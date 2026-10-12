@@ -1,0 +1,10 @@
+node_modules
+.next
+.open-next
+.wrangler
+playwright-report
+test-results
+package-lock.json
+cloudflare-env.d.ts
+next-env.d.ts
+CampusOS_Codex_完整设计文档_v2

@@ -1,0 +1,53 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "campusos-local",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-12",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "services": [
+    { "binding": "WORKER_SELF_REFERENCE", "service": "campusos-local" },
+  ],
+  "vars": { "APP_ENV": "local" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "campusos-local",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "env": {
+    "preview": {
+      "name": "campusos-preview",
+      "vars": { "APP_ENV": "preview" },
+      "services": [
+        { "binding": "WORKER_SELF_REFERENCE", "service": "campusos-preview" },
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "campusos-preview",
+          "database_id": "00000000-0000-0000-0000-000000000000",
+          "migrations_dir": "migrations",
+        },
+      ],
+    },
+    "production": {
+      "name": "campusos",
+      "vars": { "APP_ENV": "production" },
+      "services": [
+        { "binding": "WORKER_SELF_REFERENCE", "service": "campusos" },
+      ],
+      "routes": [{ "pattern": "gdufs.ccwu.cc", "custom_domain": true }],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "campusos-production",
+          "database_id": "00000000-0000-0000-0000-000000000000",
+          "migrations_dir": "migrations",
+        },
+      ],
+    },
+  },
+}
