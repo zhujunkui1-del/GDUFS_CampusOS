@@ -117,7 +117,7 @@ type SkillDefinition<I,O> = {
 
 ### 14 `get_account_context`
 - 输入：`{fields:['displayName'|'preferredZone'|'interests'|'favoritePlaceIds'|'schoolConnectionStatus',...]}`。
-- 输出：明确白名单字段；**不可返回完整手机号、密码哈希、学校授权令牌或原始成绩**。
+- 输出：明确白名单字段；**不可返回完整手机号、密码哈希、学校授权令牌、模型 API Key/密文或原始成绩**。
 
 ### 15 `sync_academic_data`
 - 输入：`{scopes:['timetable'|'exam_schedule'|'grades',...];mode:'manual'|'scheduled'}`。
@@ -132,9 +132,10 @@ type SkillDefinition<I,O> = {
 - 使用 Zod/JSON Schema 完成入参/出参验证；对结果体大小和工具并发设限。
 - 每个 Skill 自带单元测试和固定错误行为。输入地点必须在 `places` 数据表中存在；路线必须有非空坐标路径。
 - 所有本人数据工具在执行层检查有效 session；权限不可只放在系统提示词中。
-- 账号注册/手机号找回等认证行为走独立固定 API，不暴露成可以让 Agent 自主修改的 Skill。
+- 账号注册/手机号找回、模型配置与密钥管理走独立固定 API，不暴露成可以让 Agent 自主修改的 Skill。
 - `sync_academic_data` 无校方接口时不属于 P0/P1 完成项，保持明确错误响应。
 - 地图绘制和 UI 点击通常直接操作前端，无须每一步都消耗模型调用。
+- 模型设置不扩充 16 项目录；连接诊断工具只用于隔离测试。不同模型调用同一注册器、Schema、权限及确认流程；工具不兼容时阻止执行，故障重试按业务动作幂等键核对已有结果。完整要求见 `12_MODEL_API_SETTINGS.md`。
 
 ## 6. 复用与比赛展示
 

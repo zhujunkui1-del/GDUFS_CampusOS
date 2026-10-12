@@ -117,9 +117,12 @@ type AgentResponse = {
 
 ## 9. 接入模型与配置
 
-- 封装 `ModelClient`：`generateWithTools`、`generateStructured`、`embed` 等按供应商分离；支持设置基础 URL、模型名称、限额、重试、超时。
-- 提交前实测所选择模型是否支持真正的 tool calling/JSON Schema，不能由 Codex 仅靠推测配置。
-- API Key 只在服务器变量；审计日志脱敏；所有 AI 调用设置 token、成本和并发预算。
+- 对话 `ModelClient` 封装 `generateWithTools`、`generateStructured`；Embedding 使用独立客户端和平台配置。供应商协议、允许端点、能力与错误由服务端适配器注册，基础 URL 按审核策略限制。
+- 平台默认为 DeepSeek；游客可临时使用自定义 API，登录用户可选择本人持久配置。服务端在每个 Run 开始时校验身份、所有权、配置版本、真实测试结果和预算并固定模型快照；前端传入的能力或 config ID 不形成授权。
+- API Key 由服务端用于供应商请求：平台 Key 为 Secret，登录用户 Key 认证加密保存，游客 Key 仅请求内存使用。审计日志脱敏；所有调用设置 token、成本、并发和超时预算。
+- 工具兼容测试未通过的模型不能进入 Agent Skill 执行循环；JSON 输出能力按任务需要验证。测试工具不属于正式 16 项 Skill。
+- 自定义失败保留会话、地图和已完成工具台账，提供重测/切换入口；用户明确选择后才改用平台模型。重试或切换不能重复业务写入；停用/删除/替换与运行中请求须协调取消。
+- 完整凭据生命周期、连接测试、错误与切换恢复规则见 `12_MODEL_API_SETTINGS.md`，实施本节前必须完整阅读。
 
 ## 10. 必须测试
 
@@ -130,3 +133,4 @@ type AgentResponse = {
 5. 工具 JSON 参数畸形、恶意群聊提示词、不可信网页中的指令无法越权调用工具。
 6. 写入用户日程必须在后端确认令牌校验后执行。
 7. 通过真实校园问题回放，确保 `Agent → Skill → MapAction → UI` 闭环。
+8. 模型选择、能力门控、自定义故障无自动回退、工具幂等及跨用户隔离按 `12_MODEL_API_SETTINGS.md` 验收。
