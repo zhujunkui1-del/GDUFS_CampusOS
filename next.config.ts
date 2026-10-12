@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   poweredByHeader: false,
   images: { unoptimized: true },
+  async rewrites() {
+    return [
+      { source: "/_AMapService/:path*", destination: "/api/amap/:path*" },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

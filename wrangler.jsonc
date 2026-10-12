@@ -9,6 +9,13 @@
     { "binding": "WORKER_SELF_REFERENCE", "service": "campusos-local" },
   ],
   "vars": { "APP_ENV": "local" },
+  "ratelimits": [
+    {
+      "name": "MAP_RATE_LIMITER",
+      "namespace_id": "2101",
+      "simple": { "limit": 120, "period": 60 },
+    },
+  ],
   "d1_databases": [
     {
       "binding": "DB",
@@ -21,6 +28,13 @@
     "preview": {
       "name": "campusos-preview",
       "vars": { "APP_ENV": "preview" },
+      "ratelimits": [
+        {
+          "name": "MAP_RATE_LIMITER",
+          "namespace_id": "2102",
+          "simple": { "limit": 120, "period": 60 },
+        },
+      ],
       "services": [
         { "binding": "WORKER_SELF_REFERENCE", "service": "campusos-preview" },
       ],
@@ -36,6 +50,13 @@
     "production": {
       "name": "campusos",
       "vars": { "APP_ENV": "production" },
+      "ratelimits": [
+        {
+          "name": "MAP_RATE_LIMITER",
+          "namespace_id": "2103",
+          "simple": { "limit": 120, "period": 60 },
+        },
+      ],
       "services": [
         { "binding": "WORKER_SELF_REFERENCE", "service": "campusos" },
       ],

@@ -1,4 +1,8 @@
 import { test, expect } from "@playwright/test";
+import { mockAMap } from "./map-fixture";
+test.beforeEach(async ({ page }) => {
+  await mockAMap(page);
+});
 
 test("visitor shell, shared assistant and honest unavailable states", async ({
   page,
@@ -7,9 +11,9 @@ test("visitor shell, shared assistant and honest unavailable states", async ({
   await page.goto("/");
   await expect(page).toHaveURL(/\/map$/);
   await expect(
-    page.getByRole("heading", { name: "校园地图准备中" }),
+    page.getByRole("heading", { name: "广外大学城校园地图" }),
   ).toBeVisible();
-  await expect(page.getByLabel("搜索校园地点")).toBeDisabled();
+  await expect(page.getByLabel("搜索校园地点")).toBeEnabled();
   await expect(page.locator(".topbar")).toHaveCount(0);
   await page.evaluate(() => document.fonts.ready);
   await page.getByRole("button", { name: "打开校园助理" }).click();
@@ -139,11 +143,10 @@ test("API never trusts an incoming user identity or pretends integrations are re
   expect((await me.json()).error.code).toBe("UNAUTHORIZED");
   const capabilities = await request.get("/api/capabilities");
   const body = await capabilities.json();
-  expect(
-    Object.values(body.data.capabilities).every(
-      (item) => !(item as { available: boolean }).available,
-    ),
-  ).toBe(true);
+  expect(body.data.capabilities.places.available).toBe(true);
+  for (const service of ["agent", "knowledge", "events", "auth", "routes"])
+    expect(body.data.capabilities[service].available).toBe(false);
+  expect(body.data.capabilities.map.implemented).toBe(true);
 });
 
 test("all documented page routes and missing pages render", async ({
@@ -181,10 +184,12 @@ test("layout, larger text, accessibility preferences and keyboard interaction", 
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  const heading = await page.locator("#map-title").boundingBox();
   const search = await page.locator(".map-search").boundingBox();
-  if (!heading || !search) throw new Error("Map landmarks are missing");
-  expect(heading.y).toBeGreaterThan(search.y + search.height);
+  if (!search) throw new Error("Map search landmark is missing");
+  expect(search.x).toBeGreaterThanOrEqual(0);
+  expect(search.x + search.width).toBeLessThanOrEqual(
+    (await page.viewportSize())!.width,
+  );
   await page.screenshot({
     path: testInfo.outputPath("large-text.png"),
     fullPage: true,

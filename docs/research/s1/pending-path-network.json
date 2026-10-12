@@ -1,0 +1,551 @@
+{
+  "version": "osm-13900183-2026-10-12",
+  "verification": "pending_walkability_review",
+  "nodes": [
+    {
+      "id": "osm-node-2618125717",
+      "coordinate": [
+        113.3902789,
+        23.0608158
+      ]
+    },
+    {
+      "id": "osm-node-11984526400",
+      "coordinate": [
+        113.3905177,
+        23.0607183
+      ]
+    },
+    {
+      "id": "osm-node-4592853088",
+      "coordinate": [
+        113.3920461,
+        23.0606977
+      ]
+    },
+    {
+      "id": "osm-node-2618125719",
+      "coordinate": [
+        113.3900152,
+        23.0601909
+      ]
+    },
+    {
+      "id": "osm-node-11984526399",
+      "coordinate": [
+        113.3902435,
+        23.0601351
+      ]
+    },
+    {
+      "id": "osm-node-4592853085",
+      "coordinate": [
+        113.3915956,
+        23.0601168
+      ]
+    },
+    {
+      "id": "osm-node-2618125721",
+      "coordinate": [
+        113.3912323,
+        23.0631667
+      ]
+    },
+    {
+      "id": "osm-node-2618125722",
+      "coordinate": [
+        113.392127,
+        23.063211
+      ]
+    },
+    {
+      "id": "osm-node-2618125723",
+      "coordinate": [
+        113.3922387,
+        23.0624974
+      ]
+    },
+    {
+      "id": "osm-node-2618125724",
+      "coordinate": [
+        113.3922299,
+        23.0620966
+      ]
+    },
+    {
+      "id": "osm-node-2618125725",
+      "coordinate": [
+        113.3910575,
+        23.062113
+      ]
+    },
+    {
+      "id": "osm-node-2618125727",
+      "coordinate": [
+        113.3906799,
+        23.0652645
+      ]
+    },
+    {
+      "id": "osm-node-2618125728",
+      "coordinate": [
+        113.3907132,
+        23.0654119
+      ]
+    },
+    {
+      "id": "osm-node-11984526403",
+      "coordinate": [
+        113.3906728,
+        23.0654894
+      ]
+    },
+    {
+      "id": "osm-node-3189625592",
+      "coordinate": [
+        113.3905403,
+        23.0655584
+      ]
+    },
+    {
+      "id": "osm-node-2618125729",
+      "coordinate": [
+        113.3897594,
+        23.0655713
+      ]
+    },
+    {
+      "id": "osm-node-6110327049",
+      "coordinate": [
+        113.3915715,
+        23.0637583
+      ]
+    },
+    {
+      "id": "osm-node-12958953113",
+      "coordinate": [
+        113.392012,
+        23.0640877
+      ]
+    },
+    {
+      "id": "osm-node-8050991338",
+      "coordinate": [
+        113.3920866,
+        23.0641435
+      ]
+    },
+    {
+      "id": "osm-node-6110327051",
+      "coordinate": [
+        113.3926083,
+        23.0645455
+      ]
+    },
+    {
+      "id": "osm-node-6110327054",
+      "coordinate": [
+        113.392672,
+        23.0650147
+      ]
+    },
+    {
+      "id": "osm-node-6110327053",
+      "coordinate": [
+        113.3912426,
+        23.0635083
+      ]
+    },
+    {
+      "id": "osm-node-12865982392",
+      "coordinate": [
+        113.3932178,
+        23.0650424
+      ]
+    },
+    {
+      "id": "osm-node-12865982394",
+      "coordinate": [
+        113.3933003,
+        23.0649813
+      ]
+    },
+    {
+      "id": "osm-node-12959172028",
+      "coordinate": [
+        113.3931584,
+        23.0648079
+      ]
+    },
+    {
+      "id": "osm-node-12959172027",
+      "coordinate": [
+        113.3927168,
+        23.064491
+      ]
+    },
+    {
+      "id": "osm-node-13341705183",
+      "coordinate": [
+        113.3926768,
+        23.0651415
+      ]
+    },
+    {
+      "id": "osm-node-12958944858",
+      "coordinate": [
+        113.3927008,
+        23.0662361
+      ]
+    },
+    {
+      "id": "osm-node-12958944859",
+      "coordinate": [
+        113.3922658,
+        23.0662304
+      ]
+    },
+    {
+      "id": "osm-node-12958944860",
+      "coordinate": [
+        113.3920158,
+        23.0666475
+      ]
+    },
+    {
+      "id": "osm-node-12958944861",
+      "coordinate": [
+        113.3916682,
+        23.0670477
+      ]
+    },
+    {
+      "id": "osm-node-12958944862",
+      "coordinate": [
+        113.3916763,
+        23.0673731
+      ]
+    },
+    {
+      "id": "osm-node-12959908045",
+      "coordinate": [
+        113.390551,
+        23.0673732
+      ]
+    },
+    {
+      "id": "osm-node-12958953110",
+      "coordinate": [
+        113.3919219,
+        23.0675803
+      ]
+    },
+    {
+      "id": "osm-node-12865982378",
+      "coordinate": [
+        113.3918033,
+        23.068055
+      ]
+    },
+    {
+      "id": "osm-node-12958953111",
+      "coordinate": [
+        113.3916132,
+        23.0635574
+      ]
+    },
+    {
+      "id": "osm-node-12958953112",
+      "coordinate": [
+        113.3920924,
+        23.0639055
+      ]
+    },
+    {
+      "id": "osm-node-12864293746",
+      "coordinate": [
+        113.3918966,
+        23.0706317
+      ]
+    },
+    {
+      "id": "osm-node-12959172030",
+      "coordinate": [
+        113.3918239,
+        23.0708937
+      ]
+    },
+    {
+      "id": "osm-node-12959172031",
+      "coordinate": [
+        113.391612,
+        23.0715699
+      ]
+    },
+    {
+      "id": "osm-node-12959172032",
+      "coordinate": [
+        113.3918855,
+        23.0720412
+      ]
+    },
+    {
+      "id": "osm-node-12864293703",
+      "coordinate": [
+        113.3918397,
+        23.0722685
+      ]
+    },
+    {
+      "id": "osm-node-12959172034",
+      "coordinate": [
+        113.3910058,
+        23.0715263
+      ]
+    },
+    {
+      "id": "osm-node-12959172033",
+      "coordinate": [
+        113.3907416,
+        23.0715074
+      ]
+    },
+    {
+      "id": "osm-node-12959172035",
+      "coordinate": [
+        113.3908816,
+        23.0717422
+      ]
+    },
+    {
+      "id": "osm-node-12864293799",
+      "coordinate": [
+        113.3908625,
+        23.0718825
+      ]
+    }
+  ],
+  "ways": [
+    {
+      "id": "osm-way-256116848",
+      "nodeIds": [
+        "osm-node-2618125717",
+        "osm-node-11984526400",
+        "osm-node-4592853088"
+      ],
+      "highway": "service",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/256116848"
+    },
+    {
+      "id": "osm-way-256116849",
+      "nodeIds": [
+        "osm-node-2618125719",
+        "osm-node-11984526399",
+        "osm-node-4592853085"
+      ],
+      "highway": "service",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/256116849"
+    },
+    {
+      "id": "osm-way-256116850",
+      "nodeIds": [
+        "osm-node-2618125721",
+        "osm-node-2618125722",
+        "osm-node-2618125723",
+        "osm-node-2618125724",
+        "osm-node-2618125725"
+      ],
+      "highway": "service",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/256116850"
+    },
+    {
+      "id": "osm-way-256116853",
+      "nodeIds": [
+        "osm-node-2618125727",
+        "osm-node-2618125728",
+        "osm-node-11984526403",
+        "osm-node-3189625592",
+        "osm-node-2618125729"
+      ],
+      "highway": "service",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/256116853"
+    },
+    {
+      "id": "osm-way-651646933",
+      "nodeIds": [
+        "osm-node-6110327049",
+        "osm-node-12958953113",
+        "osm-node-8050991338"
+      ],
+      "highway": "steps",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/651646933"
+    },
+    {
+      "id": "osm-way-651646934",
+      "nodeIds": [
+        "osm-node-6110327051",
+        "osm-node-6110327054"
+      ],
+      "highway": "steps",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/651646934"
+    },
+    {
+      "id": "osm-way-651646935",
+      "nodeIds": [
+        "osm-node-6110327049",
+        "osm-node-6110327053"
+      ],
+      "highway": "steps",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/651646935"
+    },
+    {
+      "id": "osm-way-864205124",
+      "nodeIds": [
+        "osm-node-8050991338",
+        "osm-node-6110327051"
+      ],
+      "highway": "path",
+      "level": "underground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/864205124"
+    },
+    {
+      "id": "osm-way-864205125",
+      "nodeIds": [
+        "osm-node-6110327051",
+        "osm-node-12865982392"
+      ],
+      "highway": "steps",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/864205125"
+    },
+    {
+      "id": "osm-way-1410275260",
+      "nodeIds": [
+        "osm-node-12865982394",
+        "osm-node-12959172028",
+        "osm-node-12959172027",
+        "osm-node-6110327051"
+      ],
+      "highway": "path",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/1410275260"
+    },
+    {
+      "id": "osm-way-1410275261",
+      "nodeIds": [
+        "osm-node-6110327053",
+        "osm-node-6110327049"
+      ],
+      "highway": "path",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/1410275261"
+    },
+    {
+      "id": "osm-way-1410302044",
+      "nodeIds": [
+        "osm-node-6110327054",
+        "osm-node-13341705183",
+        "osm-node-12958944858",
+        "osm-node-12958944859",
+        "osm-node-12958944860",
+        "osm-node-12958944861",
+        "osm-node-12958944862",
+        "osm-node-12959908045"
+      ],
+      "highway": "footway",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/1410302044"
+    },
+    {
+      "id": "osm-way-1410302050",
+      "nodeIds": [
+        "osm-node-12958944862",
+        "osm-node-12958953110",
+        "osm-node-12865982378"
+      ],
+      "highway": "footway",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/1410302050"
+    },
+    {
+      "id": "osm-way-1410302051",
+      "nodeIds": [
+        "osm-node-12958953111",
+        "osm-node-12958953112",
+        "osm-node-12958953113"
+      ],
+      "highway": "path",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/1410302051"
+    },
+    {
+      "id": "osm-way-1410329674",
+      "nodeIds": [
+        "osm-node-12864293746",
+        "osm-node-12959172030",
+        "osm-node-12959172031",
+        "osm-node-12959172032",
+        "osm-node-12864293703"
+      ],
+      "highway": "footway",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/1410329674"
+    },
+    {
+      "id": "osm-way-1410329675",
+      "nodeIds": [
+        "osm-node-12959172031",
+        "osm-node-12959172034",
+        "osm-node-12959172033"
+      ],
+      "highway": "footway",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/1410329675"
+    },
+    {
+      "id": "osm-way-1410329676",
+      "nodeIds": [
+        "osm-node-12959172035",
+        "osm-node-12864293799"
+      ],
+      "highway": "steps",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/1410329676"
+    },
+    {
+      "id": "osm-way-1410329677",
+      "nodeIds": [
+        "osm-node-12959172034",
+        "osm-node-12959172035"
+      ],
+      "highway": "footway",
+      "level": "ground",
+      "verified": false,
+      "sourceUrl": "https://www.openstreetmap.org/way/1410329677"
+    }
+  ]
+}

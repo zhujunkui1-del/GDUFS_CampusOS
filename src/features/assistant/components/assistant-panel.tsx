@@ -1,6 +1,7 @@
 "use client";
 
 import { Drawer } from "@base-ui/react/drawer";
+import { useCampusMap } from "@/features/campus-map/components/campus-map-provider";
 import { useRef, useState, useSyncExternalStore } from "react";
 import {
   ArrowUp,
@@ -39,6 +40,7 @@ export function AssistantPanel({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const { assistantPlace } = useCampusMap();
   const compact = useMediaQuery(
     "(max-width: 760px), (max-width: 1024px) and (max-height: 500px)",
   );
@@ -136,6 +138,11 @@ export function AssistantPanel({
                   </div>
                 </div>
                 <Drawer.Content className="assistant-body">
+                  {assistantPlace && (
+                    <p className="assistant-map-context">
+                      当前地点：{assistantPlace.name}
+                    </p>
+                  )}
                   <h3>服务尚未接入</h3>
                   <Drawer.Description>
                     服务接入后，可在这里查找地点、规划路线，核对校园信息。

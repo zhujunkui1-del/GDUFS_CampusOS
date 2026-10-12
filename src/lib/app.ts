@@ -6,11 +6,19 @@ export const APP = {
   campusName: "广外大学城校区",
 } as const;
 
-// Availability describes implemented services, not the presence of a key.
+// Server availability is separate from per-browser SDK rendering (MapContext.status).
 export const CAPABILITIES = {
-  map: { available: false, status: "pending_integration" },
-  places: { available: false, status: "pending_verified_data" },
-  routes: { available: false, status: "pending_verified_network" },
+  map: {
+    available: false,
+    implemented: true,
+    status: "client_sdk_render_check_required",
+  },
+  places: { available: true, status: "source_mapped_entrances_pending" },
+  routes: {
+    available: false,
+    implemented: true,
+    status: "client_walking_only_verified_network_pending",
+  },
   agent: { available: false, status: "pending_integration" },
   knowledge: { available: false, status: "pending_verified_sources" },
   events: { available: false, status: "pending_verified_sources" },
