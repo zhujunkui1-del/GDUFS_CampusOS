@@ -47,9 +47,17 @@ for place in current["places"]:
 
 highways = []
 tunnels = []
+buildings = []
 for identifier, way in ways.items():
     t = tags(way)
     points = [nodes[n.get("ref")] for n in way.findall("nd")]
+    anchor = [(min(p[0] for p in points) + max(p[0] for p in points)) / 2,
+              (min(p[1] for p in points) + max(p[1] for p in points)) / 2] if points else None
+    if t.get("building") and t["building"] != "no" and anchor and in_campus(anchor):
+        buildings.append({"id": identifier, "name": t.get("name"), "building": t["building"],
+                          "closed": len(points) >= 4 and points[0] == points[-1],
+                          "height": t.get("height"), "levels": t.get("building:levels"),
+                          "sourceTimestamp": way.get("timestamp")})
     if t.get("highway") and any(in_campus(p) for p in points):
         highways.append({"id": identifier, "name": t.get("name"), "highway": t["highway"],
                          "tunnel": t.get("tunnel"), "level": t.get("level"), "layer": t.get("layer"),
@@ -82,6 +90,11 @@ report = {
             "existing_places_matched": len(matched), "missing_place_ids": missing,
             "changed_anchor_ids": changed,
             "highways_touching_campus": highways, "tunnels_in_extract": tunnels},
+    "building_coverage": {"footprints": len(buildings),
+                          "named": sum(bool(b["name"]) for b in buildings),
+                          "with_height": sum(b["height"] is not None for b in buildings),
+                          "with_levels": sum(b["levels"] is not None for b in buildings),
+                          "buildings": buildings},
     "geopackage": {"checksum_matches": actual_md5 == expected_md5, "layers": layers},
     "limitations": ["Exports retain whole crossing geometries outside the selected extent.",
                     "Two extracts share the OSM source and are not independent geography verification.",
@@ -96,3 +109,4 @@ print(json.dumps({"osm_counts": report["osm"]["counts"], "matched_places": len(m
                   "highway_count": len(highways), "tunnels": tunnels,
                   "gpkg_layers": {l["name"]: l["features"] for l in layers},
                   "gpkg_checksum_matches": actual_md5 == expected_md5}, ensure_ascii=False))
+print(json.dumps({"building_coverage": {k:v for k,v in report["building_coverage"].items() if k != "buildings"}}, ensure_ascii=False))

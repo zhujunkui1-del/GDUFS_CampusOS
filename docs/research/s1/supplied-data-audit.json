@@ -43,7 +43,12 @@
         "name:zh-Hant": "廣東外語外貿大學(大學城校區)",
         "type": "multipolygon"
       },
-      "outer_way_ids": ["1037933911", "1499812811", "1388137572", "1499812812"]
+      "outer_way_ids": [
+        "1037933911",
+        "1499812811",
+        "1388137572",
+        "1499812812"
+      ]
     },
     "existing_places_matched": 75,
     "missing_place_ids": [],
@@ -637,6 +642,338 @@
       }
     ]
   },
+  "building_coverage": {
+    "footprints": 36,
+    "named": 27,
+    "with_height": 0,
+    "with_levels": 4,
+    "buildings": [
+      {
+        "id": "307250997",
+        "name": "大会堂",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-05-27T04:10:28Z"
+      },
+      {
+        "id": "307250998",
+        "name": "大学城校区图书馆",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "307437431",
+        "name": "院系办公楼",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2018-12-02T06:09:35Z"
+      },
+      {
+        "id": "307437432",
+        "name": "校办公楼",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2018-12-02T06:09:35Z"
+      },
+      {
+        "id": "312536950",
+        "name": "9栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-11-30T03:04:27Z"
+      },
+      {
+        "id": "312536951",
+        "name": "10栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "312536952",
+        "name": "11栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-11-30T03:04:27Z"
+      },
+      {
+        "id": "312536953",
+        "name": "13栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "312536954",
+        "name": "12栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "312536955",
+        "name": "7栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-11-30T03:04:27Z"
+      },
+      {
+        "id": "312536956",
+        "name": "8栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-11-30T03:04:27Z"
+      },
+      {
+        "id": "313039010",
+        "name": null,
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "313039013",
+        "name": "北苑1栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2024-06-16T03:05:19Z"
+      },
+      {
+        "id": "313039014",
+        "name": "北苑4栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2024-06-16T03:05:19Z"
+      },
+      {
+        "id": "313039019",
+        "name": "北苑5栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2024-06-16T03:05:19Z"
+      },
+      {
+        "id": "313039020",
+        "name": "北苑3栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2024-06-16T03:05:19Z"
+      },
+      {
+        "id": "313039023",
+        "name": "北苑6栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "313039024",
+        "name": "北苑2栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2024-06-16T03:05:19Z"
+      },
+      {
+        "id": "313039029",
+        "name": "后勤楼",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "313039031",
+        "name": null,
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "313039033",
+        "name": "2栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "313039037",
+        "name": "1栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "313039038",
+        "name": null,
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "313039046",
+        "name": "大学城校区门诊部",
+        "building": "yes",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2018-12-02T07:22:22Z"
+      },
+      {
+        "id": "313039048",
+        "name": null,
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "313039056",
+        "name": "3栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "313039057",
+        "name": null,
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-11-30T03:04:27Z"
+      },
+      {
+        "id": "313039061",
+        "name": null,
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-06-28T19:13:23Z"
+      },
+      {
+        "id": "651642991",
+        "name": "B8学术报告厅",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2018-12-02T06:09:34Z"
+      },
+      {
+        "id": "1389756836",
+        "name": null,
+        "building": "grandstand",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-05-26T09:49:08Z"
+      },
+      {
+        "id": "1389756844",
+        "name": "体育馆",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-12-09T05:55:13Z"
+      },
+      {
+        "id": "1389970391",
+        "name": "艺术楼",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": null,
+        "sourceTimestamp": "2025-05-27T04:10:28Z"
+      },
+      {
+        "id": "1410412690",
+        "name": null,
+        "building": "bridge",
+        "closed": true,
+        "height": null,
+        "levels": "5",
+        "sourceTimestamp": "2025-06-28T19:40:49Z"
+      },
+      {
+        "id": "1410412691",
+        "name": "教学楼C栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": "5",
+        "sourceTimestamp": "2025-06-28T19:40:49Z"
+      },
+      {
+        "id": "1410412692",
+        "name": null,
+        "building": "bridge",
+        "closed": true,
+        "height": null,
+        "levels": "5",
+        "sourceTimestamp": "2025-06-28T19:40:49Z"
+      },
+      {
+        "id": "1410412694",
+        "name": "教学楼A栋",
+        "building": "university",
+        "closed": true,
+        "height": null,
+        "levels": "5",
+        "sourceTimestamp": "2025-06-28T19:40:49Z"
+      }
+    ]
+  },
   "geopackage": {
     "checksum_matches": true,
     "layers": [
@@ -644,35 +981,60 @@
         "name": "points",
         "features": 243,
         "data_type": "features",
-        "bounds": [113.3815972, 23.04617179999999, 113.4235477, 23.0784298],
+        "bounds": [
+          113.3815972,
+          23.04617179999999,
+          113.4235477,
+          23.0784298
+        ],
         "srs_id": 4326
       },
       {
         "name": "lines",
         "features": 281,
         "data_type": "features",
-        "bounds": [113.378242, 23.0337539, 113.450298, 23.0964561],
+        "bounds": [
+          113.378242,
+          23.0337539,
+          113.450298,
+          23.0964561
+        ],
         "srs_id": 4326
       },
       {
         "name": "multilinestrings",
         "features": 10,
         "data_type": "features",
-        "bounds": [113.3814674, 23.04964209999999, 113.450298, 23.0964561],
+        "bounds": [
+          113.3814674,
+          23.04964209999999,
+          113.450298,
+          23.0964561
+        ],
         "srs_id": 4326
       },
       {
         "name": "multipolygons",
         "features": 116,
         "data_type": "features",
-        "bounds": [113.3812788, 23.05197629999999, 113.4004397, 23.0763195],
+        "bounds": [
+          113.3812788,
+          23.05197629999999,
+          113.4004397,
+          23.0763195
+        ],
         "srs_id": 4326
       },
       {
         "name": "other_relations",
         "features": 1,
         "data_type": "features",
-        "bounds": [113.3984174, 23.06576349999999, 113.3988896, 23.0659823],
+        "bounds": [
+          113.3984174,
+          23.06576349999999,
+          113.3988896,
+          23.0659823
+        ],
         "srs_id": 4326
       }
     ]

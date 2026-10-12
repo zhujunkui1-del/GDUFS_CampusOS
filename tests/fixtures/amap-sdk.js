@@ -87,18 +87,41 @@
       this.setZoom(16);
     }
     lngLatToContainer(coordinate) {
+      const scale = 2 ** (this.zoom - 16);
+      const angle = (this.rotation * Math.PI) / 180;
+      const x = (coordinate[0] - this.center[0]) * 170000 * scale;
+      const y = (this.center[1] - coordinate[1]) * 185000 * scale;
       return {
-        getX: () => (coordinate[0] - 113.389) * 200000,
-        getY: () => (23.074 - coordinate[1]) * 50000,
+        getX: () =>
+          this.element.clientWidth / 2 +
+          x * Math.cos(angle) -
+          y * Math.sin(angle),
+        getY: () =>
+          this.element.clientHeight / 2 +
+          x * Math.sin(angle) +
+          y * Math.cos(angle),
       };
     }
     add(overlays) {
+      // Deterministic renderer fixture; this projection is not a campus screenshot.
       for (const overlay of Array.isArray(overlays) ? overlays : [overlays])
         overlay.setMap(this);
     }
     remove(overlays) {
       for (const overlay of Array.isArray(overlays) ? overlays : [overlays])
         overlay.setMap(null);
+    }
+    containerToLngLat(pixel) {
+      const scale = 2 ** (this.zoom - 16),
+        angle = (this.rotation * Math.PI) / 180;
+      const x = pixel[0] - this.element.clientWidth / 2,
+        y = pixel[1] - this.element.clientHeight / 2;
+      return point([
+        this.center[0] +
+          (x * Math.cos(angle) + y * Math.sin(angle)) / (170000 * scale),
+        this.center[1] -
+          (-x * Math.sin(angle) + y * Math.cos(angle)) / (185000 * scale),
+      ]);
     }
     destroy() {
       this.element.removeEventListener("click", this.click);

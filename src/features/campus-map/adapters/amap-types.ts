@@ -29,6 +29,7 @@ export interface SDKMap {
   clearLimitBounds(): void;
   setZooms(zooms: [number, number]): void;
   lngLatToContainer(coordinate: Coordinate): { getX(): number; getY(): number };
+  containerToLngLat(pixel: [number, number]): SDKPoint;
   add(overlays: MapOverlay | MapOverlay[]): void;
   remove(overlays: MapOverlay | MapOverlay[]): void;
   destroy(): void;

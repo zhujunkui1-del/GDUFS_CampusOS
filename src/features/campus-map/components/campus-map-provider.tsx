@@ -186,11 +186,12 @@ export function CampusMapProvider({
         if (!cancelled) {
           // Fit only after the real renderer knows its viewport dimensions.
           next.setPitch(view.current.mode === "2d" ? 0 : CAMPUS_PITCH);
-          next.initializeViewport();
-          next.setZone(
+          await next.initializeViewport();
+          await next.setZone(
             view.current.zone,
             window.innerWidth < 761 ? [170, 150, 30, 60] : [40, 40, 110, 70],
           );
+          if (cancelled) return;
           setStatus("ready");
           setZoom(next.map.getZoom());
           setMinimumZoom(next.minimumZoom);

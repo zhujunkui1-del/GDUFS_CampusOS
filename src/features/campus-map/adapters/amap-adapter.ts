@@ -62,6 +62,10 @@ function timed<T>(
     );
   });
 }
+const renderedFrame = () =>
+  new Promise<void>((resolve) =>
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+  );
 export class AMapAdapter implements MapAdapter {
   readonly supports3D: boolean;
   readonly map: SDKMap;
@@ -84,6 +88,8 @@ export class AMapAdapter implements MapAdapter {
   private zoomHandler = () => this.updateLabels();
   minimumZoom = CAMPUS_MIN_ZOOM;
   private resizeObserver?: ResizeObserver;
+  private destroyed = false;
+  private fitGeneration = 0;
   private constructor(
     sdk: AMapSDK,
     private readonly element: HTMLElement,
@@ -150,8 +156,9 @@ export class AMapAdapter implements MapAdapter {
     this.map.on("pitchend", this.zoomHandler);
     this.updateLabels();
   }
-  initializeViewport() {
-    const update = (restore: boolean) => {
+  async initializeViewport() {
+    const update = async (restore: boolean) => {
+      if (this.destroyed) return;
       const center = sdkCoordinate(this.map.getCenter());
       const zoom = this.map.getZoom();
       this.map.clearLimitBounds();
@@ -161,10 +168,11 @@ export class AMapAdapter implements MapAdapter {
         this.element.clientWidth > this.element.clientHeight ? 90 : 0,
         true,
       );
-      this.setZone(
+      await this.setZone(
         "all",
         this.element.clientWidth < 761 ? [170, 150, 30, 60] : [40, 40, 110, 70],
       );
+      if (this.destroyed) return;
       // Use the SDK's actual visible geography, including perspective and aspect ratio.
       // The permitted nearby region must contain the entire screen, not crop it to a narrow campus rectangle.
       const visible = this.map.getBounds();
@@ -185,7 +193,7 @@ export class AMapAdapter implements MapAdapter {
           true,
         );
     };
-    update(false);
+    await update(false);
     let width = this.element.clientWidth,
       height = this.element.clientHeight;
     this.resizeObserver = new ResizeObserver(() => {
@@ -196,7 +204,7 @@ export class AMapAdapter implements MapAdapter {
         return;
       width = this.element.clientWidth;
       height = this.element.clientHeight;
-      update(true);
+      void update(true).catch(() => console.info("map.viewport_resize_failed"));
     });
     this.resizeObserver.observe(this.element);
   }
@@ -240,7 +248,11 @@ export class AMapAdapter implements MapAdapter {
   setPitch(pitch: number) {
     this.map.setPitch(Math.max(0, Math.min(60, pitch)), true);
   }
-  setZone(zone: "all" | "teaching" | "living", padding = [170, 100, 110, 120]) {
+  async setZone(
+    zone: "all" | "teaching" | "living",
+    padding = [170, 100, 110, 120],
+  ) {
+    const generation = ++this.fitGeneration;
     const points = this.zones
       .filter((z) => zone === "all" || z.id === zone)
       .flatMap((z) => z.polygon);
@@ -252,8 +264,49 @@ export class AMapAdapter implements MapAdapter {
       this.map.getRotation(),
     );
     this.map.setZoomAndCenter(view.zoom, view.center, true);
+    for (let i = 0; i < 3; i++) {
+      await renderedFrame();
+      if (this.destroyed || generation !== this.fitGeneration) return;
+      const pixels = points.map((p) => this.map.lngLatToContainer(p));
+      const xs = pixels.map((p) => p.getX()),
+        ys = pixels.map((p) => p.getY());
+      const ratio = Math.min(
+        Math.max(80, this.element.clientWidth - padding[2] - padding[3]) /
+          Math.max(1, Math.max(...xs) - Math.min(...xs)),
+        Math.max(80, this.element.clientHeight - padding[0] - padding[1]) /
+          Math.max(1, Math.max(...ys) - Math.min(...ys)),
+      );
+      const correction = Math.log2(ratio);
+      const shiftX =
+        (Math.min(...xs) + Math.max(...xs)) / 2 -
+        (padding[2] + (this.element.clientWidth - padding[2] - padding[3]) / 2);
+      const shiftY =
+        (Math.min(...ys) + Math.max(...ys)) / 2 -
+        (padding[0] +
+          (this.element.clientHeight - padding[0] - padding[1]) / 2);
+      const zoom = Math.max(
+        this.minimumZoom,
+        Math.min(17.4, this.map.getZoom() + correction),
+      );
+      if (!Number.isFinite(zoom)) break;
+      if (
+        Math.abs(zoom - this.map.getZoom()) < 0.05 &&
+        Math.abs(shiftX) < 8 &&
+        Math.abs(shiftY) < 8
+      )
+        break;
+      const center = sdkCoordinate(
+        this.map.containerToLngLat([
+          this.element.clientWidth / 2 + shiftX,
+          this.element.clientHeight / 2 + shiftY,
+        ]),
+      );
+      this.map.setZoomAndCenter(zoom, center, true);
+    }
+    await renderedFrame();
   }
   focusPlace(id: string) {
+    ++this.fitGeneration;
     const marker = this.markers.get(id),
       coordinate = this.coordinates.get(id);
     if (!marker || !coordinate) throw new Error("地点不存在或尚未核验。");
@@ -446,6 +499,8 @@ export class AMapAdapter implements MapAdapter {
     this.routes.clear();
   }
   destroy() {
+    this.destroyed = true;
+    ++this.fitGeneration;
     this.listeners.clear();
     this.map.off("zoomend", this.zoomHandler);
     this.resizeObserver?.disconnect();
