@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   Map,
   Radar,
@@ -12,9 +12,7 @@ import {
   UserRound,
   PanelLeftClose,
   PanelLeftOpen,
-  Sparkles,
 } from "lucide-react";
-
 import { AssistantPanel } from "@/features/assistant/components/assistant-panel";
 
 const navigation = [
@@ -30,30 +28,6 @@ export function CampusShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [expanded, setExpanded] = useState(false);
   const [assistantOpen, setAssistantOpen] = useState(false);
-  const launcher = useRef<HTMLButtonElement>(null);
-  const closeButton = useRef<HTMLButtonElement>(null);
-  const assistantWasOpen = useRef(false);
-
-  function closeAssistant() {
-    setAssistantOpen(false);
-  }
-
-  useEffect(() => {
-    if (!assistantOpen) {
-      if (assistantWasOpen.current) launcher.current?.focus();
-      assistantWasOpen.current = false;
-      return;
-    }
-    assistantWasOpen.current = true;
-    closeButton.current?.focus();
-    function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setAssistantOpen(false);
-      }
-    }
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, [assistantOpen]);
 
   return (
     <div
@@ -62,82 +36,82 @@ export function CampusShell({ children }: { children: React.ReactNode }) {
       <a className="skip-link" href="#main-content">
         跳到主要内容
       </a>
-      <header className="topbar">
-        <Link className="brand" href="/map" aria-label="广外通首页">
-          <span className="brand-mark">广</span>
+      <aside className="sidebar glass-surface" aria-label="侧边栏">
+        <Link
+          className="brand"
+          href="/map"
+          aria-label="广外通 CampusOS 首页"
+          title="广外通 CampusOS"
+        >
+          <span className="brand-symbol" aria-hidden="true">
+            C<span>.</span>
+          </span>
           <span className="brand-word">
-            广外通<span>CampusOS</span>
+            广外通<small>CampusOS</small>
           </span>
         </Link>
-        <span className="campus-chip">
-          <span className="campus-dot" />
-          大学城校区
-        </span>
-        <div className="header-right">
-          <span className="guest-label">游客</span>
-          <Link
-            className="account-link"
-            href="/account"
-            aria-label="打开我的账号"
-          >
-            <UserRound size={19} />
-          </Link>
-        </div>
-      </header>
-
-      <aside className="sidebar" aria-label="侧边栏">
-        <nav aria-label="桌面主导航">
-          {navigation.map(({ href, label, icon: Icon }) => (
-            <Link
-              key={href}
-              href={href}
-              className={`nav-item ${pathname === href ? "active" : ""}`}
-              aria-current={pathname === href ? "page" : undefined}
-              aria-label={label}
-              title={label}
+        <nav className="desktop-navigation" aria-label="桌面主导航">
+          <div className="nav-primary">
+            {navigation
+              .slice(0, 5)
+              .map(({ href, label, short, icon: Icon }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`nav-item ${pathname === href ? "active" : ""}`}
+                  aria-current={pathname === href ? "page" : undefined}
+                  aria-label={label}
+                  title={label}
+                >
+                  <Icon size={21} strokeWidth={1.7} />
+                  <span>{label}</span>
+                  <small className="nav-tooltip" aria-hidden="true">
+                    {short}
+                  </small>
+                </Link>
+              ))}
+          </div>
+          <div className="nav-secondary">
+            <button
+              className="nav-toggle"
+              onClick={() => setExpanded(!expanded)}
+              aria-label={expanded ? "收起导航" : "展开导航"}
+              aria-expanded={expanded}
+              title={expanded ? "收起导航" : "展开导航"}
             >
-              <Icon size={21} />
-              <span>{label}</span>
+              {expanded ? (
+                <PanelLeftClose size={20} strokeWidth={1.7} />
+              ) : (
+                <PanelLeftOpen size={20} strokeWidth={1.7} />
+              )}
+              <span>{expanded ? "收起导航" : "展开导航"}</span>
+            </button>
+            <Link
+              href="/account"
+              className={`nav-item nav-account ${pathname === "/account" ? "active" : ""}`}
+              aria-label="我的账号"
+              aria-describedby="visitor-label"
+              aria-current={pathname === "/account" ? "page" : undefined}
+              title="我的账号 · 游客"
+            >
+              <span className="account-avatar">
+                <UserRound size={20} strokeWidth={1.7} />
+              </span>
+              <span className="account-caption">
+                我的账号<small>游客模式</small>
+              </span>
+              <small id="visitor-label" className="nav-guest">
+                游客
+              </small>
             </Link>
-          ))}
+          </div>
         </nav>
-        <button
-          className="nav-toggle"
-          onClick={() => setExpanded(!expanded)}
-          aria-label={expanded ? "收起导航" : "展开导航"}
-          aria-expanded={expanded}
-        >
-          {expanded ? (
-            <PanelLeftClose size={19} />
-          ) : (
-            <PanelLeftOpen size={19} />
-          )}
-        </button>
       </aside>
-
       <main id="main-content" className="main-content">
         {children}
       </main>
-
-      <button
-        ref={launcher}
-        className="assistant-launcher"
-        onClick={() =>
-          assistantOpen ? closeAssistant() : setAssistantOpen(true)
-        }
-        aria-label={assistantOpen ? "关闭校园助理" : "打开校园助理"}
-        aria-controls="campus-assistant"
-        aria-expanded={assistantOpen}
-      >
-        <Sparkles size={20} />
-        <span>问 AI</span>
-      </button>
-
-      {assistantOpen && (
-        <AssistantPanel closeButtonRef={closeButton} onClose={closeAssistant} />
-      )}
-
-      <nav className="mobile-navigation" aria-label="手机主导航">
+      <AssistantPanel open={assistantOpen} onOpenChange={setAssistantOpen} />
+      <nav className="mobile-navigation glass-surface" aria-label="手机主导航">
         {navigation
           .filter((item) => item.href !== "/favorites")
           .map(({ href, short, icon: Icon }) => (
@@ -152,7 +126,9 @@ export function CampusShell({ children }: { children: React.ReactNode }) {
                   : undefined
               }
             >
-              <Icon size={21} />
+              <span className="tab-icon">
+                <Icon size={22} strokeWidth={1.7} />
+              </span>
               <span>{short}</span>
             </Link>
           ))}

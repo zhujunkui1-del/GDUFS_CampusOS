@@ -4,6 +4,8 @@
 
 已确定：**B 方案（精致 2.5D 数字校园）融合 A 方案（简洁易读的地图标注）**。主视觉采用广外校园蓝白色，借鉴 Apple 界面的克制排版、圆角、柔和层次、半透明浮层和轻快动效，但不直接复制其具体专有图标或界面资产。
 
+2026-10-12 负责人修订：采用 Apple-inspired UI + 局部 Liquid Glass + Minimalism。取消常驻顶层栏，使用局部半透明导航/搜索，内容面板保持实白；以常规/中等字重、克制的蓝色强调、柔和阴影与大圆角建立层次。具体实现与检查见 `../docs/UI_REVIEW.md`。
+
 UI 视觉和校园地图地理信息分层：蓝白色负责品牌/控件；地图本身仍应保留合理的道路、绿地、水体、建筑和场馆色。
 
 ## 2. 初步 Design Tokens（待实机对比与无障碍审核）
@@ -14,26 +16,29 @@ UI 视觉和校园地图地理信息分层：蓝白色负责品牌/控件；地�
   --brand-primary-hover: #0E53A4;
   --brand-soft: #EAF3FF;
   --brand-ink: #16375D;
-  --surface-page: #F5F7FA;
+  --surface-page: #F4F6F9;
   --surface-card: #FFFFFF;
-  --text-primary: #172B44;
-  --text-secondary: #64748B;
+  --text-primary: #1D1D1F;
+  --text-secondary: #62666E;
   --border-subtle: rgba(26,67,120,.12);
   --map-grass: #B9DFC0;
   --map-water: #D5E5F2;
   --map-building-roof: #F6F0E9;
   --map-building-side: #8DA2B5;
   --map-route: #3169D8;
-  --radius-small: 10px;
-  --radius-medium: 16px;
-  --radius-large: 22px;
-  --shadow-card: 0 10px 35px rgba(21,68,124,.09);
+  --radius-small: 14px;
+  --radius-medium: 22px;
+  --radius-large: 28px;
+  --shadow-card: 0 8px 32px rgba(28,40,57,.065);
+  --glass-fill: rgba(255,255,255,.76);
+  --ease-out: cubic-bezier(.23,1,.32,1);
+  --ease-drawer: cubic-bezier(.32,.72,0,1);
   --transition-fast: 160ms;
   --transition-normal: 220ms;
 }
 ```
 
-色值是 CampusOS 的提议品牌体系，**不宣称来自广外官方视觉识别规范**；如果使用官方校徽/Logo，需提供来源和适当授权。字体优先使用操作系统字体栈，如 `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif`，不附带或再分发系统字体文件。
+色值是 CampusOS 的提议品牌体系，**不宣称来自广外官方视觉识别规范**；如果使用官方校徽/Logo，需提供来源和适当授权。字体优先使用操作系统字体栈，如 `-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif`，不附带或再分发系统字体文件。Windows 固定界面文案可使用经许可的 Noto Sans SC 自托管子集（OFL）；与系统字体保持相同的常规/中等层级，并记录字体来源/许可。
 
 ## 3. UI 组件
 
@@ -47,7 +52,7 @@ UI 视觉和校园地图地理信息分层：蓝白色负责品牌/控件；地�
 
 ## 4. 桌面与手机布局
 
-桌面：左侧导航→中心大地图→右侧 Agent；地图拥有主要视觉比重。顶部统一搜索与账号。右侧面板默认可收起，页面跳转保留会话。
+桌面：浮动左侧导航→中心大地图→右侧 Agent；地图拥有主要视觉比重。取消常驻顶层栏，品牌/校区整合在搜索浮层，账号/游客移至导航。右侧面板默认可收起，页面跳转保留会话。
 
 手机：全屏地图、顶部搜索/分区切换、地图工具按钮、可拖动 AI 抽屉（收起/半屏/全屏）、底部五入口。浮层避开状态栏和底部安全区。
 

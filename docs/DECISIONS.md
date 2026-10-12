@@ -64,3 +64,7 @@
 - **数据与边界**：地点/节点内部坐标统一 WGS84；MapAdapter 在 S1 承担高德 GCJ-02 转换。Schema 与数据库 ID/权限验证分开，S0 不注册真实 Skill 或地图动作执行器。
 - **项目域名**：`gdufs.ccwu.cc` 写入公开项目 URL 和 production custom-domain 配置；2026-10-12 A/AAAA 查询只返回 SOA，HTTPS 连接未成功。不将目标域名声明为已上线。
 - **源码管理**：创建本地 Git `main`，未经许可的研究图片不进入 Git/公开资源目录；没有配置远程仓库或推送。
+
+## UI 修订决定（2026-10-12）
+
+负责人明确要求删除顶栏并加强 Apple-inspired、局部 Liquid Glass、Minimalism。已按此批准调整功能浮层/字体/导航位置；原模块范围与 Next/Workers、Agent、Skill、数据权限边界继续沿用。使用 Base UI React 1.9.0 的非模态 Drawer，统一焦点/拖动/停靠；没有增设 UI 原型或虚假数据入口。细节、颜色对比与实际检查边界见 `UI_REVIEW.md`。

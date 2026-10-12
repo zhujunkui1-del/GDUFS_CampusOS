@@ -1,6 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { APP } from "@/lib/app";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  interactiveWidget: "resizes-content",
+  themeColor: "#f4f6f9",
+  colorScheme: "light",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP.origin),

@@ -20,7 +20,7 @@ const pages = {
   },
   knowledge: {
     eyebrow: "校园知识",
-    title: "查得清，也找得到出处",
+    title: "校园知识",
     text: "校园政策、办事指南和官方通知，从原文开始。",
     empty: "知识来源尚未接入",
     detail: "经核验的官方资料接入后，可在此检索并查看原文及适用范围。",
@@ -60,7 +60,9 @@ export function ModulePage({ page }: { page: keyof typeof pages }) {
   return (
     <section className="module-page">
       <div className="page-heading">
-        <span className="overline">{content.eyebrow}</span>
+        <Link className="module-brand" href="/map">
+          广外通 <span>CampusOS</span>
+        </Link>
         <h1>{content.title}</h1>
         <p>{content.text}</p>
       </div>
@@ -72,7 +74,7 @@ export function ModulePage({ page }: { page: keyof typeof pages }) {
         <p>{content.detail}</p>
         <Link className="text-link" href="/map">
           返回校园地图
-          <ArrowUpRight size={16} />
+          <ArrowUpRight size={16} strokeWidth={1.65} />
         </Link>
       </div>
       {page === "account" && (
