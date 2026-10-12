@@ -56,6 +56,7 @@ function timed<T>(
   });
 }
 export class AMapAdapter implements MapAdapter {
+  readonly supports3D: boolean;
   readonly map: SDKMap;
   readonly sdk: AMapSDK;
   readonly coordinates = new Map<string, Coordinate>();
@@ -87,14 +88,20 @@ export class AMapAdapter implements MapAdapter {
       this.coordinates.set(place.id, coordinates[i]),
     );
     const bounds = boundsOf(zones.flatMap((z) => z.polygon));
+    const probe = document.createElement("canvas");
+    const context = probe.getContext("webgl2") || probe.getContext("webgl");
+    const memory = (navigator as Navigator & { deviceMemory?: number })
+      .deviceMemory;
+    this.supports3D = !!context && !(memory && memory < 4);
+    context?.getExtension("WEBGL_lose_context")?.loseContext();
     this.map = new sdk.Map(element, {
-      viewMode: "3D",
+      viewMode: this.supports3D ? "3D" : "2D",
       zoom: 15.5,
       center: [
         (bounds[0][0] + bounds[1][0]) / 2,
         (bounds[0][1] + bounds[1][1]) / 2,
       ],
-      pitch: 48,
+      pitch: this.supports3D ? 48 : 0,
       rotation: 0,
       keyboardEnable: true,
       dragEnable: true,
@@ -127,7 +134,11 @@ export class AMapAdapter implements MapAdapter {
     this.map.on("zoomend", this.zoomHandler);
     this.updateLabels();
   }
-  static async create(sdk: AMapSDK, element: HTMLElement) {
+  static async create(
+    sdk: AMapSDK,
+    element: HTMLElement,
+    signal?: AbortSignal,
+  ) {
     const places = campusData.places;
     const pointList = [
       ...places.map((p) => p.coordinate),
@@ -135,8 +146,11 @@ export class AMapAdapter implements MapAdapter {
     ];
     const converted: Coordinate[] = [];
     for (let i = 0; i < pointList.length; i += 40) {
+      if (signal?.aborted) throw new DOMException("Cancelled", "AbortError");
+      if (i) await new Promise((resolve) => setTimeout(resolve, 400));
+      if (signal?.aborted) throw new DOMException("Cancelled", "AbortError");
       const batch = pointList.slice(i, i + 40);
-      const result = await convertCampusCoordinates(batch);
+      const result = await convertCampusCoordinates(batch, signal);
       converted.push(...result);
     }
     let offset = places.length;
@@ -179,7 +193,7 @@ export class AMapAdapter implements MapAdapter {
     );
     this.markers.forEach((value, key) => {
       value.button.classList.toggle("selected", key === id);
-      value.overlay.setZIndex(key === id ? 300 : 110);
+      value.overlay.setzIndex(key === id ? 300 : 110);
     });
     this.updateLabels();
   }

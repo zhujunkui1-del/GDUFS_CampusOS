@@ -6,11 +6,7 @@ export type MapEvent = { lnglat?: SDKPoint };
 export interface MapOverlay {
   setMap(map: SDKMap | null): void;
 }
-export interface SDKMarker extends MapOverlay {
-  hide(): void;
-  show(): void;
-  setZIndex(value: number): void;
-}
+export type SDKMarker = MapOverlay & Pick<AMap.Marker, "hide" | "show" | "setzIndex">;
 export interface SDKMap {
   on(name: string, callback: (event: MapEvent) => void): void;
   off(name: string, callback: (event: MapEvent) => void): void;

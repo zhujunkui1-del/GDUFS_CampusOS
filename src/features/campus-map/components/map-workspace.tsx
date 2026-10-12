@@ -250,7 +250,7 @@ export function MapWorkspace() {
       )}
       <div className="map-controls glass-surface" aria-label="地图工具">
         <button
-          disabled={!ready}
+          disabled={!ready || (map.mode === "2d" && !map.supports3D)}
           onClick={() => map.setMode(map.mode === "2d" ? "2.5d" : "2d")}
           aria-label={map.mode === "2d" ? "切换为2.5D" : "切换为2D"}
         >

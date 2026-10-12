@@ -39,6 +39,7 @@ type MapContextValue = {
   routeBusy: boolean;
   assistantPlace: CampusPlace | null;
   zoom: number;
+  supports3D: boolean;
   retry(): void;
   setZone(zone: "all" | "teaching" | "living"): void;
   setMode(mode: MapMode): void;
@@ -95,6 +96,7 @@ export function CampusMapProvider({
   const [picking, setPicking] = useState<MapContextValue["picking"]>(null);
   const [routeBusy, setRouteBusy] = useState(false);
   const [zoom, setZoom] = useState(15.5);
+  const [supports3D, setSupports3D] = useState(true);
   const routeGeneration = useRef(0);
   const view = useRef<{ mode: MapMode; zone: MapContextValue["zone"] }>({
     mode: "2.5d",
@@ -110,12 +112,21 @@ export function CampusMapProvider({
       try {
         const sdk = await loadAMap();
         if (cancelled || !element.current) return;
-        const next = await AMapAdapter.create(sdk, element.current);
+        const next = await AMapAdapter.create(
+          sdk,
+          element.current,
+          abort.signal,
+        );
         if (cancelled) {
           next.destroy();
           return;
         }
         adapter.current = next;
+        setSupports3D(next.supports3D);
+        if (!next.supports3D) {
+          view.current.mode = "2d";
+          setModeState("2d");
+        }
         next.setPitch(view.current.mode === "2d" ? 0 : 48);
         next.setZone(
           view.current.zone,
@@ -241,6 +252,7 @@ export function CampusMapProvider({
     routeBusy,
     assistantPlace,
     zoom,
+    supports3D,
     retry: () => {
       adapter.current?.destroy();
       adapter.current = null;
@@ -257,6 +269,7 @@ export function CampusMapProvider({
       );
     },
     setMode: (next) => {
+      if (next === "2.5d" && !adapter.current?.supports3D) return;
       view.current.mode = next;
       setModeState(next);
       adapter.current?.setPitch(next === "2d" ? 0 : 48);

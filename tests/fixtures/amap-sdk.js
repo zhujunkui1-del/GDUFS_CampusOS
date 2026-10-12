@@ -109,7 +109,7 @@
     show() {
       this.element.hidden = false;
     }
-    setZIndex(value) {
+    setzIndex(value) {
       this.element.style.zIndex = value;
     }
   }
