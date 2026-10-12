@@ -22,6 +22,8 @@
 | `login_sessions` | `session_hash,user_id,expires_at,revoked_at` | 会话控制 |
 | `external_connections` | `user_id,provider,scopes,status,expires_at` | 校方授权状态（待接入） |
 | `user_preferences` | `user_id,map_mode,interests_json` | 偏好 |
+| `user_model_configs` | `id,user_id,provider,model_id,base_url,encrypted_api_key,key_version,version` | 待新增：登录用户模型配置/加密凭据，完整字段与约束见第 12 份文档 |
+| `user_model_preferences` | `user_id,mode,active_config_id,version,updated_at` | 待新增：当前选择唯一，配置必须属于本人 |
 | `user_memories` | `user_id,content,consent_at,deleted_at` | 可管理长期记忆 |
 | `conversations` | `id,user_id?,guest_session_id?,status` | Agent 会话 |
 | `conversation_messages` | `id,conversation_id,role,content,created_at` | 对话信息 |
@@ -47,6 +49,8 @@
 | `audit_events` | `id,actor_id,action,target_id,created_at` | 重要操作审计 |
 
 P2 社交表另见 `10_CAMPUS_SOCIAL.md`。生产 DDL 应使用迁移工具和字段约束、索引、唯一性/外键；本表是逻辑设计而非可直接执行 SQL。
+
+模型新增表以 `12_MODEL_API_SETTINGS.md` 第 9 节为完整依据，兼容现有账号、会话和业务数据；游客临时配置不写库。`is_active` 从本人选择派生，避免多处状态不一致。本次没有生成/执行迁移。
 
 ## 3. 数据隔离与权限
 
@@ -83,6 +87,10 @@ P2 社交表另见 `10_CAMPUS_SOCIAL.md`。生产 DDL 应使用迁移工具和�
 
 所有 API 返回受控错误结构；查询范围有分页上限、速率限制，日志脱敏。除公共查询外，高风险修改使用服务端确认与幂等控制。
 
+### 模型设置接口扩展
+
+新增公开供应商元数据、匿名/登录连接测试、本人模型配置 CRUD/测试及当前选择接口，扩展原 `/api/agent/chat` 的服务端模型选择。完整接口目录、请求敏感字段与响应白名单见 `12_MODEL_API_SETTINGS.md` 第 10 节。本人配置不返回明文/密文 Key；所有读取、测试、调用和修改均检查所有权。游客测试只在请求内存中使用 Key，匿名保存接口拒绝。
+
 ## 5. API 结果约定
 
 ```ts
@@ -113,7 +121,10 @@ type ApiResult<T> =
 - 配置 `.env.example` / Cloudflare secrets，不提交真实 key、短信密钥、OAuth client secret。
 - 地图前端发布型密钥按平台要求配域名/安全参数白名单；服务端密钥仅在后端。
 - 数据库迁移、备份、审计/错误监控、生产/预览环境分离；不得把试验用手机号或测试地点公开到生产。
+- 模型凭据按 `12_MODEL_API_SETTINGS.md` 处理：HTTPS、登录持久 Key 的 AES-256-GCM/Cloudflare Secret、游客内存临时 Key、日志/缓存脱敏和供应商出站白名单；当前 HTTP 本地预览仅用 Mock 凭据。`anykey.md` 不作为可提交/公开资源。
 
 ## 9. 模块边界单元测试
 
 重点验证：匿名 API 不返回个人数据；错误校区不出地图；过期活动筛选正确；无真实路径不返回成功；关联删除不会留下悬空事件；地图素材待审核不会进入公开响应；Agent 对话异常不会破坏地图使用；手机号找回/账号撤销会话状态一致。
+
+模型配置、凭据加密、SSRF、并发切换、故障恢复及游客临时模式追加验收见 `12_MODEL_API_SETTINGS.md` 第 12 节，均为待实施测试要求。
