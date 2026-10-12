@@ -1,5 +1,29 @@
 import { test, expect } from "@playwright/test";
 import { mockAMap } from "./map-fixture";
+import type { Page } from "@playwright/test";
+
+async function clickMapGround(
+  page: Page,
+  preferredX: number,
+  preferredY: number,
+) {
+  const point = await page.evaluate(
+    ({ x, y }) => {
+      for (const dy of [0, 25, -25, 50])
+        for (const dx of [0, 35, -35, 70]) {
+          const target = document.elementFromPoint(x + dx, y + dy);
+          if (
+            target?.closest('[data-testid="campus-map"]') &&
+            !target.closest("button")
+          )
+            return { x: x + dx, y: y + dy };
+        }
+      throw new Error("No unobscured map ground in the test viewport");
+    },
+    { x: preferredX, y: preferredY },
+  );
+  await page.mouse.click(point.x, point.y);
+}
 
 test.beforeEach(async ({ page }) => {
   await mockAMap(page);
@@ -94,14 +118,14 @@ test("route selection computes through the SDK and reset discards results", asyn
   await page
     .getByRole("button", { name: "在地图上选择起点", exact: true })
     .click();
-  await page.mouse.click(isMobile ? 120 : 700, 250);
+  await clickMapGround(page, isMobile ? 120 : 700, 250);
   await expect(
     page.getByRole("button", { name: /地图选定起点/ }),
   ).toBeVisible();
   await page
     .getByRole("button", { name: "在地图上选择终点", exact: true })
     .click();
-  await page.mouse.click(isMobile ? 170 : 740, 310);
+  await clickMapGround(page, isMobile ? 170 : 740, 310);
   await expect(
     page.getByRole("button", { name: /地图选定终点/ }),
   ).toBeVisible();

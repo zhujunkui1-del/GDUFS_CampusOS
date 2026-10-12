@@ -77,6 +77,7 @@ export class AMapAdapter implements MapAdapter {
     { overlay: SDKMarker; button: HTMLButtonElement; place: CampusPlace }
   >();
   private routeOverlay?: MapOverlay;
+  private visibleRouteId?: string;
   private routes = new Map<string, CampusRoute>();
   private listeners = new Set<(id: string) => void>();
   private visibility: Record<MapLayer, boolean> = {
@@ -186,7 +187,8 @@ export class AMapAdapter implements MapAdapter {
       this.minimumZoom = Math.max(CAMPUS_MIN_ZOOM, this.map.getZoom());
       this.map.setLimitBounds(new this.sdk.Bounds(sw, ne));
       this.map.setZooms([this.minimumZoom, CAMPUS_MAX_ZOOM]);
-      if (restore)
+      if (restore && this.visibleRouteId) this.renderRoute(this.visibleRouteId);
+      else if (restore)
         this.map.setZoomAndCenter(
           Math.max(zoom, this.minimumZoom),
           center,
@@ -253,6 +255,11 @@ export class AMapAdapter implements MapAdapter {
     padding = [170, 100, 110, 120],
   ) {
     const generation = ++this.fitGeneration;
+    if (zone === "all")
+      this.map.setRotation(
+        this.element.clientWidth > this.element.clientHeight ? 90 : 0,
+        true,
+      );
     const points = this.zones
       .filter((z) => zone === "all" || z.id === zone)
       .flatMap((z) => z.polygon);
@@ -478,6 +485,7 @@ export class AMapAdapter implements MapAdapter {
   renderRoute(id: string) {
     const route = this.routes.get(id);
     if (!route) throw new Error("路线不存在或已失效。");
+    this.visibleRouteId = id;
     this.routeOverlay?.setMap(null);
     this.setPitch(0);
     this.routeOverlay = new this.sdk.Polyline({
@@ -490,10 +498,38 @@ export class AMapAdapter implements MapAdapter {
       zIndex: 200,
     });
     this.map.add(this.routeOverlay);
-    const [sw, ne] = boundsOf(route.pathGcj02);
-    this.map.setBounds(new this.sdk.Bounds(sw, ne), true, [220, 90, 160, 380]);
+    const generation = ++this.fitGeneration;
+    // React commits the route result before measuring the drawer's real occupied space.
+    void renderedFrame().then(() => {
+      if (
+        this.destroyed ||
+        generation !== this.fitGeneration ||
+        this.visibleRouteId !== id
+      )
+        return;
+      const [sw, ne] = boundsOf(route.pathGcj02);
+      const panel = document
+        .querySelector(".route-planner")
+        ?.getBoundingClientRect();
+      const top = Math.max(
+        190,
+        (document.querySelector(".map-top")?.getBoundingClientRect().bottom ||
+          170) + 20,
+      );
+      const padding =
+        this.element.clientWidth < 761
+          ? [
+              top,
+              panel ? this.element.clientHeight - panel.top + 20 : 110,
+              24,
+              90,
+            ]
+          : [top, 70, panel ? panel.right + 24 : 110, 90];
+      this.map.setBounds(new this.sdk.Bounds(sw, ne), true, padding);
+    });
   }
   clearRoute() {
+    this.visibleRouteId = undefined;
     this.routeOverlay?.setMap(null);
     this.routeOverlay = undefined;
     this.routes.clear();

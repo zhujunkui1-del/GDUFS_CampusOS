@@ -5,6 +5,7 @@ const endpoints = new Set([
   "v3/assistant/coordinate/convert",
   "v3/place/text",
   "v3/place/around",
+  "v3/place/polygon",
   "v3/place/detail",
   "v3/direction/walking",
   "v3/assistant/inputtips",

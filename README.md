@@ -19,7 +19,7 @@ npm run dev
 
 地图需 `AMAP_WEB_KEY`、`AMAP_SECURITY_JS_CODE`；Next 开发写入被忽略的 `.env.local`，Workers 本地写入被忽略的 `.dev.vars`。高德后台允许本地与正式站点域名。安全密钥只用于服务端固定地址代理；`AMAP_WEBSERVICE_KEY` 未提供时保持空值，不冒充独立 Web 服务接入。请勿把凭据文件上传或提交。
 
-地图只浏览教学、生活两区及约250米周边，首次进入地图页才加载 SDK；原始 OSM/GeoPackage 不整包加载到浏览器。新增资料离线检查可运行 `python scripts/inspect-campus-sources.py`，需负责人提供的两个本地文件。
+地图只浏览教学、生活两区及按窗口比例确定的必要周边，首次进入地图页才加载 SDK；原始 OSM/GeoPackage 不整包加载到浏览器。新增资料离线检查可运行 `python scripts/inspect-campus-sources.py`，需负责人提供的两个本地文件。
 
 ## 验证
 

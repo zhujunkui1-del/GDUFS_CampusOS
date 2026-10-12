@@ -147,9 +147,11 @@
     }
     hide() {
       this.element.hidden = true;
+      this.element.style.display = "none";
     }
     show() {
       this.element.hidden = false;
+      this.element.style.display = "";
     }
     setzIndex(value) {
       this.element.style.zIndex = value;
