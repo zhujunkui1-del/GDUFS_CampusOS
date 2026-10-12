@@ -4,6 +4,14 @@
   z-index: 0;
   background: #ecf0ef;
 }
+.campus-map-canvas::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 400;
+  pointer-events: none;
+  box-shadow: inset 0 0 24px rgba(255, 255, 255, 0.16);
+}
 .campus-shell {
   pointer-events: none;
 }

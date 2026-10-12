@@ -51,3 +51,30 @@
 - SRC-018：负责人在本次会话指定默认模型为 DeepSeek，凭据材料位置为 `CampusOS_Codex_完整设计文档_v2/anykey.md`。只记录位置；文件内容未读取，未验证认证、生成、工具能力或配额。Git 忽略检查确认此路径被排除，当前未被跟踪。不得把凭据文件作为可引用的公开附件。
 - SRC-019：负责人明确澄清“游客也可临时使用自定义 API，但不能保存密钥或配置；登录后可持久保存”；已写入 `12_MODEL_API_SETTINGS.md`，替代原冲突句。属于需求决定，不是运行结果。
 - SRC-020：官方/原始模型安全资料已查阅：[DeepSeek API](https://api-docs.deepseek.com/)、[工具调用](https://api-docs.deepseek.com/guides/tool_calls/)、[JSON 输出](https://api-docs.deepseek.com/guides/json_mode/)、[Workers Web Crypto](https://developers.cloudflare.com/workers/runtime-apis/web-crypto/)、[Workers Secrets](https://developers.cloudflare.com/workers/configuration/secrets/)、[OWASP SSRF](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)。只核对技术依据；没有创建云资源、调用模型或把文档示例当作项目测试成功。
+
+## S1 来源与核验台账（2026-10-12～13）
+
+| ID | 来源 | 用途/许可 | 核验与边界 |
+|---|---|---|---|
+| SRC-021 | 负责人指定的本地 `anykey.md` | 敏感配置材料，仅提取地图 JS Key/安全密钥至忽略文件 | 负责人更新本地域名白名单后真实 SDK 加载；没有输出凭据或使用 DeepSeek |
+| SRC-022 | [OSM 校园关系 13900183](https://www.openstreetmap.org/relation/13900183)、[官方 OSM API](https://www.openstreetmap.org/api/0.6/map?bbox=113.388,23.060,113.399,23.073) | 负责人允许交叉制图；© OpenStreetMap contributors，ODbL-1.0 | 2026-10-12 取得来源几何，派生教学/生活两个分区与 75 条地物；WGS84、稳定源 ID、原文链接及采集时间；不是学校认证或现场核验 |
+| SRC-023 | [OSM 许可](https://www.openstreetmap.org/copyright) | 独立数据按 ODbL 再分发/署名，与应用代码许可分开 | `/api/map/data` 提供完整派生数据；宽范围研究快照保留本地且被忽略；不储存 OSM 用户姓名/UID |
+| SRC-024 | [广外南校体育馆](https://www.gdufs.edu.cn/info/1354/59038.htm)、[2025 校园改造报道](https://news.gdufs.edu.cn/info/1002/99562.htm)、[体育部场馆条件](https://tyb.gdufs.edu.cn/tycg/cgtj.htm) | 官方建筑/场馆/隧道广场存在性与名称线索；不自动获得照片/地图许可 | 历史场馆统计不能当作 2026 数量；网页不能提供隧道两端精确坐标或当前完整通行拓扑 |
+| SRC-025 | `assets/source_maps/广外南校区地图.jpg`、`鸟瞰模拟地图.jpg` | 负责人新增参考资料，仅内部核对 | 已查看；原作者、原文 URL、发布日期、展示/改编许可未提供。鸟瞰稿不是真实影像或 GIS；未上线、未据图猜坐标/编号 |
+| SRC-026 | [高德安全代理](https://lbs.amap.com/api/javascript-api-v2/guide/abc/jscode)、[POI 搜索](https://lbs.amap.com/api/javascript-api-v2/guide/services/autocomplete)、[路线插件](https://lbs.amap.com/api/javascript-api-v2/guide/services/navigation) | 官方 JS SDK 在线底图、坐标、查询/路线接口 | 真实域名/坐标请求已核验；库内没有瓦片/模型/整库 POI。图书馆 OSM 地物标签点与高德同名 POI 对照指向同一建筑，不将 POI 点当作已验证入口 |
+| SRC-027 | [高德官方类型库](https://github.com/AMap-Web/amap-jsapi-types)、[Workers Fetch](https://developers.cloudflare.com/workers/runtime-apis/fetch/)、[限流绑定](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/) | 类型/服务端协议及运行时依据 | `setzIndex` 与重定向策略经真实接口修正；本地限流不能证明线上跨区域总预算已落实 |
+
+地物分类：校园建筑 9、图书馆 1、教学楼 2、宿舍编号 12、生活服务 12、出入口 1、足球地物 2、体育馆 1、篮球地物 13、游泳地物 2、网球地物 10、类型待复核球场 10。这里的数字是 OSM 对象数，可能存在组成部分或复合场地，不能代替学校场馆总数。
+
+候选路网：18 条道路、46 节点，均 `verified=false`；来源/版本保存在 `research/s1/pending-path-network.json`。未经审核不进入正式自有路由。图片的编号只用于查漏；目前南苑 13 栋、完整教学/实验楼命名、食堂专有名称、排球/跑道分类、建筑入口及隧道连通仍有缺项。
+# SRC-028：负责人交付的 OSM XML 与 BBBike GeoPackage（2026-10-13）
+
+- 输入：文档包 `map.osm` 与 `planet_113.388_23.059_80bab6f4.osm.geopackage.zh/`。来源为 [OpenStreetMap](https://www.openstreetmap.org/) 和 [BBBike Extract](https://extract.bbbike.org/)，README、log、checksum 已读取，GeoPackage checksum 相符。
+- XML 9,104节点/540道路/76关系；GeoPackage为EPSG:4326，243点/281线/10多线/116多边形/1其他关系。逐个核对现有75地点，全部匹配且锚点坐标未变化。
+- 两份文件同源 OSM，不作为独立交叉核验；完整几何可超出导出选区，必须按校园筛选。原包不上传前端，不复制贡献者 user/uid 到派生数据。许可沿用 ODbL及贡献者署名；不自动转为现场已核验。
+- 48条 highway 道路触及校园；地下 path way864205124带 `foot=designated`、`layer=-1`，无名称或端点标签。仅登记研究候选；隧道身份、入口与现状待核验，不开放跨区导航。
+- 完整文件SHA256、分层范围和来源比对见 `research/s1/supplied-data-audit.json`；可复现脚本 `scripts/inspect-campus-sources.py`。
+
+# SRC-029：高德官方区域掩模和范围限制（2026-10-13）
+
+[JSAPI区域掩模示例](https://lbs.amap.com/demo/javascript-api-v2/example/3d/mask) 与 [Map参考](https://lbs.amap.com/api/maps-javascript-api/reference/amap-map/map) 用于实现校区及必要周边显示、限制拖动与缩放。掩模属于渲染/交互约束，不保证消除全部屏幕外底图请求；未替换地图供应商或抓取其瓦片。

@@ -6,7 +6,8 @@ export type MapEvent = { lnglat?: SDKPoint };
 export interface MapOverlay {
   setMap(map: SDKMap | null): void;
 }
-export type SDKMarker = MapOverlay & Pick<AMap.Marker, "hide" | "show" | "setzIndex">;
+export type SDKMarker = MapOverlay &
+  Pick<AMap.Marker, "hide" | "show" | "setzIndex">;
 export interface SDKMap {
   on(name: string, callback: (event: MapEvent) => void): void;
   off(name: string, callback: (event: MapEvent) => void): void;
@@ -23,6 +24,10 @@ export interface SDKMap {
   getZoom(): number;
   setZoom(value: number, immediately?: boolean, duration?: number): void;
   getCenter(): SDKPoint;
+  getBounds(): { getSouthWest(): SDKPoint; getNorthEast(): SDKPoint };
+  setLimitBounds(bounds: AMap.Bounds): void;
+  clearLimitBounds(): void;
+  setZooms(zooms: [number, number]): void;
   lngLatToContainer(coordinate: Coordinate): { getX(): number; getY(): number };
   add(overlays: MapOverlay | MapOverlay[]): void;
   remove(overlays: MapOverlay | MapOverlay[]): void;
@@ -50,7 +55,7 @@ export interface AMapSDK {
   Marker: new (options: Record<string, unknown>) => SDKMarker;
   Polyline: new (options: Record<string, unknown>) => MapOverlay;
   Polygon: new (options: Record<string, unknown>) => MapOverlay;
-  Bounds: new (southwest: Coordinate, northeast: Coordinate) => unknown;
+  Bounds: new (southwest: Coordinate, northeast: Coordinate) => AMap.Bounds;
   Pixel: new (x: number, y: number) => unknown;
   plugin(names: string[], callback: () => void): void;
   convertFrom(

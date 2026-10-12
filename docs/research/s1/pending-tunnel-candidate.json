@@ -1,0 +1,28 @@
+{
+  "id": "osm-way-864205124",
+  "sourceUrl": "https://www.openstreetmap.org/way/864205124",
+  "sourceFile": "map.osm",
+  "sourceTimestamp": "2025-06-28T19:13:23Z",
+  "license": "ODbL-1.0",
+  "tags": {
+    "bicycle": "designated",
+    "foot": "designated",
+    "highway": "path",
+    "layer": "-1",
+    "motor_vehicle": "no",
+    "segregated": "yes",
+    "tunnel": "yes"
+  },
+  "nodeIds": ["8050991338", "6110327051"],
+  "coordinatesWgs84": [
+    [113.3920866, 23.0641435],
+    [113.3926083, 23.0645455]
+  ],
+  "verified": false,
+  "campusTunnelIdentityVerified": false,
+  "endpointsVerified": false,
+  "notes": [
+    "OSM highway=path/tunnel=yes candidate; not evidence of current walkability or building entrances.",
+    "Do not use as approved South Campus tunnel navigation edge."
+  ]
+}

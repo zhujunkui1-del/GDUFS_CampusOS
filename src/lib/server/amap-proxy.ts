@@ -107,9 +107,10 @@ export async function proxyAMap(request: Request, path: string[]) {
       throw new ApiError("RATE_LIMITED", "地图查询过于频繁，请稍后再试。");
   }
   try {
-    const response = await fetch(target, {
+    const response = await fetch(target.toString(), {
       signal: AbortSignal.timeout(12000),
-      redirect: "error",
+      // Workers supports manual/follow; reject 3xx below instead of following it.
+      redirect: "manual",
       headers: { Accept: "application/json" },
       cache: "no-store",
     });
@@ -129,6 +130,30 @@ export async function proxyAMap(request: Request, path: string[]) {
     });
   } catch (error) {
     if (error instanceof ApiError) throw error;
+    const message = error instanceof Error ? error.message : "";
+    const diagnostic = message
+      .replaceAll(env.AMAP_WEB_KEY, "[credential]")
+      .replaceAll(env.AMAP_SECURITY_JS_CODE, "[credential]")
+      .replace(/https?:\/\/\S+/g, "[upstream-url]")
+      .slice(0, 160);
+    console.info(
+      JSON.stringify({
+        event: "map.upstream.failure",
+        kind: error instanceof Error ? error.name : "unknown",
+        reason: message.includes("cache")
+          ? "cache_option"
+          : message.includes("certificate") ||
+              message.includes("SSL") ||
+              message.includes("TLS")
+            ? "tls"
+            : message.includes("DNS")
+              ? "dns"
+              : message.includes("aborted")
+                ? "timeout"
+                : "network",
+        diagnostic,
+      }),
+    );
     throw new ApiError(
       "UPSTREAM_ERROR",
       "无法连接高德地图服务，请稍后重试。",

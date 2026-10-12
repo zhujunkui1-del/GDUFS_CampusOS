@@ -8,6 +8,7 @@
       this.pitch = options.pitch;
       this.rotation = 0;
       this.center = options.center;
+      this.zooms = options.zooms || [2, 20];
       this.events = {};
       this.click = (event) => {
         const height = element.clientHeight;
@@ -38,7 +39,7 @@
       return this.zoom;
     }
     setZoom(value) {
-      this.zoom = value;
+      this.zoom = Math.max(this.zooms[0], Math.min(this.zooms[1], value));
       this.emit("zoomend");
     }
     getPitch() {
@@ -55,6 +56,24 @@
     }
     getCenter() {
       return point(this.center);
+    }
+    getBounds() {
+      return {
+        getSouthWest: () =>
+          point([this.center[0] - 0.01, this.center[1] - 0.01]),
+        getNorthEast: () =>
+          point([this.center[0] + 0.01, this.center[1] + 0.01]),
+      };
+    }
+    setZooms(zooms) {
+      this.zooms = zooms;
+      this.setZoom(this.zoom);
+    }
+    setLimitBounds(bounds) {
+      this.limitBounds = bounds;
+    }
+    clearLimitBounds() {
+      this.limitBounds = null;
     }
     setZoomAndCenter(zoom, position) {
       this.center = position;

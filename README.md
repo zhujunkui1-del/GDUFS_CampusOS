@@ -2,7 +2,7 @@
 
 广外大学城校区的响应式 Web 应用。正式域名：`gdufs.ccwu.cc`（已由负责人指定，尚未完成线上绑定）。需求基线保存在 `CampusOS_Codex_完整设计文档_v2/`。
 
-当前为 S0 工程基线：六个页面入口、全局 AI 面板/手机抽屉、API 错误与权限基础、30 张空数据表和 Cloudflare Workers 本地预览。校园地图、地点/路线、Agent/RAG、短信登录尚未接入，页面显示实际不可用状态。
+S0 工程基线已完成；当前进行 S1 真实校园地图与验收：高德官方底图、两区视野、75个 OSM 来源地点、搜索/详情和客户端地图动作已实现。校园完整名录、入口、自建路网/跨区隧道仍待核验；Agent/RAG、短信登录和模型设置尚未开发。实际边界见 [S1验收记录](docs/S1_ACCEPTANCE.md)。
 
 ## 本地运行
 
@@ -16,6 +16,10 @@ npm run dev
 ```
 
 访问 `http://127.0.0.1:3000/map`。保留 `.env.local` 内未知服务的空值；凭据只在本地环境或 Cloudflare Secret 中配置，不写入源码或文档。
+
+地图需 `AMAP_WEB_KEY`、`AMAP_SECURITY_JS_CODE`；Next 开发写入被忽略的 `.env.local`，Workers 本地写入被忽略的 `.dev.vars`。高德后台允许本地与正式站点域名。安全密钥只用于服务端固定地址代理；`AMAP_WEBSERVICE_KEY` 未提供时保持空值，不冒充独立 Web 服务接入。请勿把凭据文件上传或提交。
+
+地图只浏览教学、生活两区及约250米周边，首次进入地图页才加载 SDK；原始 OSM/GeoPackage 不整包加载到浏览器。新增资料离线检查可运行 `python scripts/inspect-campus-sources.py`，需负责人提供的两个本地文件。
 
 ## 验证
 
@@ -46,12 +50,12 @@ npm run test:e2e
 - `src/app/`：页面和 API 路由；地图首页是 `/map`。
 - `src/components/`：导航/响应式 Shell 和公共空状态。
 - `src/features/campus-map/`、`src/features/assistant/`：地图及全局 AI 的独立 UI 边界。
-- `src/domain/`：MapAdapter、MapAction 和 Skill 合约；S0 未注册真实地图 SDK 或 Skill 执行器。
+- `src/domain/`：MapAdapter、MapAction、核验路网算法及 Skill 合约；未注册真实 Agent/Skill 执行器。
 - `src/lib/server/`：错误封装、脱敏日志、环境校验和服务端权限检查。
 - `migrations/`：空表迁移与约束，未经核验的地点/路径不能被标为已确认。
 - `tests/`：权限/错误/地图合约单测与两种视口的 E2E；测试数据库仅在内存中含隔离夹具。
 - `docs/`：进度、决策、数据来源、阻塞和部署说明。
 
-下一阶段 S1 需要高德凭据、获准的真实大学城地点/入口/路网与隧道资料。参考图片没有复制到公开资源库。
+S1 剩余需要完整地点名录、已核验入口/通行路网与隧道资料；参考图片没有复制到公开资源库。真实运行截图与测试条件见 `docs/screenshots/s1/`。
 
 部署与回滚见 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)，架构边界见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)，实测记录见 [docs/PROGRESS.md](docs/PROGRESS.md)。

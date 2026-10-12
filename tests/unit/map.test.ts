@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   campusData,
   searchCampusPlaces,
@@ -11,9 +11,60 @@ import {
   planVerifiedRoute,
   type WalkingGraph,
 } from "@/domain/maps/route-graph";
-import { buildAMapTarget } from "@/lib/server/amap-proxy";
+import { buildAMapTarget, proxyAMap } from "@/lib/server/amap-proxy";
+import {
+  campusViewport,
+  CAMPUS_MIN_ZOOM,
+  fitCampusView,
+} from "@/features/campus-map/data/viewport";
+vi.mock("@/lib/server/map-env", () => ({
+  mapRuntime: () => ({
+    env: {
+      APP_ENV: "local",
+      AMAP_WEB_KEY: "test-published-js-key",
+      AMAP_SECURITY_JS_CODE: "test-server-security-code",
+    },
+    limiter: undefined,
+  }),
+}));
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.restoreAllMocks();
+});
 
 describe("licensed campus geometry and search", () => {
+  it("limits context to the two campus zones and a small margin without changing geography", () => {
+    const input = campusData.zones.flatMap((z) => z.polygon);
+    const original = JSON.stringify(input);
+    const viewport = campusViewport(input);
+    expect(viewport.ring[0]).toEqual(viewport.ring.at(-1));
+    expect(JSON.stringify(input)).toBe(original);
+    expect(viewport.northeast[0] - viewport.southwest[0]).toBeLessThan(0.014);
+    expect(viewport.northeast[1] - viewport.southwest[1]).toBeLessThan(0.02);
+    expect(CAMPUS_MIN_ZOOM).toBeGreaterThanOrEqual(15);
+    expect(pointInPolygon([113.29, 23.2], viewport.ring)).toBe(false);
+    for (const point of input)
+      expect(pointInPolygon(point, viewport.ring)).toBe(true);
+  });
+  it("fits campus-sized initial views after the viewport dimensions are known", () => {
+    const points = campusData.zones.flatMap((z) => z.polygon);
+    const desktop = fitCampusView(
+      points,
+      { width: 1440, height: 900 },
+      [40, 40, 110, 70],
+    );
+    const mobile = fitCampusView(
+      points,
+      { width: 390, height: 844 },
+      [170, 150, 30, 60],
+    );
+    expect(desktop.zoom).toBeGreaterThan(15.5);
+    expect(mobile.zoom).toBeGreaterThanOrEqual(CAMPUS_MIN_ZOOM);
+    expect(desktop.zoom).toBeLessThan(17);
+    expect(pointInPolygon(desktop.center, campusViewport(points).ring)).toBe(
+      true,
+    );
+  });
   it("covers both zones with closed WGS84 geometry and distinct IDs", () => {
     expect(new Set(campusData.zones.map((z) => z.id))).toEqual(
       new Set(["teaching", "living"]),
@@ -100,6 +151,64 @@ describe("AMap security proxy policy", () => {
         secret,
       ),
     ).toThrow();
+  });
+});
+
+describe("proxy requests and secret-safe failures", () => {
+  const request = () =>
+    new Request(
+      "https://campus.test/_AMapService/v3/place/text?key=test-published-js-key&keywords=library",
+      { headers: { referer: "https://campus.test/map" } },
+    );
+  it("uses Workers-compatible manual redirect handling and rejects 3xx", async () => {
+    const upstream = vi.fn().mockResolvedValue(
+      new Response(null, {
+        status: 302,
+        headers: { Location: "http://127.0.0.1/" },
+      }),
+    );
+    vi.stubGlobal("fetch", upstream);
+    await expect(
+      proxyAMap(request(), ["v3", "place", "text"]),
+    ).rejects.toMatchObject({ code: "UPSTREAM_ERROR" });
+    expect(upstream.mock.calls[0][1].redirect).toBe("manual");
+    expect(upstream).toHaveBeenCalledTimes(1);
+  });
+  it("does not forward a reflected security code to the browser", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        Response.json({
+          status: "1",
+          reflected: "test-server-security-code",
+        }),
+      ),
+    );
+    await expect(
+      proxyAMap(request(), ["v3", "place", "text"]),
+    ).rejects.toMatchObject({ code: "UPSTREAM_ERROR" });
+  });
+  it("redacts credentials and upstream URLs from network diagnostics", async () => {
+    const log = vi.spyOn(console, "info").mockImplementation(() => {});
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockRejectedValue(
+          new Error(
+            "failed https://restapi.amap.com/v3/place/text?jscode=test-server-security-code key=test-published-js-key",
+          ),
+        ),
+    );
+    await expect(
+      proxyAMap(request(), ["v3", "place", "text"]),
+    ).rejects.toMatchObject({ code: "UPSTREAM_ERROR" });
+    expect(JSON.stringify(log.mock.calls)).not.toContain(
+      "test-server-security-code",
+    );
+    expect(JSON.stringify(log.mock.calls)).not.toContain(
+      "test-published-js-key",
+    );
   });
 });
 

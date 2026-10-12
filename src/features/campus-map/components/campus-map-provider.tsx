@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import "./campus-map.css";
+import { usePathname } from "next/navigation";
 import { loadAMap } from "../adapters/load-amap";
 import {
   AMapAdapter,
@@ -24,6 +25,11 @@ import {
 import type { MapMode } from "@/domain/maps/contracts";
 import { MapActionSchema } from "@/domain/maps/contracts";
 import { sdkCoordinate, type SDKPoi } from "../adapters/amap-types";
+import {
+  CAMPUS_MIN_ZOOM,
+  CAMPUS_MAX_ZOOM,
+  CAMPUS_PITCH,
+} from "../data/viewport";
 
 type MapContextValue = {
   status: "loading" | "ready" | "error";
@@ -72,6 +78,9 @@ export function CampusMapProvider({
   children: React.ReactNode;
   onAskAssistant(): void;
 }) {
+  const pathname = usePathname();
+  const [mapRequested, setMapRequested] = useState(pathname === "/map");
+  if (pathname === "/map" && !mapRequested) setMapRequested(true);
   const element = useRef<HTMLDivElement>(null);
   const adapter = useRef<AMapAdapter | null>(null);
   const pickRef = useRef<"start" | "end" | null>(null);
@@ -96,6 +105,7 @@ export function CampusMapProvider({
   const [picking, setPicking] = useState<MapContextValue["picking"]>(null);
   const [routeBusy, setRouteBusy] = useState(false);
   const [zoom, setZoom] = useState(15.5);
+  const [minimumZoom, setMinimumZoom] = useState(CAMPUS_MIN_ZOOM);
   const [supports3D, setSupports3D] = useState(true);
   const routeGeneration = useRef(0);
   const view = useRef<{ mode: MapMode; zone: MapContextValue["zone"] }>({
@@ -104,6 +114,7 @@ export function CampusMapProvider({
   });
 
   useEffect(() => {
+    if (!mapRequested) return;
     let cancelled = false;
     let disposePick: (() => void) | undefined,
       disposeCoordinate: (() => void) | undefined;
@@ -127,11 +138,6 @@ export function CampusMapProvider({
           view.current.mode = "2d";
           setModeState("2d");
         }
-        next.setPitch(view.current.mode === "2d" ? 0 : 48);
-        next.setZone(
-          view.current.zone,
-          window.innerWidth < 761 ? [170, 150, 30, 60] : [160, 100, 120, 80],
-        );
         const lowMemory = (navigator as Navigator & { deviceMemory?: number })
           .deviceMemory;
         if (lowMemory && lowMemory < 4) {
@@ -155,7 +161,10 @@ export function CampusMapProvider({
           setPicking(null);
           setError("");
         });
-        next.map.on("zoomend", () => setZoom(next.map.getZoom()));
+        next.map.on("zoomend", () => {
+          setZoom(next.map.getZoom());
+          setMinimumZoom(next.minimumZoom);
+        });
         await new Promise<void>((resolve, reject) => {
           const timeout = setTimeout(
             () => reject(new Error("地图图层加载超时，请检查网络。")),
@@ -175,8 +184,16 @@ export function CampusMapProvider({
           );
         });
         if (!cancelled) {
+          // Fit only after the real renderer knows its viewport dimensions.
+          next.setPitch(view.current.mode === "2d" ? 0 : CAMPUS_PITCH);
+          next.initializeViewport();
+          next.setZone(
+            view.current.zone,
+            window.innerWidth < 761 ? [170, 150, 30, 60] : [40, 40, 110, 70],
+          );
           setStatus("ready");
           setZoom(next.map.getZoom());
+          setMinimumZoom(next.minimumZoom);
         }
       } catch (failure) {
         if (!cancelled) {
@@ -197,7 +214,7 @@ export function CampusMapProvider({
       adapter.current?.destroy();
       adapter.current = null;
     };
-  }, [revision]);
+  }, [revision, mapRequested]);
 
   const select = useCallback((id: string) => {
     const place = campusData.places.find((p) => p.id === id);
@@ -265,14 +282,14 @@ export function CampusMapProvider({
       setZoneState(next);
       adapter.current?.setZone(
         next,
-        window.innerWidth < 761 ? [170, 150, 30, 60] : [160, 100, 120, 80],
+        window.innerWidth < 761 ? [170, 150, 30, 60] : [40, 40, 110, 70],
       );
     },
     setMode: (next) => {
       if (next === "2.5d" && !adapter.current?.supports3D) return;
       view.current.mode = next;
       setModeState(next);
-      adapter.current?.setPitch(next === "2d" ? 0 : 48);
+      adapter.current?.setPitch(next === "2d" ? 0 : CAMPUS_PITCH);
     },
     setLayer: (layer, visible) => {
       setLayers((prior) => ({ ...prior, [layer]: visible }));
@@ -283,7 +300,13 @@ export function CampusMapProvider({
     zoomBy: (delta) => {
       const map = adapter.current?.map;
       if (map)
-        map.setZoom(Math.max(13, Math.min(20, map.getZoom() + delta)), true);
+        map.setZoom(
+          Math.max(
+            CAMPUS_MIN_ZOOM,
+            Math.min(CAMPUS_MAX_ZOOM, map.getZoom() + delta),
+          ),
+          true,
+        );
     },
     rotateBy: (delta) => {
       const map = adapter.current?.map;
@@ -340,11 +363,14 @@ export function CampusMapProvider({
       <div
         ref={element}
         className="campus-map-canvas"
+        style={{ visibility: pathname === "/map" ? "visible" : "hidden" }}
         aria-label="高德大学城校区地图"
         data-testid="campus-map"
         data-status={status}
         data-mode={mode}
         data-zoom={zoom.toFixed(2)}
+        data-scope="campus-and-visible-context"
+        data-min-zoom={minimumZoom.toFixed(2)}
       />
       {children}
     </MapContext.Provider>

@@ -1,0 +1,686 @@
+{
+  "license": "ODbL-1.0; © OpenStreetMap contributors",
+  "sources": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2\\map.osm",
+      "bytes": 2260700,
+      "sha256": "bd151987c468be315e1acb7976539ddef2a076f8e32e777e1b0071bd6e0e265f"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2\\planet_113.388_23.059_80bab6f4.osm.geopackage.zh\\planet_113.388_23.059_80bab6f4-geopackage\\planet_113.388_23.059_80bab6f4.gpkg",
+      "bytes": 393216,
+      "sha256": "92fc2702a33de8f58b37779f12bca7e0c9a8e05e9e4ab568831e191a2e329c78"
+    }
+  ],
+  "osm": {
+    "bounds": {
+      "minlat": "23.0584900",
+      "minlon": "113.3877700",
+      "maxlat": "23.0750900",
+      "maxlon": "113.3974200"
+    },
+    "counts": {
+      "node": 9104,
+      "way": 540,
+      "relation": 76
+    },
+    "campus_relation": {
+      "id": "13900183",
+      "tags": {
+        "addr:city": "广州市",
+        "addr:district": "番禺区",
+        "addr:housenumber": "178",
+        "addr:postcode": "510006",
+        "addr:province": "广东省",
+        "addr:street": "大学城外环东路",
+        "amenity": "university",
+        "check_date": "2025-02-27",
+        "education": "university",
+        "name": "广东外语外贸大学(大学城校区)",
+        "name:en": "Guangdong University of Foreign Studies (HEMC Campus)",
+        "name:zh": "广东外语外贸大学(大学城校区)",
+        "name:zh-Hans": "广东外语外贸大学(大学城校区)",
+        "name:zh-Hant": "廣東外語外貿大學(大學城校區)",
+        "type": "multipolygon"
+      },
+      "outer_way_ids": ["1037933911", "1499812811", "1388137572", "1499812812"]
+    },
+    "existing_places_matched": 75,
+    "missing_place_ids": [],
+    "changed_anchor_ids": [],
+    "highways_touching_campus": [
+      {
+        "id": "256116847",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "permissive",
+        "all_nodes_inside": false
+      },
+      {
+        "id": "256116848",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "256116849",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "256116850",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "permissive",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "256116852",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "permissive",
+        "all_nodes_inside": false
+      },
+      {
+        "id": "256116853",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "permissive",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "651646933",
+        "name": null,
+        "highway": "steps",
+        "tunnel": null,
+        "level": null,
+        "layer": "-1",
+        "foot": "designated",
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "651646934",
+        "name": null,
+        "highway": "steps",
+        "tunnel": null,
+        "level": null,
+        "layer": "-1",
+        "foot": "designated",
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "651646935",
+        "name": null,
+        "highway": "steps",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": "designated",
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "864205124",
+        "name": null,
+        "highway": "path",
+        "tunnel": "yes",
+        "level": null,
+        "layer": "-1",
+        "foot": "designated",
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "864205125",
+        "name": null,
+        "highway": "steps",
+        "tunnel": null,
+        "level": null,
+        "layer": "-1",
+        "foot": "designated",
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1305754062",
+        "name": "贝岗村大街",
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1387049710",
+        "name": "贝岗村大街",
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1387112062",
+        "name": null,
+        "highway": "footway",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": "designated",
+        "access": null,
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1387112064",
+        "name": null,
+        "highway": "footway",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": "designated",
+        "access": null,
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1387112074",
+        "name": null,
+        "highway": "footway",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": "designated",
+        "access": null,
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1387112690",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1387973449",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389756839",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1389756840",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389756842",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389756843",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389859455",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": "1",
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389859456",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389859458",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389880219",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1389880221",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": "1",
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389880222",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389880224",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389981427",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1389981428",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389981429",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389981430",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389981431",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1389981432",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1390024649",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": "private",
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1390064379",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1390064380",
+        "name": null,
+        "highway": "service",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": false
+      },
+      {
+        "id": "1410275260",
+        "name": null,
+        "highway": "path",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": "yes",
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1410275261",
+        "name": null,
+        "highway": "path",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": "yes",
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1410302044",
+        "name": null,
+        "highway": "footway",
+        "tunnel": null,
+        "level": null,
+        "layer": "-1",
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1410302050",
+        "name": null,
+        "highway": "footway",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1410302051",
+        "name": null,
+        "highway": "path",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": "yes",
+        "access": "no",
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1410329674",
+        "name": null,
+        "highway": "footway",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1410329675",
+        "name": null,
+        "highway": "footway",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1410329676",
+        "name": null,
+        "highway": "steps",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1410329677",
+        "name": null,
+        "highway": "footway",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": true
+      },
+      {
+        "id": "1559129506",
+        "name": "大学城广外西路",
+        "highway": "secondary",
+        "tunnel": null,
+        "level": null,
+        "layer": null,
+        "foot": null,
+        "access": null,
+        "all_nodes_inside": false
+      }
+    ],
+    "tunnels_in_extract": [
+      {
+        "id": "864205124",
+        "name": null,
+        "highway": "path",
+        "tunnel": "yes",
+        "touches_campus": true
+      },
+      {
+        "id": "942980258",
+        "name": "琶莲城际线",
+        "highway": null,
+        "tunnel": "yes",
+        "touches_campus": false
+      },
+      {
+        "id": "1389870972",
+        "name": "贝岗步头基涌",
+        "highway": null,
+        "tunnel": "culvert",
+        "touches_campus": true
+      },
+      {
+        "id": "1454804400",
+        "name": "博上涌",
+        "highway": null,
+        "tunnel": "culvert",
+        "touches_campus": false
+      },
+      {
+        "id": "1454804402",
+        "name": "贝岗步头基涌",
+        "highway": null,
+        "tunnel": "culvert",
+        "touches_campus": true
+      },
+      {
+        "id": "1524204543",
+        "name": "广州地铁7号线",
+        "highway": null,
+        "tunnel": "yes",
+        "touches_campus": false
+      },
+      {
+        "id": "1524204544",
+        "name": "广州地铁7号线",
+        "highway": null,
+        "tunnel": "yes",
+        "touches_campus": false
+      },
+      {
+        "id": "1532999457",
+        "name": null,
+        "highway": null,
+        "tunnel": "culvert",
+        "touches_campus": true
+      }
+    ]
+  },
+  "geopackage": {
+    "checksum_matches": true,
+    "layers": [
+      {
+        "name": "points",
+        "features": 243,
+        "data_type": "features",
+        "bounds": [113.3815972, 23.04617179999999, 113.4235477, 23.0784298],
+        "srs_id": 4326
+      },
+      {
+        "name": "lines",
+        "features": 281,
+        "data_type": "features",
+        "bounds": [113.378242, 23.0337539, 113.450298, 23.0964561],
+        "srs_id": 4326
+      },
+      {
+        "name": "multilinestrings",
+        "features": 10,
+        "data_type": "features",
+        "bounds": [113.3814674, 23.04964209999999, 113.450298, 23.0964561],
+        "srs_id": 4326
+      },
+      {
+        "name": "multipolygons",
+        "features": 116,
+        "data_type": "features",
+        "bounds": [113.3812788, 23.05197629999999, 113.4004397, 23.0763195],
+        "srs_id": 4326
+      },
+      {
+        "name": "other_relations",
+        "features": 1,
+        "data_type": "features",
+        "bounds": [113.3984174, 23.06576349999999, 113.3988896, 23.0659823],
+        "srs_id": 4326
+      }
+    ]
+  },
+  "limitations": [
+    "Exports retain whole crossing geometries outside the selected extent.",
+    "Two extracts share the OSM source and are not independent geography verification.",
+    "Building height, current access, entrances and underground walkability still require review.",
+    "No contributor user/uid fields are copied into this report or production data."
+  ]
+}

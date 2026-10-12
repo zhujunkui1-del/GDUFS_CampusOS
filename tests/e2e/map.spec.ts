@@ -4,6 +4,24 @@ import { mockAMap } from "./map-fixture";
 test.beforeEach(async ({ page }) => {
   await mockAMap(page);
 });
+
+test("opening another page does not load the map SDK until the map is visited", async ({
+  page,
+}) => {
+  let configRequests = 0;
+  page.on("request", (request) => {
+    if (request.url().includes("/api/map/config")) configRequests++;
+  });
+  await page.goto("/account");
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  expect(configRequests).toBe(0);
+  await page.goto("/map");
+  await expect(page.getByTestId("campus-map")).toHaveAttribute(
+    "data-status",
+    "ready",
+  );
+  expect(configRequests).toBeGreaterThan(0);
+});
 test("map controls, source-backed place details, layers and cross-page state", async ({
   page,
   isMobile,
@@ -11,14 +29,25 @@ test("map controls, source-backed place details, layers and cross-page state", a
   await page.goto("/map");
   const map = page.getByTestId("campus-map");
   await expect(map).toHaveAttribute("data-status", "ready");
+  await expect(map).toHaveAttribute("data-scope", "campus-and-visible-context");
   await page.getByRole("button", { name: "切换为2D", exact: true }).click();
   await expect(map).toHaveAttribute("data-mode", "2d");
   await page.getByRole("button", { name: "生活区", exact: true }).click();
   await expect(
     page.getByRole("button", { name: "生活区", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
+  const beforeZoom = Number(await map.getAttribute("data-zoom"));
   await page.getByRole("button", { name: "放大地图" }).click();
-  await expect(map).toHaveAttribute("data-zoom", "17.00");
+  expect(Number(await map.getAttribute("data-zoom"))).toBeCloseTo(
+    Math.min(20, beforeZoom + 1),
+    1,
+  );
+  for (let i = 0; i < 8; i++)
+    await page.getByRole("button", { name: "缩小地图" }).click();
+  expect(Number(await map.getAttribute("data-zoom"))).toBeCloseTo(
+    Number(await map.getAttribute("data-min-zoom")),
+    1,
+  );
   await page.getByRole("button", { name: "地图图层", exact: true }).click();
   await page.getByLabel("体育设施", { exact: true }).uncheck();
   await expect(page.getByLabel("体育设施", { exact: true })).not.toBeChecked();

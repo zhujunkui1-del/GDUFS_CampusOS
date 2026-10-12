@@ -7,6 +7,13 @@ import {
   type MapLayer,
 } from "../data/campus";
 import { boundsOf, distanceMeters, pointInPolygon } from "../data/geometry";
+import {
+  campusViewport,
+  CAMPUS_MIN_ZOOM,
+  CAMPUS_MAX_ZOOM,
+  CAMPUS_PITCH,
+  fitCampusView,
+} from "../data/viewport";
 import { convertCampusCoordinates } from "./coordinates";
 import {
   sdkCoordinate,
@@ -75,9 +82,11 @@ export class AMapAdapter implements MapAdapter {
     services: true,
   };
   private zoomHandler = () => this.updateLabels();
+  minimumZoom = CAMPUS_MIN_ZOOM;
+  private resizeObserver?: ResizeObserver;
   private constructor(
     sdk: AMapSDK,
-    element: HTMLElement,
+    private readonly element: HTMLElement,
     coordinates: Coordinate[],
     places: CampusPlace[],
     zones: { id: "teaching" | "living"; polygon: Coordinate[] }[],
@@ -97,11 +106,14 @@ export class AMapAdapter implements MapAdapter {
     this.map = new sdk.Map(element, {
       viewMode: this.supports3D ? "3D" : "2D",
       zoom: 15.5,
+      zooms: [CAMPUS_MIN_ZOOM, CAMPUS_MAX_ZOOM],
+      backgroundColor: "#ecf0ef",
+      skyColor: "#ecf0ef",
       center: [
         (bounds[0][0] + bounds[1][0]) / 2,
         (bounds[0][1] + bounds[1][1]) / 2,
       ],
-      pitch: this.supports3D ? 48 : 0,
+      pitch: this.supports3D ? CAMPUS_PITCH : 0,
       rotation: 0,
       keyboardEnable: true,
       dragEnable: true,
@@ -109,6 +121,7 @@ export class AMapAdapter implements MapAdapter {
       rotateEnable: true,
       pitchEnable: true,
       showLabel: true,
+      showIndoorMap: false,
       features: ["bg", "road", "building", "point"],
     });
     for (const place of places) {
@@ -132,7 +145,60 @@ export class AMapAdapter implements MapAdapter {
       this.map.add(overlay);
     }
     this.map.on("zoomend", this.zoomHandler);
+    this.map.on("moveend", this.zoomHandler);
+    this.map.on("rotateend", this.zoomHandler);
+    this.map.on("pitchend", this.zoomHandler);
     this.updateLabels();
+  }
+  initializeViewport() {
+    const update = (restore: boolean) => {
+      const center = sdkCoordinate(this.map.getCenter());
+      const zoom = this.map.getZoom();
+      this.map.clearLimitBounds();
+      this.map.setZooms([CAMPUS_MIN_ZOOM, CAMPUS_MAX_ZOOM]);
+      this.minimumZoom = CAMPUS_MIN_ZOOM;
+      this.map.setRotation(
+        this.element.clientWidth > this.element.clientHeight ? 90 : 0,
+        true,
+      );
+      this.setZone(
+        "all",
+        this.element.clientWidth < 761 ? [170, 150, 30, 60] : [40, 40, 110, 70],
+      );
+      // Use the SDK's actual visible geography, including perspective and aspect ratio.
+      // The permitted nearby region must contain the entire screen, not crop it to a narrow campus rectangle.
+      const visible = this.map.getBounds();
+      const context = campusViewport(this.zones.flatMap((z) => z.polygon));
+      const [sw, ne] = boundsOf([
+        sdkCoordinate(visible.getSouthWest()),
+        sdkCoordinate(visible.getNorthEast()),
+        context.southwest,
+        context.northeast,
+      ]);
+      this.minimumZoom = Math.max(CAMPUS_MIN_ZOOM, this.map.getZoom());
+      this.map.setLimitBounds(new this.sdk.Bounds(sw, ne));
+      this.map.setZooms([this.minimumZoom, CAMPUS_MAX_ZOOM]);
+      if (restore)
+        this.map.setZoomAndCenter(
+          Math.max(zoom, this.minimumZoom),
+          center,
+          true,
+        );
+    };
+    update(false);
+    let width = this.element.clientWidth,
+      height = this.element.clientHeight;
+    this.resizeObserver = new ResizeObserver(() => {
+      if (
+        width === this.element.clientWidth &&
+        height === this.element.clientHeight
+      )
+        return;
+      width = this.element.clientWidth;
+      height = this.element.clientHeight;
+      update(true);
+    });
+    this.resizeObserver.observe(this.element);
   }
   static async create(
     sdk: AMapSDK,
@@ -178,8 +244,14 @@ export class AMapAdapter implements MapAdapter {
     const points = this.zones
       .filter((z) => zone === "all" || z.id === zone)
       .flatMap((z) => z.polygon);
-    const [sw, ne] = boundsOf(points);
-    this.map.setBounds(new this.sdk.Bounds(sw, ne), true, padding);
+    const view = fitCampusView(
+      points,
+      { width: this.element.clientWidth, height: this.element.clientHeight },
+      padding,
+      this.map.getPitch(),
+      this.map.getRotation(),
+    );
+    this.map.setZoomAndCenter(view.zoom, view.center, true);
   }
   focusPlace(id: string) {
     const marker = this.markers.get(id),
@@ -376,6 +448,10 @@ export class AMapAdapter implements MapAdapter {
   destroy() {
     this.listeners.clear();
     this.map.off("zoomend", this.zoomHandler);
+    this.resizeObserver?.disconnect();
+    this.map.off("moveend", this.zoomHandler);
+    this.map.off("rotateend", this.zoomHandler);
+    this.map.off("pitchend", this.zoomHandler);
     this.map.destroy();
   }
 }
