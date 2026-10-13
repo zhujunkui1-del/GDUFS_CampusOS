@@ -5,6 +5,7 @@ import {
   LngLat,
   type GeoJSONSource,
   setWorkerUrl,
+  type EaseToOptions,
 } from "maplibre-gl";
 import type { MapAdapter } from "@/domain/maps/contracts";
 import {
@@ -32,6 +33,9 @@ import { sdkCoordinate, type SDKPoi } from "./amap-types";
 import type { CampusRoute, RoutePoint } from "./amap-adapter";
 import { nearestTunnelDistance, planLocalRoute } from "../data/local-routing";
 import walkwayReview from "../data/walkway-review.json";
+import { cameraDuration, mapEase } from "../data/map-motion";
+import { projectOnPath } from "../data/route-progress";
+import { headingBetween } from "../data/navigation-geometry";
 
 type CameraEvent = "zoomend" | "rotateend" | "moveend" | "pitchend";
 // Dataset geometry is immutable for this release; do not rescan it per gesture frame.
@@ -70,6 +74,14 @@ export class LocalMapAdapter implements MapAdapter {
   private observedRoutePanel?: Element;
   private selected?: string;
   private destroyed = false;
+  private interaction: "browse" | "pick" | "navigation" = "browse";
+  private cameraTargetZoom?: number;
+  private followSuspended = false;
+  private navigationHasPosition = false;
+  private navigationPanelObserver?: ResizeObserver;
+  private lastFollow?: Coordinate;
+  private pendingPitch?: number;
+  private cameraRevision = 0;
   private constructor(private element: HTMLElement) {
     setWorkerUrl("/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs");
     const memory = (navigator as Navigator & { deviceMemory?: number })
@@ -191,6 +203,13 @@ export class LocalMapAdapter implements MapAdapter {
             paint: { "fill-color": "#e9e9e5", "fill-outline-color": "#b9bcb9" },
           },
           {
+            id: "parking",
+            type: "fill",
+            source: "campus",
+            filter: ["==", ["get", "kind"], "parking"],
+            paint: { "fill-color": "#e6e6e1", "fill-outline-color": "#b9bcb9" },
+          },
+          {
             id: "roads",
             type: "line",
             source: "campus",
@@ -250,19 +269,48 @@ export class LocalMapAdapter implements MapAdapter {
         this.native.on(name === "rotateend" ? "rotateend" : name, fn),
       getZoom: () => this.native.getZoom(),
       getRotation: () => this.native.getBearing(),
-      setZoom: (zoom: number) => this.native.jumpTo({ zoom }),
-      setRotation: (bearing: number) => this.native.jumpTo({ bearing }),
+      setZoom: (zoom: number) => this.animateCamera({ zoom }),
+      setRotation: (bearing: number) => this.animateCamera({ bearing }),
       setZoomAndCenter: (zoom: number, center: Coordinate) =>
-        this.native.jumpTo({ center, zoom }),
+        this.animateCamera({ center, zoom }),
     };
     this.native.on("moveend", () => this.updateLabels());
+    this.native.on("idle", () => {
+      if (this.native.isStyleLoaded())
+        this.element.dataset.sportsFeatureCount = String(
+          this.native.queryRenderedFeatures({ layers: ["sports"] }).length,
+        );
+    });
+    this.native.on("dragstart", () => {
+      this.followSuspended = true;
+      ++this.cameraRevision;
+    });
+    this.native.on("pitchend", () => {
+      if (
+        this.activeRouteId &&
+        this.native.getPitch() < 0.1 &&
+        (this.pendingPitch ?? 0) < 0.1
+      )
+        this.fitRoute(this.activeRouteId);
+    });
+    this.native.on("zoomend", () => {
+      this.cameraTargetZoom = undefined;
+    });
     this.native.on("click", (event) => {
+      if (this.interaction !== "browse") return;
       const feature = this.native.queryRenderedFeatures(event.point, {
-        layers: ["buildings", "sports", "plazas", "underground"],
+        layers: [
+          "buildings",
+          "sports",
+          "plazas",
+          "underground",
+          "roads",
+          "parking",
+        ],
       })[0];
       let id = feature?.properties.sourceId;
       const children = id
-        ? campusData.places.filter((p) => p.parentId === id)
+        ? campusData.places.filter((p) => p.parentId === id && !p.geometry)
         : [];
       if (children.length)
         id = children.sort((a, b) => {
@@ -319,7 +367,8 @@ export class LocalMapAdapter implements MapAdapter {
         button.dataset.placeId = place.id;
         button.onclick = (e) => {
           e.stopPropagation();
-          adapter.focusPlace(place.id);
+          if (adapter.interaction === "navigation") return;
+          if (adapter.interaction !== "pick") adapter.focusPlace(place.id);
           adapter.listeners.forEach((fn) => fn(place.id));
         };
         const marker = new Marker({ element: button, anchor: "bottom" })
@@ -347,6 +396,14 @@ export class LocalMapAdapter implements MapAdapter {
     }
   }
   get minimumZoom() {
+    return this.minimumZoomForPitch(
+      Math.max(
+        this.native.getPitch(),
+        this.pendingPitch ?? this.native.getPitch(),
+      ),
+    );
+  }
+  private minimumZoomForPitch(pitch: number) {
     const a = MercatorCoordinate.fromLngLat([
       manifest.bounds[0],
       manifest.bounds[3],
@@ -360,7 +417,7 @@ export class LocalMapAdapter implements MapAdapter {
       this.element.clientHeight,
     );
     // A cloned camera invokes constraints before the main map exposes new angles.
-    const footprint = viewportFootprint(diameter, diameter, CAMPUS_PITCH, 0);
+    const footprint = viewportFootprint(diameter, diameter, pitch, 0);
     return Math.max(
       CAMPUS_MIN_ZOOM - 1,
       Math.log2(
@@ -388,7 +445,15 @@ export class LocalMapAdapter implements MapAdapter {
       this.element.clientWidth,
       this.element.clientHeight,
     );
-    const footprint = viewportFootprint(diameter, diameter, CAMPUS_PITCH, 0);
+    const footprint = viewportFootprint(
+      diameter,
+      diameter,
+      Math.max(
+        this.native.getPitch(),
+        this.pendingPitch ?? this.native.getPitch(),
+      ),
+      0,
+    );
     const x = footprint.width / (2 * 512 * 2 ** zoom),
       y = footprint.height / (2 * 512 * 2 ** zoom);
     const point = MercatorCoordinate.fromLngLat(center);
@@ -423,12 +488,296 @@ export class LocalMapAdapter implements MapAdapter {
     this.observer.observe(this.element);
   }
   setView(center: readonly [number, number], zoom: number) {
-    this.native.jumpTo({ center: [...center], zoom });
+    this.animatePoints(
+      [[...center]],
+      this.native.getPitch(),
+      this.native.getBearing(),
+      zoom,
+    );
   }
   setPitch(pitch: number) {
-    this.native.jumpTo({
-      pitch: this.supports3D ? Math.max(0, Math.min(CAMPUS_PITCH, pitch)) : 0,
+    const next = this.supports3D
+      ? Math.max(0, Math.min(CAMPUS_PITCH, pitch))
+      : 0;
+    const route = this.routes.get(this.activeRouteId || ""),
+      place = campusData.places.find((p) => p.id === this.selected);
+    if (this.navigationHasPosition && this.lastFollow)
+      this.animatePoints(
+        [this.lastFollow],
+        next,
+        this.native.getBearing(),
+        this.native.getZoom(),
+      );
+    else if (route)
+      this.animatePoints(
+        route.pathGcj02.map(toWgs84),
+        next,
+        this.native.getBearing(),
+        18,
+      );
+    else if (place)
+      this.animatePoints(
+        place.geometry && place.geometry.length > 3
+          ? place.geometry
+          : [place.coordinate],
+        next,
+        this.native.getBearing(),
+        Math.max(17.2, this.native.getZoom()),
+      );
+    else this.animateCamera({ pitch: next });
+  }
+  private animateCamera(options: EaseToOptions) {
+    ++this.cameraRevision;
+    if (options.pitch !== undefined) this.pendingPitch = options.pitch;
+    this.native.stop();
+    this.cameraTargetZoom = options.zoom;
+    this.element.dataset.cameraMoving = "true";
+    this.element.dataset.cameraAnimationCount = String(
+      Number(this.element.dataset.cameraAnimationCount || 0) + 1,
+    );
+    this.element.dataset.lastCameraDuration = String(cameraDuration());
+    this.native.once("moveend", () => {
+      this.element.dataset.cameraMoving = "false";
+      this.updateLabels();
     });
+    this.native.easeTo({
+      ...options,
+      duration: cameraDuration(),
+      easing: mapEase,
+      essential: false,
+    });
+  }
+  zoomBy(delta: number) {
+    this.animateCamera({
+      zoom: Math.max(
+        this.minimumZoom,
+        Math.min(
+          CAMPUS_MAX_ZOOM,
+          (this.cameraTargetZoom ?? this.native.getZoom()) + delta,
+        ),
+      ),
+    });
+  }
+  setInteractionMode(mode: "browse" | "pick" | "navigation") {
+    if (mode === "pick" && this.interaction !== "pick") {
+      ++this.cameraRevision;
+      this.native.stop();
+    }
+    if (mode === "navigation" && this.interaction !== "navigation")
+      this.followSuspended = false;
+    if (mode !== this.interaction) {
+      this.navigationPanelObserver?.disconnect();
+      this.navigationHasPosition = false;
+      if (mode === "navigation") {
+        this.navigationPanelObserver = new ResizeObserver(() => {
+          if (!this.navigationHasPosition && this.interaction === "navigation")
+            this.setNavigationView(this.native.getBearing());
+        });
+        for (const selector of [
+          ".navigation-direction",
+          ".navigation-summary",
+        ]) {
+          const el = document.querySelector(selector);
+          if (el) this.navigationPanelObserver.observe(el);
+        }
+      }
+    }
+    this.interaction = mode;
+    this.updateLabels();
+  }
+  private visiblePadding() {
+    const width = this.element.clientWidth,
+      height = this.element.clientHeight;
+    let panel = document
+      .querySelector(".route-planner")
+      ?.getBoundingClientRect();
+    if (!panel) {
+      const viewport = document
+          .querySelector(".place-details-viewport")
+          ?.getBoundingClientRect(),
+        frame = document.querySelector<HTMLElement>(".place-details-frame");
+      if (
+        viewport &&
+        frame &&
+        !frame
+          .closest(".place-details-panel")
+          ?.hasAttribute("data-ending-style")
+      )
+        panel = {
+          ...viewport,
+          left: viewport.left,
+          right: viewport.right,
+          top: viewport.bottom - frame.offsetHeight,
+          bottom: viewport.bottom,
+        } as DOMRect;
+    }
+    const top = document
+      .querySelector(
+        this.interaction === "navigation"
+          ? ".navigation-direction"
+          : ".map-top",
+      )
+      ?.getBoundingClientRect();
+    const footer = document
+      .querySelector(".navigation-summary")
+      ?.getBoundingClientRect();
+    const main = document
+      .getElementById("main-content")
+      ?.getBoundingClientRect();
+    const ai = document
+      .querySelector(".assistant-panel")
+      ?.getBoundingClientRect();
+    return {
+      top: Math.min(height * 0.35, (top?.bottom || 40) + 20),
+      bottom: footer
+        ? height - footer.top + 20
+        : width < 761 && panel
+          ? height - panel.top + 20
+          : 90,
+      left:
+        width < 761
+          ? 20
+          : panel
+            ? panel.right + 24
+            : Math.max(30, (main?.left || 0) + 110),
+      right: ai && ai.left < width && ai.width > 0 ? width - ai.left + 20 : 78,
+    };
+  }
+  private animatePoints(
+    points: Coordinate[],
+    pitch: number,
+    bearing: number,
+    maxZoom: number,
+  ) {
+    const required = this.minimumZoomForPitch(pitch);
+    if (
+      pitch > this.native.getPitch() + 0.1 &&
+      this.native.getZoom() < required
+    ) {
+      if (cameraDuration() === 0) {
+        this.pendingPitch = this.native.getPitch();
+        this.native.jumpTo({ zoom: required + 0.01 });
+      } else {
+        this.pendingPitch = this.native.getPitch();
+        this.animateCamera({
+          zoom: required + 0.01,
+          pitch: this.native.getPitch(),
+        });
+        const revision = this.cameraRevision;
+        this.native.once("moveend", () =>
+          requestAnimationFrame(() => {
+            if (!this.destroyed && this.cameraRevision === revision)
+              this.animatePoints(points, pitch, bearing, maxZoom);
+          }),
+        );
+        return;
+      }
+    }
+    this.pendingPitch = pitch;
+    const padding = this.visiblePadding(),
+      camera = this.native.cameraForBounds(boundsOf(points), {
+        padding,
+        absolutePadding: true,
+        maxZoom,
+        bearing,
+        pitch,
+      });
+    if (!camera) return;
+    // Work on an off-screen transform; correction passes never paint a jump.
+    // MapLibre is pinned to 6.14.0 and this projection seam is browser-tested.
+    const trial = this.native._camera.transform.clone();
+    trial.setPadding({ top: 0, bottom: 0, left: 0, right: 0 });
+    trial.setPitch(pitch);
+    trial.setBearing(bearing);
+    trial.setZoom(points.length === 1 ? maxZoom : camera.zoom!);
+    trial.setCenter(LngLat.convert(camera.center!));
+    for (let i = 0; i < 6; i++) {
+      const pixels = points.map((p) =>
+        trial.locationToScreenPoint(LngLat.convert(p)),
+      );
+      const xs = pixels.map((p) => p.x),
+        ys = pixels.map((p) => p.y),
+        shiftX =
+          (Math.min(...xs) + Math.max(...xs)) / 2 -
+          (padding.left + this.element.clientWidth - padding.right) / 2,
+        shiftY =
+          (Math.min(...ys) + Math.max(...ys)) / 2 -
+          (padding.top + this.element.clientHeight - padding.bottom) / 2;
+      const ratio =
+        points.length === 1
+          ? 1
+          : Math.min(
+              Math.max(
+                40,
+                this.element.clientWidth - padding.left - padding.right,
+              ) / Math.max(1, Math.max(...xs) - Math.min(...xs)),
+              Math.max(
+                40,
+                this.element.clientHeight - padding.top - padding.bottom,
+              ) / Math.max(1, Math.max(...ys) - Math.min(...ys)),
+            );
+      const zoom = Math.max(
+        this.minimumZoom,
+        Math.min(maxZoom, trial.zoom + Math.log2(ratio)),
+      );
+      if (
+        Math.abs(shiftX) < 2 &&
+        Math.abs(shiftY) < 2 &&
+        Math.abs(zoom - trial.zoom) < 0.015
+      )
+        break;
+      const center = trial.centerPoint.clone();
+      center.x += shiftX;
+      center.y += shiftY;
+      const bounded = this.constrain(trial.screenPointToLocation(center), zoom);
+      trial.setCenter(bounded.center);
+      trial.setZoom(bounded.zoom);
+    }
+    this.animateCamera({
+      center: trial.center,
+      zoom: trial.zoom,
+      pitch,
+      bearing,
+      padding: { top: 0, bottom: 0, left: 0, right: 0 },
+    });
+  }
+  followLocation(point: Coordinate, heading?: number) {
+    if (this.followSuspended) return;
+    this.navigationHasPosition = true;
+    this.lastFollow = point;
+    this.animatePoints(
+      [point],
+      this.native.getPitch(),
+      heading ?? this.native.getBearing(),
+      Math.max(17.5, this.native.getZoom()),
+    );
+  }
+  resumeFollow() {
+    this.followSuspended = false;
+  }
+  setNavigationView(heading?: number) {
+    if (this.activeRouteId) {
+      const route = this.routes.get(this.activeRouteId)!;
+      const path = route.pathGcj02.map(toWgs84);
+      if (this.navigationHasPosition && this.lastFollow) {
+        const index = projectOnPath(this.lastFollow, path).index;
+        this.followLocation(
+          this.lastFollow,
+          heading ??
+            headingBetween(
+              path[index],
+              path[Math.min(index + 1, path.length - 1)],
+            ),
+        );
+        return;
+      }
+      this.animatePoints(
+        path,
+        this.native.getPitch(),
+        heading ?? headingBetween(path[0], path[1]),
+        18,
+      );
+    }
   }
   setZone(zone: "all" | "teaching" | "living", padding = [170, 120, 110, 80]) {
     const points = campusData.zones
@@ -493,17 +842,30 @@ export class LocalMapAdapter implements MapAdapter {
   focusPlace(id: string) {
     const place = campusData.places.find((p) => p.id === id);
     if (!place) throw new Error("地点不存在或尚未核验。");
+    this.highlightPlace(id);
+    requestAnimationFrame(() => {
+      if (this.destroyed || this.selected !== id || this.interaction === "pick")
+        return;
+      this.animatePoints(
+        place.geometry && place.geometry.length > 3
+          ? place.geometry
+          : [place.coordinate],
+        this.native.getPitch(),
+        this.native.getBearing(),
+        Math.max(17.2, this.native.getZoom()),
+      );
+    });
+  }
+  highlightPlace(id: string) {
+    const place = campusData.places.find((p) => p.id === id);
+    if (!place) throw new Error("地点不存在或尚未核验。");
     this.selected = id;
     this.layers[placeLayer(place)] = true;
     this.native.setFilter("selected", [
       "==",
       ["get", "sourceId"],
-      place.parentId || id,
+      place.geometry ? id : place.parentId || id,
     ]);
-    this.native.jumpTo({
-      center: place.coordinate,
-      zoom: Math.max(17.2, this.native.getZoom()),
-    });
     this.updateLabels();
   }
   focusOnline(poi: SDKPoi) {
@@ -520,15 +882,13 @@ export class LocalMapAdapter implements MapAdapter {
   setLayerVisibility(layer: string, visible: boolean) {
     if (!(layer in this.layers)) throw new Error("该图层尚不可用。");
     this.layers[layer as MapLayer] = visible;
-    if (layer === "sports")
-      this.native.setLayoutProperty(
-        "sports",
-        "visibility",
-        visible ? "visible" : "none",
-      );
     this.updateLabels();
   }
   private updateLabels() {
+    if (this.native.isStyleLoaded())
+      this.element.dataset.sportsFeatureCount = String(
+        this.native.queryRenderedFeatures({ layers: ["sports"] }).length,
+      );
     for (const marker of this.zoneMarkers)
       marker.getElement().hidden = this.native.getZoom() > 15.4;
     const width = this.element.clientWidth,
@@ -551,6 +911,18 @@ export class LocalMapAdapter implements MapAdapter {
       Math.max(...pixels.map((p) => p.x)),
       Math.max(...pixels.map((p) => p.y)),
     ]);
+    const active = this.routes.get(this.activeRouteId || "");
+    if (active) {
+      const pixels = active.pathGcj02
+        .map(toWgs84)
+        .map((p) => this.native.project(p));
+      this.element.dataset.routeExtent = JSON.stringify([
+        Math.min(...pixels.map((p) => p.x)),
+        Math.min(...pixels.map((p) => p.y)),
+        Math.max(...pixels.map((p) => p.x)),
+        Math.max(...pixels.map((p) => p.y)),
+      ]);
+    }
     const occupied: { x: number; y: number; width: number }[] = [];
     for (const place of [...campusData.places].sort(
       (a, b) =>
@@ -563,6 +935,9 @@ export class LocalMapAdapter implements MapAdapter {
         width = Math.max(60, place.name.length * 12 + 24);
       const visible =
         this.layers[placeLayer(place)] &&
+        (this.interaction !== "navigation" ||
+          this.routes.get(this.activeRouteId || "")?.end.placeId ===
+            place.id) &&
         (place.id === this.selected ||
           (this.native.getZoom() >= place.minZoom - 1 &&
             this.native.getZoom() <= (place.maxZoom ?? Infinity) &&
@@ -587,17 +962,52 @@ export class LocalMapAdapter implements MapAdapter {
   }
   pickCoordinate(listener: (point: RoutePoint) => void) {
     const handler = (event: { lngLat: LngLat }) => {
+      if (this.interaction === "navigation") return;
       const point: Coordinate = [event.lngLat.lng, event.lngLat.lat];
       const zone = campusData.zones.find((z) =>
         pointInPolygon(point, z.polygon),
       );
-      if (zone || nearestTunnelDistance(point) <= 25)
+      if (zone || nearestTunnelDistance(point) <= 25) {
+        let place = campusData.places.find(
+          (p) =>
+            p.geometry &&
+            p.geometry.length > 3 &&
+            [
+              "building",
+              "teaching",
+              "dormitory",
+              "canteen",
+              "library",
+              "sports_hall",
+              "parking",
+            ].includes(p.category) &&
+            pointInPolygon(point, p.geometry),
+        );
+        if (place) {
+          const children = campusData.places.filter(
+            (p) => p.parentId === place!.id && !p.geometry,
+          );
+          if (children.length)
+            place = children.sort(
+              (a, b) =>
+                Math.hypot(
+                  a.coordinate[0] - point[0],
+                  a.coordinate[1] - point[1],
+                ) -
+                Math.hypot(
+                  b.coordinate[0] - point[0],
+                  b.coordinate[1] - point[1],
+                ),
+            )[0];
+        }
         listener({
-          name: "地图选点",
+          name: place?.name || "地图选点",
           coordinateGcj02: toGcj02(point),
           zone: zone?.id || "connection",
           source: "user_map_selection",
+          placeId: place?.id,
         });
+      }
     };
     this.native.on("click", handler);
     return () => {
@@ -615,7 +1025,7 @@ export class LocalMapAdapter implements MapAdapter {
     )
       throw new Error(
         walkwayReview.approved
-          ? "跨区路线目前仅支持下沉隧道及两端连接步道；请选取隧道生活区入口与教学区入口。其他校内连接尚未核验。"
+          ? "当前选点未连接到校园步行路网，请选择校内道路或附近建筑后重试。跨区路线必须经过下沉隧道。"
           : "下沉隧道和两端步道通行尚待负责人确认，跨区导航暂不可用。地图标注已保留。",
       );
     const route = local || (await planOnlineRoute(start, end));
@@ -769,89 +1179,19 @@ export class LocalMapAdapter implements MapAdapter {
       if (this.destroyed || this.activeRouteId !== id) return;
       const route = this.routes.get(id);
       if (!route) return;
-      const path = route.pathGcj02.map(toWgs84);
-      const panelElement = document.querySelector(".route-planner");
-      if (panelElement !== this.observedRoutePanel) {
+      const panel = document.querySelector(".route-planner");
+      if (panel !== this.observedRoutePanel) {
         this.routePanelObserver?.disconnect();
-        this.observedRoutePanel = panelElement || undefined;
-        if (panelElement) {
+        this.observedRoutePanel = panel || undefined;
+        if (panel) {
           this.routePanelObserver = new ResizeObserver(() => {
-            if (this.activeRouteId && !this.destroyed)
-              this.fitRoute(this.activeRouteId);
+            if (this.activeRouteId) this.fitRoute(this.activeRouteId);
           });
-          this.routePanelObserver.observe(panelElement);
+          this.routePanelObserver.observe(panel);
         }
       }
-      const panel = panelElement?.getBoundingClientRect();
-      const top = Math.max(
-        190,
-        (document.querySelector(".map-top")?.getBoundingClientRect().bottom ||
-          170) + 20,
-      );
-      const padding = {
-        top,
-        bottom:
-          this.element.clientWidth < 761 && panel
-            ? this.element.clientHeight - panel.top + 20
-            : 90,
-        left:
-          this.element.clientWidth < 761 ? 24 : panel ? panel.right + 24 : 110,
-        right: 90,
-      };
-      this.native.fitBounds(boundsOf(path), {
-        padding,
-        duration: 0,
-        maxZoom: 18,
-      });
-      // The renderer constrains a cloned camera while fitting. Recheck the final
-      // projection at its resulting zoom, especially after desktop -> phone resize.
-      for (let i = 0; i < 4; i++) {
-        const pixels = path.map((p) => this.native.project(p));
-        const xs = pixels.map((p) => p.x),
-          ys = pixels.map((p) => p.y);
-        const shiftX =
-          (Math.min(...xs) + Math.max(...xs)) / 2 -
-          (padding.left + this.element.clientWidth - padding.right) / 2;
-        const shiftY =
-          (Math.min(...ys) + Math.max(...ys)) / 2 -
-          (padding.top + this.element.clientHeight - padding.bottom) / 2;
-        const ratio = Math.min(
-          Math.max(
-            60,
-            this.element.clientWidth - padding.left - padding.right,
-          ) / Math.max(1, Math.max(...xs) - Math.min(...xs)),
-          Math.max(
-            60,
-            this.element.clientHeight - padding.top - padding.bottom,
-          ) / Math.max(1, Math.max(...ys) - Math.min(...ys)),
-        );
-        const zoom = Math.max(
-          this.minimumZoom,
-          Math.min(18, this.native.getZoom() + Math.log2(ratio)),
-        );
-        if (
-          Math.abs(shiftX) < 3 &&
-          Math.abs(shiftY) < 3 &&
-          Math.abs(zoom - this.native.getZoom()) < 0.02
-        )
-          break;
-        this.native.jumpTo({
-          center: this.native.unproject([
-            this.element.clientWidth / 2 + shiftX,
-            this.element.clientHeight / 2 + shiftY,
-          ]),
-          zoom,
-        });
-      }
-      const pixels = path.map((p) => this.native.project(p));
-      this.element.dataset.routeExtent = JSON.stringify([
-        Math.min(...pixels.map((p) => p.x)),
-        Math.min(...pixels.map((p) => p.y)),
-        Math.max(...pixels.map((p) => p.x)),
-        Math.max(...pixels.map((p) => p.y)),
-      ]);
+      this.animatePoints(route.pathGcj02.map(toWgs84), 0, 0, 18);
     };
-    // Measure after React commits the drawer, with a bound for background tabs.
     const timer = setTimeout(() => {
       cancelAnimationFrame(frame);
       fit();
@@ -879,6 +1219,7 @@ export class LocalMapAdapter implements MapAdapter {
     this.destroyed = true;
     this.observer?.disconnect();
     this.routePanelObserver?.disconnect();
+    this.navigationPanelObserver?.disconnect();
     this.listeners.clear();
     this.markers.forEach((m) => m.marker.remove());
     this.zoneMarkers.forEach((marker) => marker.remove());

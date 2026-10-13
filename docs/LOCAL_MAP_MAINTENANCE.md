@@ -36,3 +36,9 @@ python scripts/prepare-local-map.py --context 'CampusOS_Codex_完整设计文档
 ## 步行网络维护补充
 
 更新本地底图后手动运行 `python scripts/prepare-walking-network.py`，同步路网mapVersion和原XML SHA；不要在启动/构建时运行。道路审核名单位于src/features/campus-map/data/walkway-review.json，approved只由负责人身份/通行确认后修改。当前名单仅隧道及两端步道，不能开启整个原始OSM路网。路网与底图版本不一致时拒绝本地规划。名称绑定在owner-labels.json，分栋标签使用原始node及parentId，不能用它们当入口或独立建筑模型。
+
+## 新的全校路网手动准备流程（2026-10-14）
+
+当前需使用scripts/prepare-campus-navigation.py，历史prepare-walking-network.py仅隧道走廊，会拒绝覆盖已批准全校网络。先安装离线工具 `python -m pip install --target .map-tools -r scripts/requirements-map-tools.txt`，再运行 `python scripts/prepare-campus-navigation.py --map-version <准备的地图版本> --network-version <新的路网版本>`，最后用prepare-local-map.py同一地图版本准备底图并格式/类型/单元/浏览器/构建验收。新模块不会在startup/build自动执行或联网更新地图。
+
+owner-map-review.json保存负责人坐标、批准通行策略和已校准停车轮廓；owner-map-additions.json为生成补绘。georeference-owner-parking.py只在新的本地批注图需要配准时运行，依赖Pillow12.2.0与控制照片；普通重新准备可使用已保存轮廓，不需下载个人图片。非校区/禁止步行/水面与未批准穿楼仍是约束，校门不根据图片猜。GPS位置/临时附接节点不能写入入口名录。镜头依实际/目标倾角约束视口，SDK投影接缝锁6.14.0，升级需真实浏览器回归。

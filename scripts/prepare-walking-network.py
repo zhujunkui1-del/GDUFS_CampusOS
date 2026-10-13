@@ -4,6 +4,9 @@ import hashlib
 from pathlib import Path
 import xml.etree.ElementTree as ET
 p=Path('src/features/campus-map/data')
+existing=p/'walking-network.json'
+if existing.exists() and json.loads(existing.read_text(encoding='utf-8')).get('walkingPolicy',{}).get('campusRoadsApproved'):
+    raise SystemExit('Full-campus network already approved. Use prepare-campus-navigation.py with explicit map/network versions; do not overwrite with the historical tunnel-only network.')
 review=json.loads((p/'walkway-review.json').read_text(encoding='utf-8'))
 root=ET.parse(review['sourceFile']).getroot()
 nodes={n.get('id'):[float(n.get('lon')),float(n.get('lat'))] for n in root.findall('node')}

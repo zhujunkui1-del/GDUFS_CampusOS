@@ -19,6 +19,8 @@ args = parser.parse_args()
 base = pathlib.Path("src/features/campus-map/data")
 campus = json.loads((base / "campus.json").read_text(encoding="utf-8"))
 labels = json.loads((base / "owner-labels.json").read_text(encoding="utf-8"))
+addition_path = base / 'owner-map-additions.json'
+additions = json.loads(addition_path.read_text(encoding='utf-8')) if addition_path.exists() else {'places': [], 'features': []}
 context = ET.parse(args.context).getroot()
 buffer = ET.parse(args.buffer).getroot() if args.buffer else None
 supplied_path = pathlib.Path("CampusOS_Codex_完整设计文档_v2/map.osm")
@@ -89,9 +91,13 @@ for identifier, relation in relations.items():
     if valid and len(rings["outer"]) == 1:
         feature("osm-relation-" + identifier, {"type": "Polygon", "coordinates": rings["outer"] + rings["inner"]}, t)
 # Apply only reviewed names to source geometry; unknown mappings stay unresolved.
+features.extend(additions['features'])
 places = {p["id"]: p for p in campus["places"]}
 feature_index = {f["id"]: f for f in features}
 for p in places.values():
+    if not p['id'].startswith('osm-'):
+        if not any(a['id']==p['id'] for a in additions['places']): raise ValueError('Owner place missing; review removal: '+p['id'])
+        continue
     kind, identifier = p["id"].split("-")[1:]
     if kind == "way":
         w = ways.get(identifier)
@@ -136,6 +142,7 @@ for identifier, label in labels["labels"].items():
         feature_index[identifier]['properties']['name'] = label['name']
         if label.get('category') in ('badminton','volleyball','basketball'):
             feature_index[identifier]['properties']['sport'] = label['category']
+for p in additions['places']: places[p['id']] = p
 campus["places"] = list(places.values())
 campus["mapVersion"] = args.version
 (base / "campus.json").write_text(json.dumps(campus, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")

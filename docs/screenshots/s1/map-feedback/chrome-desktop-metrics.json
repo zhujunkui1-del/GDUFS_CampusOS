@@ -1,9 +1,9 @@
 {
   "browser": "chrome",
   "viewport": "desktop",
-  "loadMs": 1452,
+  "loadMs": 1350,
   "initialBearing": 0,
-  "dragResponseMs": 277,
+  "dragResponseMs": 346,
   "sdk": "real MapLibre GL 6.14.0 / local OSM snapshot",
   "network": "same-origin only during map loading",
   "providerRequestsBeforeOnlineAction": 0,

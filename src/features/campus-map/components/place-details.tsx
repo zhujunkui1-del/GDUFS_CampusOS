@@ -80,10 +80,10 @@ export function PlaceDetails({
                   </p>
                   <p>
                     {place.navigationVerified
-                      ? "下沉隧道及两端台阶已由负责人确认正常步行通行。开放状态以现场为准。"
-                      : "建筑入口与开放时间尚未核验。导航以附近步行道路为终点，也可在地图上选择已知可通行的位置。"}
+                      ? "地点位置与步行策略已由负责人确认。导航以建筑周边就近到达，开放状态以现场为准。"
+                      : "导航以建筑周边就近到达，不指定某一扇门。教学、实验楼可穿行区域按负责人确认的策略计算；开放状态以现场为准。"}
                   </p>
-                  {place.parentId && (
+                  {place.parentId && !place.geometry && (
                     <p>
                       分栋名称按负责人确认的朝北顺序标注，使用复合建筑原始轮廓；未生成独立分栋边界。
                     </p>
@@ -106,7 +106,9 @@ export function PlaceDetails({
                   </Link>
                   <div className="place-source">
                     <a href={place.sourceUrl} target="_blank" rel="noreferrer">
-                      OpenStreetMap 地物原始记录
+                      {place.verification === "owner_confirmed"
+                        ? "查看OpenStreetMap坐标位置"
+                        : "OpenStreetMap 地物原始记录"}
                       <ExternalLink size={13} />
                     </a>
                     <span>

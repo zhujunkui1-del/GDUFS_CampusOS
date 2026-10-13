@@ -33,17 +33,21 @@ async function clickKnownRoad(page: Page, coordinate: [number, number]) {
     marker!.y +
     marker!.height +
     (mercY(coordinate[1]) - mercY(library[1])) * world;
-  expect(
-    await page.evaluate(
-      ({ x, y }) => {
-        const e = document.elementFromPoint(x, y);
-        return (
-          !!e?.closest('[data-testid="campus-map"]') && !e.closest("button")
-        );
-      },
-      { x, y },
-    ),
-  ).toBe(true);
+  const target = await page.evaluate(
+    ({ x, y }) => {
+      const e = document.elementFromPoint(x, y);
+      return {
+        valid:
+          !!e?.closest('[data-testid="campus-map"]') && !e.closest("button"),
+        tag: e?.tagName,
+        cls: e?.className,
+      };
+    },
+    { x, y },
+  );
+  expect(target.valid, JSON.stringify({ x, y, marker, world, target })).toBe(
+    true,
+  );
   await page.mouse.click(x, y);
 }
 
@@ -77,20 +81,22 @@ test("map controls, source-backed place details, layers and cross-page state", a
   await expect(map).toHaveAttribute("data-status", "ready");
   await expect(map).toHaveAttribute("data-scope", "campus-and-visible-context");
   await page.getByRole("button", { name: "切换为2D", exact: true }).click();
+  await expect(page.getByTestId("campus-map")).toHaveAttribute(
+    "data-camera-moving",
+    "false",
+  );
   await expect(map).toHaveAttribute("data-mode", "2d");
   await expect(page.getByLabel("校园视角")).toHaveCount(0);
   const beforeZoom = Number(await map.getAttribute("data-zoom"));
   await page.getByRole("button", { name: "放大地图" }).click();
-  expect(Number(await map.getAttribute("data-zoom"))).toBeCloseTo(
-    Math.min(20, beforeZoom + 1),
-    1,
-  );
+  await expect
+    .poll(async () => Number(await map.getAttribute("data-zoom")))
+    .toBeCloseTo(Math.min(20, beforeZoom + 1), 1);
   for (let i = 0; i < 8; i++)
     await page.getByRole("button", { name: "缩小地图" }).click();
-  expect(Number(await map.getAttribute("data-zoom"))).toBeCloseTo(
-    Number(await map.getAttribute("data-min-zoom")),
-    1,
-  );
+  await expect
+    .poll(async () => Number(await map.getAttribute("data-zoom")))
+    .toBeCloseTo(Number(await map.getAttribute("data-min-zoom")), 1);
   await page.getByRole("button", { name: "地图图层", exact: true }).click();
   await page.getByLabel("体育设施", { exact: true }).uncheck();
   await expect(page.getByLabel("体育设施", { exact: true })).not.toBeChecked();
@@ -102,7 +108,7 @@ test("map controls, source-backed place details, layers and cross-page state", a
     page.getByRole("heading", { name: "北苑1栋", exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("建筑入口与开放时间尚未核验。", { exact: false }),
+    page.getByText("导航以建筑周边就近到达", { exact: false }),
   ).toBeVisible();
   await page.getByRole("button", { name: "问 AI", exact: true }).click();
   await expect(page.locator(".assistant-map-context")).toContainText("北苑1栋");
@@ -124,7 +130,7 @@ test("map controls, source-backed place details, layers and cross-page state", a
   ).toBe(true);
 });
 
-test("route selection computes through the SDK and reset discards results", async ({
+test("road selection computes locally and reset discards results", async ({
   page,
   isMobile,
 }) => {
@@ -137,19 +143,36 @@ test("route selection computes through the SDK and reset discards results", asyn
   await page.locator(".place-result").filter({ hasText: "图书馆" }).click();
   await page.getByRole("button", { name: "关闭地点详情" }).click();
   await page.getByRole("button", { name: "切换为2D", exact: true }).click();
+  await expect(page.getByTestId("campus-map")).toHaveAttribute(
+    "data-camera-moving",
+    "false",
+  );
   await page.getByRole("button", { name: "校园步行导航", exact: true }).click();
+  await page.getByLabel("导航起点").fill("图书馆");
+  await page
+    .getByRole("region", { name: "起点地点建议" })
+    .getByRole("button", { name: /图书馆/ })
+    .first()
+    .click();
+  await expect(page.getByTestId("campus-map")).toHaveAttribute(
+    "data-camera-moving",
+    "false",
+  );
   await page
     .getByRole("button", { name: "在地图上选择起点", exact: true })
     .click();
-  await clickKnownRoad(page, [113.3906104, 23.0684451]);
+  await clickKnownRoad(page, [113.3917339, 23.0681376]);
   await expect(page.getByLabel("导航起点")).toHaveValue("地图选定起点");
   await page
     .getByRole("button", { name: "在地图上选择终点", exact: true })
     .click();
-  await clickKnownRoad(page, [113.3906791, 23.0687343]);
+  await clickKnownRoad(page, [113.3918033, 23.068055]);
   await expect(page.getByLabel("导航终点")).toHaveValue("地图选定终点");
   await page.getByRole("button", { name: "规划步行路线", exact: true }).click();
-  await expect(page.locator(".route-result")).toContainText("90 米");
+  await expect(page.locator(".route-result")).toContainText("本地 OSM");
+  const summary = await page.locator(".route-result h3").innerText();
+  expect(Number(summary.match(/\d+/)![0])).toBeGreaterThan(10);
+  expect(Number(summary.match(/\d+/)![0])).toBeLessThan(30);
   await expect(page.getByTestId("campus-map")).toHaveAttribute(
     "data-mode",
     "2d",
@@ -172,7 +195,7 @@ test("route selection computes through the SDK and reset discards results", asyn
           `${error.message}\nroute extent=${await page.getByTestId("campus-map").getAttribute("data-route-extent")} panel=${JSON.stringify(await page.locator(".route-planner").boundingBox())} map=${JSON.stringify(await page.getByTestId("campus-map").boundingBox())}`,
         );
       });
-    await expect(page.locator(".route-result")).toContainText("90 米");
+    await expect(page.locator(".route-result h3")).toHaveText(summary);
   }
   await page.getByRole("button", { name: "重置路线", exact: true }).click();
   await expect(page.locator(".route-result")).toHaveCount(0);

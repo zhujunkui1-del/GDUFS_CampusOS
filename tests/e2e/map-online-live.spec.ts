@@ -54,7 +54,8 @@ test("controlled real online services on the fixed local map", async ({
     `${dir}/real-online-service-result.json`,
     JSON.stringify(
       {
-        source: "real AMap PlaceSearch / Walking, user-triggered only",
+        source:
+          "real AMap PlaceSearch + actual local CampusOS route, user-triggered only",
         mocks: false,
         routeSummary: await page.locator(".route-result").innerText(),
         condition:

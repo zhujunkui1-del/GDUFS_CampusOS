@@ -25,6 +25,7 @@ export const categoryNames = {
   entrance: "校园出入口",
   transport: "步行通道",
   plaza: "广场",
+  parking: "停车场",
 } as const;
 export const PlaceSchema = z.object({
   id: z.string().max(128),
@@ -44,7 +45,7 @@ export const PlaceSchema = z.object({
   sourceUrl: z.url(),
   sourceName: z.string(),
   fetchedAt: z.string(),
-  verification: z.literal("source_mapped"),
+  verification: z.enum(["source_mapped", "owner_confirmed"]),
   navigationVerified: z.boolean(),
   navigationReviewedAt: z.string().optional(),
   navigationSource: z.string().optional(),
@@ -89,7 +90,8 @@ export function placeLayer(place: CampusPlace): MapLayer {
     ].includes(place.category)
   )
     return "buildings";
-  if (["service", "canteen"].includes(place.category)) return "services";
+  if (["service", "canteen", "parking"].includes(place.category))
+    return "services";
   return "sports";
 }
 export function searchCampusPlaces(query: string, layer?: MapLayer) {
@@ -100,10 +102,21 @@ export function searchCampusPlaces(query: string, layer?: MapLayer) {
         (!layer || placeLayer(p) === layer) &&
         (!normalized ||
           `${p.name} ${(p.aliases || []).join(" ")} ${categoryNames[p.category]} ${placeLayer(p) === "sports" ? "体育设施 运动" : ""} ${zoneName(p.zone)}`
+            .normalize("NFKC")
             .toLowerCase()
             .includes(normalized)),
     )
-    .sort((a, b) => a.minZoom - b.minZoom);
+    .sort((a, b) => {
+      const score = (p: CampusPlace) =>
+        p.name.normalize("NFKC").toLowerCase() === normalized
+          ? 0
+          : (p.aliases || []).some(
+                (s) => s.normalize("NFKC").toLowerCase() === normalized,
+              )
+            ? 1
+            : 2;
+      return score(a) - score(b) || a.minZoom - b.minZoom;
+    });
 }
 export function zoneName(zone: CampusPlace["zone"]) {
   return zone === "living"

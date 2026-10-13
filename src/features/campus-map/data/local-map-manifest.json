@@ -1,11 +1,11 @@
 {
-  "version": "s1-2026-10-13.7",
+  "version": "s1-2026-10-13.8",
   "crs": "WGS84",
   "bounds": [113.362, 23.045, 113.424, 23.086],
-  "url": "/maps/campus-bcf19a94d00a.geojson",
-  "sha256": "bcf19a94d00abdd8382698a6fabdc3a2686a566a4cc34ac9eb3bab2e182e667c",
-  "bytes": 2557623,
-  "features": 4502,
+  "url": "/maps/campus-0f7a1a36e85c.geojson",
+  "sha256": "0f7a1a36e85cda535421c1e4abe9803d811dea80ddbd7c36718637d16f7da0fc",
+  "bytes": 2561626,
+  "features": 4511,
   "license": "ODbL-1.0",
   "contextSources": [
     "https://api.openstreetmap.org/api/0.6/map?bbox=113.374,23.053,113.410,23.079",
@@ -24,6 +24,6 @@
   },
   "bufferSha256": "82bfc67438c64ad7679de8ef9891ad912aebca1a88c4404449500ff67df15b04",
   "campusSourceSha256": "bd151987c468be315e1acb7976539ddef2a076f8e32e777e1b0071bd6e0e265f",
-  "preparedAt": "2026-10-13T10:23:01.536783+00:00",
+  "preparedAt": "2026-10-13T16:26:29.286162+00:00",
   "updates": "manual only"
 }

@@ -30,6 +30,8 @@ import {
 import type { SDKPoi } from "../adapters/amap-types";
 import { PlaceDetails } from "./place-details";
 import { WalkingNavigation } from "./walking-navigation";
+import { LocationNotice } from "./location-notice";
+import { FocusedNavigation } from "./focused-navigation";
 
 const layerNames: Record<MapLayer, string> = {
   buildings: "校园建筑",
@@ -65,6 +67,7 @@ export function MapWorkspace() {
       if (revision === generation.current) setSearchBusy(false);
     }
   };
+  if (map.navigating && map.route) return <FocusedNavigation />;
   return (
     <section className="map-workspace" aria-labelledby="map-title">
       <h1 id="map-title" className="sr-only">
@@ -302,11 +305,7 @@ export function MapWorkspace() {
           <Minus size={20} strokeWidth={1.5} />
         </button>
       </div>
-      {map.locationMessage && !routeOpen && (
-        <div className="map-location-notice" role="status">
-          {map.locationMessage}
-        </div>
-      )}
+      {!routeOpen && <LocationNotice />}
       {layersOpen && (
         <div
           className="map-layers-panel"
@@ -332,14 +331,6 @@ export function MapWorkspace() {
             </label>
           ))}
           <p>标注随缩放展开，未核验编号不补写。</p>
-        </div>
-      )}
-      {map.picking && (
-        <div className="map-pick-notice" role="status">
-          在地图道路上点击选择{map.picking === "start" ? "起点" : "终点"}
-          <button className="text-link" onClick={map.cancelPicking}>
-            取消
-          </button>
         </div>
       )}
       {routeOpen && <WalkingNavigation onClose={() => setRouteOpen(false)} />}

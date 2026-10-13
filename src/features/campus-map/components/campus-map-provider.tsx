@@ -23,16 +23,13 @@ import {
 import type { MapMode } from "@/domain/maps/contracts";
 import { MapActionSchema } from "@/domain/maps/contracts";
 import { type SDKPoi } from "../adapters/amap-types";
-import {
-  CAMPUS_MIN_ZOOM,
-  CAMPUS_MAX_ZOOM,
-  CAMPUS_PITCH,
-} from "../data/viewport";
+import { CAMPUS_MIN_ZOOM, CAMPUS_PITCH } from "../data/viewport";
 import { useMapLocation } from "./use-map-location";
 import { toGcj02, toWgs84 } from "../adapters/online-services";
 import { pointInPolygon } from "../data/geometry";
 import { nearestTunnelDistance } from "../data/local-routing";
 import { projectOnPath } from "../data/route-progress";
+import { headingBetween } from "../data/navigation-geometry";
 
 type MapContextValue = {
   status: "loading" | "ready" | "error";
@@ -52,12 +49,25 @@ type MapContextValue = {
   locationBusy: boolean;
   locationMessage: string;
   navigating: boolean;
-  navigationProgress: { remaining: number; step: number } | null;
+  navigationProgress: {
+    remaining: number;
+    step: number;
+    heading: number;
+  } | null;
+  navigationOrientation: "north" | "route";
+  setNavigationOrientation(value: "north" | "route"): void;
+  locationNoticeId: string;
+  locationNoticeVisible: boolean;
+  dismissLocationNotice(id: string): void;
   locate(): void;
   useMyLocation(): void;
   beginNavigation(): void;
   stopNavigation(): void;
-  choosePoint(which: "start" | "end", place: CampusPlace): void;
+  choosePoint(
+    which: "start" | "end",
+    place: CampusPlace,
+    focus?: boolean,
+  ): void;
   clearPoint(which: "start" | "end"): void;
   swapPoints(a: RoutePoint, b: RoutePoint): void;
   retry(): void;
@@ -88,9 +98,11 @@ export function useCampusMap() {
 export function CampusMapProvider({
   children,
   onAskAssistant,
+  onNavigationStart,
 }: {
   children: React.ReactNode;
   onAskAssistant(): void;
+  onNavigationStart?(): void;
 }) {
   const pathname = usePathname();
   const [mapRequested, setMapRequested] = useState(pathname === "/map");
@@ -125,7 +137,23 @@ export function CampusMapProvider({
   const routeGeneration = useRef(0);
   const location = useMapLocation();
   const stopLocation = location.stop;
+  const [navigationActive, setNavigationActive] = useState(false);
+  const [navigationPath, setNavigationPath] = useState(pathname);
+  if (navigationPath !== pathname) {
+    setNavigationPath(pathname);
+    if (pathname !== "/map") setNavigationActive(false);
+  }
+  const [navigationOrientation, setNavigationOrientation] = useState<
+    "north" | "route"
+  >("north");
+  const [locationRequest, setLocationRequest] = useState(0),
+    [dismissedNotice, setDismissedNotice] = useState("");
   const [locationMessage, setLocationMessage] = useState("");
+  const locationFeedback =
+    location.busy && !navigationActive
+      ? "正在请求设备定位…"
+      : location.error || locationMessage;
+  const locationNoticeId = locationRequest + ":" + locationFeedback;
   const [navigationProgress, setNavigationProgress] =
     useState<MapContextValue["navigationProgress"]>(null);
   const focusLocation = useRef(false),
@@ -142,6 +170,8 @@ export function CampusMapProvider({
       setRouteBusy(false);
       setError("");
       stopLocation();
+      setNavigationActive(false);
+      adapter.current?.setInteractionMode("browse");
       setNavigationProgress(null);
       if (which === "start") setStart(point);
       else setEnd(point);
@@ -151,7 +181,7 @@ export function CampusMapProvider({
     [stopLocation],
   );
   const choosePoint = useCallback(
-    (which: "start" | "end", place: CampusPlace) => {
+    (which: "start" | "end", place: CampusPlace, focus = true) => {
       setPoint(which, {
         name: place.name,
         coordinateGcj02: toGcj02(place.coordinate),
@@ -159,6 +189,9 @@ export function CampusMapProvider({
         source: "campus_place",
         placeId: place.id,
       });
+      if (focus) adapter.current?.focusPlace(place.id);
+      else adapter.current?.highlightPlace(place.id);
+      setLayers((prior) => ({ ...prior, [placeLayer(place)]: true }));
     },
     [setPoint],
   );
@@ -166,11 +199,17 @@ export function CampusMapProvider({
     adapter.current?.showEndpoints(start, end);
   }, [start, end, status]);
   useEffect(() => {
-    if (pathname !== "/map") stopLocation();
+    if (pathname !== "/map") {
+      stopLocation();
+    }
   }, [pathname, stopLocation]);
   useEffect(() => {
     const onHidden = () => {
-      if (document.hidden) stopLocation();
+      if (document.hidden) {
+        stopLocation();
+        setNavigationProgress(null);
+        setLocationMessage("定位已暂停，点击定位可继续追踪。");
+      }
     };
     document.addEventListener("visibilitychange", onHidden);
     return () => document.removeEventListener("visibilitychange", onHidden);
@@ -251,12 +290,25 @@ export function CampusMapProvider({
       setNavigationProgress({
         remaining: Math.max(0, r.distanceMeters - traveled),
         step,
+        heading: headingBetween(
+          toWgs84(r.pathGcj02[projection.index]),
+          toWgs84(
+            r.pathGcj02[Math.min(r.pathGcj02.length - 1, projection.index + 1)],
+          ),
+        ),
       });
     };
     update();
     const timer = setInterval(update, 5000);
     return () => clearInterval(timer);
-  }, [location.position, location.tracking, setPoint, status]);
+  }, [
+    location.position,
+    location.tracking,
+    setPoint,
+    status,
+    navigationActive,
+    navigationOrientation,
+  ]);
   const view = useRef<{ mode: MapMode; zone: MapContextValue["zone"] }>({
     mode: "2.5d",
     zone: "all",
@@ -297,7 +349,7 @@ export function CampusMapProvider({
         disposePick = next.pickPlace((id) => {
           if (pickRef.current) {
             const place = campusData.places.find((p) => p.id === id);
-            if (place) choosePoint(pickRef.current, place);
+            if (place) choosePoint(pickRef.current, place, false);
             return;
           }
           setSelected(campusData.places.find((p) => p.id === id) || null);
@@ -307,9 +359,14 @@ export function CampusMapProvider({
           if (!which) return;
           const chosen = {
             ...point,
-            name: which === "start" ? "地图选定起点" : "地图选定终点",
+            name: point.placeId
+              ? point.name
+              : which === "start"
+                ? "地图选定起点"
+                : "地图选定终点",
           };
           setPoint(which, chosen);
+          if (point.placeId) next.highlightPlace(point.placeId);
         });
         next.map.on("zoomend", () => {
           setZoom(next.map.getZoom());
@@ -365,8 +422,48 @@ export function CampusMapProvider({
     setRouteBusy(false);
     setError("");
     stopLocation();
+    setNavigationActive(false);
     setNavigationProgress(null);
   }, [stopLocation]);
+  useEffect(() => {
+    adapter.current?.setInteractionMode(
+      navigationActive ? "navigation" : picking ? "pick" : "browse",
+    );
+    if (navigationActive) {
+      if (
+        location.tracking &&
+        location.position &&
+        route &&
+        location.position.accuracy <= 50 &&
+        Date.now() - location.position.timestamp < 30000
+      ) {
+        const path = route.pathGcj02.map(toWgs84),
+          projection = projectOnPath(location.position.coordinate, path);
+        if (projection.distance <= Math.max(25, location.position.accuracy)) {
+          adapter.current?.followLocation(
+            location.position.coordinate,
+            navigationOrientation === "north"
+              ? 0
+              : headingBetween(
+                  path[projection.index],
+                  path[Math.min(projection.index + 1, path.length - 1)],
+                ),
+          );
+          return;
+        }
+      }
+      adapter.current?.setNavigationView(
+        navigationOrientation === "north" ? 0 : undefined,
+      );
+    }
+  }, [
+    navigationActive,
+    navigationOrientation,
+    picking,
+    route,
+    location.position,
+    location.tracking,
+  ]);
   const plan = async () => {
     if (!start || !end || !adapter.current) return;
     const generation = ++routeGeneration.current;
@@ -405,28 +502,46 @@ export function CampusMapProvider({
     zoom,
     supports3D,
     locationBusy: location.busy,
-    locationMessage: location.error || locationMessage,
-    navigating: location.tracking,
+    locationMessage: locationFeedback,
+    locationNoticeId,
+    locationNoticeVisible:
+      !!locationFeedback && dismissedNotice !== locationNoticeId,
+    dismissLocationNotice: setDismissedNotice,
+    navigating: navigationActive,
+    navigationOrientation,
+    setNavigationOrientation,
     navigationProgress,
     locate: () => {
+      adapter.current?.resumeFollow();
+      setLocationRequest((n) => n + 1);
       focusLocation.current = true;
       locationAsStart.current = false;
-      location.request(false);
+      location.request(navigationActive);
     },
     useMyLocation: () => {
+      setLocationRequest((n) => n + 1);
       focusLocation.current = true;
       locationAsStart.current = true;
       location.request(false);
     },
     beginNavigation: () => {
       if (route) {
+        setNavigationActive(true);
+        setSelected(null);
+        onNavigationStart?.();
+        setLocationRequest((n) => n + 1);
         setNavigationProgress(null);
         location.request(true);
       }
     },
     stopNavigation: () => {
       location.stop();
+      setNavigationActive(false);
       setNavigationProgress(null);
+      adapter.current?.setInteractionMode("browse");
+      if (route) adapter.current?.renderRoute(route.id);
+      view.current.mode = "2d";
+      setModeState("2d");
     },
     choosePoint,
     clearPoint: (which) => {
@@ -469,15 +584,7 @@ export function CampusMapProvider({
     select,
     closeDetails: () => setSelected(null),
     zoomBy: (delta) => {
-      const current = adapter.current;
-      const map = current?.map;
-      if (map && current)
-        map.setZoom(
-          Math.max(
-            current.minimumZoom,
-            Math.min(CAMPUS_MAX_ZOOM, map.getZoom() + delta),
-          ),
-        );
+      adapter.current?.zoomBy(delta);
     },
     rotateBy: (delta) => {
       const map = adapter.current?.map;
@@ -489,10 +596,12 @@ export function CampusMapProvider({
       setSelected(null);
       pickRef.current = which;
       setPicking(which);
+      adapter.current?.setInteractionMode("pick");
     },
     cancelPicking: () => {
       pickRef.current = null;
       setPicking(null);
+      adapter.current?.setInteractionMode("browse");
     },
     plan,
     clearRoute,

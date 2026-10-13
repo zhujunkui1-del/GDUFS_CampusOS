@@ -85,16 +85,22 @@ describe("licensed campus geometry and search", () => {
               campusData.zones.find((z) => z.id === place.zone)!.polygon,
             );
       expect(isInsideBoundary, place.id).toBe(true);
-      expect(place.sourceUrl).toMatch(
-        /^https:\/\/www\.openstreetmap\.org\/(way|node|relation)\/\d+$/,
-      );
-      expect(place.navigationVerified).toBe(
-        [
-          "osm-way-864205124",
-          "osm-node-6110327053",
-          "osm-node-6110327054",
-        ].includes(place.id),
-      );
+      if (place.verification === "source_mapped")
+        expect(place.sourceUrl).toMatch(
+          /^https:\/\/www\.openstreetmap\.org\/(way|node|relation)\/\d+$/,
+        );
+      else
+        expect(place.sourceUrl).toMatch(
+          /^https:\/\/www\.openstreetmap\.org\/#map=/,
+        );
+      if (place.verification === "source_mapped")
+        expect(place.navigationVerified).toBe(
+          [
+            "osm-way-864205124",
+            "osm-node-6110327053",
+            "osm-node-6110327054",
+          ].includes(place.id),
+        );
     }
   });
   it("finds real mapped library and numbered dormitories without adding guessed names", () => {

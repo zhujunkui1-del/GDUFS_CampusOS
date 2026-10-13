@@ -1,0 +1,369 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "id": "owner-bridge-e",
+      "properties": {
+        "kind": "road",
+        "sourceId": "owner-bridge-e",
+        "name": "语心桥（教学楼E栋）",
+        "bridge": "yes",
+        "highway": "footway",
+        "tunnel": "no",
+        "ownerReviewed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [113.39298425, 23.0675717],
+          [113.393049, 23.067618],
+          [113.39312967, 23.06767569]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "owner-bridge-f",
+      "properties": {
+        "kind": "road",
+        "sourceId": "owner-bridge-f",
+        "name": "语心桥（教学楼F栋）",
+        "bridge": "yes",
+        "highway": "footway",
+        "tunnel": "no",
+        "ownerReviewed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [113.39342874, 23.06697647],
+          [113.393505, 23.067031],
+          [113.39367617, 23.0671534]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "owner-bridge-g",
+      "properties": {
+        "kind": "road",
+        "sourceId": "owner-bridge-g",
+        "name": "语心桥（教学楼G栋）",
+        "bridge": "yes",
+        "highway": "footway",
+        "tunnel": "no",
+        "ownerReviewed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [113.3938149, 23.06643966],
+          [113.393958, 23.066542],
+          [113.39411081, 23.06665128]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "owner-west-shore-0",
+      "properties": {
+        "kind": "road",
+        "sourceId": "owner-west-shore-0",
+        "name": "语心湖岸边步道",
+        "bridge": "no",
+        "highway": "footway",
+        "tunnel": "no",
+        "ownerReviewed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [113.39298425, 23.0675717],
+          [113.3929855, 23.0675706],
+          [113.3930298, 23.0675321],
+          [113.3930522, 23.0675009],
+          [113.3930663, 23.0674729],
+          [113.393077, 23.0674392],
+          [113.3930814, 23.067401],
+          [113.3930767, 23.0673615],
+          [113.3930769, 23.0673328],
+          [113.3930832, 23.0672968],
+          [113.3930941, 23.0672415],
+          [113.3931092, 23.0671934],
+          [113.3931287, 23.0671551],
+          [113.3931578, 23.0671187],
+          [113.3931991, 23.0670792],
+          [113.3932594, 23.0670413],
+          [113.3933231, 23.0670142],
+          [113.39342874, 23.06697647]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "owner-west-shore-1",
+      "properties": {
+        "kind": "road",
+        "sourceId": "owner-west-shore-1",
+        "name": "语心湖岸边步道",
+        "bridge": "no",
+        "highway": "footway",
+        "tunnel": "no",
+        "ownerReviewed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [113.39342874, 23.06697647],
+          [113.3934572, 23.0669663],
+          [113.3935058, 23.0669438],
+          [113.3935528, 23.066913],
+          [113.3935954, 23.0668732],
+          [113.3936312, 23.0668272],
+          [113.3936601, 23.066784],
+          [113.3936802, 23.0667433],
+          [113.3937016, 23.0666887],
+          [113.3937181, 23.0666381],
+          [113.3937358, 23.0665647],
+          [113.3937516, 23.0665252],
+          [113.3937764, 23.0664827],
+          [113.3938059, 23.0664484],
+          [113.3938149, 23.06643966]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "owner-east-shore-0",
+      "properties": {
+        "kind": "road",
+        "sourceId": "owner-east-shore-0",
+        "name": "语心湖岸边步道",
+        "bridge": "no",
+        "highway": "footway",
+        "tunnel": "no",
+        "ownerReviewed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [113.39312967, 23.06767569],
+          [113.3931367, 23.0676687],
+          [113.3931515, 23.0676626],
+          [113.3931696, 23.0676619],
+          [113.3932031, 23.0676644],
+          [113.3932239, 23.0676613],
+          [113.3932386, 23.0676552],
+          [113.3932541, 23.067641],
+          [113.39367617, 23.0671534]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "owner-east-shore-1",
+      "properties": {
+        "kind": "road",
+        "sourceId": "owner-east-shore-1",
+        "name": "语心湖岸边步道",
+        "bridge": "no",
+        "highway": "footway",
+        "tunnel": "no",
+        "ownerReviewed": true
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [113.39367617, 23.0671534],
+          [113.39411081, 23.06665128]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "owner-bajiaolou",
+      "properties": {
+        "kind": "building",
+        "sourceId": "owner-bajiaolou",
+        "name": "八角楼",
+        "tunnel": "no",
+        "bridge": "no"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [113.3945084, 23.0653379],
+            [113.3945095, 23.065432],
+            [113.394464, 23.0655065],
+            [113.3943705, 23.0655075],
+            [113.3942902, 23.0654659],
+            [113.394289, 23.0653678],
+            [113.3943338, 23.0652945],
+            [113.3944254, 23.0652936],
+            [113.3945084, 23.0653379]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "owner-parking-north",
+      "properties": {
+        "kind": "parking",
+        "sourceId": "owner-parking-north",
+        "name": "体育馆北侧停车场",
+        "tunnel": "no",
+        "bridge": "no"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [113.39122386, 23.07325499],
+            [113.39232214, 23.07325499],
+            [113.39232214, 23.07297576],
+            [113.3926368, 23.07297576],
+            [113.3926368, 23.07265185],
+            [113.39171703, 23.07265185],
+            [113.39171703, 23.07297576],
+            [113.39122386, 23.07297576],
+            [113.39122386, 23.07325499]
+          ]
+        ]
+      }
+    }
+  ],
+  "places": [
+    {
+      "id": "owner-bridge-e",
+      "name": "语心桥（教学楼E栋）",
+      "category": "transport",
+      "zone": "teaching",
+      "coordinate": [113.393049, 23.067618],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/#map=19/23.067618/113.393049",
+      "sourceName": "负责人提供的OSM坐标/原始轮廓核对",
+      "fetchedAt": "2026-10-13",
+      "verification": "owner_confirmed",
+      "nameSource": "负责人坐标与地图批注确认",
+      "nameReviewedAt": "2026-10-13",
+      "navigationVerified": true,
+      "navigationSource": "负责人确认通行/就近到达策略",
+      "navigationReviewedAt": "2026-10-13",
+      "minZoom": 16,
+      "geometry": [
+        [113.39298425, 23.0675717],
+        [113.393049, 23.067618],
+        [113.39312967, 23.06767569]
+      ]
+    },
+    {
+      "id": "owner-bridge-f",
+      "name": "语心桥（教学楼F栋）",
+      "category": "transport",
+      "zone": "teaching",
+      "coordinate": [113.393505, 23.067031],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/#map=19/23.067031/113.393505",
+      "sourceName": "负责人提供的OSM坐标/原始轮廓核对",
+      "fetchedAt": "2026-10-13",
+      "verification": "owner_confirmed",
+      "nameSource": "负责人坐标与地图批注确认",
+      "nameReviewedAt": "2026-10-13",
+      "navigationVerified": true,
+      "navigationSource": "负责人确认通行/就近到达策略",
+      "navigationReviewedAt": "2026-10-13",
+      "minZoom": 16,
+      "geometry": [
+        [113.39342874, 23.06697647],
+        [113.393505, 23.067031],
+        [113.39367617, 23.0671534]
+      ]
+    },
+    {
+      "id": "owner-bridge-g",
+      "name": "语心桥（教学楼G栋）",
+      "category": "transport",
+      "zone": "teaching",
+      "coordinate": [113.393958, 23.066542],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/#map=19/23.066542/113.393958",
+      "sourceName": "负责人提供的OSM坐标/原始轮廓核对",
+      "fetchedAt": "2026-10-13",
+      "verification": "owner_confirmed",
+      "nameSource": "负责人坐标与地图批注确认",
+      "nameReviewedAt": "2026-10-13",
+      "navigationVerified": true,
+      "navigationSource": "负责人确认通行/就近到达策略",
+      "navigationReviewedAt": "2026-10-13",
+      "minZoom": 16,
+      "geometry": [
+        [113.3938149, 23.06643966],
+        [113.393958, 23.066542],
+        [113.39411081, 23.06665128]
+      ]
+    },
+    {
+      "id": "owner-bajiaolou",
+      "name": "八角楼",
+      "category": "building",
+      "zone": "teaching",
+      "coordinate": [113.39439883220507, 23.065400773348678],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/#map=19/23.065400773348678/113.39439883220507",
+      "sourceName": "负责人提供的OSM坐标/原始轮廓核对",
+      "fetchedAt": "2026-10-13",
+      "verification": "owner_confirmed",
+      "nameSource": "负责人坐标与地图批注确认",
+      "nameReviewedAt": "2026-10-13",
+      "navigationVerified": true,
+      "navigationSource": "负责人确认通行/就近到达策略",
+      "navigationReviewedAt": "2026-10-13",
+      "minZoom": 16,
+      "geometry": [
+        [113.3945084, 23.0653379],
+        [113.3945095, 23.065432],
+        [113.394464, 23.0655065],
+        [113.3943705, 23.0655075],
+        [113.3942902, 23.0654659],
+        [113.394289, 23.0653678],
+        [113.3943338, 23.0652945],
+        [113.3944254, 23.0652936],
+        [113.3945084, 23.0653379]
+      ],
+      "parentId": "osm-way-307437432"
+    },
+    {
+      "id": "owner-parking-north",
+      "name": "体育馆北侧停车场",
+      "category": "parking",
+      "zone": "teaching",
+      "coordinate": [113.391957, 23.072652],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/#map=19/23.072652/113.391957",
+      "sourceName": "负责人提供的OSM坐标/原始轮廓核对",
+      "fetchedAt": "2026-10-13",
+      "verification": "owner_confirmed",
+      "nameSource": "负责人坐标与地图批注确认",
+      "nameReviewedAt": "2026-10-13",
+      "navigationVerified": true,
+      "navigationSource": "负责人确认通行/就近到达策略",
+      "navigationReviewedAt": "2026-10-13",
+      "minZoom": 16,
+      "geometry": [
+        [113.39122386, 23.07325499],
+        [113.39232214, 23.07325499],
+        [113.39232214, 23.07297576],
+        [113.3926368, 23.07297576],
+        [113.3926368, 23.07265185],
+        [113.39171703, 23.07265185],
+        [113.39171703, 23.07297576],
+        [113.39122386, 23.07297576],
+        [113.39122386, 23.07325499]
+      ]
+    }
+  ],
+  "review": "2026-10-13",
+  "method": "负责人WGS84桥位、方向/连通确认与OSM岸线计算；不复制供应商几何；原始楼宇顶点与轮廓保留"
+}

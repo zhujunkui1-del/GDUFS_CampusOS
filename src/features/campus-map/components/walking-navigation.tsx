@@ -4,7 +4,6 @@ import { LocateFixed, MapPin, X, ArrowUpDown, Navigation } from "lucide-react";
 import { useCampusMap } from "./campus-map-provider";
 import { searchCampusPlaces, zoneName } from "../data/campus";
 import type { RoutePoint } from "../adapters/amap-adapter";
-import review from "../data/walkway-review.json";
 
 function EndpointInput({
   which,
@@ -112,6 +111,14 @@ export function WalkingNavigation({ onClose }: { onClose(): void }) {
         <EndpointInput which="start" point={map.start} />
         <EndpointInput which="end" point={map.end} />
       </div>
+      {map.picking && (
+        <div className="route-picking-tip" role="status">
+          在地图上选择{map.picking === "start" ? "起点" : "终点"}
+          <button className="text-link" onClick={map.cancelPicking}>
+            取消
+          </button>
+        </div>
+      )}
       <div className="endpoint-shortcuts">
         <button
           className="text-link"
@@ -169,7 +176,7 @@ export function WalkingNavigation({ onClose }: { onClose(): void }) {
               : "高德步行规划 · 已检查端点和校区范围"}
             <br />
             {route.source === "CampusOS.OSM"
-              ? "经下沉隧道及两端连接步道，通行已由负责人确认。开放状态以现场为准；时间按步行速度估算。"
+              ? "校园本地步行路网，跨区默认经下沉隧道。教学、实验区域可穿行；建筑周边就近到达。开放状态以现场为准，时间按步行速度估算。"
               : "目的地为附近道路，建筑入口与当前开放情况以现场为准。"}
             {route.undergroundPathGcj02?.length
               ? " 隧道段以虚线标示，包含台阶。"
@@ -213,10 +220,7 @@ export function WalkingNavigation({ onClose }: { onClose(): void }) {
       ) : (
         <p className="source-caption route-limit">
           地点可输入或点选。
-          {review.approved
-            ? "隧道附近优先使用已核验的本地路网。"
-            : "隧道通行尚待确认，跨区路线暂不可用。"}
-          其他路线点击规划后将起终点发送至高德。建筑标注不是已核验入口。
+          优先使用校园本地步行路网，跨区默认经下沉隧道；教学、实验楼可穿行，建筑终点就近到达。
         </p>
       )}
     </aside>

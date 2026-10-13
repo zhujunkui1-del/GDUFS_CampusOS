@@ -41,11 +41,13 @@ test("typed endpoints, swapping and GPS denied preserve the route", async ({
   await page
     .getByRole("region", { name: "起点地点建议" })
     .getByRole("button", { name: /教学楼E栋/ })
+    .first()
     .click();
   await page.getByLabel("导航终点").fill("教学楼F栋");
   await page
     .getByRole("region", { name: "终点地点建议" })
     .getByRole("button", { name: /教学楼F栋/ })
+    .first()
     .click();
   await page.getByRole("button", { name: "交换", exact: true }).click();
   await expect(page.getByLabel("导航起点")).toHaveValue("教学楼F栋");
@@ -53,13 +55,14 @@ test("typed endpoints, swapping and GPS denied preserve the route", async ({
   await page.getByRole("button", { name: "规划步行路线", exact: true }).click();
   await expect(page.locator(".route-result")).toBeVisible();
   await page.getByRole("button", { name: "开始步行导航", exact: true }).click();
-  await expect(page.locator(".location-feedback")).toContainText(
+  await expect(page.locator(".navigation-location-status")).toContainText(
     "定位权限未获允许",
   );
-  await expect(page.locator(".route-result")).toBeVisible();
   await expect(
-    page.getByRole("button", { name: "开始步行导航", exact: true }),
+    page.getByRole("region", { name: "步行导航模式" }),
   ).toBeVisible();
+  await page.getByRole("button", { name: "退出步行导航" }).click();
+  await expect(page.locator(".route-result")).toBeVisible();
   await page.getByLabel("导航起点").fill("不存在的地点");
   await expect(
     page.getByRole("button", { name: "规划步行路线", exact: true }),

@@ -1,0 +1,61 @@
+{
+  "reviewedAt": "2026-10-13",
+  "crs": "WGS84",
+  "coordinateSource": "负责人确认来自OpenStreetMap，输入顺序为纬度、经度；文件内统一经度、纬度",
+  "parking": {
+    "name": "体育馆北侧停车场",
+    "coordinate": [113.391957, 23.072652],
+    "geometry": [
+      [113.39122386, 23.07325499],
+      [113.39232214, 23.07325499],
+      [113.39232214, 23.07297576],
+      [113.3926368, 23.07297576],
+      [113.3926368, 23.07265185],
+      [113.39171703, 23.07265185],
+      [113.39171703, 23.07297576],
+      [113.39122386, 23.07297576],
+      [113.39122386, 23.07325499]
+    ],
+    "geometrySource": "负责人在CampusOS真实OSM底图上红框描绘；用原始体育馆轮廓校准，不是根据无参照图片猜坐标",
+    "calibration": {
+      "sourceSha256": "47b73518b2f250432aa2889d07ef7ba2aec37372d5a7a85ae274486a2bebc1ad",
+      "control": "osm-way-1389756844",
+      "controlPixelBounds": [85, 481, 394, 754],
+      "maximumControlResidualPixels": 1.109031629158564,
+      "note": "影像重合残差，不等于现场测绘精度；用户给定停车场WGS84点位于标注南边界"
+    }
+  },
+  "bridges": [
+    {
+      "id": "owner-bridge-e",
+      "name": "语心桥（教学楼E栋）",
+      "teaching": "E",
+      "coordinate": [113.393049, 23.067618]
+    },
+    {
+      "id": "owner-bridge-f",
+      "name": "语心桥（教学楼F栋）",
+      "teaching": "F",
+      "coordinate": [113.393505, 23.067031]
+    },
+    {
+      "id": "owner-bridge-g",
+      "name": "语心桥（教学楼G栋）",
+      "teaching": "G",
+      "coordinate": [113.393958, 23.066542]
+    }
+  ],
+  "walkingPolicy": {
+    "campusRoadsApproved": true,
+    "crossZoneMustUseTunnel": true,
+    "teachingAndLaboratoryTraversable": true,
+    "buildingArrival": "nearest perimeter, no fixed door",
+    "review": "负责人要求打通校园路网，默认宿舍区与教学区之间必须走下沉隧道；教学/实验楼按可穿行区域计算，终点到建筑周围即可。仅校园内部步道及校内道路，非校园及禁止步行道路不纳入。"
+  },
+  "referenceFiles": [
+    "C:/Users/zhuju/Downloads/停车场_.png",
+    "C:/Users/zhuju/Downloads/语心桥_.png",
+    "C:/Users/zhuju/Downloads/八角楼.png",
+    "C:/Users/zhuju/Downloads/百度导航参考图.jpg"
+  ]
+}

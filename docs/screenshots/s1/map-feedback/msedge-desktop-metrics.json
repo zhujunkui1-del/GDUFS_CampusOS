@@ -1,9 +1,9 @@
 {
   "browser": "msedge",
   "viewport": "desktop",
-  "loadMs": 1917,
+  "loadMs": 1425,
   "initialBearing": 0,
-  "dragResponseMs": 363,
+  "dragResponseMs": 391,
   "sdk": "real MapLibre GL 6.14.0 / local OSM snapshot",
   "network": "same-origin only during map loading",
   "providerRequestsBeforeOnlineAction": 0,

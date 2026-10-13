@@ -1,7 +1,6 @@
 import { distanceMeters } from "@/features/campus-map/data/geometry";
 import type { Coordinate } from "@/features/campus-map/data/campus";
-
-export type GraphNode = { id: string; coordinate: Coordinate };
+export type GraphNode = { id: string; coordinate: Coordinate; zone?: string };
 export type GraphEdge = {
   id: string;
   from: string;
@@ -13,6 +12,7 @@ export type GraphEdge = {
   bidirectional: boolean;
   name?: string;
   stairs?: boolean;
+  kind?: string;
 };
 export type WalkingGraph = {
   version: string;
@@ -28,16 +28,46 @@ export type GraphRoute = {
   estimatedMinutes: number;
   undergroundEdgeIds: string[];
 };
-
-// Only reviewed edges participate. A research OSM graph is never implicitly approved.
-export function planVerifiedRoute(
+// Heap queue and a tunnel-visited state compute the constrained shortest route.
+class Queue {
+  items: { key: string; cost: number }[] = [];
+  push(item: { key: string; cost: number }) {
+    const a = this.items;
+    a.push(item);
+    let i = a.length - 1;
+    while (i > 0) {
+      const p = (i - 1) >> 1;
+      if (a[p].cost <= item.cost) break;
+      a[i] = a[p];
+      i = p;
+    }
+    a[i] = item;
+  }
+  pop() {
+    const a = this.items,
+      head = a[0],
+      tail = a.pop();
+    if (!a.length) return head;
+    let i = 0;
+    while (i * 2 + 1 < a.length) {
+      let c = i * 2 + 1;
+      if (c + 1 < a.length && a[c + 1].cost < a[c].cost) c++;
+      if (a[c].cost >= tail!.cost) break;
+      a[i] = a[c];
+      i = c;
+    }
+    a[i] = tail!;
+    return head;
+  }
+}
+export function planCandidateRoute(
   graph: WalkingGraph,
-  startId: string,
-  endId: string,
+  startIds: string[],
+  endIds: string[],
+  tunnelSource?: string,
 ): GraphRoute | null {
-  const nodes = new Map(graph.nodes.map((node) => [node.id, node]));
-  if (!nodes.has(startId) || !nodes.has(endId) || startId === endId)
-    return null;
+  const nodes = new Map(graph.nodes.map((n) => [n.id, n])),
+    ends = new Set(endIds.filter((id) => nodes.has(id)));
   const adjacency = new Map<
     string,
     { edge: GraphEdge; next: string; reversed: boolean; length: number }[]
@@ -58,68 +88,74 @@ export function planVerifiedRoute(
       continue;
     const length = edge.geometry
       .slice(1)
-      .reduce(
-        (sum, point, index) =>
-          sum + distanceMeters(edge.geometry[index], point),
-        0,
-      );
+      .reduce((sum, p, i) => sum + distanceMeters(edge.geometry[i], p), 0);
     if (!Number.isFinite(length) || length <= 0) continue;
-    const forward = adjacency.get(edge.from) || [];
-    forward.push({ edge, next: edge.to, reversed: false, length });
-    adjacency.set(edge.from, forward);
-    if (edge.bidirectional) {
-      const reverse = adjacency.get(edge.to) || [];
-      reverse.push({ edge, next: edge.from, reversed: true, length });
-      adjacency.set(edge.to, reverse);
-    }
+    const add = (from: string, next: string, reversed: boolean) => {
+      const list = adjacency.get(from) || [];
+      list.push({ edge, next, reversed, length });
+      adjacency.set(from, list);
+    };
+    add(edge.from, edge.to, false);
+    if (edge.bidirectional) add(edge.to, edge.from, true);
   }
-  const distances = new Map<string, number>([[startId, 0]]),
-    visited = new Set<string>();
-  const previous = new Map<
-    string,
-    { node: string; edge: GraphEdge; reversed: boolean }
-  >();
-  for (;;) {
-    let current: string | undefined,
-      best = Infinity;
-    for (const [id, cost] of distances)
-      if (!visited.has(id) && cost < best) {
-        current = id;
-        best = cost;
-      }
-    if (!current) return null;
-    if (current === endId) break;
-    visited.add(current);
-    for (const connection of adjacency.get(current) || []) {
-      const cost = best + connection.length;
-      if (cost < (distances.get(connection.next) ?? Infinity)) {
-        distances.set(connection.next, cost);
-        previous.set(connection.next, {
-          node: current,
-          edge: connection.edge,
-          reversed: connection.reversed,
+  const queue = new Queue(),
+    distances = new Map<string, number>(),
+    previous = new Map<
+      string,
+      { prior: string; edge: GraphEdge; reversed: boolean }
+    >();
+  for (const id of startIds)
+    if (nodes.has(id)) {
+      const key = id + "|0";
+      distances.set(key, 0);
+      queue.push({ key, cost: 0 });
+    }
+  let final: string | undefined;
+  while (queue.items.length) {
+    const current = queue.pop();
+    if (current.cost !== distances.get(current.key)) continue;
+    const split = current.key.lastIndexOf("|"),
+      id = current.key.slice(0, split),
+      passed = current.key.slice(split + 1) === "1";
+    if (ends.has(id) && (!tunnelSource || passed)) {
+      final = current.key;
+      break;
+    }
+    for (const item of adjacency.get(id) || []) {
+      const used = passed || item.edge.sourceUrl === tunnelSource,
+        key = item.next + "|" + (used ? "1" : "0"),
+        cost = current.cost + item.length;
+      if (cost < (distances.get(key) ?? Infinity)) {
+        distances.set(key, cost);
+        previous.set(key, {
+          prior: current.key,
+          edge: item.edge,
+          reversed: item.reversed,
         });
+        queue.push({ key, cost });
       }
     }
   }
-  const chain: { node: string; edge: GraphEdge; reversed: boolean }[] = [];
-  let node = endId;
-  while (node !== startId) {
-    const step = previous.get(node);
-    if (!step) return null;
-    chain.unshift(step);
-    node = step.node;
+  if (!final) return null;
+  const chain: { edge: GraphEdge; reversed: boolean }[] = [];
+  let key = final;
+  while (previous.has(key)) {
+    const p = previous.get(key)!;
+    chain.unshift(p);
+    key = p.prior;
   }
-  const coordinates = chain.flatMap((step, i) => {
-    const path = step.reversed
-      ? [...step.edge.geometry].reverse()
-      : step.edge.geometry;
-    return i ? path.slice(1) : path;
-  });
-  const distance = distances.get(endId)!;
+  if (!chain.length) return null;
+  const coordinates = chain.flatMap((s, i) => {
+      const p = s.reversed ? [...s.edge.geometry].reverse() : s.edge.geometry;
+      return i ? p.slice(1) : p;
+    }),
+    distance = distances.get(final)!;
   return {
     networkVersion: graph.version,
-    nodeIds: [...chain.map((s) => s.node), endId],
+    nodeIds: [
+      key.slice(0, key.lastIndexOf("|")),
+      ...chain.map((s) => (s.reversed ? s.edge.from : s.edge.to)),
+    ],
     edgeIds: chain.map((s) => s.edge.id),
     coordinates,
     distanceMeters: distance,
@@ -128,4 +164,12 @@ export function planVerifiedRoute(
       .filter((s) => s.edge.level === "underground")
       .map((s) => s.edge.id),
   };
+}
+export function planVerifiedRoute(
+  graph: WalkingGraph,
+  startId: string,
+  endId: string,
+) {
+  if (startId === endId) return null;
+  return planCandidateRoute(graph, [startId], [endId]);
 }
