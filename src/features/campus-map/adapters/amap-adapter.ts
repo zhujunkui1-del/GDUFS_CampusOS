@@ -28,8 +28,9 @@ import {
 export type RoutePoint = {
   name: string;
   coordinateGcj02: Coordinate;
-  zone: "teaching" | "living";
-  source: "user_map_selection";
+  zone: "teaching" | "living" | "connection";
+  source: "user_map_selection" | "campus_place" | "device_location";
+  placeId?: string;
 };
 export type CampusRoute = {
   id: string;
@@ -39,8 +40,11 @@ export type CampusRoute = {
   distanceMeters: number;
   seconds: number;
   steps: { instruction: string; distance: number }[];
-  source: "AMap.Walking";
-  verification: "provider_geometry_checked";
+  source: "AMap.Walking" | "CampusOS.OSM";
+  verification: "provider_geometry_checked" | "reviewed_source_network";
+  networkVersion?: string;
+  undergroundPathGcj02?: Coordinate[][];
+  snapDistances?: { start: number; end: number };
 };
 function timed<T>(
   operation: (done: (value: T) => void, fail: (error: Error) => void) => void,

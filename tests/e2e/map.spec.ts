@@ -1,28 +1,50 @@
 import { test, expect } from "@playwright/test";
 import { mockAMap } from "./map-fixture";
 import type { Page } from "@playwright/test";
+import { readFile } from "node:fs/promises";
+const catalogue = JSON.parse(
+  await readFile("src/features/campus-map/data/campus.json", "utf8"),
+);
 
-async function clickMapGround(
-  page: Page,
-  preferredX: number,
-  preferredY: number,
-) {
-  const point = await page.evaluate(
-    ({ x, y }) => {
-      for (const dy of [0, 25, -25, 50])
-        for (const dx of [0, 35, -35, 70]) {
-          const target = document.elementFromPoint(x + dx, y + dy);
-          if (
-            target?.closest('[data-testid="campus-map"]') &&
-            !target.closest("button")
-          )
-            return { x: x + dx, y: y + dy };
-        }
-      throw new Error("No unobscured map ground in the test viewport");
-    },
-    { x: preferredX, y: preferredY },
-  );
-  await page.mouse.click(point.x, point.y);
+async function clickKnownRoad(page: Page, coordinate: [number, number]) {
+  // Real OSM way1389859458 nodes. Flat/north camera projection uses the visible
+  // library marker as reference; no hidden renderer handles or invented road points.
+  const marker = await page
+    .getByRole("button", { name: "查看图书馆", exact: true })
+    .boundingBox();
+  const library = catalogue.places.find(
+    (p: { name: string }) => p.name === "图书馆",
+  ).coordinate;
+  const world =
+    512 *
+    2 ** Number(await page.getByTestId("campus-map").getAttribute("data-zoom"));
+  const mercY = (lat: number) =>
+    0.5 -
+    Math.log(
+      (1 + Math.sin((lat * Math.PI) / 180)) /
+        (1 - Math.sin((lat * Math.PI) / 180)),
+    ) /
+      (4 * Math.PI);
+  const x =
+    marker!.x +
+    marker!.width / 2 +
+    ((coordinate[0] - library[0]) * world) / 360;
+  const y =
+    marker!.y +
+    marker!.height +
+    (mercY(coordinate[1]) - mercY(library[1])) * world;
+  expect(
+    await page.evaluate(
+      ({ x, y }) => {
+        const e = document.elementFromPoint(x, y);
+        return (
+          !!e?.closest('[data-testid="campus-map"]') && !e.closest("button")
+        );
+      },
+      { x, y },
+    ),
+  ).toBe(true);
+  await page.mouse.click(x, y);
 }
 
 test.beforeEach(async ({ page }) => {
@@ -56,10 +78,7 @@ test("map controls, source-backed place details, layers and cross-page state", a
   await expect(map).toHaveAttribute("data-scope", "campus-and-visible-context");
   await page.getByRole("button", { name: "切换为2D", exact: true }).click();
   await expect(map).toHaveAttribute("data-mode", "2d");
-  await page.getByRole("button", { name: "生活区", exact: true }).click();
-  await expect(
-    page.getByRole("button", { name: "生活区", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByLabel("校园视角")).toHaveCount(0);
   const beforeZoom = Number(await map.getAttribute("data-zoom"));
   await page.getByRole("button", { name: "放大地图" }).click();
   expect(Number(await map.getAttribute("data-zoom"))).toBeCloseTo(
@@ -118,32 +137,17 @@ test("route selection computes through the SDK and reset discards results", asyn
   await page.locator(".place-result").filter({ hasText: "图书馆" }).click();
   await page.getByRole("button", { name: "关闭地点详情" }).click();
   await page.getByRole("button", { name: "切换为2D", exact: true }).click();
-  const library = await page
-    .getByRole("button", { name: "查看图书馆", exact: true })
-    .boundingBox();
   await page.getByRole("button", { name: "校园步行导航", exact: true }).click();
   await page
     .getByRole("button", { name: "在地图上选择起点", exact: true })
     .click();
-  await clickMapGround(
-    page,
-    library!.x + library!.width / 2 + 35,
-    library!.y + library!.height - 60,
-  );
-  await expect(
-    page.getByRole("button", { name: /地图选定起点/ }),
-  ).toBeVisible();
+  await clickKnownRoad(page, [113.3906104, 23.0684451]);
+  await expect(page.getByLabel("导航起点")).toHaveValue("地图选定起点");
   await page
     .getByRole("button", { name: "在地图上选择终点", exact: true })
     .click();
-  await clickMapGround(
-    page,
-    library!.x + library!.width / 2 + 90,
-    library!.y + library!.height - 80,
-  );
-  await expect(
-    page.getByRole("button", { name: /地图选定终点/ }),
-  ).toBeVisible();
+  await clickKnownRoad(page, [113.3906791, 23.0687343]);
+  await expect(page.getByLabel("导航终点")).toHaveValue("地图选定终点");
   await page.getByRole("button", { name: "规划步行路线", exact: true }).click();
   await expect(page.locator(".route-result")).toContainText("90 米");
   await expect(page.getByTestId("campus-map")).toHaveAttribute(

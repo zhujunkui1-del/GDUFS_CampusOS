@@ -1,0 +1,17 @@
+{
+  "version": "s1-tunnel-2026-10-13.1",
+  "sourceFile": "CampusOS_Codex_完整设计文档_v2/map.osm",
+  "sourceUrl": "https://www.openstreetmap.org/way/864205124",
+  "reviewedAt": "2026-10-13",
+  "approved": false,
+  "review": "负责人指定下沉隧道；两端台阶与当前通行等待负责人确认。没有批准整个OSM道路网络。",
+  "wayIds": [
+    "651646933",
+    "651646934",
+    "651646935",
+    "864205124",
+    "864205125",
+    "1410275260",
+    "1410275261"
+  ]
+}

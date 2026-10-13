@@ -28,6 +28,11 @@ import {
   CAMPUS_MAX_ZOOM,
   CAMPUS_PITCH,
 } from "../data/viewport";
+import { useMapLocation } from "./use-map-location";
+import { toGcj02, toWgs84 } from "../adapters/online-services";
+import { pointInPolygon } from "../data/geometry";
+import { nearestTunnelDistance } from "../data/local-routing";
+import { projectOnPath } from "../data/route-progress";
 
 type MapContextValue = {
   status: "loading" | "ready" | "error";
@@ -44,6 +49,17 @@ type MapContextValue = {
   assistantPlace: CampusPlace | null;
   zoom: number;
   supports3D: boolean;
+  locationBusy: boolean;
+  locationMessage: string;
+  navigating: boolean;
+  navigationProgress: { remaining: number; step: number } | null;
+  locate(): void;
+  useMyLocation(): void;
+  beginNavigation(): void;
+  stopNavigation(): void;
+  choosePoint(which: "start" | "end", place: CampusPlace): void;
+  clearPoint(which: "start" | "end"): void;
+  swapPoints(a: RoutePoint, b: RoutePoint): void;
   retry(): void;
   setZone(zone: "all" | "teaching" | "living"): void;
   setMode(mode: MapMode): void;
@@ -107,6 +123,140 @@ export function CampusMapProvider({
   const [minimumZoom, setMinimumZoom] = useState(CAMPUS_MIN_ZOOM);
   const [supports3D, setSupports3D] = useState(true);
   const routeGeneration = useRef(0);
+  const location = useMapLocation();
+  const stopLocation = location.stop;
+  const [locationMessage, setLocationMessage] = useState("");
+  const [navigationProgress, setNavigationProgress] =
+    useState<MapContextValue["navigationProgress"]>(null);
+  const focusLocation = useRef(false),
+    locationAsStart = useRef(false);
+  const currentRoute = useRef(route);
+  useEffect(() => {
+    currentRoute.current = route;
+  }, [route]);
+  const setPoint = useCallback(
+    (which: "start" | "end", point: RoutePoint) => {
+      ++routeGeneration.current;
+      adapter.current?.clearRoute();
+      setRoute(null);
+      setRouteBusy(false);
+      setError("");
+      stopLocation();
+      setNavigationProgress(null);
+      if (which === "start") setStart(point);
+      else setEnd(point);
+      pickRef.current = null;
+      setPicking(null);
+    },
+    [stopLocation],
+  );
+  const choosePoint = useCallback(
+    (which: "start" | "end", place: CampusPlace) => {
+      setPoint(which, {
+        name: place.name,
+        coordinateGcj02: toGcj02(place.coordinate),
+        zone: place.zone,
+        source: "campus_place",
+        placeId: place.id,
+      });
+    },
+    [setPoint],
+  );
+  useEffect(() => {
+    adapter.current?.showEndpoints(start, end);
+  }, [start, end, status]);
+  useEffect(() => {
+    if (pathname !== "/map") stopLocation();
+  }, [pathname, stopLocation]);
+  useEffect(() => {
+    const onHidden = () => {
+      if (document.hidden) stopLocation();
+    };
+    document.addEventListener("visibilitychange", onHidden);
+    return () => document.removeEventListener("visibilitychange", onHidden);
+  }, [stopLocation]);
+  useEffect(() => {
+    const position = location.position;
+    if (!position) return;
+    const update = () => {
+      const { coordinate, accuracy, timestamp } = position;
+      if (Date.now() - timestamp > 30000) {
+        adapter.current?.clearLocation();
+        setLocationMessage("定位已过期；隧道内可能无信号，请按路线指引步行。");
+        setNavigationProgress(null);
+        return;
+      }
+      if (
+        !campusData.zones.some((z) => pointInPolygon(coordinate, z.polygon)) &&
+        nearestTunnelDistance(coordinate) > 25
+      ) {
+        adapter.current?.clearLocation();
+        setLocationMessage(
+          "当前位置在大学城校区之外，地图保持校园范围；请手动选择校园起点。",
+        );
+        setNavigationProgress(null);
+        return;
+      }
+      if (accuracy > 100) {
+        adapter.current?.clearLocation();
+        setLocationMessage(
+          `定位误差约${Math.round(accuracy)}米，暂不用于导航，请重新定位。`,
+        );
+        setNavigationProgress(null);
+        return;
+      }
+      adapter.current?.showLocation(
+        coordinate,
+        accuracy,
+        focusLocation.current,
+      );
+      focusLocation.current = false;
+      if (locationAsStart.current) {
+        locationAsStart.current = false;
+        const zone = campusData.zones.find((z) =>
+          pointInPolygon(coordinate, z.polygon),
+        );
+        setPoint("start", {
+          name: "我的位置",
+          coordinateGcj02: toGcj02(coordinate),
+          zone: zone?.id || "connection",
+          source: "device_location",
+        });
+      }
+      setLocationMessage(
+        `定位精度约${Math.round(accuracy)}米；位置仅在当前页面使用。`,
+      );
+      if (!location.tracking || !currentRoute.current) return;
+      if (accuracy > 50) {
+        setLocationMessage("定位精度不足，路线已保留；暂不更新步行进度。");
+        setNavigationProgress(null);
+        return;
+      }
+      const r = currentRoute.current;
+      const projection = projectOnPath(coordinate, r.pathGcj02.map(toWgs84));
+      if (projection.distance > Math.max(25, accuracy)) {
+        setLocationMessage("当前位置偏离路线；请核对起点，可手动重新规划。");
+        setNavigationProgress(null);
+        return;
+      }
+      const traveled =
+        (projection.along / Math.max(1, projection.total)) * r.distanceMeters;
+      let sum = 0,
+        step = 0;
+      for (let i = 0; i < r.steps.length; i++) {
+        sum += r.steps[i].distance;
+        step = i;
+        if (sum >= traveled) break;
+      }
+      setNavigationProgress({
+        remaining: Math.max(0, r.distanceMeters - traveled),
+        step,
+      });
+    };
+    update();
+    const timer = setInterval(update, 5000);
+    return () => clearInterval(timer);
+  }, [location.position, location.tracking, setPoint, status]);
   const view = useRef<{ mode: MapMode; zone: MapContextValue["zone"] }>({
     mode: "2.5d",
     zone: "all",
@@ -145,6 +295,11 @@ export function CampusMapProvider({
           setModeState("2d");
         }
         disposePick = next.pickPlace((id) => {
+          if (pickRef.current) {
+            const place = campusData.places.find((p) => p.id === id);
+            if (place) choosePoint(pickRef.current, place);
+            return;
+          }
           setSelected(campusData.places.find((p) => p.id === id) || null);
         });
         disposeCoordinate = next.pickCoordinate((point) => {
@@ -154,11 +309,7 @@ export function CampusMapProvider({
             ...point,
             name: which === "start" ? "地图选定起点" : "地图选定终点",
           };
-          if (which === "start") setStart(chosen);
-          else setEnd(chosen);
-          pickRef.current = null;
-          setPicking(null);
-          setError("");
+          setPoint(which, chosen);
         });
         next.map.on("zoomend", () => {
           setZoom(next.map.getZoom());
@@ -195,7 +346,7 @@ export function CampusMapProvider({
       adapter.current?.destroy();
       adapter.current = null;
     };
-  }, [revision, mapRequested]);
+  }, [revision, mapRequested, choosePoint, setPoint]);
 
   const select = useCallback((id: string) => {
     const place = campusData.places.find((p) => p.id === id);
@@ -213,7 +364,9 @@ export function CampusMapProvider({
     setRoute(null);
     setRouteBusy(false);
     setError("");
-  }, []);
+    stopLocation();
+    setNavigationProgress(null);
+  }, [stopLocation]);
   const plan = async () => {
     if (!start || !end || !adapter.current) return;
     const generation = ++routeGeneration.current;
@@ -251,6 +404,43 @@ export function CampusMapProvider({
     assistantPlace,
     zoom,
     supports3D,
+    locationBusy: location.busy,
+    locationMessage: location.error || locationMessage,
+    navigating: location.tracking,
+    navigationProgress,
+    locate: () => {
+      focusLocation.current = true;
+      locationAsStart.current = false;
+      location.request(false);
+    },
+    useMyLocation: () => {
+      focusLocation.current = true;
+      locationAsStart.current = true;
+      location.request(false);
+    },
+    beginNavigation: () => {
+      if (route) {
+        setNavigationProgress(null);
+        location.request(true);
+      }
+    },
+    stopNavigation: () => {
+      location.stop();
+      setNavigationProgress(null);
+    },
+    choosePoint,
+    clearPoint: (which) => {
+      clearRoute();
+      if (which === "start") setStart(null);
+      else setEnd(null);
+    },
+    swapPoints: (a, b) => {
+      clearRoute();
+      setStart(b);
+      setEnd(a);
+      pickRef.current = null;
+      setPicking(null);
+    },
     retry: () => {
       adapter.current?.destroy();
       adapter.current = null;

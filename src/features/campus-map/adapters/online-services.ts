@@ -106,5 +106,9 @@ export async function planOnlineRoute(
     })),
     source: "AMap.Walking",
     verification: "provider_geometry_checked",
+    snapDistances: {
+      start: distanceMeters(path[0], start.coordinateGcj02),
+      end: distanceMeters(path.at(-1)!, end.coordinateGcj02),
+    },
   };
 }

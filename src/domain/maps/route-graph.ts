@@ -11,6 +11,8 @@ export type GraphEdge = {
   level: "ground" | "underground" | "elevated";
   sourceUrl: string;
   bidirectional: boolean;
+  name?: string;
+  stairs?: boolean;
 };
 export type WalkingGraph = {
   version: string;

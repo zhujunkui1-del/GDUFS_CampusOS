@@ -39,12 +39,12 @@ def feature(identifier, geometry, t):
             "water" if t.get("natural") == "water" or t.get("waterway") else
             "sports" if t.get("leisure") in ("pitch", "track", "stadium", "swimming_pool") else
             "green" if t.get("landuse") in ("grass", "forest", "meadow", "recreation_ground") or t.get("natural") in ("wood", "grassland", "scrub") or t.get("leisure") in ("park", "garden") else
-            "road" if t.get("highway") else "land")
+            "plaza" if t.get("place") == "square" else "road" if t.get("highway") else "land")
     if kind == "land" and not (t.get("landuse") or t.get("amenity") == "university"):
         return
     features.append({"type": "Feature", "id": identifier,
         "properties": {"kind": kind, "name": t.get("name", ""), "highway": t.get("highway", ""),
-                       "sport": t.get("sport", ""), "tunnel": t.get("tunnel", "no"), "sourceId": identifier},
+                       "sport": t.get("sport", ""), "tunnel": t.get("tunnel", "no"), "bridge": t.get("bridge", "no"), "sourceId": identifier},
         "geometry": geometry})
 for identifier, w in ways.items():
     refs = [n.get("ref") for n in w.findall("nd")]
@@ -111,16 +111,20 @@ for p in places.values():
         p["coordinate"] = nodes[identifier]
 for identifier, label in labels["labels"].items():
     if identifier not in places:
-        f = feature_index.get(identifier)
-        if f is None or f["geometry"]["type"] != "Polygon": raise ValueError("Reviewed geometry missing: " + identifier)
-        points = f["geometry"]["coordinates"][0]
-        if points[0] != points[-1]: raise ValueError("Building ring is open")
         source_kind, source_id = identifier.split("-")[1:]
+        f = feature_index.get(identifier)
+        if source_kind == 'node':
+            if source_id not in nodes: raise ValueError('Missing source anchor: ' + identifier)
+            points = [nodes[source_id]]
+        else:
+            if f is None: raise ValueError("Reviewed geometry missing: " + identifier)
+            points = f["geometry"]["coordinates"][0] if f["geometry"]["type"] == "Polygon" else f["geometry"]["coordinates"]
         places[identifier] = {"id": identifier, "category": label["category"], "zone": label["zone"],
             "coordinate": [(min(p[0] for p in points)+max(p[0] for p in points))/2, (min(p[1] for p in points)+max(p[1] for p in points))/2],
             "geometry": points, "crs": "WGS84", "sourceUrl": "https://www.openstreetmap.org/" + source_kind + "/" + source_id,
             "sourceName": "OpenStreetMap", "fetchedAt": "2026-10-12", "verification": "source_mapped", "navigationVerified": False,
             "minZoom": 15 if label["category"] == "canteen" else 17}
+        if source_kind == 'node': places[identifier].pop('geometry')
         if source_kind == "relation": places[identifier]["geometryRings"] = f["geometry"]["coordinates"]
     p = places[identifier]
     old = p.get("name")
@@ -128,6 +132,10 @@ for identifier, label in labels["labels"].items():
     p["aliases"] = sorted(set(p.get("aliases", []) + ([old] if old and old != label["name"] else [])))
     p["nameSource"] = label.get("nameSource", labels["source"])
     p["nameReviewedAt"] = labels["reviewedAt"]
+    if identifier in feature_index:
+        feature_index[identifier]['properties']['name'] = label['name']
+        if label.get('category') in ('badminton','volleyball','basketball'):
+            feature_index[identifier]['properties']['sport'] = label['category']
 campus["places"] = list(places.values())
 campus["mapVersion"] = args.version
 (base / "campus.json").write_text(json.dumps(campus, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")

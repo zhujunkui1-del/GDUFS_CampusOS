@@ -16,6 +16,7 @@ import {
   ExternalLink,
   ArrowRight,
   RefreshCw,
+  LocateFixed,
 } from "lucide-react";
 import { useCampusMap } from "./campus-map-provider";
 import {
@@ -24,9 +25,11 @@ import {
   placeLayer,
   searchCampusPlaces,
   type MapLayer,
+  zoneName,
 } from "../data/campus";
 import type { SDKPoi } from "../adapters/amap-types";
 import { PlaceDetails } from "./place-details";
+import { WalkingNavigation } from "./walking-navigation";
 
 const layerNames: Record<MapLayer, string> = {
   buildings: "校园建筑",
@@ -115,9 +118,13 @@ export function MapWorkspace() {
                 className="search-clear"
                 aria-label="清空地点搜索"
                 onClick={() => {
+                  ++generation.current;
+                  searchInput.current?.focus();
                   setQuery("");
                   setSearchOpen(false);
-                  searchInput.current?.focus();
+                  setOnline([]);
+                  setSearchBusy(false);
+                  setSearchError("");
                 }}
               >
                 <X size={16} />
@@ -132,27 +139,6 @@ export function MapWorkspace() {
           >
             <UserRound size={20} strokeWidth={1.6} />
           </Link>
-        </div>
-        <div className="zone-switcher glass-surface" aria-label="校园视角">
-          {(
-            [
-              ["all", "全校区"],
-              ["teaching", "教学区"],
-              ["living", "生活区"],
-            ] as const
-          ).map(([zone, label]) => (
-            <button
-              key={zone}
-              disabled={!ready}
-              aria-pressed={map.zone === zone}
-              onClick={() => {
-                map.setZone(zone);
-                setSearchOpen(false);
-              }}
-            >
-              {label}
-            </button>
-          ))}
         </div>
         {searchOpen && (
           <div
@@ -184,8 +170,7 @@ export function MapWorkspace() {
                   <span>
                     {place.name}
                     <small>
-                      {place.zone === "living" ? "生活区" : "教学区"} ·{" "}
-                      {categoryNames[place.category]}
+                      {zoneName(place.zone)} · {categoryNames[place.category]}
                     </small>
                   </span>
                   <ArrowRight size={16} />
@@ -248,6 +233,14 @@ export function MapWorkspace() {
       )}
       <div className="map-controls glass-surface" aria-label="地图工具">
         <button
+          disabled={!ready || map.locationBusy}
+          aria-label="定位我的位置"
+          title="定位"
+          onClick={map.locate}
+        >
+          <LocateFixed size={20} strokeWidth={1.5} />
+        </button>
+        <button
           disabled={!ready || (map.mode === "2d" && !map.supports3D)}
           onClick={() => map.setMode(map.mode === "2d" ? "2.5d" : "2d")}
           aria-label={map.mode === "2d" ? "切换为2.5D" : "切换为2D"}
@@ -281,6 +274,10 @@ export function MapWorkspace() {
           onClick={() => {
             setSearchOpen(false);
             setRouteOpen(!routeOpen);
+            if (routeOpen) {
+              map.cancelPicking();
+              map.stopNavigation();
+            }
             if (map.route)
               map.executeAction({ type: "SHOW_ROUTE", routeId: map.route.id });
           }}
@@ -305,6 +302,11 @@ export function MapWorkspace() {
           <Minus size={20} strokeWidth={1.5} />
         </button>
       </div>
+      {map.locationMessage && !routeOpen && (
+        <div className="map-location-notice" role="status">
+          {map.locationMessage}
+        </div>
+      )}
       {layersOpen && (
         <div
           className="map-layers-panel"
@@ -340,98 +342,14 @@ export function MapWorkspace() {
           </button>
         </div>
       )}
-      {routeOpen && (
-        <aside className="route-planner" aria-label="校园步行路线">
-          <div className="results-heading">
-            <h2>步行导航</h2>
-            <button
-              className="icon-button"
-              aria-label="关闭导航面板"
-              onClick={() => {
-                setRouteOpen(false);
-                map.cancelPicking();
-              }}
-            >
-              <X size={18} />
-            </button>
-          </div>
-          <p className="source-caption">
-            在已知可通行的位置选点，建筑中心不作为入口。
-          </p>
-          <button
-            className="route-point"
-            disabled={!ready}
-            onClick={() => map.startPicking("start")}
-          >
-            <span className="route-dot" />
-            {map.start
-              ? `${map.start.name} · ${map.start.zone === "teaching" ? "教学区" : "生活区"}`
-              : "在地图上选择起点"}
-          </button>
-          <button
-            className="route-point"
-            disabled={!ready}
-            onClick={() => map.startPicking("end")}
-          >
-            <span className="route-dot route-end" />
-            {map.end
-              ? `${map.end.name} · ${map.end.zone === "teaching" ? "教学区" : "生活区"}`
-              : "在地图上选择终点"}
-          </button>
-          <div className="route-actions">
-            <button
-              className="primary-button"
-              disabled={!ready || !map.start || !map.end || map.routeBusy}
-              onClick={() => void map.plan()}
-            >
-              {map.routeBusy ? "正在规划…" : "规划步行路线"}
-            </button>
-            <button className="text-link" onClick={map.clearRoute}>
-              重置路线
-            </button>
-          </div>
-          {ready && map.error && (
-            <p className="inline-error" role="alert">
-              {map.error}
-            </p>
-          )}
-          {map.route && (
-            <div className="route-result">
-              <h3>
-                {Math.round(map.route.distanceMeters)} 米{" "}
-                <span>
-                  约 {Math.max(1, Math.round(map.route.seconds / 60))} 分钟
-                </span>
-              </h3>
-              <p className="source-caption">
-                高德步行规划 · 已检查端点和校区范围
-                <br />
-                当前校内开放情况需以现场为准。
-              </p>
-              <ol>
-                {map.route.steps.map((step, i) => (
-                  <li key={i}>
-                    {step.instruction}
-                    <small>{step.distance} 米</small>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
-          {!map.route && (
-            <p className="source-caption route-limit">
-              跨区隧道入口及通行连接待核验，跨区导航暂不可用。
-            </p>
-          )}
-        </aside>
-      )}
+      {routeOpen && <WalkingNavigation onClose={() => setRouteOpen(false)} />}
       <PlaceDetails
         finalFocus={searchInput}
         onNavigate={() => {
           setSearchOpen(false);
           map.closeDetails();
           setRouteOpen(true);
-          map.startPicking("end");
+          if (map.selected) map.choosePoint("end", map.selected);
         }}
       />
       <div className="map-attribution">

@@ -11,7 +11,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { useCampusMap } from "./campus-map-provider";
-import { categoryNames } from "../data/campus";
+import { categoryNames, zoneName } from "../data/campus";
 
 function compactSnapshot() {
   return window.matchMedia("(max-width: 760px)").matches;
@@ -57,7 +57,7 @@ export function PlaceDetails({
                 <div>
                   <p>
                     {place
-                      ? `${place.zone === "teaching" ? "教学区" : "生活区"} · ${categoryNames[place.category]}`
+                      ? `${zoneName(place.zone)} · ${categoryNames[place.category]}`
                       : ""}
                   </p>
                   <Drawer.Title>{place?.name || "地点详情"}</Drawer.Title>
@@ -79,8 +79,13 @@ export function PlaceDetails({
                     <small>WGS84 地物标注位置</small>
                   </p>
                   <p>
-                    建筑入口与开放时间尚未核验。导航请在地图上选择已知可通行的位置。
+                    建筑入口与开放时间尚未核验。导航以附近步行道路为终点，也可在地图上选择已知可通行的位置。
                   </p>
+                  {place.parentId && (
+                    <p>
+                      分栋名称按负责人确认的朝北顺序标注，使用复合建筑原始轮廓；未生成独立分栋边界。
+                    </p>
+                  )}
                   <div className="place-detail-actions">
                     <button className="primary-button" onClick={onNavigate}>
                       <Navigation size={16} />

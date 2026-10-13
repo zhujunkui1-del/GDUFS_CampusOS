@@ -37,13 +37,19 @@ test("real browser map starts north and responds to drag and zoom", async ({
   expect.soft(initialExtent[1]).toBeGreaterThanOrEqual(0);
   expect.soft(initialExtent[2]).toBeLessThanOrEqual(box!.width);
   expect.soft(initialExtent[3]).toBeLessThanOrEqual(box!.height);
-  const dir = "docs/screenshots/s1/browser-fix";
+  const dir = "docs/screenshots/s1/map-feedback";
   await mkdir(dir, { recursive: true });
   const name = `${process.env.PLAYWRIGHT_CHANNEL || "chromium"}-${testInfo.project.name}`;
   await page.screenshot({ path: `${dir}/${name}-initial.jpg`, type: "jpeg" });
   // Soft assertion keeps the interaction probe running when north is wrong.
   expect.soft(initialBearing).toBe(0);
-  await page.getByRole("button", { name: "教学区", exact: true }).click();
+  await page.getByLabel("搜索校园地点").fill("图书馆");
+  await page
+    .locator(".place-result")
+    .filter({ hasText: "图书馆" })
+    .first()
+    .click();
+  await page.getByRole("button", { name: "关闭地点详情" }).click();
   await page.getByRole("button", { name: "切换为2D", exact: true }).click();
   await page.getByRole("button", { name: "放大地图", exact: true }).click();
   const beforeZoom = Number(await map.getAttribute("data-zoom"));

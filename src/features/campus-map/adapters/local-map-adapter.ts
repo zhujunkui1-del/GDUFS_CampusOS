@@ -30,6 +30,8 @@ import {
 } from "./online-services";
 import { sdkCoordinate, type SDKPoi } from "./amap-types";
 import type { CampusRoute, RoutePoint } from "./amap-adapter";
+import { nearestTunnelDistance, planLocalRoute } from "../data/local-routing";
+import walkwayReview from "../data/walkway-review.json";
 
 type CameraEvent = "zoomend" | "rotateend" | "moveend" | "pitchend";
 // Dataset geometry is immutable for this release; do not rescan it per gesture frame.
@@ -53,6 +55,7 @@ export class LocalMapAdapter implements MapAdapter {
     { marker: Marker; button: HTMLButtonElement; visible: boolean }
   >();
   private zoneMarkers: Marker[] = [];
+  private endpointMarkers: Marker[] = [];
   private listeners = new Set<(id: string) => void>();
   private routes = new Map<string, CampusRoute>();
   private activeRouteId?: string;
@@ -181,6 +184,13 @@ export class LocalMapAdapter implements MapAdapter {
             layout: { "line-join": "round", "line-cap": "round" },
           },
           {
+            id: "plazas",
+            type: "fill",
+            source: "campus",
+            filter: ["==", ["get", "kind"], "plaza"],
+            paint: { "fill-color": "#e9e9e5", "fill-outline-color": "#b9bcb9" },
+          },
+          {
             id: "roads",
             type: "line",
             source: "campus",
@@ -205,6 +215,17 @@ export class LocalMapAdapter implements MapAdapter {
             source: "campus",
             filter: ["==", ["get", "kind"], "building"],
             paint: { "fill-color": "#e0d8ce", "fill-outline-color": "#bdb5aa" },
+          },
+          {
+            id: "underground",
+            type: "line",
+            source: "campus",
+            filter: ["==", ["get", "tunnel"], "yes"],
+            paint: {
+              "line-color": "#7c8894",
+              "line-width": 4,
+              "line-dasharray": [2, 2],
+            },
           },
           {
             id: "selected",
@@ -237,9 +258,21 @@ export class LocalMapAdapter implements MapAdapter {
     this.native.on("moveend", () => this.updateLabels());
     this.native.on("click", (event) => {
       const feature = this.native.queryRenderedFeatures(event.point, {
-        layers: ["buildings", "sports"],
+        layers: ["buildings", "sports", "plazas", "underground"],
       })[0];
-      const id = feature?.properties.sourceId;
+      let id = feature?.properties.sourceId;
+      const children = id
+        ? campusData.places.filter((p) => p.parentId === id)
+        : [];
+      if (children.length)
+        id = children.sort((a, b) => {
+          const x = this.native.project(a.coordinate),
+            y = this.native.project(b.coordinate);
+          return (
+            Math.hypot(x.x - event.point.x, x.y - event.point.y) -
+            Math.hypot(y.x - event.point.x, y.y - event.point.y)
+          );
+        })[0].id;
       if (campusData.places.some((p) => p.id === id)) {
         this.focusPlace(id);
         this.listeners.forEach((fn) => fn(id));
@@ -283,6 +316,7 @@ export class LocalMapAdapter implements MapAdapter {
         button.className = `campus-marker marker-${placeLayer(place)}`;
         button.textContent = place.name;
         button.setAttribute("aria-label", `查看${place.name}`);
+        button.dataset.placeId = place.id;
         button.onclick = (e) => {
           e.stopPropagation();
           adapter.focusPlace(place.id);
@@ -461,7 +495,11 @@ export class LocalMapAdapter implements MapAdapter {
     if (!place) throw new Error("地点不存在或尚未核验。");
     this.selected = id;
     this.layers[placeLayer(place)] = true;
-    this.native.setFilter("selected", ["==", ["get", "sourceId"], id]);
+    this.native.setFilter("selected", [
+      "==",
+      ["get", "sourceId"],
+      place.parentId || id,
+    ]);
     this.native.jumpTo({
       center: place.coordinate,
       zoom: Math.max(17.2, this.native.getZoom()),
@@ -527,6 +565,7 @@ export class LocalMapAdapter implements MapAdapter {
         this.layers[placeLayer(place)] &&
         (place.id === this.selected ||
           (this.native.getZoom() >= place.minZoom - 1 &&
+            this.native.getZoom() <= (place.maxZoom ?? Infinity) &&
             !occupied.some(
               (p) =>
                 Math.abs(p.x - pixel.x) < (p.width + width) / 2 + 8 &&
@@ -552,11 +591,11 @@ export class LocalMapAdapter implements MapAdapter {
       const zone = campusData.zones.find((z) =>
         pointInPolygon(point, z.polygon),
       );
-      if (zone)
+      if (zone || nearestTunnelDistance(point) <= 25)
         listener({
           name: "地图选点",
           coordinateGcj02: toGcj02(point),
-          zone: zone.id,
+          zone: zone?.id || "connection",
           source: "user_map_selection",
         });
     };
@@ -567,9 +606,105 @@ export class LocalMapAdapter implements MapAdapter {
   }
   onlineSearch = onlineSearch;
   async planRoute(start: RoutePoint, end: RoutePoint) {
-    const route = await planOnlineRoute(start, end);
+    const local = planLocalRoute(start, end);
+    if (
+      !local &&
+      (start.zone !== end.zone ||
+        start.zone === "connection" ||
+        end.zone === "connection")
+    )
+      throw new Error(
+        walkwayReview.approved
+          ? "跨区路线目前仅支持下沉隧道及两端连接步道；请选取隧道生活区入口与教学区入口。其他校内连接尚未核验。"
+          : "下沉隧道和两端步道通行尚待负责人确认，跨区导航暂不可用。地图标注已保留。",
+      );
+    const route = local || (await planOnlineRoute(start, end));
     if (!this.destroyed) this.routes.set(route.id, route);
     return route;
+  }
+  showEndpoints(start: RoutePoint | null, end: RoutePoint | null) {
+    this.endpointMarkers.forEach((m) => m.remove());
+    this.endpointMarkers = [];
+    for (const [point, label] of [
+      [start, "起"],
+      [end, "终"],
+    ] as const) {
+      if (!point) continue;
+      const el = document.createElement("span");
+      el.className =
+        "route-endpoint " +
+        (label === "起" ? "route-start-marker" : "route-end-marker");
+      el.textContent = label;
+      el.setAttribute("aria-label", label === "起" ? "已选起点" : "已选终点");
+      this.endpointMarkers.push(
+        new Marker({ element: el, anchor: "center" })
+          .setLngLat(toWgs84(point.coordinateGcj02))
+          .addTo(this.native),
+      );
+    }
+  }
+  showLocation(coordinate: Coordinate, accuracy: number, focus = false) {
+    const ring: Coordinate[] = [];
+    for (let i = 0; i <= 48; i++) {
+      const angle = (i * Math.PI * 2) / 48;
+      ring.push([
+        coordinate[0] +
+          (Math.sin(angle) * accuracy) /
+            (111320 * Math.cos((coordinate[1] * Math.PI) / 180)),
+        coordinate[1] + (Math.cos(angle) * accuracy) / 111320,
+      ]);
+    }
+    const data: GeoJSON.FeatureCollection = {
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          properties: { kind: "accuracy" },
+          geometry: { type: "Polygon", coordinates: [ring] },
+        },
+        {
+          type: "Feature",
+          properties: { kind: "position" },
+          geometry: { type: "Point", coordinates: coordinate },
+        },
+      ],
+    };
+    const source = this.native.getSource("device-position") as
+      GeoJSONSource | undefined;
+    if (source) source.setData(data);
+    else {
+      this.native.addSource("device-position", { type: "geojson", data });
+      this.native.addLayer({
+        id: "position-accuracy",
+        type: "fill",
+        source: "device-position",
+        filter: ["==", ["get", "kind"], "accuracy"],
+        paint: {
+          "fill-color": "#1261bb",
+          "fill-opacity": 0.1,
+          "fill-outline-color": "#1261bb",
+        },
+      });
+      this.native.addLayer({
+        id: "position-dot",
+        type: "circle",
+        source: "device-position",
+        filter: ["==", ["get", "kind"], "position"],
+        paint: {
+          "circle-radius": 7,
+          "circle-color": "#1261bb",
+          "circle-stroke-color": "#fff",
+          "circle-stroke-width": 3,
+        },
+      });
+    }
+    if (focus) this.setView(coordinate, Math.max(17, this.native.getZoom()));
+  }
+  clearLocation() {
+    for (const id of ["position-dot", "position-accuracy"])
+      if (this.native.getLayer(id)) this.native.removeLayer(id);
+    if (this.native.getSource("device-position"))
+      this.native.removeSource("device-position");
   }
   renderRoute(id: string) {
     const route = this.routes.get(id);
@@ -596,6 +731,38 @@ export class LocalMapAdapter implements MapAdapter {
       });
     }
     this.fitRoute(id);
+    this.showEndpoints(
+      { ...route.start, coordinateGcj02: route.pathGcj02[0] },
+      { ...route.end, coordinateGcj02: route.pathGcj02.at(-1)! },
+    );
+    if (
+      route.undergroundPathGcj02?.length &&
+      !this.native.getSource("route-underground")
+    ) {
+      this.native.addSource("route-underground", {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          properties: {},
+          geometry: {
+            type: "MultiLineString",
+            coordinates: route.undergroundPathGcj02.map((path) =>
+              path.map(toWgs84),
+            ),
+          },
+        },
+      });
+      this.native.addLayer({
+        id: "route-underground",
+        type: "line",
+        source: "route-underground",
+        paint: {
+          "line-color": "#fff",
+          "line-width": 3,
+          "line-dasharray": [2, 2],
+        },
+      });
+    }
   }
   private fitRoute(id: string) {
     const fit = () => {
@@ -700,6 +867,10 @@ export class LocalMapAdapter implements MapAdapter {
     this.observedRoutePanel = undefined;
     delete this.element.dataset.routeExtent;
     if (this.native.getLayer("route")) this.native.removeLayer("route");
+    if (this.native.getLayer("route-underground"))
+      this.native.removeLayer("route-underground");
+    if (this.native.getSource("route-underground"))
+      this.native.removeSource("route-underground");
     if (this.native.getSource("route")) this.native.removeSource("route");
     this.routes.clear();
   }
@@ -711,6 +882,7 @@ export class LocalMapAdapter implements MapAdapter {
     this.listeners.clear();
     this.markers.forEach((m) => m.marker.remove());
     this.zoneMarkers.forEach((marker) => marker.remove());
+    this.endpointMarkers.forEach((m) => m.remove());
     this.native.remove();
   }
 }

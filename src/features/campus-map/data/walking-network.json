@@ -1,0 +1,199 @@
+{
+  "version": "s1-tunnel-2026-10-13.1",
+  "mapVersion": "s1-2026-10-13.7",
+  "sourceSha256": "bd151987c468be315e1acb7976539ddef2a076f8e32e777e1b0071bd6e0e265f",
+  "nodes": [
+    {
+      "id": "osm-node-12865982392",
+      "coordinate": [113.3932178, 23.0650424]
+    },
+    {
+      "id": "osm-node-12865982394",
+      "coordinate": [113.3933003, 23.0649813]
+    },
+    {
+      "id": "osm-node-12958953113",
+      "coordinate": [113.392012, 23.0640877]
+    },
+    {
+      "id": "osm-node-12959172027",
+      "coordinate": [113.3927168, 23.064491]
+    },
+    {
+      "id": "osm-node-12959172028",
+      "coordinate": [113.3931584, 23.0648079]
+    },
+    {
+      "id": "osm-node-6110327049",
+      "coordinate": [113.3915715, 23.0637583]
+    },
+    {
+      "id": "osm-node-6110327051",
+      "coordinate": [113.3926083, 23.0645455]
+    },
+    {
+      "id": "osm-node-6110327053",
+      "coordinate": [113.3912426, 23.0635083]
+    },
+    {
+      "id": "osm-node-6110327054",
+      "coordinate": [113.392672, 23.0650147]
+    },
+    {
+      "id": "osm-node-8050991338",
+      "coordinate": [113.3920866, 23.0641435]
+    }
+  ],
+  "edges": [
+    {
+      "id": "osm-way-651646933:6110327049-12958953113",
+      "from": "osm-node-6110327049",
+      "to": "osm-node-12958953113",
+      "geometry": [
+        [113.3915715, 23.0637583],
+        [113.392012, 23.0640877]
+      ],
+      "verified": false,
+      "level": "ground",
+      "sourceUrl": "https://www.openstreetmap.org/way/651646933",
+      "bidirectional": true,
+      "name": "隧道连接步道（台阶）",
+      "stairs": true
+    },
+    {
+      "id": "osm-way-651646933:12958953113-8050991338",
+      "from": "osm-node-12958953113",
+      "to": "osm-node-8050991338",
+      "geometry": [
+        [113.392012, 23.0640877],
+        [113.3920866, 23.0641435]
+      ],
+      "verified": false,
+      "level": "ground",
+      "sourceUrl": "https://www.openstreetmap.org/way/651646933",
+      "bidirectional": true,
+      "name": "隧道连接步道（台阶）",
+      "stairs": true
+    },
+    {
+      "id": "osm-way-651646934:6110327051-6110327054",
+      "from": "osm-node-6110327051",
+      "to": "osm-node-6110327054",
+      "geometry": [
+        [113.3926083, 23.0645455],
+        [113.392672, 23.0650147]
+      ],
+      "verified": false,
+      "level": "ground",
+      "sourceUrl": "https://www.openstreetmap.org/way/651646934",
+      "bidirectional": true,
+      "name": "隧道连接步道（台阶）",
+      "stairs": true
+    },
+    {
+      "id": "osm-way-651646935:6110327049-6110327053",
+      "from": "osm-node-6110327049",
+      "to": "osm-node-6110327053",
+      "geometry": [
+        [113.3915715, 23.0637583],
+        [113.3912426, 23.0635083]
+      ],
+      "verified": false,
+      "level": "ground",
+      "sourceUrl": "https://www.openstreetmap.org/way/651646935",
+      "bidirectional": true,
+      "name": "隧道连接步道（台阶）",
+      "stairs": true
+    },
+    {
+      "id": "osm-way-864205124:8050991338-6110327051",
+      "from": "osm-node-8050991338",
+      "to": "osm-node-6110327051",
+      "geometry": [
+        [113.3920866, 23.0641435],
+        [113.3926083, 23.0645455]
+      ],
+      "verified": false,
+      "level": "underground",
+      "sourceUrl": "https://www.openstreetmap.org/way/864205124",
+      "bidirectional": true,
+      "name": "下沉隧道",
+      "stairs": false
+    },
+    {
+      "id": "osm-way-864205125:6110327051-12865982392",
+      "from": "osm-node-6110327051",
+      "to": "osm-node-12865982392",
+      "geometry": [
+        [113.3926083, 23.0645455],
+        [113.3932178, 23.0650424]
+      ],
+      "verified": false,
+      "level": "ground",
+      "sourceUrl": "https://www.openstreetmap.org/way/864205125",
+      "bidirectional": true,
+      "name": "隧道连接步道（台阶）",
+      "stairs": true
+    },
+    {
+      "id": "osm-way-1410275260:12865982394-12959172028",
+      "from": "osm-node-12865982394",
+      "to": "osm-node-12959172028",
+      "geometry": [
+        [113.3933003, 23.0649813],
+        [113.3931584, 23.0648079]
+      ],
+      "verified": false,
+      "level": "ground",
+      "sourceUrl": "https://www.openstreetmap.org/way/1410275260",
+      "bidirectional": true,
+      "name": "隧道连接步道",
+      "stairs": false
+    },
+    {
+      "id": "osm-way-1410275260:12959172028-12959172027",
+      "from": "osm-node-12959172028",
+      "to": "osm-node-12959172027",
+      "geometry": [
+        [113.3931584, 23.0648079],
+        [113.3927168, 23.064491]
+      ],
+      "verified": false,
+      "level": "ground",
+      "sourceUrl": "https://www.openstreetmap.org/way/1410275260",
+      "bidirectional": true,
+      "name": "隧道连接步道",
+      "stairs": false
+    },
+    {
+      "id": "osm-way-1410275260:12959172027-6110327051",
+      "from": "osm-node-12959172027",
+      "to": "osm-node-6110327051",
+      "geometry": [
+        [113.3927168, 23.064491],
+        [113.3926083, 23.0645455]
+      ],
+      "verified": false,
+      "level": "ground",
+      "sourceUrl": "https://www.openstreetmap.org/way/1410275260",
+      "bidirectional": true,
+      "name": "隧道连接步道",
+      "stairs": false
+    },
+    {
+      "id": "osm-way-1410275261:6110327053-6110327049",
+      "from": "osm-node-6110327053",
+      "to": "osm-node-6110327049",
+      "geometry": [
+        [113.3912426, 23.0635083],
+        [113.3915715, 23.0637583]
+      ],
+      "verified": false,
+      "level": "ground",
+      "sourceUrl": "https://www.openstreetmap.org/way/1410275261",
+      "bidirectional": true,
+      "name": "隧道连接步道",
+      "stairs": false
+    }
+  ]
+}

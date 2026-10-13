@@ -1012,8 +1012,8 @@
     },
     {
       "id": "osm-way-1389859416",
-      "name": "运动场地（类型待核验）",
-      "category": "sports",
+      "name": "排球场",
+      "category": "volleyball",
       "zone": "teaching",
       "coordinate": [113.38993415, 23.0671718],
       "crs": "WGS84",
@@ -1029,7 +1029,10 @@
         [113.3898899, 23.0670902],
         [113.3898901, 23.0672535],
         [113.3899784, 23.0672534]
-      ]
+      ],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图",
+      "aliases": ["运动场地（类型待核验）"],
+      "nameReviewedAt": "2026-10-13"
     },
     {
       "id": "osm-way-1389859417",
@@ -1054,8 +1057,8 @@
     },
     {
       "id": "osm-way-1389859418",
-      "name": "运动场地（类型待核验）",
-      "category": "sports",
+      "name": "排球场",
+      "category": "volleyball",
       "zone": "teaching",
       "coordinate": [113.39036734999999, 23.0671724],
       "crs": "WGS84",
@@ -1071,7 +1074,10 @@
         [113.3903231, 23.0670908],
         [113.3903233, 23.0672541],
         [113.3904116, 23.067254]
-      ]
+      ],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图",
+      "aliases": ["运动场地（类型待核验）"],
+      "nameReviewedAt": "2026-10-13"
     },
     {
       "id": "osm-way-1389859419",
@@ -1096,8 +1102,8 @@
     },
     {
       "id": "osm-way-1389859420",
-      "name": "运动场地（类型待核验）",
-      "category": "sports",
+      "name": "排球场",
+      "category": "volleyball",
       "zone": "teaching",
       "coordinate": [113.39022045, 23.0674028],
       "crs": "WGS84",
@@ -1113,7 +1119,10 @@
         [113.3901762, 23.0673212],
         [113.3901764, 23.0674845],
         [113.3902647, 23.0674844]
-      ]
+      ],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图",
+      "aliases": ["运动场地（类型待核验）"],
+      "nameReviewedAt": "2026-10-13"
     },
     {
       "id": "osm-way-1389859421",
@@ -1159,8 +1168,8 @@
     },
     {
       "id": "osm-way-1389859423",
-      "name": "运动场地（类型待核验）",
-      "category": "sports",
+      "name": "排球场",
+      "category": "volleyball",
       "zone": "teaching",
       "coordinate": [113.38993345, 23.0674022],
       "crs": "WGS84",
@@ -1176,7 +1185,10 @@
         [113.3898892, 23.0673206],
         [113.3898894, 23.0674839],
         [113.3899777, 23.0674838]
-      ]
+      ],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图",
+      "aliases": ["运动场地（类型待核验）"],
+      "nameReviewedAt": "2026-10-13"
     },
     {
       "id": "osm-way-1389859424",
@@ -1464,8 +1476,8 @@
     },
     {
       "id": "osm-way-1389859440",
-      "name": "运动场地（类型待核验）",
-      "category": "sports",
+      "name": "羽毛球场",
+      "category": "badminton",
       "zone": "teaching",
       "coordinate": [113.38962975, 23.0696849],
       "crs": "WGS84",
@@ -1481,12 +1493,15 @@
         [113.3895855, 23.0696033],
         [113.3895857, 23.0697666],
         [113.389674, 23.0697665]
-      ]
+      ],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图",
+      "aliases": ["运动场地（类型待核验）"],
+      "nameReviewedAt": "2026-10-13"
     },
     {
       "id": "osm-way-1389859441",
-      "name": "运动场地（类型待核验）",
-      "category": "sports",
+      "name": "羽毛球场",
+      "category": "badminton",
       "zone": "teaching",
       "coordinate": [113.38962835, 23.0700118],
       "crs": "WGS84",
@@ -1502,7 +1517,10 @@
         [113.3895841, 23.0699302],
         [113.3895843, 23.0700935],
         [113.3896726, 23.0700934]
-      ]
+      ],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图",
+      "aliases": ["运动场地（类型待核验）"],
+      "nameReviewedAt": "2026-10-13"
     },
     {
       "id": "osm-way-1389859442",
@@ -2110,7 +2128,7 @@
     },
     {
       "id": "osm-way-313039031",
-      "category": "building",
+      "category": "dormitory",
       "zone": "living",
       "coordinate": [113.39260254999999, 23.0619911],
       "geometry": [
@@ -2147,7 +2165,7 @@
       "minZoom": 17,
       "name": "友苑",
       "aliases": [],
-      "nameSource": "负责人指定：广外南校区地图.jpg",
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图",
       "nameReviewedAt": "2026-10-13"
     },
     {
@@ -2449,10 +2467,11 @@
           [113.3921715, 23.0671948]
         ]
       ],
-      "name": "教学楼组",
-      "nameSource": "OpenStreetMap 复合建筑：教学楼（整体轮廓，分栋待划分）",
-      "aliases": [],
-      "nameReviewedAt": "2026-10-13"
+      "name": "教学楼（E/F/G栋）",
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；保留整体轮廓，分栋标签按负责人朝北顺序绑定原始外环节点",
+      "aliases": ["教学楼组"],
+      "nameReviewedAt": "2026-10-13",
+      "maxZoom": 15.8
     },
     {
       "id": "osm-relation-4105911",
@@ -2545,10 +2564,11 @@
           [113.3945903, 23.0672354]
         ]
       ],
-      "name": "实验楼组",
-      "nameSource": "OpenStreetMap 复合建筑：实验楼（整体轮廓，分区待划分）",
-      "aliases": [],
-      "nameReviewedAt": "2026-10-13"
+      "name": "实验楼（A/B/C/D/E栋）",
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；保留整体轮廓，分栋标签按负责人朝北顺序绑定原始外环节点",
+      "aliases": ["实验楼组"],
+      "nameReviewedAt": "2026-10-13",
+      "maxZoom": 15.8
     },
     {
       "id": "osm-relation-4105910",
@@ -2784,7 +2804,232 @@
       "nameSource": "OpenStreetMap 与负责人校区图名称一致",
       "aliases": [],
       "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-node-3125704419",
+      "category": "teaching",
+      "zone": "teaching",
+      "coordinate": [113.3923508, 23.0675307],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/node/3125704419",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 17,
+      "name": "教学楼E栋",
+      "parentId": "osm-relation-4105730",
+      "aliases": ["E栋", "教学楼E"],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；源轮廓标签锚点，非已核验建筑入口",
+      "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-node-3125704391",
+      "category": "teaching",
+      "zone": "teaching",
+      "coordinate": [113.392906, 23.0668696],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/node/3125704391",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 17,
+      "name": "教学楼F栋",
+      "parentId": "osm-relation-4105730",
+      "aliases": ["F栋", "教学楼F"],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；源轮廓标签锚点，非已核验建筑入口",
+      "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-node-3125704356",
+      "category": "teaching",
+      "zone": "teaching",
+      "coordinate": [113.3933824, 23.0661999],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/node/3125704356",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 17,
+      "name": "教学楼G栋",
+      "parentId": "osm-relation-4105730",
+      "aliases": ["G栋", "教学楼G"],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；源轮廓标签锚点，非已核验建筑入口",
+      "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-node-3125808975",
+      "category": "building",
+      "zone": "teaching",
+      "coordinate": [113.3950759, 23.0667826],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/node/3125808975",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 17,
+      "name": "实验楼A栋",
+      "parentId": "osm-relation-4105911",
+      "aliases": ["A栋", "实验楼A"],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；源轮廓标签锚点，非已核验建筑入口",
+      "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-node-3125808984",
+      "category": "building",
+      "zone": "teaching",
+      "coordinate": [113.3949862, 23.0671247],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/node/3125808984",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 17,
+      "name": "实验楼B栋",
+      "parentId": "osm-relation-4105911",
+      "aliases": ["B栋", "实验楼B"],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；源轮廓标签锚点，非已核验建筑入口",
+      "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-node-3125808994",
+      "category": "building",
+      "zone": "teaching",
+      "coordinate": [113.3947648, 23.0674616],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/node/3125808994",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 17,
+      "name": "实验楼C栋",
+      "parentId": "osm-relation-4105911",
+      "aliases": ["C栋", "实验楼C"],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；源轮廓标签锚点，非已核验建筑入口",
+      "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-node-3125809005",
+      "category": "building",
+      "zone": "teaching",
+      "coordinate": [113.3941986, 23.0680048],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/node/3125809005",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 17,
+      "name": "实验楼D栋",
+      "parentId": "osm-relation-4105911",
+      "aliases": ["D栋", "实验楼D"],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；源轮廓标签锚点，非已核验建筑入口",
+      "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-node-3125809014",
+      "category": "building",
+      "zone": "teaching",
+      "coordinate": [113.3940787, 23.0683424],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/node/3125809014",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 17,
+      "name": "实验楼E栋",
+      "parentId": "osm-relation-4105911",
+      "aliases": ["E栋", "实验楼E"],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；源轮廓标签锚点，非已核验建筑入口",
+      "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-way-1410275259",
+      "category": "plaza",
+      "zone": "living",
+      "coordinate": [113.39182205, 23.06384585],
+      "geometry": [
+        [113.3914464, 23.0637786],
+        [113.3919919, 23.0641614],
+        [113.3921977, 23.0639131],
+        [113.3916522, 23.0635303],
+        [113.3916132, 23.0635574],
+        [113.3915715, 23.0637583],
+        [113.3914464, 23.0637786]
+      ],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/way/1410275259",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 15,
+      "name": "下沉广场",
+      "nameSource": "OpenStreetMap命名广场与负责人指定校区图",
+      "aliases": [],
+      "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-way-864205124",
+      "category": "transport",
+      "zone": "connection",
+      "coordinate": [113.39234745, 23.0643445],
+      "geometry": [
+        [113.3920866, 23.0641435],
+        [113.3926083, 23.0645455]
+      ],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/way/864205124",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 15,
+      "name": "下沉隧道",
+      "aliases": ["南校地下隧道", "南校隧道"],
+      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；OSM地下步行段，通行待确认",
+      "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-node-6110327053",
+      "category": "entrance",
+      "zone": "living",
+      "coordinate": [113.3912426, 23.0635083],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/node/6110327053",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 17,
+      "name": "下沉隧道生活区入口",
+      "nameSource": "OSM两端台阶地面节点；负责人指定下沉隧道",
+      "aliases": [],
+      "nameReviewedAt": "2026-10-13"
+    },
+    {
+      "id": "osm-node-6110327054",
+      "category": "entrance",
+      "zone": "teaching",
+      "coordinate": [113.392672, 23.0650147],
+      "crs": "WGS84",
+      "sourceUrl": "https://www.openstreetmap.org/node/6110327054",
+      "sourceName": "OpenStreetMap",
+      "fetchedAt": "2026-10-12",
+      "verification": "source_mapped",
+      "navigationVerified": false,
+      "minZoom": 17,
+      "name": "下沉隧道教学区入口",
+      "nameSource": "OSM两端台阶地面节点；负责人指定下沉隧道",
+      "aliases": [],
+      "nameReviewedAt": "2026-10-13"
     }
   ],
-  "mapVersion": "s1-2026-10-13.6"
+  "mapVersion": "s1-2026-10-13.7"
 }

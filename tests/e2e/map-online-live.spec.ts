@@ -31,27 +31,20 @@ test("controlled real online services on the fixed local map", async ({
     .click();
   await page.getByRole("button", { name: "关闭地点详情" }).click();
   await page.getByRole("button", { name: "切换为2D", exact: true }).click();
-  const marker = await page
-    .getByRole("button", { name: "查看图书馆", exact: true })
-    .boundingBox();
   await page.getByRole("button", { name: "校园步行导航", exact: true }).click();
+  await page.getByLabel("导航起点").fill("图书馆");
   await page
-    .getByRole("button", { name: "在地图上选择起点", exact: true })
+    .getByRole("region", { name: "起点地点建议" })
+    .getByRole("button", { name: /图书馆/ })
     .click();
-  await page.mouse.click(
-    marker!.x + marker!.width / 2 + 35,
-    marker!.y + marker!.height - 60,
-  );
+  await page.getByLabel("导航终点").fill("教学楼D栋");
   await page
-    .getByRole("button", { name: "在地图上选择终点", exact: true })
+    .getByRole("region", { name: "终点地点建议" })
+    .getByRole("button", { name: /教学楼D栋/ })
     .click();
-  await page.mouse.click(
-    marker!.x + marker!.width / 2 + 350,
-    marker!.y + marker!.height - 100,
-  );
   await page.getByRole("button", { name: "规划步行路线", exact: true }).click();
   await expect(page.locator(".route-result")).toBeVisible({ timeout: 30000 });
-  const dir = "docs/screenshots/s1/browser-fix";
+  const dir = "docs/screenshots/s1/map-feedback";
   await mkdir(dir, { recursive: true });
   await page.screenshot({
     path: `${dir}/local-map-real-online-route.jpg`,
@@ -65,7 +58,7 @@ test("controlled real online services on the fixed local map", async ({
         mocks: false,
         routeSummary: await page.locator(".route-result").innerText(),
         condition:
-          "same-zone map selection near library; current access / entrances not field verified",
+          "typed library -> teaching building D; actual supplier path to nearby roads; current access / entrances not field verified",
       },
       null,
       2,

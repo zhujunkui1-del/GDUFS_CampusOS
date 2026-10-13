@@ -19,9 +19,12 @@ export const categoryNames = {
   football: "足球场",
   basketball: "篮球场",
   volleyball: "排球场",
+  badminton: "羽毛球场",
   tennis: "网球场",
   sports: "运动场地",
   entrance: "校园出入口",
+  transport: "步行通道",
+  plaza: "广场",
 } as const;
 export const PlaceSchema = z.object({
   id: z.string().max(128),
@@ -35,7 +38,7 @@ export const PlaceSchema = z.object({
       ...(keyof typeof categoryNames)[],
     ],
   ),
-  zone: z.enum(["teaching", "living"]),
+  zone: z.enum(["teaching", "living", "connection"]),
   coordinate: CoordinateSchema,
   crs: z.literal("WGS84"),
   sourceUrl: z.url(),
@@ -44,6 +47,8 @@ export const PlaceSchema = z.object({
   verification: z.literal("source_mapped"),
   navigationVerified: z.literal(false),
   minZoom: z.number(),
+  maxZoom: z.number().optional(),
+  parentId: z.string().optional(),
   geometry: z.array(CoordinateSchema).optional(),
   geometryRings: z.array(z.array(CoordinateSchema).min(4)).optional(),
 });
@@ -71,7 +76,16 @@ export const campusData = z
 export type MapLayer = "buildings" | "sports" | "dormitories" | "services";
 export function placeLayer(place: CampusPlace): MapLayer {
   if (place.category === "dormitory") return "dormitories";
-  if (["building", "teaching", "library", "entrance"].includes(place.category))
+  if (
+    [
+      "building",
+      "teaching",
+      "library",
+      "entrance",
+      "transport",
+      "plaza",
+    ].includes(place.category)
+  )
     return "buildings";
   if (["service", "canteen"].includes(place.category)) return "services";
   return "sports";
@@ -83,9 +97,16 @@ export function searchCampusPlaces(query: string, layer?: MapLayer) {
       (p) =>
         (!layer || placeLayer(p) === layer) &&
         (!normalized ||
-          `${p.name} ${(p.aliases || []).join(" ")} ${categoryNames[p.category]} ${placeLayer(p) === "sports" ? "体育设施 运动" : ""} ${p.zone === "living" ? "生活区" : "教学区"}`
+          `${p.name} ${(p.aliases || []).join(" ")} ${categoryNames[p.category]} ${placeLayer(p) === "sports" ? "体育设施 运动" : ""} ${zoneName(p.zone)}`
             .toLowerCase()
             .includes(normalized)),
     )
     .sort((a, b) => a.minZoom - b.minZoom);
+}
+export function zoneName(zone: CampusPlace["zone"]) {
+  return zone === "living"
+    ? "生活区"
+    : zone === "teaching"
+      ? "教学区"
+      : "跨区通道";
 }

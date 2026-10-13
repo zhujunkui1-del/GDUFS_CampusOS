@@ -17,6 +17,7 @@ import {
   CAMPUS_MIN_ZOOM,
   fitCampusView,
 } from "@/features/campus-map/data/viewport";
+import { nearestTunnelDistance } from "@/features/campus-map/data/local-routing";
 vi.mock("@/lib/server/map-env", () => ({
   mapRuntime: () => ({
     env: {
@@ -75,11 +76,15 @@ describe("licensed campus geometry and search", () => {
       campusData.places.length,
     );
     for (const place of campusData.places) {
-      const isInsideBoundary = pointInPolygon(
-        place.coordinate,
-        campusData.zones.find((z) => z.id === place.zone)!.polygon,
-      );
-      expect(isInsideBoundary).toBe(true);
+      const isInsideBoundary =
+        place.zone === "connection"
+          ? place.id === "osm-way-864205124" &&
+            nearestTunnelDistance(place.coordinate) < 1
+          : pointInPolygon(
+              place.coordinate,
+              campusData.zones.find((z) => z.id === place.zone)!.polygon,
+            );
+      expect(isInsideBoundary, place.id).toBe(true);
       expect(place.sourceUrl).toMatch(
         /^https:\/\/www\.openstreetmap\.org\/(way|node|relation)\/\d+$/,
       );
@@ -95,7 +100,7 @@ describe("licensed campus geometry and search", () => {
     ]);
     expect(
       campusData.places.filter((p) => p.category === "dormitory"),
-    ).toHaveLength(17);
+    ).toHaveLength(18);
     expect(searchCampusPlaces("师苑3栋")[0].id).toBe("osm-way-313039033");
     expect(searchCampusPlaces("师苑2栋")[0].id).toBe("osm-way-313039038");
     expect(searchCampusPlaces("南苑13栋")[0].id).toBe("osm-way-312536953");

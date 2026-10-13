@@ -32,3 +32,7 @@ python scripts/prepare-local-map.py --context 'CampusOS_Codex_完整设计文档
 87个校园地点：北/南苑13栋与师苑4栋编号住宿楼宇、3个具名食堂及公共建筑/体育/服务地点。教学楼E/F/G、实验楼A—E独立分区及超市所属建筑、出入口和路网仍待资料。师苑四栋已按负责人逐项回复确认：Q1=师苑1栋，Q2=师苑3栋，Q3=师苑4栋，Q4=师苑2栋，核对图见 `research/s1/building-name-questions.svg`。
 
 本地地图当前是有真实平面轮廓的倾斜视图，尚无自主立体建筑。OSM缺少校园楼高，不按视觉效果生成默认高度；完整模型按修订建模方案另行实施。
+
+## 步行网络维护补充
+
+更新本地底图后手动运行 `python scripts/prepare-walking-network.py`，同步路网mapVersion和原XML SHA；不要在启动/构建时运行。道路审核名单位于src/features/campus-map/data/walkway-review.json，approved只由负责人身份/通行确认后修改。当前名单仅隧道及两端步道，不能开启整个原始OSM路网。路网与底图版本不一致时拒绝本地规划。名称绑定在owner-labels.json，分栋标签使用原始node及parentId，不能用它们当入口或独立建筑模型。

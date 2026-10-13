@@ -1,0 +1,6 @@
+{
+  "source": "real AMap PlaceSearch / Walking, user-triggered only",
+  "mocks": false,
+  "routeSummary": "164 米 约 2 分钟\n\n高德步行规划 · 已检查端点和校区范围\n目的地为附近道路，建筑入口与当前开放情况以现场为准。\n\n开始步行导航\n\n开始导航时请求设备定位；位置仅在本页使用，离开地图页停止追踪。\n\n向东南步行44米右转\n44 米\n向南步行75米右转\n75 米\n向西步行45米到达目的地\n45 米",
+  "condition": "typed library -> teaching building D; actual supplier path to nearby roads; current access / entrances not field verified"
+}
