@@ -1,0 +1,20 @@
+{
+  "reviewedAt": "2026-10-13",
+  "source": "负责人提供的高德地图截图",
+  "usage": "仅内部事实与位置关系核对，公开素材/几何提取许可未确认",
+  "files": [
+    {
+      "file": "CampusOS_Codex_完整设计文档_v2\\assets\\source_maps\\语心桥.png",
+      "sha256": "d0cecda703a440e9c87024260b9b2f69a6bb81cc963470ce0d7b7174043d8abc"
+    },
+    {
+      "file": "CampusOS_Codex_完整设计文档_v2\\assets\\source_maps\\停车场.png",
+      "sha256": "f26747e8e70949817c2e5b333c8f0fa2045202107da50d6320ee3a2d2259323a"
+    }
+  ],
+  "findings": [
+    "负责人考证：体育馆北侧篮球场不存在，当前为停车场。原示意图该项过时。",
+    "语心桥图显示语心湖有三处桥梁；与教学E/F/G、实验A—E的相对排列一致。",
+    "三个本地OSM XML未找到体育馆北侧amenity=parking源几何；既有语心湖桥梁仍缺可合法保存的坐标与共享节点，未从截图换算或描摹。"
+  ]
+}

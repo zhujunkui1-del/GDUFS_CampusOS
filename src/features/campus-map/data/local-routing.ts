@@ -38,7 +38,9 @@ export function planLocalRoute(
   const attach = (point: RoutePoint, id: string) => {
     const coordinate = toWgs84(point.coordinateGcj02);
     const nearest = graph.edges
-      .filter((e) => e.verified)
+      // A screen/GPS coordinate has no floor. Never snap a ground selection
+      // straight into the underground segment underneath the road.
+      .filter((e) => e.verified && e.level !== "underground")
       .map((edge) => ({ edge, snap: projectOnPath(coordinate, edge.geometry) }))
       .sort((a, b) => a.snap.distance - b.snap.distance)[0];
     if (!nearest || nearest.snap.distance > 25) return null;
@@ -72,20 +74,26 @@ export function planLocalRoute(
   const route = planVerifiedRoute(graph, a.id, b.id);
   if (!route || route.distanceMeters < 5) return null;
   const used = route.edgeIds.map((id) => graph.edges.find((e) => e.id === id)!);
-  const steps = used.map((edge) => {
-    const distance = Math.round(
-      edge.geometry
-        .slice(1)
-        .reduce((sum, p, n) => sum + distanceMeters(edge.geometry[n], p), 0),
-    );
+  const steps: CampusRoute["steps"] = [];
+  for (const [index, edge] of used.entries()) {
+    const distance = edge.geometry
+      .slice(1)
+      .reduce((sum, p, n) => sum + distanceMeters(edge.geometry[n], p), 0);
+    if (distance < 0.1) continue;
     const underground = edge.level === "underground";
     const instruction = underground
-      ? "穿过下沉隧道"
+      ? "进入并穿过下沉隧道"
       : edge.stairs
-        ? "沿台阶步行，请留意脚下"
+        ? used[index - 1]?.level === "underground"
+          ? "离开隧道，沿台阶步行，请留意脚下"
+          : "沿台阶步行，请留意脚下"
         : "沿连接步道步行";
-    return { instruction, distance };
-  });
+    const previous = steps.at(-1);
+    if (previous?.instruction === instruction) previous.distance += distance;
+    else steps.push({ instruction, distance });
+  }
+  for (const step of steps)
+    step.distance = Math.max(1, Math.round(step.distance));
   return {
     id: crypto.randomUUID(),
     start,

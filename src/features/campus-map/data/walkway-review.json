@@ -1,10 +1,10 @@
 {
-  "version": "s1-tunnel-2026-10-13.1",
+  "version": "s1-tunnel-2026-10-13.2",
   "sourceFile": "CampusOS_Codex_完整设计文档_v2/map.osm",
   "sourceUrl": "https://www.openstreetmap.org/way/864205124",
   "reviewedAt": "2026-10-13",
-  "approved": false,
-  "review": "负责人指定下沉隧道；两端台阶与当前通行等待负责人确认。没有批准整个OSM道路网络。",
+  "approved": true,
+  "review": "负责人2026-10-13明确确认：校园图中的下沉隧道及两端台阶可供师生正常步行通行。仅批准这7条隧道连接步道，不批准整个OSM路网；开放状态以现场为准。",
   "wayIds": [
     "651646933",
     "651646934",

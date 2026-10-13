@@ -88,7 +88,13 @@ describe("licensed campus geometry and search", () => {
       expect(place.sourceUrl).toMatch(
         /^https:\/\/www\.openstreetmap\.org\/(way|node|relation)\/\d+$/,
       );
-      expect(place.navigationVerified).toBe(false);
+      expect(place.navigationVerified).toBe(
+        [
+          "osm-way-864205124",
+          "osm-node-6110327053",
+          "osm-node-6110327054",
+        ].includes(place.id),
+      );
     }
   });
   it("finds real mapped library and numbered dormitories without adding guessed names", () => {

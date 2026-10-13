@@ -127,3 +127,9 @@ SRC-028离线资料统计：36个闭合建筑标签轮廓，含2个连廊；27�
 [下沉广场源记录](https://www.openstreetmap.org/way/1410275259)、[下沉隧道候选](https://www.openstreetmap.org/way/864205124)。连接ways651646933/934/935、864205125、1410275260/261均明确foot=yes/designated。共10节点/10边，实际共享节点连接；不合并地面/地下近邻节点、不把周边机动车道自动加入步行图。地面节点6110327053/6110327054作入口标注；当前通行待负责人确认，审核开关false。没有将OSM收录当现场开放证据。
 
 定位依据[Geolocation规范说明](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API)；HTTPS/localhost、显式许可、getCurrentPosition/watchPosition/clearWatch，浏览器定位在中国的可用性仍需现场验证。路线点按需传高德，跟随定位保留本页；测试坐标只在tests隔离配置，截图不假称现场GPS。权限标签核对参照[OSM access说明](https://wiki.openstreetmap.org/wiki/Key:access)。
+
+## SRC-037｜负责人通行确认与两张高德截图（2026-10-13）
+
+负责人明确确认下沉隧道及两端台阶正常通行，批准原始OSM ways651646933/934/935、864205124/125、1410275260/261组成的走廊；只这10条边标为verified。隧道及两端地面入口3个地点新增navigationReviewedAt/navigationSource，其他地点仍未标可精确导航。
+
+停车场.png、语心桥.png由负责人提供，来源高德地图，无具体分享链接，SHA与结论见research/s1/new-reference-review.json。北侧篮球场的旧示意图标注已被负责人考证纠正为停车场；三桥存在及排列可佐证。停车场区域的amenity=parking在三个本地OSM XML中没有匹配，三桥无相应源边；未将截图当带地理参考的GIS，不复制到public，公开展示/几何提取许可未确认。仍需合法坐标资料进行绘制/导航。

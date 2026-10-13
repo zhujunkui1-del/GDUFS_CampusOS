@@ -16,4 +16,8 @@
 | mobile-real-online-route                               | 同一实际路线在390×844重新排布；没有新增规划请求。未点击GPS导航，不宣称现场定位成功。                 |
 | desktop-overview、desktop-lab-details、desktop-youyuan | Codex浏览器1280×720实际总览、实验C栋详情和友苑分类补充。                                             |
 
-共25张JPEG。metrics.json为实际初始化/拖动响应计时，不等于FPS；real-online-service-result.json为真实服务摘要，不含凭据/设备个人位置。体育馆北侧篮球场、语心湖三桥、已完成隧道路线和现场GPS缺资源/确认，未生成这些成功截图。
+共25张JPEG。metrics.json为实际初始化/拖动响应计时，不等于FPS；real-online-service-result.json为真实服务摘要，不含凭据/设备个人位置。体育馆北侧篮球场已由负责人考证撤销，改为停车场；停车场/语心湖三桥源几何与现场GPS仍缺。隧道真实路线已另存tunnel-confirmed。
+
+## 通行确认后的更新
+
+下沉隧道通行现已由负责人确认，真实234米走廊路线截图另见../tunnel-confirmed。本目录的隧道标签/详情和导航表单已按最新状态重截图。北侧篮球场经考证不存在，当前停车场；仍缺停车场与语心湖三桥的源几何，原“缺北侧篮球场”结论撤销。

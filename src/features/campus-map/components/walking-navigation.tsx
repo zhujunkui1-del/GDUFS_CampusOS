@@ -168,7 +168,9 @@ export function WalkingNavigation({ onClose }: { onClose(): void }) {
               ? "本地 OSM 步行网络 · 已核对节点连接"
               : "高德步行规划 · 已检查端点和校区范围"}
             <br />
-            目的地为附近道路，建筑入口与当前开放情况以现场为准。
+            {route.source === "CampusOS.OSM"
+              ? "经下沉隧道及两端连接步道，通行已由负责人确认。开放状态以现场为准；时间按步行速度估算。"
+              : "目的地为附近道路，建筑入口与当前开放情况以现场为准。"}
             {route.undergroundPathGcj02?.length
               ? " 隧道段以虚线标示，包含台阶。"
               : ""}

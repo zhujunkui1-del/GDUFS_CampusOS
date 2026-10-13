@@ -79,7 +79,9 @@ export function PlaceDetails({
                     <small>WGS84 地物标注位置</small>
                   </p>
                   <p>
-                    建筑入口与开放时间尚未核验。导航以附近步行道路为终点，也可在地图上选择已知可通行的位置。
+                    {place.navigationVerified
+                      ? "下沉隧道及两端台阶已由负责人确认正常步行通行。开放状态以现场为准。"
+                      : "建筑入口与开放时间尚未核验。导航以附近步行道路为终点，也可在地图上选择已知可通行的位置。"}
                   </p>
                   {place.parentId && (
                     <p>
@@ -119,7 +121,11 @@ export function PlaceDetails({
                         · {place.nameReviewedAt}
                       </span>
                     )}
-                    <span>出入口、服务信息与当前通行情况待核验。</span>
+                    <span>
+                      {place.navigationVerified
+                        ? `通行：${place.navigationSource} · ${place.navigationReviewedAt}。开放状态以现场为准。`
+                        : "出入口、服务信息与当前通行情况待核验。"}
+                    </span>
                   </div>
                 </Drawer.Content>
               )}

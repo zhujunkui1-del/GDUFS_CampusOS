@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { mockAMap } from "./map-fixture";
-import { readFile } from "node:fs/promises";
+import { readFile, mkdir, writeFile } from "node:fs/promises";
 const review = JSON.parse(
   await readFile("src/features/campus-map/data/walkway-review.json", "utf8"),
 );
@@ -101,7 +101,7 @@ test("controlled browser geolocation is opt-in and rejects an outside-campus pos
 
 test("tunnel uses the real source corridor only after owner confirmation", async ({
   page,
-}) => {
+}, testInfo) => {
   let onlineRequests = 0;
   page.on("request", (r) => {
     if (r.url().includes("amap.com")) onlineRequests++;
@@ -126,6 +126,25 @@ test("tunnel uses the real source corridor only after owner confirmation", async
   if (review.approved) {
     await expect(page.locator(".route-result")).toContainText("本地 OSM");
     await expect(page.locator(".route-result")).toContainText("穿过下沉隧道");
+    const dir = "docs/screenshots/s1/tunnel-confirmed";
+    await mkdir(dir, { recursive: true });
+    await page.screenshot({
+      path: `${dir}/${process.env.PLAYWRIGHT_CHANNEL || "chromium"}-${testInfo.project.name}-tunnel-route.jpg`,
+      type: "jpeg",
+    });
+    await writeFile(
+      `${dir}/${process.env.PLAYWRIGHT_CHANNEL || "chromium"}-${testInfo.project.name}-result.json`,
+      JSON.stringify(
+        {
+          source: "actual local OSM network / owner approved",
+          fixtures: false,
+          summary: await page.locator(".route-result").innerText(),
+          providerRequests: onlineRequests,
+        },
+        null,
+        2,
+      ) + "\n",
+    );
   } else
     await expect(page.locator(".route-planner .inline-error")).toContainText(
       "通行尚待负责人确认",

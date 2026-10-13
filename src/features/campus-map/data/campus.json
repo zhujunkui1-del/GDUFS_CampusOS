@@ -2989,12 +2989,14 @@
       "sourceName": "OpenStreetMap",
       "fetchedAt": "2026-10-12",
       "verification": "source_mapped",
-      "navigationVerified": false,
+      "navigationVerified": true,
       "minZoom": 15,
       "name": "下沉隧道",
       "aliases": ["南校地下隧道", "南校隧道"],
-      "nameSource": "负责人2026-10-13浏览器批注与指定校区图；OSM地下步行段，通行待确认",
-      "nameReviewedAt": "2026-10-13"
+      "nameSource": "负责人2026-10-13确认：下沉隧道及两端台阶正常通行；几何使用原始OSM",
+      "nameReviewedAt": "2026-10-13",
+      "navigationReviewedAt": "2026-10-13",
+      "navigationSource": "负责人确认隧道及两端台阶正常通行"
     },
     {
       "id": "osm-node-6110327053",
@@ -3006,12 +3008,14 @@
       "sourceName": "OpenStreetMap",
       "fetchedAt": "2026-10-12",
       "verification": "source_mapped",
-      "navigationVerified": false,
+      "navigationVerified": true,
       "minZoom": 17,
       "name": "下沉隧道生活区入口",
-      "nameSource": "OSM两端台阶地面节点；负责人指定下沉隧道",
+      "nameSource": "负责人2026-10-13确认：下沉隧道及两端台阶正常通行；几何使用原始OSM",
       "aliases": [],
-      "nameReviewedAt": "2026-10-13"
+      "nameReviewedAt": "2026-10-13",
+      "navigationReviewedAt": "2026-10-13",
+      "navigationSource": "负责人确认隧道及两端台阶正常通行"
     },
     {
       "id": "osm-node-6110327054",
@@ -3023,12 +3027,14 @@
       "sourceName": "OpenStreetMap",
       "fetchedAt": "2026-10-12",
       "verification": "source_mapped",
-      "navigationVerified": false,
+      "navigationVerified": true,
       "minZoom": 17,
       "name": "下沉隧道教学区入口",
-      "nameSource": "OSM两端台阶地面节点；负责人指定下沉隧道",
+      "nameSource": "负责人2026-10-13确认：下沉隧道及两端台阶正常通行；几何使用原始OSM",
       "aliases": [],
-      "nameReviewedAt": "2026-10-13"
+      "nameReviewedAt": "2026-10-13",
+      "navigationReviewedAt": "2026-10-13",
+      "navigationSource": "负责人确认隧道及两端台阶正常通行"
     }
   ],
   "mapVersion": "s1-2026-10-13.7"

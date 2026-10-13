@@ -1,5 +1,5 @@
 {
-  "version": "s1-tunnel-2026-10-13.1",
+  "version": "s1-tunnel-2026-10-13.2",
   "mapVersion": "s1-2026-10-13.7",
   "sourceSha256": "bd151987c468be315e1acb7976539ddef2a076f8e32e777e1b0071bd6e0e265f",
   "nodes": [
@@ -53,7 +53,7 @@
         [113.3915715, 23.0637583],
         [113.392012, 23.0640877]
       ],
-      "verified": false,
+      "verified": true,
       "level": "ground",
       "sourceUrl": "https://www.openstreetmap.org/way/651646933",
       "bidirectional": true,
@@ -68,7 +68,7 @@
         [113.392012, 23.0640877],
         [113.3920866, 23.0641435]
       ],
-      "verified": false,
+      "verified": true,
       "level": "ground",
       "sourceUrl": "https://www.openstreetmap.org/way/651646933",
       "bidirectional": true,
@@ -83,7 +83,7 @@
         [113.3926083, 23.0645455],
         [113.392672, 23.0650147]
       ],
-      "verified": false,
+      "verified": true,
       "level": "ground",
       "sourceUrl": "https://www.openstreetmap.org/way/651646934",
       "bidirectional": true,
@@ -98,7 +98,7 @@
         [113.3915715, 23.0637583],
         [113.3912426, 23.0635083]
       ],
-      "verified": false,
+      "verified": true,
       "level": "ground",
       "sourceUrl": "https://www.openstreetmap.org/way/651646935",
       "bidirectional": true,
@@ -113,7 +113,7 @@
         [113.3920866, 23.0641435],
         [113.3926083, 23.0645455]
       ],
-      "verified": false,
+      "verified": true,
       "level": "underground",
       "sourceUrl": "https://www.openstreetmap.org/way/864205124",
       "bidirectional": true,
@@ -128,7 +128,7 @@
         [113.3926083, 23.0645455],
         [113.3932178, 23.0650424]
       ],
-      "verified": false,
+      "verified": true,
       "level": "ground",
       "sourceUrl": "https://www.openstreetmap.org/way/864205125",
       "bidirectional": true,
@@ -143,7 +143,7 @@
         [113.3933003, 23.0649813],
         [113.3931584, 23.0648079]
       ],
-      "verified": false,
+      "verified": true,
       "level": "ground",
       "sourceUrl": "https://www.openstreetmap.org/way/1410275260",
       "bidirectional": true,
@@ -158,7 +158,7 @@
         [113.3931584, 23.0648079],
         [113.3927168, 23.064491]
       ],
-      "verified": false,
+      "verified": true,
       "level": "ground",
       "sourceUrl": "https://www.openstreetmap.org/way/1410275260",
       "bidirectional": true,
@@ -173,7 +173,7 @@
         [113.3927168, 23.064491],
         [113.3926083, 23.0645455]
       ],
-      "verified": false,
+      "verified": true,
       "level": "ground",
       "sourceUrl": "https://www.openstreetmap.org/way/1410275260",
       "bidirectional": true,
@@ -188,7 +188,7 @@
         [113.3912426, 23.0635083],
         [113.3915715, 23.0637583]
       ],
-      "verified": false,
+      "verified": true,
       "level": "ground",
       "sourceUrl": "https://www.openstreetmap.org/way/1410275261",
       "bidirectional": true,

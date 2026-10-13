@@ -86,7 +86,40 @@ describe("owner-reviewed names and real walking topology", () => {
     if (review.approved) {
       expect(route?.source).toBe("CampusOS.OSM");
       expect(route?.undergroundPathGcj02).toHaveLength(1);
+      expect(route?.distanceMeters).toBeGreaterThan(100);
+      expect(route?.steps.every((s) => s.distance > 0)).toBe(true);
+      const reverse = planLocalRoute(
+        point("osm-node-6110327054"),
+        point("osm-node-6110327053"),
+      )!;
+      expect(reverse.distanceMeters).toBeCloseTo(route!.distanceMeters, 1);
+      expect(
+        reverse.steps.some((s) => s.instruction.includes("离开隧道")),
+      ).toBe(true);
     } else expect(route).toBeNull();
+  });
+  it("does not teleport a ground map selection into the tunnel below the road", () => {
+    const midpoint = campusData.places.find(
+      (p) => p.id === "osm-way-864205124",
+    )!;
+    const portal = campusData.places.find(
+      (p) => p.id === "osm-node-6110327054",
+    )!;
+    const route = planLocalRoute(
+      {
+        name: "中环路地面选点",
+        coordinateGcj02: toGcj02(midpoint.coordinate),
+        zone: "connection",
+        source: "user_map_selection",
+      },
+      {
+        name: portal.name,
+        coordinateGcj02: toGcj02(portal.coordinate),
+        zone: portal.zone,
+        source: "campus_place",
+      },
+    );
+    expect(route).toBeNull();
   });
   it("projects GPS onto path geometry and distinguishes permission, unavailable and timeout errors", () => {
     const p = projectOnPath(
