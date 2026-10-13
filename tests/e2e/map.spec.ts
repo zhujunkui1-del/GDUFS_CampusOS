@@ -32,19 +32,19 @@ test.beforeEach(async ({ page }) => {
 test("opening another page does not load the map SDK until the map is visited", async ({
   page,
 }) => {
-  let configRequests = 0;
+  let snapshotRequests = 0;
   page.on("request", (request) => {
-    if (request.url().includes("/api/map/config")) configRequests++;
+    if (request.url().endsWith(".geojson")) snapshotRequests++;
   });
   await page.goto("/account");
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  expect(configRequests).toBe(0);
+  expect(snapshotRequests).toBe(0);
   await page.goto("/map");
   await expect(page.getByTestId("campus-map")).toHaveAttribute(
     "data-status",
     "ready",
   );
-  expect(configRequests).toBeGreaterThan(0);
+  expect(snapshotRequests).toBeGreaterThan(0);
 });
 test("map controls, source-backed place details, layers and cross-page state", async ({
   page,
@@ -114,18 +114,33 @@ test("route selection computes through the SDK and reset discards results", asyn
     "data-status",
     "ready",
   );
+  await page.getByLabel("搜索校园地点").fill("图书馆");
+  await page.locator(".place-result").filter({ hasText: "图书馆" }).click();
+  await page.getByRole("button", { name: "关闭地点详情" }).click();
+  await page.getByRole("button", { name: "切换为2D", exact: true }).click();
+  const library = await page
+    .getByRole("button", { name: "查看图书馆", exact: true })
+    .boundingBox();
   await page.getByRole("button", { name: "校园步行导航", exact: true }).click();
   await page
     .getByRole("button", { name: "在地图上选择起点", exact: true })
     .click();
-  await clickMapGround(page, isMobile ? 120 : 700, 250);
+  await clickMapGround(
+    page,
+    library!.x + library!.width / 2 + 35,
+    library!.y + library!.height - 60,
+  );
   await expect(
     page.getByRole("button", { name: /地图选定起点/ }),
   ).toBeVisible();
   await page
     .getByRole("button", { name: "在地图上选择终点", exact: true })
     .click();
-  await clickMapGround(page, isMobile ? 170 : 740, 310);
+  await clickMapGround(
+    page,
+    library!.x + library!.width / 2 + 90,
+    library!.y + library!.height - 80,
+  );
   await expect(
     page.getByRole("button", { name: /地图选定终点/ }),
   ).toBeVisible();
@@ -135,11 +150,31 @@ test("route selection computes through the SDK and reset discards results", asyn
     "data-mode",
     "2d",
   );
+  if (!isMobile) {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect
+      .poll(async () => {
+        const raw = await page
+          .getByTestId("campus-map")
+          .getAttribute("data-route-extent");
+        const panel = await page.locator(".route-planner").boundingBox();
+        if (!raw || !panel) return false;
+        const [left, top, right, bottom] = JSON.parse(raw);
+        return left >= 0 && top >= 0 && right <= 390 && bottom < panel.y;
+      })
+      .toBe(true)
+      .catch(async (error) => {
+        throw new Error(
+          `${error.message}\nroute extent=${await page.getByTestId("campus-map").getAttribute("data-route-extent")} panel=${JSON.stringify(await page.locator(".route-planner").boundingBox())} map=${JSON.stringify(await page.getByTestId("campus-map").boundingBox())}`,
+        );
+      });
+    await expect(page.locator(".route-result")).toContainText("90 米");
+  }
   await page.getByRole("button", { name: "重置路线", exact: true }).click();
   await expect(page.locator(".route-result")).toHaveCount(0);
 });
 
-test("missing map credentials and unlisted proxy endpoints report actual failure", async ({
+test("missing online credentials keeps the local map usable and reports service failure", async ({
   page,
   request,
 }) => {
@@ -156,12 +191,22 @@ test("missing map credentials and unlisted proxy endpoints report actual failure
     }),
   );
   await page.goto("/map");
-  await expect(
-    page.getByRole("heading", { name: "地图暂时无法加载", exact: true }),
-  ).toBeVisible();
+  await expect(page.getByTestId("campus-map")).toHaveAttribute(
+    "data-status",
+    "ready",
+  );
   await expect(
     page.getByRole("button", { name: "切换为2D", exact: true }),
-  ).toBeDisabled();
+  ).toBeEnabled();
+  await page.getByLabel("搜索校园地点").fill("图书馆");
+  await page
+    .getByRole("button", { name: "查询高德在线地点", exact: true })
+    .click();
+  await expect(
+    page.getByText("高德查询暂时失败，校园已收录地点仍可搜索。", {
+      exact: true,
+    }),
+  ).toBeVisible();
   const proxy = await request.get("/_AMapService/not-permitted?key=fixture");
   expect([404, 503]).toContain(proxy.status());
   const places = await request.get("/api/places?q=北苑1栋");

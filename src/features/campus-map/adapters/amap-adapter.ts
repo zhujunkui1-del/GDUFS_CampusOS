@@ -165,10 +165,7 @@ export class AMapAdapter implements MapAdapter {
       this.map.clearLimitBounds();
       this.map.setZooms([CAMPUS_MIN_ZOOM, CAMPUS_MAX_ZOOM]);
       this.minimumZoom = CAMPUS_MIN_ZOOM;
-      this.map.setRotation(
-        this.element.clientWidth > this.element.clientHeight ? 90 : 0,
-        true,
-      );
+      if (!restore) this.map.setRotation(0, true);
       await this.setZone(
         "all",
         this.element.clientWidth < 761 ? [170, 150, 30, 60] : [40, 40, 110, 70],
@@ -255,11 +252,7 @@ export class AMapAdapter implements MapAdapter {
     padding = [170, 100, 110, 120],
   ) {
     const generation = ++this.fitGeneration;
-    if (zone === "all")
-      this.map.setRotation(
-        this.element.clientWidth > this.element.clientHeight ? 90 : 0,
-        true,
-      );
+    if (zone === "all") this.map.setRotation(0, true);
     const points = this.zones
       .filter((z) => zone === "all" || z.id === zone)
       .flatMap((z) => z.polygon);

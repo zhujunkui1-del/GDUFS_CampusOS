@@ -45,7 +45,7 @@
       },
       "outer_way_ids": ["1037933911", "1499812811", "1388137572", "1499812812"]
     },
-    "existing_places_matched": 75,
+    "existing_places_matched": 87,
     "missing_place_ids": [],
     "changed_anchor_ids": [],
     "highways_touching_campus": [
@@ -967,7 +967,59 @@
         "levels": "5",
         "sourceTimestamp": "2025-06-28T19:40:49Z"
       }
-    ]
+    ],
+    "complex_footprints": 5,
+    "complex_buildings": [
+      {
+        "id": "4105730",
+        "name": "教学楼",
+        "building": "university",
+        "height": null,
+        "levels": null,
+        "type": "multipolygon",
+        "sourceTimestamp": "2018-12-02T06:09:36Z"
+      },
+      {
+        "id": "4105910",
+        "name": "学术交流中心",
+        "building": "university",
+        "height": null,
+        "levels": null,
+        "type": "multipolygon",
+        "sourceTimestamp": "2018-12-02T06:09:36Z"
+      },
+      {
+        "id": "4105911",
+        "name": "实验楼",
+        "building": "university",
+        "height": null,
+        "levels": null,
+        "type": "multipolygon",
+        "sourceTimestamp": "2018-12-02T06:09:36Z"
+      },
+      {
+        "id": "19299170",
+        "name": "教学楼D栋",
+        "building": "university",
+        "height": null,
+        "levels": "5",
+        "type": "multipolygon",
+        "sourceTimestamp": "2025-06-28T19:40:49Z"
+      },
+      {
+        "id": "19299171",
+        "name": "教学楼B栋",
+        "building": "university",
+        "height": null,
+        "levels": "5",
+        "type": "multipolygon",
+        "sourceTimestamp": "2025-06-28T19:40:49Z"
+      }
+    ],
+    "total_candidate_objects": 41,
+    "total_with_levels": 6,
+    "total_with_height": 0,
+    "count_caution": "Complex footprints can overlap child ways; this is not a unique school building count."
   },
   "geopackage": {
     "checksum_matches": true,

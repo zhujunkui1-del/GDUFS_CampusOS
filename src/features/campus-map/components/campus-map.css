@@ -1,4 +1,5 @@
-.campus-map-canvas {
+.campus-map-canvas,
+.campus-map-canvas.maplibregl-map {
   position: fixed;
   inset: 0;
   z-index: 0;
@@ -441,6 +442,25 @@
   border-radius: 50%;
   background: #6f7f92;
   vertical-align: 2px;
+}
+.campus-marker[hidden] {
+  display: none;
+}
+.campus-zone-label {
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: rgba(248, 249, 247, 0.86);
+  color: #4e6254;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+}
+.campus-zone-label[hidden] {
+  display: none;
+}
+.campus-map-canvas .maplibregl-canvas {
+  touch-action: none;
 }
 .marker-sports::before {
   background: #56845f;

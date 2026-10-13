@@ -9,13 +9,11 @@ import {
   useState,
 } from "react";
 import "./campus-map.css";
+import "maplibre-gl/dist/maplibre-gl.css";
 import { usePathname } from "next/navigation";
-import { loadAMap } from "../adapters/load-amap";
-import {
-  AMapAdapter,
-  type CampusRoute,
-  type RoutePoint,
-} from "../adapters/amap-adapter";
+import { type CampusRoute, type RoutePoint } from "../adapters/amap-adapter";
+import type { LocalMapAdapter } from "../adapters/local-map-adapter";
+import manifest from "../data/local-map-manifest.json";
 import {
   campusData,
   placeLayer,
@@ -24,7 +22,7 @@ import {
 } from "../data/campus";
 import type { MapMode } from "@/domain/maps/contracts";
 import { MapActionSchema } from "@/domain/maps/contracts";
-import { sdkCoordinate, type SDKPoi } from "../adapters/amap-types";
+import { type SDKPoi } from "../adapters/amap-types";
 import {
   CAMPUS_MIN_ZOOM,
   CAMPUS_MAX_ZOOM,
@@ -82,7 +80,7 @@ export function CampusMapProvider({
   const [mapRequested, setMapRequested] = useState(pathname === "/map");
   if (pathname === "/map" && !mapRequested) setMapRequested(true);
   const element = useRef<HTMLDivElement>(null);
-  const adapter = useRef<AMapAdapter | null>(null);
+  const adapter = useRef<LocalMapAdapter | null>(null);
   const pickRef = useRef<"start" | "end" | null>(null);
   const [revision, setRevision] = useState(0);
   const [status, setStatus] = useState<MapContextValue["status"]>("loading");
@@ -105,6 +103,7 @@ export function CampusMapProvider({
   const [picking, setPicking] = useState<MapContextValue["picking"]>(null);
   const [routeBusy, setRouteBusy] = useState(false);
   const [zoom, setZoom] = useState(15.5);
+  const [bearing, setBearing] = useState(0);
   const [minimumZoom, setMinimumZoom] = useState(CAMPUS_MIN_ZOOM);
   const [supports3D, setSupports3D] = useState(true);
   const routeGeneration = useRef(0);
@@ -121,10 +120,10 @@ export function CampusMapProvider({
     const abort = new AbortController();
     void (async () => {
       try {
-        const sdk = await loadAMap();
+        const { LocalMapAdapter } =
+          await import("../adapters/local-map-adapter");
         if (cancelled || !element.current) return;
-        const next = await AMapAdapter.create(
-          sdk,
+        const next = await LocalMapAdapter.create(
           element.current,
           abort.signal,
         );
@@ -165,35 +164,16 @@ export function CampusMapProvider({
           setZoom(next.map.getZoom());
           setMinimumZoom(next.minimumZoom);
         });
-        await new Promise<void>((resolve, reject) => {
-          const timeout = setTimeout(
-            () => reject(new Error("地图图层加载超时，请检查网络。")),
-            20000,
-          );
-          next.map.on("complete", () => {
-            clearTimeout(timeout);
-            resolve();
-          });
-          abort.signal.addEventListener(
-            "abort",
-            () => {
-              clearTimeout(timeout);
-              reject(new Error("地图加载已取消。"));
-            },
-            { once: true },
-          );
-        });
+        next.map.on("rotateend", () => setBearing(next.map.getRotation()));
         if (!cancelled) {
           // Fit only after the real renderer knows its viewport dimensions.
           next.setPitch(view.current.mode === "2d" ? 0 : CAMPUS_PITCH);
           await next.initializeViewport();
-          await next.setZone(
-            view.current.zone,
-            window.innerWidth < 761 ? [170, 150, 30, 60] : [40, 40, 110, 70],
-          );
+          if (view.current.zone !== "all") next.setZone(view.current.zone);
           if (cancelled) return;
           setStatus("ready");
           setZoom(next.map.getZoom());
+          setBearing(next.map.getRotation());
           setMinimumZoom(next.minimumZoom);
         }
       } catch (failure) {
@@ -299,21 +279,21 @@ export function CampusMapProvider({
     select,
     closeDetails: () => setSelected(null),
     zoomBy: (delta) => {
-      const map = adapter.current?.map;
-      if (map)
+      const current = adapter.current;
+      const map = current?.map;
+      if (map && current)
         map.setZoom(
           Math.max(
-            CAMPUS_MIN_ZOOM,
+            current.minimumZoom,
             Math.min(CAMPUS_MAX_ZOOM, map.getZoom() + delta),
           ),
-          true,
         );
     },
     rotateBy: (delta) => {
       const map = adapter.current?.map;
-      if (map) map.setRotation(map.getRotation() + delta, true);
+      if (map) map.setRotation(map.getRotation() + delta);
     },
-    resetBearing: () => adapter.current?.map.setRotation(0, true),
+    resetBearing: () => adapter.current?.map.setRotation(0),
     startPicking: (which) => {
       clearRoute();
       setSelected(null);
@@ -329,11 +309,7 @@ export function CampusMapProvider({
     searchOnline: async (query) =>
       adapter.current ? adapter.current.onlineSearch(query) : [],
     focusOnline: (poi) => {
-      adapter.current?.map.setZoomAndCenter(
-        18,
-        sdkCoordinate(poi.location),
-        true,
-      );
+      adapter.current?.focusOnline(poi);
     },
     askAssistant: (place) => {
       setAssistantPlace(place);
@@ -365,11 +341,14 @@ export function CampusMapProvider({
         ref={element}
         className="campus-map-canvas"
         style={{ visibility: pathname === "/map" ? "visible" : "hidden" }}
-        aria-label="高德大学城校区地图"
+        aria-label="大学城校区本地地图"
         data-testid="campus-map"
         data-status={status}
         data-mode={mode}
         data-zoom={zoom.toFixed(2)}
+        data-bearing={bearing.toFixed(2)}
+        data-engine="maplibre-local"
+        data-map-version={manifest.version}
         data-scope="campus-and-visible-context"
         data-min-zoom={minimumZoom.toFixed(2)}
       />

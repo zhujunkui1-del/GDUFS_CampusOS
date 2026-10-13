@@ -1,0 +1,11 @@
+© OpenStreetMap contributors
+
+This local map dataset contains OpenStreetMap data, available under the
+Open Data Commons Open Database License (ODbL) 1.0.
+https://www.openstreetmap.org/copyright
+https://opendatacommons.org/licenses/odbl/1-0/
+
+Source IDs are retained in each GeoJSON feature. CampusOS publishes the
+processed data as a fixed, manually maintained snapshot. Source records and
+checksums are recorded in docs/DATA_SOURCES.md and local-map-manifest.json.
+This dataset does not contain AMap, Baidu or Apple Maps tiles or 3D assets.

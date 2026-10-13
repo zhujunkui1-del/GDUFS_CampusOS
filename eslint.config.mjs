@@ -13,5 +13,6 @@ export default defineConfig([
     "cloudflare-env.d.ts",
     "playwright-report/**",
     "test-results/**",
+    "public/vendor/**",
   ]),
 ]);

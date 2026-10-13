@@ -94,7 +94,7 @@ export function MapWorkspace() {
               enterKeyHint="search"
               autoComplete="off"
               onFocus={() => {
-                if (query) setSearchOpen(true);
+                if (query && !routeOpen) setSearchOpen(true);
               }}
               onChange={(event) => {
                 ++generation.current;
@@ -236,9 +236,7 @@ export function MapWorkspace() {
             {map.status === "loading" ? "正在加载校园地图" : "地图暂时无法加载"}
           </h2>
           <p>
-            {map.status === "loading"
-              ? "连接高德地图并校验校园坐标。"
-              : map.error}
+            {map.status === "loading" ? "正在读取本地校园地图。" : map.error}
           </p>
           {map.status === "error" && (
             <button className="primary-button" onClick={map.retry}>
@@ -280,7 +278,12 @@ export function MapWorkspace() {
           <Layers size={20} strokeWidth={1.5} />
         </button>
         <button
-          onClick={() => setRouteOpen(!routeOpen)}
+          onClick={() => {
+            setSearchOpen(false);
+            setRouteOpen(!routeOpen);
+            if (map.route)
+              map.executeAction({ type: "SHOW_ROUTE", routeId: map.route.id });
+          }}
           aria-label="校园步行导航"
           aria-expanded={routeOpen}
         >
@@ -425,6 +428,7 @@ export function MapWorkspace() {
       <PlaceDetails
         finalFocus={searchInput}
         onNavigate={() => {
+          setSearchOpen(false);
           map.closeDetails();
           setRouteOpen(true);
           map.startPicking("end");

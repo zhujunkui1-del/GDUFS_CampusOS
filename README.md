@@ -2,7 +2,7 @@
 
 广外大学城校区的响应式 Web 应用。正式域名：`gdufs.ccwu.cc`（已由负责人指定，尚未完成线上绑定）。需求基线保存在 `CampusOS_Codex_完整设计文档_v2/`。
 
-S0 工程基线已完成；当前进行 S1 真实校园地图与验收：高德官方底图、两区视野、75个 OSM 来源地点、搜索/详情和客户端地图动作已实现。校园完整名录、入口、自建路网/跨区隧道仍待核验；Agent/RAG、短信登录和模型设置尚未开发。实际边界见 [S1验收记录](docs/S1_ACCEPTANCE.md)。
+S0 工程基线已完成；当前进行 S1 真实校园地图与验收：本地固定OSM底图、默认朝北、两区视野、87个 OSM 来源地点、搜索/详情和客户端地图动作已实现。校园完整名录、入口、自建路网/跨区隧道仍待核验；Agent/RAG、短信登录和模型设置尚未开发。实际边界见 [本次验收](docs/S1_LOCAL_MAP_ACCEPTANCE.md)；底图只手动更新，见 [维护步骤](docs/LOCAL_MAP_MAINTENANCE.md)。
 
 ## 本地运行
 
@@ -17,9 +17,9 @@ npm run dev
 
 访问 `http://127.0.0.1:3000/map`。保留 `.env.local` 内未知服务的空值；凭据只在本地环境或 Cloudflare Secret 中配置，不写入源码或文档。
 
-地图需 `AMAP_WEB_KEY`、`AMAP_SECURITY_JS_CODE`；Next 开发写入被忽略的 `.env.local`，Workers 本地写入被忽略的 `.dev.vars`。高德后台允许本地与正式站点域名。安全密钥只用于服务端固定地址代理；`AMAP_WEBSERVICE_KEY` 未提供时保持空值，不冒充独立 Web 服务接入。请勿把凭据文件上传或提交。
+本地地图不需要高德凭据；按需在线查询/路线需 `AMAP_WEB_KEY`、`AMAP_SECURITY_JS_CODE`；Next 开发写入被忽略的 `.env.local`，Workers 本地写入被忽略的 `.dev.vars`。高德后台允许本地与正式站点域名。安全密钥只用于服务端固定地址代理；`AMAP_WEBSERVICE_KEY` 未提供时保持空值，不冒充独立 Web 服务接入。请勿把凭据文件上传或提交。
 
-地图只浏览教学、生活两区及按窗口比例确定的必要周边，首次进入地图页才加载 SDK；原始 OSM/GeoPackage 不整包加载到浏览器。新增资料离线检查可运行 `python scripts/inspect-campus-sources.py`，需负责人提供的两个本地文件。
+地图只浏览教学、生活两区及按窗口比例确定的必要周边，首次进入地图页才加载本地渲染器，打开地图不请求高德；原始 OSM/GeoPackage 不整包加载到浏览器。校园几何优先 map.osm、横屏周边优先 map (1).osm。新增资料离线检查可运行 `python scripts/inspect-campus-sources.py`，需负责人提供的两个本地文件。
 
 ## 验证
 

@@ -75,14 +75,13 @@ describe("licensed campus geometry and search", () => {
       campusData.places.length,
     );
     for (const place of campusData.places) {
-      expect(
-        pointInPolygon(
-          place.coordinate,
-          campusData.zones.find((z) => z.id === place.zone)!.polygon,
-        ),
-      ).toBe(true);
+      const isInsideBoundary = pointInPolygon(
+        place.coordinate,
+        campusData.zones.find((z) => z.id === place.zone)!.polygon,
+      );
+      expect(isInsideBoundary).toBe(true);
       expect(place.sourceUrl).toMatch(
-        /^https:\/\/www\.openstreetmap\.org\/(way|node)\/\d+$/,
+        /^https:\/\/www\.openstreetmap\.org\/(way|node|relation)\/\d+$/,
       );
       expect(place.navigationVerified).toBe(false);
     }
@@ -96,7 +95,11 @@ describe("licensed campus geometry and search", () => {
     ]);
     expect(
       campusData.places.filter((p) => p.category === "dormitory"),
-    ).toHaveLength(12);
+    ).toHaveLength(17);
+    expect(searchCampusPlaces("师苑3栋")[0].id).toBe("osm-way-313039033");
+    expect(searchCampusPlaces("师苑2栋")[0].id).toBe("osm-way-313039038");
+    expect(searchCampusPlaces("南苑13栋")[0].id).toBe("osm-way-312536953");
+    expect(searchCampusPlaces("一饭")[0].name).toBe("文采园（一饭）");
     expect(searchCampusPlaces("不存在的第99栋宿舍")).toEqual([]);
   });
   it("keeps outside locations out and computes geographic distances", () => {

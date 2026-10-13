@@ -105,6 +105,15 @@ export function PlaceDetails({
                     <span>
                       采集：{place.fetchedAt.slice(0, 10)} · 地物来源已核对
                     </span>
+                    {place.nameSource && (
+                      <span>
+                        名称：
+                        {place.nameSource.startsWith("负责人逐栋确认")
+                          ? "负责人逐栋确认"
+                          : place.nameSource}{" "}
+                        · {place.nameReviewedAt}
+                      </span>
+                    )}
                     <span>出入口、服务信息与当前通行情况待核验。</span>
                   </div>
                 </Drawer.Content>

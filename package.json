@@ -8,6 +8,9 @@
     "node": ">=22.12.0"
   },
   "scripts": {
+    "predev": "node scripts/prepare-map-runtime.mjs",
+    "prebuild": "node scripts/prepare-map-runtime.mjs",
+    "prebuild:worker": "node scripts/prepare-map-runtime.mjs",
     "dev": "next dev --hostname 127.0.0.1",
     "build": "next build",
     "start": "next start --hostname 127.0.0.1",
@@ -26,7 +29,9 @@
   },
   "dependencies": {
     "@base-ui/react": "1.9.0",
+    "gcoord": "1.0.7",
     "lucide-react": "1.55.0",
+    "maplibre-gl": "6.14.0",
     "next": "16.3.8",
     "react": "19.3.0",
     "react-dom": "19.3.0",

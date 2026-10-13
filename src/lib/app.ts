@@ -6,12 +6,12 @@ export const APP = {
   campusName: "广外大学城校区",
 } as const;
 
-// Server availability is separate from per-browser SDK rendering (MapContext.status).
+// Static local data is available; actual browser rendering remains MapContext.status.
 export const CAPABILITIES = {
   map: {
-    available: false,
+    available: true,
     implemented: true,
-    status: "client_sdk_render_check_required",
+    status: "local_osm_snapshot_browser_render_check_required",
   },
   places: { available: true, status: "source_mapped_entrances_pending" },
   routes: {

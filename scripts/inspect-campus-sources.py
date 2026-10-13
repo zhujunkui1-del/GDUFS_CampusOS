@@ -31,7 +31,7 @@ def in_campus(point):
 matched, missing, changed = [], [], []
 for place in current["places"]:
     _, kind, identifier = place["id"].split("-")
-    element = ways.get(identifier) if kind == "way" else root.find(f"node[@id='{identifier}']")
+    element = ways.get(identifier) if kind == "way" else root.find(f"{kind}[@id='{identifier}']")
     if element is None:
         missing.append(place["id"])
         continue
@@ -39,6 +39,10 @@ for place in current["places"]:
         points = [nodes[n.get("ref")] for n in element.findall("nd")]
         anchor = [(min(p[0] for p in points) + max(p[0] for p in points)) / 2,
                   (min(p[1] for p in points) + max(p[1] for p in points)) / 2]
+    elif kind == "relation":
+        refs = [m.get("ref") for m in element.findall("member") if m.get("type") == "way" and m.get("role") == "outer"]
+        points = [nodes[n.get("ref")] for ref in refs for n in ways[ref].findall("nd")]
+        anchor = [(min(p[i] for p in points)+max(p[i] for p in points))/2 for i in range(2)]
     else:
         anchor = nodes[identifier]
     matched.append(place["id"])
@@ -53,7 +57,7 @@ for identifier, way in ways.items():
     points = [nodes[n.get("ref")] for n in way.findall("nd")]
     anchor = [(min(p[0] for p in points) + max(p[0] for p in points)) / 2,
               (min(p[1] for p in points) + max(p[1] for p in points)) / 2] if points else None
-    if t.get("building") and t["building"] != "no" and anchor and in_campus(anchor):
+    if t.get("building") and t["building"] != "no" and anchor and (in_campus(anchor) or identifier == "312536953"):
         buildings.append({"id": identifier, "name": t.get("name"), "building": t["building"],
                           "closed": len(points) >= 4 and points[0] == points[-1],
                           "height": t.get("height"), "levels": t.get("building:levels"),
@@ -66,6 +70,17 @@ for identifier, way in ways.items():
     if t.get("tunnel") and t.get("tunnel") != "no":
         tunnels.append({"id": identifier, "name": t.get("name"), "highway": t.get("highway"),
                         "tunnel": t.get("tunnel"), "touches_campus": any(in_campus(p) for p in points)})
+
+complex_buildings = []
+for rel in root.findall("relation"):
+    t = tags(rel)
+    if not t.get("building") or t.get("building") == "no": continue
+    refs = [m.get("ref") for m in rel.findall("member") if m.get("type") == "way" and m.get("role") == "outer"]
+    if not refs or any(ref not in ways for ref in refs): continue
+    points = [nodes[n.get("ref")] for ref in refs for n in ways[ref].findall("nd")]
+    anchor = [(min(p[i] for p in points)+max(p[i] for p in points))/2 for i in range(2)]
+    if in_campus(anchor): complex_buildings.append({"id": rel.get("id"), "name": t.get("name"), "building": t.get("building"),
+        "height": t.get("height"), "levels": t.get("building:levels"), "type": "multipolygon", "sourceTimestamp": rel.get("timestamp")})
 
 relation = root.find("relation[@id='13900183']")
 con = sqlite3.connect(f"file:{gpkg_path.as_posix()}?mode=ro", uri=True)
@@ -94,7 +109,12 @@ report = {
                           "named": sum(bool(b["name"]) for b in buildings),
                           "with_height": sum(b["height"] is not None for b in buildings),
                           "with_levels": sum(b["levels"] is not None for b in buildings),
-                          "buildings": buildings},
+                          "buildings": buildings,
+                          "complex_footprints": len(complex_buildings), "complex_buildings": complex_buildings,
+                          "total_candidate_objects": len(buildings) + len(complex_buildings),
+                          "total_with_levels": sum(b["levels"] is not None for b in buildings + complex_buildings),
+                          "total_with_height": sum(b["height"] is not None for b in buildings + complex_buildings),
+                          "count_caution": "Complex footprints can overlap child ways; this is not a unique school building count."},
     "geopackage": {"checksum_matches": actual_md5 == expected_md5, "layers": layers},
     "limitations": ["Exports retain whole crossing geometries outside the selected extent.",
                     "Two extracts share the OSM source and are not independent geography verification.",

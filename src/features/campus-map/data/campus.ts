@@ -26,6 +26,9 @@ export const categoryNames = {
 export const PlaceSchema = z.object({
   id: z.string().max(128),
   name: z.string().max(150),
+  aliases: z.array(z.string()).optional(),
+  nameSource: z.string().optional(),
+  nameReviewedAt: z.string().optional(),
   category: z.enum(
     Object.keys(categoryNames) as [
       keyof typeof categoryNames,
@@ -42,6 +45,7 @@ export const PlaceSchema = z.object({
   navigationVerified: z.literal(false),
   minZoom: z.number(),
   geometry: z.array(CoordinateSchema).optional(),
+  geometryRings: z.array(z.array(CoordinateSchema).min(4)).optional(),
 });
 export type CampusPlace = z.infer<typeof PlaceSchema>;
 export const campusData = z
@@ -52,6 +56,7 @@ export const campusData = z
     license: z.literal("ODbL-1.0"),
     attribution: z.string(),
     fetchedAt: z.string(),
+    mapVersion: z.string().optional(),
     zones: z
       .array(
         z.object({
@@ -78,7 +83,7 @@ export function searchCampusPlaces(query: string, layer?: MapLayer) {
       (p) =>
         (!layer || placeLayer(p) === layer) &&
         (!normalized ||
-          `${p.name} ${categoryNames[p.category]} ${placeLayer(p) === "sports" ? "体育设施 运动" : ""} ${p.zone === "living" ? "生活区" : "教学区"}`
+          `${p.name} ${(p.aliases || []).join(" ")} ${categoryNames[p.category]} ${placeLayer(p) === "sports" ? "体育设施 运动" : ""} ${p.zone === "living" ? "生活区" : "教学区"}`
             .toLowerCase()
             .includes(normalized)),
     )
