@@ -1,10 +1,10 @@
 {
-  "version": "s1-2026-10-13.8",
+  "version": "s1-2026-10-14.1",
   "crs": "WGS84",
   "bounds": [113.362, 23.045, 113.424, 23.086],
-  "url": "/maps/campus-0f7a1a36e85c.geojson",
-  "sha256": "0f7a1a36e85cda535421c1e4abe9803d811dea80ddbd7c36718637d16f7da0fc",
-  "bytes": 2561626,
+  "url": "/maps/campus-e81df54c66ed.geojson",
+  "sha256": "e81df54c66ed52077cd99d8d82ed90190780357388b435cf3d058231bdaa5359",
+  "bytes": 2561611,
   "features": 4511,
   "license": "ODbL-1.0",
   "contextSources": [
@@ -24,6 +24,6 @@
   },
   "bufferSha256": "82bfc67438c64ad7679de8ef9891ad912aebca1a88c4404449500ff67df15b04",
   "campusSourceSha256": "bd151987c468be315e1acb7976539ddef2a076f8e32e777e1b0071bd6e0e265f",
-  "preparedAt": "2026-10-13T16:26:29.286162+00:00",
+  "preparedAt": "2026-10-13T19:26:33.865494+00:00",
   "updates": "manual only"
 }

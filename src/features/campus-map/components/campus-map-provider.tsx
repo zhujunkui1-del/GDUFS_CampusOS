@@ -208,7 +208,7 @@ export function CampusMapProvider({
       if (document.hidden) {
         stopLocation();
         setNavigationProgress(null);
-        setLocationMessage("定位已暂停，点击定位可继续追踪。");
+        setLocationMessage("定位已暂停。");
       }
     };
     document.addEventListener("visibilitychange", onHidden);
@@ -221,7 +221,7 @@ export function CampusMapProvider({
       const { coordinate, accuracy, timestamp } = position;
       if (Date.now() - timestamp > 30000) {
         adapter.current?.clearLocation();
-        setLocationMessage("定位已过期；隧道内可能无信号，请按路线指引步行。");
+        setLocationMessage("定位已过期，请重新定位。");
         setNavigationProgress(null);
         return;
       }
@@ -230,9 +230,7 @@ export function CampusMapProvider({
         nearestTunnelDistance(coordinate) > 25
       ) {
         adapter.current?.clearLocation();
-        setLocationMessage(
-          "当前位置在大学城校区之外，地图保持校园范围；请手动选择校园起点。",
-        );
+        setLocationMessage("当前位置在校外，请选择校内起点。");
         setNavigationProgress(null);
         return;
       }
@@ -262,19 +260,17 @@ export function CampusMapProvider({
           source: "device_location",
         });
       }
-      setLocationMessage(
-        `定位精度约${Math.round(accuracy)}米；位置仅在当前页面使用。`,
-      );
+      setLocationMessage(`定位精度约${Math.round(accuracy)}米。`);
       if (!location.tracking || !currentRoute.current) return;
       if (accuracy > 50) {
-        setLocationMessage("定位精度不足，路线已保留；暂不更新步行进度。");
+        setLocationMessage("定位精度不足，请重新定位。");
         setNavigationProgress(null);
         return;
       }
       const r = currentRoute.current;
       const projection = projectOnPath(coordinate, r.pathGcj02.map(toWgs84));
       if (projection.distance > Math.max(25, accuracy)) {
-        setLocationMessage("当前位置偏离路线；请核对起点，可手动重新规划。");
+        setLocationMessage("已偏离路线，请重新规划。");
         setNavigationProgress(null);
         return;
       }
@@ -535,11 +531,15 @@ export function CampusMapProvider({
       }
     },
     stopNavigation: () => {
-      location.stop();
-      setNavigationActive(false);
-      setNavigationProgress(null);
+      clearRoute();
+      setStart(null);
+      setEnd(null);
+      setSelected(null);
+      pickRef.current = null;
+      setPicking(null);
+      adapter.current?.showEndpoints(null, null);
+      adapter.current?.clearSelection();
       adapter.current?.setInteractionMode("browse");
-      if (route) adapter.current?.renderRoute(route.id);
       view.current.mode = "2d";
       setModeState("2d");
     },

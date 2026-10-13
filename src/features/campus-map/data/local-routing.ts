@@ -113,7 +113,36 @@ export function planLocalRoute(
         ? campusData.places.find((p) => p.id === point.placeId)
         : undefined,
       ring = place ? targetRing(place) : undefined;
-    const cacheKey = point.placeId || coordinate.join(",");
+    const device = point.source === "device_location";
+    if (device) {
+      const area = areaPlaces.find(
+        (p) => p.geometry && pointInPolygon(coordinate, p.geometry),
+      );
+      if (area?.geometry) {
+        const id = addNode(coordinate);
+        let linked = false;
+        for (const n of tunnelNetwork.nodes) {
+          if (
+            segmentInside(coordinate, n.coordinate, area.geometry) &&
+            segmentAvoids(coordinate, n.coordinate, water)
+          ) {
+            addEdge(
+              id,
+              n.id,
+              "owner-review:" + area.id,
+              "穿过教学实验楼可通行区域",
+            );
+            linked = true;
+          }
+        }
+        if (linked) return [id];
+      }
+    }
+    const deviceZone = campusData.zones.find(
+      (z) => z.id === point.zone,
+    )?.polygon;
+    const cacheKey =
+      point.source + ":" + (point.placeId || coordinate.join(","));
     let options = endpointCache.get(cacheKey);
     if (!options) {
       options = [];
@@ -131,9 +160,18 @@ export function planLocalRoute(
               };
             })();
         if (
-          option.distance > (place ? 80 : 30) ||
+          (!device && option.distance > (place ? 80 : 30)) ||
+          (device &&
+            ((!(edge.kind === "bridge" && option.distance < 0.3) &&
+              !segmentAvoids(coordinate, option.road, water)) ||
+              !(deviceZone
+                ? edge.geometry.every((p) => pointInPolygon(p, deviceZone))
+                : edge.geometry.every(
+                    (p) => nearestTunnelDistance(p) < 25,
+                  )))) ||
           (place && !belongsToPart(place, option.boundary)) ||
-          (!(edge.kind === "bridge" && option.distance < 0.3) &&
+          (!device &&
+            !(edge.kind === "bridge" && option.distance < 0.3) &&
             !clear(option.road, option.boundary))
         )
           continue;
@@ -148,7 +186,7 @@ export function planLocalRoute(
     for (const p of options) {
       if (!chosen.some((c) => distanceMeters(c.boundary, p.boundary) < 8))
         chosen.push(p);
-      if (chosen.length === 16) break;
+      if (chosen.length === (device ? 1 : 16)) break;
     }
     const ids: string[] = [];
     for (const p of chosen) {
@@ -158,8 +196,9 @@ export function planLocalRoute(
             : distanceMeters(p.road, p.edge.geometry.at(-1)!) < 0.15
               ? p.edge.to
               : addNode(p.road),
-        boundaryId =
-          distanceMeters(p.road, p.boundary) < 0.1
+        boundaryId = device
+          ? roadId
+          : distanceMeters(p.road, p.boundary) < 0.1
             ? roadId
             : addNode(p.boundary);
       const split = splits.get(p.edge.id) || {
@@ -183,7 +222,7 @@ export function planLocalRoute(
         );
       ids.push(boundaryId);
     }
-    if (!place)
+    if (!place && !device)
       for (const area of areaPlaces)
         if (area.geometry && pointInPolygon(coordinate, area.geometry)) {
           const id = addNode(coordinate);
@@ -252,7 +291,7 @@ export function planLocalRoute(
           : e.kind === "building_passage"
             ? "穿过教学实验楼可通行区域"
             : e.kind === "bridge"
-              ? "经过" + e.name
+              ? "经过语心桥"
               : e.stairs
                 ? "沿台阶步行，请留意脚下"
                 : e.name?.startsWith("语心")
@@ -263,13 +302,31 @@ export function planLocalRoute(
     else steps.push({ instruction, distance: length });
   }
   steps.forEach((s) => (s.distance = Math.max(1, Math.round(s.distance))));
+  const approach =
+    start.source === "device_location" &&
+    distanceMeters(toWgs84(start.coordinateGcj02), planned.coordinates[0]) > 0.3
+      ? [start.coordinateGcj02, toGcj02(planned.coordinates[0])]
+      : undefined;
+  const approachDistance = approach
+    ? distanceMeters(toWgs84(approach[0]), planned.coordinates[0])
+    : 0;
+  if (approach)
+    steps.unshift({
+      instruction: "前往最近步道",
+      distance: Math.max(1, Math.round(approachDistance)),
+    });
+  const distance = planned.distanceMeters + approachDistance;
   return {
     id: crypto.randomUUID(),
     start,
     end,
-    pathGcj02: planned.coordinates.map(toGcj02),
-    distanceMeters: planned.distanceMeters,
-    seconds: planned.distanceMeters / 1.25,
+    pathGcj02: [
+      ...(approach ? [start.coordinateGcj02] : []),
+      ...planned.coordinates.map(toGcj02),
+    ],
+    approachPathGcj02: approach,
+    distanceMeters: distance,
+    seconds: distance / 1.25,
     steps,
     source: "CampusOS.OSM",
     verification: "reviewed_source_network",

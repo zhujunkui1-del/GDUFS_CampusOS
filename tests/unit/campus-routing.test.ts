@@ -25,6 +25,46 @@ function point(name: string): RoutePoint {
   };
 }
 describe("campus-wide owner-approved routing", () => {
+  it("can start a device route on the confirmed bridge", () => {
+    const p = {
+      ...point("语心桥"),
+      source: "device_location" as const,
+      placeId: undefined,
+    };
+    expect(planLocalRoute(p, point("实验楼C栋"))).not.toBeNull();
+  });
+  it("uses one bridge label for all three connected geometries", () => {
+    expect(searchCampusPlaces("语心桥").map((p) => p.id)).toEqual([
+      "owner-bridge-f",
+    ]);
+    expect(
+      campusData.places.filter((p) => p.labelPlaceId === "owner-bridge-f"),
+    ).toHaveLength(3);
+    expect(searchCampusPlaces("体育馆北侧停车场")[0].name).toBe("停车场");
+  });
+  it("takes the teaching B to laboratory C shortcut through Yuxin bridge", () => {
+    const route = planLocalRoute(point("教学楼B栋"), point("实验楼C栋"))!;
+    expect(route).not.toBeNull();
+    expect(route.steps.some((s) => s.instruction.includes("语心桥"))).toBe(
+      true,
+    );
+    expect(route.distanceMeters).toBeLessThan(400);
+    expect(
+      Math.min(...route.pathGcj02.map((p) => toWgs84(p)[1])),
+    ).toBeGreaterThan(23.0657);
+  });
+  it("guides a device position inside a dorm to the nearest campus path", () => {
+    const start = {
+      ...point("北苑1栋"),
+      source: "device_location" as const,
+      placeId: undefined,
+    };
+    const route = planLocalRoute(start, point("实验楼C栋"));
+    expect(route).not.toBeNull();
+    expect(route).toHaveProperty("approachPathGcj02");
+    expect(route!.pathGcj02[0]).toEqual(start.coordinateGcj02);
+    expect(route!.undergroundPathGcj02).toHaveLength(1);
+  });
   it("connects every dorm to teaching and laboratory through the tunnel", () => {
     const targets = [
       "教学楼A栋",
@@ -50,18 +90,14 @@ describe("campus-wide owner-approved routing", () => {
     );
   }, 20000);
   it("keeps three bridge anchors exact and provides connected crossing paths", () => {
-    const names = [
-      "语心桥（教学楼E栋）",
-      "语心桥（教学楼F栋）",
-      "语心桥（教学楼G栋）",
-    ];
-    for (const name of names) {
-      const p = point(name);
+    for (const id of ["owner-bridge-e", "owner-bridge-f", "owner-bridge-g"]) {
+      const place = campusData.places.find((v) => v.id === id)!;
+      const p = { placeId: id, coordinateGcj02: toGcj02(place.coordinate) };
       expect(
         campusData.places.find((v) => v.id === p.placeId)!.verification,
       ).toBe("owner_confirmed");
       const edges = tunnelNetwork.edges.filter(
-        (e) => e.kind === "bridge" && e.name === name,
+        (e) => e.kind === "bridge" && e.sourceUrl === "owner-review:" + id,
       );
       expect(edges).toHaveLength(1);
       expect(

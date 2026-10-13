@@ -175,7 +175,8 @@ test("full-campus route and focused navigation retain honest GPS failure state",
     "data-camera-moving",
     "false",
   );
-  const dir = "docs/screenshots/s1/campus-navigation";
+  const dir =
+    process.env.E2E_CAPTURE_DIR || "docs/screenshots/s1/campus-navigation";
   await mkdir(dir, { recursive: true });
   await page.screenshot({
     path: `${dir}/${info.project.name}-dorm-to-teaching-route.jpg`,
@@ -231,18 +232,20 @@ test("full-campus route and focused navigation retain honest GPS failure state",
   await page.getByRole("button", { name: "切换路线方向朝上" }).click();
   await expect(page.getByRole("button", { name: "切换朝北" })).toBeVisible();
   await page.getByRole("button", { name: "退出步行导航" }).click();
-  await expect(page.locator(".route-result")).toBeVisible();
-  await expect(page.getByLabel("导航终点")).toHaveValue("教学楼E栋");
+  await expect(page.locator(".route-result")).toHaveCount(0);
+  await expect(page.getByLabel("导航终点")).toHaveValue("");
+  await expect(page.locator(".route-endpoint")).toHaveCount(0);
 });
 test("capture owner-reviewed parking, bridges and octagonal building", async ({
   page,
 }, info) => {
   await ready(page);
-  const dir = "docs/screenshots/s1/campus-navigation";
+  const dir =
+    process.env.E2E_CAPTURE_DIR || "docs/screenshots/s1/campus-navigation";
   await mkdir(dir, { recursive: true });
   for (const [name, file] of [
-    ["体育馆北侧停车场", "parking"],
-    ["语心桥（教学楼F栋）", "bridges"],
+    ["停车场", "parking"],
+    ["语心桥", "bridges"],
     ["八角楼", "octagonal-building"],
   ] as const) {
     await page.getByLabel("搜索校园地点").fill(name);
@@ -282,7 +285,7 @@ test("controlled GPS updates progress and view orientation without external requ
   await expect(page.locator(".route-result")).toBeVisible();
   await page.getByRole("button", { name: "开始步行导航", exact: true }).click();
   await expect(page.locator(".navigation-direction")).toContainText(
-    "正在更新步行位置",
+    "定位已连接",
   );
   const before = Number(
     (
@@ -307,5 +310,5 @@ test("controlled GPS updates progress and view orientation without external requ
   await page.getByRole("button", { name: "切换路线方向朝上" }).click();
   await expect(page.getByRole("button", { name: "切换朝北" })).toBeVisible();
   await page.getByRole("button", { name: "退出步行导航" }).click();
-  await expect(page.getByLabel("导航起点")).toHaveValue("下沉隧道生活区入口");
+  await expect(page.getByLabel("导航起点")).toHaveValue("");
 });

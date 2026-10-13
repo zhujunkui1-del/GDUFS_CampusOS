@@ -212,7 +212,7 @@
       "properties": {
         "kind": "parking",
         "sourceId": "owner-parking-north",
-        "name": "体育馆北侧停车场",
+        "name": "停车场",
         "tunnel": "no",
         "bridge": "no"
       },
@@ -256,11 +256,12 @@
         [113.39298425, 23.0675717],
         [113.393049, 23.067618],
         [113.39312967, 23.06767569]
-      ]
+      ],
+      "labelPlaceId": "owner-bridge-f"
     },
     {
       "id": "owner-bridge-f",
-      "name": "语心桥（教学楼F栋）",
+      "name": "语心桥",
       "category": "transport",
       "zone": "teaching",
       "coordinate": [113.393505, 23.067031],
@@ -279,7 +280,8 @@
         [113.39342874, 23.06697647],
         [113.393505, 23.067031],
         [113.39367617, 23.0671534]
-      ]
+      ],
+      "labelPlaceId": "owner-bridge-f"
     },
     {
       "id": "owner-bridge-g",
@@ -302,7 +304,8 @@
         [113.3938149, 23.06643966],
         [113.393958, 23.066542],
         [113.39411081, 23.06665128]
-      ]
+      ],
+      "labelPlaceId": "owner-bridge-f"
     },
     {
       "id": "owner-bajiaolou",
@@ -336,7 +339,7 @@
     },
     {
       "id": "owner-parking-north",
-      "name": "体育馆北侧停车场",
+      "name": "停车场",
       "category": "parking",
       "zone": "teaching",
       "coordinate": [113.391957, 23.072652],
@@ -361,7 +364,8 @@
         [113.39171703, 23.07297576],
         [113.39122386, 23.07297576],
         [113.39122386, 23.07325499]
-      ]
+      ],
+      "aliases": ["体育馆北侧停车场"]
     }
   ],
   "review": "2026-10-13",

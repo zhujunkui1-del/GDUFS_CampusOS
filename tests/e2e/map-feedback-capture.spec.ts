@@ -5,7 +5,9 @@ test("capture source-backed labels and responsive navigation surfaces", async ({
   page,
 }, testInfo) => {
   // Actual local renderer, no supplier/GPS fixtures and no API calls.
-  const dir = "docs/screenshots/s1/map-feedback";
+  const dir = process.env.E2E_CAPTURE_DIR
+    ? process.env.E2E_CAPTURE_DIR + "/map-feedback"
+    : "docs/screenshots/s1/map-feedback";
   await mkdir(dir, { recursive: true });
   await page.goto("/map");
   await expect(page.getByTestId("campus-map")).toHaveAttribute(

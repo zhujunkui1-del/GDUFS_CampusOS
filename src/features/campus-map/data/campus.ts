@@ -52,6 +52,7 @@ export const PlaceSchema = z.object({
   minZoom: z.number(),
   maxZoom: z.number().optional(),
   parentId: z.string().optional(),
+  labelPlaceId: z.string().optional(),
   geometry: z.array(CoordinateSchema).optional(),
   geometryRings: z.array(z.array(CoordinateSchema).min(4)).optional(),
 });
@@ -99,6 +100,7 @@ export function searchCampusPlaces(query: string, layer?: MapLayer) {
   return campusData.places
     .filter(
       (p) =>
+        (!p.labelPlaceId || p.labelPlaceId === p.id) &&
         (!layer || placeLayer(p) === layer) &&
         (!normalized ||
           `${p.name} ${(p.aliases || []).join(" ")} ${categoryNames[p.category]} ${placeLayer(p) === "sports" ? "体育设施 运动" : ""} ${zoneName(p.zone)}`

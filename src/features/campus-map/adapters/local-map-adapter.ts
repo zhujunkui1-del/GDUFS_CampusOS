@@ -82,6 +82,7 @@ export class LocalMapAdapter implements MapAdapter {
   private lastFollow?: Coordinate;
   private pendingPitch?: number;
   private cameraRevision = 0;
+  private cameraTargetKey?: string;
   private constructor(private element: HTMLElement) {
     setWorkerUrl("/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs");
     const memory = (navigator as Navigator & { deviceMemory?: number })
@@ -274,7 +275,15 @@ export class LocalMapAdapter implements MapAdapter {
       setZoomAndCenter: (zoom: number, center: Coordinate) =>
         this.animateCamera({ center, zoom }),
     };
-    this.native.on("moveend", () => this.updateLabels());
+    this.native.on("moveend", () => {
+      this.element.dataset.cameraMoving = String(this.native.isMoving());
+      this.updateLabels();
+    });
+    this.native.on("move", () => {
+      this.element.dataset.cameraFrameCount = String(
+        Number(this.element.dataset.cameraFrameCount || 0) + 1,
+      );
+    });
     this.native.on("idle", () => {
       if (this.native.isStyleLoaded())
         this.element.dataset.sportsFeatureCount = String(
@@ -284,14 +293,6 @@ export class LocalMapAdapter implements MapAdapter {
     this.native.on("dragstart", () => {
       this.followSuspended = true;
       ++this.cameraRevision;
-    });
-    this.native.on("pitchend", () => {
-      if (
-        this.activeRouteId &&
-        this.native.getPitch() < 0.1 &&
-        (this.pendingPitch ?? 0) < 0.1
-      )
-        this.fitRoute(this.activeRouteId);
     });
     this.native.on("zoomend", () => {
       this.cameraTargetZoom = undefined;
@@ -309,6 +310,7 @@ export class LocalMapAdapter implements MapAdapter {
         ],
       })[0];
       let id = feature?.properties.sourceId;
+      id = campusData.places.find((p) => p.id === id)?.labelPlaceId || id;
       const children = id
         ? campusData.places.filter((p) => p.parentId === id && !p.geometry)
         : [];
@@ -360,6 +362,7 @@ export class LocalMapAdapter implements MapAdapter {
         });
       });
       for (const place of campusData.places) {
+        if (place.labelPlaceId && place.labelPlaceId !== place.id) continue;
         const button = document.createElement("button");
         button.className = `campus-marker marker-${placeLayer(place)}`;
         button.textContent = place.name;
@@ -481,7 +484,7 @@ export class LocalMapAdapter implements MapAdapter {
     this.observer = new ResizeObserver(() => {
       if (!this.destroyed) {
         this.native.resize();
-        this.native.jumpTo({ center: this.native.getCenter() });
+        this.native.triggerRepaint();
         if (this.activeRouteId) this.fitRoute(this.activeRouteId);
       }
     });
@@ -527,7 +530,10 @@ export class LocalMapAdapter implements MapAdapter {
     else this.animateCamera({ pitch: next });
   }
   private animateCamera(options: EaseToOptions) {
-    ++this.cameraRevision;
+    const key = JSON.stringify(options);
+    if (this.native.isMoving() && this.cameraTargetKey === key) return;
+    const revision = ++this.cameraRevision;
+    this.cameraTargetKey = key;
     if (options.pitch !== undefined) this.pendingPitch = options.pitch;
     this.native.stop();
     this.cameraTargetZoom = options.zoom;
@@ -537,7 +543,9 @@ export class LocalMapAdapter implements MapAdapter {
     );
     this.element.dataset.lastCameraDuration = String(cameraDuration());
     this.native.once("moveend", () => {
+      if (this.cameraRevision !== revision) return;
       this.element.dataset.cameraMoving = "false";
+      this.native.triggerRepaint();
       this.updateLabels();
     });
     this.native.easeTo({
@@ -627,20 +635,27 @@ export class LocalMapAdapter implements MapAdapter {
     const ai = document
       .querySelector(".assistant-panel")
       ?.getBoundingClientRect();
+    const aiAcrossMap = ai && ai.width > width * 0.75;
     return {
       top: Math.min(height * 0.35, (top?.bottom || 40) + 20),
-      bottom: footer
-        ? height - footer.top + 20
-        : width < 761 && panel
-          ? height - panel.top + 20
-          : 90,
+      bottom: Math.max(
+        footer
+          ? height - footer.top + 20
+          : width < 761 && panel
+            ? height - panel.top + 20
+            : 90,
+        aiAcrossMap ? height - ai.top + 20 : 0,
+      ),
       left:
         width < 761
           ? 20
           : panel
             ? panel.right + 24
             : Math.max(30, (main?.left || 0) + 110),
-      right: ai && ai.left < width && ai.width > 0 ? width - ai.left + 20 : 78,
+      right:
+        !aiAcrossMap && ai && ai.left < width && ai.width > 0
+          ? width - ai.left + 20
+          : 78,
     };
   }
   private animatePoints(
@@ -868,6 +883,11 @@ export class LocalMapAdapter implements MapAdapter {
     ]);
     this.updateLabels();
   }
+  clearSelection() {
+    this.selected = undefined;
+    this.native.setFilter("selected", ["==", ["get", "sourceId"], ""]);
+    this.updateLabels();
+  }
   focusOnline(poi: SDKPoi) {
     this.setView(toWgs84(sdkCoordinate(poi.location)), 18);
   }
@@ -1025,8 +1045,8 @@ export class LocalMapAdapter implements MapAdapter {
     )
       throw new Error(
         walkwayReview.approved
-          ? "当前选点未连接到校园步行路网，请选择校内道路或附近建筑后重试。跨区路线必须经过下沉隧道。"
-          : "下沉隧道和两端步道通行尚待负责人确认，跨区导航暂不可用。地图标注已保留。",
+          ? "当前选点未连接步道，请重新选点。"
+          : "跨区通道暂不可用。",
       );
     const route = local || (await planOnlineRoute(start, end));
     if (!this.destroyed) this.routes.set(route.id, route);
@@ -1120,8 +1140,9 @@ export class LocalMapAdapter implements MapAdapter {
     const route = this.routes.get(id);
     if (!route) throw new Error("路线不存在或已失效。");
     this.activeRouteId = id;
-    this.setPitch(0);
-    const path = route.pathGcj02.map(toWgs84);
+    const path = route.pathGcj02
+      .slice(route.approachPathGcj02 ? 1 : 0)
+      .map(toWgs84);
     const data: GeoJSON.Feature<GeoJSON.LineString> = {
       type: "Feature",
       properties: {},
@@ -1141,6 +1162,30 @@ export class LocalMapAdapter implements MapAdapter {
       });
     }
     this.fitRoute(id);
+    if (route.approachPathGcj02 && !this.native.getSource("route-approach")) {
+      this.element.dataset.routeApproach = "dashed";
+      this.native.addSource("route-approach", {
+        type: "geojson",
+        data: {
+          type: "Feature",
+          properties: {},
+          geometry: {
+            type: "LineString",
+            coordinates: route.approachPathGcj02.map(toWgs84),
+          },
+        },
+      });
+      this.native.addLayer({
+        id: "route-approach",
+        type: "line",
+        source: "route-approach",
+        paint: {
+          "line-color": "#1261bb",
+          "line-width": 5,
+          "line-dasharray": [1.5, 1.5],
+        },
+      });
+    }
     this.showEndpoints(
       { ...route.start, coordinateGcj02: route.pathGcj02[0] },
       { ...route.end, coordinateGcj02: route.pathGcj02.at(-1)! },
@@ -1202,10 +1247,20 @@ export class LocalMapAdapter implements MapAdapter {
     });
   }
   clearRoute() {
+    ++this.cameraRevision;
+    this.cameraTargetKey = undefined;
+    this.native.stop();
+    this.element.dataset.cameraMoving = "false";
     this.activeRouteId = undefined;
     this.routePanelObserver?.disconnect();
     this.observedRoutePanel = undefined;
+    this.showEndpoints(null, null);
+    if (this.native.getLayer("route-approach"))
+      this.native.removeLayer("route-approach");
+    if (this.native.getSource("route-approach"))
+      this.native.removeSource("route-approach");
     delete this.element.dataset.routeExtent;
+    delete this.element.dataset.routeApproach;
     if (this.native.getLayer("route")) this.native.removeLayer("route");
     if (this.native.getLayer("route-underground"))
       this.native.removeLayer("route-underground");

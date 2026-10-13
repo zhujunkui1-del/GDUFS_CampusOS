@@ -3,7 +3,7 @@
   "crs": "WGS84",
   "coordinateSource": "负责人确认来自OpenStreetMap，输入顺序为纬度、经度；文件内统一经度、纬度",
   "parking": {
-    "name": "体育馆北侧停车场",
+    "name": "停车场",
     "coordinate": [113.391957, 23.072652],
     "geometry": [
       [113.39122386, 23.07325499],
@@ -50,12 +50,15 @@
     "crossZoneMustUseTunnel": true,
     "teachingAndLaboratoryTraversable": true,
     "buildingArrival": "nearest perimeter, no fixed door",
-    "review": "负责人要求打通校园路网，默认宿舍区与教学区之间必须走下沉隧道；教学/实验楼按可穿行区域计算，终点到建筑周围即可。仅校园内部步道及校内道路，非校园及禁止步行道路不纳入。"
+    "review": "负责人要求打通校园路网，默认宿舍区与教学区之间必须走下沉隧道；教学/实验楼按可穿行区域计算，终点到建筑周围即可。仅校园内部步道及校内道路，非校园及禁止步行道路不纳入。",
+    "teachingAToGContinuous": true,
+    "teachingAToGReview": "负责人2026-10-14确认教学A-G连片可穿行，教学B到实验C应经语心桥；范围由原始教学轮廓包络确定，排除水域与其他建筑。"
   },
   "referenceFiles": [
     "C:/Users/zhuju/Downloads/停车场_.png",
     "C:/Users/zhuju/Downloads/语心桥_.png",
     "C:/Users/zhuju/Downloads/八角楼.png",
-    "C:/Users/zhuju/Downloads/百度导航参考图.jpg"
+    "C:/Users/zhuju/Downloads/百度导航参考图.jpg",
+    "C:/Users/zhuju/Downloads/关于教学楼和实验楼之间的路线.png"
   ]
 }

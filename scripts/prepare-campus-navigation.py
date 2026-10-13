@@ -38,7 +38,7 @@ def clear_connection(a,b):
 
 nodes={};edges=[];positions={}
 def node(p,id=None):
-    key=(round(p[0],5),round(p[1],5))
+    key=tuple(wgs(p))
     if id is None and key in positions:return positions[key]
     id=id or 'gis-node-'+str(len(nodes))
     nodes[id]={'id':id,'coordinate':wgs(p),'zone':zone_of(p)};positions.setdefault(key,id)
@@ -100,7 +100,11 @@ for br,c in zip(review['bridges'],centers):
     edge(nw,ne,'owner-review:'+br['id'],'bridge','elevated',br['name'])
     coords=[wgs(west),wgs(c),wgs(east)]
     owner_features.append({'type':'Feature','id':br['id'],'properties':{'kind':'road','sourceId':br['id'],'name':br['name'],'bridge':'yes','highway':'footway','tunnel':'no','ownerReviewed':True},'geometry':{'type':'LineString','coordinates':coords}})
-    place(br['id'],br['name'],'transport',br['coordinate'],coords)
+    place(br['id'],'语心桥' if br['id']=='owner-bridge-f' else br['name'],'transport',br['coordinate'],coords)
+    owner_places[-1]['labelPlaceId']='owner-bridge-f'
+    west_landing=nearest_points(walk_polys['osm-relation-4105730'],Point(west))[0]
+    if not clear_connection(west,west_landing.coords[0]):raise ValueError('Blocked western bridge approach')
+    edge(nw,node(west_landing.coords[0]),'owner-review:'+br['id'],'bridge-approach',name='语心桥')
     # Attach eastern landing to the existing eastern shore road, outside the water.
     candidates=[]
     for e in edges:
@@ -130,10 +134,28 @@ for side,bank in [('west',bridge_bank),('east',east_bank)]:
 
 # Build visibility graphs within the owner-approved teaching/laboratory surface.
 # Room interiors/stairs/floors are not claimed; this is a ground passage policy.
+if review['walkingPolicy'].get('teachingAToGContinuous'):
+    # Owner confirms the open space between A-G is traversable. Derive its extent
+    # from the existing footprints; preserve obstacles and all original geometry.
+    teaching=unary_union([poly for pid,poly in walk_polys.items() if pid!='osm-relation-4105911'])
+    surface=teaching.convex_hull.intersection(zones['teaching']).difference(water).difference(blocked_buildings)
+    continuous_anchors=set()
+    teaching_parts=[poly for pid,poly in walk_polys.items() if pid!='osm-relation-4105911']
+    for i,part in enumerate(teaching_parts):
+        for other in teaching_parts[i+1:]:
+            a,b=nearest_points(part,other)
+            if clear_connection(a.coords[0],b.coords[0]):
+                continuous_anchors.update([node(a.coords[0]),node(b.coords[0])])
+        for head in bridge_bank:
+            q=nearest_points(part,Point(head))[0]
+            if clear_connection(head,q.coords[0]):
+                continuous_anchors.update([node(head),node(q.coords[0])])
+    for i,poly in enumerate([surface] if surface.geom_type=='Polygon' else surface.geoms):
+        if poly.geom_type=='Polygon':walk_polys['owner-teaching-a-g-'+str(i)]=poly
 for pid,poly in walk_polys.items():
     pts=list(poly.exterior.coords)[:-1]
     # Include actual nearby road vertices and owner bridge heads on the facade.
-    nearby=[(id,xy(n['coordinate'])) for id,n in list(nodes.items()) if poly.distance(Point(xy(n['coordinate'])))<20 and n['zone']=='teaching']
+    nearby=[(id,xy(n['coordinate'])) for id,n in list(nodes.items()) if poly.distance(Point(xy(n['coordinate'])))<20 and n['zone']=='teaching' and (not pid.startswith('owner-teaching-a-g') or id in continuous_anchors)]
     for id,p in nearby:
         q=nearest_points(poly,Point(p))[0];qq=(q.x,q.y)
         if math.dist(p,qq)>.1 and clear_connection(p,qq):
@@ -144,7 +166,7 @@ for pid,poly in walk_polys.items():
     for i,a in enumerate(ids):
         for b in ids[i+1:]:
             line=LineString([xy(nodes[a]['coordinate']),xy(nodes[b]['coordinate'])])
-            if poly.buffer(.12).covers(line) and not line.intersects(water.buffer(-.2)):
+            if poly.buffer(.12).covers(line) and clear_connection(*line.coords):
                 edge(a,b,'owner-review:'+pid,'building_passage',name='穿过教学实验楼可通行区域')
 
 # Octagonal part of the existing administration footprint: eight original vertices.
@@ -153,6 +175,7 @@ octagon=[source_nodes[n] for n in octagon_refs];octagon.append(octagon[0]);op=Po
 place('owner-bajiaolou','八角楼','building',[op.x,op.y],octagon,'osm-way-307437432')
 owner_features.append({'type':'Feature','id':'owner-bajiaolou','properties':{'kind':'building','sourceId':'owner-bajiaolou','name':'八角楼','tunnel':'no','bridge':'no'},'geometry':{'type':'Polygon','coordinates':[octagon]}})
 place('owner-parking-north',review['parking']['name'],'parking',review['parking']['coordinate'],review['parking'].get('geometry'))
+owner_places[-1]['aliases']=['体育馆北侧停车场']
 if review['parking'].get('geometry'):
     owner_features.append({'type':'Feature','id':'owner-parking-north','properties':{'kind':'parking','sourceId':'owner-parking-north','name':review['parking']['name'],'tunnel':'no','bridge':'no'},'geometry':{'type':'Polygon','coordinates':[review['parking']['geometry']]}})
 

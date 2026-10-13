@@ -65,11 +65,9 @@ export function FocusedNavigation() {
             {Math.round(next)} 米 · 向{direction}
           </p>
           <h2>{route.steps[step]?.instruction || "沿路线步行"}</h2>
-          <small>
-            {map.navigationProgress
-              ? "正在更新步行位置"
-              : "定位未连接，按路线指引步行"}
-          </small>
+          <span className="navigation-position-state">
+            {map.navigationProgress ? "定位已连接" : "等待定位"}
+          </span>
         </div>
       </div>
       <div
@@ -115,7 +113,7 @@ export function FocusedNavigation() {
         </button>
         <button
           aria-label="退出步行导航"
-          title="退出导航，保留路线"
+          title="退出导航"
           onClick={map.stopNavigation}
         >
           <LogOut size={20} />

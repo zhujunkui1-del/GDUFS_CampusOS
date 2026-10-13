@@ -37,7 +37,9 @@ test("real browser map starts north and responds to drag and zoom", async ({
   expect.soft(initialExtent[1]).toBeGreaterThanOrEqual(0);
   expect.soft(initialExtent[2]).toBeLessThanOrEqual(box!.width);
   expect.soft(initialExtent[3]).toBeLessThanOrEqual(box!.height);
-  const dir = "docs/screenshots/s1/map-feedback";
+  const dir = process.env.E2E_CAPTURE_DIR
+    ? process.env.E2E_CAPTURE_DIR + "/map-feedback"
+    : "docs/screenshots/s1/map-feedback";
   await mkdir(dir, { recursive: true });
   const name = `${process.env.PLAYWRIGHT_CHANNEL || "chromium"}-${testInfo.project.name}`;
   await page.screenshot({ path: `${dir}/${name}-initial.jpg`, type: "jpeg" });

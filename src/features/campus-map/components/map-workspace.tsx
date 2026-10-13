@@ -211,9 +211,6 @@ export function MapWorkspace() {
                 <ArrowRight size={16} />
               </button>
             ))}
-            {online.length > 0 && (
-              <p className="source-caption">高德在线结果，不保存为自有 POI。</p>
-            )}
           </div>
         )}
       </div>
@@ -330,7 +327,6 @@ export function MapWorkspace() {
               </small>
             </label>
           ))}
-          <p>标注随缩放展开，未核验编号不补写。</p>
         </div>
       )}
       {routeOpen && <WalkingNavigation onClose={() => setRouteOpen(false)} />}
@@ -347,7 +343,6 @@ export function MapWorkspace() {
         <a href={campusData.sourceUrl} target="_blank" rel="noreferrer">
           © OpenStreetMap contributors · ODbL
         </a>
-        <span>地点资料核对中</span>
       </div>
     </section>
   );

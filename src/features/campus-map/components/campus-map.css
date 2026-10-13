@@ -1,9 +1,12 @@
+:root {
+  --transition-map: 600ms;
+}
 .campus-map-canvas,
 .campus-map-canvas.maplibregl-map {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: #ecf0ef;
+  background: #f2f1ec;
 }
 .campus-map-canvas::after {
   content: "";
@@ -254,15 +257,7 @@
   color: var(--brand-primary);
   background: var(--brand-soft);
 }
-.source-caption {
-  color: var(--text-secondary);
-  font-size: 0.6875rem;
-  line-height: 1.7;
-}
-.map-search-results > .source-caption {
-  padding: 8px 14px;
-}
-.inline-error {
+.map-search-results > .inline-error {
   padding: 12px 10px;
   color: #9d3729;
   font-size: 0.8125rem;
@@ -303,10 +298,7 @@
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-floating);
 }
-.route-planner > .source-caption {
-  padding: 0 9px;
-}
-.route-point {
+.route-planner > .route-point {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -343,9 +335,6 @@
   background: transparent;
   padding: 8px;
   min-height: 44px;
-}
-.route-limit {
-  margin-top: 15px;
 }
 .route-result {
   margin-top: 20px;
@@ -521,18 +510,6 @@
 .place-details-content > p:first-child {
   margin-bottom: 12px;
 }
-.place-position {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 5px;
-  margin: 12px 0;
-  font-size: 0.75rem;
-}
-.place-position small {
-  width: 100%;
-  font-size: 0.625rem;
-}
 .place-detail-actions {
   display: flex;
   flex-wrap: wrap;
@@ -546,20 +523,6 @@
   min-height: 44px;
   margin-top: 10px;
   font-size: 0.75rem;
-  color: var(--brand-primary);
-}
-.place-source {
-  display: grid;
-  gap: 5px;
-  border-top: 1px solid var(--border-subtle);
-  margin-top: 14px;
-  padding-top: 15px;
-  font-size: 0.625rem;
-}
-.place-source a {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   color: var(--brand-primary);
 }
 .place-drag-handle {
@@ -637,7 +600,7 @@
     width: auto;
     max-width: none;
     bottom: calc(92px + env(safe-area-inset-bottom, 0px));
-    max-height: 44dvh;
+    max-height: min(56dvh, 520px);
     padding: 14px;
   }
   .route-point {
@@ -805,13 +768,8 @@
   background: transparent;
 }
 .navigation-start {
-  width: 100%;
-  margin: 12px 0;
-}
-.walking-status {
-  color: var(--brand-primary);
-  font-size: 0.875rem;
-  padding-bottom: 10px;
+  flex: 1;
+  margin: 0;
 }
 .route-result li[aria-current="step"] {
   color: var(--brand-primary);
@@ -1022,5 +980,41 @@ body:has(.navigation-active) .place-details-viewport {
   .map-location-notice {
     left: 14px;
     bottom: 160px;
+  }
+}
+
+.place-source-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+.navigation-position-state {
+  display: block;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+.route-result ol,
+.location-feedback,
+.inline-error {
+  font-size: 0.9375rem;
+}
+
+.route-steps {
+  margin-top: 12px;
+  font-size: 0.9375rem;
+}
+.route-steps summary {
+  min-height: 44px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: var(--brand-primary);
+}
+@media (max-width: 760px) {
+  body:has(.route-planner) .assistant-launcher {
+    display: none;
   }
 }

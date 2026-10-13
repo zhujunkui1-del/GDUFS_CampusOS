@@ -8,10 +8,10 @@ export type MapLocation = {
 };
 export function locationError(code: number) {
   return code === 1
-    ? "定位权限未获允许，请在浏览器站点设置中允许定位后重试。"
+    ? "定位权限未获允许，请允许定位后重试。"
     : code === 2
-      ? "设备暂时无法获取位置，请检查系统定位和网络连接。"
-      : "定位请求超时，请到室外或网络良好的位置重试。";
+      ? "无法获取位置，请检查系统定位。"
+      : "定位请求超时，请重试。";
 }
 // Device position stays in page memory. Only a user's explicit click starts acquisition.
 export function useMapLocation() {
@@ -42,11 +42,11 @@ export function useMapLocation() {
       stop();
       setError("");
       if (!window.isSecureContext) {
-        setError("定位需要 HTTPS；本机 localhost 或 127.0.0.1 可用于开发。");
+        setError("当前连接不支持定位。");
         return;
       }
       if (!navigator.geolocation) {
-        setError("当前浏览器不支持定位。您仍可输入地点或在地图上选点。");
+        setError("当前浏览器不支持定位，请选择起点。");
         return;
       }
       const revision = generation.current;

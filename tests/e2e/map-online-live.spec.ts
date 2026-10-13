@@ -44,7 +44,9 @@ test("controlled real online services on the fixed local map", async ({
     .click();
   await page.getByRole("button", { name: "规划步行路线", exact: true }).click();
   await expect(page.locator(".route-result")).toBeVisible({ timeout: 30000 });
-  const dir = "docs/screenshots/s1/map-feedback";
+  const dir = process.env.E2E_CAPTURE_DIR
+    ? process.env.E2E_CAPTURE_DIR + "/map-feedback"
+    : "docs/screenshots/s1/map-feedback";
   await mkdir(dir, { recursive: true });
   await page.screenshot({
     path: `${dir}/local-map-real-online-route.jpg`,

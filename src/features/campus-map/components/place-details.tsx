@@ -2,14 +2,7 @@
 import Link from "next/link";
 import { Drawer } from "@base-ui/react/drawer";
 import { useRef, useSyncExternalStore, type RefObject } from "react";
-import {
-  X,
-  Navigation,
-  Bookmark,
-  Sparkles,
-  ExternalLink,
-  MapPin,
-} from "lucide-react";
+import { X, Navigation, Bookmark, Sparkles, ExternalLink } from "lucide-react";
 import { useCampusMap } from "./campus-map-provider";
 import { categoryNames, zoneName } from "../data/campus";
 
@@ -72,22 +65,6 @@ export function PlaceDetails({
               </div>
               {place && (
                 <Drawer.Content className="place-details-content">
-                  <Drawer.Description>校园公开地点资料</Drawer.Description>
-                  <p className="place-position">
-                    <MapPin size={16} />
-                    {place.coordinate.map((v) => v.toFixed(6)).join(", ")}
-                    <small>WGS84 地物标注位置</small>
-                  </p>
-                  <p>
-                    {place.navigationVerified
-                      ? "地点位置与步行策略已由负责人确认。导航以建筑周边就近到达，开放状态以现场为准。"
-                      : "导航以建筑周边就近到达，不指定某一扇门。教学、实验楼可穿行区域按负责人确认的策略计算；开放状态以现场为准。"}
-                  </p>
-                  {place.parentId && !place.geometry && (
-                    <p>
-                      分栋名称按负责人确认的朝北顺序标注，使用复合建筑原始轮廓；未生成独立分栋边界。
-                    </p>
-                  )}
                   <div className="place-detail-actions">
                     <button className="primary-button" onClick={onNavigate}>
                       <Navigation size={16} />
@@ -104,31 +81,14 @@ export function PlaceDetails({
                     <Bookmark size={16} />
                     收藏需登录账号服务
                   </Link>
-                  <div className="place-source">
-                    <a href={place.sourceUrl} target="_blank" rel="noreferrer">
-                      {place.verification === "owner_confirmed"
-                        ? "查看OpenStreetMap坐标位置"
-                        : "OpenStreetMap 地物原始记录"}
-                      <ExternalLink size={13} />
-                    </a>
-                    <span>
-                      采集：{place.fetchedAt.slice(0, 10)} · 地物来源已核对
-                    </span>
-                    {place.nameSource && (
-                      <span>
-                        名称：
-                        {place.nameSource.startsWith("负责人逐栋确认")
-                          ? "负责人逐栋确认"
-                          : place.nameSource}{" "}
-                        · {place.nameReviewedAt}
-                      </span>
-                    )}
-                    <span>
-                      {place.navigationVerified
-                        ? `通行：${place.navigationSource} · ${place.navigationReviewedAt}。开放状态以现场为准。`
-                        : "出入口、服务信息与当前通行情况待核验。"}
-                    </span>
-                  </div>
+                  <a
+                    className="place-source-link"
+                    href={place.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    查看来源 <ExternalLink size={16} />
+                  </a>
                 </Drawer.Content>
               )}
             </div>

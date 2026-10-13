@@ -5,7 +5,7 @@ const review = JSON.parse(
   await readFile("src/features/campus-map/data/walkway-review.json", "utf8"),
 );
 
-test("typed endpoints, swapping and GPS denied preserve the route", async ({
+test("typed endpoints, swapping, GPS denial and cleared exit", async ({
   page,
 }) => {
   // Isolated supplier + geolocation fixture. No actual device location or quota used.
@@ -62,7 +62,8 @@ test("typed endpoints, swapping and GPS denied preserve the route", async ({
     page.getByRole("region", { name: "步行导航模式" }),
   ).toBeVisible();
   await page.getByRole("button", { name: "退出步行导航" }).click();
-  await expect(page.locator(".route-result")).toBeVisible();
+  await expect(page.locator(".route-result")).toHaveCount(0);
+  await expect(page.locator(".route-endpoint")).toHaveCount(0);
   await page.getByLabel("导航起点").fill("不存在的地点");
   await expect(
     page.getByRole("button", { name: "规划步行路线", exact: true }),
@@ -96,7 +97,7 @@ test("controlled browser geolocation is opt-in and rejects an outside-campus pos
     accuracy: 10,
   });
   await page.getByRole("button", { name: "定位我的位置", exact: true }).click();
-  await expect(page.locator(".map-location-notice")).toContainText("校区之外");
+  await expect(page.locator(".map-location-notice")).toContainText("校外");
   expect(
     await page.evaluate(() => Object.values(localStorage).join(" ")),
   ).not.toMatch(/113\.391314|23\.068046/);
@@ -127,9 +128,14 @@ test("tunnel uses the real source corridor only after owner confirmation", async
   }
   await page.getByRole("button", { name: "规划步行路线", exact: true }).click();
   if (review.approved) {
-    await expect(page.locator(".route-result")).toContainText("本地 OSM");
+    await expect(page.locator(".route-result")).toHaveAttribute(
+      "data-route-source",
+      "CampusOS.OSM",
+    );
     await expect(page.locator(".route-result")).toContainText("穿过下沉隧道");
-    const dir = "docs/screenshots/s1/tunnel-confirmed";
+    const dir = process.env.E2E_CAPTURE_DIR
+      ? process.env.E2E_CAPTURE_DIR + "/tunnel-confirmed"
+      : "docs/screenshots/s1/tunnel-confirmed";
     await mkdir(dir, { recursive: true });
     await page.screenshot({
       path: `${dir}/${process.env.PLAYWRIGHT_CHANNEL || "chromium"}-${testInfo.project.name}-tunnel-route.jpg`,

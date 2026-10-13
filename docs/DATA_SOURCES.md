@@ -145,3 +145,9 @@ SRC-028离线资料统计：36个闭合建筑标签轮廓，含2个连廊；27�
 负责人要求整个校园路网默认跨区经隧道、教学实验可穿行、周边就近到达。固定图s1-2026-10-13.8：4511地物、104地点；路网s1-campus-2026-10-13.3：540节点、1432边、39源道路节段。道路与显示底图独立，其他校区/机动车主路/禁止步行/非教学实验建筑内部/非桥水面不成为捷径。区域内路线是批准的简化地面策略，不补假门或室内房间。
 
 [Shapely官方手册](https://shapely.readthedocs.io/en/stable/manual.html)核对离线求交/可见性，固定Shapely2.1.2、NumPy2.5.4，仅本地工具，不打包至浏览器；Pillow12.2.0用于一次性读标注图。相机过渡参照[MapLibre Camera API](https://maplibre.org/maplibre-gl-js/docs/API/classes/Map/)，引擎仍6.14.0，复制投影修正的接缝仅在MapAdapter内部。浏览器不获取任何这些源参考图片/本机目录或GIS工具。
+
+## SRC-040｜本地路线批注与浏览器异常（2026-10-14）
+
+负责人提供“关于教学楼和实验楼之间的路线.png”“异常.png”“无异常.png”，保留在v2/assets/source_maps；为校园本地OSM地图/UI反馈，内部用于连接策略与渲染排查，不复制截图作公开底图。负责人明确教学B至实验C穿过教学A—G连片可穿行空间并经语心桥；计算范围依据原始教学轮廓包络扣除水域/其他建筑/校区外，未从红线像素猜世界坐标。桥西端接入由已批准桥位及真实轮廓最近点推导，支持源码再计算；JSON保留策略审核记录。
+
+CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastCameraDuration=0.6。MapLibre6.14.0本地源码确认相机easeTo接受毫秒，且WebGL alpha/depth/stencil固定启用；不能用alpha:false假称关闭透明缓冲。公开主源：[MapLibre Map源码](https://github.com/maplibre/maplibre-gl-js/blob/v6.14.0/src/ui/map.ts)、[相机源码](https://github.com/maplibre/maplibre-gl-js/blob/v6.14.0/src/ui/camera.ts)。截图和逐帧JSON来自真实Chrome/Edge的隔离测试上下文，控制GPS使用既有公开北苑1栋坐标，无个人位置记录。

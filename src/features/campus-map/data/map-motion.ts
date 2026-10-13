@@ -16,9 +16,13 @@ export function mapEase(t: number) {
 export function cameraDuration() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ? 0
-    : parseFloat(
+    : cssTimeMilliseconds(
         getComputedStyle(document.documentElement).getPropertyValue(
-          "--transition-normal",
+          "--transition-map",
         ),
-      ) || 220;
+      );
+}
+export function cssTimeMilliseconds(value: string) {
+  const time = value.trim().match(/^(\d+(?:\.\d+)?|\.\d+)(ms|s)$/);
+  return time ? Number(time[1]) * (time[2] === "s" ? 1000 : 1) : 600;
 }

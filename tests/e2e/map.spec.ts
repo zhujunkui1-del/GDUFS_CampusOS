@@ -108,8 +108,9 @@ test("map controls, source-backed place details, layers and cross-page state", a
     page.getByRole("heading", { name: "北苑1栋", exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText("导航以建筑周边就近到达", { exact: false }),
-  ).toBeVisible();
+    page.locator(".source-caption, .place-position, .place-source"),
+  ).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "查看来源" })).toBeVisible();
   await page.getByRole("button", { name: "问 AI", exact: true }).click();
   await expect(page.locator(".assistant-map-context")).toContainText("北苑1栋");
   await page.getByRole("button", { name: "收起校园助理" }).click();
@@ -169,7 +170,10 @@ test("road selection computes locally and reset discards results", async ({
   await clickKnownRoad(page, [113.3918033, 23.068055]);
   await expect(page.getByLabel("导航终点")).toHaveValue("地图选定终点");
   await page.getByRole("button", { name: "规划步行路线", exact: true }).click();
-  await expect(page.locator(".route-result")).toContainText("本地 OSM");
+  await expect(page.locator(".route-result")).toHaveAttribute(
+    "data-route-source",
+    "CampusOS.OSM",
+  );
   const summary = await page.locator(".route-result h3").innerText();
   expect(Number(summary.match(/\d+/)![0])).toBeGreaterThan(10);
   expect(Number(summary.match(/\d+/)![0])).toBeLessThan(30);

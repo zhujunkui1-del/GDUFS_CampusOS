@@ -142,18 +142,20 @@ export function WalkingNavigation({ onClose }: { onClose(): void }) {
           交换
         </button>
       </div>
-      <div className="route-actions">
-        <button
-          className="primary-button"
-          disabled={!ready || !map.start || !map.end || map.routeBusy}
-          onClick={() => void map.plan()}
-        >
-          {map.routeBusy ? "正在规划…" : "规划步行路线"}
-        </button>
-        <button className="text-link" onClick={map.clearRoute}>
-          重置路线
-        </button>
-      </div>
+      {!route && (
+        <div className="route-actions">
+          <button
+            className="primary-button"
+            disabled={!ready || !map.start || !map.end || map.routeBusy}
+            onClick={() => void map.plan()}
+          >
+            {map.routeBusy ? "正在规划…" : "规划步行路线"}
+          </button>
+          <button className="text-link" onClick={map.clearRoute}>
+            重置路线
+          </button>
+        </div>
+      )}
       {map.error && (
         <p className="inline-error" role="alert">
           {map.error}
@@ -165,64 +167,45 @@ export function WalkingNavigation({ onClose }: { onClose(): void }) {
         </p>
       )}
       {route ? (
-        <div className="route-result">
+        <div className="route-result" data-route-source={route.source}>
           <h3>
             {Math.round(route.distanceMeters)} 米{" "}
             <span>约 {Math.max(1, Math.round(route.seconds / 60))} 分钟</span>
           </h3>
-          <p className="source-caption">
-            {route.source === "CampusOS.OSM"
-              ? "本地 OSM 步行网络 · 已核对节点连接"
-              : "高德步行规划 · 已检查端点和校区范围"}
-            <br />
-            {route.source === "CampusOS.OSM"
-              ? "校园本地步行路网，跨区默认经下沉隧道。教学、实验区域可穿行；建筑周边就近到达。开放状态以现场为准，时间按步行速度估算。"
-              : "目的地为附近道路，建筑入口与当前开放情况以现场为准。"}
-            {route.undergroundPathGcj02?.length
-              ? " 隧道段以虚线标示，包含台阶。"
-              : ""}
-          </p>
-          <button
-            className="primary-button navigation-start"
-            onClick={map.navigating ? map.stopNavigation : map.beginNavigation}
-          >
-            <Navigation size={16} />
-            {map.navigating ? "结束步行导航" : "开始步行导航"}
-          </button>
-          {!map.navigating && (
-            <p className="source-caption">
-              开始导航时请求设备定位；位置仅在本页使用，离开地图页停止追踪。
-            </p>
-          )}
-          {map.navigating && (
-            <p className="walking-status" role="status">
-              {map.navigationProgress
-                ? `距终点约 ${Math.round(map.navigationProgress.remaining)} 米`
-                : "正在等待可靠定位；路线指引已保留。"}
-            </p>
-          )}
-          <ol>
-            {route.steps.map((step, i) => (
-              <li
-                key={i}
-                aria-current={
-                  map.navigating && map.navigationProgress?.step === i
-                    ? "step"
-                    : undefined
-                }
-              >
-                {step.instruction}
-                <small>{step.distance} 米</small>
-              </li>
-            ))}
-          </ol>
+          <div className="route-actions">
+            <button
+              className="primary-button navigation-start"
+              onClick={
+                map.navigating ? map.stopNavigation : map.beginNavigation
+              }
+            >
+              <Navigation size={16} />
+              {map.navigating ? "结束步行导航" : "开始步行导航"}
+            </button>
+            <button className="text-link" onClick={map.clearRoute}>
+              重置路线
+            </button>
+          </div>
+          <details className="route-steps">
+            <summary>路线详情</summary>
+            <ol>
+              {route.steps.map((step, i) => (
+                <li
+                  key={i}
+                  aria-current={
+                    map.navigating && map.navigationProgress?.step === i
+                      ? "step"
+                      : undefined
+                  }
+                >
+                  {step.instruction}
+                  <small>{step.distance} 米</small>
+                </li>
+              ))}
+            </ol>
+          </details>
         </div>
-      ) : (
-        <p className="source-caption route-limit">
-          地点可输入或点选。
-          优先使用校园本地步行路网，跨区默认经下沉隧道；教学、实验楼可穿行，建筑终点就近到达。
-        </p>
-      )}
+      ) : null}
     </aside>
   );
 }

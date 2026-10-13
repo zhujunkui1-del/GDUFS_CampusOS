@@ -37,6 +37,7 @@ export type CampusRoute = {
   start: RoutePoint;
   end: RoutePoint;
   pathGcj02: Coordinate[];
+  approachPathGcj02?: Coordinate[];
   distanceMeters: number;
   seconds: number;
   steps: { instruction: string; distance: number }[];
