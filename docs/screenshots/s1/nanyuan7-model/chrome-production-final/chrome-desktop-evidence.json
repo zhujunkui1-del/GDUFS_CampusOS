@@ -1,0 +1,15 @@
+{
+  "viewport": [1440, 900],
+  "devicePixelRatio": 1,
+  "mode": "3d",
+  "mapVersion": "s1-2026-10-14.2",
+  "modelVersion": "nanyuan7-2026-10-14.1",
+  "height": "21",
+  "lod": "full",
+  "bytes": "124024",
+  "triangles": "7040",
+  "drawCalls": "12",
+  "extent": "[355.16751882883534,264.8792789894372,1113.0551958906628,689.2069932657064]",
+  "cameraDuration": "600",
+  "actualPhone": false
+}

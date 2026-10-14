@@ -192,8 +192,8 @@ test("full-campus route and focused navigation retain honest GPS failure state",
   await expect(page.locator(".sidebar")).toBeHidden();
   await expect(page.getByLabel("搜索校园地点")).toHaveCount(0);
   await expect(
-    page.getByRole("button", { name: "3D建筑尚未就绪" }),
-  ).toBeDisabled();
+    page.getByRole("button", { name: "切换为3D", exact: true }),
+  ).toBeEnabled();
   await expect(page.locator(".navigation-location-status")).toContainText(
     "权限未获允许",
   );

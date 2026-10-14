@@ -1,0 +1,72 @@
+{
+  "modelVersion": "nanyuan7-2026-10-14.1",
+  "mapVersion": "s1-2026-10-14.2",
+  "footprintId": "osm-way-312536955",
+  "placeId": "osm-way-312536955",
+  "name": "南苑7栋",
+  "origin": [113.390146, 23.0615765],
+  "footprintSha256": "cafc04b8e7f6fe939eaa7728f14fa8be8717088f1642028add614bd8470045da",
+  "heightMeters": 21,
+  "levels": 7,
+  "heightAccuracy": "owner_approximation",
+  "appearanceAccuracy": "schematic",
+  "courtyardAccuracy": "visual_approximation",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [113.3898011, 23.0613928],
+        [113.390278, 23.0613902],
+        [113.3904882, 23.0613891],
+        [113.3904909, 23.0614753],
+        [113.3904028, 23.0614808],
+        [113.3904013, 23.0616607],
+        [113.3904361, 23.0616629],
+        [113.390437, 23.0617586],
+        [113.3898558, 23.0617639],
+        [113.3898567, 23.0616637],
+        [113.3899018, 23.0616607],
+        [113.3899013, 23.0614749],
+        [113.389805, 23.0614778],
+        [113.3898011, 23.0613928]
+      ],
+      [
+        [113.38999424399998, 23.06165895610522],
+        [113.390256368, 23.06165895610522],
+        [113.390256368, 23.061494044105217],
+        [113.38999424399998, 23.061494044105217],
+        [113.38999424399998, 23.06165895610522]
+      ]
+    ]
+  },
+  "courtyardGeometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [113.38999424399998, 23.06165895610522],
+        [113.390256368, 23.06165895610522],
+        [113.390256368, 23.061494044105217],
+        [113.38999424399998, 23.061494044105217],
+        [113.38999424399998, 23.06165895610522]
+      ]
+    ]
+  },
+  "dimensionsMeters": [70.57265058669776, 21, 41.6759160730311],
+  "assets": {
+    "low": {
+      "url": "/models/nanyuan7/nanyuan7-low-7def165d3ed8.glb",
+      "sha256": "7def165d3ed8fc9ce19378b3fa3916147ef9519be94760dcee1dd50e135c01ca",
+      "bytes": 71432,
+      "triangles": 3804,
+      "drawCalls": 5
+    },
+    "full": {
+      "url": "/models/nanyuan7/nanyuan7-full-3386f67af1bf.glb",
+      "sha256": "3386f67af1bfc8dd83cec87115c06001e02e8ed722970a13775a5761166546b5",
+      "bytes": 124024,
+      "triangles": 7040,
+      "drawCalls": 7
+    }
+  },
+  "license": "OSM footprint: ODbL-1.0; original procedural geometry/materials. Research imagery not embedded."
+}

@@ -19,3 +19,12 @@ CampusOS_Codex_完整设计文档_v2/anykey.md
 docs/research/s1/osm-reference.json
 docs/research/s1/local-context.osm
 .map-tools/
+
+# Local generated pilot diagnostics; final model images and window evidence stay tracked.
+docs/screenshots/s1/nanyuan7-model/chrome-dev/
+docs/screenshots/s1/nanyuan7-model/chrome-dev-v2/
+docs/screenshots/s1/nanyuan7-model/chrome-dev-regression/
+docs/screenshots/s1/nanyuan7-model/chrome-production/
+docs/screenshots/s1/nanyuan7-model/edge-production/
+docs/screenshots/s1/nanyuan7-model/chrome-production-final/*/
+docs/screenshots/s1/nanyuan7-model/edge-production-final/*/

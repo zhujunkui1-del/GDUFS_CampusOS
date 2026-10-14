@@ -164,6 +164,11 @@
 .map-controls button:disabled {
   opacity: 0.4;
 }
+.map-controls button[aria-pressed="true"],
+.navigation-controls button[aria-pressed="true"] {
+  background: var(--blue-soft, #e9f0f9);
+  color: var(--blue, #1261bb);
+}
 .tool-divider {
   height: 1px;
   margin: 6px;
@@ -680,6 +685,8 @@
   .map-controls {
     top: 20px;
     flex-direction: row;
+    flex-wrap: wrap;
+    max-width: calc(100vw - 28px);
     width: auto;
   }
   .map-controls .tool-divider {

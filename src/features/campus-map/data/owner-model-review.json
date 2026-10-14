@@ -1,0 +1,39 @@
+{
+  "reviewedAt": "2026-10-14",
+  "placeId": "osm-way-312536955",
+  "name": "南苑7栋",
+  "mapVersion": "s1-2026-10-14.2",
+  "levels": 7,
+  "heightMeters": 21,
+  "heightAccuracy": "owner_approximation",
+  "heightSource": "负责人：南苑七栋有7层楼，也就是大概21米高。",
+  "scope": "仅南苑7栋2.5D/3D外观试点，不生成室内或导航数据。",
+  "courtyard": {
+    "widthRatio": 0.38,
+    "depthRatio": 0.44,
+    "centerRatio": [0.47, 0.5],
+    "accuracy": "visual_approximation",
+    "source": "项目苹果卫星图顶部左侧南苑7栋，中庭按可见比例估计，仅模型展示，不写入原GIS或路由。"
+  },
+  "appearanceAccuracy": "schematic",
+  "appearanceNotes": "保留OSM外轮廓、卫星图围合中庭和横向翼楼；楼层按负责人确认。立面色彩、窗格、分层线、女儿墙和屋顶条带为程序化近似，没有精确立面测量。",
+  "references": [
+    {
+      "file": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/宿舍区_南苑_三食堂.png",
+      "source": "负责人提供的苹果地图截图",
+      "usage": "内部观察体量和屋顶，不嵌入模型或网页纹理"
+    },
+    {
+      "file": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外南校区地图.jpg",
+      "source": "负责人已确认南苑7栋名称/地物对应",
+      "usage": "内部核对名称，不用作几何测量"
+    },
+    {
+      "url": "https://www.sohu.com/a/252154047_683738",
+      "title": "《广外攻略》之领略广外食宿魅力",
+      "author": "页面署名广外学生处",
+      "publishedAt": "2018-09-05",
+      "usage": "已读南校宿舍七层文字；配图CDN未成功显示，不作为立面观察或当前测量证据，不复制图片"
+    }
+  ]
+}

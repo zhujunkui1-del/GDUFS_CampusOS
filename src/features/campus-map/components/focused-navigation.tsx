@@ -11,6 +11,7 @@ import { useCampusMap } from "./campus-map-provider";
 import { headingBetween } from "../data/navigation-geometry";
 import { toWgs84 } from "../adapters/online-services";
 import { campusData } from "../data/campus";
+import { MapViewButtons } from "./map-view-buttons";
 
 export function FocusedNavigation() {
   const map = useCampusMap(),
@@ -101,16 +102,7 @@ export function FocusedNavigation() {
             <Navigation2 size={20} />
           )}
         </button>
-        <button
-          aria-label={map.mode === "2d" ? "切换为2.5D" : "切换为2D"}
-          disabled={!map.supports3D && map.mode === "2d"}
-          onClick={() => map.setMode(map.mode === "2d" ? "2.5d" : "2d")}
-        >
-          {map.mode === "2d" ? "2D" : "2.5D"}
-        </button>
-        <button disabled aria-label="3D建筑尚未就绪" title="尚未接入完整3D建筑">
-          3D
-        </button>
+        <MapViewButtons />
         <button
           aria-label="退出步行导航"
           title="退出导航"

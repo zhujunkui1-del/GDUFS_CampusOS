@@ -30,6 +30,7 @@ import { pointInPolygon } from "../data/geometry";
 import { nearestTunnelDistance } from "../data/local-routing";
 import { projectOnPath } from "../data/route-progress";
 import { headingBetween } from "../data/navigation-geometry";
+import { type PilotModelState } from "../data/model-pilot";
 
 type MapContextValue = {
   status: "loading" | "ready" | "error";
@@ -46,6 +47,8 @@ type MapContextValue = {
   assistantPlace: CampusPlace | null;
   zoom: number;
   supports3D: boolean;
+  modelAvailable: boolean;
+  modelState: PilotModelState;
   locationBusy: boolean;
   locationMessage: string;
   navigating: boolean;
@@ -134,6 +137,8 @@ export function CampusMapProvider({
   const [bearing, setBearing] = useState(0);
   const [minimumZoom, setMinimumZoom] = useState(CAMPUS_MIN_ZOOM);
   const [supports3D, setSupports3D] = useState(true);
+  const [modelAvailable, setModelAvailable] = useState(false);
+  const [modelState, setModelState] = useState<PilotModelState>("idle");
   const routeGeneration = useRef(0);
   const location = useMapLocation();
   const stopLocation = location.stop;
@@ -314,7 +319,8 @@ export function CampusMapProvider({
     if (!mapRequested) return;
     let cancelled = false;
     let disposePick: (() => void) | undefined,
-      disposeCoordinate: (() => void) | undefined;
+      disposeCoordinate: (() => void) | undefined,
+      disposeModel: (() => void) | undefined;
     const abort = new AbortController();
     void (async () => {
       try {
@@ -331,6 +337,16 @@ export function CampusMapProvider({
         }
         adapter.current = next;
         setSupports3D(next.supports3D);
+        setModelAvailable(next.modelAvailable);
+        disposeModel = next.onModelState((state) => {
+          if (cancelled) return;
+          setModelState(state);
+          if (state === "error" && view.current.mode === "3d") {
+            view.current.mode = "2.5d";
+            setModeState("2.5d");
+            next.setDisplayMode("2.5d");
+          }
+        });
         if (!next.supports3D) {
           view.current.mode = "2d";
           setModeState("2d");
@@ -338,7 +354,7 @@ export function CampusMapProvider({
         const lowMemory = (navigator as Navigator & { deviceMemory?: number })
           .deviceMemory;
         if (lowMemory && lowMemory < 4) {
-          next.setPitch(0);
+          next.setDisplayMode("2d");
           view.current.mode = "2d";
           setModeState("2d");
         }
@@ -371,6 +387,7 @@ export function CampusMapProvider({
         next.map.on("rotateend", () => setBearing(next.map.getRotation()));
         if (!cancelled) {
           // Fit only after the real renderer knows its viewport dimensions.
+          next.setDisplayMode(view.current.mode, false);
           next.setPitch(view.current.mode === "2d" ? 0 : CAMPUS_PITCH);
           await next.initializeViewport();
           if (view.current.zone !== "all") next.setZone(view.current.zone);
@@ -396,6 +413,7 @@ export function CampusMapProvider({
       abort.abort();
       disposePick?.();
       disposeCoordinate?.();
+      disposeModel?.();
       adapter.current?.destroy();
       adapter.current = null;
     };
@@ -497,6 +515,8 @@ export function CampusMapProvider({
     assistantPlace,
     zoom,
     supports3D,
+    modelAvailable,
+    modelState,
     locationBusy: location.busy,
     locationMessage: locationFeedback,
     locationNoticeId,
@@ -542,6 +562,7 @@ export function CampusMapProvider({
       adapter.current?.setInteractionMode("browse");
       view.current.mode = "2d";
       setModeState("2d");
+      adapter.current?.setDisplayMode("2d");
     },
     choosePoint,
     clearPoint: (which) => {
@@ -572,10 +593,11 @@ export function CampusMapProvider({
       );
     },
     setMode: (next) => {
-      if (next === "2.5d" && !adapter.current?.supports3D) return;
+      if (next !== "2d" && !adapter.current?.supports3D) return;
+      if (next === "3d" && !adapter.current?.modelAvailable) return;
       view.current.mode = next;
       setModeState(next);
-      adapter.current?.setPitch(next === "2d" ? 0 : CAMPUS_PITCH);
+      adapter.current?.setDisplayMode(next);
     },
     setLayer: (layer, visible) => {
       setLayers((prior) => ({ ...prior, [layer]: visible }));

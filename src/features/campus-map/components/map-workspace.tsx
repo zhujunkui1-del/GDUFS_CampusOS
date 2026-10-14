@@ -32,6 +32,7 @@ import { PlaceDetails } from "./place-details";
 import { WalkingNavigation } from "./walking-navigation";
 import { LocationNotice } from "./location-notice";
 import { FocusedNavigation } from "./focused-navigation";
+import { MapViewButtons } from "./map-view-buttons";
 
 const layerNames: Record<MapLayer, string> = {
   buildings: "校园建筑",
@@ -99,7 +100,7 @@ export function MapWorkspace() {
               value={query}
               enterKeyHint="search"
               autoComplete="off"
-              onFocus={() => {
+              onPointerDown={() => {
                 if (query && !routeOpen) setSearchOpen(true);
               }}
               onChange={(event) => {
@@ -112,6 +113,8 @@ export function MapWorkspace() {
               }}
               onKeyDown={(event) => {
                 if (event.key === "Escape") setSearchOpen(false);
+                if (event.key === "ArrowDown" && query && !routeOpen)
+                  setSearchOpen(true);
               }}
               aria-controls="campus-search-results"
             />
@@ -240,13 +243,12 @@ export function MapWorkspace() {
         >
           <LocateFixed size={20} strokeWidth={1.5} />
         </button>
-        <button
-          disabled={!ready || (map.mode === "2d" && !map.supports3D)}
-          onClick={() => map.setMode(map.mode === "2d" ? "2.5d" : "2d")}
-          aria-label={map.mode === "2d" ? "切换为2.5D" : "切换为2D"}
-        >
-          {map.mode === "2d" ? "2D" : "2.5D"}
-        </button>
+        <MapViewButtons
+          onChange={() => {
+            setSearchOpen(false);
+            setLayersOpen(false);
+          }}
+        />
         <button
           disabled={!ready}
           onClick={map.resetBearing}

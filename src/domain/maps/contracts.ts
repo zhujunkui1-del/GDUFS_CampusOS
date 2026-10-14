@@ -34,7 +34,7 @@ export const MapActionSchema = z.discriminatedUnion("type", [
 
 export type MapAction = z.infer<typeof MapActionSchema>;
 export type LngLat = readonly [longitude: number, latitude: number];
-export type MapMode = "2d" | "2.5d";
+export type MapMode = "2d" | "2.5d" | "3d";
 
 export interface MapAdapter {
   setView(centerWgs84: LngLat, zoom: number): void;
