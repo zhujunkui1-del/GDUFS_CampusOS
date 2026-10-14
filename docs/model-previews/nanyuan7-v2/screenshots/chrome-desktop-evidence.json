@@ -1,0 +1,11 @@
+{
+  "version": "nanyuan7-v2-2026-10-14",
+  "bytes": "80384",
+  "triangles": "4748",
+  "modelDrawCalls": "7",
+  "sceneDrawCalls": "14",
+  "viewport": [1440, 900],
+  "devicePixelRatio": 1,
+  "actualPhone": false,
+  "standalone": true
+}

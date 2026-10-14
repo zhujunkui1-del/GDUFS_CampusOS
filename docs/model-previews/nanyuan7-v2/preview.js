@@ -208,7 +208,8 @@ function setView(name, animated = true) {
     if (t < 1) transitionFrame = requestAnimationFrame(step);
     else canvas.dataset.moving = "false";
   }
-  transitionFrame = requestAnimationFrame(step);
+  if (duration === 0) step(startTime);
+  else transitionFrame = requestAnimationFrame(step);
 }
 document
   .querySelectorAll("nav button")
