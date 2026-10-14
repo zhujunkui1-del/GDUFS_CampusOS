@@ -296,13 +296,26 @@
   width: 350px;
   max-width: calc(100% - 100px);
   max-height: 56dvh;
-  overflow: auto;
-  overscroll-behavior: contain;
-  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+  padding: 0;
   border-radius: 26px;
   background: #fff;
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-floating);
+}
+.route-planner > .results-heading {
+  flex-shrink: 0;
+  padding: 18px 18px 0;
+}
+.route-planner-scroll {
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding: 0 18px 18px;
 }
 .route-planner > .route-point {
   display: flex;
@@ -607,7 +620,13 @@
     max-width: none;
     bottom: calc(92px + env(safe-area-inset-bottom, 0px));
     max-height: min(56dvh, 520px);
-    padding: 14px;
+    padding: 0;
+  }
+  .route-planner > .results-heading {
+    padding: 14px 14px 0;
+  }
+  .route-planner-scroll {
+    padding: 0 14px 14px;
   }
   .route-point {
     min-height: 44px;
@@ -672,6 +691,8 @@
   .route-planner {
     bottom: calc(8px + env(safe-area-inset-bottom, 0px));
     max-height: min(56dvh, calc(100dvh - 150px));
+  }
+  .route-planner-scroll {
     padding-bottom: 28px;
   }
   body:has(.route-planner) .map-attribution {

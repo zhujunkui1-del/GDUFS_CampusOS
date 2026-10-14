@@ -261,7 +261,7 @@ test("native browser zoom and short window retain a fully painted map", async ({
         .click();
       await expect(page.locator(".route-result")).toBeVisible();
       await expect(map).toHaveAttribute("data-camera-moving", "false");
-      await page.locator(".route-planner").evaluate((el) => {
+      await page.locator(".route-planner-scroll").evaluate((el) => {
         el.scrollTop = el.scrollHeight;
       });
     };
@@ -285,7 +285,7 @@ test("native browser zoom and short window retain a fully painted map", async ({
         bounds: { width: 1000, height },
       });
       await plan("short-" + height);
-      await page.locator(".route-planner").evaluate((el) => {
+      await page.locator(".route-planner-scroll").evaluate((el) => {
         el.scrollTop = el.scrollHeight;
       });
       await page.evaluate(
