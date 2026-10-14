@@ -1,0 +1,31 @@
+{
+  "modelVersion": "nanyuan7-v2-2026-10-14",
+  "stage": "standalone_review_only",
+  "mapIntegrated": false,
+  "placeId": "osm-way-312536955",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "origin": [113.390146, 23.0615765],
+  "footprintSha256": "cafc04b8e7f6fe939eaa7728f14fa8be8717088f1642028add614bd8470045da",
+  "levels": 7,
+  "heightMeters": 21,
+  "heightAccuracy": "owner_approximation",
+  "appearanceAccuracy": "photo_informed_simplification",
+  "bounds": {
+    "min": [-35.54703903198242, 0, -21.14795708656311],
+    "max": [35.543148040771484, 20.999999850988388, 22.48223227262497]
+  },
+  "courtyard": {
+    "min": [-15.52598312882816, -9.168716046465562],
+    "max": [11.291624091091064, 9.168687026240592],
+    "accuracy": "visual_approximation"
+  },
+  "asset": {
+    "url": "./nanyuan7-v2.glb",
+    "sha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+    "bytes": 80384,
+    "triangles": 4748,
+    "drawCalls": 7,
+    "materialCount": 5,
+    "textureCount": 0
+  }
+}

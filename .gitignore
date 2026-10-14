@@ -28,3 +28,6 @@ docs/screenshots/s1/nanyuan7-model/chrome-production/
 docs/screenshots/s1/nanyuan7-model/edge-production/
 docs/screenshots/s1/nanyuan7-model/chrome-production-final/*/
 docs/screenshots/s1/nanyuan7-model/edge-production-final/*/
+
+# First standalone V2 generation kept locally; the active draft is nanyuan7-v2.glb.
+docs/model-previews/nanyuan7-v2/nanyuan7-v2-5e6b8c4a48ac.glb

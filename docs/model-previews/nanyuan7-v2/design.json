@@ -1,0 +1,50 @@
+{
+  "version": "nanyuan7-v2-2026-10-14",
+  "scope": "standalone_review_only",
+  "placeId": "osm-way-312536955",
+  "levels": 7,
+  "heightMeters": 21,
+  "heightAccuracy": "owner_approximation",
+  "galleryDepthMeters": 1.35,
+  "baySpacingMeters": 5.4,
+  "stairWallWidthMeters": 3.2,
+  "appearanceAccuracy": "photo_informed_simplification",
+  "sourceNotes": "附件宿舍3.png可见南苑七栋标识；宿舍内测4.png用于中庭走廊、浅色框架和红砖楼梯墙参考；宿舍7.jpg可见北苑6字样，只作同类宿舍样式参考。立面朝向/精确开间/楼梯位置和中庭尺寸未测量。",
+  "features": [
+    "七层围合体量",
+    "浅色柱梁框架",
+    "砖红色竖向墙体",
+    "凹进阳台",
+    "开放中庭走廊",
+    "简化水平栏杆",
+    "平屋顶挑檐"
+  ],
+  "performance": {
+    "triangleBudget": 6500,
+    "modelDrawCallBudget": 10,
+    "glbByteBudget": 150000,
+    "textureCount": 0
+  },
+  "references": [
+    {
+      "file": "宿舍6.png",
+      "sha256": "5076e06541aa5d0e734b1a915ceaeae8a50ccb08d938d309d81605e90f1b8dd4"
+    },
+    {
+      "file": "宿舍5.png",
+      "sha256": "c21416c13a4151b86694a1ed5f41f7df6d7e1d0dc4774c58395d6939c390515e"
+    },
+    {
+      "file": "宿舍内测4.png",
+      "sha256": "24fc0d7ecb801c0af46d24ad2945931508c5f9af1a5700e2e0b887a92b54076e"
+    },
+    {
+      "file": "宿舍3.png",
+      "sha256": "e7040c164a6763904ec8e4adb6e733fbc8c73bd4d09c525e0ee25b1ea2085dad"
+    },
+    {
+      "file": "宿舍7.jpg",
+      "sha256": "f823ca110c76eaca50cea6e3fa634f089b490562399154f8bc2e6ae35f48174f"
+    }
+  ]
+}
