@@ -11,13 +11,15 @@ export function mapRuntime() {
   } catch {
     /* Node development has no Worker bindings. */
   }
-  const values = { ...process.env };
+  // A broken model configuration must not invalidate independent public map services.
+  const values: Record<string, string | undefined> = {};
   for (const name of [
     "APP_ENV",
     "AMAP_WEB_KEY",
     "AMAP_SECURITY_JS_CODE",
     "AMAP_WEBSERVICE_KEY",
   ]) {
+    values[name] = process.env[name];
     if (typeof bindings[name] === "string")
       values[name] = bindings[name] as string;
   }

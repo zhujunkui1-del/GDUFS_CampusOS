@@ -1,0 +1,41 @@
+{
+  "browser": "148.0.7778.97",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "realPhone": false,
+  "modelStatus": {
+    "stage": "S2-A",
+    "chatAvailable": false,
+    "status": "pending_map_skills_and_session_quotas",
+    "model": {
+      "ready": true,
+      "model": {
+        "source": "platform",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "policyVersion": "deepseek-default-v1",
+        "testedAt": "2026-10-14T20:20:15.727Z",
+        "capabilities": {
+          "toolCalling": true,
+          "jsonObject": true,
+          "strictJsonSchema": false
+        }
+      }
+    },
+    "domains": [
+      "knowledge-domain",
+      "spatial-domain",
+      "events-domain",
+      "personal-domain"
+    ],
+    "skills": []
+  },
+  "businessChatTested": false,
+  "chatHttpStatus": 503,
+  "forgedHttpStatus": 400,
+  "mapVersion": "s1-2026-10-14.2",
+  "modelSha": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+  "pageErrors": []
+}

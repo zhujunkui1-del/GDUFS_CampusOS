@@ -149,3 +149,6 @@ Skill 应同时支持 (1) Agent 调用，(2) 内部 API 调用，(3) 开发测�
 - 社交地点 `moments` 图层即使未实现也不会造成地图错误。
 - `get_place_media` 不返回未审核素材和无许可的第三方图片。
 - 行程的距离/时间来自算法，不允许由模型返回任意未经验证数字。
+## 2026-10-15 S2-A / S2-B 分界
+
+已实现通用SkillRegistry/ToolExecutor，具备严格输入JSON Schema、Zod入出参、权限/确认拒绝、取消/超时/输出大小及安全错误处理。16项业务名单保留，本轮不注册空壳Skill。S2-B首先实现search_places/get_place_details/find_nearby_places/plan_route/control_map，直接复用现有固定OSM地点和本地路网。写入Skill在服务端确认台账/业务幂等未接入前一律关闭，即使提交confirmedActionId也不能授权。

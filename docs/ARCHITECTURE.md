@@ -52,3 +52,8 @@ Next.js 本地服务和本地 workerd 预览均可启动。`wrangler.jsonc` 将 
 ## 当前地图架构（2026-10-13，D-018）
 
 默认 MapLibre 本地OSM渲染，不请求高德底图；校园WGS84数据、复合外环/内庭与未来模型共享版本。高德SDK只在用户主动在线查询/规划时加载，GCJ02服务结果由锁版本gcoord与WGS84底图对齐；旧 /api/map/coordinates 保留受限接口但不用于地图启动。MapAdapter/地点ID/MapAction边界不变，唯一实例由Provider维护，主相机/渲染前地面视口范围由本地适配器约束。源详情与维护见 LOCAL_MAP_MAINTENANCE.md。
+## S2-A Agent核心（2026-10-15）
+
+src/lib/server/models承载受控DeepSeek ModelClient、ProviderRegistry、ModelRouter、管理员能力验证与Cloudflare/Node运行环境；src/lib/server/agent承载1总控、4逻辑域、SkillRegistry/ToolExecutor、局部限额与循环。秘密为JS私有字段或服务端环境，不进入客户端接口；ModelRouter要求实测记录而非配置声称支持工具。
+
+S2-A对话仅隔离诊断验证，业务注册表为空；/api/agent/status提供无付费查询，/api/agent/chat严格验证后503，原AssistantPanel继续准确禁用。S2-B/C接入现有真实地图服务、可信会话/路线快照和共享配额后启用，未复制/重构地图。已有D1会话/运行表尚未接DAO，不声称持久会话。完整边界与结果见S2_A_AGENT_CORE.md，模型失败与错误配置不影响mapRuntime/health。

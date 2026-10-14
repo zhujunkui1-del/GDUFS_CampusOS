@@ -134,3 +134,8 @@ type AgentResponse = {
 6. 写入用户日程必须在后端确认令牌校验后执行。
 7. 通过真实校园问题回放，确保 `Agent → Skill → MapAction → UI` 闭环。
 8. 模型选择、能力门控、自定义故障无自动回退、工具幂等及跨用户隔离按 `12_MODEL_API_SETTINGS.md` 验收。
+## 2026-10-15 S2-A 实施状态
+
+核心实现在src/lib/server/agent与src/lib/server/models，四域为逻辑模块，共用一个总控与管理员默认模型。S2-A实际生产注册表为空，不伪造尚未实现的Skill。诊断工具只用于运维能力测试，不能查询校园业务或产生地图动作。ModelRouter要求绑定配置的真实验证记录；仅JSON Object经业务Schema实测，不声称供应商严格JSON Schema支持。
+
+S2-A完成核心循环测试后，S2-B接五项真实地图服务，S2-C接原全局AI面板和会话，S2-D执行完整自然语言地图验收。当前/api/agent/status可查询模型准备状态；/api/agent/chat在真实业务Skill、主体会话和共享额度接入前返回503，AI面板保留准确禁用状态。实现/差异/配置/证据见docs/S2_A_AGENT_CORE.md。

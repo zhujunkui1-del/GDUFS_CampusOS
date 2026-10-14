@@ -20,6 +20,7 @@ export type SkillContext = {
   campusId: "gdufs_university_town";
   permissions: string[];
   confirmedActionId?: string;
+  signal?: AbortSignal;
 };
 
 export type SkillDefinition<I, O> = {
@@ -32,5 +33,6 @@ export type SkillDefinition<I, O> = {
   sideEffect: "none" | "user_data_write" | "external_sync";
   requiresConfirmation: boolean;
   timeoutMs: number;
+  permissions?: readonly string[];
   execute: (input: I, context: SkillContext) => Promise<SkillResult<O>>;
 };

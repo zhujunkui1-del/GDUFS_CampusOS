@@ -251,3 +251,8 @@ API Key 输入始终遮蔽，不提供完整明文显示/复制入口。编辑�
 - DeepSeek 官方提供 API、工具调用和 JSON 输出文档；具体模型权限及 CampusOS 能力仍需真实测试，JSON 输出不能直接视为严格 Schema 保证。来源：[API 入口](https://api-docs.deepseek.com/)、[Tool Calls](https://api-docs.deepseek.com/guides/tool_calls/)、[JSON Output](https://api-docs.deepseek.com/guides/json_mode/)。
 - Workers Web Crypto 提供 AES-GCM 支持，Secret 是服务端敏感配置绑定；实现封装和轮换方案仍须审查。来源：[Web Crypto](https://developers.cloudflare.com/workers/runtime-apis/web-crypto/)、[Secrets](https://developers.cloudflare.com/workers/configuration/secrets/)。
 - SSRF 防护要求目标白名单、重定向控制及连接时地址约束；一次域名/地址检查不等于防住重绑定。来源：[OWASP SSRF Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)。
+## 2026-10-15 S2-A 范围修订
+
+负责人决定先管理员默认模型，完整BYOK管理界面/游客临时配置后续实施，不阻塞核心架构。本文件凭据、供应商、权限、能力实测和无自动回退约束仍适用。
+
+当前官方模型列表及受控真实API验证使用deepseek-flash，配置MODEL_API_KEY/MODEL_NAME/MODEL_BASE_URL/MODEL_CAPABILITIES_JSON。能力记录绑定供应商/规范端点/模型/凭据指纹/策略，24小时过期，变更后重新验证。诊断最多3请求、每请求256输出Token、20秒总时限、无重试；记录见docs/verification/s2-a/model-live.json。仅服务端CLI读取管理员凭据并通过HTTPS连接供应商，不经HTTP页面提交Key；公开HTTP接口没有凭据输入。上线使用Cloudflare Secrets，凭据不进入Git/前端/日志。BYOK测试、加密和账号子任务不计为已实现。

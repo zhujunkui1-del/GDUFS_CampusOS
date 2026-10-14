@@ -19,7 +19,7 @@ export const CAPABILITIES = {
     implemented: true,
     status: "client_walking_only_verified_network_pending",
   },
-  agent: { available: false, status: "pending_integration" },
+  agent: { available: false, implemented: true, status: "s2_a_core_pending_map_skills" },
   knowledge: { available: false, status: "pending_verified_sources" },
   events: { available: false, status: "pending_verified_sources" },
   auth: { available: false, status: "pending_sms_service" },

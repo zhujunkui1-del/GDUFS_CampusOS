@@ -24,6 +24,7 @@
     "preview:worker": "opennextjs-cloudflare preview",
     "db:migrate:local": "wrangler d1 migrations apply campusos-local --local",
     "db:verify": "node scripts/verify-database.mjs",
+    "model:verify": "node scripts/verify-model.mjs",
     "deploy:preview": "node scripts/deploy.mjs preview",
     "deploy:production": "node scripts/deploy.mjs production"
   },

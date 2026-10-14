@@ -4,6 +4,6 @@ import { readServerEnv } from "@/lib/server/env";
 
 export const dynamic = "force-dynamic";
 export const GET = withApi(() => {
-  readServerEnv(process.env);
+  readServerEnv({ APP_ENV: process.env.APP_ENV });
   return { service: "campusos", status: "ok", version: APP.version };
 });

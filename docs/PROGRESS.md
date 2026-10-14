@@ -251,3 +251,14 @@ OpenNext 提示 Windows 兼容性有限。本次最终组合在 Windows 实测�
 - 初次试跑发现MapLibre6为ESM，旧UMD路径不可用，修正本地模块/worker路由；早期手机视口1轮受后台调度影响出现低帧频，保留test-results诊断，主48轮改固定窗口、禁后台节流并记录visibility，所有正式主轮可见且无pageerror。主JSON原始文件本机保留，压缩JSON/汇总/CSV/16主截图+补充截图均存docs/performance/dormitory-2026-10-15，完整报告REPORT.md及对比图comparison.svg。
 - 类型/Lint、50单元/10文件、Next/OpenNext生产构建通过；最新Edge完整63通过/11跳过，新增GL丢失/恢复两端均通过。跳过为在线2、原生窗口布局2、原生模型窗口2、独立模型预览4及桌面不适用手机AI1；窗口/预览历史验收不冒充本轮性能验收。3000已更新，3013保留隔离场景，无外网部署。正式模式/导航、定位拒绝/受控更新、标签/九门/服务、AI/响应式均回归。
 - 建议下一批先南苑8/南苑9/北苑1三栋核对资料，初期高细节同屏≤10，再验证师苑/友苑差异；实际楼型和手机实机测量决定扩展。全校批量建模尚未开始，SRC-048/D-032/建模方案和BLOCKERS更新。
+## S2-A 核心Agent启动与默认模型实测（2026-10-15）
+
+- 负责人明确暂停建筑批量建模，进入S2-A。根/v2规则、PROJECT_SPEC、02/03/04/05/08/09/12及进度/决策/阻塞已核对；审计和开发清单见S2_A_AGENT_CORE.md。MapLibre/固定OSM/现有搜索与路线保留；GLB SHA54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a核对一致，未制作其他建筑。
+- 实际D1只读检查：30业务表，对话/消息/运行/用户/地点均0；当前地点来自固定JSON。仅有Skill类型和禁用AssistantPanel，未有Agent/Model实现；鉴权只有原语，不能从客户端userId建立身份。原数据库偏好仅两模式/默认2.5d尚未接入UI，未来S4兼容三模式。没有新增迁移/业务种子。
+- 新增受控DeepSeek ModelClient（工具、JSON、流解析、输出Schema、上游限长/超时/安全错误）、ProviderRegistry/ModelRouter（默认管理员模型、实测配置绑定/24h有效期/单Run快照）、四逻辑域及原16Skill名单。无4模型并发、无任意URL/BYOKfallback；HTTP/日志/对象序列化不暴露Key，供应商内部reasoning_content丢弃。
+- SkillRegistry/ToolExecutor验证严格输入JSON Schema和Zod输出、权限、确认、取消/超时及32KiB结果；未实现确认台账的写入一律拒绝。Orchestrator最多6轮/12次工具/4096输出Token，单请求≤1024Token/15s，总90s，执行台账复用同Run重复调用结果。局部保护2并发、主体10分钟8次，尚非跨Worker实例全局配额。
+- 增加/api/agent/status，不发起付费探测；/api/agent/chat验证消息/上下文和8KiB/5s边界后返回503，生产注册表空，未把诊断工具当地图Skill。前端AI保持原准确禁用状态；跨请求会话/指代、真实五地图Skill、MapAction卡片/流消费、共享额度留S2-B/C，完整四场景及故障验收留S2-D。公共地图环境验证与模型配置分离，模型故障不使mapRuntime/health失败。
+- **真实API独立记录**：安全读取负责人指定anykey.md，官方模型列表认证200。默认deepseek-flash，两轮受控能力验证各3生成请求（3029ms、最终5268ms），每请求≤256输出Token，总时限20s，无自动重试；真实总控→诊断Executor→结果回传→流式结束及JSON Object+Zod通过。最新脱敏证据verification/s2-a/model-live.json；严格JSON Schema未验证，未声称业务search_places/plan_route已经接入。本机.env.local/.dev.vars安全配置且Git忽略；公开资源20个JS/HTML/JSON/map文件扫描无交付Key，原凭据文件忽略。云端Secret/HTTPS部署仍待配置。
+- **Mock及工程验收分开**：108单元/13文件通过（原50+新增58），typecheck/Lint通过，db:verify验证30表约束/外键与内存隔离夹具；Next生产与OpenNext Workers打包通过，Wrangler3000预览/status实际ready=true、chatAvailable=false。首轮发现Zod输出模式JSON Schema将strip对象标为additionalProperties=false，修为输入模式并拒绝非严格定义；后补已经取消的异常输入/慢请求超时/结构Schema传输测试。没有用Mock冒充真实服务。
+- Chrome148.0.7778.97与Edge149.0.4022.80专项各29通过/1跳过，桌面1440×900/手机视口390×844，四spec涵盖状态/拒绝伪造身份、地图搜索、模型模式/资产/GL恢复、导航退出/定位虚线/平滑镜头/抽屉/跨页状态及响应式。跳过为桌面不适用手机避让；不是实机手机性能或完整S2业务验收。最终构建/预览后重跑，截图和脱敏浏览器JSON在verification/s2-a/screenshots。OpenNext Windows兼容提示和NO_COLOR环境提示不记成测试失败。
+- 已更新基线/建模计划、D-033、SRC-049及阻塞：BYOK全UI不阻塞S2-A；地图供应商/手动更新及模型视觉不变。无外网部署，账号/SMS/学校接口未接入；S2-B/C共享主体/会话/路线快照/额度是启用公开付费聊天的必要边界。
