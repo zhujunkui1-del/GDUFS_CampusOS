@@ -191,3 +191,9 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 ## SRC-047｜3D窗口缩放故障与实际GL尺寸（2026-10-15）
 
 来源是负责人故障反馈、Chrome/Edge实际绘制与Three0.186.1本地源码。探针在隔离测试上下文观察七层实例楼板drawArraysInstanced/drawElementsInstanced的GL viewport和drawingBuffer，排除512px阴影，不读取账号/个人GPS/认证请求。修复前1440×900 viewport与780×520 buffer不一致；修复后桌面/手机DPR1/3、真实窗口DPR1.5、调整后拖动均一致。证据在screenshots/s1/nanyuan7-v2-resize，复验和限制见S1_NANYUAN7_MODEL_RESIZE_ACCEPTANCE.md；不新增GIS或影像许可。
+
+## SRC-048｜宿舍视觉验收与实际Edge性能采样（2026-10-15）
+
+负责人明确已验收南苑7栋2.5D/3D作为宿舍模板，并要求性能试验先于全校批量。复用已批准GLB，SHA仍54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a；原2.5D/地图/地点/路由未修改，没有新照片或外部模型采集。
+
+数据来自Edge149.0.4022.80实际ANGLE/D3D11、RTX4070 Laptop/Ryzen7745HX、约15.18GiB RAM。主采样48轮、策略14轮、近景8轮、真实指针16轮及正式地图前后各18条件；原始压缩JSON/摘要/CSV/浏览器PNG在docs/performance/dormitory-2026-10-15。FPS是渲染事件频率，页JS内存为CDP；GPU VRAM/最终呈现FPS/完整进程RAM等未可靠归因。隔离虚拟坐标和编号不能当作真实建筑数据。未采集个人GPS/账号或发送供应商请求，手机视口不等于手机实机，来源口径及异常试跑记录见报告/PROGRESS。

@@ -1,0 +1,32 @@
+{
+  "id": "campusos-dormitory-standard-v1",
+  "visualAcceptedAt": "2026-10-15",
+  "acceptedBy": "project_owner",
+  "referencePlaceId": "osm-way-312536955",
+  "volumeVersion": "nanyuan7-2026-10-14.1",
+  "modelVersion": "nanyuan7-v2-2026-10-14",
+  "assetSha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+  "scope": ["南苑", "北苑", "师苑", "友苑"],
+  "parameters": [
+    "footprint",
+    "orientation",
+    "length",
+    "width",
+    "levels",
+    "heightMeters",
+    "courtyard",
+    "roof",
+    "facade",
+    "gallery",
+    "baySpacing"
+  ],
+  "source": "scripts/build-nanyuan7-v2.mjs + docs/model-previews/nanyuan7-v2/design.json",
+  "expansionStatus": "performance_report_then_small_batch_review",
+  "requiredForEachBuilding": [
+    "verifiedFootprintId",
+    "reviewedHeightAndLevels",
+    "reviewedRoofAndFacadeVariant"
+  ],
+  "productionBuildingCount": 1,
+  "notes": "复用构件、材质和建模规则；逐栋保留真实轮廓及资料依据。性能夹具的复制数量不是正式宿舍模型数量。"
+}

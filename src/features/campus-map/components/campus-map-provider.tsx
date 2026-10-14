@@ -116,7 +116,7 @@ export function CampusMapProvider({
   const [revision, setRevision] = useState(0);
   const [status, setStatus] = useState<MapContextValue["status"]>("loading");
   const [error, setError] = useState("");
-  const [mode, setModeState] = useState<MapMode>("2.5d");
+  const [mode, setModeState] = useState<MapMode>("2d");
   const [zone, setZoneState] = useState<MapContextValue["zone"]>("all");
   const [selected, setSelected] = useState<CampusPlace | null>(null);
   const [assistantPlace, setAssistantPlace] = useState<CampusPlace | null>(
@@ -311,7 +311,7 @@ export function CampusMapProvider({
     navigationOrientation,
   ]);
   const view = useRef<{ mode: MapMode; zone: MapContextValue["zone"] }>({
-    mode: "2.5d",
+    mode: "2d",
     zone: "all",
   });
 

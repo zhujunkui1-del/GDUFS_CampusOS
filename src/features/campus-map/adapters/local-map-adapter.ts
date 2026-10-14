@@ -93,7 +93,7 @@ export class LocalMapAdapter implements MapAdapter {
   private pendingPitch?: number;
   private cameraRevision = 0;
   private cameraTargetKey?: string;
-  private displayMode: MapMode = "2.5d";
+  private displayMode: MapMode = "2d";
   private modelLayer?: Nanyuan7ModelLayer;
   private modelLoading = false;
   private modelState: PilotModelState = "idle";
@@ -109,7 +109,7 @@ export class LocalMapAdapter implements MapAdapter {
     this.native = new LibreMap({
       container: element,
       bearing: 0,
-      pitch: this.supports3D ? CAMPUS_PITCH : 0,
+      pitch: 0,
       center: [113.392, 23.066],
       zoom: 16,
       // MapLibre's 512px world is one zoom level above the old 256px SDK scale.
@@ -603,6 +603,8 @@ export class LocalMapAdapter implements MapAdapter {
     if (mode !== "2d" && !this.supports3D) mode = "2d";
     if (mode === "3d" && !this.modelAvailable) mode = "2.5d";
     this.displayMode = mode;
+    if (mode === "2d" && this.modelState === "error")
+      this.setModelState("idle");
     this.updateModelVisibility();
     if (mode === "3d") void this.loadDetailedModel();
     if (animate) this.setPitch(mode === "2d" ? 0 : CAMPUS_PITCH);

@@ -45,6 +45,9 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
     { opacity: number; transparent: boolean }
   >();
   private localMatrix: Matrix4;
+  private readonly restoreShadows = () => {
+    if (this.renderer) this.renderer.shadowMap.needsUpdate = true;
+  };
 
   constructor(private onState: (state: PilotModelState) => void) {
     const origin = MercatorCoordinate.fromLngLat(
@@ -63,6 +66,12 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
     this.renderer.autoClear = false;
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = PCFShadowMap;
+    // Building and sunlight are static; camera movement can reuse the depth texture.
+    this.renderer.shadowMap.autoUpdate = false;
+    this.renderer.shadowMap.needsUpdate = true;
+    map
+      .getCanvas()
+      .addEventListener("webglcontextrestored", this.restoreShadows);
     this.scene.add(new AmbientLight(0xffffff, 2));
     const sun = new DirectionalLight(0xfff5e5, 3);
     sun.position.set(-45, 90, 65);
@@ -126,6 +135,7 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
           });
       });
       this.scene.add(this.root);
+      if (this.renderer) this.renderer.shadowMap.needsUpdate = true;
       this.updateAppearance();
       this.ready = true;
       if (this.map) {
@@ -142,6 +152,8 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
     }
   }
   setAppearance(selected: boolean, routeVisible: boolean) {
+    if (this.routeVisible !== routeVisible && this.renderer)
+      this.renderer.shadowMap.needsUpdate = true;
     this.selected = selected;
     this.routeVisible = routeVisible;
     this.updateAppearance();
@@ -228,6 +240,9 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
   onRemove() {
     this.disposed = true;
     this.abort.abort();
+    this.map
+      ?.getCanvas()
+      .removeEventListener("webglcontextrestored", this.restoreShadows);
     this.disposeObjects(this.scene);
     this.scene.traverse((object) => {
       if (object instanceof DirectionalLight) object.shadow.dispose();

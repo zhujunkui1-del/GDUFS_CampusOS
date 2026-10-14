@@ -34,7 +34,7 @@ test("South 7 native 2.5D and lazy 3D keep their geography and label semantics",
   await page.getByLabel("搜索校园地点").press("Escape");
   await expect(page.locator(".map-search-results")).toHaveCount(0);
   await expect(map).toHaveAttribute("data-model-height", "21");
-  await expect(map).toHaveAttribute("data-model-volume", "visible");
+  await expect(map).toHaveAttribute("data-model-volume", "none");
   await expect(map).toHaveAttribute(
     "data-model-volume-version",
     "nanyuan7-2026-10-14.1",
@@ -44,7 +44,7 @@ test("South 7 native 2.5D and lazy 3D keep their geography and label semantics",
     "nanyuan7-v2-2026-10-14",
   );
   await expect(page.getByTestId("map-mode-trigger")).toHaveCount(1);
-  await expect(page.getByTestId("map-mode-trigger")).toHaveText("2.5D");
+  await expect(page.getByTestId("map-mode-trigger")).toHaveText("2D");
   expect(assets).toHaveLength(0);
   const dir =
     process.env.E2E_CAPTURE_DIR || "docs/screenshots/s1/nanyuan7-model";
@@ -148,7 +148,7 @@ test("failed 3D assets fall back to native volume and can be retried", async ({
     r.fulfill({ status: 503, body: "unavailable" }),
   );
   const map = await focusDorm(page);
-  await selectMapMode(page, "3D");
+  await selectMapMode(page, "3D", true);
   await expect(map).toHaveAttribute("data-model-state", "error", {
     timeout: 30000,
   });
@@ -157,36 +157,31 @@ test("failed 3D assets fall back to native volume and can be retried", async ({
   await selectMapMode(page, "2D");
   await expect(map).toHaveAttribute("data-model-volume", "none");
   await page.unroute("**/models/nanyuan7/*.glb");
-  await selectMapMode(page, "3D", true);
+  await selectMapMode(page, "3D");
   await expect(map).toHaveAttribute("data-model-state", "ready", {
     timeout: 30000,
   });
   await expect(map).toHaveAttribute("data-model-detailed", "visible");
 });
 
-test("one mode menu supports keyboard selection and dismissal", async ({
+test("one mode button starts in 2D and cycles with keyboard without a menu", async ({
   page,
 }) => {
   const map = await focusDorm(page);
   const trigger = page.getByTestId("map-mode-trigger");
   await trigger.focus();
   await page.keyboard.press("Enter");
-  const menu = page.getByRole("menu", { name: "地图模式" });
-  await expect(menu.getByRole("menuitemradio")).toHaveCount(3);
-  await expect(
-    menu.getByRole("menuitemradio", { name: "切换为2.5D", exact: true }),
-  ).toHaveAttribute("aria-checked", "true");
-  await page.keyboard.press("Escape");
-  await expect(menu).toHaveCount(0);
+  await expect(trigger).toHaveText("2.5D");
+  await expect(page.getByRole("menu")).toHaveCount(0);
   await expect(trigger).toBeFocused();
   await expect(map).toHaveAttribute("data-mode", "2.5d");
-  await trigger.press("ArrowDown");
-  await page.keyboard.press("Home");
+  await page.keyboard.press("Enter");
+  await expect(map).toHaveAttribute("data-mode", "3d");
   await page.keyboard.press("Enter");
   await expect(map).toHaveAttribute("data-mode", "2d");
-  await trigger.click();
-  await page.locator(".map-context").click();
-  await expect(menu).toHaveCount(0);
+  expect(await trigger.evaluate((el) => getComputedStyle(el).color)).toBe(
+    "rgb(29, 29, 31)",
+  );
 });
 
 test("2D remains selectable during 3D loading and late completion does not restore 3D", async ({
@@ -207,12 +202,6 @@ test("2D remains selectable during 3D loading and late completion does not resto
     await selectMapMode(page, "3D");
     await expect(map).toHaveAttribute("data-model-state", "loading");
     await page.getByTestId("map-mode-trigger").click();
-    await expect(
-      page.getByRole("menuitemradio", { name: "切换为3D", exact: true }),
-    ).toBeDisabled();
-    await page
-      .getByRole("menuitemradio", { name: "切换为2D", exact: true })
-      .click();
     await expect(map).toHaveAttribute("data-mode", "2d");
     release();
     await expect(map).toHaveAttribute("data-model-state", "ready", {
@@ -229,9 +218,7 @@ test("2D remains selectable during 3D loading and late completion does not resto
   }
 });
 
-test("closing details does not dismiss a newly opened mode menu", async ({
-  page,
-}) => {
+test("closing details keeps the cycle button usable", async ({ page }) => {
   await page.goto("/map");
   await expect(page.getByTestId("campus-map")).toHaveAttribute(
     "data-status",
@@ -243,14 +230,35 @@ test("closing details does not dismiss a newly opened mode menu", async ({
     await page.locator(".place-result").filter({ hasText: "南苑7栋" }).click();
     await page.getByRole("button", { name: "关闭地点详情" }).click();
     // Open during the drawer's closing transition, then let its focus cleanup finish.
-    await page.getByTestId("map-mode-trigger").click();
-    const menu = page.getByRole("menu", { name: "地图模式" });
-    await expect(menu).toBeVisible();
     await expect(page.locator(".place-details-panel")).toHaveCount(0);
-    await expect(menu).toBeVisible();
-    await menu
-      .getByRole("menuitemradio", { name: `切换为${mode}`, exact: true })
-      .click();
+    await selectMapMode(page, mode);
     await expect(page.getByTestId("map-mode-trigger")).toHaveText(mode);
   }
+});
+
+test("cached building shadows recover with the map WebGL context", async ({
+  page,
+}) => {
+  const map = await focusDorm(page);
+  await selectMapMode(page, "3D");
+  await expect(map).toHaveAttribute("data-model-state", "ready");
+  const before = Number(await map.getAttribute("data-model-frame-count"));
+  const supported = await page.evaluate(() => {
+    const canvas =
+      document.querySelector<HTMLCanvasElement>(".maplibregl-canvas")!;
+    const extension = canvas
+      .getContext("webgl2")
+      ?.getExtension("WEBGL_lose_context");
+    if (!extension) return false;
+    extension.loseContext();
+    setTimeout(() => extension.restoreContext(), 450);
+    return true;
+  });
+  test.skip(!supported, "Browser does not expose context recovery testing");
+  await expect(map).toHaveAttribute("data-render-state", "context-lost");
+  await expect(map).toHaveAttribute("data-render-state", "ready");
+  await expect
+    .poll(async () => Number(await map.getAttribute("data-model-frame-count")))
+    .toBeGreaterThan(before);
+  await expect(map).toHaveAttribute("data-model-detailed", "visible");
 });

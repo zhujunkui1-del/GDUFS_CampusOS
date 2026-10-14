@@ -1,0 +1,303 @@
+{
+  "browser": "149.0.4022.80",
+  "assetSha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+  "actualPhone": false,
+  "cases": [
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 60,
+      "variant": "baseline",
+      "repeats": 1,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 363,
+      "navigationMsMedian": 439,
+      "parseMsMedian": 7.4000000059604645,
+      "constructionMsMedian": 8.099999994039536,
+      "pageJsHeapReadyMbMedian": 8.71285629272461,
+      "pageJsHeapDeltaMbMedian": 7.834968566894531,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "closeup": {
+          "effectiveFpsMedian": 236.95686439564815,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.300000011920929,
+          "frameMsP99": 6.799999982118607,
+          "modelDrawsMean": 574.4345898004434,
+          "totalGlDrawsMean": 633.7671840354767,
+          "submittedModelTrianglesMean": 358943.32150776056,
+          "modelCpuSubmitMsMean": 1.8414634150967102,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 60,
+      "variant": "optimized",
+      "repeats": 1,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 145.90000000596046,
+      "navigationMsMedian": 207,
+      "parseMsMedian": 4.199999988079071,
+      "constructionMsMedian": 27.100000023841858,
+      "pageJsHeapReadyMbMedian": 7.883754730224609,
+      "pageJsHeapDeltaMbMedian": 3.8946685791015625,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "closeup": {
+          "effectiveFpsMedian": 240.46303604314653,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.800000011920929,
+          "frameMsP99": 5.700000017881393,
+          "modelDrawsMean": 43,
+          "totalGlDrawsMean": 102.86214442013129,
+          "submittedModelTrianglesMean": 284882,
+          "modelCpuSubmitMsMean": 0.17658643264739204,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 60,
+      "variant": "spatial",
+      "repeats": 1,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 163.2000000178814,
+      "navigationMsMedian": 224,
+      "parseMsMedian": 4.0999999940395355,
+      "constructionMsMedian": 26.30000001192093,
+      "pageJsHeapReadyMbMedian": 8.589405059814453,
+      "pageJsHeapDeltaMbMedian": 7.4555816650390625,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "closeup": {
+          "effectiveFpsMedian": 238.34523309384645,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 5.0999999940395355,
+          "frameMsP99": 6.199999988079071,
+          "modelDrawsMean": 128.1497797356828,
+          "totalGlDrawsMean": 187.90308370044053,
+          "submittedModelTrianglesMean": 239079.97356828194,
+          "modelCpuSubmitMsMean": 0.3400881058712888,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 60,
+      "variant": "adaptive",
+      "repeats": 1,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 118,
+      "navigationMsMedian": 187,
+      "parseMsMedian": 4.4000000059604645,
+      "constructionMsMedian": 25.80000001192093,
+      "pageJsHeapReadyMbMedian": 7.870052337646484,
+      "pageJsHeapDeltaMbMedian": 7.3159637451171875,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "closeup": {
+          "effectiveFpsMedian": 235.20764424991017,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.800000011920929,
+          "frameMsP99": 5.5,
+          "modelDrawsMean": 39.80357142857143,
+          "totalGlDrawsMean": 100.09375,
+          "submittedModelTrianglesMean": 263616.66964285716,
+          "modelCpuSubmitMsMean": 0.25446428511557834,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 60,
+      "variant": "baseline",
+      "repeats": 1,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 174.40000000596046,
+      "navigationMsMedian": 274,
+      "parseMsMedian": 4.799999982118607,
+      "constructionMsMedian": 6.300000011920929,
+      "pageJsHeapReadyMbMedian": 9.058486938476562,
+      "pageJsHeapDeltaMbMedian": 5.692138671875,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "closeup": {
+          "effectiveFpsMedian": 231.34759976792736,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 5.700000017881393,
+          "frameMsP99": 7.9000000059604645,
+          "modelDrawsMean": 554.040909090909,
+          "totalGlDrawsMean": 590.2863636363636,
+          "submittedModelTrianglesMean": 345186.7727272727,
+          "modelCpuSubmitMsMean": 1.9631818180057135,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 60,
+      "variant": "optimized",
+      "repeats": 1,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 152.90000000596046,
+      "navigationMsMedian": 234,
+      "parseMsMedian": 5.199999988079071,
+      "constructionMsMedian": 26.099999994039536,
+      "pageJsHeapReadyMbMedian": 7.675880432128906,
+      "pageJsHeapDeltaMbMedian": 3.014862060546875,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "closeup": {
+          "effectiveFpsMedian": 240.1850002642893,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.800000011920929,
+          "frameMsP99": 5.800000011920929,
+          "modelDrawsMean": 43,
+          "totalGlDrawsMean": 79.25164113785559,
+          "submittedModelTrianglesMean": 284882,
+          "modelCpuSubmitMsMean": 0.17221006561942903,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 60,
+      "variant": "spatial",
+      "repeats": 1,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 146.80000001192093,
+      "navigationMsMedian": 213,
+      "parseMsMedian": 4.5999999940395355,
+      "constructionMsMedian": 24.900000005960464,
+      "pageJsHeapReadyMbMedian": 8.134151458740234,
+      "pageJsHeapDeltaMbMedian": 7.515827178955078,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "closeup": {
+          "effectiveFpsMedian": 237.79461279312144,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5,
+          "frameMsP99": 6,
+          "modelDrawsMean": 117.44026548672566,
+          "totalGlDrawsMean": 153.68362831858408,
+          "submittedModelTrianglesMean": 227665.00884955752,
+          "modelCpuSubmitMsMean": 0.3254424775332476,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 60,
+      "variant": "adaptive",
+      "repeats": 1,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 114.5,
+      "navigationMsMedian": 172,
+      "parseMsMedian": 5.0999999940395355,
+      "constructionMsMedian": 26.099999994039536,
+      "pageJsHeapReadyMbMedian": 7.773128509521484,
+      "pageJsHeapDeltaMbMedian": 3.0271759033203125,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "closeup": {
+          "effectiveFpsMedian": 237.24355602314571,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.800000011920929,
+          "modelDrawsMean": 39.63414634146341,
+          "totalGlDrawsMean": 76.23946784922394,
+          "submittedModelTrianglesMean": 262494.7893569845,
+          "modelCpuSubmitMsMean": 0.2523281607950342,
+          "hiddenRuns": 0
+        }
+      }
+    }
+  ]
+}

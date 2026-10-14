@@ -31,3 +31,8 @@ docs/screenshots/s1/nanyuan7-model/edge-production-final/*/
 
 # First standalone V2 generation kept locally; the active draft is nanyuan7-v2.glb.
 docs/model-previews/nanyuan7-v2/nanyuan7-v2-5e6b8c4a48ac.glb
+
+# Full raw benchmark stays local; compressed raw + summary/CSV/screenshots are tracked.
+docs/performance/dormitory-2026-10-15/raw.json
+docs/performance/dormitory-2026-10-15/probes/raw.json
+docs/performance/dormitory-2026-10-15/closeup/raw.json

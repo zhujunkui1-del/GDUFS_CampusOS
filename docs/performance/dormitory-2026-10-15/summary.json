@@ -1,0 +1,1303 @@
+{
+  "browser": "149.0.4022.80",
+  "assetSha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+  "actualPhone": false,
+  "cases": [
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 1,
+      "variant": "baseline",
+      "repeats": 3,
+      "geometryTriangles": 4748,
+      "assetBytes": 80384,
+      "readyMsMedian": 151.89999997615814,
+      "navigationMsMedian": 251,
+      "parseMsMedian": 6.199999988079071,
+      "constructionMsMedian": 0.5,
+      "pageJsHeapReadyMbMedian": 7.751007080078125,
+      "pageJsHeapDeltaMbMedian": 17.418792724609375,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 229.93544273476905,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 5,
+          "frameMsP99": 5.799999982118607,
+          "modelDrawsMean": 13,
+          "totalGlDrawsMean": 74,
+          "submittedModelTrianglesMean": 7402,
+          "modelCpuSubmitMsMean": 0.31612716765072996,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 230.55787838858421,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 5.799999982118607,
+          "frameMsP99": 7.299999982118607,
+          "modelDrawsMean": 13,
+          "totalGlDrawsMean": 72.27777777777777,
+          "submittedModelTrianglesMean": 7402,
+          "modelCpuSubmitMsMean": 0.2411458332746945,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 232.35423060116574,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.5999999940395355,
+          "frameMsP99": 6.800000011920929,
+          "modelDrawsMean": 13,
+          "totalGlDrawsMean": 65.69442848937392,
+          "submittedModelTrianglesMean": 7402,
+          "modelCpuSubmitMsMean": 0.22923607096324222,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 231.30393096946204,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.5999999940395355,
+          "frameMsP99": 6.600000023841858,
+          "modelDrawsMean": 13,
+          "totalGlDrawsMean": 76.03788748564868,
+          "submittedModelTrianglesMean": 7402,
+          "modelCpuSubmitMsMean": 0.19121699185719035,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 216.99049780356455,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.4000000059604645,
+          "frameMsP99": 6.800000011920929,
+          "modelDrawsMean": 4.132075471698113,
+          "totalGlDrawsMean": 59.66835994194485,
+          "submittedModelTrianglesMean": 2352.7402031930333,
+          "modelCpuSubmitMsMean": 0.15870826770328472,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 1,
+      "variant": "optimized",
+      "repeats": 3,
+      "geometryTriangles": 4748,
+      "assetBytes": 80384,
+      "readyMsMedian": 130,
+      "navigationMsMedian": 210,
+      "parseMsMedian": 5.100000023841858,
+      "constructionMsMedian": 2.9000000059604645,
+      "pageJsHeapReadyMbMedian": 7.457653045654297,
+      "pageJsHeapDeltaMbMedian": 26.320632934570312,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 229.3358815103388,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.799999982118607,
+          "frameMsP99": 5.5999999940395355,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 69,
+          "submittedModelTrianglesMean": 4750,
+          "modelCpuSubmitMsMean": 0.1734375001138283,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 231.44834168511076,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.299999982118607,
+          "frameMsP99": 6.100000023841858,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 67.2788296041308,
+          "submittedModelTrianglesMean": 4750,
+          "modelCpuSubmitMsMean": 0.1189902467900012,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 230.85786943055268,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 5.5,
+          "frameMsP99": 7,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 60.81188690132718,
+          "submittedModelTrianglesMean": 4750,
+          "modelCpuSubmitMsMean": 0.13837276434389348,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 231.42993478496945,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.300000011920929,
+          "frameMsP99": 6.300000011920929,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 71.04355300859599,
+          "submittedModelTrianglesMean": 4750,
+          "modelCpuSubmitMsMean": 0.12206303777872321,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 218.1438801169443,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.199999988079071,
+          "frameMsP99": 6.4000000059604645,
+          "modelDrawsMean": 2.531791907514451,
+          "totalGlDrawsMean": 58.0614161849711,
+          "submittedModelTrianglesMean": 1503.2514450867052,
+          "modelCpuSubmitMsMean": 0.13092485014241556,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 10,
+      "variant": "baseline",
+      "repeats": 3,
+      "geometryTriangles": 47480,
+      "assetBytes": 80384,
+      "readyMsMedian": 158.90000000596046,
+      "navigationMsMedian": 245,
+      "parseMsMedian": 7,
+      "constructionMsMedian": 1.9000000059604645,
+      "pageJsHeapReadyMbMedian": 8.197898864746094,
+      "pageJsHeapDeltaMbMedian": 15.482379913330078,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 230.5417931932725,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.399999976158142,
+          "frameMsP99": 6.4000000059604645,
+          "modelDrawsMean": 121,
+          "totalGlDrawsMean": 182,
+          "submittedModelTrianglesMean": 74002,
+          "modelCpuSubmitMsMean": 0.733410271240395,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 230.4717093977536,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 6.299999982118607,
+          "frameMsP99": 7.699999988079071,
+          "modelDrawsMean": 121,
+          "totalGlDrawsMean": 180.27745664739885,
+          "submittedModelTrianglesMean": 74002,
+          "modelCpuSubmitMsMean": 0.5826011561417166,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 230.64316265049746,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 6.199999988079071,
+          "frameMsP99": 7.4000000059604645,
+          "modelDrawsMean": 121,
+          "totalGlDrawsMean": 173.65935334872978,
+          "submittedModelTrianglesMean": 74002,
+          "modelCpuSubmitMsMean": 0.5869515008931898,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 228.13990461049283,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 6.199999988079071,
+          "frameMsP99": 7.9000000059604645,
+          "modelDrawsMean": 121,
+          "totalGlDrawsMean": 184.03613053613054,
+          "submittedModelTrianglesMean": 74002,
+          "modelCpuSubmitMsMean": 0.6017482517968803,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 217.82178217821783,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.700000017881393,
+          "frameMsP99": 6.9000000059604645,
+          "modelDrawsMean": 38.29776496034607,
+          "totalGlDrawsMean": 94.88752703677001,
+          "submittedModelTrianglesMean": 23422.40663302091,
+          "modelCpuSubmitMsMean": 0.707930788902731,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 10,
+      "variant": "optimized",
+      "repeats": 3,
+      "geometryTriangles": 47480,
+      "assetBytes": 80384,
+      "readyMsMedian": 149.90000000596046,
+      "navigationMsMedian": 244,
+      "parseMsMedian": 5.199999988079071,
+      "constructionMsMedian": 12.5,
+      "pageJsHeapReadyMbMedian": 7.660877227783203,
+      "pageJsHeapDeltaMbMedian": 20.476211547851562,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 229.72488752746688,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 5.100000023841858,
+          "frameMsP99": 5.9000000059604645,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 69,
+          "submittedModelTrianglesMean": 47482,
+          "modelCpuSubmitMsMean": 0.17116386787216306,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 230.9164871973453,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 6,
+          "frameMsP99": 7.199999988079071,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 67.28604382929642,
+          "submittedModelTrianglesMean": 47482,
+          "modelCpuSubmitMsMean": 0.12866205317338858,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 231.63257183848629,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.9000000059604645,
+          "frameMsP99": 6.799999982118607,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 60.672789896670494,
+          "submittedModelTrianglesMean": 47482,
+          "modelCpuSubmitMsMean": 0.1236509761840413,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 230.60713291772674,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 6,
+          "frameMsP99": 7.199999988079071,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 71.02880184331798,
+          "submittedModelTrianglesMean": 47482,
+          "modelCpuSubmitMsMean": 0.11526497702376085,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 216.2491790992902,
+          "frameMsMedian": 4.0999999940395355,
+          "frameMsP95": 5.9000000059604645,
+          "frameMsP99": 6.700000017881393,
+          "modelDrawsMean": 2.527838033261027,
+          "totalGlDrawsMean": 59.14750542299349,
+          "submittedModelTrianglesMean": 15003.350686912509,
+          "modelCpuSubmitMsMean": 0.08206796564231812,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 30,
+      "variant": "baseline",
+      "repeats": 3,
+      "geometryTriangles": 142440,
+      "assetBytes": 80384,
+      "readyMsMedian": 174,
+      "navigationMsMedian": 257,
+      "parseMsMedian": 4.9000000059604645,
+      "constructionMsMedian": 3.300000011920929,
+      "pageJsHeapReadyMbMedian": 8.358131408691406,
+      "pageJsHeapDeltaMbMedian": 11.691669464111328,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 229.83469428400716,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.4000000059604645,
+          "frameMsP99": 6.4000000059604645,
+          "modelDrawsMean": 361,
+          "totalGlDrawsMean": 422,
+          "submittedModelTrianglesMean": 222002,
+          "modelCpuSubmitMsMean": 1.5392712554261476,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 223.88654290335296,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 6.600000023841858,
+          "frameMsP99": 8.300000011920929,
+          "modelDrawsMean": 361,
+          "totalGlDrawsMean": 420.3051251489869,
+          "submittedModelTrianglesMean": 222002,
+          "modelCpuSubmitMsMean": 1.473420739138368,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 222.1689442958136,
+          "frameMsMedian": 4.0999999940395355,
+          "frameMsP95": 6.800000011920929,
+          "frameMsP99": 9.299999982118607,
+          "modelDrawsMean": 361,
+          "totalGlDrawsMean": 416.4043062200957,
+          "submittedModelTrianglesMean": 222002,
+          "modelCpuSubmitMsMean": 1.4845693781971931,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 221.94772075283828,
+          "frameMsMedian": 4.0999999940395355,
+          "frameMsP95": 6.699999988079071,
+          "frameMsP99": 8.899999976158142,
+          "modelDrawsMean": 361,
+          "totalGlDrawsMean": 424.0059523809524,
+          "submittedModelTrianglesMean": 222002,
+          "modelCpuSubmitMsMean": 1.4555952380455675,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 217.0848604436229,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.399999976158142,
+          "frameMsP99": 6.799999982118607,
+          "modelDrawsMean": 113.71107892831282,
+          "totalGlDrawsMean": 170.302679217958,
+          "submittedModelTrianglesMean": 69928.21868211441,
+          "modelCpuSubmitMsMean": 1.7454018839065102,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 30,
+      "variant": "optimized",
+      "repeats": 3,
+      "geometryTriangles": 142440,
+      "assetBytes": 80384,
+      "readyMsMedian": 178.2000000178814,
+      "navigationMsMedian": 256,
+      "parseMsMedian": 5.299999982118607,
+      "constructionMsMedian": 22.700000017881393,
+      "pageJsHeapReadyMbMedian": 7.870216369628906,
+      "pageJsHeapDeltaMbMedian": 22.72985076904297,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 230.44051280222618,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.9000000059604645,
+          "frameMsP99": 5.800000011920929,
+          "modelDrawsMean": 22,
+          "totalGlDrawsMean": 83,
+          "submittedModelTrianglesMean": 142442,
+          "modelCpuSubmitMsMean": 0.20854503434263255,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 231.81454836131095,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.5999999940395355,
+          "frameMsP99": 6.9000000059604645,
+          "modelDrawsMean": 22,
+          "totalGlDrawsMean": 81.27784156142366,
+          "submittedModelTrianglesMean": 142442,
+          "modelCpuSubmitMsMean": 0.13593570626288412,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 231.8263294164509,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.600000023841858,
+          "frameMsP99": 6.800000011920929,
+          "modelDrawsMean": 22,
+          "totalGlDrawsMean": 77.6456059735784,
+          "submittedModelTrianglesMean": 142442,
+          "modelCpuSubmitMsMean": 0.13164847786230716,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 231.92795090404783,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.699999988079071,
+          "frameMsP99": 7.0999999940395355,
+          "modelDrawsMean": 22,
+          "totalGlDrawsMean": 85.05184331797236,
+          "submittedModelTrianglesMean": 142442,
+          "modelCpuSubmitMsMean": 0.13225806422085257,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 217.7411720161402,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.5999999940395355,
+          "frameMsP99": 6.5999999940395355,
+          "modelDrawsMean": 6.940665701881332,
+          "totalGlDrawsMean": 63.54486251808972,
+          "submittedModelTrianglesMean": 44938.286541244575,
+          "modelCpuSubmitMsMean": 0.13169319334665014,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 60,
+      "variant": "baseline",
+      "repeats": 3,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 156.90000000596046,
+      "navigationMsMedian": 222,
+      "parseMsMedian": 4.299999982118607,
+      "constructionMsMedian": 5.300000011920929,
+      "pageJsHeapReadyMbMedian": 9.373157501220703,
+      "pageJsHeapDeltaMbMedian": 17.812278747558594,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 229.45314998455694,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.0999999940395355,
+          "frameMsP99": 7.300000011920929,
+          "modelDrawsMean": 694,
+          "totalGlDrawsMean": 755,
+          "submittedModelTrianglesMean": 433814,
+          "modelCpuSubmitMsMean": 2.0849941385798547,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 231.09159848333667,
+          "frameMsMedian": 4.200000017881393,
+          "frameMsP95": 6.799999982118607,
+          "frameMsP99": 12.699999988079071,
+          "modelDrawsMean": 694,
+          "totalGlDrawsMean": 753.2950819672132,
+          "submittedModelTrianglesMean": 433814,
+          "modelCpuSubmitMsMean": 2.1897225721749805,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 230.72931220090973,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 5.5,
+          "frameMsP99": 7.5,
+          "modelDrawsMean": 687.7205188679245,
+          "totalGlDrawsMean": 744.1875,
+          "submittedModelTrianglesMean": 430252.1509433962,
+          "modelCpuSubmitMsMean": 2.064740565974476,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 229.29377517083378,
+          "frameMsMedian": 4.200000017881393,
+          "frameMsP95": 6.699999988079071,
+          "frameMsP99": 9,
+          "modelDrawsMean": 694,
+          "totalGlDrawsMean": 757.0286069651742,
+          "submittedModelTrianglesMean": 433814,
+          "modelCpuSubmitMsMean": 2.199937810759936,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 215.85446319344885,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 5.199999988079071,
+          "frameMsP99": 8.100000023841858,
+          "modelDrawsMean": 221.18713450292398,
+          "totalGlDrawsMean": 277.83040935672517,
+          "submittedModelTrianglesMean": 138262.3567251462,
+          "modelCpuSubmitMsMean": 2.0815058439011462,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1
+      },
+      "count": 60,
+      "variant": "optimized",
+      "repeats": 3,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 162.09999999403954,
+      "navigationMsMedian": 222,
+      "parseMsMedian": 4.799999982118607,
+      "constructionMsMedian": 31.600000023841858,
+      "pageJsHeapReadyMbMedian": 7.878471374511719,
+      "pageJsHeapDeltaMbMedian": 4.427211761474609,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 230.40370562522597,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.5,
+          "frameMsP99": 5.200000017881393,
+          "modelDrawsMean": 43,
+          "totalGlDrawsMean": 104,
+          "submittedModelTrianglesMean": 284882,
+          "modelCpuSubmitMsMean": 0.20156494550208717,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 231.56805793345035,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.5999999940395355,
+          "modelDrawsMean": 43,
+          "totalGlDrawsMean": 102.27887082976903,
+          "submittedModelTrianglesMean": 284882,
+          "modelCpuSubmitMsMean": 0.14148845136726484,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 231.92795090404783,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.799999982118607,
+          "frameMsP99": 5.5,
+          "modelDrawsMean": 43,
+          "totalGlDrawsMean": 99.6343347639485,
+          "submittedModelTrianglesMean": 284882,
+          "modelCpuSubmitMsMean": 0.13630901278344346,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 232.2982358128596,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.700000017881393,
+          "frameMsP99": 5.299999982118607,
+          "modelDrawsMean": 43,
+          "totalGlDrawsMean": 106.02996575342466,
+          "submittedModelTrianglesMean": 284882,
+          "modelCpuSubmitMsMean": 0.13313356169486698,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 217.47316889718743,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.600000023841858,
+          "frameMsP99": 5.700000017881393,
+          "modelDrawsMean": 13.574054054054054,
+          "totalGlDrawsMean": 70.14054054054054,
+          "submittedModelTrianglesMean": 89930.31783783784,
+          "modelCpuSubmitMsMean": 0.10789189805855622,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 1,
+      "variant": "baseline",
+      "repeats": 3,
+      "geometryTriangles": 4748,
+      "assetBytes": 80384,
+      "readyMsMedian": 116.90000000596046,
+      "navigationMsMedian": 189,
+      "parseMsMedian": 4.5,
+      "constructionMsMedian": 0.30000001192092896,
+      "pageJsHeapReadyMbMedian": 7.669589996337891,
+      "pageJsHeapDeltaMbMedian": 9.394847869873047,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 229.92628013548514,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.5999999940395355,
+          "frameMsP99": 4.9000000059604645,
+          "modelDrawsMean": 13,
+          "totalGlDrawsMean": 50,
+          "submittedModelTrianglesMean": 7402,
+          "modelCpuSubmitMsMean": 0.1839399191081214,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 231.84601924814362,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.799999982118607,
+          "frameMsP99": 5.200000017881393,
+          "modelDrawsMean": 13,
+          "totalGlDrawsMean": 50,
+          "submittedModelTrianglesMean": 7402,
+          "modelCpuSubmitMsMean": 0.14737142862592426,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 232.56740074126327,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.700000017881393,
+          "frameMsP99": 5.299999982118607,
+          "modelDrawsMean": 13,
+          "totalGlDrawsMean": 46.512,
+          "submittedModelTrianglesMean": 7402,
+          "modelCpuSubmitMsMean": 0.14537142840453557,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 231.9916946169211,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.799999982118607,
+          "frameMsP99": 5.5,
+          "modelDrawsMean": 13,
+          "totalGlDrawsMean": 50.07507163323782,
+          "submittedModelTrianglesMean": 7402,
+          "modelCpuSubmitMsMean": 0.1417191979536696,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 217.79184579893055,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.700000017881393,
+          "frameMsP99": 5.5,
+          "modelDrawsMean": 4.111191335740072,
+          "totalGlDrawsMean": 38.51407942238267,
+          "submittedModelTrianglesMean": 2340.8490974729243,
+          "modelCpuSubmitMsMean": 0.11364620523762617,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 1,
+      "variant": "optimized",
+      "repeats": 3,
+      "geometryTriangles": 4748,
+      "assetBytes": 80384,
+      "readyMsMedian": 126.09999999403954,
+      "navigationMsMedian": 198,
+      "parseMsMedian": 4.5,
+      "constructionMsMedian": 3.4000000059604645,
+      "pageJsHeapReadyMbMedian": 7.622650146484375,
+      "pageJsHeapDeltaMbMedian": 10.501930236816406,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 230.5820401335416,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.5,
+          "frameMsP99": 5,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 45,
+          "submittedModelTrianglesMean": 4750,
+          "modelCpuSubmitMsMean": 0.12765588896998634,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 231.9094676447969,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.700000017881393,
+          "frameMsP99": 5.300000011920929,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 45,
+          "submittedModelTrianglesMean": 4750,
+          "modelCpuSubmitMsMean": 0.09140401144423936,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 232.33532934131736,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.700000017881393,
+          "frameMsP99": 5.300000011920929,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 41.504009163802976,
+          "submittedModelTrianglesMean": 4750,
+          "modelCpuSubmitMsMean": 0.08911798390872426,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 232.48407643312103,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.299999982118607,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 45.072612921669524,
+          "submittedModelTrianglesMean": 4750,
+          "modelCpuSubmitMsMean": 0.08507718702191418,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 217.55545068428503,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.600000023841858,
+          "frameMsP99": 5.5999999940395355,
+          "modelDrawsMean": 2.5281385281385282,
+          "totalGlDrawsMean": 36.94516594516595,
+          "submittedModelTrianglesMean": 1501.082251082251,
+          "modelCpuSubmitMsMean": 0.06998556721176076,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 10,
+      "variant": "baseline",
+      "repeats": 3,
+      "geometryTriangles": 47480,
+      "assetBytes": 80384,
+      "readyMsMedian": 142.59999999403954,
+      "navigationMsMedian": 224,
+      "parseMsMedian": 5.199999988079071,
+      "constructionMsMedian": 1.5,
+      "pageJsHeapReadyMbMedian": 7.772327423095703,
+      "pageJsHeapDeltaMbMedian": 11.673526763916016,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 230.3117391147241,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.600000023841858,
+          "frameMsP99": 5.0999999940395355,
+          "modelDrawsMean": 121,
+          "totalGlDrawsMean": 158,
+          "submittedModelTrianglesMean": 74002,
+          "modelCpuSubmitMsMean": 0.648729791955089,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 231.852827329713,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.800000011920929,
+          "frameMsP99": 5.700000017881393,
+          "modelDrawsMean": 121,
+          "totalGlDrawsMean": 158,
+          "submittedModelTrianglesMean": 74002,
+          "modelCpuSubmitMsMean": 0.5162937468451053,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 231.14937031833074,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.800000011920929,
+          "frameMsP99": 6.0999999940395355,
+          "modelDrawsMean": 121,
+          "totalGlDrawsMean": 154.51293847038528,
+          "submittedModelTrianglesMean": 74002,
+          "modelCpuSubmitMsMean": 0.49695227141350146,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 231.22537509287434,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.800000011920929,
+          "frameMsP99": 5.9000000059604645,
+          "modelDrawsMean": 121,
+          "totalGlDrawsMean": 158.07979334098738,
+          "submittedModelTrianglesMean": 74002,
+          "modelCpuSubmitMsMean": 0.48668197442346545,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 217.7191328934967,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 6,
+          "modelDrawsMean": 38.26570397111913,
+          "totalGlDrawsMean": 73.75379061371841,
+          "submittedModelTrianglesMean": 23402.79855595668,
+          "modelCpuSubmitMsMean": 0.5267147998947529,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 10,
+      "variant": "optimized",
+      "repeats": 3,
+      "geometryTriangles": 47480,
+      "assetBytes": 80384,
+      "readyMsMedian": 127.09999999403954,
+      "navigationMsMedian": 200,
+      "parseMsMedian": 5.5999999940395355,
+      "constructionMsMedian": 10.5,
+      "pageJsHeapReadyMbMedian": 7.6645050048828125,
+      "pageJsHeapDeltaMbMedian": 8.807369232177734,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 230.59707457547316,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.5,
+          "frameMsP99": 4.9000000059604645,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 45,
+          "submittedModelTrianglesMean": 47482,
+          "modelCpuSubmitMsMean": 0.12511574099254277,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 232.02966152263843,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.200000017881393,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 45,
+          "submittedModelTrianglesMean": 47482,
+          "modelCpuSubmitMsMean": 0.08814433017342362,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 231.99363310783923,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.300000011920929,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 41.505431675242995,
+          "submittedModelTrianglesMean": 47482,
+          "modelCpuSubmitMsMean": 0.08822184070101324,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 231.8078623502463,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.700000017881393,
+          "frameMsP99": 5.5,
+          "modelDrawsMean": 8,
+          "totalGlDrawsMean": 45.077319587628864,
+          "submittedModelTrianglesMean": 47482,
+          "modelCpuSubmitMsMean": 0.08665521159546209,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 217.91538643346726,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.9000000059604645,
+          "modelDrawsMean": 2.5354558610709117,
+          "totalGlDrawsMean": 38.01736613603473,
+          "submittedModelTrianglesMean": 15048.56439942113,
+          "modelCpuSubmitMsMean": 0.13675832127351664,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 30,
+      "variant": "baseline",
+      "repeats": 3,
+      "geometryTriangles": 142440,
+      "assetBytes": 80384,
+      "readyMsMedian": 153.59999999403954,
+      "navigationMsMedian": 226,
+      "parseMsMedian": 5.5999999940395355,
+      "constructionMsMedian": 3.5,
+      "pageJsHeapReadyMbMedian": 8.382793426513672,
+      "pageJsHeapDeltaMbMedian": 6.167140960693359,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 230.5233719536556,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.700000017881393,
+          "frameMsP99": 5.299999982118607,
+          "modelDrawsMean": 361,
+          "totalGlDrawsMean": 398,
+          "submittedModelTrianglesMean": 222002,
+          "modelCpuSubmitMsMean": 1.430733679709305,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 232.697373672313,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.9000000059604645,
+          "frameMsP99": 6,
+          "modelDrawsMean": 361,
+          "totalGlDrawsMean": 398,
+          "submittedModelTrianglesMean": 222002,
+          "modelCpuSubmitMsMean": 1.2307912843011388,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 232.01022282399623,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.899999976158142,
+          "frameMsP99": 6.199999988079071,
+          "modelDrawsMean": 361,
+          "totalGlDrawsMean": 394.5091743119266,
+          "submittedModelTrianglesMean": 222002,
+          "modelCpuSubmitMsMean": 1.257167431346457,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 231.437221159425,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.9000000059604645,
+          "frameMsP99": 6.699999988079071,
+          "modelDrawsMean": 361,
+          "totalGlDrawsMean": 398.07754164273405,
+          "submittedModelTrianglesMean": 222002,
+          "modelCpuSubmitMsMean": 1.2457208501614763,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 217.68771451347146,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.700000017881393,
+          "frameMsP99": 6,
+          "modelDrawsMean": 114.2471098265896,
+          "totalGlDrawsMean": 149.73049132947978,
+          "submittedModelTrianglesMean": 70257.85838150288,
+          "modelCpuSubmitMsMean": 1.2969653181774767,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 30,
+      "variant": "optimized",
+      "repeats": 3,
+      "geometryTriangles": 142440,
+      "assetBytes": 80384,
+      "readyMsMedian": 149.69999998807907,
+      "navigationMsMedian": 223,
+      "parseMsMedian": 5.5,
+      "constructionMsMedian": 20.900000005960464,
+      "pageJsHeapReadyMbMedian": 7.500507354736328,
+      "pageJsHeapDeltaMbMedian": 11.05621337890625,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 230.33394437136033,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.5,
+          "frameMsP99": 5.0999999940395355,
+          "modelDrawsMean": 22,
+          "totalGlDrawsMean": 59,
+          "submittedModelTrianglesMean": 142442,
+          "modelCpuSubmitMsMean": 0.16878245831980432,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 232.34460457448006,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.299999982118607,
+          "modelDrawsMean": 22,
+          "totalGlDrawsMean": 59,
+          "submittedModelTrianglesMean": 142442,
+          "modelCpuSubmitMsMean": 0.12427017780188226,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 231.9187089061566,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.700000017881393,
+          "frameMsP99": 5.5,
+          "modelDrawsMean": 22,
+          "totalGlDrawsMean": 55.497991967871485,
+          "submittedModelTrianglesMean": 142442,
+          "modelCpuSubmitMsMean": 0.11055651105346176,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 232.7438221081132,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.199999988079071,
+          "modelDrawsMean": 22,
+          "totalGlDrawsMean": 59.072612921669524,
+          "submittedModelTrianglesMean": 142442,
+          "modelCpuSubmitMsMean": 0.10291595151248559,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 218.00546190667725,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.5,
+          "modelDrawsMean": 6.9523809523809526,
+          "totalGlDrawsMean": 42.44660894660895,
+          "submittedModelTrianglesMean": 45014.13852813853,
+          "modelCpuSubmitMsMean": 0.12518037655652858,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 60,
+      "variant": "baseline",
+      "repeats": 3,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 166.5,
+      "navigationMsMedian": 244,
+      "parseMsMedian": 5.5,
+      "constructionMsMedian": 6.5,
+      "pageJsHeapReadyMbMedian": 8.996696472167969,
+      "pageJsHeapDeltaMbMedian": 20.69921875,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 230.01793900737493,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.9000000059604645,
+          "frameMsP99": 5.700000017881393,
+          "modelDrawsMean": 694,
+          "totalGlDrawsMean": 731,
+          "submittedModelTrianglesMean": 433814,
+          "modelCpuSubmitMsMean": 2.3654335257290415,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 225.0278795592311,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 5.700000017881393,
+          "frameMsP99": 8.300000011920929,
+          "modelDrawsMean": 693.6006024096386,
+          "totalGlDrawsMean": 730.6006024096386,
+          "submittedModelTrianglesMean": 433680.8048192771,
+          "modelCpuSubmitMsMean": 2.395542168473623,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 223.79410941826805,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 5.5,
+          "frameMsP99": 8.300000011920929,
+          "modelDrawsMean": 693.4415274463007,
+          "totalGlDrawsMean": 726.9236276849642,
+          "submittedModelTrianglesMean": 433629.8042959427,
+          "modelCpuSubmitMsMean": 2.342004773173668,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 224.31172556622295,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 5.5,
+          "frameMsP99": 7.699999988079071,
+          "modelDrawsMean": 694,
+          "totalGlDrawsMean": 731.0712148414124,
+          "submittedModelTrianglesMean": 433814,
+          "modelCpuSubmitMsMean": 2.3722321960042865,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 218.02737140160454,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.899999976158142,
+          "frameMsP99": 6.5,
+          "modelDrawsMean": 219.1578947368421,
+          "totalGlDrawsMean": 254.63229992790195,
+          "submittedModelTrianglesMean": 136993.8947368421,
+          "modelCpuSubmitMsMean": 2.3051910652217025,
+          "hiddenRuns": 0
+        }
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "dpr": 3
+      },
+      "count": 60,
+      "variant": "optimized",
+      "repeats": 3,
+      "geometryTriangles": 284880,
+      "assetBytes": 80384,
+      "readyMsMedian": 165.90000000596046,
+      "navigationMsMedian": 247,
+      "parseMsMedian": 6.5,
+      "constructionMsMedian": 37.599999994039536,
+      "pageJsHeapReadyMbMedian": 7.5938873291015625,
+      "pageJsHeapDeltaMbMedian": 10.345893859863281,
+      "geometries": 8,
+      "textures": 3,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "gpuTimerAvailable": true,
+      "errors": [],
+      "actions": {
+        "idle": {
+          "effectiveFpsMedian": 230.72010218580328,
+          "frameMsMedian": 4.199999988079071,
+          "frameMsP95": 4.5,
+          "frameMsP99": 4.9000000059604645,
+          "modelDrawsMean": 43,
+          "totalGlDrawsMean": 80,
+          "submittedModelTrianglesMean": 284882,
+          "modelCpuSubmitMsMean": 0.19740334710356686,
+          "hiddenRuns": 0
+        },
+        "drag": {
+          "effectiveFpsMedian": 232.01022282675737,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.299999982118607,
+          "modelDrawsMean": 43,
+          "totalGlDrawsMean": 80,
+          "submittedModelTrianglesMean": 284882,
+          "modelCpuSubmitMsMean": 0.14092730392574512,
+          "hiddenRuns": 0
+        },
+        "zoom": {
+          "effectiveFpsMedian": 232.19628964691802,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.300000011920929,
+          "modelDrawsMean": 43,
+          "totalGlDrawsMean": 76.50400916380298,
+          "submittedModelTrianglesMean": 284882,
+          "modelCpuSubmitMsMean": 0.13785796104700979,
+          "hiddenRuns": 0
+        },
+        "rotate": {
+          "effectiveFpsMedian": 232.06666932438168,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.700000017881393,
+          "frameMsP99": 5.5,
+          "modelDrawsMean": 43,
+          "totalGlDrawsMean": 80.07961053837343,
+          "submittedModelTrianglesMean": 284882,
+          "modelCpuSubmitMsMean": 0.13923253149715895,
+          "hiddenRuns": 0
+        },
+        "mode": {
+          "effectiveFpsMedian": 218.81941490557008,
+          "frameMsMedian": 4.100000023841858,
+          "frameMsP95": 4.699999988079071,
+          "frameMsP99": 5.699999988079071,
+          "modelDrawsMean": 13.590352771778258,
+          "totalGlDrawsMean": 49.06839452843772,
+          "submittedModelTrianglesMean": 90038.29949604032,
+          "modelCpuSubmitMsMean": 0.11526277487530306,
+          "hiddenRuns": 0
+        }
+      }
+    }
+  ]
+}
