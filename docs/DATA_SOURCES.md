@@ -151,3 +151,7 @@ SRC-028离线资料统计：36个闭合建筑标签轮廓，含2个连廊；27�
 负责人提供“关于教学楼和实验楼之间的路线.png”“异常.png”“无异常.png”，保留在v2/assets/source_maps；为校园本地OSM地图/UI反馈，内部用于连接策略与渲染排查，不复制截图作公开底图。负责人明确教学B至实验C穿过教学A—G连片可穿行空间并经语心桥；计算范围依据原始教学轮廓包络扣除水域/其他建筑/校区外，未从红线像素猜世界坐标。桥西端接入由已批准桥位及真实轮廓最近点推导，支持源码再计算；JSON保留策略审核记录。
 
 CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastCameraDuration=0.6。MapLibre6.14.0本地源码确认相机easeTo接受毫秒，且WebGL alpha/depth/stencil固定启用；不能用alpha:false假称关闭透明缓冲。公开主源：[MapLibre Map源码](https://github.com/maplibre/maplibre-gl-js/blob/v6.14.0/src/ui/map.ts)、[相机源码](https://github.com/maplibre/maplibre-gl-js/blob/v6.14.0/src/ui/camera.ts)。截图和逐帧JSON来自真实Chrome/Edge的隔离测试上下文，控制GPS使用既有公开北苑1栋坐标，无个人位置记录。
+
+## SRC-041｜窗口与原生页面缩放检查（2026-10-14）
+
+负责人补充灰框触发与消失条件，作为UI故障反馈；不新增GIS数据。安装的Chrome/Edge临时独立配置目录执行原生缩放与窗口尺寸矩阵，浏览器版本、视口、DPR、画布缓冲、面板/端点位置与像素扫描来自实际DOM和截图，保存在screenshots/s1/window-layout。测试使用公开教学B与实验C，不读取用户常用浏览器配置或个人GPS。仅测试注入的洋红背景不进入产品CSS。原用户截图仍是内部研究资料，不作为公开底图资源。

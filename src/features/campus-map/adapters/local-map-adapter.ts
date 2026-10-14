@@ -431,9 +431,16 @@ export class LocalMapAdapter implements MapAdapter {
       ) + 0.025,
     );
   }
-  private constrain(center: LngLat, proposedZoom: number) {
+  private constrain(
+    center: LngLat,
+    proposedZoom: number,
+    pitch = Math.max(
+      this.native.getPitch(),
+      this.pendingPitch ?? this.native.getPitch(),
+    ),
+  ) {
     const zoom = Math.max(
-      this.minimumZoom,
+      this.minimumZoomForPitch(pitch),
       Math.min(CAMPUS_MAX_ZOOM, proposedZoom),
     );
     const a = MercatorCoordinate.fromLngLat([
@@ -448,15 +455,7 @@ export class LocalMapAdapter implements MapAdapter {
       this.element.clientWidth,
       this.element.clientHeight,
     );
-    const footprint = viewportFootprint(
-      diameter,
-      diameter,
-      Math.max(
-        this.native.getPitch(),
-        this.pendingPitch ?? this.native.getPitch(),
-      ),
-      0,
-    );
+    const footprint = viewportFootprint(diameter, diameter, pitch, 0);
     const x = footprint.width / (2 * 512 * 2 ** zoom),
       y = footprint.height / (2 * 512 * 2 ** zoom);
     const point = MercatorCoordinate.fromLngLat(center);
@@ -635,19 +634,20 @@ export class LocalMapAdapter implements MapAdapter {
     const ai = document
       .querySelector(".assistant-panel")
       ?.getBoundingClientRect();
+    const panelAcrossMap = panel && panel.right - panel.left > width * 0.75;
     const aiAcrossMap = ai && ai.width > width * 0.75;
     return {
       top: Math.min(height * 0.35, (top?.bottom || 40) + 20),
       bottom: Math.max(
         footer
           ? height - footer.top + 20
-          : width < 761 && panel
+          : panelAcrossMap && panel
             ? height - panel.top + 20
             : 90,
         aiAcrossMap ? height - ai.top + 20 : 0,
       ),
       left:
-        width < 761
+        width < 761 || panelAcrossMap
           ? 20
           : panel
             ? panel.right + 24
@@ -701,6 +701,9 @@ export class LocalMapAdapter implements MapAdapter {
     // Work on an off-screen transform; correction passes never paint a jump.
     // MapLibre is pinned to 6.14.0 and this projection seam is browser-tested.
     const trial = this.native._camera.transform.clone();
+    trial.setConstrainOverride((center, zoom) =>
+      this.constrain(center, zoom, pitch),
+    );
     trial.setPadding({ top: 0, bottom: 0, left: 0, right: 0 });
     trial.setPitch(pitch);
     trial.setBearing(bearing);
@@ -732,7 +735,7 @@ export class LocalMapAdapter implements MapAdapter {
               ) / Math.max(1, Math.max(...ys) - Math.min(...ys)),
             );
       const zoom = Math.max(
-        this.minimumZoom,
+        required,
         Math.min(maxZoom, trial.zoom + Math.log2(ratio)),
       );
       if (
@@ -744,7 +747,11 @@ export class LocalMapAdapter implements MapAdapter {
       const center = trial.centerPoint.clone();
       center.x += shiftX;
       center.y += shiftY;
-      const bounded = this.constrain(trial.screenPointToLocation(center), zoom);
+      const bounded = this.constrain(
+        trial.screenPointToLocation(center),
+        zoom,
+        pitch,
+      );
       trial.setCenter(bounded.center);
       trial.setZoom(bounded.zoom);
     }

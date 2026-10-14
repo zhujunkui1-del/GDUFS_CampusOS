@@ -1,0 +1,1808 @@
+[
+  {
+    "name": "maximized-100-open",
+    "viewport": [1707, 932],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.3771356020577, 23.07480414753833],
+      [113.40742710784355, 23.07480414753833],
+      [113.40116830583099, 23.059484013120652],
+      [113.38339440406315, 23.059484013120652]
+    ],
+    "pageSize": [1707, 932],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1707.3333740234375,
+      "height": 932,
+      "top": 0,
+      "right": 1707.3333740234375,
+      "bottom": 932,
+      "left": 0
+    },
+    "backing": [2561, 1398],
+    "drawing": [2561, 1398],
+    "panel": {
+      "x": 130,
+      "y": 575,
+      "width": 350,
+      "height": 323,
+      "top": 575,
+      "right": 480,
+      "bottom": 898,
+      "left": 130
+    },
+    "endpoints": [],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-110-selection",
+    "viewport": [1552, 847],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.38888811700593, 23.070733713349014],
+      [113.39868816469539, 23.070733713349014],
+      [113.39666328819703, 23.06577948962301],
+      [113.39091299350429, 23.06577948962301]
+    ],
+    "pageSize": [1552, 847],
+    "dpr": 1.6500000953674316,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1552.12109375,
+      "height": 847.2726440429688,
+      "top": 0,
+      "right": 1552.12109375,
+      "bottom": 847.2726440429688,
+      "left": 0
+    },
+    "backing": [2561, 1398],
+    "drawing": [2561, 1398],
+    "panel": {
+      "x": 129.9905242919922,
+      "y": 490.7291259765625,
+      "width": 349.9999694824219,
+      "height": 322.5473327636719,
+      "top": 490.7291259765625,
+      "right": 479.99049377441406,
+      "bottom": 813.2764587402344,
+      "left": 129.9905242919922
+    },
+    "endpoints": [
+      {
+        "x": 335,
+        "y": 780.9999389648438,
+        "width": 29.999998092651367,
+        "height": 29.999998092651367,
+        "top": 780.9999389648438,
+        "right": 364.99999809265137,
+        "bottom": 810.9999370574951,
+        "left": 335
+      },
+      {
+        "x": 974,
+        "y": 436,
+        "width": 29.999998092651367,
+        "height": 29.999998092651367,
+        "top": 436,
+        "right": 1003.9999980926514,
+        "bottom": 465.99999809265137,
+        "left": 974
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-110",
+    "viewport": [1552, 847],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.39077593146999, 23.06801118180624],
+      [113.39493871986105, 23.06801118180624],
+      [113.39493871986105, 23.065920989235494],
+      [113.39077593146999, 23.065920989235494]
+    ],
+    "pageSize": [1552, 847],
+    "dpr": 1.6500000953674316,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1552.12109375,
+      "height": 847.2726440429688,
+      "top": 0,
+      "right": 1552.12109375,
+      "bottom": 847.2726440429688,
+      "left": 0
+    },
+    "backing": [2561, 1398],
+    "drawing": [2561, 1398],
+    "panel": {
+      "x": 129.9905242919922,
+      "y": 383.7405090332031,
+      "width": 349.9999694824219,
+      "height": 429.53594970703125,
+      "top": 383.7405090332031,
+      "right": 479.99049377441406,
+      "bottom": 813.2764587402344,
+      "left": 129.9905242919922
+    },
+    "endpoints": [
+      {
+        "x": 598,
+        "y": 724,
+        "width": 29.999998092651367,
+        "height": 29.999998092651367,
+        "top": 724,
+        "right": 627.9999980926514,
+        "bottom": 753.9999980926514,
+        "left": 598
+      },
+      {
+        "x": 1349,
+        "y": 149,
+        "width": 29.999998092651367,
+        "height": 29.999998092651367,
+        "top": 149,
+        "right": 1378.9999980926514,
+        "bottom": 178.99999809265137,
+        "left": 1349
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-125-selection",
+    "viewport": [1366, 745],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39156394780099, 23.06921677615506],
+      [113.39678609522184, 23.06921677615506],
+      [113.39570710010685, 23.066575011333285],
+      [113.39264294291587, 23.066575011333285]
+    ],
+    "pageSize": [1366, 745],
+    "dpr": 1.875,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1365.86669921875,
+      "height": 746.1333618164062,
+      "top": 0,
+      "right": 1365.86669921875,
+      "bottom": 746.1333618164062,
+      "left": 0
+    },
+    "backing": [2561, 1399],
+    "drawing": [2561, 1399],
+    "panel": {
+      "x": 130,
+      "y": 389.4000244140625,
+      "width": 350.0000305175781,
+      "height": 322.20001220703125,
+      "top": 389.4000244140625,
+      "right": 480.0000305175781,
+      "bottom": 711.6000366210938,
+      "left": 130
+    },
+    "endpoints": [
+      {
+        "x": -401.0000305175781,
+        "y": 1085,
+        "width": 30.000001907348633,
+        "height": 30.000001907348633,
+        "top": 1085,
+        "right": -371.0000286102295,
+        "bottom": 1115.0000019073486,
+        "left": -401.0000305175781
+      },
+      {
+        "x": 880.0000610351562,
+        "y": 386.0000305175781,
+        "width": 30.000001907348633,
+        "height": 30.000001907348633,
+        "top": 386.0000305175781,
+        "right": 910.0000629425049,
+        "bottom": 416.00003242492676,
+        "left": 880.0000610351562
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-125",
+    "viewport": [1366, 745],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.39071937846973, 23.068012363173892],
+      [113.39484976748463, 23.068012363173892],
+      [113.39484976748463, 23.06593702282842],
+      [113.39071937846973, 23.06593702282842]
+    ],
+    "pageSize": [1366, 745],
+    "dpr": 1.875,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1365.86669921875,
+      "height": 746.1333618164062,
+      "top": 0,
+      "right": 1365.86669921875,
+      "bottom": 746.1333618164062,
+      "left": 0
+    },
+    "backing": [2561, 1399],
+    "drawing": [2561, 1399],
+    "panel": {
+      "x": 130,
+      "y": 294.0666809082031,
+      "width": 350.0000305175781,
+      "height": 417.5333557128906,
+      "top": 294.0666809082031,
+      "right": 480.0000305175781,
+      "bottom": 711.6000366210938,
+      "left": 130
+    },
+    "endpoints": [
+      {
+        "x": 548,
+        "y": 641.0000610351562,
+        "width": 30.000001907348633,
+        "height": 30.000001907348633,
+        "top": 641.0000610351562,
+        "right": 578.0000019073486,
+        "bottom": 671.0000629425049,
+        "left": 548
+      },
+      {
+        "x": 1214.0001220703125,
+        "y": 131,
+        "width": 30.000001907348633,
+        "height": 30.000001907348633,
+        "top": 131,
+        "right": 1244.0001239776611,
+        "bottom": 161.00000190734863,
+        "left": 1214.0001220703125
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-150-selection",
+    "viewport": [1138, 621],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39131520233678, 23.069306082852094],
+      [113.39674847540994, 23.069306082852094],
+      [113.39562585771353, 23.066559658453997],
+      [113.392437820032, 23.066559658453997]
+    ],
+    "pageSize": [1138, 621],
+    "dpr": 2.25,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1138.2222900390625,
+      "height": 620.888916015625,
+      "top": 0,
+      "right": 1138.2222900390625,
+      "bottom": 620.888916015625,
+      "left": 0
+    },
+    "backing": [2561, 1397],
+    "drawing": [2561, 1397],
+    "panel": {
+      "x": 130,
+      "y": 263,
+      "width": 350,
+      "height": 324.3333435058594,
+      "top": 263,
+      "right": 480,
+      "bottom": 587.3333435058594,
+      "left": 130
+    },
+    "endpoints": [
+      {
+        "x": -231,
+        "y": 879,
+        "width": 30,
+        "height": 30,
+        "top": 879,
+        "right": -201,
+        "bottom": 909,
+        "left": -231
+      },
+      {
+        "x": 766,
+        "y": 324,
+        "width": 30,
+        "height": 30,
+        "top": 324,
+        "right": 796,
+        "bottom": 354,
+        "left": 766
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-150",
+    "viewport": [1138, 621],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.39029085665481, 23.068147680441157],
+      [113.3948570696914, 23.068147680441157],
+      [113.3948570696914, 23.065855147075],
+      [113.39029085665481, 23.065855147075]
+    ],
+    "pageSize": [1138, 621],
+    "dpr": 2.25,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1138.2222900390625,
+      "height": 620.888916015625,
+      "top": 0,
+      "right": 1138.2222900390625,
+      "bottom": 620.888916015625,
+      "left": 0
+    },
+    "backing": [2561, 1397],
+    "drawing": [2561, 1397],
+    "panel": {
+      "x": 130,
+      "y": 239.38888549804688,
+      "width": 350,
+      "height": 347.9444580078125,
+      "top": 239.38888549804688,
+      "right": 480,
+      "bottom": 587.3333435058594,
+      "left": 130
+    },
+    "endpoints": [
+      {
+        "x": 516,
+        "y": 516,
+        "width": 30,
+        "height": 30,
+        "top": 516,
+        "right": 546,
+        "bottom": 546,
+        "left": 516
+      },
+      {
+        "x": 1018,
+        "y": 132,
+        "width": 30,
+        "height": 30,
+        "top": 132,
+        "right": 1048,
+        "bottom": 162,
+        "left": 1018
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-175-selection",
+    "viewport": [975, 532],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39088606664035, 23.069487688838734],
+      [113.39679351037745, 23.069487688838734],
+      [113.39557291999097, 23.06649932434874],
+      [113.39210665702535, 23.06649932434874]
+    ],
+    "pageSize": [975, 532],
+    "dpr": 2.625,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 976,
+      "height": 532.952392578125,
+      "top": 0,
+      "right": 976,
+      "bottom": 532.952392578125,
+      "left": 0
+    },
+    "backing": [2562, 1399],
+    "drawing": [2562, 1399],
+    "panel": {
+      "x": 130,
+      "y": 200.33334350585938,
+      "width": 350,
+      "height": 298.23809814453125,
+      "top": 200.33334350585938,
+      "right": 480,
+      "bottom": 498.5714416503906,
+      "left": 130
+    },
+    "endpoints": [
+      {
+        "x": -66,
+        "y": 706,
+        "width": 30,
+        "height": 30,
+        "top": 706,
+        "right": -36,
+        "bottom": 736,
+        "left": -66
+      },
+      {
+        "x": 685,
+        "y": 280,
+        "width": 30,
+        "height": 30,
+        "top": 280,
+        "right": 715,
+        "bottom": 310,
+        "left": 685
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-175",
+    "viewport": [975, 532],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.38978397364497, 23.068306497902213],
+      [113.39485840758573, 23.068306497902213],
+      [113.39485840758573, 23.065756880267173],
+      [113.38978397364497, 23.065756880267173]
+    ],
+    "pageSize": [975, 532],
+    "dpr": 2.625,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 976,
+      "height": 532.952392578125,
+      "top": 0,
+      "right": 976,
+      "bottom": 532.952392578125,
+      "left": 0
+    },
+    "backing": [2562, 1399],
+    "drawing": [2562, 1399],
+    "panel": {
+      "x": 130,
+      "y": 200.33334350585938,
+      "width": 350,
+      "height": 298.23809814453125,
+      "top": 200.33334350585938,
+      "right": 480,
+      "bottom": 498.5714416503906,
+      "left": 130
+    },
+    "endpoints": [
+      {
+        "x": 492,
+        "y": 428,
+        "width": 30,
+        "height": 30,
+        "top": 428,
+        "right": 522,
+        "bottom": 458,
+        "left": 492
+      },
+      {
+        "x": 880,
+        "y": 131,
+        "width": 30,
+        "height": 30,
+        "top": 131,
+        "right": 910,
+        "bottom": 161,
+        "left": 880
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-200-selection",
+    "viewport": [853, 466],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39221987186437, 23.068561034704615],
+      [113.39761242387902, 23.068561034704615],
+      [113.39649821992992, 23.065835312839795],
+      [113.39333407581432, 23.065835312839795]
+    ],
+    "pageSize": [853, 466],
+    "dpr": 3,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 854,
+      "height": 466,
+      "top": 0,
+      "right": 854,
+      "bottom": 466,
+      "left": 0
+    },
+    "backing": [2562, 1398],
+    "drawing": [2562, 1398],
+    "panel": {
+      "x": 8,
+      "y": 197.0416717529297,
+      "width": 837.6666870117188,
+      "height": 260.9583435058594,
+      "top": 197.0416717529297,
+      "right": 845.6666870117188,
+      "bottom": 458.00001525878906,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": -306,
+        "y": 416,
+        "width": 30,
+        "height": 30,
+        "top": 416,
+        "right": -276,
+        "bottom": 446,
+        "left": -306
+      },
+      {
+        "x": 383,
+        "y": 117,
+        "width": 30,
+        "height": 30,
+        "top": 117,
+        "right": 413,
+        "bottom": 147,
+        "left": 383
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-200",
+    "viewport": [853, 466],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.38668541157261, 23.068947136877682],
+      [113.40115451441534, 23.068947136877682],
+      [113.40115451441534, 23.061682979411415],
+      [113.38668541157261, 23.061682979411415]
+    ],
+    "pageSize": [853, 466],
+    "dpr": 3,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 854,
+      "height": 466,
+      "top": 0,
+      "right": 854,
+      "bottom": 466,
+      "left": 0
+    },
+    "backing": [2562, 1398],
+    "drawing": [2562, 1398],
+    "panel": {
+      "x": 8,
+      "y": 197.0416717529297,
+      "width": 837.6666870117188,
+      "height": 260.9583435058594,
+      "top": 197.0416717529297,
+      "right": 845.6666870117188,
+      "bottom": 458.00001525878906,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": 324,
+        "y": 162,
+        "width": 30,
+        "height": 30,
+        "top": 162,
+        "right": 354,
+        "bottom": 192,
+        "left": 324
+      },
+      {
+        "x": 442,
+        "y": 71,
+        "width": 30,
+        "height": 30,
+        "top": 71,
+        "right": 472,
+        "bottom": 101,
+        "left": 442
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-250-selection",
+    "viewport": [683, 372],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39275865782145, 23.068379962478573],
+      [113.3970714365409, 23.068379962478573],
+      [113.39618033432129, 23.06619821662146],
+      [113.39364976004578, 23.06619821662146]
+    ],
+    "pageSize": [683, 372],
+    "dpr": 3.75,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 682.933349609375,
+      "height": 373.0666809082031,
+      "top": 0,
+      "right": 682.933349609375,
+      "bottom": 373.0666809082031,
+      "left": 0
+    },
+    "backing": [2561, 1399],
+    "drawing": [2561, 1399],
+    "panel": {
+      "x": 8,
+      "y": 156.03334045410156,
+      "width": 666.933349609375,
+      "height": 208.7666778564453,
+      "top": 156.03334045410156,
+      "right": 674.933349609375,
+      "bottom": 364.8000183105469,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": -476.0000305175781,
+        "y": 433.0000305175781,
+        "width": 30.000001907348633,
+        "height": 30.000001907348633,
+        "top": 433.0000305175781,
+        "right": -446.0000286102295,
+        "bottom": 463.00003242492676,
+        "left": -476.0000305175781
+      },
+      {
+        "x": 298.0000305175781,
+        "y": 97.00000762939453,
+        "width": 30.000001907348633,
+        "height": 30.000001907348633,
+        "top": 97.00000762939453,
+        "right": 328.00003242492676,
+        "bottom": 127.00000953674316,
+        "left": 298.0000305175781
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-250",
+    "viewport": [683, 372],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.38379444866331, 23.07004588217802],
+      [113.40485090104033, 23.07004588217802],
+      [113.40485090104033, 23.05946575871927],
+      [113.38379444866331, 23.05946575871927]
+    ],
+    "pageSize": [683, 372],
+    "dpr": 3.75,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 682.933349609375,
+      "height": 373.0666809082031,
+      "top": 0,
+      "right": 682.933349609375,
+      "bottom": 373.0666809082031,
+      "left": 0
+    },
+    "backing": [2561, 1399],
+    "drawing": [2561, 1399],
+    "panel": {
+      "x": 8,
+      "y": 156.03334045410156,
+      "width": 666.933349609375,
+      "height": 208.7666778564453,
+      "top": 156.03334045410156,
+      "right": 674.933349609375,
+      "bottom": 364.8000183105469,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": 265,
+        "y": 121.00000762939453,
+        "width": 30.000001907348633,
+        "height": 30.000001907348633,
+        "top": 121.00000762939453,
+        "right": 295.00000190734863,
+        "bottom": 151.00000953674316,
+        "left": 265
+      },
+      {
+        "x": 330.0000305175781,
+        "y": 71,
+        "width": 30.000001907348633,
+        "height": 30.000001907348633,
+        "top": 71,
+        "right": 360.00003242492676,
+        "bottom": 101.00000190734863,
+        "left": 330.0000305175781
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-300-selection",
+    "viewport": [569, 310],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39311268650522, 23.068308726387613],
+      [113.39670561636308, 23.068308726387613],
+      [113.39596324862475, 23.066489631464478],
+      [113.39385505424332, 23.066489631464478]
+    ],
+    "pageSize": [569, 310],
+    "dpr": 4.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 569.1111450195312,
+      "height": 311.1111145019531,
+      "top": 0,
+      "right": 569.1111450195312,
+      "bottom": 311.1111145019531,
+      "left": 0
+    },
+    "backing": [2561, 1400],
+    "drawing": [2561, 1400],
+    "panel": {
+      "x": 8,
+      "y": 142.00347900390625,
+      "width": 553.1111450195312,
+      "height": 160.66319274902344,
+      "top": 142.00347900390625,
+      "right": 561.1111450195312,
+      "bottom": 302.6666717529297,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": -660,
+        "y": 490,
+        "width": 30,
+        "height": 30,
+        "top": 490,
+        "right": -630,
+        "bottom": 520,
+        "left": -660
+      },
+      {
+        "x": 241,
+        "y": 90,
+        "width": 30,
+        "height": 30,
+        "top": 90,
+        "right": 271,
+        "bottom": 120,
+        "left": 241
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "maximized-zoom-300",
+    "viewport": [569, 310],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.38357593227033, 23.07058684099087],
+      [113.40551793333242, 23.07058684099087],
+      [113.40551793333242, 23.059552643670187],
+      [113.38357593227033, 23.059552643670187]
+    ],
+    "pageSize": [569, 310],
+    "dpr": 4.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 569.1111450195312,
+      "height": 311.1111145019531,
+      "top": 0,
+      "right": 569.1111450195312,
+      "bottom": 311.1111145019531,
+      "left": 0
+    },
+    "backing": [2561, 1400],
+    "drawing": [2561, 1400],
+    "panel": {
+      "x": 8,
+      "y": 142.00347900390625,
+      "width": 553.1111450195312,
+      "height": 160.66319274902344,
+      "top": 142.00347900390625,
+      "right": 561.1111450195312,
+      "bottom": 302.6666717529297,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": 214,
+        "y": 109,
+        "width": 30,
+        "height": 30,
+        "top": 109,
+        "right": 244,
+        "bottom": 139,
+        "left": 214
+      },
+      {
+        "x": 267,
+        "y": 69,
+        "width": 30,
+        "height": 30,
+        "top": 69,
+        "right": 297,
+        "bottom": 99,
+        "left": 267
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-800-selection",
+    "viewport": [986, 706],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39067895913325, 23.070213694957943],
+      [113.39690502035813, 23.070213694957943],
+      [113.39561859753434, 23.066084197024125],
+      [113.39196538196319, 23.066084197024125]
+    ],
+    "pageSize": [986, 706],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 706,
+      "top": 0,
+      "right": 986,
+      "bottom": 706,
+      "left": 0
+    },
+    "backing": [1479, 1059],
+    "drawing": [1479, 1059],
+    "panel": {
+      "x": 130,
+      "y": 349,
+      "width": 350,
+      "height": 323,
+      "top": 349,
+      "right": 480,
+      "bottom": 672,
+      "left": 130
+    },
+    "endpoints": [
+      {
+        "x": 31,
+        "y": 728,
+        "width": 30,
+        "height": 30,
+        "top": 728,
+        "right": 61,
+        "bottom": 758,
+        "left": 31
+      },
+      {
+        "x": 691,
+        "y": 366,
+        "width": 30,
+        "height": 30,
+        "top": 366,
+        "right": 721,
+        "bottom": 396,
+        "left": 691
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-800",
+    "viewport": [986, 706],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.3899083291617, 23.068645135448463],
+      [113.39482477413048, 23.068645135448463],
+      [113.39482477413048, 23.06540629877979],
+      [113.3899083291617, 23.06540629877979]
+    ],
+    "pageSize": [986, 706],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 706,
+      "top": 0,
+      "right": 986,
+      "bottom": 706,
+      "left": 0
+    },
+    "backing": [1479, 1059],
+    "drawing": [1479, 1059],
+    "panel": {
+      "x": 130,
+      "y": 276.6458435058594,
+      "width": 350,
+      "height": 395.35418701171875,
+      "top": 276.6458435058594,
+      "right": 480,
+      "bottom": 672.0000305175781,
+      "left": 130
+    },
+    "endpoints": [
+      {
+        "x": 489,
+        "y": 521,
+        "width": 30,
+        "height": 30,
+        "top": 521,
+        "right": 519,
+        "bottom": 551,
+        "left": 489
+      },
+      {
+        "x": 893,
+        "y": 211,
+        "width": 30,
+        "height": 30,
+        "top": 211,
+        "right": 923,
+        "bottom": 241,
+        "left": 893
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-650-selection",
+    "viewport": [986, 556],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39068532562464, 23.069659790600227],
+      [113.3969113868506, 23.069659790600227],
+      [113.39562496402226, 23.066407661963794],
+      [113.39197174845054, 23.066407661963794]
+    ],
+    "pageSize": [986, 556],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 556,
+      "top": 0,
+      "right": 986,
+      "bottom": 556,
+      "left": 0
+    },
+    "backing": [1479, 834],
+    "drawing": [1479, 834],
+    "panel": {
+      "x": 130,
+      "y": 210.64584350585938,
+      "width": 350,
+      "height": 311.35418701171875,
+      "top": 210.64584350585938,
+      "right": 480,
+      "bottom": 522.0000305175781,
+      "left": 130
+    },
+    "endpoints": [
+      {
+        "x": -9,
+        "y": 685,
+        "width": 30,
+        "height": 30,
+        "top": 685,
+        "right": 21,
+        "bottom": 715,
+        "left": -9
+      },
+      {
+        "x": 690,
+        "y": 291,
+        "width": 30,
+        "height": 30,
+        "top": 291,
+        "right": 720,
+        "bottom": 321,
+        "left": 690
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-650",
+    "viewport": [986, 556],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.38990832916323, 23.068301070096354],
+      [113.39482477413185, 23.068301070096354],
+      [113.39482477413185, 23.065750371530015],
+      [113.38990832916323, 23.065750371530015]
+    ],
+    "pageSize": [986, 556],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 556,
+      "top": 0,
+      "right": 986,
+      "bottom": 556,
+      "left": 0
+    },
+    "backing": [1479, 834],
+    "drawing": [1479, 834],
+    "panel": {
+      "x": 130,
+      "y": 210.64584350585938,
+      "width": 350,
+      "height": 311.35418701171875,
+      "top": 210.64584350585938,
+      "right": 480,
+      "bottom": 522.0000305175781,
+      "left": 130
+    },
+    "endpoints": [
+      {
+        "x": 489,
+        "y": 446,
+        "width": 30,
+        "height": 30,
+        "top": 446,
+        "right": 519,
+        "bottom": 476,
+        "left": 489
+      },
+      {
+        "x": 893,
+        "y": 136,
+        "width": 30,
+        "height": 30,
+        "top": 136,
+        "right": 923,
+        "bottom": 166,
+        "left": 893
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-550-selection",
+    "viewport": [986, 456],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39180301986647, 23.068541633495826],
+      [113.39802908109027, 23.068541633495826],
+      [113.39674265826358, 23.065874403711902],
+      [113.39308944269305, 23.065874403711902]
+    ],
+    "pageSize": [986, 456],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 456,
+      "top": 0,
+      "right": 986,
+      "bottom": 456,
+      "left": 0
+    },
+    "backing": [1479, 684],
+    "drawing": [1479, 684],
+    "panel": {
+      "x": 8,
+      "y": 192.64584350585938,
+      "width": 970,
+      "height": 255.3541717529297,
+      "top": 192.64584350585938,
+      "right": 978,
+      "bottom": 448.00001525878906,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": -247,
+        "y": 417,
+        "width": 30,
+        "height": 30,
+        "top": 417,
+        "right": -217,
+        "bottom": 447,
+        "left": -247
+      },
+      {
+        "x": 449,
+        "y": 115,
+        "width": 30,
+        "height": 30,
+        "top": 115,
+        "right": 479,
+        "bottom": 145,
+        "left": 449
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-550",
+    "viewport": [986, 456],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.38516835419136, 23.06901514784161],
+      [113.4027214263291, 23.06901514784161],
+      [113.4027214263291, 23.061546245573965],
+      [113.38516835419136, 23.061546245573965]
+    ],
+    "pageSize": [986, 456],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 456,
+      "top": 0,
+      "right": 986,
+      "bottom": 456,
+      "left": 0
+    },
+    "backing": [1479, 684],
+    "drawing": [1479, 684],
+    "panel": {
+      "x": 8,
+      "y": 192.64584350585938,
+      "width": 970,
+      "height": 255.3541717529297,
+      "top": 192.64584350585938,
+      "right": 978,
+      "bottom": 448.00001525878906,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": 392,
+        "y": 158,
+        "width": 30,
+        "height": 30,
+        "top": 158,
+        "right": 422,
+        "bottom": 188,
+        "left": 392
+      },
+      {
+        "x": 506,
+        "y": 71,
+        "width": 30,
+        "height": 30,
+        "top": 71,
+        "right": 536,
+        "bottom": 101,
+        "left": 506
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-500-selection",
+    "viewport": [986, 406],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39180246087932, 23.068444479884533],
+      [113.39802852210659, 23.068444479884533],
+      [113.39674209928006, 23.066069710371863],
+      [113.39308888370874, 23.066069710371863]
+    ],
+    "pageSize": [986, 406],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 406,
+      "top": 0,
+      "right": 986,
+      "bottom": 406,
+      "left": 0
+    },
+    "backing": [1479, 609],
+    "drawing": [1479, 609],
+    "panel": {
+      "x": 8,
+      "y": 170.64584350585938,
+      "width": 970,
+      "height": 227.3541717529297,
+      "top": 170.64584350585938,
+      "right": 978,
+      "bottom": 398.00001525878906,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": -288,
+        "y": 424,
+        "width": 30,
+        "height": 30,
+        "top": 424,
+        "right": -258,
+        "bottom": 454,
+        "left": -288
+      },
+      {
+        "x": 449,
+        "y": 104,
+        "width": 30,
+        "height": 30,
+        "top": 104,
+        "right": 479,
+        "bottom": 134,
+        "left": 449
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-500",
+    "viewport": [986, 406],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.3823572543053, 23.06949450545639],
+      [113.40588391370011, 23.06949450545639],
+      [113.40588391370011, 23.060581464992225],
+      [113.3823572543053, 23.060581464992225]
+    ],
+    "pageSize": [986, 406],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 406,
+      "top": 0,
+      "right": 986,
+      "bottom": 406,
+      "left": 0
+    },
+    "backing": [1479, 609],
+    "drawing": [1479, 609],
+    "panel": {
+      "x": 8,
+      "y": 170.64584350585938,
+      "width": 970,
+      "height": 227.3541717529297,
+      "top": 170.64584350585938,
+      "right": 978,
+      "bottom": 398.00001525878906,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": 407,
+        "y": 136,
+        "width": 30,
+        "height": 30,
+        "top": 136,
+        "right": 437,
+        "bottom": 166,
+        "left": 407
+      },
+      {
+        "x": 491,
+        "y": 71,
+        "width": 30,
+        "height": 30,
+        "top": 71,
+        "right": 521,
+        "bottom": 101,
+        "left": 491
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-450-selection",
+    "viewport": [986, 356],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39180174052177, 23.068347155295598],
+      [113.39802780174875, 23.068347155295598],
+      [113.39674137892098, 23.066264845840323],
+      [113.3930881633487, 23.066264845840323]
+    ],
+    "pageSize": [986, 356],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 356,
+      "top": 0,
+      "right": 986,
+      "bottom": 356,
+      "left": 0
+    },
+    "backing": [1479, 534],
+    "drawing": [1479, 534],
+    "panel": {
+      "x": 8,
+      "y": 148.64584350585938,
+      "width": 970,
+      "height": 199.3541717529297,
+      "top": 148.64584350585938,
+      "right": 978,
+      "bottom": 348.00001525878906,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": -348,
+        "y": 440,
+        "width": 30,
+        "height": 30,
+        "top": 440,
+        "right": -318,
+        "bottom": 470,
+        "left": -348
+      },
+      {
+        "x": 449,
+        "y": 93,
+        "width": 30,
+        "height": 30,
+        "top": 93,
+        "right": 479,
+        "bottom": 123,
+        "left": 449
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-450",
+    "viewport": [986, 356],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.38240439073667, 23.06915993119385],
+      [113.4065507100396, 23.06915993119385],
+      [113.4065507100396, 23.061138716189177],
+      [113.38240439073667, 23.061138716189177]
+    ],
+    "pageSize": [986, 356],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 356,
+      "top": 0,
+      "right": 986,
+      "bottom": 356,
+      "left": 0
+    },
+    "backing": [1479, 534],
+    "drawing": [1479, 534],
+    "panel": {
+      "x": 8,
+      "y": 148.64584350585938,
+      "width": 970,
+      "height": 199.3541717529297,
+      "top": 148.64584350585938,
+      "right": 978,
+      "bottom": 348.00001525878906,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": 394,
+        "y": 117,
+        "width": 30,
+        "height": 30,
+        "top": 117,
+        "right": 424,
+        "bottom": 147,
+        "left": 394
+      },
+      {
+        "x": 476,
+        "y": 54,
+        "width": 30,
+        "height": 30,
+        "top": 54,
+        "right": 506,
+        "bottom": 84,
+        "left": 476
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-400-selection",
+    "viewport": [986, 306],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39179590661399, 23.068305236839336],
+      [113.39802196784393, 23.068305236839336],
+      [113.39673554501746, 23.06651538796332],
+      [113.39308232944182, 23.06651538796332]
+    ],
+    "pageSize": [986, 306],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 306,
+      "top": 0,
+      "right": 986,
+      "bottom": 306,
+      "left": 0
+    },
+    "backing": [1479, 459],
+    "drawing": [1479, 459],
+    "panel": {
+      "x": 8,
+      "y": 142,
+      "width": 970,
+      "height": 156,
+      "top": 142,
+      "right": 978,
+      "bottom": 298,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": -468,
+        "y": 498,
+        "width": 30,
+        "height": 30,
+        "top": 498,
+        "right": -438,
+        "bottom": 528,
+        "left": -468
+      },
+      {
+        "x": 450,
+        "y": 90,
+        "width": 30,
+        "height": 30,
+        "top": 90,
+        "right": 480,
+        "bottom": 120,
+        "left": 450
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-400",
+    "viewport": [986, 306],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.3823582172019, 23.068638763080884],
+      [113.40673564839551, 23.068638763080884],
+      [113.40673564839551, 23.06167813295663],
+      [113.3823582172019, 23.06167813295663]
+    ],
+    "pageSize": [986, 306],
+    "dpr": 1.5,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 986,
+      "height": 306,
+      "top": 0,
+      "right": 986,
+      "bottom": 306,
+      "left": 0
+    },
+    "backing": [1479, 459],
+    "drawing": [1479, 459],
+    "panel": {
+      "x": 8,
+      "y": 142,
+      "width": 970,
+      "height": 156,
+      "top": 142,
+      "right": 978,
+      "bottom": 298,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": 392,
+        "y": 93,
+        "width": 30,
+        "height": 30,
+        "top": 93,
+        "right": 422,
+        "bottom": 123,
+        "left": 392
+      },
+      {
+        "x": 473,
+        "y": 30,
+        "width": 30,
+        "height": 30,
+        "top": 30,
+        "right": 503,
+        "bottom": 60,
+        "left": 473
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-650-zoom-150-selection",
+    "viewport": [657, 370],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "38.00",
+    "groundCorners": [
+      [113.39284072121103, 23.068375882111],
+      [113.39698932387296, 23.068375882111],
+      [113.39613214355319, 23.066205834652507],
+      [113.39369790153472, 23.066205834652507]
+    ],
+    "pageSize": [657, 370],
+    "dpr": 2.25,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 656.888916015625,
+      "height": 371.1111145019531,
+      "top": 0,
+      "right": 656.888916015625,
+      "bottom": 371.1111145019531,
+      "left": 0
+    },
+    "backing": [1478, 835],
+    "drawing": [1478, 835],
+    "panel": {
+      "x": 8,
+      "y": 155.09722900390625,
+      "width": 641.3333129882812,
+      "height": 207.56944274902344,
+      "top": 155.09722900390625,
+      "right": 649.3333129882812,
+      "bottom": 362.6666717529297,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": -492,
+        "y": 434,
+        "width": 30,
+        "height": 30,
+        "top": 434,
+        "right": -462,
+        "bottom": 464,
+        "left": -492
+      },
+      {
+        "x": 285,
+        "y": 96,
+        "width": 30,
+        "height": 30,
+        "top": 96,
+        "right": 315,
+        "bottom": 126,
+        "left": 285
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  },
+  {
+    "name": "short-650-zoom-150",
+    "viewport": [657, 370],
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4070 Laptop GPU (0x00002820) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "contextLost": false,
+    "attributionVisible": true,
+    "pitch": "0.00",
+    "groundCorners": [
+      [113.38401918290384, 23.07009239046006],
+      [113.40466025945636, 23.07009239046006],
+      [113.40466025945636, 23.059368351782155],
+      [113.38401918290384, 23.059368351782155]
+    ],
+    "pageSize": [657, 370],
+    "dpr": 2.25,
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 656.888916015625,
+      "height": 371.1111145019531,
+      "top": 0,
+      "right": 656.888916015625,
+      "bottom": 371.1111145019531,
+      "left": 0
+    },
+    "backing": [1478, 835],
+    "drawing": [1478, 835],
+    "panel": {
+      "x": 8,
+      "y": 155.09722900390625,
+      "width": 641.3333129882812,
+      "height": 207.56944274902344,
+      "top": 155.09722900390625,
+      "right": 649.3333129882812,
+      "bottom": 362.6666717529297,
+      "left": 8
+    },
+    "endpoints": [
+      {
+        "x": 252,
+        "y": 120,
+        "width": 30,
+        "height": 30,
+        "top": 120,
+        "right": 282,
+        "bottom": 150,
+        "left": 252
+      },
+      {
+        "x": 317,
+        "y": 71,
+        "width": 30,
+        "height": 30,
+        "top": 71,
+        "right": 347,
+        "bottom": 101,
+        "left": 317
+      }
+    ],
+    "longest": 0,
+    "longestGreyRun": 0
+  }
+]

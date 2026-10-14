@@ -19,6 +19,12 @@
 .campus-shell {
   pointer-events: none;
 }
+.campus-shell:has(.map-workspace) {
+  min-height: 0;
+}
+.main-content:has(.map-workspace) {
+  overflow: clip;
+}
 .assistant-launcher,
 .skip-link {
   pointer-events: auto;
@@ -664,7 +670,19 @@
     display: none;
   }
   .route-planner {
-    max-height: 56dvh;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    max-height: min(56dvh, calc(100dvh - 150px));
+    padding-bottom: 28px;
+  }
+  body:has(.route-planner) .map-attribution {
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    z-index: 16;
+  }
+  body:has(.route-planner) .mobile-navigation {
+    display: none;
+  }
+  body:has(.route-planner) .assistant-launcher {
+    display: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
