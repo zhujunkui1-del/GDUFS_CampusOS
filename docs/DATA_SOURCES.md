@@ -181,3 +181,13 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 宿舍3.png可见“南苑七栋 / SOUTH HALL OF RESIDENCE BLOCK7”标识，用于建筑外观对应；内侧参考呈现浅色框架、红砖竖墙、开放走廊和水平栏杆。宿舍7.jpg可见北苑6字样，仅作为同类宿舍风格参考，不当作南苑7栋的全部立面证据。精确立面朝向、开间/楼梯/雨棚位置和中庭尺度仍未标定。
 
 第二版使用原OSM way312536955和原七层/约21米依据，外轮廓SHA为cafc04b8e7f6fe939eaa7728f14fa8be8717088f1642028add614bd8470045da。显示几何近共线点简化误差小于4厘米，原GIS未改。自有程序化框架、凹进阳台和廊道以纯色/实例表达，不复制照片像素或砖纹。独立GLB为80384字节/4748三角面/7调用/5材质/0图片，当前SHA54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a；仅独立评审，未注册到地图。
+
+## SRC-046｜负责人第二版3D接图批准与原2.5D保留（2026-10-15）
+
+负责人本轮明确批准把第二版南苑7栋3D换入地图、保留第一版2.5D，并合并视角按钮。来源仍为SRC-044的OSM/高度和SRC-045的外观研究；本轮无新照片或供应商模型采集。只发布自有零纹理GLB，原参考照片不进入public。批准、版本与精确SHA登记owner-model-review.model3D；公共SOURCE.md更新当前版本及历史资产出处。
+
+发布文件nanyuan7-v2-54cc55342ae5.glb与独立评审nanyuan7-v2.glb二进制完全一致，SHA256仍为54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a。原评审manifest/design保留其2026-10-14快照状态，不能将其中mapIntegrated:false解释为当前地图状态；当前运行清单为src/features/campus-map/data/nanyuan7-model.json。2.5D参数与第一版快照完全一致，底图/地点/路由没有重建。两款真实浏览器隔离测试保存公开校园模型截图及视口/版本/哈希/调用证据，无真实个人定位采集。
+
+## SRC-047｜3D窗口缩放故障与实际GL尺寸（2026-10-15）
+
+来源是负责人故障反馈、Chrome/Edge实际绘制与Three0.186.1本地源码。探针在隔离测试上下文观察七层实例楼板drawArraysInstanced/drawElementsInstanced的GL viewport和drawingBuffer，排除512px阴影，不读取账号/个人GPS/认证请求。修复前1440×900 viewport与780×520 buffer不一致；修复后桌面/手机DPR1/3、真实窗口DPR1.5、调整后拖动均一致。证据在screenshots/s1/nanyuan7-v2-resize，复验和限制见S1_NANYUAN7_MODEL_RESIZE_ACCEPTANCE.md；不新增GIS或影像许可。

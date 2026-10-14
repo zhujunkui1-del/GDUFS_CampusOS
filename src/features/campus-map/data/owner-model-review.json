@@ -16,6 +16,14 @@
     "source": "项目苹果卫星图顶部左侧南苑7栋，中庭按可见比例估计，仅模型展示，不写入原GIS或路由。"
   },
   "appearanceAccuracy": "schematic",
+  "model3D": {
+    "reviewedAt": "2026-10-15",
+    "modelVersion": "nanyuan7-v2-2026-10-14",
+    "assetSha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+    "approvedForMap": true,
+    "appearanceAccuracy": "photo_informed_simplification",
+    "decision": "负责人：同意2.5D保留第一版，3D换成第二版，可以进行更换了。仅南苑7栋，原图仅参考，不发布照片或纹理。"
+  },
   "appearanceNotes": "保留OSM外轮廓、卫星图围合中庭和横向翼楼；楼层按负责人确认。立面色彩、窗格、分层线、女儿墙和屋顶条带为程序化近似，没有精确立面测量。",
   "references": [
     {

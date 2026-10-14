@@ -2,6 +2,8 @@
 
 2026-10-14。负责人要求先设计第二版，不放入地图。本目录是独立评审草稿，地图中的第一版、地点、路网和公共模型清单保持原状。
 
+2026-10-15更新：负责人已批准第二版3D接图、第一版2.5D保留。上文及本目录design/manifest是原评审快照；当前运行资产为public/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb，二进制与本目录GLB相同。当前地图清单在src/features/campus-map/data/nanyuan7-model.json，第一版原清单另存docs/model-previews/nanyuan7-v1/manifest.json。独立预览仍可用于查看模型，接图记录见docs/S1_NANYUAN7_V2_INTEGRATION_ACCEPTANCE.md。
+
 [打开可旋转预览](http://127.0.0.1:3012/) · [模型文件](nanyuan7-v2.glb)
 
 ## 外观调整

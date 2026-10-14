@@ -1,6 +1,7 @@
 import { test, expect, chromium } from "@playwright/test";
 import { mkdir, writeFile, readFile } from "node:fs/promises";
 import sharp from "sharp";
+import { selectMapMode } from "./helpers/map-mode";
 const { bounds }: { bounds: number[] } = JSON.parse(
   await readFile(
     "src/features/campus-map/data/local-map-manifest.json",
@@ -237,11 +238,8 @@ test("native browser zoom and short window retain a fully painted map", async ({
     const plan = async (name: string) => {
       const reset = page.getByRole("button", { name: "重置路线", exact: true });
       if (await reset.count()) await reset.click();
-      const tilt = page.getByRole("button", {
-        name: "切换为2.5D",
-        exact: true,
-      });
-      if (await tilt.count()) await tilt.click();
+      if ((await map.getAttribute("data-mode")) === "2d")
+        await selectMapMode(page, "2.5D");
       await expect(map).toHaveAttribute("data-camera-moving", "false");
       for (const [which, name] of [
         ["起点", "教学楼B栋"],

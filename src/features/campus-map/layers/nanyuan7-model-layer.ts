@@ -113,7 +113,7 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
       this.root = gltf.scene;
       this.root.traverse((object) => {
         if (!(object instanceof Mesh)) return;
-        object.castShadow = !["glass", "frame", "recess"].includes(
+        object.castShadow = !["glass", "metal", "frame", "recess"].includes(
           Array.isArray(object.material) ? "" : object.material.name,
         );
         object.receiveShadow = true;
@@ -133,6 +133,7 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
         data.modelLod = low ? "low" : "full";
         data.modelBytes = String(asset.bytes);
         data.modelTriangles = String(asset.triangles);
+        data.modelAssetSha = asset.sha256;
       }
       this.onState("ready");
       this.map?.triggerRepaint();
@@ -159,7 +160,6 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
     }
   }
   render(gl: WebGL2RenderingContext, input: CustomRenderMethodInput) {
-    void gl;
     if (
       !this.visible ||
       !this.ready ||
@@ -175,6 +175,15 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
       .copy(this.camera.projectionMatrix)
       .invert();
     this.renderer.resetState();
+    // MapLibre resizes its canvas; Three caches the viewport from construction.
+    // Sync buffer pixels without setSize/setPixelRatio, which would resize the map's canvas.
+    const ratio = this.renderer.getPixelRatio();
+    this.renderer.setViewport(
+      0,
+      0,
+      gl.drawingBufferWidth / ratio,
+      gl.drawingBufferHeight / ratio,
+    );
     this.renderer.render(this.scene, this.camera);
     this.renderer.resetState();
     const data = this.map.getContainer().dataset;

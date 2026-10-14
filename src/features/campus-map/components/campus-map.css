@@ -164,6 +164,46 @@
 .map-controls button:disabled {
   opacity: 0.4;
 }
+.map-mode-positioner {
+  z-index: 45;
+  pointer-events: auto;
+}
+.map-mode-menu {
+  min-width: 124px;
+  padding: 6px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-floating);
+  outline: none;
+}
+.map-mode-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.map-mode-item[data-highlighted],
+.map-mode-item[data-checked] {
+  background: var(--blue-soft, #e9f0f9);
+  color: var(--blue, #1261bb);
+}
+.map-mode-item[data-disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+.map-mode-check {
+  display: grid;
+  place-items: center;
+  width: 16px;
+}
 .map-controls button[aria-pressed="true"],
 .navigation-controls button[aria-pressed="true"] {
   background: var(--blue-soft, #e9f0f9);

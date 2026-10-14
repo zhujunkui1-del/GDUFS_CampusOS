@@ -1,0 +1,16 @@
+[
+  {
+    "stage": "before",
+    "sample": {
+      "viewport": [0, 0, 1440, 900],
+      "buffer": [1440, 900]
+    }
+  },
+  {
+    "stage": "resized",
+    "sample": {
+      "viewport": [0, 0, 1440, 900],
+      "buffer": [780, 520]
+    }
+  }
+]

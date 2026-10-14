@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { selectMapMode } from "./helpers/map-mode";
 import { mkdir, writeFile } from "node:fs/promises";
 test("controlled real online services on the fixed local map", async ({
   page,
@@ -30,7 +31,7 @@ test("controlled real online services on the fixed local map", async ({
     .first()
     .click();
   await page.getByRole("button", { name: "关闭地点详情" }).click();
-  await page.getByRole("button", { name: "切换为2D", exact: true }).click();
+  await selectMapMode(page, "2D");
   await page.getByRole("button", { name: "校园步行导航", exact: true }).click();
   await page.getByLabel("导航起点").fill("图书馆");
   await page

@@ -191,9 +191,12 @@ test("full-campus route and focused navigation retain honest GPS failure state",
   ).toBeHidden();
   await expect(page.locator(".sidebar")).toBeHidden();
   await expect(page.getByLabel("搜索校园地点")).toHaveCount(0);
+  await expect(page.getByTestId("map-mode-trigger")).toHaveCount(1);
+  await page.getByTestId("map-mode-trigger").click();
   await expect(
-    page.getByRole("button", { name: "切换为3D", exact: true }),
+    page.getByRole("menuitemradio", { name: "切换为3D", exact: true }),
   ).toBeEnabled();
+  await page.keyboard.press("Escape");
   await expect(page.locator(".navigation-location-status")).toContainText(
     "权限未获允许",
   );

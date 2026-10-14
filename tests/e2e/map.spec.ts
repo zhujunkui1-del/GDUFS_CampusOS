@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import { mockAMap } from "./map-fixture";
 import type { Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { selectMapMode } from "./helpers/map-mode";
 const catalogue = JSON.parse(
   await readFile("src/features/campus-map/data/campus.json", "utf8"),
 );
@@ -80,7 +81,7 @@ test("map controls, source-backed place details, layers and cross-page state", a
   const map = page.getByTestId("campus-map");
   await expect(map).toHaveAttribute("data-status", "ready");
   await expect(map).toHaveAttribute("data-scope", "campus-and-visible-context");
-  await page.getByRole("button", { name: "切换为2D", exact: true }).click();
+  await selectMapMode(page, "2D");
   await expect(page.getByTestId("campus-map")).toHaveAttribute(
     "data-camera-moving",
     "false",
@@ -143,7 +144,7 @@ test("road selection computes locally and reset discards results", async ({
   await page.getByLabel("搜索校园地点").fill("图书馆");
   await page.locator(".place-result").filter({ hasText: "图书馆" }).click();
   await page.getByRole("button", { name: "关闭地点详情" }).click();
-  await page.getByRole("button", { name: "切换为2D", exact: true }).click();
+  await selectMapMode(page, "2D");
   await expect(page.getByTestId("campus-map")).toHaveAttribute(
     "data-camera-moving",
     "false",
@@ -226,9 +227,7 @@ test("missing online credentials keeps the local map usable and reports service 
     "data-status",
     "ready",
   );
-  await expect(
-    page.getByRole("button", { name: "切换为2D", exact: true }),
-  ).toBeEnabled();
+  await expect(page.getByTestId("map-mode-trigger")).toBeEnabled();
   await page.getByLabel("搜索校园地点").fill("图书馆");
   await page
     .getByRole("button", { name: "查询高德在线地点", exact: true })

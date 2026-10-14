@@ -64,8 +64,14 @@ describe("single owner-reviewed dormitory model", () => {
         .setFromObject(gltf.scene)
         .getSize(new (await import("three")).Vector3());
       expect(size.y).toBeCloseTo(21, 3);
-      expect(size.x).toBeCloseTo(modelPilot.dimensionsMeters[0], 0);
-      expect(size.z).toBeCloseTo(modelPilot.dimensionsMeters[2], 0);
+      expect(size.x).toBeCloseTo(
+        modelPilot.modelBounds.max[0] - modelPilot.modelBounds.min[0],
+        3,
+      );
+      expect(size.z).toBeCloseTo(
+        modelPilot.modelBounds.max[2] - modelPilot.modelBounds.min[2],
+        3,
+      );
     });
   }
 });

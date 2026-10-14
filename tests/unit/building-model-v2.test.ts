@@ -7,13 +7,28 @@ import v2 from "../../docs/model-previews/nanyuan7-v2/manifest.json";
 import design from "../../docs/model-previews/nanyuan7-v2/design.json";
 import active from "@/features/campus-map/data/nanyuan7-model.json";
 import { campusData } from "@/features/campus-map/data/campus";
+import legacy from "../../docs/model-previews/nanyuan7-v1/manifest.json";
+import review from "@/features/campus-map/data/owner-model-review.json";
 
 describe("standalone photo-informed second draft", () => {
-  it("keeps V2 outside the active map and preserves its source footprint", () => {
+  it("promotes only the approved V2 asset and retains the exact V1 2.5D volume", () => {
     expect(v2.mapIntegrated).toBe(false);
     expect(v2.stage).toBe("standalone_review_only");
-    expect(active.modelVersion).toBe("nanyuan7-2026-10-14.1");
-    expect(active.assets.full.url).toContain("3386f67af1bf");
+    expect(active.modelVersion).toBe(v2.modelVersion);
+    expect(active.volumeVersion).toBe(legacy.modelVersion);
+    expect(active.geometry).toEqual(legacy.geometry);
+    expect(active.courtyardGeometry).toEqual(legacy.courtyardGeometry);
+    expect(active.origin).toEqual(legacy.origin);
+    expect(active.dimensionsMeters).toEqual(legacy.dimensionsMeters);
+    expect(active.heightMeters).toBe(legacy.heightMeters);
+    expect(active.lodStrategy).toBe("shared_lightweight_v2");
+    expect(active.assets.low).toEqual(active.assets.full);
+    expect(active.assets.full.sha256).toBe(v2.asset.sha256);
+    expect(review.model3D.approvedForMap).toBe(true);
+    expect(review.model3D.assetSha256).toBe(v2.asset.sha256);
+    expect(readFileSync("public" + active.assets.full.url)).toEqual(
+      readFileSync("docs/model-previews/nanyuan7-v2/nanyuan7-v2.glb"),
+    );
     const footprint = campusData.places.find(
       (p) => p.id === v2.placeId,
     )!.geometry;

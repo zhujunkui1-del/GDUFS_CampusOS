@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { selectMapMode } from "./helpers/map-mode";
 const manifest = JSON.parse(
   await readFile(
     "src/features/campus-map/data/local-map-manifest.json",
@@ -52,7 +53,7 @@ test("real browser map starts north and responds to drag and zoom", async ({
     .first()
     .click();
   await page.getByRole("button", { name: "关闭地点详情" }).click();
-  await page.getByRole("button", { name: "切换为2D", exact: true }).click();
+  await selectMapMode(page, "2D");
   await page.getByRole("button", { name: "放大地图", exact: true }).click();
   const beforeZoom = Number(await map.getAttribute("data-zoom"));
   await page.getByRole("button", { name: "放大地图", exact: true }).click();
@@ -96,10 +97,8 @@ test("real browser map starts north and responds to drag and zoom", async ({
     .toBeGreaterThan(25);
   const dragResponseMs = Date.now() - dragStarted;
   await page.screenshot({ path: `${dir}/${name}-drag.jpg`, type: "jpeg" });
-  for (const mode of ["2.5D", "2D"]) {
-    await page
-      .getByRole("button", { name: `切换为${mode}`, exact: true })
-      .click();
+  for (const mode of ["2.5D", "2D"] as const) {
+    await selectMapMode(page, mode);
     for (let i = 0; i < 8; i++)
       await page.getByRole("button", { name: "缩小地图", exact: true }).click();
     await page

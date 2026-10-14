@@ -1,5 +1,5 @@
 {
-  "modelVersion": "nanyuan7-2026-10-14.1",
+  "modelVersion": "nanyuan7-v2-2026-10-14",
   "mapVersion": "s1-2026-10-14.2",
   "footprintId": "osm-way-312536955",
   "placeId": "osm-way-312536955",
@@ -9,7 +9,7 @@
   "heightMeters": 21,
   "levels": 7,
   "heightAccuracy": "owner_approximation",
-  "appearanceAccuracy": "schematic",
+  "appearanceAccuracy": "photo_informed_simplification",
   "courtyardAccuracy": "visual_approximation",
   "geometry": {
     "type": "Polygon",
@@ -54,19 +54,30 @@
   "dimensionsMeters": [70.57265058669776, 21, 41.6759160730311],
   "assets": {
     "low": {
-      "url": "/models/nanyuan7/nanyuan7-low-7def165d3ed8.glb",
-      "sha256": "7def165d3ed8fc9ce19378b3fa3916147ef9519be94760dcee1dd50e135c01ca",
-      "bytes": 71432,
-      "triangles": 3804,
-      "drawCalls": 5
+      "url": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+      "sha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+      "bytes": 80384,
+      "triangles": 4748,
+      "drawCalls": 7,
+      "materialCount": 5,
+      "textureCount": 0
     },
     "full": {
-      "url": "/models/nanyuan7/nanyuan7-full-3386f67af1bf.glb",
-      "sha256": "3386f67af1bfc8dd83cec87115c06001e02e8ed722970a13775a5761166546b5",
-      "bytes": 124024,
-      "triangles": 7040,
-      "drawCalls": 7
+      "url": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+      "sha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+      "bytes": 80384,
+      "triangles": 4748,
+      "drawCalls": 7,
+      "materialCount": 5,
+      "textureCount": 0
     }
   },
-  "license": "OSM footprint: ODbL-1.0; original procedural geometry/materials. Research imagery not embedded."
+  "license": "OSM footprint: ODbL-1.0; original procedural geometry/materials. Research imagery not embedded.",
+  "volumeVersion": "nanyuan7-2026-10-14.1",
+  "modelBounds": {
+    "min": [-35.54703903198242, 0, -21.14795708656311],
+    "max": [35.543148040771484, 20.999999850988388, 22.48223227262497]
+  },
+  "lodStrategy": "shared_lightweight_v2",
+  "approvedAt": "2026-10-15"
 }

@@ -42,6 +42,7 @@ import {
   modelPilotAvailable,
   pilotVolume,
   pilotCourtyard,
+  pilotModelCorners,
   type PilotModelState,
 } from "../data/model-pilot";
 import type { Nanyuan7ModelLayer } from "../layers/nanyuan7-model-layer";
@@ -580,6 +581,7 @@ export class LocalMapAdapter implements MapAdapter {
     this.element.dataset.modelPlaceId = modelPilot.placeId;
     this.element.dataset.modelHeight = String(modelPilot.heightMeters);
     this.element.dataset.modelVersion = modelPilot.modelVersion;
+    this.element.dataset.modelVolumeVersion = modelPilot.volumeVersion;
     this.element.dataset.modelState = "idle";
     this.updateModelVisibility();
   }
@@ -897,12 +899,20 @@ export class LocalMapAdapter implements MapAdapter {
       const matrix = fittingModel
         ? trial.getProjectionDataForCustomLayer(false).mainMatrix
         : undefined;
-      const pixels = points.flatMap((p) => {
-        const ground = trial.locationToScreenPoint(LngLat.convert(p));
-        return matrix
-          ? [ground, this.elevatedPixel(p, modelPilot.heightMeters, matrix)]
-          : [ground];
-      });
+      const pixels =
+        fittingModel && matrix && this.displayMode === "3d"
+          ? pilotModelCorners.map(({ coordinate, height }) =>
+              this.elevatedPixel(coordinate, height, matrix),
+            )
+          : points.flatMap((p) => {
+              const ground = trial.locationToScreenPoint(LngLat.convert(p));
+              return matrix
+                ? [
+                    ground,
+                    this.elevatedPixel(p, modelPilot.heightMeters, matrix),
+                  ]
+                : [ground];
+            });
       const xs = pixels.map((p) => p.x),
         ys = pixels.map((p) => p.y),
         shiftX =
@@ -1132,11 +1142,16 @@ export class LocalMapAdapter implements MapAdapter {
         this.native._camera.transform.getProjectionDataForCustomLayer(
           false,
         ).mainMatrix;
-      const pixels = modelPilot.geometry.coordinates[0].flatMap((p) =>
-        [0, modelPilot.heightMeters].map((h) =>
-          this.elevatedPixel([p[0], p[1]], h, matrix),
-        ),
-      );
+      const pixels =
+        this.displayMode === "3d"
+          ? pilotModelCorners.map(({ coordinate, height }) =>
+              this.elevatedPixel(coordinate, height, matrix),
+            )
+          : modelPilot.geometry.coordinates[0].flatMap((p) =>
+              [0, modelPilot.heightMeters].map((h) =>
+                this.elevatedPixel([p[0], p[1]], h, matrix),
+              ),
+            );
       this.element.dataset.modelExtent = JSON.stringify([
         Math.min(...pixels.map((p) => p.x)),
         Math.min(...pixels.map((p) => p.y)),

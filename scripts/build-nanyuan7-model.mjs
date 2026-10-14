@@ -35,6 +35,10 @@ const readJson = async (path) => JSON.parse(await readFile(path, "utf8"));
 const review = await readJson(
   "src/features/campus-map/data/owner-model-review.json",
 );
+if (review.model3D?.approvedForMap)
+  throw new Error(
+    "V1 is historical. Build V2 with build-nanyuan7-v2.mjs and activate the approved asset with publish-nanyuan7-v2.mjs.",
+  );
 const campus = await readJson("src/features/campus-map/data/campus.json");
 const mapManifest = await readJson(
   "src/features/campus-map/data/local-map-manifest.json",

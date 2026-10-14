@@ -40,7 +40,18 @@ export function PlaceDetails({
           <Drawer.Popup
             className="place-details-panel"
             initialFocus={close}
-            finalFocus={finalFocus}
+            finalFocus={() => {
+              const active = document.activeElement;
+              // Closing motion may finish after the user opens another control.
+              // Keep their new focus instead of dismissing the mode menu.
+              if (
+                active instanceof HTMLElement &&
+                active !== document.body &&
+                !active.closest(".place-details-panel")
+              )
+                return false;
+              return finalFocus.current || false;
+            }}
           >
             <div className="place-details-frame">
               <div className="place-drag-handle" aria-hidden="true">
