@@ -18,6 +18,8 @@ import {
   fitCampusView,
 } from "@/features/campus-map/data/viewport";
 import { nearestTunnelDistance } from "@/features/campus-map/data/local-routing";
+import { projectOnPath } from "@/features/campus-map/data/route-progress";
+import ownerPoints from "@/features/campus-map/data/owner-poi-review.json";
 vi.mock("@/lib/server/map-env", () => ({
   mapRuntime: () => ({
     env: {
@@ -84,8 +86,22 @@ describe("licensed campus geometry and search", () => {
               place.coordinate,
               campusData.zones.find((z) => z.id === place.zone)!.polygon,
             );
-      expect(isInsideBoundary, place.id).toBe(true);
-      if (place.verification === "source_mapped")
+      const reviewedBoundaryGate =
+        place.category === "entrance" &&
+        ownerPoints.points.some(
+          (p) => p.id === place.id && p.category === "entrance",
+        );
+      if (!isInsideBoundary && reviewedBoundaryGate) {
+        // Owner gate anchors lie on either side of the unchanged OSM boundary.
+        const boundary = campusData.zones.find(
+          (z) => z.id === place.zone,
+        )!.polygon;
+        expect(
+          projectOnPath(place.coordinate, boundary).distance,
+          place.id,
+        ).toBeLessThan(10);
+      } else expect(isInsideBoundary, place.id).toBe(true);
+      if (place.id.startsWith("osm-"))
         expect(place.sourceUrl).toMatch(
           /^https:\/\/www\.openstreetmap\.org\/(way|node|relation)\/\d+$/,
         );

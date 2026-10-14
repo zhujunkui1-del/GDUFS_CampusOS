@@ -1,0 +1,93 @@
+{
+  "reviewedAt": "2026-10-14",
+  "crs": "WGS84",
+  "coordinateSource": "负责人提供：校门坐标取自OpenStreetMap，原输入纬度、经度；本文件统一经度、纬度。充值点为负责人给定坐标与北苑1栋截图位置批注。",
+  "referenceFile": "北苑1栋_水电冷充值点.png",
+  "navigationReview": "本轮确认名称和标签位置，不据坐标推断校门开放状态、校外连接道路或楼内通道。",
+  "points": [
+    {
+      "id": "owner-gate-1",
+      "name": "1号门",
+      "aliases": ["生活区1号门", "宿舍区1号门"],
+      "category": "entrance",
+      "zone": "living",
+      "coordinate": [113.392027, 23.064346]
+    },
+    {
+      "id": "owner-gate-2",
+      "name": "2号门",
+      "aliases": ["生活区2号门", "宿舍区2号门"],
+      "category": "entrance",
+      "zone": "living",
+      "coordinate": [113.392649, 23.06136]
+    },
+    {
+      "id": "owner-gate-3",
+      "name": "3号门",
+      "aliases": ["生活区3号门", "宿舍区3号门"],
+      "category": "entrance",
+      "zone": "living",
+      "coordinate": [113.389862, 23.059852]
+    },
+    {
+      "id": "owner-gate-4",
+      "name": "4号门",
+      "aliases": ["生活区4号门", "宿舍区4号门"],
+      "category": "entrance",
+      "zone": "living",
+      "coordinate": [113.390061, 23.062374]
+    },
+    {
+      "id": "osm-node-12866752417",
+      "name": "西南门",
+      "aliases": ["教学区西南门", "教学区A座门"],
+      "category": "entrance",
+      "zone": "teaching",
+      "coordinate": [113.392199, 23.06501],
+      "sourceUrl": "https://www.openstreetmap.org/node/12866752417"
+    },
+    {
+      "id": "owner-gate-northwest",
+      "name": "西北门",
+      "aliases": ["教学区西北门"],
+      "category": "entrance",
+      "zone": "teaching",
+      "coordinate": [113.390034, 23.071347]
+    },
+    {
+      "id": "owner-gate-west",
+      "name": "西门",
+      "aliases": ["教学区西门"],
+      "category": "entrance",
+      "zone": "teaching",
+      "coordinate": [113.390799, 23.072586]
+    },
+    {
+      "id": "owner-gate-east",
+      "name": "东门",
+      "aliases": ["教学区东门"],
+      "category": "entrance",
+      "zone": "teaching",
+      "coordinate": [113.393811, 23.069277]
+    },
+    {
+      "id": "owner-gate-southeast",
+      "name": "东南门",
+      "aliases": ["教学区东南门"],
+      "category": "entrance",
+      "zone": "teaching",
+      "coordinate": [113.395758, 23.064529]
+    },
+    {
+      "id": "owner-utilities-recharge",
+      "name": "大学城校区水电冷充值点",
+      "aliases": ["水电冷充值点", "水电充值", "水电冷充值", "充值点"],
+      "category": "service",
+      "zone": "living",
+      "coordinate": [113.390697, 23.064485],
+      "parentId": "osm-way-313039013",
+      "minZoom": 18,
+      "sourceName": "负责人给定坐标与北苑1栋位置批注"
+    }
+  ]
+}

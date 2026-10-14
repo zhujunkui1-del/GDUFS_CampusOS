@@ -10,6 +10,7 @@ import {
 import type { MapAdapter } from "@/domain/maps/contracts";
 import {
   campusData,
+  buildingLabelParts,
   placeLayer,
   type Coordinate,
   type MapLayer,
@@ -311,9 +312,7 @@ export class LocalMapAdapter implements MapAdapter {
       })[0];
       let id = feature?.properties.sourceId;
       id = campusData.places.find((p) => p.id === id)?.labelPlaceId || id;
-      const children = id
-        ? campusData.places.filter((p) => p.parentId === id && !p.geometry)
-        : [];
+      const children = id ? buildingLabelParts(id) : [];
       if (children.length)
         id = children.sort((a, b) => {
           const x = this.native.project(a.coordinate),

@@ -4,7 +4,7 @@
 
 ## 固定版本
 
-- 当前 `s1-2026-10-13.6`：同源静态 GeoJSON + SHA-256 内容文件名 + WGS84。运行时不下载 OSM、不更新底图、不加载高德底图。
+- 当前 `s1-2026-10-14.2`（以local-map-manifest.json为准）：同源静态 GeoJSON + SHA-256 内容文件名 + WGS84。运行时不下载 OSM、不更新底图、不加载高德底图。
 - 地点、二维轮廓、未来模型均使用稳定 OSM ID 和这份版本；模型须记录 `mapVersion / footprintId / modelVersion`。模型不单独修正或偏移真实地理坐标。
 - 高德服务仅在用户点击在线查询/规划时加载 SDK。结果不进入本地底图库，GCJ02 经 `gcoord` 转为 WGS84 叠加；数学转换已与官方校园控制点比较（误差小于5米），不用于证明入口或现场通行。
 - 南苑13栋在原始OSM中已有真实轮廓，旧地点导入遗漏，已补回；来源校园边界仍不声称为实测权属界。
@@ -29,7 +29,7 @@ python scripts/prepare-local-map.py --context 'CampusOS_Codex_完整设计文档
 
 ## 当前资料边界
 
-87个校园地点：北/南苑13栋与师苑4栋编号住宿楼宇、3个具名食堂及公共建筑/体育/服务地点。教学楼E/F/G、实验楼A—E独立分区及超市所属建筑、出入口和路网仍待资料。师苑四栋已按负责人逐项回复确认：Q1=师苑1栋，Q2=师苑3栋，Q3=师苑4栋，Q4=师苑2栋，核对图见 `research/s1/building-name-questions.svg`。
+113个校园地点：住宿楼宇、食堂、公共建筑/体育/服务、九个校门和隧道相关标签。教学E/F/G与实验A—E已有分栋标签，仍不是独立实测分栋轮廓；充值点关联北苑1栋，其他服务的所属建筑/开放信息继续核对。师苑四栋已按负责人逐项回复确认：Q1=师苑1栋、Q2=师苑3栋、Q3=师苑4栋、Q4=师苑2栋。
 
 本地地图当前是有真实平面轮廓的倾斜视图，尚无自主立体建筑。OSM缺少校园楼高，不按视觉效果生成默认高度；完整模型按修订建模方案另行实施。
 
@@ -42,3 +42,7 @@ python scripts/prepare-local-map.py --context 'CampusOS_Codex_完整设计文档
 当前需使用scripts/prepare-campus-navigation.py，历史prepare-walking-network.py仅隧道走廊，会拒绝覆盖已批准全校网络。先安装离线工具 `python -m pip install --target .map-tools -r scripts/requirements-map-tools.txt`，再运行 `python scripts/prepare-campus-navigation.py --map-version <准备的地图版本> --network-version <新的路网版本>`，最后用prepare-local-map.py同一地图版本准备底图并格式/类型/单元/浏览器/构建验收。新模块不会在startup/build自动执行或联网更新地图。
 
 owner-map-review.json保存负责人坐标、批准通行策略和已校准停车轮廓；owner-map-additions.json为生成补绘。georeference-owner-parking.py只在新的本地批注图需要配准时运行，依赖Pillow12.2.0与控制照片；普通重新准备可使用已保存轮廓，不需下载个人图片。非校区/禁止步行/水面与未批准穿楼仍是约束，校门不根据图片猜。GPS位置/临时附接节点不能写入入口名录。镜头依实际/目标倾角约束视口，SDK投影接缝锁6.14.0，升级需真实浏览器回归。
+
+## 负责人点位输入（2026-10-14）
+
+`owner-poi-review.json`独立保存已确认校门与服务点的WGS84经纬度、名称、类别、所属区域和父建筑。prepare-local-map.py将它们合并到地点与Point要素，支持更新既有源ID（西南门）而不重复创建；不从图片自动提取坐标。先准备新地图，再以同一mapVersion准备路网并检查版本一致。当前113地点、4521地物，版本s1-2026-10-14.2。

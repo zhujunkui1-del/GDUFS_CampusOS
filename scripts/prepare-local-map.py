@@ -21,6 +21,27 @@ campus = json.loads((base / "campus.json").read_text(encoding="utf-8"))
 labels = json.loads((base / "owner-labels.json").read_text(encoding="utf-8"))
 addition_path = base / 'owner-map-additions.json'
 additions = json.loads(addition_path.read_text(encoding='utf-8')) if addition_path.exists() else {'places': [], 'features': []}
+point_review_path = base / 'owner-poi-review.json'
+if point_review_path.exists():
+    point_review = json.loads(point_review_path.read_text(encoding='utf-8'))
+    if point_review['crs'] != 'WGS84': raise ValueError('Owner points must use WGS84')
+    reviewed_points = []
+    for point in point_review['points']:
+        coordinate = point['coordinate']
+        reviewed_points.append({
+            'crs': 'WGS84', 'sourceName': '负责人提供的OSM坐标与校门命名',
+            'sourceUrl': f'https://www.openstreetmap.org/#map=19/{coordinate[1]}/{coordinate[0]}',
+            'fetchedAt': point_review['reviewedAt'], 'verification': 'owner_confirmed',
+            'nameSource': '负责人2026-10-14坐标与地图批注确认',
+            'nameReviewedAt': point_review['reviewedAt'], 'navigationVerified': False,
+            'minZoom': 17, **point,
+        })
+    additions['places'].extend(reviewed_points)
+    additions['features'].extend({
+        'type': 'Feature', 'id': p['id'],
+        'properties': {'kind': p['category'], 'sourceId': p['id'], 'name': p['name'], 'ownerReviewed': True},
+        'geometry': {'type': 'Point', 'coordinates': p['coordinate']}
+    } for p in reviewed_points)
 context = ET.parse(args.context).getroot()
 buffer = ET.parse(args.buffer).getroot() if args.buffer else None
 supplied_path = pathlib.Path("CampusOS_Codex_完整设计文档_v2/map.osm")
@@ -137,7 +158,7 @@ for identifier, label in labels["labels"].items():
     p.update(label)
     p["aliases"] = sorted(set(p.get("aliases", []) + ([old] if old and old != label["name"] else [])))
     p["nameSource"] = label.get("nameSource", labels["source"])
-    p["nameReviewedAt"] = labels["reviewedAt"]
+    p["nameReviewedAt"] = label.get('nameReviewedAt', labels["reviewedAt"])
     if identifier in feature_index:
         feature_index[identifier]['properties']['name'] = label['name']
         if label.get('category') in ('badminton','volleyball','basketball'):

@@ -127,7 +127,20 @@
       "name": "门诊部"
     },
     "osm-way-651642991": {
-      "name": "报告厅"
+      "name": "B8学术报告厅",
+      "aliases": ["报告厅"],
+      "nameSource": "负责人2026-10-14浏览器批注确认",
+      "nameReviewedAt": "2026-10-14",
+      "verification": "owner_confirmed"
+    },
+    "osm-node-12959101438": {
+      "name": "又康超市",
+      "category": "service",
+      "zone": "living",
+      "aliases": ["又康"],
+      "nameSource": "负责人2026-10-14浏览器批注确认",
+      "nameReviewedAt": "2026-10-14",
+      "verification": "owner_confirmed"
     },
     "osm-way-1389756837": {
       "name": "体育场（真草场）",

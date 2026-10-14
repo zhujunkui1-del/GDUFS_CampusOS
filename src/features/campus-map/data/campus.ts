@@ -78,6 +78,14 @@ export const campusData = z
   })
   .parse(raw);
 export type MapLayer = "buildings" | "sports" | "dormitories" | "services";
+export function buildingLabelParts(parentId: string) {
+  return campusData.places.filter(
+    (p) =>
+      p.parentId === parentId &&
+      !p.geometry &&
+      (p.category === "building" || p.category === "teaching"),
+  );
+}
 export function placeLayer(place: CampusPlace): MapLayer {
   if (place.category === "dormitory") return "dormitories";
   if (
