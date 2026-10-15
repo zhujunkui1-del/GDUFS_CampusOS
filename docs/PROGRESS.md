@@ -262,3 +262,13 @@ OpenNext 提示 Windows 兼容性有限。本次最终组合在 Windows 实测�
 - **Mock及工程验收分开**：108单元/13文件通过（原50+新增58），typecheck/Lint通过，db:verify验证30表约束/外键与内存隔离夹具；Next生产与OpenNext Workers打包通过，Wrangler3000预览/status实际ready=true、chatAvailable=false。首轮发现Zod输出模式JSON Schema将strip对象标为additionalProperties=false，修为输入模式并拒绝非严格定义；后补已经取消的异常输入/慢请求超时/结构Schema传输测试。没有用Mock冒充真实服务。
 - Chrome148.0.7778.97与Edge149.0.4022.80专项各29通过/1跳过，桌面1440×900/手机视口390×844，四spec涵盖状态/拒绝伪造身份、地图搜索、模型模式/资产/GL恢复、导航退出/定位虚线/平滑镜头/抽屉/跨页状态及响应式。跳过为桌面不适用手机避让；不是实机手机性能或完整S2业务验收。最终构建/预览后重跑，截图和脱敏浏览器JSON在verification/s2-a/screenshots。OpenNext Windows兼容提示和NO_COLOR环境提示不记成测试失败。
 - 已更新基线/建模计划、D-033、SRC-049及阻塞：BYOK全UI不阻塞S2-A；地图供应商/手动更新及模型视觉不变。无外网部署，账号/SMS/学校接口未接入；S2-B/C共享主体/会话/路线快照/额度是启用公开付费聊天的必要边界。
+## S2-B 首批五项地图Skills完成（2026-10-15）
+
+- 按负责人指令从cc16201继续；阅读根/v2 AGENTS、PROJECT_SPEC、02/03/05、S2-A审计/进度/决策并检查真实代码。新增src/domain/maps/skill-contracts.ts与src/lib/server/maps，五项真实Skill注册原SkillRegistry，由原ToolExecutor执行。总控/Router未重搭，仅增加可选空间失败终止/域指令，原S2-A默认核心用例保持。
+- search_places复用现有检索/标签规则并补NFKC/空格/中文宿舍数字与有限模糊候选；get_place_details提供实际字段，未知建筑层数/高度/入口/开放保留null/unknown。find_nearby_places复用WGS84大圆距离，明确中心来源与几何距离。plan_route直接调用原校园路网，保留跨区隧道/教学实验穿行/语心桥/定位虚线/建筑周边到达；返回真实WGS84几何、距离、估时、步骤和版本。
+- control_map整批验证真实地点、会话所有路线/有效期/版本及模式，输出intent_only；协议增加SHOW_PLACE_DETAILS/CLEAR_ROUTE/SET_VIEW_MODE，原动作兼容。可信前端控制器复用已有select/详情/渲染/完整退出/模式，详情不额外动镜头，未载入路线拒绝；没有重建地图/改镜头架构。服务端快照接收和AI联动由S2-C接入。
+- 新增无模型的POST /api/map/skills/{name}，严格正文/Origin/限长限时、既有地图限流；不接收客户端身份或GPS授权。随机匿名句柄HttpOnly/SameSite=Strict，主体40次/10分钟/最多1000，路线100条/10分钟，均isolate内存，所有权/版本/过期校验及克隆返回。没有D1迁移、虚假种子、位置持久存储；共享主体/路线/额度尚待S2-C，公开AI聊天继续503、原抽屉保持未接入状态。
+- **真实API独立验收**：skills:verify:live经原ModelRouter/服务端密钥，最多10请求/每次512输出Token/60s总限/无自动重试，实际9请求25428ms。未强制工具名，模型自主search→details→nearby→control，以及search两地点→plan_route→control；南苑7栋至图书馆848.0326392899915米/预计12分钟、经下沉隧道。未知南苑999栋NOT_FOUND后结束，无地图动作。全部五项真实执行，完整输入/输出/模型原文保存verification/s2-b/deepseek-live.json，无Key/Cookie/私人位置。原始回复过程叙述/技术词留S2-C精简编排，不计产品UI完成。
+- **单元/Mock与运行验收**：147项/16文件通过，保留原108+新增39；类型、Lint、Next/OpenNext生产构建及Workers3000本地预览通过。包含实际校园数据/90条原路由、严格Schema、未知ID/参数/工具、WGS距离、授权缺失/过期/不准/校外、跨会话/过期/旧版本路线、前端动作控制器及失败终止。无路负面为显式注入null规划器结果，不假称现场封路；最初对北苑楼内服务“应无路线”的断言与原周边策略不符，纠正测试且未改算法。未用Mock冒充真实供应商。
+- Chrome148与Edge149桌面/手机视口各31通过/1跳过，5个spec；直接向真实Worker执行五项Skill并保存原输入输出，未知工具/ID、无授权GPS/假路线拒绝。原地图搜索/建模/三模式/GL恢复/定位虚线/导航退出/镜头/抽屉/跨页/响应式通过。跳过桌面不适用手机抽屉，非手机实机/全量S2验收。证据verification/s2-b，完整S2_B_MAP_SKILLS_ACCEPTANCE.md；截图仍准确显示AI未启用。
+- 南苑7栋GLB哈希与地理/路网文件不变，未制作其他建筑。D-034/SRC-050、设计基线/阻塞已更新。具备进入S2-C后端基础；C先做共享会话/额度、授权定位与真实路线接收，再接现有全局AI/SSE/卡片/地图动作和简洁中文回执。无外网部署，BYOK/RAG/学校/个人服务未扩展。

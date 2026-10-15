@@ -1,5 +1,6 @@
 import type { z } from "zod";
 import type { ErrorCode } from "@/lib/server/errors";
+import type { MapSkillContext } from "@/domain/maps/skill-contracts";
 
 export type SourceReference = {
   title: string;
@@ -21,6 +22,8 @@ export type SkillContext = {
   permissions: string[];
   confirmedActionId?: string;
   signal?: AbortSignal;
+  // Server-owned execution context. Never populated from tool arguments.
+  map?: MapSkillContext;
 };
 
 export type SkillDefinition<I, O> = {

@@ -74,7 +74,7 @@ describe("S2-A HTTP fail-closed boundary", () => {
       code: "MODEL_SELECTION_REQUIRED",
     });
     expect(body.data.chatAvailable).toBe(false);
-    expect(body.data.skills).toEqual([]);
+    expect(body.data.skills).toHaveLength(5);
     expect(fetchSpy).not.toHaveBeenCalled();
   });
   it("keeps map runtime and service health independent of broken model configuration", async () => {

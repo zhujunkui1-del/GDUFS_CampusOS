@@ -21,7 +21,7 @@ import {
   type MapLayer,
 } from "../data/campus";
 import type { MapMode } from "@/domain/maps/contracts";
-import { MapActionSchema } from "@/domain/maps/contracts";
+import { executeMapAction } from "../interactions/map-action-controller";
 import { type SDKPoi } from "../adapters/amap-types";
 import { CAMPUS_MIN_ZOOM, CAMPUS_PITCH } from "../data/viewport";
 import { useMapLocation } from "./use-map-location";
@@ -638,22 +638,29 @@ export function CampusMapProvider({
       onAskAssistant();
     },
     executeAction: (input) => {
-      const action = MapActionSchema.parse(input);
       if (!adapter.current) throw new Error("地图尚未就绪。");
-      if (
-        action.type === "FOCUS_PLACE" ||
-        action.type === "OPEN_PLACE_DETAILS"
-      ) {
-        if (!campusData.places.some((p) => p.id === action.placeId))
-          throw new Error("地点不存在。");
-        select(action.placeId);
-      } else if (action.type === "SHOW_PLACES")
-        adapter.current.showPlaces(action.placeIds);
-      else if (action.type === "SHOW_ROUTE")
-        adapter.current.renderRoute(action.routeId);
-      else if (action.layer === "buildings" || action.layer === "services")
-        adapter.current.setLayerVisibility(action.layer, action.visible);
-      else throw new Error("该图层尚未接入。");
+      executeMapAction(input, {
+        hasPlace: (id) => campusData.places.some((p) => p.id === id),
+        hasRoute: (id) => route?.id === id,
+        focusPlace: select,
+        showPlaceDetails: (id) => {
+          const place = campusData.places.find((p) => p.id === id)!;
+          setSelected(place);
+          setLayers((prior) => ({ ...prior, [placeLayer(place)]: true }));
+        },
+        showPlaces: (ids) => adapter.current!.showPlaces(ids),
+        showRoute: (id) => adapter.current!.renderRoute(id),
+        clearRoute: context.stopNavigation,
+        setViewMode: (next) => {
+          if (
+            (next !== "2d" && !adapter.current?.supports3D) ||
+            (next === "3d" && !adapter.current?.modelAvailable)
+          )
+            throw new Error("当前设备不支持此地图模式。");
+          context.setMode(next);
+        },
+        setLayer: context.setLayer,
+      });
     },
   };
   return (

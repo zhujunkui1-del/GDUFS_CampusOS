@@ -25,6 +25,7 @@
     "db:migrate:local": "wrangler d1 migrations apply campusos-local --local",
     "db:verify": "node scripts/verify-database.mjs",
     "model:verify": "node scripts/verify-model.mjs",
+    "skills:verify:live": "node scripts/verify-map-skills.mjs",
     "deploy:preview": "node scripts/deploy.mjs preview",
     "deploy:production": "node scripts/deploy.mjs production"
   },

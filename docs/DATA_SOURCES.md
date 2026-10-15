@@ -203,3 +203,8 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 - 负责人指定的anykey.md仅安全交付，Git忽略；服务端.env.local/.dev.vars也是忽略文件，不复制到public。生产凭据须Cloudflare Secrets，不随构建发布。
 - 真实地图数据仍为既有固定campus.json/local-routing与OSM版本，S2-A未联网更新GIS；实际D1只读审计发现30业务表，用户/对话/消息/运行/地点均0，不能将空表视为已接业务数据。
 - 压力测试及南苑7栋既有自有资产完整保留；无新增照片、模型或地图素材公开发布。
+## SRC-050｜S2-B 地图Skill实际数据与工具证据（2026-10-15）
+
+五项Skill复用已审核campus.json、walking-network.json与原planLocalRoute，mapVersion=s1-2026-10-14.2、networkVersion=s1-campus-2026-10-14.2；无新增地图/模型/照片/在线地图采集。建筑高度只引用原南苑7栋manifest的负责人7层约21米，不补其他栋。
+
+真实DeepSeek受控9请求/25428ms，无强制tool_choice，调用全部五项；正向地点/详情/附近与跨区路线，以及未知999栋拒绝均有完整脱敏记录docs/verification/s2-b/deepseek-live.json。真实Workers输入输出取自该目录HTTP记录并提取inputs-and-outputs.json；仅公共校园数据，不保存Key/Cookie/个人定位。带授权公开坐标仅单元夹具，不当现场定位。OSM原许可/署名与固定手动更新机制不变。

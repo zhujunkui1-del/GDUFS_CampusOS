@@ -89,7 +89,9 @@ type PathEdge = {
 
 ### Map Action 双向协议
 
-Agent 只返回 `FOCUS_PLACE/SHOW_PLACES/SHOW_ROUTE/OPEN_PLACE_DETAILS/SET_LAYER`，前端按校验后 IDs 执行。用户点击地图建筑产生 `selectedPlaceId`，传给下一轮 Agent 作为上下文。
+Agent返回经校验的声明式意图：`FOCUS_PLACE/SHOW_PLACE_DETAILS/SHOW_ROUTE/CLEAR_ROUTE/SET_VIEW_MODE`，兼容原`SHOW_PLACES/OPEN_PLACE_DETAILS/SET_LAYER`。前端按真实地点/已载入路线ID及设备允许模式执行；不接自由坐标或JS。用户点击地图建筑产生`selectedPlaceId`，服务端再次校验后用于上下文。
+
+S2-B复用既有搜索/路线内核，服务输出WGS84并绑定当前mapVersion/networkVersion。新动作复用原Provider与镜头/退出逻辑，不重建地图，不改渲染架构。实际AI抽屉消费、授权位置传递与服务端快照载入留S2-C，不能将intent_only说成已经显示路线。
 
 ## 9. 实景/室内
 

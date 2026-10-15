@@ -71,11 +71,11 @@ type SkillDefinition<I,O> = {
 - 输出：建筑描述、入口、服务、来源、资料更新日期、已审核媒体；缺项省略。
 
 ### 03 `find_nearby_places`
-- 输入：`{originPlaceId?:string;location?:{lng:number;lat:number};category?:string;radiusMeters?:number}`。
+- 当前输入：`{origin?:{type:'place',placeId}|{type:'selected_place'}|{type:'device_location'};category?;radiusMeters?;limit?}`。定位坐标/当次浏览器授权只在受控执行上下文提供，不接受模型参数声明授权。
 - 输出：经核实地点及几何距离；如果需要真实步行距离，再调用 `plan_route`。用户位置必须有当次授权；不能在未授权时偷偷定位。
 
 ### 04 `plan_route`
-- 输入：`{startPlaceId:string;endPlaceId:string;mode:'walking';preferences?:{accessible?:boolean}}`。
+- 当前输入：`{start:{type:'place',placeId}|{type:'selected_place'}|{type:'device_location'};endPlaceId:string;mode:'walking';preferences?:{accessible?:boolean}}`。
 - 输出：`{routeId,distanceMeters,estimatedMinutes,path:{type:'LineString',coordinates:[number,number][]},segments:[...],networkVersion}`。
 - 必须走经过核验的步行道路图；隧道作为标注 `underground` 的连接边；无障碍选项只有在可用数据充分时启用。
 
@@ -85,7 +85,7 @@ type SkillDefinition<I,O> = {
 
 ### 06 `control_map`
 - 输入：`{actions:MapAction[]}`；`MapAction` 定义见 `02_AGENT_ARCHITECTURE.md`。
-- 输出：`{acceptedActions:MapAction[];rejectedActions:[{action,reason}]}`；校验地点 ID、路线 ID 与安全图层名，绝不执行任意 JS。
+- 当前输出：`{acceptedActions:MapAction[];execution:'intent_only';mapVersion:string}`；整个批次原子校验，任一无效即失败，不发出部分操作。校验真实地点、会话所有路线及版本/有效期，绝不执行任意 JS。
 
 ### 07 `search_campus_knowledge`
 - 输入：`{query;sourceTypes?;timeRange?;academicYear?;campusScope?;limit?}`。
@@ -149,6 +149,10 @@ Skill 应同时支持 (1) Agent 调用，(2) 内部 API 调用，(3) 开发测�
 - 社交地点 `moments` 图层即使未实现也不会造成地图错误。
 - `get_place_media` 不返回未审核素材和无许可的第三方图片。
 - 行程的距离/时间来自算法，不允许由模型返回任意未经验证数字。
-## 2026-10-15 S2-A / S2-B 分界
+## 2026-10-15 S2-A / S2-B 分界（阶段历史）
 
 已实现通用SkillRegistry/ToolExecutor，具备严格输入JSON Schema、Zod入出参、权限/确认拒绝、取消/超时/输出大小及安全错误处理。16项业务名单保留，本轮不注册空壳Skill。S2-B首先实现search_places/get_place_details/find_nearby_places/plan_route/control_map，直接复用现有固定OSM地点和本地路网。写入Skill在服务端确认台账/业务幂等未接入前一律关闭，即使提交confirmedActionId也不能授权。
+
+## S2-B 当前状态（2026-10-15）
+
+上述五项已实际实现并注册。Skill Schema以src/domain/maps/skill-contracts.ts为准，服务实现src/lib/server/maps，确定性接口POST /api/map/skills/{name}；地图Agent复用原总控并在工具失败后结束本轮。来源是固定campus.json/现有planLocalRoute，不从空D1/在线底图重新获取。实际输入输出、错误/权限/超时及独立真实DeepSeek验证见docs/S2_B_MAP_SKILLS_ACCEPTANCE.md。前端AI聊天与共享会话/额度、定位授权传递及路线快照载入属于S2-C。

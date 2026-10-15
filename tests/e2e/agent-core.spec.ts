@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { selectMapMode } from "./helpers/map-mode";
 
-test("S2-A model status is truthful and closed chat leaves the real map usable", async ({
+test("S2-B model status is truthful and closed chat leaves the real map usable", async ({
   page,
   request,
   browser,
@@ -12,9 +12,9 @@ test("S2-A model status is truthful and closed chat leaves the real map usable",
   const status = await request.get("/api/agent/status");
   expect(status.status()).toBe(200);
   const body = await status.json();
-  expect(body.data.stage).toBe("S2-A");
+  expect(body.data.stage).toBe("S2-B");
   expect(body.data.chatAvailable).toBe(false);
-  expect(body.data.skills).toEqual([]);
+  expect(body.data.skills).toHaveLength(5);
   if (process.env.E2E_MODEL_READY === "1") {
     expect(body.data.model.ready).toBe(true);
     expect(body.data.model.model.provider).toBe("deepseek");

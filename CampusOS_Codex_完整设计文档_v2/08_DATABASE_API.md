@@ -133,3 +133,5 @@ type ApiResult<T> =
 早期高德默认底图描述已由D-018取代，当前为固定MapLibre/本地OSM及真实本地步行路网。S2-A复用Next.js/OpenNext/Workers，新增/api/agent/status与严格验证但暂不启用的/api/agent/chat。实际D1已有30个空业务表，地点服务来自固定JSON；没有为了Agent复制或假填数据库。
 
 S2-A暂不迁移账号/BYOK表。现有user_preferences.map_mode仍只允许2d/2.5d且默认2.5d；未被当前地图使用，未来账号偏好接入需兼容当前默认2D/三模式。会话、消息、运行表存在但尚未接DAO；工具迭代上下文只在单次Run内存。跨请求指代记忆、路线快照所有权与共享使用额度在S2-B/C接入前必须验收。
+
+S2-B新增POST /api/map/skills/{name}确定性公开工具接口，正文{input,selectedPlaceId?}严格校验，身份/GPS参数拒绝。匿名主体为服务端随机句柄，路线快照有会话所有权/版本/10分钟有效期；目前都在isolate有界内存，不写D1、不保证跨实例连续。S2-C启用公开付费聊天前补共享DAO/额度与授权定位传递；详细Schema/HTTP实例见docs/S2_B_MAP_SKILLS_ACCEPTANCE.md。现有D1未迁移/造数据。

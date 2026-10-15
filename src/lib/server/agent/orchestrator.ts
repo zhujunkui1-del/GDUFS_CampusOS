@@ -64,6 +64,10 @@ export class AgentOrchestrator {
     private readonly router: ModelResolver,
     private readonly registry: SkillRegistry,
     private readonly limiter = new RunLimiter(),
+    private readonly options: {
+      stopOnToolError?: boolean;
+      instructions?: string;
+    } = {},
   ) {}
   async run(input: AgentRunInput) {
     const runId = crypto.randomUUID();
@@ -114,7 +118,12 @@ export class AgentOrchestrator {
       const tools = this.registry.tools(context);
       const allowed = new Set(tools.map((tool) => tool.function.name));
       const messages: ModelMessage[] = [
-        { role: "system", content: SYSTEM_PROMPT },
+        {
+          role: "system",
+          content:
+            SYSTEM_PROMPT +
+            (this.options.instructions ? "\n" + this.options.instructions : ""),
+        },
         ...history,
         { role: "user", content: message },
       ];
@@ -235,6 +244,12 @@ export class AgentOrchestrator {
               toolCalls: toolsExecuted,
             };
           }
+          if (!result.ok && this.options.stopOnToolError)
+            throw new ApiError(
+              result.error.code,
+              result.error.message,
+              result.error.retryable,
+            );
         }
       }
       throw new ApiError("RUN_LIMIT_EXCEEDED", "本次对话已达到执行轮数限制。");

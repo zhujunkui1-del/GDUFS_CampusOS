@@ -59,7 +59,10 @@ type MapAction =
   | { type:'SHOW_PLACES'; placeIds:string[] }
   | { type:'SHOW_ROUTE'; routeId:string }
   | { type:'OPEN_PLACE_DETAILS'; placeId:string }
-  | { type:'SET_LAYER'; layer:'buildings'|'events'|'services'|'moments'; visible:boolean };
+  | { type:'SHOW_PLACE_DETAILS'; placeId:string }
+  | { type:'CLEAR_ROUTE' }
+  | { type:'SET_VIEW_MODE'; mode:'2d'|'2.5d'|'3d' }
+  | { type:'SET_LAYER'; layer:'buildings'|'sports'|'dormitories'|'services'; visible:boolean };
 
 type AgentResponse = {
   status:'completed'|'needs_input'|'needs_confirmation'|'failed';
@@ -139,3 +142,9 @@ type AgentResponse = {
 核心实现在src/lib/server/agent与src/lib/server/models，四域为逻辑模块，共用一个总控与管理员默认模型。S2-A实际生产注册表为空，不伪造尚未实现的Skill。诊断工具只用于运维能力测试，不能查询校园业务或产生地图动作。ModelRouter要求绑定配置的真实验证记录；仅JSON Object经业务Schema实测，不声称供应商严格JSON Schema支持。
 
 S2-A完成核心循环测试后，S2-B接五项真实地图服务，S2-C接原全局AI面板和会话，S2-D执行完整自然语言地图验收。当前/api/agent/status可查询模型准备状态；/api/agent/chat在真实业务Skill、主体会话和共享额度接入前返回503，AI面板保留准确禁用状态。实现/差异/配置/证据见docs/S2_A_AGENT_CORE.md。
+
+## S2-B 实施状态（2026-10-15，取代前述空注册表状态）
+
+五项地图Skill已在同一注册器/执行器下实际运行，createMapAgent复用原总控/Router，地图工作流启用失败终止，原通用默认行为与预算保持。真实DeepSeek三场景自主工具选择通过，详细输入输出见docs/S2_B_MAP_SKILLS_ACCEPTANCE.md。
+
+control_map输出经业务校验的intent_only，不等于地图已经执行。前端复用原Provider控制器，SHOW_PLACE_DETAILS不移动镜头，CLEAR_ROUTE走完整退出，模式走原能力检查，SHOW_ROUTE先要求可信快照已载入。当前匿名句柄与路线快照为有界短时isolate内存；公开聊天仍关闭，S2-C需共享会话/额度、上下文、定位授权与前端事件/路线桥接，不能将本轮后台实测称完整聊天UI验收。旧events/moments图层形状保留兼容，但业务拒绝。

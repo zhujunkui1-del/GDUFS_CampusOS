@@ -1,0 +1,595 @@
+{
+  "actualWorkerExecution": true,
+  "actualPhone": false,
+  "routeDistanceMeters": 848.0326392899915,
+  "networkVersion": "s1-campus-2026-10-14.2",
+  "calls": [
+    {
+      "name": "search_places",
+      "input": {
+        "query": "南苑7栋"
+      },
+      "status": 200,
+      "output": {
+        "ok": true,
+        "data": {
+          "ok": true,
+          "data": {
+            "matches": [
+              {
+                "placeId": "osm-way-312536955",
+                "name": "南苑7栋",
+                "category": "dormitory",
+                "zone": "living",
+                "location": [
+                  113.390146,
+                  23.0615765
+                ],
+                "crs": "WGS84",
+                "aliases": [
+                  "7栋"
+                ],
+                "labelPlaceId": "osm-way-312536955",
+                "verificationStatus": "source_mapped"
+              }
+            ],
+            "ambiguous": false,
+            "matchType": "exact",
+            "requiresOriginForNearest": false,
+            "mapVersion": "s1-2026-10-14.2"
+          },
+          "sources": [
+            {
+              "title": "CampusOS 固定校园OSM数据",
+              "url": "https://www.openstreetmap.org/relation/13900183"
+            }
+          ]
+        },
+        "requestId": "dde3d5ef-5a49-4c32-bd61-f0b2821120dc"
+      }
+    },
+    {
+      "name": "search_places",
+      "input": {
+        "query": "图书馆"
+      },
+      "status": 200,
+      "output": {
+        "ok": true,
+        "data": {
+          "ok": true,
+          "data": {
+            "matches": [
+              {
+                "placeId": "osm-way-307250998",
+                "name": "图书馆",
+                "category": "library",
+                "zone": "teaching",
+                "location": [
+                  113.39131405,
+                  23.0680465
+                ],
+                "crs": "WGS84",
+                "aliases": [
+                  "大学城校区图书馆"
+                ],
+                "labelPlaceId": "osm-way-307250998",
+                "verificationStatus": "source_mapped"
+              }
+            ],
+            "ambiguous": false,
+            "matchType": "exact",
+            "requiresOriginForNearest": false,
+            "mapVersion": "s1-2026-10-14.2"
+          },
+          "sources": [
+            {
+              "title": "CampusOS 固定校园OSM数据",
+              "url": "https://www.openstreetmap.org/relation/13900183"
+            }
+          ]
+        },
+        "requestId": "1f0fc434-382d-4a63-bacf-0e478d9b7495"
+      }
+    },
+    {
+      "name": "get_place_details",
+      "input": {
+        "placeId": "osm-way-312536955"
+      },
+      "status": 200,
+      "output": {
+        "ok": true,
+        "data": {
+          "ok": true,
+          "data": {
+            "place": {
+              "placeId": "osm-way-312536955",
+              "name": "南苑7栋",
+              "category": "dormitory",
+              "zone": "living",
+              "location": [
+                113.390146,
+                23.0615765
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "7栋"
+              ],
+              "labelPlaceId": "osm-way-312536955",
+              "verificationStatus": "source_mapped"
+            },
+            "building": {
+              "footprintId": "osm-way-312536955",
+              "levels": 7,
+              "heightMeters": 21,
+              "heightAccuracy": "owner_approximation",
+              "modelModes": [
+                "2.5d",
+                "3d"
+              ]
+            },
+            "source": {
+              "url": "https://www.openstreetmap.org/way/312536955",
+              "name": "OpenStreetMap",
+              "fetchedAt": "2026-10-12T13:46:31.6286264Z",
+              "nameSource": "负责人指定：广外南校区地图.jpg",
+              "nameReviewedAt": "2026-10-13"
+            },
+            "navigation": {
+              "pointVerified": false,
+              "arrivalPolicy": "nearest_perimeter",
+              "entranceDetails": "unknown",
+              "openingStatus": "unknown"
+            },
+            "mapVersion": "s1-2026-10-14.2"
+          },
+          "sources": [
+            {
+              "title": "CampusOS 固定校园OSM数据",
+              "url": "https://www.openstreetmap.org/relation/13900183"
+            }
+          ]
+        },
+        "requestId": "45761191-da42-4c9f-aa46-198a405f84cf"
+      }
+    },
+    {
+      "name": "find_nearby_places",
+      "input": {
+        "origin": {
+          "type": "place",
+          "placeId": "osm-way-312536955"
+        },
+        "category": "canteen",
+        "radiusMeters": 1000
+      },
+      "status": 200,
+      "output": {
+        "ok": true,
+        "data": {
+          "ok": true,
+          "data": {
+            "origin": {
+              "source": "place",
+              "placeId": "osm-way-312536955",
+              "name": "南苑7栋",
+              "coordinate": [
+                113.390146,
+                23.0615765
+              ],
+              "crs": "WGS84"
+            },
+            "distanceType": "geodesic_straight_line",
+            "radiusMeters": 1000,
+            "matches": [
+              {
+                "placeId": "osm-way-313039057",
+                "name": "风采园（三饭）",
+                "category": "canteen",
+                "zone": "living",
+                "location": [
+                  113.38962265,
+                  23.060230500000003
+                ],
+                "crs": "WGS84",
+                "aliases": [],
+                "labelPlaceId": "osm-way-313039057",
+                "verificationStatus": "source_mapped",
+                "distanceMeters": 158.95786009696354
+              },
+              {
+                "placeId": "osm-way-313039061",
+                "name": "博雅园（二饭）",
+                "category": "canteen",
+                "zone": "living",
+                "location": [
+                  113.39209575,
+                  23.063546799999997
+                ],
+                "crs": "WGS84",
+                "aliases": [],
+                "labelPlaceId": "osm-way-313039061",
+                "verificationStatus": "source_mapped",
+                "distanceMeters": 296.2933945409851
+              },
+              {
+                "placeId": "osm-way-313039048",
+                "name": "文采园（一饭）",
+                "category": "canteen",
+                "zone": "living",
+                "location": [
+                  113.39131745,
+                  23.06449055
+                ],
+                "crs": "WGS84",
+                "aliases": [],
+                "labelPlaceId": "osm-way-313039048",
+                "verificationStatus": "source_mapped",
+                "distanceMeters": 345.4819858425115
+              }
+            ],
+            "mapVersion": "s1-2026-10-14.2"
+          },
+          "sources": [
+            {
+              "title": "CampusOS 固定校园OSM数据",
+              "url": "https://www.openstreetmap.org/relation/13900183"
+            }
+          ]
+        },
+        "requestId": "bfb7dfa7-8cf0-4649-bf73-ae75834a64d8"
+      }
+    },
+    {
+      "name": "plan_route",
+      "input": {
+        "start": {
+          "type": "place",
+          "placeId": "osm-way-312536955"
+        },
+        "endPlaceId": "osm-way-307250998",
+        "mode": "walking"
+      },
+      "status": 200,
+      "output": {
+        "ok": true,
+        "data": {
+          "ok": true,
+          "data": {
+            "routeId": "7d14e58f-e583-48c6-8eb7-56c618bc1474",
+            "start": {
+              "source": "place",
+              "placeId": "osm-way-312536955",
+              "name": "南苑7栋",
+              "coordinate": [
+                113.390146,
+                23.0615765
+              ],
+              "crs": "WGS84"
+            },
+            "end": {
+              "source": "place",
+              "placeId": "osm-way-307250998",
+              "name": "图书馆",
+              "coordinate": [
+                113.39131405,
+                23.0680465
+              ],
+              "crs": "WGS84"
+            },
+            "mode": "walking",
+            "crs": "WGS84",
+            "source": "CampusOS.OSM",
+            "path": {
+              "type": "LineString",
+              "coordinates": [
+                [
+                  113.39043700078385,
+                  23.061758601246027
+                ],
+                [
+                  113.39062188452782,
+                  23.06196418126806
+                ],
+                [
+                  113.39085960070024,
+                  23.061783201124936
+                ],
+                [
+                  113.39105750066247,
+                  23.06211300106942
+                ],
+                [
+                  113.39115450064426,
+                  23.062346601042492
+                ],
+                [
+                  113.39123180062994,
+                  23.062817101021206
+                ],
+                [
+                  113.39123230062987,
+                  23.06316670102112
+                ],
+                [
+                  113.39124260062799,
+                  23.063508301018334
+                ],
+                [
+                  113.39157150056845,
+                  23.06375830092886
+                ],
+                [
+                  113.39201200049246,
+                  23.064087700812284
+                ],
+                [
+                  113.39208660048003,
+                  23.064143500792913
+                ],
+                [
+                  113.3926083003966,
+                  23.064545500660515
+                ],
+                [
+                  113.39267200038688,
+                  23.06501470064481
+                ],
+                [
+                  113.39267680038614,
+                  23.065141500643648
+                ],
+                [
+                  113.39233960043886,
+                  23.065129500728197
+                ],
+                [
+                  113.3922660004507,
+                  23.065224700746974
+                ],
+                [
+                  113.39219930046157,
+                  23.065305800764072
+                ],
+                [
+                  113.39230380044462,
+                  23.065450900737368
+                ],
+                [
+                  113.39157410056822,
+                  23.06675220092866
+                ],
+                [
+                  113.39125820062542,
+                  23.067173601014606
+                ],
+                [
+                  113.39125900062528,
+                  23.067244901014394
+                ],
+                [
+                  113.39125350039203,
+                  23.06754706634362
+                ]
+              ]
+            },
+            "approachPath": null,
+            "undergroundPaths": [
+              {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    113.39208660048003,
+                    23.064143500792913
+                  ],
+                  [
+                    113.3926083003966,
+                    23.064545500660515
+                  ]
+                ]
+              }
+            ],
+            "distanceMeters": 848.0326392899915,
+            "estimatedSeconds": 678.4261114319931,
+            "estimatedMinutes": 12,
+            "steps": [
+              {
+                "instruction": "沿校内步道步行",
+                "distanceMeters": 261
+              },
+              {
+                "instruction": "沿台阶步行，请留意脚下",
+                "distanceMeters": 112
+              },
+              {
+                "instruction": "进入并穿过下沉隧道",
+                "distanceMeters": 70
+              },
+              {
+                "instruction": "离开隧道，沿台阶步行",
+                "distanceMeters": 53
+              },
+              {
+                "instruction": "沿校内步道步行",
+                "distanceMeters": 92
+              },
+              {
+                "instruction": "穿过教学实验楼可通行区域",
+                "distanceMeters": 228
+              },
+              {
+                "instruction": "沿校内步道步行",
+                "distanceMeters": 34
+              }
+            ],
+            "networkVersion": "s1-campus-2026-10-14.2",
+            "mapVersion": "s1-2026-10-14.2",
+            "crossesZones": true,
+            "usesTunnel": true,
+            "expiresAt": "2026-10-15T05:01:51.189Z"
+          },
+          "sources": [
+            {
+              "title": "CampusOS 固定校园OSM数据",
+              "url": "https://www.openstreetmap.org/relation/13900183"
+            }
+          ]
+        },
+        "requestId": "a8002550-7358-4093-9bb4-eac186ff7a17"
+      }
+    },
+    {
+      "name": "control_map",
+      "input": {
+        "actions": [
+          {
+            "type": "FOCUS_PLACE",
+            "placeId": "osm-way-312536955"
+          },
+          {
+            "type": "SHOW_PLACE_DETAILS",
+            "placeId": "osm-way-312536955"
+          },
+          {
+            "type": "SHOW_ROUTE",
+            "routeId": "7d14e58f-e583-48c6-8eb7-56c618bc1474"
+          },
+          {
+            "type": "SET_VIEW_MODE",
+            "mode": "3d"
+          },
+          {
+            "type": "CLEAR_ROUTE"
+          }
+        ]
+      },
+      "status": 200,
+      "output": {
+        "ok": true,
+        "data": {
+          "ok": true,
+          "data": {
+            "acceptedActions": [
+              {
+                "type": "FOCUS_PLACE",
+                "placeId": "osm-way-312536955"
+              },
+              {
+                "type": "SHOW_PLACE_DETAILS",
+                "placeId": "osm-way-312536955"
+              },
+              {
+                "type": "SHOW_ROUTE",
+                "routeId": "7d14e58f-e583-48c6-8eb7-56c618bc1474"
+              },
+              {
+                "type": "SET_VIEW_MODE",
+                "mode": "3d"
+              },
+              {
+                "type": "CLEAR_ROUTE"
+              }
+            ],
+            "execution": "intent_only",
+            "mapVersion": "s1-2026-10-14.2"
+          },
+          "sources": [
+            {
+              "title": "CampusOS 固定校园OSM数据",
+              "url": "https://www.openstreetmap.org/relation/13900183"
+            }
+          ]
+        },
+        "requestId": "c9aa7794-4284-4276-80b2-4dd38b1c5b36"
+      }
+    },
+    {
+      "name": "search_places",
+      "input": {
+        "query": "南苑999栋"
+      },
+      "status": 404,
+      "output": {
+        "ok": false,
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "未找到该地点，请换个名称。",
+          "retryable": false
+        },
+        "requestId": "21a95b8f-5214-4c55-8444-6c8b54db9c96"
+      }
+    },
+    {
+      "name": "get_place_details",
+      "input": {
+        "placeId": "fake"
+      },
+      "status": 404,
+      "output": {
+        "ok": false,
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "地点不存在，请重新选择。",
+          "retryable": false
+        },
+        "requestId": "18f49da9-4443-4a4e-acb1-694d7f5728fe"
+      }
+    },
+    {
+      "name": "find_nearby_places",
+      "input": {
+        "origin": {
+          "type": "device_location"
+        }
+      },
+      "status": 422,
+      "output": {
+        "ok": false,
+        "error": {
+          "code": "LOCATION_REQUIRED",
+          "message": "请重新授权定位或选择起点。",
+          "retryable": false
+        },
+        "requestId": "a3695149-49b7-40bd-aac6-7c4cf772ad42"
+      }
+    },
+    {
+      "name": "control_map",
+      "input": {
+        "actions": [
+          {
+            "type": "SHOW_ROUTE",
+            "routeId": "17160e8c-f747-4183-bbb6-3c5169f02d06"
+          }
+        ]
+      },
+      "status": 404,
+      "output": {
+        "ok": false,
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "路线不存在或已失效，请重新规划。",
+          "retryable": false
+        },
+        "requestId": "079a616d-6e70-4b65-9ba6-f540e04c6497"
+      }
+    },
+    {
+      "name": "run_javascript",
+      "input": {
+        "code": "x"
+      },
+      "status": 404,
+      "output": {
+        "ok": false,
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "此工具未开放。",
+          "retryable": false
+        },
+        "requestId": "ca797f83-3238-4031-b2dc-150e4d85b4c4"
+      }
+    }
+  ]
+}

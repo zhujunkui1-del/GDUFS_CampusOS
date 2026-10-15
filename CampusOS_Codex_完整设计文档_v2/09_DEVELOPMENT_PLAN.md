@@ -127,3 +127,5 @@
 ## 2026-10-15 当前执行顺序（负责人决定，覆盖早期前置项）
 
 建筑批量建模暂停，南苑7栋及现有地图渲染保留。当前S2-A：ModelClient/ModelRouter/Agent Orchestrator/Skill Registry及服务端边界；随后S2-B五项真实地图Skills、S2-C全局AI面板/地图/会话、S2-D真实模型业务闭环与两端验收。管理员默认模型先行，BYOK完整界面与游客配置后续开发，不作为本轮阻塞。不得将核心诊断测试计作首批地图Skills或完整S2验收。
+
+2026-10-15进展：S2-B五项地图Skills完成真实数据/路网与受控DeepSeek工具测试，具备进入S2-C条件；公开AI聊天仍关闭。S2-C需完成共享主体/路线/配额、授权定位桥接、原全局面板的SSE/卡片/地图动作接收和中文简洁编排，再进入完整S2-D验收。见docs/S2_B_MAP_SKILLS_ACCEPTANCE.md。

@@ -23,10 +23,25 @@ export const MapActionSchema = z.discriminatedUnion("type", [
     })
     .strict(),
   z.object({ type: z.literal("OPEN_PLACE_DETAILS"), placeId }).strict(),
+  z.object({ type: z.literal("SHOW_PLACE_DETAILS"), placeId }).strict(),
+  z.object({ type: z.literal("CLEAR_ROUTE") }).strict(),
+  z
+    .object({
+      type: z.literal("SET_VIEW_MODE"),
+      mode: z.enum(["2d", "2.5d", "3d"]),
+    })
+    .strict(),
   z
     .object({
       type: z.literal("SET_LAYER"),
-      layer: z.enum(["buildings", "events", "services", "moments"]),
+      layer: z.enum([
+        "buildings",
+        "sports",
+        "dormitories",
+        "services",
+        "events",
+        "moments",
+      ]),
       visible: z.boolean(),
     })
     .strict(),
@@ -47,5 +62,4 @@ export interface MapAdapter {
   destroy(): void;
 }
 
-// Contract validation is followed by DB ID/permission validation in S1/S2.
-// No SDK adapter or map-action executor is registered during S0.
+// Shape checks are followed by real place/route/version/ownership checks in S2-B.
