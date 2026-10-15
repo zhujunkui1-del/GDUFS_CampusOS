@@ -3236,8 +3236,8 @@
       "navigationVerified": false,
       "minZoom": 17,
       "id": "owner-gate-4",
-      "name": "4号门",
-      "aliases": ["生活区4号门", "宿舍区4号门"],
+      "name": "4号门（贝岗门）",
+      "aliases": ["4号门", "贝岗门", "生活区4号门", "宿舍区4号门"],
       "category": "entrance",
       "zone": "living",
       "coordinate": [113.390061, 23.062374]

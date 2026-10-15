@@ -161,3 +161,7 @@ Skill 应同时支持 (1) Agent 调用，(2) 内部 API 调用，(3) 开发测�
 ## S2-C 接入状态（2026-10-15）
 
 五Skill继续复用原实现/注册器/执行器，生产身份、共享路线由D1 request context提供。control_map仍生成intent_only；本轮新增受控动作领取/回执桥，前端复验后才执行原控制器，不能把Skill返回直接等同已显示。模型只接脱敏路线摘要，GPS不作模型参数。明确地图命令限制为对应动作Schema；必要工具缺失最多一次同预算纠正，持续错误安全拒绝。未知地点/工具错误即结束，无自由生成替代路线。真实API、Mock和浏览器记录分列docs/S2_C_AI_MAP_ACCEPTANCE.md。
+
+### S2-D工具结果复用约束（2026-10-15）
+
+新增内部`reuseResultMs`显式策略，仅批准search_places/get_place_details的公共固定快照，同Run成功已校验结果最多5秒。注册器拒绝写入/非公开/需确认的缓存策略；执行前与复用前均鉴权，键绑定可信主体/角色/权限/校区/Skill版本/规范参数，不跨Run或Worker。模型callId仅作协议重复冲突检查。find_nearby_places/plan_route/control_map不缓存，定位、路线期限/版本、单次动作领取每次检查。保留原轮次/执行/超时/Token上限；本轮没有新Skill。

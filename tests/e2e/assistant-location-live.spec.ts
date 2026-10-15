@@ -94,9 +94,22 @@ test("real model uses an explicitly granted browser location, navigation, reject
     "false",
     { timeout: 40000 },
   );
-  await expect(
-    page.locator('[data-message-role="assistant"]').last(),
-  ).toContainText(/起点|授权|定位|从哪|出发/);
+  const denialWasSafeRejection = await page
+    .locator(".assistant-error")
+    .isVisible();
+  if (denialWasSafeRejection) {
+    await expect(page.locator(".assistant-error")).toContainText(
+      "请授权定位或输入起点",
+    );
+    expect((await readAgentEvidence(page)).at(-1)).toMatchObject({
+      tools: [],
+      actions: [],
+      result: { error: { code: "LOCATION_REQUIRED" } },
+    });
+  } else
+    await expect(
+      page.locator('[data-message-role="assistant"]').last(),
+    ).toContainText(/起点|授权|定位|从哪|出发/);
   await expect(map).not.toHaveAttribute("data-route-extent", /.+/);
   await page.getByLabel("向校园助理提问").fill("从南苑7栋去图书馆。");
   await page.getByLabel("向校园助理提问").press("Enter");
@@ -118,6 +131,7 @@ test("real model uses an explicitly granted browser location, navigation, reject
         controlledPublicCampusLocation: true,
         actualHardwareGPS: false,
         permissionDenialBranchSimulated: true,
+        denialWasSafeRejection,
         realRequestCancellation: true,
         records: await readAgentEvidence(page),
       },

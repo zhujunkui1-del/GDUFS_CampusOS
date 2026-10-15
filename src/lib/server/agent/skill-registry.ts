@@ -18,6 +18,7 @@ type RegisteredSkill = {
   requiresConfirmation: boolean;
   timeoutMs: number;
   permissions: readonly string[];
+  reuseResultMs: number;
   run(input: unknown, context: SkillContext): Promise<SkillResult<unknown>>;
 };
 export function canCall(
@@ -52,6 +53,18 @@ export class SkillRegistry {
       io: "input",
     }) as Record<string, unknown>;
     if (
+      definition.reuseResultMs !== undefined &&
+      (!Number.isInteger(definition.reuseResultMs) ||
+        definition.reuseResultMs < 1 ||
+        definition.reuseResultMs > 5000 ||
+        definition.auth !== "public" ||
+        definition.sideEffect !== "none" ||
+        definition.requiresConfirmation)
+    )
+      throw new Error(
+        "Only explicitly approved public snapshot reads may reuse results",
+      );
+    if (
       parameters.type !== "object" ||
       parameters.additionalProperties !== false
     )
@@ -78,6 +91,7 @@ export class SkillRegistry {
       requiresConfirmation: definition.requiresConfirmation,
       timeoutMs: definition.timeoutMs,
       permissions: definition.permissions || [],
+      reuseResultMs: definition.reuseResultMs || 0,
       async run(input, context) {
         const parsed = definition.inputSchema.safeParse(input);
         if (!parsed.success)

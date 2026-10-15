@@ -4,7 +4,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import assert from "node:assert/strict";
 await fs.mkdir("test-results", { recursive: true });
-await fs.mkdir("docs/verification/s2-c", { recursive: true });
+const outputDir =
+  process.env.ASSISTANT_STATE_CAPTURE_DIR || "docs/verification/s2-c";
+await fs.mkdir(outputDir, { recursive: true });
 const scriptPath = path.resolve("test-results/assistant-state-worker.mjs");
 await build({
   entryPoints: ["tests/fixtures/assistant-state-worker.ts"],
@@ -130,7 +132,7 @@ try {
   );
   assert.equal((await call(b, "/restore", cookie, { routeId })).status, 200);
   await fs.writeFile(
-    "docs/verification/s2-c/shared-workers.json",
+    path.join(outputDir, "shared-workers.json"),
     JSON.stringify(
       {
         actualWorkerdIsolates: 2,

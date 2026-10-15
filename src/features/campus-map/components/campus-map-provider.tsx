@@ -394,6 +394,19 @@ export function CampusMapProvider({
           setMinimumZoom(next.minimumZoom);
         });
         next.map.on("rotateend", () => setBearing(next.map.getRotation()));
+        for (const event of [
+          "dragstart",
+          "zoomstart",
+          "rotatestart",
+        ] as const) {
+          next.native.on(event, (detail) => {
+            if (
+              event === "dragstart" ||
+              ("originalEvent" in detail && detail.originalEvent)
+            )
+              ++interactionVersion.current;
+          });
+        }
         if (!cancelled) {
           // Fit only after the real renderer knows its viewport dimensions.
           next.setDisplayMode(view.current.mode, false);
@@ -490,6 +503,7 @@ export function CampusMapProvider({
     location.tracking,
   ]);
   const plan = async () => {
+    ++interactionVersion.current;
     if (!start || !end || !adapter.current) return;
     const generation = ++routeGeneration.current;
     setRouteBusy(true);
@@ -539,6 +553,7 @@ export function CampusMapProvider({
     setNavigationOrientation,
     navigationProgress,
     locate: () => {
+      ++interactionVersion.current;
       adapter.current?.resumeFollow();
       setLocationRequest((n) => n + 1);
       focusLocation.current = true;
@@ -618,14 +633,20 @@ export function CampusMapProvider({
     select,
     closeDetails: () => setSelected(null),
     zoomBy: (delta) => {
+      ++interactionVersion.current;
       adapter.current?.zoomBy(delta);
     },
     rotateBy: (delta) => {
+      ++interactionVersion.current;
       const map = adapter.current?.map;
       if (map) map.setRotation(map.getRotation() + delta);
     },
-    resetBearing: () => adapter.current?.map.setRotation(0),
+    resetBearing: () => {
+      ++interactionVersion.current;
+      adapter.current?.map.setRotation(0);
+    },
     startPicking: (which) => {
+      ++interactionVersion.current;
       clearRoute();
       setSelected(null);
       pickRef.current = which;

@@ -142,3 +142,9 @@ S2-B新增POST /api/map/skills/{name}确定性公开工具接口，正文{input,
 0004_assistant_shared_state.sql复用conversations/conversation_messages/agent_runs，新增assistant_sessions/assistant_route_refs/assistant_actions/assistant_location_challenges，34表，无虚构种子。D1按主库会话访问；额度/租约在一个INSERT trigger中原子检查，批次事务取消/清理，非单isolate额度。会话/历史/动作/路线均绑定可信Cookie主体；登录仅从真实login_sessions验证，不信任userId。账号UI/SMS仍未接入。
 
 新增GET /api/agent/session、/conversations/:id；POST /chat（SSE）、/cancel、/location/challenge、/routes/:id、/actions/:id/claim与/receipt；/api/map/skills/:name改共用D1身份/路线。设备路线payload不落库，完整性保护短期票据只在页面内存/POST传输；建筑路线可跨运行时恢复。会话48h/20消息、路线10min/版本绑定、动作5min单次领取，存储容量/额度/清理与全部接口见docs/S2_C_AI_MAP_ACCEPTANCE.md。没有新增学校数据或私人业务Skill。
+
+### S2-D验证与计时（2026-10-15）
+
+无新增表/迁移，34表空库约束与双workerd共享D1模拟服务并发/跨主体拒绝/重启恢复通过；不是云端多地域。request级数据库包装保留first-primary/batch语义，只统计调用/读写语句数量和await时长，不记录SQL/参数。部分私有API返回数值Server-Timing；chat指标为结束前快照，不包含后续finish写入或独立动作HTTP请求。精确GPS/票据仍不落日志，额度不因本地测试被重置。
+
+Cloudflare账号已认证但无专用D1，preview/production UUID仍全零；生产迁移与公开发布未获本轮批准，保持不执行。实际云端额度/延迟/CPU与Free子请求预算须隔离预览实测，见docs/S2_D_AGENT_ACCEPTANCE.md。

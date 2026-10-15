@@ -1,0 +1,132 @@
+{
+  "recordedAt": "2026-10-15T14:11:31.486Z",
+  "includesDebugAndFailedRuns": true,
+  "notSupplierInvoice": true,
+  "ledgerCounts": {
+    "failed": 31,
+    "completed": 165
+  },
+  "quotaTokensReservedOrActual": 2626453,
+  "summary": {
+    "tasks": 196,
+    "completed": 165,
+    "errors": [
+      "MODEL_NETWORK_ERROR",
+      "NOT_FOUND",
+      "MODEL_TOOLS_UNSUPPORTED",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "MODEL_TOOLS_UNSUPPORTED",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "INVALID_ARGUMENT",
+      "CANCELLED",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "CANCELLED",
+      "NOT_FOUND",
+      "CANCELLED",
+      "CANCELLED",
+      "CANCELLED",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "LOCATION_REQUIRED",
+      "CANCELLED",
+      "CANCELLED"
+    ],
+    "missingTerminalOrUsage": 7,
+    "incompleteUsage": 1,
+    "upstreamRequests": 431,
+    "correctionRetries": 0,
+    "knownPromptTokens": 602265,
+    "knownCompletionTokens": 24188,
+    "knownCachedPromptTokens": 334336,
+    "knownTotalTokens": 626453,
+    "measuredDurationMs": {
+      "p50": 2798,
+      "p95": 8708,
+      "min": 20,
+      "max": 13612
+    },
+    "estimatedKnownUsdRange": [
+      0.05570515800000001,
+      0.11141031600000002
+    ],
+    "costIsInvoice": false,
+    "unknownUsageIsNotZeroCost": true,
+    "timingMs": {
+      "version": "camera-settled-v2",
+      "settledSamples": 10,
+      "supersededSamples": 179,
+      "clientHeaders": null,
+      "clientFirstText": null,
+      "clientCompleted": null,
+      "preparation": {
+        "samples": 10,
+        "p50": 25,
+        "p95": 29,
+        "min": 22,
+        "max": 29
+      },
+      "mapAction": {
+        "samples": 8,
+        "p50": 806,
+        "p95": 1080,
+        "min": 796,
+        "max": 1080
+      },
+      "databasePerChat": {
+        "samples": 10,
+        "p50": 76,
+        "p95": 111,
+        "min": 41,
+        "max": 111
+      },
+      "upstreamRequest": {
+        "samples": 22,
+        "p50": 1000,
+        "p95": 1283,
+        "min": 648,
+        "max": 1443
+      },
+      "upstreamFirstText": {
+        "samples": 10,
+        "p50": 690,
+        "p95": 926,
+        "min": 279,
+        "max": 926
+      },
+      "skills": {
+        "search_places": null,
+        "get_place_details": null,
+        "find_nearby_places": null,
+        "plan_route": {
+          "samples": 4,
+          "p50": 11,
+          "p95": 50,
+          "min": 9,
+          "max": 50
+        },
+        "control_map": {
+          "samples": 8,
+          "p50": 1,
+          "p95": 4,
+          "min": 0,
+          "max": 4
+        }
+      }
+    },
+    "databaseCallsInChat": 626,
+    "databaseReadStatements": 476,
+    "databaseWriteStatements": 406
+  }
+}

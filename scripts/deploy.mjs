@@ -22,7 +22,9 @@ const cli = "node_modules/@opennextjs/cloudflare/dist/cli/index.js";
 for (const action of ["build", "deploy"]) {
   const result = spawnSync(
     process.execPath,
-    [cli, action, "--env", environment],
+    action === "build"
+      ? ["scripts/build-worker.mjs", "--env", environment]
+      : [cli, action, "--env", environment],
     { stdio: "inherit", env: process.env },
   );
   if (result.error || result.status !== 0) process.exit(result.status ?? 1);

@@ -10,7 +10,7 @@ import type { AgentEvent } from "@/domain/agent/contracts";
 import { ApiError } from "../errors";
 import { SYSTEM_PROMPT } from "./domains";
 import { RUN_LIMITS, RunLimiter } from "./limits";
-import { SkillRegistry } from "./skill-registry";
+import { canCall, SkillRegistry } from "./skill-registry";
 import { ToolExecutor } from "./tool-executor";
 
 const toolCallSchema = z
@@ -59,6 +59,25 @@ function whenAborted(signal: AbortSignal) {
     },
   };
 }
+function canonicalReadArguments(text: string) {
+  const sort = (value: unknown, depth = 0): unknown => {
+    if (depth > 12)
+      throw new ApiError("INVALID_ARGUMENT", "工具参数层级过深。");
+    if (Array.isArray(value)) return value.map((item) => sort(item, depth + 1));
+    if (value && typeof value === "object")
+      return Object.fromEntries(
+        Object.entries(value)
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([key, item]) => [key, sort(item, depth + 1)]),
+      );
+    return value;
+  };
+  try {
+    return JSON.stringify(sort(JSON.parse(text)));
+  } catch {
+    return text;
+  }
+}
 
 export class AgentOrchestrator {
   constructor(
@@ -94,6 +113,10 @@ export class AgentOrchestrator {
     const ledger = new Map<
       string,
       { signature: string; result: SkillResult<unknown> }
+    >();
+    const readResults = new Map<
+      string,
+      { result: SkillResult<unknown>; expiresAt: number }
     >();
     let toolsExecuted = 0;
     let tokensRemaining = RUN_LIMITS.completionTokens;
@@ -193,26 +216,53 @@ export class AgentOrchestrator {
             );
           const signature = JSON.stringify(call.function);
           const previous = ledger.get(call.id);
+          const skill = this.registry.get(call.function.name);
+          if (skill && !canCall(skill, context))
+            throw new ApiError("FORBIDDEN", "没有使用此工具的权限。");
           if (previous && previous.signature !== signature)
             throw new ApiError("INVALID_ARGUMENT", "工具调用编号重复。");
-          if (previous) {
+          const reusable =
+            !!skill?.reuseResultMs &&
+            skill.sideEffect === "none" &&
+            !skill.requiresConfirmation;
+          const scopeKey = JSON.stringify([
+            context.sessionId,
+            context.user?.id || null,
+            context.user?.role || null,
+            [...context.permissions].sort(),
+            context.campusId,
+            skill?.version,
+          ]);
+          const readKey =
+            scopeKey +
+            ":" +
+            call.function.name +
+            ":" +
+            canonicalReadArguments(call.function.arguments);
+          const cached = reusable ? readResults.get(readKey) : undefined;
+          if (cached && cached.expiresAt > Date.now()) {
+            ledger.set(call.id, { signature, result: cached.result });
             messages.push({
               role: "tool",
               tool_call_id: call.id,
               content: JSON.stringify(
-                this.options.modelResult?.(
-                  call.function.name,
-                  previous.result,
-                ) ?? previous.result,
+                this.options.modelResult?.(call.function.name, cached.result) ??
+                  cached.result,
               ),
             });
             continue;
           }
+          if (previous)
+            throw new ApiError(
+              "INVALID_ARGUMENT",
+              "工具调用编号已使用，请重新查询。",
+            );
           emit("tool.started", {
             toolCallId: call.id,
             name: call.function.name,
           });
           toolsExecuted++;
+          const toolStarted = performance.now();
           const result: SkillResult<unknown> = allowed.has(call.function.name)
             ? await Promise.race([
                 executor.execute(call, context),
@@ -228,10 +278,17 @@ export class AgentOrchestrator {
               };
           signal.throwIfAborted();
           ledger.set(call.id, { signature, result });
+          if (reusable && result.ok)
+            readResults.set(readKey, {
+              result,
+              expiresAt: Date.now() + skill!.reuseResultMs,
+            });
           emit("tool.finished", {
             toolCallId: call.id,
             name: call.function.name,
             result,
+            durationMs:
+              Math.round((performance.now() - toolStarted) * 100) / 100,
           });
           messages.push({
             role: "tool",

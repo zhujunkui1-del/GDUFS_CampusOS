@@ -4,6 +4,7 @@ import { LocateFixed, MapPin, X, ArrowUpDown, Navigation } from "lucide-react";
 import { useCampusMap } from "./campus-map-provider";
 import { searchCampusPlaces, zoneName } from "../data/campus";
 import type { RoutePoint } from "../adapters/amap-adapter";
+import { useRouteSheet } from "./use-route-sheet";
 
 function EndpointInput({
   which,
@@ -84,20 +85,44 @@ function EndpointInput({
   );
 }
 export function WalkingNavigation({ onClose }: { onClose(): void }) {
+  const { attach, compact, collapsed, header, toggle, expand, collapse } =
+    useRouteSheet();
   const map = useCampusMap(),
     route = map.route;
   const ready = map.status === "ready";
   return (
     <aside
+      ref={attach}
       className="route-planner"
+      data-sheet={compact ? (collapsed ? "collapsed" : "expanded") : "desktop"}
       aria-label="校园步行路线"
       data-navigation={map.navigating ? "walking" : "planning"}
     >
-      <div className="results-heading">
+      <div className="results-heading" {...header}>
+        <button
+          className="route-drawer-handle"
+          aria-label="调整步行导航面板"
+          aria-expanded={!collapsed}
+          aria-controls="route-planner-body"
+          onClick={toggle}
+          onKeyDown={(event) => {
+            if (["ArrowUp", "Home"].includes(event.key)) {
+              event.preventDefault();
+              expand();
+            }
+            if (["ArrowDown", "End"].includes(event.key)) {
+              event.preventDefault();
+              collapse();
+            }
+          }}
+        >
+          <span />
+        </button>
         <h2>步行导航</h2>
         <button
           className="icon-button"
           aria-label="关闭导航面板"
+          data-route-close
           onClick={() => {
             onClose();
             map.cancelPicking();
@@ -107,7 +132,11 @@ export function WalkingNavigation({ onClose }: { onClose(): void }) {
           <X size={18} />
         </button>
       </div>
-      <div className="route-planner-scroll">
+      <div
+        id="route-planner-body"
+        className="route-planner-scroll"
+        inert={compact && collapsed}
+      >
         <div className="endpoint-list">
           <EndpointInput which="start" point={map.start} />
           <EndpointInput which="end" point={map.end} />

@@ -1,0 +1,75 @@
+{
+  "browser": "149.0.4022.80",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "realPhone": false,
+  "measurement": "requestAnimationFrame callback cadence during real pointer drag, zoom and rotation; not presented FPS or GPU timing",
+  "loadMs": 1671,
+  "modes": [
+    {
+      "mode": "2D",
+      "switchMs": 20,
+      "frames": 425,
+      "p50Ms": 4.199999999999818,
+      "p95Ms": 4.299999999999727,
+      "longestMs": 12.599999999999909,
+      "visible": true,
+      "model": {
+        "data-model-place-id": "osm-way-312536955",
+        "data-model-height": "21",
+        "data-model-version": "nanyuan7-v2-2026-10-14",
+        "data-model-volume-version": "nanyuan7-2026-10-14.1",
+        "data-model-state": "idle",
+        "data-model-volume": "none",
+        "data-model-detailed": "none",
+        "data-model-extent": "[626.1309008753956,-93.1073268571421,1676.9805861873228,833.1349200465315]"
+      }
+    },
+    {
+      "mode": "2.5D",
+      "switchMs": 997,
+      "frames": 425,
+      "p50Ms": 4.199999999999818,
+      "p95Ms": 4.299999999999272,
+      "longestMs": 12.5,
+      "visible": true,
+      "model": {
+        "data-model-place-id": "osm-way-312536955",
+        "data-model-height": "21",
+        "data-model-version": "nanyuan7-v2-2026-10-14",
+        "data-model-volume-version": "nanyuan7-2026-10-14.1",
+        "data-model-state": "idle",
+        "data-model-volume": "visible",
+        "data-model-detailed": "none",
+        "data-model-extent": "[351.80537463531937,48.240039296725655,1321.7136275679402,1096.920407761391]"
+      }
+    },
+    {
+      "mode": "3D",
+      "switchMs": 682,
+      "frames": 391,
+      "p50Ms": 4.199999999999818,
+      "p95Ms": 8.300000000001091,
+      "longestMs": 12.5,
+      "visible": true,
+      "model": {
+        "data-model-place-id": "osm-way-312536955",
+        "data-model-height": "21",
+        "data-model-version": "nanyuan7-v2-2026-10-14",
+        "data-model-volume-version": "nanyuan7-2026-10-14.1",
+        "data-model-state": "ready",
+        "data-model-volume": "none",
+        "data-model-detailed": "visible",
+        "data-model-extent": "[646.0018932225042,80.90526460728798,1348.0415814676935,907.5478308959475]",
+        "data-model-lod": "full",
+        "data-model-bytes": "80384",
+        "data-model-triangles": "4748",
+        "data-model-asset-sha": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+        "data-model-draw-calls": "8",
+        "data-model-frame-count": "267"
+      }
+    }
+  ]
+}

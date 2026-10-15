@@ -719,7 +719,9 @@ export class LocalMapAdapter implements MapAdapter {
     this.element.dataset.cameraAnimationCount = String(
       Number(this.element.dataset.cameraAnimationCount || 0) + 1,
     );
-    this.element.dataset.lastCameraDuration = String(cameraDuration());
+    this.element.dataset.lastCameraDuration = String(
+      options.duration ?? cameraDuration(),
+    );
     this.native.once("moveend", () => {
       if (this.cameraRevision !== revision) return;
       this.element.dataset.cameraMoving = "false";
@@ -728,7 +730,7 @@ export class LocalMapAdapter implements MapAdapter {
     });
     this.native.easeTo({
       ...options,
-      duration: cameraDuration(),
+      duration: options.duration ?? cameraDuration(),
       easing: mapEase,
       essential: false,
     });
@@ -842,6 +844,7 @@ export class LocalMapAdapter implements MapAdapter {
     pitch: number,
     bearing: number,
     maxZoom: number,
+    duration?: number,
   ) {
     const required = this.minimumZoomForPitch(pitch);
     if (
@@ -963,6 +966,7 @@ export class LocalMapAdapter implements MapAdapter {
       pitch,
       bearing,
       padding: { top: 0, bottom: 0, left: 0, right: 0 },
+      duration,
     });
   }
   followLocation(point: Coordinate, heading?: number) {
@@ -1494,7 +1498,17 @@ export class LocalMapAdapter implements MapAdapter {
           this.routePanelObserver.observe(panel);
         }
       }
-      this.animatePoints(route.pathGcj02.map(toWgs84), 0, 0, 18);
+      const followingSheet =
+        panel instanceof HTMLElement &&
+        (panel.dataset.dragging === "true" ||
+          panel.dataset.resizing === "true");
+      this.animatePoints(
+        route.pathGcj02.map(toWgs84),
+        0,
+        0,
+        18,
+        followingSheet ? 0 : undefined,
+      );
     };
     const timer = setTimeout(() => {
       cancelAnimationFrame(frame);

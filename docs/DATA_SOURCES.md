@@ -197,21 +197,32 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 负责人明确已验收南苑7栋2.5D/3D作为宿舍模板，并要求性能试验先于全校批量。复用已批准GLB，SHA仍54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a；原2.5D/地图/地点/路由未修改，没有新照片或外部模型采集。
 
 数据来自Edge149.0.4022.80实际ANGLE/D3D11、RTX4070 Laptop/Ryzen7745HX、约15.18GiB RAM。主采样48轮、策略14轮、近景8轮、真实指针16轮及正式地图前后各18条件；原始压缩JSON/摘要/CSV/浏览器PNG在docs/performance/dormitory-2026-10-15。FPS是渲染事件频率，页JS内存为CDP；GPU VRAM/最终呈现FPS/完整进程RAM等未可靠归因。隔离虚拟坐标和编号不能当作真实建筑数据。未采集个人GPS/账号或发送供应商请求，手机视口不等于手机实机，来源口径及异常试跑记录见报告/PROGRESS。
+
 ## SRC-049｜S2-A 模型能力与当前代码/数据库审计（2026-10-15）
 
 - 官方接口和协议：[DeepSeek Chat Completions](https://api-docs.deepseek.com/api/create-chat-completion/)，实际/api模型列表认证与deepseek-flash三请求诊断通过。原始响应/密钥不归档；仅脱敏事件和测试元数据存docs/verification/s2-a/model-live.json。json_object+本地Zod校验实测，严格JSON Schema未验证。
 - 负责人指定的anykey.md仅安全交付，Git忽略；服务端.env.local/.dev.vars也是忽略文件，不复制到public。生产凭据须Cloudflare Secrets，不随构建发布。
 - 真实地图数据仍为既有固定campus.json/local-routing与OSM版本，S2-A未联网更新GIS；实际D1只读审计发现30业务表，用户/对话/消息/运行/地点均0，不能将空表视为已接业务数据。
 - 压力测试及南苑7栋既有自有资产完整保留；无新增照片、模型或地图素材公开发布。
+
 ## SRC-050｜S2-B 地图Skill实际数据与工具证据（2026-10-15）
 
 五项Skill复用已审核campus.json、walking-network.json与原planLocalRoute，mapVersion=s1-2026-10-14.2、networkVersion=s1-campus-2026-10-14.2；无新增地图/模型/照片/在线地图采集。建筑高度只引用原南苑7栋manifest的负责人7层约21米，不补其他栋。
 
 真实DeepSeek受控9请求/25428ms，无强制tool_choice，调用全部五项；正向地点/详情/附近与跨区路线，以及未知999栋拒绝均有完整脱敏记录docs/verification/s2-b/deepseek-live.json。真实Workers输入输出取自该目录HTTP记录并提取inputs-and-outputs.json；仅公共校园数据，不保存Key/Cookie/个人定位。带授权公开坐标仅单元夹具，不当现场定位。OSM原许可/署名与固定手动更新机制不变。
 
-
 ## SRC-051｜S2-C共享状态、真实对话与浏览器证据（2026-10-15）
 
 继续复用SRC-050固定OSM地点/路网和已批准S7资产，无地图、图片、建筑模型新采集或公开发布。真实模型为服务端deepseek-flash；Chrome/Edge A–G、受控公开校园坐标定位、实际动作回执、usage/耗时与截图存docs/verification/s2-c。证据仅保留公共ID/动作与脱敏结果，不含Key/Cookie/签名票据或私人GPS。手机视口非实机，拒绝授权负面分支有显式模拟标记，Mock服务失败另列。
 
 共享D1方案依据官方[D1 Database API](https://developers.cloudflare.com/d1/worker-api/d1-database/)，成本范围依据官方[DeepSeek价格](https://api-docs.deepseek.com/quick_start/pricing/)（核对2026-10-15），非实际账单。双workerd/同一受管D1模拟服务用于原子配额/重启恢复实测，隔离SQLite/Mock只在tests，生产迁移无虚假种子。完整条件/限制和首次失败修订见S2_C_AI_MAP_ACCEPTANCE.md。
+
+## SRC-052｜S2-D本地验收、门名确认与云端只读证据（2026-10-15）
+
+负责人浏览器批注确认4号门改为4号门（贝岗门）。只更新canonical名称/别名，不改变owner-gate-4及WGS84坐标、OSM固定几何或路网。S7自有资产SHA仍54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a；无新模型/影像或地图采集。
+
+数据/PNG来自Chrome148与Edge149实际浏览器、本地生产Workers/真实DeepSeek、两个workerd共享受管D1模拟服务，保存docs/verification/s2-d。手机视口/CDP触摸、公开校园定位夹具明确不是实机GPS；故障Mock与真实模型分开。原始秘密/Cookie/签名票据/私人GPS不归档。归档28轮模型请求成本按[DeepSeek官方](https://api-docs.deepseek.com/quick_start/pricing/)核对估算，非账单；累计开发台账包含历史/失败，不作为本阶段总成本。
+
+负责人已登录Edge控制台与CLI只读核查：无CampusOS Worker/D1、目标域名0DNS/证书Active。截图裁去私人账户信息；公共DoH无A记录，本机198.18/15代理地址不视作真实公网解析。来源为[Cloudflare控制台](https://dash.cloudflare.com/5328fbf5ef7ef40f7743723c2c192499/workers-and-pages)、[IANA地址注册表](https://www.iana.org/assignments/iana-ipv4-special-registry/)、[Workers限制](https://developers.cloudflare.com/workers/platform/limits/)。未改账户资源/DNS/HTTPS或公开发布。
+
+构建净化依据锁定OpenNext1.20.10本机extract-project-env-vars/compile-env-files源码及[官方环境变量文档](https://opennext.js.org/cloudflare/howtos/env-vars)，保留无值命中路径前后证据。开发链漏洞核对[GitHub官方公告](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm)，当前无补丁；来源检查不等于供应链完整安全证明。

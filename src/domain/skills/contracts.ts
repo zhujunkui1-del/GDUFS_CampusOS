@@ -37,5 +37,7 @@ export type SkillDefinition<I, O> = {
   requiresConfirmation: boolean;
   timeoutMs: number;
   permissions?: readonly string[];
+  // Opt-in for public queries over an immutable snapshot; never for location, routes or writes.
+  reuseResultMs?: number;
   execute: (input: I, context: SkillContext) => Promise<SkillResult<O>>;
 };

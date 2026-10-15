@@ -11,12 +11,19 @@ function api(
 ) {
   return async (request: Request) => {
     let cookie: string | undefined;
+    let databaseTiming: Context["databaseTiming"] | undefined;
     const response = await withApi(async (req) => {
       const context = await assistantContext(req);
+      databaseTiming = context.databaseTiming;
       cookie = context.identity.cookie;
       return handler(req, context);
     })(request);
     if (cookie) response.headers.set("Set-Cookie", cookie);
+    if (databaseTiming)
+      response.headers.set(
+        "Server-Timing",
+        `d1;dur=${databaseTiming().durationMs}`,
+      );
     return response;
   };
 }

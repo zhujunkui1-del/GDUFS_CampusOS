@@ -95,6 +95,7 @@ const explain: Record<string, string> = {
 };
 
 export async function chatResponse(request: Request) {
+  const receivedAt = performance.now();
   let response: Response | undefined;
   const fallback = await withApi(async (req, apiContext) => {
     const input = AgentChatRequestSchema.parse(await readJson(req));
@@ -114,7 +115,9 @@ export async function chatResponse(request: Request) {
         input.mapContext.routeTicket,
       );
     const activeRoute =
-      input.mapContext?.activeRouteId || conversation.active_route_id;
+      input.mapContext?.activeRouteId !== undefined
+        ? input.mapContext.activeRouteId
+        : conversation.active_route_id;
     if (
       input.mapContext?.activeRouteId &&
       !/清除|清空|取消.*路线/.test(input.message)
@@ -220,6 +223,7 @@ export async function chatResponse(request: Request) {
       () => nextRequiredTool,
       requiredAction,
     );
+    const preparationMs = Math.round(performance.now() - receivedAt);
     const stream = new ReadableStream<Uint8Array>({
       start(controller) {
         let sequence = 0,
@@ -250,6 +254,13 @@ export async function chatResponse(request: Request) {
         let published = false;
         let acknowledged = false;
         let acknowledgedMode: string | null = null;
+        let mapActionMs: number | null = null;
+        let firstTextMs: number | null = null;
+        const skillTimings: {
+          name: string;
+          durationMs: number;
+          ok: boolean;
+        }[] = [];
         beforeAnswer = async () => {
           if (published)
             return acknowledged ? { mode: acknowledgedMode } : false;
@@ -266,6 +277,7 @@ export async function chatResponse(request: Request) {
               "地图操作与请求不符，请重试。",
             );
           published = true;
+          const mapStarted = performance.now();
           if (actions.length > 8)
             throw new ApiError("RUN_LIMIT_EXCEEDED", "请分次执行地图操作。");
           const packet = await ctx.store.action(
@@ -295,6 +307,7 @@ export async function chatResponse(request: Request) {
               packet.id,
             );
             if (receipt) {
+              mapActionMs = Math.round(performance.now() - mapStarted);
               if (!receipt.ok)
                 throw new ApiError("UPSTREAM_ERROR", receipt.message);
               acknowledged = true;
@@ -307,8 +320,21 @@ export async function chatResponse(request: Request) {
         };
         let text = "";
         let error: { code: string; message: string } | undefined;
+        const runMetrics = () => ({
+          ...metered.metrics(),
+          timings: {
+            version: "camera-settled-v2",
+            preparationMs,
+            serverElapsedMs: Math.round(performance.now() - receivedAt),
+            firstTextMs,
+            mapActionMs,
+            skills: skillTimings,
+            database: ctx.databaseTiming(),
+          },
+        });
         const onEvent = (event: AgentEvent) => {
           if (event.type === "message.delta") {
+            firstTextMs ??= Math.round(performance.now() - receivedAt);
             text += String(event.payload.text);
             if (!needsOriginQuestion)
               emit(event.type, { text: event.payload.text });
@@ -318,7 +344,21 @@ export async function chatResponse(request: Request) {
           if (event.type === "tool.finished") {
             const result = event.payload.result as SkillResult<unknown>;
             const name = String(event.payload.name);
-            emit(event.type, { name, ok: result.ok });
+            const durationMs = Number(event.payload.durationMs || 0);
+            skillTimings.push({
+              name: [
+                "search_places",
+                "get_place_details",
+                "find_nearby_places",
+                "plan_route",
+                "control_map",
+              ].includes(name)
+                ? name
+                : "unregistered",
+              durationMs,
+              ok: result.ok,
+            });
+            emit(event.type, { name, ok: result.ok, durationMs });
             if (!result.ok) return;
             if (name === "search_places") {
               const found = SearchPlacesOutputSchema.parse(result.data);
@@ -433,7 +473,7 @@ export async function chatResponse(request: Request) {
               },
               onEvent,
             });
-            const metrics = metered.metrics();
+            const metrics = runMetrics();
             if (result.status !== "completed" || streamSignal.aborted) {
               const code = error?.code || "CANCELLED";
               const message =
@@ -478,7 +518,7 @@ export async function chatResponse(request: Request) {
             );
             const routeId =
               actions.find((action) => action.type === "SHOW_ROUTE")?.routeId ||
-              conversation.active_route_id;
+              activeRoute;
             const cleared = actions.some(
               (action) => action.type === "CLEAR_ROUTE",
             );
@@ -526,7 +566,7 @@ export async function chatResponse(request: Request) {
                     "AI 暂不可用，请重试。",
                     true,
                   );
-            const metrics = metered.metrics();
+            const metrics = runMetrics();
             await ctx.store
               .finish(
                 ctx.identity,
@@ -543,6 +583,7 @@ export async function chatResponse(request: Request) {
                 message: explain[controlled.code] || controlled.message,
               },
               conversationId: conversation.id,
+              metrics,
             });
           } finally {
             closed = true;

@@ -1,0 +1,81 @@
+{
+  "browser": "148.0.7778.97",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "realPhone": false,
+  "realModel": true,
+  "records": [
+    {
+      "prompt": "把地图切换成3D。",
+      "tools": [
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SET_VIEW_MODE",
+          "mode": "3d"
+        }
+      ],
+      "result": {
+        "conversationId": "b8f0c39b-c4c5-4bbf-b3fd-df021e32cacc",
+        "requestId": "bb9561dc-4680-411b-88b4-ad54bdd52037",
+        "metrics": {
+          "requests": 2,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1198,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 691,
+              "firstTextMs": 566
+            }
+          ],
+          "promptTokens": 1316,
+          "completionTokens": 59,
+          "cachedPromptTokens": 896,
+          "totalTokens": 1375,
+          "usageComplete": true,
+          "chargedTokens": 1375,
+          "durationMs": 3090,
+          "estimatedUsdRange": [
+            0.00010108799999999999,
+            0.00020217599999999998
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 24,
+            "serverElapsedMs": 3114,
+            "firstTextMs": 2987,
+            "mapActionMs": 1080,
+            "skills": [
+              {
+                "name": "control_map",
+                "durationMs": 1,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 20,
+              "writeQueries": 13,
+              "calls": 25,
+              "failures": 0,
+              "durationMs": 72,
+              "maxCallMs": 5
+            }
+          }
+        }
+      },
+      "response": "已切换为 3D 模式。",
+      "responseHeadersMs": 37,
+      "firstTextMs": 2994,
+      "completeMs": 3128
+    }
+  ]
+}

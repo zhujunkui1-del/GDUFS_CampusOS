@@ -1,0 +1,81 @@
+{
+  "browser": "149.0.4022.80",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "realPhone": false,
+  "realModel": true,
+  "records": [
+    {
+      "prompt": "把地图切换成3D。",
+      "tools": [
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SET_VIEW_MODE",
+          "mode": "3d"
+        }
+      ],
+      "result": {
+        "conversationId": "6a2b9f39-1b81-48dd-b86c-31ef70e338bf",
+        "requestId": "3d99da31-ebe8-46c7-b504-503b98afcd1b",
+        "metrics": {
+          "requests": 2,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1084,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 648,
+              "firstTextMs": 549
+            }
+          ],
+          "promptTokens": 1316,
+          "completionTokens": 59,
+          "cachedPromptTokens": 512,
+          "totalTokens": 1375,
+          "usageComplete": true,
+          "chargedTokens": 1375,
+          "durationMs": 2562,
+          "estimatedUsdRange": [
+            0.000157536,
+            0.000315072
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 25,
+            "serverElapsedMs": 2587,
+            "firstTextMs": 2485,
+            "mapActionMs": 806,
+            "skills": [
+              {
+                "name": "control_map",
+                "durationMs": 1,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 18,
+              "writeQueries": 13,
+              "calls": 23,
+              "failures": 0,
+              "durationMs": 76,
+              "maxCallMs": 8
+            }
+          }
+        }
+      },
+      "response": "已切换为 3D 模式。",
+      "responseHeadersMs": 37,
+      "firstTextMs": 2492,
+      "completeMs": 2603
+    }
+  ]
+}

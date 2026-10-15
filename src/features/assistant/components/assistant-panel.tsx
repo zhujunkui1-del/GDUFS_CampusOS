@@ -207,9 +207,12 @@ export function AssistantPanel({
                         className={`chat-message chat-${message.role}`}
                         data-message-role={message.role}
                       >
-                        {message.text && !(message.error && message.error === chat.error) && (
-                          <p>{message.text.replace(/\*\*(.*?)\*\*/g, "$1")}</p>
-                        )}
+                        {message.text &&
+                          !(message.error && message.error === chat.error) && (
+                            <p>
+                              {message.text.replace(/\*\*(.*?)\*\*/g, "$1")}
+                            </p>
+                          )}
                         {message.cards.map((card, index) =>
                           card.kind === "place" ? (
                             <button
@@ -238,9 +241,15 @@ export function AssistantPanel({
                               </span>
                               <div>
                                 <button
-                                  onClick={() => void chat.showCard(card)}
+                                  onClick={() =>
+                                    chat.activeRouteId === card.routeId
+                                      ? chat.clearRoute()
+                                      : void chat.showCard(card)
+                                  }
                                 >
-                                  显示路线
+                                  {chat.activeRouteId === card.routeId
+                                    ? "清除路线"
+                                    : "显示路线"}
                                 </button>
                                 <button
                                   onClick={() => void chat.showCard(card, true)}

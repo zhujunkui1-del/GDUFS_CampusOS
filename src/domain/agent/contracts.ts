@@ -12,7 +12,7 @@ export const AgentChatRequestSchema = z
     mapContext: z
       .object({
         selectedPlaceId: z.string().min(1).max(128).optional(),
-        activeRouteId: z.string().min(1).max(128).optional(),
+        activeRouteId: z.string().min(1).max(128).nullable().optional(),
         routeTicket: z.string().max(60000).optional(),
         mode: z.enum(["2d", "2.5d", "3d"]).optional(),
         visibleLayers: z

@@ -60,10 +60,14 @@ npm run test:e2e
 
 ## S2-C 真实 AI 与地图
 
-原全局“问 AI”入口支持真实 DeepSeek、流式回复、地点/路线卡片和地图操作。服务端需配置 `DEEPSEEK_API_KEY`、默认模型及能力验证记录，并增加 `AGENT_SIGNING_SECRET`（至少32字符，推荐32随机字节）；仅写入忽略的 `.env.local`/`.dev.vars` 或 Cloudflare Secrets。执行 `npm run db:migrate:local` 应用含0004的迁移，再运行 `npm run model:verify`。未配置或模型故障时，公共地图继续独立使用。
+原全局“问 AI”入口支持真实 DeepSeek、流式回复、地点/路线卡片和地图操作。服务端需配置 `MODEL_API_KEY`、`MODEL_NAME`、`MODEL_BASE_URL`、`MODEL_CAPABILITIES_JSON`，并增加 `AGENT_SIGNING_SECRET`（至少32字符，推荐32随机字节）；仅写入忽略的 `.env.local`/`.dev.vars` 或 Cloudflare Secrets。执行 `npm run db:migrate:local` 应用含0004的迁移，再运行 `npm run model:verify`。未配置或模型故障时，公共地图继续独立使用。
 
 Next dev 通过 OpenNext 开发绑定访问本地D1；Workers构建后用 `npm run preview:worker`。不要同时启动两个独立本地D1模拟器写同一个持久目录。共享会话/额度/动作/建筑路线使用D1；设备精确路线只保留短期页面票据，刷新后重新定位。默认2D、现有导航与南苑7栋模型保持，批量建模暂停。
 
 真实模型测试明确启用且会使用API额度：设置 `E2E_BASE_URL`、`PLAYWRIGHT_CHANNEL=chrome` 或 `msedge`、`E2E_LIVE_AGENT=1`，运行 `npx playwright test tests/e2e/assistant-live.spec.ts tests/e2e/assistant-location-live.spec.ts --workers=1`。默认回归跳过付费用例；隔离双Worker共享D1运行 `npm run test:assistant:state`。验收、安全/成本边界、截图与S2-D依赖见 [S2-C报告](docs/S2_C_AI_MAP_ACCEPTANCE.md)。
 
 部署与回滚见 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)，架构边界见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)，实测记录见 [docs/PROGRESS.md](docs/PROGRESS.md)。
+
+S2-D本地验收与上线缺项见 [验收报告](docs/S2_D_AGENT_ACCEPTANCE.md)：AI/地图可直接清路线，手机步行面板支持保留最小档上下拖动。180单元和Chrome/Edge各61项常规回归通过，真实DeepSeek证据单列；云端与真实手机未完成，不作为公网试用就绪。
+
+Workers构建务必用 `npm run build:worker`：包装器移除OpenNext生成的服务端环境默认值并扫描残留秘密。不要绕过包装器直接构建发布；运行时模型密钥/签名Secret通过本地 `.dev.vars` 或云端Secret配置。离线核查可运行 `node tests/integration/verify-s2-d-artifacts.mjs`，它要求本机实际MODEL/签名Secret存在，仅输出计数/结论，不输出值。

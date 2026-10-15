@@ -28,6 +28,8 @@ export function meteredClient(
     outputBudgetUsed = 0,
     correctionRetries = 0;
   let reliable = true;
+  const upstreamTimings: { durationMs: number; firstTextMs: number | null }[] =
+    [];
   const started = performance.now();
   const bounded: ModelClient = {
     generateWithTools: async (request) => {
@@ -54,6 +56,8 @@ export function meteredClient(
         )
           throw new ApiError("RUN_LIMIT_EXCEEDED", "本次对话已达到用量限制。");
         requests++;
+        const upstreamStarted = performance.now();
+        let firstTextMs: number | null = null;
         let reply: ModelReply;
         try {
           reply = await client.generateWithTools({
@@ -130,11 +134,23 @@ export function meteredClient(
                   },
                 }
               : {}),
-            onText: final ? request.onText : undefined,
+            onText: final
+              ? (text) => {
+                  firstTextMs ??= Math.round(
+                    performance.now() - upstreamStarted,
+                  );
+                  request.onText?.(text);
+                }
+              : undefined,
           });
         } catch (error) {
           reliable = false;
           throw error;
+        } finally {
+          upstreamTimings.push({
+            durationMs: Math.round(performance.now() - upstreamStarted),
+            firstTextMs,
+          });
         }
         if (reply.usage) {
           outputBudgetUsed += reply.usage.completionTokens;
@@ -211,6 +227,7 @@ export function meteredClient(
       return {
         requests,
         correctionRetries,
+        upstreamTimings,
         promptTokens,
         completionTokens,
         cachedPromptTokens,

@@ -5,6 +5,7 @@ export async function installAgentEvidence(page: Page) {
     target.__agentEvidence = [];
     const original = window.fetch.bind(window);
     window.fetch = async (...args) => {
+      const started = performance.now();
       const response = await original(...args);
       if (
         String(args[0]).endsWith("/api/agent/chat") &&
@@ -17,6 +18,9 @@ export async function installAgentEvidence(page: Page) {
           actions: [] as unknown[],
           result: null as unknown,
           response: "",
+          responseHeadersMs: Math.round(performance.now() - started),
+          firstTextMs: null as number | null,
+          completeMs: null as number | null,
         };
         target.__agentEvidence!.push(record);
         const stream = response.body;
@@ -44,13 +48,19 @@ export async function installAgentEvidence(page: Page) {
                     record.tools.push(event.payload.name);
                   if (event.type === "artifact.ready" && event.payload.packet)
                     record.actions.push(...event.payload.packet.actions);
-                  if (event.type === "message.delta")
+                  if (event.type === "message.delta") {
+                    record.firstTextMs ??= Math.round(
+                      performance.now() - started,
+                    );
                     record.response += event.payload.text;
+                  }
                   if (
                     event.type === "run.completed" ||
                     event.type === "run.failed"
-                  )
+                  ) {
                     record.result = event.payload;
+                    record.completeMs = Math.round(performance.now() - started);
+                  }
                 }
               }
               return part;

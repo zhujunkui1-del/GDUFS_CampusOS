@@ -2,6 +2,7 @@ import { assistantBindings } from "./database";
 import { AssistantStore } from "./store";
 import { SharedRouteStore } from "./routes";
 import { ApiError } from "../errors";
+import { databaseTimings } from "./timings";
 export function sameOrigin(request: Request) {
   const origin = request.headers.get("Origin");
   const target = new URL(request.url);
@@ -24,13 +25,16 @@ export function sameOrigin(request: Request) {
 export async function assistantContext(request: Request) {
   sameOrigin(request);
   const bindings = assistantBindings();
-  const store = new AssistantStore(bindings.db);
+  const timing = databaseTimings(bindings.db);
+  const store = new AssistantStore(timing.db);
   const identity = await store.identity(request);
   return {
     ...bindings,
+    db: timing.db,
+    databaseTiming: timing.snapshot,
     store,
     identity,
-    routes: new SharedRouteStore(bindings.db, bindings.signingSecret),
+    routes: new SharedRouteStore(timing.db, bindings.signingSecret),
     ip:
       bindings.environment === "local"
         ? "local-preview"

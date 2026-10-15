@@ -36,6 +36,7 @@ const definition: SkillDefinition<Input, Input> = {
   outputSchema: schema,
   auth: "public",
   sideEffect: "none",
+  reuseResultMs: 5000,
   requiresConfirmation: false,
   timeoutMs: 30,
   execute: async (input) => ({ ok: true, data: input }),
@@ -43,6 +44,12 @@ const definition: SkillDefinition<Input, Input> = {
 function registry(overrides: Partial<SkillDefinition<Input, Input>> = {}) {
   return new SkillRegistry().register("spatial-domain", {
     ...definition,
+    reuseResultMs:
+      (overrides.auth && overrides.auth !== "public") ||
+      overrides.requiresConfirmation ||
+      (overrides.sideEffect && overrides.sideEffect !== "none")
+        ? undefined
+        : 5000,
     ...overrides,
   });
 }
@@ -80,6 +87,106 @@ function toolReply(calls = [call()]): ModelReply {
   };
 }
 afterEach(() => vi.useRealTimers());
+
+it("reuses an identical read-only tool result across different model call IDs", async () => {
+  const execute = vi.fn(definition.execute);
+  const provider = new MockModelProvider([
+    toolReply([call("test_echo", '{"value":"fixture"}', "first")]),
+    toolReply([call("test_echo", '{ "value" : "fixture" }', "second")]),
+    final,
+  ]);
+  const events: AgentEvent[] = [];
+  const result = await new AgentOrchestrator(
+    { resolve: async () => ({ client: provider, snapshot }) },
+    registry({ execute }),
+  ).run({
+    message: "fixture",
+    context,
+    onEvent: (event) => events.push(event),
+  });
+  expect(result.status).toBe("completed");
+  expect(execute).toHaveBeenCalledTimes(1);
+  expect(events.filter((event) => event.type === "tool.finished")).toHaveLength(
+    1,
+  );
+});
+
+it("does not reuse across runs or beyond the approved lifetime", async () => {
+  const execute = vi.fn(definition.execute);
+  const provider = new MockModelProvider([
+    toolReply(),
+    final,
+    toolReply(),
+    final,
+  ]);
+  const agent = new AgentOrchestrator(
+    { resolve: async () => ({ client: provider, snapshot }) },
+    registry({ execute }),
+  );
+  await agent.run({ message: "one", context, onEvent: () => {} });
+  await agent.run({
+    message: "two",
+    context: { ...context, sessionId: "another-owner" },
+    onEvent: () => {},
+  });
+  expect(execute).toHaveBeenCalledTimes(2);
+  let now = Date.now();
+  const clock = vi.spyOn(Date, "now").mockImplementation(() => now);
+  try {
+    const expired = new MockModelProvider([
+      toolReply([call("test_echo", '{"value":"x"}', "a")]),
+      async () => {
+        now += 5001;
+        return toolReply([call("test_echo", '{"value":"x"}', "b")]);
+      },
+      final,
+    ]);
+    await new AgentOrchestrator(
+      { resolve: async () => ({ client: expired, snapshot }) },
+      registry({ execute }),
+    ).run({ message: "expiry", context, onEvent: () => {} });
+    expect(execute).toHaveBeenCalledTimes(4);
+  } finally {
+    clock.mockRestore();
+  }
+});
+it("checks permissions again before replaying a cached result", async () => {
+  const permissions = ["read_snapshot"];
+  const execute = vi.fn(definition.execute);
+  const provider = new MockModelProvider([
+    toolReply([call("test_echo", '{"value":"x"}', "a")]),
+    async () => {
+      permissions.length = 0;
+      return toolReply([call("test_echo", '{"value":"x"}', "b")]);
+    },
+  ]);
+  const result = await new AgentOrchestrator(
+    { resolve: async () => ({ client: provider, snapshot }) },
+    registry({ execute, permissions: ["read_snapshot"] }),
+  ).run({
+    message: "scope",
+    context: { ...context, permissions },
+    onEvent: () => {},
+  });
+  expect(result).toMatchObject({ status: "failed", code: "FORBIDDEN" });
+  expect(execute).toHaveBeenCalledTimes(1);
+});
+it("does not reuse unapproved reads or allow write/identity scoped cache policies", async () => {
+  expect(() => registry({ auth: "user", reuseResultMs: 5000 })).toThrow(
+    /snapshot/,
+  );
+  const execute = vi.fn(definition.execute);
+  const provider = new MockModelProvider([
+    toolReply([call("test_echo", '{"value":"x"}', "a")]),
+    toolReply([call("test_echo", '{"value":"x"}', "b")]),
+    final,
+  ]);
+  await new AgentOrchestrator(
+    { resolve: async () => ({ client: provider, snapshot }) },
+    registry({ execute, reuseResultMs: undefined }),
+  ).run({ message: "fresh", context, onEvent: () => {} });
+  expect(execute).toHaveBeenCalledTimes(2);
+});
 
 describe("Skill Registry / Tool Executor (Mock only)", () => {
   it("keeps exactly the documented 16 names across four logical domains", () => {
@@ -313,7 +420,11 @@ describe("bounded orchestrator and events (Mock only)", () => {
       Array.from({ length: 4 }, (_, round) =>
         toolReply(
           Array.from({ length: 4 }, (_, i) =>
-            call("test_echo", '{"value":"a"}', `call-${round}-${i}`),
+            call(
+              "test_echo",
+              JSON.stringify({ value: `${round}:${i}` }),
+              `call-${round}-${i}`,
+            ),
           ),
         ),
       ),

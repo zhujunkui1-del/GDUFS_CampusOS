@@ -1,0 +1,78 @@
+{
+  "browser": "149.0.4022.80",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "realPhone": false,
+  "modelStatus": {
+    "stage": "S2-C",
+    "chatAvailable": true,
+    "status": "ready",
+    "storageReady": true,
+    "model": {
+      "ready": true,
+      "model": {
+        "source": "platform",
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "policyVersion": "deepseek-default-v1",
+        "testedAt": "2026-10-14T20:20:15.727Z",
+        "capabilities": {
+          "toolCalling": true,
+          "jsonObject": true,
+          "strictJsonSchema": false
+        }
+      }
+    },
+    "domains": [
+      "knowledge-domain",
+      "spatial-domain",
+      "events-domain",
+      "personal-domain"
+    ],
+    "skills": [
+      {
+        "name": "search_places",
+        "version": "1.0.0",
+        "domain": "spatial-domain",
+        "auth": "public",
+        "sideEffect": "none"
+      },
+      {
+        "name": "get_place_details",
+        "version": "1.0.0",
+        "domain": "spatial-domain",
+        "auth": "public",
+        "sideEffect": "none"
+      },
+      {
+        "name": "find_nearby_places",
+        "version": "1.0.0",
+        "domain": "spatial-domain",
+        "auth": "public",
+        "sideEffect": "none"
+      },
+      {
+        "name": "plan_route",
+        "version": "1.0.0",
+        "domain": "spatial-domain",
+        "auth": "public",
+        "sideEffect": "none"
+      },
+      {
+        "name": "control_map",
+        "version": "1.0.0",
+        "domain": "spatial-domain",
+        "auth": "public",
+        "sideEffect": "none"
+      }
+    ]
+  },
+  "businessChatTested": false,
+  "chatAvailable": true,
+  "forgedHttpStatus": 400,
+  "mapVersion": "s1-2026-10-14.2",
+  "modelSha": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+  "pageErrors": []
+}

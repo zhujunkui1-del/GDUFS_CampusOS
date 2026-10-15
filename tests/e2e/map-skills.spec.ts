@@ -9,13 +9,21 @@ test("five real map Skills execute in Workers with owned route actions and no gu
     input: unknown;
     status: number;
     output: unknown;
+    elapsedMs: number;
   }[] = [];
   const run = async (name: string, input: unknown) => {
+    const started = performance.now();
     const response = await request.post(`/api/map/skills/${name}`, {
       data: { input },
     });
     const output = await response.json();
-    calls.push({ name, input, status: response.status(), output });
+    calls.push({
+      name,
+      input,
+      status: response.status(),
+      output,
+      elapsedMs: Math.round((performance.now() - started) * 100) / 100,
+    });
     return { status: response.status(), output };
   };
   const south = await run("search_places", { query: "南苑7栋" });

@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-10-15T14:15:41.892Z",
+  "rollingWindowHours": 24,
+  "siteLimit": 200,
+  "used": 196,
+  "remaining": 4,
+  "firstSlotReturnsAt": "2026-10-16T05:43:06.996Z",
+  "quotaResetPerformed": false
+}

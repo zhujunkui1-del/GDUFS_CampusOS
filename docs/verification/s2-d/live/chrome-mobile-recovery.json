@@ -1,0 +1,95 @@
+{
+  "browser": "148.0.7778.97",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "realModel": true,
+  "realPhone": false,
+  "actualMapActionReceipt": true,
+  "endpointsAvoidOverlays": true,
+  "historyRestoredAfterReload": true,
+  "routeRestoredOnMapFromAnotherPage": true,
+  "records": [
+    {
+      "prompt": "从南苑7栋去图书馆。",
+      "tools": [
+        "plan_route",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SHOW_ROUTE",
+          "routeId": "54923765-b62f-4e36-af8a-fc580e55364f"
+        }
+      ],
+      "result": {
+        "conversationId": "25589f70-3643-4f11-b55a-3f7f8baa065f",
+        "requestId": "3cb05468-2c35-462d-9e7c-cb311724c438",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1255,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 826,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1220,
+              "firstTextMs": 885
+            }
+          ],
+          "promptTokens": 3639,
+          "completionTokens": 222,
+          "cachedPromptTokens": 2432,
+          "totalTokens": 3861,
+          "usageComplete": true,
+          "chargedTokens": 3861,
+          "durationMs": 4421,
+          "estimatedUsdRange": [
+            0.0003215459999999999,
+            0.0006430919999999998
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 22,
+            "serverElapsedMs": 4443,
+            "firstTextMs": 4106,
+            "mapActionMs": 1079,
+            "skills": [
+              {
+                "name": "plan_route",
+                "durationMs": 9,
+                "ok": true
+              },
+              {
+                "name": "control_map",
+                "durationMs": 4,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 24,
+              "writeQueries": 15,
+              "calls": 31,
+              "failures": 0,
+              "durationMs": 93,
+              "maxCallMs": 8
+            }
+          }
+        }
+      },
+      "response": "南苑7栋 → 图书馆（步行）：约 848 米，预计 12 分钟。\n\n途中需下台阶进入并穿过下沉隧道（隧道段约 70 米），出隧道后再上台阶；之后经教学实验楼可通行区域到达图书馆。路线已在地图上显示。",
+      "responseHeadersMs": 33,
+      "firstTextMs": 4112,
+      "completeMs": 4456
+    }
+  ]
+}

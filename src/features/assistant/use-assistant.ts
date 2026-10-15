@@ -103,6 +103,12 @@ export function useAssistant(
         pending.current?.controller.abort();
         generation.current++;
         tickets.current.clear();
+        if (
+          mapRef.current.route &&
+          knownRoutes.current.has(mapRef.current.route.id)
+        )
+          mapRef.current.stopNavigation();
+        knownRoutes.current.clear();
         setMessages([]);
         setConversationId(undefined);
       }
@@ -286,6 +292,8 @@ export function useAssistant(
           mapRef.current.executeAction(action);
           expectedMapVersion = mapRef.current.getInteractionVersion();
           if (action.type === "FOCUS_PLACE" || action.type === "SHOW_ROUTE") {
+            // The existing map controller schedules its fit on the next frame.
+            await frames();
             await waitFor(
               () =>
                 document.querySelector<HTMLElement>(
@@ -298,6 +306,8 @@ export function useAssistant(
           }
           if (action.type === "SET_VIEW_MODE") {
             await waitFor(() => {
+              if (mapRef.current.getInteractionVersion() !== expectedMapVersion)
+                throw new Error("地图操作已被新的选择中断。");
               const mapElement = document.querySelector<HTMLElement>(
                 '[data-testid="campus-map"]',
               );
@@ -309,6 +319,16 @@ export function useAssistant(
                   mapElement?.dataset.modelState === "ready")
               );
             }, controller.signal);
+            await frames();
+            await waitFor(
+              () =>
+                document.querySelector<HTMLElement>(
+                  '[data-testid="campus-map"]',
+                )?.dataset.cameraMoving === "false",
+              controller.signal,
+            );
+            if (mapRef.current.getInteractionVersion() !== expectedMapVersion)
+              throw new Error("地图操作已被新的选择中断。");
           }
         }
         ok = true;
@@ -370,7 +390,7 @@ export function useAssistant(
           message: text,
           mapContext: {
             selectedPlaceId: current.selected?.id || current.assistantPlace?.id,
-            activeRouteId: activeRoute?.id,
+            activeRouteId: activeRoute?.id || null,
             routeTicket: activeRoute
               ? tickets.current.get(activeRoute.id)
               : undefined,
@@ -449,7 +469,9 @@ export function useAssistant(
           (cause instanceof z.ZodError || cause instanceof SyntaxError
             ? "回复格式异常，请重试。"
             : cause instanceof Error
-              ? cause.message
+              ? cause instanceof TypeError
+                ? "连接已中断，请重试。"
+                : cause.message
               : "连接失败，请重试。");
         setError(message);
         failureRef.current();
@@ -477,5 +499,11 @@ export function useAssistant(
     cancel,
     retry: boot,
     showCard,
+    activeRouteId: map.route?.id || null,
+    clearRoute: () => {
+      if (pending.current) cancel();
+      setError("");
+      mapRef.current.stopNavigation();
+    },
   };
 }

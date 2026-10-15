@@ -30,6 +30,7 @@ import {
 import type { SDKPoi } from "../adapters/amap-types";
 import { PlaceDetails } from "./place-details";
 import { WalkingNavigation } from "./walking-navigation";
+import { routeSheetMediaQuery } from "./use-route-sheet";
 import { LocationNotice } from "./location-notice";
 import { FocusedNavigation } from "./focused-navigation";
 import { MapViewButtons } from "./map-view-buttons";
@@ -274,13 +275,14 @@ export function MapWorkspace() {
         </button>
         <button
           onClick={() => {
+            if (routeOpen && window.matchMedia(routeSheetMediaQuery).matches)
+              return;
             setSearchOpen(false);
             setRouteOpen(!routeOpen);
             if (routeOpen) {
               map.cancelPicking();
               map.stopNavigation();
-            }
-            if (map.route)
+            } else if (map.route)
               map.executeAction({ type: "SHOW_ROUTE", routeId: map.route.id });
           }}
           aria-label="校园步行导航"
@@ -288,6 +290,15 @@ export function MapWorkspace() {
         >
           <Navigation size={20} strokeWidth={1.5} />
         </button>
+        {map.route && (
+          <button
+            onClick={map.stopNavigation}
+            aria-label="清除路线"
+            title="清除路线"
+          >
+            <X size={20} strokeWidth={1.5} />
+          </button>
+        )}
         <span className="tool-divider" />
         <button
           disabled={!ready}

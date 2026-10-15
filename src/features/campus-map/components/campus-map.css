@@ -314,6 +314,55 @@
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-floating);
 }
+.route-drawer-handle {
+  display: none;
+}
+@media (max-width: 760px), (max-width: 1024px) and (max-height: 500px) {
+  .route-planner {
+    height: var(--route-panel-height, 56dvh);
+    min-height: 88px;
+    transition: height var(--transition-normal) var(--ease-drawer);
+  }
+  .route-planner[data-dragging="true"] {
+    transition: none;
+  }
+  .route-planner[data-sheet] > .results-heading {
+    position: relative;
+    padding-top: 28px;
+    touch-action: none;
+    user-select: none;
+    cursor: ns-resize;
+  }
+  .route-drawer-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 44px);
+    width: 88px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    touch-action: none;
+    cursor: ns-resize;
+  }
+  .route-drawer-handle > span {
+    width: 36px;
+    height: 5px;
+    border-radius: 8px;
+    background: #c5c8ce;
+  }
+  .route-planner[data-sheet="collapsed"] .route-planner-scroll {
+    visibility: hidden;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-planner {
+    transition: none;
+  }
+}
 .route-planner > .results-heading {
   flex-shrink: 0;
   padding: 18px 18px 0;

@@ -1,0 +1,36 @@
+{
+  "recordedAt": "2026-10-15T13:53:38.561Z",
+  "baseline": "010072b",
+  "scannedVariableNames": [
+    "MODEL_API_KEY",
+    "AGENT_SIGNING_SECRET",
+    "AMAP_SECURITY_JS_CODE"
+  ],
+  "actualModelKeyChecked": true,
+  "repository": {
+    "files": 1166,
+    "matches": []
+  },
+  "generatedWorkerAndAssets": {
+    "files": 1310,
+    "matches": [
+      {
+        "file": ".open-next\\cloudflare\\next-env.mjs",
+        "variable": "MODEL_API_KEY"
+      },
+      {
+        "file": ".open-next\\cloudflare\\next-env.mjs",
+        "variable": "AGENT_SIGNING_SECRET"
+      },
+      {
+        "file": ".open-next\\cloudflare\\next-env.mjs",
+        "variable": "AMAP_SECURITY_JS_CODE"
+      }
+    ]
+  },
+  "credentialFilesIgnored": true,
+  "gateOnlyNameAliasesChanged": true,
+  "frozenDataUntouched": true,
+  "modelSha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+  "modelMatchesApprovedAsset": true
+}

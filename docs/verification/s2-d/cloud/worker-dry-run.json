@@ -1,0 +1,11 @@
+{
+  "recordedAt": "2026-10-15T14:00:23.280Z",
+  "localOnly": true,
+  "actualDeployment": false,
+  "environment": "preview",
+  "rawKiB": 12572.96,
+  "gzipKiB": 2165.4,
+  "assetsFiles": null,
+  "databaseIdStillPlaceholder": true,
+  "privateEnvDefaultsRemoved": true
+}

@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-10-15T11:40:46.989Z",
+  "hostname": "gdufs.ccwu.cc",
+  "dns": {
+    "A": {
+      "ok": true,
+      "answers": [
+        "198.18.0.3"
+      ]
+    },
+    "AAAA": {
+      "ok": false,
+      "code": "ENODATA"
+    }
+  },
+  "https": {
+    "ok": false,
+    "code": "ECONNRESET"
+  },
+  "localResolverMayBeIntercepted": true,
+  "publicDoH": {
+    "httpStatus": 200,
+    "status": 0,
+    "answers": [],
+    "authorityTypes": [
+      6
+    ]
+  }
+}

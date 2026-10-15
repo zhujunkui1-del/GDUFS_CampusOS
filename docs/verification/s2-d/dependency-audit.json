@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-15T11:53:34.432Z",
+  "allDependencies": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 5,
+    "critical": 0,
+    "total": 5
+  },
+  "affected": [
+    "@next/eslint-plugin-next",
+    "braces",
+    "eslint-config-next",
+    "fast-glob",
+    "micromatch"
+  ],
+  "advisory": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+  "automaticDowngradeApplied": false
+}

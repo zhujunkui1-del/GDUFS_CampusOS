@@ -31,6 +31,9 @@ function define<I, O>(
     version: "1.0.0",
     auth: "public",
     sideEffect: "none",
+    reuseResultMs: ["search_places", "get_place_details"].includes(name)
+      ? 5000
+      : undefined,
     requiresConfirmation: false,
     timeoutMs: name === "plan_route" ? 8000 : 2000,
     execute: async (input, context) => ({
