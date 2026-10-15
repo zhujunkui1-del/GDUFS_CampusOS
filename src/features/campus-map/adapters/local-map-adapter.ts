@@ -1474,6 +1474,10 @@ export class LocalMapAdapter implements MapAdapter {
       });
     }
   }
+  installRoute(route: CampusRoute) {
+    this.clearRoute();
+    this.routes.set(route.id, route);
+  }
   private fitRoute(id: string) {
     const fit = () => {
       if (this.destroyed || this.activeRouteId !== id) return;

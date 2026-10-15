@@ -208,3 +208,10 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 五项Skill复用已审核campus.json、walking-network.json与原planLocalRoute，mapVersion=s1-2026-10-14.2、networkVersion=s1-campus-2026-10-14.2；无新增地图/模型/照片/在线地图采集。建筑高度只引用原南苑7栋manifest的负责人7层约21米，不补其他栋。
 
 真实DeepSeek受控9请求/25428ms，无强制tool_choice，调用全部五项；正向地点/详情/附近与跨区路线，以及未知999栋拒绝均有完整脱敏记录docs/verification/s2-b/deepseek-live.json。真实Workers输入输出取自该目录HTTP记录并提取inputs-and-outputs.json；仅公共校园数据，不保存Key/Cookie/个人定位。带授权公开坐标仅单元夹具，不当现场定位。OSM原许可/署名与固定手动更新机制不变。
+
+
+## SRC-051｜S2-C共享状态、真实对话与浏览器证据（2026-10-15）
+
+继续复用SRC-050固定OSM地点/路网和已批准S7资产，无地图、图片、建筑模型新采集或公开发布。真实模型为服务端deepseek-flash；Chrome/Edge A–G、受控公开校园坐标定位、实际动作回执、usage/耗时与截图存docs/verification/s2-c。证据仅保留公共ID/动作与脱敏结果，不含Key/Cookie/签名票据或私人GPS。手机视口非实机，拒绝授权负面分支有显式模拟标记，Mock服务失败另列。
+
+共享D1方案依据官方[D1 Database API](https://developers.cloudflare.com/d1/worker-api/d1-database/)，成本范围依据官方[DeepSeek价格](https://api-docs.deepseek.com/quick_start/pricing/)（核对2026-10-15），非实际账单。双workerd/同一受管D1模拟服务用于原子配额/重启恢复实测，隔离SQLite/Mock只在tests，生产迁移无虚假种子。完整条件/限制和首次失败修订见S2_C_AI_MAP_ACCEPTANCE.md。

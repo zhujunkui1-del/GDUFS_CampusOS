@@ -121,8 +121,15 @@ export class CampusMapService {
   resolveOrigin(
     origin: MapOrigin | undefined,
     context: SkillContext,
+    enforceRequestedSource = true,
   ): ResolvedOrigin {
     this.assertContext(context);
+    if (
+      enforceRequestedSource &&
+      context.map?.requiresDeviceOrigin &&
+      origin?.type !== "device_location"
+    )
+      throw new ApiError("LOCATION_REQUIRED", "请授权定位或输入其他起点。");
     if (!origin || origin.type === "selected_place") {
       if (!context.map?.selectedPlaceId)
         throw new ApiError("LOCATION_REQUIRED", "请选择起点或授权定位。");
@@ -324,6 +331,7 @@ export class CampusMapService {
     const end = this.resolveOrigin(
       { type: "place", placeId: checked.endPlaceId },
       context,
+      false,
     );
     if (
       start.placeId === end.placeId ||

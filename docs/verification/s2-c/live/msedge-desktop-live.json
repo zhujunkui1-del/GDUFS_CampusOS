@@ -1,0 +1,299 @@
+{
+  "browser": "149.0.4022.80",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "realPhone": false,
+  "realModel": true,
+  "mapVersion": "s1-2026-10-14.2",
+  "modelSha": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+  "records": [
+    {
+      "prompt": "帮我找到南苑7栋。",
+      "tools": [
+        "search_places",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "FOCUS_PLACE",
+          "placeId": "osm-way-312536955",
+          "zoom": 17
+        },
+        {
+          "type": "SHOW_PLACE_DETAILS",
+          "placeId": "osm-way-312536955"
+        }
+      ],
+      "result": {
+        "conversationId": "29e4f03c-3334-40c8-8171-fba06e507c6b",
+        "requestId": "6e82f6ab-0eba-4702-b098-07b645b06eea",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "promptTokens": 3313,
+          "completionTokens": 159,
+          "cachedPromptTokens": 2688,
+          "totalTokens": 3472,
+          "usageComplete": true,
+          "chargedTokens": 3472,
+          "durationMs": 2643,
+          "estimatedUsdRange": [
+            0.000197214,
+            0.000394428
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": "已找到 **南苑7栋**（宿舍区，生活区），地图已定位并显示详情。需要我规划去那里的路线吗？说下你的起点即可。"
+    },
+    {
+      "prompt": "这栋宿舍附近有什么食堂？",
+      "tools": [
+        "find_nearby_places"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "29e4f03c-3334-40c8-8171-fba06e507c6b",
+        "requestId": "e18ba5b9-3500-41cc-b193-81a1e6621046",
+        "metrics": {
+          "requests": 2,
+          "correctionRetries": 0,
+          "promptTokens": 3300,
+          "completionTokens": 156,
+          "cachedPromptTokens": 2560,
+          "totalTokens": 3456,
+          "usageComplete": true,
+          "chargedTokens": 3456,
+          "durationMs": 2877,
+          "estimatedUsdRange": [
+            0.00021228,
+            0.00042456
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": "南苑7栋附近的食堂（直线距离）：\n\n- **风采园（三饭）** 约 159 米\n- **博雅园（二饭）** 约 296 米\n- **文采园（一饭）** 约 345 米\n\n需要我规划去其中哪一家的路线吗？"
+    },
+    {
+      "prompt": "从南苑7栋去图书馆。",
+      "tools": [
+        "plan_route",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SHOW_ROUTE",
+          "routeId": "b8270fbd-b80f-40b6-b4df-c75742f171e3"
+        }
+      ],
+      "result": {
+        "conversationId": "29e4f03c-3334-40c8-8171-fba06e507c6b",
+        "requestId": "44c55c73-25e1-4aaf-9a85-7f3d126d852d",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "promptTokens": 4246,
+          "completionTokens": 196,
+          "cachedPromptTokens": 2560,
+          "totalTokens": 4442,
+          "usageComplete": true,
+          "chargedTokens": 4442,
+          "durationMs": 4531,
+          "estimatedUsdRange": [
+            0.00037817999999999993,
+            0.0007563599999999999
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": "南苑7栋 → 图书馆（步行）\n\n- 距离约 848 米，预计 12 分钟\n- 途经下沉隧道，路线已在地图显示"
+    },
+    {
+      "prompt": "把地图切换成3D。",
+      "tools": [
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SET_VIEW_MODE",
+          "mode": "3d"
+        }
+      ],
+      "result": {
+        "conversationId": "29e4f03c-3334-40c8-8171-fba06e507c6b",
+        "requestId": "c500a3a9-b074-4eb5-8494-48fd28abf0a2",
+        "metrics": {
+          "requests": 2,
+          "correctionRetries": 0,
+          "promptTokens": 1892,
+          "completionTokens": 57,
+          "cachedPromptTokens": 384,
+          "totalTokens": 1949,
+          "usageComplete": true,
+          "chargedTokens": 1949,
+          "durationMs": 2625,
+          "estimatedUsdRange": [
+            0.00026155199999999997,
+            0.0005231039999999999
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": "已切换为3D模式。"
+    },
+    {
+      "prompt": "清除刚刚的路线。",
+      "tools": [
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "CLEAR_ROUTE"
+        }
+      ],
+      "result": {
+        "conversationId": "29e4f03c-3334-40c8-8171-fba06e507c6b",
+        "requestId": "85fc6391-2a37-4c99-8f21-b8c01239b68e",
+        "metrics": {
+          "requests": 2,
+          "correctionRetries": 0,
+          "promptTokens": 1886,
+          "completionTokens": 56,
+          "cachedPromptTokens": 384,
+          "totalTokens": 1942,
+          "usageComplete": true,
+          "chargedTokens": 1942,
+          "durationMs": 4929,
+          "estimatedUsdRange": [
+            0.000260052,
+            0.000520104
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": "路线已清除。另：当前地图模式为2D。"
+    },
+    {
+      "prompt": "帮我找到南苑999栋。",
+      "tools": [
+        "search_places"
+      ],
+      "actions": [],
+      "result": {
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "未找到该地点或路线，请换个名称。"
+        },
+        "conversationId": "29e4f03c-3334-40c8-8171-fba06e507c6b",
+        "metrics": {
+          "requests": 1,
+          "correctionRetries": 0,
+          "promptTokens": 1154,
+          "completionTokens": 36,
+          "cachedPromptTokens": 768,
+          "totalTokens": 1190,
+          "usageComplete": true,
+          "chargedTokens": 1190,
+          "durationMs": 1021,
+          "estimatedUsdRange": [
+            0.000081804,
+            0.000163608
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": ""
+    },
+    {
+      "prompt": "找到南苑7栋。",
+      "tools": [
+        "search_places",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "FOCUS_PLACE",
+          "placeId": "osm-way-312536955"
+        },
+        {
+          "type": "SHOW_PLACE_DETAILS",
+          "placeId": "osm-way-312536955"
+        }
+      ],
+      "result": {
+        "conversationId": "29e4f03c-3334-40c8-8171-fba06e507c6b",
+        "requestId": "14a19266-ccb4-4a19-a65c-5c6c73ac45c7",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "promptTokens": 4093,
+          "completionTokens": 131,
+          "cachedPromptTokens": 2304,
+          "totalTokens": 4224,
+          "usageComplete": true,
+          "chargedTokens": 4224,
+          "durationMs": 2989,
+          "estimatedUsdRange": [
+            0.000353862,
+            0.000707724
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": "已定位南苑7栋，地图已聚焦并显示详情。"
+    },
+    {
+      "prompt": "那从这里去图书馆呢？",
+      "tools": [
+        "plan_route",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SHOW_ROUTE",
+          "routeId": "db49bd86-53e8-4d07-bf06-6eea849a293a"
+        }
+      ],
+      "result": {
+        "conversationId": "29e4f03c-3334-40c8-8171-fba06e507c6b",
+        "requestId": "a6ec90ed-1c08-4638-b74f-642d0bef5bb9",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "promptTokens": 4239,
+          "completionTokens": 187,
+          "cachedPromptTokens": 2560,
+          "totalTokens": 4426,
+          "usageComplete": true,
+          "chargedTokens": 4426,
+          "durationMs": 3213,
+          "estimatedUsdRange": [
+            0.00037172999999999997,
+            0.0007434599999999999
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": "南苑7栋 → 图书馆（步行）\n\n- 距离约 848 米，预计 12 分钟\n- 途经下沉隧道，路线已在地图显示"
+    }
+  ],
+  "pageErrors": []
+}

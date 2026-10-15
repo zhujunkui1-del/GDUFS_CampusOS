@@ -156,3 +156,8 @@ Skill 应同时支持 (1) Agent 调用，(2) 内部 API 调用，(3) 开发测�
 ## S2-B 当前状态（2026-10-15）
 
 上述五项已实际实现并注册。Skill Schema以src/domain/maps/skill-contracts.ts为准，服务实现src/lib/server/maps，确定性接口POST /api/map/skills/{name}；地图Agent复用原总控并在工具失败后结束本轮。来源是固定campus.json/现有planLocalRoute，不从空D1/在线底图重新获取。实际输入输出、错误/权限/超时及独立真实DeepSeek验证见docs/S2_B_MAP_SKILLS_ACCEPTANCE.md。前端AI聊天与共享会话/额度、定位授权传递及路线快照载入属于S2-C。
+
+
+## S2-C 接入状态（2026-10-15）
+
+五Skill继续复用原实现/注册器/执行器，生产身份、共享路线由D1 request context提供。control_map仍生成intent_only；本轮新增受控动作领取/回执桥，前端复验后才执行原控制器，不能把Skill返回直接等同已显示。模型只接脱敏路线摘要，GPS不作模型参数。明确地图命令限制为对应动作Schema；必要工具缺失最多一次同预算纠正，持续错误安全拒绝。未知地点/工具错误即结束，无自由生成替代路线。真实API、Mock和浏览器记录分列docs/S2_C_AI_MAP_ACCEPTANCE.md。

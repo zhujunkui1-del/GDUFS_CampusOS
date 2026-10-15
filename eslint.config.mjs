@@ -9,6 +9,7 @@ export default defineConfig([
     ".next/**",
     ".open-next/**",
     ".wrangler/**",
+    "**/.wrangler/**",
     "next-env.d.ts",
     "cloudflare-env.d.ts",
     "playwright-report/**",

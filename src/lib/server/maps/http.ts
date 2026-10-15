@@ -3,7 +3,10 @@ import { withApi } from "../http";
 import { ApiError } from "../errors";
 import { mapRuntime } from "../map-env";
 import { ToolExecutor } from "../agent/tool-executor";
-import { mapSessionVault, mapSkillRegistry, mapSkillService } from "./runtime";
+import { mapSkillRegistry } from "./runtime";
+import { assistantContext, sameOrigin } from "../assistant/http-context";
+import { CampusMapService } from "./campus-map-service";
+import { createMapSkillRegistry } from "./skills";
 import { PlaceIdSchema } from "@/domain/maps/skill-contracts";
 
 async function body(request: Request) {
@@ -37,9 +40,7 @@ async function body(request: Request) {
 export async function executeMapSkillHttp(request: Request) {
   let cookie: string | undefined;
   const response = await withApi(async (req, apiContext) => {
-    const origin = req.headers.get("Origin");
-    if (origin && origin !== new URL(req.url).origin)
-      throw new ApiError("FORBIDDEN", "请求来源不受支持。");
+    sameOrigin(req);
     const limiter = mapRuntime().limiter;
     if (
       limiter &&
@@ -62,19 +63,25 @@ export async function executeMapSkillHttp(request: Request) {
       .parse(await body(req));
     if (envelope.input === undefined)
       throw new ApiError("INVALID_ARGUMENT", "缺少工具参数。");
-    const session = mapSessionVault.resolve(req);
-    cookie = session.cookie;
+    const session = await assistantContext(req);
+    cookie = session.identity.cookie;
+    const service = new CampusMapService(session.routes);
+    const registry = createMapSkillRegistry(service);
     const context = {
-      ...session.context,
+      sessionId: session.identity.owner,
+      user: session.identity.user,
+      campusId: "gdufs_university_town" as const,
+      permissions: [],
+      signal: req.signal,
       requestId: apiContext.requestId,
       map: envelope.selectedPlaceId
         ? { selectedPlaceId: envelope.selectedPlaceId }
         : undefined,
     };
     if (envelope.selectedPlaceId) {
-      mapSkillService.place(envelope.selectedPlaceId);
+      service.place(envelope.selectedPlaceId);
     }
-    const result = await new ToolExecutor(mapSkillRegistry).execute(
+    const result = await new ToolExecutor(registry).execute(
       {
         id: crypto.randomUUID(),
         type: "function",

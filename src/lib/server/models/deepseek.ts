@@ -20,6 +20,7 @@ const usageSchema = z.object({
   prompt_tokens: z.number().int().nonnegative(),
   completion_tokens: z.number().int().nonnegative(),
   total_tokens: z.number().int().nonnegative(),
+  prompt_cache_hit_tokens: z.number().int().nonnegative().optional(),
 });
 const deltaSchema = z.object({
   choices: z
@@ -126,6 +127,9 @@ function safeReply(
           promptTokens: usage.prompt_tokens,
           completionTokens: usage.completion_tokens,
           totalTokens: usage.total_tokens,
+          ...(usage.prompt_cache_hit_tokens !== undefined
+            ? { cachedPromptTokens: usage.prompt_cache_hit_tokens }
+            : {}),
         }
       : undefined,
   };
@@ -295,7 +299,8 @@ export class DeepseekModelClient implements ModelClient {
     try {
       const response = await this.transport(this.#endpoint, {
         method: "POST",
-        redirect: "error",
+        // workerd rejects redirect:"error"; manual plus an explicit 3xx rejection never forwards credentials.
+        redirect: "manual",
         signal,
         headers: {
           Authorization: `Bearer ${this.#key}`,
@@ -319,6 +324,13 @@ export class DeepseekModelClient implements ModelClient {
           ...(json ? { response_format: { type: "json_object" } } : {}),
         }),
       });
+      if (response.status >= 300 && response.status < 400) {
+        await response.body?.cancel();
+        throw new ApiError(
+          "MODEL_ENDPOINT_INVALID",
+          "模型服务地址发生重定向，已停止请求。",
+        );
+      }
       if (!response.ok) {
         await response.body?.cancel();
         throw upstreamError(response.status);

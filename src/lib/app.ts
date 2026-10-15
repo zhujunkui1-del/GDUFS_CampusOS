@@ -15,14 +15,14 @@ export const CAPABILITIES = {
   },
   places: { available: true, status: "source_mapped_entrances_pending" },
   routes: {
-    available: false,
+    available: true,
     implemented: true,
-    status: "client_walking_only_verified_network_pending",
+    status: "reviewed_local_campus_network",
   },
   agent: {
     available: false,
     implemented: true,
-    status: "s2_b_map_skills_pending_chat_ui",
+    status: "s2_c_real_agent",
   },
   knowledge: { available: false, status: "pending_verified_sources" },
   events: { available: false, status: "pending_verified_sources" },

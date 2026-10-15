@@ -1,0 +1,85 @@
+{
+  "realModel": true,
+  "browser": "148.0.7778.97",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "controlledPublicCampusLocation": true,
+  "actualHardwareGPS": false,
+  "permissionDenialBranchSimulated": true,
+  "realRequestCancellation": true,
+  "records": [
+    {
+      "prompt": "从我现在的位置到图书馆怎么走？",
+      "tools": [
+        "plan_route",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SHOW_ROUTE",
+          "routeId": "7837ddba-439c-4d4a-a85a-3339dd9af064"
+        }
+      ],
+      "result": {
+        "conversationId": "048f9d5c-50e8-44b7-8c3d-e37584c54f6f",
+        "requestId": "83db753a-ca4f-4ffb-aa32-632f8216ed27",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "promptTokens": 3642,
+          "completionTokens": 183,
+          "cachedPromptTokens": 2432,
+          "totalTokens": 3825,
+          "usageComplete": true,
+          "chargedTokens": 3825,
+          "durationMs": 3286,
+          "estimatedUsdRange": [
+            0.000298596,
+            0.000597192
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": "从你当前位置到图书馆：步行约 895 米，预计 12 分钟。路线已显示。\n\n途中会经过下沉隧道和台阶，请注意脚下。"
+    },
+    {
+      "prompt": "从我的位置到图书馆怎么走？",
+      "tools": [],
+      "actions": [],
+      "result": {
+        "conversationId": "048f9d5c-50e8-44b7-8c3d-e37584c54f6f",
+        "requestId": "e5bc09f4-0dd3-4729-bc05-eeedf489a540",
+        "metrics": {
+          "requests": 1,
+          "correctionRetries": 0,
+          "promptTokens": 434,
+          "completionTokens": 7,
+          "cachedPromptTokens": 256,
+          "totalTokens": 441,
+          "usageComplete": true,
+          "chargedTokens": 441,
+          "durationMs": 683,
+          "estimatedUsdRange": [
+            0.000031668,
+            0.000063336
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": "请告诉我你的出发位置在哪里？"
+    },
+    {
+      "prompt": "从南苑7栋去图书馆。",
+      "tools": [],
+      "actions": [],
+      "result": null,
+      "response": ""
+    }
+  ]
+}

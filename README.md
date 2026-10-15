@@ -50,12 +50,20 @@ npm run test:e2e
 - `src/app/`：页面和 API 路由；地图首页是 `/map`。
 - `src/components/`：导航/响应式 Shell 和公共空状态。
 - `src/features/campus-map/`、`src/features/assistant/`：地图及全局 AI 的独立 UI 边界。
-- `src/domain/`：MapAdapter、MapAction、核验路网算法及 Skill 合约；未注册真实 Agent/Skill 执行器。
+- `src/domain/`：MapAdapter、MapAction、核验路网算法及严格 Skill/Agent/会话合约；五项真实地图 Skill 已接执行器。
 - `src/lib/server/`：错误封装、脱敏日志、环境校验和服务端权限检查。
 - `migrations/`：空表迁移与约束，未经核验的地点/路径不能被标为已确认。
 - `tests/`：权限/错误/地图合约单测与两种视口的 E2E；测试数据库仅在内存中含隔离夹具。
 - `docs/`：进度、决策、数据来源、阻塞和部署说明。
 
-S1 剩余需要完整地点名录、已核验入口/通行路网与隧道资料；参考图片没有复制到公开资源库。真实运行截图与测试条件见 `docs/screenshots/s1/`。
+当前固定校园地点和步行路网已接入，入口开放状态仍以现场为准；参考照片没有复制到公开资源库。真实运行截图与测试条件见 `docs/screenshots/s1/` 和 `docs/verification/s2-c/`。
+
+## S2-C 真实 AI 与地图
+
+原全局“问 AI”入口支持真实 DeepSeek、流式回复、地点/路线卡片和地图操作。服务端需配置 `DEEPSEEK_API_KEY`、默认模型及能力验证记录，并增加 `AGENT_SIGNING_SECRET`（至少32字符，推荐32随机字节）；仅写入忽略的 `.env.local`/`.dev.vars` 或 Cloudflare Secrets。执行 `npm run db:migrate:local` 应用含0004的迁移，再运行 `npm run model:verify`。未配置或模型故障时，公共地图继续独立使用。
+
+Next dev 通过 OpenNext 开发绑定访问本地D1；Workers构建后用 `npm run preview:worker`。不要同时启动两个独立本地D1模拟器写同一个持久目录。共享会话/额度/动作/建筑路线使用D1；设备精确路线只保留短期页面票据，刷新后重新定位。默认2D、现有导航与南苑7栋模型保持，批量建模暂停。
+
+真实模型测试明确启用且会使用API额度：设置 `E2E_BASE_URL`、`PLAYWRIGHT_CHANNEL=chrome` 或 `msedge`、`E2E_LIVE_AGENT=1`，运行 `npx playwright test tests/e2e/assistant-live.spec.ts tests/e2e/assistant-location-live.spec.ts --workers=1`。默认回归跳过付费用例；隔离双Worker共享D1运行 `npm run test:assistant:state`。验收、安全/成本边界、截图与S2-D依赖见 [S2-C报告](docs/S2_C_AI_MAP_ACCEPTANCE.md)。
 
 部署与回滚见 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)，架构边界见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)，实测记录见 [docs/PROGRESS.md](docs/PROGRESS.md)。

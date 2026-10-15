@@ -1,0 +1,295 @@
+{
+  "recordedAt": "2026-10-15T09:42:41.086Z",
+  "realModel": true,
+  "note": "Final saved browser matrix only; earlier debug runs are excluded here. Location cancellation lacks final usage. Latency includes tools/browser ACK and final model stream, not just network TTFT.",
+  "groups": {
+    "chrome-desktop-live": {
+      "tasks": 8,
+      "completed": 7,
+      "errors": [
+        "NOT_FOUND"
+      ],
+      "missingTerminalOrUsage": 0,
+      "incompleteUsage": 0,
+      "upstreamRequests": 19,
+      "correctionRetries": 0,
+      "knownPromptTokens": 24048,
+      "knownCompletionTokens": 1007,
+      "knownCachedPromptTokens": 14208,
+      "knownTotalTokens": 25055,
+      "measuredDurationMs": {
+        "p50": 2413,
+        "p95": 3227,
+        "min": 718,
+        "max": 3227
+      },
+      "estimatedKnownUsdRange": [
+        0.0021228239999999997,
+        0.0042456479999999994
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true
+    },
+    "chrome-desktop-location": {
+      "tasks": 3,
+      "completed": 2,
+      "errors": [],
+      "missingTerminalOrUsage": 1,
+      "incompleteUsage": 0,
+      "upstreamRequests": 4,
+      "correctionRetries": 0,
+      "knownPromptTokens": 4076,
+      "knownCompletionTokens": 190,
+      "knownCachedPromptTokens": 2688,
+      "knownTotalTokens": 4266,
+      "measuredDurationMs": {
+        "p50": 683,
+        "p95": 3286,
+        "min": 683,
+        "max": 3286
+      },
+      "estimatedKnownUsdRange": [
+        0.000330264,
+        0.000660528
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true
+    },
+    "chrome-mobile-live": {
+      "tasks": 8,
+      "completed": 7,
+      "errors": [
+        "NOT_FOUND"
+      ],
+      "missingTerminalOrUsage": 0,
+      "incompleteUsage": 0,
+      "upstreamRequests": 19,
+      "correctionRetries": 0,
+      "knownPromptTokens": 24270,
+      "knownCompletionTokens": 1080,
+      "knownCachedPromptTokens": 14208,
+      "knownTotalTokens": 25350,
+      "measuredDurationMs": {
+        "p50": 2343,
+        "p95": 3784,
+        "min": 1168,
+        "max": 3784
+      },
+      "estimatedKnownUsdRange": [
+        0.002199924,
+        0.004399848
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true
+    },
+    "chrome-mobile-location": {
+      "tasks": 3,
+      "completed": 2,
+      "errors": [],
+      "missingTerminalOrUsage": 1,
+      "incompleteUsage": 0,
+      "upstreamRequests": 4,
+      "correctionRetries": 0,
+      "knownPromptTokens": 4084,
+      "knownCompletionTokens": 215,
+      "knownCachedPromptTokens": 2688,
+      "knownTotalTokens": 4299,
+      "measuredDurationMs": {
+        "p50": 1017,
+        "p95": 3573,
+        "min": 1017,
+        "max": 3573
+      },
+      "estimatedKnownUsdRange": [
+        0.00034646399999999994,
+        0.0006929279999999999
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true
+    },
+    "chrome-mobile-recovery": {
+      "tasks": 1,
+      "completed": 1,
+      "errors": [],
+      "missingTerminalOrUsage": 0,
+      "incompleteUsage": 0,
+      "upstreamRequests": 3,
+      "correctionRetries": 0,
+      "knownPromptTokens": 3651,
+      "knownCompletionTokens": 255,
+      "knownCachedPromptTokens": 768,
+      "knownTotalTokens": 3906,
+      "measuredDurationMs": {
+        "p50": 3780,
+        "p95": 3780,
+        "min": 3780,
+        "max": 3780
+      },
+      "estimatedKnownUsdRange": [
+        0.0005877539999999999,
+        0.0011755079999999998
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true
+    },
+    "msedge-desktop-live": {
+      "tasks": 8,
+      "completed": 7,
+      "errors": [
+        "NOT_FOUND"
+      ],
+      "missingTerminalOrUsage": 0,
+      "incompleteUsage": 0,
+      "upstreamRequests": 19,
+      "correctionRetries": 0,
+      "knownPromptTokens": 24123,
+      "knownCompletionTokens": 978,
+      "knownCachedPromptTokens": 14208,
+      "knownTotalTokens": 25101,
+      "measuredDurationMs": {
+        "p50": 2877,
+        "p95": 4929,
+        "min": 1021,
+        "max": 4929
+      },
+      "estimatedKnownUsdRange": [
+        0.002116674,
+        0.004233348
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true
+    },
+    "msedge-desktop-location": {
+      "tasks": 3,
+      "completed": 2,
+      "errors": [],
+      "missingTerminalOrUsage": 1,
+      "incompleteUsage": 0,
+      "upstreamRequests": 4,
+      "correctionRetries": 0,
+      "knownPromptTokens": 4088,
+      "knownCompletionTokens": 245,
+      "knownCachedPromptTokens": 2688,
+      "knownTotalTokens": 4333,
+      "measuredDurationMs": {
+        "p50": 1681,
+        "p95": 3736,
+        "min": 1681,
+        "max": 3736
+      },
+      "estimatedKnownUsdRange": [
+        0.00036506399999999996,
+        0.0007301279999999999
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true
+    },
+    "msedge-desktop-recovery": {
+      "tasks": 1,
+      "completed": 1,
+      "errors": [],
+      "missingTerminalOrUsage": 0,
+      "incompleteUsage": 0,
+      "upstreamRequests": 3,
+      "correctionRetries": 0,
+      "knownPromptTokens": 3749,
+      "knownCompletionTokens": 255,
+      "knownCachedPromptTokens": 2432,
+      "knownTotalTokens": 4004,
+      "measuredDurationMs": {
+        "p50": 3370,
+        "p95": 3370,
+        "min": 3370,
+        "max": 3370
+      },
+      "estimatedKnownUsdRange": [
+        0.000357846,
+        0.000715692
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true
+    },
+    "msedge-mobile-live": {
+      "tasks": 8,
+      "completed": 7,
+      "errors": [
+        "NOT_FOUND"
+      ],
+      "missingTerminalOrUsage": 0,
+      "incompleteUsage": 0,
+      "upstreamRequests": 19,
+      "correctionRetries": 0,
+      "knownPromptTokens": 24084,
+      "knownCompletionTokens": 1028,
+      "knownCachedPromptTokens": 14464,
+      "knownTotalTokens": 25112,
+      "measuredDurationMs": {
+        "p50": 2782,
+        "p95": 4776,
+        "min": 1339,
+        "max": 4776
+      },
+      "estimatedKnownUsdRange": [
+        0.002103192,
+        0.004206384
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true
+    },
+    "msedge-mobile-location": {
+      "tasks": 3,
+      "completed": 2,
+      "errors": [],
+      "missingTerminalOrUsage": 1,
+      "incompleteUsage": 0,
+      "upstreamRequests": 4,
+      "correctionRetries": 0,
+      "knownPromptTokens": 4084,
+      "knownCompletionTokens": 188,
+      "knownCachedPromptTokens": 2688,
+      "knownTotalTokens": 4272,
+      "measuredDurationMs": {
+        "p50": 1028,
+        "p95": 3077,
+        "min": 1028,
+        "max": 3077
+      },
+      "estimatedKnownUsdRange": [
+        0.0003302639999999999,
+        0.0006605279999999999
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true
+    }
+  },
+  "total": {
+    "tasks": 46,
+    "completed": 38,
+    "errors": [
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND"
+    ],
+    "missingTerminalOrUsage": 4,
+    "incompleteUsage": 0,
+    "upstreamRequests": 98,
+    "correctionRetries": 0,
+    "knownPromptTokens": 120257,
+    "knownCompletionTokens": 5441,
+    "knownCachedPromptTokens": 71040,
+    "knownTotalTokens": 125698,
+    "measuredDurationMs": {
+      "p50": 2782,
+      "p95": 4531,
+      "min": 683,
+      "max": 4929
+    },
+    "estimatedKnownUsdRange": [
+      0.010860270000000002,
+      0.021720540000000003
+    ],
+    "costIsInvoice": false,
+    "unknownUsageIsNotZeroCost": true
+  }
+}

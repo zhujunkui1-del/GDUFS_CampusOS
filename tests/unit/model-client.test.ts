@@ -55,6 +55,14 @@ function delta(value: unknown, finish: string | null = null) {
 }
 
 describe("DeepSeek transport contract (Mock HTTP only)", () => {
+  it("uses the workerd-compatible manual policy and rejects redirects without a second request", async () => {
+    const transport = vi.fn<typeof fetch>(async (_url, init) => {
+      if (init?.redirect !== "manual") throw new TypeError("workerd rejects redirect:error");
+      return new Response(null, { status: 302, headers: { Location: "https://untrusted.invalid" } });
+    });
+    await expect(client(transport).generateWithTools(request)).rejects.toMatchObject({ code: "MODEL_ENDPOINT_INVALID" });
+    expect(transport).toHaveBeenCalledTimes(1);
+  });
   it.each([
     "http://api.deepseek.com",
     "https://api.deepseek.com.evil.invalid",
@@ -74,7 +82,7 @@ describe("DeepSeek transport contract (Mock HTTP only)", () => {
     );
     const [url, init] = transport.mock.calls[0];
     expect(url).toBe("https://api.deepseek.com/chat/completions");
-    expect(init?.redirect).toBe("error");
+    expect(init?.redirect).toBe("manual");
     expect(JSON.stringify(init?.body)).not.toContain(secret);
     expect(JSON.stringify(client(transport))).not.toContain(secret);
     expect(JSON.parse(String(init?.body)).thinking.type).toBe("disabled");

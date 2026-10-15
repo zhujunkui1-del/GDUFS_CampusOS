@@ -1,0 +1,26 @@
+{
+  "bounds": {
+    "x": 0,
+    "y": 0,
+    "width": 608,
+    "height": 871,
+    "top": 0,
+    "right": 608,
+    "bottom": 871,
+    "left": 0
+  },
+  "viewport": [
+    608,
+    871
+  ],
+  "dpr": 3,
+  "canvas": [
+    "1824",
+    "2613"
+  ],
+  "alpha": true,
+  "greyElements": [],
+  "longestGreyRun": 0,
+  "route": "262 米 约 3 分钟",
+  "routeMock": false
+}

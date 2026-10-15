@@ -1,0 +1,51 @@
+{
+  "browser": "148.0.7778.97",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "realModel": true,
+  "realPhone": false,
+  "actualMapActionReceipt": true,
+  "endpointsAvoidOverlays": true,
+  "historyRestoredAfterReload": true,
+  "routeRestoredOnMapFromAnotherPage": true,
+  "records": [
+    {
+      "prompt": "从南苑7栋去图书馆。",
+      "tools": [
+        "plan_route",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SHOW_ROUTE",
+          "routeId": "0895857a-0099-42ed-9eb6-4c60ae8f5e32"
+        }
+      ],
+      "result": {
+        "conversationId": "3fbf6ec8-df41-40cd-a3ba-76d399c92f49",
+        "requestId": "ac139720-1ce6-4893-8cc3-1ce8a0689978",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "promptTokens": 3651,
+          "completionTokens": 255,
+          "cachedPromptTokens": 768,
+          "totalTokens": 3906,
+          "usageComplete": true,
+          "chargedTokens": 3906,
+          "durationMs": 3780,
+          "estimatedUsdRange": [
+            0.0005877539999999999,
+            0.0011755079999999998
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": "南苑7栋 → 图书馆，步行约 848 米，预计 12 分钟，途中经下沉隧道。\n\n主要路段：校内步道 261 米 → 台阶 112 米 → 下沉隧道 70 米 → 台阶 53 米 → 步道 92 米 → 教学实验楼可通行区域 228 米 → 步道 34 米。路线已在地图上显示。"
+    }
+  ]
+}

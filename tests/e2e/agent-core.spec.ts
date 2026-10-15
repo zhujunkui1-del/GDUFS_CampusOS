@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { mkdir, writeFile } from "node:fs/promises";
 import { selectMapMode } from "./helpers/map-mode";
 
-test("S2-B model status is truthful and closed chat leaves the real map usable", async ({
+test("S2-C readiness and the real map remain usable without spending model requests", async ({
   page,
   request,
   browser,
@@ -12,8 +12,10 @@ test("S2-B model status is truthful and closed chat leaves the real map usable",
   const status = await request.get("/api/agent/status");
   expect(status.status()).toBe(200);
   const body = await status.json();
-  expect(body.data.stage).toBe("S2-B");
-  expect(body.data.chatAvailable).toBe(false);
+  expect(body.data.stage).toBe("S2-C");
+  expect(body.data.chatAvailable).toBe(
+    body.data.model.ready && body.data.storageReady,
+  );
   expect(body.data.skills).toHaveLength(5);
   if (process.env.E2E_MODEL_READY === "1") {
     expect(body.data.model.ready).toBe(true);
@@ -22,11 +24,6 @@ test("S2-B model status is truthful and closed chat leaves the real map usable",
   expect(JSON.stringify(body)).not.toMatch(
     /fingerprint|apiKey|sk-[a-zA-Z0-9]{12}/,
   );
-  const chat = await request.post("/api/agent/chat", {
-    data: { message: "帮我找到南苑7栋。" },
-  });
-  expect(chat.status()).toBe(503);
-  expect((await chat.json()).error.code).toBe("SERVICE_UNAVAILABLE");
   const forged = await request.post("/api/agent/chat", {
     data: { message: "hi", userId: "admin", provider: "mock" },
   });
@@ -65,7 +62,7 @@ test("S2-B model status is truthful and closed chat leaves the real map usable",
         realPhone: false,
         modelStatus: body.data,
         businessChatTested: false,
-        chatHttpStatus: chat.status(),
+        chatAvailable: body.data.chatAvailable,
         forgedHttpStatus: forged.status(),
         mapVersion: await map.getAttribute("data-map-version"),
         modelSha: await map.getAttribute("data-model-asset-sha"),

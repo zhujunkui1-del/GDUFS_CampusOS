@@ -13,6 +13,37 @@ export function locationError(code: number) {
       ? "无法获取位置，请检查系统定位。"
       : "定位请求超时，请重试。";
 }
+export function requestOneTimeLocation(
+  signal?: AbortSignal,
+): Promise<MapLocation> {
+  return new Promise((resolve, reject) => {
+    if (!window.isSecureContext || !navigator.geolocation)
+      return reject(new Error("当前浏览器无法定位，请输入起点。"));
+    navigator.geolocation.getCurrentPosition(
+      (p) => {
+        if (signal?.aborted) return reject(new Error("已停止定位。"));
+        if (
+          ![
+            p.coords.longitude,
+            p.coords.latitude,
+            p.coords.accuracy,
+            p.timestamp,
+          ].every(Number.isFinite) ||
+          p.coords.accuracy < 0 ||
+          p.coords.accuracy > 100
+        )
+          return reject(new Error("定位精度不足，请输入起点。"));
+        resolve({
+          coordinate: [p.coords.longitude, p.coords.latitude],
+          accuracy: p.coords.accuracy,
+          timestamp: p.timestamp,
+        });
+      },
+      (error) => reject(new Error(locationError(error.code))),
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 },
+    );
+  });
+}
 // Device position stays in page memory. Only a user's explicit click starts acquisition.
 export function useMapLocation() {
   const [position, setPosition] = useState<MapLocation | null>(null);

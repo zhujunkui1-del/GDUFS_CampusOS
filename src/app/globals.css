@@ -559,6 +559,21 @@ p {
   overscroll-behavior: contain;
   padding: 40px 28px 28px;
 }
+.assistant-chat { padding: 18px 20px; }
+.assistant-chat .assistant-map-context { margin: 0 0 16px; font-size: 1rem; }
+.chat-message { margin: 0 0 20px; overflow-wrap: anywhere; }
+.assistant-chat .chat-message p { white-space: pre-wrap; font-size: 1rem; line-height: 1.65; color: var(--text-primary); }
+.chat-user { margin-left: 28px; padding: 12px 15px; background: #edf4fc; border-radius: 18px 18px 6px 18px; }
+.assistant-place-card, .assistant-route-card { width: 100%; margin-top: 10px; padding: 14px; border-radius: 17px; border: 1px solid #e5e9ef; background: #f8fafd; text-align: left; color: #1d1d1f; font-size: 1rem; }
+.assistant-place-card { display: flex; justify-content: space-between; align-items: center; min-height: 52px; gap: 12px; }
+.assistant-route-card > strong, .assistant-route-card > span { display: block; margin-bottom: 9px; }
+.assistant-route-card div { display: flex; gap: 12px; }
+.assistant-route-card button, .assistant-error button { border: 0; background: transparent; padding: 8px 0; min-height: 44px; color: var(--brand-primary); font-size: 1rem; }
+.assistant-chat .assistant-status { font-size: 1rem; color: var(--text-secondary); }
+.assistant-error { font-size: 1rem; line-height: 1.6; color: #a13d31; padding: 10px 0; }
+.assistant-error button { display: block; }
+.send-button:not(:disabled) { color: #fff; background: var(--brand-primary); }
+.assistant-input textarea { color: var(--text-primary); font-size: 1rem; }
 .assistant-body h3 {
   font-size: 1.125rem;
   font-weight: 500;

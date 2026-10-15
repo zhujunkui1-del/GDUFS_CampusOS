@@ -34,6 +34,7 @@ export type ModelReply = {
     promptTokens: number;
     completionTokens: number;
     totalTokens: number;
+    cachedPromptTokens?: number;
   };
 };
 

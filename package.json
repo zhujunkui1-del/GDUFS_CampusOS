@@ -26,6 +26,7 @@
     "db:verify": "node scripts/verify-database.mjs",
     "model:verify": "node scripts/verify-model.mjs",
     "skills:verify:live": "node scripts/verify-map-skills.mjs",
+    "test:assistant:state": "node tests/integration/shared-isolates.mjs",
     "deploy:preview": "node scripts/deploy.mjs preview",
     "deploy:production": "node scripts/deploy.mjs production"
   },

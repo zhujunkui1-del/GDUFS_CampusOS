@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-15",
+  "typecheck": "passed",
+  "lint": "passed",
+  "unit": {
+    "passed": 168,
+    "files": 19
+  },
+  "databaseConstraints": {
+    "emptyTables": 34,
+    "passed": true
+  },
+  "productionNextBuild": "passed",
+  "openNextWorkerBuild": "passed",
+  "actualWorkerApi": "passed",
+  "sharedWorkerdIsolates": {
+    "isolates": 2,
+    "passed": true,
+    "productionMultiRegion": false
+  },
+  "chrome": {
+    "version": "148.0.7778.97",
+    "regressionPassed": 41,
+    "skipped": 1,
+    "realAGScenarios": {
+      "desktop": "passed",
+      "mobileViewport": "passed"
+    },
+    "controlledLocationNavigationDenialCancellation": {
+      "desktop": "passed",
+      "mobileViewport": "passed"
+    },
+    "realRecoveryAndOverlayClearance": "mobileViewport passed"
+  },
+  "edge": {
+    "version": "149.0.4022.80",
+    "regressionPassed": 41,
+    "skipped": 1,
+    "realAGScenarios": {
+      "desktop": "passed",
+      "mobileViewport": "passed"
+    },
+    "controlledLocationNavigationDenialCancellation": {
+      "desktop": "passed",
+      "mobileViewport": "passed"
+    },
+    "realRecoveryAndOverlayClearance": "desktop passed"
+  },
+  "skipReason": "desktop does not use the mobile drawer",
+  "realPhoneTested": false,
+  "liveCasesRunSeparately": 10,
+  "mockCasesOnlyInTests": true
+}

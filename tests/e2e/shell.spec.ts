@@ -17,9 +17,7 @@ test("visitor shell, shared assistant and honest unavailable states", async ({
   await expect(page.locator(".topbar")).toHaveCount(0);
   await page.evaluate(() => document.fonts.ready);
   await page.getByRole("button", { name: "打开校园助理" }).click();
-  await expect(
-    page.getByRole("heading", { name: "服务尚未接入" }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "想去哪里？" })).toBeVisible();
   await expect(page.getByRole("button", { name: "发送消息" })).toBeDisabled();
   await expect(page.locator("#campus-assistant")).toHaveCSS("opacity", "1");
   if (isMobile) {
@@ -76,9 +74,7 @@ test("visitor shell, shared assistant and honest unavailable states", async ({
   await expect(
     page.getByRole("heading", { name: "知识来源尚未接入" }),
   ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "服务尚未接入" }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "想去哪里？" })).toBeVisible();
   if (isMobile) {
     await page.getByRole("button", { name: "展开全屏助理" }).click();
     await expect(page.locator("#campus-assistant")).toHaveClass(/drawer-full/);
@@ -114,7 +110,7 @@ test("visitor shell, shared assistant and honest unavailable states", async ({
   }
   await page.keyboard.press("Escape");
   await expect(
-    page.getByRole("heading", { name: "服务尚未接入" }),
+    page.getByRole("heading", { name: "想去哪里？" }),
   ).not.toBeVisible();
   await expect(
     page.getByRole("button", { name: "打开校园助理" }),
@@ -144,9 +140,10 @@ test("API never trusts an incoming user identity or pretends integrations are re
   const capabilities = await request.get("/api/capabilities");
   const body = await capabilities.json();
   expect(body.data.capabilities.places.available).toBe(true);
-  for (const service of ["agent", "knowledge", "events", "auth", "routes"])
+  for (const service of ["knowledge", "events", "auth"])
     expect(body.data.capabilities[service].available).toBe(false);
   expect(body.data.capabilities.map.implemented).toBe(true);
+  expect(body.data.capabilities.routes.available).toBe(true);
 });
 
 test("all documented page routes and missing pages render", async ({

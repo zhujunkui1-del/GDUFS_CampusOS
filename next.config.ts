@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -36,4 +38,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default async function configure(phase: string) {
+  if (phase === PHASE_DEVELOPMENT_SERVER) await initOpenNextCloudflareForDev();
+  return nextConfig;
+}

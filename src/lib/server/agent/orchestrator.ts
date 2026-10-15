@@ -26,6 +26,7 @@ const toolCallSchema = z
   })
   .strict();
 export type AgentRunInput = {
+  runId?: string;
   message: string;
   context: SkillContext;
   // Only server-retrieved history is accepted here; HTTP payload has no history/userId fields.
@@ -67,10 +68,11 @@ export class AgentOrchestrator {
     private readonly options: {
       stopOnToolError?: boolean;
       instructions?: string;
+      modelResult?: (name: string, result: SkillResult<unknown>) => unknown;
     } = {},
   ) {}
   async run(input: AgentRunInput) {
-    const runId = crypto.randomUUID();
+    const runId = input.runId || crypto.randomUUID();
     let sequence = 0;
     const timeout = AbortSignal.timeout(RUN_LIMITS.timeoutMs);
     const signal = input.context.signal
@@ -197,7 +199,12 @@ export class AgentOrchestrator {
             messages.push({
               role: "tool",
               tool_call_id: call.id,
-              content: JSON.stringify(previous.result),
+              content: JSON.stringify(
+                this.options.modelResult?.(
+                  call.function.name,
+                  previous.result,
+                ) ?? previous.result,
+              ),
             });
             continue;
           }
@@ -229,7 +236,9 @@ export class AgentOrchestrator {
           messages.push({
             role: "tool",
             tool_call_id: call.id,
-            content: JSON.stringify(result),
+            content: JSON.stringify(
+              this.options.modelResult?.(call.function.name, result) ?? result,
+            ),
           });
           if (!result.ok && result.error.code === "CONFIRMATION_REQUIRED") {
             emit("confirmation.required", {

@@ -148,3 +148,10 @@ S2-A完成核心循环测试后，S2-B接五项真实地图服务，S2-C接原�
 五项地图Skill已在同一注册器/执行器下实际运行，createMapAgent复用原总控/Router，地图工作流启用失败终止，原通用默认行为与预算保持。真实DeepSeek三场景自主工具选择通过，详细输入输出见docs/S2_B_MAP_SKILLS_ACCEPTANCE.md。
 
 control_map输出经业务校验的intent_only，不等于地图已经执行。前端复用原Provider控制器，SHOW_PLACE_DETAILS不移动镜头，CLEAR_ROUTE走完整退出，模式走原能力检查，SHOW_ROUTE先要求可信快照已载入。当前匿名句柄与路线快照为有界短时isolate内存；公开聊天仍关闭，S2-C需共享会话/额度、上下文、定位授权与前端事件/路线桥接，不能将本轮后台实测称完整聊天UI验收。旧events/moments图层形状保留兼容，但业务拒绝。
+
+
+## S2-C 当前架构（2026-10-15，取代前述聊天关闭/内存会话状态）
+
+原总控、四逻辑域、ModelRouter与五Skill保持，src/lib/server/assistant新增D1主体/会话/路线/动作/用量DAO与SSE编排。生产chat和确定性Skill入口使用共享D1，旧内存Store只留隔离测试/受控CLI辅助，不承担生产恢复。原全局AssistantPanel已接真实DeepSeek；工具规划文字和reasoning不展示，地点/路线卡片来自真实工具。动作包须前端领取/复验/执行/回执，之后才生成最终文字流。缺定位不复用旧路线；原有权限、超时、循环上限保留。
+
+会话48小时/20消息；建筑路线D1保存10分钟，设备路线精确几何仅签名短期页面票据；主体绑定与版本/过期检查跨Worker。单INSERT触发器原子预留额度，每主体1/站点4并发；可靠usage回收预留，取消/缺失usage保守保留。依赖D1主库会话，未依赖KV一致性。公开地图独立于模型/D1工作。详见docs/S2_C_AI_MAP_ACCEPTANCE.md，云端与实机验收留S2-D。

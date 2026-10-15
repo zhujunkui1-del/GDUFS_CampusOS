@@ -1,10 +1,14 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { sqliteD1 } from "../fixtures/sqlite-d1";
+const bindings = vi.hoisted(() => ({ env: {} as Record<string, unknown> }));
 vi.mock("@opennextjs/cloudflare", () => ({
-  getCloudflareContext: () => ({ env: {} }),
+  getCloudflareContext: () => bindings,
 }));
 import { executeMapSkillHttp } from "@/lib/server/maps/http";
 
-afterEach(() => vi.restoreAllMocks());
+let fixture: ReturnType<typeof sqliteD1>;
+beforeEach(() => { fixture = sqliteD1(); bindings.env = { DB: fixture.db, AGENT_SIGNING_SECRET: "isolated-test-secret-not-a-real-key", APP_ENV: "local" }; });
+afterEach(() => { fixture.close(); vi.restoreAllMocks(); });
 describe("deterministic public map Skill HTTP boundary", () => {
   async function post(
     name: string,

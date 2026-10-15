@@ -57,3 +57,10 @@ Next.js 本地服务和本地 workerd 预览均可启动。`wrangler.jsonc` 将 
 src/lib/server/models承载受控DeepSeek ModelClient、ProviderRegistry、ModelRouter、管理员能力验证与Cloudflare/Node运行环境；src/lib/server/agent承载1总控、4逻辑域、SkillRegistry/ToolExecutor、局部限额与循环。秘密为JS私有字段或服务端环境，不进入客户端接口；ModelRouter要求实测记录而非配置声称支持工具。
 
 S2-A对话仅隔离诊断验证，业务注册表为空；/api/agent/status提供无付费查询，/api/agent/chat严格验证后503，原AssistantPanel继续准确禁用。S2-B/C接入现有真实地图服务、可信会话/路线快照和共享配额后启用，未复制/重构地图。已有D1会话/运行表尚未接DAO，不声称持久会话。完整边界与结果见S2_A_AGENT_CORE.md，模型失败与错误配置不影响mapRuntime/health。
+
+
+## S2-C 共享AI与地图（2026-10-15，当前权威状态）
+
+原五Skill与Agent核心接入真实全局AssistantPanel，/api/agent/chat已为真实SSE，不再固定503。src/lib/server/assistant负责D1身份/会话/用量/路线/动作包与回执，模型输出经Schema和原控制器执行后才确认。34张业务表；建筑路线可跨运行时恢复，设备路线仅短期签名页面票据，精确位置不进模型/D1历史。配额使用D1原子INSERT触发器，关键DAO first-primary，未用KV/单实例内存假装共享强一致。原MapLibre/静态OSM/本地路网/南苑7栋未变，地图不依赖AI就绪。
+
+账号识别只接已有login_sessions验证DAO，个人业务权限仍关闭；/api/me和SMS产品流程尚未实现，不能据DAO测试宣称账号上线。详细架构/接口/容量/安全与实测见S2_C_AI_MAP_ACCEPTANCE.md。前面的S0/S1/S2-A段落是阶段历史，不覆盖当前状态。

@@ -1,0 +1,59 @@
+{
+  "recordedAt": "2026-10-15T09:42:41.099Z",
+  "includesDebugAndFailedRuns": true,
+  "notSupplierInvoice": true,
+  "ledgerCounts": {
+    "failed": 23,
+    "completed": 129
+  },
+  "quotaTokensReservedOrActual": 1991788,
+  "summary": {
+    "tasks": 152,
+    "completed": 129,
+    "errors": [
+      "MODEL_NETWORK_ERROR",
+      "NOT_FOUND",
+      "MODEL_TOOLS_UNSUPPORTED",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "MODEL_TOOLS_UNSUPPORTED",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "INVALID_ARGUMENT",
+      "CANCELLED",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "NOT_FOUND",
+      "CANCELLED",
+      "NOT_FOUND",
+      "CANCELLED",
+      "CANCELLED",
+      "CANCELLED"
+    ],
+    "missingTerminalOrUsage": 5,
+    "incompleteUsage": 1,
+    "upstreamRequests": 340,
+    "correctionRetries": 0,
+    "knownPromptTokens": 472636,
+    "knownCompletionTokens": 19152,
+    "knownCachedPromptTokens": 267264,
+    "knownTotalTokens": 491788,
+    "measuredDurationMs": {
+      "p50": 2989,
+      "p95": 9101,
+      "min": 20,
+      "max": 13612
+    },
+    "estimatedKnownUsdRange": [
+      0.043098792,
+      0.086197584
+    ],
+    "costIsInvoice": false,
+    "unknownUsageIsNotZeroCost": true
+  }
+}

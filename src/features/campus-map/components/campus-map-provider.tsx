@@ -22,6 +22,7 @@ import {
 } from "../data/campus";
 import type { MapMode } from "@/domain/maps/contracts";
 import { executeMapAction } from "../interactions/map-action-controller";
+import { campusRouteFromSnapshot } from "../interactions/route-snapshot";
 import { type SDKPoi } from "../adapters/amap-types";
 import { CAMPUS_MIN_ZOOM, CAMPUS_PITCH } from "../data/viewport";
 import { useMapLocation } from "./use-map-location";
@@ -90,6 +91,8 @@ type MapContextValue = {
   focusOnline(poi: SDKPoi): void;
   askAssistant(place: CampusPlace): void;
   executeAction(action: unknown): void;
+  installRoute(snapshot: unknown): void;
+  getInteractionVersion(): number;
 };
 const MapContext = createContext<MapContextValue | null>(null);
 export function useCampusMap() {
@@ -140,6 +143,7 @@ export function CampusMapProvider({
   const [modelAvailable, setModelAvailable] = useState(false);
   const [modelState, setModelState] = useState<PilotModelState>("idle");
   const routeGeneration = useRef(0);
+  const interactionVersion = useRef(0);
   const location = useMapLocation();
   const stopLocation = location.stop;
   const [navigationActive, setNavigationActive] = useState(false);
@@ -169,6 +173,7 @@ export function CampusMapProvider({
   }, [route]);
   const setPoint = useCallback(
     (which: "start" | "end", point: RoutePoint) => {
+      ++interactionVersion.current;
       ++routeGeneration.current;
       adapter.current?.clearRoute();
       setRoute(null);
@@ -201,8 +206,11 @@ export function CampusMapProvider({
     [setPoint],
   );
   useEffect(() => {
-    adapter.current?.showEndpoints(start, end);
-  }, [start, end, status]);
+    adapter.current?.showEndpoints(
+      route ? { ...route.start, coordinateGcj02: route.pathGcj02[0] } : start,
+      route ? { ...route.end, coordinateGcj02: route.pathGcj02.at(-1)! } : end,
+    );
+  }, [start, end, status, route]);
   useEffect(() => {
     if (pathname !== "/map") {
       stopLocation();
@@ -359,6 +367,7 @@ export function CampusMapProvider({
           setModeState("2d");
         }
         disposePick = next.pickPlace((id) => {
+          ++interactionVersion.current;
           if (pickRef.current) {
             const place = campusData.places.find((p) => p.id === id);
             if (place) choosePoint(pickRef.current, place, false);
@@ -420,6 +429,7 @@ export function CampusMapProvider({
   }, [revision, mapRequested, choosePoint, setPoint]);
 
   const select = useCallback((id: string) => {
+    ++interactionVersion.current;
     const place = campusData.places.find((p) => p.id === id);
     if (!place) {
       setError("地点不存在或尚未核验。");
@@ -430,6 +440,7 @@ export function CampusMapProvider({
     setLayers((prior) => ({ ...prior, [placeLayer(place)]: true }));
   }, []);
   const clearRoute = useCallback(() => {
+    ++interactionVersion.current;
     ++routeGeneration.current;
     adapter.current?.clearRoute();
     setRoute(null);
@@ -593,6 +604,7 @@ export function CampusMapProvider({
       );
     },
     setMode: (next) => {
+      ++interactionVersion.current;
       if (next !== "2d" && !adapter.current?.supports3D) return;
       if (next === "3d" && !adapter.current?.modelAvailable) return;
       view.current.mode = next;
@@ -630,9 +642,11 @@ export function CampusMapProvider({
     searchOnline: async (query) =>
       adapter.current ? adapter.current.onlineSearch(query) : [],
     focusOnline: (poi) => {
+      ++interactionVersion.current;
       adapter.current?.focusOnline(poi);
     },
     askAssistant: (place) => {
+      ++interactionVersion.current;
       setAssistantPlace(place);
       setSelected(null);
       onAskAssistant();
@@ -641,7 +655,7 @@ export function CampusMapProvider({
       if (!adapter.current) throw new Error("地图尚未就绪。");
       executeMapAction(input, {
         hasPlace: (id) => campusData.places.some((p) => p.id === id),
-        hasRoute: (id) => route?.id === id,
+        hasRoute: (id) => currentRoute.current?.id === id,
         focusPlace: select,
         showPlaceDetails: (id) => {
           const place = campusData.places.find((p) => p.id === id)!;
@@ -662,6 +676,28 @@ export function CampusMapProvider({
         setLayer: context.setLayer,
       });
     },
+    installRoute: (input) => {
+      if (!adapter.current) throw new Error("地图尚未就绪。");
+      const result = campusRouteFromSnapshot(input);
+      ++routeGeneration.current;
+      stopLocation();
+      setNavigationActive(false);
+      setNavigationProgress(null);
+      adapter.current.installRoute(result);
+      currentRoute.current = result;
+      setRoute(result);
+      setStart(result.start);
+      setEnd(result.end);
+      setRouteBusy(false);
+      setError("");
+      setSelected(null);
+      pickRef.current = null;
+      setPicking(null);
+      adapter.current.setInteractionMode("browse");
+      view.current.mode = "2d";
+      setModeState("2d");
+    },
+    getInteractionVersion: () => interactionVersion.current,
   };
   return (
     <MapContext.Provider value={context}>

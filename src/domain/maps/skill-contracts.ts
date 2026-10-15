@@ -20,6 +20,7 @@ export const OriginSchema = z.discriminatedUnion("type", [
 export type MapOrigin = z.infer<typeof OriginSchema>;
 export type MapSkillContext = {
   selectedPlaceId?: string;
+  requiresDeviceOrigin?: boolean;
   // Caller must have obtained current browser consent; no public tool or HTTP argument can supply this grant.
   authorizedLocation?: {
     coordinate: [number, number];

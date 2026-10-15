@@ -135,3 +135,10 @@ type ApiResult<T> =
 S2-A暂不迁移账号/BYOK表。现有user_preferences.map_mode仍只允许2d/2.5d且默认2.5d；未被当前地图使用，未来账号偏好接入需兼容当前默认2D/三模式。会话、消息、运行表存在但尚未接DAO；工具迭代上下文只在单次Run内存。跨请求指代记忆、路线快照所有权与共享使用额度在S2-B/C接入前必须验收。
 
 S2-B新增POST /api/map/skills/{name}确定性公开工具接口，正文{input,selectedPlaceId?}严格校验，身份/GPS参数拒绝。匿名主体为服务端随机句柄，路线快照有会话所有权/版本/10分钟有效期；目前都在isolate有界内存，不写D1、不保证跨实例连续。S2-C启用公开付费聊天前补共享DAO/额度与授权定位传递；详细Schema/HTTP实例见docs/S2_B_MAP_SKILLS_ACCEPTANCE.md。现有D1未迁移/造数据。
+
+
+## S2-C 数据与API现状（2026-10-15，覆盖前述空表/内存状态）
+
+0004_assistant_shared_state.sql复用conversations/conversation_messages/agent_runs，新增assistant_sessions/assistant_route_refs/assistant_actions/assistant_location_challenges，34表，无虚构种子。D1按主库会话访问；额度/租约在一个INSERT trigger中原子检查，批次事务取消/清理，非单isolate额度。会话/历史/动作/路线均绑定可信Cookie主体；登录仅从真实login_sessions验证，不信任userId。账号UI/SMS仍未接入。
+
+新增GET /api/agent/session、/conversations/:id；POST /chat（SSE）、/cancel、/location/challenge、/routes/:id、/actions/:id/claim与/receipt；/api/map/skills/:name改共用D1身份/路线。设备路线payload不落库，完整性保护短期票据只在页面内存/POST传输；建筑路线可跨运行时恢复。会话48h/20消息、路线10min/版本绑定、动作5min单次领取，存储容量/额度/清理与全部接口见docs/S2_C_AI_MAP_ACCEPTANCE.md。没有新增学校数据或私人业务Skill。

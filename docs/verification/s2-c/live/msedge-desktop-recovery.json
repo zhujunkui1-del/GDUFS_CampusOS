@@ -1,0 +1,59 @@
+{
+  "browser": "149.0.4022.80",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "realModel": true,
+  "realPhone": false,
+  "actualMapActionReceipt": true,
+  "endpointsAvoidOverlays": true,
+  "historyRestoredAfterReload": true,
+  "routeRestoredOnMapFromAnotherPage": true,
+  "records": [
+    {
+      "prompt": "从南苑7栋去图书馆。",
+      "tools": [
+        "plan_route",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SHOW_ROUTE",
+          "routeId": "ec5a7ddc-7f4c-46a2-bcb0-28c324f292b0"
+        },
+        {
+          "type": "FOCUS_PLACE",
+          "placeId": "osm-way-307250998"
+        },
+        {
+          "type": "SHOW_PLACE_DETAILS",
+          "placeId": "osm-way-307250998"
+        }
+      ],
+      "result": {
+        "conversationId": "80a15e80-299d-4d2d-b76a-b142534ca387",
+        "requestId": "2e43a20f-71ca-4faa-800e-ea1c3243de96",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "promptTokens": 3749,
+          "completionTokens": 255,
+          "cachedPromptTokens": 2432,
+          "totalTokens": 4004,
+          "usageComplete": true,
+          "chargedTokens": 4004,
+          "durationMs": 3370,
+          "estimatedUsdRange": [
+            0.000357846,
+            0.000715692
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash"
+        }
+      },
+      "response": "步行路线：南苑7栋 → 图书馆\n\n- 距离：约848米\n- 预计时间：约12分钟\n- 途中会经过一段下沉隧道并需上下台阶，请注意脚下"
+    }
+  ]
+}
