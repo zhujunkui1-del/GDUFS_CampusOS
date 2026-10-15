@@ -33,6 +33,7 @@ import {
 } from "./intent";
 import { requestsDeviceLocation } from "@/domain/agent/location-intent";
 import { searchCampusPlaces } from "@/features/campus-map/data/campus";
+import { receiptPollDelay, RECEIPT_QUERY_SOFT_LIMIT } from "./receipt-policy";
 
 function modelResult(name: string, result: SkillResult<unknown>) {
   if (!result.ok) return result;
@@ -299,12 +300,19 @@ export async function chatResponse(request: Request) {
             routes,
           });
           const started = Date.now();
+          let polls = 0;
           while (Date.now() - started < 15000) {
             streamSignal.throwIfAborted();
-            await ctx.store.running(ctx.identity.owner, runId);
+            const measured = ctx.databaseTiming();
+            if (
+              measured.readQueries + measured.writeQueries >=
+              RECEIPT_QUERY_SOFT_LIMIT
+            )
+              throw new ApiError("TIMEOUT", "地图操作等待超时，请重试。", true);
             const receipt = await ctx.store.execution(
               ctx.identity.owner,
               packet.id,
+              runId,
             );
             if (receipt) {
               mapActionMs = Math.round(performance.now() - mapStarted);
@@ -314,7 +322,9 @@ export async function chatResponse(request: Request) {
               acknowledgedMode = receipt.mode || null;
               return { mode: acknowledgedMode };
             }
-            await new Promise((resolve) => setTimeout(resolve, 250));
+            await new Promise((resolve) =>
+              setTimeout(resolve, receiptPollDelay(polls++)),
+            );
           }
           throw new ApiError("TIMEOUT", "地图操作未完成，请重试。");
         };

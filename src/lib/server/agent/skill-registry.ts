@@ -8,6 +8,40 @@ import type { ModelTool } from "@/domain/models/contracts";
 import { ApiError } from "../errors";
 import type { AgentDomain } from "./domains";
 
+// Schema definitions are immutable server code. Share only frozen metadata;
+// executors, permissions and business results remain request-scoped.
+const inputParameters = new WeakMap<z.ZodType, Record<string, unknown>>();
+function parametersFor(schema: z.ZodType) {
+  const cached = inputParameters.get(schema);
+  if (cached) return cached;
+  const parameters = z.toJSONSchema(schema, { io: "input" }) as Record<
+    string,
+    unknown
+  >;
+  function freeze(value: unknown) {
+    if (value && typeof value === "object" && !Object.isFrozen(value)) {
+      for (const child of Object.values(value)) freeze(child);
+      Object.freeze(value);
+    }
+  }
+  freeze(parameters);
+  inputParameters.set(schema, parameters);
+  return parameters;
+}
+const sourcesSchema = z
+  .array(
+    z
+      .object({
+        title: z.string().max(200),
+        url: z.url().refine((url) => /^https?:\/\//.test(url)),
+        publishedAt: z.string().max(50).optional(),
+      })
+      .strict(),
+  )
+  .max(20)
+  .optional();
+const warningsSchema = z.array(z.string().max(200)).max(10).optional();
+
 type RegisteredSkill = {
   name: string;
   version: string;
@@ -49,9 +83,7 @@ export class SkillRegistry {
       definition.timeoutMs > 15000
     )
       throw new Error("Invalid or duplicate Skill definition");
-    const parameters = z.toJSONSchema(definition.inputSchema, {
-      io: "input",
-    }) as Record<string, unknown>;
+    const parameters = parametersFor(definition.inputSchema);
     if (
       definition.reuseResultMs !== undefined &&
       (!Number.isInteger(definition.reuseResultMs) ||
@@ -103,24 +135,8 @@ export class SkillRegistry {
           const output = definition.outputSchema.safeParse(result.data);
           if (!output.success)
             throw new ApiError("UPSTREAM_ERROR", "工具结果未通过验证。");
-          const sources = z
-            .array(
-              z
-                .object({
-                  title: z.string().max(200),
-                  url: z.url().refine((url) => /^https?:\/\//.test(url)),
-                  publishedAt: z.string().max(50).optional(),
-                })
-                .strict(),
-            )
-            .max(20)
-            .optional()
-            .parse(result.sources);
-          const warnings = z
-            .array(z.string().max(200))
-            .max(10)
-            .optional()
-            .parse(result.warnings);
+          const sources = sourcesSchema.parse(result.sources);
+          const warnings = warningsSchema.parse(result.warnings);
           return {
             ok: true,
             data: output.data,

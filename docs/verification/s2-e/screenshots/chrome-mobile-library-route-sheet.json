@@ -1,0 +1,402 @@
+{
+  "actualPhone": false,
+  "pointerDrag": "CDP touch simulation",
+  "samples": [
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 351.9375px;",
+      "panelTop": 400.0625,
+      "panelHeight": 351.9375,
+      "topBottom": 111.25,
+      "extent": [
+        121.70999987844796,
+        131.24999995781536,
+        210.2900001019663,
+        380.06249995781536
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 299.4375px;",
+      "panelTop": 452.5625,
+      "panelHeight": 299.4375,
+      "topBottom": 111.25,
+      "extent": [
+        112.36470984207322,
+        131.24999992617688,
+        219.63529036885,
+        432.5624999261769
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 246.9375px;",
+      "panelTop": 505.0625,
+      "panelHeight": 246.9375,
+      "topBottom": 111.25,
+      "extent": [
+        103.0194196354533,
+        131.25000003917145,
+        228.98058046699512,
+        485.0625000391715
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 194.4375px;",
+      "panelTop": 557.5625,
+      "panelHeight": 194.4375,
+      "topBottom": 111.25,
+      "extent": [
+        93.67412930227945,
+        131.24999997740107,
+        238.3258704385863,
+        537.5624999774011
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 141.9375px;",
+      "panelTop": 610.0625,
+      "panelHeight": 141.9375,
+      "topBottom": 111.25,
+      "extent": [
+        84.3288391619497,
+        131.2499999713747,
+        247.67116060302155,
+        590.0624999713747
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 89.4375px;",
+      "panelTop": 662.5625,
+      "panelHeight": 89.4375,
+      "topBottom": 111.25,
+      "extent": [
+        74.98354891013196,
+        131.2499999126175,
+        257.01645065295565,
+        642.5624999126176
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 88px;",
+      "panelTop": 664,
+      "panelHeight": 88,
+      "topBottom": 111.25,
+      "extent": [
+        74.72766620099638,
+        131.24999996233512,
+        257.2723338381751,
+        643.9999999623351
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 88px;",
+      "panelTop": 664,
+      "panelHeight": 88,
+      "topBottom": 111.25,
+      "extent": [
+        74.72766620099638,
+        131.24999996233512,
+        257.2723338381751,
+        643.9999999623351
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 88px;",
+      "panelTop": 664,
+      "panelHeight": 88,
+      "topBottom": 111.25,
+      "extent": [
+        74.72766620099638,
+        131.24999996233512,
+        257.2723338381751,
+        643.9999999623351
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 140.5px;",
+      "panelTop": 611.5,
+      "panelHeight": 140.5,
+      "topBottom": 111.25,
+      "extent": [
+        84.07295632324701,
+        131.2500000271187,
+        247.92704365264748,
+        591.5000000271187
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 193px;",
+      "panelTop": 559,
+      "panelHeight": 193,
+      "topBottom": 111.25,
+      "extent": [
+        93.41824653890649,
+        131.24999992919007,
+        238.58175356354192,
+        538.99999992919
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 245.5px;",
+      "panelTop": 506.5,
+      "panelHeight": 245.5,
+      "topBottom": 111.25,
+      "extent": [
+        102.76353667320987,
+        131.2500000045198,
+        229.23646339609348,
+        486.5000000045198
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 298px;",
+      "panelTop": 454,
+      "panelHeight": 298,
+      "topBottom": 111.25,
+      "extent": [
+        112.10882680751324,
+        131.25000000753298,
+        219.89117322261865,
+        434.00000000753295
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 350.5px;",
+      "panelTop": 401.5,
+      "panelHeight": 350.5,
+      "topBottom": 111.25,
+      "extent": [
+        121.4541168664869,
+        131.24999997062142,
+        210.54588297984046,
+        381.4999999706214
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 403px;",
+      "panelTop": 349,
+      "panelHeight": 403,
+      "topBottom": 111.25,
+      "extent": [
+        130.79940711679805,
+        131.24999995856865,
+        201.2005929253866,
+        328.99999995856865
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 404.6112783448633px;",
+      "panelTop": 347.390625,
+      "panelHeight": 404.609375,
+      "topBottom": 111.25,
+      "extent": [
+        131.08588477823218,
+        131.25000000376647,
+        200.91411530161733,
+        327.3906250037665
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 404.8296004551777px;",
+      "panelTop": 347.171875,
+      "panelHeight": 404.828125,
+      "topBottom": 111.25,
+      "extent": [
+        131.1248234798558,
+        131.24999999397363,
+        200.87517658342117,
+        327.17187499397363
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "visualViewport": [
+        844,
+        0,
+        1
+      ],
+      "scrollY": 0,
+      "style": "--route-panel-height: 405.02579941906095px;",
+      "panelTop": 346.984375,
+      "panelHeight": 405.015625,
+      "topBottom": 111.25,
+      "extent": [
+        131.15819944438965,
+        131.2499999984934,
+        200.84180047425426,
+        326.9843749984934
+      ]
+    }
+  ]
+}

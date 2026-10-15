@@ -300,3 +300,15 @@ OpenNext 提示 Windows 兼容性有限。本次最终组合在 Windows 实测�
 - 串行三模式采样4组，地图ready1473–1716ms，2.5D995–1052ms/3D642–689ms；前台实际拖动/缩放/旋转rAF间隔P95为4.3–8.3ms。高刷桌面与手机视口不等于最终FPS/手机硬件；无新渲染架构或建筑。真实帧/内存/电量仍待实机。
 - Cloudflare Edge/CLI均已认证指定账户，但无CampusOS Worker/专用D1；域名存在、0DNS、Universal证书Active，公共DoH无A答案。preview dry-run12572.96KiB（gzip2165.40）通过，只打包不部署。云端Secrets/迁移/应用HTTPS/CPU与子请求预算/多地域仍阻塞，未购买或修改正式DNS。依赖审计生产0，全依赖5high为同一未修复braces开发链漏洞，未全通过。
 - 完整结论/实际截图/批准后发布步骤见S2_D_AGENT_ACCEPTANCE.md，D-036/SRC-052及设计/部署文档同步。S2尚不能完整正式验收或公开学生试用；须先批准隔离预览并实测云端、处理已登记风险、由负责人做手机GPS/输入法/后台/弱GPU验收。S3可独立设计/资料准备，正式扩展前先关闭S2发布门槛；本轮无RAG/雷达或批量建模。
+
+## S2-E Cloudflare隔离预览与实际云端验收（2026-10-16）
+
+- 负责人明确批准仅创建campusos-preview Worker/D1、workers.dev预览、空库迁移与Secrets。当前账户Edge/CLI均认证，控制台确认Workers Free；订阅API403未扩权。先确认无同名资源，原3 Worker/2 D1不改。实际预览URL为https://campusos-preview.zhujunkui1.workers.dev，当前版本3545d51c-e112-4e4f-bce2-774951f9609c，Deployment ID见S2_E_CLOUDFLARE_PREVIEW_ACCEPTANCE.md及verification/s2-e/resource-isolation.json。
+- 独立APAC D1 UUID18299abc-b38b-4494-8d12-8ab4d482c304仅绑定env.preview的DB。name明确、workers_dev=true、preview_urls=false、routes=[]、自引用同名；无生产Worker/D1、无正式域名绑定/DNS或其他项目修改。最终4 Worker/3 D1，仅新增指定两资源，其他Worker修改时间和其他D1总大小保持。DNS API复读权限不足，没有为此扩大权限或做变更。
+- 迁移0001–0003首次通过，0004云端7500 incomplete input。schema/迁移表证明完整回滚，不清库重建。远程EXPLAIN最小对照证明裸CASE触发器分句不兼容；12个CASE加括号同义修复后0004通过，阈值/权限保持。4迁移/34业务表/11触发器，外键0错误，无业务或账号种子。真实会话/路线读写、跨游客404、错误版本422、到期404、外键拒绝均通过。
+- 五项secret_text通过stdin配置；预览签名密钥独立随机，与本地不同。真实模型3请求能力验证刷新，运行时model/storageReady以及公网真实工具调用通过。DeepSeek赠送额度0，负责人随后明确授权现有余额最多1元，无充值；最终账户变化与usage见model-budget/metrics，未增加请求/Token额度或新供应商。
+- 初包真实第8轮出现exceededCpu。使用原ASSETS静态页面缓存及拦截、预览专用轻量API入口转交原处理函数、冻结Schema元数据复用、运行租约/回执合并JOIN及250/500/750ms轮询和40SQL等待软阈值。身份/Origin/权限/输出校验均保留；不改地图/Agent架构，不缓存私有API/SSE或跨用户结果，不新增R2/KV/DO/辅助Worker。页面CPU观测P50约49→2ms；最终窗口542调用0次exceededCpu，chat CPU P50/P95 25/170ms，仍超Free10ms标称，不能宣称稳定容量达标。
+- 实际workers.dev上Chrome桌面/Edge手机A–G+图书馆通过；Edge桌面真实查询get_place_details返回已核实7层/约21m，五项均有真实模型调用；Chrome手机HTTPS受控公开坐标/拒绝/取消通过（非GPS实机）。并发同请求ID429、取消无迟到路线、实际Worker更新后原Cookie会话/路线恢复通过。最终归档23轮：19完成、2预期NOT_FOUND、2取消缺usage，51已知上游请求/70055Token；已知矩阵模型费估算CNY0.04224–0.08448，累计调试余额变化另列，不当独立账单。
+- 最终194单元/25文件、TypeScript/Lint、34表空库与本地双workerd回归通过。公网常规9spec最终Chrome/Edge各61通过/3跳过；首轮各60通过/1失败为GLB真正请求开始前取消的测试时序，补网络屏障后保留原全部断言并重跑整套。跳过为原生外框2与桌面不适用手机AI1，不冒充实机。另8项公网资产/三模式采样通过；OSM/字体/GLB ETag/304、无高德请求和S7哈希验证。
+- 安全构建新增实际预览入口dry-run编译及bundle扫描，保留原环境净化；无Key/签名/OAuth明文命中。最终包14762.03KiB/gzip2398.74、部署启动验证117ms；实际运行内存与逐请求完整子请求未可靠归因。GraphQL、Tail、D1行用量与时延已归档；Workers时钟仅IO后前进，纯同步Skill显示0ms不代表0CPU。生产依赖audit0，全依赖仍5high开发链告警。
+- 地图s1-2026-10-14.2/路网s1-campus-2026-10-14.2及547/2202、113地点、南苑7栋GLB SHA54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a/第一版2.5D均不改，建筑批量/RAG/雷达/个人Skills未启动。预览功能通过，可进行负责人低频手机实机测试；Free CPU稳定容量、实机、跨地域和24h模型能力刷新运维仍是正式验收/生产门槛，生产发布需另批。D-037/SRC-053及验收/部署文档同步。

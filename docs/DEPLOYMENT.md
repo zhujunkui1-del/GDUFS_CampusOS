@@ -1,6 +1,6 @@
 # 部署与回滚
 
-目标生产域名：`gdufs.ccwu.cc`。2026-10-15 S2-D只读确认：负责人Edge和Wrangler已经登录正确账户，域名在该账户且Universal证书Active，但0条DNS、没有CampusOS Worker/专用D1。环境UUID仍全零，云端Secrets/应用HTTPS/预算尚待配置与批准。完整本地验收及截图见 [S2-D报告](S2_D_AGENT_ACCEPTANCE.md)。
+目标生产域名：`gdufs.ccwu.cc`（尚未批准发布）。2026-10-16已获授权并完成独立预览：https://campusos-preview.zhujunkui1.workers.dev 。env.preview绑定专用D1，5项Secret已配置并在云端验证；生产UUID仍占位，正式域名/DNS/生产库未动。完整结果与Free CPU限制见 [S2-E报告](S2_E_CLOUDFLARE_PREVIEW_ACCEPTANCE.md)。S2-D只读记录是此前状态。
 
 ## 本地 Workers 验证
 
@@ -14,7 +14,7 @@ npm run preview:worker
 
 ## 配置预览环境
 
-**以下仅为批准后的执行说明，不是当前发布授权。** 负责人须先明确确认专用预览D1创建/迁移、`campusos-preview` Worker公开发布及模型试用预算。账号已经认证，不必再次登录或导出Cookie/Token。生产建库/迁移、公开正式域名、DNS/HTTPS及付费服务仍需单独明确批准。
+负责人2026-10-16已经明确批准且本轮已执行专用预览D1创建/迁移、`campusos-preview` workers.dev发布和运行时Secret配置。现有认证可用，不需导出Cookie/Token。只允许后续同一预览的非破坏性更新；生产建库/迁移、正式域名/DNS/HTTPS及套餐升级仍需额外明确批准。
 
 设置 `CLOUDFLARE_ACCOUNT_ID`。创建各环境独立的 D1 数据库后，把真实 UUID 写入 `wrangler.jsonc` 对应 `env.preview` / `env.production`，保留本地占位配置。数据库 ID 是资源标识，不是认证凭据。部署脚本仅在账户变量和该环境数据库 ID 均准备好时运行。
 
@@ -24,6 +24,10 @@ npm run preview:worker
 npx wrangler d1 migrations apply campusos-preview --remote --env preview
 npm run deploy:preview
 ```
+
+管理员shell须明确设置已核对的`CLOUDFLARE_ACCOUNT_ID`。脚本检查预览名称、专用DB、main、自引用和无正式Routes，并显式传入配置/env；不要在tail等命令同时传入Worker位置名称和env，否则某些命令会追加第二个-preview。当前预览入口`preview-worker.ts`复用原API处理函数和OpenNext请求ALS；页面使用原ASSETS只读缓存，无R2/KV/DO。升级OpenNext后必须回归该入口，不把其内部生成模块视作永久兼容保证。
+
+预览build包装器还dry-run编译最终入口、扫描实际Worker bundle后才允许部署；不可绕过。迁移前列出目标名/UUID/账户和待执行列表，只执行新增非破坏性迁移，不能为测试删除重建库。0004为云端CASE分句增加的括号不改规则，既有已应用本地库不重跑。
 
 配置该环境的运行时Secret：`MODEL_API_KEY`、`MODEL_NAME`、`MODEL_BASE_URL`、`MODEL_CAPABILITIES_JSON`、独立`AGENT_SIGNING_SECRET`。能力记录须按实际管理员Key/模型验证，24小时有效；禁止把秘密写入wrangler vars或Git。使用`npm run build:worker`/部署脚本的构建净化步骤，不能绕过后直接发布OpenNext的本机`.env`默认值。云端只配置运行时Secret；本地用忽略的`.dev.vars`。
 

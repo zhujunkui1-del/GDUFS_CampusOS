@@ -131,6 +131,21 @@ test("real DeepSeek A-G controls the real campus map through browser receipts", 
   );
   await expect(map).toHaveAttribute("data-route-extent", /.+/);
   await page.screenshot({ path: `${dir}/${name}-G-context.png` });
+  if (process.env.E2E_CLOUD_ACCEPTANCE === "1") {
+    await ask("帮我找到图书馆。");
+    await expect(page.locator(".place-details-heading")).toContainText(
+      "图书馆",
+    );
+    if (!(await page.locator("#campus-assistant").isVisible()))
+      await page
+        .locator(".place-details-frame")
+        .getByRole("button", { name: "问 AI", exact: true })
+        .click();
+    await expect(page.locator(".assistant-place-card").last()).toContainText(
+      "图书馆",
+    );
+    await page.screenshot({ path: `${dir}/${name}-library-found.png` });
+  }
   const records = await page.evaluate(
     () =>
       (window as Window & { __agentEvidence?: unknown[] }).__agentEvidence ||
@@ -171,4 +186,11 @@ test("real DeepSeek A-G controls the real campus map through browser receipts", 
       2,
     ) + "\n",
   );
+  if (
+    process.env.E2E_CLOUD_ACCEPTANCE === "1" &&
+    process.env.E2E_RECOVERY_STATE_PATH
+  )
+    await page
+      .context()
+      .storageState({ path: process.env.E2E_RECOVERY_STATE_PATH });
 });

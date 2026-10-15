@@ -1,0 +1,31 @@
+{
+  "recordedAt": "2026-10-15T17:27:26.432Z",
+  "realRemoteD1": true,
+  "schemaMutated": false,
+  "results": [
+    {
+      "name": "plain-case",
+      "explainOnly": true,
+      "passed": false,
+      "incompleteInput": true
+    },
+    {
+      "name": "parenthesized-case",
+      "explainOnly": true,
+      "passed": true,
+      "incompleteInput": false
+    },
+    {
+      "name": "lf-begin",
+      "explainOnly": true,
+      "passed": false,
+      "incompleteInput": false
+    },
+    {
+      "name": "crlf-begin",
+      "explainOnly": true,
+      "passed": true,
+      "incompleteInput": false
+    }
+  ]
+}

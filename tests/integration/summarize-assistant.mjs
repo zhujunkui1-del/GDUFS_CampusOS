@@ -115,7 +115,7 @@ function summary(records) {
 const files = ["live", "runtime"].flatMap((dir) =>
   existsSync(join(root, dir))
     ? readdirSync(join(root, dir))
-        .filter((f) => /-(?:live|location|recovery)\.json$/.test(f))
+        .filter((f) => /-(?:live|location|recovery|concurrency)\.json$/.test(f))
         .map((f) => join(dir, f))
     : [],
 );

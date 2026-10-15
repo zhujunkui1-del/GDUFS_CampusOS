@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { parse } from "comment-json";
+import { assertPreviewTarget } from "./preview-config.mjs";
 
 const environment = process.argv[2];
 if (!["preview", "production"].includes(environment)) {
@@ -9,6 +10,12 @@ if (!["preview", "production"].includes(environment)) {
 }
 const config = parse(readFileSync("wrangler.jsonc", "utf8"));
 const database = config.env[environment].d1_databases[0];
+if (environment === "preview")
+  console.log(
+    JSON.stringify(
+      assertPreviewTarget(config, process.env.CLOUDFLARE_ACCOUNT_ID),
+    ),
+  );
 if (
   !process.env.CLOUDFLARE_ACCOUNT_ID ||
   database.database_id === "00000000-0000-0000-0000-000000000000"
@@ -23,8 +30,14 @@ for (const action of ["build", "deploy"]) {
   const result = spawnSync(
     process.execPath,
     action === "build"
-      ? ["scripts/build-worker.mjs", "--env", environment]
-      : [cli, action, "--env", environment],
+      ? [
+          "scripts/build-worker.mjs",
+          "--config",
+          "wrangler.jsonc",
+          "--env",
+          environment,
+        ]
+      : [cli, action, "--config", "wrangler.jsonc", "--env", environment],
     { stdio: "inherit", env: process.env },
   );
   if (result.error || result.status !== 0) process.exit(result.status ?? 1);

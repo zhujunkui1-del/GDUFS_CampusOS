@@ -1,0 +1,26 @@
+{
+  "recordedAt": "2026-10-15T18:54:37.527Z",
+  "baseline": "8ef2faa",
+  "scannedVariableNames": [
+    "MODEL_API_KEY",
+    "AGENT_SIGNING_SECRET",
+    "AMAP_SECURITY_JS_CODE",
+    "CLOUDFLARE_API_TOKEN",
+    "preview:MODEL_API_KEY",
+    "preview:AGENT_SIGNING_SECRET"
+  ],
+  "actualModelKeyChecked": true,
+  "repository": {
+    "files": 1365,
+    "matches": []
+  },
+  "generatedWorkerAndAssets": {
+    "files": 1323,
+    "matches": []
+  },
+  "credentialFilesIgnored": true,
+  "gateOnlyNameAliasesChanged": true,
+  "frozenDataUntouched": true,
+  "modelSha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+  "modelMatchesApprovedAsset": true
+}

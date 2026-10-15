@@ -1,0 +1,20 @@
+{
+  "realCloud": true,
+  "duplicateStatus": 429,
+  "realCancellation": true,
+  "lateRouteAbsent": true,
+  "records": [
+    {
+      "prompt": "从南苑7栋去图书馆。",
+      "tools": [
+        "plan_route"
+      ],
+      "actions": [],
+      "result": null,
+      "response": "",
+      "responseHeadersMs": 704,
+      "firstTextMs": null,
+      "completeMs": null
+    }
+  ]
+}

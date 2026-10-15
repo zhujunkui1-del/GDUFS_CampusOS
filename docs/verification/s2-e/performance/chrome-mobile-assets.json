@@ -1,0 +1,35 @@
+{
+  "actualCloud": true,
+  "actualPhone": false,
+  "hosts": [
+    "campusos-preview.zhujunkui1.workers.dev"
+  ],
+  "mapVersion": "s1-2026-10-14.2",
+  "assets": [
+    {
+      "path": "/maps/campus-15060d099418.geojson",
+      "bytes": 2563740,
+      "etagPresent": true,
+      "conditionalStatus": 304,
+      "cacheControl": "public,max-age=31536000,immutable",
+      "contentType": "application/geo+json"
+    },
+    {
+      "path": "/fonts/campus-ui-sc.woff2",
+      "bytes": 58528,
+      "etagPresent": true,
+      "conditionalStatus": 304,
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+      "bytes": 80384,
+      "etagPresent": true,
+      "conditionalStatus": 304,
+      "cacheControl": "public, max-age=0, must-revalidate",
+      "contentType": "model/gltf-binary",
+      "sha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a"
+    }
+  ]
+}

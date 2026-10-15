@@ -1,0 +1,48 @@
+{
+  "recordedAt": "2026-10-15T18:51:01.424Z",
+  "actualCloud": true,
+  "checks": [
+    {
+      "path": "/.env",
+      "status": 404,
+      "secretValuePresent": false,
+      "debugJsonExposed": false
+    },
+    {
+      "path": "/.dev.vars",
+      "status": 404,
+      "secretValuePresent": false,
+      "debugJsonExposed": false
+    },
+    {
+      "path": "/.map-tools/s2-e/runtime-secrets.json",
+      "status": 404,
+      "secretValuePresent": false,
+      "debugJsonExposed": false
+    },
+    {
+      "path": "/cloudflare/next-env.mjs",
+      "status": 404,
+      "secretValuePresent": false,
+      "debugJsonExposed": false
+    },
+    {
+      "path": "/api/admin/sql",
+      "status": 404,
+      "secretValuePresent": false,
+      "debugJsonExposed": false
+    },
+    {
+      "path": "/api/debug",
+      "status": 404,
+      "secretValuePresent": false,
+      "debugJsonExposed": false
+    },
+    {
+      "path": "/cdn-cgi/local/explorer/api",
+      "status": 404,
+      "secretValuePresent": false,
+      "debugJsonExposed": false
+    }
+  ]
+}

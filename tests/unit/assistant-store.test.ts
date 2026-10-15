@@ -197,7 +197,14 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
     const packet = await store.action(a, conversation, run, [
       { type: "CLEAR_ROUTE" },
     ]);
+    expect(await store.execution(a.owner, packet.id, run)).toBeNull();
+    await expect(
+      store.execution(b.owner, packet.id, run),
+    ).rejects.toMatchObject({ code: "CANCELLED" });
     await store.finish(a, run, "completed", {}, 1);
+    await expect(
+      store.execution(a.owner, packet.id, run),
+    ).rejects.toMatchObject({ code: "CANCELLED" });
     await expect(store.claim(b, packet.id)).rejects.toMatchObject({
       code: "NOT_FOUND",
     });

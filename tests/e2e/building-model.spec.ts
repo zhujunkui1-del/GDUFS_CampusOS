@@ -201,6 +201,9 @@ test("2D remains selectable during 3D loading and late completion does not resto
     const map = await focusDorm(page);
     await selectMapMode(page, "3D");
     await expect(map).toHaveAttribute("data-model-state", "loading");
+    // Exercise an in-flight GLB, rather than cancelling the lazy import before
+    // it has made any asset request on the public network.
+    await expect.poll(() => requests, { timeout: 10000 }).toBe(1);
     await page.getByTestId("map-mode-trigger").click();
     await expect(map).toHaveAttribute("data-mode", "2d");
     release();

@@ -1,0 +1,64 @@
+{
+  "recordedAt": "2026-10-15T18:58:34.943Z",
+  "actualCloudUrl": "https://campusos-preview.zhujunkui1.workers.dev",
+  "unitTests": 194,
+  "unitFiles": 25,
+  "typecheck": "passed",
+  "lint": "passed",
+  "productionBuild": "passed",
+  "opennextBuild": "passed",
+  "actualPhoneTested": false,
+  "multiRegionTested": false,
+  "results": [
+    {
+      "name": "s2-e-chrome-final",
+      "status": "passed",
+      "failedTests": []
+    },
+    {
+      "name": "s2-e-msedge-final",
+      "status": "passed",
+      "failedTests": []
+    },
+    {
+      "name": "s2-e-chrome-live-receipt-final",
+      "status": "passed",
+      "failedTests": []
+    },
+    {
+      "name": "s2-e-edge-live-receipt-final",
+      "status": "passed",
+      "failedTests": []
+    },
+    {
+      "name": "s2-e-location-final",
+      "status": "passed",
+      "failedTests": []
+    },
+    {
+      "name": "s2-e-concurrency-live",
+      "status": "passed",
+      "failedTests": []
+    },
+    {
+      "name": "s2-e-details-live-final",
+      "status": "passed",
+      "failedTests": []
+    },
+    {
+      "name": "s2-e-update-recovery",
+      "status": "passed",
+      "failedTests": []
+    },
+    {
+      "name": "s2-e-chrome-performance-assets",
+      "status": "passed",
+      "failedTests": []
+    },
+    {
+      "name": "s2-e-msedge-performance-assets",
+      "status": "passed",
+      "failedTests": []
+    }
+  ]
+}

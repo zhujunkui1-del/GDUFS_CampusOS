@@ -1,0 +1,51 @@
+{
+  "recordedAt": "2026-10-15T18:02:05.605Z",
+  "realCloud": true,
+  "guestCookiesIsolated": true,
+  "routeRestoredByOwner": true,
+  "crossGuestRouteStatus": 404,
+  "staleVersionStatus": 422,
+  "staleVersionCode": "ROUTE_UNAVAILABLE",
+  "expiredRouteStatus": 404,
+  "expiredRouteCode": "NOT_FOUND",
+  "foreignKeyConstraintRejected": true,
+  "cookieRestored": true,
+  "scopeAndCredentialsStored": false,
+  "rowsModifiedOnlyOnNewOwnedTestRoute": true,
+  "adminQueryMeta": [
+    {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "NRT",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.2548
+      },
+      "duration": 0.2548,
+      "changes": 1,
+      "last_row_id": 5,
+      "changed_db": true,
+      "size_after": 507904,
+      "rows_read": 1,
+      "rows_written": 1,
+      "total_attempts": 1
+    },
+    {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "NRT",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.2548
+      },
+      "duration": 0.2548,
+      "changes": 1,
+      "last_row_id": 5,
+      "changed_db": true,
+      "size_after": 507904,
+      "rows_read": 1,
+      "rows_written": 2,
+      "total_attempts": 1
+    }
+  ]
+}

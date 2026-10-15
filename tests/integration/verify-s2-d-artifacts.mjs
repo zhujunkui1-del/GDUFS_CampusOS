@@ -2,7 +2,13 @@
 import { createRequire } from "node:module";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import {
+  readFileSync,
+  readdirSync,
+  statSync,
+  writeFileSync,
+  mkdirSync,
+} from "node:fs";
 import { join } from "node:path";
 const require = createRequire(import.meta.url);
 require("@next/env").loadEnvConfig(process.cwd(), true, {
@@ -15,10 +21,26 @@ const names = [
   "AMAP_SECURITY_JS_CODE",
   "AMAP_WEBSERVICE_KEY",
   "DEEPSEEK_API_KEY",
+  "CLOUDFLARE_API_TOKEN",
 ];
 const secrets = names
   .filter((name) => process.env[name]?.length > 7)
   .map((name) => ({ name, value: process.env[name] }));
+if (process.env.RELEASE_PREVIEW_SECRETS_FILE) {
+  for (const [name, value] of Object.entries(
+    JSON.parse(readFileSync(process.env.RELEASE_PREVIEW_SECRETS_FILE, "utf8")),
+  )) {
+    if (
+      typeof value === "string" &&
+      value.length > 7 &&
+      /KEY|SECRET|TOKEN|PASSWORD|_CODE/.test(name)
+    )
+      secrets.push({ name: `preview:${name}`, value });
+  }
+}
+const captureRoot =
+  process.env.ARTIFACT_VERIFICATION_DIR || "docs/verification/s2-d";
+const baselineRef = process.env.ARTIFACT_BASELINE || "010072b";
 if (
   !secrets.some((s) => s.name === "MODEL_API_KEY") ||
   !secrets.some((s) => s.name === "AGENT_SIGNING_SECRET")
@@ -51,7 +73,13 @@ function scan(files) {
   return { files: files.length, matches };
 }
 const repository = scan(candidates);
-const generatedWorkerAndAssets = scan(filesUnder(".open-next"));
+const generatedWorkerAndAssets = scan([
+  ...filesUnder(".open-next"),
+  ...(process.env.ARTIFACT_EXTRA_DIRS || "")
+    .split(";")
+    .filter(Boolean)
+    .flatMap(filesUnder),
+]);
 const credentialFilesIgnored = [
   ".env.local",
   ".dev.vars",
@@ -64,10 +92,12 @@ const credentialFilesIgnored = [
     return false;
   }
 });
-const changed = git("diff", "010072b", "--name-only").trim().split(/\r?\n/);
+const changed = git("diff", baselineRef, "--name-only").trim().split(/\r?\n/);
 function normalizedGate(file, baseline) {
   const data = JSON.parse(
-    baseline ? git("show", `010072b:${file}`) : readFileSync(file, "utf8"),
+    baseline
+      ? git("show", `${baselineRef}:${file}`)
+      : readFileSync(file, "utf8"),
   );
   const normalize = (value) => {
     if (!value || typeof value !== "object") return;
@@ -101,7 +131,7 @@ const expectedModel =
   "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a";
 const checks = {
   recordedAt: new Date().toISOString(),
-  baseline: "010072b",
+  baseline: baselineRef,
   scannedVariableNames: secrets.map((s) => s.name),
   actualModelKeyChecked: true,
   repository,
@@ -112,8 +142,9 @@ const checks = {
   modelSha256,
   modelMatchesApprovedAsset: modelSha256 === expectedModel,
 };
+mkdirSync(captureRoot, { recursive: true });
 writeFileSync(
-  "docs/verification/s2-d/security-integrity.json",
+  join(captureRoot, "security-integrity.json"),
   JSON.stringify(checks, null, 2) + "\n",
 );
 const passed =

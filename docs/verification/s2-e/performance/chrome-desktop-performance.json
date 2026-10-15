@@ -1,0 +1,75 @@
+{
+  "browser": "148.0.7778.97",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "realPhone": false,
+  "measurement": "requestAnimationFrame callback cadence during real pointer drag, zoom and rotation; not presented FPS or GPU timing",
+  "loadMs": 1422,
+  "modes": [
+    {
+      "mode": "2D",
+      "switchMs": 17,
+      "frames": 430,
+      "p50Ms": 4.199999999999818,
+      "p95Ms": 4.299999999999727,
+      "longestMs": 8.400000000000091,
+      "visible": true,
+      "model": {
+        "data-model-place-id": "osm-way-312536955",
+        "data-model-height": "21",
+        "data-model-version": "nanyuan7-v2-2026-10-14",
+        "data-model-volume-version": "nanyuan7-2026-10-14.1",
+        "data-model-state": "idle",
+        "data-model-volume": "none",
+        "data-model-detailed": "none",
+        "data-model-extent": "[638.6754613895952,-6.1113309205378386,1518.7874358832426,769.6388689956751]"
+      }
+    },
+    {
+      "mode": "2.5D",
+      "switchMs": 951,
+      "frames": 394,
+      "p50Ms": 4.199999999999818,
+      "p95Ms": 8.200000000000728,
+      "longestMs": 8.400000000000546,
+      "visible": true,
+      "model": {
+        "data-model-place-id": "osm-way-312536955",
+        "data-model-height": "21",
+        "data-model-version": "nanyuan7-v2-2026-10-14",
+        "data-model-volume-version": "nanyuan7-2026-10-14.1",
+        "data-model-state": "idle",
+        "data-model-volume": "visible",
+        "data-model-detailed": "none",
+        "data-model-extent": "[406.608342759416,93.60731668129142,1247.3846081051443,1000.3009278082022]"
+      }
+    },
+    {
+      "mode": "3D",
+      "switchMs": 671,
+      "frames": 422,
+      "p50Ms": 4.199999999998909,
+      "p95Ms": 4.300000000000182,
+      "longestMs": 8.400000000000546,
+      "visible": true,
+      "model": {
+        "data-model-place-id": "osm-way-312536955",
+        "data-model-height": "21",
+        "data-model-version": "nanyuan7-v2-2026-10-14",
+        "data-model-volume-version": "nanyuan7-2026-10-14.1",
+        "data-model-state": "ready",
+        "data-model-volume": "none",
+        "data-model-detailed": "visible",
+        "data-model-extent": "[659.1860337092887,104.58884836112458,1299.5274049333957,875.5992470293577]",
+        "data-model-lod": "full",
+        "data-model-bytes": "80384",
+        "data-model-triangles": "4748",
+        "data-model-asset-sha": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+        "data-model-draw-calls": "8",
+        "data-model-frame-count": "294"
+      }
+    }
+  ]
+}

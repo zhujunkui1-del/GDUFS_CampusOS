@@ -1,0 +1,528 @@
+{
+  "recordedAt": "2026-10-15T17:34:31.630Z",
+  "database": "campusos-preview",
+  "databaseId": "18299abc-b38b-4494-8d12-8ab4d482c304",
+  "newEmptyDatabase": true,
+  "migrations": [
+    {
+      "name": "0001_platform_and_campus.sql",
+      "sha256": "3056df29ff0a92c7fc7763cf12595aa9b60f60657dea6a01ae4c8711e3bc8d16"
+    },
+    {
+      "name": "0002_knowledge_and_events.sql",
+      "sha256": "bfcd7588f4924cf3cc81ea1fc0563334e8bcc4c4f4008642ed6a5e1544acce62"
+    },
+    {
+      "name": "0003_route_geometry_guards.sql",
+      "sha256": "d49fc65ef9a4687d5aeeef21e1b92fe3f6e32fc293765ac632c5cf6068341e0c"
+    },
+    {
+      "name": "0004_assistant_shared_state.sql",
+      "sha256": "a58b9b808dce148389d91717f611eebef29feb8d2e93dbad4889a796ed6154ed"
+    }
+  ],
+  "schema": [
+    {
+      "type": "index",
+      "name": "assistant_conversation_owner"
+    },
+    {
+      "type": "index",
+      "name": "assistant_request_once"
+    },
+    {
+      "type": "index",
+      "name": "assistant_route_owner"
+    },
+    {
+      "type": "index",
+      "name": "assistant_run_global"
+    },
+    {
+      "type": "index",
+      "name": "assistant_run_quota"
+    },
+    {
+      "type": "index",
+      "name": "assistant_sessions_expiry"
+    },
+    {
+      "type": "index",
+      "name": "documents_visibility"
+    },
+    {
+      "type": "index",
+      "name": "edges_end"
+    },
+    {
+      "type": "index",
+      "name": "edges_start"
+    },
+    {
+      "type": "index",
+      "name": "events_time_scope"
+    },
+    {
+      "type": "index",
+      "name": "login_sessions_user"
+    },
+    {
+      "type": "index",
+      "name": "messages_conversation"
+    },
+    {
+      "type": "index",
+      "name": "places_zone_category"
+    },
+    {
+      "type": "index",
+      "name": "schedules_user_time"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_agent_runs_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_assistant_actions_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_assistant_location_challenges_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_assistant_route_refs_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_assistant_sessions_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_audit_events_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_auth_identities_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_auth_identities_2"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_campus_events_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_campus_places_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_campus_zones_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_content_reviews_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_conversation_messages_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_conversations_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_d1_migrations_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_event_sources_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_external_connections_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_external_connections_2"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_ingestion_jobs_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_knowledge_chunks_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_knowledge_chunks_2"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_knowledge_documents_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_knowledge_documents_2"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_knowledge_facts_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_knowledge_sources_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_login_sessions_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_otp_challenges_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_path_edges_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_path_nodes_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_place_entrances_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_place_media_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_route_snapshots_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_source_records_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_user_favorites_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_user_memories_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_user_preferences_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_user_schedules_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_user_tasks_1"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_user_tasks_2"
+    },
+    {
+      "type": "index",
+      "name": "sqlite_autoindex_users_1"
+    },
+    {
+      "type": "index",
+      "name": "tasks_user_time"
+    },
+    {
+      "type": "table",
+      "name": "_cf_KV"
+    },
+    {
+      "type": "table",
+      "name": "agent_runs"
+    },
+    {
+      "type": "table",
+      "name": "assistant_actions"
+    },
+    {
+      "type": "table",
+      "name": "assistant_location_challenges"
+    },
+    {
+      "type": "table",
+      "name": "assistant_route_refs"
+    },
+    {
+      "type": "table",
+      "name": "assistant_sessions"
+    },
+    {
+      "type": "table",
+      "name": "audit_events"
+    },
+    {
+      "type": "table",
+      "name": "auth_identities"
+    },
+    {
+      "type": "table",
+      "name": "campus_events"
+    },
+    {
+      "type": "table",
+      "name": "campus_places"
+    },
+    {
+      "type": "table",
+      "name": "campus_zones"
+    },
+    {
+      "type": "table",
+      "name": "content_reviews"
+    },
+    {
+      "type": "table",
+      "name": "conversation_messages"
+    },
+    {
+      "type": "table",
+      "name": "conversations"
+    },
+    {
+      "type": "table",
+      "name": "d1_migrations"
+    },
+    {
+      "type": "table",
+      "name": "event_sources"
+    },
+    {
+      "type": "table",
+      "name": "external_connections"
+    },
+    {
+      "type": "table",
+      "name": "ingestion_jobs"
+    },
+    {
+      "type": "table",
+      "name": "knowledge_chunks"
+    },
+    {
+      "type": "table",
+      "name": "knowledge_documents"
+    },
+    {
+      "type": "table",
+      "name": "knowledge_facts"
+    },
+    {
+      "type": "table",
+      "name": "knowledge_sources"
+    },
+    {
+      "type": "table",
+      "name": "login_sessions"
+    },
+    {
+      "type": "table",
+      "name": "otp_challenges"
+    },
+    {
+      "type": "table",
+      "name": "path_edges"
+    },
+    {
+      "type": "table",
+      "name": "path_nodes"
+    },
+    {
+      "type": "table",
+      "name": "place_entrances"
+    },
+    {
+      "type": "table",
+      "name": "place_media"
+    },
+    {
+      "type": "table",
+      "name": "route_snapshots"
+    },
+    {
+      "type": "table",
+      "name": "source_records"
+    },
+    {
+      "type": "table",
+      "name": "sqlite_sequence"
+    },
+    {
+      "type": "table",
+      "name": "user_favorites"
+    },
+    {
+      "type": "table",
+      "name": "user_memories"
+    },
+    {
+      "type": "table",
+      "name": "user_preferences"
+    },
+    {
+      "type": "table",
+      "name": "user_schedules"
+    },
+    {
+      "type": "table",
+      "name": "user_tasks"
+    },
+    {
+      "type": "table",
+      "name": "users"
+    },
+    {
+      "type": "trigger",
+      "name": "assistant_conversation_capacity"
+    },
+    {
+      "type": "trigger",
+      "name": "assistant_route_capacity"
+    },
+    {
+      "type": "trigger",
+      "name": "assistant_run_limits"
+    },
+    {
+      "type": "trigger",
+      "name": "assistant_session_capacity"
+    },
+    {
+      "type": "trigger",
+      "name": "edge_verification_insert"
+    },
+    {
+      "type": "trigger",
+      "name": "edge_verification_update"
+    },
+    {
+      "type": "trigger",
+      "name": "place_approval_insert"
+    },
+    {
+      "type": "trigger",
+      "name": "place_approval_update"
+    },
+    {
+      "type": "trigger",
+      "name": "revoke_source_map_data"
+    },
+    {
+      "type": "trigger",
+      "name": "route_geometry_insert"
+    },
+    {
+      "type": "trigger",
+      "name": "route_geometry_update"
+    }
+  ],
+  "foreignKeyErrors": [],
+  "users": 0,
+  "sessions": 0,
+  "meta": [
+    {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "NRT",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.3206
+      },
+      "duration": 0.3206,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 421888,
+      "rows_read": 4,
+      "rows_written": 0,
+      "total_attempts": 1
+    },
+    {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "NRT",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.6011
+      },
+      "duration": 0.6011,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 421888,
+      "rows_read": 206,
+      "rows_written": 0,
+      "total_attempts": 1
+    },
+    {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "NRT",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.4324
+      },
+      "duration": 0.4324,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 421888,
+      "rows_read": 27,
+      "rows_written": 0,
+      "total_attempts": 1
+    },
+    {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "NRT",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.9795
+      },
+      "duration": 0.9795,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 421888,
+      "rows_read": 0,
+      "rows_written": 0,
+      "total_attempts": 1
+    },
+    {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "NRT",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.1636
+      },
+      "duration": 0.1636,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 421888,
+      "rows_read": 0,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  ]
+}

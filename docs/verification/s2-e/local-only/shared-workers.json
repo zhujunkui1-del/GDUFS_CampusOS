@@ -1,0 +1,14 @@
+{
+  "actualWorkerdIsolates": 2,
+  "managedSharedD1Emulator": true,
+  "isolatedDatabase": true,
+  "modelCalls": 0,
+  "sharedSessionRestored": true,
+  "concurrentRunsAccepted": 1,
+  "concurrentRunsRejectedByQuota": 1,
+  "sharedRouteRestored": true,
+  "crossGuestRouteRejected": true,
+  "shared20PerHourQuotaEnforced": true,
+  "runtimeRestartVerified": true,
+  "productionMultiRegionDeployment": false
+}

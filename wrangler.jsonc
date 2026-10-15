@@ -27,6 +27,10 @@
   "env": {
     "preview": {
       "name": "campusos-preview",
+      "main": "preview-worker.ts",
+      "workers_dev": true,
+      "preview_urls": false,
+      "routes": [],
       "vars": { "APP_ENV": "preview" },
       "ratelimits": [
         {
@@ -42,7 +46,7 @@
         {
           "binding": "DB",
           "database_name": "campusos-preview",
-          "database_id": "00000000-0000-0000-0000-000000000000",
+          "database_id": "18299abc-b38b-4494-8d12-8ab4d482c304",
           "migrations_dir": "migrations",
         },
       ],

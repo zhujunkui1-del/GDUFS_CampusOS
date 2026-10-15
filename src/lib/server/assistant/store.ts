@@ -421,12 +421,19 @@ export class AssistantStore {
     if (!result.meta.changes)
       throw new ApiError("NOT_FOUND", "地图操作已失效。");
   }
-  async execution(owner: string, id: string) {
+  async execution(owner: string, id: string, runningRunId?: string) {
     const row = await this.db
       .prepare(
-        "SELECT status,receipt_json FROM assistant_actions WHERE id=? AND owner_key=? AND expires_at_ms>?",
+        runningRunId
+          ? "SELECT a.status,a.receipt_json FROM assistant_actions a JOIN agent_runs r ON r.id=a.run_id WHERE a.id=? AND a.owner_key=? AND a.expires_at_ms>? AND r.id=? AND r.owner_key=? AND r.status='running' AND r.lease_until_ms>?"
+          : "SELECT status,receipt_json FROM assistant_actions WHERE id=? AND owner_key=? AND expires_at_ms>?",
       )
-      .bind(id, owner, this.now())
+      .bind(
+        id,
+        owner,
+        this.now(),
+        ...(runningRunId ? [runningRunId, owner, this.now()] : []),
+      )
       .first<{ status: string; receipt_json: string | null }>();
     if (!row || row.status === "revoked")
       throw new ApiError("CANCELLED", "地图操作已取消。");

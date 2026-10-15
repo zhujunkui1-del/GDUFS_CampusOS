@@ -1,0 +1,64 @@
+{
+  "recordedAt": "2026-10-15T17:40:00.377Z",
+  "worker": "campusos-preview",
+  "url": "https://campusos-preview.zhujunkui1.workers.dev",
+  "versionId": "3545d51c-e112-4e4f-bce2-774951f9609c",
+  "workerStartupValidationMs": 117,
+  "rawKiB": 14762.03,
+  "gzipKiB": 2398.74,
+  "publicHttps": true,
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "elapsedMs": 2539,
+      "contentType": "text/html; charset=utf-8",
+      "ray": "a4b09b1f08085de3-HKG"
+    },
+    {
+      "path": "/map",
+      "status": 200,
+      "elapsedMs": 430,
+      "contentType": "text/html; charset=utf-8",
+      "ray": "a4b09b261e5fe2dd-HKG"
+    },
+    {
+      "path": "/knowledge",
+      "status": 200,
+      "elapsedMs": 130,
+      "contentType": "text/html; charset=utf-8",
+      "ray": "a4b09b28bfaf5de3-HKG"
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "elapsedMs": 181,
+      "contentType": "application/json",
+      "ray": "a4b09b299862e2dd-HKG"
+    },
+    {
+      "path": "/api/agent/status",
+      "status": 200,
+      "elapsedMs": 356,
+      "contentType": "application/json",
+      "ray": "a4b09b2acb9ae2dd-HKG",
+      "chatAvailable": true,
+      "storageReady": true,
+      "modelReady": true
+    },
+    {
+      "path": "/api/agent/session",
+      "status": 200,
+      "elapsedMs": 350,
+      "contentType": "application/json",
+      "ray": "a4b09b2cf8e5e2dd-HKG",
+      "sessionCreated": true,
+      "secureCookie": true,
+      "httpOnlyCookie": true
+    }
+  ],
+  "initialVersionId": "5eeb6684-feda-4423-9868-e43e68deec86",
+  "assetsFiles": 98,
+  "previewEntry": "preview-worker.ts",
+  "updatedAt": "2026-10-15T18:30:02.427Z"
+}

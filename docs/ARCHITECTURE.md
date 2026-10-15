@@ -52,15 +52,21 @@ Next.js 本地服务和本地 workerd 预览均可启动。`wrangler.jsonc` 将 
 ## 当前地图架构（2026-10-13，D-018）
 
 默认 MapLibre 本地OSM渲染，不请求高德底图；校园WGS84数据、复合外环/内庭与未来模型共享版本。高德SDK只在用户主动在线查询/规划时加载，GCJ02服务结果由锁版本gcoord与WGS84底图对齐；旧 /api/map/coordinates 保留受限接口但不用于地图启动。MapAdapter/地点ID/MapAction边界不变，唯一实例由Provider维护，主相机/渲染前地面视口范围由本地适配器约束。源详情与维护见 LOCAL_MAP_MAINTENANCE.md。
+
 ## S2-A Agent核心（2026-10-15）
 
 src/lib/server/models承载受控DeepSeek ModelClient、ProviderRegistry、ModelRouter、管理员能力验证与Cloudflare/Node运行环境；src/lib/server/agent承载1总控、4逻辑域、SkillRegistry/ToolExecutor、局部限额与循环。秘密为JS私有字段或服务端环境，不进入客户端接口；ModelRouter要求实测记录而非配置声称支持工具。
 
 S2-A对话仅隔离诊断验证，业务注册表为空；/api/agent/status提供无付费查询，/api/agent/chat严格验证后503，原AssistantPanel继续准确禁用。S2-B/C接入现有真实地图服务、可信会话/路线快照和共享配额后启用，未复制/重构地图。已有D1会话/运行表尚未接DAO，不声称持久会话。完整边界与结果见S2_A_AGENT_CORE.md，模型失败与错误配置不影响mapRuntime/health。
 
-
 ## S2-C 共享AI与地图（2026-10-15，当前权威状态）
 
 原五Skill与Agent核心接入真实全局AssistantPanel，/api/agent/chat已为真实SSE，不再固定503。src/lib/server/assistant负责D1身份/会话/用量/路线/动作包与回执，模型输出经Schema和原控制器执行后才确认。34张业务表；建筑路线可跨运行时恢复，设备路线仅短期签名页面票据，精确位置不进模型/D1历史。配额使用D1原子INSERT触发器，关键DAO first-primary，未用KV/单实例内存假装共享强一致。原MapLibre/静态OSM/本地路网/南苑7栋未变，地图不依赖AI就绪。
 
 账号识别只接已有login_sessions验证DAO，个人业务权限仍关闭；/api/me和SMS产品流程尚未实现，不能据DAO测试宣称账号上线。详细架构/接口/容量/安全与实测见S2_C_AI_MAP_ACCEPTANCE.md。前面的S0/S1/S2-A段落是阶段历史，不覆盖当前状态。
+
+## S2-E隔离预览（2026-10-16）
+
+实际workers.dev使用专用D1/Secret、原5 Skill与同一Agent。为解决云端Free CPU观测到的超限，预览main薄封装转交原API函数，通过OpenNext生成的ALS提供相同可信绑定；其他页面走原OpenNext并读取ASSETS预渲染缓存。无新服务/地图渲染架构或业务Skill。私有API/SSE不缓存，Cookie/安全头/Origin/Schema/权限/额度不变。适配器升级须重新验证生成模块接口。
+
+Schema对象仅复用冻结定义元数据；业务结果仍按原Run隔离策略。D1回执JOIN同时检查运行中租约、动作/运行所有权和有效期，渐进轮询/40SQL软阈值保留最终化查询余量。真实Worker更新后共享D1恢复通过；多地域、内存及Free长期CPU容量尚未验证。生产main/资源未改，详见S2_E_CLOUDFLARE_PREVIEW_ACCEPTANCE.md。

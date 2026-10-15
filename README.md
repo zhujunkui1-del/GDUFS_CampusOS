@@ -71,3 +71,5 @@ Next dev 通过 OpenNext 开发绑定访问本地D1；Workers构建后用 `npm r
 S2-D本地验收与上线缺项见 [验收报告](docs/S2_D_AGENT_ACCEPTANCE.md)：AI/地图可直接清路线，手机步行面板支持保留最小档上下拖动。180单元和Chrome/Edge各61项常规回归通过，真实DeepSeek证据单列；云端与真实手机未完成，不作为公网试用就绪。
 
 Workers构建务必用 `npm run build:worker`：包装器移除OpenNext生成的服务端环境默认值并扫描残留秘密。不要绕过包装器直接构建发布；运行时模型密钥/签名Secret通过本地 `.dev.vars` 或云端Secret配置。离线核查可运行 `node tests/integration/verify-s2-d-artifacts.mjs`，它要求本机实际MODEL/签名Secret存在，仅输出计数/结论，不输出值。
+
+S2-E隔离HTTPS预览：[打开CampusOS地图](https://campusos-preview.zhujunkui1.workers.dev/map)。独立Worker/D1和云端真实Agent已运行，完整验收、截图、手机测试步骤及Free CPU风险见 [S2-E报告](docs/S2_E_CLOUDFLARE_PREVIEW_ACCEPTANCE.md)。低频功能通过不等于免费套餐长期稳定或生产已就绪；正式域名/生产库/套餐仍需另批。模型能力24小时到期须管理员重新验证并更新预览Secret，当前未自动安排付费刷新。

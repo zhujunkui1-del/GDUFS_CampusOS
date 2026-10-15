@@ -1,4 +1,9 @@
 import { defineCloudflareConfig } from "@opennextjs/cloudflare";
+import staticAssetsIncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/static-assets-incremental-cache";
 
-// S0 does not need an R2 incremental cache or any cloud resources.
-export default defineCloudflareConfig();
+// Existing pages are prerendered. Cache them in the existing ASSETS binding;
+// private API/SSE responses remain dynamic and never enter this cache.
+export default defineCloudflareConfig({
+  incrementalCache: staticAssetsIncrementalCache,
+  enableCacheInterception: true,
+});

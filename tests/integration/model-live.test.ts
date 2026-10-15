@@ -12,13 +12,15 @@ test.skipIf(process.env.MODEL_LIVE_TEST !== "1")(
     });
     expect(result.evidence.requests).toBe(3);
     await mkdir("test-results", { recursive: true });
-    await mkdir("docs/verification/s2-a", { recursive: true });
+    const capture =
+      process.env.MODEL_VERIFICATION_CAPTURE_DIR || "docs/verification/s2-a";
+    await mkdir(capture, { recursive: true });
     await writeFile(
       "test-results/model-capability-receipt.json",
       JSON.stringify(result.receipt),
     );
     await writeFile(
-      "docs/verification/s2-a/model-live.json",
+      `${capture}/model-live.json`,
       JSON.stringify(result.evidence, null, 2) + "\n",
     );
   },

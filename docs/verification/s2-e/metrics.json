@@ -1,0 +1,627 @@
+{
+  "recordedAt": "2026-10-15T18:26:25.805Z",
+  "realModel": true,
+  "note": "Final saved browser matrix only; earlier debug runs are excluded here. Location cancellation lacks final usage. Latency includes tools/browser ACK and final model stream, not just network TTFT.",
+  "groups": {
+    "live\\chrome-desktop-concurrency": {
+      "tasks": 1,
+      "completed": 0,
+      "errors": [],
+      "missingTerminalOrUsage": 1,
+      "incompleteUsage": 0,
+      "upstreamRequests": 0,
+      "correctionRetries": 0,
+      "knownPromptTokens": 0,
+      "knownCompletionTokens": 0,
+      "knownCachedPromptTokens": 0,
+      "knownTotalTokens": 0,
+      "measuredDurationMs": null,
+      "estimatedKnownUsdRange": [
+        0,
+        0
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true,
+      "timingMs": {
+        "version": "camera-settled-v2",
+        "settledSamples": 0,
+        "supersededSamples": 0,
+        "clientHeaders": null,
+        "clientFirstText": null,
+        "clientCompleted": null,
+        "preparation": null,
+        "mapAction": null,
+        "databasePerChat": null,
+        "upstreamRequest": null,
+        "upstreamFirstText": null,
+        "skills": {
+          "search_places": null,
+          "get_place_details": null,
+          "find_nearby_places": null,
+          "plan_route": null,
+          "control_map": null
+        }
+      },
+      "databaseCallsInChat": 0,
+      "databaseReadStatements": 0,
+      "databaseWriteStatements": 0
+    },
+    "live\\chrome-desktop-live": {
+      "tasks": 9,
+      "completed": 8,
+      "errors": [
+        "NOT_FOUND"
+      ],
+      "missingTerminalOrUsage": 0,
+      "incompleteUsage": 0,
+      "upstreamRequests": 22,
+      "correctionRetries": 0,
+      "knownPromptTokens": 28402,
+      "knownCompletionTokens": 1161,
+      "knownCachedPromptTokens": 14976,
+      "knownTotalTokens": 29563,
+      "measuredDurationMs": {
+        "p50": 4354,
+        "p95": 5197,
+        "min": 987,
+        "max": 5197
+      },
+      "estimatedKnownUsdRange": [
+        0.0027554279999999994,
+        0.005510855999999999
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true,
+      "timingMs": {
+        "version": "camera-settled-v2",
+        "settledSamples": 9,
+        "supersededSamples": 0,
+        "clientHeaders": {
+          "samples": 9,
+          "p50": 547,
+          "p95": 604,
+          "min": 491,
+          "max": 604
+        },
+        "clientFirstText": {
+          "samples": 8,
+          "p50": 4720,
+          "p95": 5384,
+          "min": 1951,
+          "max": 5384
+        },
+        "clientCompleted": {
+          "samples": 9,
+          "p50": 5149,
+          "p95": 5923,
+          "min": 1683,
+          "max": 5923
+        },
+        "preparation": {
+          "samples": 9,
+          "p50": 443,
+          "p95": 526,
+          "min": 411,
+          "max": 526
+        },
+        "mapAction": {
+          "samples": 7,
+          "p50": 1790,
+          "p95": 1851,
+          "min": 990,
+          "max": 1851
+        },
+        "databasePerChat": {
+          "samples": 9,
+          "p50": 1255,
+          "p95": 1508,
+          "min": 585,
+          "max": 1508
+        },
+        "upstreamRequest": {
+          "samples": 22,
+          "p50": 762,
+          "p95": 945,
+          "min": 563,
+          "max": 967
+        },
+        "upstreamFirstText": {
+          "samples": 8,
+          "p50": 501,
+          "p95": 775,
+          "min": 449,
+          "max": 775
+        },
+        "skills": {
+          "search_places": {
+            "samples": 4,
+            "p50": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "get_place_details": null,
+          "find_nearby_places": {
+            "samples": 1,
+            "p50": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "plan_route": {
+            "samples": 2,
+            "p50": 132,
+            "p95": 149,
+            "min": 132,
+            "max": 149
+          },
+          "control_map": {
+            "samples": 7,
+            "p50": 0,
+            "p95": 57,
+            "min": 0,
+            "max": 57
+          }
+        }
+      },
+      "databaseCallsInChat": 172,
+      "databaseReadStatements": 133,
+      "databaseWriteStatements": 111
+    },
+    "live\\chrome-mobile-location": {
+      "tasks": 3,
+      "completed": 2,
+      "errors": [],
+      "missingTerminalOrUsage": 1,
+      "incompleteUsage": 0,
+      "upstreamRequests": 4,
+      "correctionRetries": 0,
+      "knownPromptTokens": 4076,
+      "knownCompletionTokens": 288,
+      "knownCachedPromptTokens": 2688,
+      "knownTotalTokens": 4364,
+      "measuredDurationMs": {
+        "p50": 1586,
+        "p95": 4933,
+        "min": 1586,
+        "max": 4933
+      },
+      "estimatedKnownUsdRange": [
+        0.00038906400000000005,
+        0.0007781280000000001
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true,
+      "timingMs": {
+        "version": "camera-settled-v2",
+        "settledSamples": 2,
+        "supersededSamples": 0,
+        "clientHeaders": {
+          "samples": 2,
+          "p50": 524,
+          "p95": 657,
+          "min": 524,
+          "max": 657
+        },
+        "clientFirstText": {
+          "samples": 2,
+          "p50": 2133,
+          "p95": 5161,
+          "min": 2133,
+          "max": 5161
+        },
+        "clientCompleted": {
+          "samples": 2,
+          "p50": 2314,
+          "p95": 6104,
+          "min": 2314,
+          "max": 6104
+        },
+        "preparation": {
+          "samples": 2,
+          "p50": 417,
+          "p95": 569,
+          "min": 417,
+          "max": 569
+        },
+        "mapAction": {
+          "samples": 1,
+          "p50": 1799,
+          "p95": 1799,
+          "min": 1799,
+          "max": 1799
+        },
+        "databasePerChat": {
+          "samples": 2,
+          "p50": 586,
+          "p95": 1598,
+          "min": 586,
+          "max": 1598
+        },
+        "upstreamRequest": {
+          "samples": 4,
+          "p50": 748,
+          "p95": 1417,
+          "min": 733,
+          "max": 1417
+        },
+        "upstreamFirstText": {
+          "samples": 2,
+          "p50": 335,
+          "p95": 1199,
+          "min": 335,
+          "max": 1199
+        },
+        "skills": {
+          "search_places": null,
+          "get_place_details": null,
+          "find_nearby_places": null,
+          "plan_route": {
+            "samples": 1,
+            "p50": 140,
+            "p95": 140,
+            "min": 140,
+            "max": 140
+          },
+          "control_map": {
+            "samples": 1,
+            "p50": 60,
+            "p95": 60,
+            "min": 60,
+            "max": 60
+          }
+        }
+      },
+      "databaseCallsInChat": 36,
+      "databaseReadStatements": 25,
+      "databaseWriteStatements": 27
+    },
+    "live\\msedge-desktop-details-live": {
+      "tasks": 1,
+      "completed": 1,
+      "errors": [],
+      "missingTerminalOrUsage": 0,
+      "incompleteUsage": 0,
+      "upstreamRequests": 3,
+      "correctionRetries": 0,
+      "knownPromptTokens": 6590,
+      "knownCompletionTokens": 165,
+      "knownCachedPromptTokens": 4096,
+      "knownTotalTokens": 6755,
+      "measuredDurationMs": {
+        "p50": 3237,
+        "p95": 3237,
+        "min": 3237,
+        "max": 3237
+      },
+      "estimatedKnownUsdRange": [
+        0.00048538799999999995,
+        0.0009707759999999999
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true,
+      "timingMs": {
+        "version": "camera-settled-v2",
+        "settledSamples": 1,
+        "supersededSamples": 0,
+        "clientHeaders": {
+          "samples": 1,
+          "p50": 693,
+          "p95": 693,
+          "min": 693,
+          "max": 693
+        },
+        "clientFirstText": {
+          "samples": 1,
+          "p50": 3811,
+          "p95": 3811,
+          "min": 3811,
+          "max": 3811
+        },
+        "clientCompleted": {
+          "samples": 1,
+          "p50": 4071,
+          "p95": 4071,
+          "min": 4071,
+          "max": 4071
+        },
+        "preparation": {
+          "samples": 1,
+          "p50": 570,
+          "p95": 570,
+          "min": 570,
+          "max": 570
+        },
+        "mapAction": null,
+        "databasePerChat": {
+          "samples": 1,
+          "p50": 1095,
+          "p95": 1095,
+          "min": 1095,
+          "max": 1095
+        },
+        "upstreamRequest": {
+          "samples": 3,
+          "p50": 917,
+          "p95": 979,
+          "min": 816,
+          "max": 979
+        },
+        "upstreamFirstText": null,
+        "skills": {
+          "search_places": {
+            "samples": 1,
+            "p50": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "get_place_details": {
+            "samples": 1,
+            "p50": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "find_nearby_places": null,
+          "plan_route": null,
+          "control_map": null
+        }
+      },
+      "databaseCallsInChat": 17,
+      "databaseReadStatements": 13,
+      "databaseWriteStatements": 12
+    },
+    "live\\msedge-mobile-live": {
+      "tasks": 9,
+      "completed": 8,
+      "errors": [
+        "NOT_FOUND"
+      ],
+      "missingTerminalOrUsage": 0,
+      "incompleteUsage": 0,
+      "upstreamRequests": 22,
+      "correctionRetries": 0,
+      "knownPromptTokens": 28217,
+      "knownCompletionTokens": 1156,
+      "knownCachedPromptTokens": 15104,
+      "knownTotalTokens": 29373,
+      "measuredDurationMs": {
+        "p50": 4777,
+        "p95": 5265,
+        "min": 1012,
+        "max": 5265
+      },
+      "estimatedKnownUsdRange": [
+        0.002705862,
+        0.005411724
+      ],
+      "costIsInvoice": false,
+      "unknownUsageIsNotZeroCost": true,
+      "timingMs": {
+        "version": "camera-settled-v2",
+        "settledSamples": 9,
+        "supersededSamples": 0,
+        "clientHeaders": {
+          "samples": 9,
+          "p50": 556,
+          "p95": 995,
+          "min": 485,
+          "max": 995
+        },
+        "clientFirstText": {
+          "samples": 8,
+          "p50": 5023,
+          "p95": 5467,
+          "min": 2308,
+          "max": 5467
+        },
+        "clientCompleted": {
+          "samples": 9,
+          "p50": 5504,
+          "p95": 5953,
+          "min": 1924,
+          "max": 5953
+        },
+        "preparation": {
+          "samples": 9,
+          "p50": 424,
+          "p95": 513,
+          "min": 410,
+          "max": 513
+        },
+        "mapAction": {
+          "samples": 7,
+          "p50": 1793,
+          "p95": 1795,
+          "min": 993,
+          "max": 1795
+        },
+        "databasePerChat": {
+          "samples": 9,
+          "p50": 1227,
+          "p95": 1419,
+          "min": 589,
+          "max": 1419
+        },
+        "upstreamRequest": {
+          "samples": 22,
+          "p50": 844,
+          "p95": 1190,
+          "min": 625,
+          "max": 1305
+        },
+        "upstreamFirstText": {
+          "samples": 8,
+          "p50": 586,
+          "p95": 784,
+          "min": 409,
+          "max": 784
+        },
+        "skills": {
+          "search_places": {
+            "samples": 4,
+            "p50": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "get_place_details": null,
+          "find_nearby_places": {
+            "samples": 1,
+            "p50": 0,
+            "p95": 0,
+            "min": 0,
+            "max": 0
+          },
+          "plan_route": {
+            "samples": 2,
+            "p50": 130,
+            "p95": 132,
+            "min": 130,
+            "max": 132
+          },
+          "control_map": {
+            "samples": 7,
+            "p50": 0,
+            "p95": 59,
+            "min": 0,
+            "max": 59
+          }
+        }
+      },
+      "databaseCallsInChat": 172,
+      "databaseReadStatements": 133,
+      "databaseWriteStatements": 111
+    }
+  },
+  "total": {
+    "tasks": 23,
+    "completed": 19,
+    "errors": [
+      "NOT_FOUND",
+      "NOT_FOUND"
+    ],
+    "missingTerminalOrUsage": 2,
+    "incompleteUsage": 0,
+    "upstreamRequests": 51,
+    "correctionRetries": 0,
+    "knownPromptTokens": 67285,
+    "knownCompletionTokens": 2770,
+    "knownCachedPromptTokens": 36864,
+    "knownTotalTokens": 70055,
+    "measuredDurationMs": {
+      "p50": 4354,
+      "p95": 5197,
+      "min": 987,
+      "max": 5265
+    },
+    "estimatedKnownUsdRange": [
+      0.006335741999999998,
+      0.012671483999999997
+    ],
+    "costIsInvoice": false,
+    "unknownUsageIsNotZeroCost": true,
+    "timingMs": {
+      "version": "camera-settled-v2",
+      "settledSamples": 21,
+      "supersededSamples": 0,
+      "clientHeaders": {
+        "samples": 21,
+        "p50": 555,
+        "p95": 732,
+        "min": 485,
+        "max": 995
+      },
+      "clientFirstText": {
+        "samples": 19,
+        "p50": 4776,
+        "p95": 5467,
+        "min": 1951,
+        "max": 5467
+      },
+      "clientCompleted": {
+        "samples": 21,
+        "p50": 5149,
+        "p95": 5953,
+        "min": 1683,
+        "max": 6104
+      },
+      "preparation": {
+        "samples": 21,
+        "p50": 430,
+        "p95": 569,
+        "min": 410,
+        "max": 570
+      },
+      "mapAction": {
+        "samples": 15,
+        "p50": 1793,
+        "p95": 1851,
+        "min": 990,
+        "max": 1851
+      },
+      "databasePerChat": {
+        "samples": 21,
+        "p50": 1227,
+        "p95": 1508,
+        "min": 585,
+        "max": 1598
+      },
+      "upstreamRequest": {
+        "samples": 51,
+        "p50": 816,
+        "p95": 1190,
+        "min": 563,
+        "max": 1417
+      },
+      "upstreamFirstText": {
+        "samples": 18,
+        "p50": 577,
+        "p95": 1199,
+        "min": 335,
+        "max": 1199
+      },
+      "skills": {
+        "search_places": {
+          "samples": 9,
+          "p50": 0,
+          "p95": 0,
+          "min": 0,
+          "max": 0
+        },
+        "get_place_details": {
+          "samples": 1,
+          "p50": 0,
+          "p95": 0,
+          "min": 0,
+          "max": 0
+        },
+        "find_nearby_places": {
+          "samples": 2,
+          "p50": 0,
+          "p95": 0,
+          "min": 0,
+          "max": 0
+        },
+        "plan_route": {
+          "samples": 5,
+          "p50": 132,
+          "p95": 149,
+          "min": 130,
+          "max": 149
+        },
+        "control_map": {
+          "samples": 15,
+          "p50": 0,
+          "p95": 60,
+          "min": 0,
+          "max": 60
+        }
+      }
+    },
+    "databaseCallsInChat": 397,
+    "databaseReadStatements": 304,
+    "databaseWriteStatements": 261
+  }
+}

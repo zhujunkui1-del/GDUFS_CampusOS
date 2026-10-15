@@ -1,0 +1,700 @@
+{
+  "recordedAt": "2026-10-15T18:00:00.186Z",
+  "actualCloudTail": true,
+  "rawLogsStored": false,
+  "records": [
+    {
+      "at": 1792086968102,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 12,
+      "wallTimeMs": 455,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792086969416,
+      "path": "/api/agent/status",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 88,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792086969971,
+      "path": "/api/agent/session",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 10,
+      "wallTimeMs": 275,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087003885,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 11,
+      "wallTimeMs": 25,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087005014,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 22,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087005020,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 388,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087005020,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 397,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087005524,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 46,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087005947,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 23,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087006043,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 13,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087005015,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 12,
+      "wallTimeMs": 404,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087005096,
+      "path": "/favorites",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 415,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087005229,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 436,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087005517,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 447,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087007004,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 80,
+      "wallTimeMs": 5318,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087012634,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 73,
+      "wallTimeMs": 3240,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087019328,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 261,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087020298,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 133,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087016144,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 239,
+      "wallTimeMs": 5723,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087024521,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 136,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087025695,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 135,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087022434,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 49,
+      "wallTimeMs": 4629,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087029238,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 130,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087029461,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 133,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087027508,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 33,
+      "wallTimeMs": 3450,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087031522,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 26,
+      "wallTimeMs": 1614,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087033196,
+      "path": "/api/agent/cancel",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 131,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087036077,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 130,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087036994,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 130,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087033410,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 43,
+      "wallTimeMs": 5113,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087041697,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 260,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087042886,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 132,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087038924,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 103,
+      "wallTimeMs": 5634,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087047923,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 130,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087048770,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 130,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087045048,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 50,
+      "wallTimeMs": 5297,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087050608,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 9,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087050814,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 9,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087050816,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 25,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087050817,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 29,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087050818,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 32,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087052244,
+      "path": "/api/agent/routes/REDACTED",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 129,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087117268,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 9,
+      "wallTimeMs": 27,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087118270,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 16,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087118505,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 30,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087118268,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 28,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087118268,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 9,
+      "wallTimeMs": 26,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087118268,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 29,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087118395,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 36,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087118777,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 12,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087118777,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 19,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087118777,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 19,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087118778,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 20,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087122432,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 133,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087123502,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 127,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087119793,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 52,
+      "wallTimeMs": 5381,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087126173,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 36,
+      "wallTimeMs": 2839,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087132929,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 247,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087134073,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 135,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087129812,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 216,
+      "wallTimeMs": 5811,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087138228,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 139,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087139289,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 123,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087136678,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 25,
+      "wallTimeMs": 4059,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087142909,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 133,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087143466,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 131,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087141342,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 25,
+      "wallTimeMs": 3223,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087144818,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 34,
+      "wallTimeMs": 1648,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087146995,
+      "path": "/api/agent/cancel",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 118,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087149803,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 130,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087151163,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 125,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087147020,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 32,
+      "wallTimeMs": 5394,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087155545,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 253,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087156709,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 125,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087152742,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 48,
+      "wallTimeMs": 5476,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087161562,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 127,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087162599,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 128,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792087159000,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 32,
+      "wallTimeMs": 4836,
+      "exceptionCount": 0
+    }
+  ]
+}

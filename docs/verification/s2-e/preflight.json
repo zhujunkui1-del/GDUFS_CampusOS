@@ -1,0 +1,41 @@
+{
+  "recordedAt": "2026-10-15T17:12:13.026Z",
+  "accountMatches": true,
+  "workerSettings": {
+    "default_usage_model": "standard",
+    "green_compute": false
+  },
+  "workers": {
+    "count": 3,
+    "previewExists": false
+  },
+  "d1": {
+    "count": 2,
+    "previewExists": false,
+    "totalBytes": 311296
+  },
+  "workersDevConfigured": true,
+  "workersPlan": "Free",
+  "planVerifiedFromDashboard": true,
+  "quotaDayUtc": "2026-10-15",
+  "accountUsage": {
+    "d1AnalyticsAdaptiveGroups": [
+      {
+        "sum": {
+          "rowsRead": 3694,
+          "rowsWritten": 0
+        }
+      }
+    ],
+    "workersInvocationsAdaptive": [
+      {
+        "sum": {
+          "errors": 0,
+          "requests": 125,
+          "subrequests": 0
+        }
+      }
+    ]
+  },
+  "subscriptionApiReadable": false
+}

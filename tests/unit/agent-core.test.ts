@@ -88,6 +88,20 @@ function toolReply(calls = [call()]): ModelReply {
 }
 afterEach(() => vi.useRealTimers());
 
+it("shares frozen schema metadata without sharing executors or authorization", async () => {
+  const a = registry();
+  const b = registry({ auth: "user" });
+  expect(a.get("test_echo")!.tool.function.parameters).toBe(
+    b.get("test_echo")!.tool.function.parameters,
+  );
+  expect(Object.isFrozen(a.get("test_echo")!.tool.function.parameters)).toBe(
+    true,
+  );
+  expect(a.get("test_echo")!.run).not.toBe(b.get("test_echo")!.run);
+  expect(a.tools(context)).toHaveLength(1);
+  expect(b.tools(context)).toHaveLength(0);
+});
+
 it("reuses an identical read-only tool result across different model call IDs", async () => {
   const execute = vi.fn(definition.execute);
   const provider = new MockModelProvider([

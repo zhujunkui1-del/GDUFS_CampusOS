@@ -1,0 +1,59 @@
+{
+  "recordedAt": "2026-10-15T18:35:12.935Z",
+  "workersCount": 4,
+  "onlyExpectedNewWorker": true,
+  "otherWorkersUnchanged": true,
+  "databasesCount": 3,
+  "previewDatabaseMatches": true,
+  "otherDatabaseBytes": 311296,
+  "bindings": [
+    {
+      "name": "AGENT_SIGNING_SECRET",
+      "type": "secret_text"
+    },
+    {
+      "name": "APP_ENV",
+      "type": "plain_text"
+    },
+    {
+      "name": "ASSETS",
+      "type": "assets"
+    },
+    {
+      "name": "DB",
+      "type": "d1",
+      "databaseId": "18299abc-b38b-4494-8d12-8ab4d482c304"
+    },
+    {
+      "name": "MAP_RATE_LIMITER",
+      "type": "ratelimit"
+    },
+    {
+      "name": "MODEL_API_KEY",
+      "type": "secret_text"
+    },
+    {
+      "name": "MODEL_BASE_URL",
+      "type": "secret_text"
+    },
+    {
+      "name": "MODEL_CAPABILITIES_JSON",
+      "type": "secret_text"
+    },
+    {
+      "name": "MODEL_NAME",
+      "type": "secret_text"
+    },
+    {
+      "name": "WORKER_SELF_REFERENCE",
+      "type": "service",
+      "service": "campusos-preview"
+    }
+  ],
+  "workersDevEnabled": true,
+  "versionPreviewUrlsEnabled": false,
+  "previewCustomDomainCount": 0,
+  "deploymentId": "5f922422-a1b8-4837-b310-9e028aa57fd5",
+  "versionId": "3545d51c-e112-4e4f-bce2-774951f9609c",
+  "dnsApiRecheckUnavailable": true
+}

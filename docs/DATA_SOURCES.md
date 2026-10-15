@@ -226,3 +226,11 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 负责人已登录Edge控制台与CLI只读核查：无CampusOS Worker/D1、目标域名0DNS/证书Active。截图裁去私人账户信息；公共DoH无A记录，本机198.18/15代理地址不视作真实公网解析。来源为[Cloudflare控制台](https://dash.cloudflare.com/5328fbf5ef7ef40f7743723c2c192499/workers-and-pages)、[IANA地址注册表](https://www.iana.org/assignments/iana-ipv4-special-registry/)、[Workers限制](https://developers.cloudflare.com/workers/platform/limits/)。未改账户资源/DNS/HTTPS或公开发布。
 
 构建净化依据锁定OpenNext1.20.10本机extract-project-env-vars/compile-env-files源码及[官方环境变量文档](https://opennext.js.org/cloudflare/howtos/env-vars)，保留无值命中路径前后证据。开发链漏洞核对[GitHub官方公告](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm)，当前无补丁；来源检查不等于供应链完整安全证明。
+
+## SRC-053｜S2-E实际Cloudflare预览、SQL兼容与性能（2026-10-16）
+
+来源为负责人预览/1元模型测试明确授权、当前Cloudflare控制台Free套餐、Wrangler4.149/OpenNext1.20.10实际发布、真实workers.dev请求、Cloudflare Tail/GraphQL/D1 meta与Chrome/Edge实际截图。独立预览URL及资源名/非秘密UUID见S2_E_CLOUDFLARE_PREVIEW_ACCEPTANCE.md；不记录账户邮箱/认证Token/Key/签名值/私人GPS，测试Cookie只在忽略目录，不提交。未采集新的地理/照片/模型资源；原OSM、路网及S7许可/资产不变。
+
+技术核对：[Workers限制](https://developers.cloudflare.com/workers/platform/limits/)、[D1限制](https://developers.cloudflare.com/d1/platform/limits/)、[D1价格](https://developers.cloudflare.com/d1/platform/pricing/)、[OpenNext静态缓存](https://opennext.js.org/cloudflare/caching#ssg-site)、[自定义入口](https://opennext.js.org/cloudflare/howtos/custom-worker)、[D1触发器CASE兼容问题](https://github.com/cloudflare/workers-sdk/issues/4727)。复用生成ALS的入口与当前适配器版本绑定，升级时必须回归。
+
+成本来自[DeepSeek官方人民币价格](https://api-docs.deepseek.com/zh-cn/quick_start/pricing/)与实际usage/余额变化，后者可能包括同期其他调用，不是项目独立账单。同步工具0ms受[Workers只在IO后前进的时钟](https://developers.cloudflare.com/workers/runtime-apis/performance/)限制；CPU采用平台Tail，GraphQL CPU微秒转换不能与墙钟混淆。内存/逐请求完整子请求、真实手机GPS及跨地域明确未验证，未用本地双worker结果替代。

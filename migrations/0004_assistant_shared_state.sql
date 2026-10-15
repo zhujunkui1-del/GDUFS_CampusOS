@@ -29,14 +29,14 @@ CREATE INDEX assistant_run_quota ON agent_runs(owner_key,started_at_ms);
 CREATE INDEX assistant_run_global ON agent_runs(started_at_ms,status,lease_until_ms);
 -- One atomic INSERT reserves identity, concurrency, request and token budgets together.
 CREATE TRIGGER assistant_run_limits BEFORE INSERT ON agent_runs WHEN NEW.owner_key IS NOT NULL BEGIN
-  SELECT CASE WHEN EXISTS(SELECT 1 FROM agent_runs WHERE owner_key=NEW.owner_key AND status='running' AND lease_until_ms>NEW.started_at_ms) THEN RAISE(ABORT,'AGENT_BUSY') END;
-  SELECT CASE WHEN (SELECT count(*) FROM agent_runs WHERE status='running' AND lease_until_ms>NEW.started_at_ms)>=4 THEN RAISE(ABORT,'AGENT_SITE_BUSY') END;
-  SELECT CASE WHEN (SELECT count(*) FROM agent_runs WHERE owner_key=NEW.owner_key AND started_at_ms>NEW.started_at_ms-3600000)>=CASE WHEN NEW.is_user=1 THEN 60 ELSE 20 END THEN RAISE(ABORT,'AGENT_QUOTA') END;
-  SELECT CASE WHEN (SELECT count(*) FROM agent_runs WHERE owner_key=NEW.owner_key AND started_at_ms>NEW.started_at_ms-86400000)>=CASE WHEN NEW.is_user=1 THEN 120 ELSE 30 END THEN RAISE(ABORT,'AGENT_QUOTA') END;
-  SELECT CASE WHEN (SELECT count(*) FROM agent_runs WHERE started_at_ms>NEW.started_at_ms-86400000)>=200 THEN RAISE(ABORT,'AGENT_SITE_QUOTA') END;
-  SELECT CASE WHEN (SELECT count(*) FROM agent_runs WHERE ip_key=NEW.ip_key AND started_at_ms>NEW.started_at_ms-3600000)>=120 THEN RAISE(ABORT,'AGENT_IP_QUOTA') END;
-  SELECT CASE WHEN COALESCE((SELECT sum(charged_tokens) FROM agent_runs WHERE owner_key=NEW.owner_key AND started_at_ms>NEW.started_at_ms-86400000),0)+NEW.charged_tokens>CASE WHEN NEW.is_user=1 THEN 2000000 ELSE 600000 END THEN RAISE(ABORT,'AGENT_TOKEN_QUOTA') END;
-  SELECT CASE WHEN COALESCE((SELECT sum(charged_tokens) FROM agent_runs WHERE started_at_ms>NEW.started_at_ms-86400000),0)+NEW.charged_tokens>5000000 THEN RAISE(ABORT,'AGENT_SITE_TOKEN_QUOTA') END;
+  SELECT (CASE WHEN EXISTS(SELECT 1 FROM agent_runs WHERE owner_key=NEW.owner_key AND status='running' AND lease_until_ms>NEW.started_at_ms) THEN RAISE(ABORT,'AGENT_BUSY') END);
+  SELECT (CASE WHEN (SELECT count(*) FROM agent_runs WHERE status='running' AND lease_until_ms>NEW.started_at_ms)>=4 THEN RAISE(ABORT,'AGENT_SITE_BUSY') END);
+  SELECT (CASE WHEN (SELECT count(*) FROM agent_runs WHERE owner_key=NEW.owner_key AND started_at_ms>NEW.started_at_ms-3600000)>=CASE WHEN NEW.is_user=1 THEN 60 ELSE 20 END THEN RAISE(ABORT,'AGENT_QUOTA') END);
+  SELECT (CASE WHEN (SELECT count(*) FROM agent_runs WHERE owner_key=NEW.owner_key AND started_at_ms>NEW.started_at_ms-86400000)>=CASE WHEN NEW.is_user=1 THEN 120 ELSE 30 END THEN RAISE(ABORT,'AGENT_QUOTA') END);
+  SELECT (CASE WHEN (SELECT count(*) FROM agent_runs WHERE started_at_ms>NEW.started_at_ms-86400000)>=200 THEN RAISE(ABORT,'AGENT_SITE_QUOTA') END);
+  SELECT (CASE WHEN (SELECT count(*) FROM agent_runs WHERE ip_key=NEW.ip_key AND started_at_ms>NEW.started_at_ms-3600000)>=120 THEN RAISE(ABORT,'AGENT_IP_QUOTA') END);
+  SELECT (CASE WHEN COALESCE((SELECT sum(charged_tokens) FROM agent_runs WHERE owner_key=NEW.owner_key AND started_at_ms>NEW.started_at_ms-86400000),0)+NEW.charged_tokens>CASE WHEN NEW.is_user=1 THEN 2000000 ELSE 600000 END THEN RAISE(ABORT,'AGENT_TOKEN_QUOTA') END);
+  SELECT (CASE WHEN COALESCE((SELECT sum(charged_tokens) FROM agent_runs WHERE started_at_ms>NEW.started_at_ms-86400000),0)+NEW.charged_tokens>5000000 THEN RAISE(ABORT,'AGENT_SITE_TOKEN_QUOTA') END);
 END;
 CREATE TABLE assistant_route_refs (
   id TEXT PRIMARY KEY, owner_key TEXT NOT NULL, expires_at_ms INTEGER NOT NULL,
@@ -57,13 +57,13 @@ CREATE TABLE assistant_location_challenges (
   nonce_hash TEXT PRIMARY KEY,owner_key TEXT NOT NULL,expires_at_ms INTEGER NOT NULL
 );
 CREATE TRIGGER assistant_session_capacity BEFORE INSERT ON assistant_sessions BEGIN
-  SELECT CASE WHEN (SELECT count(*) FROM assistant_sessions)>=10000 THEN RAISE(ABORT,'AGENT_SESSION_CAPACITY') END;
+  SELECT (CASE WHEN (SELECT count(*) FROM assistant_sessions)>=10000 THEN RAISE(ABORT,'AGENT_SESSION_CAPACITY') END);
 END;
 CREATE TRIGGER assistant_conversation_capacity BEFORE INSERT ON conversations WHEN NEW.owner_key IS NOT NULL BEGIN
-  SELECT CASE WHEN (SELECT count(*) FROM conversations WHERE owner_key=NEW.owner_key)>=5 THEN RAISE(ABORT,'AGENT_CONVERSATION_CAPACITY') END;
-  SELECT CASE WHEN (SELECT count(*) FROM conversations WHERE owner_key IS NOT NULL)>=5000 THEN RAISE(ABORT,'AGENT_CONVERSATION_CAPACITY') END;
+  SELECT (CASE WHEN (SELECT count(*) FROM conversations WHERE owner_key=NEW.owner_key)>=5 THEN RAISE(ABORT,'AGENT_CONVERSATION_CAPACITY') END);
+  SELECT (CASE WHEN (SELECT count(*) FROM conversations WHERE owner_key IS NOT NULL)>=5000 THEN RAISE(ABORT,'AGENT_CONVERSATION_CAPACITY') END);
 END;
 CREATE TRIGGER assistant_route_capacity BEFORE INSERT ON assistant_route_refs BEGIN
   DELETE FROM assistant_route_refs WHERE id IN (SELECT id FROM assistant_route_refs WHERE owner_key=NEW.owner_key ORDER BY expires_at_ms DESC LIMIT -1 OFFSET 99);
-  SELECT CASE WHEN (SELECT count(*) FROM assistant_route_refs)>=10000 THEN RAISE(ABORT,'AGENT_ROUTE_CAPACITY') END;
+  SELECT (CASE WHEN (SELECT count(*) FROM assistant_route_refs)>=10000 THEN RAISE(ABORT,'AGENT_ROUTE_CAPACITY') END);
 END;

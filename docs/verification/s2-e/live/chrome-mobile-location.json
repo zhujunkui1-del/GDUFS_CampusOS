@@ -1,0 +1,158 @@
+{
+  "realModel": true,
+  "browser": "148.0.7778.97",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "controlledPublicCampusLocation": true,
+  "actualHardwareGPS": false,
+  "permissionDenialBranchSimulated": true,
+  "denialWasSafeRejection": false,
+  "realRequestCancellation": true,
+  "records": [
+    {
+      "prompt": "从我现在的位置到图书馆怎么走？",
+      "tools": [
+        "plan_route",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SHOW_ROUTE",
+          "routeId": "479c8038-d2bb-4362-a7d8-5fff54f2d548"
+        }
+      ],
+      "result": {
+        "conversationId": "32c2d1eb-0560-44bb-a3d9-67bb95394730",
+        "requestId": "0ad479ca-4f8d-4d38-927b-b42da59ec3de",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 923,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 748,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 733,
+              "firstTextMs": 335
+            }
+          ],
+          "promptTokens": 3642,
+          "completionTokens": 269,
+          "cachedPromptTokens": 2432,
+          "totalTokens": 3911,
+          "usageComplete": true,
+          "chargedTokens": 3911,
+          "durationMs": 4933,
+          "estimatedUsdRange": [
+            0.00035019600000000005,
+            0.0007003920000000001
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 569,
+            "serverElapsedMs": 5502,
+            "firstTextMs": 5045,
+            "mapActionMs": 1799,
+            "skills": [
+              {
+                "name": "plan_route",
+                "durationMs": 140,
+                "ok": true
+              },
+              {
+                "name": "control_map",
+                "durationMs": 60,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 18,
+              "writeQueries": 16,
+              "calls": 26,
+              "failures": 0,
+              "durationMs": 1598,
+              "maxCallMs": 72
+            }
+          }
+        }
+      },
+      "response": "从你当前位置步行到图书馆：约 895 米，预计 12 分钟，路线会经过一段下沉隧道并穿越教学实验楼可通行区域。\n\n主要路段：前往最近步道 53 米 → 校内步道 255 米 → 台阶 112 米（留意脚下）→ 下沉隧道 70 米 → 出隧道台阶 53 米 → 校内步道 92 米 → 教学实验楼可通行区域 228 米 → 步道 34 米到达图书馆。\n\n路线已在地图上显示。",
+      "responseHeadersMs": 657,
+      "firstTextMs": 5161,
+      "completeMs": 6104
+    },
+    {
+      "prompt": "从我的位置到图书馆怎么走？",
+      "tools": [],
+      "actions": [],
+      "result": {
+        "conversationId": "32c2d1eb-0560-44bb-a3d9-67bb95394730",
+        "requestId": "dc22d353-4623-43d8-b7f5-264e789c269d",
+        "metrics": {
+          "requests": 1,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1417,
+              "firstTextMs": 1199
+            }
+          ],
+          "promptTokens": 434,
+          "completionTokens": 19,
+          "cachedPromptTokens": 256,
+          "totalTokens": 453,
+          "usageComplete": true,
+          "chargedTokens": 453,
+          "durationMs": 1586,
+          "estimatedUsdRange": [
+            0.000038868,
+            0.000077736
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 417,
+            "serverElapsedMs": 2003,
+            "firstTextMs": 1729,
+            "mapActionMs": null,
+            "skills": [],
+            "database": {
+              "readQueries": 7,
+              "writeQueries": 11,
+              "calls": 10,
+              "failures": 0,
+              "durationMs": 586,
+              "maxCallMs": 69
+            }
+          }
+        }
+      },
+      "response": "请先授权设备定位或告诉我你的出发地点，我才能规划到图书馆的路线。",
+      "responseHeadersMs": 524,
+      "firstTextMs": 2133,
+      "completeMs": 2314
+    },
+    {
+      "prompt": "从南苑7栋去图书馆。",
+      "tools": [],
+      "actions": [],
+      "result": null,
+      "response": "",
+      "responseHeadersMs": 518,
+      "firstTextMs": null,
+      "completeMs": null
+    }
+  ]
+}

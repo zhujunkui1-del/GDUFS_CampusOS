@@ -1,0 +1,78 @@
+{
+  "recordedAt": "2026-10-15T18:30:02.431Z",
+  "tailGroups": {
+    "invocations-before.json": {
+      "samples": 31,
+      "cpuExceeded": 2,
+      "pagesCpuMs": {
+        "samples": 10,
+        "p50": 49,
+        "p95": 501,
+        "max": 501
+      },
+      "chatCpuMs": {
+        "samples": 8,
+        "p50": 69,
+        "p95": 364,
+        "max": 364
+      },
+      "apiCpuMs": {
+        "samples": 21,
+        "p50": 21,
+        "p95": 283,
+        "max": 364
+      }
+    },
+    "invocations.json": {
+      "samples": 77,
+      "cpuExceeded": 0,
+      "pagesCpuMs": {
+        "samples": 28,
+        "p50": 3,
+        "p95": 12,
+        "max": 12
+      },
+      "chatCpuMs": {
+        "samples": 18,
+        "p50": 43,
+        "p95": 239,
+        "max": 239
+      },
+      "apiCpuMs": {
+        "samples": 49,
+        "p50": 4,
+        "p95": 103,
+        "max": 239
+      }
+    },
+    "invocations-final.json": {
+      "samples": 542,
+      "cpuExceeded": 0,
+      "pagesCpuMs": {
+        "samples": 459,
+        "p50": 2,
+        "p95": 11,
+        "max": 96
+      },
+      "chatCpuMs": {
+        "samples": 24,
+        "p50": 25,
+        "p95": 170,
+        "max": 173
+      },
+      "apiCpuMs": {
+        "samples": 83,
+        "p50": 4,
+        "p95": 164,
+        "max": 178
+      }
+    }
+  },
+  "knownMatrixModelCny": [
+    0.042238279999999996,
+    0.08447655999999999
+  ],
+  "isInvoice": false,
+  "perInvocationMemoryMeasured": false,
+  "individualSubrequestsFullyAttributed": false
+}

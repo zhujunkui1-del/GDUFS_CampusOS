@@ -1,0 +1,28 @@
+{
+  "recordedAt": "2026-10-15T18:16:58.229Z",
+  "actualCloudAnalytics": true,
+  "windowStartUtc": "2026-10-15T18:07:00Z",
+  "data": {
+    "d1AnalyticsAdaptiveGroups": [
+      {
+        "sum": {
+          "rowsRead": 24423,
+          "rowsWritten": 1477
+        }
+      }
+    ],
+    "workersInvocationsAdaptive": [
+      {
+        "quantiles": {
+          "cpuTimeP50": 2313,
+          "cpuTimeP99": 170923
+        },
+        "sum": {
+          "errors": 0,
+          "requests": 143,
+          "subrequests": 202
+        }
+      }
+    ]
+  }
+}

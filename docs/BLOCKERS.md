@@ -174,3 +174,12 @@ B-001 师苑名称依赖已解决：负责人逐项确认四栋并纠正原编�
 - **依赖未全通过**：生产npm audit0；全依赖5high来自未修复braces开发链漏洞GHSA-vfj7-8cjw-p6xm，无可用修复版，不盲降Next ESLint。限制开发/CI处理受信任路径、跟进补丁并复验后关闭。
 - **真实手机未验收**：HTTPS GPS、允许/拒绝/弱信号、输入法、iOS Safari、前后台/锁屏恢复、触摸冲突、横竖屏/文字放大、弱GPU热机/内存/电量。桌面手机视口/CDP触摸和公开校园坐标仅软件流程证据。
 - 个人Skill/真实学生账号/SMS/学校授权、BYOK、RAG/活动保持原范围，未因本轮完成而宣称可用。建筑批量继续暂停。S2完整正式验收/公网学生试用尚不具备条件；细项和步骤见S2_D_AGENT_ACCEPTANCE.md。
+
+## S2-E 当前状态（2026-10-16，取代前述预览授权/资源缺项）
+
+- 已解除：负责人已批准隔离预览；campusos-preview Worker/D1、4迁移/34业务表、5项Secret、实际workers.dev HTTPS、真实Agent五Skill、路线/卡片/模式/清理、会话与Worker更新恢复、公开资产已验证。入口：https://campusos-preview.zhujunkui1.workers.dev/map 。原Cloudflare账号接入/预览D1/Secrets/HTTPS不再是当前阻塞。
+- **Free CPU稳定性未达标**：初包实测2次exceededCpu，已做静态缓存/复用原处理函数的轻量入口/Schema元数据/回执查询优化。最终542调用窗口0次超限，但chat CPU P50/P95仍25/170ms，高于10ms标称。不能依赖弹性宣称长期稳定；请后续决定专项CPU预算优化，或另批Paid后复验，本轮没有升级/新收费资源。
+- **实机/多地域未验**：可用真实HTTPS开始Android Chrome/iPhone Safari GPS、输入法、后台、方向、弱网和弱GPU验收，步骤见S2_E_CLOUDFLARE_PREVIEW_ACCEPTANCE.md第9节。Chrome/Edge手机视口和公开坐标不是GPS实机。实际Worker更新恢复通过，不等于多地域客户端一致性；完整isolate内存/单次全部子请求无法可靠归因。
+- **运维/预算**：能力凭证本轮已刷新，当前到2026-10-17约01:30（北京时间）须重新验证和更新Secret；需建立人工操作制度，未擅自安排定时付费测试。1元仅为本轮受控API验收授权，持续公开试用的模型预算另行确定。原取消250k预留/主体额度策略未改。
+- **安全残项**：生产依赖audit0，全依赖仍5high开发链漏洞；仅处理可信开发路径，跟进官方补丁。DNS/订阅API只读权限不足未扩权；资源/无自定义域名及无变更操作已验证，未触碰正式DNS。已知实际凭据及产物扫描无命中，不代表完整供应链无风险。
+- **生产仍未授权**：新生产Worker/D1、迁移/备份、gdufs.ccwu.cc域名/DNS/HTTPS、生产Secret、套餐/预算均需额外明确批准。production配置未用preview轻量入口，不能直接复制上线结论。S2完整正式验收仍有门槛；RAG/雷达/个人服务与建筑批量未继续。
