@@ -2,6 +2,8 @@
 
 日期：2026-10-16（北京时间）。基线：`8ef2faa`。这是实际Cloudflare公网测试，localhost结果另列。本文的最终统计见末尾及`verification/s2-e/`，未测项不按通过处理。
 
+本报告保留首轮验收快照。后续浏览器路线/定位及运动场标签修复、最新预览版本与截图见 [S2_E_BROWSER_FIXES.md](S2_E_BROWSER_FIXES.md)。
+
 ## 1. 授权、套餐与隔离
 
 负责人本轮明确允许仅创建`campusos-preview` Worker/D1、workers.dev公开预览、对新预览库迁移和配置Secrets。未授权生产库、正式DNS/域名、其他项目修改或Cloudflare付费升级。中途确认DeepSeek赠送余额为0后，负责人另外明确允许使用现有充值余额**最多人民币1元**，未充值。
@@ -18,7 +20,7 @@ Wrangler认证仍有效，账号与负责人指定账户一致。订阅API返回
 | D1            | `campusos-preview`，独立新空库，APAC                                    |
 | D1 UUID       | `18299abc-b38b-4494-8d12-8ab4d482c304`，仅写入`env.preview`             |
 | HTTPS URL     | **https://campusos-preview.zhujunkui1.workers.dev**，取自实际部署输出   |
-| 当前版本      | `3545d51c-e112-4e4f-bce2-774951f9609c`                                  |
+| 首轮验收版本  | `3545d51c-e112-4e4f-bce2-774951f9609c`                                  |
 | Deployment ID | `5f922422-a1b8-4837-b310-9e028aa57fd5`，由实际部署API确认               |
 | 发布入口      | `npm run deploy:preview`，显式`--config wrangler.jsonc --env preview`   |
 | 绑定          | DB=预览UUID；WORKER_SELF_REFERENCE=同名预览；ASSETS；原MAP_RATE_LIMITER |
@@ -161,3 +163,7 @@ Tail的CPU/wallTime是平台实际数值，路径中UUID脱敏；GraphQL提供�
 - **S3：可做官方资料整理和独立设计；建议资源方案与S2发布门槛确定后再扩展公网AI/RAG/雷达。** 本轮没有实施这些模块或建筑批量。
 
 截图：[桌面真实详情](verification/s2-e/live/msedge-desktop-verified-details.png)、[手机真实路线](verification/s2-e/live/msedge-mobile-B-route.png)、[更新后恢复](verification/s2-e/screenshots/msedge-mobile-after-worker-update.png)、[手机步行面板](verification/s2-e/screenshots/msedge-mobile-library-route-expanded.png)。均为真实浏览器PNG，不是生成图。完整索引及复验环境变量见`verification/s2-e/README.md`。
+
+### 2026-10-16 后续反馈发布
+
+预览非破坏性更新至a520feb8-41e6-4adb-8fae-58c6611f77bb，修复省略从字/宿舍简称、导航默认定位及客户端时钟差，按负责人批注合并体育标签和调整清理按钮。原D1/Secrets/生产隔离不变。最新211单元、Chrome/Edge常规各61/3及最终真实专项各10通过，详见S2_E_BROWSER_FIXES.md；前文版本/指标保留为首轮快照，不代表当前容量或实机已全验收。

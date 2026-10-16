@@ -148,3 +148,7 @@ S2-B新增POST /api/map/skills/{name}确定性公开工具接口，正文{input,
 无新增表/迁移，34表空库约束与双workerd共享D1模拟服务并发/跨主体拒绝/重启恢复通过；不是云端多地域。request级数据库包装保留first-primary/batch语义，只统计调用/读写语句数量和await时长，不记录SQL/参数。部分私有API返回数值Server-Timing；chat指标为结束前快照，不包含后续finish写入或独立动作HTTP请求。精确GPS/票据仍不落日志，额度不因本地测试被重置。
 
 Cloudflare账号已认证但无专用D1，preview/production UUID仍全零；生产迁移与公开发布未获本轮批准，保持不执行。实际云端额度/延迟/CPU与Free子请求预算须隔离预览实测，见docs/S2_D_AGENT_ACCEPTANCE.md。
+
+### 2026-10-16 定位challenge时间校准
+
+POST /api/agent/location/challenge除challenge/expiresInSeconds外返回服务端serverTime；客户端基于它与单调耗时/样本年龄计算原locationGrant.capturedAt。请求Schema、D1表和30秒单次nonce协议不变，不信任模型定位授权声明，不增加精确位置持久化。原服务端未来时间、所有权、过期、精度和范围校验保留。详见docs/S2_E_BROWSER_FIXES.md。

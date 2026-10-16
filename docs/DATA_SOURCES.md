@@ -234,3 +234,9 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 技术核对：[Workers限制](https://developers.cloudflare.com/workers/platform/limits/)、[D1限制](https://developers.cloudflare.com/d1/platform/limits/)、[D1价格](https://developers.cloudflare.com/d1/platform/pricing/)、[OpenNext静态缓存](https://opennext.js.org/cloudflare/caching#ssg-site)、[自定义入口](https://opennext.js.org/cloudflare/howtos/custom-worker)、[D1触发器CASE兼容问题](https://github.com/cloudflare/workers-sdk/issues/4727)。复用生成ALS的入口与当前适配器版本绑定，升级时必须回归。
 
 成本来自[DeepSeek官方人民币价格](https://api-docs.deepseek.com/zh-cn/quick_start/pricing/)与实际usage/余额变化，后者可能包括同期其他调用，不是项目独立账单。同步工具0ms受[Workers只在IO后前进的时钟](https://developers.cloudflare.com/workers/runtime-apis/performance/)限制；CPU采用平台Tail，GraphQL CPU微秒转换不能与墙钟混淆。内存/逐请求完整子请求、真实手机GPS及跨地域明确未验证，未用本地双worker结果替代。
+
+## SRC-054｜负责人预览浏览器批注与真实浏览器故障复现（2026-10-16）
+
+来源：负责人13条浏览器批注、edge使用ai助手.png及campusos-preview公开页面。体育标签以原序号和稳定data-place-id核对，锚点/成员/隐藏ID记录owner-sports-label-review.json；无新坐标、第三方图或模型资源，不从截图推算经纬度。ODbL原几何和署名保持；负责人图片不复制进public。
+
+实际证据为全新Chrome/Edge访问真实workers.dev的DeepSeek工具事件、执行回执及浏览器PNG；模拟公开校园坐标不是私人位置或GPS实机。HTTP Date与客户端时差诊断存在秒级日期量化误差，不作为精确时钟同步服务；最终时间校准及服务端消费/过期约束有单元和真实HTTPS验证。记录在verification/s2-e-fixes及S2_E_BROWSER_FIXES.md。

@@ -1,0 +1,57 @@
+{
+  "permissionDenialBranchSimulated": true,
+  "actualHardwareGPS": false,
+  "record": {
+    "prompt": "我想去北苑5",
+    "tools": [],
+    "actions": [],
+    "result": {
+      "conversationId": "b2d7e386-ff26-42e1-8bc1-a52d9025c1b3",
+      "requestId": "59cdf132-0370-455f-8eb2-401c981555cf",
+      "metrics": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 414,
+            "firstTextMs": 316
+          }
+        ],
+        "promptTokens": 431,
+        "completionTokens": 6,
+        "cachedPromptTokens": 256,
+        "totalTokens": 437,
+        "usageComplete": true,
+        "chargedTokens": 437,
+        "durationMs": 588,
+        "estimatedUsdRange": [
+          0.000030618000000000004,
+          0.00006123600000000001
+        ],
+        "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "priceCheckedAt": "2026-10-15",
+        "model": "deepseek-flash",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 491,
+          "serverElapsedMs": 1079,
+          "firstTextMs": 926,
+          "mapActionMs": null,
+          "skills": [],
+          "database": {
+            "readQueries": 7,
+            "writeQueries": 12,
+            "calls": 11,
+            "failures": 0,
+            "durationMs": 665,
+            "maxCallMs": 68
+          }
+        }
+      }
+    },
+    "response": "请告诉我你从哪里出发。",
+    "responseHeadersMs": 612,
+    "firstTextMs": 1230,
+    "completeMs": 1390
+  }
+}

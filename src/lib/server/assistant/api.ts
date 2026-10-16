@@ -49,6 +49,7 @@ export const historyGet = api(async (request, context) => {
 });
 export const challengePost = api(async (_request, context) => ({
   challenge: await context.store.locationChallenge(context.identity),
+  serverTime: context.store.now(),
   expiresInSeconds: 30,
 }));
 export const cancelPost = api(async (request, context) => {

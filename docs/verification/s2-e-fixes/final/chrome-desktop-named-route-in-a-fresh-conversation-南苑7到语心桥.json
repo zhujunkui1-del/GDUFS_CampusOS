@@ -1,0 +1,91 @@
+{
+  "browser": "148.0.7778.97",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "baseline": false,
+  "status": "passed",
+  "records": [
+    {
+      "prompt": "南苑7到语心桥",
+      "tools": [
+        "plan_route",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SHOW_ROUTE",
+          "routeId": "debbace2-2b32-44a3-bccf-2fa13cc3df2f"
+        }
+      ],
+      "result": {
+        "conversationId": "cffd53db-5994-4ec1-b765-099b9841f3f5",
+        "requestId": "c6f1d405-53a3-4afd-99c9-19710bff923a",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 804,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 679,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1064,
+              "firstTextMs": 804
+            }
+          ],
+          "promptTokens": 3814,
+          "completionTokens": 202,
+          "cachedPromptTokens": 2688,
+          "totalTokens": 4016,
+          "usageComplete": true,
+          "chargedTokens": 4016,
+          "durationMs": 5086,
+          "estimatedUsdRange": [
+            0.000298164,
+            0.000596328
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 489,
+            "serverElapsedMs": 5575,
+            "firstTextMs": 5255,
+            "mapActionMs": 1802,
+            "skills": [
+              {
+                "name": "plan_route",
+                "durationMs": 143,
+                "ok": true
+              },
+              {
+                "name": "control_map",
+                "durationMs": 61,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 18,
+              "writeQueries": 15,
+              "calls": 25,
+              "failures": 0,
+              "durationMs": 1528,
+              "maxCallMs": 76
+            }
+          }
+        }
+      },
+      "response": "南苑7栋 → 语心桥：步行约 806 米，预计 11 分钟，途中需穿过下沉隧道并经过教学实验楼通行区域。路线已在地图上显示。",
+      "responseHeadersMs": 736,
+      "firstTextMs": 5348,
+      "completeMs": 5867
+    }
+  ]
+}

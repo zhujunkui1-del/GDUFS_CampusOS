@@ -1,0 +1,91 @@
+{
+  "browser": "148.0.7778.97",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "baseline": false,
+  "status": "passed",
+  "records": [
+    {
+      "prompt": "我想去北苑5",
+      "tools": [
+        "plan_route",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SHOW_ROUTE",
+          "routeId": "06634a4b-89c1-45a3-89a5-c0ac79145ce7"
+        }
+      ],
+      "result": {
+        "conversationId": "98063509-aef8-489b-81a6-f3eb30cf3bed",
+        "requestId": "4532fbf5-9dc7-4aa3-8065-96737eff6ea3",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 831,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 977,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 821,
+              "firstTextMs": 653
+            }
+          ],
+          "promptTokens": 3610,
+          "completionTokens": 175,
+          "cachedPromptTokens": 2688,
+          "totalTokens": 3785,
+          "usageComplete": true,
+          "chargedTokens": 3785,
+          "durationMs": 5150,
+          "estimatedUsdRange": [
+            0.00025136399999999996,
+            0.0005027279999999999
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 545,
+            "serverElapsedMs": 5695,
+            "firstTextMs": 5466,
+            "mapActionMs": 1792,
+            "skills": [
+              {
+                "name": "plan_route",
+                "durationMs": 137,
+                "ok": true
+              },
+              {
+                "name": "control_map",
+                "durationMs": 55,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 18,
+              "writeQueries": 16,
+              "calls": 26,
+              "failures": 0,
+              "durationMs": 1566,
+              "maxCallMs": 70
+            }
+          }
+        }
+      },
+      "response": "从你的位置到北苑5栋，步行约189米，预计3分钟。路线已在地图上显示。",
+      "responseHeadersMs": 640,
+      "firstTextMs": 5711,
+      "completeMs": 6020
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "reviewedAt": "2026-10-16",
+  "version": "sports-labels-2026-10-16.1",
+  "source": "负责人公开预览地图浏览器批注1—10；锚点按原marker顺序及其稳定data-place-id核对",
+  "groups": [
+    {
+      "anchorId": "osm-way-1389859426",
+      "memberIds": [
+        "osm-way-1389859424",
+        "osm-way-1389859425",
+        "osm-way-1389859426",
+        "osm-way-1389859427",
+        "osm-way-1389859428",
+        "osm-way-1389859429",
+        "osm-way-1389859430",
+        "osm-way-1389859431",
+        "osm-way-1389859432",
+        "osm-way-1389859433"
+      ]
+    },
+    {
+      "anchorId": "osm-way-1389859420",
+      "memberIds": [
+        "osm-way-1389859416",
+        "osm-way-1389859418",
+        "osm-way-1389859420",
+        "osm-way-1389859423"
+      ]
+    },
+    {
+      "anchorId": "osm-way-1389859443",
+      "memberIds": [
+        "osm-way-1389859442",
+        "osm-way-1389859443",
+        "osm-way-1389859444"
+      ]
+    },
+    {
+      "anchorId": "osm-way-1389859447",
+      "memberIds": [
+        "osm-way-1389859445",
+        "osm-way-1389859446",
+        "osm-way-1389859447",
+        "osm-way-1389859448",
+        "osm-way-1389859449",
+        "osm-way-1389859450",
+        "osm-way-1389859451",
+        "osm-way-1389859452",
+        "osm-way-1389859453",
+        "osm-way-1389859454"
+      ]
+    },
+    {
+      "anchorId": "osm-way-1389859440",
+      "memberIds": ["osm-way-1389859440", "osm-way-1389859441"]
+    },
+    {
+      "anchorId": "osm-way-1389859438",
+      "memberIds": ["osm-way-1389859438", "osm-way-1389859439"]
+    }
+  ],
+  "hiddenLabelIds": [
+    "osm-way-1389859422",
+    "osm-way-1389859417",
+    "osm-way-1389859421",
+    "osm-way-1389859419"
+  ]
+}

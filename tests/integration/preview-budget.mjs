@@ -34,7 +34,7 @@ const result = {
   topUpPerformed: false,
 };
 writeFileSync(
-  "docs/verification/s2-e/model-budget.json",
+  process.env.MODEL_BUDGET_CAPTURE || "docs/verification/s2-e/model-budget.json",
   JSON.stringify(result, null, 2) + "\n",
 );
 console.log(JSON.stringify(result));

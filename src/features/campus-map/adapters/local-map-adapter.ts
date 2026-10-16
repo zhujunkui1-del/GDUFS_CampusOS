@@ -329,6 +329,7 @@ export class LocalMapAdapter implements MapAdapter {
       })[0];
       let id =
         this.pickedPilot(event.point)?.id || feature?.properties.sourceId;
+      if (campusData.places.find((p) => p.id === id)?.hiddenLabel) return;
       id = campusData.places.find((p) => p.id === id)?.labelPlaceId || id;
       const children = id ? buildingLabelParts(id) : [];
       if (children.length)
@@ -380,6 +381,7 @@ export class LocalMapAdapter implements MapAdapter {
       });
       adapter.initializePilot();
       for (const place of campusData.places) {
+        if (place.hiddenLabel) continue;
         if (place.labelPlaceId && place.labelPlaceId !== place.id) continue;
         const button = document.createElement("button");
         button.className = `campus-marker marker-${placeLayer(place)}`;

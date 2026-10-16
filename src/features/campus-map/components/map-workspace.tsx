@@ -293,6 +293,7 @@ export function MapWorkspace() {
         {map.route && (
           <button
             onClick={map.stopNavigation}
+            className="clear-route-button"
             aria-label="清除路线"
             title="清除路线"
           >

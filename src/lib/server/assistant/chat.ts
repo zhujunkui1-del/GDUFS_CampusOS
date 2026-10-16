@@ -31,8 +31,10 @@ import {
   requiresPlaceLookup,
   isOriginQuestion,
 } from "./intent";
-import { requestsDeviceLocation } from "@/domain/agent/location-intent";
-import { searchCampusPlaces } from "@/features/campus-map/data/campus";
+import {
+  navigationIntent,
+  pendingNavigationMessages,
+} from "@/domain/agent/navigation-intent";
 import { receiptPollDelay, RECEIPT_QUERY_SOFT_LIMIT } from "./receipt-policy";
 
 function modelResult(name: string, result: SkillResult<unknown>) {
@@ -131,7 +133,6 @@ export async function chatResponse(request: Request) {
     const location = input.locationGrant
       ? await ctx.store.consumeLocation(ctx.identity, input.locationGrant)
       : undefined;
-    const needsLocation = requestsDeviceLocation(input.message);
     const resolved = await defaultModelRuntime().resolve();
     const requestId = input.clientRequestId || crypto.randomUUID();
     const runId = await ctx.store.reserve(
@@ -148,37 +149,20 @@ export async function chatResponse(request: Request) {
     await ctx.store.append(conversation, "user", input.message);
     const abort = new AbortController();
     const streamSignal = AbortSignal.any([request.signal, abort.signal]);
-    const normalizedQuestion = input.message
-      .normalize("NFKC")
-      .replace(/\s+/g, "")
-      .toLowerCase();
-    const namedPlaces = searchCampusPlaces("").filter((place) =>
-      normalizedQuestion.includes(
-        place.name.normalize("NFKC").replace(/\s+/g, "").toLowerCase(),
-      ),
+    const {
+      needsLocation,
+      namedPlaces,
+      routeQuestion,
+      originIds,
+      destinations,
+      originMissing,
+      resolvedMessage,
+    } = navigationIntent(
+      input.message,
+      selected,
+      !!location,
+      pendingNavigationMessages(history.messages),
     );
-    const routeQuestion =
-      /从.+(?:去|到)|(?:去|到|导航).+|怎么走|怎么去|规划.*路线/.test(
-        normalizedQuestion.replace(/找到|查到|定位到/g, "找"),
-      );
-    const startText = /从(.+?)(?:去|到)/.exec(normalizedQuestion)?.[1];
-    const originIds =
-      needsLocation && location
-        ? ["device_location"]
-        : startText && !/这里|这儿/.test(startText)
-          ? namedPlaces
-              .filter((place) => startText.includes(place.name.toLowerCase()))
-              .map((place) => place.id)
-          : selected
-            ? [selected]
-            : [];
-    const destinations = namedPlaces.filter(
-      (place) => !originIds.includes(place.id),
-    );
-    const originMissing =
-      routeQuestion &&
-      !originIds.length &&
-      (!startText || /这里|这儿/.test(startText));
     const verifiedIds = new Set<string>([
       ...namedPlaces.map((place) => place.id),
       ...(selected ? [selected] : []),
@@ -450,6 +434,7 @@ export async function chatResponse(request: Request) {
 查找唯一地点后必须调用control_map，生成FOCUS_PLACE及SHOW_PLACE_DETAILS。规划路线后必须调用control_map生成SHOW_ROUTE。切换模式/清路线必须调用control_map。动作是否成功以浏览器回执为准，不提前声称已切换或显示。不追加无必要的追问，只有缺起点或歧义时询问。
 已验证当前地点：${selectedPlace ? selectedPlace.name + " (" + selectedPlace.id + ")" : "无"}。最近规划路线：${(!needsOriginQuestion && activeRoute) || "无"}。当前模式：${input.mapContext?.mode || "2d"}。
 已验证实体数据：${JSON.stringify(needsOriginQuestion ? [] : verifiedEntities)}。这些ID来自当前固定校园资料及本会话已核对实体，可直接用于路线输入。不要凭空编写ID。${needsOriginQuestion ? "本轮没有有效起点，必须只用一句话询问用户从哪里出发。不复述旧路线，不生成距离或时间，不声称已经显示路线或完成操作。" : ""}
+${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSON.stringify(originIds)}；终点候选ID：${JSON.stringify(destinations.map((p) => p.id))}。起终点各唯一时直接调用plan_route，不重复询问已写明的起点。` : ""}
 “这里/这栋/那栋”只引用上述已验证地点，不能猜测用户位置。${needsLocation ? "本轮明确请求设备位置；只能用device_location，无授权必须询问起点，不能改用历史地点。" : ""}`;
             const orchestrator = new AgentOrchestrator(
               {
@@ -466,7 +451,7 @@ export async function chatResponse(request: Request) {
             );
             const result = await orchestrator.run({
               runId,
-              message: input.message,
+              message: resolvedMessage,
               history: needsOriginQuestion ? [] : previous,
               context: {
                 requestId: apiContext.requestId,

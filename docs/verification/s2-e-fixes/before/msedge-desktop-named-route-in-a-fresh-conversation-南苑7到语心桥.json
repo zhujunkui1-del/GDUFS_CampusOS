@@ -1,0 +1,64 @@
+{
+  "browser": "149.0.4022.80",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "baseline": true,
+  "status": "passed",
+  "records": [
+    {
+      "prompt": "南苑7到语心桥",
+      "tools": [],
+      "actions": [],
+      "result": {
+        "conversationId": "c80dddd0-f7d2-41b3-976a-e20b6341855d",
+        "requestId": "65f571c7-16ec-4690-9b5c-91aa7139b09c",
+        "metrics": {
+          "requests": 1,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 846,
+              "firstTextMs": 736
+            }
+          ],
+          "promptTokens": 412,
+          "completionTokens": 5,
+          "cachedPromptTokens": 256,
+          "totalTokens": 417,
+          "usageComplete": true,
+          "chargedTokens": 417,
+          "durationMs": 1026,
+          "estimatedUsdRange": [
+            0.000027167999999999998,
+            0.000054335999999999996
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 546,
+            "serverElapsedMs": 1572,
+            "firstTextMs": 1403,
+            "mapActionMs": null,
+            "skills": [],
+            "database": {
+              "readQueries": 7,
+              "writeQueries": 12,
+              "calls": 11,
+              "failures": 0,
+              "durationMs": 726,
+              "maxCallMs": 82
+            }
+          }
+        }
+      },
+      "response": "请问你从哪里出发？",
+      "responseHeadersMs": 642,
+      "firstTextMs": 1631,
+      "completeMs": 1830
+    }
+  ]
+}

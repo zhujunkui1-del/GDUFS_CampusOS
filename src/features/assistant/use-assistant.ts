@@ -13,7 +13,11 @@ import {
 import { MapActionSchema } from "@/domain/maps/contracts";
 import { RouteOutputSchema } from "@/domain/maps/skill-contracts";
 import { readAgentStream } from "./sse";
-import { requestsDeviceLocation } from "@/domain/agent/location-intent";
+import {
+  navigationIntent,
+  pendingNavigationMessages,
+} from "@/domain/agent/navigation-intent";
+import { locationCaptureTime } from "@/domain/agent/location-grant";
 
 async function jsonApi(path: string, body?: unknown, signal?: AbortSignal) {
   const response = await fetch(path, {
@@ -349,11 +353,21 @@ export function useAssistant(
     };
     try {
       let locationGrant: unknown;
-      if (requestsDeviceLocation(text)) {
+      if (
+        navigationIntent(
+          text,
+          mapRef.current.selected?.id || mapRef.current.assistantPlace?.id,
+          false,
+          pendingNavigationMessages(messages),
+        ).needsLocation
+      ) {
         setStatus("等待定位");
         try {
           const challenge = z
-            .object({ challenge: z.string() })
+            .object({
+              challenge: z.string(),
+              serverTime: z.number().int().positive(),
+            })
             .passthrough()
             .parse(
               await jsonApi(
@@ -361,16 +375,21 @@ export function useAssistant(
                 {},
                 controller.signal,
               ),
-            ).challenge;
+            );
+          const receivedAt = performance.now();
           const position = await requestOneTimeLocation(controller.signal);
           locationGrant = {
-            challenge,
+            challenge: challenge.challenge,
             coordinate: position.coordinate,
             accuracyMeters: position.accuracy,
-            capturedAt: Math.round(position.timestamp),
+            capturedAt: locationCaptureTime(
+              challenge.serverTime,
+              performance.now() - receivedAt,
+              Date.now() - position.timestamp,
+            ),
           };
         } catch {
-          setStatus("定位未获授权，将询问起点");
+          setStatus("无法获取定位，请输入起点");
         }
       }
       if (controller.signal.aborted) return;

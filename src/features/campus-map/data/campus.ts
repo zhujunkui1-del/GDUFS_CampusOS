@@ -1,5 +1,6 @@
 import { z } from "zod";
 import raw from "./campus.json";
+import sportsReview from "./owner-sports-label-review.json";
 
 export const CoordinateSchema = z.tuple([
   z.number().min(-180).max(180),
@@ -14,7 +15,7 @@ export const categoryNames = {
   canteen: "食堂",
   service: "生活服务",
   sports_hall: "体育馆",
-  swimming: "游泳场地",
+  swimming: "游泳馆",
   track: "田径场",
   football: "足球场",
   basketball: "篮球场",
@@ -53,6 +54,7 @@ export const PlaceSchema = z.object({
   maxZoom: z.number().optional(),
   parentId: z.string().optional(),
   labelPlaceId: z.string().optional(),
+  hiddenLabel: z.boolean().optional(),
   geometry: z.array(CoordinateSchema).optional(),
   geometryRings: z.array(z.array(CoordinateSchema).min(4)).optional(),
 });
@@ -76,7 +78,47 @@ export const campusData = z
       .length(2),
     places: z.array(PlaceSchema),
   })
-  .parse(raw);
+  .parse({
+    ...raw,
+    places: raw.places.map((place) => {
+      const group = sportsReview.groups.find((item) =>
+        item.memberIds.includes(place.id),
+      );
+      return {
+        ...place,
+        ...(place.category === "swimming"
+          ? {
+              name: "游泳馆",
+              aliases: [
+                ...new Set([
+                  ...("aliases" in place ? place.aliases || [] : []),
+                  place.name,
+                ]),
+              ],
+              nameSource: sportsReview.source,
+              nameReviewedAt: sportsReview.reviewedAt,
+            }
+          : {}),
+        ...(group
+          ? {
+              labelPlaceId: group.anchorId,
+              ...(place.category !== "swimming"
+                ? {
+                    aliases: ("aliases" in place
+                      ? place.aliases || []
+                      : []
+                    ).filter((name) => !name.includes("类型待核验")),
+                  }
+                : {}),
+            }
+          : {}),
+        ...(sportsReview.hiddenLabelIds.includes(place.id)
+          ? { hiddenLabel: true }
+          : {}),
+      };
+    }),
+  });
+export const campusLabelVersion = sportsReview.version;
 export type MapLayer = "buildings" | "sports" | "dormitories" | "services";
 export function buildingLabelParts(parentId: string) {
   return campusData.places.filter(
@@ -108,6 +150,7 @@ export function searchCampusPlaces(query: string, layer?: MapLayer) {
   return campusData.places
     .filter(
       (p) =>
+        !p.hiddenLabel &&
         (!p.labelPlaceId || p.labelPlaceId === p.id) &&
         (!layer || placeLayer(p) === layer) &&
         (!normalized ||

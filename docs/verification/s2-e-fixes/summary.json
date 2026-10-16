@@ -1,0 +1,197 @@
+{
+  "recordedAt": "2026-10-16T04:42:19.464Z",
+  "url": "https://campusos-preview.zhujunkui1.workers.dev/map",
+  "workerVersion": "a520feb8-41e6-4adb-8fae-58c6611f77bb",
+  "unitTests": 211,
+  "unitFiles": 28,
+  "typescript": "passed",
+  "lint": "passed",
+  "safeWorkerBuild": "passed",
+  "workerStartupValidationMs": 106,
+  "uploadKiB": 14780.42,
+  "gzipKiB": 2403.5,
+  "browsers": [
+    {
+      "browser": "chrome",
+      "passed": 61,
+      "skipped": 3
+    },
+    {
+      "browser": "msedge",
+      "passed": 61,
+      "skipped": 3
+    },
+    {
+      "browser": "chrome-live",
+      "passed": 10,
+      "skipped": 0
+    },
+    {
+      "browser": "msedge-live",
+      "passed": 10,
+      "skipped": 0
+    }
+  ],
+  "liveCases": [
+    {
+      "file": "chrome-desktop-a-first-destination-only-request-directly-plans-from-authorized-device-location.json",
+      "browser": "148.0.7778.97",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "passed"
+    },
+    {
+      "file": "chrome-desktop-destination-only-navigation-uses-authorized-location-and-retains-destination-after-denial.json",
+      "browser": "148.0.7778.97",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "passed"
+    },
+    {
+      "file": "chrome-desktop-named-route-in-a-fresh-conversation-南苑7到语心桥.json",
+      "browser": "148.0.7778.97",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "passed"
+    },
+    {
+      "file": "chrome-desktop-named-route-in-a-fresh-conversation-南苑7栋到语心桥.json",
+      "browser": "148.0.7778.97",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "passed"
+    },
+    {
+      "file": "chrome-mobile-a-first-destination-only-request-directly-plans-from-authorized-device-location.json",
+      "browser": "148.0.7778.97",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": "passed"
+    },
+    {
+      "file": "chrome-mobile-destination-only-navigation-uses-authorized-location-and-retains-destination-after-denial.json",
+      "browser": "148.0.7778.97",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": "passed"
+    },
+    {
+      "file": "chrome-mobile-named-route-in-a-fresh-conversation-南苑7到语心桥.json",
+      "browser": "148.0.7778.97",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": "passed"
+    },
+    {
+      "file": "chrome-mobile-named-route-in-a-fresh-conversation-南苑7栋到语心桥.json",
+      "browser": "148.0.7778.97",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": "passed"
+    },
+    {
+      "file": "msedge-desktop-a-first-destination-only-request-directly-plans-from-authorized-device-location.json",
+      "browser": "149.0.4022.80",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "passed"
+    },
+    {
+      "file": "msedge-desktop-destination-only-navigation-uses-authorized-location-and-retains-destination-after-denial.json",
+      "browser": "149.0.4022.80",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "passed"
+    },
+    {
+      "file": "msedge-desktop-named-route-in-a-fresh-conversation-南苑7到语心桥.json",
+      "browser": "149.0.4022.80",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "passed"
+    },
+    {
+      "file": "msedge-desktop-named-route-in-a-fresh-conversation-南苑7栋到语心桥.json",
+      "browser": "149.0.4022.80",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "passed"
+    },
+    {
+      "file": "msedge-mobile-a-first-destination-only-request-directly-plans-from-authorized-device-location.json",
+      "browser": "149.0.4022.80",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": "passed"
+    },
+    {
+      "file": "msedge-mobile-destination-only-navigation-uses-authorized-location-and-retains-destination-after-denial.json",
+      "browser": "149.0.4022.80",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": "passed"
+    },
+    {
+      "file": "msedge-mobile-named-route-in-a-fresh-conversation-南苑7到语心桥.json",
+      "browser": "149.0.4022.80",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": "passed"
+    },
+    {
+      "file": "msedge-mobile-named-route-in-a-fresh-conversation-南苑7栋到语心桥.json",
+      "browser": "149.0.4022.80",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "status": "passed"
+    }
+  ],
+  "allRecordedLiveRoutesHaveRealToolsAndReceipts": true,
+  "controlledPublicCampusCoordinatesOnly": true,
+  "actualHardwareGpsTested": false,
+  "productionOrDnsModified": false,
+  "databaseMigrated": false,
+  "paidResourcesAdded": false,
+  "modelBudget": {
+    "recordedAt": "2026-10-16T04:42:19.354Z",
+    "budgetCny": 1,
+    "accountBalanceDecreaseCny": 0.2,
+    "remainingApprovedBudgetCny": 0.7999999999999998,
+    "isProjectInvoice": false,
+    "mayIncludeConcurrentAccountUsage": true,
+    "chargedExistingBalanceOnly": true,
+    "topUpPerformed": false
+  }
+}

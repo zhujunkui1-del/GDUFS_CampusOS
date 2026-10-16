@@ -164,6 +164,10 @@
 .map-controls button:disabled {
   opacity: 0.4;
 }
+.map-controls .clear-route-button {
+  background: #d92d20;
+  color: #fff;
+}
 .map-controls .map-mode-button,
 .navigation-controls .map-mode-button {
   color: #1d1d1f;
@@ -626,6 +630,9 @@
   .place-result:hover,
   .map-controls button:hover {
     background: #edf1f5;
+  }
+  .map-controls .clear-route-button:hover {
+    background: #b42318;
   }
 }
 @media (max-width: 760px), (max-width: 1024px) and (max-height: 500px) {
