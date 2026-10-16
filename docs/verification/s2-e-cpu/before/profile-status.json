@@ -1,0 +1,8 @@
+{
+  "began": "2026-10-16T07:18:55.909Z",
+  "ended": "2026-10-16T07:19:07.520Z",
+  "activeVersion": "f98aadf8-8581-49ca-befb-d9c13d38f90e",
+  "captured": true,
+  "bytes": 101,
+  "privateBinary": ".map-tools/cpu/before-route.pprof.gz"
+}

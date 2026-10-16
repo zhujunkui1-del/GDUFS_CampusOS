@@ -246,3 +246,11 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 来源为当前0001/0004真实外键、既有AssistantStore/SharedRouteStore与负责人多会话要求；0005本地空库/有历史升级、两个workerd共享D1模拟、真实预览迁移和Chrome/Edge截图分别记录于AI_CONVERSATION_MANAGEMENT_ACCEPTANCE.md及verification/conversations。官方D1 batch文档：https://developers.cloudflare.com/d1/worker-api/d1-database/ 。测试夹具/模型流故障明确标Mock，未当真实DeepSeek。
 
 没有新地理、图片或模型数据；实际网页截图来自原许可OSM及已验收模型。登录身份在隔离真实Schema夹具验证，不伪造学生登录/SMS上线；无私人GPS/密钥/用户Cookie进入公开报告。预览迁移只改本项目元数据，既有历史内容数量与外键检查留存。
+
+## SRC-056｜CPU诊断与离线公开道路候选（2026-10-16）
+
+官方技术来源：https://developers.cloudflare.com/workers/platform/limits/ 、https://developers.cloudflare.com/workers/observability/profiling-in-production/ 、https://developers.cloudflare.com/workers/observability/dev-tools/cpu-usage/ 、https://developers.cloudflare.com/workers/runtime-apis/performance/ 、https://developers.cloudflare.com/workers/platform/pricing/ 。当日核对10ms CPU与网络等待区别、平台弹性、profiling目标限制及计费方案；未升级套餐。
+
+实际指标来自指定预览Worker的Tail/GraphQL、指定预览D1数值聚合及受控真实DeepSeek浏览器任务；本地workerd采样单独标明，不冒充云端函数归因或手机实机。线上Profile只idle/无近期执行的限制保留。公开证据无Key、Cookie、原始SQL参数或私人GPS。
+
+新public-walking-attachments.json完全由已审核固定campus/walking-network及原几何函数离线导出，113地点/445道路候选；沿用原OSM来源与许可，不构成新的建筑入口/道路通行事实。保留原地图/路网版本与所有几何、建筑模型SHA。每次普通构建校验来源哈希，手动重建，不联网更新。数据/截图/比较见S2_E_CPU_ACCEPTANCE.md与verification/s2-e-cpu。

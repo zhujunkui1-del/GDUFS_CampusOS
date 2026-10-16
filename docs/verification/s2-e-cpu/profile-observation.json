@@ -1,0 +1,31 @@
+{
+  "recordedAt": "2026-10-16T10:09:03.257Z",
+  "officialProductionProfileApi": true,
+  "profiles": [
+    {
+      "label": "before-active-chat",
+      "decoded": true,
+      "bytes": 101,
+      "sampleCount": 1,
+      "functions": [
+        "(root)",
+        "(idle)"
+      ],
+      "hasApplicationFunctions": false
+    },
+    {
+      "label": "before-route",
+      "decoded": true,
+      "bytes": 101,
+      "sampleCount": 1,
+      "functions": [
+        "(root)",
+        "(idle)"
+      ],
+      "hasApplicationFunctions": false
+    }
+  ],
+  "dashboardAttempt": "Capture during real requests returned No recent executions were found for this Worker.",
+  "usableCloudFunctionAttribution": false,
+  "fallback": "Local workerd V8 sampling and actual per-invocation Cloudflare CPU metrics; kept separate."
+}

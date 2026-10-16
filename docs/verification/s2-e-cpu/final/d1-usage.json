@@ -1,0 +1,62 @@
+{
+  "at": "2026-10-16T10:11:06.715Z",
+  "actualPreviewD1": true,
+  "numericOnly": true,
+  "windowStart": "2026-10-16T09:59:40.000Z",
+  "windowEnd": "2026-10-16T10:07:30.000Z",
+  "scope": "All preview runs in this bounded window; no private rows retrieved",
+  "usage": [
+    {
+      "status": "completed",
+      "error_code": null,
+      "runs": 23,
+      "upstream_requests": 63,
+      "total_tokens": 92363,
+      "prompt_tokens": 88722,
+      "completion_tokens": 3641,
+      "cached_prompt_tokens": 50427,
+      "estimated_usd_low": 0.008080130999999999,
+      "estimated_usd_high": 0.016160261999999998,
+      "measured_d1_calls": 440,
+      "measured_read_statements": 336,
+      "measured_write_statements": 293
+    },
+    {
+      "status": "failed",
+      "error_code": "INVALID_ARGUMENT",
+      "runs": 1,
+      "upstream_requests": 1,
+      "total_tokens": 1381,
+      "prompt_tokens": 1260,
+      "completion_tokens": 121,
+      "cached_prompt_tokens": 896,
+      "estimated_usd_low": 0.00012988800000000001,
+      "estimated_usd_high": 0.00025977600000000003,
+      "measured_d1_calls": 12,
+      "measured_read_statements": 7,
+      "measured_write_statements": 14
+    },
+    {
+      "status": "failed",
+      "error_code": "NOT_FOUND",
+      "runs": 3,
+      "upstream_requests": 3,
+      "total_tokens": 3847,
+      "prompt_tokens": 3739,
+      "completion_tokens": 108,
+      "cached_prompt_tokens": 2304,
+      "estimated_usd_low": 0.000286962,
+      "estimated_usd_high": 0.000573924,
+      "measured_d1_calls": 30,
+      "measured_read_statements": 21,
+      "measured_write_statements": 33
+    }
+  ],
+  "quotas": [
+    {
+      "requests_in_rolling_24h": 191,
+      "charged_tokens_in_rolling_24h": 1372694
+    }
+  ],
+  "foreignKeyViolations": 0
+}

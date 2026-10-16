@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-16T10:23:37.972Z",
+  "passed": true,
+  "credentialScanPassed": true,
+  "legacyAllRoutingCodeFrozen": false,
+  "explicitlyReviewedCodeChanges": [
+    "src/features/campus-map/data/local-routing.ts"
+  ],
+  "frozenDataFilesChecked": 30,
+  "sourceMapModelDataHashesUnchanged": true,
+  "exactRouteComparisons": 239,
+  "metadataSourceHashChecked": true,
+  "modelSha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a"
+}

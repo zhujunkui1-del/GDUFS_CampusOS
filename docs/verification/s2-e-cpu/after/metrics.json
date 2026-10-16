@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-10-16T09:55:20.747Z",
+  "start": "2026-10-16T07:30:20Z",
+  "actualCloudMetrics": true,
+  "status": 200,
+  "cpuUnit": "microseconds",
+  "data": {
+    "d1AnalyticsAdaptiveGroups": [
+      {
+        "sum": {
+          "rowsRead": 8692,
+          "rowsWritten": 239
+        }
+      }
+    ],
+    "workersInvocationsAdaptive": [
+      {
+        "dimensions": {
+          "status": "success"
+        },
+        "quantiles": {
+          "cpuTimeP50": 3464,
+          "cpuTimeP95": 45653,
+          "wallTimeP50": 81576,
+          "wallTimeP95": 1597668
+        },
+        "sum": {
+          "errors": 0,
+          "requests": 159,
+          "subrequests": 171
+        }
+      }
+    ]
+  }
+}

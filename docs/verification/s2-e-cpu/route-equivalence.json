@@ -1,0 +1,2131 @@
+{
+  "at": "2026-10-16T09:56:55.133Z",
+  "baseline": "a3ab24b",
+  "localOnly": true,
+  "exactEqualityExcludingRandomRouteId": true,
+  "cases": [
+    {
+      "start": "南苑7栋",
+      "end": "图书馆",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 848.0326392899915,
+      "oldLocalWallMs": 42.86629999999997,
+      "newLocalWallMs": 4.8075000000000045
+    },
+    {
+      "start": "图书馆",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 848.0326392899915,
+      "oldLocalWallMs": 5.270600000000002,
+      "newLocalWallMs": 3.5966999999999985
+    },
+    {
+      "start": "南苑7栋",
+      "end": "语心桥（教学楼E栋）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 847.2566870962874,
+      "oldLocalWallMs": 8.691499999999962,
+      "newLocalWallMs": 2.113200000000006
+    },
+    {
+      "start": "语心桥（教学楼E栋）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 847.2566870962874,
+      "oldLocalWallMs": 2.314200000000028,
+      "newLocalWallMs": 2.372600000000034
+    },
+    {
+      "start": "南苑7栋",
+      "end": "北苑5栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 142.03629832989552,
+      "oldLocalWallMs": 16.398300000000006,
+      "newLocalWallMs": 1.51339999999999
+    },
+    {
+      "start": "北苑5栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 142.0362983298955,
+      "oldLocalWallMs": 1.3315999999999804,
+      "newLocalWallMs": 1.100500000000011
+    },
+    {
+      "start": "南苑7栋",
+      "end": "教学楼A栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 542.5551305426477,
+      "oldLocalWallMs": 13.988699999999994,
+      "newLocalWallMs": 1.479600000000005
+    },
+    {
+      "start": "教学楼A栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 542.5551305426477,
+      "oldLocalWallMs": 3.5989000000000146,
+      "newLocalWallMs": 4.41719999999998
+    },
+    {
+      "start": "南苑7栋",
+      "end": "博雅园（二饭）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 311.1088686386654,
+      "oldLocalWallMs": 10.744799999999998,
+      "newLocalWallMs": 1.9518999999999664
+    },
+    {
+      "start": "博雅园（二饭）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 311.1088686386653,
+      "oldLocalWallMs": 1.7774,
+      "newLocalWallMs": 2.9769999999999754
+    },
+    {
+      "start": "南苑7栋",
+      "end": "风采园（三饭）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 119.6503195937133,
+      "oldLocalWallMs": 10.857000000000028,
+      "newLocalWallMs": 1.3778999999999542
+    },
+    {
+      "start": "风采园（三饭）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 119.6503195937133,
+      "oldLocalWallMs": 1.1042999999999665,
+      "newLocalWallMs": 1.7824000000000524
+    },
+    {
+      "start": "南苑7栋",
+      "end": "大会堂（教工活动中心）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 983.6569735074688,
+      "oldLocalWallMs": 16.184900000000084,
+      "newLocalWallMs": 2.391200000000026
+    },
+    {
+      "start": "大会堂（教工活动中心）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 983.6569735074688,
+      "oldLocalWallMs": 3.140700000000038,
+      "newLocalWallMs": 3.903599999999983
+    },
+    {
+      "start": "南苑7栋",
+      "end": "图书馆",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 848.0326392899915,
+      "oldLocalWallMs": 2.371399999999994,
+      "newLocalWallMs": 3.608699999999999
+    },
+    {
+      "start": "图书馆",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 848.0326392899915,
+      "oldLocalWallMs": 2.987600000000043,
+      "newLocalWallMs": 2.9763000000000375
+    },
+    {
+      "start": "南苑7栋",
+      "end": "院系办公楼",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 750.3054496671236,
+      "oldLocalWallMs": 20.907699999999977,
+      "newLocalWallMs": 2.0669000000000324
+    },
+    {
+      "start": "院系办公楼",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 750.3054496671236,
+      "oldLocalWallMs": 2.546899999999937,
+      "newLocalWallMs": 2.947400000000016
+    },
+    {
+      "start": "南苑7栋",
+      "end": "校行政办公楼",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 601.6232998936434,
+      "oldLocalWallMs": 36.399099999999976,
+      "newLocalWallMs": 1.2486999999999853
+    },
+    {
+      "start": "校行政办公楼",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 601.6232998936432,
+      "oldLocalWallMs": 2.653500000000008,
+      "newLocalWallMs": 3.9273999999999205
+    },
+    {
+      "start": "南苑7栋",
+      "end": "南苑9栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 44.06668800643765,
+      "oldLocalWallMs": 14.653700000000072,
+      "newLocalWallMs": 0.9782999999999902
+    },
+    {
+      "start": "南苑9栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 44.06668800643765,
+      "oldLocalWallMs": 0.8749000000000251,
+      "newLocalWallMs": 0.8781999999999925
+    },
+    {
+      "start": "南苑7栋",
+      "end": "南苑10栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 135.32767937104268,
+      "oldLocalWallMs": 13.4923,
+      "newLocalWallMs": 0.9747999999999593
+    },
+    {
+      "start": "南苑10栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 135.32767937104268,
+      "oldLocalWallMs": 0.8637999999999693,
+      "newLocalWallMs": 1.41700000000003
+    },
+    {
+      "start": "南苑7栋",
+      "end": "南苑11栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 97.9325308746261,
+      "oldLocalWallMs": 13.692900000000009,
+      "newLocalWallMs": 0.8706000000000813
+    },
+    {
+      "start": "南苑11栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 97.93253087462611,
+      "oldLocalWallMs": 1.0494999999999663,
+      "newLocalWallMs": 0.9046999999999343
+    },
+    {
+      "start": "南苑7栋",
+      "end": "南苑12栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 163.35572659504294,
+      "oldLocalWallMs": 12.662599999999998,
+      "newLocalWallMs": 0.8273000000000366
+    },
+    {
+      "start": "南苑12栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 163.35572659504294,
+      "oldLocalWallMs": 0.7513000000000147,
+      "newLocalWallMs": 0.751700000000028
+    },
+    {
+      "start": "南苑7栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 93.91533621075152,
+      "oldLocalWallMs": 0.8468000000000302,
+      "newLocalWallMs": 0.7806999999999107
+    },
+    {
+      "start": "南苑7栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 93.91533621075152,
+      "oldLocalWallMs": 0.7712000000000216,
+      "newLocalWallMs": 0.7269000000000005
+    },
+    {
+      "start": "南苑7栋",
+      "end": "南苑8栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 78.0928485036888,
+      "oldLocalWallMs": 18.36970000000008,
+      "newLocalWallMs": 1.6820000000000164
+    },
+    {
+      "start": "南苑8栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 78.0928485036888,
+      "oldLocalWallMs": 1.2210999999999785,
+      "newLocalWallMs": 0.9475999999999658
+    },
+    {
+      "start": "南苑7栋",
+      "end": "北苑1栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 398.9938202147101,
+      "oldLocalWallMs": 12.216800000000035,
+      "newLocalWallMs": 0.9095999999999549
+    },
+    {
+      "start": "北苑1栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 398.99382021471007,
+      "oldLocalWallMs": 0.6741000000000668,
+      "newLocalWallMs": 0.8693000000000666
+    },
+    {
+      "start": "南苑7栋",
+      "end": "北苑4栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 120.94534593904393,
+      "oldLocalWallMs": 11.468699999999899,
+      "newLocalWallMs": 0.8134999999999764
+    },
+    {
+      "start": "北苑4栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 120.94534593904392,
+      "oldLocalWallMs": 0.6042999999999665,
+      "newLocalWallMs": 0.7651999999999362
+    },
+    {
+      "start": "南苑7栋",
+      "end": "北苑5栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 142.03629832989552,
+      "oldLocalWallMs": 0.6951999999999998,
+      "newLocalWallMs": 1.2118000000000393
+    },
+    {
+      "start": "北苑5栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 142.0362983298955,
+      "oldLocalWallMs": 0.982599999999934,
+      "newLocalWallMs": 0.9469000000000278
+    },
+    {
+      "start": "南苑7栋",
+      "end": "北苑3栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 253.67189428174711,
+      "oldLocalWallMs": 11.585900000000038,
+      "newLocalWallMs": 0.7450000000000045
+    },
+    {
+      "start": "北苑3栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 253.67189428174711,
+      "oldLocalWallMs": 0.6071000000000595,
+      "newLocalWallMs": 0.9329000000000178
+    },
+    {
+      "start": "南苑7栋",
+      "end": "北苑6栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 84.66322647273167,
+      "oldLocalWallMs": 11.509300000000053,
+      "newLocalWallMs": 0.7915000000000418
+    },
+    {
+      "start": "北苑6栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 84.66322647273167,
+      "oldLocalWallMs": 0.6710000000000491,
+      "newLocalWallMs": 0.7510999999999513
+    },
+    {
+      "start": "南苑7栋",
+      "end": "北苑2栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 331.65996397169965,
+      "oldLocalWallMs": 12.517399999999952,
+      "newLocalWallMs": 0.8206000000000131
+    },
+    {
+      "start": "北苑2栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 331.65996397169965,
+      "oldLocalWallMs": 0.6190000000000282,
+      "newLocalWallMs": 0.7934999999999945
+    },
+    {
+      "start": "南苑7栋",
+      "end": "后勤楼",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 457.3943232108661,
+      "oldLocalWallMs": 16.06970000000001,
+      "newLocalWallMs": 1.0428999999999178
+    },
+    {
+      "start": "后勤楼",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 457.394323210866,
+      "oldLocalWallMs": 0.7101000000000113,
+      "newLocalWallMs": 0.9670999999999594
+    },
+    {
+      "start": "南苑7栋",
+      "end": "师苑3栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 327.59427659815117,
+      "oldLocalWallMs": 4.7812999999999874,
+      "newLocalWallMs": 0.9089999999999918
+    },
+    {
+      "start": "师苑3栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 327.59427659815117,
+      "oldLocalWallMs": 0.6383999999999332,
+      "newLocalWallMs": 0.7677999999999656
+    },
+    {
+      "start": "南苑7栋",
+      "end": "师苑1栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 220.97150445680052,
+      "oldLocalWallMs": 4.423799999999915,
+      "newLocalWallMs": 0.7522999999999911
+    },
+    {
+      "start": "师苑1栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 220.9715044568005,
+      "oldLocalWallMs": 0.6019000000000005,
+      "newLocalWallMs": 0.7001000000000204
+    },
+    {
+      "start": "南苑7栋",
+      "end": "门诊部",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 538.146125583412,
+      "oldLocalWallMs": 5.514499999999998,
+      "newLocalWallMs": 0.7598000000000411
+    },
+    {
+      "start": "门诊部",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 538.1461255834117,
+      "oldLocalWallMs": 0.6248999999999114,
+      "newLocalWallMs": 0.7080999999999449
+    },
+    {
+      "start": "南苑7栋",
+      "end": "师苑4栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 308.3799464947825,
+      "oldLocalWallMs": 7.772600000000011,
+      "newLocalWallMs": 0.7630000000000337
+    },
+    {
+      "start": "师苑4栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 308.3799464947825,
+      "oldLocalWallMs": 0.5835000000000719,
+      "newLocalWallMs": 0.6938000000000102
+    },
+    {
+      "start": "南苑7栋",
+      "end": "B8学术报告厅",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1000.4348555743771,
+      "oldLocalWallMs": 6.682300000000055,
+      "newLocalWallMs": 1.6951999999999998
+    },
+    {
+      "start": "B8学术报告厅",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1000.4348555743773,
+      "oldLocalWallMs": 1.981300000000033,
+      "newLocalWallMs": 2
+    },
+    {
+      "start": "南苑7栋",
+      "end": "体育场（真草场）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1298.926220792538,
+      "oldLocalWallMs": 12.893699999999967,
+      "newLocalWallMs": 1.7590999999999894
+    },
+    {
+      "start": "体育场（真草场）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1298.9262207925387,
+      "oldLocalWallMs": 2.095100000000002,
+      "newLocalWallMs": 2.082400000000007
+    },
+    {
+      "start": "南苑7栋",
+      "end": "体育馆（羽毛球场）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1431.908854286572,
+      "oldLocalWallMs": 73.27229999999997,
+      "newLocalWallMs": 3.3125
+    },
+    {
+      "start": "体育馆（羽毛球场）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1431.9088542865718,
+      "oldLocalWallMs": 2.6883000000000266,
+      "newLocalWallMs": 3.0439999999999827
+    },
+    {
+      "start": "南苑7栋",
+      "end": "排球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 897.7057210073596,
+      "oldLocalWallMs": 5.765699999999924,
+      "newLocalWallMs": 1.8587999999999738
+    },
+    {
+      "start": "排球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 897.7057210073594,
+      "oldLocalWallMs": 2.1605999999999312,
+      "newLocalWallMs": 2.2898999999999887
+    },
+    {
+      "start": "南苑7栋",
+      "end": "运动场地（类型待核验）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 882.7487862106483,
+      "oldLocalWallMs": 5.8827,
+      "newLocalWallMs": 1.9072999999999638
+    },
+    {
+      "start": "运动场地（类型待核验）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 882.748786210648,
+      "oldLocalWallMs": 2.0540999999999485,
+      "newLocalWallMs": 2.3145999999999276
+    },
+    {
+      "start": "南苑7栋",
+      "end": "排球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 853.387399105826,
+      "oldLocalWallMs": 7.035600000000045,
+      "newLocalWallMs": 1.9720000000000937
+    },
+    {
+      "start": "排球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 853.3873991058258,
+      "oldLocalWallMs": 2.252399999999966,
+      "newLocalWallMs": 2.4394999999999527
+    },
+    {
+      "start": "南苑7栋",
+      "end": "运动场地（类型待核验）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 868.3443339190941,
+      "oldLocalWallMs": 6.616900000000101,
+      "newLocalWallMs": 1.8081000000000813
+    },
+    {
+      "start": "运动场地（类型待核验）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 868.3443339190937,
+      "oldLocalWallMs": 2.602800000000002,
+      "newLocalWallMs": 2.23700000000008
+    },
+    {
+      "start": "南苑7栋",
+      "end": "排球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 891.9078144387438,
+      "oldLocalWallMs": 6.3875000000000455,
+      "newLocalWallMs": 2.9419000000000324
+    },
+    {
+      "start": "排球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 891.9078144387436,
+      "oldLocalWallMs": 2.6753000000001066,
+      "newLocalWallMs": 2.536100000000033
+    },
+    {
+      "start": "南苑7栋",
+      "end": "运动场地（类型待核验）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 876.9509060584946,
+      "oldLocalWallMs": 6.768700000000081,
+      "newLocalWallMs": 1.8550000000000182
+    },
+    {
+      "start": "运动场地（类型待核验）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 876.9509060584944,
+      "oldLocalWallMs": 1.9663000000000466,
+      "newLocalWallMs": 2.2562000000000353
+    },
+    {
+      "start": "南苑7栋",
+      "end": "运动场地（类型待核验）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 906.3122412722713,
+      "oldLocalWallMs": 5.263300000000072,
+      "newLocalWallMs": 1.7072000000000571
+    },
+    {
+      "start": "运动场地（类型待核验）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 906.312241272271,
+      "oldLocalWallMs": 2.6271999999999025,
+      "newLocalWallMs": 2.154800000000023
+    },
+    {
+      "start": "南苑7栋",
+      "end": "排球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 921.26914963451,
+      "oldLocalWallMs": 5.846400000000131,
+      "newLocalWallMs": 1.6791000000000622
+    },
+    {
+      "start": "排球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 921.2691496345099,
+      "oldLocalWallMs": 1.952199999999948,
+      "newLocalWallMs": 2.680799999999863
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 3.53469999999993,
+      "newLocalWallMs": 0.06520000000000437
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.06480000000010477,
+      "newLocalWallMs": 0.04899999999997817
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 914.3126106230625,
+      "oldLocalWallMs": 5.501300000000128,
+      "newLocalWallMs": 1.7537999999999556
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 914.3126106230623,
+      "oldLocalWallMs": 2.3333999999999833,
+      "newLocalWallMs": 2.1802000000000135
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 4.12259999999992,
+      "newLocalWallMs": 0.07500000000004547
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.0684000000001106,
+      "newLocalWallMs": 0.0465999999998985
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 923.8817597245902,
+      "oldLocalWallMs": 6.385899999999992,
+      "newLocalWallMs": 1.8917999999998756
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 923.88175972459,
+      "oldLocalWallMs": 2.3607999999999265,
+      "newLocalWallMs": 2.6125999999999294
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 911.3232291972084,
+      "oldLocalWallMs": 5.161800000000085,
+      "newLocalWallMs": 1.6872000000000753
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 911.3232291972081,
+      "oldLocalWallMs": 2.2543000000000575,
+      "newLocalWallMs": 2.102100000000064
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 894.4332176006476,
+      "oldLocalWallMs": 5.5795999999998,
+      "newLocalWallMs": 1.7079999999998563
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 894.4332176006474,
+      "oldLocalWallMs": 2.034400000000005,
+      "newLocalWallMs": 3.0739000000000942
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 948.481486258926,
+      "oldLocalWallMs": 5.576999999999998,
+      "newLocalWallMs": 1.684500000000071
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 948.4814862589258,
+      "oldLocalWallMs": 1.8735999999998967,
+      "newLocalWallMs": 2.0597999999999956
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 930.6975345044129,
+      "oldLocalWallMs": 5.70659999999998,
+      "newLocalWallMs": 2.014799999999923
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 930.6975345044127,
+      "oldLocalWallMs": 2.1726000000001022,
+      "newLocalWallMs": 2.7146999999999935
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 4.341999999999871,
+      "newLocalWallMs": 0.1368999999999687
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.08249999999998181,
+      "newLocalWallMs": 0.09729999999990468
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 4.120400000000018,
+      "newLocalWallMs": 0.06650000000013279
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.06490000000007967,
+      "newLocalWallMs": 0.050700000000006185
+    },
+    {
+      "start": "南苑7栋",
+      "end": "假草场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 976.0347780886623,
+      "oldLocalWallMs": 14.725500000000011,
+      "newLocalWallMs": 2.6603999999999814
+    },
+    {
+      "start": "假草场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 976.034778088662,
+      "oldLocalWallMs": 2.8596999999999753,
+      "newLocalWallMs": 2.701300000000174
+    },
+    {
+      "start": "南苑7栋",
+      "end": "游泳馆",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1138.1966647894621,
+      "oldLocalWallMs": 7.4809999999999945,
+      "newLocalWallMs": 2.353599999999915
+    },
+    {
+      "start": "游泳馆",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1138.1966647894621,
+      "oldLocalWallMs": 2.3900999999998476,
+      "newLocalWallMs": 3.5850000000000364
+    },
+    {
+      "start": "南苑7栋",
+      "end": "游泳馆",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1156.6700821319384,
+      "oldLocalWallMs": 7.550600000000031,
+      "newLocalWallMs": 3.317399999999907
+    },
+    {
+      "start": "游泳馆",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1156.6700821319384,
+      "oldLocalWallMs": 2.4451000000001386,
+      "newLocalWallMs": 4.091800000000148
+    },
+    {
+      "start": "南苑7栋",
+      "end": "羽毛球场",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 4.851900000000114,
+      "newLocalWallMs": 0.2244999999998072
+    },
+    {
+      "start": "羽毛球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.17090000000007421,
+      "newLocalWallMs": 0.09960000000000946
+    },
+    {
+      "start": "南苑7栋",
+      "end": "羽毛球场",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 4.700800000000072,
+      "newLocalWallMs": 0.09749999999985448
+    },
+    {
+      "start": "羽毛球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.07390000000009422,
+      "newLocalWallMs": 0.5443000000000211
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 4.391499999999951,
+      "newLocalWallMs": 0.08159999999998035
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.07120000000008986,
+      "newLocalWallMs": 0.04809999999997672
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 5.223899999999958,
+      "newLocalWallMs": 0.07410000000004402
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.06700000000000728,
+      "newLocalWallMs": 0.05019999999990432
+    },
+    {
+      "start": "南苑7栋",
+      "end": "篮球场",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 3.9375,
+      "newLocalWallMs": 0.06809999999995853
+    },
+    {
+      "start": "篮球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.06709999999998217,
+      "newLocalWallMs": 0.05039999999985412
+    },
+    {
+      "start": "南苑7栋",
+      "end": "网球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1203.4785149426807,
+      "oldLocalWallMs": 6.988700000000108,
+      "newLocalWallMs": 2.7953999999999724
+    },
+    {
+      "start": "网球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1203.4785149426805,
+      "oldLocalWallMs": 2.815800000000081,
+      "newLocalWallMs": 2.5862999999999374
+    },
+    {
+      "start": "南苑7栋",
+      "end": "网球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1209.22238806991,
+      "oldLocalWallMs": 8.8757999999998,
+      "newLocalWallMs": 2.183999999999969
+    },
+    {
+      "start": "网球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1209.2223880699096,
+      "oldLocalWallMs": 2.4894999999999072,
+      "newLocalWallMs": 3.0753000000001975
+    },
+    {
+      "start": "南苑7栋",
+      "end": "网球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1353.2195166845086,
+      "oldLocalWallMs": 7.5853000000001884,
+      "newLocalWallMs": 2.564000000000078
+    },
+    {
+      "start": "网球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1353.2195166845083,
+      "oldLocalWallMs": 3.425499999999829,
+      "newLocalWallMs": 2.5826999999999316
+    },
+    {
+      "start": "南苑7栋",
+      "end": "网球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1323.3037108248986,
+      "oldLocalWallMs": 7.822400000000016,
+      "newLocalWallMs": 3.28449999999998
+    },
+    {
+      "start": "网球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1323.3037108248984,
+      "oldLocalWallMs": 2.800100000000157,
+      "newLocalWallMs": 3.9757999999999356
+    },
+    {
+      "start": "南苑7栋",
+      "end": "网球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1304.4260026049626,
+      "oldLocalWallMs": 7.447200000000066,
+      "newLocalWallMs": 3.189399999999978
+    },
+    {
+      "start": "网球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1304.4260026049622,
+      "oldLocalWallMs": 2.372000000000071,
+      "newLocalWallMs": 2.8053999999999633
+    },
+    {
+      "start": "南苑7栋",
+      "end": "网球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1214.487646201549,
+      "oldLocalWallMs": 7.2707000000000335,
+      "newLocalWallMs": 2.123299999999972
+    },
+    {
+      "start": "网球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1214.4876462015484,
+      "oldLocalWallMs": 3.0377999999998337,
+      "newLocalWallMs": 3.5108999999999924
+    },
+    {
+      "start": "南苑7栋",
+      "end": "网球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1380.4931631529244,
+      "oldLocalWallMs": 6.919499999999971,
+      "newLocalWallMs": 2.684800000000223
+    },
+    {
+      "start": "网球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1380.4931631529241,
+      "oldLocalWallMs": 3.4178000000001703,
+      "newLocalWallMs": 3.5230000000001382
+    },
+    {
+      "start": "南苑7栋",
+      "end": "网球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1382.3812768140242,
+      "oldLocalWallMs": 6.451400000000149,
+      "newLocalWallMs": 2.355600000000095
+    },
+    {
+      "start": "网球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1382.381276814024,
+      "oldLocalWallMs": 3.0758999999998196,
+      "newLocalWallMs": 2.3161999999999807
+    },
+    {
+      "start": "南苑7栋",
+      "end": "网球场",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 4.4927000000000135,
+      "newLocalWallMs": 0.09040000000004511
+    },
+    {
+      "start": "网球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.0729999999998654,
+      "newLocalWallMs": 0.04610000000002401
+    },
+    {
+      "start": "南苑7栋",
+      "end": "网球场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1406.6046875909933,
+      "oldLocalWallMs": 7.873399999999947,
+      "newLocalWallMs": 3.958599999999933
+    },
+    {
+      "start": "网球场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1406.604687590993,
+      "oldLocalWallMs": 2.4506999999998698,
+      "newLocalWallMs": 2.9035999999998694
+    },
+    {
+      "start": "南苑7栋",
+      "end": "艺术楼",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1046.0366436787124,
+      "oldLocalWallMs": 25.773099999999886,
+      "newLocalWallMs": 2.191500000000133
+    },
+    {
+      "start": "艺术楼",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1046.0366436787124,
+      "oldLocalWallMs": 2.5352000000000317,
+      "newLocalWallMs": 3.8282000000001517
+    },
+    {
+      "start": "南苑7栋",
+      "end": "教学楼C栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 677.4714689209054,
+      "oldLocalWallMs": 21.54280000000017,
+      "newLocalWallMs": 1.4136999999998352
+    },
+    {
+      "start": "教学楼C栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 677.4714689209054,
+      "oldLocalWallMs": 2.1521999999999935,
+      "newLocalWallMs": 2.338799999999992
+    },
+    {
+      "start": "南苑7栋",
+      "end": "教学楼A栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 542.5551305426477,
+      "oldLocalWallMs": 0.9080000000001291,
+      "newLocalWallMs": 0.8972999999998592
+    },
+    {
+      "start": "教学楼A栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 542.5551305426477,
+      "oldLocalWallMs": 3.1627999999998337,
+      "newLocalWallMs": 2.2974999999999
+    },
+    {
+      "start": "南苑7栋",
+      "end": "西南门",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 563.7004986227898,
+      "oldLocalWallMs": 1.4040999999999713,
+      "newLocalWallMs": 0.8495000000000346
+    },
+    {
+      "start": "西南门",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 563.7004986227898,
+      "oldLocalWallMs": 2.1586999999999534,
+      "newLocalWallMs": 4.052400000000034
+    },
+    {
+      "start": "南苑7栋",
+      "end": "京东物流",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 66.34737590655364,
+      "oldLocalWallMs": 0.9209000000000742,
+      "newLocalWallMs": 0.7514000000001033
+    },
+    {
+      "start": "京东物流",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 66.34737590655364,
+      "oldLocalWallMs": 0.5881999999999152,
+      "newLocalWallMs": 0.7080000000000837
+    },
+    {
+      "start": "南苑7栋",
+      "end": "菜鸟驿站",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 51.41604264897001,
+      "oldLocalWallMs": 1.1639999999999873,
+      "newLocalWallMs": 0.921100000000024
+    },
+    {
+      "start": "菜鸟驿站",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 51.41604264897001,
+      "oldLocalWallMs": 0.5528999999999087,
+      "newLocalWallMs": 0.7179000000000997
+    },
+    {
+      "start": "南苑7栋",
+      "end": "顺丰速运",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 58.17303391580894,
+      "oldLocalWallMs": 0.9268000000001848,
+      "newLocalWallMs": 0.7593999999999141
+    },
+    {
+      "start": "顺丰速运",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 58.173033915808944,
+      "oldLocalWallMs": 0.5688000000000102,
+      "newLocalWallMs": 0.71550000000002
+    },
+    {
+      "start": "南苑7栋",
+      "end": "中通快递",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 49.871540923530134,
+      "oldLocalWallMs": 0.9221000000000004,
+      "newLocalWallMs": 0.7061000000001059
+    },
+    {
+      "start": "中通快递",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 49.871540923530134,
+      "oldLocalWallMs": 0.560799999999972,
+      "newLocalWallMs": 0.7479000000000724
+    },
+    {
+      "start": "南苑7栋",
+      "end": "韵达速递",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 54.51103979196065,
+      "oldLocalWallMs": 1.0845999999999094,
+      "newLocalWallMs": 1.1026999999999134
+    },
+    {
+      "start": "韵达速递",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 54.51103979196064,
+      "oldLocalWallMs": 0.7502999999999247,
+      "newLocalWallMs": 0.9284999999999854
+    },
+    {
+      "start": "南苑7栋",
+      "end": "圆通速递",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 51.67835366126106,
+      "oldLocalWallMs": 1.4546000000000276,
+      "newLocalWallMs": 0.9108000000001084
+    },
+    {
+      "start": "圆通速递",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 51.67835366126106,
+      "oldLocalWallMs": 0.930699999999888,
+      "newLocalWallMs": 0.9477999999999156
+    },
+    {
+      "start": "南苑7栋",
+      "end": "三饭打印店",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.7472000000000207,
+      "newLocalWallMs": 0.11850000000004002
+    },
+    {
+      "start": "三饭打印店",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.0649999999998272,
+      "newLocalWallMs": 0.1348000000000411
+    },
+    {
+      "start": "南苑7栋",
+      "end": "B栋打印店",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 636.8389953162699,
+      "oldLocalWallMs": 3.833900000000085,
+      "newLocalWallMs": 1.057700000000068
+    },
+    {
+      "start": "B栋打印店",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 636.8389953162698,
+      "oldLocalWallMs": 2.2411999999999352,
+      "newLocalWallMs": 2.2984999999998763
+    },
+    {
+      "start": "南苑7栋",
+      "end": "又康超市",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.4942000000000917,
+      "newLocalWallMs": 0.07150000000001455
+    },
+    {
+      "start": "又康超市",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.04549999999994725,
+      "newLocalWallMs": 0.06989999999996144
+    },
+    {
+      "start": "南苑7栋",
+      "end": "云山凉茶坊",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.43849999999997635,
+      "newLocalWallMs": 0.061599999999998545
+    },
+    {
+      "start": "云山凉茶坊",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 1.173200000000179,
+      "newLocalWallMs": 0.058499999999867214
+    },
+    {
+      "start": "南苑7栋",
+      "end": "伟腾图文",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.2880000000000109,
+      "newLocalWallMs": 0.048799999999801
+    },
+    {
+      "start": "伟腾图文",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": false,
+      "oldLocalWallMs": 0.03999999999996362,
+      "newLocalWallMs": 0.04060000000004038
+    },
+    {
+      "start": "南苑7栋",
+      "end": "南苑13栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 181.35590966626216,
+      "oldLocalWallMs": 15.6558,
+      "newLocalWallMs": 1.123700000000099
+    },
+    {
+      "start": "南苑13栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 181.35590966626214,
+      "oldLocalWallMs": 1.6553999999998723,
+      "newLocalWallMs": 0.7522999999998774
+    },
+    {
+      "start": "南苑7栋",
+      "end": "学生活动中心",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 48.73053785497811,
+      "oldLocalWallMs": 12.308499999999867,
+      "newLocalWallMs": 0.960700000000088
+    },
+    {
+      "start": "学生活动中心",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 48.73053785497811,
+      "oldLocalWallMs": 0.6171999999999116,
+      "newLocalWallMs": 0.9429000000000087
+    },
+    {
+      "start": "南苑7栋",
+      "end": "友苑",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 166.13572134485494,
+      "oldLocalWallMs": 23.225099999999884,
+      "newLocalWallMs": 1.0166999999999007
+    },
+    {
+      "start": "友苑",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 166.13572134485497,
+      "oldLocalWallMs": 0.6744999999998527,
+      "newLocalWallMs": 1.0266999999998916
+    },
+    {
+      "start": "南苑7栋",
+      "end": "文采园（一饭）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 334.16110304458357,
+      "oldLocalWallMs": 5.8853999999998905,
+      "newLocalWallMs": 1.168999999999869
+    },
+    {
+      "start": "文采园（一饭）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 334.16110304458357,
+      "oldLocalWallMs": 0.7327000000000226,
+      "newLocalWallMs": 0.9053000000001248
+    },
+    {
+      "start": "南苑7栋",
+      "end": "风采园（三饭）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 119.6503195937133,
+      "oldLocalWallMs": 0.5596000000000458,
+      "newLocalWallMs": 1.013300000000072
+    },
+    {
+      "start": "风采园（三饭）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 119.6503195937133,
+      "oldLocalWallMs": 0.6322000000000116,
+      "newLocalWallMs": 0.7589000000000397
+    },
+    {
+      "start": "南苑7栋",
+      "end": "博雅园（二饭）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 311.1088686386654,
+      "oldLocalWallMs": 0.5973000000001321,
+      "newLocalWallMs": 0.7437999999999647
+    },
+    {
+      "start": "博雅园（二饭）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 311.1088686386653,
+      "oldLocalWallMs": 0.6512000000000171,
+      "newLocalWallMs": 0.8057000000001153
+    },
+    {
+      "start": "南苑7栋",
+      "end": "师苑2栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 185.6900131577695,
+      "oldLocalWallMs": 4.103800000000092,
+      "newLocalWallMs": 0.72849999999994
+    },
+    {
+      "start": "师苑2栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 185.6900131577695,
+      "oldLocalWallMs": 0.5529999999998836,
+      "newLocalWallMs": 0.7028000000000247
+    },
+    {
+      "start": "南苑7栋",
+      "end": "教学楼（E/F/G栋）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 757.1368732007913,
+      "oldLocalWallMs": 63.937000000000126,
+      "newLocalWallMs": 1.5153000000000247
+    },
+    {
+      "start": "教学楼（E/F/G栋）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 757.1368732007913,
+      "oldLocalWallMs": 2.300399999999854,
+      "newLocalWallMs": 2.649400000000014
+    },
+    {
+      "start": "南苑7栋",
+      "end": "实验楼（A/B/C/D/E栋）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 831.6671122068542,
+      "oldLocalWallMs": 27.421499999999924,
+      "newLocalWallMs": 1.7376999999999043
+    },
+    {
+      "start": "实验楼（A/B/C/D/E栋）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 831.6671122068542,
+      "oldLocalWallMs": 2.231999999999971,
+      "newLocalWallMs": 2.2135000000000673
+    },
+    {
+      "start": "南苑7栋",
+      "end": "学术交流中心",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 938.3616938489482,
+      "oldLocalWallMs": 28.110800000000154,
+      "newLocalWallMs": 1.9308999999998377
+    },
+    {
+      "start": "学术交流中心",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 938.3616938489481,
+      "oldLocalWallMs": 2.0196999999998297,
+      "newLocalWallMs": 2.7983999999999014
+    },
+    {
+      "start": "南苑7栋",
+      "end": "教学楼D栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 749.578181120126,
+      "oldLocalWallMs": 18.89580000000001,
+      "newLocalWallMs": 1.3461999999999534
+    },
+    {
+      "start": "教学楼D栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 749.5781811201259,
+      "oldLocalWallMs": 2.1147000000000844,
+      "newLocalWallMs": 2.391300000000001
+    },
+    {
+      "start": "南苑7栋",
+      "end": "教学楼B栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 621.3267176422061,
+      "oldLocalWallMs": 20.017900000000054,
+      "newLocalWallMs": 1.0226000000000113
+    },
+    {
+      "start": "教学楼B栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 621.326717642206,
+      "oldLocalWallMs": 2.0661999999999807,
+      "newLocalWallMs": 2.068899999999985
+    },
+    {
+      "start": "南苑7栋",
+      "end": "教学楼E栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 768.9880315619966,
+      "oldLocalWallMs": 55.97630000000004,
+      "newLocalWallMs": 1.8122000000000753
+    },
+    {
+      "start": "教学楼E栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 768.9880315619966,
+      "oldLocalWallMs": 2.184199999999919,
+      "newLocalWallMs": 2.1879999999998745
+    },
+    {
+      "start": "南苑7栋",
+      "end": "教学楼F栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 699.4092503040096,
+      "oldLocalWallMs": 56.510299999999916,
+      "newLocalWallMs": 1.2657999999998992
+    },
+    {
+      "start": "教学楼F栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 699.4092503040097,
+      "oldLocalWallMs": 2.048799999999801,
+      "newLocalWallMs": 2.874599999999873
+    },
+    {
+      "start": "南苑7栋",
+      "end": "教学楼G栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 725.2691912453648,
+      "oldLocalWallMs": 61.044200000000046,
+      "newLocalWallMs": 1.5597999999999956
+    },
+    {
+      "start": "教学楼G栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 725.2691912453647,
+      "oldLocalWallMs": 2.369699999999966,
+      "newLocalWallMs": 2.373399999999947
+    },
+    {
+      "start": "南苑7栋",
+      "end": "实验楼A栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 831.6671122068542,
+      "oldLocalWallMs": 23.697599999999966,
+      "newLocalWallMs": 3.1766999999999825
+    },
+    {
+      "start": "实验楼A栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 831.6671122068542,
+      "oldLocalWallMs": 2.19600000000014,
+      "newLocalWallMs": 2.1270999999999276
+    },
+    {
+      "start": "南苑7栋",
+      "end": "实验楼B栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 831.6671122068542,
+      "oldLocalWallMs": 23.231199999999944,
+      "newLocalWallMs": 1.7043999999998505
+    },
+    {
+      "start": "实验楼B栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 831.6671122068542,
+      "oldLocalWallMs": 2.5756999999998698,
+      "newLocalWallMs": 2.419200000000046
+    },
+    {
+      "start": "南苑7栋",
+      "end": "实验楼C栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 899.0524793008996,
+      "oldLocalWallMs": 24.23209999999972,
+      "newLocalWallMs": 1.9902000000001863
+    },
+    {
+      "start": "实验楼C栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 899.0524793008997,
+      "oldLocalWallMs": 1.9605999999998858,
+      "newLocalWallMs": 3.496399999999994
+    },
+    {
+      "start": "南苑7栋",
+      "end": "实验楼D栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 855.6492148416019,
+      "oldLocalWallMs": 23.82320000000027,
+      "newLocalWallMs": 2.0583999999998923
+    },
+    {
+      "start": "实验楼D栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 855.6492148416019,
+      "oldLocalWallMs": 2.0046000000002095,
+      "newLocalWallMs": 2.045799999999872
+    },
+    {
+      "start": "南苑7栋",
+      "end": "实验楼E栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 989.6259898311317,
+      "oldLocalWallMs": 24.177000000000135,
+      "newLocalWallMs": 1.8118999999996959
+    },
+    {
+      "start": "实验楼E栋",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 989.6259898311316,
+      "oldLocalWallMs": 1.9983999999999469,
+      "newLocalWallMs": 2.1159999999999854
+    },
+    {
+      "start": "南苑7栋",
+      "end": "下沉广场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 304.36464093608765,
+      "oldLocalWallMs": 6.9054000000001,
+      "newLocalWallMs": 0.8427999999998974
+    },
+    {
+      "start": "下沉广场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 304.36464093608765,
+      "oldLocalWallMs": 0.7689000000000306,
+      "newLocalWallMs": 0.9542000000001281
+    },
+    {
+      "start": "南苑7栋",
+      "end": "下沉隧道",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 424.42298482149874,
+      "oldLocalWallMs": 0.9553999999998268,
+      "newLocalWallMs": 0.7518999999997504
+    },
+    {
+      "start": "下沉隧道",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 424.42298482149874,
+      "oldLocalWallMs": 0.5875999999998385,
+      "newLocalWallMs": 0.7442000000000917
+    },
+    {
+      "start": "南苑7栋",
+      "end": "下沉隧道生活区入口",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 260.71812882793205,
+      "oldLocalWallMs": 0.8680000000003929,
+      "newLocalWallMs": 0.6954999999998108
+    },
+    {
+      "start": "下沉隧道生活区入口",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 260.718128827932,
+      "oldLocalWallMs": 0.5450999999998203,
+      "newLocalWallMs": 0.671100000000024
+    },
+    {
+      "start": "南苑7栋",
+      "end": "下沉隧道教学区入口",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 494.4718425660078,
+      "oldLocalWallMs": 1.5979999999999563,
+      "newLocalWallMs": 0.7116000000000895
+    },
+    {
+      "start": "下沉隧道教学区入口",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 494.47184256600775,
+      "oldLocalWallMs": 1.8004000000000815,
+      "newLocalWallMs": 1.8038000000001375
+    },
+    {
+      "start": "南苑7栋",
+      "end": "语心桥（教学楼E栋）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 847.2566870962874,
+      "oldLocalWallMs": 1.7867999999998574,
+      "newLocalWallMs": 1.8908000000001266
+    },
+    {
+      "start": "语心桥（教学楼E栋）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 847.2566870962874,
+      "oldLocalWallMs": 1.9108000000001084,
+      "newLocalWallMs": 1.9076999999997497
+    },
+    {
+      "start": "南苑7栋",
+      "end": "语心桥",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 806.1185569225831,
+      "oldLocalWallMs": 10.00689999999986,
+      "newLocalWallMs": 1.7383999999997286
+    },
+    {
+      "start": "语心桥",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 806.1185569225831,
+      "oldLocalWallMs": 1.90099999999984,
+      "newLocalWallMs": 1.8935999999998785
+    },
+    {
+      "start": "南苑7栋",
+      "end": "语心桥（教学楼G栋）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 803.8401361833855,
+      "oldLocalWallMs": 9.105800000000272,
+      "newLocalWallMs": 1.3067000000000917
+    },
+    {
+      "start": "语心桥（教学楼G栋）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 803.8401361833855,
+      "oldLocalWallMs": 1.8062999999997373,
+      "newLocalWallMs": 1.888800000000174
+    },
+    {
+      "start": "南苑7栋",
+      "end": "八角楼",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 667.2804920516279,
+      "oldLocalWallMs": 12.358900000000176,
+      "newLocalWallMs": 1.2406000000000859
+    },
+    {
+      "start": "八角楼",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 667.2804920516278,
+      "oldLocalWallMs": 2.142199999999775,
+      "newLocalWallMs": 2.1914999999999054
+    },
+    {
+      "start": "南苑7栋",
+      "end": "停车场",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1507.591551317578,
+      "oldLocalWallMs": 9.929600000000391,
+      "newLocalWallMs": 1.75
+    },
+    {
+      "start": "停车场",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1507.591551317578,
+      "oldLocalWallMs": 1.9701999999997497,
+      "newLocalWallMs": 1.9619000000002416
+    },
+    {
+      "start": "南苑7栋",
+      "end": "1号门",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 391.6383730279779,
+      "oldLocalWallMs": 1.0734999999999673,
+      "newLocalWallMs": 0.6734000000001288
+    },
+    {
+      "start": "1号门",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 391.6383730279779,
+      "oldLocalWallMs": 0.5684000000001106,
+      "newLocalWallMs": 0.6626000000001113
+    },
+    {
+      "start": "南苑7栋",
+      "end": "2号门",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 223.48055689777163,
+      "oldLocalWallMs": 0.9981999999999971,
+      "newLocalWallMs": 0.6356000000000677
+    },
+    {
+      "start": "2号门",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 223.48055689777166,
+      "oldLocalWallMs": 0.521900000000187,
+      "newLocalWallMs": 0.6140000000000327
+    },
+    {
+      "start": "南苑7栋",
+      "end": "3号门",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 179.22196550812825,
+      "oldLocalWallMs": 1.018000000000029,
+      "newLocalWallMs": 0.6421000000000276
+    },
+    {
+      "start": "3号门",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 179.22196550812828,
+      "oldLocalWallMs": 0.6148000000002867,
+      "newLocalWallMs": 0.6083000000003267
+    },
+    {
+      "start": "南苑7栋",
+      "end": "4号门（贝岗门）",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 81.77405473598226,
+      "oldLocalWallMs": 0.9929999999999382,
+      "newLocalWallMs": 0.6430999999997766
+    },
+    {
+      "start": "4号门（贝岗门）",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 81.77405473598225,
+      "oldLocalWallMs": 0.5902999999998428,
+      "newLocalWallMs": 0.6078999999999724
+    },
+    {
+      "start": "南苑7栋",
+      "end": "西北门",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1395.2887290027522,
+      "oldLocalWallMs": 2.881000000000313,
+      "newLocalWallMs": 1.6421000000000276
+    },
+    {
+      "start": "西北门",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1395.2887290027518,
+      "oldLocalWallMs": 1.9722000000001572,
+      "newLocalWallMs": 1.89220000000023
+    },
+    {
+      "start": "南苑7栋",
+      "end": "西门",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1540.027585278356,
+      "oldLocalWallMs": 2.016399999999976,
+      "newLocalWallMs": 1.6518000000000939
+    },
+    {
+      "start": "西门",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1540.0275852783564,
+      "oldLocalWallMs": 2.192500000000109,
+      "newLocalWallMs": 2.6664999999998145
+    },
+    {
+      "start": "南苑7栋",
+      "end": "东门",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1143.502102572311,
+      "oldLocalWallMs": 1.9010000000002947,
+      "newLocalWallMs": 1.5340000000001055
+    },
+    {
+      "start": "东门",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 1143.502102572311,
+      "oldLocalWallMs": 1.9894999999996799,
+      "newLocalWallMs": 1.9697999999998501
+    },
+    {
+      "start": "南苑7栋",
+      "end": "东南门",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 890.6892637907574,
+      "oldLocalWallMs": 1.7826000000000022,
+      "newLocalWallMs": 1.4133999999999105
+    },
+    {
+      "start": "东南门",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 890.6892637907576,
+      "oldLocalWallMs": 1.9835000000002765,
+      "newLocalWallMs": 1.8467000000000553
+    },
+    {
+      "start": "南苑7栋",
+      "end": "大学城校区水电冷充值点",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 398.9938202147101,
+      "oldLocalWallMs": 12.92390000000023,
+      "newLocalWallMs": 0.7569999999996071
+    },
+    {
+      "start": "大学城校区水电冷充值点",
+      "end": "南苑7栋",
+      "deviceOriginSimulated": false,
+      "available": true,
+      "distanceMeters": 398.99382021471007,
+      "oldLocalWallMs": 0.8379999999997381,
+      "newLocalWallMs": 0.6998999999996158
+    },
+    {
+      "start": "南苑7栋",
+      "end": "图书馆",
+      "deviceOriginSimulated": true,
+      "available": true,
+      "distanceMeters": 895.0074025592709,
+      "oldLocalWallMs": 13.77539999999999,
+      "newLocalWallMs": 17.25559999999996
+    }
+  ]
+}

@@ -37,7 +37,6 @@ export function meteredClient(
       const executionConfirmed = final
         ? (await beforeAnswer?.()) || false
         : false;
-      await store.running(owner, runId);
       const required = final
         ? undefined
         : requests === 0

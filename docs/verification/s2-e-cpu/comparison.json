@@ -1,0 +1,758 @@
+{
+  "at": "2026-10-16T10:14:23.790Z",
+  "matchedScenariosAreOrderedControlledTests": true,
+  "warning": "Low sample nearest-rank percentiles. CPU excludes waiting. HKG versus NRT and isolate coldness were not controlled. Not proof of long-term stability.",
+  "phases": [
+    {
+      "phase": "before",
+      "sameChromeDesktopScenarioCount": 8,
+      "perScenario": [
+        {
+          "prompt": "帮我找到南苑7栋。",
+          "tools": [
+            "search_places",
+            "control_map"
+          ],
+          "cpuMs": 99,
+          "invocationWallMs": 6115,
+          "firstTextMs": 5603,
+          "completeMs": 6166,
+          "d1Calls": 23,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "这栋宿舍附近有什么食堂？",
+          "tools": [
+            "find_nearby_places"
+          ],
+          "cpuMs": 80,
+          "invocationWallMs": 3756,
+          "firstTextMs": 3089,
+          "completeMs": 3833,
+          "d1Calls": 14,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "从南苑7栋去图书馆。",
+          "tools": [
+            "plan_route",
+            "control_map"
+          ],
+          "cpuMs": 316,
+          "invocationWallMs": 6636,
+          "firstTextMs": 6107,
+          "completeMs": 6814,
+          "d1Calls": 25,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "把地图切换成3D。",
+          "tools": [
+            "control_map"
+          ],
+          "cpuMs": 50,
+          "invocationWallMs": 5154,
+          "firstTextMs": 5239,
+          "completeMs": 5604,
+          "d1Calls": 21,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "清除刚刚的路线。",
+          "tools": [
+            "control_map"
+          ],
+          "cpuMs": 51,
+          "invocationWallMs": 5209,
+          "firstTextMs": 5611,
+          "completeMs": 6140,
+          "d1Calls": 20,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "帮我找到南苑999栋。",
+          "tools": [
+            "search_places"
+          ],
+          "cpuMs": 68,
+          "invocationWallMs": 1813,
+          "firstTextMs": null,
+          "completeMs": 1879,
+          "d1Calls": 11,
+          "outcome": "NOT_FOUND"
+        },
+        {
+          "prompt": "找到南苑7栋。",
+          "tools": [
+            "search_places",
+            "control_map"
+          ],
+          "cpuMs": 53,
+          "invocationWallMs": 6402,
+          "firstTextMs": 6044,
+          "completeMs": 6471,
+          "d1Calls": 22,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "那从这里去图书馆呢？",
+          "tools": [
+            "plan_route",
+            "control_map"
+          ],
+          "cpuMs": 106,
+          "invocationWallMs": 6463,
+          "firstTextMs": 5989,
+          "completeMs": 6539,
+          "d1Calls": 25,
+          "outcome": "completed"
+        }
+      ],
+      "cpu": {
+        "n": 8,
+        "p50": 68,
+        "p95": 316
+      },
+      "firstTextMs": {
+        "n": 7,
+        "p50": 5611,
+        "p95": 6107
+      },
+      "completeMs": {
+        "n": 8,
+        "p50": 6140,
+        "p95": 6814
+      },
+      "d1AwaitMs": {
+        "n": 8,
+        "p50": 1453,
+        "p95": 1766
+      },
+      "d1Calls": {
+        "n": 8,
+        "p50": 21,
+        "p95": 25
+      },
+      "mapActionMs": {
+        "n": 6,
+        "p50": 1833,
+        "p95": 1868
+      },
+      "modelRequests": 19,
+      "totalTokens": 25852
+    },
+    {
+      "phase": "after",
+      "sameChromeDesktopScenarioCount": 8,
+      "perScenario": [
+        {
+          "prompt": "帮我找到南苑7栋。",
+          "tools": [
+            "search_places",
+            "control_map"
+          ],
+          "cpuMs": 89,
+          "invocationWallMs": 6804,
+          "firstTextMs": 6125,
+          "completeMs": 6925,
+          "d1Calls": 20,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "这栋宿舍附近有什么食堂？",
+          "tools": [
+            "find_nearby_places"
+          ],
+          "cpuMs": 55,
+          "invocationWallMs": 3590,
+          "firstTextMs": 2891,
+          "completeMs": 3645,
+          "d1Calls": 12,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "从南苑7栋去图书馆。",
+          "tools": [
+            "plan_route",
+            "control_map"
+          ],
+          "cpuMs": 356,
+          "invocationWallMs": 7182,
+          "firstTextMs": 6598,
+          "completeMs": 7262,
+          "d1Calls": 22,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "把地图切换成3D。",
+          "tools": [
+            "control_map"
+          ],
+          "cpuMs": 37,
+          "invocationWallMs": 5203,
+          "firstTextMs": 4715,
+          "completeMs": 5496,
+          "d1Calls": 19,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "清除刚刚的路线。",
+          "tools": [
+            "control_map"
+          ],
+          "cpuMs": 35,
+          "invocationWallMs": 4131,
+          "firstTextMs": 3796,
+          "completeMs": 4200,
+          "d1Calls": 17,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "帮我找到南苑999栋。",
+          "tools": [
+            "search_places"
+          ],
+          "cpuMs": 25,
+          "invocationWallMs": 1597,
+          "firstTextMs": null,
+          "completeMs": 1669,
+          "d1Calls": 10,
+          "outcome": "NOT_FOUND"
+        },
+        {
+          "prompt": "找到南苑7栋。",
+          "tools": [
+            "search_places",
+            "control_map"
+          ],
+          "cpuMs": 45,
+          "invocationWallMs": 6565,
+          "firstTextMs": 6481,
+          "completeMs": 6905,
+          "d1Calls": 19,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "那从这里去图书馆呢？",
+          "tools": [
+            "plan_route",
+            "control_map"
+          ],
+          "cpuMs": 78,
+          "invocationWallMs": 6453,
+          "firstTextMs": 5949,
+          "completeMs": 6525,
+          "d1Calls": 22,
+          "outcome": "completed"
+        }
+      ],
+      "cpu": {
+        "n": 8,
+        "p50": 45,
+        "p95": 356
+      },
+      "firstTextMs": {
+        "n": 7,
+        "p50": 5949,
+        "p95": 6598
+      },
+      "completeMs": {
+        "n": 8,
+        "p50": 5496,
+        "p95": 7262
+      },
+      "d1AwaitMs": {
+        "n": 8,
+        "p50": 1377,
+        "p95": 1992
+      },
+      "d1Calls": {
+        "n": 8,
+        "p50": 19,
+        "p95": 22
+      },
+      "mapActionMs": {
+        "n": 6,
+        "p50": 1857,
+        "p95": 1892
+      },
+      "modelRequests": 19,
+      "totalTokens": 25706
+    },
+    {
+      "phase": "final",
+      "sameChromeDesktopScenarioCount": 8,
+      "perScenario": [
+        {
+          "prompt": "帮我找到南苑7栋。",
+          "tools": [
+            "search_places",
+            "control_map"
+          ],
+          "cpuMs": 59,
+          "invocationWallMs": 5935,
+          "firstTextMs": 5533,
+          "completeMs": 6056,
+          "d1Calls": 20,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "这栋宿舍附近有什么食堂？",
+          "tools": [
+            "find_nearby_places"
+          ],
+          "cpuMs": 34,
+          "invocationWallMs": 2884,
+          "firstTextMs": 2517,
+          "completeMs": 2997,
+          "d1Calls": 12,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "从南苑7栋去图书馆。",
+          "tools": [
+            "plan_route",
+            "control_map"
+          ],
+          "cpuMs": 65,
+          "invocationWallMs": 5891,
+          "firstTextMs": 5375,
+          "completeMs": 5993,
+          "d1Calls": 22,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "把地图切换成3D。",
+          "tools": [
+            "control_map"
+          ],
+          "cpuMs": 26,
+          "invocationWallMs": 4526,
+          "firstTextMs": 4439,
+          "completeMs": 4639,
+          "d1Calls": 20,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "清除刚刚的路线。",
+          "tools": [
+            "control_map"
+          ],
+          "cpuMs": 25,
+          "invocationWallMs": 2907,
+          "firstTextMs": 2743,
+          "completeMs": 3021,
+          "d1Calls": 17,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "帮我找到南苑999栋。",
+          "tools": [
+            "search_places"
+          ],
+          "cpuMs": 36,
+          "invocationWallMs": 933,
+          "firstTextMs": null,
+          "completeMs": 1055,
+          "d1Calls": 10,
+          "outcome": "NOT_FOUND"
+        },
+        {
+          "prompt": "找到南苑7栋。",
+          "tools": [
+            "search_places",
+            "control_map"
+          ],
+          "cpuMs": 30,
+          "invocationWallMs": 5058,
+          "firstTextMs": 4949,
+          "completeMs": 5170,
+          "d1Calls": 19,
+          "outcome": "completed"
+        },
+        {
+          "prompt": "那从这里去图书馆呢？",
+          "tools": [
+            "plan_route",
+            "control_map"
+          ],
+          "cpuMs": 55,
+          "invocationWallMs": 5092,
+          "firstTextMs": 4806,
+          "completeMs": 5204,
+          "d1Calls": 22,
+          "outcome": "completed"
+        }
+      ],
+      "cpu": {
+        "n": 8,
+        "p50": 34,
+        "p95": 65
+      },
+      "firstTextMs": {
+        "n": 7,
+        "p50": 4806,
+        "p95": 5533
+      },
+      "completeMs": {
+        "n": 8,
+        "p50": 4639,
+        "p95": 6056
+      },
+      "d1AwaitMs": {
+        "n": 8,
+        "p50": 466,
+        "p95": 637
+      },
+      "d1Calls": {
+        "n": 8,
+        "p50": 19,
+        "p95": 22
+      },
+      "mapActionMs": {
+        "n": 6,
+        "p50": 1607,
+        "p95": 2386
+      },
+      "modelRequests": 19,
+      "totalTokens": 27483
+    }
+  ],
+  "finalAllInvocations": {
+    "actualCloud": true,
+    "recordedAt": "2026-10-16T10:06:55.554Z",
+    "source": "Cloudflare Wrangler tail invocation CPU milliseconds; wall milliseconds are separate",
+    "total": 185,
+    "exceededCpu": 0,
+    "groups": [
+      {
+        "path": "/map",
+        "n": 22,
+        "measuredCpuN": 22,
+        "cpuP50Ms": 6,
+        "cpuP95Ms": 17,
+        "cpuMaxMs": 31,
+        "wallP50Ms": 31,
+        "wallP95Ms": 82,
+        "over10ms": 4,
+        "outcomes": {
+          "ok": 22
+        }
+      },
+      {
+        "path": "/api/health",
+        "n": 6,
+        "measuredCpuN": 6,
+        "cpuP50Ms": 0,
+        "cpuP95Ms": 1,
+        "cpuMaxMs": 1,
+        "wallP50Ms": 0,
+        "wallP95Ms": 1,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 6
+        }
+      },
+      {
+        "path": "/api/agent/status",
+        "n": 5,
+        "measuredCpuN": 5,
+        "cpuP50Ms": 1,
+        "cpuP95Ms": 3,
+        "cpuMaxMs": 3,
+        "wallP50Ms": 36,
+        "wallP95Ms": 72,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 5
+        }
+      },
+      {
+        "path": "/api/agent/session",
+        "n": 7,
+        "measuredCpuN": 7,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 9,
+        "cpuMaxMs": 9,
+        "wallP50Ms": 76,
+        "wallP95Ms": 1876,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 7
+        }
+      },
+      {
+        "path": "/icon.svg",
+        "n": 7,
+        "measuredCpuN": 7,
+        "cpuP50Ms": 3,
+        "cpuP95Ms": 8,
+        "cpuMaxMs": 8,
+        "wallP50Ms": 22,
+        "wallP95Ms": 189,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 7
+        }
+      },
+      {
+        "path": "/radar",
+        "n": 11,
+        "measuredCpuN": 11,
+        "cpuP50Ms": 4,
+        "cpuP95Ms": 19,
+        "cpuMaxMs": 19,
+        "wallP50Ms": 28,
+        "wallP95Ms": 190,
+        "over10ms": 1,
+        "outcomes": {
+          "ok": 11
+        }
+      },
+      {
+        "path": "/api/map/skills/search_places",
+        "n": 6,
+        "measuredCpuN": 6,
+        "cpuP50Ms": 3,
+        "cpuP95Ms": 6,
+        "cpuMaxMs": 6,
+        "wallP50Ms": 34,
+        "wallP95Ms": 47,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 6
+        }
+      },
+      {
+        "path": "/schedule",
+        "n": 9,
+        "measuredCpuN": 9,
+        "cpuP50Ms": 4,
+        "cpuP95Ms": 8,
+        "cpuMaxMs": 8,
+        "wallP50Ms": 28,
+        "wallP95Ms": 221,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 9
+        }
+      },
+      {
+        "path": "/account",
+        "n": 9,
+        "measuredCpuN": 9,
+        "cpuP50Ms": 4,
+        "cpuP95Ms": 9,
+        "cpuMaxMs": 9,
+        "wallP50Ms": 26,
+        "wallP95Ms": 224,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 9
+        }
+      },
+      {
+        "path": "/knowledge",
+        "n": 11,
+        "measuredCpuN": 11,
+        "cpuP50Ms": 3,
+        "cpuP95Ms": 20,
+        "cpuMaxMs": 20,
+        "wallP50Ms": 26,
+        "wallP95Ms": 223,
+        "over10ms": 1,
+        "outcomes": {
+          "ok": 11
+        }
+      },
+      {
+        "path": "/favorites",
+        "n": 1,
+        "measuredCpuN": 1,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 2,
+        "cpuMaxMs": 2,
+        "wallP50Ms": 237,
+        "wallP95Ms": 237,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 1
+        }
+      },
+      {
+        "path": "/api/map/skills/get_place_details",
+        "n": 6,
+        "measuredCpuN": 6,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 4,
+        "cpuMaxMs": 4,
+        "wallP50Ms": 28,
+        "wallP95Ms": 71,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 6
+        }
+      },
+      {
+        "path": "/api/map/skills/find_nearby_places",
+        "n": 6,
+        "measuredCpuN": 6,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 3,
+        "cpuMaxMs": 3,
+        "wallP50Ms": 30,
+        "wallP95Ms": 44,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 6
+        }
+      },
+      {
+        "path": "/api/map/skills/plan_route",
+        "n": 6,
+        "measuredCpuN": 6,
+        "cpuP50Ms": 19,
+        "cpuP95Ms": 29,
+        "cpuMaxMs": 29,
+        "wallP50Ms": 117,
+        "wallP95Ms": 1664,
+        "over10ms": 6,
+        "outcomes": {
+          "ok": 6
+        }
+      },
+      {
+        "path": "/api/map/skills/control_map",
+        "n": 5,
+        "measuredCpuN": 5,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 4,
+        "cpuMaxMs": 4,
+        "wallP50Ms": 27,
+        "wallP95Ms": 39,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 5
+        }
+      },
+      {
+        "path": "/api/agent/actions/REDACTED/claim",
+        "n": 18,
+        "measuredCpuN": 18,
+        "cpuP50Ms": 3,
+        "cpuP95Ms": 13,
+        "cpuMaxMs": 13,
+        "wallP50Ms": 81,
+        "wallP95Ms": 433,
+        "over10ms": 1,
+        "outcomes": {
+          "ok": 18
+        }
+      },
+      {
+        "path": "/api/agent/actions/REDACTED/receipt",
+        "n": 19,
+        "measuredCpuN": 19,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 5,
+        "cpuMaxMs": 5,
+        "wallP50Ms": 54,
+        "wallP95Ms": 115,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 19
+        }
+      },
+      {
+        "path": "/api/agent/chat",
+        "n": 27,
+        "measuredCpuN": 27,
+        "cpuP50Ms": 48,
+        "cpuP95Ms": 116,
+        "cpuMaxMs": 127,
+        "wallP50Ms": 4534,
+        "wallP95Ms": 6477,
+        "over10ms": 27,
+        "outcomes": {
+          "ok": 27
+        }
+      },
+      {
+        "path": "/api/agent/cancel",
+        "n": 4,
+        "measuredCpuN": 4,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 3,
+        "cpuMaxMs": 3,
+        "wallP50Ms": 44,
+        "wallP95Ms": 65,
+        "over10ms": 0,
+        "outcomes": {
+          "ok": 4
+        }
+      }
+    ]
+  },
+  "finalD1Usage": {
+    "at": "2026-10-16T10:11:06.715Z",
+    "actualPreviewD1": true,
+    "numericOnly": true,
+    "windowStart": "2026-10-16T09:59:40.000Z",
+    "windowEnd": "2026-10-16T10:07:30.000Z",
+    "scope": "All preview runs in this bounded window; no private rows retrieved",
+    "usage": [
+      {
+        "status": "completed",
+        "error_code": null,
+        "runs": 23,
+        "upstream_requests": 63,
+        "total_tokens": 92363,
+        "prompt_tokens": 88722,
+        "completion_tokens": 3641,
+        "cached_prompt_tokens": 50427,
+        "estimated_usd_low": 0.008080130999999999,
+        "estimated_usd_high": 0.016160261999999998,
+        "measured_d1_calls": 440,
+        "measured_read_statements": 336,
+        "measured_write_statements": 293
+      },
+      {
+        "status": "failed",
+        "error_code": "INVALID_ARGUMENT",
+        "runs": 1,
+        "upstream_requests": 1,
+        "total_tokens": 1381,
+        "prompt_tokens": 1260,
+        "completion_tokens": 121,
+        "cached_prompt_tokens": 896,
+        "estimated_usd_low": 0.00012988800000000001,
+        "estimated_usd_high": 0.00025977600000000003,
+        "measured_d1_calls": 12,
+        "measured_read_statements": 7,
+        "measured_write_statements": 14
+      },
+      {
+        "status": "failed",
+        "error_code": "NOT_FOUND",
+        "runs": 3,
+        "upstream_requests": 3,
+        "total_tokens": 3847,
+        "prompt_tokens": 3739,
+        "completion_tokens": 108,
+        "cached_prompt_tokens": 2304,
+        "estimated_usd_low": 0.000286962,
+        "estimated_usd_high": 0.000573924,
+        "measured_d1_calls": 30,
+        "measured_read_statements": 21,
+        "measured_write_statements": 33
+      }
+    ],
+    "quotas": [
+      {
+        "requests_in_rolling_24h": 191,
+        "charged_tokens_in_rolling_24h": 1372694
+      }
+    ],
+    "foreignKeyViolations": 0
+  }
+}

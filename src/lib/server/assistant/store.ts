@@ -9,6 +9,18 @@ import {
 } from "@/domain/agent/assistant-contracts";
 import { MapActionSchema, type MapAction } from "@/domain/maps/contracts";
 import type { AgentChatRequest } from "@/domain/agent/contracts";
+const storedCardsSchema = z.array(AssistantCardSchema).max(30);
+const storedActionsSchema = z.array(MapActionSchema).max(8);
+const storedReceiptSchema = z
+  .object({
+    ok: z.boolean(),
+    message: z.string().max(100),
+    mode: z.enum(["2d", "2.5d", "3d"]).optional(),
+  })
+  .strict();
+const writeResultSchema = z
+  .object({ meta: z.object({ changes: z.number() }).passthrough() })
+  .passthrough();
 
 export type AssistantIdentity = {
   owner: string;
@@ -218,10 +230,7 @@ export class AssistantStore {
       id: row.id,
       role: row.role,
       text: row.content,
-      cards: z
-        .array(AssistantCardSchema)
-        .max(30)
-        .parse(JSON.parse(row.artifacts_json)),
+      cards: storedCardsSchema.parse(JSON.parse(row.artifacts_json)),
     }));
     // A deletion may interleave between the initial ownership read and rows.
     await this.conversation(identity, id);
@@ -460,12 +469,7 @@ export class AssistantStore {
           conversation.owner_key,
         ),
     ]);
-    if (
-      !z
-        .object({ meta: z.object({ changes: z.number() }).passthrough() })
-        .passthrough()
-        .parse(results[0]).meta.changes
-    )
+    if (!writeResultSchema.parse(results[0]).meta.changes)
       throw new ApiError("CANCELLED", "对话已删除。");
   }
   async context(
@@ -531,10 +535,7 @@ export class AssistantStore {
       .first<{ actions_json: string; conversation_id: string }>();
     if (!row) throw new ApiError("NOT_FOUND", "地图操作已失效，请重新查询。");
     return {
-      actions: z
-        .array(MapActionSchema)
-        .max(8)
-        .parse(JSON.parse(row.actions_json)),
+      actions: storedActionsSchema.parse(JSON.parse(row.actions_json)),
       conversationId: row.conversation_id,
     };
   }
@@ -577,14 +578,7 @@ export class AssistantStore {
     if (!row || row.status === "revoked")
       throw new ApiError("CANCELLED", "地图操作已取消。");
     if (row.status === "applied" || row.status === "failed")
-      return z
-        .object({
-          ok: z.boolean(),
-          message: z.string().max(100),
-          mode: z.enum(["2d", "2.5d", "3d"]).optional(),
-        })
-        .strict()
-        .parse(JSON.parse(row.receipt_json || "{}"));
+      return storedReceiptSchema.parse(JSON.parse(row.receipt_json || "{}"));
     return null;
   }
   async locationChallenge(identity: AssistantIdentity) {

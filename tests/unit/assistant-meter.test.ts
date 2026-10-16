@@ -21,6 +21,7 @@ describe("metered orchestration policy and truthful browser receipts", () => {
     const fixture = sqliteD1();
     try {
       const store = new AssistantStore(fixture.db);
+      const running = vi.spyOn(store, "running");
       const identity = await store.identity(
         new Request("https://test.invalid"),
       );
@@ -85,6 +86,9 @@ describe("metered orchestration policy and truthful browser receipts", () => {
         correctionRetries: 1,
         totalTokens: 36,
       });
+      // One live ownership/lease read immediately before EACH upstream request
+      // (including correction), plus the completion read; no adjacent duplicate.
+      expect(running).toHaveBeenCalledTimes(3);
     } finally {
       fixture.close();
     }

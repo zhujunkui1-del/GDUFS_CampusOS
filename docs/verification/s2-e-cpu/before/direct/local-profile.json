@@ -1,0 +1,507 @@
+{
+  "at": "2026-10-16T07:20:57.317Z",
+  "localWorkerdOnly": true,
+  "interpretation": "V8 sampling includes idle/GC and framework startup. Not Cloudflare per-invocation CPU or wall latency.",
+  "results": [
+    {
+      "phase": "cold-1",
+      "top": [
+        {
+          "function": "i",
+          "file": "preview-worker.js",
+          "line": 126207,
+          "selfMs": 28.21,
+          "inclusiveMs": 28.21
+        },
+        {
+          "function": "close",
+          "file": "",
+          "line": 0,
+          "selfMs": 23.04,
+          "inclusiveMs": 23.04
+        },
+        {
+          "function": "g",
+          "file": "preview-worker.js",
+          "line": 126242,
+          "selfMs": 22.27,
+          "inclusiveMs": 50.48
+        },
+        {
+          "function": "t10._zod.run",
+          "file": "preview-worker.js",
+          "line": 116218,
+          "selfMs": 18.11,
+          "inclusiveMs": 18.11
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 149713,
+          "selfMs": 14.78,
+          "inclusiveMs": 14.78
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 126489,
+          "selfMs": 12.22,
+          "inclusiveMs": 62.7
+        },
+        {
+          "function": "instantiateModule",
+          "file": "preview-worker.js",
+          "line": 134070,
+          "selfMs": 12.06,
+          "inclusiveMs": 52.46
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 123337,
+          "selfMs": 12.04,
+          "inclusiveMs": 12.04
+        },
+        {
+          "function": "(garbage collector)",
+          "file": "",
+          "line": 0,
+          "selfMs": 10.41,
+          "inclusiveMs": 10.41
+        },
+        {
+          "function": "Object.defineProperty",
+          "file": "preview-worker.js",
+          "line": 147545,
+          "selfMs": 6.5,
+          "inclusiveMs": 6.5
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 128777,
+          "selfMs": 6.17,
+          "inclusiveMs": 85.72
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 1204,
+          "selfMs": 5.83,
+          "inclusiveMs": 5.83
+        },
+        {
+          "function": "__init",
+          "file": "preview-worker.js",
+          "line": 10,
+          "selfMs": 3.16,
+          "inclusiveMs": 28.64
+        },
+        {
+          "function": "set restore",
+          "file": "",
+          "line": 0,
+          "selfMs": 3.11,
+          "inclusiveMs": 3.11
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 1204,
+          "selfMs": 2.69,
+          "inclusiveMs": 8.36
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 126540,
+          "selfMs": 1.77,
+          "inclusiveMs": 7.74
+        },
+        {
+          "function": "s3",
+          "file": "preview-worker.js",
+          "line": 107779,
+          "selfMs": 1.72,
+          "inclusiveMs": 1.72
+        },
+        {
+          "function": "C",
+          "file": "preview-worker.js",
+          "line": 128836,
+          "selfMs": 1.61,
+          "inclusiveMs": 1.61
+        },
+        {
+          "function": "ut",
+          "file": "preview-worker.js",
+          "line": 121697,
+          "selfMs": 1.59,
+          "inclusiveMs": 3.09
+        },
+        {
+          "function": "prepare",
+          "file": "preview-worker.js",
+          "line": 110849,
+          "selfMs": 1.59,
+          "inclusiveMs": 3.14
+        },
+        {
+          "function": "__nccwpck_require__2",
+          "file": "preview-worker.js",
+          "line": 6444,
+          "selfMs": 1.59,
+          "inclusiveMs": 1.59
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 116190,
+          "selfMs": 1.58,
+          "inclusiveMs": 1.58
+        },
+        {
+          "function": "a2",
+          "file": "preview-worker.js",
+          "line": 39964,
+          "selfMs": 1.58,
+          "inclusiveMs": 1.58
+        },
+        {
+          "function": "./dist/esm/server/after/after-context.js",
+          "file": "preview-worker.js",
+          "line": 35070,
+          "selfMs": 1.58,
+          "inclusiveMs": 1.58
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 14173,
+          "selfMs": 1.58,
+          "inclusiveMs": 1.58
+        },
+        {
+          "function": "eF",
+          "file": "preview-worker.js",
+          "line": 113919,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": "t10._zod.parse",
+          "file": "preview-worker.js",
+          "line": 116887,
+          "selfMs": 1.57,
+          "inclusiveMs": 2.37
+        },
+        {
+          "function": "s2",
+          "file": "preview-worker.js",
+          "line": 115653,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": "s2",
+          "file": "preview-worker.js",
+          "line": 115653,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": "a2",
+          "file": "preview-worker.js",
+          "line": 39964,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": "_addListener",
+          "file": "node-internal:events",
+          "line": 336,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": "_getContextManager",
+          "file": "preview-worker.js",
+          "line": 5600,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": ".open-next/server-functions/default/node_modules/next/dist/client/components/hooks-server-context.js",
+          "file": "preview-worker.js",
+          "line": 2630,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": "_write",
+          "file": "node-internal:streams_writable",
+          "line": 473,
+          "selfMs": 1.56,
+          "inclusiveMs": 1.56
+        },
+        {
+          "function": "instantiateModule",
+          "file": "preview-worker.js",
+          "line": 134070,
+          "selfMs": 1.56,
+          "inclusiveMs": 16.01
+        }
+      ]
+    },
+    {
+      "phase": "warm-12",
+      "top": [
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 126467,
+          "selfMs": 41.75,
+          "inclusiveMs": 116.93
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 148096,
+          "selfMs": 32.79,
+          "inclusiveMs": 32.79
+        },
+        {
+          "function": "stringToRegexp",
+          "file": "preview-worker.js",
+          "line": 149912,
+          "selfMs": 24.75,
+          "inclusiveMs": 24.75
+        },
+        {
+          "function": "match",
+          "file": "preview-worker.js",
+          "line": 10478,
+          "selfMs": 23.61,
+          "inclusiveMs": 23.61
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 126540,
+          "selfMs": 17.76,
+          "inclusiveMs": 23.98
+        },
+        {
+          "function": "close",
+          "file": "",
+          "line": 0,
+          "selfMs": 16.2,
+          "inclusiveMs": 16.2
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 126473,
+          "selfMs": 16.12,
+          "inclusiveMs": 16.12
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 126535,
+          "selfMs": 15.56,
+          "inclusiveMs": 15.56
+        },
+        {
+          "function": "i",
+          "file": "preview-worker.js",
+          "line": 126207,
+          "selfMs": 13.1,
+          "inclusiveMs": 13.1
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 146257,
+          "selfMs": 11.83,
+          "inclusiveMs": 11.83
+        },
+        {
+          "function": "EventEmitter.init",
+          "file": "node-internal:events",
+          "line": 162,
+          "selfMs": 11.73,
+          "inclusiveMs": 11.73
+        },
+        {
+          "function": "prepare",
+          "file": "preview-worker.js",
+          "line": 110849,
+          "selfMs": 10.37,
+          "inclusiveMs": 10.37
+        },
+        {
+          "function": "match",
+          "file": "preview-worker.js",
+          "line": 10575,
+          "selfMs": 10.13,
+          "inclusiveMs": 33.74
+        },
+        {
+          "function": "pipeImpl",
+          "file": "preview-worker.js",
+          "line": 14362,
+          "selfMs": 10.08,
+          "inclusiveMs": 10.08
+        },
+        {
+          "function": "getRandomValues",
+          "file": "",
+          "line": 0,
+          "selfMs": 9.3,
+          "inclusiveMs": 9.3
+        },
+        {
+          "function": "fromArrayBuffer",
+          "file": "node-internal:internal_buffer",
+          "line": 165,
+          "selfMs": 9.21,
+          "inclusiveMs": 9.21
+        },
+        {
+          "function": "ReadableStream",
+          "file": "",
+          "line": 0,
+          "selfMs": 8.99,
+          "inclusiveMs": 8.99
+        },
+        {
+          "function": "URL",
+          "file": "",
+          "line": 0,
+          "selfMs": 8.08,
+          "inclusiveMs": 8.08
+        },
+        {
+          "function": "handleRewrites",
+          "file": "preview-worker.js",
+          "line": 150141,
+          "selfMs": 7.72,
+          "inclusiveMs": 7.72
+        },
+        {
+          "function": "get",
+          "file": "",
+          "line": 0,
+          "selfMs": 6.86,
+          "inclusiveMs": 6.86
+        },
+        {
+          "function": "tA",
+          "file": "preview-worker.js",
+          "line": 114842,
+          "selfMs": 6.6,
+          "inclusiveMs": 13.3
+        },
+        {
+          "function": "tc",
+          "file": "preview-worker.js",
+          "line": 114263,
+          "selfMs": 6.17,
+          "inclusiveMs": 6.17
+        },
+        {
+          "function": "",
+          "file": "",
+          "line": 0,
+          "selfMs": 6.16,
+          "inclusiveMs": 6.16
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 116181,
+          "selfMs": 6.11,
+          "inclusiveMs": 6.11
+        },
+        {
+          "function": "c",
+          "file": "preview-worker.js",
+          "line": 128786,
+          "selfMs": 6.07,
+          "inclusiveMs": 6.07
+        },
+        {
+          "function": "r",
+          "file": "preview-worker.js",
+          "line": 123121,
+          "selfMs": 5.9,
+          "inclusiveMs": 5.9
+        },
+        {
+          "function": "execute",
+          "file": "preview-worker.js",
+          "line": 128607,
+          "selfMs": 5.69,
+          "inclusiveMs": 5.69
+        },
+        {
+          "function": "writeHeaders",
+          "file": "preview-worker.js",
+          "line": 146289,
+          "selfMs": 5.68,
+          "inclusiveMs": 14.68
+        },
+        {
+          "function": "fetch",
+          "file": "",
+          "line": 0,
+          "selfMs": 5.35,
+          "inclusiveMs": 5.35
+        },
+        {
+          "function": "",
+          "file": "",
+          "line": 0,
+          "selfMs": 5.03,
+          "inclusiveMs": 36.99
+        },
+        {
+          "function": "_wrappedFetch",
+          "file": "cloudflare-internal:d1-api",
+          "line": 162,
+          "selfMs": 4.6,
+          "inclusiveMs": 4.6
+        },
+        {
+          "function": "sessionCookie",
+          "file": "preview-worker.js",
+          "line": 123175,
+          "selfMs": 4.26,
+          "inclusiveMs": 4.26
+        },
+        {
+          "function": "_send",
+          "file": "cloudflare-internal:d1-api",
+          "line": 196,
+          "selfMs": 3.28,
+          "inclusiveMs": 3.28
+        },
+        {
+          "function": "__name",
+          "file": "preview-worker.js",
+          "line": 3,
+          "selfMs": 3.13,
+          "inclusiveMs": 3.13
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 115987,
+          "selfMs": 3.13,
+          "inclusiveMs": 3.13
+        }
+      ]
+    }
+  ]
+}

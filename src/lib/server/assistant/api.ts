@@ -9,6 +9,34 @@ import { mapRuntime } from "../map-env";
 import { ApiError } from "../errors";
 import { historyForClient } from "@/domain/agent/assistant-contracts";
 type Context = Awaited<ReturnType<typeof assistantContext>>;
+const idSchema = z.string().uuid();
+const emptyBodySchema = z.object({}).strict();
+const listSchema = z
+  .object({
+    cursor: z.string().max(60).optional(),
+    limit: z.coerce.number().int().min(1).max(20).optional(),
+  })
+  .strict();
+const cancelSchema = z.object({ requestId: idSchema }).strict();
+const routeSchema = z
+  .object({
+    ticket: z.string().max(60000).optional(),
+    conversationId: idSchema.optional(),
+  })
+  .strict();
+const claimSchema = z
+  .object({
+    tickets: z.array(z.string().max(60000)).max(4).optional(),
+    conversationId: idSchema.optional(),
+  })
+  .strict();
+const receiptSchema = z
+  .object({
+    ok: z.boolean(),
+    message: z.string().max(100),
+    mode: z.enum(["2d", "2.5d", "3d"]).optional(),
+  })
+  .strict();
 function api(
   handler: (request: Request, context: Context) => Promise<unknown>,
   limited = false,
@@ -62,32 +90,22 @@ export const sessionGet = api(async (request, context) => {
   };
 });
 export const historyGet = api(async (request, context) => {
-  const id = z
-    .string()
-    .uuid()
-    .parse(new URL(request.url).pathname.split("/").at(-1));
+  const id = idSchema.parse(new URL(request.url).pathname.split("/").at(-1));
   return historyForClient(
     await context.store.history(context.identity, id),
     request.headers.get("X-CampusOS-Conversation-Protocol") === "1",
   );
 }, true);
 export const conversationsGet = api(async (request, context) => {
-  const query = z
-    .object({
-      cursor: z.string().max(60).optional(),
-      limit: z.coerce.number().int().min(1).max(20).optional(),
-    })
-    .strict()
-    .parse(Object.fromEntries(new URL(request.url).searchParams));
+  const query = listSchema.parse(
+    Object.fromEntries(new URL(request.url).searchParams),
+  );
   return context.store.list(context.identity, query.cursor, query.limit);
 }, true);
 export const conversationDelete = api(async (request, context) => {
   const body = await readJson(request, 1024, true);
-  if (body !== undefined) z.object({}).strict().parse(body);
-  const id = z
-    .string()
-    .uuid()
-    .parse(new URL(request.url).pathname.split("/").at(-1));
+  if (body !== undefined) emptyBodySchema.parse(body);
+  const id = idSchema.parse(new URL(request.url).pathname.split("/").at(-1));
   return context.store.deleteConversation(context.identity, id);
 }, true);
 export const challengePost = api(async (_request, context) => ({
@@ -96,25 +114,13 @@ export const challengePost = api(async (_request, context) => ({
   expiresInSeconds: 30,
 }));
 export const cancelPost = api(async (request, context) => {
-  const body = z
-    .object({ requestId: z.string().uuid() })
-    .strict()
-    .parse(await readJson(request));
+  const body = cancelSchema.parse(await readJson(request));
   await context.store.cancel(context.identity, body.requestId);
   return { cancelled: true };
 });
 export const routePost = api(async (request, context) => {
-  const id = z
-    .string()
-    .uuid()
-    .parse(new URL(request.url).pathname.split("/").at(-1));
-  const body = z
-    .object({
-      ticket: z.string().max(60000).optional(),
-      conversationId: z.string().uuid().optional(),
-    })
-    .strict()
-    .parse(await readJson(request));
+  const id = idSchema.parse(new URL(request.url).pathname.split("/").at(-1));
+  const body = routeSchema.parse(await readJson(request));
   if (body.conversationId)
     await context.store.conversation(context.identity, body.conversationId);
   const routes = body.conversationId
@@ -124,17 +130,8 @@ export const routePost = api(async (request, context) => {
   return routes.get(context.identity.owner, id, MAP_VERSIONS);
 });
 export const claimPost = api(async (request, context) => {
-  const id = z
-    .string()
-    .uuid()
-    .parse(new URL(request.url).pathname.split("/").at(-2));
-  const body = z
-    .object({
-      tickets: z.array(z.string().max(60000)).max(4).optional(),
-      conversationId: z.string().uuid().optional(),
-    })
-    .strict()
-    .parse(await readJson(request));
+  const id = idSchema.parse(new URL(request.url).pathname.split("/").at(-2));
+  const body = claimSchema.parse(await readJson(request));
   const packet = await context.store.claim(
     context.identity,
     id,
@@ -175,18 +172,8 @@ export const claimPost = api(async (request, context) => {
   };
 });
 export const receiptPost = api(async (request, context) => {
-  const id = z
-    .string()
-    .uuid()
-    .parse(new URL(request.url).pathname.split("/").at(-2));
-  const body = z
-    .object({
-      ok: z.boolean(),
-      message: z.string().max(100),
-      mode: z.enum(["2d", "2.5d", "3d"]).optional(),
-    })
-    .strict()
-    .parse(await readJson(request));
+  const id = idSchema.parse(new URL(request.url).pathname.split("/").at(-2));
+  const body = receiptSchema.parse(await readJson(request));
   await context.store.receipt(
     context.identity,
     id,

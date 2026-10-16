@@ -1,0 +1,98 @@
+{
+  "recordedAt": "2026-10-16T10:24:59.841Z",
+  "baseline": "a3ab24b",
+  "previewVersion": "0c8cb22a-85d0-4b64-8e17-fac4063b875a",
+  "url": "https://campusos-preview.zhujunkui1.workers.dev/map",
+  "freeCpuAcceptancePassed": false,
+  "actualInvocations": 185,
+  "exceededCpu": 0,
+  "agentCpu": {
+    "path": "/api/agent/chat",
+    "n": 27,
+    "measuredCpuN": 27,
+    "cpuP50Ms": 48,
+    "cpuP95Ms": 116,
+    "cpuMaxMs": 127,
+    "wallP50Ms": 4534,
+    "wallP95Ms": 6477,
+    "over10ms": 27,
+    "outcomes": {
+      "ok": 27
+    }
+  },
+  "routeCpu": {
+    "path": "/api/map/skills/plan_route",
+    "n": 6,
+    "measuredCpuN": 6,
+    "cpuP50Ms": 19,
+    "cpuP95Ms": 29,
+    "cpuMaxMs": 29,
+    "wallP50Ms": 117,
+    "wallP95Ms": 1664,
+    "over10ms": 6,
+    "outcomes": {
+      "ok": 6
+    }
+  },
+  "checks": {
+    "typecheck": true,
+    "lint": true,
+    "unit": {
+      "files": 31,
+      "passed": 233
+    },
+    "chrome": {
+      "passed": 79,
+      "skipped": 3
+    },
+    "edge": {
+      "passed": 79,
+      "skipped": 3
+    },
+    "dbConstraints": {
+      "tables": 35,
+      "passed": true
+    },
+    "twoIndependentWorkerdSharedD1": true,
+    "nextAndOpenNextBuild": true,
+    "safePreviewDeploy": true,
+    "localWorkers": {
+      "realCloud": false,
+      "requests": 54,
+      "allHttp200": true
+    },
+    "credentialsAndFrozenData": true
+  },
+  "realModel": {
+    "chromeDesktopAG": true,
+    "edgeMobileViewportAG": true,
+    "edgeMobileDetails": true,
+    "realPhone": false,
+    "initialInvalidToolParametersRejected": true,
+    "oneControlledRecheck": true
+  },
+  "budget": {
+    "recordedAt": "2026-10-16T10:08:02.706Z",
+    "budgetCny": 1,
+    "accountBalanceDecreaseCny": 0.43,
+    "remainingApprovedBudgetCny": 0.5700000000000003,
+    "isProjectInvoice": false,
+    "mayIncludeConcurrentAccountUsage": true,
+    "chargedExistingBalanceOnly": true,
+    "topUpPerformed": false
+  },
+  "changes": {
+    "newCloudResources": false,
+    "paidPlanChanges": false,
+    "productionChanges": false,
+    "d1Migrations": false,
+    "secretChanges": false,
+    "buildingModels": false
+  },
+  "limitations": [
+    "All 27 chat CPU samples exceed 10ms",
+    "Cloud function profiler supplied no application samples",
+    "Isolate coldness and HKG/NRT ingress not controlled",
+    "Real hardware and long-term multi-region load not tested"
+  ]
+}

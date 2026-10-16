@@ -12,7 +12,9 @@ import {
   nearestTunnelDistance,
   planLocalRoute,
   tunnelNetwork,
+  loadPublicWalkingAttachments,
 } from "@/features/campus-map/data/local-routing";
+import publicAttachments from "./public-walking-attachments.json";
 import {
   toGcj02,
   toWgs84,
@@ -42,6 +44,7 @@ import {
 } from "./route-store";
 
 type ResolvedOrigin = z.infer<typeof ResolvedOriginSchema>;
+loadPublicWalkingAttachments(publicAttachments);
 export const MAP_VERSIONS = {
   mapVersion: campusData.mapVersion!,
   networkVersion: tunnelNetwork.version,

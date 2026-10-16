@@ -1,0 +1,105 @@
+{
+  "realModel": true,
+  "realCloud": true,
+  "browser": "149.0.4022.80",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "records": [
+    {
+      "prompt": "查询南苑7栋的详细资料：它属于哪个区域、有多少层、高约多少米？请先查询地点详情，再按已核实资料回答。",
+      "tools": [
+        "search_places",
+        "get_place_details",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "FOCUS_PLACE",
+          "placeId": "osm-way-312536955"
+        },
+        {
+          "type": "SHOW_PLACE_DETAILS",
+          "placeId": "osm-way-312536955"
+        }
+      ],
+      "result": {
+        "conversationId": "c4b53380-5652-4286-9ca4-aee947f84d50",
+        "requestId": "fb97c747-8376-468a-afe3-9183e1552cdd",
+        "metrics": {
+          "requests": 4,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 879,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 906,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 782,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1109,
+              "firstTextMs": 653
+            }
+          ],
+          "promptTokens": 7654,
+          "completionTokens": 247,
+          "cachedPromptTokens": 6907,
+          "totalTokens": 7901,
+          "usageComplete": true,
+          "chargedTokens": 7901,
+          "durationMs": 5458,
+          "estimatedUsdRange": [
+            0.000280971,
+            0.000561942
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 281,
+            "serverElapsedMs": 5739,
+            "firstTextMs": 5267,
+            "mapActionMs": 1623,
+            "skills": [
+              {
+                "name": "search_places",
+                "durationMs": 0,
+                "ok": true
+              },
+              {
+                "name": "get_place_details",
+                "durationMs": 0,
+                "ok": true
+              },
+              {
+                "name": "control_map",
+                "durationMs": 0,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 17,
+              "writeQueries": 13,
+              "calls": 22,
+              "failures": 0,
+              "durationMs": 563,
+              "maxCallMs": 51
+            }
+          }
+        }
+      },
+      "response": "南苑7栋资料如下：\n\n- 区域：生活区（living）\n- 类别：宿舍楼\n- 层数：7 层\n- 高度：约 21 米（高度为业主估算值）\n- 开放状态：未知\n\n位置坐标：113.390146, 23.0615765。已在地图上聚焦该地点并显示详情。",
+      "responseHeadersMs": 442,
+      "firstTextMs": 5387,
+      "completeMs": 5972
+    }
+  ]
+}

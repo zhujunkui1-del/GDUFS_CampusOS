@@ -49,6 +49,108 @@ type EndpointOption = {
   distance: number;
 };
 const endpointCache = new Map<string, EndpointOption[]>();
+function distinctEndpointOptions(options: EndpointOption[], limit: number) {
+  const chosen: EndpointOption[] = [];
+  for (const option of options) {
+    if (
+      !chosen.some(
+        (previous) => distanceMeters(previous.boundary, option.boundary) < 8,
+      )
+    )
+      chosen.push(option);
+    if (chosen.length === limit) break;
+  }
+  return chosen;
+}
+export type PublicWalkingAttachments = {
+  mapVersion: string;
+  networkVersion: string;
+  entries: Record<
+    string,
+    {
+      edgeId: string;
+      road: Coordinate;
+      boundary: Coordinate;
+      distance: number;
+    }[]
+  >;
+};
+// Only the build tool exports/loads this fixed public geometry index. It holds
+// no route IDs, identities, device positions, tickets or computed private routes.
+export function publicWalkingAttachments(): PublicWalkingAttachments {
+  return {
+    mapVersion: campusData.mapVersion!,
+    networkVersion: tunnelNetwork.version,
+    entries: Object.fromEntries(
+      [...endpointCache]
+        .filter(([key]) => key.startsWith("campus_place:"))
+        .map(([key, options]) => [
+          key,
+          distinctEndpointOptions(options, 16).map(
+            ({ edge, road, boundary, distance }) => ({
+              edgeId: edge.id,
+              road,
+              boundary,
+              distance,
+            }),
+          ),
+        ]),
+    ),
+  };
+}
+const publicAttachmentsSchema = z
+  .object({
+    sourceHash: z
+      .string()
+      .regex(/^[a-f0-9]{64}$/)
+      .optional(),
+    mapVersion: z.string().max(100),
+    networkVersion: z.string().max(100),
+    entries: z.record(
+      z.string().max(160),
+      z
+        .array(
+          z
+            .object({
+              edgeId: z.string().max(160),
+              road: CoordinateSchema,
+              boundary: CoordinateSchema,
+              distance: z.number().nonnegative(),
+            })
+            .strict(),
+        )
+        .max(16),
+    ),
+  })
+  .strict();
+export function loadPublicWalkingAttachments(input: unknown) {
+  const metadata = publicAttachmentsSchema.parse(input);
+  if (
+    metadata.mapVersion !== campusData.mapVersion ||
+    metadata.networkVersion !== tunnelNetwork.version
+  )
+    throw new Error(
+      "Public walking attachment versions do not match the fixed map",
+    );
+  const edges = new Map(candidates.map((edge) => [edge.id, edge]));
+  const places = new Set(
+    campusData.places.map((place) => "campus_place:" + place.id),
+  );
+  const prepared = new Map<string, EndpointOption[]>();
+  for (const [key, options] of Object.entries(metadata.entries)) {
+    if (!places.has(key))
+      throw new Error("Unknown public walking attachment place");
+    prepared.set(
+      key,
+      options.map(({ edgeId, ...option }) => {
+        const edge = edges.get(edgeId);
+        if (!edge) throw new Error("Unknown public walking attachment edge");
+        return { edge, ...option };
+      }),
+    );
+  }
+  for (const [key, options] of prepared) endpointCache.set(key, options);
+}
 function targetRing(place: CampusPlace) {
   const parent =
     place.parentId && campusData.places.find((p) => p.id === place.parentId);
@@ -81,9 +183,14 @@ export function planLocalRoute(
     nodes: [...tunnelNetwork.nodes],
     edges: [...tunnelNetwork.edges],
   };
+  // Request-local indexes preserve the same graph and route order. Avoid an
+  // O(nodes/edges) scan for every attachment, split and output step.
+  const nodeById = new Map(graph.nodes.map((node) => [node.id, node]));
   const addNode = (p: Coordinate) => {
     const id = "selection:" + graph.nodes.length;
-    graph.nodes.push({ id, coordinate: p });
+    const node = { id, coordinate: p };
+    graph.nodes.push(node);
+    nodeById.set(id, node);
     return id;
   };
   const splits = new Map<
@@ -91,8 +198,8 @@ export function planLocalRoute(
     { edge: GraphEdge; points: { fraction: number; id: string }[] }
   >();
   const addEdge = (a: string, b: string, source: string, name: string) => {
-    const x = graph.nodes.find((n) => n.id === a)!.coordinate,
-      y = graph.nodes.find((n) => n.id === b)!.coordinate;
+    const x = nodeById.get(a)!.coordinate,
+      y = nodeById.get(b)!.coordinate;
     if (distanceMeters(x, y) > 0.03)
       graph.edges.push({
         id: "selection-edge:" + graph.edges.length,
@@ -143,7 +250,15 @@ export function planLocalRoute(
     )?.polygon;
     const cacheKey =
       point.source + ":" + (point.placeId || coordinate.join(","));
-    let options = endpointCache.get(cacheKey);
+    // Cache only fixed public place attachments. Precise device/selected point
+    // coordinates must not be retained in an isolate shared by different users.
+    const canonical = place && toGcj02(place.coordinate);
+    const cacheable =
+      point.source === "campus_place" &&
+      !!canonical &&
+      canonical[0] === point.coordinateGcj02[0] &&
+      canonical[1] === point.coordinateGcj02[1];
+    let options = cacheable ? endpointCache.get(cacheKey) : undefined;
     if (!options) {
       options = [];
       for (const edge of candidates) {
@@ -178,16 +293,11 @@ export function planLocalRoute(
         options.push({ edge, ...option });
       }
       options.sort((a, b) => a.distance - b.distance);
-      endpointCache.set(cacheKey, options);
+      if (cacheable) endpointCache.set(cacheKey, options);
       if (endpointCache.size > 200)
         endpointCache.delete(endpointCache.keys().next().value!);
     }
-    const chosen: typeof options = [];
-    for (const p of options) {
-      if (!chosen.some((c) => distanceMeters(c.boundary, p.boundary) < 8))
-        chosen.push(p);
-      if (chosen.length === (device ? 1 : 16)) break;
-    }
+    const chosen = distinctEndpointOptions(options, device ? 1 : 16);
     const ids: string[] = [];
     for (const p of chosen) {
       const roadId =
@@ -250,8 +360,8 @@ export function planLocalRoute(
       const from = points[i - 1].id,
         to = points[i].id;
       if (from === to) continue;
-      const a = graph.nodes.find((n) => n.id === from)!.coordinate,
-        b = graph.nodes.find((n) => n.id === to)!.coordinate;
+      const a = nodeById.get(from)!.coordinate,
+        b = nodeById.get(to)!.coordinate;
       if (distanceMeters(a, b) > 0.03)
         graph.edges.push({
           ...edge,
@@ -274,9 +384,8 @@ export function planLocalRoute(
     cross ? raw.mandatoryTunnelSource : undefined,
   );
   if (!planned || planned.distanceMeters < 3) return null;
-  const used = planned.edgeIds.map((id) =>
-      graph.edges.find((e) => e.id === id)!,
-    ),
+  const edgeById = new Map(graph.edges.map((edge) => [edge.id, edge]));
+  const used = planned.edgeIds.map((id) => edgeById.get(id)!),
     steps: CampusRoute["steps"] = [];
   for (const [i, e] of used.entries()) {
     const length = e.geometry

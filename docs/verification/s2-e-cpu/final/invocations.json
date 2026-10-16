@@ -1,0 +1,1672 @@
+{
+  "recordedAt": "2026-10-16T10:06:03.799Z",
+  "actualCloudTail": true,
+  "rawLogsStored": false,
+  "records": [
+    {
+      "at": 1792144794271,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 10,
+      "wallTimeMs": 159,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144796193,
+      "path": "/api/health",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144797394,
+      "path": "/api/agent/status",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 72,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144797098,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 31,
+      "wallTimeMs": 68,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144798499,
+      "path": "/api/agent/session",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 128,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144799044,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 7,
+      "wallTimeMs": 25,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144799043,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 189,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144799044,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 7,
+      "wallTimeMs": 190,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144799549,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 36,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144799157,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 8,
+      "wallTimeMs": 221,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144799343,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 224,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144799042,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 8,
+      "wallTimeMs": 223,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144799185,
+      "path": "/favorites",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 237,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144799886,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 12,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144799893,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 12,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144799900,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 7,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144800498,
+      "path": "/api/map/skills/get_place_details",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 25,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144801406,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 30,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144801987,
+      "path": "/api/agent/session",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 9,
+      "wallTimeMs": 1876,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144802332,
+      "path": "/api/map/skills/plan_route",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 29,
+      "wallTimeMs": 1664,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144804877,
+      "path": "/api/map/skills/control_map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 31,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144805795,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 7,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144806700,
+      "path": "/api/health",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144807681,
+      "path": "/api/agent/status",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 40,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144807682,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 100,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144808571,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 56,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144808612,
+      "path": "/api/agent/session",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 76,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144809613,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 34,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144804443,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 59,
+      "wallTimeMs": 5935,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144810531,
+      "path": "/api/map/skills/get_place_details",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 71,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144811499,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 44,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144812428,
+      "path": "/api/map/skills/plan_route",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 15,
+      "wallTimeMs": 117,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144813417,
+      "path": "/api/map/skills/control_map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 19,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144811049,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 34,
+      "wallTimeMs": 2884,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144814306,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 8,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144815333,
+      "path": "/api/health",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144816241,
+      "path": "/api/agent/status",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 21,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144817170,
+      "path": "/api/agent/session",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 72,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144817356,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 150,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144818154,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 47,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144818304,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 115,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144819181,
+      "path": "/api/map/skills/get_place_details",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 52,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144820218,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 35,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144814551,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 65,
+      "wallTimeMs": 5891,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144821128,
+      "path": "/api/map/skills/plan_route",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 20,
+      "wallTimeMs": 105,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144822130,
+      "path": "/api/map/skills/control_map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 39,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144822601,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 76,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144823100,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 10,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144824015,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 50,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144824222,
+      "path": "/api/health",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144825230,
+      "path": "/api/agent/status",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 36,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144821300,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 26,
+      "wallTimeMs": 4526,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144826145,
+      "path": "/api/agent/session",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 50,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144827112,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 41,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144827705,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 110,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144828072,
+      "path": "/api/map/skills/get_place_details",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 27,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144828108,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 83,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144828986,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 41,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144826345,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 25,
+      "wallTimeMs": 2907,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144829940,
+      "path": "/api/map/skills/plan_route",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 21,
+      "wallTimeMs": 137,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144829829,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 36,
+      "wallTimeMs": 933,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144830871,
+      "path": "/api/agent/cancel",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 65,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144831872,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 12,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144832765,
+      "path": "/api/health",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144833638,
+      "path": "/api/agent/status",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 31,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144833669,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 72,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144834507,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 47,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144834547,
+      "path": "/api/agent/session",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 80,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144835500,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 26,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144831207,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 30,
+      "wallTimeMs": 5058,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144836414,
+      "path": "/api/map/skills/get_place_details",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 28,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144837328,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 30,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144838253,
+      "path": "/api/map/skills/plan_route",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 19,
+      "wallTimeMs": 112,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144839086,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 132,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144839252,
+      "path": "/api/map/skills/control_map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 21,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144839991,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 57,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144840168,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 6,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144841069,
+      "path": "/api/health",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144836675,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 55,
+      "wallTimeMs": 5092,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144842304,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 6,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144842530,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 11,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144842546,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 15,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144842548,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 16,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144842864,
+      "path": "/api/agent/session",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 60,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144843835,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 29,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144844824,
+      "path": "/api/map/skills/get_place_details",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 52,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144845792,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 28,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144846796,
+      "path": "/api/map/skills/plan_route",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 17,
+      "wallTimeMs": 384,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144848074,
+      "path": "/api/map/skills/control_map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 27,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144913788,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 12,
+      "wallTimeMs": 35,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144915369,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 14,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144915372,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 16,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144915370,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 29,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144915540,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 33,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144915370,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 9,
+      "wallTimeMs": 32,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144915648,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 35,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144916132,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 13,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144916131,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 15,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144916134,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 17,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144916132,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 16,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144917029,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 48,
+      "wallTimeMs": 4788,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144922309,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 32,
+      "wallTimeMs": 2555,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144927873,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 156,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144929182,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 79,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144925370,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 65,
+      "wallTimeMs": 5234,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144932760,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 72,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144933780,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 60,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144931407,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 24,
+      "wallTimeMs": 3576,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144936847,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 68,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144937262,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 48,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144935614,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 24,
+      "wallTimeMs": 2899,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144939030,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 14,
+      "wallTimeMs": 1288,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144940417,
+      "path": "/api/agent/cancel",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 39,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144942972,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 60,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144944006,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 41,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144940951,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 27,
+      "wallTimeMs": 4534,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144945941,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 32,
+      "wallTimeMs": 1550,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792144947593,
+      "path": "/api/agent/cancel",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 44,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145046112,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 17,
+      "wallTimeMs": 82,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145047763,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 22,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145047786,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 20,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145047780,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 24,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145047783,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 19,
+      "wallTimeMs": 52,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145048047,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 49,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145047786,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 53,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145048051,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 7,
+      "wallTimeMs": 45,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145049063,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 26,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145049059,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 28,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145049067,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 28,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145054234,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 67,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145055295,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 51,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145050131,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 116,
+      "wallTimeMs": 6477,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145057337,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 69,
+      "wallTimeMs": 2658,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145062791,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 13,
+      "wallTimeMs": 161,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145063935,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 52,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145060374,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 103,
+      "wallTimeMs": 5096,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145067633,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 62,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145069194,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 72,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145066328,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 48,
+      "wallTimeMs": 4653,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145073031,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 81,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145073444,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 47,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145071527,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 40,
+      "wallTimeMs": 3223,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145074982,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 20,
+      "wallTimeMs": 1223,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145076334,
+      "path": "/api/agent/cancel",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 45,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145078783,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 81,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145079830,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 54,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145076415,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 106,
+      "wallTimeMs": 4818,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145084894,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 10,
+      "wallTimeMs": 169,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145086029,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 60,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145082190,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 78,
+      "wallTimeMs": 5118,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145090478,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 80,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145091544,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 41,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145088164,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 51,
+      "wallTimeMs": 4047,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145092822,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 9,
+      "wallTimeMs": 31,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145093102,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 16,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145093110,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 21,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145093126,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 20,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145093127,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 27,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145096554,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 16,
+      "wallTimeMs": 43,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145098133,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 52,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145098134,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 7,
+      "wallTimeMs": 58,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145098132,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 7,
+      "wallTimeMs": 29,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145098312,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 31,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145098133,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 26,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145098133,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 32,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145098308,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 28,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145098736,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 11,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145098739,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 12,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145098743,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 12,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145103093,
+      "path": "/api/agent/actions/REDACTED/claim",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 433,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145104516,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 51,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145099812,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 75,
+      "wallTimeMs": 6510,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145154765,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 9,
+      "wallTimeMs": 35,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145155477,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 32,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145155480,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 32,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145155474,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 9,
+      "wallTimeMs": 60,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145155665,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 74,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145155667,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 7,
+      "wallTimeMs": 69,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145155478,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 8,
+      "wallTimeMs": 71,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145155477,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 20,
+      "wallTimeMs": 64,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145156501,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 26,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145156501,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 28,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145156508,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 26,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145161929,
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 98,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792145157687,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 127,
+      "wallTimeMs": 5861,
+      "exceptionCount": 0
+    }
+  ]
+}

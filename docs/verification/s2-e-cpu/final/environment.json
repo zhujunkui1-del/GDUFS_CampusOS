@@ -1,0 +1,230 @@
+{
+  "at": "2026-10-16T10:08:01.820Z",
+  "accountMatched": true,
+  "worker": "campusos-preview",
+  "deployments": [
+    {
+      "id": "85aa9810-10b5-4a75-af32-8f7c8590b7f9",
+      "versions": [
+        {
+          "version_id": "0c8cb22a-85d0-4b64-8e17-fac4063b875a",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-16T09:59:19.935106Z"
+    },
+    {
+      "id": "88056a21-c0eb-4ff3-8c97-17f6db78d524",
+      "versions": [
+        {
+          "version_id": "2719e1ad-ac75-474a-86e9-6a9e3c3a2bdd",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-16T07:29:51.320678Z"
+    },
+    {
+      "id": "a933c69c-97e2-4beb-b4f9-4a7d9c2b740d",
+      "versions": [
+        {
+          "version_id": "f98aadf8-8581-49ca-befb-d9c13d38f90e",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-16T06:12:50.386454Z"
+    },
+    {
+      "id": "76a22c12-d0e7-412f-b325-68e4d07922d5",
+      "versions": [
+        {
+          "version_id": "17b97545-1dcc-4a13-8a00-1c101d3751aa",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-16T06:09:09.791808Z"
+    },
+    {
+      "id": "d33a0ea9-415d-4052-bfd6-b1de7d6f0694",
+      "versions": [
+        {
+          "version_id": "117fc924-98bf-4adc-87a0-b073a828d12c",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-16T05:55:04.411246Z"
+    },
+    {
+      "id": "58aa4800-ff27-4bcd-a742-1d7138b786d8",
+      "versions": [
+        {
+          "version_id": "8f4c3b54-aa21-4fb5-9c44-51db98c4e256",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-16T05:49:10.076831Z"
+    },
+    {
+      "id": "1c991d7c-6462-47c2-baf9-bedd8e110db6",
+      "versions": [
+        {
+          "version_id": "7d31fb21-f05d-4213-aa9c-2ec83dc591dd",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-16T05:45:59.788487Z"
+    },
+    {
+      "id": "2717d336-efd9-4ccc-a518-6bbdadae1d8e",
+      "versions": [
+        {
+          "version_id": "80152b86-ca82-4909-95aa-65ba958bb3f0",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-16T05:42:29.589938Z"
+    },
+    {
+      "id": "dce7b29e-0b03-46ca-97dc-6f553ffb280d",
+      "versions": [
+        {
+          "version_id": "a520feb8-41e6-4adb-8fae-58c6611f77bb",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-15T20:33:38.759889Z"
+    },
+    {
+      "id": "019e0d09-30b7-4f76-82a4-3b474be54d39",
+      "versions": [
+        {
+          "version_id": "b1ec8f74-bcd9-4d13-a51c-639259223904",
+          "percentage": 100
+        }
+      ],
+      "created_on": "2026-10-15T20:23:45.511929Z"
+    }
+  ],
+  "settings": {
+    "compatibility_date": "2026-10-12",
+    "compatibility_flags": [
+      "nodejs_compat",
+      "global_fetch_strictly_public"
+    ],
+    "usage_model": "standard",
+    "bindings": [
+      {
+        "name": "AGENT_SIGNING_SECRET",
+        "type": "secret_text"
+      },
+      {
+        "name": "APP_ENV",
+        "type": "plain_text"
+      },
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "name": "DB",
+        "type": "d1"
+      },
+      {
+        "name": "MAP_RATE_LIMITER",
+        "type": "ratelimit"
+      },
+      {
+        "name": "MODEL_API_KEY",
+        "type": "secret_text"
+      },
+      {
+        "name": "MODEL_BASE_URL",
+        "type": "secret_text"
+      },
+      {
+        "name": "MODEL_CAPABILITIES_JSON",
+        "type": "secret_text"
+      },
+      {
+        "name": "MODEL_NAME",
+        "type": "secret_text"
+      },
+      {
+        "name": "WORKER_SELF_REFERENCE",
+        "type": "service"
+      }
+    ]
+  },
+  "database": {
+    "name": "campusos-preview",
+    "version": "production",
+    "size": 1032192
+  },
+  "runtimeStatus": {
+    "ok": true,
+    "data": {
+      "stage": "S2-C",
+      "chatAvailable": true,
+      "status": "ready",
+      "storageReady": true,
+      "model": {
+        "ready": true,
+        "model": {
+          "source": "platform",
+          "provider": "deepseek",
+          "model": "deepseek-flash",
+          "policyVersion": "deepseek-default-v1",
+          "testedAt": "2026-10-15T17:30:54.547Z",
+          "capabilities": {
+            "toolCalling": true,
+            "jsonObject": true,
+            "strictJsonSchema": false
+          }
+        }
+      },
+      "domains": [
+        "knowledge-domain",
+        "spatial-domain",
+        "events-domain",
+        "personal-domain"
+      ],
+      "skills": [
+        {
+          "name": "search_places",
+          "version": "1.0.0",
+          "domain": "spatial-domain",
+          "auth": "public",
+          "sideEffect": "none"
+        },
+        {
+          "name": "get_place_details",
+          "version": "1.0.0",
+          "domain": "spatial-domain",
+          "auth": "public",
+          "sideEffect": "none"
+        },
+        {
+          "name": "find_nearby_places",
+          "version": "1.0.0",
+          "domain": "spatial-domain",
+          "auth": "public",
+          "sideEffect": "none"
+        },
+        {
+          "name": "plan_route",
+          "version": "1.0.0",
+          "domain": "spatial-domain",
+          "auth": "public",
+          "sideEffect": "none"
+        },
+        {
+          "name": "control_map",
+          "version": "1.0.0",
+          "domain": "spatial-domain",
+          "auth": "public",
+          "sideEffect": "none"
+        }
+      ]
+    },
+    "requestId": "9eee1a3f-89d4-4747-a61c-4e982bfd1c87"
+  }
+}

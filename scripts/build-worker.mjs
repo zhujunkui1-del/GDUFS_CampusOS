@@ -9,6 +9,16 @@ import {
 import { join } from "node:path";
 import { publicWorkerEnvironment } from "./worker-env.mjs";
 
+const metadata = spawnSync(
+  process.execPath,
+  ["scripts/prepare-route-metadata.mjs", "--check"],
+  {
+    stdio: "inherit",
+    env: process.env,
+  },
+);
+if (metadata.error || metadata.status !== 0) process.exit(metadata.status ?? 1);
+
 const result = spawnSync(
   process.execPath,
   [

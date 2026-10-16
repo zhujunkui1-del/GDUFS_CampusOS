@@ -7,6 +7,12 @@ import type { RouteSnapshotStore } from "../maps/route-store";
 import type { SqlDatabase } from "./database";
 import { signData, verifyData } from "./crypto";
 import { ApiError } from "../errors";
+const writeResultSchema = z
+  .object({ meta: z.object({ changes: z.number() }).passthrough() })
+  .passthrough();
+const ticketSchema = z
+  .object({ owner: z.string(), route: RouteOutputSchema })
+  .strict();
 
 export class SharedRouteStore implements RouteSnapshotStore {
   #transient = new Map<string, RouteSnapshot>();
@@ -67,12 +73,7 @@ export class SharedRouteStore implements RouteSnapshotStore {
           ]
         : []),
     ]);
-    if (
-      !z
-        .object({ meta: z.object({ changes: z.number() }).passthrough() })
-        .passthrough()
-        .parse(results[0]).meta.changes
-    )
+    if (!writeResultSchema.parse(results[0]).meta.changes)
       throw new ApiError("CANCELLED", "对话已停止或已删除。");
     this.#transient.set(route.routeId, structuredClone(route));
   }
@@ -80,10 +81,7 @@ export class SharedRouteStore implements RouteSnapshotStore {
     return signData({ owner, route }, this.secret);
   }
   async hydrate(owner: string, ticket: string) {
-    const value = z
-      .object({ owner: z.string(), route: RouteOutputSchema })
-      .strict()
-      .parse(await verifyData(ticket, this.secret));
+    const value = ticketSchema.parse(await verifyData(ticket, this.secret));
     if (
       value.owner !== owner ||
       Date.parse(value.route.expiresAt) <= this.now()

@@ -41,6 +41,16 @@ test("real cloud model queries verified dormitory details", async ({
   expect(records[0]).toMatchObject({
     tools: expect.arrayContaining(["get_place_details"]),
   });
+  // A successful focus action collapses the phone sheet. Reopen the same
+  // assistant before asserting its actual answer; retain all tool/text checks.
+  if (!(await page.locator("#campus-assistant").isVisible())) {
+    if (await page.locator(".place-details-frame").isVisible())
+      await page
+        .locator(".place-details-frame")
+        .getByRole("button", { name: "问 AI", exact: true })
+        .click();
+    else await page.getByRole("button", { name: "打开校园助理" }).click();
+  }
   const answer = page.locator('[data-message-role="assistant"]').last();
   await expect(answer).toContainText(/(?:7|七)\s*层/);
   await expect(answer).toContainText(/21\s*米/);

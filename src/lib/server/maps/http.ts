@@ -8,6 +8,10 @@ import { assistantContext, sameOrigin } from "../assistant/http-context";
 import { CampusMapService } from "./campus-map-service";
 import { createMapSkillRegistry } from "./skills";
 import { PlaceIdSchema } from "@/domain/maps/skill-contracts";
+const skillNameSchema = z.string().regex(/^[a-z][a-z0-9_]{0,63}$/);
+const envelopeSchema = z
+  .object({ input: z.unknown(), selectedPlaceId: PlaceIdSchema.optional() })
+  .strict();
 
 async function body(request: Request) {
   const reader = request.body?.getReader();
@@ -51,16 +55,12 @@ export async function executeMapSkillHttp(request: Request) {
       ).success
     )
       throw new ApiError("RATE_LIMITED", "地图请求过于频繁。", true);
-    const name = z
-      .string()
-      .regex(/^[a-z][a-z0-9_]{0,63}$/)
-      .parse(new URL(req.url).pathname.split("/").at(-1));
+    const name = skillNameSchema.parse(
+      new URL(req.url).pathname.split("/").at(-1),
+    );
     if (!mapSkillRegistry.get(name))
       throw new ApiError("NOT_FOUND", "此工具未开放。");
-    const envelope = z
-      .object({ input: z.unknown(), selectedPlaceId: PlaceIdSchema.optional() })
-      .strict()
-      .parse(await body(req));
+    const envelope = envelopeSchema.parse(await body(req));
     if (envelope.input === undefined)
       throw new ApiError("INVALID_ARGUMENT", "缺少工具参数。");
     const session = await assistantContext(req);

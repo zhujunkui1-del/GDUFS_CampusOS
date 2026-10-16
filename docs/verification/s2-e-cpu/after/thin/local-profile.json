@@ -1,0 +1,346 @@
+{
+  "at": "2026-10-16T07:28:09.315Z",
+  "localWorkerdOnly": true,
+  "interpretation": "V8 sampling includes idle/GC and framework startup. Not Cloudflare per-invocation CPU or wall latency.",
+  "results": [
+    {
+      "phase": "cold-1",
+      "top": [
+        {
+          "function": "distanceMeters",
+          "file": "preview-worker.js",
+          "line": 176476,
+          "selfMs": 32.44,
+          "inclusiveMs": 32.44
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 152692,
+          "selfMs": 26.86,
+          "inclusiveMs": 26.86
+        },
+        {
+          "function": "projectOnPath",
+          "file": "preview-worker.js",
+          "line": 215691,
+          "selfMs": 16.46,
+          "inclusiveMs": 48.89
+        },
+        {
+          "function": "enterSpan",
+          "file": "",
+          "line": 0,
+          "selfMs": 15.02,
+          "inclusiveMs": 15.02
+        },
+        {
+          "function": "closestToBoundary",
+          "file": "preview-worker.js",
+          "line": 215799,
+          "selfMs": 10.87,
+          "inclusiveMs": 59.76
+        },
+        {
+          "function": "formatWithOptions",
+          "file": "node-internal:internal_inspect",
+          "line": 2157,
+          "selfMs": 7.59,
+          "inclusiveMs": 7.59
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 217911,
+          "selfMs": 6.2,
+          "inclusiveMs": 82.54
+        },
+        {
+          "function": "planCandidateRoute",
+          "file": "preview-worker.js",
+          "line": 176521,
+          "selfMs": 4.89,
+          "inclusiveMs": 5.67
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 216438,
+          "selfMs": 3.08,
+          "inclusiveMs": 67.45
+        },
+        {
+          "function": "pointInPolygon",
+          "file": "preview-worker.js",
+          "line": 176466,
+          "selfMs": 3.07,
+          "inclusiveMs": 3.07
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 215777,
+          "selfMs": 1.54,
+          "inclusiveMs": 4.61
+        },
+        {
+          "function": "get",
+          "file": "preview-worker.js",
+          "line": 152294,
+          "selfMs": 1.51,
+          "inclusiveMs": 1.51
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 216565,
+          "selfMs": 1.39,
+          "inclusiveMs": 1.39
+        },
+        {
+          "function": "assistantBindings",
+          "file": "preview-worker.js",
+          "line": 171525,
+          "selfMs": 1,
+          "inclusiveMs": 1
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 176531,
+          "selfMs": 0.69,
+          "inclusiveMs": 0.69
+        },
+        {
+          "function": "inst._zod.check",
+          "file": "preview-worker.js",
+          "line": 153077,
+          "selfMs": 0.19,
+          "inclusiveMs": 0.19
+        },
+        {
+          "function": "planLocalRoute",
+          "file": "preview-worker.js",
+          "line": 216404,
+          "selfMs": 0.12,
+          "inclusiveMs": 74.64
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 176529,
+          "selfMs": 0.09,
+          "inclusiveMs": 0.09
+        }
+      ]
+    },
+    {
+      "phase": "warm-12",
+      "top": [
+        {
+          "function": "distanceMeters",
+          "file": "preview-worker.js",
+          "line": 176476,
+          "selfMs": 87.79,
+          "inclusiveMs": 87.79
+        },
+        {
+          "function": "planLocalRoute",
+          "file": "preview-worker.js",
+          "line": 216404,
+          "selfMs": 62.02,
+          "inclusiveMs": 216.94
+        },
+        {
+          "function": "encode3",
+          "file": "preview-worker.js",
+          "line": 171558,
+          "selfMs": 39.53,
+          "inclusiveMs": 39.53
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 216438,
+          "selfMs": 32.42,
+          "inclusiveMs": 56.5
+        },
+        {
+          "function": "enterSpan",
+          "file": "",
+          "line": 0,
+          "selfMs": 20.89,
+          "inclusiveMs": 20.89
+        },
+        {
+          "function": "setAttributes",
+          "file": "",
+          "line": 0,
+          "selfMs": 19.38,
+          "inclusiveMs": 19.38
+        },
+        {
+          "function": "identity",
+          "file": "preview-worker.js",
+          "line": 175402,
+          "selfMs": 17.43,
+          "inclusiveMs": 80.44
+        },
+        {
+          "function": "",
+          "file": "preview-worker.js",
+          "line": 216493,
+          "selfMs": 16.75,
+          "inclusiveMs": 16.75
+        },
+        {
+          "function": "read",
+          "file": "",
+          "line": 0,
+          "selfMs": 16.43,
+          "inclusiveMs": 16.43
+        },
+        {
+          "function": "fetch",
+          "file": "",
+          "line": 0,
+          "selfMs": 13.95,
+          "inclusiveMs": 13.95
+        },
+        {
+          "function": "(garbage collector)",
+          "file": "",
+          "line": 0,
+          "selfMs": 11.05,
+          "inclusiveMs": 11.05
+        },
+        {
+          "function": "distanceMeters",
+          "file": "preview-worker.js",
+          "line": 176476,
+          "selfMs": 7.33,
+          "inclusiveMs": 7.33
+        },
+        {
+          "function": "save",
+          "file": "preview-worker.js",
+          "line": 175813,
+          "selfMs": 5.45,
+          "inclusiveMs": 8.33
+        },
+        {
+          "function": "planCandidateRoute",
+          "file": "preview-worker.js",
+          "line": 176521,
+          "selfMs": 5.19,
+          "inclusiveMs": 6.78
+        },
+        {
+          "function": "(program)",
+          "file": "",
+          "line": 0,
+          "selfMs": 4.96,
+          "inclusiveMs": 4.96
+        },
+        {
+          "function": "throwIfAborted",
+          "file": "",
+          "line": 0,
+          "selfMs": 4.64,
+          "inclusiveMs": 4.64
+        },
+        {
+          "function": "enterSpan",
+          "file": "",
+          "line": 0,
+          "selfMs": 2.88,
+          "inclusiveMs": 2.88
+        },
+        {
+          "function": "",
+          "file": "",
+          "line": 0,
+          "selfMs": 2.72,
+          "inclusiveMs": 2.72
+        },
+        {
+          "function": "withSpan",
+          "file": "cloudflare-internal:tracing-helpers",
+          "line": 34,
+          "selfMs": 2.59,
+          "inclusiveMs": 2.59
+        },
+        {
+          "function": "",
+          "file": "cloudflare-internal:d1-api",
+          "line": 117,
+          "selfMs": 2.35,
+          "inclusiveMs": 2.35
+        },
+        {
+          "function": "set platform",
+          "file": "",
+          "line": 0,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": "distanceMeters",
+          "file": "preview-worker.js",
+          "line": 176476,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": "__name",
+          "file": "preview-worker.js",
+          "line": 3,
+          "selfMs": 1.56,
+          "inclusiveMs": 1.56
+        },
+        {
+          "function": "fetch",
+          "file": "",
+          "line": 0,
+          "selfMs": 1.48,
+          "inclusiveMs": 1.48
+        },
+        {
+          "function": "enterSpan",
+          "file": "",
+          "line": 0,
+          "selfMs": 1.2,
+          "inclusiveMs": 2.69
+        },
+        {
+          "function": "withSpan",
+          "file": "cloudflare-internal:tracing-helpers",
+          "line": 34,
+          "selfMs": 0.79,
+          "inclusiveMs": 3.48
+        },
+        {
+          "function": "pop",
+          "file": "preview-worker.js",
+          "line": 176506,
+          "selfMs": 0.48,
+          "inclusiveMs": 0.48
+        },
+        {
+          "function": "toGcj02",
+          "file": "preview-worker.js",
+          "line": 216357,
+          "selfMs": 0.23,
+          "inclusiveMs": 0.23
+        },
+        {
+          "function": "push",
+          "file": "preview-worker.js",
+          "line": 176494,
+          "selfMs": 0.03,
+          "inclusiveMs": 0.03
+        }
+      ]
+    }
+  ]
+}

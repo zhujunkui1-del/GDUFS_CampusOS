@@ -9,8 +9,9 @@
   },
   "scripts": {
     "predev": "node scripts/prepare-map-runtime.mjs",
-    "prebuild": "node scripts/prepare-map-runtime.mjs",
-    "prebuild:worker": "node scripts/prepare-map-runtime.mjs",
+    "prebuild": "node scripts/prepare-map-runtime.mjs && node scripts/prepare-route-metadata.mjs --check",
+    "prebuild:worker": "node scripts/prepare-map-runtime.mjs && node scripts/prepare-route-metadata.mjs --check",
+    "map:route-metadata": "node scripts/prepare-route-metadata.mjs",
     "dev": "next dev --hostname 127.0.0.1",
     "build": "next build",
     "start": "next start --hostname 127.0.0.1",

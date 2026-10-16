@@ -1,0 +1,275 @@
+{
+  "actualCloud": true,
+  "recordedAt": "2026-10-16T10:06:55.554Z",
+  "source": "Cloudflare Wrangler tail invocation CPU milliseconds; wall milliseconds are separate",
+  "total": 185,
+  "exceededCpu": 0,
+  "groups": [
+    {
+      "path": "/map",
+      "n": 22,
+      "measuredCpuN": 22,
+      "cpuP50Ms": 6,
+      "cpuP95Ms": 17,
+      "cpuMaxMs": 31,
+      "wallP50Ms": 31,
+      "wallP95Ms": 82,
+      "over10ms": 4,
+      "outcomes": {
+        "ok": 22
+      }
+    },
+    {
+      "path": "/api/health",
+      "n": 6,
+      "measuredCpuN": 6,
+      "cpuP50Ms": 0,
+      "cpuP95Ms": 1,
+      "cpuMaxMs": 1,
+      "wallP50Ms": 0,
+      "wallP95Ms": 1,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 6
+      }
+    },
+    {
+      "path": "/api/agent/status",
+      "n": 5,
+      "measuredCpuN": 5,
+      "cpuP50Ms": 1,
+      "cpuP95Ms": 3,
+      "cpuMaxMs": 3,
+      "wallP50Ms": 36,
+      "wallP95Ms": 72,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 5
+      }
+    },
+    {
+      "path": "/api/agent/session",
+      "n": 7,
+      "measuredCpuN": 7,
+      "cpuP50Ms": 2,
+      "cpuP95Ms": 9,
+      "cpuMaxMs": 9,
+      "wallP50Ms": 76,
+      "wallP95Ms": 1876,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 7
+      }
+    },
+    {
+      "path": "/icon.svg",
+      "n": 7,
+      "measuredCpuN": 7,
+      "cpuP50Ms": 3,
+      "cpuP95Ms": 8,
+      "cpuMaxMs": 8,
+      "wallP50Ms": 22,
+      "wallP95Ms": 189,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 7
+      }
+    },
+    {
+      "path": "/radar",
+      "n": 11,
+      "measuredCpuN": 11,
+      "cpuP50Ms": 4,
+      "cpuP95Ms": 19,
+      "cpuMaxMs": 19,
+      "wallP50Ms": 28,
+      "wallP95Ms": 190,
+      "over10ms": 1,
+      "outcomes": {
+        "ok": 11
+      }
+    },
+    {
+      "path": "/api/map/skills/search_places",
+      "n": 6,
+      "measuredCpuN": 6,
+      "cpuP50Ms": 3,
+      "cpuP95Ms": 6,
+      "cpuMaxMs": 6,
+      "wallP50Ms": 34,
+      "wallP95Ms": 47,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 6
+      }
+    },
+    {
+      "path": "/schedule",
+      "n": 9,
+      "measuredCpuN": 9,
+      "cpuP50Ms": 4,
+      "cpuP95Ms": 8,
+      "cpuMaxMs": 8,
+      "wallP50Ms": 28,
+      "wallP95Ms": 221,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 9
+      }
+    },
+    {
+      "path": "/account",
+      "n": 9,
+      "measuredCpuN": 9,
+      "cpuP50Ms": 4,
+      "cpuP95Ms": 9,
+      "cpuMaxMs": 9,
+      "wallP50Ms": 26,
+      "wallP95Ms": 224,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 9
+      }
+    },
+    {
+      "path": "/knowledge",
+      "n": 11,
+      "measuredCpuN": 11,
+      "cpuP50Ms": 3,
+      "cpuP95Ms": 20,
+      "cpuMaxMs": 20,
+      "wallP50Ms": 26,
+      "wallP95Ms": 223,
+      "over10ms": 1,
+      "outcomes": {
+        "ok": 11
+      }
+    },
+    {
+      "path": "/favorites",
+      "n": 1,
+      "measuredCpuN": 1,
+      "cpuP50Ms": 2,
+      "cpuP95Ms": 2,
+      "cpuMaxMs": 2,
+      "wallP50Ms": 237,
+      "wallP95Ms": 237,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 1
+      }
+    },
+    {
+      "path": "/api/map/skills/get_place_details",
+      "n": 6,
+      "measuredCpuN": 6,
+      "cpuP50Ms": 2,
+      "cpuP95Ms": 4,
+      "cpuMaxMs": 4,
+      "wallP50Ms": 28,
+      "wallP95Ms": 71,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 6
+      }
+    },
+    {
+      "path": "/api/map/skills/find_nearby_places",
+      "n": 6,
+      "measuredCpuN": 6,
+      "cpuP50Ms": 2,
+      "cpuP95Ms": 3,
+      "cpuMaxMs": 3,
+      "wallP50Ms": 30,
+      "wallP95Ms": 44,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 6
+      }
+    },
+    {
+      "path": "/api/map/skills/plan_route",
+      "n": 6,
+      "measuredCpuN": 6,
+      "cpuP50Ms": 19,
+      "cpuP95Ms": 29,
+      "cpuMaxMs": 29,
+      "wallP50Ms": 117,
+      "wallP95Ms": 1664,
+      "over10ms": 6,
+      "outcomes": {
+        "ok": 6
+      }
+    },
+    {
+      "path": "/api/map/skills/control_map",
+      "n": 5,
+      "measuredCpuN": 5,
+      "cpuP50Ms": 2,
+      "cpuP95Ms": 4,
+      "cpuMaxMs": 4,
+      "wallP50Ms": 27,
+      "wallP95Ms": 39,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 5
+      }
+    },
+    {
+      "path": "/api/agent/actions/REDACTED/claim",
+      "n": 18,
+      "measuredCpuN": 18,
+      "cpuP50Ms": 3,
+      "cpuP95Ms": 13,
+      "cpuMaxMs": 13,
+      "wallP50Ms": 81,
+      "wallP95Ms": 433,
+      "over10ms": 1,
+      "outcomes": {
+        "ok": 18
+      }
+    },
+    {
+      "path": "/api/agent/actions/REDACTED/receipt",
+      "n": 19,
+      "measuredCpuN": 19,
+      "cpuP50Ms": 2,
+      "cpuP95Ms": 5,
+      "cpuMaxMs": 5,
+      "wallP50Ms": 54,
+      "wallP95Ms": 115,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 19
+      }
+    },
+    {
+      "path": "/api/agent/chat",
+      "n": 27,
+      "measuredCpuN": 27,
+      "cpuP50Ms": 48,
+      "cpuP95Ms": 116,
+      "cpuMaxMs": 127,
+      "wallP50Ms": 4534,
+      "wallP95Ms": 6477,
+      "over10ms": 27,
+      "outcomes": {
+        "ok": 27
+      }
+    },
+    {
+      "path": "/api/agent/cancel",
+      "n": 4,
+      "measuredCpuN": 4,
+      "cpuP50Ms": 2,
+      "cpuP95Ms": 3,
+      "cpuMaxMs": 3,
+      "wallP50Ms": 44,
+      "wallP95Ms": 65,
+      "over10ms": 0,
+      "outcomes": {
+        "ok": 4
+      }
+    }
+  ]
+}

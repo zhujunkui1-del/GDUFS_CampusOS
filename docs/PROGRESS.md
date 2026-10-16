@@ -331,3 +331,14 @@ OpenNext 提示 Windows 兼容性有限。本次最终组合在 Windows 实测�
 - 最终云端8段受控对话删除后消息/动作/路线关联均0，12条配额Run及charged_tokens仍在；跨游客删拒绝、空正文和空对象DELETE幂等、伪造userId正文400、过期/删除路线404，刷新不复活。初轮真实云端空DELETE流400已修复为有界可选正文，普通必填JSON校验未放宽；失败证据保留不冒充成功。
 - 仅更新独立预览，URL不变，最新Worker f98aadf8-8581-49ca-befb-d9c13d38f90e；14866.37KiB/gzip2420.46，平台启动验证99ms（非用户冷启动）。无Secret/生产/DNS/付费套餐变更。累计原1元授权内余额变化0.26元，非本次独立账单；Free CPU、跨地域、真实手机和能力记录刷新门槛保持。
 - 设计/SQL/API/实际截图/复现命令见AI_CONVERSATION_MANAGEMENT_ACCEPTANCE.md及verification/conversations，D-039/SRC-055和相关设计同步。五Skill、固定地图/路网/南苑7栋模型未改，无建筑批量或其他新业务。
+
+## S2-E Free CPU 专项（2026-10-16）
+
+- 从干净的a3ab24b续接，核实公网f98aadf8，按真实Tail CPU/Wall、官方Metrics/Invocation Status、本地workerd Profiler分开诊断。线上官方Profile捕获仅idle或报未找到近期执行，没有伪称取得应用函数样本。低频云端建立可失败的10ms检查，不以0个1102代替CPU门槛。
+- 固定API/DAO/总控Schema移至模块级、健康原处理函数接入既有预览直达入口、去除相邻重复租约读（每次上游及结束仍检查）、请求内节点/边索引。原Skill注册/权限/Token/身份/回执/路线所有权均保持。
+- 原算法离线导出113地点/445公开道路候选，74398字节，普通构建检查源SHA及版本，不自动更新地图。设备/自由坐标不再进入共享endpointCache。239组与a3ab24b路线精确一致；JSON地理数据、路网、模型等30项SHA保持，未新建道路/入口/建筑或业务Skill。
+- 第一轮Worker2719e1ad，最终0c8cb22a-85d0-4b64-8e17-fac4063b875a，仅更新campusos-preview。最终包15092.80KiB/gzip2462.92，平台启动校验90ms；没有D1迁移、Secret/生产/DNS/套餐操作。
+- 同组Chrome8任务CPU P50/P95：68/316→45/356→34/65ms；最终全窗口27个Agent为48/116ms（最大127），27/27超10ms。路线6次19/29ms，P95较166ms降低；健康0/1ms。185条Tail 0个exceededCpu仍判Free不达标。HKG→NRT及冷暖不可控，首字/Wall变化不全部归因代码。
+- 最终官方窗口220请求/253子请求/0运行错误，D1读31108行/写730行；D1聚合27Run/67真实上游请求/97591Token，23完成、3预期未找到、1无效参数安全拒绝。Chrome桌面A–G、Edge手机视口A–G及详情复测通过；首次模型参数失败和手机详情测试未重开抽屉的失败分别保留，不扩大重试或放宽断言。手机视口非实机。
+- 233单元/31文件、类型/Lint、35表约束、双workerd共享D1、生产/OpenNext安全构建、本地Worker请求通过。Chrome、Edge常规10spec（含多会话）各79通过/3跳过。实际凭据扫描0命中，旧全代码冻结守卫保留失败标记，专项独立证明只有经审查的local-routing代码改变、30项固定数据与239条路线相同。
+- 原1元授权余额累计变化0.43元（任务开始0.31），未充值；滚动站点191/200次，停止追加模型探测，不重置配额。Free稳定容量阻塞保留，独立轻量API/分阶段Run/Paid仅在报告比较，未另建资源或升级。详见S2_E_CPU_ACCEPTANCE.md及verification/s2-e-cpu，D-040/SRC-056。

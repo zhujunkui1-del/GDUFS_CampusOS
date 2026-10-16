@@ -1,0 +1,507 @@
+{
+  "at": "2026-10-16T07:18:21.453Z",
+  "localWorkerdOnly": true,
+  "interpretation": "V8 sampling includes idle/GC and framework startup. Not Cloudflare per-invocation CPU or wall latency.",
+  "results": [
+    {
+      "phase": "cold-1",
+      "top": [
+        {
+          "function": "close",
+          "file": "",
+          "line": 0,
+          "selfMs": 28.63,
+          "inclusiveMs": 28.63
+        },
+        {
+          "function": "i",
+          "file": "worker.js",
+          "line": 126207,
+          "selfMs": 28.61,
+          "inclusiveMs": 28.61
+        },
+        {
+          "function": "g",
+          "file": "worker.js",
+          "line": 126242,
+          "selfMs": 19,
+          "inclusiveMs": 47.61
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 123336,
+          "selfMs": 16.18,
+          "inclusiveMs": 16.18
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 115870,
+          "selfMs": 14.89,
+          "inclusiveMs": 14.92
+        },
+        {
+          "function": "instantiateModule",
+          "file": "worker.js",
+          "line": 134070,
+          "selfMs": 9.25,
+          "inclusiveMs": 52.33
+        },
+        {
+          "function": "(garbage collector)",
+          "file": "",
+          "line": 0,
+          "selfMs": 8.79,
+          "inclusiveMs": 8.79
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 1204,
+          "selfMs": 6.25,
+          "inclusiveMs": 6.25
+        },
+        {
+          "function": "",
+          "file": "",
+          "line": 0,
+          "selfMs": 6.18,
+          "inclusiveMs": 6.18
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 126467,
+          "selfMs": 6.16,
+          "inclusiveMs": 70.83
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 150688,
+          "selfMs": 6.08,
+          "inclusiveMs": 7.13
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 126489,
+          "selfMs": 5.61,
+          "inclusiveMs": 54.76
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 126540,
+          "selfMs": 4.02,
+          "inclusiveMs": 6.2
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 128810,
+          "selfMs": 3.1,
+          "inclusiveMs": 94.2
+        },
+        {
+          "function": "t10._zod.parse",
+          "file": "worker.js",
+          "line": 116642,
+          "selfMs": 3.06,
+          "inclusiveMs": 3.19
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 1204,
+          "selfMs": 2.6,
+          "inclusiveMs": 8.89
+        },
+        {
+          "function": "identity",
+          "file": "worker.js",
+          "line": 123167,
+          "selfMs": 2.58,
+          "inclusiveMs": 18.77
+        },
+        {
+          "function": "(program)",
+          "file": "",
+          "line": 0,
+          "selfMs": 2.43,
+          "inclusiveMs": 2.43
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 148093,
+          "selfMs": 1.72,
+          "inclusiveMs": 1.72
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 116814,
+          "selfMs": 1.6,
+          "inclusiveMs": 1.6
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 1204,
+          "selfMs": 1.6,
+          "inclusiveMs": 1.6
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 1204,
+          "selfMs": 1.6,
+          "inclusiveMs": 3.14
+        },
+        {
+          "function": "routeMatcher2",
+          "file": "worker.js",
+          "line": 1068,
+          "selfMs": 1.59,
+          "inclusiveMs": 1.59
+        },
+        {
+          "function": ".open-next/server-functions/default/node_modules/next/dist/server/web/spec-extension/adapters/next-request.js",
+          "file": "worker.js",
+          "line": 9671,
+          "selfMs": 1.59,
+          "inclusiveMs": 1.59
+        },
+        {
+          "function": "u",
+          "file": "worker.js",
+          "line": 123319,
+          "selfMs": 1.58,
+          "inclusiveMs": 1.58
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 112383,
+          "selfMs": 1.58,
+          "inclusiveMs": 2.64
+        },
+        {
+          "function": "s2",
+          "file": "worker.js",
+          "line": 115653,
+          "selfMs": 1.58,
+          "inclusiveMs": 3.2
+        },
+        {
+          "function": "eT",
+          "file": "worker.js",
+          "line": 115585,
+          "selfMs": 1.58,
+          "inclusiveMs": 1.58
+        },
+        {
+          "function": "Object.defineProperty",
+          "file": "worker.js",
+          "line": 147542,
+          "selfMs": 1.58,
+          "inclusiveMs": 1.58
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 108417,
+          "selfMs": 1.58,
+          "inclusiveMs": 1.58
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 114847,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": "sB",
+          "file": "worker.js",
+          "line": 122312,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": "module.exports",
+          "file": "worker.js",
+          "line": 128830,
+          "selfMs": 1.57,
+          "inclusiveMs": 15.47
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 42263,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        },
+        {
+          "function": "getNextFontManifest",
+          "file": "worker.js",
+          "line": 145724,
+          "selfMs": 1.57,
+          "inclusiveMs": 1.57
+        }
+      ]
+    },
+    {
+      "phase": "warm-12",
+      "top": [
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 126467,
+          "selfMs": 38.67,
+          "inclusiveMs": 120.12
+        },
+        {
+          "function": "text",
+          "file": "",
+          "line": 0,
+          "selfMs": 31.79,
+          "inclusiveMs": 31.79
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 149275,
+          "selfMs": 25.03,
+          "inclusiveMs": 25.03
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 148000,
+          "selfMs": 23.24,
+          "inclusiveMs": 23.24
+        },
+        {
+          "function": "normalize",
+          "file": "node-internal:internal_path",
+          "line": 972,
+          "selfMs": 22.68,
+          "inclusiveMs": 22.68
+        },
+        {
+          "function": "Request",
+          "file": "",
+          "line": 0,
+          "selfMs": 21.75,
+          "inclusiveMs": 21.75
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 7821,
+          "selfMs": 18.45,
+          "inclusiveMs": 18.45
+        },
+        {
+          "function": "DetachedPromiseRunner",
+          "file": "worker.js",
+          "line": 148445,
+          "selfMs": 17.52,
+          "inclusiveMs": 17.52
+        },
+        {
+          "function": "i",
+          "file": "worker.js",
+          "line": 126207,
+          "selfMs": 17.21,
+          "inclusiveMs": 17.21
+        },
+        {
+          "function": "set process",
+          "file": "",
+          "line": 0,
+          "selfMs": 15.48,
+          "inclusiveMs": 15.48
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 126476,
+          "selfMs": 11.94,
+          "inclusiveMs": 29.14
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 146383,
+          "selfMs": 10.77,
+          "inclusiveMs": 10.77
+        },
+        {
+          "function": "set platform",
+          "file": "",
+          "line": 0,
+          "selfMs": 10.69,
+          "inclusiveMs": 10.69
+        },
+        {
+          "function": "append",
+          "file": "",
+          "line": 0,
+          "selfMs": 9.43,
+          "inclusiveMs": 9.43
+        },
+        {
+          "function": "(garbage collector)",
+          "file": "",
+          "line": 0,
+          "selfMs": 9.25,
+          "inclusiveMs": 9.25
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 126540,
+          "selfMs": 9.22,
+          "inclusiveMs": 38.7
+        },
+        {
+          "function": "__name",
+          "file": "worker.js",
+          "line": 3,
+          "selfMs": 8.73,
+          "inclusiveMs": 8.73
+        },
+        {
+          "function": "_send",
+          "file": "cloudflare-internal:d1-api",
+          "line": 196,
+          "selfMs": 8.63,
+          "inclusiveMs": 8.63
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 126546,
+          "selfMs": 7.7,
+          "inclusiveMs": 7.7
+        },
+        {
+          "function": "withSpan",
+          "file": "cloudflare-internal:tracing-helpers",
+          "line": 34,
+          "selfMs": 7.51,
+          "inclusiveMs": 16.13
+        },
+        {
+          "function": "(program)",
+          "file": "",
+          "line": 0,
+          "selfMs": 7.35,
+          "inclusiveMs": 7.35
+        },
+        {
+          "function": "",
+          "file": "",
+          "line": 0,
+          "selfMs": 7.24,
+          "inclusiveMs": 21.1
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 126535,
+          "selfMs": 7.17,
+          "inclusiveMs": 7.17
+        },
+        {
+          "function": "enqueue",
+          "file": "",
+          "line": 0,
+          "selfMs": 6.16,
+          "inclusiveMs": 6.16
+        },
+        {
+          "function": "t11.setHeader",
+          "file": "worker.js",
+          "line": 110856,
+          "selfMs": 5.69,
+          "inclusiveMs": 5.69
+        },
+        {
+          "function": "t10._zod.check",
+          "file": "worker.js",
+          "line": 116053,
+          "selfMs": 5.54,
+          "inclusiveMs": 5.54
+        },
+        {
+          "function": "p",
+          "file": "worker.js",
+          "line": 107506,
+          "selfMs": 5.49,
+          "inclusiveMs": 5.49
+        },
+        {
+          "function": "t10._zod.parse",
+          "file": "worker.js",
+          "line": 116540,
+          "selfMs": 5.25,
+          "inclusiveMs": 5.25
+        },
+        {
+          "function": "",
+          "file": "",
+          "line": 0,
+          "selfMs": 5.04,
+          "inclusiveMs": 9.71
+        },
+        {
+          "function": "formatLog",
+          "file": "node-internal:internal_inspect",
+          "line": 2381,
+          "selfMs": 4.68,
+          "inclusiveMs": 4.68
+        },
+        {
+          "function": "__name",
+          "file": "worker.js",
+          "line": 3,
+          "selfMs": 4.67,
+          "inclusiveMs": 15.35
+        },
+        {
+          "function": "i",
+          "file": "worker.js",
+          "line": 126207,
+          "selfMs": 4.64,
+          "inclusiveMs": 4.64
+        },
+        {
+          "function": "readableAddChunkPushByteMode",
+          "file": "node-internal:streams_readable",
+          "line": 470,
+          "selfMs": 4.59,
+          "inclusiveMs": 10.75
+        },
+        {
+          "function": "",
+          "file": "worker.js",
+          "line": 116186,
+          "selfMs": 3.13,
+          "inclusiveMs": 3.13
+        },
+        {
+          "function": "fetch",
+          "file": "",
+          "line": 0,
+          "selfMs": 3.13,
+          "inclusiveMs": 3.13
+        }
+      ]
+    }
+  ]
+}

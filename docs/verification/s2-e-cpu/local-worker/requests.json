@@ -1,0 +1,545 @@
+{
+  "realCloud": false,
+  "records": [
+    {
+      "at": 1792145507050,
+      "name": "page",
+      "path": "/map",
+      "round": 0,
+      "status": 200,
+      "clientWallMs": 93,
+      "bytes": 24064,
+      "cache": null
+    },
+    {
+      "at": 1792145507902,
+      "name": "health",
+      "path": "/api/health",
+      "round": 0,
+      "status": 200,
+      "clientWallMs": 438,
+      "bytes": 124,
+      "cache": null
+    },
+    {
+      "at": 1792145509094,
+      "name": "status",
+      "path": "/api/agent/status",
+      "round": 0,
+      "status": 200,
+      "clientWallMs": 138,
+      "bytes": 1021,
+      "cache": null
+    },
+    {
+      "at": 1792145509992,
+      "name": "session",
+      "path": "/api/agent/session",
+      "round": 0,
+      "status": 200,
+      "clientWallMs": 50,
+      "bytes": 394,
+      "cache": null
+    },
+    {
+      "at": 1792145510795,
+      "name": "search",
+      "path": "/api/map/skills/search_places",
+      "round": 0,
+      "status": 200,
+      "clientWallMs": 68,
+      "bytes": 546,
+      "cache": null
+    },
+    {
+      "at": 1792145511619,
+      "name": "details",
+      "path": "/api/map/skills/get_place_details",
+      "round": 0,
+      "status": 200,
+      "clientWallMs": 51,
+      "bytes": 958,
+      "cache": null
+    },
+    {
+      "at": 1792145512426,
+      "name": "nearby",
+      "path": "/api/map/skills/find_nearby_places",
+      "round": 0,
+      "status": 200,
+      "clientWallMs": 36,
+      "bytes": 1263,
+      "cache": null
+    },
+    {
+      "at": 1792145513214,
+      "name": "route",
+      "path": "/api/map/skills/plan_route",
+      "round": 0,
+      "status": 200,
+      "clientWallMs": 57,
+      "bytes": 2353,
+      "cache": null
+    },
+    {
+      "at": 1792145514029,
+      "name": "map-intent",
+      "path": "/api/map/skills/control_map",
+      "round": 0,
+      "status": 200,
+      "clientWallMs": 56,
+      "bytes": 315,
+      "cache": null
+    },
+    {
+      "at": 1792145514852,
+      "name": "page",
+      "path": "/map",
+      "round": 1,
+      "status": 200,
+      "clientWallMs": 37,
+      "bytes": 24064,
+      "cache": null
+    },
+    {
+      "at": 1792145515652,
+      "name": "health",
+      "path": "/api/health",
+      "round": 1,
+      "status": 200,
+      "clientWallMs": 29,
+      "bytes": 124,
+      "cache": null
+    },
+    {
+      "at": 1792145516445,
+      "name": "status",
+      "path": "/api/agent/status",
+      "round": 1,
+      "status": 200,
+      "clientWallMs": 31,
+      "bytes": 1021,
+      "cache": null
+    },
+    {
+      "at": 1792145517240,
+      "name": "session",
+      "path": "/api/agent/session",
+      "round": 1,
+      "status": 200,
+      "clientWallMs": 33,
+      "bytes": 394,
+      "cache": null
+    },
+    {
+      "at": 1792145518028,
+      "name": "search",
+      "path": "/api/map/skills/search_places",
+      "round": 1,
+      "status": 200,
+      "clientWallMs": 31,
+      "bytes": 546,
+      "cache": null
+    },
+    {
+      "at": 1792145518823,
+      "name": "details",
+      "path": "/api/map/skills/get_place_details",
+      "round": 1,
+      "status": 200,
+      "clientWallMs": 36,
+      "bytes": 958,
+      "cache": null
+    },
+    {
+      "at": 1792145519612,
+      "name": "nearby",
+      "path": "/api/map/skills/find_nearby_places",
+      "round": 1,
+      "status": 200,
+      "clientWallMs": 49,
+      "bytes": 1263,
+      "cache": null
+    },
+    {
+      "at": 1792145520412,
+      "name": "route",
+      "path": "/api/map/skills/plan_route",
+      "round": 1,
+      "status": 200,
+      "clientWallMs": 48,
+      "bytes": 2353,
+      "cache": null
+    },
+    {
+      "at": 1792145521225,
+      "name": "map-intent",
+      "path": "/api/map/skills/control_map",
+      "round": 1,
+      "status": 200,
+      "clientWallMs": 29,
+      "bytes": 315,
+      "cache": null
+    },
+    {
+      "at": 1792145522013,
+      "name": "page",
+      "path": "/map",
+      "round": 2,
+      "status": 200,
+      "clientWallMs": 23,
+      "bytes": 24064,
+      "cache": null
+    },
+    {
+      "at": 1792145522791,
+      "name": "health",
+      "path": "/api/health",
+      "round": 2,
+      "status": 200,
+      "clientWallMs": 26,
+      "bytes": 124,
+      "cache": null
+    },
+    {
+      "at": 1792145523571,
+      "name": "status",
+      "path": "/api/agent/status",
+      "round": 2,
+      "status": 200,
+      "clientWallMs": 27,
+      "bytes": 1021,
+      "cache": null
+    },
+    {
+      "at": 1792145524362,
+      "name": "session",
+      "path": "/api/agent/session",
+      "round": 2,
+      "status": 200,
+      "clientWallMs": 30,
+      "bytes": 394,
+      "cache": null
+    },
+    {
+      "at": 1792145525155,
+      "name": "search",
+      "path": "/api/map/skills/search_places",
+      "round": 2,
+      "status": 200,
+      "clientWallMs": 14,
+      "bytes": 546,
+      "cache": null
+    },
+    {
+      "at": 1792145525924,
+      "name": "details",
+      "path": "/api/map/skills/get_place_details",
+      "round": 2,
+      "status": 200,
+      "clientWallMs": 32,
+      "bytes": 958,
+      "cache": null
+    },
+    {
+      "at": 1792145526707,
+      "name": "nearby",
+      "path": "/api/map/skills/find_nearby_places",
+      "round": 2,
+      "status": 200,
+      "clientWallMs": 31,
+      "bytes": 1263,
+      "cache": null
+    },
+    {
+      "at": 1792145527498,
+      "name": "route",
+      "path": "/api/map/skills/plan_route",
+      "round": 2,
+      "status": 200,
+      "clientWallMs": 81,
+      "bytes": 2353,
+      "cache": null
+    },
+    {
+      "at": 1792145528339,
+      "name": "map-intent",
+      "path": "/api/map/skills/control_map",
+      "round": 2,
+      "status": 200,
+      "clientWallMs": 45,
+      "bytes": 315,
+      "cache": null
+    },
+    {
+      "at": 1792145529148,
+      "name": "page",
+      "path": "/map",
+      "round": 3,
+      "status": 200,
+      "clientWallMs": 11,
+      "bytes": 24064,
+      "cache": null
+    },
+    {
+      "at": 1792145529923,
+      "name": "health",
+      "path": "/api/health",
+      "round": 3,
+      "status": 200,
+      "clientWallMs": 17,
+      "bytes": 124,
+      "cache": null
+    },
+    {
+      "at": 1792145530700,
+      "name": "status",
+      "path": "/api/agent/status",
+      "round": 3,
+      "status": 200,
+      "clientWallMs": 27,
+      "bytes": 1021,
+      "cache": null
+    },
+    {
+      "at": 1792145531485,
+      "name": "session",
+      "path": "/api/agent/session",
+      "round": 3,
+      "status": 200,
+      "clientWallMs": 33,
+      "bytes": 394,
+      "cache": null
+    },
+    {
+      "at": 1792145532281,
+      "name": "search",
+      "path": "/api/map/skills/search_places",
+      "round": 3,
+      "status": 200,
+      "clientWallMs": 32,
+      "bytes": 546,
+      "cache": null
+    },
+    {
+      "at": 1792145533077,
+      "name": "details",
+      "path": "/api/map/skills/get_place_details",
+      "round": 3,
+      "status": 200,
+      "clientWallMs": 32,
+      "bytes": 958,
+      "cache": null
+    },
+    {
+      "at": 1792145533870,
+      "name": "nearby",
+      "path": "/api/map/skills/find_nearby_places",
+      "round": 3,
+      "status": 200,
+      "clientWallMs": 31,
+      "bytes": 1263,
+      "cache": null
+    },
+    {
+      "at": 1792145534652,
+      "name": "route",
+      "path": "/api/map/skills/plan_route",
+      "round": 3,
+      "status": 200,
+      "clientWallMs": 62,
+      "bytes": 2353,
+      "cache": null
+    },
+    {
+      "at": 1792145535475,
+      "name": "map-intent",
+      "path": "/api/map/skills/control_map",
+      "round": 3,
+      "status": 200,
+      "clientWallMs": 45,
+      "bytes": 315,
+      "cache": null
+    },
+    {
+      "at": 1792145536274,
+      "name": "page",
+      "path": "/map",
+      "round": 4,
+      "status": 200,
+      "clientWallMs": 30,
+      "bytes": 24064,
+      "cache": null
+    },
+    {
+      "at": 1792145537063,
+      "name": "health",
+      "path": "/api/health",
+      "round": 4,
+      "status": 200,
+      "clientWallMs": 34,
+      "bytes": 124,
+      "cache": null
+    },
+    {
+      "at": 1792145537853,
+      "name": "status",
+      "path": "/api/agent/status",
+      "round": 4,
+      "status": 200,
+      "clientWallMs": 28,
+      "bytes": 1021,
+      "cache": null
+    },
+    {
+      "at": 1792145538644,
+      "name": "session",
+      "path": "/api/agent/session",
+      "round": 4,
+      "status": 200,
+      "clientWallMs": 35,
+      "bytes": 394,
+      "cache": null
+    },
+    {
+      "at": 1792145539436,
+      "name": "search",
+      "path": "/api/map/skills/search_places",
+      "round": 4,
+      "status": 200,
+      "clientWallMs": 35,
+      "bytes": 546,
+      "cache": null
+    },
+    {
+      "at": 1792145540231,
+      "name": "details",
+      "path": "/api/map/skills/get_place_details",
+      "round": 4,
+      "status": 200,
+      "clientWallMs": 33,
+      "bytes": 958,
+      "cache": null
+    },
+    {
+      "at": 1792145541028,
+      "name": "nearby",
+      "path": "/api/map/skills/find_nearby_places",
+      "round": 4,
+      "status": 200,
+      "clientWallMs": 30,
+      "bytes": 1263,
+      "cache": null
+    },
+    {
+      "at": 1792145541818,
+      "name": "route",
+      "path": "/api/map/skills/plan_route",
+      "round": 4,
+      "status": 200,
+      "clientWallMs": 56,
+      "bytes": 2353,
+      "cache": null
+    },
+    {
+      "at": 1792145542630,
+      "name": "map-intent",
+      "path": "/api/map/skills/control_map",
+      "round": 4,
+      "status": 200,
+      "clientWallMs": 34,
+      "bytes": 315,
+      "cache": null
+    },
+    {
+      "at": 1792145543423,
+      "name": "page",
+      "path": "/map",
+      "round": 5,
+      "status": 200,
+      "clientWallMs": 33,
+      "bytes": 24064,
+      "cache": null
+    },
+    {
+      "at": 1792145544215,
+      "name": "health",
+      "path": "/api/health",
+      "round": 5,
+      "status": 200,
+      "clientWallMs": 33,
+      "bytes": 124,
+      "cache": null
+    },
+    {
+      "at": 1792145545015,
+      "name": "status",
+      "path": "/api/agent/status",
+      "round": 5,
+      "status": 200,
+      "clientWallMs": 32,
+      "bytes": 1021,
+      "cache": null
+    },
+    {
+      "at": 1792145545813,
+      "name": "session",
+      "path": "/api/agent/session",
+      "round": 5,
+      "status": 200,
+      "clientWallMs": 35,
+      "bytes": 394,
+      "cache": null
+    },
+    {
+      "at": 1792145546610,
+      "name": "search",
+      "path": "/api/map/skills/search_places",
+      "round": 5,
+      "status": 200,
+      "clientWallMs": 39,
+      "bytes": 546,
+      "cache": null
+    },
+    {
+      "at": 1792145547404,
+      "name": "details",
+      "path": "/api/map/skills/get_place_details",
+      "round": 5,
+      "status": 200,
+      "clientWallMs": 44,
+      "bytes": 958,
+      "cache": null
+    },
+    {
+      "at": 1792145548215,
+      "name": "nearby",
+      "path": "/api/map/skills/find_nearby_places",
+      "round": 5,
+      "status": 200,
+      "clientWallMs": 36,
+      "bytes": 1263,
+      "cache": null
+    },
+    {
+      "at": 1792145549007,
+      "name": "route",
+      "path": "/api/map/skills/plan_route",
+      "round": 5,
+      "status": 200,
+      "clientWallMs": 57,
+      "bytes": 2353,
+      "cache": null
+    },
+    {
+      "at": 1792145549831,
+      "name": "map-intent",
+      "path": "/api/map/skills/control_map",
+      "round": 5,
+      "status": 200,
+      "clientWallMs": 53,
+      "bytes": 315,
+      "cache": null
+    }
+  ]
+}

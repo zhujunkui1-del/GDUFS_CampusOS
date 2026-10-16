@@ -12,22 +12,24 @@ import {
 import { chatResponse } from "./assistant/chat";
 import { executeMapSkillHttp } from "./maps/http";
 import { GET as agentStatus } from "@/app/api/agent/status/route";
+import { GET as health } from "@/app/api/health/route";
 
 type Handler = (request: Request) => Promise<Response>;
+const fixed: Record<string, { method: string; handle: Handler }> = {
+  "/api/health": { method: "GET", handle: health },
+  "/api/agent/session": { method: "GET", handle: sessionGet },
+  "/api/agent/conversations": { method: "GET", handle: conversationsGet },
+  "/api/agent/status": { method: "GET", handle: agentStatus },
+  "/api/agent/chat": { method: "POST", handle: chatResponse },
+  "/api/agent/cancel": { method: "POST", handle: cancelPost },
+  "/api/agent/location/challenge": { method: "POST", handle: challengePost },
+};
 // Delegate unchanged public handlers. They retain their own identity, Origin,
 // quota, schema, ownership and error checks; no alternative implementation.
 export function previewApiHandler(
   path: string,
   method = "GET",
 ): { method: string; handle: Handler } | null {
-  const fixed: Record<string, { method: string; handle: Handler }> = {
-    "/api/agent/session": { method: "GET", handle: sessionGet },
-    "/api/agent/conversations": { method: "GET", handle: conversationsGet },
-    "/api/agent/status": { method: "GET", handle: agentStatus },
-    "/api/agent/chat": { method: "POST", handle: chatResponse },
-    "/api/agent/cancel": { method: "POST", handle: cancelPost },
-    "/api/agent/location/challenge": { method: "POST", handle: challengePost },
-  };
   if (Object.hasOwn(fixed, path)) return fixed[path];
   if (/^\/api\/agent\/conversations\/[^/]+$/.test(path))
     return method === "DELETE"

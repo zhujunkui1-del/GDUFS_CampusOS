@@ -25,6 +25,19 @@ const toolCallSchema = z
       .strict(),
   })
   .strict();
+const messageSchema = z.string().trim().min(1).max(2000);
+const textDeltaSchema = z.string().max(32768);
+const toolCallsSchema = z.array(toolCallSchema).max(4);
+const historySchema = z
+  .array(
+    z
+      .object({
+        role: z.enum(["user", "assistant"]),
+        content: z.string().max(4000),
+      })
+      .strict(),
+  )
+  .max(12);
 export type AgentRunInput = {
   runId?: string;
   message: string;
@@ -121,18 +134,8 @@ export class AgentOrchestrator {
     let toolsExecuted = 0;
     let tokensRemaining = RUN_LIMITS.completionTokens;
     try {
-      const message = z.string().trim().min(1).max(2000).parse(input.message);
-      const history = z
-        .array(
-          z
-            .object({
-              role: z.enum(["user", "assistant"]),
-              content: z.string().max(4000),
-            })
-            .strict(),
-        )
-        .max(12)
-        .parse(input.history || []);
+      const message = messageSchema.parse(input.message);
+      const history = historySchema.parse(input.history || []);
       if (JSON.stringify(history).length > 24000)
         throw new ApiError("RUN_LIMIT_EXCEEDED", "对话上下文过长。");
       release = this.limiter.acquire(context.sessionId);
@@ -170,7 +173,7 @@ export class AgentOrchestrator {
             onText: (text) => {
               if (!signal.aborted)
                 emit("message.delta", {
-                  text: z.string().max(32768).parse(text),
+                  text: textDeltaSchema.parse(text),
                 });
             },
           }),
@@ -178,10 +181,7 @@ export class AgentOrchestrator {
         ]);
         signal.throwIfAborted();
         tokensRemaining -= reply.usage?.completionTokens ?? maxTokens;
-        const calls: ModelToolCall[] = z
-          .array(toolCallSchema)
-          .max(4)
-          .parse(reply.toolCalls);
+        const calls: ModelToolCall[] = toolCallsSchema.parse(reply.toolCalls);
         if (
           new Set(calls.map((call) => call.id)).size !== calls.length ||
           (reply.finishReason === "tool_calls") !== calls.length > 0
