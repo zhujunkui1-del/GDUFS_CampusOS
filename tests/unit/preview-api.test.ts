@@ -3,7 +3,14 @@ import {
   previewApiHandler,
   withPreviewSecurityHeaders,
 } from "@/lib/server/preview-api";
-import { sessionGet, routePost, claimPost } from "@/lib/server/assistant/api";
+import {
+  sessionGet,
+  routePost,
+  claimPost,
+  historyGet,
+  conversationsGet,
+  conversationDelete,
+} from "@/lib/server/assistant/api";
 import { executeMapSkillHttp } from "@/lib/server/maps/http";
 it("delegates to the exact existing authenticated handlers", () => {
   expect(previewApiHandler("/api/agent/session")?.handle).toBe(sessionGet);
@@ -14,6 +21,17 @@ it("delegates to the exact existing authenticated handlers", () => {
   expect(previewApiHandler("/api/map/skills/search_places")?.handle).toBe(
     executeMapSkillHttp,
   );
+});
+it("dispatches conversation listing, read and delete to authenticated shared handlers", () => {
+  expect(previewApiHandler("/api/agent/conversations")?.handle).toBe(
+    conversationsGet,
+  );
+  expect(
+    previewApiHandler("/api/agent/conversations/test", "GET")?.handle,
+  ).toBe(historyGet);
+  expect(
+    previewApiHandler("/api/agent/conversations/test", "DELETE")?.handle,
+  ).toBe(conversationDelete);
 });
 it("does not open management, arbitrary SQL or prefix lookalike routes", () => {
   for (const path of [

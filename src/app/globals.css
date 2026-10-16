@@ -1053,3 +1053,27 @@ p {
     background: #fff;
   }
 }
+
+/* Conversation management stays inside the existing assistant panel. */
+.assistant-title h2 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.assistant-title { gap: 2px; flex: 1; }
+.assistant-history { display: grid; gap: 8px; }
+.assistant-history-row { display: flex; align-items: center; border-radius: 16px; }
+.assistant-history-row[data-current="true"] { background: var(--blue-soft, #e9f0f9); }
+.assistant-history-open { border: 0; background: transparent; text-align: left; min-height: 64px; padding: 12px; min-width: 0; flex: 1; display: grid; gap: 5px; }
+.assistant-history-open strong { font-size: 1rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.assistant-history-open time { color: var(--text-secondary); font-size: 0.875rem; }
+.history-more { padding: 12px; min-height: 44px; border: 0; background: transparent; color: var(--brand-primary); }
+.conversation-delete { color: #b42318; }
+.conversation-confirm-backdrop { position: fixed; inset: 0; background: rgb(0 0 0 / 25%); z-index: 150; }
+.conversation-confirm { position: fixed; z-index: 151; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(360px, calc(100vw - 32px)); padding: 24px; border-radius: 24px; background: #fff; box-shadow: var(--shadow-floating); }
+.conversation-confirm h2 { font-size: 1.125rem; margin: 0 0 12px; }
+.conversation-confirm p { font-size: 1rem; line-height: 1.5; }
+.conversation-confirm [role="alert"] { color: #b42318; }
+.conversation-confirm-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+.conversation-confirm-actions button { border: 0; border-radius: 14px; min-height: 44px; padding: 10px 20px; background: #f2f2f7; }
+.conversation-confirm-actions .conversation-danger { background: #d92d20; color: #fff; }
+.conversation-confirm button:disabled { opacity: 0.55; }
+@media (hover: hover) and (pointer: fine) {
+  .assistant-history-open:hover { background: rgb(0 0 0 / 3%); border-radius: 16px; }
+}

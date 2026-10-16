@@ -1,0 +1,292 @@
+{
+  "realModel": true,
+  "browser": "148.0.7778.97",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "unchangedTrustedIdentity": true,
+  "conversations": [
+    "997c9635-53c0-4795-9f41-57a2c4a1671f",
+    "c7ce44f9-acc9-4001-8067-1d2a60f4d585"
+  ],
+  "deletedBoth": true,
+  "routeId": "a018fe2e-7cb8-460b-b4a0-2f8e5c6ba534",
+  "lateActionFaultsTestedSeparatelyWithMock": true,
+  "actualHardwareGPS": false,
+  "submissions": [
+    {
+      "message": "帮我找到南苑7栋。",
+      "conversationId": null,
+      "selectedPlaceId": null,
+      "activeRouteId": null,
+      "requestId": "622da265-faf6-4719-98a5-83be532b94c2"
+    },
+    {
+      "message": "帮我找到图书馆。",
+      "conversationId": null,
+      "selectedPlaceId": null,
+      "activeRouteId": null,
+      "requestId": "0f284a18-7c12-415d-9dfc-846a958e0f6b"
+    },
+    {
+      "message": "那从这里去图书馆呢？",
+      "conversationId": "997c9635-53c0-4795-9f41-57a2c4a1671f",
+      "selectedPlaceId": "osm-way-312536955",
+      "activeRouteId": null,
+      "requestId": "40653797-62eb-4853-b3fb-26c214a19846"
+    }
+  ],
+  "records": [
+    {
+      "prompt": "帮我找到南苑7栋。",
+      "tools": [
+        "search_places",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "FOCUS_PLACE",
+          "placeId": "osm-way-312536955",
+          "zoom": 17
+        },
+        {
+          "type": "SHOW_PLACE_DETAILS",
+          "placeId": "osm-way-312536955"
+        }
+      ],
+      "result": {
+        "conversationId": "997c9635-53c0-4795-9f41-57a2c4a1671f",
+        "requestId": "622da265-faf6-4719-98a5-83be532b94c2",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 518,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1061,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 982,
+              "firstTextMs": 619
+            }
+          ],
+          "promptTokens": 3313,
+          "completionTokens": 169,
+          "cachedPromptTokens": 2688,
+          "totalTokens": 3482,
+          "usageComplete": true,
+          "chargedTokens": 3482,
+          "durationMs": 4940,
+          "estimatedUsdRange": [
+            0.000203214,
+            0.000406428
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 595,
+            "serverElapsedMs": 5535,
+            "firstTextMs": 5114,
+            "mapActionMs": 1817,
+            "skills": [
+              {
+                "name": "search_places",
+                "durationMs": 0,
+                "ok": true
+              },
+              {
+                "name": "control_map",
+                "durationMs": 0,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 18,
+              "writeQueries": 13,
+              "calls": 23,
+              "failures": 0,
+              "durationMs": 1474,
+              "maxCallMs": 75
+            }
+          }
+        }
+      },
+      "response": "南苑7栋已在地图上定位并显示详情（生活区，宿舍）。位置坐标：113.390146, 23.0615765。\n\n需要从某个起点规划到这里的路线吗？告诉我起点即可。",
+      "responseHeadersMs": 741,
+      "firstTextMs": 5166,
+      "completeMs": 5838
+    },
+    {
+      "prompt": "帮我找到图书馆。",
+      "tools": [
+        "search_places",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "FOCUS_PLACE",
+          "placeId": "osm-way-307250998",
+          "zoom": 17
+        },
+        {
+          "type": "SHOW_PLACE_DETAILS",
+          "placeId": "osm-way-307250998"
+        }
+      ],
+      "result": {
+        "conversationId": "c7ce44f9-acc9-4001-8067-1d2a60f4d585",
+        "requestId": "0f284a18-7c12-415d-9dfc-846a958e0f6b",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 932,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 828,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1075,
+              "firstTextMs": 924
+            }
+          ],
+          "promptTokens": 3317,
+          "completionTokens": 174,
+          "cachedPromptTokens": 2688,
+          "totalTokens": 3491,
+          "usageComplete": true,
+          "chargedTokens": 3491,
+          "durationMs": 5236,
+          "estimatedUsdRange": [
+            0.00020681399999999996,
+            0.0004136279999999999
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 605,
+            "serverElapsedMs": 5841,
+            "firstTextMs": 5628,
+            "mapActionMs": 1831,
+            "skills": [
+              {
+                "name": "search_places",
+                "durationMs": 0,
+                "ok": true
+              },
+              {
+                "name": "control_map",
+                "durationMs": 0,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 18,
+              "writeQueries": 13,
+              "calls": 23,
+              "failures": 0,
+              "durationMs": 1506,
+              "maxCallMs": 77
+            }
+          }
+        }
+      },
+      "response": "已为你定位到**图书馆**（大学城校区图书馆，教学区），地图已聚焦并打开详情。\n\n需要我规划从某个起点过去的路线吗？告诉我出发位置即可。",
+      "responseHeadersMs": 702,
+      "firstTextMs": 5710,
+      "completeMs": 6136
+    },
+    {
+      "prompt": "那从这里去图书馆呢？",
+      "tools": [
+        "plan_route",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SHOW_ROUTE",
+          "routeId": "a018fe2e-7cb8-460b-b4a0-2f8e5c6ba534"
+        }
+      ],
+      "result": {
+        "conversationId": "997c9635-53c0-4795-9f41-57a2c4a1671f",
+        "requestId": "40653797-62eb-4853-b3fb-26c214a19846",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1056,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 935,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1048,
+              "firstTextMs": 719
+            }
+          ],
+          "promptTokens": 3968,
+          "completionTokens": 235,
+          "cachedPromptTokens": 2432,
+          "totalTokens": 4203,
+          "usageComplete": true,
+          "chargedTokens": 4203,
+          "durationMs": 5700,
+          "estimatedUsdRange": [
+            0.000378696,
+            0.000757392
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 609,
+            "serverElapsedMs": 6309,
+            "firstTextMs": 5919,
+            "mapActionMs": 1849,
+            "skills": [
+              {
+                "name": "plan_route",
+                "durationMs": 160,
+                "ok": true
+              },
+              {
+                "name": "control_map",
+                "durationMs": 76,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 19,
+              "writeQueries": 15,
+              "calls": 25,
+              "failures": 0,
+              "durationMs": 1770,
+              "maxCallMs": 143
+            }
+          }
+        }
+      },
+      "response": "南苑7栋 → 图书馆（步行）：\n\n- 距离：约 848 米\n- 预计时间：约 12 分钟\n- 途经：校内步道 → 台阶 → 下沉隧道 → 台阶 → 步道 → 教学实验楼可通行区域 → 步道\n\n路线已显示在地图上。",
+      "responseHeadersMs": 689,
+      "firstTextMs": 5994,
+      "completeMs": 6645
+    }
+  ]
+}

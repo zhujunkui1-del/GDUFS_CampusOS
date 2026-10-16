@@ -41,9 +41,16 @@ export async function assistantContext(request: Request) {
         : request.headers.get("CF-Connecting-IP") || "unknown-edge",
   };
 }
-export async function readJson(request: Request, maxBytes = 98304) {
+export async function readJson(
+  request: Request,
+  maxBytes = 98304,
+  allowEmpty = false,
+) {
   const reader = request.body?.getReader();
-  if (!reader) throw new ApiError("INVALID_ARGUMENT", "请求为空。");
+  if (!reader) {
+    if (allowEmpty) return undefined;
+    throw new ApiError("INVALID_ARGUMENT", "请求为空。");
+  }
   const decoder = new TextDecoder();
   let text = "",
     bytes = 0;
@@ -63,7 +70,9 @@ export async function readJson(request: Request, maxBytes = 98304) {
         throw new ApiError("INVALID_ARGUMENT", "请求过长。");
       text += decoder.decode(part.value, { stream: true });
     }
-    return JSON.parse(text + decoder.decode()) as unknown;
+    const body = text + decoder.decode();
+    if (allowEmpty && !body.trim()) return undefined;
+    return JSON.parse(body) as unknown;
   } finally {
     clearTimeout(timer);
     await reader.cancel().catch(() => {});

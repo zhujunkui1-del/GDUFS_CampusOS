@@ -1,0 +1,208 @@
+{
+  "recordedAt": "2026-10-16T06:22:29.789Z",
+  "baseline": "c6a90cb",
+  "previewUrl": "https://campusos-preview.zhujunkui1.workers.dev/map",
+  "workerVersion": "f98aadf8-8581-49ca-befb-d9c13d38f90e",
+  "unitTests": 231,
+  "unitFiles": 30,
+  "typescript": "passed",
+  "lint": "passed",
+  "databaseBusinessTables": 35,
+  "populatedMigrationPreservesData": true,
+  "sharedWorkerdIsolates": 2,
+  "actualHardwarePhoneTested": false,
+  "safeWorkerBuild": "passed",
+  "uploadKiB": 14866.37,
+  "gzipKiB": 2420.46,
+  "workerStartupValidationMs": 99,
+  "logs": [
+    {
+      "name": "conversations-regression-chrome",
+      "passed": 61,
+      "skipped": 3
+    },
+    {
+      "name": "conversations-regression-msedge",
+      "passed": 61,
+      "skipped": 3
+    },
+    {
+      "name": "conversations-release-chrome",
+      "passed": 2,
+      "skipped": 0
+    },
+    {
+      "name": "conversations-release-edge",
+      "passed": 2,
+      "skipped": 0
+    },
+    {
+      "name": "conversations-release-mock-chrome",
+      "passed": 18,
+      "skipped": 0
+    },
+    {
+      "name": "conversations-release-mock-edge",
+      "passed": 18,
+      "skipped": 0
+    }
+  ],
+  "realModelCases": [
+    {
+      "file": "chrome-desktop-live.json",
+      "browser": "148.0.7778.97",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "identityPreserved": true,
+      "deleted": true
+    },
+    {
+      "file": "chrome-mobile-live.json",
+      "browser": "148.0.7778.97",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "identityPreserved": true,
+      "deleted": true
+    },
+    {
+      "file": "msedge-desktop-live.json",
+      "browser": "149.0.4022.80",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "identityPreserved": true,
+      "deleted": true
+    },
+    {
+      "file": "msedge-mobile-live.json",
+      "browser": "149.0.4022.80",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "identityPreserved": true,
+      "deleted": true
+    }
+  ],
+  "realModelPrompts": 12,
+  "knownUsage": {
+    "requests": 36,
+    "tokens": 44362,
+    "correctionRetries": 0
+  },
+  "cloudDeletedConversationAudit": {
+    "recordedAt": "2026-10-16T06:18:31.236Z",
+    "previewTarget": {
+      "worker": "campusos-preview",
+      "database": "campusos-preview",
+      "databaseId": "18299abc-b38b-4494-8d12-8ab4d482c304"
+    },
+    "accountVerified": true,
+    "migrations": [
+      "0001_platform_and_campus.sql",
+      "0002_knowledge_and_events.sql",
+      "0003_route_geometry_guards.sql",
+      "0004_assistant_shared_state.sql",
+      "0005_assistant_conversations.sql"
+    ],
+    "counts": {
+      "conversations": 65,
+      "messages": 240,
+      "runs": 146,
+      "routes": 2
+    },
+    "foreignKeyViolations": 0,
+    "hasTitle": true,
+    "hasDeletionMarker": true,
+    "readOnly": true,
+    "deletedTestConversations": [
+      {
+        "test": "chrome-desktop-live.json",
+        "deleted": 1,
+        "messages": 0,
+        "actions": 0,
+        "routeLinks": 0,
+        "quotaRuns": 2,
+        "chargedTokens": 7685
+      },
+      {
+        "test": "chrome-desktop-live.json",
+        "deleted": 1,
+        "messages": 0,
+        "actions": 0,
+        "routeLinks": 0,
+        "quotaRuns": 1,
+        "chargedTokens": 3491
+      },
+      {
+        "test": "chrome-mobile-live.json",
+        "deleted": 1,
+        "messages": 0,
+        "actions": 0,
+        "routeLinks": 0,
+        "quotaRuns": 2,
+        "chargedTokens": 7638
+      },
+      {
+        "test": "chrome-mobile-live.json",
+        "deleted": 1,
+        "messages": 0,
+        "actions": 0,
+        "routeLinks": 0,
+        "quotaRuns": 1,
+        "chargedTokens": 3424
+      },
+      {
+        "test": "msedge-desktop-live.json",
+        "deleted": 1,
+        "messages": 0,
+        "actions": 0,
+        "routeLinks": 0,
+        "quotaRuns": 2,
+        "chargedTokens": 7584
+      },
+      {
+        "test": "msedge-desktop-live.json",
+        "deleted": 1,
+        "messages": 0,
+        "actions": 0,
+        "routeLinks": 0,
+        "quotaRuns": 1,
+        "chargedTokens": 3417
+      },
+      {
+        "test": "msedge-mobile-live.json",
+        "deleted": 1,
+        "messages": 0,
+        "actions": 0,
+        "routeLinks": 0,
+        "quotaRuns": 2,
+        "chargedTokens": 7636
+      },
+      {
+        "test": "msedge-mobile-live.json",
+        "deleted": 1,
+        "messages": 0,
+        "actions": 0,
+        "routeLinks": 0,
+        "quotaRuns": 1,
+        "chargedTokens": 3487
+      }
+    ]
+  },
+  "modelBudget": {
+    "recordedAt": "2026-10-16T06:18:33.428Z",
+    "budgetCny": 1,
+    "accountBalanceDecreaseCny": 0.26,
+    "remainingApprovedBudgetCny": 0.7400000000000002,
+    "isProjectInvoice": false,
+    "mayIncludeConcurrentAccountUsage": true,
+    "chargedExistingBalanceOnly": true,
+    "topUpPerformed": false
+  }
+}

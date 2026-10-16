@@ -21,6 +21,7 @@ export type Conversation = {
   selected_place_id: string | null;
   active_route_id: string | null;
   expires_at_ms: number;
+  title?: string;
 };
 const cookie = (request: Request, name: string) =>
   request.headers
@@ -142,7 +143,7 @@ export class AssistantStore {
     if (id) {
       const row = await this.db
         .prepare(
-          "SELECT id,owner_key,selected_place_id,active_route_id,expires_at_ms FROM conversations WHERE id=? AND owner_key=? AND expires_at_ms>?",
+          "SELECT id,owner_key,selected_place_id,active_route_id,expires_at_ms,title FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND expires_at_ms>?",
         )
         .bind(id, identity.owner, this.now())
         .first<Conversation>();
@@ -152,12 +153,15 @@ export class AssistantStore {
     }
     const counts = await this.db
       .prepare(
-        "SELECT count(*) AS total,sum(CASE WHEN owner_key=? THEN 1 ELSE 0 END) AS mine FROM conversations WHERE expires_at_ms>?",
+        "SELECT count(*) AS total,sum(CASE WHEN owner_key=? THEN 1 ELSE 0 END) AS mine FROM conversations WHERE deleted_at_ms IS NULL AND expires_at_ms>?",
       )
       .bind(identity.owner, this.now())
       .first<{ total: number; mine: number }>();
-    if ((counts?.total || 0) >= 5000 || (counts?.mine || 0) >= 5)
-      throw new ApiError("RATE_LIMITED", "对话数量已达上限，请稍后重试。");
+    if ((counts?.total || 0) >= 5000 || (counts?.mine || 0) >= 50)
+      throw new ApiError(
+        "RATE_LIMITED",
+        "对话数量已达上限，请删除旧对话后重试。",
+      );
     const next = crypto.randomUUID();
     await this.db
       .prepare(
@@ -171,7 +175,16 @@ export class AssistantStore {
         this.now() + 172800000,
         this.now(),
       )
-      .run();
+      .run()
+      .catch((error) => {
+        if (/AGENT_CONVERSATION_CAPACITY/.test(String(error)))
+          throw new ApiError(
+            "RATE_LIMITED",
+            "对话存储已达上限，请稍后重试。",
+            true,
+          );
+        throw error;
+      });
     return {
       id: next,
       owner_key: identity.owner,
@@ -183,7 +196,7 @@ export class AssistantStore {
   async latest(identity: AssistantIdentity) {
     return this.db
       .prepare(
-        "SELECT id FROM conversations WHERE owner_key=? AND expires_at_ms>? ORDER BY updated_at_ms DESC LIMIT 1",
+        "SELECT id FROM conversations WHERE owner_key=? AND deleted_at_ms IS NULL AND expires_at_ms>? AND EXISTS(SELECT 1 FROM conversation_messages WHERE conversation_id=conversations.id) ORDER BY updated_at_ms DESC,id DESC LIMIT 1",
       )
       .bind(identity.owner, this.now())
       .first<{ id: string }>();
@@ -210,12 +223,103 @@ export class AssistantStore {
         .max(30)
         .parse(JSON.parse(row.artifacts_json)),
     }));
+    // A deletion may interleave between the initial ownership read and rows.
+    await this.conversation(identity, id);
     return {
       conversationId: id,
       messages,
       selectedPlaceId: conversation.selected_place_id,
       activeRouteId: conversation.active_route_id,
+      title: conversation.title,
     };
+  }
+  async list(identity: AssistantIdentity, cursor?: string, limit = 20) {
+    const page = z.number().int().min(1).max(20).parse(limit);
+    const parsed = cursor
+      ? z
+          .string()
+          .regex(/^\d{1,16}:[0-9a-f-]{36}$/i)
+          .parse(cursor)
+          .split(":")
+      : null;
+    const before = parsed
+      ? z.number().int().nonnegative().safe().parse(Number(parsed[0]))
+      : null;
+    if (parsed) z.string().uuid().parse(parsed[1]);
+    const rows = await this.db
+      .prepare(
+        "SELECT id,title,updated_at_ms FROM conversations WHERE owner_key=? AND deleted_at_ms IS NULL AND expires_at_ms>? AND EXISTS(SELECT 1 FROM conversation_messages WHERE conversation_id=conversations.id)" +
+          (parsed
+            ? " AND (updated_at_ms<? OR (updated_at_ms=? AND id<?))"
+            : "") +
+          " ORDER BY updated_at_ms DESC,id DESC LIMIT ?",
+      )
+      .bind(
+        identity.owner,
+        this.now(),
+        ...(parsed ? [before, before, parsed[1]] : []),
+        page + 1,
+      )
+      .all<{ id: string; title: string; updated_at_ms: number }>();
+    const slice = rows.results.slice(0, page),
+      last = slice.at(-1);
+    return {
+      conversations: slice.map((r) => ({
+        id: r.id,
+        title: r.title,
+        updatedAt: r.updated_at_ms,
+      })),
+      nextCursor:
+        rows.results.length > page && last
+          ? `${last.updated_at_ms}:${last.id}`
+          : null,
+    };
+  }
+  async deleteConversation(identity: AssistantIdentity, id: string) {
+    z.string().uuid().parse(id);
+    const owned = await this.db
+      .prepare(
+        "SELECT id,deleted_at_ms FROM conversations WHERE id=? AND owner_key=? AND expires_at_ms>?",
+      )
+      .bind(id, identity.owner, this.now())
+      .first<{ id: string; deleted_at_ms: number | null }>();
+    if (!owned) throw new ApiError("NOT_FOUND", "对话不存在或已删除。");
+    if (owned.deleted_at_ms !== null) return { deleted: true };
+    // Atomic batch: content is physically removed; the owner-bound tombstone and
+    // scrubbed runs retain only bounded quota/idempotency records until cleanup.
+    await this.db.batch([
+      this.db
+        .prepare(
+          "UPDATE conversations SET deleted_at_ms=COALESCE(deleted_at_ms,?),status='archived',title='已删除',selected_place_id=NULL,active_route_id=NULL,expires_at_ms=max(expires_at_ms,?) WHERE id=? AND owner_key=?",
+        )
+        .bind(this.now(), this.now() + 172800000, id, identity.owner),
+      this.db
+        .prepare(
+          "UPDATE agent_runs SET status=CASE WHEN status='running' THEN 'failed' ELSE status END,error_code='CONVERSATION_DELETED',lease_until_ms=0,finished_at_ms=COALESCE(finished_at_ms,?),tool_calls_json='[]',usage_json=NULL WHERE conversation_id=? AND owner_key=?",
+        )
+        .bind(this.now(), id, identity.owner),
+      this.db
+        .prepare(
+          "DELETE FROM assistant_actions WHERE conversation_id=? AND owner_key=?",
+        )
+        .bind(id, identity.owner),
+      this.db
+        .prepare(
+          "DELETE FROM assistant_route_refs WHERE owner_key=? AND id IN (SELECT route_id FROM assistant_conversation_routes WHERE conversation_id=? AND owner_key=?) AND NOT EXISTS(SELECT 1 FROM assistant_conversation_routes other WHERE other.route_id=assistant_route_refs.id AND other.conversation_id<>?)",
+        )
+        .bind(identity.owner, id, identity.owner, id),
+      this.db
+        .prepare(
+          "DELETE FROM assistant_conversation_routes WHERE conversation_id=? AND owner_key=?",
+        )
+        .bind(id, identity.owner),
+      this.db
+        .prepare(
+          "DELETE FROM conversation_messages WHERE conversation_id=? AND EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=?)",
+        )
+        .bind(id, id, identity.owner),
+    ]);
+    return { deleted: true };
   }
   async reserve(
     identity: AssistantIdentity,
@@ -242,6 +346,8 @@ export class AssistantStore {
         .run();
     } catch (error) {
       const text = String(error);
+      if (/AGENT_CONVERSATION_GONE/.test(text))
+        throw new ApiError("NOT_FOUND", "对话已删除，请新建对话。");
       if (/AGENT_|UNIQUE constraint/.test(text))
         throw new ApiError(
           "RATE_LIMITED",
@@ -259,7 +365,7 @@ export class AssistantStore {
   async running(owner: string, runId: string) {
     const row = await this.db
       .prepare(
-        "SELECT id FROM agent_runs WHERE id=? AND owner_key=? AND status='running' AND lease_until_ms>?",
+        "SELECT r.id FROM agent_runs r JOIN conversations c ON c.id=r.conversation_id WHERE r.id=? AND r.owner_key=? AND r.status='running' AND r.lease_until_ms>? AND c.deleted_at_ms IS NULL",
       )
       .bind(runId, owner, this.now())
       .first();
@@ -320,10 +426,10 @@ export class AssistantStore {
     const safeText = text
       .slice(0, 4000)
       .replace(/(?:1[01]\d|120)\.\d{4,}\s*[,，]\s*2\d\.\d{4,}/g, "[位置]");
-    await this.db.batch([
+    const results = await this.db.batch([
       this.db
         .prepare(
-          "INSERT INTO conversation_messages(id,conversation_id,role,content,artifacts_json) VALUES(?,?,?,?,?)",
+          "INSERT INTO conversation_messages(id,conversation_id,role,content,artifacts_json) SELECT ?,?,?,?,? WHERE EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND expires_at_ms>?)",
         )
         .bind(
           crypto.randomUUID(),
@@ -331,6 +437,9 @@ export class AssistantStore {
           role,
           safeText,
           JSON.stringify(cards),
+          conversation.id,
+          conversation.owner_key,
+          this.now(),
         ),
       this.db
         .prepare(
@@ -339,15 +448,25 @@ export class AssistantStore {
         .bind(conversation.id, conversation.id),
       this.db
         .prepare(
-          "UPDATE conversations SET updated_at_ms=?,expires_at_ms=? WHERE id=? AND owner_key=?",
+          "UPDATE conversations SET updated_at_ms=?,expires_at_ms=?,title=CASE WHEN title='新对话' AND ?='user' AND (SELECT count(*) FROM conversation_messages WHERE conversation_id=? AND role='user')=1 THEN substr(replace(?,char(10),' '),1,48) ELSE title END WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL",
         )
         .bind(
           this.now(),
           this.now() + 172800000,
+          role,
+          conversation.id,
+          safeText,
           conversation.id,
           conversation.owner_key,
         ),
     ]);
+    if (
+      !z
+        .object({ meta: z.object({ changes: z.number() }).passthrough() })
+        .passthrough()
+        .parse(results[0]).meta.changes
+    )
+      throw new ApiError("CANCELLED", "对话已删除。");
   }
   async context(
     conversation: Conversation,
@@ -356,7 +475,7 @@ export class AssistantStore {
   ) {
     await this.db
       .prepare(
-        "UPDATE conversations SET selected_place_id=?,active_route_id=? WHERE id=? AND owner_key=?",
+        "UPDATE conversations SET selected_place_id=?,active_route_id=? WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL",
       )
       .bind(selected, route, conversation.id, conversation.owner_key)
       .run();
@@ -368,9 +487,9 @@ export class AssistantStore {
     actions: MapAction[],
   ) {
     const id = crypto.randomUUID();
-    await this.db
+    const inserted = await this.db
       .prepare(
-        "INSERT INTO assistant_actions(id,owner_key,run_id,conversation_id,actions_json,expires_at_ms) VALUES(?,?,?,?,?,?)",
+        "INSERT INTO assistant_actions(id,owner_key,run_id,conversation_id,actions_json,expires_at_ms) SELECT ?,?,?,?,?,? WHERE EXISTS(SELECT 1 FROM conversations c JOIN agent_runs r ON r.conversation_id=c.id WHERE c.id=? AND c.owner_key=? AND c.deleted_at_ms IS NULL AND r.id=? AND r.owner_key=? AND r.status='running' AND r.lease_until_ms>?)",
       )
       .bind(
         id,
@@ -379,16 +498,36 @@ export class AssistantStore {
         conversation.id,
         JSON.stringify(actions),
         this.now() + 300000,
+        conversation.id,
+        identity.owner,
+        runId,
+        identity.owner,
+        this.now(),
       )
       .run();
+    if (!inserted.meta.changes)
+      throw new ApiError("CANCELLED", "地图操作已取消。");
     return { id, actions };
   }
-  async claim(identity: AssistantIdentity, actionId: string) {
+  async claim(
+    identity: AssistantIdentity,
+    actionId: string,
+    conversationId?: string,
+  ) {
     const row = await this.db
       .prepare(
-        "UPDATE assistant_actions SET status='claimed' WHERE id=? AND owner_key=? AND status='pending' AND expires_at_ms>? AND run_id IN (SELECT id FROM agent_runs WHERE owner_key=? AND (status='completed' OR (status='running' AND lease_until_ms>?))) RETURNING actions_json,conversation_id",
+        "UPDATE assistant_actions SET status='claimed' WHERE id=? AND owner_key=? AND status='pending' AND expires_at_ms>? AND run_id IN (SELECT id FROM agent_runs WHERE owner_key=? AND (status='completed' OR (status='running' AND lease_until_ms>?)))" +
+          (conversationId ? " AND conversation_id=?" : "") +
+          " RETURNING actions_json,conversation_id",
       )
-      .bind(actionId, identity.owner, this.now(), identity.owner, this.now())
+      .bind(
+        actionId,
+        identity.owner,
+        this.now(),
+        identity.owner,
+        this.now(),
+        ...(conversationId ? [conversationId] : []),
+      )
       .first<{ actions_json: string; conversation_id: string }>();
     if (!row) throw new ApiError("NOT_FOUND", "地图操作已失效，请重新查询。");
     return {

@@ -131,6 +131,76 @@ try {
     conversationId,
   );
   assert.equal((await call(b, "/restore", cookie, { routeId })).status, 200);
+  const manager = await call(a, "/session"),
+    own = manager.cookie;
+  const one = (
+    await call(a, "/new", own, { title: "isolated conversation one" })
+  ).body.data.conversationId;
+  const two = (
+    await call(b, "/new", own, { title: "isolated conversation two" })
+  ).body.data.conversationId;
+  const r1 = (await call(a, "/route", own, { conversationId: one })).body.data
+    .routeId;
+  const r2 = (await call(b, "/route", own, { conversationId: two })).body.data
+    .routeId;
+  const running = await call(a, "/reserve", own, {
+    conversationId: one,
+    requestId: crypto.randomUUID(),
+  });
+  assert.equal(running.status, 200);
+  assert.equal(
+    (await call(b, "/restore", own, { conversationId: two, routeId: r1 })).body
+      .code,
+    "NOT_FOUND",
+  );
+  assert.equal(
+    (await call(a, "/delete", stranger.cookie, { conversationId: one })).body
+      .code,
+    "NOT_FOUND",
+  );
+  assert.equal(
+    (await call(b, "/delete", own, { conversationId: one })).status,
+    200,
+  );
+  assert.equal(
+    (await call(a, "/delete", own, { conversationId: one })).status,
+    200,
+  );
+  assert.equal(
+    (await call(a, "/history", own, { conversationId: one })).body.code,
+    "NOT_FOUND",
+  );
+  assert.equal(
+    (await call(a, "/restore", own, { conversationId: one, routeId: r1 })).body
+      .code,
+    "NOT_FOUND",
+  );
+  assert.equal(
+    (await call(b, "/restore", own, { conversationId: two, routeId: r2 }))
+      .status,
+    200,
+  );
+  const retained = await (
+    await mf.getD1Database("DB", "a")
+  )
+    .prepare("SELECT status,charged_tokens FROM agent_runs WHERE id=?")
+    .bind(running.body.data.runId)
+    .first();
+  assert.equal(retained.status, "failed");
+  assert.equal(retained.charged_tokens, 250000);
+  await mf.dispose();
+  mf = new Miniflare(options);
+  a = await mf.getWorker("a");
+  b = await mf.getWorker("b");
+  assert.equal(
+    (await call(a, "/history", own, { conversationId: two })).body.data
+      .messages[0].text,
+    "isolated conversation two",
+  );
+  assert.equal(
+    (await call(b, "/history", own, { conversationId: one })).body.code,
+    "NOT_FOUND",
+  );
   await fs.writeFile(
     path.join(outputDir, "shared-workers.json"),
     JSON.stringify(
@@ -146,6 +216,9 @@ try {
         crossGuestRouteRejected: true,
         shared20PerHourQuotaEnforced: true,
         runtimeRestartVerified: true,
+        conversationDeletionAcrossWorkers: true,
+        deletedConversationStaysGoneAfterRestart: true,
+        deletionPreservesQuotaAndOtherConversationRoute: true,
         productionMultiRegionDeployment: false,
       },
       null,

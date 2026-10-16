@@ -152,3 +152,9 @@ Cloudflare账号已认证但无专用D1，preview/production UUID仍全零；生
 ### 2026-10-16 定位challenge时间校准
 
 POST /api/agent/location/challenge除challenge/expiresInSeconds外返回服务端serverTime；客户端基于它与单调耗时/样本年龄计算原locationGrant.capturedAt。请求Schema、D1表和30秒单次nonce协议不变，不信任模型定位授权声明，不增加精确位置持久化。原服务端未来时间、所有权、过期、精度和范围校验保留。详见docs/S2_E_BROWSER_FIXES.md。
+
+## 0005多会话数据与API（2026-10-16）
+
+35业务表：conversations新增title/deleted_at_ms，assistant_conversation_routes维护会话-路线引用。新增GET /api/agent/conversations游标列表及DELETE /api/agent/conversations/:id；原历史、身份、SSE和路线端点复用并加强会话绑定，全部鉴权、Origin与no-store。元数据复用原边缘限流，不能替代D1全局Agent额度。
+
+内容实际SQL DELETE，父对话无内容删除标记与去内容Run台账保留48h，避免旧级联外键删除配额；共享路线仅删除当前引用，独占路线一起删除。Run预留/消息追加/动作校验拒绝已删除父会话。事务失败全回滚，重复删除安全。每主体50有效/100总记录，全站5000有效/10000总记录、每页20；历史20条/48h和原模型额度不变。旧客户端响应形状兼容，迁移不重建或清空任何表，细节/云端证据见docs/AI_CONVERSATION_MANAGEMENT_ACCEPTANCE.md。

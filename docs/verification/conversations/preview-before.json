@@ -1,0 +1,25 @@
+{
+  "recordedAt": "2026-10-16T05:37:55.590Z",
+  "previewTarget": {
+    "worker": "campusos-preview",
+    "database": "campusos-preview",
+    "databaseId": "18299abc-b38b-4494-8d12-8ab4d482c304"
+  },
+  "accountVerified": true,
+  "migrations": [
+    "0001_platform_and_campus.sql",
+    "0002_knowledge_and_events.sql",
+    "0003_route_geometry_guards.sql",
+    "0004_assistant_shared_state.sql"
+  ],
+  "counts": {
+    "conversations": 45,
+    "messages": 228,
+    "runs": 116,
+    "routes": 4
+  },
+  "foreignKeyViolations": 0,
+  "hasTitle": false,
+  "hasDeletionMarker": false,
+  "readOnly": true
+}

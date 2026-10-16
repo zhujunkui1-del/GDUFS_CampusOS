@@ -33,8 +33,33 @@ const worker = {
         const conversation = latest
           ? await store.conversation(identity, latest.id)
           : await store.conversation(identity);
+        if (!latest)
+          await store.append(
+            conversation,
+            "user",
+            "isolated shared-session fixture",
+          );
         data = { conversationId: conversation.id };
-      } else if (path === "/reserve") {
+      } else if (path === "/new") {
+        const c = await store.conversation(identity);
+        await store.append(
+          c,
+          "user",
+          z.string().min(1).max(48).parse(body.title),
+        );
+        data = { conversationId: c.id };
+      } else if (path === "/list") data = await store.list(identity);
+      else if (path === "/history")
+        data = await store.history(
+          identity,
+          z.string().uuid().parse(body.conversationId),
+        );
+      else if (path === "/delete")
+        data = await store.deleteConversation(
+          identity,
+          z.string().uuid().parse(body.conversationId),
+        );
+      else if (path === "/reserve") {
         const conversation = await store.conversation(
           identity,
           z.string().uuid().parse(body.conversationId),
@@ -57,7 +82,16 @@ const worker = {
         );
         data = { finished: true };
       } else if (path === "/route") {
-        data = await new CampusMapService(routeStore).plan(
+        if (body.conversationId)
+          await store.conversation(
+            identity,
+            z.string().uuid().parse(body.conversationId),
+          );
+        data = await new CampusMapService(
+          body.conversationId
+            ? routeStore.forConversation(body.conversationId)
+            : routeStore,
+        ).plan(
           {
             start: { type: "place", placeId: "osm-way-312536955" },
             endPlaceId: "osm-way-307250998",
@@ -72,7 +106,13 @@ const worker = {
           },
         );
       } else if (path === "/restore") {
-        data = await routeStore.get(
+        data = await (
+          body.conversationId
+            ? routeStore.forConversation(
+                z.string().uuid().parse(body.conversationId),
+              )
+            : routeStore
+        ).get(
           identity.owner,
           z.string().uuid().parse(body.routeId),
           MAP_VERSIONS,

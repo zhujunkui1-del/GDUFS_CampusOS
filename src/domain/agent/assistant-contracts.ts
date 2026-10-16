@@ -58,5 +58,34 @@ export const AssistantHistorySchema = z
     messages: z.array(StoredMessageSchema).max(20),
     selectedPlaceId: z.string().nullable(),
     activeRouteId: z.string().nullable(),
+    title: z.string().max(48).optional(),
   })
   .strict();
+export const ConversationSummarySchema = z
+  .object({
+    id: z.string().uuid(),
+    title: z.string().max(48),
+    updatedAt: z.number().int().nonnegative(),
+  })
+  .strict();
+export type ConversationSummary = z.infer<typeof ConversationSummarySchema>;
+export const ConversationListSchema = z
+  .object({
+    conversations: z.array(ConversationSummarySchema).max(20),
+    nextCursor: z.string().nullable(),
+  })
+  .strict();
+// An older open browser tab uses strict response schemas. New clients opt in
+// to the title field; both forms still use identical server ownership checks.
+export function historyForClient(
+  history: z.infer<typeof AssistantHistorySchema>,
+  expanded: boolean,
+) {
+  return {
+    conversationId: history.conversationId,
+    messages: history.messages,
+    selectedPlaceId: history.selectedPlaceId,
+    activeRouteId: history.activeRouteId,
+    ...(expanded ? { title: history.title } : {}),
+  };
+}

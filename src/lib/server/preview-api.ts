@@ -6,6 +6,8 @@ import {
   routePost,
   claimPost,
   receiptPost,
+  conversationsGet,
+  conversationDelete,
 } from "./assistant/api";
 import { chatResponse } from "./assistant/chat";
 import { executeMapSkillHttp } from "./maps/http";
@@ -16,9 +18,11 @@ type Handler = (request: Request) => Promise<Response>;
 // quota, schema, ownership and error checks; no alternative implementation.
 export function previewApiHandler(
   path: string,
+  method = "GET",
 ): { method: string; handle: Handler } | null {
   const fixed: Record<string, { method: string; handle: Handler }> = {
     "/api/agent/session": { method: "GET", handle: sessionGet },
+    "/api/agent/conversations": { method: "GET", handle: conversationsGet },
     "/api/agent/status": { method: "GET", handle: agentStatus },
     "/api/agent/chat": { method: "POST", handle: chatResponse },
     "/api/agent/cancel": { method: "POST", handle: cancelPost },
@@ -26,7 +30,9 @@ export function previewApiHandler(
   };
   if (Object.hasOwn(fixed, path)) return fixed[path];
   if (/^\/api\/agent\/conversations\/[^/]+$/.test(path))
-    return { method: "GET", handle: historyGet };
+    return method === "DELETE"
+      ? { method: "DELETE", handle: conversationDelete }
+      : { method: "GET", handle: historyGet };
   if (/^\/api\/agent\/routes\/[^/]+$/.test(path))
     return { method: "POST", handle: routePost };
   if (/^\/api\/agent\/actions\/[^/]+\/claim$/.test(path))

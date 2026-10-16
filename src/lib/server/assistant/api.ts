@@ -5,9 +5,13 @@ import { tokenHash } from "./crypto";
 import { defaultModelRuntime } from "../models/runtime";
 import { CampusMapService, MAP_VERSIONS } from "../maps/campus-map-service";
 import type { MapAction } from "@/domain/maps/contracts";
+import { mapRuntime } from "../map-env";
+import { ApiError } from "../errors";
+import { historyForClient } from "@/domain/agent/assistant-contracts";
 type Context = Awaited<ReturnType<typeof assistantContext>>;
 function api(
   handler: (request: Request, context: Context) => Promise<unknown>,
+  limited = false,
 ) {
   return async (request: Request) => {
     let cookie: string | undefined;
@@ -16,6 +20,20 @@ function api(
       const context = await assistantContext(req);
       databaseTiming = context.databaseTiming;
       cookie = context.identity.cookie;
+      const limiter = limited ? mapRuntime().limiter : undefined;
+      if (
+        limiter &&
+        !(
+          await limiter.limit({
+            key: "conversations:" + context.identity.owner,
+          })
+        ).success
+      )
+        throw new ApiError(
+          "RATE_LIMITED",
+          "对话操作较频繁，请稍后重试。",
+          true,
+        );
       return handler(req, context);
     })(request);
     if (cookie) response.headers.set("Set-Cookie", cookie);
@@ -27,7 +45,7 @@ function api(
     return response;
   };
 }
-export const sessionGet = api(async (_request, context) => {
+export const sessionGet = api(async (request, context) => {
   const latest = await context.store.latest(context.identity);
   return {
     scopeKey: (
@@ -35,7 +53,10 @@ export const sessionGet = api(async (_request, context) => {
     ).slice(0, 24),
     kind: context.identity.user ? "user" : "guest",
     history: latest
-      ? await context.store.history(context.identity, latest.id)
+      ? historyForClient(
+          await context.store.history(context.identity, latest.id),
+          request.headers.get("X-CampusOS-Conversation-Protocol") === "1",
+        )
       : null,
     model: await defaultModelRuntime().status(),
   };
@@ -45,8 +66,30 @@ export const historyGet = api(async (request, context) => {
     .string()
     .uuid()
     .parse(new URL(request.url).pathname.split("/").at(-1));
-  return context.store.history(context.identity, id);
-});
+  return historyForClient(
+    await context.store.history(context.identity, id),
+    request.headers.get("X-CampusOS-Conversation-Protocol") === "1",
+  );
+}, true);
+export const conversationsGet = api(async (request, context) => {
+  const query = z
+    .object({
+      cursor: z.string().max(60).optional(),
+      limit: z.coerce.number().int().min(1).max(20).optional(),
+    })
+    .strict()
+    .parse(Object.fromEntries(new URL(request.url).searchParams));
+  return context.store.list(context.identity, query.cursor, query.limit);
+}, true);
+export const conversationDelete = api(async (request, context) => {
+  const body = await readJson(request, 1024, true);
+  if (body !== undefined) z.object({}).strict().parse(body);
+  const id = z
+    .string()
+    .uuid()
+    .parse(new URL(request.url).pathname.split("/").at(-1));
+  return context.store.deleteConversation(context.identity, id);
+}, true);
 export const challengePost = api(async (_request, context) => ({
   challenge: await context.store.locationChallenge(context.identity),
   serverTime: context.store.now(),
@@ -66,12 +109,19 @@ export const routePost = api(async (request, context) => {
     .uuid()
     .parse(new URL(request.url).pathname.split("/").at(-1));
   const body = z
-    .object({ ticket: z.string().max(60000).optional() })
+    .object({
+      ticket: z.string().max(60000).optional(),
+      conversationId: z.string().uuid().optional(),
+    })
     .strict()
     .parse(await readJson(request));
-  if (body.ticket)
-    await context.routes.hydrate(context.identity.owner, body.ticket);
-  return context.routes.get(context.identity.owner, id, MAP_VERSIONS);
+  if (body.conversationId)
+    await context.store.conversation(context.identity, body.conversationId);
+  const routes = body.conversationId
+    ? context.routes.forConversation(body.conversationId)
+    : context.routes;
+  if (body.ticket) await routes.hydrate(context.identity.owner, body.ticket);
+  return routes.get(context.identity.owner, id, MAP_VERSIONS);
 });
 export const claimPost = api(async (request, context) => {
   const id = z
@@ -79,13 +129,24 @@ export const claimPost = api(async (request, context) => {
     .uuid()
     .parse(new URL(request.url).pathname.split("/").at(-2));
   const body = z
-    .object({ tickets: z.array(z.string().max(60000)).max(4).optional() })
+    .object({
+      tickets: z.array(z.string().max(60000)).max(4).optional(),
+      conversationId: z.string().uuid().optional(),
+    })
     .strict()
     .parse(await readJson(request));
+  const packet = await context.store.claim(
+    context.identity,
+    id,
+    body.conversationId,
+  );
+  await context.store.conversation(context.identity, packet.conversationId);
+  if (body.conversationId && body.conversationId !== packet.conversationId)
+    throw new ApiError("FORBIDDEN", "地图操作不属于当前对话。");
+  const scopedRoutes = context.routes.forConversation(packet.conversationId);
   for (const ticket of body.tickets || [])
-    await context.routes.hydrate(context.identity.owner, ticket);
-  const packet = await context.store.claim(context.identity, id);
-  const service = new CampusMapService(context.routes);
+    await scopedRoutes.hydrate(context.identity.owner, ticket);
+  const service = new CampusMapService(scopedRoutes);
   await service.control(
     { actions: packet.actions },
     {
@@ -103,14 +164,15 @@ export const claimPost = api(async (request, context) => {
           action.type === "SHOW_ROUTE",
       )
       .map((action) =>
-        context.routes.get(
-          context.identity.owner,
-          action.routeId,
-          MAP_VERSIONS,
-        ),
+        scopedRoutes.get(context.identity.owner, action.routeId, MAP_VERSIONS),
       ),
   );
-  return { id, actions: packet.actions, routes };
+  return {
+    id,
+    ...(body.conversationId ? { conversationId: packet.conversationId } : {}),
+    actions: packet.actions,
+    routes,
+  };
 });
 export const receiptPost = api(async (request, context) => {
   const id = z

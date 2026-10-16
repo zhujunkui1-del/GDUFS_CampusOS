@@ -15,7 +15,7 @@ const previewWorker = {
   ) {
     const route =
       env.APP_ENV === "preview"
-        ? previewApiHandler(new URL(request.url).pathname)
+        ? previewApiHandler(new URL(request.url).pathname, request.method)
         : null;
     if (!route) return handler.fetch(request, env, ctx);
     return runWithCloudflareRequestContext(request, env, ctx, async () => {

@@ -9,6 +9,8 @@ import {
   AssistantHistorySchema,
   type AssistantCard,
   type StoredMessage,
+  ConversationListSchema,
+  type ConversationSummary,
 } from "@/domain/agent/assistant-contracts";
 import { MapActionSchema } from "@/domain/maps/contracts";
 import { RouteOutputSchema } from "@/domain/maps/skill-contracts";
@@ -18,19 +20,46 @@ import {
   pendingNavigationMessages,
 } from "@/domain/agent/navigation-intent";
 import { locationCaptureTime } from "@/domain/agent/location-grant";
+import {
+  blankConversation,
+  conversationTitle,
+  afterConversationDelete,
+  acceptsConversationResult,
+  type ConversationView,
+} from "./conversation-state";
+class AssistantRequestError extends Error {
+  constructor(
+    message: string,
+    readonly status: number,
+  ) {
+    super(message);
+  }
+}
 
-async function jsonApi(path: string, body?: unknown, signal?: AbortSignal) {
+async function jsonApi(
+  path: string,
+  body?: unknown,
+  signal?: AbortSignal,
+  method?: string,
+) {
   const response = await fetch(path, {
-    method: body === undefined ? "GET" : "POST",
-    headers:
-      body === undefined ? undefined : { "Content-Type": "application/json" },
+    method: method || (body === undefined ? "GET" : "POST"),
+    headers: {
+      "X-CampusOS-Conversation-Protocol": "1",
+      ...(body === undefined ? {} : { "Content-Type": "application/json" }),
+    },
     body: body === undefined ? undefined : JSON.stringify(body),
-    signal,
+    signal: signal
+      ? AbortSignal.any([signal, AbortSignal.timeout(15000)])
+      : AbortSignal.timeout(15000),
     cache: "no-store",
   });
   const value = await response.json();
   if (!response.ok || !value.ok)
-    throw new Error(value.error?.message || "服务暂不可用，请重试。");
+    throw new AssistantRequestError(
+      value.error?.message || "服务暂不可用，请重试。",
+      response.status,
+    );
   return value.data as unknown;
 }
 async function frames() {
@@ -75,9 +104,29 @@ export function useAssistant(
   const router = useRouter();
   const pathname = usePathname();
   const pathRef = useRef(pathname);
-  const [messages, setMessages] = useState<StoredMessage[]>([]);
-  const [conversationId, setConversationId] = useState<string>();
+  const [view, setView] = useState<ConversationView>(blankConversation);
+  const { messages, id: conversationId } = view;
+  const viewRef = useRef(view);
   const conversationRef = useRef(conversationId);
+  const setMessages = (
+    update: StoredMessage[] | ((prior: StoredMessage[]) => StoredMessage[]),
+  ) =>
+    setView((prior) => {
+      const next =
+        typeof update === "function" ? update(prior.messages) : update;
+      return {
+        ...prior,
+        messages: next,
+        title:
+          prior.messages.length === 0
+            ? conversationTitle(next.find((m) => m.role === "user")?.text || "")
+            : prior.title,
+      };
+    });
+  const setConversationId = (id: string | undefined) => {
+    conversationRef.current = id;
+    setView((prior) => ({ ...prior, id }));
+  };
   const [busy, setBusy] = useState(false),
     [ready, setReady] = useState(false),
     [status, setStatus] = useState("");
@@ -85,63 +134,165 @@ export function useAssistant(
   const initialized = useRef(false),
     scope = useRef("");
   const generation = useRef(0);
+  const [connected, setConnected] = useState(false);
+  const [loadingConversation, setLoadingConversation] = useState(false);
+  const [conversations, setConversations] = useState<ConversationSummary[]>([]);
+  const [listBusy, setListBusy] = useState(false),
+    [historyError, setHistoryError] = useState("");
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const chosen = useRef(false),
+    selectionBoundary = useRef(0),
+    semanticPlace = useRef<string | null>(null);
+  const cardWork = useRef<AbortController | null>(null),
+    historyWork = useRef<AbortController | null>(null),
+    listWork = useRef<AbortController | null>(null);
+  const cancellation = useRef<Promise<unknown>>(Promise.resolve());
   const pending = useRef<{
     controller: AbortController;
     requestId: string;
   } | null>(null);
   const tickets = useRef(new Map<string, string>());
   const knownRoutes = useRef(new Map<string, number>());
+  // Ownership of the visible map only, never a conversation capability or tool
+  // context. Keep this across New Chat so a later identity switch can clear it.
+  const displayedRouteOwner = useRef<{
+    routeId: string;
+    scopeKey: string;
+  } | null>(null);
   const prepareRef = useRef(prepareMap);
   const failureRef = useRef(onFailure);
   useEffect(() => {
     mapRef.current = map;
     pathRef.current = pathname;
     conversationRef.current = conversationId;
+    viewRef.current = view;
     prepareRef.current = prepareMap;
     failureRef.current = onFailure;
-  }, [map, pathname, conversationId, prepareMap, onFailure]);
+  }, [map, pathname, conversationId, view, prepareMap, onFailure]);
+  const invalidate = useCallback(() => {
+    ++generation.current;
+    historyWork.current?.abort();
+    cardWork.current?.abort();
+    const active = pending.current;
+    pending.current = null;
+    if (active) {
+      active.controller.abort();
+      const stop = jsonApi(
+        "/api/agent/cancel",
+        {
+          requestId: active.requestId,
+        },
+        AbortSignal.timeout(5000),
+      ).catch(() => {});
+      cancellation.current = Promise.all([cancellation.current, stop]);
+    }
+    setBusy(false);
+    setStatus("");
+    setLoadingConversation(false);
+    return generation.current;
+  }, []);
+  const resetSemantics = useCallback(() => {
+    tickets.current.clear();
+    knownRoutes.current.clear();
+    semanticPlace.current = null;
+    selectionBoundary.current = mapRef.current.getAssistantSelection().revision;
+  }, []);
+  const acceptHistory = useCallback(
+    (history: z.infer<typeof AssistantHistorySchema>) => {
+      if (conversationRef.current !== history.conversationId)
+        tickets.current.clear();
+      knownRoutes.current.clear();
+      semanticPlace.current = history.selectedPlaceId;
+      for (const message of history.messages)
+        for (const card of message.cards)
+          if (card.kind === "route")
+            knownRoutes.current.set(card.routeId, Date.parse(card.expiresAt));
+      conversationRef.current = history.conversationId;
+      setView({
+        id: history.conversationId,
+        messages: history.messages,
+        title:
+          history.title ||
+          conversationTitle(
+            history.messages.find((m) => m.role === "user")?.text || "",
+          ) ||
+          "新对话",
+      });
+    },
+    [],
+  );
   const boot = useCallback(async () => {
+    const started = generation.current;
+    let restoreError = "";
     try {
       const session = (await jsonApi("/api/agent/session")) as Session;
+      if (started !== generation.current) return;
       if (scope.current && scope.current !== session.scopeKey) {
-        pending.current?.controller.abort();
-        generation.current++;
-        tickets.current.clear();
+        invalidate();
         if (
           mapRef.current.route &&
-          knownRoutes.current.has(mapRef.current.route.id)
+          (knownRoutes.current.has(mapRef.current.route.id) ||
+            (displayedRouteOwner.current?.routeId === mapRef.current.route.id &&
+              displayedRouteOwner.current.scopeKey === scope.current))
         )
           mapRef.current.stopNavigation();
-        knownRoutes.current.clear();
-        setMessages([]);
-        setConversationId(undefined);
+        displayedRouteOwner.current = null;
+        resetSemantics();
+        chosen.current = false;
+        listWork.current?.abort();
+        setListBusy(false);
+        conversationRef.current = undefined;
+        setView(blankConversation());
+        setConversations([]);
       }
       scope.current = session.scopeKey;
-      if (!pending.current) {
-        if (session.history) {
-          const history = AssistantHistorySchema.parse(session.history);
-          for (const message of history.messages)
-            for (const card of message.cards)
-              if (card.kind === "route")
-                knownRoutes.current.set(
-                  card.routeId,
-                  Date.parse(card.expiresAt),
-                );
-          setMessages(history.messages);
-          setConversationId(history.conversationId);
-        } else {
-          setMessages([]);
-          setConversationId(undefined);
+      const readyGeneration = generation.current;
+      if (!pending.current && !historyWork.current) {
+        if (!chosen.current) {
+          if (session.history)
+            acceptHistory(AssistantHistorySchema.parse(session.history));
+          else {
+            conversationRef.current = undefined;
+            setView(blankConversation());
+          }
+          chosen.current = true;
+        } else if (conversationRef.current) {
+          const cid = conversationRef.current,
+            rev = generation.current;
+          try {
+            const history = AssistantHistorySchema.parse(
+              await jsonApi(`/api/agent/conversations/${cid}`),
+            );
+            if (rev === generation.current && cid === conversationRef.current)
+              acceptHistory(history);
+          } catch (cause) {
+            if (rev === generation.current) {
+              if (
+                cause instanceof AssistantRequestError &&
+                cause.status === 404
+              ) {
+                resetSemantics();
+                conversationRef.current = undefined;
+                setView(blankConversation());
+              }
+              restoreError = "对话暂不可用，请稍后重试。";
+            }
+          }
         }
       }
+      if (readyGeneration !== generation.current) return;
       setReady(session.model.ready);
-      setError(session.model.ready ? "" : "AI 暂不可用，请稍后重试。");
+      setError(
+        session.model.ready ? restoreError : "AI 暂不可用，请稍后重试。",
+      );
       initialized.current = true;
+      setConnected(true);
     } catch (cause) {
+      if (started !== generation.current) return;
       setReady(false);
       setError(cause instanceof Error ? cause.message : "连接失败，请重试。");
     }
-  }, []);
+  }, [invalidate, resetSemantics, acceptHistory]);
   useEffect(() => {
     if (open && !initialized.current) void boot();
   }, [open, boot]);
@@ -153,19 +304,122 @@ export function useAssistant(
     return () => window.removeEventListener("focus", focus);
   }, [boot]);
   const cancel = useCallback(() => {
-    const active = pending.current;
-    generation.current++;
-    pending.current = null;
-    if (active) {
-      active.controller.abort();
-      void jsonApi("/api/agent/cancel", { requestId: active.requestId }).catch(
-        () => {},
-      );
-    }
-    setBusy(false);
-    setStatus("");
+    invalidate();
     setError("已停止回复。");
-  }, []);
+  }, [invalidate]);
+  const newConversation = () => {
+    invalidate();
+    resetSemantics();
+    chosen.current = true;
+    conversationRef.current = undefined;
+    setView(blankConversation());
+    setError("");
+  };
+  const loadConversations = async (more = false) => {
+    listWork.current?.abort();
+    const controller = new AbortController();
+    listWork.current = controller;
+    const owner = scope.current;
+    setListBusy(true);
+    setHistoryError("");
+    try {
+      const list = ConversationListSchema.parse(
+        await jsonApi(
+          `/api/agent/conversations${more && nextCursor ? `?cursor=${encodeURIComponent(nextCursor)}` : ""}`,
+          undefined,
+          controller.signal,
+        ),
+      );
+      if (controller.signal.aborted || owner !== scope.current) return;
+      setConversations((prior) =>
+        more
+          ? [
+              ...prior.filter(
+                (p) => !list.conversations.some((n) => n.id === p.id),
+              ),
+              ...list.conversations,
+            ]
+          : list.conversations,
+      );
+      setNextCursor(list.nextCursor);
+    } catch {
+      if (!controller.signal.aborted)
+        setHistoryError("无法加载历史对话，请重试。");
+    } finally {
+      if (listWork.current === controller) {
+        listWork.current = null;
+        setListBusy(false);
+      }
+    }
+  };
+  const openConversation = async (id: string) => {
+    const prior = viewRef.current,
+      rev = invalidate();
+    resetSemantics();
+    chosen.current = true;
+    const controller = new AbortController();
+    historyWork.current = controller;
+    conversationRef.current = id;
+    setView({ id, title: "对话", messages: [] });
+    setLoadingConversation(true);
+    setError("");
+    try {
+      await cancellation.current;
+      const history = AssistantHistorySchema.parse(
+        await jsonApi(
+          `/api/agent/conversations/${id}`,
+          undefined,
+          controller.signal,
+        ),
+      );
+      if (
+        acceptsConversationResult(
+          rev,
+          generation.current,
+          controller.signal.aborted,
+        )
+      )
+        acceptHistory(history);
+    } catch {
+      if (
+        acceptsConversationResult(
+          rev,
+          generation.current,
+          controller.signal.aborted,
+        )
+      ) {
+        conversationRef.current = prior.id;
+        setView(prior);
+        setError("无法打开对话，请重试。");
+      }
+    } finally {
+      if (rev === generation.current) {
+        historyWork.current = null;
+        setLoadingConversation(false);
+      }
+    }
+  };
+  const deleteConversation = async (id: string) => {
+    const current = conversationRef.current === id;
+    if (current) invalidate();
+    const owner = scope.current;
+    await jsonApi(
+      `/api/agent/conversations/${id}`,
+      undefined,
+      undefined,
+      "DELETE",
+    );
+    if (owner !== scope.current) return;
+    setConversations((prior) => prior.filter((p) => p.id !== id));
+    if (conversationRef.current === id) {
+      invalidate();
+      resetSemantics();
+      conversationRef.current = undefined;
+      chosen.current = true;
+      setView((prior) => afterConversationDelete(prior, id));
+      setError("");
+    }
+  };
   useEffect(() => {
     if (map.navigating && pending.current) cancel();
   }, [map.navigating, cancel]);
@@ -184,40 +438,98 @@ export function useAssistant(
           .visibility !== "hidden",
       signal,
     );
+    signal.throwIfAborted();
     await prepareRef.current();
     await frames();
+  };
+  const selectedContext = () => {
+    const manual = mapRef.current.getAssistantSelection();
+    return manual.revision > selectionBoundary.current
+      ? manual.placeId
+      : semanticPlace.current;
   };
   const showCard = async (card: AssistantCard, navigate = false) => {
     if (pending.current) cancel();
     setError("");
-    const signal = new AbortController().signal;
+    cardWork.current?.abort();
+    const controller = new AbortController();
+    cardWork.current = controller;
+    const signal = controller.signal,
+      revision = generation.current,
+      cid = conversationRef.current;
+    const expected = mapRef.current.getInteractionVersion();
     try {
       await toMap(signal);
-      if (card.kind === "place")
+      if (
+        !acceptsConversationResult(
+          revision,
+          generation.current,
+          signal.aborted,
+        ) ||
+        expected !== mapRef.current.getInteractionVersion()
+      )
+        return;
+      if (card.kind === "place") {
         mapRef.current.executeAction({
           type: "FOCUS_PLACE",
           placeId: card.place.placeId,
         });
-      else {
+        semanticPlace.current = card.place.placeId;
+        selectionBoundary.current =
+          mapRef.current.getAssistantSelection().revision;
+      } else {
         const route = RouteOutputSchema.parse(
-          await jsonApi(`/api/agent/routes/${card.routeId}`, {
-            ticket: tickets.current.get(card.routeId),
-          }),
+          await jsonApi(
+            `/api/agent/routes/${card.routeId}`,
+            {
+              ticket: tickets.current.get(card.routeId),
+              conversationId: cid,
+            },
+            signal,
+          ),
         );
+        if (
+          !acceptsConversationResult(
+            revision,
+            generation.current,
+            signal.aborted,
+          ) ||
+          expected !== mapRef.current.getInteractionVersion()
+        )
+          return;
         mapRef.current.installRoute(route);
+        displayedRouteOwner.current = {
+          routeId: route.routeId,
+          scopeKey: scope.current,
+        };
         mapRef.current.executeAction({
           type: "SHOW_ROUTE",
           routeId: route.routeId,
         });
+        semanticPlace.current = route.start.placeId;
+        selectionBoundary.current =
+          mapRef.current.getAssistantSelection().revision;
         await frames();
-        if (navigate) mapRef.current.beginNavigation();
+        if (
+          navigate &&
+          acceptsConversationResult(
+            revision,
+            generation.current,
+            signal.aborted,
+          )
+        )
+          mapRef.current.beginNavigation();
       }
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "地图操作失败。");
+      if (
+        acceptsConversationResult(revision, generation.current, signal.aborted)
+      )
+        setError(cause instanceof Error ? cause.message : "地图操作失败。");
     }
   };
   const send = async (text: string) => {
-    if (pending.current || !text.trim() || !ready) return;
+    if (pending.current || loadingConversation || !text.trim() || !ready)
+      return;
     const controller = new AbortController(),
       requestId = crypto.randomUUID(),
       revision = ++generation.current;
@@ -263,6 +575,7 @@ export function useAssistant(
         const claimed = z
           .object({
             id: z.string().uuid(),
+            conversationId: z.string().uuid().optional(),
             actions: z.array(MapActionSchema),
             routes: z.array(RouteOutputSchema),
           })
@@ -270,11 +583,19 @@ export function useAssistant(
           .parse(
             await jsonApi(
               `/api/agent/actions/${packet.id}/claim`,
-              { tickets: value.routes.map((item) => item.ticket) },
+              {
+                tickets: value.routes.map((item) => item.ticket),
+                conversationId: cid,
+              },
               controller.signal,
             ),
           );
         if (revision !== generation.current || controller.signal.aborted)
+          return;
+        if (
+          claimed.conversationId &&
+          claimed.conversationId !== conversationRef.current
+        )
           return;
         if (mapRef.current.getInteractionVersion() !== expectedMapVersion)
           throw new Error("地图操作已被新的选择中断。");
@@ -292,8 +613,21 @@ export function useAssistant(
             );
             if (!route) throw new Error("路线已失效，请重新规划。");
             mapRef.current.installRoute(route);
+            displayedRouteOwner.current = {
+              routeId: route.routeId,
+              scopeKey: scope.current,
+            };
+            semanticPlace.current = route.start.placeId;
           }
+          if (
+            action.type === "FOCUS_PLACE" ||
+            action.type === "SHOW_PLACE_DETAILS"
+          )
+            semanticPlace.current = action.placeId;
           mapRef.current.executeAction(action);
+          if (action.type === "CLEAR_ROUTE") displayedRouteOwner.current = null;
+          selectionBoundary.current =
+            mapRef.current.getAssistantSelection().revision;
           expectedMapVersion = mapRef.current.getInteractionVersion();
           if (action.type === "FOCUS_PLACE" || action.type === "SHOW_ROUTE") {
             // The existing map controller schedules its fit on the next frame.
@@ -352,11 +686,20 @@ export function useAssistant(
       }
     };
     try {
+      await cancellation.current;
+      if (
+        !acceptsConversationResult(
+          revision,
+          generation.current,
+          controller.signal.aborted,
+        )
+      )
+        return;
       let locationGrant: unknown;
       if (
         navigationIntent(
           text,
-          mapRef.current.selected?.id || mapRef.current.assistantPlace?.id,
+          selectedContext(),
           false,
           pendingNavigationMessages(messages),
         ).needsLocation
@@ -389,7 +732,14 @@ export function useAssistant(
             ),
           };
         } catch {
-          setStatus("无法获取定位，请输入起点");
+          if (
+            acceptsConversationResult(
+              revision,
+              generation.current,
+              controller.signal.aborted,
+            )
+          )
+            setStatus("无法获取定位，请输入起点");
         }
       }
       if (controller.signal.aborted) return;
@@ -408,7 +758,7 @@ export function useAssistant(
           clientRequestId: requestId,
           message: text,
           mapContext: {
-            selectedPlaceId: current.selected?.id || current.assistantPlace?.id,
+            selectedPlaceId: selectedContext() || undefined,
             activeRouteId: activeRoute?.id || null,
             routeTicket: activeRoute
               ? tickets.current.get(activeRoute.id)
@@ -440,6 +790,7 @@ export function useAssistant(
           if (event.type === "artifact.ready") {
             if (event.payload.started) {
               cid = z.string().uuid().parse(event.payload.conversationId);
+              chosen.current = true;
               setConversationId(cid);
             } else {
               const payload = { ...event.payload };
@@ -509,6 +860,18 @@ export function useAssistant(
     }
   };
   return {
+    conversationId,
+    title: view.title,
+    connected,
+    loadingConversation,
+    conversations,
+    nextCursor,
+    listBusy,
+    historyError,
+    newConversation,
+    openConversation,
+    deleteConversation,
+    loadConversations,
     messages,
     busy,
     ready,
@@ -520,9 +883,10 @@ export function useAssistant(
     showCard,
     activeRouteId: map.route?.id || null,
     clearRoute: () => {
-      if (pending.current) cancel();
+      invalidate();
       setError("");
       mapRef.current.stopNavigation();
+      displayedRouteOwner.current = null;
     },
   };
 }

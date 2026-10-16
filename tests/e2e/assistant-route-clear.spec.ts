@@ -20,6 +20,11 @@ test("an AI route has direct clear controls on its card and the map", async ({
   });
   expect(response.ok()).toBe(true);
   const route = (await response.json()).data.data;
+  // Controlled history fixture: serve the genuine computed route at its mock
+  // conversation boundary; live ownership is tested independently in D1/API.
+  await page.route(`**/api/agent/routes/${route.routeId}`, (r) =>
+    r.fulfill({ json: { ok: true, data: route } }),
+  );
   const card = {
     kind: "route",
     routeId: route.routeId,

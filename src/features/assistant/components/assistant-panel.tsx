@@ -1,7 +1,8 @@
 "use client";
 
 import { Drawer } from "@base-ui/react/drawer";
-import { useCampusMap } from "@/features/campus-map/components/campus-map-provider";
+import { AlertDialog } from "@base-ui/react/alert-dialog";
+import type { ConversationSummary } from "@/domain/agent/assistant-contracts";
 import {
   useCallback,
   useEffect,
@@ -17,9 +18,20 @@ import {
   Square,
   Sparkles,
   X,
+  History,
+  SquarePen,
+  ArrowLeft,
+  Trash2,
 } from "lucide-react";
 
 const SNAP_POINTS = [0.62, 1];
+const historyDate = new Intl.DateTimeFormat("zh-CN", {
+  month: "numeric",
+  day: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  timeZone: "Asia/Shanghai",
+});
 
 function isKeyboardInteraction(event: { type: string; detail?: number }) {
   return (
@@ -47,7 +59,6 @@ export function AssistantPanel({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  const { assistantPlace } = useCampusMap();
   const compact = useMediaQuery(
     "(max-width: 760px), (max-width: 1024px) and (max-height: 500px)",
   );
@@ -61,6 +72,16 @@ export function AssistantPanel({
   const effectiveSnapPoint = compact && shortViewport ? 1 : snapPoint;
   const expanded = effectiveSnapPoint === 1;
   const [input, setInput] = useState("");
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<ConversationSummary | null>(
+    null,
+  );
+  const [deleting, setDeleting] = useState(false),
+    [deleteError, setDeleteError] = useState("");
+  const messageInput = useRef<HTMLTextAreaElement>(null),
+    newButton = useRef<HTMLButtonElement>(null),
+    historyButton = useRef<HTMLButtonElement>(null),
+    cancelDelete = useRef<HTMLButtonElement>(null);
   const end = useRef<HTMLDivElement>(null);
   const prepareMap = useCallback(async () => {
     if (!compact) return;
@@ -81,6 +102,36 @@ export function AssistantPanel({
   }, [compact, onOpenChange]);
   const showFailure = useCallback(() => onOpenChange(true), [onOpenChange]);
   const chat = useAssistant(open, prepareMap, showFailure);
+  const focusComposer = () => {
+    if (!window.matchMedia("(pointer: coarse)").matches)
+      requestAnimationFrame(() =>
+        messageInput.current?.focus({ preventScroll: true }),
+      );
+  };
+  const newChat = () => {
+    chat.newConversation();
+    setInput("");
+    setHistoryOpen(false);
+    focusComposer();
+  };
+  const remove = async () => {
+    if (!deleteTarget || deleting) return;
+    const current = deleteTarget.id === chat.conversationId;
+    setDeleting(true);
+    setDeleteError("");
+    try {
+      await chat.deleteConversation(deleteTarget.id);
+      setDeleteTarget(null);
+      if (current) {
+        setInput("");
+        setHistoryOpen(false);
+      }
+    } catch {
+      setDeleteError("删除失败，请重试。");
+    } finally {
+      setDeleting(false);
+    }
+  };
   useEffect(() => {
     end.current?.scrollIntoView({ block: "nearest" });
   }, [chat.messages, chat.status]);
@@ -153,12 +204,42 @@ export function AssistantPanel({
                 </div>
                 <div className="assistant-heading">
                   <div className="assistant-title">
-                    <span className="assistant-title-icon">
-                      <Sparkles size={17} strokeWidth={1.65} />
-                    </span>
-                    <Drawer.Title>校园助理</Drawer.Title>
+                    <button
+                      ref={historyButton}
+                      className="icon-button"
+                      title={historyOpen ? "返回对话" : "历史对话"}
+                      aria-label={historyOpen ? "返回对话" : "历史对话"}
+                      disabled={!chat.connected}
+                      onClick={() => {
+                        setHistoryOpen(!historyOpen);
+                        if (!historyOpen) void chat.loadConversations();
+                      }}
+                    >
+                      {historyOpen ? (
+                        <ArrowLeft size={18} />
+                      ) : (
+                        <History size={18} />
+                      )}
+                    </button>
+                    <Drawer.Title title={chat.title}>
+                      {historyOpen
+                        ? "历史对话"
+                        : chat.title === "新对话"
+                          ? "校园助理"
+                          : chat.title}
+                    </Drawer.Title>
                   </div>
                   <div className="assistant-actions">
+                    <button
+                      ref={newButton}
+                      className="icon-button"
+                      title="新对话"
+                      aria-label="新对话"
+                      disabled={!chat.connected}
+                      onClick={newChat}
+                    >
+                      <SquarePen size={18} />
+                    </button>
                     <button
                       className="icon-button drawer-size-toggle"
                       onClick={(event) => {
@@ -189,140 +270,257 @@ export function AssistantPanel({
                   <Drawer.Description className="sr-only">
                     校园地点与步行路线助手
                   </Drawer.Description>
-                  {assistantPlace && (
-                    <p className="assistant-map-context">
-                      当前地点：{assistantPlace.name}
-                    </p>
-                  )}
-                  {!chat.messages.length && <h3>想去哪里？</h3>}
-                  <div
-                    role="log"
-                    aria-label="校园助理对话"
-                    aria-live="polite"
-                    aria-relevant="additions text"
-                  >
-                    {chat.messages.map((message) => (
-                      <div
-                        key={message.id}
-                        className={`chat-message chat-${message.role}`}
-                        data-message-role={message.role}
-                      >
-                        {message.text &&
-                          !(message.error && message.error === chat.error) && (
-                            <p>
-                              {message.text.replace(/\*\*(.*?)\*\*/g, "$1")}
-                            </p>
-                          )}
-                        {message.cards.map((card, index) =>
-                          card.kind === "place" ? (
-                            <button
-                              key={card.place.placeId + index}
-                              className="assistant-place-card"
-                              onClick={() => void chat.showCard(card)}
+                  {historyOpen ? (
+                    <div
+                      className="assistant-history"
+                      aria-label="历史对话列表"
+                    >
+                      {chat.conversations.map((item) => (
+                        <div
+                          key={item.id}
+                          className="assistant-history-row"
+                          data-current={
+                            item.id === chat.conversationId ? "true" : undefined
+                          }
+                        >
+                          <button
+                            className="assistant-history-open"
+                            aria-current={
+                              item.id === chat.conversationId
+                                ? "true"
+                                : undefined
+                            }
+                            disabled={chat.loadingConversation}
+                            onClick={() => {
+                              setHistoryOpen(false);
+                              setInput("");
+                              void chat.openConversation(item.id);
+                            }}
+                          >
+                            <strong>{item.title}</strong>
+                            <time
+                              dateTime={new Date(item.updatedAt).toISOString()}
                             >
-                              <strong>{card.place.name}</strong>
-                              {card.distanceMeters !== undefined && (
-                                <span>
-                                  {Math.round(card.distanceMeters)} 米
-                                </span>
-                              )}
-                            </button>
-                          ) : (
-                            <div
-                              key={card.routeId}
-                              className="assistant-route-card"
-                            >
-                              <strong>
-                                {card.startName} → {card.endName}
-                              </strong>
-                              <span>
-                                {Math.round(card.distanceMeters)} 米 · 约{" "}
-                                {card.estimatedMinutes} 分钟
-                              </span>
-                              <div>
-                                <button
-                                  onClick={() =>
-                                    chat.activeRouteId === card.routeId
-                                      ? chat.clearRoute()
-                                      : void chat.showCard(card)
-                                  }
-                                >
-                                  {chat.activeRouteId === card.routeId
-                                    ? "清除路线"
-                                    : "显示路线"}
-                                </button>
-                                <button
-                                  onClick={() => void chat.showCard(card, true)}
-                                >
-                                  开始导航
-                                </button>
-                              </div>
-                            </div>
-                          ),
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                  {chat.status && (
-                    <p className="assistant-status" role="status">
-                      {chat.status}…
-                    </p>
-                  )}
-                  {chat.error && (
-                    <div className="assistant-error" role="alert">
-                      <span>{chat.error}</span>
-                      {!chat.ready && (
-                        <button onClick={() => void chat.retry()}>
-                          重试连接
+                              {historyDate.format(item.updatedAt)}
+                            </time>
+                          </button>
+                          <button
+                            className="icon-button conversation-delete"
+                            aria-label="删除对话"
+                            title="删除对话"
+                            disabled={chat.busy && !chat.conversationId}
+                            onClick={() => {
+                              setDeleteError("");
+                              setDeleteTarget(item);
+                            }}
+                          >
+                            <Trash2 size={17} />
+                          </button>
+                        </div>
+                      ))}
+                      {chat.listBusy && <p role="status">正在加载…</p>}
+                      {!chat.listBusy &&
+                        !chat.conversations.length &&
+                        !chat.historyError && <p>暂无历史对话</p>}
+                      {chat.historyError && (
+                        <p role="alert">
+                          {chat.historyError}
+                          <button
+                            className="history-more"
+                            onClick={() => void chat.loadConversations()}
+                          >
+                            重试
+                          </button>
+                        </p>
+                      )}
+                      {chat.nextCursor && (
+                        <button
+                          className="history-more"
+                          disabled={chat.listBusy}
+                          onClick={() => void chat.loadConversations(true)}
+                        >
+                          更多对话
                         </button>
                       )}
                     </div>
-                  )}
-                  <div ref={end} />
-                </Drawer.Content>
-                <div className="assistant-composer" data-base-ui-swipe-ignore>
-                  <div className="assistant-input">
-                    <label className="sr-only" htmlFor="assistant-message">
-                      向校园助理提问
-                    </label>
-                    <textarea
-                      id="assistant-message"
-                      placeholder="问地点、路线…"
-                      value={input}
-                      onChange={(event) => setInput(event.target.value)}
-                      onKeyDown={(event) => {
-                        if (
-                          event.key === "Enter" &&
-                          !event.shiftKey &&
-                          !event.nativeEvent.isComposing
-                        ) {
-                          event.preventDefault();
-                          submit();
-                        }
-                      }}
-                      maxLength={2000}
-                      disabled={!chat.ready}
-                      enterKeyHint="send"
-                    />
-                    <button
-                      className="send-button"
-                      disabled={!chat.busy && (!chat.ready || !input.trim())}
-                      aria-label={chat.busy ? "停止回复" : "发送消息"}
-                      onClick={chat.busy ? chat.cancel : submit}
-                    >
-                      {chat.busy ? (
-                        <Square size={16} fill="currentColor" />
-                      ) : (
-                        <ArrowUp size={19} />
+                  ) : (
+                    <>
+                      {chat.loadingConversation && (
+                        <p role="status">正在打开对话…</p>
                       )}
-                    </button>
+                      {!chat.messages.length && !chat.loadingConversation && (
+                        <h3>想去哪里？</h3>
+                      )}
+                      <div
+                        role="log"
+                        aria-label="校园助理对话"
+                        aria-live="polite"
+                        aria-relevant="additions text"
+                      >
+                        {chat.messages.map((message) => (
+                          <div
+                            key={message.id}
+                            className={`chat-message chat-${message.role}`}
+                            data-message-role={message.role}
+                          >
+                            {message.text &&
+                              !(
+                                message.error && message.error === chat.error
+                              ) && (
+                                <p>
+                                  {message.text.replace(/\*\*(.*?)\*\*/g, "$1")}
+                                </p>
+                              )}
+                            {message.cards.map((card, index) =>
+                              card.kind === "place" ? (
+                                <button
+                                  key={card.place.placeId + index}
+                                  className="assistant-place-card"
+                                  onClick={() => void chat.showCard(card)}
+                                >
+                                  <strong>{card.place.name}</strong>
+                                  {card.distanceMeters !== undefined && (
+                                    <span>
+                                      {Math.round(card.distanceMeters)} 米
+                                    </span>
+                                  )}
+                                </button>
+                              ) : (
+                                <div
+                                  key={card.routeId}
+                                  className="assistant-route-card"
+                                >
+                                  <strong>
+                                    {card.startName} → {card.endName}
+                                  </strong>
+                                  <span>
+                                    {Math.round(card.distanceMeters)} 米 · 约{" "}
+                                    {card.estimatedMinutes} 分钟
+                                  </span>
+                                  <div>
+                                    <button
+                                      onClick={() =>
+                                        chat.activeRouteId === card.routeId
+                                          ? chat.clearRoute()
+                                          : void chat.showCard(card)
+                                      }
+                                    >
+                                      {chat.activeRouteId === card.routeId
+                                        ? "清除路线"
+                                        : "显示路线"}
+                                    </button>
+                                    <button
+                                      onClick={() =>
+                                        void chat.showCard(card, true)
+                                      }
+                                    >
+                                      开始导航
+                                    </button>
+                                  </div>
+                                </div>
+                              ),
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      {chat.status && (
+                        <p className="assistant-status" role="status">
+                          {chat.status}…
+                        </p>
+                      )}
+                      {chat.error && (
+                        <div className="assistant-error" role="alert">
+                          <span>{chat.error}</span>
+                          {!chat.ready && (
+                            <button onClick={() => void chat.retry()}>
+                              重试连接
+                            </button>
+                          )}
+                        </div>
+                      )}
+                      <div ref={end} />
+                    </>
+                  )}
+                </Drawer.Content>
+                {!historyOpen && (
+                  <div className="assistant-composer" data-base-ui-swipe-ignore>
+                    <div className="assistant-input">
+                      <label className="sr-only" htmlFor="assistant-message">
+                        向校园助理提问
+                      </label>
+                      <textarea
+                        ref={messageInput}
+                        id="assistant-message"
+                        placeholder="问地点、路线…"
+                        value={input}
+                        onChange={(event) => setInput(event.target.value)}
+                        onKeyDown={(event) => {
+                          if (
+                            event.key === "Enter" &&
+                            !event.shiftKey &&
+                            !event.nativeEvent.isComposing
+                          ) {
+                            event.preventDefault();
+                            submit();
+                          }
+                        }}
+                        maxLength={2000}
+                        disabled={!chat.ready || chat.loadingConversation}
+                        enterKeyHint="send"
+                      />
+                      <button
+                        className="send-button"
+                        disabled={!chat.busy && (!chat.ready || !input.trim())}
+                        aria-label={chat.busy ? "停止回复" : "发送消息"}
+                        onClick={chat.busy ? chat.cancel : submit}
+                      >
+                        {chat.busy ? (
+                          <Square size={16} fill="currentColor" />
+                        ) : (
+                          <ArrowUp size={19} />
+                        )}
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </Drawer.Popup>
           </Drawer.Viewport>
         </Drawer.VirtualKeyboardProvider>
       </Drawer.Portal>
+      <AlertDialog.Root
+        open={!!deleteTarget}
+        onOpenChange={(next) => {
+          if (!next && !deleting) setDeleteTarget(null);
+        }}
+      >
+        <AlertDialog.Portal>
+          <AlertDialog.Backdrop className="conversation-confirm-backdrop" />
+          <AlertDialog.Popup
+            className="conversation-confirm"
+            initialFocus={cancelDelete}
+            finalFocus={historyOpen ? historyButton : newButton}
+          >
+            <AlertDialog.Title>删除这段对话？</AlertDialog.Title>
+            <AlertDialog.Description>
+              删除后，这段对话及其历史消息将无法恢复。
+            </AlertDialog.Description>
+            {deleteError && <p role="alert">{deleteError}</p>}
+            <div className="conversation-confirm-actions">
+              <AlertDialog.Close ref={cancelDelete} disabled={deleting}>
+                取消
+              </AlertDialog.Close>
+              <button
+                className="conversation-danger"
+                disabled={deleting}
+                onClick={() => void remove()}
+              >
+                {deleting ? "正在删除…" : "删除"}
+              </button>
+            </div>
+          </AlertDialog.Popup>
+        </AlertDialog.Portal>
+      </AlertDialog.Root>
     </Drawer.Root>
   );
 }

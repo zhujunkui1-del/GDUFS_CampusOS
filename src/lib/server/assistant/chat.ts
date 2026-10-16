@@ -108,12 +108,13 @@ export async function chatResponse(request: Request) {
       ctx.identity,
       input.conversationId,
     );
-    const service = new CampusMapService(ctx.routes);
+    const scopedRoutes = ctx.routes.forConversation(conversation.id);
+    const service = new CampusMapService(scopedRoutes);
     let selected =
       input.mapContext?.selectedPlaceId || conversation.selected_place_id;
     if (selected) service.place(selected);
     if (input.mapContext?.routeTicket)
-      await ctx.routes.hydrate(
+      await scopedRoutes.hydrate(
         ctx.identity.owner,
         input.mapContext.routeTicket,
       );
@@ -125,7 +126,7 @@ export async function chatResponse(request: Request) {
       input.mapContext?.activeRouteId &&
       !/清除|清空|取消.*路线/.test(input.message)
     )
-      await ctx.routes.get(
+      await scopedRoutes.get(
         ctx.identity.owner,
         input.mapContext.activeRouteId,
         MAP_VERSIONS,
@@ -141,6 +142,7 @@ export async function chatResponse(request: Request) {
       requestId,
       ctx.ip,
     );
+    scopedRoutes.requireRun(runId);
     const history = await ctx.store.history(ctx.identity, conversation.id);
     const previous = history.messages
       .map((message) => ({ role: message.role, content: message.text }))
@@ -274,7 +276,7 @@ export async function chatResponse(request: Request) {
           const routes = await Promise.all(
             [...routeArtifacts.values()].map(async (route) => ({
               route,
-              ticket: await ctx.routes.ticket(ctx.identity.owner, route),
+              ticket: await scopedRoutes.ticket(ctx.identity.owner, route),
             })),
           );
           emit("artifact.ready", {
@@ -539,7 +541,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
             const routes = await Promise.all(
               [...routeArtifacts.values()].map(async (route) => ({
                 route,
-                ticket: await ctx.routes.ticket(ctx.identity.owner, route),
+                ticket: await scopedRoutes.ticket(ctx.identity.owner, route),
               })),
             );
             emit("artifact.ready", {

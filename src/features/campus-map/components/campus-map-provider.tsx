@@ -93,6 +93,7 @@ type MapContextValue = {
   executeAction(action: unknown): void;
   installRoute(snapshot: unknown): void;
   getInteractionVersion(): number;
+  getAssistantSelection(): { placeId: string | null; revision: number };
 };
 const MapContext = createContext<MapContextValue | null>(null);
 export function useCampusMap() {
@@ -122,6 +123,10 @@ export function CampusMapProvider({
   const [mode, setModeState] = useState<MapMode>("2d");
   const [zone, setZoneState] = useState<MapContextValue["zone"]>("all");
   const [selected, setSelected] = useState<CampusPlace | null>(null);
+  const assistantSelection = useRef<{
+    placeId: string | null;
+    revision: number;
+  }>({ placeId: null, revision: 0 });
   const [assistantPlace, setAssistantPlace] = useState<CampusPlace | null>(
     null,
   );
@@ -374,6 +379,10 @@ export function CampusMapProvider({
             return;
           }
           setSelected(campusData.places.find((p) => p.id === id) || null);
+          assistantSelection.current = {
+            placeId: id,
+            revision: assistantSelection.current.revision + 1,
+          };
         });
         disposeCoordinate = next.pickCoordinate((point) => {
           const which = pickRef.current;
@@ -441,7 +450,7 @@ export function CampusMapProvider({
     };
   }, [revision, mapRequested, choosePoint, setPoint]);
 
-  const select = useCallback((id: string) => {
+  const select = useCallback((id: string, manual = true) => {
     ++interactionVersion.current;
     const place = campusData.places.find((p) => p.id === id);
     if (!place) {
@@ -449,6 +458,11 @@ export function CampusMapProvider({
       return;
     }
     setSelected(place);
+    if (manual)
+      assistantSelection.current = {
+        placeId: id,
+        revision: assistantSelection.current.revision + 1,
+      };
     adapter.current?.focusPlace(id);
     setLayers((prior) => ({ ...prior, [placeLayer(place)]: true }));
   }, []);
@@ -669,6 +683,10 @@ export function CampusMapProvider({
     askAssistant: (place) => {
       ++interactionVersion.current;
       setAssistantPlace(place);
+      assistantSelection.current = {
+        placeId: place.id,
+        revision: assistantSelection.current.revision + 1,
+      };
       setSelected(null);
       onAskAssistant();
     },
@@ -677,7 +695,7 @@ export function CampusMapProvider({
       executeMapAction(input, {
         hasPlace: (id) => campusData.places.some((p) => p.id === id),
         hasRoute: (id) => currentRoute.current?.id === id,
-        focusPlace: select,
+        focusPlace: (id) => select(id, false),
         showPlaceDetails: (id) => {
           const place = campusData.places.find((p) => p.id === id)!;
           setSelected(place);
@@ -719,6 +737,7 @@ export function CampusMapProvider({
       setModeState("2d");
     },
     getInteractionVersion: () => interactionVersion.current,
+    getAssistantSelection: () => assistantSelection.current,
   };
   return (
     <MapContext.Provider value={context}>
