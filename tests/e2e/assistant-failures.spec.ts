@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Route } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 
 test.beforeEach(async ({ page }) => {
@@ -55,15 +55,15 @@ test("Mock HTTP model failure leaves the public map usable", async ({
 test("Mock database outage and recovery leave the local map independent", async ({
   page,
 }) => {
-  await page.route("**/api/agent/session", (route) =>
+  const outage = (route: Route) =>
     route.fulfill({
       status: 503,
       json: {
         ok: false,
         error: { code: "SERVICE_UNAVAILABLE", message: "会话服务暂不可用。" },
       },
-    }),
-  );
+    });
+  await page.route("**/api/agent/session", outage);
   await page.reload();
   await expect(page.getByTestId("campus-map")).toHaveAttribute(
     "data-status",
@@ -79,7 +79,9 @@ test("Mock database outage and recovery leave the local map independent", async 
     page.locator(".place-result").filter({ hasText: "南苑7栋" }),
   ).toBeVisible();
   await page.getByRole("button", { name: "打开校园助理" }).click();
-  await page.unroute("**/api/agent/session");
+  // Remove only the outage. Keep the explicit model-ready Mock from beforeEach;
+  // a real provider capability receipt may correctly be absent or expired.
+  await page.unroute("**/api/agent/session", outage);
   await page.getByRole("button", { name: "重试连接" }).click();
   await expect(page.getByLabel("向校园助理提问")).toBeEnabled();
 });

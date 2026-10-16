@@ -13,6 +13,7 @@ import { chatResponse } from "./assistant/chat";
 import { executeMapSkillHttp } from "./maps/http";
 import { GET as agentStatus } from "@/app/api/agent/status/route";
 import { GET as health } from "@/app/api/health/route";
+import { consoleAdministration, consoleAuthentication } from "./console/api";
 
 type Handler = (request: Request) => Promise<Response>;
 const fixed: Record<string, { method: string; handle: Handler }> = {
@@ -30,6 +31,14 @@ export function previewApiHandler(
   path: string,
   method = "GET",
 ): { method: string; handle: Handler } | null {
+  if (path === "/api/console-auth")
+    return { method, handle: consoleAuthentication };
+  if (
+    /^\/api\/admin\/(?:overview|audit|admins|sources(?:\/[^/]+(?:\/(?:verify|enabled))?)?|content(?:\/[^/]+(?:\/(?:review|publish|withdraw|restore|versions\/\d{1,4}))?)?|jobs(?:\/[^/]+\/cancel)?|admins\/[^/]+\/revoke)$/.test(
+      path,
+    )
+  )
+    return { method, handle: consoleAdministration };
   if (Object.hasOwn(fixed, path)) return fixed[path];
   if (/^\/api\/agent\/conversations\/[^/]+$/.test(path))
     return method === "DELETE"

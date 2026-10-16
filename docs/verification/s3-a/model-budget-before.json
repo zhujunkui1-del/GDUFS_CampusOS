@@ -1,0 +1,10 @@
+{
+  "recordedAt": "2026-10-16T20:25:31.013Z",
+  "budgetCny": 1,
+  "accountBalanceDecreaseCny": 0.74,
+  "remainingApprovedBudgetCny": 0.2599999999999998,
+  "isProjectInvoice": false,
+  "mayIncludeConcurrentAccountUsage": true,
+  "chargedExistingBalanceOnly": true,
+  "topUpPerformed": false
+}

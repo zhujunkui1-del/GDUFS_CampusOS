@@ -1,0 +1,86 @@
+{
+  "at": "2026-10-16T20:31:04.189Z",
+  "readOnly": true,
+  "accountMatched": true,
+  "worker": "campusos-preview",
+  "database": "campusos-preview",
+  "databaseId": "18299abc-b38b-4494-8d12-8ab4d482c304",
+  "migrations": [
+    "0001_platform_and_campus.sql",
+    "0002_knowledge_and_events.sql",
+    "0003_route_geometry_guards.sql",
+    "0004_assistant_shared_state.sql",
+    "0005_assistant_conversations.sql",
+    "0006_console_registry.sql"
+  ],
+  "counts": {
+    "conversations": 75,
+    "messages": 330,
+    "runs": 192,
+    "sources": 220,
+    "documents": 0
+  },
+  "registry": {
+    "sources": 220,
+    "enabled": 0,
+    "candidates": 220,
+    "verified": 0
+  },
+  "foreignKeyViolations": 0,
+  "activeVersions": [
+    {
+      "version_id": "108eaf1b-b04e-4e04-94b9-197609c293c6",
+      "percentage": 100
+    }
+  ],
+  "deploymentId": "bf3f39f9-d3ca-4c8e-8ae5-22c2d98600d8",
+  "consoleState": {
+    "admins": 0,
+    "sessions": 0,
+    "commands": 0,
+    "publicDocuments": 0
+  },
+  "bindings": [
+    {
+      "name": "AGENT_SIGNING_SECRET",
+      "type": "secret_text"
+    },
+    {
+      "name": "APP_ENV",
+      "type": "plain_text"
+    },
+    {
+      "name": "ASSETS",
+      "type": "assets"
+    },
+    {
+      "name": "DB",
+      "type": "d1"
+    },
+    {
+      "name": "MAP_RATE_LIMITER",
+      "type": "ratelimit"
+    },
+    {
+      "name": "MODEL_API_KEY",
+      "type": "secret_text"
+    },
+    {
+      "name": "MODEL_BASE_URL",
+      "type": "secret_text"
+    },
+    {
+      "name": "MODEL_CAPABILITIES_JSON",
+      "type": "secret_text"
+    },
+    {
+      "name": "MODEL_NAME",
+      "type": "secret_text"
+    },
+    {
+      "name": "WORKER_SELF_REFERENCE",
+      "type": "service"
+    }
+  ],
+  "dnsOrRoutesModifiedByThisTool": false
+}

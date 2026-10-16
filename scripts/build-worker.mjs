@@ -37,6 +37,22 @@ writeFileSync(file, content);
 const envIndex = process.argv.indexOf("--env");
 const environment = envIndex >= 0 ? process.argv[envIndex + 1] : undefined;
 const generatedDirs = [".open-next"];
+// Include independently generated Console credentials in every release scan.
+for (const privateFile of [
+  ".map-tools/s3-a/local-secrets.json",
+  ".map-tools/s3-a/preview-secrets.json",
+]) {
+  if (!existsSync(privateFile)) continue;
+  for (const [name, value] of Object.entries(
+    JSON.parse(readFileSync(privateFile, "utf8")),
+  ))
+    if (
+      typeof value === "string" &&
+      value.length > 7 &&
+      /KEY|SECRET|TOKEN|PASSWORD|_CODE/.test(name)
+    )
+      privateValues.push(value);
+}
 if (environment === "preview") {
   const previewSecrets = ".map-tools/s2-e/runtime-secrets.json";
   if (existsSync(previewSecrets))

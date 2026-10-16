@@ -158,3 +158,9 @@ POST /api/agent/location/challenge除challenge/expiresInSeconds外返回服务�
 35业务表：conversations新增title/deleted_at_ms，assistant_conversation_routes维护会话-路线引用。新增GET /api/agent/conversations游标列表及DELETE /api/agent/conversations/:id；原历史、身份、SSE和路线端点复用并加强会话绑定，全部鉴权、Origin与no-store。元数据复用原边缘限流，不能替代D1全局Agent额度。
 
 内容实际SQL DELETE，父对话无内容删除标记与去内容Run台账保留48h，避免旧级联外键删除配额；共享路线仅删除当前引用，独占路线一起删除。Run预留/消息追加/动作校验拒绝已删除父会话。事务失败全回滚，重复删除安全。每主体50有效/100总记录，全站5000有效/10000总记录、每页20；历史20条/48h和原模型额度不变。旧客户端响应形状兼容，迁移不重建或清空任何表，细节/云端证据见docs/AI_CONVERSATION_MANAGEMENT_ACCEPTANCE.md。
+
+## S3-A 实际增量（2026-10-17）
+
+0006扩展既有knowledge_sources/documents/ingestion_jobs，增加独立console_admins/sessions/revoked_tokens/limits/commands/content_versions/content_reviews/import_batches/audit_logs和content_index_invalidations，45业务表。Console只管理console_managed公开来源和owner为空、非user_private的正文，不能查询学生私人业务。全部/api/admin固定管理路由服务端鉴权、参数化SQL、no-store，写入同源/CSRF/实时角色和会话检查；业务+版本+审核+审计使用原子batch。
+
+来源10类载体/三种独立状态（官方、核验、许可）及原始出处；不同载体同名不合并。新增精简运营契约与实际迁移，没有S3-0已完成的假定。发布/撤回/暂停统一经过公开新鲜视图与ID+版本验证，outbox供未来索引失效；尚无RAG/采集消费者。详细结构、原始220条导入和测试见docs/S3_A_CONSOLE_ACCEPTANCE.md。

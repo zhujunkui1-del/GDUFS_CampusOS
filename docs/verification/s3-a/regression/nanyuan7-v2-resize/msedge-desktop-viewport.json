@@ -1,0 +1,62 @@
+[
+  {
+    "stage": "before",
+    "sample": {
+      "viewport": [
+        0,
+        0,
+        1440,
+        900
+      ],
+      "buffer": [
+        1440,
+        900
+      ]
+    }
+  },
+  {
+    "stage": "resized",
+    "sample": {
+      "viewport": [
+        0,
+        0,
+        780,
+        520
+      ],
+      "buffer": [
+        780,
+        520
+      ]
+    }
+  },
+  {
+    "stage": "dragged",
+    "sample": {
+      "viewport": [
+        0,
+        0,
+        780,
+        520
+      ],
+      "buffer": [
+        780,
+        520
+      ]
+    }
+  },
+  {
+    "stage": "narrow",
+    "sample": {
+      "viewport": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "buffer": [
+        390,
+        844
+      ]
+    }
+  }
+]

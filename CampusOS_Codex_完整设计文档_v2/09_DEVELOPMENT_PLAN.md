@@ -146,3 +146,9 @@
 负责人已批准隔离Worker/D1/workers.dev/Secret和新预览迁移，另批准模型测试现有余额最多1元。实际地址https://campusos-preview.zhujunkui1.workers.dev；194单元、Chrome/Edge各61常规公网回归及真实五Skill/路线/恢复通过。详见docs/S2_E_CLOUDFLARE_PREVIEW_ACCEPTANCE.md。此前“未配置预览资源”已解除；生产/正式域名/付费仍未授权。
 
 可用预览进行负责人Android/iPhone实机测试；正式S2验收仍需关闭Free CPU稳定性、实机、多地域/内存归因、24h能力刷新及既有开发依赖风险。S3可独立准备官方资料/设计，公网扩展建议在资源方案确定后推进。建筑批量继续暂停。
+
+## 2026-10-17 S3-A 本轮范围（负责人新指令）
+
+本轮明确授权推进CampusOS Console和220条来源候选登记，复用既有D1非破坏性迁移和隔离预览更新；不表示S2的Free CPU稳定容量已达标。后台可信认证前可以先完成本地，但公网管理API必须关闭。实际Access激活涉及额外条款/超额扣费授权，当前停止该步骤；认证选择待负责人答复。
+
+只实现运营基础及数据治理，不实施完整雷达/RAG/公众号采集。S3-A代码/本地验收、真实预览候选导入/门禁分别记录docs/S3_A_CONSOLE_ACCEPTANCE.md。完成后停止等待下一轮；原地图/Agent架构和南苑7栋模型、暂停建筑批量的决定保持。

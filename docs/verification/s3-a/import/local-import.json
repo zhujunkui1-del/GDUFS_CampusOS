@@ -1,0 +1,52 @@
+{
+  "recordedAt": "2026-10-16T20:05:57.575Z",
+  "realCloud": false,
+  "target": "isolated-local-sqlite",
+  "first": {
+    "manifestHash": "e3340b45237be5d7ca8bb073c3918476327611b23da4473bc2ab089a8ef6780a",
+    "expected": 220,
+    "imported": 220,
+    "enabled": 0,
+    "candidates": 220,
+    "verified": 0,
+    "inserted": 0,
+    "skipped": 220,
+    "failed": 0,
+    "automaticCollection": false,
+    "originalFiles": [
+      {
+        "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.xlsx",
+        "sha256": "b4d5c287a4b53c745f7cdf05df41c3b168a6ae6b3394060c28a04cae965e5deb"
+      },
+      {
+        "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.md",
+        "sha256": "e0c9e16ae9097c998ca50d30d2db729063a9d409af7c6d1521f53c7e680919ab"
+      }
+    ]
+  },
+  "second": {
+    "manifestHash": "e3340b45237be5d7ca8bb073c3918476327611b23da4473bc2ab089a8ef6780a",
+    "expected": 220,
+    "imported": 220,
+    "enabled": 0,
+    "candidates": 220,
+    "verified": 0,
+    "inserted": 0,
+    "skipped": 220,
+    "failed": 0,
+    "automaticCollection": false,
+    "originalFiles": [
+      {
+        "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.xlsx",
+        "sha256": "b4d5c287a4b53c745f7cdf05df41c3b168a6ae6b3394060c28a04cae965e5deb"
+      },
+      {
+        "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.md",
+        "sha256": "e0c9e16ae9097c998ca50d30d2db729063a9d409af7c6d1521f53c7e680919ab"
+      }
+    ]
+  },
+  "sourceImportAuditRows": 220,
+  "originalFilesUnchanged": true,
+  "modelCalls": 0
+}

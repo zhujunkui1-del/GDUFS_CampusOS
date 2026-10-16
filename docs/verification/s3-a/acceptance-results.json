@@ -1,0 +1,499 @@
+{
+  "recordedAt": "2026-10-16T20:44:24.539Z",
+  "baseline": "b71e29e",
+  "worker": "campusos-preview",
+  "url": "https://campusos-preview.zhujunkui1.workers.dev",
+  "deploymentId": "9ce67e07-2df7-4099-82d5-d0b2d11ff08d",
+  "versions": [
+    {
+      "version_id": "ace425b6-912a-448d-82dc-5fb52e48f678",
+      "percentage": 100
+    }
+  ],
+  "typecheck": "passed",
+  "lint": "passed",
+  "unit": {
+    "passed": 252,
+    "failed": 0,
+    "files": 34
+  },
+  "migrations": {
+    "recordedAt": "2026-10-16T20:39:03.516Z",
+    "emptyMigrationPassed": true,
+    "populatedUpgradePassed": true,
+    "businessTables": 45,
+    "originalUserSessionConversationMessagesPreserved": true,
+    "privateDocumentsNotCopiedToConsole": true,
+    "publicLegacyVersionPreserved": true,
+    "oldDocumentsNotAutoPublished": true,
+    "foreignKeyViolations": 0,
+    "realCloud": false,
+    "fixturesOnly": true
+  },
+  "previewMigration": "passed, original user content counts preserved",
+  "import": {
+    "recordedAt": "2026-10-16T20:09:18.950Z",
+    "realCloud": true,
+    "target": "campusos-preview",
+    "first": {
+      "manifestHash": "e3340b45237be5d7ca8bb073c3918476327611b23da4473bc2ab089a8ef6780a",
+      "expected": 220,
+      "imported": 220,
+      "enabled": 0,
+      "candidates": 220,
+      "verified": 0,
+      "inserted": 220,
+      "skipped": 0,
+      "failed": 0,
+      "automaticCollection": false,
+      "originalFiles": [
+        {
+          "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.xlsx",
+          "sha256": "b4d5c287a4b53c745f7cdf05df41c3b168a6ae6b3394060c28a04cae965e5deb"
+        },
+        {
+          "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.md",
+          "sha256": "e0c9e16ae9097c998ca50d30d2db729063a9d409af7c6d1521f53c7e680919ab"
+        }
+      ]
+    },
+    "second": {
+      "manifestHash": "e3340b45237be5d7ca8bb073c3918476327611b23da4473bc2ab089a8ef6780a",
+      "expected": 220,
+      "imported": 220,
+      "enabled": 0,
+      "candidates": 220,
+      "verified": 0,
+      "inserted": 0,
+      "skipped": 220,
+      "failed": 0,
+      "automaticCollection": false,
+      "originalFiles": [
+        {
+          "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.xlsx",
+          "sha256": "b4d5c287a4b53c745f7cdf05df41c3b168a6ae6b3394060c28a04cae965e5deb"
+        },
+        {
+          "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.md",
+          "sha256": "e0c9e16ae9097c998ca50d30d2db729063a9d409af7c6d1521f53c7e680919ab"
+        }
+      ]
+    },
+    "sourceImportAuditRows": 220,
+    "originalFilesUnchanged": true,
+    "modelCalls": 0
+  },
+  "productionBuild": "Next.js + OpenNext passed via mandatory sanitized deploy:preview",
+  "artifactSecurity": {
+    "recordedAt": "2026-10-16T20:44:24.449Z",
+    "baseline": "b71e29e",
+    "scannedVariableNames": [
+      "MODEL_API_KEY",
+      "AGENT_SIGNING_SECRET",
+      "AMAP_SECURITY_JS_CODE",
+      "console:CONSOLE_SESSION_SECRET",
+      "console:CONSOLE_LOCAL_ACCESS_KEY",
+      "console:AGENT_SIGNING_SECRET",
+      "preview:MODEL_API_KEY",
+      "preview:AGENT_SIGNING_SECRET"
+    ],
+    "actualModelKeyChecked": true,
+    "repository": {
+      "files": 2525,
+      "matches": []
+    },
+    "generatedWorkerAndAssets": {
+      "files": 1366,
+      "matches": []
+    },
+    "credentialFilesIgnored": true,
+    "gateOnlyNameAliasesChanged": true,
+    "frozenDataUntouched": true,
+    "modelSha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+    "modelMatchesApprovedAsset": true
+  },
+  "browserTests": [
+    {
+      "description": "Local Chrome: map/Agent regression and Console, desktop + mobile viewport",
+      "passed": 66,
+      "skipped": 2,
+      "failed": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-16T20:21:20.442Z",
+      "durationMs": 194377.948
+    },
+    {
+      "description": "Local Edge: map/Agent regression, desktop + mobile viewport",
+      "passed": 62,
+      "skipped": 2,
+      "failed": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-16T20:20:24.798Z",
+      "durationMs": 190019.799
+    },
+    {
+      "description": "Final Worker Chrome: real isolated Console APIs, desktop + mobile viewport",
+      "passed": 4,
+      "skipped": 0,
+      "failed": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-16T20:37:38.837Z",
+      "durationMs": 10411.114
+    },
+    {
+      "description": "Final Worker Edge: real isolated Console APIs, desktop + mobile viewport",
+      "passed": 4,
+      "skipped": 0,
+      "failed": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-16T20:38:25.166Z",
+      "durationMs": 10624.189
+    },
+    {
+      "description": "Real HTTPS Chrome: closed management gate, public map + all five real Skills",
+      "passed": 4,
+      "skipped": 0,
+      "failed": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-16T20:40:08.786Z",
+      "durationMs": 26419.492
+    },
+    {
+      "description": "Real HTTPS Edge: closed management gate, public map + all five real Skills",
+      "passed": 4,
+      "skipped": 0,
+      "failed": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-16T20:40:19.149Z",
+      "durationMs": 24577.67
+    },
+    {
+      "description": "Real HTTPS Chrome desktop: DeepSeek query, details and two acknowledged map actions",
+      "passed": 1,
+      "skipped": 0,
+      "failed": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-16T20:28:51.677Z",
+      "durationMs": 11353.780999999999
+    }
+  ],
+  "cloudAdminAuthentication": "NOT_CONFIGURED_FAIL_CLOSED; Access activation/alternative decision pending",
+  "publicAdminAuthenticatedOperations": "NOT_VERIFIED; no anonymous fallback",
+  "consoleCloudState": {
+    "admins": 0,
+    "sessions": 0,
+    "commands": 0,
+    "publicDocuments": 0
+  },
+  "model": {
+    "testedWorkerVersion": [
+      {
+        "version_id": "108eaf1b-b04e-4e04-94b9-197609c293c6",
+        "percentage": 100
+      }
+    ],
+    "capturedCpu": {
+      "samples": 1,
+      "p50Ms": 54,
+      "p95Ms": 54,
+      "over10Ms": 1
+    },
+    "diagnosticRequests": 3,
+    "cloudAgentRuns": 1,
+    "cloudUpstreamRequests": 4,
+    "cloudTokens": 7877,
+    "diagnosticTokenUsage": "not recorded by existing verifier",
+    "tools": [
+      "search_places",
+      "get_place_details",
+      "control_map"
+    ],
+    "actions": [
+      {
+        "type": "FOCUS_PLACE",
+        "placeId": "osm-way-312536955"
+      },
+      {
+        "type": "SHOW_PLACE_DETAILS",
+        "placeId": "osm-way-312536955"
+      }
+    ],
+    "firstTextMs": 6295,
+    "serverElapsedMs": 6909,
+    "approximateStageBalanceDecreaseCny": 0,
+    "cumulativeApprovedBudgetDecreaseCny": 0.74,
+    "totalApprovedBudgetCny": 1,
+    "budgetInvoice": false
+  },
+  "controlledCloudSample": {
+    "consoleRootBefore": {
+      "samples": 4,
+      "p50Ms": 348,
+      "p95Ms": 374,
+      "over10Ms": 4
+    },
+    "consoleRootAfter": {
+      "samples": 4,
+      "p50Ms": 8,
+      "p95Ms": 14,
+      "over10Ms": 1
+    },
+    "invocations": 121,
+    "paths": [
+      {
+        "path": "/api/admin/sources",
+        "requests": 8,
+        "cpuP50Ms": 0,
+        "cpuP95Ms": 0,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          503
+        ]
+      },
+      {
+        "path": "/api/admin/overview",
+        "requests": 4,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 3,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          503
+        ]
+      },
+      {
+        "path": "/api/admin/content",
+        "requests": 4,
+        "cpuP50Ms": 0,
+        "cpuP95Ms": 0,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          503
+        ]
+      },
+      {
+        "path": "/api/admin/admins",
+        "requests": 4,
+        "cpuP50Ms": 0,
+        "cpuP95Ms": 0,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          503
+        ]
+      },
+      {
+        "path": "/api/admin/jobs",
+        "requests": 4,
+        "cpuP50Ms": 0,
+        "cpuP95Ms": 0,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          503
+        ]
+      },
+      {
+        "path": "/api/admin/audit",
+        "requests": 4,
+        "cpuP50Ms": 1,
+        "cpuP95Ms": 1,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          503
+        ]
+      },
+      {
+        "path": "/admin",
+        "requests": 4,
+        "cpuP50Ms": 8,
+        "cpuP95Ms": 14,
+        "cpuOver10Ms": 1,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200
+        ]
+      },
+      {
+        "path": "/api/console-auth",
+        "requests": 10,
+        "cpuP50Ms": 1,
+        "cpuP95Ms": 4,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          503
+        ]
+      },
+      {
+        "path": "/icon.svg",
+        "requests": 10,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 6,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200,
+          null
+        ]
+      },
+      {
+        "path": "/map",
+        "requests": 16,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 10,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200,
+          null
+        ]
+      },
+      {
+        "path": "/admin/sources",
+        "requests": 4,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 7,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200
+        ]
+      },
+      {
+        "path": "/admin/jobs",
+        "requests": 3,
+        "cpuP50Ms": 1,
+        "cpuP95Ms": 3,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200
+        ]
+      },
+      {
+        "path": "/api/map/skills/search_places",
+        "requests": 12,
+        "cpuP50Ms": 6,
+        "cpuP95Ms": 17,
+        "cpuOver10Ms": 3,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200,
+          404
+        ]
+      },
+      {
+        "path": "/api/map/skills/get_place_details",
+        "requests": 8,
+        "cpuP50Ms": 2,
+        "cpuP95Ms": 7,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200,
+          404
+        ]
+      },
+      {
+        "path": "/api/map/skills/find_nearby_places",
+        "requests": 8,
+        "cpuP50Ms": 3,
+        "cpuP95Ms": 9,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200,
+          422
+        ]
+      },
+      {
+        "path": "/api/map/skills/plan_route",
+        "requests": 4,
+        "cpuP50Ms": 30,
+        "cpuP95Ms": 48,
+        "cpuOver10Ms": 4,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200
+        ]
+      },
+      {
+        "path": "/api/map/skills/control_map",
+        "requests": 8,
+        "cpuP50Ms": 3,
+        "cpuP95Ms": 8,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200,
+          404
+        ]
+      },
+      {
+        "path": "/api/map/skills/run_javascript",
+        "requests": 4,
+        "cpuP50Ms": 0,
+        "cpuP95Ms": 1,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          404
+        ]
+      },
+      {
+        "path": "/schedule",
+        "requests": 1,
+        "cpuP50Ms": 8,
+        "cpuP95Ms": 8,
+        "cpuOver10Ms": 0,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200
+        ]
+      },
+      {
+        "path": "/account",
+        "requests": 1,
+        "cpuP50Ms": 16,
+        "cpuP95Ms": 16,
+        "cpuOver10Ms": 1,
+        "exceededResources": 0,
+        "exceptions": 0,
+        "statuses": [
+          200
+        ]
+      }
+    ],
+    "fullIsolateMemory": "not measured",
+    "longTermCapacity": "not verified",
+    "authenticatedConsoleCpu": "not measured"
+  },
+  "realPhone": "NOT_TESTED; viewport only",
+  "collectionEnabled": false,
+  "ragIndexEnabled": false,
+  "productionResourcesChanged": false,
+  "paidPlanActivated": false
+}

@@ -8,6 +8,7 @@ import {
   statSync,
   writeFileSync,
   mkdirSync,
+  existsSync,
 } from "node:fs";
 import { join } from "node:path";
 const require = createRequire(import.meta.url);
@@ -22,10 +23,28 @@ const names = [
   "AMAP_WEBSERVICE_KEY",
   "DEEPSEEK_API_KEY",
   "CLOUDFLARE_API_TOKEN",
+  "CONSOLE_SESSION_SECRET",
+  "CONSOLE_LOCAL_ACCESS_KEY",
+  "CONSOLE_ADMIN_ACCESS_KEY",
 ];
 const secrets = names
   .filter((name) => process.env[name]?.length > 7)
   .map((name) => ({ name, value: process.env[name] }));
+for (const privateFile of [
+  ".map-tools/s3-a/local-secrets.json",
+  ".map-tools/s3-a/preview-secrets.json",
+]) {
+  if (!existsSync(privateFile)) continue;
+  for (const [name, value] of Object.entries(
+    JSON.parse(readFileSync(privateFile, "utf8")),
+  ))
+    if (
+      typeof value === "string" &&
+      value.length > 7 &&
+      /KEY|SECRET|TOKEN|PASSWORD|_CODE/.test(name)
+    )
+      secrets.push({ name: `console:${name}`, value });
+}
 if (process.env.RELEASE_PREVIEW_SECRETS_FILE) {
   for (const [name, value] of Object.entries(
     JSON.parse(readFileSync(process.env.RELEASE_PREVIEW_SECRETS_FILE, "utf8")),
@@ -84,6 +103,10 @@ const credentialFilesIgnored = [
   ".env.local",
   ".dev.vars",
   "CampusOS_Codex_完整设计文档_v2/anykey.md",
+  ".map-tools/s2-e/runtime-secrets.json",
+  ".map-tools/s3-a/local-secrets.json",
+  ".map-tools/s3-a/preview-secrets.json",
+  ".map-tools/s3-a/.dev.vars",
 ].every((name) => {
   try {
     git("check-ignore", "--", name);

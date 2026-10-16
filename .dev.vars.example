@@ -5,3 +5,11 @@ MODEL_NAME=deepseek-flash
 MODEL_API_KEY=
 MODEL_CAPABILITIES_JSON=
 AGENT_SIGNING_SECRET=
+# Console remains closed until all server settings and Access policy are configured.
+CONSOLE_AUTH_MODE=
+CONSOLE_ADMIN_EMAILS=
+CONSOLE_SESSION_SECRET=
+CONSOLE_ACCESS_TEAM_DOMAIN=
+CONSOLE_ACCESS_AUD=
+# local_key is accepted only with APP_ENV=local on loopback; never a public fallback.
+CONSOLE_LOCAL_ACCESS_KEY=

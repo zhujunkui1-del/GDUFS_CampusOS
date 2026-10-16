@@ -1,0 +1,1069 @@
+{
+  "recordedAt": "2026-10-16T20:31:02.948Z",
+  "actualCloudTail": true,
+  "rawLogsStored": false,
+  "records": [
+    {
+      "at": 1792182494927,
+      "path": "/api/admin/sources",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182494429,
+      "path": "/api/admin/overview",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182495019,
+      "path": "/api/admin/content",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182495400,
+      "path": "/api/admin/sources",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182495103,
+      "path": "/api/admin/jobs",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182495213,
+      "path": "/api/admin/audit",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182495298,
+      "path": "/api/admin/admins",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182495763,
+      "path": "/admin",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 365,
+      "wallTimeMs": 381,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182497602,
+      "path": "/api/console-auth",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 3,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182497676,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 178,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182497577,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 7,
+      "wallTimeMs": 363,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182497761,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 181,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182498048,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 7,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182498858,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 343,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182498862,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 433,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182499374,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 10,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182499117,
+      "path": "/favorites",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 344,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182499497,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 8,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182502754,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 11,
+      "wallTimeMs": 334,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182503860,
+      "path": "/api/map/skills/get_place_details",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 90,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182503672,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 88,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182504063,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 7,
+      "wallTimeMs": 93,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182504276,
+      "path": "/api/map/skills/plan_route",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 23,
+      "wallTimeMs": 285,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182504645,
+      "path": "/api/map/skills/control_map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 164,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182504908,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 404,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 89,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182505104,
+      "path": "/api/map/skills/get_place_details",
+      "outcome": "ok",
+      "status": 404,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 85,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182505285,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 422,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 88,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182505471,
+      "path": "/api/map/skills/control_map",
+      "outcome": "ok",
+      "status": 404,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 171,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182504574,
+      "path": "/api/admin/overview",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 2,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182505372,
+      "path": "/api/admin/sources",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182505724,
+      "path": "/api/admin/admins",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182505736,
+      "path": "/api/map/skills/run_javascript",
+      "outcome": "ok",
+      "status": 404,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182505453,
+      "path": "/api/admin/content",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182505828,
+      "path": "/api/admin/sources",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182505531,
+      "path": "/api/admin/jobs",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182505609,
+      "path": "/api/admin/audit",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182506171,
+      "path": "/admin",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 297,
+      "wallTimeMs": 309,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507456,
+      "path": "/api/console-auth",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507462,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 12,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507638,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 11,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507034,
+      "path": "/api/admin/overview",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507555,
+      "path": "/api/admin/sources",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507889,
+      "path": "/api/admin/audit",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507454,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 8,
+      "wallTimeMs": 16,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507971,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 9,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507650,
+      "path": "/api/admin/content",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507974,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 11,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507982,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 8,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507992,
+      "path": "/api/admin/admins",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182508073,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 8,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182508104,
+      "path": "/api/admin/sources",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507770,
+      "path": "/api/admin/jobs",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182507970,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 17,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182508070,
+      "path": "/favorites",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 7,
+      "wallTimeMs": 18,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182508545,
+      "path": "/favorites",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 13,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182508505,
+      "path": "/admin",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 348,
+      "wallTimeMs": 362,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182510017,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 24,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182510035,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 16,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182510133,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 11,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182510035,
+      "path": "/api/console-auth",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 5,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182510926,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 9,
+      "wallTimeMs": 258,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182511293,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 90,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182511471,
+      "path": "/api/map/skills/get_place_details",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 80,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182511561,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 23,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182511565,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 21,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182511568,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 20,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182511598,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 12,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182511719,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 8,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182511654,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 90,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182511703,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 21,
+      "wallTimeMs": 34,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182511853,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 8,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182511831,
+      "path": "/api/map/skills/plan_route",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 18,
+      "wallTimeMs": 272,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182513002,
+      "path": "/api/map/skills/control_map",
+      "outcome": "ok",
+      "status": 404,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 153,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182515008,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 8,
+      "wallTimeMs": 272,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182515381,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 89,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182515574,
+      "path": "/api/map/skills/get_place_details",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 88,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182514921,
+      "path": "/api/admin/overview",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182515737,
+      "path": "/api/admin/audit",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182515440,
+      "path": "/api/admin/sources",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182515823,
+      "path": "/api/admin/admins",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182515764,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 79,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182515550,
+      "path": "/api/admin/content",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182515908,
+      "path": "/api/admin/sources",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182515650,
+      "path": "/api/admin/jobs",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 0,
+      "wallTimeMs": 0,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182515946,
+      "path": "/api/map/skills/plan_route",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 24,
+      "wallTimeMs": 274,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182516304,
+      "path": "/api/map/skills/control_map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 33,
+      "wallTimeMs": 197,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182516946,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 422,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 77,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182516276,
+      "path": "/admin",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 374,
+      "wallTimeMs": 393,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182517881,
+      "path": "/api/console-auth",
+      "outcome": "ok",
+      "status": 503,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 4,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182517887,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 6,
+      "wallTimeMs": 18,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182517982,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 12,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182518289,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 13,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182518283,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 4,
+      "wallTimeMs": 20,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182518442,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 7,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182517878,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 14,
+      "wallTimeMs": 32,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182518283,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 5,
+      "wallTimeMs": 35,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182518767,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 13,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182518822,
+      "path": "/schedule",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 13,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182518282,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 13,
+      "wallTimeMs": 25,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182518436,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 14,
+      "wallTimeMs": 25,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182521460,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 10,
+      "wallTimeMs": 264,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182521842,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 80,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182522047,
+      "path": "/api/map/skills/get_place_details",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 84,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182522248,
+      "path": "/api/map/skills/find_nearby_places",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 86,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182522431,
+      "path": "/api/map/skills/plan_route",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 19,
+      "wallTimeMs": 265,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182523052,
+      "path": "/api/map/skills/search_places",
+      "outcome": "ok",
+      "status": 404,
+      "cpuTimeMs": 3,
+      "wallTimeMs": 77,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182532597,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 9,
+      "wallTimeMs": 24,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182533113,
+      "path": "/radar",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 12,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182533131,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 7,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182533129,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 11,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182533251,
+      "path": "/map",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 9,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182533251,
+      "path": "/favorites",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 16,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182533273,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 7,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182533351,
+      "path": "/icon.svg",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 10,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182533355,
+      "path": "/knowledge",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 2,
+      "wallTimeMs": 6,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182533362,
+      "path": "/favorites",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 5,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182533444,
+      "path": "/account",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 1,
+      "wallTimeMs": 4,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792182535092,
+      "path": "/api/agent/chat",
+      "outcome": "ok",
+      "status": 200,
+      "cpuTimeMs": 54,
+      "wallTimeMs": 7208,
+      "exceptionCount": 0
+    }
+  ]
+}

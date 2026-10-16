@@ -1,0 +1,13 @@
+{
+  "recordedAt": "2026-10-16T20:39:03.516Z",
+  "emptyMigrationPassed": true,
+  "populatedUpgradePassed": true,
+  "businessTables": 45,
+  "originalUserSessionConversationMessagesPreserved": true,
+  "privateDocumentsNotCopiedToConsole": true,
+  "publicLegacyVersionPreserved": true,
+  "oldDocumentsNotAutoPublished": true,
+  "foreignKeyViolations": 0,
+  "realCloud": false,
+  "fixturesOnly": true
+}

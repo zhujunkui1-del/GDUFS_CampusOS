@@ -1,0 +1,902 @@
+{
+  "recordedAt": "2026-10-16T20:05:57.233Z",
+  "dryRun": true,
+  "passed": true,
+  "originalRows": 220,
+  "mdRecords": 220,
+  "mappedRecords": 220,
+  "sourceTypes": {
+    "official_web": 109,
+    "wechat_subscription": 89,
+    "wechat_service": 3,
+    "mini_program": 16,
+    "enterprise_wechat": 1,
+    "embedded_app": 2
+  },
+  "sameNameDifferentChannels": [
+    [
+      {
+        "id": "GDUFS-SRC-0012",
+        "channel": "official_web"
+      },
+      {
+        "id": "GDUFS-SRC-0110",
+        "channel": "wechat_subscription"
+      }
+    ],
+    [
+      {
+        "id": "GDUFS-SRC-0021",
+        "channel": "official_web"
+      },
+      {
+        "id": "GDUFS-SRC-0108",
+        "channel": "official_web"
+      }
+    ],
+    [
+      {
+        "id": "GDUFS-SRC-0052",
+        "channel": "official_web"
+      },
+      {
+        "id": "GDUFS-SRC-0173",
+        "channel": "wechat_subscription"
+      }
+    ],
+    [
+      {
+        "id": "GDUFS-SRC-0176",
+        "channel": "wechat_subscription"
+      },
+      {
+        "id": "GDUFS-SRC-0202",
+        "channel": "mini_program"
+      }
+    ],
+    [
+      {
+        "id": "GDUFS-SRC-0200",
+        "channel": "wechat_service"
+      },
+      {
+        "id": "GDUFS-SRC-0204",
+        "channel": "mini_program"
+      }
+    ]
+  ],
+  "conflictCatalog": [
+    {
+      "row": 2,
+      "A": "1",
+      "B": "附属单位仅有文章入口",
+      "C": "广外从化实验小学",
+      "D": "https://mp.weixin.qq.com/s/MRJnssHw1lcIOcuL121Lcw",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!6"
+    },
+    {
+      "row": 3,
+      "A": "2",
+      "B": "附属单位仅有文章入口",
+      "C": "广外实验中学",
+      "D": "https://mp.weixin.qq.com/s/LFsQ_7C0sOeKSyv0WWTr8Q",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!7"
+    },
+    {
+      "row": 4,
+      "A": "3",
+      "B": "附属单位仅有文章入口",
+      "C": "广外从化实验中学",
+      "D": "https://mp.weixin.qq.com/s/OHUFLsng6LWsFC2HfXIf4A",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!8"
+    },
+    {
+      "row": 5,
+      "A": "4",
+      "B": "附属单位仅有文章入口",
+      "C": "广外附设茂名实验学校",
+      "D": "https://mp.weixin.qq.com/s/Oy0ARzFKToEoiCpczt2BtA",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!9"
+    },
+    {
+      "row": 6,
+      "A": "5",
+      "B": "附属单位仅有文章入口",
+      "C": "广外附属知识城实验小学",
+      "D": "https://mp.weixin.qq.com/s/I0MqtangJdTL7rnfUfW-9Q",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!10"
+    },
+    {
+      "row": 7,
+      "A": "6",
+      "B": "附属单位仅有文章入口",
+      "C": "广外附属科学城实验学校",
+      "D": "https://eg.gdufs.edu.cn/",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!11"
+    },
+    {
+      "row": 8,
+      "A": "7",
+      "B": "附属单位仅有文章入口",
+      "C": "广外附属黄埔实验学校",
+      "D": "https://eg.gdufs.edu.cn/",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!12"
+    },
+    {
+      "row": 9,
+      "A": "8",
+      "B": "附属单位仅有文章入口",
+      "C": "广外番禺实验学校",
+      "D": "https://eg.gdufs.edu.cn/",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!13"
+    },
+    {
+      "row": 10,
+      "A": "9",
+      "B": "附属单位仅有文章入口",
+      "C": "广外附属信宜学校",
+      "D": "https://eg.gdufs.edu.cn/",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!14"
+    },
+    {
+      "row": 11,
+      "A": "10",
+      "B": "附属单位仅有文章入口",
+      "C": "广外新塘实验小学",
+      "D": "https://eg.gdufs.edu.cn/",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!15"
+    },
+    {
+      "row": 12,
+      "A": "11",
+      "B": "附属单位仅有文章入口",
+      "C": "广外乳源实验学校",
+      "D": "https://eg.gdufs.edu.cn/",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!16"
+    },
+    {
+      "row": 13,
+      "A": "12",
+      "B": "附属单位仅有文章入口",
+      "C": "梅州市外语实验学校",
+      "D": "https://eg.gdufs.edu.cn/",
+      "E": "独立官网未见证据，不能把公众号文章当官网",
+      "F": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜教育集团附属机构!17"
+    },
+    {
+      "row": 14,
+      "A": "13",
+      "B": "无实际官网URL",
+      "C": "团联e家",
+      "D": "",
+      "E": "原汇总宣称官网但未给出URL；未加入独立官网表",
+      "F": "广外链接deepseek.md｜行153"
+    },
+    {
+      "row": 15,
+      "A": "14",
+      "B": "同名跨类型",
+      "C": "广外人",
+      "D": "人民网2017与校友官网2026",
+      "E": "非官方历史公众号 ≠ 官方校友小程序；按介质分别保留",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 16,
+      "A": "15",
+      "B": "一名多载体",
+      "C": "数智广外",
+      "D": "etr 2026官方说明",
+      "E": "服务号和小程序为不同载体；同一品牌分别保留",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 17,
+      "A": "16",
+      "B": "服务号误分类",
+      "C": "广外图书馆",
+      "D": "lib.gdufs.edu.cn/info/1115/6271.htm",
+      "E": "部分二手资料列入订阅号，官网明确为服务号；主表按服务号归类",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 18,
+      "A": "17",
+      "B": "微信ID冲突",
+      "C": "广外留学生院",
+      "D": "iie.gdufs.edu.cn/info/1099/5938.htm",
+      "E": "2025 IIEGDUFS 与2026 GDUFSIIE 冲突；暂存双值且待微信认证核验",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 19,
+      "A": "18",
+      "B": "近似名称未确认",
+      "C": "广外英教团学/广外英教青年",
+      "D": "see.gdufs.edu.cn",
+      "E": "尚无同一微信主体证据，不自动合并",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 20,
+      "A": "19",
+      "B": "历史更名待确认",
+      "C": "广外创业学院/广外创新创业/广外创新创业学院",
+      "D": "gwcxcy.gdufs.edu.cn",
+      "E": "可能是名称变迁；无法确认账号主体同一，分别记录",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 21,
+      "A": "20",
+      "B": "机构名称相似",
+      "C": "广外学工/广外学生处",
+      "D": "nstu.gdufs.edu.cn",
+      "E": "可能属于学生工作部的不同阶段或不同账号，未确认前不合并",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 22,
+      "A": "21",
+      "B": "机构名称相似",
+      "C": "广外就业/广外就业指导中心",
+      "D": "gwcareer.gdufs.edu.cn",
+      "E": "可能同属就业部门，未证明为同一公众号",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 23,
+      "A": "22",
+      "B": "产品名相似",
+      "C": "广外校园码/广外一卡通小程序",
+      "D": "etr.gdufs.edu.cn",
+      "E": "未核同一 appid，分别保留",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 24,
+      "A": "23",
+      "B": "项目相关第三方",
+      "C": "百千万校地通/校地通",
+      "D": "youth.gdufs.edu.cn/info/1050/12792.htm",
+      "E": "不能在未获 appid/主体证据时认定为同一个小程序",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 25,
+      "A": "24",
+      "B": "学院新旧域名",
+      "C": "新闻与传播学院（mjc 与 xwxy）",
+      "D": "xwxy.gdufs.edu.cn",
+      "E": "两域名需确认旧站迁移/同组织；不同 URL 暂保留",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 26,
+      "A": "25",
+      "B": "旧社团已注销",
+      "C": "广外德思团队、广外国学社、爱莲社",
+      "D": "youth.gdufs.edu.cn/info/1050/10106.htm",
+      "E": "不能以旧社团名录视作2026现有或微信活跃",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 27,
+      "A": "26",
+      "B": "社团 vs 公众号",
+      "C": "广外紫云读书社/悦读广外",
+      "D": "lib.gdufs.edu.cn/info/1115/6271.htm",
+      "E": "2026紫云社团活动≠悦读广外2026发文；公众号更名待核",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 28,
+      "A": "27",
+      "B": "社团 vs 公众号",
+      "C": "广外广袤园武术协会",
+      "D": "fx.xwapp.moe.gov.cn",
+      "E": "2026社团活跃+报道提及公众号，不等于拿到2026独立推文",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 29,
+      "A": "28",
+      "B": "微信群/平台非账号",
+      "C": "微信平台、小红书、知乎、微信群",
+      "D": "广外链接.md",
+      "E": "通用平台或无名群不能作为单一广外官方公众号条目",
+      "F": "跨资料合并核对"
+    },
+    {
+      "row": 30,
+      "A": "29",
+      "B": "附属学校文章≠公众号",
+      "C": "广外教育集团附属校",
+      "D": "eg.gdufs.edu.cn",
+      "E": "公众号文章的 URL 不能证明所属独立公众号名称；附校不能算大学本部信息源",
+      "F": "跨资料合并核对"
+    }
+  ],
+  "warnings": [
+    {
+      "sourceId": "GDUFS-SRC-0111",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0112",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0113",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0114",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0116",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0118",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0119",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0120",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0121",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0122",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0123",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0124",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0125",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0126",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0127",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0128",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0129",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0130",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0131",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0132",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0133",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0134",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0135",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0136",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0137",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0138",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0139",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0140",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0141",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0142",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0143",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0144",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0145",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0146",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0147",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0148",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0149",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0150",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0151",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0153",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0154",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0156",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0157",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0158",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0159",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0160",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0161",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0162",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0163",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0164",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0165",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0166",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0167",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0168",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0169",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0170",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0171",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0172",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0173",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0174",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0175",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0176",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0177",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0178",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0179",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0180",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0181",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0182",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0183",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0184",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0185",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0186",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0187",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0188",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0189",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0190",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0192",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0193",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0195",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0197",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0198",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0199",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0200",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0201",
+      "code": "MISSING_WECHAT_ID",
+      "raw": ""
+    },
+    {
+      "sourceId": "GDUFS-SRC-0004",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0008",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0011",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0012",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0014",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0019",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0023",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0025",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0027",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0028",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0029",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0036",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0042",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0043",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0052",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0077",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0081",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0092",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0095",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0101",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0152",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0202",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0203",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0207",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0208",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0209",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0210",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0211",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0212",
+      "code": "AUTHORITY_CLAIM_REQUIRES_HUMAN_REVIEW"
+    }
+  ],
+  "errors": [],
+  "manifestHash": "e3340b45237be5d7ca8bb073c3918476327611b23da4473bc2ab089a8ef6780a",
+  "enabled": 0,
+  "verified": 0,
+  "allCandidates": true,
+  "automaticCollection": false,
+  "files": [
+    {
+      "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.xlsx",
+      "sha256": "b4d5c287a4b53c745f7cdf05df41c3b168a6ae6b3394060c28a04cae965e5deb"
+    },
+    {
+      "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.md",
+      "sha256": "e0c9e16ae9097c998ca50d30d2db729063a9d409af7c6d1521f53c7e680919ab"
+    }
+  ],
+  "fieldMapping": {
+    "A": "source_id",
+    "B": "channel_type",
+    "C": "subtype",
+    "D": "display_name",
+    "E": "organization",
+    "F": "claimed authority only",
+    "G": "catalog activity claim only",
+    "H": "account verification claim only",
+    "I": "website for web channels; evidence for WeChat",
+    "J": "wechat_id if unambiguous",
+    "L": "evidence_urls",
+    "N": "campus_scope",
+    "R": "priority clue",
+    "S": "aliases/notes",
+    "T": "original_catalog_refs"
+  }
+}

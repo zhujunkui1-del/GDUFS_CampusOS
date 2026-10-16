@@ -254,3 +254,13 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 实际指标来自指定预览Worker的Tail/GraphQL、指定预览D1数值聚合及受控真实DeepSeek浏览器任务；本地workerd采样单独标明，不冒充云端函数归因或手机实机。线上Profile只idle/无近期执行的限制保留。公开证据无Key、Cookie、原始SQL参数或私人GPS。
 
 新public-walking-attachments.json完全由已审核固定campus/walking-network及原几何函数离线导出，113地点/445道路候选；沿用原OSM来源与许可，不构成新的建筑入口/道路通行事实。保留原地图/路网版本与所有几何、建筑模型SHA。每次普通构建校验来源哈希，手动重建，不联网更新。数据/截图/比较见S2_E_CPU_ACCEPTANCE.md与verification/s2-e-cpu。
+
+## SRC-057｜负责人220条来源清单及S3-A运营登记（2026-10-17）
+
+原始输入：文档包内CampusOS_广外信息源_去重详表_2026-10-17.xlsx及同名Markdown。只读使用，SHA256见verification/s3-a/import/preview-import.json；109官网、89公众号、3服务号、16小程序、1企业微信、2内嵌应用。规范化清单位于data/console，保留文件/表/行/原目录引用及全部待核声明。
+
+来源是负责人提供的研究目录，不等于学校认证、当前可用性或采集许可。220条均候选/未启用/未核验，0文章；113项警告和29行冲突保留，公众号缺微信号或无主页返回未知，不生成URL。后台逐项核验机构/证据/许可后才能启用；非官方内容人工审核，活动关键时间/地点另有门禁。未把原文件、第三方采集项目或其中图片加入public，未运行三个采集项目。
+
+技术依据：[D1 batch与参数绑定](https://developers.cloudflare.com/d1/worker-api/d1-database/)、[Access JWT验证](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/)。实际证据为本地SQLite/workerd、真实指定预览D1迁移/幂等导入和Chrome/Edge截图，Mock与真实云端分列。运营认证未配置时API关闭；无私人学生数据或凭据进入报告。RAG索引/抓取尚未实施，来源登记不代表内容已采集。
+
+后台界面静态化参照[Next静态参数](https://nextjs.org/docs/app/api-reference/functions/generate-static-params)和[查询参数/Suspense](https://nextjs.org/docs/app/api-reference/functions/use-search-params)，本机16.3.8实际构建及OpenNext1.20.10本地/真实云端验证为准，不据官网更新版本假设升级。只缓存空界面，管理数据保持鉴权/no-store。

@@ -1,0 +1,28 @@
+{
+  "recordedAt": "2026-10-16T20:44:24.449Z",
+  "baseline": "b71e29e",
+  "scannedVariableNames": [
+    "MODEL_API_KEY",
+    "AGENT_SIGNING_SECRET",
+    "AMAP_SECURITY_JS_CODE",
+    "console:CONSOLE_SESSION_SECRET",
+    "console:CONSOLE_LOCAL_ACCESS_KEY",
+    "console:AGENT_SIGNING_SECRET",
+    "preview:MODEL_API_KEY",
+    "preview:AGENT_SIGNING_SECRET"
+  ],
+  "actualModelKeyChecked": true,
+  "repository": {
+    "files": 2525,
+    "matches": []
+  },
+  "generatedWorkerAndAssets": {
+    "files": 1366,
+    "matches": []
+  },
+  "credentialFilesIgnored": true,
+  "gateOnlyNameAliasesChanged": true,
+  "frozenDataUntouched": true,
+  "modelSha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+  "modelMatchesApprovedAsset": true
+}
