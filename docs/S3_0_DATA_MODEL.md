@@ -1,5 +1,7 @@
 # S3-0｜统一数据模型、协议与状态契约
 
+> 当前检索裁决（2026-10-17，D-045）：自研 KnowledgeRetriever + D1KeywordRetriever；Dify 路线正式废弃。原冻结中已由S3-B实现的结构以0007–0011和实际DAO为准；本次不新增迁移。S3-D计划见 [验收目标](S3_D_RETRIEVAL_PLAN.md)。
+
 版本：`s3-freeze-2026-10-17.1`。基线：`7d0f9eb`。**本文件是设计冻结，不是已执行DDL；没有新增migration、API或表。** 实际45表/列/PK/FK见[只读Schema证据](verification/s3-0/repository-audit.json)，产品与阶段见[总体基线](S3_0_ARCHITECTURE_BASELINE.md)。
 
 ## 1. 现有权威实体：复用而非另建一套
@@ -82,7 +84,7 @@ erDiagram
 | knowledge_facts/chunks                | 补content_revision、snapshot_version、input_hash与用途/核验字段，沿用doc FK                                                                            | 事实与检索片段分离；不把未经批准片段送公共索引                                                         |
 | campus_events/event_sources           | event version/publication/lifecycle、报名要求/链接/状态、deadline_date/semantics；关系补证据快照/内容修订                                              | 保留既有事件状态CHECK和真实地点FK；对外报名徽标是派生，不将现有status硬塞新枚举                        |
 | console_content_reviews               | 兼容扩展target_type/可空event_candidate_id/event_id，仍保留document_id和admin FK                                                                       | 事件审核指定主证据文档/版本，复用批准/退回/拒绝/撤回与审计，不另建第二套审核权限                       |
-| search_index_refs（新）               | PK(backend,external_document_id,external_segment_id)；本地doc/版本/chunk FK、dataset标识、indexed_version/status/attempts                              | Dify/FTS/向量只保可重建映射；外部ID/score不授予可见性                                                  |
+| search_index_refs（后续按实现评审）   | 本地doc/版本/chunk FK、索引命名空间、indexed_version/status/attempts；主键随自研索引实现确定，不预建外部Dataset映射                                  | 自研关键词/分段索引只保可重建映射；未来获批向量需另评审，索引ID/score不授予可见性                       |
 
 分类常量可先由同一服务端JSON契约维护，需SQL约束时再建taxonomy_categories；不要同时维护多份互不校验的UI/SQL枚举。JSON数组可用于有界连接器规则或历史快照，不能替代可检索的主维度和实体关系。
 
@@ -154,7 +156,7 @@ S3-A命令触发器有固定动作/角色/版本约束，S3-B扩展任务动作�
 
 `PublicEventCard`：eventId/version、title/organizer、startsAt/endsAt、date-only或exact-time截止语义、registrationRequirement/state/url、eventStatus、campusScope、原始地点文本、有条件的真实placeId/mapVersion，以及当前可公开的documentId/version证据列表。
 
-`KnowledgeHit`：documentId/currentVersion/contentRevision、chunkId、允许用途内片段/evidence offsets、来源URL/原发布日期、backend/score（只排序）。所有命中回D1重新验证；Dify的dataset/segment ID通过search_index_refs映射，不直接当本地对象ID。
+`KnowledgeHit`：documentId/currentVersion/contentRevision、chunkId、允许用途内片段/evidence offsets、来源URL/原发布日期、适用学年/时效、官方与非官方标识、backend/score（只排序）。所有命中回D1重新验证当前审核/发布、版本、来源许可与生命周期；索引状态和片段绑定内容修订。KnowledgeRetriever保持平台无关的自研接口，D1KeywordRetriever为正式后端路线；无证据或召回不足返回不足，不猜测规定。当前两者未实现，详见S3-D计划。
 
 后续只读Skills沿用现有knowledge/events逻辑域和16项规划位置；每项仍严格Schema/权限/超时/错误/来源引用。RAG返回文字不能直接触发地图；需要经现有control_map与客户端真实回执。个人收藏/日程写操作继续关闭，直至S4真实身份和服务端确认台账可用，不能以模型confirmedActionId或运营密钥代替本人确认。
 

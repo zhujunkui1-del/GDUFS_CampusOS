@@ -1,0 +1,155 @@
+{
+  "checked_at_utc": "2026-10-17T06:49:10.723179+00:00",
+  "github_rest_status": "403 rate limit exceeded on first repo request; no retries or alternate identity",
+  "real_wechat_sogou_requests": 0,
+  "service_starts": 0,
+  "repository_code_imported": false,
+  "repositories": [
+    {
+      "repository": "fancyboi999/weixin_search_mcp",
+      "default_branch": "main",
+      "head_sha": "a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb",
+      "ref_method": "git ls-remote --symref HEAD",
+      "updated_at": null,
+      "updated_at_status": "not obtained; REST quota exhausted",
+      "files": [
+        {
+          "path": "README.md",
+          "code_url": "https://github.com/fancyboi999/weixin_search_mcp/blob/a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb/README.md",
+          "sha256": "4c348a213be7ea51cb7571765aabae9de35debd968a1d3c08ce5c983004341c0",
+          "bytes": 4347,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "pyproject.toml",
+          "code_url": "https://github.com/fancyboi999/weixin_search_mcp/blob/a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb/pyproject.toml",
+          "sha256": "8eb9f645c9c4ec898dfbca2df51fc26f7ae5a0a089e487572cc8dda9f747397f",
+          "bytes": 1486,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "weixin_search_mcp/main.py",
+          "code_url": "https://github.com/fancyboi999/weixin_search_mcp/blob/a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb/weixin_search_mcp/main.py",
+          "sha256": "595f9e872bfc8f57879b9e48ad0c784f02c929507ad56d55c0c091185d6fb425",
+          "bytes": 3495,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "weixin_search_mcp/tools/weixin_search.py",
+          "code_url": "https://github.com/fancyboi999/weixin_search_mcp/blob/a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb/weixin_search_mcp/tools/weixin_search.py",
+          "sha256": "1116283ce51d2fb3e56eea92820de105dea05e68b3de43b8a31a813f73bca38f",
+          "bytes": 8969,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "tests/test_stdio_encoding.py",
+          "code_url": "https://github.com/fancyboi999/weixin_search_mcp/blob/a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb/tests/test_stdio_encoding.py",
+          "sha256": "366cafa0172a06d038e5695a97757d885ff3f5882d039203ec07f949685d07f7",
+          "bytes": 1302,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        }
+      ],
+      "commit_headers": [
+        "From a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb Mon Sep 17 00:00:00 2001",
+        "Date: Mon, 17 Aug 2026 10:28:43 +0800",
+        "Subject: [PATCH] fix: enforce UTF-8 for stdio transport (#7)"
+      ]
+    },
+    {
+      "repository": "yibeigen/wechat-article-exporter",
+      "default_branch": "main",
+      "head_sha": "c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8",
+      "ref_method": "git ls-remote --symref HEAD",
+      "updated_at": null,
+      "updated_at_status": "not obtained; REST quota exhausted",
+      "files": [
+        {
+          "path": "README.md",
+          "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/README.md",
+          "sha256": "4235757e150bcf79658773627e30b0d50942c53b54d52806424ddf19eeae05f9",
+          "bytes": 21972,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "LICENSE",
+          "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/LICENSE",
+          "sha256": "8ba38c358e00aca9e506331c930dcf7f02dc990e24031c2c5152a99e9262163f",
+          "bytes": 4335,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "requirements.txt",
+          "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/requirements.txt",
+          "sha256": "a482bb733781d93acfc0874df0095c0241bc6961549eaa52af27c34c5f8ce826",
+          "bytes": 239,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "package.json",
+          "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/package.json",
+          "sha256": "9d0cb9453f398fcfb6fc4142ff1d15cf391e74b519d535e39cf6d171361fba96",
+          "bytes": 309,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "backend/app/scrapers/wechat.py",
+          "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/backend/app/scrapers/wechat.py",
+          "sha256": "5604957e4d04714b094469074a0fa6da3a500750d0933cfe3d1c81ec802076aa",
+          "bytes": 80762,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "backend/app/models.py",
+          "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/backend/app/models.py",
+          "sha256": "7b52cc75e2b6e0df84ac2bd61aa9b477eaeeaac793a40b6d518f9e5a6350d8d8",
+          "bytes": 7705,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "backend/app/main.py",
+          "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/backend/app/main.py",
+          "sha256": "e4e1c41fa0a86ff2c91bfd9df99ca42570e1227758b9611a772b2ba18f1475a9",
+          "bytes": 76012,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "backend/app/task_manager.py",
+          "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/backend/app/task_manager.py",
+          "sha256": "7de529803ed5f562d29ff5052cf94722957384781763dbcd4ce7134c5b841cd9",
+          "bytes": 65314,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "backend/app/cli.py",
+          "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/backend/app/cli.py",
+          "sha256": "b12c2c937ec97e187ffde506bfa8364f1310d2cf37779dc86ece45c2a92f8fe3",
+          "bytes": 2537,
+          "local_original_exists": true,
+          "local_lf_equals_current": true
+        },
+        {
+          "path": "backend/app/exporters/markdown_exporter.py",
+          "error": "HTTP Error 404: Not Found"
+        }
+      ],
+      "commit_headers": [
+        "From c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8 Mon Sep 17 00:00:00 2001",
+        "Date: Wed, 14 Oct 2026 23:02:48 +0800",
+        "Subject: [PATCH] =?UTF-8?q?feat:=20=E5=8F=91=E5=B8=83=20v1.2.8=20=E4=BF=AE?="
+      ]
+    }
+  ]
+}

@@ -378,3 +378,13 @@ OpenNext 提示 Windows 兼容性有限。本次最终组合在 Windows 实测�
 - 微信3仓库许可/版本/PR及独立离线试验完成；robots阻止搜索/文章路径后停止，0文章，率均0/0未测，10项离线检查不当采集成功。负责人后来提供学校Dify，Edge实际只读确认1.17.1与知识库入口；API/Key/费用/网络未验，不接入运行或调用模型。
 - TypeScript、Lint、单元、生产/OpenNext净化构建和真实Workers本地预览通过；两浏览器桌面/手机视口Console、原地图/导航/模型/会话与真实HTTPS验收分开记录。完整计数、失败断言修正、截图和限制见verification/s3-b/acceptance-results.json与S3_B_INGESTION_ACCEPTANCE.md；不把模拟视口或Mock对话当实机/真实模型。
 - 实际preview版本21a72753-f951-4b91-9549-1390a2c7e49f，压缩2505.00KiB，1350产物凭据扫描0命中。Windows Tail异常无逐API样本；GraphQL采集窗口28请求CPU P50/P95=4.031/16.752ms、错误0，仍有Free尾延迟风险。模型0调用，不改生产/DNS/套餐/Secrets、不新购资源；S3-C公开雷达/检索及新增Skills未开始。
+
+## D-045｜废弃Dify路线与断点保留（2026-10-17）
+
+- 从e30a939及上轮未提交现场恢复：保留.gitignore中的thu-push-main规则、两份未完成研究草稿、三个上游证据JSON、旧只读D1快照与两个研究脚本；标注中断/未验收，不继续公众号采集或宣称四份研究已交付。
+- 负责人正式废弃Dify学校实例、Cloud、自托管、Dataset、Workflow与API；当前/未来架构和阻塞均移除该路线。运行源码、依赖和模板原本无Dify集成，因此无适配器卸载或数据库变更。
+- 保留原Agent/模型/SSE/五地图Skills、Console、采集任务、版本/审核/outbox及地图。KnowledgeRetriever作为平台无关自研契约，D1KeywordRetriever为正式待实现路线；D1是知识来源/版本/审核/分类/片段/引用/索引状态权威，中文召回和公共门禁独立测试。
+- 更新生效架构/数据模型/README/v2规则与计划，历史决策/验收/学校UI研究标注废弃而保留。新增S3_D_RETRIEVAL_PLAN.md，12项未来验收含现有DeepSeek只读知识Skill；S3-E汇合事件/知识及地图回归。本轮未开发完整S3-D。
+- typecheck、lint、283单元/37文件、Next生产与OpenNext安全构建通过；显式preview dry-run gzip2505.00KiB，1350产物文件私密值0命中。最终文档/关键回归结果见DIFY_RETIREMENT.md与verification/dify-retirement。本轮不调用模型/学校API，不迁移/写入D1或更新云端部署/DNS/套餐。
+
+本次关键浏览器回归：Chrome、Edge各8项通过（桌面/手机视口的公共Shell、AI入口、页面路由、匿名身份拒绝、键盘/较大字号/无障碍偏好）。属于本地现有基础回归，不是完整真实DeepSeek、云端RAG或手机实机验收。Next dev产生的next-env.d.ts导入路径变动已恢复为测试前内容。

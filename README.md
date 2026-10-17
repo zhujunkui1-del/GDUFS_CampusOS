@@ -2,7 +2,13 @@
 
 广外大学城校区的响应式 Web 应用。正式域名：`gdufs.ccwu.cc`（已由负责人指定，尚未完成线上绑定）。需求基线保存在 `CampusOS_Codex_完整设计文档_v2/`。
 
-S0 工程基线已完成；当前进行 S1 真实校园地图与验收：本地固定OSM底图、默认朝北、两区视野、87个 OSM 来源地点、搜索/详情和客户端地图动作已实现。校园完整名录、入口、自建路网/跨区隧道仍待核验；Agent/RAG、短信登录和模型设置尚未开发。实际边界见 [本次验收](docs/S1_LOCAL_MAP_ACCEPTANCE.md)；底图只手动更新，见 [维护步骤](docs/LOCAL_MAP_MAINTENANCE.md)。
+当前已完成固定 OSM/MapLibre 地图与校园步行路网、真实 DeepSeek Agent、五项地图 Skills、多会话及删除、S3-A Console 和 S3-B 受控官网元数据链路。220条来源中3条已启用，3篇元数据均待审，尚无公开知识检索或雷达内容。实际验收见 [S3-B报告](docs/S3_B_INGESTION_ACCEPTANCE.md)；底图只手动更新，见 [维护步骤](docs/LOCAL_MAP_MAINTENANCE.md)。短信学生登录、完整知识检索和个人服务仍待后续实施。
+
+## 当前技术路线
+
+Next.js / OpenNext + Cloudflare Workers / D1；自研 Orchestrator、Skill Registry、Tool Executor、ModelRouter、DeepSeek 和 SSE 保持。校园知识 RAG 使用平台无关的自研 `KnowledgeRetriever`，正式后端路线为 `D1KeywordRetriever` 的关键词、分类与分段检索。两者目前为待实现契约，不代表已上线。D1 保存来源、文章版本、审核、分类、片段、引用和索引状态，公开结果逐次复验权限、用途和时效。
+
+**Dify 技术路线已废弃**，不配置其地址、Dataset 或 Key，也不使用其 Cloud/自托管/Workflow/API。详见 [D-045](docs/DECISIONS.md)及 [S3-D验收计划](docs/S3_D_RETRIEVAL_PLAN.md)。未来向量检索须另行技术与费用评估；当前不新增商业知识库平台。分类、时间和地点提取优先 TypeScript 确定性规则，模型仅限明确授权服务和预算。
 
 ## 本地运行
 

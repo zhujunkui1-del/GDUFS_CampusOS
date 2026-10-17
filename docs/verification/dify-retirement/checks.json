@@ -1,0 +1,63 @@
+{
+  "recordedAt": "2026-10-17T09:39:37.604Z",
+  "baseline": "e30a939",
+  "typecheck": "passed",
+  "lint": "passed",
+  "unit": {
+    "tests": 283,
+    "passed": 283,
+    "failed": 0,
+    "files": 37
+  },
+  "browser": {
+    "scope": "Local existing shell regressions; desktop and mobile viewport, not physical phone or live model",
+    "chrome": {
+      "startTime": "2026-10-17T09:37:39.797Z",
+      "duration": 17519.818,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "edge": {
+      "startTime": "2026-10-17T09:38:26.879Z",
+      "duration": 16658.994,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "build": {
+    "next": "passed via build-worker",
+    "openNext": "passed",
+    "wrangler": "explicit preview dry-run only",
+    "gzipKiB": 2505,
+    "privateValuesScanFiles": 1350,
+    "privateValueMatches": 0
+  },
+  "currentTask": {
+    "modelCalls": 0,
+    "difyCalls": 0,
+    "articleFetches": 0,
+    "d1Migration": false,
+    "d1Write": false,
+    "deployment": false,
+    "dnsChange": false,
+    "paidResources": false
+  },
+  "notVerified": [
+    "Full S3-D implementation",
+    "Chinese retrieval quality",
+    "Real knowledge Skill",
+    "Cloud request CPU capacity",
+    "Physical phone"
+  ],
+  "interruptedResearch": "Preserved draft artifacts, not continued or accepted",
+  "commonCredentialPatterns": {
+    "filesScanned": 1808,
+    "matches": 0,
+    "scope": "Tracked and newly preserved source, documentation and test files; heuristic scan complements actual-value build scan"
+  },
+  "formatCheck": "passed for new audit script, baseline research script and current new plan/report"
+}

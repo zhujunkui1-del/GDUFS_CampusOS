@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-17T09:41:32.386Z",
+  "offline": true,
+  "runtimeFilesScanned": 137,
+  "configFilesScanned": [
+    "package.json",
+    "wrangler.jsonc",
+    "open-next.config.ts",
+    "next.config.ts",
+    ".env.example",
+    ".dev.vars.example"
+  ],
+  "runtimeHits": [],
+  "dependencyHits": [],
+  "retrievalImplementation": "planned_not_implemented",
+  "twelveCriteriaPresent": true,
+  "plannedOnly": true,
+  "taxonomyCategories": {
+    "radar": 7,
+    "knowledge": 6
+  },
+  "documentsChecked": 24,
+  "linksChecked": 87,
+  "missingLinks": [],
+  "migrationChanges": [],
+  "sourceChanges": [],
+  "networkCalls": 0,
+  "modelCalls": 0,
+  "databaseWrites": 0,
+  "deployment": false,
+  "passed": true
+}

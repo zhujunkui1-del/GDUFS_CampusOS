@@ -1,0 +1,64 @@
+{
+  "checkedAt": "2026-10-17T06:49:50.990831+00:00",
+  "repository": "thu-lawyer/thu-push",
+  "defaultBranch": "main",
+  "commit": "19abc55134cf5691e575fbcc74cb88d3801c2b28",
+  "commitDate": "2026-10-12T00:54:42+08:00",
+  "license": "MIT",
+  "licenseSha256": "b390747f07ada7f6486b73f67f8d0b5b0df38a8555edebfc7ef9eff932b5a64f",
+  "apiFailure": {
+    "status": 403,
+    "reason": "Unauthenticated GitHub API rate limit exceeded; no token or bypass attempted. Used public GitHub HTML and git transport instead."
+  },
+  "pages": {
+    "repo": {
+      "url": "https://github.com/thu-lawyer/thu-push",
+      "httpStatus": 200,
+      "pageSha256": "4fb8d20948c9bd3f8971e6de191627d669506abaf68ebf863b03b58fcaf9f69c",
+      "defaultBranch": [
+        "main"
+      ],
+      "openCount": [],
+      "closedCount": [],
+      "createdAt": [
+        "2026-10-08T17:05:11.000Z"
+      ],
+      "currentOid": [
+        "19abc55134cf5691e575fbcc74cb88d3801c2b28"
+      ]
+    },
+    "issues": {
+      "url": "https://github.com/thu-lawyer/thu-push/issues",
+      "httpStatus": 200,
+      "pageSha256": "13cda3af386be416c6c38206ed784905f2e87b09aba424f84ab1d8584db7b4a0",
+      "defaultBranch": [],
+      "openCount": [],
+      "closedCount": [],
+      "createdAt": [],
+      "currentOid": [],
+      "navigationIssuesCount": [
+        0
+      ],
+      "noResults": true
+    },
+    "pulls": {
+      "url": "https://github.com/thu-lawyer/thu-push/pulls",
+      "httpStatus": 200,
+      "pageSha256": "4e8c801ad3624f62eb5ac17589cb94005a4817d1b6b9d7dca101961a250e99bd",
+      "defaultBranch": [
+        "main"
+      ],
+      "openCount": [
+        0
+      ],
+      "closedCount": [
+        0
+      ],
+      "createdAt": [
+        "2026-10-08T17:05:11Z"
+      ],
+      "currentOid": []
+    }
+  },
+  "scope": "Public source repository metadata only; no WeChat/CDP/SMTP/model requests."
+}

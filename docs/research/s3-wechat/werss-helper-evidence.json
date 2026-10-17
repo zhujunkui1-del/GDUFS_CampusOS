@@ -1,0 +1,295 @@
+{
+  "checkedAt": "2026-10-17T06:48:22.784Z",
+  "method": "public Git read only; no application execution",
+  "repos": [
+    {
+      "repository": "rachelos/we-mp-rss",
+      "defaultBranch": "main",
+      "sha": "9b40351fd1913e7f74cf88f65740cd67a28baf81",
+      "commitTime": "2026-10-10T09:45:30+08:00",
+      "subject": "Merge pull request #475 from hellostronger/codex/2026-10-04-multi-account-failover",
+      "updatedAt": "2026-10-17T05:14:51Z",
+      "pushedAt": "2026-10-10T01:45:31Z",
+      "restMetadataStatus": "raw public GitHub API via official connector verified; initial local anonymous API request rate-limited; no credentials read",
+      "files": [
+        {
+          "path": "README.zh-CN.md",
+          "bytes": 14400,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/README.zh-CN.md"
+        },
+        {
+          "path": "LICENSE",
+          "bytes": 1106,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/LICENSE"
+        },
+        {
+          "path": "core/article_content.py",
+          "bytes": 8576,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/core/article_content.py"
+        },
+        {
+          "path": "core/wx/model/weread_mp.py",
+          "bytes": 20641,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/core/wx/model/weread_mp.py"
+        },
+        {
+          "path": "driver/wx_api.py",
+          "bytes": 38065,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/driver/wx_api.py"
+        },
+        {
+          "path": "apis/mps.py",
+          "bytes": 21701,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/apis/mps.py"
+        },
+        {
+          "path": "apis/articles.py",
+          "status": "not_present_at_path"
+        },
+        {
+          "path": "jobs/article_job.py",
+          "status": "not_present_at_path"
+        },
+        {
+          "path": "core/models/article.py",
+          "bytes": 5078,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/core/models/article.py"
+        },
+        {
+          "path": "core/models/feed.py",
+          "bytes": 667,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/core/models/feed.py"
+        },
+        {
+          "path": "apis/article.py",
+          "bytes": 27637,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/apis/article.py"
+        },
+        {
+          "path": "apis/message_task.py",
+          "bytes": 13520,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/apis/message_task.py"
+        },
+        {
+          "path": "jobs/article.py",
+          "bytes": 475,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/jobs/article.py"
+        },
+        {
+          "path": "jobs/mps.py",
+          "bytes": 14459,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/jobs/mps.py"
+        },
+        {
+          "path": "requirements.txt",
+          "bytes": 1217,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/requirements.txt"
+        },
+        {
+          "path": "Dockerfile",
+          "bytes": 1164,
+          "url": "https://github.com/rachelos/we-mp-rss/blob/9b40351fd1913e7f74cf88f65740cd67a28baf81/Dockerfile"
+        }
+      ],
+      "licenseClassifier": "NOASSERTION; pinned LICENSE text is MIT"
+    },
+    {
+      "repository": "thu-lawyer/thu-push",
+      "defaultBranch": "main",
+      "sha": "19abc55134cf5691e575fbcc74cb88d3801c2b28",
+      "commitTime": "2026-10-12T00:54:42+08:00",
+      "subject": "fix(weread-push): 07a 凭据扫描误报两处改写（行为不变）",
+      "updatedAt": "2026-10-11T16:54:49Z",
+      "pushedAt": "2026-10-11T16:54:45Z",
+      "restMetadataStatus": "raw public GitHub API via official connector verified",
+      "files": [
+        {
+          "path": "README.md",
+          "bytes": 11649,
+          "url": "https://github.com/thu-lawyer/thu-push/blob/19abc55134cf5691e575fbcc74cb88d3801c2b28/README.md"
+        },
+        {
+          "path": "LICENSE",
+          "bytes": 1067,
+          "url": "https://github.com/thu-lawyer/thu-push/blob/19abc55134cf5691e575fbcc74cb88d3801c2b28/LICENSE"
+        },
+        {
+          "path": "weread-push/README.md",
+          "bytes": 1429,
+          "url": "https://github.com/thu-lawyer/thu-push/blob/19abc55134cf5691e575fbcc74cb88d3801c2b28/weread-push/README.md"
+        },
+        {
+          "path": "weread-push/import/mp_searchbiz.py",
+          "bytes": 4310,
+          "url": "https://github.com/thu-lawyer/thu-push/blob/19abc55134cf5691e575fbcc74cb88d3801c2b28/weread-push/import/mp_searchbiz.py"
+        },
+        {
+          "path": "weread-push/docs/api.md",
+          "bytes": 2829,
+          "url": "https://github.com/thu-lawyer/thu-push/blob/19abc55134cf5691e575fbcc74cb88d3801c2b28/weread-push/docs/api.md"
+        },
+        {
+          "path": "weread-push/docs/RUNBOOK.md",
+          "bytes": 2464,
+          "url": "https://github.com/thu-lawyer/thu-push/blob/19abc55134cf5691e575fbcc74cb88d3801c2b28/weread-push/docs/RUNBOOK.md"
+        }
+      ],
+      "licenseClassifier": "MIT"
+    }
+  ],
+  "issuePullEvidence": {
+    "method": "official GitHub connector normalized issue/PR metadata plus public issue pages; no attachments opened",
+    "issues": [
+      {
+        "number": 463,
+        "state": "open",
+        "createdAt": "2026-09-07T00:43:58Z",
+        "updatedAt": "2026-10-09T14:52:51Z",
+        "closedAt": null,
+        "url": "https://github.com/rachelos/we-mp-rss/issues/463"
+      },
+      {
+        "number": 476,
+        "state": "open",
+        "createdAt": "2026-10-05T03:50:54Z",
+        "updatedAt": "2026-10-14T03:32:20Z",
+        "closedAt": null,
+        "url": "https://github.com/rachelos/we-mp-rss/issues/476"
+      }
+    ],
+    "pulls": [
+      {
+        "number": 478,
+        "state": "open",
+        "merged": false,
+        "baseSha": "9b40351fd1913e7f74cf88f65740cd67a28baf81",
+        "headSha": "a76517ba5682a83c184916037daa6116ac15bf98",
+        "updatedAt": "2026-10-14T13:36:35Z",
+        "mergedAt": null,
+        "url": "https://github.com/rachelos/we-mp-rss/pull/478"
+      }
+    ]
+  },
+  "localComparisons": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/README.zh-CN.md",
+      "remoteSha256": "b4421ca6fdcba3566f0d4005501f41a3e060fa00b649be4b6278d376d547c5e9",
+      "localSha256": "b4421ca6fdcba3566f0d4005501f41a3e060fa00b649be4b6278d376d547c5e9",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/LICENSE",
+      "remoteSha256": "8aaac477797f18afb9b8da33a093a770485d380acc6e942761343dc8993ee87a",
+      "localSha256": "8aaac477797f18afb9b8da33a093a770485d380acc6e942761343dc8993ee87a",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/core/article_content.py",
+      "remoteSha256": "4aca553cf8ede3d1d70727072ababf1a13598cc8e5d7ca976cd93a8b9f8d35a9",
+      "localSha256": "4aca553cf8ede3d1d70727072ababf1a13598cc8e5d7ca976cd93a8b9f8d35a9",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/core/wx/model/weread_mp.py",
+      "remoteSha256": "29526c6c1b3ef4fb8b1a5c0c3f7e91eaae9d252cc2d4cbbdffa2a2d3822e784c",
+      "localSha256": "29526c6c1b3ef4fb8b1a5c0c3f7e91eaae9d252cc2d4cbbdffa2a2d3822e784c",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/driver/wx_api.py",
+      "remoteSha256": "1c463e557b21cfa5627b86ebdedaa3de76a2facc51edac03e31b248563d35918",
+      "localSha256": "1c463e557b21cfa5627b86ebdedaa3de76a2facc51edac03e31b248563d35918",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/apis/mps.py",
+      "remoteSha256": "c1c139b51e0c4d0ed04965ca99fca65d0771fdd3ffe2774f5cdbda1d4b757c53",
+      "localSha256": "c1c139b51e0c4d0ed04965ca99fca65d0771fdd3ffe2774f5cdbda1d4b757c53",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/core/models/article.py",
+      "remoteSha256": "e60aba385f0e6de81051c4910c66a9d7ac1f78d1af7e7d4c9087cfc0b1dc6c60",
+      "localSha256": "e60aba385f0e6de81051c4910c66a9d7ac1f78d1af7e7d4c9087cfc0b1dc6c60",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/core/models/feed.py",
+      "remoteSha256": "c4ec9298516d0d42f026f9fad234d7f02e298191f4de6fe2c7da2fd86845912e",
+      "localSha256": "c4ec9298516d0d42f026f9fad234d7f02e298191f4de6fe2c7da2fd86845912e",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/apis/article.py",
+      "remoteSha256": "1ce090810d15215b8f3b26107afaedf20c53cd0b4bd02dc32436772baf2418d4",
+      "localSha256": "1ce090810d15215b8f3b26107afaedf20c53cd0b4bd02dc32436772baf2418d4",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/apis/message_task.py",
+      "remoteSha256": "a88b4966edc10ba93adb4359054b4e8c429166bdeb3dd3c4e4de050c45f852d6",
+      "localSha256": "a88b4966edc10ba93adb4359054b4e8c429166bdeb3dd3c4e4de050c45f852d6",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/jobs/article.py",
+      "remoteSha256": "8df320808b360d008c8a3f26fdec42651e11819f58c3c49d71327e6453d72dbf",
+      "localSha256": "8df320808b360d008c8a3f26fdec42651e11819f58c3c49d71327e6453d72dbf",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/jobs/mps.py",
+      "remoteSha256": "726b29cd6b28a572348dda0badfef062ebd891dc84b7dcc1fcb93bd76bcac35b",
+      "localSha256": "726b29cd6b28a572348dda0badfef062ebd891dc84b7dcc1fcb93bd76bcac35b",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/requirements.txt",
+      "remoteSha256": "3bc902d4a6b32cf118d628ac93290613b72e3526aab190bebc2caa878d314dc8",
+      "localSha256": "3bc902d4a6b32cf118d628ac93290613b72e3526aab190bebc2caa878d314dc8",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/Dockerfile",
+      "remoteSha256": "f781760c6f4bcd6234c4dbbf6f52e2884e76acaaacd40c250ef9dc8fda52e63e",
+      "localSha256": "f781760c6f4bcd6234c4dbbf6f52e2884e76acaaacd40c250ef9dc8fda52e63e",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/README.md",
+      "remoteSha256": "5ff31cf46ad352875940a01c89fb85119229bb6a73fd0c9338aef73dfaa9dbf5",
+      "localSha256": "5ff31cf46ad352875940a01c89fb85119229bb6a73fd0c9338aef73dfaa9dbf5",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/LICENSE",
+      "remoteSha256": "21f2adc5a994f75dff903c21fc1367c935b0fe071bd32a563d400d9aba5ef426",
+      "localSha256": "21f2adc5a994f75dff903c21fc1367c935b0fe071bd32a563d400d9aba5ef426",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/weread-push/README.md",
+      "remoteSha256": "2d7fc3de32f50c16f5cc737505f9b574e3068fd22200ceaa0c9a923d8049cd61",
+      "localSha256": "2d7fc3de32f50c16f5cc737505f9b574e3068fd22200ceaa0c9a923d8049cd61",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/weread-push/import/mp_searchbiz.py",
+      "remoteSha256": "5b8a795026926f363c41b37d9b1614876351a68afd6a6d38f19af0547537f941",
+      "localSha256": "5b8a795026926f363c41b37d9b1614876351a68afd6a6d38f19af0547537f941",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/weread-push/docs/api.md",
+      "remoteSha256": "146ac3dbce09e8878816b3734dda5999c9f93fe5cfee1a3a1003ad986e7ddb16",
+      "localSha256": "146ac3dbce09e8878816b3734dda5999c9f93fe5cfee1a3a1003ad986e7ddb16",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/weread-push/docs/RUNBOOK.md",
+      "remoteSha256": "380e6cd2ac965335abd4f721a2e958468dbbb598c1ac62d7462c982fc3c794ba",
+      "localSha256": "380e6cd2ac965335abd4f721a2e958468dbbb598c1ac62d7462c982fc3c794ba",
+      "exactMatch": true
+    }
+  ]
+}

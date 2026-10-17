@@ -287,6 +287,14 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 
 ## SRC-061｜微信独立PoC与学校Dify依赖核查（2026-10-17）
 
+> 历史证据：学校UI核查记录仅供追溯。D-045已废弃全部Dify技术路线，下文接入依赖不再生效；不删除原时刻事实或将其记为真实API已接通。
+
 三候选仓库、当前HEAD、许可证和开放问题见S3_B_WECHAT_POC.md；源码只读、离线合成输入隔离于tests，robots限制后不抓文章，不使用静态Cookie或登录绕行。实际文章0，率0/0未测，未正式集成或再分发工具/公众号全文。
 
 负责人指定学校比赛Dify http://172.17.1.46/，仅校园网；Edge已登录UI实际只读确认1.17.1与知识库/API入口，未读Key/传文档/调模型，不登记为公开信息源或扩入官网抓取白名单。学校授权、API范围/费用/安全传输与云端可达仍待核验，见research/s3-b/school-dify-readiness.md。CPU聚合单位由真实GraphQL Schema核对，协议来源为[官方Workers metrics](https://developers.cloudflare.com/analytics/graphql-api/tutorials/querying-workers-metrics/)，不以客户端Wall Time冒充CPU。
+
+## SRC-062｜自研知识检索路线与中断研究资料（2026-10-17）
+
+依据负责人最新明确决定D-045，知识检索采用自研接口+D1关键词/分类/分段，旧Dify研究仅历史归档，不再是数据/软件供应商或待接依赖。没有新数据采集、模型请求、公开素材、部署或数据库写入；来源/版本/审核/outbox保持。
+
+上轮四项目研究中断现场见research/s3-wechat/README.md；四份原始本地项目包只读，thu-push-main忽略规则按负责人新增目录保留。部分GitHub元数据与只读D1快照为已有研究证据，不当实时公众号采集或完整研究已验收。当前技术调整不续做这些实验。
