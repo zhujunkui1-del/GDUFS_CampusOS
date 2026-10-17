@@ -153,7 +153,7 @@ if (process.argv.includes("--migrate-compatible")) {
     consoleState: ready
       ? (
           await sql(
-            "SELECT (SELECT count(*) FROM console_admins) AS admins,(SELECT count(*) FROM console_sessions) AS sessions,(SELECT count(*) FROM console_commands) AS commands,(SELECT count(*) FROM console_public_documents) AS publicDocuments",
+            "SELECT (SELECT count(*) FROM console_admins) AS admins,(SELECT count(*) FROM console_sessions) AS sessions,(SELECT count(*) FROM console_sessions WHERE revoked_at_ms IS NULL AND expires_at_ms>unixepoch('now')*1000) AS activeSessions,(SELECT count(*) FROM console_commands) AS commands,(SELECT count(*) FROM console_public_documents) AS publicDocuments,(SELECT count(*) FROM console_audit_logs WHERE action='auth.login') AS logins,(SELECT count(*) FROM console_audit_logs WHERE action='auth.logout') AS logouts",
           )
         )[0]
       : null,

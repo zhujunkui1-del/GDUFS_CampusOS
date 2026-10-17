@@ -27,11 +27,18 @@ else {
   writeFileSync(path, JSON.stringify(values, null, 2) + "\n", { mode: 0o600 });
 }
 if (
-  values.CONSOLE_AUTH_MODE !== "admin_key" ||
-  values.CONSOLE_ADMIN_EMAILS !== email ||
-  values.CONSOLE_ORIGIN !== "https://campusos-preview.zhujunkui1.workers.dev" ||
-  values.CONSOLE_ADMIN_ACCESS_KEY?.length < 48 ||
-  values.CONSOLE_SESSION_SECRET?.length < 48
+  !z
+    .object({
+      CONSOLE_AUTH_MODE: z.literal("admin_key"),
+      CONSOLE_ADMIN_EMAILS: z.literal(email),
+      CONSOLE_ORIGIN: z.literal(
+        "https://campusos-preview.zhujunkui1.workers.dev",
+      ),
+      CONSOLE_ADMIN_ACCESS_KEY: z.string().min(48).max(200),
+      CONSOLE_SESSION_SECRET: z.string().min(48).max(200),
+    })
+    .strict()
+    .safeParse(values).success
 )
   throw Error(
     "Existing preview Console configuration conflicts; no credentials changed",

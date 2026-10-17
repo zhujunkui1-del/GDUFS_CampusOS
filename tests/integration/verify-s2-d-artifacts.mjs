@@ -41,7 +41,9 @@ for (const privateFile of [
     if (
       typeof value === "string" &&
       value.length > 7 &&
-      /KEY|SECRET|TOKEN|PASSWORD|_CODE/.test(name)
+      (/KEY|SECRET|TOKEN|PASSWORD|_CODE/.test(name) ||
+        (privateFile.endsWith("preview-secrets.json") &&
+          name === "CONSOLE_ADMIN_EMAILS"))
     )
       secrets.push({ name: `console:${name}`, value });
 }
@@ -107,6 +109,7 @@ const credentialFilesIgnored = [
   ".map-tools/s3-a/local-secrets.json",
   ".map-tools/s3-a/preview-secrets.json",
   ".map-tools/s3-a/.dev.vars",
+  ".map-tools/s3-a/admin-access-key.txt",
 ].every((name) => {
   try {
     git("check-ignore", "--", name);

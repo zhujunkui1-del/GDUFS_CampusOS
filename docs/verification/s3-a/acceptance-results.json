@@ -1,21 +1,21 @@
 {
-  "recordedAt": "2026-10-16T20:44:24.539Z",
+  "recordedAt": "2026-10-17T01:28:19.052Z",
   "baseline": "b71e29e",
   "worker": "campusos-preview",
   "url": "https://campusos-preview.zhujunkui1.workers.dev",
-  "deploymentId": "9ce67e07-2df7-4099-82d5-d0b2d11ff08d",
+  "deploymentId": "f3b9fece-38ee-4af0-851b-a6622881058d",
   "versions": [
     {
-      "version_id": "ace425b6-912a-448d-82dc-5fb52e48f678",
+      "version_id": "f602fa2a-265b-479c-ad73-743c9222f198",
       "percentage": 100
     }
   ],
   "typecheck": "passed",
   "lint": "passed",
   "unit": {
-    "passed": 252,
+    "passed": 256,
     "failed": 0,
-    "files": 34
+    "files": 35
   },
   "migrations": {
     "recordedAt": "2026-10-16T20:39:03.516Z",
@@ -85,7 +85,7 @@
   },
   "productionBuild": "Next.js + OpenNext passed via mandatory sanitized deploy:preview",
   "artifactSecurity": {
-    "recordedAt": "2026-10-16T20:44:24.449Z",
+    "recordedAt": "2026-10-17T01:28:18.957Z",
     "baseline": "b71e29e",
     "scannedVariableNames": [
       "MODEL_API_KEY",
@@ -94,12 +94,15 @@
       "console:CONSOLE_SESSION_SECRET",
       "console:CONSOLE_LOCAL_ACCESS_KEY",
       "console:AGENT_SIGNING_SECRET",
+      "console:CONSOLE_ADMIN_EMAILS",
+      "console:CONSOLE_ADMIN_ACCESS_KEY",
+      "console:CONSOLE_SESSION_SECRET",
       "preview:MODEL_API_KEY",
       "preview:AGENT_SIGNING_SECRET"
     ],
     "actualModelKeyChecked": true,
     "repository": {
-      "files": 2525,
+      "files": 1717,
       "matches": []
     },
     "generatedWorkerAndAssets": {
@@ -137,8 +140,8 @@
       "skipped": 0,
       "failed": 0,
       "flaky": 0,
-      "startedAt": "2026-10-16T20:37:38.837Z",
-      "durationMs": 10411.114
+      "startedAt": "2026-10-17T01:15:42.316Z",
+      "durationMs": 11779.311
     },
     {
       "description": "Final Worker Edge: real isolated Console APIs, desktop + mobile viewport",
@@ -146,26 +149,26 @@
       "skipped": 0,
       "failed": 0,
       "flaky": 0,
-      "startedAt": "2026-10-16T20:38:25.166Z",
-      "durationMs": 10624.189
+      "startedAt": "2026-10-17T01:16:42.176Z",
+      "durationMs": 11087.573
     },
     {
-      "description": "Real HTTPS Chrome: closed management gate, public map + all five real Skills",
-      "passed": 4,
+      "description": "Real HTTPS Chrome: administrator key/session/refresh/logout, anonymous gate, map + all five Skills",
+      "passed": 6,
       "skipped": 0,
       "failed": 0,
       "flaky": 0,
-      "startedAt": "2026-10-16T20:40:08.786Z",
-      "durationMs": 26419.492
+      "startedAt": "2026-10-17T01:19:15.057Z",
+      "durationMs": 44954.672999999995
     },
     {
-      "description": "Real HTTPS Edge: closed management gate, public map + all five real Skills",
-      "passed": 4,
+      "description": "Real HTTPS Edge: administrator key/session/refresh/logout, anonymous gate, map + all five Skills",
+      "passed": 6,
       "skipped": 0,
       "failed": 0,
       "flaky": 0,
-      "startedAt": "2026-10-16T20:40:19.149Z",
-      "durationMs": 24577.67
+      "startedAt": "2026-10-17T01:19:25.324Z",
+      "durationMs": 41152.613999999994
     },
     {
       "description": "Real HTTPS Chrome desktop: DeepSeek query, details and two acknowledged map actions",
@@ -177,13 +180,24 @@
       "durationMs": 11353.780999999999
     }
   ],
-  "cloudAdminAuthentication": "NOT_CONFIGURED_FAIL_CLOSED; Access activation/alternative decision pending",
-  "publicAdminAuthenticatedOperations": "NOT_VERIFIED; no anonymous fallback",
+  "cloudAdminAuthentication": "CONFIGURED_AND_VERIFIED: explicit HTTPS admin_key, exact origin, revocable D1 session; Access not used",
+  "publicAdminAuthenticatedOperations": "Verified: catalog/detail reads, refresh recovery, logout, revoked-cookie replay rejection, CSRF/cross-origin denial. Positive source/content mutations tested only in isolated local D1; no fabricated cloud articles or source verification.",
+  "consoleAuthSecrets": [
+    "CONSOLE_ADMIN_ACCESS_KEY",
+    "CONSOLE_ADMIN_EMAILS",
+    "CONSOLE_AUTH_MODE",
+    "CONSOLE_ORIGIN",
+    "CONSOLE_SESSION_SECRET"
+  ],
+  "adminEmailOwnershipVerified": false,
   "consoleCloudState": {
-    "admins": 0,
-    "sessions": 0,
+    "admins": 1,
+    "sessions": 4,
+    "activeSessions": 0,
     "commands": 0,
-    "publicDocuments": 0
+    "publicDocuments": 0,
+    "logins": 4,
+    "logouts": 4
   },
   "model": {
     "testedWorkerVersion": [
@@ -489,7 +503,96 @@
     ],
     "fullIsolateMemory": "not measured",
     "longTermCapacity": "not verified",
-    "authenticatedConsoleCpu": "not measured"
+    "authenticatedConsoleCpu": "See keyModeSample; mixed HTTP methods per path, not per-function attribution"
+  },
+  "keyModeSample": {
+    "invocations": 164,
+    "exceededResources": 0,
+    "paths": [
+      {
+        "path": "/api/console-auth",
+        "samples": 21,
+        "p50Ms": 3,
+        "p95Ms": 9,
+        "over10Ms": 0,
+        "statuses": [
+          200
+        ]
+      },
+      {
+        "path": "/api/admin/overview",
+        "samples": 7,
+        "p50Ms": 2,
+        "p95Ms": 4,
+        "over10Ms": 0,
+        "statuses": [
+          200,
+          401
+        ]
+      },
+      {
+        "path": "/api/admin/sources",
+        "samples": 16,
+        "p50Ms": 0,
+        "p95Ms": 3,
+        "over10Ms": 0,
+        "statuses": [
+          403,
+          401
+        ]
+      },
+      {
+        "path": "/api/admin/content",
+        "samples": 3,
+        "p50Ms": 0,
+        "p95Ms": 0,
+        "over10Ms": 0,
+        "statuses": [
+          401
+        ]
+      },
+      {
+        "path": "/api/admin/jobs",
+        "samples": 3,
+        "p50Ms": 0,
+        "p95Ms": 0,
+        "over10Ms": 0,
+        "statuses": [
+          401
+        ]
+      },
+      {
+        "path": "/api/admin/audit",
+        "samples": 3,
+        "p50Ms": 0,
+        "p95Ms": 1,
+        "over10Ms": 0,
+        "statuses": [
+          401
+        ]
+      },
+      {
+        "path": "/api/admin/admins",
+        "samples": 3,
+        "p50Ms": 0,
+        "p95Ms": 1,
+        "over10Ms": 0,
+        "statuses": [
+          401
+        ]
+      },
+      {
+        "path": "/api/admin/sources/GDUFS-SRC-0001",
+        "samples": 1,
+        "p50Ms": 3,
+        "p95Ms": 3,
+        "over10Ms": 0,
+        "statuses": [
+          200
+        ]
+      }
+    ],
+    "scope": "Controlled read/login/logout and rejected mutations; positive content mutations not run in cloud"
   },
   "realPhone": "NOT_TESTED; viewport only",
   "collectionEnabled": false,

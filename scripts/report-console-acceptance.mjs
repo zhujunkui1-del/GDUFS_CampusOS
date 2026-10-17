@@ -36,12 +36,12 @@ const tests = [
     "Final Worker Edge: real isolated Console APIs, desktop + mobile viewport",
   ),
   browser(
-    ".map-tools/s3-a/cloud-chrome.json",
-    "Real HTTPS Chrome: closed management gate, public map + all five real Skills",
+    ".map-tools/s3-a/cloud-key-chrome.json",
+    "Real HTTPS Chrome: administrator key/session/refresh/logout, anonymous gate, map + all five Skills",
   ),
   browser(
-    ".map-tools/s3-a/cloud-msedge.json",
-    "Real HTTPS Edge: closed management gate, public map + all five real Skills",
+    ".map-tools/s3-a/cloud-key-msedge.json",
+    "Real HTTPS Edge: administrator key/session/refresh/logout, anonymous gate, map + all five Skills",
   ),
   browser(
     ".map-tools/s3-a/live-model.json",
@@ -61,6 +61,9 @@ const percentile = (values, fraction) =>
 const records = read("docs/verification/s3-a/cloud-invocations.json").records;
 const beforeStatic = read(
   "docs/verification/s3-a/cloud-invocations-before-static.json",
+).records;
+const keyRecords = read(
+  "docs/verification/s3-a/key-mode-invocations.json",
 ).records;
 const cpuSummary = (values) => {
   const cpu = values
@@ -111,8 +114,13 @@ const result = {
   artifactSecurity: read("docs/verification/s3-a/security-integrity.json"),
   browserTests: tests,
   cloudAdminAuthentication:
-    "NOT_CONFIGURED_FAIL_CLOSED; Access activation/alternative decision pending",
-  publicAdminAuthenticatedOperations: "NOT_VERIFIED; no anonymous fallback",
+    "CONFIGURED_AND_VERIFIED: explicit HTTPS admin_key, exact origin, revocable D1 session; Access not used",
+  publicAdminAuthenticatedOperations:
+    "Verified: catalog/detail reads, refresh recovery, logout, revoked-cookie replay rejection, CSRF/cross-origin denial. Positive source/content mutations tested only in isolated local D1; no fabricated cloud articles or source verification.",
+  consoleAuthSecrets: cloud.bindings
+    .filter((x) => x.name.startsWith("CONSOLE_"))
+    .map((x) => x.name),
+  adminEmailOwnershipVerified: false,
   consoleCloudState: cloud.consoleState,
   model: {
     testedWorkerVersion: read(
@@ -153,7 +161,29 @@ const result = {
     paths,
     fullIsolateMemory: "not measured",
     longTermCapacity: "not verified",
-    authenticatedConsoleCpu: "not measured",
+    authenticatedConsoleCpu:
+      "See keyModeSample; mixed HTTP methods per path, not per-function attribution",
+  },
+  keyModeSample: {
+    invocations: keyRecords.length,
+    exceededResources: keyRecords.filter((x) => /exceed/i.test(x.outcome))
+      .length,
+    paths: [...new Set(keyRecords.map((x) => x.path))]
+      .filter(
+        (path) =>
+          path?.startsWith("/api/admin/") || path === "/api/console-auth",
+      )
+      .map((path) => ({
+        path,
+        ...cpuSummary(keyRecords.filter((x) => x.path === path)),
+        statuses: [
+          ...new Set(
+            keyRecords.filter((x) => x.path === path).map((x) => x.status),
+          ),
+        ],
+      })),
+    scope:
+      "Controlled read/login/logout and rejected mutations; positive content mutations not run in cloud",
   },
   realPhone: "NOT_TESTED; viewport only",
   collectionEnabled: false,

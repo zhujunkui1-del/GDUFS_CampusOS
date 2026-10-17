@@ -264,3 +264,9 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 技术依据：[D1 batch与参数绑定](https://developers.cloudflare.com/d1/worker-api/d1-database/)、[Access JWT验证](https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/)。实际证据为本地SQLite/workerd、真实指定预览D1迁移/幂等导入和Chrome/Edge截图，Mock与真实云端分列。运营认证未配置时API关闭；无私人学生数据或凭据进入报告。RAG索引/抓取尚未实施，来源登记不代表内容已采集。
 
 后台界面静态化参照[Next静态参数](https://nextjs.org/docs/app/api-reference/functions/generate-static-params)和[查询参数/Suspense](https://nextjs.org/docs/app/api-reference/functions/use-search-params)，本机16.3.8实际构建及OpenNext1.20.10本地/真实云端验证为准，不据官网更新版本假设升级。只缓存空界面，管理数据保持鉴权/no-store。
+
+## SRC-058｜管理员密钥授权与真实HTTPS验证（2026-10-17）
+
+来源为负责人明确选择独立管理员访问密钥的答复和服务端配置，非QQ邮箱验证/学校统一身份授权。密钥以密码学随机数生成，独立于本地/模型/其他项目，只有忽略文件和指定preview Worker Secrets保存；原值不进入Git、报告、URL或截图。唯一管理员标识仅服务端配置，界面截图遮蔽邮箱，身份不赋予学生私人数据读取权限。
+
+实际证据为Chrome/Edge桌面/手机视口的公网登录、真实220候选读取、刷新恢复、退出与旧Cookie拒绝，D1有4次登录/退出审计且活跃会话0。没有在公网填造内容或把候选核验为事实，没有本次Access/扣费授权操作。详见D-042、S3_A_CONSOLE_ACCEPTANCE.md第9节及verification/s3-a/admin-preview-*；本阶段之后无额外模型请求。

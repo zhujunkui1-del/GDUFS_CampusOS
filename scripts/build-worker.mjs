@@ -49,7 +49,9 @@ for (const privateFile of [
     if (
       typeof value === "string" &&
       value.length > 7 &&
-      /KEY|SECRET|TOKEN|PASSWORD|_CODE/.test(name)
+      (/KEY|SECRET|TOKEN|PASSWORD|_CODE/.test(name) ||
+        (privateFile.endsWith("preview-secrets.json") &&
+          name === "CONSOLE_ADMIN_EMAILS"))
     )
       privateValues.push(value);
 }

@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-16T20:40:48.703Z",
+  "at": "2026-10-17T01:21:05.341Z",
   "readOnly": true,
   "accountMatched": true,
   "worker": "campusos-preview",
@@ -29,16 +29,19 @@
   "foreignKeyViolations": 0,
   "activeVersions": [
     {
-      "version_id": "ace425b6-912a-448d-82dc-5fb52e48f678",
+      "version_id": "f602fa2a-265b-479c-ad73-743c9222f198",
       "percentage": 100
     }
   ],
-  "deploymentId": "9ce67e07-2df7-4099-82d5-d0b2d11ff08d",
+  "deploymentId": "f3b9fece-38ee-4af0-851b-a6622881058d",
   "consoleState": {
-    "admins": 0,
-    "sessions": 0,
+    "admins": 1,
+    "sessions": 4,
+    "activeSessions": 0,
     "commands": 0,
-    "publicDocuments": 0
+    "publicDocuments": 0,
+    "logins": 4,
+    "logouts": 4
   },
   "bindings": [
     {
@@ -52,6 +55,26 @@
     {
       "name": "ASSETS",
       "type": "assets"
+    },
+    {
+      "name": "CONSOLE_ADMIN_ACCESS_KEY",
+      "type": "secret_text"
+    },
+    {
+      "name": "CONSOLE_ADMIN_EMAILS",
+      "type": "secret_text"
+    },
+    {
+      "name": "CONSOLE_AUTH_MODE",
+      "type": "secret_text"
+    },
+    {
+      "name": "CONSOLE_ORIGIN",
+      "type": "secret_text"
+    },
+    {
+      "name": "CONSOLE_SESSION_SECRET",
+      "type": "secret_text"
     },
     {
       "name": "DB",

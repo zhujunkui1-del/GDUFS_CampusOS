@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-17T01:18:11.391Z",
+  "recordedAt": "2026-10-17T01:28:18.957Z",
   "baseline": "b71e29e",
   "scannedVariableNames": [
     "MODEL_API_KEY",
@@ -8,6 +8,7 @@
     "console:CONSOLE_SESSION_SECRET",
     "console:CONSOLE_LOCAL_ACCESS_KEY",
     "console:AGENT_SIGNING_SECRET",
+    "console:CONSOLE_ADMIN_EMAILS",
     "console:CONSOLE_ADMIN_ACCESS_KEY",
     "console:CONSOLE_SESSION_SECRET",
     "preview:MODEL_API_KEY",
@@ -15,7 +16,7 @@
   ],
   "actualModelKeyChecked": true,
   "repository": {
-    "files": 1726,
+    "files": 1717,
     "matches": []
   },
   "generatedWorkerAndAssets": {
