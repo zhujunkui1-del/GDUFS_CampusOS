@@ -35,6 +35,8 @@ export function previewApiHandler(
 ): { method: string; handle: Handler } | null {
   if (path === "/api/console-auth")
     return { method, handle: consoleAuthentication };
+  if (/^\/api\/admin\/v2(?:\/[a-zA-Z0-9_-]+){1,3}$/.test(path))
+    return { method, handle: consoleAdministration };
   if (
     /^\/api\/admin\/(?:overview|audit|admins|sources(?:\/[^/]+(?:\/(?:verify|enabled|collection-policy|import-policy))?)?|content(?:\/[^/]+(?:\/(?:review|publish|withdraw|restore|versions\/\d{1,4}))?)?|jobs(?:\/[^/]+(?:\/(?:claim|commit|pause|resume|cancel))?)?|admins\/[^/]+\/revoke)$/.test(
       path,

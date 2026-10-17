@@ -33,7 +33,7 @@ const documentScope =
 const json = (value: unknown) => JSON.stringify(value);
 const parse = (value: string | number | null | undefined) =>
   JSON.parse(String(value || "null"));
-const sqlLegacyType = (type: string) =>
+export const sqlLegacyType = (type: string) =>
   ["official_web", "login_service"].includes(type)
     ? "official_web"
     : ["wechat_subscription", "wechat_service"].includes(type)
@@ -44,7 +44,7 @@ const sqlLegacyType = (type: string) =>
 const sourceCreateSchema = SourceInputSchema.extend({
   commandId: z.string().uuid(),
 }).strict();
-function sourceLocator(value: z.infer<typeof SourceInputSchema>) {
+export function sourceLocator(value: z.infer<typeof SourceInputSchema>) {
   if (
     ["official_web", "third_party_web", "login_service"].includes(
       value.sourceType,
@@ -215,10 +215,11 @@ export class ConsoleStore {
     permission = "write",
     sourceId?: string,
     before: Statement[] = [],
+    trustedDetails: Record<string, unknown> = {},
   ) {
     consolePermission(this.actor, permission);
     const fingerprint = await tokenHash(json([action, id, payload]));
-    const details: Record<string, unknown> = {};
+    const details: Record<string, unknown> = { ...trustedDetails };
     if (payload && typeof payload === "object")
       for (const key of [
         "note",
@@ -232,6 +233,11 @@ export class ConsoleStore {
         "leaseHash",
         "sourceVersion",
         "policyVersion",
+        "syncHours",
+        "hours",
+        "autoSync",
+        "networkBudget",
+        "earliestImportDay",
       ]) {
         const value = (payload as Record<string, unknown>)[key];
         if (["string", "number", "boolean"].includes(typeof value))

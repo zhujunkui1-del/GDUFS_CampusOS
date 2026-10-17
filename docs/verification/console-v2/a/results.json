@@ -1,0 +1,33 @@
+{
+  "recordedAt": "2026-10-17T19:28:07.066Z",
+  "phase": "V2-A",
+  "localOnly": true,
+  "unit": {
+    "file": "a-all-unit",
+    "passed": 307,
+    "failed": 0
+  },
+  "chrome": {
+    "file": "a-chrome-final",
+    "passed": 2,
+    "failed": 0
+  },
+  "edge": {
+    "file": "a-edge",
+    "passed": 2,
+    "failed": 0
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "workerBuild": "passed",
+  "credentialScanFiles": 1357,
+  "credentialHits": 0,
+  "localMigration": "0014",
+  "remoteMigration": false,
+  "unfinishedNextPhases": [
+    "V2-B",
+    "V2-C",
+    "V2-D"
+  ],
+  "firstFailuresPreserved": true
+}

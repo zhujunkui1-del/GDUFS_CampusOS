@@ -1,0 +1,9 @@
+# Console V2 数据模型
+
+只增量扩展现有权威。来源关联/运营证据、同步覆盖/next_sync_at放knowledge_sources。全局配置为单行版本化控制对象，命令继续原console_commands（job控制对象作用域）、审计原console_audit_logs，不另建文章/审核/采集任务权威。
+
+来源—文章沿原knowledge_documents.source_id和document_origins多出处；日后移除一个来源不物理删除其他来源支持的文档。采集仍ingestion_jobs/steps/租约/fence，来源暂停与策略版本变更拒绝迟到提交。
+
+新增职责分阶段：全局引擎配置/实测存储样本；来源级自动发布政策/内容检查/系统主体；版本正文按内容修订去重、原业务快照可解析引用且旧快照不改；白名单、清理计划/成员/墓碑；runner作用域凭据与心跳。系统身份复用console_admins增加principal_type/capability，不签发人类Console会话，权限仅指定动作，不读取学生表。
+
+不重建现有表、不关闭外键。全局策略和清理控制沿现有命令事务/CAS，独立职责表不复制文章。原版本存在fetch/evidence复合外键，因此永久清理优先清正文/片段和大版本载荷，保留最小文档/快照墓碑及许可/审计/获取证据；不强删父行破坏FK。

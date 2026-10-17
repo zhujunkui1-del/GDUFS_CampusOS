@@ -1,0 +1,22 @@
+// Disposable SQLite only. No persistent/local/cloud database changes.
+import {DatabaseSync} from 'node:sqlite';
+import {readFileSync,readdirSync,mkdirSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+const files=readdirSync('migrations').filter(f=>f.endsWith('.sql')).sort(),current=files.filter(f=>f>'0013_content_edit_intake_guard.sql');
+for(const f of current)assert(!/\b(?:DROP\s+TABLE|DELETE\s+FROM|PRAGMA\s+foreign_keys\s*=\s*OFF|ALTER\s+TABLE\s+\w+\s+RENAME)\b/i.test(readFileSync('migrations/'+f,'utf8')));
+function baseline(){const db=new DatabaseSync(':memory:');db.exec('PRAGMA foreign_keys=ON');for(const f of files.filter(f=>f<='0013_content_edit_intake_guard.sql'))db.exec(readFileSync('migrations/'+f,'utf8'));return db;}
+function seed(db){db.exec(`INSERT INTO console_admins(id,email,role) VALUES('v2-old-admin','old@example.invalid','admin');
+INSERT INTO users(id,display_name) VALUES('v2-private-user','isolated');
+INSERT INTO conversations(id,user_id,owner_key,expires_at_ms) VALUES('v2-private-chat','v2-private-user','u:v2-private-user',4102444800000);
+INSERT INTO conversation_messages(id,conversation_id,role,content) VALUES('v2-private-message','v2-private-chat','user','do not modify isolated private content');
+INSERT INTO knowledge_sources(id,display_name,source_type,allowed_domains_json,entry_urls_json,fetch_policy_json,console_managed,enabled,verification_status,permission_status,authorization_status) VALUES('v2-old-source','isolated old source','official_web','[]','[]','{}',1,1,'verified','approved','approved');
+INSERT INTO knowledge_documents(id,source_id,title,url,body,content_hash,fetched_at,campus_scope,data_domain) VALUES('v2-old-doc','v2-old-source','old metadata','https://example.invalid/old','old body','old-hash','2020-01-01','all','campus_announcements');
+INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at) VALUES('v2-old-doc',1,'{"immutable":true}','v2-old-admin','2020-01-01');`);}
+const oldTables=['knowledge_sources','knowledge_documents','console_content_versions','conversation_messages','users','conversations'];
+const oldCols={};const schema=baseline();for(const table of oldTables)oldCols[table]=schema.prepare(`PRAGMA table_info(${table})`).all().map(c=>c.name);schema.close();
+const fingerprint=db=>JSON.stringify(Object.fromEntries(oldTables.map(t=>[t,db.prepare(`SELECT ${oldCols[t].map(c=>'"'+c+'"').join(',')} FROM ${t} ORDER BY 1`).all()])));
+const empty=baseline();for(const f of current)empty.exec(readFileSync('migrations/'+f,'utf8'));assert.equal(empty.prepare('PRAGMA foreign_key_check').all().length,0);const businessTables=empty.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().length;empty.close();
+const populated=baseline();seed(populated);const before=fingerprint(populated);for(const f of current)populated.exec(readFileSync('migrations/'+f,'utf8'));assert.equal(fingerprint(populated),before);assert.equal(populated.prepare('SELECT enabled FROM knowledge_sources WHERE id=?').get('v2-old-source').enabled,1);assert.equal(populated.prepare('PRAGMA foreign_key_check').all().length,0);assert.equal(populated.prepare('PRAGMA integrity_check').get().integrity_check,'ok');populated.close();
+const rollback=baseline();seed(rollback);const original=fingerprint(rollback);rollback.exec('BEGIN');try{for(const f of current)rollback.exec(readFileSync('migrations/'+f,'utf8'));rollback.exec("INSERT INTO users(id,display_name) VALUES('v2-private-user','duplicate')");assert.fail('expected rollback');}catch{rollback.exec('ROLLBACK');}assert.equal(fingerprint(rollback),original);assert.equal(rollback.prepare("SELECT name FROM sqlite_master WHERE name='console_engine_settings'").get(),undefined);rollback.close();
+const report={recordedAt:new Date().toISOString(),emptyMigration:true,populatedUpgrade:true,oldRowsAndPrivateDataUnchanged:true,failedMigrationRollback:true,foreignKeyViolations:0,businessTables,dangerousTableOperations:false,remoteTouched:false,migrations:current.map(file=>({file,sha256:createHash('sha256').update(readFileSync('migrations/'+file,'utf8').replace(/\r\n/g,'\n').trimEnd()+'\n').digest('hex')}))};mkdirSync('docs/verification/console-v2',{recursive:true});writeFileSync('docs/verification/console-v2/database-upgrade.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));

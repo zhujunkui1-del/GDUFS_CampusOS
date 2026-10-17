@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ManualImportForm } from "./manual-import-form";
+import { ConsoleV2Workspace } from "./v2-workspace";
 import {
   deriveConsoleCredential,
   type ConsoleCredentialDerivation,
@@ -20,8 +21,7 @@ import {
   LayoutDashboard,
   Library,
   ClipboardCheck,
-  FileText,
-  ListChecks,
+  Archive,
   ShieldCheck,
   LogOut,
   Plus,
@@ -60,10 +60,9 @@ type List<T> = { items: T[]; total?: number; offset: number; limit: number };
 const navigation = [
   { id: "", label: "总览", icon: LayoutDashboard },
   { id: "sources", label: "信息源", icon: Library },
-  { id: "jobs", label: "采集任务", icon: ListChecks },
   { id: "reviews", label: "内容审核", icon: ClipboardCheck },
-  { id: "content", label: "内容记录", icon: FileText },
-  { id: "audit", label: "审计日志", icon: ShieldCheck },
+  { id: "retention", label: "过时信息清理", icon: Archive },
+  { id: "whitelist", label: "白名单", icon: ShieldCheck },
 ];
 const date = (value: string | null | undefined) =>
   value
@@ -113,10 +112,23 @@ const recordHref = (section: "sources" | "content", id: string) =>
   `/admin/${section}?record=${encodeURIComponent(id)}`;
 
 export function ConsoleApp() {
+  const router = useRouter();
   const pathname = usePathname(),
     parts = pathname.split("/").filter(Boolean).slice(1),
     section = parts[0] || "",
     id = useSearchParams().get("record");
+  useEffect(() => {
+    if (section === "jobs") router.replace("/admin?view=jobs");
+    if (section === "audit") router.replace("/admin?view=history");
+    if (section === "content")
+      router.replace(
+        id === "new"
+          ? "/admin/sources?view=import"
+          : id
+            ? "/admin/sources?article=" + encodeURIComponent(id)
+            : "/admin/sources",
+      );
+  }, [section, id, router]);
   const [auth, setAuth] = useState<Auth | null>(null),
     [error, setError] = useState(""),
     [checking, setChecking] = useState(true),
@@ -330,39 +342,29 @@ export function ConsoleApp() {
           </p>
         )}
         <main id="console-main" key={pathname + ":" + (id || "")}>
-          {section === "" ? (
-            <Overview request={request} />
-          ) : section === "sources" ? (
-            id ? (
-              <SourceEditor
-                key={id}
-                id={id}
-                request={request}
-                actor={auth.actor!}
-              />
-            ) : (
-              <Sources request={request} />
-            )
-          ) : section === "content" ? (
-            id ? (
+          <ConsoleV2Workspace
+            section={section}
+            id={id}
+            request={request}
+            actor={auth.actor!}
+            Dialog={Confirm}
+            article={(id) => (
               <ContentEditor
                 key={id}
                 id={id}
                 request={request}
                 actor={auth.actor!}
               />
-            ) : (
-              <ContentList request={request} />
-            )
-          ) : section === "reviews" ? (
-            <ContentList request={request} review />
-          ) : section === "jobs" ? (
-            <Jobs request={request} />
-          ) : section === "audit" ? (
-            <Audit request={request} />
-          ) : (
-            <Message>未找到该后台页面。</Message>
-          )}
+            )}
+            jobs={() => <Jobs request={request} />}
+            history={() => <Audit request={request} />}
+            advancedSource={(id) => (
+              <SourceEditor id={id} request={request} actor={auth.actor!} />
+            )}
+            manualImport={() => (
+              <ManualImportForm request={request} actor={auth.actor!} />
+            )}
+          />
         </main>
       </div>
     </div>
@@ -448,7 +450,7 @@ function Pagination({
     </div>
   );
 }
-function Overview({ request }: { request: Client }) {
+export function Overview({ request }: { request: Client }) {
   const { data, error } = useLoad(
     () =>
       request<{
@@ -503,7 +505,7 @@ function Overview({ request }: { request: Client }) {
     </>
   );
 }
-function Sources({ request }: { request: Client }) {
+export function Sources({ request }: { request: Client }) {
   const [q, setQ] = useState(""),
     [search, setSearch] = useState(""),
     [type, setType] = useState(""),
@@ -1149,7 +1151,7 @@ function Verification({
     </AlertDialog.Root>
   );
 }
-function ContentList({
+export function ContentList({
   request,
   review = false,
 }: {

@@ -9,9 +9,16 @@ export const metadata: Metadata = {
 // still goes through the authenticated management API.
 export const dynamicParams = false;
 export function generateStaticParams() {
-  return [[], ["sources"], ["jobs"], ["reviews"], ["content"], ["audit"]].map(
-    (section) => ({ section }),
-  );
+  return [
+    [],
+    ["sources"],
+    ["jobs"],
+    ["reviews"],
+    ["content"],
+    ["audit"],
+    ["retention"],
+    ["whitelist"],
+  ].map((section) => ({ section }));
 }
 export default function ConsolePage() {
   return (

@@ -7,7 +7,9 @@ db.execute("PRAGMA foreign_keys = ON")
 for migration in sorted(Path("migrations").glob("*.sql")):
     db.executescript(migration.read_text(encoding="utf-8"))
 tables = [row[0] for row in db.execute("SELECT name FROM sqlite_master WHERE type='table'")]
-assert all(db.execute(f'SELECT COUNT(*) FROM "{name}"').fetchone()[0] == 0 for name in tables)
+seeded_controls = {'console_engine_settings': 1}
+assert all(db.execute(f'SELECT COUNT(*) FROM "{name}"').fetchone()[0] == seeded_controls.get(name, 0) for name in tables)
+assert db.execute("SELECT id,sync_hours,network_budget,earliest_import_day FROM console_engine_settings").fetchone() == ('console-v2-settings', 24, 20, None)
 
 def rejects(sql, args=()):
     try:
@@ -37,4 +39,4 @@ assert db.execute("SELECT status FROM campus_places WHERE id='test-place'").fetc
 assert db.execute("SELECT verified FROM path_edges WHERE id='test-edge'").fetchone()[0] == 0
 assert not list(db.execute("PRAGMA foreign_key_check"))
 assert db.execute("PRAGMA integrity_check").fetchone()[0] == 'ok'
-print(f"PASS: {len(tables)} empty tables migrated; source approval, graph verification, ownership, campus and foreign-key constraints passed. All test fixtures remained in memory.")
+print(f"PASS: {len(tables)} tables migrated with only declared engine controls; source approval, graph verification, ownership, campus and foreign-key constraints passed. All test fixtures remained in memory.")

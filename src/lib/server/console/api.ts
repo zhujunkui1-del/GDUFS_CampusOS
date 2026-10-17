@@ -10,7 +10,8 @@ import {
   closeConsoleSession,
   consoleCookie,
 } from "./auth";
-import { ManualImportStore } from "./manual-store";
+import { ConsoleGovernanceStore } from "./v2-governance";
+import { consoleV2Api } from "./v2-api";
 
 export async function consoleAuthentication(request: Request) {
   let setCookie: string | undefined;
@@ -86,7 +87,7 @@ export const consoleAdministration = withApi(async (request) => {
     request,
     !["GET", "HEAD"].includes(request.method),
   );
-  const store = new ManualImportStore(
+  const store = new ConsoleGovernanceStore(
     context.config.db,
     context.actor,
     undefined,
@@ -102,6 +103,8 @@ export const consoleAdministration = withApi(async (request) => {
   if (id) ConsoleIdSchema.parse(id);
   const query = Object.fromEntries(new URL(request.url).searchParams);
   const read = () => readJson(request, 262144);
+  if (section === "v2")
+    return consoleV2Api(store, request, path.slice(1), query);
   if (request.method === "GET") {
     if (section === "overview" && !id)
       return {

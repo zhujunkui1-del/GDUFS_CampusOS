@@ -4,7 +4,7 @@ import { readFileSync, readdirSync, mkdirSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 const files = readdirSync("migrations")
-  .filter((f) => f.endsWith(".sql"))
+  .filter((f) => f.endsWith(".sql") && f <= "0013_content_edit_intake_guard.sql")
   .sort();
 const target = "0012_manual_intake_and_evidence.sql";
 const sql = files
