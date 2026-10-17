@@ -24,10 +24,10 @@ test("real HTTPS preview keeps management closed and the public map independent"
     const response = await request.get("/api/admin/" + path, {
       headers: { "X-User-Role": "admin", "X-User-Id": "forged" },
     });
-    expect(response.status()).toBe(503);
+    expect(response.status()).toBe(401);
     expect(response.headers()["cache-control"]).toContain("no-store");
     const body = await response.json();
-    expect(body.error.code).toBe("SERVICE_UNAVAILABLE");
+    expect(body.error.code).toBe("UNAUTHORIZED");
     expect(body.data).toBeUndefined();
   }
   const forged = await request.post("/api/admin/sources", {
@@ -37,20 +37,20 @@ test("real HTTPS preview keeps management closed and the public map independent"
       displayName: "MUST_NOT_BE_INSERTED",
     },
   });
-  expect(forged.status()).toBe(503);
+  expect(forged.status()).toBe(401);
   const dir = "docs/verification/s3-a";
   await mkdir(dir, { recursive: true });
   const prefix = `${dir}/preview-${process.env.PLAYWRIGHT_CHANNEL}-${info.project.name}`;
   await page.goto("/admin");
   await expect(
-    page.getByText("管理员登录尚未配置。", { exact: true }),
+    page.getByLabel("管理员访问密钥", { exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("button", { name: "保存信息源" })).toHaveCount(0);
   await page.screenshot({ path: prefix + "-closed.png", fullPage: true });
   for (const section of ["sources", "jobs", "reviews", "content", "audit"]) {
     await page.goto(`/admin/${section}?record=not-authorized`);
     await expect(
-      page.getByText("管理员登录尚未配置。", { exact: true }),
+      page.getByLabel("管理员访问密钥", { exact: true }),
     ).toBeVisible();
     await expect(
       page.locator(".console-source-row,.console-audit-row"),

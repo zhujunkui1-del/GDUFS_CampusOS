@@ -13,6 +13,8 @@ export type ConsoleBindings = {
   mode: string;
   secret: string;
   localKey: string;
+  adminKey?: string;
+  origin?: string;
   emails: string[];
   team: string;
   audience: string;
@@ -44,6 +46,8 @@ export function consoleBindings(): ConsoleBindings {
     mode: value("CONSOLE_AUTH_MODE"),
     secret: value("CONSOLE_SESSION_SECRET"),
     localKey: value("CONSOLE_LOCAL_ACCESS_KEY"),
+    adminKey: value("CONSOLE_ADMIN_ACCESS_KEY"),
+    origin: value("CONSOLE_ORIGIN"),
     emails: parsed.data,
     team: value("CONSOLE_ACCESS_TEAM_DOMAIN"),
     audience: value("CONSOLE_ACCESS_AUD"),
@@ -69,8 +73,27 @@ function accessConfig(config: ConsoleBindings) {
 }
 export function consoleMode(request: Request, config: ConsoleBindings) {
   if (localConsole(request, config)) return "local" as const;
+  if (config.mode === "admin_key") {
+    const url = new URL(request.url);
+    if (
+      !["preview", "production"].includes(config.environment) ||
+      url.protocol !== "https:" ||
+      url.origin !== config.origin ||
+      config.emails.length !== 1 ||
+      !config.adminKey ||
+      config.adminKey.length < 40 ||
+      config.adminKey.length > 200
+    )
+      throw new ApiError("SERVICE_UNAVAILABLE", "管理员登录尚未配置。");
+    return "key" as const;
+  }
   accessConfig(config);
   return "access" as const;
+}
+function consoleCredential(mode: "local" | "key", config: ConsoleBindings) {
+  return mode === "local"
+    ? { prefix: "local:", key: config.localKey }
+    : { prefix: "admin_key:", key: config.adminKey! };
 }
 export async function verifyConsoleAccess(
   token: string,
@@ -174,6 +197,7 @@ export async function createConsoleSession(
   resolver?: JWTVerifyGetKey,
 ) {
   sameOrigin(request);
+  const mode = consoleMode(request, config);
   await consoleLimit(
     config,
     "login:" + (request.headers.get("CF-Connecting-IP") || "local"),
@@ -186,17 +210,18 @@ export async function createConsoleSession(
     accessHash: string;
     expiresAt: number;
   };
-  if (localConsole(request, config)) {
+  if (mode === "local" || mode === "key") {
+    const credential = consoleCredential(mode, config);
     const parsed = z
       .object({ key: z.string().min(40).max(200) })
       .strict()
       .parse(body);
-    if (!(await equal(parsed.key, config.localKey)))
+    if (!(await equal(parsed.key, credential.key)))
       throw new ApiError("UNAUTHORIZED", "管理员身份无效或已撤销。");
     identity = {
       email: config.emails[0],
-      subject: "local:" + config.emails[0],
-      accessHash: await tokenHash("local:" + config.localKey),
+      subject: credential.prefix + config.emails[0],
+      accessHash: await tokenHash(credential.prefix + credential.key),
       expiresAt: now + 3600000,
     };
   } else {
@@ -280,6 +305,7 @@ export async function requireConsole(
   logoutOnly = false,
 ) {
   sameOrigin(request);
+  const mode = consoleMode(request, config);
   const raw = cookie(request);
   if (!/^[A-Za-z0-9_-]{40,100}$/.test(raw))
     throw new ApiError("UNAUTHORIZED", "请先登录管理后台。");
@@ -292,12 +318,16 @@ export async function requireConsole(
     .first<ConsoleActor & { access_hash: string; expires_at_ms: number }>();
   if (!row) throw new ApiError("UNAUTHORIZED", "管理员身份无效或已撤销。");
   if (
-    localConsole(request, config) &&
-    (row.access_hash !== (await tokenHash("local:" + config.localKey)) ||
+    (mode === "local" || mode === "key") &&
+    (row.access_hash !==
+      (await tokenHash(
+        consoleCredential(mode, config).prefix +
+          consoleCredential(mode, config).key,
+      )) ||
       !config.emails.includes(row.email))
   )
     throw new ApiError("UNAUTHORIZED", "管理员身份无效或已撤销。");
-  if (!logoutOnly && !localConsole(request, config)) {
+  if (!logoutOnly && mode === "access") {
     const identity = await verifyConsoleAccess(
       request.headers.get("Cf-Access-Jwt-Assertion") || "",
       config,
@@ -353,8 +383,9 @@ export async function closeConsoleSession(
         "UPDATE console_sessions SET revoked_at_ms=? WHERE token_hash=? AND admin_id=?",
       )
       .bind(Date.now(), context.sessionHash, actor.id),
-    // Local development key remains reusable; public Access JWT is revoked for this Console.
-    ...(!localConsole(request, config)
+    // Key sessions are revoked individually; rotating the key invalidates all.
+    // Access JWTs are additionally revoked for this Console.
+    ...(config.mode === "access"
       ? [
           config.db
             .prepare(

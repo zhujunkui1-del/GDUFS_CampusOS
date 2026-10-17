@@ -37,7 +37,7 @@ import {
 
 type Auth = {
   authenticated: boolean;
-  mode: "local" | "access";
+  mode: "local" | "key" | "access";
   actor?: ConsoleActor;
   csrf?: string;
   environment?: string;
@@ -234,7 +234,7 @@ export function ConsoleApp() {
           <h1>内容运营后台</h1>
           {checking ? (
             <Message>正在验证管理员身份…</Message>
-          ) : auth?.mode === "local" ? (
+          ) : auth?.mode === "local" || auth?.mode === "key" ? (
             <form onSubmit={signIn}>
               <label>
                 管理员访问密钥
@@ -256,7 +256,7 @@ export function ConsoleApp() {
               <button onClick={() => void connect()}>重新验证</button>
             </>
           )}
-          {error && auth?.mode === "local" && (
+          {error && (auth?.mode === "local" || auth?.mode === "key") && (
             <p className="console-error" role="alert">
               {error}
             </p>
@@ -292,7 +292,7 @@ export function ConsoleApp() {
       </aside>
       <div className="console-workspace">
         <header className="console-header">
-          <span>{auth.actor?.email}</span>
+          <span>{auth.actor?.email.replace(/^(.{2}).+(@)/, "$1•••$2")}</span>
           <span className="console-environment">
             {auth.environment === "local" ? "本地" : "预览"}
           </span>
