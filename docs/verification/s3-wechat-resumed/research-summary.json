@@ -1,0 +1,62 @@
+{
+  "checkedAt": "2026-10-17T10:07:52.679Z",
+  "baseline": "206e01d",
+  "reports": [
+    "docs/research/S3_WECHAT_OPEN_SOURCE_COMPARISON.md",
+    "docs/research/S3_WECHAT_POC_PLAN.md",
+    "docs/research/S3_THU_PUSH_ADAPTATION.md",
+    "docs/research/S3_SOURCE_PIPELINE_RECOMMENDATION.md"
+  ],
+  "linksChecked": 63,
+  "brokenLinks": [],
+  "matrixTwentyCapabilities": true,
+  "runtimeChanged": [],
+  "abAssertions": {
+    "probes": 18,
+    "assertions_passed": 18,
+    "assertions_failed": 0,
+    "warning": "Passing defect-reproduction assertions are not upstream feature success."
+  },
+  "werssChecks": {
+    "total": 26,
+    "passed": 26,
+    "gatewayIsResearchOnly": true
+  },
+  "thu": {
+    "upstreamTestsRun": 81,
+    "upstreamFailures": 0,
+    "upstreamErrors": 0,
+    "probesCompleted": 17,
+    "probesTotal": 17,
+    "meaning": "Probes observe pinned upstream behavior; completed does not mean CampusOS requirements pass.",
+    "liveArticleRequests": 0,
+    "liveModelRequests": 0,
+    "liveSmtpSends": 0
+  },
+  "campus": {
+    "checkedAt": "2026-10-17T09:51:57.308Z",
+    "scope": "offline research diagnostics, no network or cloud writes",
+    "tests": 10,
+    "passed": 8,
+    "knownContractFailures": [
+      "R01 publication and event time remain independent",
+      "R02 registration deadline is not an event start"
+    ],
+    "strictAssertionsUnchanged": true,
+    "reproductionPassed": true,
+    "campusContractAcceptancePassed": false,
+    "explanation": "R01/R02 require exact times for Chinese 日HH:mm without whitespace; current parser returns null. These remain failed requirements, not fixed or approved."
+  },
+  "scope": {
+    "liveWechatArticles": 0,
+    "modelCalls": 0,
+    "smtpSends": 0,
+    "cloudD1Reads": 0,
+    "cloudD1Writes": 0,
+    "migrations": false,
+    "deployment": false,
+    "newResources": false
+  },
+  "researchComplete": true,
+  "productionWechatOrS3CAccepted": false
+}

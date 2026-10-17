@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-17T09:51:57.308Z",
+  "scope": "offline research diagnostics, no network or cloud writes",
+  "tests": 10,
+  "passed": 8,
+  "knownContractFailures": [
+    "R01 publication and event time remain independent",
+    "R02 registration deadline is not an event start"
+  ],
+  "strictAssertionsUnchanged": true,
+  "reproductionPassed": true,
+  "campusContractAcceptancePassed": false,
+  "explanation": "R01/R02 require exact times for Chinese 日HH:mm without whitespace; current parser returns null. These remain failed requirements, not fixed or approved."
+}

@@ -1,0 +1,152 @@
+{
+  "checkedAt": "2026-10-17T09:51:03.570Z",
+  "method": "Pinned public Git blobs and read-only supplied packages; no application imported or executed",
+  "files": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/README.zh-CN.md",
+      "pinnedSha256": "b4421ca6fdcba3566f0d4005501f41a3e060fa00b649be4b6278d376d547c5e9",
+      "localSha256": "b4421ca6fdcba3566f0d4005501f41a3e060fa00b649be4b6278d376d547c5e9",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/LICENSE",
+      "pinnedSha256": "8aaac477797f18afb9b8da33a093a770485d380acc6e942761343dc8993ee87a",
+      "localSha256": "8aaac477797f18afb9b8da33a093a770485d380acc6e942761343dc8993ee87a",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/core/article_content.py",
+      "pinnedSha256": "4aca553cf8ede3d1d70727072ababf1a13598cc8e5d7ca976cd93a8b9f8d35a9",
+      "localSha256": "4aca553cf8ede3d1d70727072ababf1a13598cc8e5d7ca976cd93a8b9f8d35a9",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/core/wx/model/weread_mp.py",
+      "pinnedSha256": "29526c6c1b3ef4fb8b1a5c0c3f7e91eaae9d252cc2d4cbbdffa2a2d3822e784c",
+      "localSha256": "29526c6c1b3ef4fb8b1a5c0c3f7e91eaae9d252cc2d4cbbdffa2a2d3822e784c",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/driver/wx_api.py",
+      "pinnedSha256": "1c463e557b21cfa5627b86ebdedaa3de76a2facc51edac03e31b248563d35918",
+      "localSha256": "1c463e557b21cfa5627b86ebdedaa3de76a2facc51edac03e31b248563d35918",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/apis/mps.py",
+      "pinnedSha256": "c1c139b51e0c4d0ed04965ca99fca65d0771fdd3ffe2774f5cdbda1d4b757c53",
+      "localSha256": "c1c139b51e0c4d0ed04965ca99fca65d0771fdd3ffe2774f5cdbda1d4b757c53",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/core/models/article.py",
+      "pinnedSha256": "e60aba385f0e6de81051c4910c66a9d7ac1f78d1af7e7d4c9087cfc0b1dc6c60",
+      "localSha256": "e60aba385f0e6de81051c4910c66a9d7ac1f78d1af7e7d4c9087cfc0b1dc6c60",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/core/models/feed.py",
+      "pinnedSha256": "c4ec9298516d0d42f026f9fad234d7f02e298191f4de6fe2c7da2fd86845912e",
+      "localSha256": "c4ec9298516d0d42f026f9fad234d7f02e298191f4de6fe2c7da2fd86845912e",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/apis/article.py",
+      "pinnedSha256": "1ce090810d15215b8f3b26107afaedf20c53cd0b4bd02dc32436772baf2418d4",
+      "localSha256": "1ce090810d15215b8f3b26107afaedf20c53cd0b4bd02dc32436772baf2418d4",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/apis/message_task.py",
+      "pinnedSha256": "a88b4966edc10ba93adb4359054b4e8c429166bdeb3dd3c4e4de050c45f852d6",
+      "localSha256": "a88b4966edc10ba93adb4359054b4e8c429166bdeb3dd3c4e4de050c45f852d6",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/jobs/article.py",
+      "pinnedSha256": "8df320808b360d008c8a3f26fdec42651e11819f58c3c49d71327e6453d72dbf",
+      "localSha256": "8df320808b360d008c8a3f26fdec42651e11819f58c3c49d71327e6453d72dbf",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/jobs/mps.py",
+      "pinnedSha256": "726b29cd6b28a572348dda0badfef062ebd891dc84b7dcc1fcb93bd76bcac35b",
+      "localSha256": "726b29cd6b28a572348dda0badfef062ebd891dc84b7dcc1fcb93bd76bcac35b",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/requirements.txt",
+      "pinnedSha256": "3bc902d4a6b32cf118d628ac93290613b72e3526aab190bebc2caa878d314dc8",
+      "localSha256": "3bc902d4a6b32cf118d628ac93290613b72e3526aab190bebc2caa878d314dc8",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/Dockerfile",
+      "pinnedSha256": "f781760c6f4bcd6234c4dbbf6f52e2884e76acaaacd40c250ef9dc8fda52e63e",
+      "localSha256": "f781760c6f4bcd6234c4dbbf6f52e2884e76acaaacd40c250ef9dc8fda52e63e",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/README.md",
+      "pinnedSha256": "5ff31cf46ad352875940a01c89fb85119229bb6a73fd0c9338aef73dfaa9dbf5",
+      "localSha256": "5ff31cf46ad352875940a01c89fb85119229bb6a73fd0c9338aef73dfaa9dbf5",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/LICENSE",
+      "pinnedSha256": "21f2adc5a994f75dff903c21fc1367c935b0fe071bd32a563d400d9aba5ef426",
+      "localSha256": "21f2adc5a994f75dff903c21fc1367c935b0fe071bd32a563d400d9aba5ef426",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/weread-push/README.md",
+      "pinnedSha256": "2d7fc3de32f50c16f5cc737505f9b574e3068fd22200ceaa0c9a923d8049cd61",
+      "localSha256": "2d7fc3de32f50c16f5cc737505f9b574e3068fd22200ceaa0c9a923d8049cd61",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/weread-push/import/mp_searchbiz.py",
+      "pinnedSha256": "5b8a795026926f363c41b37d9b1614876351a68afd6a6d38f19af0547537f941",
+      "localSha256": "5b8a795026926f363c41b37d9b1614876351a68afd6a6d38f19af0547537f941",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/weread-push/docs/api.md",
+      "pinnedSha256": "146ac3dbce09e8878816b3734dda5999c9f93fe5cfee1a3a1003ad986e7ddb16",
+      "localSha256": "146ac3dbce09e8878816b3734dda5999c9f93fe5cfee1a3a1003ad986e7ddb16",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main/weread-push/docs/RUNBOOK.md",
+      "pinnedSha256": "380e6cd2ac965335abd4f721a2e958468dbbb598c1ac62d7462c982fc3c794ba",
+      "localSha256": "380e6cd2ac965335abd4f721a2e958468dbbb598c1ac62d7462c982fc3c794ba",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/web.py",
+      "pinnedSha256": "53827fcada8158906ef8c6ad73583793c53530395a1ef4805b2190ee81e4789c",
+      "localSha256": "53827fcada8158906ef8c6ad73583793c53530395a1ef4805b2190ee81e4789c",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/apis/rss.py",
+      "pinnedSha256": "b792a35551a956f86f4f58b871c224e83456ac8e06f34ad22f1dc1c52e5a0224",
+      "localSha256": "b792a35551a956f86f4f58b871c224e83456ac8e06f34ad22f1dc1c52e5a0224",
+      "exactMatch": true
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/core/db.py",
+      "pinnedSha256": "ff5b8a479eb2b89e4dff4c2bd51ff6ba9d16ac7fe65ddb795b564472e8e64513",
+      "localSha256": "ff5b8a479eb2b89e4dff4c2bd51ff6ba9d16ac7fe65ddb795b564472e8e64513",
+      "exactMatch": true
+    }
+  ],
+  "historicalFeedList": {
+    "path": "weread-push/feeds/feeds-132.json",
+    "sha256": "14c7080dfa2e99fa04ee018e78b32e222ee8b7056e3e7ed75347fcb6acc9c8f1",
+    "rows": 132,
+    "uniqueBiz": 132,
+    "uniqueNames": 132,
+    "articleRecordsFetched": 0
+  }
+}

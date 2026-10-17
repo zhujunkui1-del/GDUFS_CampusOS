@@ -1,0 +1,68 @@
+{
+  "checkedAt": "2026-10-17T10:06:55.629Z",
+  "baseline": "206e01d",
+  "typecheck": "passed",
+  "lint": "passed",
+  "unit": {
+    "tests": 283,
+    "passed": 283,
+    "failed": 0,
+    "files": 37
+  },
+  "browser": {
+    "scope": "Local shell regression with existing fixtures; desktop/mobile viewport; not live Agent or physical phone",
+    "chrome": {
+      "startTime": "2026-10-17T10:02:14.892Z",
+      "duration": 18822.2,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "edge": {
+      "startTime": "2026-10-17T10:02:47.682Z",
+      "duration": 18766.737999999998,
+      "expected": 8,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  },
+  "build": {
+    "next": "passed",
+    "openNext": "passed via sanitized wrapper without deploy or Wrangler release command",
+    "artifactFilesScanned": 1347,
+    "privateValueMatches": 0,
+    "publicWalkingMetadataHashes": "matched"
+  },
+  "heuristicCredentialScan": {
+    "files": 1802,
+    "matches": 0
+  },
+  "research": "See research-summary.json; 8/10 current CampusOS strict assertions pass, two remain failed requirements. Research reproduction completion is not production acceptance.",
+  "notTested": [
+    "Live WeChat articles/account login/subscription/API",
+    "Cloud CPU/long-term operation",
+    "Physical phone ICS/GPS",
+    "New production adapters or S3-C",
+    "Model or SMTP delivery"
+  ],
+  "cloudOperations": {
+    "d1Queries": 0,
+    "d1Writes": 0,
+    "migration": false,
+    "deploy": false,
+    "dns": false,
+    "newResources": false,
+    "modelCalls": 0,
+    "smtpSends": 0
+  },
+  "worktreeBaselineClean": true,
+  "documentation": {
+    "reports": 4,
+    "capabilities": 20,
+    "localLinksChecked": 63,
+    "brokenLinks": 0,
+    "format": "passed"
+  }
+}

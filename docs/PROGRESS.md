@@ -388,3 +388,12 @@ OpenNext 提示 Windows 兼容性有限。本次最终组合在 Windows 实测�
 - typecheck、lint、283单元/37文件、Next生产与OpenNext安全构建通过；显式preview dry-run gzip2505.00KiB，1350产物文件私密值0命中。最终文档/关键回归结果见DIFY_RETIREMENT.md与verification/dify-retirement。本轮不调用模型/学校API，不迁移/写入D1或更新云端部署/DNS/套餐。
 
 本次关键浏览器回归：Chrome、Edge各8项通过（桌面/手机视口的公共Shell、AI入口、页面路由、匿名身份拒绝、键盘/较大字号/无障碍偏好）。属于本地现有基础回归，不是完整真实DeepSeek、云端RAG或手机实机验收。Next dev产生的next-env.d.ts导入路径变动已恢复为测试前内容。
+
+## D-046｜四项目联合研究续接完成（2026-10-17）
+
+- 从干净206e01d恢复，确认两草稿/审计脚本/旧证据已提交；没有引用未落盘代理结果。四本地包只读，对照当前固定SHA、README/LICENSE/问题/PR；补齐四主报告和三份模块审计，旧快照/首次失败保留。Dify保持废弃，无相关研究或运行依赖恢复。
+- Search a5a70a2、WeRSS9b40351、thu19abc551、Blog c5e56bf；PR9仍open/changes requested未并，WeRSS463/476和PR478仍open/未并。原包受检哈希/归一比对一致，A/B另有整包前后哈希证明。在线微信文章0，URL/正文/日期/增量准确率全部N/A，不从README或上游作者132号记录推出本机成功。
+- 离线：Search/Blog18项符合（含缺陷复现）；WeRSS/helper26项（5上游函数、1文档映射、20网关/账本草案）；thu指定81测试通过+17探针完成。CampusOS10严格诊断8通过2失败，复现日HH:mm无空格漏时间，保留原断言和首次失败，不改生产解析器。日期精度、证据偏移、多发现出处/事件版本、ICS取消与更新另列B/C前置。
+- 推荐受限A：官网+获准人工资料，Search保持关闭；C为可扩展边界、B订阅长期候选。P0先活动/截止时间证据、规范事件与最新状态、匿名已核验ICS；P1确定性排序/理由；反馈与邮件/主动推送后置。B约2.5–5人日、C P0约6.5–9人日仅工程估算，不含授权/语料等待；范围/许可/验收见S3_SOURCE_PIPELINE_RECOMMENDATION.md。
+- typecheck、lint、283单元/37文件、Next/OpenNext安全构建通过；1347产物私密值0命中，无发布命令。Chrome/Edge各8项本地Shell/匿名权限/路由/无障碍、桌面及手机视口通过；夹具/视口不是完整真实Agent/手机实机。文档本地链接和20能力矩阵检查通过，src/public/migrations及运行配置无改动；Next dev生成路径恢复原字节。
+- 结果保存verification/s3-wechat-resumed；不查询/迁移/写公网D1、不部署/DNS/新资源/模型/SMTP或公众号在线请求。旧云端快照时间保留，3待审不当已发布。研究完成后停止，等待负责人确认正式B/C开发范围。

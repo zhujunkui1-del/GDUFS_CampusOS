@@ -1,0 +1,49 @@
+{
+  "checked_at_utc": "2026-10-17T09:50:23.307Z",
+  "method": "authorized GitHub connector public GET; legacy unauthenticated REST rate limit not retried",
+  "base_commit": "206e01d",
+  "real_wechat_requests": 0,
+  "real_sogou_requests": 0,
+  "data": {
+    "A_repo": {
+      "url": "https://api.github.com/repos/fancyboi999/weixin_search_mcp",
+      "default_branch": "main",
+      "updated_at": "2026-10-16T16:48:55Z",
+      "pushed_at": "2026-08-17T02:28:43Z",
+      "license": null
+    },
+    "B_repo": {
+      "url": "https://api.github.com/repos/yibeigen/wechat-article-exporter",
+      "default_branch": "main",
+      "updated_at": "2026-10-16T16:49:01Z",
+      "pushed_at": "2026-10-14T15:11:24Z",
+      "license": "NOASSERTION"
+    },
+    "A_branch": {
+      "url": "https://api.github.com/repos/fancyboi999/weixin_search_mcp/branches/main",
+      "branch": "main",
+      "sha": "a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb",
+      "author_date": "2026-08-17T02:28:43Z",
+      "committer_date": "2026-08-17T02:28:43Z",
+      "subject": "fix: enforce UTF-8 for stdio transport (#7)"
+    },
+    "B_branch": {
+      "url": "https://api.github.com/repos/yibeigen/wechat-article-exporter/branches/main",
+      "branch": "main",
+      "sha": "c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8",
+      "author_date": "2026-10-14T15:02:48Z",
+      "committer_date": "2026-10-14T15:02:48Z",
+      "subject": "feat: 发布 v1.2.8 修复微博/知乎扫码登录（访客SUB误判秒关窗、m.weibo.cn域隔离自动桥接、已登录幂等同步不踢下线、知乎后端验证制）"
+    },
+    "A_PR9": {
+      "url": "https://api.github.com/repos/fancyboi999/weixin_search_mcp/pulls/9",
+      "state": "open",
+      "merged": false,
+      "merged_at": null,
+      "updated_at": "2026-09-08T02:49:29Z",
+      "head_sha": "79fb75fc4e2b1c5a3522f2c9fb58fd64f63f712e",
+      "base_sha": "a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb",
+      "merge_commit_sha": "810aa3407dd902712d8c270b0e57f4c6b285c70e"
+    }
+  }
+}

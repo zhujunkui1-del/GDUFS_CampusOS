@@ -1,0 +1,520 @@
+{
+  "checkedAt": "2026-10-17T09:49:10.567131+00:00",
+  "upstream": {
+    "repository": "thu-lawyer/thu-push",
+    "commit": "19abc55134cf5691e575fbcc74cb88d3801c2b28"
+  },
+  "runtime": {
+    "python": "3.12.5",
+    "platform": "Windows",
+    "dependenciesInstalled": [],
+    "freshVenv": true
+  },
+  "scope": "Synthetic fixtures and local temporary SQLite only; no article retrieval, SMTP, model or CDP calls.",
+  "guards": {
+    "networkListenersAndProcessesBlockedByAuditHook": true,
+    "credentialEnvironmentCleared": true,
+    "blockedAttempts": []
+  },
+  "sourceHashes": {
+    "LICENSE": "b390747f07ada7f6486b73f67f8d0b5b0df38a8555edebfc7ef9eff932b5a64f",
+    "notice_digest/timeparse.py": "8ab2ed1ea1f2d22bae7a20df49f71ed1e93c18d392c90d42cb496610e9ee46ed",
+    "notice_digest/score.py": "50291f94a3c36e998e2fb1d95eb2c4902429c343c692dd1fdebc18fa04bcdcb2",
+    "notice_digest/render.py": "07d0bd88c42cd24c6589ccddbe1fd987c1cdf474e26535268b18002aa8ba93bc",
+    "notice_digest/gzh_source.py": "707d138f83ee405d4867c51cedfbca269f9bce796069c7999ccf660f98b1bac2",
+    "notice_digest/mailer.py": "1dc77371ce3e95e6501baba38821ee0bf01dc52bac7e85f4f7bcc6cc70566c05",
+    "notice_digest/feedback.py": "745b96090350cdaf897b155ed781fd37f2df153a3546e8642160e53826fbcc1e",
+    "tests/test_timeparse.py": "c4a1b04cc280b867f973c698bc60161001c3ff21e63e05a46c71c5410b935c65",
+    "tests/test_score.py": "0a6290d6f358d28d7400a17e92de923b81b27dd4bdf7a715207cec516a8dcb7e",
+    "tests/test_gzh_merge.py": "6452b74e930af7949bdfd0a171d5e4f3c67b13f4519410c27d304449677c7480"
+  },
+  "upstreamTests": {
+    "tests.test_timeparse": {
+      "run": 32,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.003776,
+      "passed": true,
+      "output": "................................\n----------------------------------------------------------------------\nRan 32 tests in 0.001s\n\nOK\n"
+    },
+    "tests.test_score": {
+      "run": 38,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.434359,
+      "passed": true,
+      "output": "......................................\n----------------------------------------------------------------------\nRan 38 tests in 0.431s\n\nOK\n"
+    },
+    "tests.test_gzh_merge.GzhSourceTests": {
+      "run": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.113866,
+      "passed": true,
+      "output": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.111s\n\nOK\n"
+    },
+    "tests.test_gzh_merge.RenderGzhMergeTests": {
+      "run": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.011838,
+      "passed": true,
+      "output": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.012s\n\nOK\n"
+    }
+  },
+  "probes": [
+    {
+      "name": "explicit_datetime",
+      "completed": true,
+      "input": "2026年10月20日14:30",
+      "output": {
+        "start": "2026-10-20T14:30:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "next_week",
+        "evidence": "2026年10月20日"
+      }
+    },
+    {
+      "name": "date_only_deadline_precision",
+      "completed": true,
+      "input": "报名截止2026年10月20日",
+      "output": {
+        "start": "2026-10-20T00:00:00+08:00",
+        "end": null,
+        "deadline": "2026-10-20T00:00:00+08:00",
+        "bucket": "next_week",
+        "evidence": "2026年10月20日"
+      },
+      "timeStatus": "ok",
+      "calendarEventCount": 1,
+      "hasPrecisionOrInferenceMetadata": false
+    },
+    {
+      "name": "range_end_becomes_deadline_without_registration",
+      "completed": true,
+      "input": "2026年10月20日至2026年10月22日",
+      "output": {
+        "start": "2026-10-20T00:00:00+08:00",
+        "end": "2026-10-22T00:00:00+08:00",
+        "deadline": "2026-10-22T00:00:00+08:00",
+        "bucket": "next_week",
+        "evidence": "2026年10月20日 至 2026年10月22日"
+      },
+      "calendarDateLines": [
+        "DTSTART;VALUE=DATE:20261020",
+        "DTEND;VALUE=DATE:20261022"
+      ]
+    },
+    {
+      "name": "missing_year_roll_forward",
+      "completed": true,
+      "input": "1月5日",
+      "anchor": "2026-10-17T09:00:00+08:00",
+      "output": {
+        "start": "2027-01-05T00:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "undated",
+        "evidence": "1月5日"
+      }
+    },
+    {
+      "name": "relative_anchor_changes_result",
+      "completed": true,
+      "input": "下周五14:00",
+      "publishedAt": "2026-10-01T10:00:00+08:00",
+      "fetchedAt": "2026-10-17T09:00:00+08:00",
+      "usingPublishedAnchor": {
+        "start": "2026-10-09T14:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "next_week",
+        "evidence": "下周五"
+      },
+      "usingFetchAnchor": {
+        "start": "2026-10-23T14:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "next_week",
+        "evidence": "下周五"
+      },
+      "callerPublishedAtUsed": {
+        "start": "2026-10-23T14:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "next_week",
+        "evidence": "下周五"
+      }
+    },
+    {
+      "name": "vague_evening_invents_19",
+      "completed": true,
+      "input": "今晚",
+      "output": {
+        "start": "2026-10-17T19:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "today",
+        "evidence": "今晚"
+      },
+      "timeStatus": "ok"
+    },
+    {
+      "name": "evening_seven_ambiguity",
+      "completed": true,
+      "input": "今晚7点",
+      "output": {
+        "start": "2026-10-17T19:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "today",
+        "evidence": "今晚"
+      }
+    },
+    {
+      "name": "invalid_absolute_falls_back_day_only",
+      "completed": true,
+      "input": "2026年2月30日",
+      "output": {
+        "start": "2026-10-30T00:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "undated",
+        "evidence": "月30日"
+      }
+    },
+    {
+      "name": "weekday_conflict_not_rejected",
+      "completed": true,
+      "input": "2026年10月20日（周五）14:00",
+      "output": {
+        "start": "2026-10-20T14:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "next_week",
+        "evidence": "2026年10月20日（周五）"
+      }
+    },
+    {
+      "name": "same_day_clock_range",
+      "completed": true,
+      "input": "2026年10月20日14:00-16:00",
+      "output": {
+        "start": "2026-10-20T14:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "next_week",
+        "evidence": "2026年10月20日"
+      }
+    },
+    {
+      "name": "multiple_events_only_first_point",
+      "completed": true,
+      "input": "第一场2026年10月20日14:00；第二场2026年10月21日15:00",
+      "output": {
+        "start": "2026-10-20T14:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "next_week",
+        "evidence": "2026年10月20日"
+      }
+    },
+    {
+      "name": "published_at_not_an_activity_fallback",
+      "completed": true,
+      "publishedOnly": {
+        "start": null,
+        "end": null,
+        "deadline": null,
+        "bucket": "undated",
+        "evidence": ""
+      },
+      "missingBodyAndPublicationButAiTimeAccepted": {
+        "start": "2026-10-20T14:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "next_week",
+        "evidence": "2026年10月20日"
+      },
+      "relativeWithoutAnchor": {
+        "start": null,
+        "end": null,
+        "deadline": null,
+        "bucket": "undated",
+        "evidence": "下周五14:00"
+      }
+    },
+    {
+      "name": "registration_deadline_before_event_start",
+      "completed": true,
+      "input": {
+        "event_start": "2026-10-25T14:00:00+08:00",
+        "signup_deadline": "2026-10-20T17:00:00+08:00"
+      },
+      "output": {
+        "start": "2026-10-25T14:00:00+08:00",
+        "end": null,
+        "deadline": null,
+        "bucket": "next_week",
+        "evidence": "结构化字段：detail.event_start=2026-10-25T14:00:00+08:00"
+      }
+    },
+    {
+      "name": "ics_safety_update_cancel",
+      "completed": true,
+      "stableUidAcrossTimeChange": true,
+      "batchHasSequenceAndLastModified": true,
+      "singleHasSequence": false,
+      "singleHasLastModified": false,
+      "cancelledOutputStatus": [
+        "METHOD:PUBLISH",
+        "STATUS:CONFIRMED"
+      ],
+      "literalNewlineCannotCreateExtraEvent": true,
+      "allPhysicalLinesAtMost75Bytes": true,
+      "crlfOnly": true,
+      "tzidPresent": true,
+      "unknownStartProducesNoEvent": true,
+      "postponedStatusStillConfirmed": true,
+      "verificationRequiredByRenderer": false
+    },
+    {
+      "name": "deterministic_ranking_boundaries",
+      "completed": true,
+      "deterministicTieOrder": [
+        "a",
+        "b"
+      ],
+      "contributionsSumToScore": true,
+      "asciiSubstringAiFalsePositive": true,
+      "configuredPriorCanExceedFive": 999,
+      "storedWeightIsClamped": 5.0,
+      "priorForLecture": 1.0,
+      "learnedDelta": 0.05,
+      "mergedAfterDelta": 0.05,
+      "mergedPriorPlusDeltaExpectedByComment": 1.05
+    },
+    {
+      "name": "gzh_readonly_and_failure_boundaries",
+      "completed": true,
+      "modelFailureWasMocked": true,
+      "fallbackIndices": [
+        0,
+        1
+      ],
+      "numericMillisecondsSupported": true,
+      "stringTimestamp": null,
+      "stringTimestampError": "NameError: name 'datetime' is not defined",
+      "readOnlySqliteEnforced": true,
+      "futureTimestampAccepted": true,
+      "corruptLedgerBecomesEmpty": true,
+      "missingDatabaseBecomesEmpty": true,
+      "schemaAllowsMissingTime": true,
+      "missingTimeFetchError": "TypeError: sequence item 4: expected str instance, NoneType found",
+      "trackingQueryChangesArticleIdentity": true,
+      "punctuationDifferentTitlesMerge": true,
+      "sameUrlDifferentDiscoverersHaveSameKey": true,
+      "sameUrlTwoSourcesRetainedCount": 1,
+      "sameUrlTwoSourcesInputRows": 2,
+      "discoveryProvenanceFields": [
+        "id",
+        "title",
+        "url",
+        "mp",
+        "ts"
+      ],
+      "articleBodyFieldPresentInLocalProjection": false,
+      "noRealPlatformBlockHandlingTested": "This module consumes SQLite; no HTTP 403/429/CAPTCHA requests were made or retried."
+    },
+    {
+      "name": "feedback_expiry_identity",
+      "completed": true,
+      "renderedLinkHasExpiry": false,
+      "legacyNoExpirySignatureAccepted": true,
+      "missingExpiryNotExpired": true,
+      "hmacBindsItemAndKind": true,
+      "feedbackColumns": [
+        "item_id",
+        "kind",
+        "value",
+        "ts"
+      ],
+      "firstLearned": true,
+      "duplicateLearned": false,
+      "unknownGzhLearned": false,
+      "unknownGzhReason": "unknown-item",
+      "isolationIsSingleLocalProfileNotMultiUser": true
+    }
+  ],
+  "userReferencePackageComparison": {
+    "relativePath": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main",
+    "readOnly": true,
+    "files": [
+      {
+        "path": "LICENSE",
+        "localSha256": "21f2adc5a994f75dff903c21fc1367c935b0fe071bd32a563d400d9aba5ef426",
+        "upstreamSha256": "b390747f07ada7f6486b73f67f8d0b5b0df38a8555edebfc7ef9eff932b5a64f",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "notice_digest/timeparse.py",
+        "localSha256": "ef842749b45cf89cfccf2ea7b06df5eb0c1ef69cd09fb300ed1391d387f9835e",
+        "upstreamSha256": "8ab2ed1ea1f2d22bae7a20df49f71ed1e93c18d392c90d42cb496610e9ee46ed",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "notice_digest/score.py",
+        "localSha256": "f404fcff03746308ab616c9facd18ab94cffbf812f0400c17ad3e393e50fd978",
+        "upstreamSha256": "50291f94a3c36e998e2fb1d95eb2c4902429c343c692dd1fdebc18fa04bcdcb2",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "notice_digest/render.py",
+        "localSha256": "2040b38328d1b303da50b21590dc6d1d5c0970c3f771b9cf9e2b7c3ee381ad0b",
+        "upstreamSha256": "07d0bd88c42cd24c6589ccddbe1fd987c1cdf474e26535268b18002aa8ba93bc",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "notice_digest/gzh_source.py",
+        "localSha256": "b225eda4f532bbe9fa112cf61d5225b5fc67b329f6d8a352d933d6520acf321e",
+        "upstreamSha256": "707d138f83ee405d4867c51cedfbca269f9bce796069c7999ccf660f98b1bac2",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "notice_digest/mailer.py",
+        "localSha256": "46e7dee9ce502169c0f2009f89b89d72667166965e8c52b05c632ffe03bad184",
+        "upstreamSha256": "1dc77371ce3e95e6501baba38821ee0bf01dc52bac7e85f4f7bcc6cc70566c05",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "notice_digest/feedback.py",
+        "localSha256": "aeb0678c50901e2c6e9276ca7d4e32cf7448fc2ea86bc68c1fb2df92b3d22a81",
+        "upstreamSha256": "745b96090350cdaf897b155ed781fd37f2df153a3546e8642160e53826fbcc1e",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "tests/test_timeparse.py",
+        "localSha256": "36aa5ebc84e7cc58d20a9a2d48105b1d0a1db5f151950bcbc7571a49df2f64b9",
+        "upstreamSha256": "c4a1b04cc280b867f973c698bc60161001c3ff21e63e05a46c71c5410b935c65",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "tests/test_score.py",
+        "localSha256": "9fe07e4d63c2263941e77875c2a7e184041bc9eb37c750b791159b9a5fb5a80d",
+        "upstreamSha256": "0a6290d6f358d28d7400a17e92de923b81b27dd4bdf7a715207cec516a8dcb7e",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "tests/test_gzh_merge.py",
+        "localSha256": "c62e126286856e8695846fa1ce98af76f3c870730025b7eb91665e3bd6fb05ec",
+        "upstreamSha256": "6452b74e930af7949bdfd0a171d5e4f3c67b13f4519410c27d304449677c7480",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "README.md",
+        "localSha256": "5ff31cf46ad352875940a01c89fb85119229bb6a73fd0c9338aef73dfaa9dbf5",
+        "upstreamSha256": "77da76854ccfef45f6e783c418f8fad496270da8ee475cac07c0a8c8a10959c6",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "pyproject.toml",
+        "localSha256": "296e3575adceda6a5735790b4fddb9eb346978b5edc9ea728941fac8aeda4737",
+        "upstreamSha256": "575febb480bb004e493ce28cace740ec93dcf16aedabb356da924de15b1021ee",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "requirements.txt",
+        "localSha256": "5f0968ba50780aa5b7adec6d125f1e1bb4418bab42f35ba57f17b8bb7d782c96",
+        "upstreamSha256": "3d51330aba5d7178996fe21ee35522951b72ef5545d19fd7085fc61fe98d2d98",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "notice_digest/enrich.py",
+        "localSha256": "90480a87d6df1971a3227eb9622bdbf94f26293b18d79ea4f94171de1a7eba3f",
+        "upstreamSha256": "5c50227d25f03b7b77e92eea1264ed27c22c47c3629f36aa9970a2182a531132",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "notice_digest/store.py",
+        "localSha256": "60387ea542502cb71325a8732f28385fc31dde01bf3315bcc8cffed16b2cfe9f",
+        "upstreamSha256": "634724036a3275da3e93689ca8f8b1a21e5e6ed7c32f4cebf76b29979b728987",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "notice_digest/cli.py",
+        "localSha256": "94134c968714403c4d7099fa0c0fbee76f5ac99132423a1cfa01afea77cb71d2",
+        "upstreamSha256": "1f760577ab6cb6eb81408cdebc2634df24955342abd3d7706c11152d24a41b84",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "weread-push/README.md",
+        "localSha256": "2d7fc3de32f50c16f5cc737505f9b574e3068fd22200ceaa0c9a923d8049cd61",
+        "upstreamSha256": "47d77e85a83306f3ab085df002a4b6b5644c338fa125ff8ed5bf9d397ca09482",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "weread-push/import/mp_searchbiz.py",
+        "localSha256": "5b8a795026926f363c41b37d9b1614876351a68afd6a6d38f19af0547537f941",
+        "upstreamSha256": "1d2e973dc0893a65fee3ad3f876f45b10dc2729f83902bc56e4eb63522cc84b4",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "weread-push/docs/api.md",
+        "localSha256": "146ac3dbce09e8878816b3734dda5999c9f93fe5cfee1a3a1003ad986e7ddb16",
+        "upstreamSha256": "9d83afe847143d03b241b5df1cfd607cbeb097a4dc29c07ba3c82f13bc6bb4c6",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      },
+      {
+        "path": "weread-push/docs/RUNBOOK.md",
+        "localSha256": "380e6cd2ac965335abd4f721a2e958468dbbb598c1ac62d7462c982fc3c794ba",
+        "upstreamSha256": "dadca8044cb1cd1a94add6d2debe5bafb48cf3d55f4d2fdcec7eb0c6d788de55",
+        "bytesEqual": false,
+        "equalIgnoringCrLf": true
+      }
+    ],
+    "allFilesEqualIgnoringCrLf": true,
+    "archiveDoesNotProveGitCommitWithoutRepositoryMetadata": true
+  },
+  "upstreamTestsNotRun": {
+    "tests.test_gzh_merge.FeedbackIcsHttpTests": {
+      "count": 5,
+      "reason": "Starts a real loopback HTTP server; excluded to keep this run offline and listener-free."
+    },
+    "fullSuite": "Not run: other modules include network/SMTP/model paths. This is not full upstream or CampusOS regression acceptance."
+  },
+  "summary": {
+    "upstreamTestsRun": 81,
+    "upstreamFailures": 0,
+    "upstreamErrors": 0,
+    "probesCompleted": 17,
+    "probesTotal": 17,
+    "meaning": "Probes observe pinned upstream behavior; completed does not mean CampusOS requirements pass.",
+    "liveArticleRequests": 0,
+    "liveModelRequests": 0,
+    "liveSmtpSends": 0
+  }
+}

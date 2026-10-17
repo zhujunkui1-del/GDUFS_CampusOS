@@ -1,0 +1,211 @@
+{
+  "checkedAt": "2026-10-17T09:53:35.868750+00:00",
+  "pins": {
+    "rachelos/we-mp-rss": "9b40351fd1913e7f74cf88f65740cd67a28baf81",
+    "thu-lawyer/thu-push": "19abc55134cf5691e575fbcc74cb88d3801c2b28"
+  },
+  "scope": "Offline research only; no WeChat/API requests, server startup, CDP, accounts, SMTP, models, D1 or deployment",
+  "syntheticData": true,
+  "gatewayImplementedInCampusOS": false,
+  "guards": {
+    "networkListenersProcessesSmtpDenied": true,
+    "attemptedDeniedCalls": []
+  },
+  "sourceHashesBefore": {
+    "CampusOS_Codex_完整设计文档_v2\\we-mp-rss-main\\we-mp-rss-main\\core\\wx\\model\\weread_mp.py": "29526c6c1b3ef4fb8b1a5c0c3f7e91eaae9d252cc2d4cbbdffa2a2d3822e784c",
+    "CampusOS_Codex_完整设计文档_v2\\we-mp-rss-main\\we-mp-rss-main\\core\\article_content.py": "4aca553cf8ede3d1d70727072ababf1a13598cc8e5d7ca976cd93a8b9f8d35a9",
+    "CampusOS_Codex_完整设计文档_v2\\thu-push-main\\thu-push-main\\weread-push\\import\\mp_searchbiz.py": "5b8a795026926f363c41b37d9b1614876351a68afd6a6d38f19af0547537f941"
+  },
+  "sourceHashesAfter": {
+    "CampusOS_Codex_完整设计文档_v2\\we-mp-rss-main\\we-mp-rss-main\\core\\wx\\model\\weread_mp.py": "29526c6c1b3ef4fb8b1a5c0c3f7e91eaae9d252cc2d4cbbdffa2a2d3822e784c",
+    "CampusOS_Codex_完整设计文档_v2\\we-mp-rss-main\\we-mp-rss-main\\core\\article_content.py": "4aca553cf8ede3d1d70727072ababf1a13598cc8e5d7ca976cd93a8b9f8d35a9",
+    "CampusOS_Codex_完整设计文档_v2\\thu-push-main\\thu-push-main\\weread-push\\import\\mp_searchbiz.py": "5b8a795026926f363c41b37d9b1614876351a68afd6a6d38f19af0547537f941"
+  },
+  "sourceFilesUnchanged": true,
+  "checks": [
+    {
+      "name": "traditional js_content extraction removes scripts",
+      "origin": "pinned upstream function",
+      "passed": true,
+      "elapsedMs": 4.014,
+      "error": null
+    },
+    {
+      "name": "JS-only new body shell raises invalid_content",
+      "origin": "pinned upstream limitation reproduced",
+      "passed": true,
+      "elapsedMs": 0.14,
+      "error": null
+    },
+    {
+      "name": "upstream error payload does not become empty success",
+      "origin": "pinned upstream function",
+      "passed": true,
+      "elapsedMs": 0.004,
+      "error": null
+    },
+    {
+      "name": "helper name normalization ignores ordinary and ideographic spaces",
+      "origin": "pinned upstream function",
+      "passed": true,
+      "elapsedMs": 0.002,
+      "error": null
+    },
+    {
+      "name": "same display name cannot distinguish certification owner",
+      "origin": "pinned upstream limitation reproduced",
+      "passed": true,
+      "elapsedMs": 0.001,
+      "error": null
+    },
+    {
+      "name": "biz decode and engine feed ID are distinct representations",
+      "origin": "synthetic format, upstream documented mapping",
+      "passed": true,
+      "elapsedMs": 0.003,
+      "error": null
+    },
+    {
+      "name": "read-only boundary rejects GET /api/v1/wx/message_tasks/x/run",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.064,
+      "error": null
+    },
+    {
+      "name": "read-only boundary rejects GET /api/v1/wx/mps/update/x",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.002,
+      "error": null
+    },
+    {
+      "name": "read-only boundary rejects POST /api/v1/wx/mps",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.0,
+      "error": null
+    },
+    {
+      "name": "read-only boundary rejects PUT /api/v1/wx/message_tasks/job/fresh",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.0,
+      "error": null
+    },
+    {
+      "name": "read-only boundary allows article list",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.001,
+      "error": null
+    },
+    {
+      "name": "real list envelope accepted with approved source mapping",
+      "origin": "proposed exchange format; synthetic input",
+      "passed": true,
+      "elapsedMs": 0.121,
+      "error": null
+    },
+    {
+      "name": "same URL and same input are idempotent",
+      "origin": "in-memory exchange sketch",
+      "passed": true,
+      "elapsedMs": 0.025,
+      "error": null
+    },
+    {
+      "name": "same URL changed input creates a new content revision",
+      "origin": "in-memory exchange sketch",
+      "passed": true,
+      "elapsedMs": 0.016,
+      "error": null
+    },
+    {
+      "name": "unknown source is rejected",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.004,
+      "error": null
+    },
+    {
+      "name": "HTML-shaped or missing list is not an empty page",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.002,
+      "error": null
+    },
+    {
+      "name": "HTTP 401 pauses before any row is consumed",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.002,
+      "error": null
+    },
+    {
+      "name": "later successful data cannot resume a paused feed automatically after 401",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.001,
+      "error": null
+    },
+    {
+      "name": "HTTP 403 pauses before any row is consumed",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.001,
+      "error": null
+    },
+    {
+      "name": "later successful data cannot resume a paused feed automatically after 403",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.001,
+      "error": null
+    },
+    {
+      "name": "HTTP 429 pauses before any row is consumed",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.001,
+      "error": null
+    },
+    {
+      "name": "later successful data cannot resume a paused feed automatically after 429",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.001,
+      "error": null
+    },
+    {
+      "name": "HTTP 200 upstream failure is not no-new-articles",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.002,
+      "error": null
+    },
+    {
+      "name": "userinfo and foreign host are rejected",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.016,
+      "error": null
+    },
+    {
+      "name": "credential query is rejected",
+      "origin": "proposed exchange gateway",
+      "passed": true,
+      "elapsedMs": 0.01,
+      "error": null
+    },
+    {
+      "name": "same title at different URL is not auto-merged",
+      "origin": "in-memory exchange sketch",
+      "passed": true,
+      "elapsedMs": 0.013,
+      "error": null
+    }
+  ],
+  "passed": 26,
+  "total": 26
+}

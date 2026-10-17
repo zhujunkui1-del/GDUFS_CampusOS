@@ -1,0 +1,56 @@
+{
+  "checked_at_utc": "2026-10-17T09:50:52.776028+00:00",
+  "repository": "yibeigen/wechat-article-exporter",
+  "commit": "c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8",
+  "files": [
+    {
+      "path": "backend/app/scrapers/custom_urls.py",
+      "raw_sha256": "45f17a50540473c8a72b5d7e067486d1dae75cb0de88ddd79a6e10961a175959",
+      "local_sha256": "45f17a50540473c8a72b5d7e067486d1dae75cb0de88ddd79a6e10961a175959",
+      "lf_equal": true,
+      "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/backend/app/scrapers/custom_urls.py"
+    },
+    {
+      "path": "backend/app/exporters/md_exporter.py",
+      "raw_sha256": "044d37143203ea8cf49ed2471791d4927de317c6bacd07b519de152925af45ba",
+      "local_sha256": "044d37143203ea8cf49ed2471791d4927de317c6bacd07b519de152925af45ba",
+      "lf_equal": true,
+      "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/backend/app/exporters/md_exporter.py"
+    },
+    {
+      "path": "backend/app/core/cache.py",
+      "raw_sha256": "a6c4d8c6030ec5416b24eb80e9212942c1d54aa94c176d835b856d5467496db0",
+      "local_sha256": "a6c4d8c6030ec5416b24eb80e9212942c1d54aa94c176d835b856d5467496db0",
+      "lf_equal": true,
+      "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/backend/app/core/cache.py"
+    },
+    {
+      "path": "frontend/app.html",
+      "raw_sha256": "e581c4622ae3d0f1a2de6ab2224e6c2b7ca924414eb011d7da43499d806722a4",
+      "local_sha256": "e581c4622ae3d0f1a2de6ab2224e6c2b7ca924414eb011d7da43499d806722a4",
+      "lf_equal": true,
+      "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/frontend/app.html"
+    },
+    {
+      "path": "desktop/package.json",
+      "raw_sha256": "e044411a2464d9c975077f0567b67aa0697233df7e3a0aeeb491a986ad70c462",
+      "local_sha256": "e044411a2464d9c975077f0567b67aa0697233df7e3a0aeeb491a986ad70c462",
+      "lf_equal": true,
+      "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/desktop/package.json"
+    },
+    {
+      "path": "desktop/main.js",
+      "raw_sha256": "aa00d5f0343daad48a9687e6475a38266640b97bb9ba4dcd921303c962c63f76",
+      "local_sha256": "aa00d5f0343daad48a9687e6475a38266640b97bb9ba4dcd921303c962c63f76",
+      "lf_equal": true,
+      "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/desktop/main.js"
+    },
+    {
+      "path": "backend/app/config.py",
+      "raw_sha256": "f8c99a2b06764a82b090e4b136372cca4eb40ca1778fc2e4a7487ee4a7087246",
+      "local_sha256": "f8c99a2b06764a82b090e4b136372cca4eb40ca1778fc2e4a7487ee4a7087246",
+      "lf_equal": true,
+      "code_url": "https://github.com/yibeigen/wechat-article-exporter/blob/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8/backend/app/config.py"
+    }
+  ]
+}

@@ -298,3 +298,11 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 依据负责人最新明确决定D-045，知识检索采用自研接口+D1关键词/分类/分段，旧Dify研究仅历史归档，不再是数据/软件供应商或待接依赖。没有新数据采集、模型请求、公开素材、部署或数据库写入；来源/版本/审核/outbox保持。
 
 上轮四项目研究中断现场见research/s3-wechat/README.md；四份原始本地项目包只读，thu-push-main忽略规则按负责人新增目录保留。部分GitHub元数据与只读D1快照为已有研究证据，不当实时公众号采集或完整研究已验收。当前技术调整不续做这些实验。
+
+## SRC-063｜四仓库固定源码、许可与离线研究（2026-10-17）
+
+负责人原包只读：weixin_search_mcp-main、we-mp-rss-main、thu-push-main、wechat-article-exporter-main；本轮当前上游main分别a5a70a2/9b40351/19abc551/c5e56bf，完整SHA/时间/原包一致性和首轮错误见research/S3_WECHAT_OPEN_SOURCE_COMPARISON.md与verification/s3-wechat-resumed。A/B整包前后哈希相同，另两包受检文件哈希/换行归一比对一致；原包不是正式资源，不复制进public或Worker。
+
+GitHub公开源码/元数据/Issue/PR为维护与行为证据，上游自报不当CampusOS成功。Search仅MIT声明缺独立LICENSE；WeRSS/thu固定LICENSE为MIT；Blog为CC BY-NC-SA4.0及附加限制，公开服务用途待明确，不默认比赛免费即获授权。全部源码许可与平台/文章权利分别核验。
+
+合成HTML/JSON/时间/SQLite仅tests/research隔离夹具；18/26/81+17分开记录，CampusOS10严格诊断8通过2失败，均非真实文章准确率。真实微信/搜狗文章、模型、SMTP及本轮公网D1请求0，不采集私人数据，不重写旧云端快照。公开规范参考RFC5545/5546用于ICS字段、时区、UID/版本和取消语义，不代表手机日历实际已验证。

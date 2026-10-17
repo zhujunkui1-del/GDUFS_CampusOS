@@ -1,0 +1,62 @@
+{
+  "checked_at_utc": "2026-10-17T09:51:17.985Z",
+  "data": {
+    "A_open": {
+      "url": "https://api.github.com/repos/fancyboi999/weixin_search_mcp/issues?state=open&per_page=100",
+      "items": [
+        {
+          "number": 9,
+          "title": "fix: 修复 real_url 恒为空、反爬被静默转成空结果等四个问题（含离线测试）",
+          "state": "open",
+          "updated_at": "2026-09-08T02:49:29Z",
+          "html_url": "https://github.com/fancyboi999/weixin_search_mcp/pull/9",
+          "is_pull_request": true
+        }
+      ]
+    },
+    "B_open": {
+      "url": "https://api.github.com/repos/yibeigen/wechat-article-exporter/issues?state=open&per_page=100",
+      "items": [
+        {
+          "number": 1,
+          "title": "安装后无法正常启动，如何解决？",
+          "state": "open",
+          "updated_at": "2026-10-15T15:55:24Z",
+          "html_url": "https://github.com/yibeigen/wechat-article-exporter/issues/1",
+          "is_pull_request": false
+        }
+      ]
+    },
+    "PR9_reviews": {
+      "url": "https://api.github.com/repos/fancyboi999/weixin_search_mcp/pulls/9/reviews",
+      "reviews": [
+        {
+          "state": "CHANGES_REQUESTED",
+          "submitted_at": "2026-09-08T02:49:29Z",
+          "html_url": "https://github.com/fancyboi999/weixin_search_mcp/pull/9#pullrequestreview-5136798174",
+          "commit_id": "79fb75fc4e2b1c5a3522f2c9fb58fd64f63f712e"
+        }
+      ]
+    },
+    "A_tree": {
+      "url": "https://api.github.com/repos/fancyboi999/weixin_search_mcp/git/trees/a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb?recursive=1",
+      "truncated": false,
+      "paths": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/publish.yml",
+        ".gitignore",
+        "Dockerfile",
+        "README.md",
+        "media/weixin-search-mcp-promo-poster.png",
+        "media/weixin-search-mcp-promo.gif",
+        "media/weixin-search-mcp-promo.mp4",
+        "pyproject.toml",
+        "smithery.yaml",
+        "tests/test_stdio_encoding.py",
+        "weixin_search_mcp/__init__.py",
+        "weixin_search_mcp/main.py",
+        "weixin_search_mcp/tools/weixin_search.py"
+      ]
+    }
+  }
+}

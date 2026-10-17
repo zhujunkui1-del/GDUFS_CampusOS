@@ -1,0 +1,31 @@
+{
+  "checked_at_utc": "2026-10-17T09:55:34.790494+00:00",
+  "method": "full original A and B directory tree hashes before and after final offline PoC; paths/sizes/content digests contribute to aggregate",
+  "offline_probe_exit": 0,
+  "before": {
+    "A": {
+      "files": 14,
+      "bytes": 10154875,
+      "tree_sha256": "78cc4c181933e39cfe5d4bb9267cf1a027ea10a4b560f2e10b44e029a7700549"
+    },
+    "B": {
+      "files": 200,
+      "bytes": 57049957,
+      "tree_sha256": "7b25503ec3825015554bd7ee20f19102d918f90c00e13a0480a54e2d9053038f"
+    }
+  },
+  "after": {
+    "A": {
+      "files": 14,
+      "bytes": 10154875,
+      "tree_sha256": "78cc4c181933e39cfe5d4bb9267cf1a027ea10a4b560f2e10b44e029a7700549"
+    },
+    "B": {
+      "files": 200,
+      "bytes": 57049957,
+      "tree_sha256": "7b25503ec3825015554bd7ee20f19102d918f90c00e13a0480a54e2d9053038f"
+    }
+  },
+  "unchanged": true,
+  "reference_writes": 0
+}

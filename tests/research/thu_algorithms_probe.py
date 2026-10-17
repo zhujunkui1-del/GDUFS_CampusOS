@@ -31,9 +31,18 @@ NOW = dt.datetime(2026, 10, 17, 9, tzinfo=TZ)
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--upstream", required=True, type=Path)
+    ap.add_argument("--local-archive", type=Path, help="Optional read-only extracted user reference package")
     ap.add_argument("--output", required=True, type=Path)
     args = ap.parse_args()
     upstream = args.upstream.resolve()
+    head_text = (upstream / ".git" / "HEAD").read_text(encoding="ascii").strip()
+    actual_pin = ((upstream / ".git" / head_text[5:]).read_text(encoding="ascii").strip()
+                  if head_text.startswith("ref: ") else head_text)
+    if actual_pin != PIN:
+        raise SystemExit("Upstream checkout differs from the audited pin; audit before executing")
+    scratch_tmp = upstream.parent / "offline-temp"
+    scratch_tmp.mkdir(parents=True, exist_ok=True)
+    tempfile.tempdir = str(scratch_tmp)
     for key in list(os.environ):
         if key.startswith(("ND_", "SMTP_", "MAIL_", "NOTICE_DIGEST_")):
             os.environ.pop(key, None)
@@ -59,7 +68,7 @@ def main() -> int:
 
     result = {
         "checkedAt": dt.datetime.now(dt.timezone.utc).isoformat(),
-        "upstream": {"repository": "thu-lawyer/thu-push", "commit": PIN},
+        "upstream": {"repository": "thu-lawyer/thu-push", "commit": actual_pin},
         "runtime": {"python": platform.python_version(), "platform": platform.system(),
                     "dependenciesInstalled": [], "freshVenv": sys.prefix != sys.base_prefix},
         "scope": "Synthetic fixtures and local temporary SQLite only; no article retrieval, SMTP, model or CDP calls.",
@@ -72,6 +81,29 @@ def main() -> int:
                 "notice_digest/mailer.py", "notice_digest/feedback.py",
                 "tests/test_timeparse.py", "tests/test_score.py", "tests/test_gzh_merge.py"]:
         result["sourceHashes"][rel] = hashlib.sha256((upstream / rel).read_bytes()).hexdigest()
+    if args.local_archive:
+        local = args.local_archive.resolve()
+        if not (local / "LICENSE").is_file() and (local / "thu-push-main" / "LICENSE").is_file():
+            local = local / "thu-push-main"
+        comparisons = []
+        compared = list(result["sourceHashes"]) + [
+            "README.md", "pyproject.toml", "requirements.txt", "notice_digest/enrich.py",
+            "notice_digest/store.py", "notice_digest/cli.py", "weread-push/README.md",
+            "weread-push/import/mp_searchbiz.py", "weread-push/docs/api.md", "weread-push/docs/RUNBOOK.md",
+        ]
+        for rel in compared:
+            lb = (local / rel).read_bytes()
+            ub = (upstream / rel).read_bytes()
+            comparisons.append({"path": rel, "localSha256": hashlib.sha256(lb).hexdigest(),
+                                "upstreamSha256": hashlib.sha256(ub).hexdigest(),
+                                "bytesEqual": lb == ub,
+                                "equalIgnoringCrLf": lb.replace(b"\r\n", b"\n") == ub.replace(b"\r\n", b"\n")})
+        result["userReferencePackageComparison"] = {
+            "relativePath": "CampusOS_Codex_完整设计文档_v2/thu-push-main/thu-push-main",
+            "readOnly": True, "files": comparisons,
+            "allFilesEqualIgnoringCrLf": all(c["equalIgnoringCrLf"] for c in comparisons),
+            "archiveDoesNotProveGitCommitWithoutRepositoryMetadata": True,
+        }
 
     # Exact requested test modules, but exclude the class that actually binds a
     # loopback HTTP server. No SMTP/model mock is confused with a live service.
@@ -142,6 +174,15 @@ def main() -> int:
     add("weekday_conflict_not_rejected", lambda: {"input":"2026年10月20日（周五）14:00", "output":parse("2026年10月20日（周五）14:00").as_dict()})
     add("same_day_clock_range", lambda: {"input":"2026年10月20日14:00-16:00", "output":parse("2026年10月20日14:00-16:00").as_dict()})
     add("multiple_events_only_first_point", lambda: {"input":"第一场2026年10月20日14:00；第二场2026年10月21日15:00", "output":parse("第一场2026年10月20日14:00；第二场2026年10月21日15:00").as_dict()})
+    add("published_at_not_an_activity_fallback", lambda: {
+        "publishedOnly": parsed_for_item({"title":"合成普通公告", "published_at":"2026-10-01T10:00:00+08:00"}, NOW).as_dict(),
+        "missingBodyAndPublicationButAiTimeAccepted": parsed_for_item({"title":"合成活动", "detail":{"ai_event_time":"2026年10月20日14:00"}}, NOW).as_dict(),
+        "relativeWithoutAnchor": parse("下周五14:00", anchor=None).as_dict(),
+    })
+    add("registration_deadline_before_event_start", lambda: {
+        "input": {"event_start":"2026-10-25T14:00:00+08:00", "signup_deadline":"2026-10-20T17:00:00+08:00"},
+        "output":parsed_for_item({"title":"合成活动", "detail":{"event_start":"2026-10-25T14:00:00+08:00", "signup_deadline":"2026-10-20T17:00:00+08:00"}}, NOW).as_dict(),
+    })
 
     def ics_probes():
         timed = parse("2026年10月20日14:30")
@@ -166,6 +207,7 @@ def main() -> int:
             "crlfOnly": "\n" not in long_ics.replace("\r\n", ""),
             "tzidPresent": "DTSTART;TZID=Asia/Shanghai:" in old and "BEGIN:VTIMEZONE" in old,
             "unknownStartProducesNoEvent": ics_for(basic, parse("时间待定")).count("BEGIN:VEVENT") == 0,
+            "postponedStatusStillConfirmed": "STATUS:CONFIRMED" in ics_for({**basic,"status":"postponed","sequence":4}, updated),
             "verificationRequiredByRenderer": False,
         }
     add("ics_safety_update_cancel", ics_probes)
@@ -204,7 +246,7 @@ def main() -> int:
             con=sqlite3.connect(db)
             con.executescript("CREATE TABLE articles(id INTEGER PRIMARY KEY,title TEXT,url TEXT,mp_id TEXT,publish_time INTEGER);CREATE TABLE feeds(id TEXT,name TEXT);")
             epoch=int(NOW.timestamp())
-            con.executemany("INSERT INTO articles VALUES(?,?,?,?,?)",[(1,"合成过去文章","https://example.invalid/past","mp1",epoch-3600),(2,"合成未来文章","https://example.invalid/future","mp1",epoch+86400)])
+            con.executemany("INSERT INTO articles VALUES(?,?,?,?,?)",[(1,"合成过去文章","https://example.invalid/past","mp1",epoch-3600),(2,"合成未来文章","https://example.invalid/future","mp1",epoch+86400),(3,"另发现器同URL","https://example.invalid/past","mp2",epoch-1800)])
             con.execute("INSERT INTO feeds VALUES('mp1','合成来源')");con.commit();con.close()
             con=gzh_source.open_db_ro(db)
             ro=False
@@ -212,6 +254,9 @@ def main() -> int:
             except sqlite3.OperationalError:ro=True
             rows=gzh_source.fetch_recent(con,gzh_source.find_article_schema(con),gzh_source.find_feed_names(con),26,now_ts=epoch)
             con.close()
+            synthetic_cfg=dataclasses.replace(cfg,gzh_db=str(db),gzh_state=str(Path(tmp)/"synthetic-state.json"))
+            with mock.patch.object(gzh_source.time,"time",return_value=epoch):
+                deduplicated=gzh_source.collect(synthetic_cfg)
             corrupted=Path(tmp)/"broken.json";corrupted.write_text("not-json")
             no_time=sqlite3.connect(":memory:");no_time.execute("CREATE TABLE articles(id INTEGER,title TEXT,url TEXT,mp_id TEXT)")
             bad_mapping=gzh_source.find_article_schema(no_time)
@@ -231,6 +276,12 @@ def main() -> int:
                 "missingTimeFetchError":schema_error,
                 "trackingQueryChangesArticleIdentity":gzh_source.article_key("https://example.invalid/s/1")!=gzh_source.article_key("https://example.invalid/s/1?scene=1"),
                 "punctuationDifferentTitlesMerge":gzh_source.normalize_title("合成甲-乙讲座")==gzh_source.normalize_title("合成甲乙讲座"),
+                "sameUrlDifferentDiscoverersHaveSameKey":gzh_source.article_key(items[0]["url"])==gzh_source.article_key(items[0]["url"]),
+                "sameUrlTwoSourcesRetainedCount":sum(r["url"]=="https://example.invalid/past" for r in deduplicated),
+                "sameUrlTwoSourcesInputRows":2,
+                "discoveryProvenanceFields":list(rows[0]) if rows else [],
+                "articleBodyFieldPresentInLocalProjection":any("content" in r or "body" in r for r in rows),
+                "noRealPlatformBlockHandlingTested":"This module consumes SQLite; no HTTP 403/429/CAPTCHA requests were made or retried.",
             }
     add("gzh_readonly_and_failure_boundaries",gzh_probes)
 

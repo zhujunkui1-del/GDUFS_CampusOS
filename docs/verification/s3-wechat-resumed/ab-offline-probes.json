@@ -1,0 +1,249 @@
+{
+  "checked_at_utc": "2026-10-17T09:55:34.707818+00:00",
+  "scope": "selected upstream function ASTs, synthetic HTML/JSON, stubbed requests; not full application startup or live collection",
+  "network_guard": "Python audit denies DNS/socket connections and subprocess/os.system",
+  "real_article_samples": 0,
+  "live_discovery_denominator": 0,
+  "live_url_accuracy": "not measured (0/0)",
+  "live_body_completeness": "not measured (0/0)",
+  "models_or_activation_used": false,
+  "original_files_unchanged": true,
+  "source_hashes": {
+    "A/search": "1116283ce51d2fb3e56eea92820de105dea05e68b3de43b8a31a813f73bca38f",
+    "A/main": "595f9e872bfc8f57879b9e48ad0c784f02c929507ad56d55c0c091185d6fb425",
+    "B/wechat": "5604957e4d04714b094469074a0fa6da3a500750d0933cfe3d1c81ec802076aa",
+    "B/meta": "45f17a50540473c8a72b5d7e067486d1dae75cb0de88ddd79a6e10961a175959",
+    "B/models": "7b52cc75e2b6e0df84ac2bd61aa9b477eaeeaac793a40b6d518f9e5a6350d8d8"
+  },
+  "summary": {
+    "probes": 18,
+    "assertions_passed": 18,
+    "assertions_failed": 0,
+    "warning": "Passing defect-reproduction assertions are not upstream feature success."
+  },
+  "cases": [
+    {
+      "id": "A01",
+      "kind": "behavior",
+      "description": "A true empty HTML result returns []",
+      "assertion_passed": true,
+      "observed": {
+        "result": []
+      },
+      "elapsed_ms": 0.209
+    },
+    {
+      "id": "A02",
+      "kind": "known_defect_reproduced",
+      "description": "A default single-page HTTP 403 is indistinguishable from true empty",
+      "assertion_passed": true,
+      "observed": {
+        "result": []
+      },
+      "elapsed_ms": 0.013
+    },
+    {
+      "id": "A03",
+      "kind": "known_defect_reproduced",
+      "description": "A default single-page 200 anti-spider HTML becomes []",
+      "assertion_passed": true,
+      "observed": {
+        "result": []
+      },
+      "elapsed_ms": 0.007
+    },
+    {
+      "id": "A04",
+      "kind": "behavior",
+      "description": "A strict page mode reports HTTP failure as exception",
+      "assertion_passed": true,
+      "observed": {
+        "exception": "RuntimeError"
+      },
+      "elapsed_ms": 0.01
+    },
+    {
+      "id": "A05",
+      "kind": "known_defect_reproduced",
+      "description": "A retains search row with missing real_url; no validated article identity",
+      "assertion_passed": true,
+      "observed": {
+        "result_count": 1,
+        "real_url": "",
+        "publish_time": "2026-10-17"
+      },
+      "elapsed_ms": 0.103
+    },
+    {
+      "id": "A06",
+      "kind": "known_defect_reproduced",
+      "description": "A returns JS date source rather than parsed timestamp",
+      "assertion_passed": true,
+      "observed": {
+        "result_count": 1,
+        "real_url": "",
+        "publish_time": "document.write(timeConvert('1788797730'))"
+      },
+      "elapsed_ms": 0.067
+    },
+    {
+      "id": "A07",
+      "kind": "known_defect_reproduced",
+      "description": "A zip(title,time) drops an article when time element is absent",
+      "assertion_passed": true,
+      "observed": {
+        "result_count": 1,
+        "real_url": "",
+        "publish_time": "2026-10-17"
+      },
+      "elapsed_ms": 0.061
+    },
+    {
+      "id": "A08",
+      "kind": "known_defect_reproduced",
+      "description": "A redirect string concatenation does not enforce exact WeChat hostname",
+      "assertion_passed": true,
+      "observed": {
+        "returned_url": "https://mp.synthetic.invalid/s/example",
+        "exact_wechat_host": false
+      },
+      "elapsed_ms": 0.028
+    },
+    {
+      "id": "A09",
+      "kind": "known_defect_reproduced",
+      "description": "A 200 page without js_content silently returns empty string",
+      "assertion_passed": true,
+      "observed": {
+        "content": "",
+        "explicit_block_or_parse_error": false
+      },
+      "elapsed_ms": 0.027
+    },
+    {
+      "id": "A10",
+      "kind": "known_defect_reproduced",
+      "description": "A multi-page aggregator concatenates duplicates without URL dedup",
+      "assertion_passed": true,
+      "observed": {
+        "rows": 2,
+        "unique_real_urls": 1
+      },
+      "elapsed_ms": 0.008
+    },
+    {
+      "id": "B01",
+      "kind": "behavior",
+      "description": "B page-meta parser converts Unix ct explicitly to Beijing time",
+      "assertion_passed": true,
+      "observed": {
+        "title": "合成通知",
+        "author": "合成公众号",
+        "publish_time": "2026-09-08 00:15",
+        "expected_timezone": "+08:00",
+        "certification_verified": false
+      },
+      "elapsed_ms": 0.501
+    },
+    {
+      "id": "B02",
+      "kind": "behavior",
+      "description": "B page-meta parser leaves unsupported date absent",
+      "assertion_passed": true,
+      "observed": {
+        "title": "合成无日期通知"
+      },
+      "elapsed_ms": 2.146
+    },
+    {
+      "id": "B03",
+      "kind": "behavior",
+      "description": "B synthetic embedded album JSON can expose parent and child article links",
+      "assertion_passed": true,
+      "observed": {
+        "rows": 2,
+        "unique_urls": 2,
+        "has_publish_time": false
+      },
+      "elapsed_ms": 0.705
+    },
+    {
+      "id": "B04",
+      "kind": "known_defect_reproduced",
+      "description": "B fallback link parser accepts hostname substring outside exact WeChat host",
+      "assertion_passed": true,
+      "observed": {
+        "exact_wechat_host": false,
+        "accepted_unapproved_hostname": true
+      },
+      "elapsed_ms": 0.228
+    },
+    {
+      "id": "B05",
+      "kind": "known_defect_reproduced",
+      "description": "B actual missing-body fallback references undefined html global",
+      "assertion_passed": true,
+      "observed": {
+        "exception": "NameError",
+        "name": "html",
+        "body_success": false
+      },
+      "elapsed_ms": 3.453
+    },
+    {
+      "id": "B06",
+      "kind": "latent_defect_with_explicit_dependency_repair",
+      "description": "B missing-body branch fabricates generic template and today's publication date after html alias supplied",
+      "assertion_passed": true,
+      "observed": {
+        "dependency_repair_only": "provided missing html stdlib alias in isolated namespace",
+        "publication_date_filled_with_run_date": true,
+        "generic_template_generated": true,
+        "is_failed": false,
+        "real_body_obtained": false
+      },
+      "elapsed_ms": 0.34
+    },
+    {
+      "id": "B07",
+      "kind": "behavior",
+      "description": "B successful-body branch retains unknown publication date rather than always filling today",
+      "assertion_passed": true,
+      "observed": {
+        "cleaner_stubbed": true,
+        "publish_time": "",
+        "body_is_synthetic": true
+      },
+      "elapsed_ms": 0.422
+    },
+    {
+      "id": "AB01",
+      "kind": "synthetic_exchange_contract_only",
+      "description": "Fixture A/B output normalization rejects missing/foreign links, preserves unknown time and deduplicates",
+      "assertion_passed": true,
+      "observed": {
+        "accepted": [
+          {
+            "title": "合成A",
+            "url": "https://mp.weixin.qq.com/s/synthetic1",
+            "published_date": null,
+            "time_precision": "unknown",
+            "rights_scope": "metadata_only",
+            "review_status": "pending"
+          },
+          {
+            "title": "合成B",
+            "url": "https://mp.weixin.qq.com/s/synthetic2",
+            "published_date": "2026-10-17",
+            "time_precision": "date",
+            "rights_scope": "metadata_only",
+            "review_status": "pending"
+          }
+        ],
+        "duplicates": 1,
+        "rejected": 2
+      },
+      "elapsed_ms": 0.103
+    }
+  ]
+}

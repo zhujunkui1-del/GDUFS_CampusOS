@@ -1,0 +1,80 @@
+{
+  "checkedAt": "2026-10-17T09:48:00.495Z",
+  "scope": "public GitHub metadata and pinned code only; no WeChat requests, credentials, application execution, SMTP, models, D1 or deployment",
+  "commits": [
+    {
+      "repository": "rachelos/we-mp-rss",
+      "sha": "9b40351fd1913e7f74cf88f65740cd67a28baf81",
+      "authorDate": "2026-10-10T01:45:30Z",
+      "committerDate": "2026-10-10T01:45:30Z",
+      "url": "https://api.github.com/repos/rachelos/we-mp-rss/git/commits/9b40351fd1913e7f74cf88f65740cd67a28baf81"
+    },
+    {
+      "repository": "thu-lawyer/thu-push",
+      "sha": "19abc55134cf5691e575fbcc74cb88d3801c2b28",
+      "authorDate": "2026-10-11T16:54:42Z",
+      "committerDate": "2026-10-11T16:54:42Z",
+      "url": "https://api.github.com/repos/thu-lawyer/thu-push/git/commits/19abc55134cf5691e575fbcc74cb88d3801c2b28"
+    }
+  ],
+  "observations": [
+    {
+      "name": "werss_repo",
+      "url": "https://api.github.com/repos/rachelos/we-mp-rss",
+      "repository": "rachelos/we-mp-rss",
+      "defaultBranch": "main",
+      "updatedAt": "2026-10-17T08:54:01Z",
+      "pushedAt": "2026-10-10T01:45:31Z",
+      "license": "NOASSERTION"
+    },
+    {
+      "name": "werss_branch",
+      "url": "https://api.github.com/repos/rachelos/we-mp-rss/branches/main",
+      "sha": "9b40351fd1913e7f74cf88f65740cd67a28baf81"
+    },
+    {
+      "name": "thu_repo",
+      "url": "https://api.github.com/repos/thu-lawyer/thu-push",
+      "repository": "thu-lawyer/thu-push",
+      "defaultBranch": "main",
+      "updatedAt": "2026-10-11T16:54:49Z",
+      "pushedAt": "2026-10-11T16:54:45Z",
+      "license": "MIT"
+    },
+    {
+      "name": "thu_branch",
+      "url": "https://api.github.com/repos/thu-lawyer/thu-push/branches/main",
+      "sha": "19abc55134cf5691e575fbcc74cb88d3801c2b28"
+    },
+    {
+      "name": "issue463",
+      "url": "https://api.github.com/repos/rachelos/we-mp-rss/issues/463",
+      "number": 463,
+      "state": "open",
+      "createdAt": "2026-09-07T00:43:58Z",
+      "updatedAt": "2026-10-09T14:52:51Z",
+      "closedAt": null
+    },
+    {
+      "name": "issue476",
+      "url": "https://api.github.com/repos/rachelos/we-mp-rss/issues/476",
+      "number": 476,
+      "state": "open",
+      "createdAt": "2026-10-05T03:50:54Z",
+      "updatedAt": "2026-10-14T03:32:20Z",
+      "closedAt": null
+    },
+    {
+      "name": "pr478",
+      "url": "https://api.github.com/repos/rachelos/we-mp-rss/pulls/478",
+      "number": 478,
+      "state": "open",
+      "merged": false,
+      "baseSha": "9b40351fd1913e7f74cf88f65740cd67a28baf81",
+      "headSha": "a76517ba5682a83c184916037daa6116ac15bf98",
+      "createdAt": "2026-10-14T13:36:35Z",
+      "updatedAt": "2026-10-14T13:36:35Z",
+      "mergedAt": null
+    }
+  ]
+}
