@@ -1,0 +1,99 @@
+{
+  "recordedAt": "2026-10-17T02:16:36.295Z",
+  "baselineHead": "7d0f9eb",
+  "scope": "Documentation-only S3-0 audit, design contracts and existing-code baseline checks; no new S3 feature acceptance.",
+  "taxonomy": {
+    "passed": true,
+    "radar": 7,
+    "knowledge": 6,
+    "exactOrderedLabels": true,
+    "codesUniqueWithinTaxonomy": true
+  },
+  "markdownLinks": {
+    "passed": true,
+    "localLinksResolved": 11,
+    "remoteLinksPresent": 26,
+    "remoteLinks": "Reviewed in research; this checker does not assert every remote link availability."
+  },
+  "schemaReplay": {
+    "passed": true,
+    "migrations": 6,
+    "tables": 45,
+    "foreignKeyViolations": 0,
+    "target": "Temporary in-memory SQLite only; not a D1 migration."
+  },
+  "sourceCatalog": {
+    "passed": true,
+    "originalRows": 220,
+    "markdownEntries": 220,
+    "originalHashesMatchS3A": true,
+    "noReimport": true
+  },
+  "unchangedRuntime": {
+    "passed": true,
+    "mapModelHashPreserved": true,
+    "migrationHashesPreserved": true,
+    "applicationOrConfigChanges": 0
+  },
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exitCode": 0
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exitCode": 0
+  },
+  "unit": {
+    "command": "npm test -- --reporter=json --outputFile=.map-tools/s3-0/unit.json",
+    "passed": 256,
+    "failed": 0,
+    "files": 35
+  },
+  "browserChecks": {
+    "chrome": {
+      "passed": 2,
+      "failed": 0,
+      "scope": "Existing console anonymous/forged-role API rejection; desktop + mobile project contexts. No full UI or real-device regression.",
+      "durationMs": 1317.9029999999998
+    },
+    "edge": {
+      "passed": 2,
+      "failed": 0,
+      "scope": "Existing console anonymous/forged-role API rejection; desktop + mobile project contexts. No full UI or real-device regression.",
+      "durationMs": 928.675
+    }
+  },
+  "productionBuild": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "scope": "Next.js production build; no new OpenNext deployment or cloud update."
+  },
+  "cloud": {
+    "passed": true,
+    "scope": "Owned preview read-only counts/config and public readiness only; no cloud capacity/model/collection test.",
+    "counts": {
+      "sources": 220,
+      "enabled": 0,
+      "verified": 0,
+      "publicDocuments": 0,
+      "events": 0,
+      "jobs": 0,
+      "projectedPlaces": 0,
+      "publishedDocuments": 0
+    }
+  },
+  "diffCheck": {
+    "passed": true,
+    "docsOnly": true
+  },
+  "notExecuted": [
+    "New collectors or WeChat PoCs",
+    "Article ingestion/review/publication",
+    "Dify integration",
+    "Model generation or paid calls",
+    "Cloud D1 writes/migrations",
+    "Deployments/resources/DNS changes",
+    "Full map/browser regression or CPU capacity tests",
+    "Real mobile/GPS testing"
+  ]
+}

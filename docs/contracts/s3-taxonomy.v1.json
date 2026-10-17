@@ -1,0 +1,74 @@
+{
+  "version": "s3-freeze-2026-10-17.1",
+  "status": "design_contract_only_not_runtime_migration",
+  "radar": [
+    { "code": "lecture", "label": "讲座" },
+    { "code": "culture_sports", "label": "文体活动" },
+    { "code": "competition", "label": "竞赛" },
+    { "code": "education_career", "label": "升学就业" },
+    { "code": "academic_research", "label": "学术科研" },
+    { "code": "scholarship_opportunity", "label": "奖助机会" },
+    { "code": "campus_notice", "label": "校园公告" }
+  ],
+  "knowledge": [
+    { "code": "academic_affairs", "label": "学业教务" },
+    { "code": "campus_life", "label": "校园生活" },
+    { "code": "administrative_services", "label": "办事服务" },
+    { "code": "scholarship_policy", "label": "奖助政策" },
+    { "code": "education_career", "label": "升学就业" },
+    { "code": "research_innovation", "label": "科研创新" }
+  ],
+  "content_type": ["event", "notice", "policy", "guide", "news", "unknown"],
+  "campus_scope": ["all", "university_town", "baiyun", "online", "unknown"],
+  "review_status": ["pending", "approved", "rejected"],
+  "lifecycle_status": ["active", "expired", "superseded", "withdrawn"],
+  "publication_status": ["draft", "published", "withdrawn"],
+  "event_status_derived": [
+    "registration_open",
+    "registration_closed",
+    "upcoming",
+    "ongoing",
+    "ended",
+    "cancelled",
+    "postponed",
+    "unknown"
+  ],
+  "registration_requirement": ["required", "not_required", "unknown"],
+  "registration_state": ["open", "closed", "not_required", "unknown"],
+  "rights_scope": [
+    "metadata_only",
+    "excerpt_and_link",
+    "licensed_full_text",
+    "no_collection",
+    "unknown"
+  ],
+  "source_channel_type": [
+    "official_web",
+    "wechat_subscription",
+    "wechat_service",
+    "mini_program",
+    "enterprise_wechat",
+    "third_party_web",
+    "student_media",
+    "manual_import",
+    "login_service",
+    "embedded_app"
+  ],
+  "rules": {
+    "category_key": ["taxonomy", "code"],
+    "primary_categories_per_projection": 1,
+    "tags_max": 12,
+    "tags_are_not": [
+      "source_id",
+      "organization",
+      "campus_scope",
+      "review_status",
+      "lifecycle_status",
+      "event_status",
+      "official_status"
+    ],
+    "unknown_category": "manual_review_no_silent_default",
+    "public_access": "published_approved_current_version_rights_and_source_gate",
+    "map_scope": "university_town_verified_place_only"
+  }
+}

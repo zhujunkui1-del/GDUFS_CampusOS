@@ -1,0 +1,3657 @@
+{
+  "recordedAt": "2026-10-17T02:10:16.040Z",
+  "head": "7d0f9eb",
+  "scope": "S3-0 read-only audit; no application/schema/resource changes",
+  "migrations": [
+    {
+      "file": "0001_platform_and_campus.sql",
+      "sha256": "3056df29ff0a92c7fc7763cf12595aa9b60f60657dea6a01ae4c8711e3bc8d16"
+    },
+    {
+      "file": "0002_knowledge_and_events.sql",
+      "sha256": "bfcd7588f4924cf3cc81ea1fc0563334e8bcc4c4f4008642ed6a5e1544acce62"
+    },
+    {
+      "file": "0003_route_geometry_guards.sql",
+      "sha256": "d49fc65ef9a4687d5aeeef21e1b92fe3f6e32fc293765ac632c5cf6068341e0c"
+    },
+    {
+      "file": "0004_assistant_shared_state.sql",
+      "sha256": "a58b9b808dce148389d91717f611eebef29feb8d2e93dbad4889a796ed6154ed"
+    },
+    {
+      "file": "0005_assistant_conversations.sql",
+      "sha256": "5af589a6148b111e682d2ee14c157e12fe52f4be3f586f9187a06e70fa4e5963"
+    },
+    {
+      "file": "0006_console_registry.sql",
+      "sha256": "6029fdfff2228bb0493e19ddbb4023bf1444ba80168836b9f26caff82ea18dd6"
+    }
+  ],
+  "businessTableCount": 45,
+  "schema": [
+    {
+      "name": "agent_runs",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "conversation_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "tool_calls_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'[]'",
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "cost_microunits",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ', 'now')",
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "owner_key",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "request_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "ip_key",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "is_user",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "started_at_ms",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "lease_until_ms",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "finished_at_ms",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "error_code",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "usage_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "charged_tokens",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "250000",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "conversations",
+          "from": "conversation_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "assistant_actions",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "owner_key",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "run_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "conversation_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "actions_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'pending'",
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "receipt_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "expires_at_ms",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "conversations",
+          "from": "conversation_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "agent_runs",
+          "from": "run_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "assistant_conversation_routes",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "conversation_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "route_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 2
+        },
+        {
+          "cid": 2,
+          "name": "owner_key",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "assistant_route_refs",
+          "from": "route_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "conversations",
+          "from": "conversation_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "assistant_location_challenges",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "nonce_hash",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "owner_key",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "expires_at_ms",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    },
+    {
+      "name": "assistant_route_refs",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "owner_key",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "expires_at_ms",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "map_version",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "network_version",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "payload_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    },
+    {
+      "name": "assistant_sessions",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "token_hash",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "owner_key",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "user_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "expires_at_ms",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "created_at_ms",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "users",
+          "from": "user_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "audit_events",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "actor_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "action",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "target_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "request_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ', 'now')",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "users",
+          "from": "actor_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "SET NULL",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "auth_identities",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "user_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "phone_hash",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "phone_encrypted",
+          "type": "BLOB",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "password_hash",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ', 'now')",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "users",
+          "from": "user_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "campus_events",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "title",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "organizer",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "category",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "starts_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "ends_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "registration_deadline",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "deadline_semantics",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "target_audience",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "campus_scope",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "place_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "review_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'pending'",
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'unknown'",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "campus_places",
+          "from": "place_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "campus_places",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "campus_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'gdufs_university_town'",
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "aliases_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'[]'",
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "category",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "zone_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "longitude",
+          "type": "REAL",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "latitude",
+          "type": "REAL",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "coord_crs",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'WGS84'",
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "geom_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "source_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'discovered'",
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "geography_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'pending'",
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "verified_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "source_records",
+          "from": "source_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "campus_zones",
+          "from": "zone_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "campus_zones",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "polygon_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "source_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "verified_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "source_records",
+          "from": "source_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "console_admins",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "email",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "role",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'active'",
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "version",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "1",
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ','now')",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    },
+    {
+      "name": "console_audit_logs",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "actor_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "actor_label",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "action",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "target_type",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "target_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "version",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "details_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'{}'",
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ','now')",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    },
+    {
+      "name": "console_commands",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "admin_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "action",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "target_type",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "target_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "source_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "expected_version",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "request_hash",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "session_hash",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "details_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'{}'",
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ','now')",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "console_sessions",
+          "from": "session_hash",
+          "to": "token_hash",
+          "on_update": "NO ACTION",
+          "on_delete": "SET NULL",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "knowledge_sources",
+          "from": "source_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 2,
+          "seq": 0,
+          "table": "console_admins",
+          "from": "admin_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "console_content_reviews",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "document_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "version",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "decision",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "admin_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "note",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "console_admins",
+          "from": "admin_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "knowledge_documents",
+          "from": "document_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "console_content_versions",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "document_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "version",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 2
+        },
+        {
+          "cid": 2,
+          "name": "snapshot_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "created_by",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "console_admins",
+          "from": "created_by",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "knowledge_documents",
+          "from": "document_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "console_import_batches",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "manifest_hash",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "report_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "actor",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    },
+    {
+      "name": "console_limits",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "key_hash",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "bucket",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 2
+        },
+        {
+          "cid": 2,
+          "name": "requests",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    },
+    {
+      "name": "console_revoked_tokens",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "token_hash",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "expires_at_ms",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    },
+    {
+      "name": "console_sessions",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "token_hash",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "admin_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "access_hash",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "expires_at_ms",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "revoked_at_ms",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "created_at_ms",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "console_admins",
+          "from": "admin_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "content_index_invalidations",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "document_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "version",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "reason",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "state",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'pending'",
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ','now')",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "knowledge_documents",
+          "from": "document_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "content_reviews",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "target_type",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "target_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "decision",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "reviewer_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "notes",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ', 'now')",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "users",
+          "from": "reviewer_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "conversation_messages",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "conversation_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "role",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "content",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ', 'now')",
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "artifacts_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'[]'",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "conversations",
+          "from": "conversation_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "conversations",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "user_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "guest_session_hash",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'active'",
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ', 'now')",
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "owner_key",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "expires_at_ms",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "updated_at_ms",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "selected_place_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "active_route_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "title",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'新对话'",
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "deleted_at_ms",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "users",
+          "from": "user_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "event_sources",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "event_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "document_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 2
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "knowledge_documents",
+          "from": "document_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "campus_events",
+          "from": "event_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "external_connections",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "user_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "provider",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "scopes_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "token_encrypted",
+          "type": "BLOB",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "expires_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "users",
+          "from": "user_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "ingestion_jobs",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "source_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "error_code",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "attempts",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ', 'now')",
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "found_count",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "body_count",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "duplicate_count",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "version",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "1",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "knowledge_sources",
+          "from": "source_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "knowledge_chunks",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "document_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "text",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "vector_key",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "start_offset",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "end_offset",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "page_number",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "knowledge_documents",
+          "from": "document_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "knowledge_documents",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "source_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "owner_user_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "title",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "url",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "body",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "content_hash",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "published_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "fetched_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "verified_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "valid_until",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "academic_year",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "campus_scope",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "data_domain",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "review_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'pending'",
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "lifecycle_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'active'",
+          "pk": 0
+        },
+        {
+          "cid": 16,
+          "name": "superseded_by",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 17,
+          "name": "version",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "1",
+          "pk": 0
+        },
+        {
+          "cid": 18,
+          "name": "publication_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'draft'",
+          "pk": 0
+        },
+        {
+          "cid": 19,
+          "name": "workflow_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'pending'",
+          "pk": 0
+        },
+        {
+          "cid": 20,
+          "name": "candidate_kind",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'knowledge'",
+          "pk": 0
+        },
+        {
+          "cid": 21,
+          "name": "extracted_fields_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'{}'",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "knowledge_documents",
+          "from": "superseded_by",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "users",
+          "from": "owner_user_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        },
+        {
+          "id": 2,
+          "seq": 0,
+          "table": "knowledge_sources",
+          "from": "source_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "knowledge_facts",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "document_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "evidence_chunk_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "claim",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "review_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'pending'",
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "valid_until",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "knowledge_chunks",
+          "from": "evidence_chunk_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "knowledge_documents",
+          "from": "document_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "knowledge_sources",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "display_name",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "source_type",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "allowed_domains_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "entry_urls_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "fetch_policy_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "authorization_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'pending'",
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "enabled",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "last_checked_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "console_managed",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "channel_type",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'manual_import'",
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "subtype",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "''",
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "source_aliases_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'[]'",
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "organization",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "''",
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "official_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'unverified'",
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "verification_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'candidate'",
+          "pk": 0
+        },
+        {
+          "cid": 16,
+          "name": "campus_scope",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'unknown'",
+          "pk": 0
+        },
+        {
+          "cid": 17,
+          "name": "website_url",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 18,
+          "name": "wechat_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 19,
+          "name": "canonical_locator",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 20,
+          "name": "evidence_urls_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'[]'",
+          "pk": 0
+        },
+        {
+          "cid": 21,
+          "name": "original_catalog_refs_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'[]'",
+          "pk": 0
+        },
+        {
+          "cid": 22,
+          "name": "catalog_metadata_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'{}'",
+          "pk": 0
+        },
+        {
+          "cid": 23,
+          "name": "catalog_hash",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 24,
+          "name": "connector_type",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'disabled'",
+          "pk": 0
+        },
+        {
+          "cid": 25,
+          "name": "connector_config_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'{}'",
+          "pk": 0
+        },
+        {
+          "cid": 26,
+          "name": "permission_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'unreviewed'",
+          "pk": 0
+        },
+        {
+          "cid": 27,
+          "name": "last_success_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 28,
+          "name": "last_error",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 29,
+          "name": "priority",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "3",
+          "pk": 0
+        },
+        {
+          "cid": 30,
+          "name": "version",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "1",
+          "pk": 0
+        },
+        {
+          "cid": 31,
+          "name": "archived_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 32,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 33,
+          "name": "updated_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    },
+    {
+      "name": "login_sessions",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "session_hash",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "user_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "expires_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "revoked_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "device_description",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ', 'now')",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "users",
+          "from": "user_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "otp_challenges",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "phone_hash",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "code_hash",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "purpose",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "attempts",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "max_attempts",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "5",
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "expires_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "consumed_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    },
+    {
+      "name": "path_edges",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "from_node",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "to_node",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "length_meters",
+          "type": "REAL",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "level",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "accessible",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "bidirectional",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "1",
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "verified",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "source_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "network_version",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "verified_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "source_records",
+          "from": "source_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "path_nodes",
+          "from": "to_node",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 2,
+          "seq": 0,
+          "table": "path_nodes",
+          "from": "from_node",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "path_nodes",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "longitude",
+          "type": "REAL",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "latitude",
+          "type": "REAL",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "coord_crs",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'WGS84'",
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "level",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "source_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "verified_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "source_records",
+          "from": "source_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "place_entrances",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "place_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "path_node_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "source_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "verified_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "source_records",
+          "from": "source_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "path_nodes",
+          "from": "path_node_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 2,
+          "seq": 0,
+          "table": "campus_places",
+          "from": "place_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "place_media",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "place_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "source_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "url",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "kind",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "review_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'pending'",
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "alt_text",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "verified_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "source_records",
+          "from": "source_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "campus_places",
+          "from": "place_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "route_snapshots",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "owner_session_hash",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "path_geojson",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "network_version",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "distance_meters",
+          "type": "REAL",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "estimated_minutes",
+          "type": "REAL",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "expires_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    },
+    {
+      "name": "source_records",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "title",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "source_url",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "license_status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'pending'",
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "allowed_uses_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'[]'",
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "verified_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "owner_decision",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    },
+    {
+      "name": "user_favorites",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "user_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "target_type",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 2
+        },
+        {
+          "cid": 2,
+          "name": "target_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 3
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "users",
+          "from": "user_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "user_memories",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "user_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "content",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "consent_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "deleted_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "users",
+          "from": "user_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "user_preferences",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "user_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "map_mode",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'2.5d'",
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "interests_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'[]'",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "users",
+          "from": "user_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "user_schedules",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "user_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "title",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "start_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "end_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "place_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "confirmed_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "campus_places",
+          "from": "place_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "id": 1,
+          "seq": 0,
+          "table": "users",
+          "from": "user_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "user_tasks",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "user_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "title",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "starts_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "due_at",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'open'",
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "version",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "1",
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "idempotency_key",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "foreignKeys": [
+        {
+          "id": 0,
+          "seq": 0,
+          "table": "users",
+          "from": "user_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "CASCADE",
+          "match": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "display_name",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "role",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'user'",
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'active'",
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "created_at",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "strftime('%Y-%m-%dT%H:%M:%fZ', 'now')",
+          "pk": 0
+        }
+      ],
+      "foreignKeys": []
+    }
+  ],
+  "foreignKeyViolations": 0,
+  "localAuditDatabase": "in-memory only; not the running local or preview D1",
+  "sources": {
+    "files": [
+      {
+        "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.xlsx",
+        "sha256": "b4d5c287a4b53c745f7cdf05df41c3b168a6ae6b3394060c28a04cae965e5deb"
+      },
+      {
+        "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.md",
+        "sha256": "e0c9e16ae9097c998ca50d30d2db729063a9d409af7c6d1521f53c7e680919ab"
+      }
+    ],
+    "originalRows": 220,
+    "markdownEntries": 220,
+    "types": {
+      "官网": 109,
+      "公众号": 89,
+      "服务号": 3,
+      "小程序": 16,
+      "企业微信": 1,
+      "内嵌应用": 2
+    },
+    "conflictRows": 29,
+    "allStableIdsUnique": true,
+    "rawFileHashesMatchS3A": true
+  },
+  "dify": {
+    "sourceFiles": [],
+    "implemented": false
+  },
+  "map": {
+    "version": "s1-2026-10-14.2",
+    "placeCount": 113,
+    "approvedModelSha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a"
+  }
+}

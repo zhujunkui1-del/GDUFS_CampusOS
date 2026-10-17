@@ -1,0 +1,57 @@
+{
+  "readOnly": true,
+  "formulaEvaluation": false,
+  "sheets": [
+    {
+      "name": "使用说明与统计",
+      "xmlRowsIncludingHeader": 17,
+      "formulaCells": 0
+    },
+    {
+      "name": "全渠道去重总表",
+      "xmlRowsIncludingHeader": 221,
+      "formulaCells": 0
+    },
+    {
+      "name": "官方网站",
+      "xmlRowsIncludingHeader": 110,
+      "formulaCells": 0
+    },
+    {
+      "name": "微信公众号",
+      "xmlRowsIncludingHeader": 90,
+      "formulaCells": 0
+    },
+    {
+      "name": "微信服务号",
+      "xmlRowsIncludingHeader": 4,
+      "formulaCells": 0
+    },
+    {
+      "name": "微信小程序",
+      "xmlRowsIncludingHeader": 17,
+      "formulaCells": 0
+    },
+    {
+      "name": "企业微信及内嵌应用",
+      "xmlRowsIncludingHeader": 4,
+      "formulaCells": 0
+    },
+    {
+      "name": "社团组织与账号核实",
+      "xmlRowsIncludingHeader": 90,
+      "formulaCells": 0
+    },
+    {
+      "name": "官方栏目与证据文章",
+      "xmlRowsIncludingHeader": 76,
+      "formulaCells": 0
+    },
+    {
+      "name": "重复冲突与待核事项",
+      "xmlRowsIncludingHeader": 30,
+      "formulaCells": 0
+    }
+  ],
+  "interpretation": "Main channels, organization leads, evidence articles and conflict notes are separate input sheets; only main channel rows are the 220 registry candidates."
+}

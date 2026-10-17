@@ -270,3 +270,11 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 来源为负责人明确选择独立管理员访问密钥的答复和服务端配置，非QQ邮箱验证/学校统一身份授权。密钥以密码学随机数生成，独立于本地/模型/其他项目，只有忽略文件和指定preview Worker Secrets保存；原值不进入Git、报告、URL或截图。唯一管理员标识仅服务端配置，界面截图遮蔽邮箱，身份不赋予学生私人数据读取权限。
 
 实际证据为Chrome/Edge桌面/手机视口的公网登录、真实220候选读取、刷新恢复、退出与旧Cookie拒绝，D1有4次登录/退出审计且活跃会话0。没有在公网填造内容或把候选核验为事实，没有本次Access/扣费授权操作。详见D-042、S3_A_CONSOLE_ACCEPTANCE.md第9节及verification/s3-a/admin-preview-*；本阶段之后无额外模型请求。
+
+## SRC-059｜S3-0只读审计、参考机制与接口边界（2026-10-17）
+
+输入仍为负责人两份2026-10-17来源清单，文件实际存在/只读SHA一致，主表220行与Markdown220稳定ID对应；组织线索、证据文章和冲突事项不当额外已认证来源。工作表结构与当前45表/外键、preview来源/知识实体只读计数见verification/s3-0，未读取学生私人正文/位置或执行数据写入。
+
+参考[PKU Know首页](https://pkuknow.cn/)与[日历](https://pkuknow.cn/calendar)仅观察聚合、筛选、摘要/原文、日历、来源补充和手机单双列；未提交表单、报名、登录或复制代码/品牌/素材/文章库。Dify仅查官方文档/许可/定价，不连接学校内网或调用真实API。研究事实与推论见research/s3-0/product-and-dify.md。
+
+平台限制依据：[Workers limits](https://developers.cloudflare.com/workers/platform/limits/)、[D1价格](https://developers.cloudflare.com/d1/platform/pricing/)、[D1限制](https://developers.cloudflare.com/d1/platform/limits/)、[D1 FTS5支持](https://developers.cloudflare.com/d1/sql-api/sql-statements/)。仅说明当日官方规格，不当本账户实时剩余配额或长期容量证明。没有新GIS/图片/全文数据入public，也无新增模型/Dify或收费资源操作。

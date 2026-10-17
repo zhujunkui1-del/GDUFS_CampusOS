@@ -4,6 +4,8 @@
 >
 > 开发助手：Codex｜目标：广东外语外贸大学第二届 AI 应用创新大赛｜主方向：（四）生活服务，管理服务为辅。
 
+**2026-10-17 S3入口（D-043）：**S3-A Console已完成，当前补做S3-0审计与架构冻结；本轮不继续S3-B。后续先读[总体基线](../docs/S3_0_ARCHITECTURE_BASELINE.md)、[数据模型](../docs/S3_0_DATA_MODEL.md)和[固定7/6分类](../docs/contracts/s3-taxonomy.v1.json)。旧章节保留历史日期，冲突按最新负责人决定/DECISIONS及实际代码裁决；Dify尚未接入，220来源仍候选，不把规划写成可用。
+
 ## 1. 正确使用方式
 
 1. 先完整阅读本文件和根目录 `AGENTS.md`，再读 `01_PRODUCT_SPEC.md`。

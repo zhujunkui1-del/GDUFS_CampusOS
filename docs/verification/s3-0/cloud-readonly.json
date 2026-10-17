@@ -1,0 +1,112 @@
+{
+  "recordedAt": "2026-10-17T02:02:36.468Z",
+  "readOnly": true,
+  "worker": "campusos-preview",
+  "database": "campusos-preview",
+  "accountMatched": true,
+  "counts": {
+    "sources": 220,
+    "enabled": 0,
+    "verified": 0,
+    "publicDocuments": 0,
+    "events": 0,
+    "jobs": 0,
+    "projectedPlaces": 0,
+    "publishedDocuments": 0
+  },
+  "migrations": [
+    "0001_platform_and_campus.sql",
+    "0002_knowledge_and_events.sql",
+    "0003_route_geometry_guards.sql",
+    "0004_assistant_shared_state.sql",
+    "0005_assistant_conversations.sql",
+    "0006_console_registry.sql"
+  ],
+  "foreignKeyViolations": 0,
+  "versions": [
+    {
+      "version_id": "f602fa2a-265b-479c-ad73-743c9222f198",
+      "percentage": 100
+    }
+  ],
+  "bindings": [
+    {
+      "name": "AGENT_SIGNING_SECRET",
+      "type": "secret_text"
+    },
+    {
+      "name": "APP_ENV",
+      "type": "plain_text"
+    },
+    {
+      "name": "ASSETS",
+      "type": "assets"
+    },
+    {
+      "name": "CONSOLE_ADMIN_ACCESS_KEY",
+      "type": "secret_text"
+    },
+    {
+      "name": "CONSOLE_ADMIN_EMAILS",
+      "type": "secret_text"
+    },
+    {
+      "name": "CONSOLE_AUTH_MODE",
+      "type": "secret_text"
+    },
+    {
+      "name": "CONSOLE_ORIGIN",
+      "type": "secret_text"
+    },
+    {
+      "name": "CONSOLE_SESSION_SECRET",
+      "type": "secret_text"
+    },
+    {
+      "name": "DB",
+      "type": "d1"
+    },
+    {
+      "name": "MAP_RATE_LIMITER",
+      "type": "ratelimit"
+    },
+    {
+      "name": "MODEL_API_KEY",
+      "type": "secret_text"
+    },
+    {
+      "name": "MODEL_BASE_URL",
+      "type": "secret_text"
+    },
+    {
+      "name": "MODEL_CAPABILITIES_JSON",
+      "type": "secret_text"
+    },
+    {
+      "name": "MODEL_NAME",
+      "type": "secret_text"
+    },
+    {
+      "name": "WORKER_SELF_REFERENCE",
+      "type": "service"
+    }
+  ],
+  "compatibilityDate": "2026-10-12",
+  "usageModel": "standard",
+  "paidPlanOrRemainingQuotaVerified": false,
+  "agentStatus": {
+    "http": 200,
+    "chatAvailable": true,
+    "storageReady": true,
+    "modelReady": true,
+    "registeredSkills": [
+      "search_places",
+      "get_place_details",
+      "find_nearby_places",
+      "plan_route",
+      "control_map"
+    ]
+  },
+  "noModelGenerationCalls": true,
+  "noDataWrites": true
+}
