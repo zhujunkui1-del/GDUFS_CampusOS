@@ -1,0 +1,47 @@
+{
+  "recordedAt": "2026-10-17T04:27:38.106Z",
+  "environment": "local-worker",
+  "sourceId": "GDUFS-SRC-0017",
+  "jobId": "job-a228c311-4fcb-42b9-9970-d1d6b28b7aae",
+  "final": {
+    "status": "completed",
+    "controlState": "active",
+    "phase": "complete",
+    "found": 10,
+    "bodyTextParsed": 0,
+    "duplicates": 1,
+    "errors": 0,
+    "reservedRequests": 4
+  },
+  "websiteRequests": 3,
+  "events": [
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 10078,
+      "requests": 2
+    },
+    {
+      "phase": "fetch",
+      "outcome": "not_modified",
+      "wallMs": 42,
+      "requests": 1
+    }
+  ],
+  "apiWallMs": [
+    45,
+    26,
+    12,
+    25,
+    35,
+    13,
+    30,
+    26,
+    16,
+    14
+  ],
+  "modelCalls": 0,
+  "fullTextPersisted": false,
+  "autoApproved": 0,
+  "autoPublished": 0
+}

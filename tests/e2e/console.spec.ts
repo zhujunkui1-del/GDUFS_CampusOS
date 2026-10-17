@@ -42,7 +42,7 @@ test("source registry, review, versions, withdrawal, audit and secure logout", a
     readFileSync(".map-tools/s3-a/local-secrets.json", "utf8"),
   );
   const name = "隔离测试来源 " + randomUUID().slice(0, 8);
-  const root = "docs/verification/s3-a";
+  const root = process.env.CONSOLE_E2E_ARTIFACT_DIR || "docs/verification/s3-a";
   mkdirSync(root, { recursive: true });
   const prefix = `${root}/${process.env.PLAYWRIGHT_CHANNEL || "chromium"}-${info.project.name}`;
   await page.goto("/admin");
@@ -53,7 +53,7 @@ test("source registry, review, versions, withdrawal, audit and secure logout", a
   await expect(
     page.getByRole("heading", { name: "总览", exact: true }),
   ).toBeVisible();
-  await expect(page.getByText("采集未启用", { exact: true })).toBeVisible();
+  await expect(page.getByText("手动采集已就绪", { exact: true })).toBeVisible();
   await page.screenshot({ path: prefix + "-overview.png", fullPage: true });
 
   const auth = (await (await page.request.get("/api/console-auth")).json())
@@ -127,8 +127,12 @@ test("source registry, review, versions, withdrawal, audit and secure logout", a
   await page.screenshot({ path: prefix + "-source.png", fullPage: true });
 
   await page.getByRole("link", { name: "采集任务", exact: true }).click();
-  await expect(page.getByRole("button", { name: "开始采集" })).toBeDisabled();
-  await expect(page.getByText("暂无采集任务。")).toBeVisible();
+  await expect(page.getByText("手动采集已就绪", { exact: true })).toBeVisible();
+  const jobs = (await (await page.request.get("/api/admin/jobs")).json()).data
+    .items;
+  if (jobs.length)
+    await expect(page.locator(".console-job")).toHaveCount(jobs.length);
+  else await expect(page.getByText("暂无采集任务。")).toBeVisible();
   await page.getByRole("link", { name: "内容记录", exact: true }).click();
   await page.getByRole("link", { name: "登记内容", exact: true }).click();
   await page.getByLabel("查找信息源", { exact: true }).fill(name);
@@ -141,6 +145,15 @@ test("source registry, review, versions, withdrawal, audit and secure logout", a
     .getByRole("combobox", { name: "信息源", exact: true })
     .selectOption(sourceId);
   await page.getByLabel("标题", { exact: true }).fill("隔离审核夹具 " + name);
+  await page
+    .getByRole("combobox", { name: "原文类型", exact: true })
+    .selectOption("guide");
+  await page
+    .getByRole("combobox", { name: "使用范围", exact: true })
+    .selectOption("licensed_full_text");
+  await page
+    .getByRole("combobox", { name: "知识分类", exact: true })
+    .selectOption("campus_life");
   await page
     .getByLabel("原文链接", { exact: true })
     .fill("https://example.invalid/article/" + randomUUID());

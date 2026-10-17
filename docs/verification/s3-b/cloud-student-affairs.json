@@ -1,0 +1,45 @@
+{
+  "recordedAt": "2026-10-17T04:52:23.944Z",
+  "environment": "real-cloudflare-preview",
+  "sourceId": "GDUFS-SRC-0010",
+  "jobId": "job-fe13cd0b-3f15-40a7-adcc-ca11c5ed3c06",
+  "final": {
+    "status": "completed",
+    "controlState": "active",
+    "phase": "complete",
+    "found": 10,
+    "bodyTextParsed": 1,
+    "duplicates": 0,
+    "errors": 0,
+    "reservedRequests": 4
+  },
+  "websiteRequests": 2,
+  "events": [
+    {
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68721.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-10-16T14:14:18.000Z",
+      "bodyTextChars": 415,
+      "imageCount": 1,
+      "fullTextPersisted": false
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 11925,
+      "requests": 2
+    }
+  ],
+  "apiWallMs": [
+    1343,
+    260,
+    347,
+    1825,
+    351,
+    349
+  ],
+  "modelCalls": 0,
+  "fullTextPersisted": false,
+  "autoApproved": 0,
+  "autoPublished": 0
+}

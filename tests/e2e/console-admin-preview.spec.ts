@@ -68,13 +68,29 @@ test("real preview key login, catalog read, refresh recovery and revoked-cookie 
     "2026-10-17",
   );
   await page.screenshot({
-    path: `docs/verification/s3-a/admin-preview-${process.env.PLAYWRIGHT_CHANNEL}-${info.project.name}-source.png`,
+    path: `${process.env.CONSOLE_E2E_ARTIFACT_DIR || "docs/verification/s3-a"}/admin-preview-${process.env.PLAYWRIGHT_CHANNEL}-${info.project.name}-source.png`,
     fullPage: true,
   });
   await page.getByRole("link", { name: "内容记录", exact: true }).click();
-  await expect(page.getByText("暂无内容记录。", { exact: true })).toBeVisible();
+  const content = (await (await page.request.get("/api/admin/content")).json())
+    .data.items;
+  if (content.length)
+    await expect(page.locator(".console-source-row")).toHaveCount(
+      content.length,
+    );
+  else
+    await expect(
+      page.getByText("暂无内容记录。", { exact: true }),
+    ).toBeVisible();
   await page.getByRole("link", { name: "采集任务", exact: true }).click();
-  await expect(page.getByText("暂无采集任务。", { exact: true })).toBeVisible();
+  const jobs = (await (await page.request.get("/api/admin/jobs")).json()).data
+    .items;
+  if (jobs.length)
+    await expect(page.locator(".console-job")).toHaveCount(jobs.length);
+  else
+    await expect(
+      page.getByText("暂无采集任务。", { exact: true }),
+    ).toBeVisible();
   await page.getByRole("link", { name: "审计日志", exact: true }).click();
   await expect(
     page

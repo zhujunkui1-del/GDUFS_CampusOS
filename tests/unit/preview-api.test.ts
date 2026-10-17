@@ -12,6 +12,19 @@ import {
   conversationDelete,
 } from "@/lib/server/assistant/api";
 import { executeMapSkillHttp } from "@/lib/server/maps/http";
+import { consoleAdministration } from "@/lib/server/console/api";
+it("keeps bounded ingestion APIs on the existing authenticated lightweight dispatcher", () => {
+  for (const path of [
+    "/api/admin/jobs/job-fixture",
+    "/api/admin/jobs/job-fixture/claim",
+    "/api/admin/jobs/job-fixture/commit",
+    "/api/admin/jobs/job-fixture/pause",
+    "/api/admin/jobs/job-fixture/resume",
+    "/api/admin/sources/source-fixture/collection-policy",
+  ])
+    expect(previewApiHandler(path, "POST")?.handle).toBe(consoleAdministration);
+  expect(previewApiHandler("/api/admin/jobs/job-fixture/sql")).toBeNull();
+});
 it("delegates to the exact existing authenticated handlers", () => {
   expect(previewApiHandler("/api/agent/session")?.handle).toBe(sessionGet);
   expect(previewApiHandler("/api/agent/routes/test")?.handle).toBe(routePost);

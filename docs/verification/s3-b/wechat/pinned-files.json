@@ -1,0 +1,96 @@
+{
+  "checkedAt": "2026-10-17T02:34:21.455Z",
+  "scope": "pinned HEAD blobs compared to read-only user supplied files; raw content not included in committed evidence",
+  "files": [
+    {
+      "owner": "fancyboi999",
+      "path": "weixin_search_mcp/tools/weixin_search.py",
+      "remoteBytes": 8969,
+      "remoteSha256": "1116283ce51d2fb3e56eea92820de105dea05e68b3de43b8a31a813f73bca38f",
+      "localSha256": "1116283ce51d2fb3e56eea92820de105dea05e68b3de43b8a31a813f73bca38f",
+      "exactMatch": true,
+      "textMatch": true
+    },
+    {
+      "owner": "fancyboi999",
+      "path": "README.md",
+      "remoteBytes": 4347,
+      "remoteSha256": "4c348a213be7ea51cb7571765aabae9de35debd968a1d3c08ce5c983004341c0",
+      "localSha256": "4c348a213be7ea51cb7571765aabae9de35debd968a1d3c08ce5c983004341c0",
+      "exactMatch": true,
+      "textMatch": true
+    },
+    {
+      "owner": "fancyboi999",
+      "path": "pyproject.toml",
+      "remoteBytes": 1486,
+      "remoteSha256": "8eb9f645c9c4ec898dfbca2df51fc26f7ae5a0a089e487572cc8dda9f747397f",
+      "localSha256": "8eb9f645c9c4ec898dfbca2df51fc26f7ae5a0a089e487572cc8dda9f747397f",
+      "exactMatch": true,
+      "textMatch": true
+    },
+    {
+      "owner": "yibeigen",
+      "path": "README.md",
+      "remoteBytes": 21972,
+      "remoteSha256": "4235757e150bcf79658773627e30b0d50942c53b54d52806424ddf19eeae05f9",
+      "localSha256": "4235757e150bcf79658773627e30b0d50942c53b54d52806424ddf19eeae05f9",
+      "exactMatch": true,
+      "textMatch": true
+    },
+    {
+      "owner": "yibeigen",
+      "path": "LICENSE",
+      "remoteBytes": 4335,
+      "remoteSha256": "8ba38c358e00aca9e506331c930dcf7f02dc990e24031c2c5152a99e9262163f",
+      "localSha256": "8ba38c358e00aca9e506331c930dcf7f02dc990e24031c2c5152a99e9262163f",
+      "exactMatch": true,
+      "textMatch": true
+    },
+    {
+      "owner": "yibeigen",
+      "path": "backend/app/scrapers/custom_urls.py",
+      "remoteBytes": 16845,
+      "remoteSha256": "45f17a50540473c8a72b5d7e067486d1dae75cb0de88ddd79a6e10961a175959",
+      "localSha256": "45f17a50540473c8a72b5d7e067486d1dae75cb0de88ddd79a6e10961a175959",
+      "exactMatch": true,
+      "textMatch": true
+    },
+    {
+      "owner": "rachelos",
+      "path": "README.zh-CN.md",
+      "remoteBytes": 14400,
+      "remoteSha256": "b4421ca6fdcba3566f0d4005501f41a3e060fa00b649be4b6278d376d547c5e9",
+      "localSha256": "b4421ca6fdcba3566f0d4005501f41a3e060fa00b649be4b6278d376d547c5e9",
+      "exactMatch": true,
+      "textMatch": true
+    },
+    {
+      "owner": "rachelos",
+      "path": "LICENSE",
+      "remoteBytes": 1106,
+      "remoteSha256": "8aaac477797f18afb9b8da33a093a770485d380acc6e942761343dc8993ee87a",
+      "localSha256": "8aaac477797f18afb9b8da33a093a770485d380acc6e942761343dc8993ee87a",
+      "exactMatch": true,
+      "textMatch": true
+    },
+    {
+      "owner": "rachelos",
+      "path": "core/article_content.py",
+      "remoteBytes": 8576,
+      "remoteSha256": "4aca553cf8ede3d1d70727072ababf1a13598cc8e5d7ca976cd93a8b9f8d35a9",
+      "localSha256": "4aca553cf8ede3d1d70727072ababf1a13598cc8e5d7ca976cd93a8b9f8d35a9",
+      "exactMatch": true,
+      "textMatch": true
+    },
+    {
+      "owner": "rachelos",
+      "path": "core/wx/model/weread_mp.py",
+      "remoteBytes": 20641,
+      "remoteSha256": "29526c6c1b3ef4fb8b1a5c0c3f7e91eaae9d252cc2d4cbbdffa2a2d3822e784c",
+      "localSha256": "29526c6c1b3ef4fb8b1a5c0c3f7e91eaae9d252cc2d4cbbdffa2a2d3822e784c",
+      "exactMatch": true,
+      "textMatch": true
+    }
+  ]
+}

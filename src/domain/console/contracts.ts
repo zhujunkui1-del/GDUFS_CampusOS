@@ -1,4 +1,11 @@
 import { z } from "zod";
+import {
+  ContentTypeSchema,
+  RightsScopeSchema,
+  RadarCategorySchema,
+  KnowledgeCategorySchema,
+  TopicTagsSchema,
+} from "./taxonomy";
 
 export const SourceTypeSchema = z.enum([
   "official_web",
@@ -177,7 +184,17 @@ export const ContentInputSchema = z
     kind: z.enum(["knowledge", "event"]),
     campusScope: CampusScopeSchema,
     validUntil: z.iso.datetime({ offset: true }).nullable(),
-    publishedAt: z.iso.datetime({ offset: true }).nullable(),
+    publishedAt: z
+      .union([z.iso.datetime({ offset: true }), z.iso.date()])
+      .nullable(),
+    sourceUpdatedAt: z.iso.datetime({ offset: true }).nullable().default(null),
+    contentType: ContentTypeSchema.default("unknown"),
+    rightsScope: RightsScopeSchema.default("unknown"),
+    radarCategory: RadarCategorySchema.nullable().default(null),
+    knowledgeCategory: KnowledgeCategorySchema.nullable().default(null),
+    publisher: z.string().trim().max(250).nullable().default(null),
+    summary: z.string().trim().max(500).default(""),
+    tags: TopicTagsSchema,
     extractedFields: ExtractedFieldsSchema,
   })
   .strict();
@@ -238,6 +255,29 @@ export type ContentDetail = ContentSummary & {
   campusScope: z.infer<typeof CampusScopeSchema>;
   extractedFields: z.infer<typeof ExtractedFieldsSchema>;
   publishedAt: string | null;
+  fetchedAt: string;
+  sourceUpdatedAt: string | null;
+  updatedAt: string | null;
+  contentRevision: number;
+  inputHash: string | null;
+  contentType: string;
+  rightsScope: string;
+  radarCategory: string | null;
+  knowledgeCategory: string | null;
+  publisher: string | null;
+  summary: string;
+  tags: z.infer<typeof TopicTagsSchema>;
+  eventCandidates: {
+    id: string;
+    title: string;
+    organizer: string | null;
+    startsAt: string | null;
+    endsAt: string | null;
+    registrationDeadline: string | null;
+    rawPlaceName: string | null;
+    verificationStatus: string;
+  }[];
+  duplicateOf: string | null;
   versions: { version: number; createdAt: string }[];
 };
 export const sourceTypeNames: Record<

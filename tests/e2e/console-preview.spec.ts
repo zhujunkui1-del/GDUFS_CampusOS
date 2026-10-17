@@ -38,7 +38,7 @@ test("real HTTPS preview keeps management closed and the public map independent"
     },
   });
   expect(forged.status()).toBe(401);
-  const dir = "docs/verification/s3-a";
+  const dir = process.env.CONSOLE_E2E_ARTIFACT_DIR || "docs/verification/s3-a";
   await mkdir(dir, { recursive: true });
   const prefix = `${dir}/preview-${process.env.PLAYWRIGHT_CHANNEL}-${info.project.name}`;
   await page.goto("/admin");

@@ -1,0 +1,62 @@
+{
+  "recordedAt": "2026-10-17T04:25:52.529Z",
+  "environment": "local-worker",
+  "sourceId": "GDUFS-SRC-0008",
+  "jobId": "job-950dee8e-9ed7-41d3-9769-ae37bffdf58e",
+  "final": {
+    "status": "completed",
+    "controlState": "active",
+    "phase": "complete",
+    "found": 10,
+    "bodyTextParsed": 1,
+    "duplicates": 0,
+    "errors": 0,
+    "reservedRequests": 4
+  },
+  "websiteRequests": 3,
+  "events": [
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 10175,
+      "requests": 2
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/9648.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-06-30",
+      "bodyTextChars": 838,
+      "imageCount": 3,
+      "fullTextPersisted": false
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 134,
+      "requests": 1
+    }
+  ],
+  "apiWallMs": [
+    46,
+    17,
+    31,
+    13,
+    22,
+    22,
+    13,
+    20,
+    31,
+    16,
+    24,
+    32,
+    15,
+    30,
+    50,
+    22,
+    22
+  ],
+  "modelCalls": 0,
+  "fullTextPersisted": false,
+  "autoApproved": 0,
+  "autoPublished": 0
+}

@@ -1,0 +1,76 @@
+{
+  "checkedAt": "2026-10-17T02:36:03.315Z",
+  "method": "Read-only public GitHub web pages, no authentication or mutation; current open-list observations, not proof of software reliability",
+  "repositories": [
+    {
+      "repository": "fancyboi999/weixin_search_mcp",
+      "readme": "https://github.com/fancyboi999/weixin_search_mcp",
+      "issuesUrl": "https://github.com/fancyboi999/weixin_search_mcp/issues",
+      "openIssueCountObserved": 0,
+      "pullsUrl": "https://github.com/fancyboi999/weixin_search_mcp/pulls",
+      "openPullCountObserved": 1,
+      "relevantOpenPulls": [
+        {
+          "number": 9,
+          "url": "https://github.com/fancyboi999/weixin_search_mcp/pull/9",
+          "openedAt": "2026-09-08",
+          "state": "Open; changes requested",
+          "summary": "Real URL resolution, anti-spider silent empty results and publication-time issues; upstream success reports excluded from CampusOS measurements"
+        }
+      ],
+      "licenseDeclaration": "README/pyproject MIT; no root LICENSE file in supplied/current tree"
+    },
+    {
+      "repository": "yibeigen/wechat-article-exporter",
+      "readme": "https://github.com/yibeigen/wechat-article-exporter",
+      "issuesUrl": "https://github.com/yibeigen/wechat-article-exporter/issues",
+      "openIssueCountObserved": 0,
+      "pullsUrl": "https://github.com/yibeigen/wechat-article-exporter/pulls",
+      "openPullCountObserved": 0,
+      "caveat": "Navigation badge and open-list count differed; records represent actual open-list rendering, not exhaustive account API results",
+      "licenseUrl": "https://github.com/yibeigen/wechat-article-exporter/blob/main/LICENSE",
+      "licenseSummary": "CC BY-NC-SA 4.0 plus additional restrictions: author attribution, same-license derivative source, prior written authorization for commercial/enterprise integration; no platform integration performed"
+    },
+    {
+      "repository": "rachelos/we-mp-rss",
+      "readme": "https://github.com/rachelos/we-mp-rss/blob/main/README.zh-CN.md",
+      "issuesUrl": "https://github.com/rachelos/we-mp-rss/issues",
+      "openIssueCountObserved": 23,
+      "pullsUrl": "https://github.com/rachelos/we-mp-rss/pulls",
+      "openPullCountObserved": 1,
+      "relevantOpenIssues": [
+        {
+          "number": 476,
+          "url": "https://github.com/rachelos/we-mp-rss/issues/476",
+          "summary": "Subscription has no content"
+        },
+        {
+          "number": 469,
+          "url": "https://github.com/rachelos/we-mp-rss/issues/469",
+          "summary": "Frequency restriction and fallback behavior"
+        },
+        {
+          "number": 466,
+          "url": "https://github.com/rachelos/we-mp-rss/issues/466",
+          "summary": "Authorized account cannot synchronize new articles"
+        },
+        {
+          "number": 420,
+          "url": "https://github.com/rachelos/we-mp-rss/issues/420",
+          "summary": "Session-expiry failure storm and CPU risk"
+        }
+      ],
+      "relevantOpenPulls": [
+        {
+          "number": 478,
+          "url": "https://github.com/rachelos/we-mp-rss/pull/478",
+          "openedAt": "2026-10-14",
+          "state": "Open",
+          "summary": "QR login and article extraction failures after WeChat page changes; upstream claims not counted as local success"
+        }
+      ],
+      "licenseUrl": "https://github.com/rachelos/we-mp-rss/blob/main/LICENSE",
+      "licenseSummary": "MIT; article copyright remains separate"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "recordedAt": "2026-10-17T04:56:05.196Z",
+  "environment": "real-cloudflare-preview",
+  "sourceId": "GDUFS-SRC-0017",
+  "jobId": "job-c57cb8e9-8c29-4df7-8c5a-76fb0fdb7bb1",
+  "final": {
+    "status": "completed",
+    "controlState": "active",
+    "phase": "complete",
+    "found": 10,
+    "bodyTextParsed": 0,
+    "duplicates": 1,
+    "errors": 0,
+    "reservedRequests": 4
+  },
+  "websiteRequests": 3,
+  "events": [
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 10958,
+      "requests": 2
+    },
+    {
+      "phase": "fetch",
+      "outcome": "not_modified",
+      "wallMs": 905,
+      "requests": 1
+    }
+  ],
+  "apiWallMs": [
+    1609,
+    616,
+    326,
+    555,
+    907,
+    275,
+    787,
+    871,
+    285,
+    280
+  ],
+  "modelCalls": 0,
+  "fullTextPersisted": false,
+  "autoApproved": 0,
+  "autoPublished": 0
+}

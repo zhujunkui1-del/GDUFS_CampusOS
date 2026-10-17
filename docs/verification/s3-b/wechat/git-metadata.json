@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-17T02:32:48.485Z",
+  "method": "read-only git ls-remote and depth-1 tree-filtered bare fetch in ignored isolated directory",
+  "repositories": [
+    {
+      "repository": "fancyboi999/weixin_search_mcp",
+      "sha": "a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb",
+      "committedAt": "2026-08-17T10:28:43+08:00",
+      "subject": "fix: enforce UTF-8 for stdio transport (#7)",
+      "url": "https://github.com/fancyboi999/weixin_search_mcp/commit/a5a70a26ca36dc7ebb201ce9d9bb54a746758ecb"
+    },
+    {
+      "repository": "yibeigen/wechat-article-exporter",
+      "sha": "c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8",
+      "committedAt": "2026-10-14T23:02:48+08:00",
+      "subject": "feat: 发布 v1.2.8 修复微博/知乎扫码登录（访客SUB误判秒关窗、m.weibo.cn域隔离自动桥接、已登录幂等同步不踢下线、知乎后端验证制）",
+      "url": "https://github.com/yibeigen/wechat-article-exporter/commit/c5e56bfba4bab6c81cb1a9cd8c196040d0baebb8"
+    },
+    {
+      "repository": "rachelos/we-mp-rss",
+      "sha": "9b40351fd1913e7f74cf88f65740cd67a28baf81",
+      "committedAt": "2026-10-10T09:45:30+08:00",
+      "subject": "Merge pull request #475 from hellostronger/codex/2026-10-04-multi-account-failover",
+      "url": "https://github.com/rachelos/we-mp-rss/commit/9b40351fd1913e7f74cf88f65740cd67a28baf81"
+    }
+  ]
+}

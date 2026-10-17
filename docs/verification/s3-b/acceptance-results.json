@@ -1,0 +1,150 @@
+{
+  "recordedAt": "2026-10-17T05:19:21.357Z",
+  "baseline": "256651b",
+  "typecheckPassed": true,
+  "lintPassed": true,
+  "unit": {
+    "passed": 283,
+    "failed": 0,
+    "files": 37
+  },
+  "database": {
+    "businessTables": 53,
+    "empty": true,
+    "populatedUpgrade": true,
+    "rollback": true,
+    "foreignKeyViolations": 0,
+    "pythonGeneralConstraintCheck": "Passed: 54 including SQLite internal table; 53 business tables"
+  },
+  "browsers": [
+    {
+      "name": "chrome-console",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-17T04:50:34.153Z",
+      "durationMs": 11511.976999999999
+    },
+    {
+      "name": "edge-console",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-17T04:52:19.603Z",
+      "durationMs": 11011.631000000001
+    },
+    {
+      "name": "chrome-regression",
+      "passed": 109,
+      "failed": 2,
+      "skipped": 3,
+      "flaky": 0,
+      "startedAt": "2026-10-17T04:15:31.492Z",
+      "durationMs": 338642.084
+    },
+    {
+      "name": "chrome-map-rerun",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-17T04:28:05.727Z",
+      "durationMs": 11647.369999999999
+    },
+    {
+      "name": "edge-regression",
+      "passed": 111,
+      "failed": 0,
+      "skipped": 3,
+      "flaky": 0,
+      "startedAt": "2026-10-17T04:28:05.725Z",
+      "durationMs": 327170.14999999997
+    },
+    {
+      "name": "cloud-chrome",
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-17T04:57:57.488Z",
+      "durationMs": 71382.084
+    },
+    {
+      "name": "cloud-edge",
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "startedAt": "2026-10-17T05:01:13.061Z",
+      "durationMs": 80852.187
+    }
+  ],
+  "chromeRegressionResolution": "109 initial passed + 2 corrected stale-caption assertions passed on rerun; no map/Agent application changes",
+  "realPhoneTested": false,
+  "realModelCalls": 0,
+  "difyApiCalls": 0,
+  "cloudCounts": {
+    "sources": 220,
+    "enabled": 3,
+    "verified": 3,
+    "candidates": 217,
+    "documents": 3,
+    "metadataOnlyBodies": 3,
+    "published": 0,
+    "reviews": 0,
+    "events": 0,
+    "chunks": 0,
+    "jobs": 4,
+    "duplicates": 1,
+    "errors": 0,
+    "reservedRequests": 16,
+    "conversations": 75,
+    "messages": 330,
+    "agentRuns": 192
+  },
+  "workerVersion": [
+    {
+      "version_id": "21a72753-f951-4b91-9549-1390a2c7e49f",
+      "percentage": 100
+    }
+  ],
+  "rights": "metadata_only; all three actual documents pending/draft; approved/published zero",
+  "build": {
+    "nextProductionPassed": true,
+    "openNextPassed": true,
+    "credentialPurificationPassed": true,
+    "filesScanned": 1350,
+    "compressedKiB": 2505,
+    "localOnlyParserNotInWorkerBundle": true
+  },
+  "integrity": {
+    "sourceFilesUnmodified": true,
+    "approvedModelHashPreserved": true,
+    "protectedModulesUnchanged": true,
+    "other217SourcesUnchanged": true,
+    "studentCountsUnchanged": true
+  },
+  "security": {
+    "actualPrivateValuesScanned": 7,
+    "pendingFilesScanned": 136,
+    "privateValuesFound": 0,
+    "dailyQuotaUsesReservationLedger": true
+  },
+  "documentation": {
+    "localLinksChecked": 30,
+    "diffCheckPassed": true
+  },
+  "clientRpcWallTimeMs": {
+    "samples": 63,
+    "p50": 362,
+    "p95": 1595,
+    "scope": "Client wall time across mixed administrator RPCs; not CPU/D1 latency or model response time"
+  },
+  "cloudMetricsAvailable": true,
+  "perApiCpuOrMemoryVerified": false,
+  "longTermFreeCapacityVerified": false,
+  "additionalPaidServicesEnabled": false,
+  "productionOrDnsChanged": false
+}

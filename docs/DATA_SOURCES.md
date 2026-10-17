@@ -278,3 +278,15 @@ CSS时间问题依据生产实际DOM：--transition-map=0.6s，旧读取使lastC
 参考[PKU Know首页](https://pkuknow.cn/)与[日历](https://pkuknow.cn/calendar)仅观察聚合、筛选、摘要/原文、日历、来源补充和手机单双列；未提交表单、报名、登录或复制代码/品牌/素材/文章库。Dify仅查官方文档/许可/定价，不连接学校内网或调用真实API。研究事实与推论见research/s3-0/product-and-dify.md。
 
 平台限制依据：[Workers limits](https://developers.cloudflare.com/workers/platform/limits/)、[D1价格](https://developers.cloudflare.com/d1/platform/pricing/)、[D1限制](https://developers.cloudflare.com/d1/platform/limits/)、[D1 FTS5支持](https://developers.cloudflare.com/d1/sql-api/sql-statements/)。仅说明当日官方规格，不当本账户实时剩余配额或长期容量证明。没有新GIS/图片/全文数据入public，也无新增模型/Dify或收费资源操作。
+
+## SRC-060｜首批官网规则核验与真实元数据（2026-10-17）
+
+对[学校官网](https://www.gdufs.edu.cn/)、[学工](https://nstu.gdufs.edu.cn/)、[后勤](https://hqc.gdufs.edu.cn/)、[团委](https://youth.gdufs.edu.cn/)、[图书馆](https://lib.gdufs.edu.cn/)各robots/主页/栏目/详情一次，共20次、间隔≥10秒；15个HTML200，robots404，未见可覆盖全文再分发许可。精确栏目/selector/原日期与失败边界见research/s3-b/official-source-audit.md和verification/s3-b/sources/http-audit.json。
+
+只核验启用原ID GDUFS-SRC-0010/0017/0008的官网元数据，不与公众号同名载体合并。真实preview保存3个标题、链接、原日期/获取时间和HTTP缓存/解析观察，全待审；批准/发布0，未保存正文/图片/附件、未送模型。详情原文为[学工通知](https://nstu.gdufs.edu.cn/info/1056/68721.htm)、[后勤公告](https://hqc.gdufs.edu.cn/info/1006/3098.htm)、[图书馆大赛通知](https://lib.gdufs.edu.cn/info/1134/9648.htm)。图书馆原日期2026-06-30，不是采集日2026-10-17；后勤条件请求304未新增文章。217其他候选状态SHA不变，原始XLSX/MD不改/不重导。没有新增GIS或正式public素材。
+
+## SRC-061｜微信独立PoC与学校Dify依赖核查（2026-10-17）
+
+三候选仓库、当前HEAD、许可证和开放问题见S3_B_WECHAT_POC.md；源码只读、离线合成输入隔离于tests，robots限制后不抓文章，不使用静态Cookie或登录绕行。实际文章0，率0/0未测，未正式集成或再分发工具/公众号全文。
+
+负责人指定学校比赛Dify http://172.17.1.46/，仅校园网；Edge已登录UI实际只读确认1.17.1与知识库/API入口，未读Key/传文档/调模型，不登记为公开信息源或扩入官网抓取白名单。学校授权、API范围/费用/安全传输与云端可达仍待核验，见research/s3-b/school-dify-readiness.md。CPU聚合单位由真实GraphQL Schema核对，协议来源为[官方Workers metrics](https://developers.cloudflare.com/analytics/graphql-api/tutorials/querying-workers-metrics/)，不以客户端Wall Time冒充CPU。

@@ -1,0 +1,90 @@
+{
+  "checkedAt": "2026-10-17T02:30:38.321Z",
+  "method": "Unauthenticated GitHub API; metadata only, no article collection, no cookies",
+  "repos": [
+    {
+      "repository": "fancyboi999/weixin_search_mcp",
+      "info": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "commit": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "issues": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "pulls": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "license": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      }
+    },
+    {
+      "repository": "yibeigen/wechat-article-exporter",
+      "info": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "commit": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "issues": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "pulls": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "license": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      }
+    },
+    {
+      "repository": "rachelos/we-mp-rss",
+      "info": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "commit": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "issues": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "pulls": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      },
+      "license": {
+        "status": 502,
+        "error": "NON_JSON_GITHUB_RESPONSE",
+        "bytes": 0
+      }
+    }
+  ]
+}

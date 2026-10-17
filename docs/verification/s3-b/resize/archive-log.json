@@ -1,0 +1,8 @@
+{
+  "recordedAt": "2026-10-17T05:11:10.469Z",
+  "reason": "Model-resize test used its dedicated default output path; archive this run before restoring historical S1 evidence byte-for-byte.",
+  "archived": 20,
+  "restoredHistoricalFiles": 10,
+  "removedOwnUntrackedCopies": 10,
+  "noUserChangesDiscarded": true
+}

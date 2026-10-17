@@ -1,0 +1,147 @@
+{
+  "recordedAt": "2026-10-17T05:18:55.771Z",
+  "realCloud": true,
+  "target": "campusos-preview",
+  "unselectedSources": 217,
+  "unselectedSourceStateSha256": "227c157918fa1cf9bba8af1ee3418f6ea9a38eaf3edd8184c08bd9730b85992d",
+  "counts": {
+    "sources": 220,
+    "enabled": 3,
+    "verified": 3,
+    "candidates": 217,
+    "documents": 3,
+    "metadataOnlyBodies": 3,
+    "published": 0,
+    "reviews": 0,
+    "events": 0,
+    "chunks": 0,
+    "jobs": 4,
+    "duplicates": 1,
+    "errors": 0,
+    "reservedRequests": 16,
+    "conversations": 75,
+    "messages": 330,
+    "agentRuns": 192
+  },
+  "auditQueryMeta": {
+    "rowsRead": 1502,
+    "rowsWritten": 0,
+    "sqlDurationMs": 1.6694
+  },
+  "unselectedSourceStatesPreserved": true,
+  "studentCountsPreserved": true,
+  "dailyBudgetUsesReservationTime": true,
+  "deployedGuardMatchesSource": true,
+  "documents": [
+    {
+      "id": "content-76b1fc0b-ace5-4db2-bb5f-b029dd771d78",
+      "source_id": "GDUFS-SRC-0008",
+      "title": "2026年第二届广东外语外贸大学“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛通知",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9648.htm",
+      "published_at": "2026-06-30",
+      "fetched_at": "2026-10-17T04:54:59.910Z",
+      "source_updated_at": null,
+      "updated_at": "2026-10-17T04:54:59.910Z",
+      "version": 1,
+      "content_revision": 1,
+      "rights_scope": "metadata_only",
+      "review_status": "pending",
+      "publication_status": "draft",
+      "radar_category": "competition",
+      "knowledge_category": "administrative_services"
+    },
+    {
+      "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+      "source_id": "GDUFS-SRC-0010",
+      "title": "关于召开2025-2026学年“校长奖章”评审会的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68721.htm",
+      "published_at": "2026-10-16T14:14:18.000Z",
+      "fetched_at": "2026-10-17T04:52:22.681Z",
+      "source_updated_at": null,
+      "updated_at": "2026-10-17T04:52:22.681Z",
+      "version": 1,
+      "content_revision": 1,
+      "rights_scope": "metadata_only",
+      "review_status": "pending",
+      "publication_status": "draft",
+      "radar_category": "campus_notice",
+      "knowledge_category": "administrative_services"
+    },
+    {
+      "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+      "source_id": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学文印中心多功能印刷机维保服务采购项目询价公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3098.htm",
+      "published_at": "2026-10-16",
+      "fetched_at": "2026-10-17T04:53:25.922Z",
+      "source_updated_at": null,
+      "updated_at": "2026-10-17T04:53:25.922Z",
+      "version": 1,
+      "content_revision": 1,
+      "rights_scope": "metadata_only",
+      "review_status": "pending",
+      "publication_status": "draft",
+      "radar_category": "campus_notice",
+      "knowledge_category": "administrative_services"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "job-fe13cd0b-3f15-40a7-adcc-ca11c5ed3c06",
+      "source_id": "GDUFS-SRC-0010",
+      "status": "completed",
+      "phase": "complete",
+      "control_state": "active",
+      "found_count": 10,
+      "body_count": 1,
+      "duplicate_count": 0,
+      "error_count": 0,
+      "request_count": 4
+    },
+    {
+      "id": "job-29f65e2e-cdb3-4093-8adc-e56a0da16932",
+      "source_id": "GDUFS-SRC-0017",
+      "status": "completed",
+      "phase": "complete",
+      "control_state": "active",
+      "found_count": 10,
+      "body_count": 1,
+      "duplicate_count": 0,
+      "error_count": 0,
+      "request_count": 4
+    },
+    {
+      "id": "job-3273a456-71d3-478c-8680-c589f0dc057c",
+      "source_id": "GDUFS-SRC-0008",
+      "status": "completed",
+      "phase": "complete",
+      "control_state": "active",
+      "found_count": 10,
+      "body_count": 1,
+      "duplicate_count": 0,
+      "error_count": 0,
+      "request_count": 4
+    },
+    {
+      "id": "job-c57cb8e9-8c29-4df7-8c5a-76fb0fdb7bb1",
+      "source_id": "GDUFS-SRC-0017",
+      "status": "completed",
+      "phase": "complete",
+      "control_state": "active",
+      "found_count": 10,
+      "body_count": 0,
+      "duplicate_count": 1,
+      "error_count": 0,
+      "request_count": 4
+    }
+  ],
+  "workerVersion": [
+    {
+      "version_id": "21a72753-f951-4b91-9549-1390a2c7e49f",
+      "percentage": 100
+    }
+  ],
+  "foreignKeyViolations": 0,
+  "modelGenerationCallsByThisTask": 0,
+  "indicesOrDifyConfiguredByThisTask": false
+}

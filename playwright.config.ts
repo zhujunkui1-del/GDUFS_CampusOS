@@ -10,6 +10,9 @@ export default defineConfig({
     baseURL,
     trace: "retain-on-failure",
     channel: process.env.PLAYWRIGHT_CHANNEL || undefined,
+    proxy: process.env.E2E_PROXY
+      ? { server: process.env.E2E_PROXY, bypass: "localhost,127.0.0.1" }
+      : undefined,
   },
   projects: [
     {

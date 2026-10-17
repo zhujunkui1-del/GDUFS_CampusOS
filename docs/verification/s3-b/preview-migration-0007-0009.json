@@ -1,0 +1,52 @@
+{
+  "recordedAt": "2026-10-17T04:24:13.410Z",
+  "target": "campusos-preview",
+  "accountMatched": true,
+  "createdResources": false,
+  "applied": true,
+  "pendingBefore": [
+    "0007_content_contract.sql",
+    "0008_ingestion_pipeline.sql",
+    "0009_ingestion_clock_guards.sql"
+  ],
+  "migrationBefore": [
+    "0001_platform_and_campus.sql",
+    "0002_knowledge_and_events.sql",
+    "0003_route_geometry_guards.sql",
+    "0004_assistant_shared_state.sql",
+    "0005_assistant_conversations.sql",
+    "0006_console_registry.sql"
+  ],
+  "migrationAfter": [
+    "0001_platform_and_campus.sql",
+    "0002_knowledge_and_events.sql",
+    "0003_route_geometry_guards.sql",
+    "0004_assistant_shared_state.sql",
+    "0005_assistant_conversations.sql",
+    "0006_console_registry.sql",
+    "0007_content_contract.sql",
+    "0008_ingestion_pipeline.sql",
+    "0009_ingestion_clock_guards.sql"
+  ],
+  "before": {
+    "sources": 220,
+    "documents": 0,
+    "jobs": 0,
+    "conversations": 75,
+    "messages": 330,
+    "runs": 192
+  },
+  "after": {
+    "sources": 220,
+    "documents": 0,
+    "jobs": 0,
+    "conversations": 75,
+    "messages": 330,
+    "runs": 192
+  },
+  "sourceHumanStatesPreserved": true,
+  "allCountsPreserved": true,
+  "foreignKeyViolations": 0,
+  "noSourceReimport": true,
+  "noDestructiveRebuild": true
+}

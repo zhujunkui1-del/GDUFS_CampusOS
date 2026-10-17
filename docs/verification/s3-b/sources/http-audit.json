@@ -1,0 +1,651 @@
+{
+  "checkedAt": "2026-10-17T02:35:03.272374+00:00",
+  "method": "GET, redirect=manual, no retries, at least 10s between request starts, <=2MiB response, <=20 requests total",
+  "scope": "read_only_source_structure_audit",
+  "requestCount": 20,
+  "minimumRequestStartIntervalSeconds": 10.001,
+  "redirectsFollowed": 0,
+  "retries": 0,
+  "thirdPartyBodiesSaved": 0,
+  "imagesOrAttachmentsDownloaded": 0,
+  "modelCalls": 0,
+  "databaseWrites": 0,
+  "requests": [
+    {
+      "source": "university",
+      "kind": "robots",
+      "url": "https://www.gdufs.edu.cn/robots.txt",
+      "startedAt": "2026-10-17T02:30:19.017712+00:00",
+      "startedEpoch": 1792204219.0177126,
+      "status": 404,
+      "headers": {
+        "Content-Type": "text/html"
+      },
+      "bytes": 727,
+      "sha256": "ea22b3352e2bb3cbdc560eb751b68e56b38e4d8b16256caf67a242d479aa39cd",
+      "wallMs": 1136
+    },
+    {
+      "source": "student_affairs",
+      "kind": "robots",
+      "url": "https://nstu.gdufs.edu.cn/robots.txt",
+      "startedAt": "2026-10-17T02:30:29.018652+00:00",
+      "startedEpoch": 1792204229.018652,
+      "status": 404,
+      "headers": {
+        "Content-Length": "1693",
+        "Content-Type": "text/html"
+      },
+      "bytes": 1693,
+      "sha256": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+      "wallMs": 1041
+    },
+    {
+      "source": "logistics",
+      "kind": "robots",
+      "url": "https://hqc.gdufs.edu.cn/robots.txt",
+      "startedAt": "2026-10-17T02:30:39.019484+00:00",
+      "startedEpoch": 1792204239.0194838,
+      "status": 404,
+      "headers": {
+        "Content-Length": "1693",
+        "Content-Type": "text/html"
+      },
+      "bytes": 1693,
+      "sha256": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+      "wallMs": 1078
+    },
+    {
+      "source": "youth_league",
+      "kind": "robots",
+      "url": "https://youth.gdufs.edu.cn/robots.txt",
+      "startedAt": "2026-10-17T02:30:49.020225+00:00",
+      "startedEpoch": 1792204249.0202253,
+      "status": 404,
+      "headers": {
+        "Content-Length": "1693",
+        "Content-Type": "text/html"
+      },
+      "bytes": 1693,
+      "sha256": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+      "wallMs": 1088
+    },
+    {
+      "source": "library",
+      "kind": "robots",
+      "url": "https://lib.gdufs.edu.cn/robots.txt",
+      "startedAt": "2026-10-17T02:30:59.020797+00:00",
+      "startedEpoch": 1792204259.0207975,
+      "status": 404,
+      "headers": {
+        "Content-Length": "1693",
+        "Content-Type": "text/html"
+      },
+      "bytes": 1693,
+      "sha256": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+      "wallMs": 1220
+    },
+    {
+      "source": "university",
+      "kind": "homepage",
+      "url": "https://www.gdufs.edu.cn/",
+      "startedAt": "2026-10-17T02:31:09.023487+00:00",
+      "startedEpoch": 1792204269.023487,
+      "status": 200,
+      "headers": {
+        "Content-Type": "text/html",
+        "Last-Modified": "Fri, 16 Oct 2026 13:33:01 GMT",
+        "ETag": "\"28d59-65df534049f0b-gzip\""
+      },
+      "bytes": 167257,
+      "sha256": "17e0a863f92f4cb88492d59591f1a7bcef65bc9fadfa56cd44636b53a4ca0872",
+      "wallMs": 1243
+    },
+    {
+      "source": "student_affairs",
+      "kind": "homepage",
+      "url": "https://nstu.gdufs.edu.cn/",
+      "startedAt": "2026-10-17T02:31:19.024111+00:00",
+      "startedEpoch": 1792204279.024111,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Fri, 16 Oct 2026 14:33:59 GMT",
+        "ETag": "\"913a-65df60e0ce542-gzip\"",
+        "Content-Length": "8817",
+        "Content-Type": "text/html"
+      },
+      "bytes": 37178,
+      "sha256": "81b571fb7025b54247ecd2e47cc38f010997e11aeaaf174cc6ef9a0db394424b",
+      "wallMs": 1111
+    },
+    {
+      "source": "logistics",
+      "kind": "homepage",
+      "url": "https://hqc.gdufs.edu.cn/",
+      "startedAt": "2026-10-17T02:31:29.024801+00:00",
+      "startedEpoch": 1792204289.024801,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Fri, 16 Oct 2026 02:07:08 GMT",
+        "ETag": "\"7dda-65deb9f18faab-gzip\"",
+        "Content-Length": "7978",
+        "Content-Type": "text/html"
+      },
+      "bytes": 32218,
+      "sha256": "ca5d7e33aa5156f7a90ed0a3cccaf2d979a1a719169b6649cecb9189d7db4763",
+      "wallMs": 1321
+    },
+    {
+      "source": "youth_league",
+      "kind": "homepage",
+      "url": "https://youth.gdufs.edu.cn/",
+      "startedAt": "2026-10-17T02:31:39.027521+00:00",
+      "startedEpoch": 1792204299.0275214,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Mon, 12 Oct 2026 08:18:27 GMT",
+        "ETag": "\"64bd-65da057aa5e0d-gzip\"",
+        "Content-Length": "7118",
+        "Content-Type": "text/html"
+      },
+      "bytes": 25789,
+      "sha256": "32108d4a32e46d82e4032b1d7d917cb29b8180d3abf9a59956c85bbb65357e8f",
+      "wallMs": 1180
+    },
+    {
+      "source": "library",
+      "kind": "homepage",
+      "url": "https://lib.gdufs.edu.cn/",
+      "startedAt": "2026-10-17T02:31:49.028113+00:00",
+      "startedEpoch": 1792204309.0281131,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Thu, 15 Oct 2026 03:47:54 GMT",
+        "ETag": "\"d5e2-65dd8e9a2905a-gzip\"",
+        "Content-Length": "11881",
+        "Content-Type": "text/html"
+      },
+      "bytes": 54754,
+      "sha256": "9a9811708a06eb5ca98f30c7682f0734cd09e532bc312e65f1f3ccba47f74306",
+      "wallMs": 1152
+    },
+    {
+      "source": "university",
+      "kind": "column",
+      "url": "https://www.gdufs.edu.cn/xkky/rdjz.htm",
+      "startedAt": "2026-10-17T02:32:08.068727+00:00",
+      "startedEpoch": 1792204328.0687275,
+      "status": 200,
+      "headers": {
+        "Content-Type": "text/html",
+        "Last-Modified": "Fri, 16 Oct 2026 14:07:28 GMT",
+        "ETag": "\"186f6-65df5af343045-gzip\""
+      },
+      "bytes": 100086,
+      "sha256": "f270ee6c7eec7e998e7e97b24c9ab674666340bbece82c0e8a8ec27d23c0015e",
+      "wallMs": 1156
+    },
+    {
+      "source": "student_affairs",
+      "kind": "column",
+      "url": "https://nstu.gdufs.edu.cn/index/tzgg.htm",
+      "startedAt": "2026-10-17T02:32:18.070338+00:00",
+      "startedEpoch": 1792204338.0703385,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Fri, 16 Oct 2026 14:28:07 GMT",
+        "ETag": "\"6216-65df5f915d48a-gzip\"",
+        "Content-Length": "6232",
+        "Content-Type": "text/html"
+      },
+      "bytes": 25110,
+      "sha256": "3c2129f27eccc985b4c6fed4d313a7a76b1f2bc3c247bcf7a281b71a659404f4",
+      "wallMs": 1167
+    },
+    {
+      "source": "logistics",
+      "kind": "column",
+      "url": "https://hqc.gdufs.edu.cn/tzgap.htm",
+      "startedAt": "2026-10-17T02:32:28.070981+00:00",
+      "startedEpoch": 1792204348.070981,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Fri, 16 Oct 2026 02:08:50 GMT",
+        "ETag": "\"3609-65deba533f1e6-gzip\"",
+        "Content-Length": "4113",
+        "Content-Type": "text/html"
+      },
+      "bytes": 13833,
+      "sha256": "937c9402b917034258ddc0e97ab152b8c352d3594d809c19beeb00706dae4ca3",
+      "wallMs": 1380
+    },
+    {
+      "source": "youth_league",
+      "kind": "column",
+      "url": "https://youth.gdufs.edu.cn/tzgg.htm",
+      "startedAt": "2026-10-17T02:32:38.072270+00:00",
+      "startedEpoch": 1792204358.0722702,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Mon, 12 Oct 2026 10:47:48 GMT",
+        "ETag": "\"4b77-65da26dca4d41-gzip\"",
+        "Content-Length": "6137",
+        "Content-Type": "text/html"
+      },
+      "bytes": 19319,
+      "sha256": "87110ac1284795b501beb7325ed169a91944b3906d9220af58e545ae30127929",
+      "wallMs": 1166
+    },
+    {
+      "source": "library",
+      "kind": "column",
+      "url": "https://lib.gdufs.edu.cn/xwzx/bgtg.htm",
+      "startedAt": "2026-10-17T02:32:48.072829+00:00",
+      "startedEpoch": 1792204368.0728295,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Sat, 10 Oct 2026 07:34:06 GMT",
+        "ETag": "\"85b1-65d777d64c75f-gzip\"",
+        "Content-Length": "10123",
+        "Content-Type": "text/html"
+      },
+      "bytes": 34225,
+      "sha256": "9bb14397ffa555d56a46fb0322cfc6b2d151db4edff01b59ad0d38cbd8ec94af",
+      "wallMs": 1298
+    },
+    {
+      "source": "university",
+      "kind": "detail",
+      "url": "https://www.gdufs.edu.cn/info/1005/265076.htm",
+      "startedAt": "2026-10-17T02:33:07.507585+00:00",
+      "startedEpoch": 1792204387.5075855,
+      "status": 200,
+      "headers": {
+        "Content-Type": "text/html",
+        "Last-Modified": "Tue, 22 Sep 2026 06:09:53 GMT",
+        "ETag": "\"12b9e-65c0c370e2a3a-gzip\""
+      },
+      "bytes": 76702,
+      "sha256": "b03560b2310ba4d75d945b14c0708e4844adecd0b1fb510f856a578cfbd8e447",
+      "wallMs": 1134
+    },
+    {
+      "source": "student_affairs",
+      "kind": "detail",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68721.htm",
+      "startedAt": "2026-10-17T02:33:17.508683+00:00",
+      "startedEpoch": 1792204397.5086834,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Fri, 16 Oct 2026 14:28:21 GMT",
+        "ETag": "\"5094-65df5f9e48daa-gzip\"",
+        "Content-Length": "6362",
+        "Content-Type": "text/html"
+      },
+      "bytes": 20628,
+      "sha256": "788863191748effc851b398f20decf3f636c8ad78bb0bd959d3a8b18025720ee",
+      "wallMs": 1175
+    },
+    {
+      "source": "logistics",
+      "kind": "detail",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3098.htm",
+      "startedAt": "2026-10-17T02:33:27.511353+00:00",
+      "startedEpoch": 1792204407.511353,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Fri, 16 Oct 2026 02:07:10 GMT",
+        "ETag": "\"7093-65deb9f355848-gzip\"",
+        "Content-Length": "8569",
+        "Content-Type": "text/html"
+      },
+      "bytes": 28819,
+      "sha256": "5843f690ce7760cdad40f9071de5ee511d0b9bab1a78393b18b50bbfbba06f52",
+      "wallMs": 1085
+    },
+    {
+      "source": "youth_league",
+      "kind": "detail",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12902.htm",
+      "startedAt": "2026-10-17T02:33:37.513494+00:00",
+      "startedEpoch": 1792204417.513494,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Thu, 17 Sep 2026 02:18:46 GMT",
+        "ETag": "\"9172-65ba4674f9651-gzip\"",
+        "Content-Length": "6382",
+        "Content-Type": "text/html"
+      },
+      "bytes": 37234,
+      "sha256": "030fac4377737cc9e6e1717cbcb15205dbec6d35d5f60821a4b5d01b594be1ac",
+      "wallMs": 1128
+    },
+    {
+      "source": "library",
+      "kind": "detail",
+      "url": "https://lib.gdufs.edu.cn/info/1134/10128.htm",
+      "startedAt": "2026-10-17T02:33:47.515014+00:00",
+      "startedEpoch": 1792204427.5150142,
+      "status": 200,
+      "headers": {
+        "Last-Modified": "Sat, 10 Oct 2026 07:34:08 GMT",
+        "ETag": "\"538a-65d777d89eef4-gzip\"",
+        "Content-Length": "5455",
+        "Content-Type": "text/html"
+      },
+      "bytes": 21386,
+      "sha256": "9f281603586d5f920b8c9ea10727e913dbd5ae885bd2efc7ea031f3d4874773a",
+      "wallMs": 1114
+    }
+  ],
+  "profiles": [
+    {
+      "profileKey": "university",
+      "officialOrganization": "广东外语外贸大学",
+      "organizationEvidence": {
+        "homeUrl": "https://www.gdufs.edu.cn/",
+        "pageTitle": "广东外语外贸大学",
+        "basis": "校方gdufs.edu.cn精确HTTPS子域、页面机构品牌及导航；团委另有团委概况/校团委学生部门导航；未使用名称相似自媒体判定"
+      },
+      "entryUrl": "https://www.gdufs.edu.cn/xkky/rdjz.htm",
+      "discoverySelector": "a[href]",
+      "detailPathPattern": "^/info/1005/[0-9]+\\.htm$",
+      "sampleDetailUrl": "https://www.gdufs.edu.cn/info/1005/265076.htm",
+      "sampleTitle": "云山学术沙龙413期：Explaining China to the West：The Cultural,Political, and Economic Logic Behind the Chinese Miracle",
+      "titleSelector": "head > title",
+      "titleRemoveSuffix": "-广东外语外贸大学",
+      "publishedAtSelector": "span",
+      "publishedAtLabel": "发布时间",
+      "publishedAtEvidence": "发布时间：2026-09-22",
+      "publishedAtRaw": "2026-09-22",
+      "publishedAtPrecision": "day",
+      "timeZonePolicy": "Asia/Shanghai for source-local times; date-only stays date-only, do not fabricate time",
+      "sourceUpdatedAt": null,
+      "bodySelector": "#vsb_content .v_news_content",
+      "observedTextCharacters": 0,
+      "bodyFormat": "image_only",
+      "fullBodyCompletenessVerified": false,
+      "articleAttachmentCount": 0,
+      "attachmentPolicy": "仅正文容器内的链接属于文章附件；导航PDF排除，本次均未下载附件或图片",
+      "observedPaginationLinks": [],
+      "paginationTested": false,
+      "conditionalRequestsTested": false,
+      "robotsStatus": 404,
+      "robotsConclusion": "未发现robots文件，不等于采集/全文转载许可",
+      "copyrightEvidence": [],
+      "fullTextLicense": "not_established",
+      "recommendedFetchPolicy": "manual_metadata_only",
+      "recommendedPersistedFields": [
+        "title",
+        "canonical_url",
+        "source_id",
+        "published_at_with_precision",
+        "fetched_at",
+        "etag",
+        "http_last_modified",
+        "content_hash",
+        "parse_status"
+      ],
+      "prohibitedUntilPermission": [
+        "persist_full_article_body",
+        "download_or_republish_images_attachments",
+        "send_full_body_to_external_models",
+        "publish_or_index_without_review"
+      ],
+      "sourceEnabledByAudit": false,
+      "notes": [
+        "只能使用本profile精确host与栏目详情path，不能抓取登录系统/其他子域",
+        "HTTP Last-Modified只用缓存，不自动等于source_updated_at；静态HTML hash不是正文修订hash"
+      ]
+    },
+    {
+      "profileKey": "student_affairs",
+      "officialOrganization": "广东外语外贸大学学生工作部",
+      "organizationEvidence": {
+        "homeUrl": "https://nstu.gdufs.edu.cn/",
+        "pageTitle": "广东外语外贸大学学生工作部",
+        "basis": "校方gdufs.edu.cn精确HTTPS子域、页面机构品牌及导航；团委另有团委概况/校团委学生部门导航；未使用名称相似自媒体判定"
+      },
+      "entryUrl": "https://nstu.gdufs.edu.cn/index/tzgg.htm",
+      "discoverySelector": "a[href]",
+      "detailPathPattern": "^/info/1056/[0-9]+\\.htm$",
+      "sampleDetailUrl": "https://nstu.gdufs.edu.cn/info/1056/68721.htm",
+      "sampleTitle": "关于召开2025-2026学年“校长奖章”评审会的通知",
+      "titleSelector": "head > title",
+      "titleRemoveSuffix": "-广东外语外贸大学学生工作部",
+      "publishedAtSelector": ".contenthead",
+      "publishedAtLabel": "发布时间",
+      "publishedAtEvidence": "发布时间：2026-10-16 22:14:18",
+      "publishedAtRaw": "2026-10-16 22:14:18",
+      "publishedAtPrecision": "second",
+      "timeZonePolicy": "Asia/Shanghai for source-local times; date-only stays date-only, do not fabricate time",
+      "sourceUpdatedAt": null,
+      "bodySelector": "#vsb_content_501 .v_news_content",
+      "observedTextCharacters": 423,
+      "bodyFormat": "text_and_image",
+      "fullBodyCompletenessVerified": false,
+      "articleAttachmentCount": 0,
+      "attachmentPolicy": "仅正文容器内的链接属于文章附件；导航PDF排除，本次均未下载附件或图片",
+      "observedPaginationLinks": [
+        "https://nstu.gdufs.edu.cn/index/tzgg/37.htm",
+        "https://nstu.gdufs.edu.cn/index/tzgg/1.htm"
+      ],
+      "paginationTested": false,
+      "conditionalRequestsTested": false,
+      "robotsStatus": 404,
+      "robotsConclusion": "未发现robots文件，不等于采集/全文转载许可",
+      "copyrightEvidence": [
+        "Copyright@广东外语外贸大学学生工作部 All Rights Reserved Powered By JerryZhao Code @ 2012-08"
+      ],
+      "fullTextLicense": "not_established",
+      "recommendedFetchPolicy": "manual_metadata_only",
+      "recommendedPersistedFields": [
+        "title",
+        "canonical_url",
+        "source_id",
+        "published_at_with_precision",
+        "fetched_at",
+        "etag",
+        "http_last_modified",
+        "content_hash",
+        "parse_status"
+      ],
+      "prohibitedUntilPermission": [
+        "persist_full_article_body",
+        "download_or_republish_images_attachments",
+        "send_full_body_to_external_models",
+        "publish_or_index_without_review"
+      ],
+      "sourceEnabledByAudit": false,
+      "notes": [
+        "只能使用本profile精确host与栏目详情path，不能抓取登录系统/其他子域",
+        "HTTP Last-Modified只用缓存，不自动等于source_updated_at；静态HTML hash不是正文修订hash"
+      ]
+    },
+    {
+      "profileKey": "logistics",
+      "officialOrganization": "广东外语外贸大学总务后勤部",
+      "organizationEvidence": {
+        "homeUrl": "https://hqc.gdufs.edu.cn/",
+        "pageTitle": "广东外语外贸大学总务后勤部",
+        "basis": "校方gdufs.edu.cn精确HTTPS子域、页面机构品牌及导航；团委另有团委概况/校团委学生部门导航；未使用名称相似自媒体判定"
+      },
+      "entryUrl": "https://hqc.gdufs.edu.cn/tzgap.htm",
+      "discoverySelector": "a[href]",
+      "detailPathPattern": "^/info/1006/[0-9]+\\.htm$",
+      "sampleDetailUrl": "https://hqc.gdufs.edu.cn/info/1006/3098.htm",
+      "sampleTitle": "广东外语外贸大学文印中心多功能印刷机维保服务采购项目询价公告",
+      "titleSelector": "head > title",
+      "titleRemoveSuffix": "-广东外语外贸大学总务后勤部",
+      "publishedAtSelector": ".wzxxys",
+      "publishedAtLabel": "时间",
+      "publishedAtEvidence": "时间：2026-10-16    点击数：",
+      "publishedAtRaw": "2026-10-16",
+      "publishedAtPrecision": "day",
+      "timeZonePolicy": "Asia/Shanghai for source-local times; date-only stays date-only, do not fabricate time",
+      "sourceUpdatedAt": null,
+      "bodySelector": "#vsb_content_2 .v_news_content",
+      "observedTextCharacters": 2973,
+      "bodyFormat": "text",
+      "fullBodyCompletenessVerified": false,
+      "articleAttachmentCount": 0,
+      "attachmentPolicy": "仅正文容器内的链接属于文章附件；导航PDF排除，本次均未下载附件或图片",
+      "observedPaginationLinks": [],
+      "paginationTested": false,
+      "conditionalRequestsTested": false,
+      "robotsStatus": 404,
+      "robotsConclusion": "未发现robots文件，不等于采集/全文转载许可",
+      "copyrightEvidence": [
+        "版权所有 © 广东外语外贸大学大学总务后勤部 All rights reserved"
+      ],
+      "fullTextLicense": "not_established",
+      "recommendedFetchPolicy": "manual_metadata_only",
+      "recommendedPersistedFields": [
+        "title",
+        "canonical_url",
+        "source_id",
+        "published_at_with_precision",
+        "fetched_at",
+        "etag",
+        "http_last_modified",
+        "content_hash",
+        "parse_status"
+      ],
+      "prohibitedUntilPermission": [
+        "persist_full_article_body",
+        "download_or_republish_images_attachments",
+        "send_full_body_to_external_models",
+        "publish_or_index_without_review"
+      ],
+      "sourceEnabledByAudit": false,
+      "notes": [
+        "只能使用本profile精确host与栏目详情path，不能抓取登录系统/其他子域",
+        "HTTP Last-Modified只用缓存，不自动等于source_updated_at；静态HTML hash不是正文修订hash"
+      ]
+    },
+    {
+      "profileKey": "youth_league",
+      "officialOrganization": "广东外语外贸大学校团委",
+      "organizationEvidence": {
+        "homeUrl": "https://youth.gdufs.edu.cn/",
+        "pageTitle": "团学时空",
+        "basis": "校方gdufs.edu.cn精确HTTPS子域、页面机构品牌及导航；团委另有团委概况/校团委学生部门导航；未使用名称相似自媒体判定"
+      },
+      "entryUrl": "https://youth.gdufs.edu.cn/tzgg.htm",
+      "discoverySelector": "a[href]",
+      "detailPathPattern": "^/info/1050/[0-9]+\\.htm$",
+      "sampleDetailUrl": "https://youth.gdufs.edu.cn/info/1050/12902.htm",
+      "sampleTitle": "关于广东外语外贸大学第四批“中国青年志愿者海外服务计划--服务联合国机构项目”拟推荐志愿者候选人名单的公示",
+      "titleSelector": "head > title",
+      "titleRemoveSuffix": "-团学时空",
+      "publishedAtSelector": ".wzxxys",
+      "publishedAtLabel": "时间",
+      "publishedAtEvidence": "作者：    时间：2026-09-17    点击数：",
+      "publishedAtRaw": "2026-09-17",
+      "publishedAtPrecision": "day",
+      "timeZonePolicy": "Asia/Shanghai for source-local times; date-only stays date-only, do not fabricate time",
+      "sourceUpdatedAt": null,
+      "bodySelector": "#vsb_content .v_news_content",
+      "observedTextCharacters": 612,
+      "bodyFormat": "text",
+      "fullBodyCompletenessVerified": false,
+      "articleAttachmentCount": 0,
+      "attachmentPolicy": "仅正文容器内的链接属于文章附件；导航PDF排除，本次均未下载附件或图片",
+      "observedPaginationLinks": [],
+      "paginationTested": false,
+      "conditionalRequestsTested": false,
+      "robotsStatus": 404,
+      "robotsConclusion": "未发现robots文件，不等于采集/全文转载许可",
+      "copyrightEvidence": [],
+      "fullTextLicense": "not_established",
+      "recommendedFetchPolicy": "manual_metadata_only",
+      "recommendedPersistedFields": [
+        "title",
+        "canonical_url",
+        "source_id",
+        "published_at_with_precision",
+        "fetched_at",
+        "etag",
+        "http_last_modified",
+        "content_hash",
+        "parse_status"
+      ],
+      "prohibitedUntilPermission": [
+        "persist_full_article_body",
+        "download_or_republish_images_attachments",
+        "send_full_body_to_external_models",
+        "publish_or_index_without_review"
+      ],
+      "sourceEnabledByAudit": false,
+      "notes": [
+        "只能使用本profile精确host与栏目详情path，不能抓取登录系统/其他子域",
+        "HTTP Last-Modified只用缓存，不自动等于source_updated_at；静态HTML hash不是正文修订hash"
+      ]
+    },
+    {
+      "profileKey": "library",
+      "officialOrganization": "广东外语外贸大学图书馆",
+      "organizationEvidence": {
+        "homeUrl": "https://lib.gdufs.edu.cn/",
+        "pageTitle": "广东外语外贸大学图书馆",
+        "basis": "校方gdufs.edu.cn精确HTTPS子域、页面机构品牌及导航；团委另有团委概况/校团委学生部门导航；未使用名称相似自媒体判定"
+      },
+      "entryUrl": "https://lib.gdufs.edu.cn/xwzx/bgtg.htm",
+      "discoverySelector": "a[href]",
+      "detailPathPattern": "^/info/1134/[0-9]+\\.htm$",
+      "sampleDetailUrl": "https://lib.gdufs.edu.cn/info/1134/10128.htm",
+      "sampleTitle": "喜讯！我校2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛获奖名单出炉",
+      "titleSelector": "head > title",
+      "titleRemoveSuffix": "-广东外语外贸大学图书馆",
+      "publishedAtSelector": ".viewInfo1",
+      "publishedAtLabel": "时间",
+      "publishedAtEvidence": "作者：  时间：2026年10月10日  浏览人次：",
+      "publishedAtRaw": "2026年10月10日",
+      "publishedAtPrecision": "day",
+      "timeZonePolicy": "Asia/Shanghai for source-local times; date-only stays date-only, do not fabricate time",
+      "sourceUpdatedAt": null,
+      "bodySelector": "#vsb_content .v_news_content",
+      "observedTextCharacters": 288,
+      "bodyFormat": "text_and_image",
+      "fullBodyCompletenessVerified": false,
+      "articleAttachmentCount": 0,
+      "attachmentPolicy": "仅正文容器内的链接属于文章附件；导航PDF排除，本次均未下载附件或图片",
+      "observedPaginationLinks": [],
+      "paginationTested": false,
+      "conditionalRequestsTested": false,
+      "robotsStatus": 404,
+      "robotsConclusion": "未发现robots文件，不等于采集/全文转载许可",
+      "copyrightEvidence": [],
+      "fullTextLicense": "not_established",
+      "recommendedFetchPolicy": "manual_metadata_only",
+      "recommendedPersistedFields": [
+        "title",
+        "canonical_url",
+        "source_id",
+        "published_at_with_precision",
+        "fetched_at",
+        "etag",
+        "http_last_modified",
+        "content_hash",
+        "parse_status"
+      ],
+      "prohibitedUntilPermission": [
+        "persist_full_article_body",
+        "download_or_republish_images_attachments",
+        "send_full_body_to_external_models",
+        "publish_or_index_without_review"
+      ],
+      "sourceEnabledByAudit": false,
+      "notes": [
+        "只能使用本profile精确host与栏目详情path，不能抓取登录系统/其他子域",
+        "HTTP Last-Modified只用缓存，不自动等于source_updated_at；静态HTML hash不是正文修订hash"
+      ]
+    }
+  ],
+  "limitations": [
+    "单次各1主页/栏目/详情不等于站点全量正文完整率或长期可访问性",
+    "未另访问条款页面；在实际观察页面未发现可覆盖全文再分发/外部模型处理的许可",
+    "仅学校域名和页面主体的官方归属证据；不代表学校为CampusOS提供采集授权",
+    "首批5站均建议metadata-only并保留人工审核，不自动变更来源核验/启用状态"
+  ]
+}

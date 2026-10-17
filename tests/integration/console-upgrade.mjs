@@ -8,7 +8,7 @@ const files = readdirSync("migrations")
 const db = new DatabaseSync(":memory:");
 db.exec("PRAGMA foreign_keys=ON");
 for (const file of files)
-  if (file !== "0006_console_registry.sql")
+  if (file < "0006_console_registry.sql")
     db.exec(readFileSync("migrations/" + file, "utf8"));
 const now = Date.now();
 db.exec(`INSERT INTO users(id,display_name) VALUES('upgrade-student','Isolated student');

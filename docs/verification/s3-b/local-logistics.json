@@ -1,0 +1,62 @@
+{
+  "recordedAt": "2026-10-17T04:19:28.691Z",
+  "environment": "local-worker",
+  "sourceId": "GDUFS-SRC-0017",
+  "jobId": "job-3559ba54-7a76-47f3-b86d-4a7f4803656c",
+  "final": {
+    "status": "completed",
+    "controlState": "active",
+    "phase": "complete",
+    "found": 10,
+    "bodyTextParsed": 1,
+    "duplicates": 0,
+    "errors": 0,
+    "reservedRequests": 4
+  },
+  "websiteRequests": 3,
+  "events": [
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 10167,
+      "requests": 2
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3098.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-10-16",
+      "bodyTextChars": 3879,
+      "imageCount": 0,
+      "fullTextPersisted": false
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 89,
+      "requests": 1
+    }
+  ],
+  "apiWallMs": [
+    76,
+    25,
+    30,
+    18,
+    28,
+    34,
+    23,
+    28,
+    45,
+    22,
+    36,
+    35,
+    14,
+    37,
+    43,
+    38,
+    57
+  ],
+  "modelCalls": 0,
+  "fullTextPersisted": false,
+  "autoApproved": 0,
+  "autoPublished": 0
+}

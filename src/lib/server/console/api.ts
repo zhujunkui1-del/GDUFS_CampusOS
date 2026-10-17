@@ -10,7 +10,7 @@ import {
   closeConsoleSession,
   consoleCookie,
 } from "./auth";
-import { ConsoleStore } from "./store";
+import { IngestionStore } from "./ingestion-store";
 
 export async function consoleAuthentication(request: Request) {
   let setCookie: string | undefined;
@@ -79,7 +79,7 @@ export const consoleAdministration = withApi(async (request) => {
     request,
     !["GET", "HEAD"].includes(request.method),
   );
-  const store = new ConsoleStore(
+  const store = new IngestionStore(
     context.config.db,
     context.actor,
     undefined,
@@ -99,15 +99,17 @@ export const consoleAdministration = withApi(async (request) => {
     if (section === "overview" && !id)
       return {
         stats: await store.overview(),
-        collectorEnabled: false,
+        collectorEnabled: true,
         indexEnabled: false,
       };
     if (section === "sources")
-      return id && !action
-        ? store.source(id)
-        : !id
-          ? store.sources(query)
-          : unknownRoute();
+      return id && action === "collection-policy"
+        ? store.policy(id)
+        : id && !action
+          ? store.source(id)
+          : !id
+            ? store.sources(query)
+            : unknownRoute();
     if (section === "content") {
       if (id && action === "versions" && version && /^\d{1,4}$/.test(version))
         return store.version(id, Number(version));
@@ -115,6 +117,12 @@ export const consoleAdministration = withApi(async (request) => {
       if (!id) return store.content(query);
     }
     if (section === "jobs" && !id) return store.jobs(query);
+    if (section === "jobs" && id && !action) {
+      const row = await store.job(id);
+      const { lease_hash: omitted, ...safe } = row;
+      void omitted;
+      return safe;
+    }
     if (section === "audit" && !id) return store.audit(query);
     if (section === "admins" && !id) return { items: await store.admins() };
   }
@@ -129,6 +137,8 @@ export const consoleAdministration = withApi(async (request) => {
       return store.verifySource(id, await read());
     if (request.method === "POST" && id && action === "enabled")
       return store.enableSource(id, await read());
+    if (request.method === "POST" && id && action === "collection-policy")
+      return store.setPolicy(id, await read());
   }
   if (section === "content") {
     if (request.method === "POST" && !id)
@@ -142,13 +152,13 @@ export const consoleAdministration = withApi(async (request) => {
       if (action === "restore") return store.restore(id, await read());
     }
   }
-  if (
-    request.method === "POST" &&
-    section === "jobs" &&
-    id &&
-    action === "cancel"
-  )
-    return store.cancelJob(id, await read());
+  if (request.method === "POST" && section === "jobs") {
+    if (!id) return store.createJob(await read());
+    if (action === "claim") return store.claim(id, await read());
+    if (action === "commit") return store.commit(id, await read());
+    if (action === "cancel" || action === "pause" || action === "resume")
+      return store.control(id, await read(), action);
+  }
   if (
     request.method === "POST" &&
     section === "admins" &&

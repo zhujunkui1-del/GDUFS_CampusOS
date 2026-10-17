@@ -24,6 +24,7 @@ import {
   type ContentDetail,
   type ContentInput,
 } from "@/domain/console/contracts";
+import { TopicTagsSchema } from "@/domain/console/taxonomy";
 
 type Row = Record<string, string | number | null>;
 const sourceScope = "console_managed=1 AND source_type<>'user_private'";
@@ -66,7 +67,12 @@ function normalizedContent(input: ContentInput): ContentInput {
       ? new Date(input.validUntil).toISOString()
       : null,
     publishedAt: input.publishedAt
-      ? new Date(input.publishedAt).toISOString()
+      ? input.publishedAt.length === 10
+        ? input.publishedAt
+        : new Date(input.publishedAt).toISOString()
+      : null,
+    sourceUpdatedAt: input.sourceUpdatedAt
+      ? new Date(input.sourceUpdatedAt).toISOString()
       : null,
     extractedFields: { ...input.extractedFields },
   };
@@ -76,8 +82,7 @@ function normalizedContent(input: ContentInput): ContentInput {
         result.extractedFields[field],
       ).toISOString();
   if (result.kind === "event" && !result.validUntil)
-    result.validUntil =
-      result.extractedFields.endAt || result.extractedFields.startAt || null;
+    result.validUntil = result.extractedFields.endAt || null;
   return result;
 }
 export class ConsoleStore {
@@ -200,7 +205,7 @@ export class ConsoleStore {
       archivedAt: null,
     };
   }
-  private async mutate(
+  protected async mutate(
     command: { commandId: string; expectedVersion: number },
     action: string,
     type: "source" | "document" | "job" | "admin",
@@ -222,6 +227,8 @@ export class ConsoleStore {
         "permissionStatus",
         "enabled",
         "restoredFrom",
+        "fence",
+        "leaseHash",
       ]) {
         const value = (payload as Record<string, unknown>)[key];
         if (["string", "number", "boolean"].includes(typeof value))
@@ -280,6 +287,8 @@ export class ConsoleStore {
         throw new ApiError("FORBIDDEN", "管理权限已失效。");
       if (message.includes("CONSOLE_STALE"))
         throw new ApiError("CONFLICT", "记录已更新，请刷新后重试。");
+      if (message.includes("CONSOLE_BUDGET"))
+        throw new ApiError("RATE_LIMITED", "今日采集预算已用完，请稍后再试。");
       if (message.includes("CONSOLE_SOURCE_NOT_READY"))
         throw new ApiError("INVALID_ARGUMENT", "请先核验来源并确认采集许可。");
       if (message.includes("CONSOLE_CONTENT_NOT_READY"))
@@ -453,7 +462,7 @@ export class ConsoleStore {
     const [rows, count] = await Promise.all([
       this.db
         .prepare(
-          `SELECT d.*,s.display_name AS source_name FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where} ORDER BY d.fetched_at DESC,d.id LIMIT ? OFFSET ?`,
+          `SELECT d.*,s.display_name AS source_name FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where} ORDER BY COALESCE(d.updated_at,d.fetched_at) DESC,d.id LIMIT ? OFFSET ?`,
         )
         .bind(...args, q.limit, q.offset)
         .all<Row>(),
@@ -508,17 +517,70 @@ export class ConsoleStore {
         parse(row.extracted_fields_json),
       ),
       publishedAt: row.published_at ? String(row.published_at) : null,
+      fetchedAt: String(row.fetched_at),
+      sourceUpdatedAt: row.source_updated_at
+        ? String(row.source_updated_at)
+        : null,
+      updatedAt: row.updated_at ? String(row.updated_at) : null,
+      contentRevision: Number(row.content_revision),
+      inputHash: row.input_hash ? String(row.input_hash) : null,
+      contentType: String(row.content_type),
+      duplicateOf:
+        (
+          await this.db
+            .prepare(
+              "SELECT duplicate_of FROM document_origins WHERE document_id=? AND duplicate_of IS NOT NULL LIMIT 1",
+            )
+            .bind(id)
+            .first<{ duplicate_of: string }>()
+        )?.duplicate_of || null,
+      rightsScope: String(row.rights_scope),
+      radarCategory: row.radar_category ? String(row.radar_category) : null,
+      knowledgeCategory: row.knowledge_category
+        ? String(row.knowledge_category)
+        : null,
+      publisher: row.publisher ? String(row.publisher) : null,
+      summary: String(row.summary),
+      tags: TopicTagsSchema.parse(
+        (
+          await this.db
+            .prepare(
+              "SELECT tag FROM document_tags WHERE document_id=? AND content_revision=? ORDER BY tag LIMIT 12",
+            )
+            .bind(id, Number(row.content_revision))
+            .all<{ tag: string }>()
+        ).results.map((x) => x.tag),
+      ),
+      eventCandidates: (
+        await this.db
+          .prepare(
+            "SELECT id,title,organizer,starts_at,ends_at,registration_deadline,raw_place_name,verification_status FROM event_candidates WHERE document_id=? AND content_revision=? ORDER BY ordinal LIMIT 10",
+          )
+          .bind(id, Number(row.content_revision))
+          .all<Row>()
+      ).results.map((e) => ({
+        id: String(e.id),
+        title: String(e.title),
+        organizer: e.organizer ? String(e.organizer) : null,
+        startsAt: e.starts_at ? String(e.starts_at) : null,
+        endsAt: e.ends_at ? String(e.ends_at) : null,
+        registrationDeadline: e.registration_deadline
+          ? String(e.registration_deadline)
+          : null,
+        rawPlaceName: e.raw_place_name ? String(e.raw_place_name) : null,
+        verificationStatus: String(e.verification_status),
+      })),
       versions: versions.results.map((v) => ({
         version: v.version,
         createdAt: v.created_at,
       })),
     };
   }
-  private snapshot(id: string) {
+  protected snapshot(id: string) {
     return this.db
       .prepare(
-        `INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at)
-    SELECT id,version,json_object('input',json_object('sourceId',source_id,'title',title,'url',url,'body',body,'kind',candidate_kind,'campusScope',campus_scope,'validUntil',valid_until,'publishedAt',published_at,'extractedFields',json(extracted_fields_json)),'publicationStatus',publication_status,'reviewStatus',workflow_status),?,? FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'`,
+        `INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at,content_revision,input_hash)
+    SELECT id,version,json_object('input',json_object('sourceId',source_id,'title',title,'url',url,'body',body,'kind',candidate_kind,'campusScope',campus_scope,'validUntil',valid_until,'publishedAt',published_at,'sourceUpdatedAt',source_updated_at,'contentType',content_type,'rightsScope',rights_scope,'radarCategory',radar_category,'knowledgeCategory',knowledge_category,'publisher',publisher,'summary',summary,'tags',json((SELECT json_group_array(tag) FROM document_tags t WHERE t.document_id=knowledge_documents.id AND t.content_revision=knowledge_documents.content_revision)),'extractedFields',json(extracted_fields_json)),'publicationStatus',publication_status,'reviewStatus',workflow_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'`,
       )
       .bind(this.actor.id, this.now(), id);
   }
@@ -527,69 +589,8 @@ export class ConsoleStore {
     raw: unknown,
     restoredFrom?: number,
   ) {
-    const value = ContentWriteSchema.parse(raw),
-      source = await this.source(value.sourceId);
-    const key = id || "content-" + value.commandId;
-    if (id) await this.document(id);
-    else if (value.expectedVersion !== 0)
-      throw new ApiError("INVALID_ARGUMENT", "新内容版本应从零开始。");
-    const data = normalizedContent(
-        ContentInputSchema.parse(
-          Object.fromEntries(
-            Object.entries(value).filter(
-              ([k]) => !["commandId", "expectedVersion"].includes(k),
-            ),
-          ),
-        ),
-      ),
-      contentHash = await tokenHash(data.body);
-    const statements: Statement[] = id
-      ? [
-          this.db
-            .prepare(
-              "UPDATE knowledge_documents SET source_id=?,title=?,url=?,body=?,content_hash=?,candidate_kind=?,campus_scope=?,valid_until=?,published_at=?,extracted_fields_json=?,data_domain=?,version=version+1,review_status='pending',workflow_status='pending',publication_status='draft',lifecycle_status='active',fetched_at=? WHERE id=?",
-            )
-            .bind(
-              data.sourceId,
-              data.title,
-              data.url,
-              data.body,
-              contentHash,
-              data.kind,
-              data.campusScope,
-              data.validUntil,
-              data.publishedAt,
-              json(data.extractedFields),
-              source.officialStatus === "verified_official"
-                ? "official_policy"
-                : "approved_life_experience",
-              this.now(),
-              key,
-            ),
-        ]
-      : [
-          this.db
-            .prepare(
-              "INSERT INTO knowledge_documents(id,source_id,title,url,body,content_hash,fetched_at,campus_scope,data_domain,candidate_kind,valid_until,published_at,extracted_fields_json) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            )
-            .bind(
-              key,
-              data.sourceId,
-              data.title,
-              data.url,
-              data.body,
-              contentHash,
-              this.now(),
-              data.campusScope,
-              source.officialStatus === "verified_official"
-                ? "official_policy"
-                : "approved_life_experience",
-              data.kind,
-              data.validUntil,
-              data.publishedAt,
-              json(data.extractedFields),
-            ),
-        ];
+    const prepared = await this.prepareContentWrite(id, raw);
+    const { value, data, key, statements } = prepared;
     return this.mutate(
       value,
       restoredFrom
@@ -600,10 +601,128 @@ export class ConsoleStore {
       "document",
       key,
       restoredFrom ? { ...value, restoredFrom } : value,
-      [...statements, this.snapshot(key)],
+      statements,
       "write",
       data.sourceId,
     );
+  }
+  protected async prepareContentWrite(
+    id: string | undefined,
+    raw: unknown,
+    sourceFingerprint?: string,
+  ) {
+    const value = ContentWriteSchema.parse(raw),
+      source = await this.source(value.sourceId);
+    const key = id || "content-" + value.commandId;
+    const previous = id ? await this.document(id) : null;
+    if (!id && value.expectedVersion !== 0)
+      throw new ApiError("INVALID_ARGUMENT", "新内容版本应从零开始。");
+    const data = normalizedContent(
+        ContentInputSchema.parse(
+          Object.fromEntries(
+            Object.entries(value).filter(
+              ([k]) => !["commandId", "expectedVersion"].includes(k),
+            ),
+          ),
+        ),
+      ),
+      contentHash = await tokenHash(data.body),
+      inputHash = await tokenHash(
+        json(sourceFingerprint ? [data, sourceFingerprint] : data),
+      ),
+      contentRevision = previous
+        ? previous.contentRevision + (previous.inputHash !== inputHash ? 1 : 0)
+        : 1;
+    const statements: Statement[] = id
+      ? [
+          this.db
+            .prepare(
+              "UPDATE knowledge_documents SET source_id=?,title=?,url=?,body=?,content_hash=?,candidate_kind=?,campus_scope=?,valid_until=?,published_at=?,extracted_fields_json=?,data_domain=?,version=version+1,review_status='pending',workflow_status='pending',publication_status='draft',lifecycle_status='active',updated_at=?,source_updated_at=?,content_revision=?,input_hash=?,approved_content_revision=NULL,approved_input_hash=NULL,content_type=?,rights_scope=?,radar_category=?,knowledge_category=?,publisher=?,summary=? WHERE id=?",
+            )
+            .bind(
+              data.sourceId,
+              data.title,
+              data.url,
+              data.body,
+              contentHash,
+              data.kind,
+              data.campusScope,
+              data.validUntil,
+              data.publishedAt,
+              json(data.extractedFields),
+              source.officialStatus === "verified_official"
+                ? "official_policy"
+                : "approved_life_experience",
+              this.now(),
+              data.sourceUpdatedAt,
+              contentRevision,
+              inputHash,
+              data.contentType,
+              data.rightsScope,
+              data.radarCategory,
+              data.knowledgeCategory,
+              data.publisher,
+              data.summary,
+              key,
+            ),
+        ]
+      : [
+          this.db
+            .prepare(
+              "INSERT INTO knowledge_documents(id,source_id,title,url,body,content_hash,fetched_at,campus_scope,data_domain,candidate_kind,valid_until,published_at,extracted_fields_json,updated_at,source_updated_at,content_revision,input_hash,content_type,rights_scope,radar_category,knowledge_category,publisher,summary) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            )
+            .bind(
+              key,
+              data.sourceId,
+              data.title,
+              data.url,
+              data.body,
+              contentHash,
+              this.now(),
+              data.campusScope,
+              source.officialStatus === "verified_official"
+                ? "official_policy"
+                : "approved_life_experience",
+              data.kind,
+              data.validUntil,
+              data.publishedAt,
+              json(data.extractedFields),
+              this.now(),
+              data.sourceUpdatedAt,
+              contentRevision,
+              inputHash,
+              data.contentType,
+              data.rightsScope,
+              data.radarCategory,
+              data.knowledgeCategory,
+              data.publisher,
+              data.summary,
+            ),
+        ];
+    if (id && sourceFingerprint)
+      statements.push(
+        this.db
+          .prepare("UPDATE knowledge_documents SET fetched_at=? WHERE id=?")
+          .bind(this.now(), key),
+      );
+    return {
+      value,
+      data,
+      key,
+      contentRevision,
+      inputHash,
+      statements: [
+        ...statements,
+        ...data.tags.map((tag) =>
+          this.db
+            .prepare(
+              "INSERT OR IGNORE INTO document_tags(document_id,content_revision,tag) VALUES(?,?,?)",
+            )
+            .bind(key, contentRevision, tag),
+        ),
+        this.snapshot(key),
+      ],
+    };
   }
   async review(id: string, raw: unknown) {
     const value = ReviewSchema.parse(raw);
@@ -617,11 +736,14 @@ export class ConsoleStore {
       [
         this.db
           .prepare(
-            "UPDATE knowledge_documents SET workflow_status=?,review_status=?,publication_status='draft',version=version+1 WHERE id=?",
+            "UPDATE knowledge_documents SET workflow_status=?,review_status=?,publication_status='draft',version=version+1,updated_at=?,approved_content_revision=CASE WHEN ?='approved' THEN content_revision ELSE NULL END,approved_input_hash=CASE WHEN ?='approved' THEN input_hash ELSE NULL END WHERE id=?",
           )
           .bind(
             value.decision,
             value.decision === "returned" ? "pending" : value.decision,
+            this.now(),
+            value.decision,
+            value.decision,
             id,
           ),
         this.db
@@ -649,6 +771,15 @@ export class ConsoleStore {
     if (!withdraw) {
       if (
         document.reviewStatus !== "approved" ||
+        !document.inputHash ||
+        document.contentRevision <= 0 ||
+        !["metadata_only", "excerpt_and_link", "licensed_full_text"].includes(
+          document.rightsScope,
+        ) ||
+        document.contentType === "unknown" ||
+        (document.kind === "knowledge"
+          ? !document.knowledgeCategory
+          : !document.radarCategory) ||
         (document.validUntil &&
           Date.parse(document.validUntil) <= Date.parse(this.now()))
       )
@@ -659,6 +790,7 @@ export class ConsoleStore {
           !f.timeVerified ||
           !f.placeVerified ||
           !f.startAt ||
+          !f.endAt ||
           (f.startAt &&
             Date.parse(f.endAt || f.startAt) <= Date.parse(this.now())) ||
           document.campusScope === "unknown" ||
@@ -682,11 +814,12 @@ export class ConsoleStore {
       [
         this.db
           .prepare(
-            "UPDATE knowledge_documents SET publication_status=?,lifecycle_status=?,version=version+1 WHERE id=?",
+            "UPDATE knowledge_documents SET publication_status=?,lifecycle_status=?,version=version+1,updated_at=? WHERE id=?",
           )
           .bind(
             withdraw ? "withdrawn" : "published",
             withdraw ? "withdrawn" : "active",
+            this.now(),
             id,
           ),
         ...(withdraw
@@ -740,15 +873,15 @@ export class ConsoleStore {
     const q = PageQuerySchema.parse(query);
     const rows = await this.db
       .prepare(
-        "SELECT j.id,j.source_id,s.display_name AS source_name,j.status,j.error_code,j.found_count,j.body_count,j.duplicate_count,j.version,j.created_at FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id WHERE s.console_managed=1 AND s.source_type<>'user_private' ORDER BY j.created_at DESC,j.id LIMIT ? OFFSET ?",
+        "SELECT j.id,j.source_id,s.display_name AS source_name,j.status,j.control_state,j.phase,j.error_code,j.found_count,j.body_count,j.duplicate_count,j.request_count,j.error_count,j.version,j.created_at FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id WHERE s.console_managed=1 AND s.source_type<>'user_private' ORDER BY j.created_at DESC,j.id LIMIT ? OFFSET ?",
       )
       .bind(q.limit, q.offset)
       .all<Row>();
     return {
-      collectorEnabled: false,
+      collectorEnabled: true,
       items: rows.results.map((row) => ({
         ...row,
-        error_code: row.error_code ? "采集任务未完成，请检查配置。" : null,
+        error_code: row.error_code ? String(row.error_code).slice(0, 50) : null,
       })),
       offset: q.offset,
       limit: q.limit,
@@ -821,13 +954,14 @@ export class ConsoleStore {
 export async function filterPublicContent(
   db: SqlDatabase,
   hits: { id: string; version: number }[],
+  purpose: "metadata" | "excerpt" | "full_text" = "excerpt",
 ) {
   if (hits.length > 50)
     throw new ApiError("INVALID_ARGUMENT", "检索候选过多。");
   if (!hits.length) return [];
   const rows = await db
     .prepare(
-      `SELECT id,version FROM console_public_documents WHERE id IN (${hits.map(() => "?").join(",")})`,
+      `SELECT id,version FROM console_public_documents WHERE id IN (${hits.map(() => "?").join(",")}) AND rights_scope IN (${purpose === "metadata" ? "'metadata_only','excerpt_and_link','licensed_full_text'" : purpose === "full_text" ? "'licensed_full_text'" : "'excerpt_and_link','licensed_full_text'"})`,
     )
     .bind(...hits.map((h) => h.id))
     .all<{ id: string; version: number }>();

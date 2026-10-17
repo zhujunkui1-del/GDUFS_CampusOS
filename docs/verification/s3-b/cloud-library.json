@@ -1,0 +1,62 @@
+{
+  "recordedAt": "2026-10-17T04:55:01.089Z",
+  "environment": "real-cloudflare-preview",
+  "sourceId": "GDUFS-SRC-0008",
+  "jobId": "job-3273a456-71d3-478c-8680-c589f0dc057c",
+  "final": {
+    "status": "completed",
+    "controlState": "active",
+    "phase": "complete",
+    "found": 10,
+    "bodyTextParsed": 1,
+    "duplicates": 0,
+    "errors": 0,
+    "reservedRequests": 4
+  },
+  "websiteRequests": 3,
+  "events": [
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 11558,
+      "requests": 2
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/9648.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-06-30",
+      "bodyTextChars": 838,
+      "imageCount": 3,
+      "fullTextPersisted": false
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 897,
+      "requests": 1
+    }
+  ],
+  "apiWallMs": [
+    1245,
+    309,
+    421,
+    295,
+    344,
+    399,
+    319,
+    434,
+    537,
+    279,
+    590,
+    1501,
+    183,
+    1595,
+    860,
+    343,
+    304
+  ],
+  "modelCalls": 0,
+  "fullTextPersisted": false,
+  "autoApproved": 0,
+  "autoPublished": 0
+}

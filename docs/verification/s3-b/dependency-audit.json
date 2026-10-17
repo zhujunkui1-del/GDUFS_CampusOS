@@ -1,0 +1,50 @@
+{
+  "recordedAt": "2026-10-17T04:34:33.698Z",
+  "vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 5,
+    "critical": 0,
+    "total": 5
+  },
+  "packages": [
+    {
+      "name": "@next/eslint-plugin-next",
+      "before": "16.3.8",
+      "now": "16.3.8",
+      "unchanged": true
+    },
+    {
+      "name": "braces",
+      "before": "3.0.3",
+      "now": "3.0.3",
+      "unchanged": true
+    },
+    {
+      "name": "eslint-config-next",
+      "before": "16.3.8",
+      "now": "16.3.8",
+      "unchanged": true
+    },
+    {
+      "name": "fast-glob",
+      "before": "3.3.1",
+      "now": "3.3.1",
+      "unchanged": true
+    },
+    {
+      "name": "micromatch",
+      "before": "4.0.8",
+      "now": "4.0.8",
+      "unchanged": true
+    }
+  ],
+  "newHtmlParser": {
+    "name": "linkedom",
+    "version": "0.18.13",
+    "devOnly": true,
+    "license": "ISC"
+  },
+  "forceUpgradeExecuted": false
+}

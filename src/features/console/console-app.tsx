@@ -34,6 +34,13 @@ import {
   type ContentDetail,
   type ContentInput,
 } from "@/domain/console/contracts";
+import {
+  radarCategories,
+  knowledgeCategories,
+  contentTypeNames,
+  rightsNames,
+  topicNames,
+} from "@/domain/console/taxonomy";
 
 type Auth = {
   authenticated: boolean;
@@ -54,10 +61,12 @@ const navigation = [
 ];
 const date = (value: string | null | undefined) =>
   value
-    ? new Date(value).toLocaleString("zh-CN", {
-        timeZone: "Asia/Shanghai",
-        hour12: false,
-      })
+    ? value.length === 10
+      ? value
+      : new Date(value).toLocaleString("zh-CN", {
+          timeZone: "Asia/Shanghai",
+          hour12: false,
+        })
     : "—";
 const short = (s: string) => statusNames[s] || s;
 function Message({ children }: { children: ReactNode }) {
@@ -459,7 +468,9 @@ function Overview({ request }: { request: Client }) {
           </div>
           <section className="console-card">
             <h2>采集状态</h2>
-            <Message>采集未启用</Message>
+            <Message>
+              {data.collectorEnabled ? "手动采集已就绪" : "采集未启用"}
+            </Message>
             <p>最近采集异常：{data.stats.failedJobs}</p>
             <Link className="text-link" href="/admin/jobs">
               查看任务
@@ -868,6 +879,22 @@ function SourceEditor({
                 >
                   归档来源
                 </button>
+                {data.connectorType === "official_web" && data.enabled && (
+                  <button
+                    disabled={busy || !write}
+                    onClick={() =>
+                      void run(() =>
+                        request("jobs", "POST", {
+                          commandId: crypto.randomUUID(),
+                          sourceId: id,
+                          maxArticles: 1,
+                        }),
+                      )
+                    }
+                  >
+                    创建采集任务
+                  </button>
+                )}
               </div>
             </div>
             <dl className="console-details">
@@ -1208,6 +1235,14 @@ const emptyContent: ContentInput = {
   campusScope: "unknown",
   validUntil: null,
   publishedAt: null,
+  sourceUpdatedAt: null,
+  contentType: "unknown",
+  rightsScope: "unknown",
+  radarCategory: null,
+  knowledgeCategory: null,
+  publisher: null,
+  summary: "",
+  tags: [],
   extractedFields: {
     timeVerified: false,
     placeVerified: false,
@@ -1263,6 +1298,14 @@ function ContentEditor({
           campusScope: data.campusScope,
           validUntil: data.validUntil,
           publishedAt: data.publishedAt,
+          sourceUpdatedAt: data.sourceUpdatedAt,
+          contentType: data.contentType,
+          rightsScope: data.rightsScope,
+          radarCategory: data.radarCategory,
+          knowledgeCategory: data.knowledgeCategory,
+          publisher: data.publisher,
+          summary: data.summary,
+          tags: data.tags,
           extractedFields: data.extractedFields,
         }
       : emptyContent);
@@ -1336,6 +1379,51 @@ function ContentEditor({
       <Heading title={isNew ? "登记内容" : data!.title}>
         {data && <Badge value={data.publicationStatus} />}
       </Heading>
+      {data?.duplicateOf && (
+        <Link
+          className="text-link"
+          href={recordHref("content", data.duplicateOf)}
+        >
+          查看可能重复的原文记录
+        </Link>
+      )}
+      {data && (
+        <dl className="console-card console-details">
+          <dt>原文发布</dt>
+          <dd>{date(data.publishedAt)}</dd>
+          <dt>获取时间</dt>
+          <dd>{date(data.fetchedAt)}</dd>
+          <dt>原文更新</dt>
+          <dd>{date(data.sourceUpdatedAt)}</dd>
+          <dt>记录更新</dt>
+          <dd>{date(data.updatedAt)}</dd>
+          <dt>内容修订</dt>
+          <dd>{data.contentRevision}</dd>
+        </dl>
+      )}
+      {!!data?.eventCandidates?.length && (
+        <section className="console-card">
+          <h2>活动提取候选</h2>
+          {data.eventCandidates.map((event) => (
+            <article key={event.id}>
+              <h3>{event.title}</h3>
+              <dl className="console-details">
+                <dt>主办方</dt>
+                <dd>{event.organizer || "待核实"}</dd>
+                <dt>开始</dt>
+                <dd>{date(event.startsAt)}</dd>
+                <dt>结束</dt>
+                <dd>{date(event.endsAt)}</dd>
+                <dt>报名截止</dt>
+                <dd>{date(event.registrationDeadline)}</dd>
+                <dt>地点</dt>
+                <dd>{event.rawPlaceName || "待核实"}</dd>
+              </dl>
+              <Badge value={event.verificationStatus} />
+            </article>
+          ))}
+        </section>
+      )}
       {message && (
         <p className="console-feedback" role="status">
           {message}
@@ -1387,7 +1475,7 @@ function ContentEditor({
           />
         </label>
         <label>
-          内容类型
+          候选用途
           <select
             value={form.kind}
             onChange={(e) =>
@@ -1397,6 +1485,104 @@ function ContentEditor({
             <option value="knowledge">知识候选</option>
             <option value="event">活动候选</option>
           </select>
+        </label>
+        <label>
+          原文类型
+          <select
+            value={form.contentType}
+            onChange={(e) => set("contentType", e.target.value)}
+          >
+            {Object.entries(contentTypeNames).map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          使用范围
+          <select
+            value={form.rightsScope}
+            onChange={(e) => set("rightsScope", e.target.value)}
+          >
+            {Object.entries(rightsNames).map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          雷达分类
+          <select
+            value={form.radarCategory || ""}
+            onChange={(e) => set("radarCategory", e.target.value || null)}
+          >
+            <option value="">待核实</option>
+            {radarCategories.map((x) => (
+              <option key={x.code} value={x.code}>
+                {x.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          知识分类
+          <select
+            value={form.knowledgeCategory || ""}
+            onChange={(e) => set("knowledgeCategory", e.target.value || null)}
+          >
+            <option value="">待核实</option>
+            {knowledgeCategories.map((x) => (
+              <option key={x.code} value={x.code}>
+                {x.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          发布机构
+          <input
+            value={form.publisher || ""}
+            onChange={(e) => set("publisher", e.target.value || null)}
+            maxLength={250}
+          />
+        </label>
+        <label>
+          原文更新时间
+          <input
+            type="datetime-local"
+            value={localDate(form.sourceUpdatedAt)}
+            onChange={(e) => set("sourceUpdatedAt", utcDate(e.target.value))}
+          />
+        </label>
+        <fieldset className="console-wide">
+          <legend>辅助主题</legend>
+          {topicNames.map((tag) => (
+            <label className="console-checkbox" key={tag}>
+              <input
+                type="checkbox"
+                checked={form.tags.includes(tag)}
+                onChange={(e) =>
+                  set(
+                    "tags",
+                    e.target.checked
+                      ? [...form.tags, tag]
+                      : form.tags.filter((x) => x !== tag),
+                  )
+                }
+              />
+              {tag}
+            </label>
+          ))}
+        </fieldset>
+        <label className="console-wide">
+          摘要
+          <textarea
+            value={form.summary}
+            onChange={(e) => set("summary", e.target.value)}
+            maxLength={500}
+          />
         </label>
         <label>
           校区
@@ -1422,9 +1608,20 @@ function ContentEditor({
         <label>
           原文发布时间（北京时间）
           <input
-            type="datetime-local"
-            value={localDate(form.publishedAt)}
-            onChange={(e) => set("publishedAt", utcDate(e.target.value))}
+            type={form.publishedAt?.length === 10 ? "date" : "datetime-local"}
+            value={
+              form.publishedAt?.length === 10
+                ? form.publishedAt
+                : localDate(form.publishedAt)
+            }
+            onChange={(e) =>
+              set(
+                "publishedAt",
+                form.publishedAt?.length === 10
+                  ? e.target.value || null
+                  : utcDate(e.target.value),
+              )
+            }
           />
         </label>
         <label>
@@ -1644,12 +1841,14 @@ function Jobs({ request }: { request: Client }) {
             id: string;
             source_name: string;
             status: string;
+            control_state: string;
+            phase: string;
             error_code: string | null;
             found_count: number;
             body_count: number;
             duplicate_count: number;
             version: number;
-          }> & { collectorEnabled: false }
+          }> & { collectorEnabled: boolean }
         >("jobs?offset=" + offset),
       [offset],
     );
@@ -1658,11 +1857,9 @@ function Jobs({ request }: { request: Client }) {
     <>
       <Heading title="采集任务" />
       <section className="console-card">
-        <Message>采集未启用</Message>
-        <div className="console-actions">
-          <button disabled>开始采集</button>
-          <button disabled>重试任务</button>
-        </div>
+        <Message>
+          {data?.collectorEnabled ? "手动采集已就绪" : "正在加载…"}
+        </Message>
       </section>
       {message && <p role="status">{message}</p>}
       {error ? (
@@ -1676,31 +1873,60 @@ function Jobs({ request }: { request: Client }) {
               <article className="console-job" key={job.id}>
                 <h2>{job.source_name}</h2>
                 <p>
-                  {job.status} · 发现 {job.found_count} · 正文 {job.body_count}{" "}
-                  · 重复 {job.duplicate_count}
+                  {job.control_state === "paused"
+                    ? "已暂停"
+                    : job.control_state === "cancelled"
+                      ? "已取消"
+                      : {
+                          queued: "等待执行",
+                          running: "执行中",
+                          completed: "已完成",
+                          failed: "未完成",
+                        }[job.status] || job.status}{" "}
+                  · 发现 {job.found_count} · 文本解析 {job.body_count} · 重复{" "}
+                  {job.duplicate_count}
                 </p>
                 {job.error_code && <p>{job.error_code}</p>}
-                {job.status === "queued" && (
-                  <button
-                    onClick={async () => {
-                      try {
-                        await request(
-                          "jobs/" + job.id + "/cancel",
-                          "POST",
-                          command(job.version),
-                        );
-                        setMessage("已取消排队任务");
-                        reload();
-                      } catch (e) {
-                        setMessage(
-                          e instanceof Error ? e.message : "操作失败。",
-                        );
-                      }
-                    }}
-                  >
-                    取消排队任务
-                  </button>
-                )}
+                {job.phase !== "complete" &&
+                  job.control_state !== "cancelled" && (
+                    <div className="console-actions">
+                      {[
+                        job.control_state === "paused" ? "resume" : "pause",
+                        "cancel",
+                      ].map((action) => (
+                        <button
+                          key={action}
+                          onClick={async () => {
+                            try {
+                              await request(
+                                "jobs/" + job.id + "/" + action,
+                                "POST",
+                                command(job.version),
+                              );
+                              setMessage(
+                                action === "cancel"
+                                  ? "已取消任务"
+                                  : action === "pause"
+                                    ? "已暂停任务"
+                                    : "任务已恢复排队",
+                              );
+                              reload();
+                            } catch (e) {
+                              setMessage(
+                                e instanceof Error ? e.message : "操作失败。",
+                              );
+                            }
+                          }}
+                        >
+                          {action === "cancel"
+                            ? "取消任务"
+                            : action === "pause"
+                              ? "暂停任务"
+                              : "恢复任务"}
+                        </button>
+                      ))}
+                    </div>
+                  )}
               </article>
             ))
           ) : (

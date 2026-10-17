@@ -4,7 +4,9 @@
 >
 > 开发助手：Codex｜目标：广东外语外贸大学第二届 AI 应用创新大赛｜主方向：（四）生活服务，管理服务为辅。
 
-**2026-10-17 S3入口（D-043）：**S3-A Console已完成，当前补做S3-0审计与架构冻结；本轮不继续S3-B。后续先读[总体基线](../docs/S3_0_ARCHITECTURE_BASELINE.md)、[数据模型](../docs/S3_0_DATA_MODEL.md)和[固定7/6分类](../docs/contracts/s3-taxonomy.v1.json)。旧章节保留历史日期，冲突按最新负责人决定/DECISIONS及实际代码裁决；Dify尚未接入，220来源仍候选，不把规划写成可用。
+**2026-10-17 S3-B执行更新（D-044）：**兼容修复与手动官网元数据流水线已实施，保留S3-A；见[兼容清单](../docs/S3_B_COMPATIBILITY.md)及[实际验收](../docs/S3_B_INGESTION_ACCEPTANCE.md)。3源/3篇待审、0公开发布；微信文章采集受限，学校Dify仅UI只读核实、未接入。完成后停在S3-B，不启动S3-C。
+
+**2026-10-17 S3入口（D-043，历史冻结阶段）：**S3-A Console已完成，当前补做S3-0审计与架构冻结；本轮不继续S3-B。后续先读[总体基线](../docs/S3_0_ARCHITECTURE_BASELINE.md)、[数据模型](../docs/S3_0_DATA_MODEL.md)和[固定7/6分类](../docs/contracts/s3-taxonomy.v1.json)。旧章节保留历史日期，冲突按最新负责人决定/DECISIONS及实际代码裁决；Dify尚未接入，220来源仍候选，不把规划写成可用。
 
 ## 1. 正确使用方式
 

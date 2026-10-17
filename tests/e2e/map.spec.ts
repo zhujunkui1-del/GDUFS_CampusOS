@@ -113,7 +113,12 @@ test("map controls, source-backed place details, layers and cross-page state", a
   ).toHaveCount(0);
   await expect(page.getByRole("link", { name: "查看来源" })).toBeVisible();
   await page.getByRole("button", { name: "问 AI", exact: true }).click();
-  await expect(page.locator(".assistant-map-context")).toContainText("北苑1栋");
+  // The real conversation UI replaced the old S2-A context caption. Validated
+  // request context is covered by conversation-management.spec.ts.
+  await expect(
+    page.getByRole("button", { name: "收起校园助理" }),
+  ).toBeVisible();
+  await expect(page.locator(".assistant-map-context")).toHaveCount(0);
   await page.getByRole("button", { name: "收起校园助理" }).click();
   const nav = page.getByRole("navigation", {
     name: isMobile ? "手机主导航" : "桌面主导航",

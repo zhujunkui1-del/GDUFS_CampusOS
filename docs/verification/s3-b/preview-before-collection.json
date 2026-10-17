@@ -1,0 +1,31 @@
+{
+  "recordedAt": "2026-10-17T04:50:36.593Z",
+  "realCloud": true,
+  "target": "campusos-preview",
+  "unselectedSources": 217,
+  "unselectedSourceStateSha256": "227c157918fa1cf9bba8af1ee3418f6ea9a38eaf3edd8184c08bd9730b85992d",
+  "counts": {
+    "sources": 220,
+    "enabled": 0,
+    "verified": 0,
+    "candidates": 220,
+    "documents": 0,
+    "metadataOnlyBodies": 0,
+    "published": 0,
+    "reviews": 0,
+    "events": 0,
+    "chunks": 0,
+    "jobs": 0,
+    "duplicates": null,
+    "errors": null,
+    "reservedRequests": null,
+    "conversations": 75,
+    "messages": 330,
+    "agentRuns": 192
+  },
+  "auditQueryMeta": {
+    "rowsRead": 1483,
+    "rowsWritten": 0,
+    "sqlDurationMs": 5.4852
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "recordedAt": "2026-10-17T05:18:51.366Z",
+  "fixturesOnly": true,
+  "migrationHashMode": "sha256 UTF-8 LF with one final newline",
+  "realCloud": false,
+  "emptyMigrationPassed": true,
+  "populatedUpgradePassed": true,
+  "failedBatchRollbackPassed": true,
+  "legacyApplicationDraftCompatibilityPassed": true,
+  "legacyApplicationCannotBypassPublicationGate": true,
+  "sourceHumanStatesPreserved": true,
+  "privateDataAndSnapshotsPreserved": true,
+  "businessTables": 53,
+  "foreignKeyViolations": 0,
+  "migrations": [
+    {
+      "file": "0007_content_contract.sql",
+      "sha256": "c98b3c019750e99108d8e4bf3d28c56694befb423a5fb3a5f7b4b4117c863aa0",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0008_ingestion_pipeline.sql",
+      "sha256": "f089da6f8b11a35fd439e939752990029038eafe64358359061c2af440ae8679",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0009_ingestion_clock_guards.sql",
+      "sha256": "1cae7c3b6619bc3bc56a4eeb3c0c31f8447cd35c1b54013970d831e599bf04a7",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0010_document_topics.sql",
+      "sha256": "70959a6c6a9ad253babe6cfd6cf92330fa15229375c7f5f0aa2fca2b04d55536",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0011_ingestion_daily_budget.sql",
+      "sha256": "08b6237d8e14bdb50a6b53d45a4621bb920edfb7ff3555ca491f739a159bcb33",
+      "populatedUpgradePassed": true
+    }
+  ],
+  "rollbackPolicy": "Application rollback preserves additive schema. Do not drop tables, erase documents or restore old public view."
+}

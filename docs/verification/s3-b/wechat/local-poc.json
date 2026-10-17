@@ -1,0 +1,192 @@
+{
+  "checkedAt": "2026-10-17T02:33:48.679932+00:00",
+  "scope": "Isolated metadata-only policy probes and offline synthetic fixtures; no account login, cookies, model calls, article collection or production data write",
+  "policyProbes": [
+    {
+      "url": "https://weixin.sogou.com/robots.txt",
+      "httpStatus": 200,
+      "curlExitCode": 0,
+      "elapsedMs": 260.1,
+      "bytes": 2779,
+      "sha256": "c3a895350dfc92290b4211fa3e799ca34bec1761a9b82188e79d9641b4e3ca3e",
+      "defaultDisallowAll": true,
+      "targetDecisions": [
+        {
+          "url": "https://weixin.sogou.com/weixin?type=2&query=CampusOS",
+          "allowed": false
+        }
+      ],
+      "action": "stop before search/article requests"
+    },
+    {
+      "url": "https://mp.weixin.qq.com/robots.txt",
+      "httpStatus": 200,
+      "curlExitCode": 0,
+      "elapsedMs": 237.7,
+      "bytes": 251,
+      "sha256": "a977bd9cd7a2fd924457fe0e671ad93754ada7b998083a75b3f58b713a6c409e",
+      "defaultDisallowAll": true,
+      "targetDecisions": [
+        {
+          "url": "https://mp.weixin.qq.com/s/example",
+          "allowed": false
+        }
+      ],
+      "action": "stop before search/article requests"
+    }
+  ],
+  "localFiles": [
+    {
+      "name": "search",
+      "path": "CampusOS_Codex_完整设计文档_v2/weixin_search_mcp-main/weixin_search_mcp/tools/weixin_search.py",
+      "sha256Before": "1116283ce51d2fb3e56eea92820de105dea05e68b3de43b8a31a813f73bca38f",
+      "sha256After": "1116283ce51d2fb3e56eea92820de105dea05e68b3de43b8a31a813f73bca38f",
+      "unchanged": true
+    },
+    {
+      "name": "blog",
+      "path": "CampusOS_Codex_完整设计文档_v2/wechat-article-exporter-main/wechat-article-exporter-main/backend/app/scrapers/custom_urls.py",
+      "sha256Before": "45f17a50540473c8a72b5d7e067486d1dae75cb0de88ddd79a6e10961a175959",
+      "sha256After": "45f17a50540473c8a72b5d7e067486d1dae75cb0de88ddd79a6e10961a175959",
+      "unchanged": true
+    },
+    {
+      "name": "rssContent",
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/core/article_content.py",
+      "sha256Before": "4aca553cf8ede3d1d70727072ababf1a13598cc8e5d7ca976cd93a8b9f8d35a9",
+      "sha256After": "4aca553cf8ede3d1d70727072ababf1a13598cc8e5d7ca976cd93a8b9f8d35a9",
+      "unchanged": true
+    },
+    {
+      "name": "rssParser",
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/core/wx/model/weread_mp.py",
+      "sha256Before": "29526c6c1b3ef4fb8b1a5c0c3f7e91eaae9d252cc2d4cbbdffa2a2d3822e784c",
+      "sha256After": "29526c6c1b3ef4fb8b1a5c0c3f7e91eaae9d252cc2d4cbbdffa2a2d3822e784c",
+      "unchanged": true
+    },
+    {
+      "name": "blogLicense",
+      "path": "CampusOS_Codex_完整设计文档_v2/wechat-article-exporter-main/wechat-article-exporter-main/LICENSE",
+      "sha256Before": "8ba38c358e00aca9e506331c930dcf7f02dc990e24031c2c5152a99e9262163f",
+      "sha256After": "8ba38c358e00aca9e506331c930dcf7f02dc990e24031c2c5152a99e9262163f",
+      "unchanged": true
+    },
+    {
+      "name": "rssLicense",
+      "path": "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/we-mp-rss-main/LICENSE",
+      "sha256Before": "8aaac477797f18afb9b8da33a093a770485d380acc6e942761343dc8993ee87a",
+      "sha256After": "8aaac477797f18afb9b8da33a093a770485d380acc6e942761343dc8993ee87a",
+      "unchanged": true
+    },
+    {
+      "name": "searchProject",
+      "path": "CampusOS_Codex_完整设计文档_v2/weixin_search_mcp-main/pyproject.toml",
+      "sha256Before": "8eb9f645c9c4ec898dfbca2df51fc26f7ae5a0a089e487572cc8dda9f747397f",
+      "sha256After": "8eb9f645c9c4ec898dfbca2df51fc26f7ae5a0a089e487572cc8dda9f747397f",
+      "unchanged": true
+    }
+  ],
+  "offlineChecks": [
+    {
+      "project": "weixin_search_mcp",
+      "name": "anti-spider detector",
+      "kind": "supported",
+      "passed": true,
+      "elapsedMs": 0.003,
+      "fixture": "synthetic, not a real campus article"
+    },
+    {
+      "project": "weixin_search_mcp",
+      "name": "default search silently returns empty on block",
+      "kind": "limitation reproduced",
+      "passed": true,
+      "elapsedMs": 0.029,
+      "fixture": "synthetic, not a real campus article"
+    },
+    {
+      "project": "weixin_search_mcp",
+      "name": "strict mode reports block",
+      "kind": "supported",
+      "passed": true,
+      "elapsedMs": 0.018,
+      "fixture": "synthetic, not a real campus article"
+    },
+    {
+      "project": "weixin_search_mcp",
+      "name": "publication time remains executable script text",
+      "kind": "limitation reproduced",
+      "passed": true,
+      "elapsedMs": 4.32,
+      "fixture": "synthetic, not a real campus article"
+    },
+    {
+      "project": "BlogDistiller",
+      "name": "empty metadata remains unknown",
+      "kind": "supported",
+      "passed": true,
+      "elapsedMs": 2.722,
+      "fixture": "synthetic, not a real campus article"
+    },
+    {
+      "project": "BlogDistiller",
+      "name": "metadata date converted to UTC+8",
+      "kind": "supported",
+      "passed": true,
+      "elapsedMs": 0.523,
+      "fixture": "synthetic, not a real campus article"
+    },
+    {
+      "project": "BlogDistiller",
+      "name": "duplicated title normalized",
+      "kind": "supported",
+      "passed": true,
+      "elapsedMs": 0.007,
+      "fixture": "synthetic, not a real campus article"
+    },
+    {
+      "project": "WeRSS",
+      "name": "verification shell rejected",
+      "kind": "supported",
+      "passed": true,
+      "elapsedMs": 0.096,
+      "fixture": "synthetic, not a real campus article"
+    },
+    {
+      "project": "WeRSS",
+      "name": "traditional body extracted with scripts removed",
+      "kind": "supported",
+      "passed": true,
+      "elapsedMs": 2.224,
+      "fixture": "synthetic, not a real campus article"
+    },
+    {
+      "project": "WeRSS",
+      "name": "JS-only new shell unsupported",
+      "kind": "limitation reproduced",
+      "passed": true,
+      "elapsedMs": 0.122,
+      "fixture": "synthetic, not a real campus article"
+    }
+  ],
+  "articleMetrics": {
+    "targets": ["广东外语外贸大学", "广外青年", "广外图书馆"],
+    "maxPerTarget": 10,
+    "searchRequests": 0,
+    "articleRequests": 0,
+    "discoveredArticles": 0,
+    "verifiedPublisherArticles": 0,
+    "discoveryRecall": null,
+    "correctUrlRatio": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "bodyCompletenessRatio": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null
+    },
+    "articleErrorRate": null,
+    "reason": "robots default denies search and article paths; no bypass, login or cookies attempted; 0/0 means untested, not zero success rate"
+  }
+}
