@@ -10,18 +10,23 @@ import {
   closeConsoleSession,
   consoleCookie,
 } from "./auth";
-import { IngestionStore } from "./ingestion-store";
+import { ManualImportStore } from "./manual-store";
 
 export async function consoleAuthentication(request: Request) {
   let setCookie: string | undefined;
   const response = await withApi(async (req) => {
     const config = consoleBindings(),
       mode = consoleMode(req, config);
+    const credentialDerivation =
+      config.mode === "admin_password"
+        ? { version: "pbkdf2-sha256-v1" as const, salt: config.credentialSalt! }
+        : undefined;
     if (req.method === "GET") {
       try {
         const session = await requireConsole(req, false, config);
         return {
           authenticated: true,
+          credentialDerivation,
           mode,
           actor: session.actor,
           csrf: session.csrf,
@@ -34,6 +39,7 @@ export async function consoleAuthentication(request: Request) {
         )
           return {
             authenticated: false,
+            credentialDerivation,
             mode,
             environment: config.environment,
           };
@@ -49,6 +55,7 @@ export async function consoleAuthentication(request: Request) {
       setCookie = session.cookie;
       return {
         authenticated: true,
+        credentialDerivation,
         mode,
         actor: session.actor,
         csrf: session.csrf,
@@ -79,7 +86,7 @@ export const consoleAdministration = withApi(async (request) => {
     request,
     !["GET", "HEAD"].includes(request.method),
   );
-  const store = new IngestionStore(
+  const store = new ManualImportStore(
     context.config.db,
     context.actor,
     undefined,
@@ -103,13 +110,15 @@ export const consoleAdministration = withApi(async (request) => {
         indexEnabled: false,
       };
     if (section === "sources")
-      return id && action === "collection-policy"
-        ? store.policy(id)
-        : id && !action
-          ? store.source(id)
-          : !id
-            ? store.sources(query)
-            : unknownRoute();
+      return id && action === "import-policy"
+        ? store.importPolicy(id)
+        : id && action === "collection-policy"
+          ? store.policy(id)
+          : id && !action
+            ? store.source(id)
+            : !id
+              ? store.sources(query)
+              : unknownRoute();
     if (section === "content") {
       if (id && action === "versions" && version && /^\d{1,4}$/.test(version))
         return store.version(id, Number(version));
@@ -139,10 +148,14 @@ export const consoleAdministration = withApi(async (request) => {
       return store.enableSource(id, await read());
     if (request.method === "POST" && id && action === "collection-policy")
       return store.setPolicy(id, await read());
+    if (request.method === "POST" && id && action === "import-policy")
+      return store.setImportPolicy(id, await read());
   }
   if (section === "content") {
+    if (request.method === "POST" && id === "import" && !action)
+      return store.importBatch(await read());
     if (request.method === "POST" && !id)
-      return store.writeContent(undefined, await read());
+      throw new ApiError("INVALID_ARGUMENT", "请使用人工导入入口登记内容。");
     if (request.method === "PATCH" && id && !action)
       return store.writeContent(id, await read());
     if (request.method === "POST" && id) {

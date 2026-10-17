@@ -4,6 +4,7 @@ import { ApiError } from "../errors";
 import { tokenHash } from "../assistant/crypto";
 import type { Statement } from "../assistant/database";
 import { CommandSchema } from "@/domain/console/contracts";
+import { discoveryStatement, timeEvidenceStatements } from "./intake-evidence";
 import {
   CheckpointSchema,
   PolicySchema,
@@ -100,6 +101,7 @@ export class IngestionStore extends ConsoleStore {
     if (
       !source.enabled ||
       !policy ||
+      policy.rule_version !== profile.ruleVersion ||
       Number(policy.expires_at_ms) <= Date.parse(this.now())
     )
       throw new ApiError("INVALID_ARGUMENT", "采集策略尚未核验或已过期。");
@@ -146,6 +148,8 @@ export class IngestionStore extends ConsoleStore {
       row = await this.job(id),
       sourceId = String(row.source_id),
       profile = profileFor(sourceId);
+    if (row.rule_version !== profile.ruleVersion)
+      throw new ApiError("CONFLICT", "采集规则已更新，请核验策略后新建任务。");
     const leaseToken = crypto.randomUUID(),
       leaseHash = await tokenHash(this.actor.id + ":" + leaseToken);
     await this.mutate(
@@ -258,6 +262,8 @@ export class IngestionStore extends ConsoleStore {
         "write",
         sourceId,
       );
+    if (row.rule_version !== profile.ruleVersion)
+      throw new ApiError("CONFLICT", "采集规则已更新，请核验策略后新建任务。");
     const checkpoint = CheckpointSchema.parse(
         JSON.parse(String(row.checkpoint_json)),
       ),
@@ -482,6 +488,19 @@ export class IngestionStore extends ConsoleStore {
                   event.changeStatus,
                 ),
             );
+            statements.push(
+              ...timeEvidenceStatements(
+                this.db,
+                event,
+                value.article.body,
+                documentId,
+                version,
+                eventId,
+                prepared.contentRevision,
+                prepared.inputHash,
+                profile.ruleVersion,
+              ),
+            );
             for (const [field, span] of [
               ["title", event.title],
               ["organizer", event.organizer],
@@ -533,6 +552,15 @@ export class IngestionStore extends ConsoleStore {
               "UPDATE document_origins SET last_seen_at=?,etag=COALESCE(?,etag),last_modified=COALESCE(?,last_modified) WHERE source_id=? AND canonical_url=?",
             )
             .bind(now, value.etag, value.lastModified, sourceId, value.url),
+          discoveryStatement(
+            this.db,
+            sourceId,
+            documentId,
+            value.url,
+            "official_web",
+            checkpoint.page || profile.entryUrl,
+            now,
+          ),
         );
       checkpoint.index++;
       if (checkpoint.index >= checkpoint.urls.length) {

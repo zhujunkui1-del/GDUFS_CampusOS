@@ -1,0 +1,47 @@
+{
+  "recordedAt": "2026-10-17T15:20:58.208Z",
+  "realCloud": true,
+  "anonymous": true,
+  "cookiesOrAuthSent": false,
+  "mutationByThisRun": false,
+  "documentId": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+  "title": "关于召开2025-2026学年“校长奖章”评审会的通知",
+  "publishedVersion": 5,
+  "checks": [
+    {
+      "requestedVersion": 5,
+      "status": 200,
+      "cacheControl": "no-store",
+      "errorCode": null,
+      "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+      "version": 5,
+      "bodyAbsent": true,
+      "privateFieldsAbsent": true,
+      "returnedKeys": [
+        "id",
+        "version",
+        "title",
+        "url",
+        "publishedAt",
+        "updatedAt",
+        "summary",
+        "contentType",
+        "campusScope",
+        "knowledgeCategory",
+        "radarCategory",
+        "source"
+      ]
+    },
+    {
+      "requestedVersion": 4,
+      "status": 404,
+      "cacheControl": "no-store",
+      "errorCode": "NOT_FOUND",
+      "id": null,
+      "version": null,
+      "bodyAbsent": true,
+      "privateFieldsAbsent": true,
+      "returnedKeys": []
+    }
+  ]
+}

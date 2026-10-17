@@ -181,6 +181,9 @@ export const ContentInputSchema = z
     title: z.string().trim().min(1).max(250),
     url: SafeUrlSchema,
     body: z.string().trim().min(1).max(50000),
+    bodyStatus: z
+      .enum(["unknown", "not_provided", "partial", "complete"])
+      .default("unknown"),
     kind: z.enum(["knowledge", "event"]),
     campusScope: CampusScopeSchema,
     validUntil: z.iso.datetime({ offset: true }).nullable(),
@@ -252,6 +255,19 @@ export type ContentSummary = {
 };
 export type ContentDetail = ContentSummary & {
   body: string;
+  bodyStatus: "unknown" | "not_provided" | "partial" | "complete";
+  discoveries?: { finder: string; entryUrl: string }[];
+  timeEvidence?: {
+    field: string;
+    rawText: string;
+    date: string | null;
+    time: string | null;
+    precision: string;
+    inferred: boolean;
+    snapshotVersion: number;
+    contentRevision: number;
+    verificationStatus: string;
+  }[];
   campusScope: z.infer<typeof CampusScopeSchema>;
   extractedFields: z.infer<typeof ExtractedFieldsSchema>;
   publishedAt: string | null;

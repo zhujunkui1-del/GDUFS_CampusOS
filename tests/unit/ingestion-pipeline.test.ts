@@ -94,6 +94,41 @@ async function setup(rights = "metadata_only") {
   return { ...f, store, job, url, article, claim, commit, discover };
 }
 describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
+  it("requires policy reapproval after a parser release and rejects old queued or in-flight rules", async () => {
+    const f = await setup();
+    try {
+      const setRule = (rule: string) => {
+        f.sqlite
+          .prepare(
+            "UPDATE source_collection_policies SET rule_version=? WHERE source_id=?",
+          )
+          .run(rule, p.sourceId);
+        f.sqlite
+          .prepare("UPDATE ingestion_jobs SET rule_version=? WHERE id=?")
+          .run(rule, f.job.id);
+      };
+      setRule("superseded-fixture-rule");
+      await expect(
+        f.store.createJob({
+          commandId: crypto.randomUUID(),
+          sourceId: p.sourceId,
+        }),
+      ).rejects.toThrow();
+      await expect(f.claim()).rejects.toMatchObject({ code: "CONFLICT" });
+      setRule(p.ruleVersion);
+      const lease = await f.claim();
+      setRule("superseded-fixture-rule");
+      await expect(
+        f.commit(lease, { discovered: [f.url] }),
+      ).rejects.toMatchObject({ code: "CONFLICT" });
+      expect((await f.store.job(f.job.id)).found_count).toBe(0);
+      expect(
+        f.sqlite.prepare("SELECT * FROM knowledge_documents").all(),
+      ).toHaveLength(0);
+    } finally {
+      f.close();
+    }
+  });
   it("persists discovery -> draft -> checkpoint atomically, keeps four success stages separate", async () => {
     const f = await setup();
     try {

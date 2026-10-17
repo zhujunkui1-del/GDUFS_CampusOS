@@ -1,0 +1,66 @@
+{
+  "checkedAt": "2026-10-17T15:19:27.109Z",
+  "emptyMigrationPassed": true,
+  "populatedUpgradePassed": true,
+  "incremental0012UpgradePassed": true,
+  "failedMigrationRollbackPassed": true,
+  "privateDataAndSnapshotsPreserved": true,
+  "foreignKeyViolations": 0,
+  "businessTables": 55,
+  "oldBodyCompletenessRemainsUnknown": true,
+  "noPersistentDatabaseTouched": true,
+  "migrations": [
+    {
+      "file": "0001_platform_and_campus.sql",
+      "sha256": "3056df29ff0a92c7fc7763cf12595aa9b60f60657dea6a01ae4c8711e3bc8d16"
+    },
+    {
+      "file": "0002_knowledge_and_events.sql",
+      "sha256": "bfcd7588f4924cf3cc81ea1fc0563334e8bcc4c4f4008642ed6a5e1544acce62"
+    },
+    {
+      "file": "0003_route_geometry_guards.sql",
+      "sha256": "d49fc65ef9a4687d5aeeef21e1b92fe3f6e32fc293765ac632c5cf6068341e0c"
+    },
+    {
+      "file": "0004_assistant_shared_state.sql",
+      "sha256": "a58b9b808dce148389d91717f611eebef29feb8d2e93dbad4889a796ed6154ed"
+    },
+    {
+      "file": "0005_assistant_conversations.sql",
+      "sha256": "5af589a6148b111e682d2ee14c157e12fe52f4be3f586f9187a06e70fa4e5963"
+    },
+    {
+      "file": "0006_console_registry.sql",
+      "sha256": "6029fdfff2228bb0493e19ddbb4023bf1444ba80168836b9f26caff82ea18dd6"
+    },
+    {
+      "file": "0007_content_contract.sql",
+      "sha256": "c98b3c019750e99108d8e4bf3d28c56694befb423a5fb3a5f7b4b4117c863aa0"
+    },
+    {
+      "file": "0008_ingestion_pipeline.sql",
+      "sha256": "f089da6f8b11a35fd439e939752990029038eafe64358359061c2af440ae8679"
+    },
+    {
+      "file": "0009_ingestion_clock_guards.sql",
+      "sha256": "1cae7c3b6619bc3bc56a4eeb3c0c31f8447cd35c1b54013970d831e599bf04a7"
+    },
+    {
+      "file": "0010_document_topics.sql",
+      "sha256": "70959a6c6a9ad253babe6cfd6cf92330fa15229375c7f5f0aa2fca2b04d55536"
+    },
+    {
+      "file": "0011_ingestion_daily_budget.sql",
+      "sha256": "08b6237d8e14bdb50a6b53d45a4621bb920edfb7ff3555ca491f739a159bcb33"
+    },
+    {
+      "file": "0012_manual_intake_and_evidence.sql",
+      "sha256": "8839c22d2e417ad0f1d87a78060013babb8533d609d2d7324c2b44ea04326f48"
+    },
+    {
+      "file": "0013_content_edit_intake_guard.sql",
+      "sha256": "b55a0e80f9e240f5b4da8a8a8078378089b586cb46a58a0a168d25c1408efa57"
+    }
+  ]
+}

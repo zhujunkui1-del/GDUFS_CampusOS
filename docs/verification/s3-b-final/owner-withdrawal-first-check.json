@@ -1,0 +1,50 @@
+{
+  "recordedAt": "2026-10-17T15:28:54.715Z",
+  "realCloud": true,
+  "anonymous": true,
+  "mutationByThisRun": false,
+  "ownerReportedWithdrawn": true,
+  "checks": [
+    {
+      "query": "?id=content-2a1a1c4e-0833-4186-afa6-e7696982513b&version=5",
+      "status": 200,
+      "cacheControl": "no-store",
+      "errorCode": null,
+      "returnedIds": [
+        {
+          "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+          "version": 5
+        }
+      ]
+    },
+    {
+      "query": "?id=content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+      "status": 200,
+      "cacheControl": "no-store",
+      "errorCode": null,
+      "returnedIds": [
+        {
+          "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+          "version": 5
+        }
+      ]
+    },
+    {
+      "query": "?limit=20",
+      "status": 200,
+      "cacheControl": "no-store",
+      "errorCode": null,
+      "returnedIds": [
+        {
+          "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+          "version": 3
+        },
+        {
+          "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+          "version": 5
+        }
+      ]
+    }
+  ],
+  "withdrawalGatePassed": false
+}

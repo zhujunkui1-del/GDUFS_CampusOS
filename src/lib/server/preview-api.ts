@@ -14,10 +14,12 @@ import { executeMapSkillHttp } from "./maps/http";
 import { GET as agentStatus } from "@/app/api/agent/status/route";
 import { GET as health } from "@/app/api/health/route";
 import { consoleAdministration, consoleAuthentication } from "./console/api";
+import { publicContent } from "./console/public-content";
 
 type Handler = (request: Request) => Promise<Response>;
 const fixed: Record<string, { method: string; handle: Handler }> = {
   "/api/health": { method: "GET", handle: health },
+  "/api/public/content": { method: "GET", handle: publicContent },
   "/api/agent/session": { method: "GET", handle: sessionGet },
   "/api/agent/conversations": { method: "GET", handle: conversationsGet },
   "/api/agent/status": { method: "GET", handle: agentStatus },
@@ -34,7 +36,7 @@ export function previewApiHandler(
   if (path === "/api/console-auth")
     return { method, handle: consoleAuthentication };
   if (
-    /^\/api\/admin\/(?:overview|audit|admins|sources(?:\/[^/]+(?:\/(?:verify|enabled|collection-policy))?)?|content(?:\/[^/]+(?:\/(?:review|publish|withdraw|restore|versions\/\d{1,4}))?)?|jobs(?:\/[^/]+(?:\/(?:claim|commit|pause|resume|cancel))?)?|admins\/[^/]+\/revoke)$/.test(
+    /^\/api\/admin\/(?:overview|audit|admins|sources(?:\/[^/]+(?:\/(?:verify|enabled|collection-policy|import-policy))?)?|content(?:\/[^/]+(?:\/(?:review|publish|withdraw|restore|versions\/\d{1,4}))?)?|jobs(?:\/[^/]+(?:\/(?:claim|commit|pause|resume|cancel))?)?|admins\/[^/]+\/revoke)$/.test(
       path,
     )
   )

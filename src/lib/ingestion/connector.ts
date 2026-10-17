@@ -2,8 +2,9 @@
 import { parseHTML } from "linkedom";
 import { createHash } from "node:crypto";
 import { ContentInputSchema } from "@/domain/console/contracts";
-import type { Checkpoint, EventCandidate } from "@/domain/console/ingestion";
+import type { Checkpoint } from "@/domain/console/ingestion";
 import { approvedUrl, type WebProfile } from "./profiles";
+import { parseCampusTime } from "./time";
 const hash = (s: string) => createHash("sha256").update(s).digest("hex");
 const text = (node: { textContent: string | null } | null) =>
   node?.textContent?.replace(/\s+/g, " ").trim() || "";
@@ -39,56 +40,10 @@ function cleanBodyText(root: {
     .join("\n");
 }
 export function originalDate(raw: string) {
-  const m = raw.match(
-    /(20\d{2})[年./-](\d{1,2})[月./-](\d{1,2})日?(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/,
-  );
-  if (!m) return null;
-  const d = `${m[1]}-${m[2].padStart(2, "0")}-${m[3].padStart(2, "0")}`;
-  const stamp = Date.parse(d + "T00:00:00Z");
-  if (
-    !Number.isFinite(stamp) ||
-    new Date(stamp).toISOString().slice(0, 10) !== d
-  )
-    return null;
-  if (!m[4]) return d;
-  if (+m[4] > 23 || +m[5] > 59 || +(m[6] || 0) > 59) return null;
-  return new Date(
-    `${d}T${m[4].padStart(2, "0")}:${m[5]}:${m[6] || "00"}+08:00`,
-  ).toISOString();
+  const parsed = parseCampusTime(raw);
+  return parsed.iso || parsed.date;
 }
-export function extractEvents(body: string): EventCandidate[] {
-  const headings = [
-    ...body.matchAll(/(?:活动名称|讲座题目|活动主题)[：:]\s*([^\n]{1,100})/g),
-  ];
-  return headings.slice(0, 3).map((m, i) => {
-    const segment = body.slice(m.index, headings[i + 1]?.index || body.length);
-    const field = (key: string) =>
-      segment
-        .match(new RegExp(`(?:${key})[：:]\\s*([^\\n]{1,150})`))?.[1]
-        ?.trim() || null;
-    const exact = (value: string | null) => {
-      const d = value ? originalDate(value) : null;
-      return d?.includes("T") ? d : null;
-    };
-    const link = field("报名链接");
-    return {
-      title: m[1].trim(),
-      organizer: field("主办单位|主办方"),
-      startsAt: exact(field("开始时间|活动时间|讲座时间")),
-      endsAt: exact(field("结束时间")),
-      registrationDeadline: exact(field("报名截止时间|报名截止")),
-      registrationUrl: link && /^https:\/\/[^\s]+$/.test(link) ? link : null,
-      rawPlaceName: field("活动地点|讲座地点|地点"),
-      campusScope: "unknown",
-      audience: field("参与对象|面向对象"),
-      changeStatus: /取消/.test(segment)
-        ? "cancelled"
-        : /延期|改期/.test(segment)
-          ? "postponed"
-          : "unknown",
-    };
-  });
-}
+export { extractEvents } from "./time";
 export class OfficialWebConnector {
   readonly sourceId: string;
   readonly ruleVersion: string;
@@ -231,6 +186,7 @@ export class OfficialWebConnector {
       title,
       url: approvedUrl(this.profile, url),
       body: "仅登记公开元数据，未保存第三方正文。",
+      bodyStatus: "not_provided",
       kind: "knowledge",
       campusScope: "unknown",
       publishedAt: parsed.publishedAt,

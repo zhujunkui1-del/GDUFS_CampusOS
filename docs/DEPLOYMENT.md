@@ -52,3 +52,7 @@ npm run deploy:preview
 服务端公开道路候选由现有固定地图与原算法离线生成。修改已审阅地理数据或相关几何实现后，显式运行 `npm run map:route-metadata`，再运行差分路线测试；普通构建只校验来源SHA，过期立即失败，不自动更新地图。生成物在src/lib/server/maps/public-walking-attachments.json，不含用户位置/会话/路线票据。
 
 本轮最后预览版本0c8cb22a-85d0-4b64-8e17-fac4063b875a，无迁移/Secret或生产变更。两轮优化后Agent仍超Free10ms，不能凭0次1102宣称生产稳定；后续方案、真实指标、CPU断言与回滚限制见S2_E_CPU_ACCEPTANCE.md。不要擅自提高套餐或使用其他项目资源。
+
+## 预览Console密码维护（D-048，2026-10-18）
+
+当前preview使用admin_password模式。不要把短密码直接写入CONSOLE_ADMIN_ACCESS_KEY：该绑定存SHA256(PBKDF2派生密钥)，CONSOLE_CREDENTIAL_SALT为随机公开salt。负责人要求的本机key.md只作为忽略Git的维护输入；先运行scripts/rotate-console-preview-password.mjs默认dry-run，显式--apply才会对经过目标断言的既有preview原子bulk更新三项Console绑定。原签名/模型Secrets、数据库和DNS不变，旧登录会话因指纹变化失效。当前轮换计划保存在忽略目录供失败恢复/幂等核对，修改密码文件不会自动同步公网；若新输入与既有计划不符，工具关闭而不覆盖。未来新密码须审计新的轮换计划，不通过清库、放宽权限或重置登录额度解决。实际协议、限制与证据见[S3-B最终准入第9节](S3_B_FINAL_ADMISSION.md)。

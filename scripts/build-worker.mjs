@@ -37,6 +37,13 @@ writeFileSync(file, content);
 const envIndex = process.argv.indexOf("--env");
 const environment = envIndex >= 0 ? process.argv[envIndex + 1] : undefined;
 const generatedDirs = [".open-next"];
+const ownerPasswordFile = "CampusOS_Codex_完整设计文档_v2/key.md";
+if (existsSync(ownerPasswordFile)) {
+  const value = readFileSync(ownerPasswordFile, "utf8")
+    .replace(/^\uFEFF/, "")
+    .trim();
+  if (value.length >= 8) privateValues.push(value);
+}
 // Include independently generated Console credentials in every release scan.
 for (const privateFile of [
   ".map-tools/s3-a/local-secrets.json",

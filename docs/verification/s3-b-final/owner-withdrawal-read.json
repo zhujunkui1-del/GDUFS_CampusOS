@@ -1,0 +1,32 @@
+{
+  "recordedAt": "2026-10-17T15:32:50.887Z",
+  "realCloud": true,
+  "anonymous": true,
+  "mutationByThisRun": false,
+  "documentId": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+  "previousPublishedVersion": 5,
+  "checks": [
+    {
+      "query": "?id=content-2a1a1c4e-0833-4186-afa6-e7696982513b&version=5",
+      "status": 404,
+      "cacheControl": "no-store",
+      "errorCode": "NOT_FOUND",
+      "returnedIds": []
+    },
+    {
+      "query": "?id=content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+      "status": 404,
+      "cacheControl": "no-store",
+      "errorCode": "NOT_FOUND",
+      "returnedIds": []
+    },
+    {
+      "query": "?limit=20",
+      "status": 200,
+      "cacheControl": "no-store",
+      "errorCode": null,
+      "returnedIds": []
+    }
+  ],
+  "withdrawalGatePassed": true
+}

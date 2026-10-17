@@ -14,4 +14,5 @@ CONSOLE_ACCESS_AUD=
 # local_key is accepted only with APP_ENV=local on loopback; never a public fallback.
 CONSOLE_LOCAL_ACCESS_KEY=
 CONSOLE_ADMIN_ACCESS_KEY=
+CONSOLE_CREDENTIAL_SALT=
 CONSOLE_ORIGIN=

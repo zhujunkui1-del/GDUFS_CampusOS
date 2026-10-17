@@ -1,3 +1,4 @@
+import { previewConsoleCredential } from "./helpers/console-credential";
 import { test, expect } from "@playwright/test";
 import { readFileSync, mkdirSync } from "node:fs";
 test.skip(
@@ -15,7 +16,7 @@ test("real cloud drafts retain original dates, metadata rights and review state"
   await page.goto("/admin");
   await page
     .getByLabel("管理员访问密钥", { exact: true })
-    .fill(values.CONSOLE_ADMIN_ACCESS_KEY);
+    .fill(previewConsoleCredential(values));
   await page.getByRole("button", { name: "登录", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "总览", exact: true }),

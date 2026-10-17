@@ -1,0 +1,406 @@
+{
+  "recordedAt": "2026-10-17T16:07:46.589Z",
+  "baseline": "2638f7f",
+  "workerVersion": "d5e3b763-0a9b-4031-b397-28b99475ad3d",
+  "https": "https://campusos-preview.zhujunkui1.workers.dev",
+  "typecheck": "passed",
+  "lint": "passed",
+  "unit": {
+    "passed": 301,
+    "total": 301,
+    "files": 38,
+    "success": true
+  },
+  "strictTime": {
+    "before": {
+      "passed": 8,
+      "failed": 2
+    },
+    "after": {
+      "checkedAt": "2026-10-17T15:25:49.142Z",
+      "scope": "offline research diagnostics, no network or cloud writes",
+      "tests": 10,
+      "passed": 10,
+      "knownContractFailures": [],
+      "strictAssertionsUnchanged": true,
+      "reproductionPassed": true,
+      "campusContractAcceptancePassed": true,
+      "explanation": "Original R01/R02 now pass after the production parser fix; all ten strict diagnostics retained. This does not approve publication of real content."
+    },
+    "originalTestsModified": false
+  },
+  "ruleVersionGuard": {
+    "originalFailureReproduced": true,
+    "finalUnitPassed": true,
+    "currentRule": "official-web-2026-10-17.2",
+    "activeReviewedPolicies": 0
+  },
+  "localBrowsers": [
+    {
+      "file": "chrome-release",
+      "passed": 52,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 136059.84100000001
+    },
+    {
+      "file": "edge-release",
+      "passed": 52,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 144706.304
+    }
+  ],
+  "cloudBrowsers": {
+    "chrome": {
+      "file": "chrome-cloud-final",
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 65952.477
+    },
+    "edgeInitial": {
+      "file": "edge-cloud-final",
+      "passed": 5,
+      "failed": 1,
+      "skipped": 0,
+      "durationMs": 56299.795999999995
+    },
+    "edgeTransportRetest": {
+      "file": "edge-cloud-final-desktop-retry",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 19958.799000000003
+    },
+    "uniquePassedPerBrowser": 6,
+    "initialTransportFailurePreserved": true
+  },
+  "passwordBrowsers": [
+    {
+      "file": "chrome-password-cloud",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 43547.223
+    },
+    {
+      "file": "edge-password-cloud",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 38230.524
+    }
+  ],
+  "database": {
+    "checkedAt": "2026-10-17T15:19:27.109Z",
+    "emptyMigrationPassed": true,
+    "populatedUpgradePassed": true,
+    "incremental0012UpgradePassed": true,
+    "failedMigrationRollbackPassed": true,
+    "privateDataAndSnapshotsPreserved": true,
+    "foreignKeyViolations": 0,
+    "businessTables": 55,
+    "oldBodyCompletenessRemainsUnknown": true,
+    "noPersistentDatabaseTouched": true,
+    "migrations": [
+      {
+        "file": "0001_platform_and_campus.sql",
+        "sha256": "3056df29ff0a92c7fc7763cf12595aa9b60f60657dea6a01ae4c8711e3bc8d16"
+      },
+      {
+        "file": "0002_knowledge_and_events.sql",
+        "sha256": "bfcd7588f4924cf3cc81ea1fc0563334e8bcc4c4f4008642ed6a5e1544acce62"
+      },
+      {
+        "file": "0003_route_geometry_guards.sql",
+        "sha256": "d49fc65ef9a4687d5aeeef21e1b92fe3f6e32fc293765ac632c5cf6068341e0c"
+      },
+      {
+        "file": "0004_assistant_shared_state.sql",
+        "sha256": "a58b9b808dce148389d91717f611eebef29feb8d2e93dbad4889a796ed6154ed"
+      },
+      {
+        "file": "0005_assistant_conversations.sql",
+        "sha256": "5af589a6148b111e682d2ee14c157e12fe52f4be3f586f9187a06e70fa4e5963"
+      },
+      {
+        "file": "0006_console_registry.sql",
+        "sha256": "6029fdfff2228bb0493e19ddbb4023bf1444ba80168836b9f26caff82ea18dd6"
+      },
+      {
+        "file": "0007_content_contract.sql",
+        "sha256": "c98b3c019750e99108d8e4bf3d28c56694befb423a5fb3a5f7b4b4117c863aa0"
+      },
+      {
+        "file": "0008_ingestion_pipeline.sql",
+        "sha256": "f089da6f8b11a35fd439e939752990029038eafe64358359061c2af440ae8679"
+      },
+      {
+        "file": "0009_ingestion_clock_guards.sql",
+        "sha256": "1cae7c3b6619bc3bc56a4eeb3c0c31f8447cd35c1b54013970d831e599bf04a7"
+      },
+      {
+        "file": "0010_document_topics.sql",
+        "sha256": "70959a6c6a9ad253babe6cfd6cf92330fa15229375c7f5f0aa2fca2b04d55536"
+      },
+      {
+        "file": "0011_ingestion_daily_budget.sql",
+        "sha256": "08b6237d8e14bdb50a6b53d45a4621bb920edfb7ff3555ca491f739a159bcb33"
+      },
+      {
+        "file": "0012_manual_intake_and_evidence.sql",
+        "sha256": "8839c22d2e417ad0f1d87a78060013babb8533d609d2d7324c2b44ea04326f48"
+      },
+      {
+        "file": "0013_content_edit_intake_guard.sql",
+        "sha256": "b55a0e80f9e240f5b4da8a8a8078378089b586cb46a58a0a168d25c1408efa57"
+      }
+    ]
+  },
+  "cloudCounts": {
+    "sources": 220,
+    "verified": 4,
+    "enabled": 4,
+    "documents": 3,
+    "approved": 3,
+    "published": 0,
+    "jobs": 4,
+    "events": 0,
+    "conversations": 75,
+    "messages": 330,
+    "runs": 192
+  },
+  "sourceStatusCounts": [
+    {
+      "verification_status": "candidate",
+      "enabled": 0,
+      "n": 216
+    },
+    {
+      "verification_status": "verified",
+      "enabled": 1,
+      "n": 4
+    }
+  ],
+  "trueOwnerPublication": {
+    "recordedAt": "2026-10-17T15:20:58.208Z",
+    "realCloud": true,
+    "anonymous": true,
+    "cookiesOrAuthSent": false,
+    "mutationByThisRun": false,
+    "documentId": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+    "title": "关于召开2025-2026学年“校长奖章”评审会的通知",
+    "publishedVersion": 5,
+    "checks": [
+      {
+        "requestedVersion": 5,
+        "status": 200,
+        "cacheControl": "no-store",
+        "errorCode": null,
+        "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+        "version": 5,
+        "bodyAbsent": true,
+        "privateFieldsAbsent": true,
+        "returnedKeys": [
+          "id",
+          "version",
+          "title",
+          "url",
+          "publishedAt",
+          "updatedAt",
+          "summary",
+          "contentType",
+          "campusScope",
+          "knowledgeCategory",
+          "radarCategory",
+          "source"
+        ]
+      },
+      {
+        "requestedVersion": 4,
+        "status": 404,
+        "cacheControl": "no-store",
+        "errorCode": "NOT_FOUND",
+        "id": null,
+        "version": null,
+        "bodyAbsent": true,
+        "privateFieldsAbsent": true,
+        "returnedKeys": []
+      }
+    ]
+  },
+  "trueOwnerWithdrawal": {
+    "recordedAt": "2026-10-17T15:32:50.887Z",
+    "realCloud": true,
+    "anonymous": true,
+    "mutationByThisRun": false,
+    "documentId": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+    "previousPublishedVersion": 5,
+    "checks": [
+      {
+        "query": "?id=content-2a1a1c4e-0833-4186-afa6-e7696982513b&version=5",
+        "status": 404,
+        "cacheControl": "no-store",
+        "errorCode": "NOT_FOUND",
+        "returnedIds": []
+      },
+      {
+        "query": "?id=content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+        "status": 404,
+        "cacheControl": "no-store",
+        "errorCode": "NOT_FOUND",
+        "returnedIds": []
+      },
+      {
+        "query": "?limit=20",
+        "status": 200,
+        "cacheControl": "no-store",
+        "errorCode": null,
+        "returnedIds": []
+      }
+    ],
+    "withdrawalGatePassed": true
+  },
+  "build": {
+    "next": "passed",
+    "openNext": "passed",
+    "localWorkersPreview": "passed",
+    "gzipKiB": 2526.97,
+    "buildCredentialScanFiles": 1355
+  },
+  "currentCredentialScan": {
+    "recordedAt": "2026-10-17T15:56:57.745Z",
+    "generatedFiles": 1371,
+    "credentialHits": 0,
+    "plaintextPasswordIncludedInScan": true,
+    "currentRuntimeVerifierIncluded": true,
+    "secretValuesPrinted": false
+  },
+  "passwordRotation": {
+    "recordedAt": "2026-10-17T15:49:15.040Z",
+    "target": "campusos-preview",
+    "alreadyApplied": false,
+    "scheme": "PBKDF2-SHA256 (600000, browser) -> SHA256 verifier (Worker Secret)",
+    "newLoginStatus": 200,
+    "oldKeyStatus": 401,
+    "oldSessionStatus": 401,
+    "verifierReplayStatus": 401,
+    "newSessionLogoutStatus": 200,
+    "plaintextStoredInWorkerOrReport": false,
+    "otherResourcesChanged": false
+  },
+  "cpu": {
+    "data": {
+      "recordedAt": "2026-10-17T15:37:29.614Z",
+      "start": "2026-10-17T15:28:00Z",
+      "end": "2026-10-17T15:37:29.614Z",
+      "actualCloudGraphQL": true,
+      "grouping": "Whole existing preview Worker, by invocation status; includes all routes/traffic in this window, not per-ingestion CPU.",
+      "sampled": true,
+      "fieldDescriptions": [
+        {
+          "description": "CPU time 50th percentile - microseconds",
+          "name": "cpuTimeP50"
+        },
+        {
+          "description": "CPU time 95th percentile - microseconds",
+          "name": "cpuTimeP95"
+        },
+        {
+          "description": "CPU time 99th percentile - microseconds",
+          "name": "cpuTimeP99"
+        },
+        {
+          "description": "Wall time 50th percentile - microseconds",
+          "name": "wallTimeP50"
+        },
+        {
+          "description": "Wall time 95th percentile - microseconds",
+          "name": "wallTimeP95"
+        }
+      ],
+      "groups": [
+        {
+          "dimensions": {
+            "status": "clientDisconnected"
+          },
+          "quantiles": {
+            "cpuTimeP50": 25309,
+            "cpuTimeP95": 38350,
+            "cpuTimeP99": 38350,
+            "wallTimeP50": 48470,
+            "wallTimeP95": 78298
+          },
+          "sum": {
+            "errors": 0,
+            "requests": 2,
+            "subrequests": 4
+          }
+        },
+        {
+          "dimensions": {
+            "status": "success"
+          },
+          "quantiles": {
+            "cpuTimeP50": 4177,
+            "cpuTimeP95": 20410,
+            "cpuTimeP99": 30981,
+            "wallTimeP50": 58529,
+            "wallTimeP95": 419336
+          },
+          "sum": {
+            "errors": 0,
+            "requests": 432,
+            "subrequests": 470
+          }
+        }
+      ],
+      "longTermFreeCapacityVerified": false
+    },
+    "tail": {
+      "recordedAt": "2026-10-17T15:13:26.814Z",
+      "actualCloudTail": false,
+      "attemptedCloudTail": true,
+      "processExitCode": 3221226505,
+      "rawLogsStored": false,
+      "records": []
+    },
+    "longTermFreeCpuPassed": false,
+    "postPasswordPerApiCpuVerified": false
+  },
+  "modelCalls": 0,
+  "modelCostRmb": 0,
+  "newPaidResources": 0,
+  "productionDnsChanged": false,
+  "actualPhoneTested": false,
+  "realFreshCrawlsThisRound": 0,
+  "thirdPartyFullTextsStored": 0,
+  "realEventsVerified": 0,
+  "s3bEngineeringAdmission": true,
+  "s3cStarted": false,
+  "remaining": [
+    "Confirm current .2 policy before further web collection; no automatic renewal",
+    "Free CPU/long-term capacity and per-API profiling remain unverified",
+    "Real phone/device, GPS and Safari acceptance remain separate",
+    "S3-C requires separate owner instruction"
+  ],
+  "deliveryBrowsers": [
+    {
+      "file": "chrome-delivery",
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 77827.56
+    },
+    {
+      "file": "edge-delivery",
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 99207.495
+    }
+  ],
+  "finalReadOnlySnapshot": "preview-delivery.json",
+  "finalObservedAt": "2026-10-17T16:07:43.927Z"
+}

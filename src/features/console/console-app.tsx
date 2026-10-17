@@ -1,5 +1,10 @@
 "use client";
 import Link from "next/link";
+import { ManualImportForm } from "./manual-import-form";
+import {
+  deriveConsoleCredential,
+  type ConsoleCredentialDerivation,
+} from "@/domain/console/credential";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   useCallback,
@@ -43,6 +48,7 @@ import {
 } from "@/domain/console/taxonomy";
 
 type Auth = {
+  credentialDerivation?: ConsoleCredentialDerivation;
   authenticated: boolean;
   mode: "local" | "key" | "access";
   actor?: ConsoleActor;
@@ -153,6 +159,7 @@ export function ConsoleApp() {
                   authenticated: false,
                   mode: previous.mode,
                   environment: previous.environment,
+                  credentialDerivation: previous.credentialDerivation,
                 }
               : null,
           );
@@ -203,7 +210,13 @@ export function ConsoleApp() {
     setChecking(true);
     setError("");
     try {
-      const next = await request<Auth>("/api/console-auth", "POST", { key });
+      const setup = await request<Auth>("/api/console-auth");
+      const presented = setup.credentialDerivation
+        ? await deriveConsoleCredential(key, setup.credentialDerivation)
+        : key;
+      const next = await request<Auth>("/api/console-auth", "POST", {
+        key: presented,
+      });
       if (epoch === authEpoch.current) setAuth(next);
       setKey("");
     } catch (e) {
@@ -221,6 +234,7 @@ export function ConsoleApp() {
         authenticated: false,
         mode: auth!.mode,
         environment: auth?.environment,
+        credentialDerivation: auth?.credentialDerivation,
       });
       setKey("");
       if (access)
@@ -1231,6 +1245,7 @@ const emptyContent: ContentInput = {
   title: "",
   url: "",
   body: "",
+  bodyStatus: "unknown",
   kind: "knowledge",
   campusScope: "unknown",
   validUntil: null,
@@ -1258,7 +1273,18 @@ const localDate = (value: string | null | undefined) =>
     : "";
 const utcDate = (value: string) =>
   value ? new Date(value + ":00+08:00").toISOString() : null;
-function ContentEditor({
+function ContentEditor(props: {
+  id: string;
+  request: Client;
+  actor: ConsoleActor;
+}) {
+  return props.id === "new" ? (
+    <ManualImportForm request={props.request} actor={props.actor} />
+  ) : (
+    <ExistingContentEditor {...props} />
+  );
+}
+function ExistingContentEditor({
   id,
   request,
   actor,
@@ -1286,6 +1312,14 @@ function ContentEditor({
       input: ContentInput;
       version: number;
     } | null>(null);
+  const noteRef = useRef<HTMLTextAreaElement>(null);
+  const [noteError, setNoteError] = useState("");
+  function validateNote() {
+    if (note.trim().length >= 2) return true;
+    setNoteError("请先填写至少两个字的审核说明。");
+    noteRef.current?.focus();
+    return false;
+  }
   const form =
     draft ||
     (data
@@ -1294,6 +1328,7 @@ function ContentEditor({
           title: data.title,
           url: data.url,
           body: data.body,
+          bodyStatus: data.bodyStatus,
           kind: data.kind,
           campusScope: data.campusScope,
           validUntil: data.validUntil,
@@ -1399,7 +1434,58 @@ function ContentEditor({
           <dd>{date(data.updatedAt)}</dd>
           <dt>内容修订</dt>
           <dd>{data.contentRevision}</dd>
+          <dt>正文状态（声明）</dt>
+          <dd>
+            {
+              {
+                unknown: "未知",
+                not_provided: "仅元数据",
+                partial: "部分正文",
+                complete: "声明完整正文",
+              }[data.bodyStatus]
+            }
+          </dd>
         </dl>
+      )}
+      {!!data?.discoveries?.length && (
+        <section className="console-card">
+          <h2>发现出处</h2>
+          {data.discoveries.map((entry, i) => (
+            <p key={i}>
+              <External url={entry.entryUrl} />
+            </p>
+          ))}
+        </section>
+      )}
+      {!!data?.timeEvidence?.length && (
+        <section className="console-card">
+          <h2>时间证据</h2>
+          {data.timeEvidence.map((e, i) => (
+            <article key={i} className="console-job">
+              <blockquote>{e.rawText}</blockquote>
+              <dl className="console-details">
+                <dt>字段</dt>
+                <dd>{e.field}</dd>
+                <dt>日期 / 时刻</dt>
+                <dd>
+                  {e.date || "未知"} / {e.time || "未知"}
+                </dd>
+                <dt>精度</dt>
+                <dd>{e.precision}</dd>
+                <dt>输入版本 / 修订</dt>
+                <dd>
+                  {e.snapshotVersion} / {e.contentRevision}
+                </dd>
+                <dt>核验</dt>
+                <dd>
+                  {e.verificationStatus === "pending"
+                    ? "待核验"
+                    : e.verificationStatus}
+                </dd>
+              </dl>
+            </article>
+          ))}
+        </section>
       )}
       {!!data?.eventCandidates?.length && (
         <section className="console-card">
@@ -1725,12 +1811,28 @@ function ContentEditor({
             <label>
               审核说明
               <textarea
+                ref={noteRef}
                 aria-label="审核说明"
+                aria-invalid={!!noteError}
+                aria-describedby={noteError ? "review-note-error" : undefined}
                 value={note}
-                onChange={(e) => setNote(e.target.value)}
+                onChange={(e) => {
+                  setNote(e.target.value);
+                  if (noteError) setNoteError("");
+                }}
+                maxLength={1000}
                 rows={2}
               />
             </label>
+            {noteError && (
+              <p
+                id="review-note-error"
+                className="console-feedback"
+                role="alert"
+              >
+                {noteError}
+              </p>
+            )}
             <div className="console-actions">
               {[
                 ["approved", "批准"],
@@ -1739,8 +1841,9 @@ function ContentEditor({
               ].map(([decision, label]) => (
                 <button
                   key={decision}
-                  disabled={busy || note.trim().length < 2}
+                  disabled={busy}
                   onClick={() =>
+                    validateNote() &&
                     void run(() =>
                       request("content/" + id + "/review", "POST", {
                         ...command(data.version),
@@ -1755,8 +1858,9 @@ function ContentEditor({
               ))}
               <button
                 className="primary-button"
-                disabled={busy || !canPublish || note.trim().length < 2}
+                disabled={busy || !canPublish}
                 onClick={() =>
+                  validateNote() &&
                   void run(() =>
                     request("content/" + id + "/publish", "POST", {
                       ...command(data.version),
@@ -1768,8 +1872,10 @@ function ContentEditor({
                 发布
               </button>
               <button
-                disabled={busy || !canPublish || note.trim().length < 2}
-                onClick={() => setWithdraw(true)}
+                disabled={busy || !canPublish}
+                onClick={() => {
+                  if (validateNote()) setWithdraw(true);
+                }}
               >
                 撤回
               </button>

@@ -14,6 +14,7 @@ export type ConsoleBindings = {
   secret: string;
   localKey: string;
   adminKey?: string;
+  credentialSalt?: string;
   origin?: string;
   emails: string[];
   team: string;
@@ -47,6 +48,7 @@ export function consoleBindings(): ConsoleBindings {
     secret: value("CONSOLE_SESSION_SECRET"),
     localKey: value("CONSOLE_LOCAL_ACCESS_KEY"),
     adminKey: value("CONSOLE_ADMIN_ACCESS_KEY"),
+    credentialSalt: value("CONSOLE_CREDENTIAL_SALT"),
     origin: value("CONSOLE_ORIGIN"),
     emails: parsed.data,
     team: value("CONSOLE_ACCESS_TEAM_DOMAIN"),
@@ -73,7 +75,7 @@ function accessConfig(config: ConsoleBindings) {
 }
 export function consoleMode(request: Request, config: ConsoleBindings) {
   if (localConsole(request, config)) return "local" as const;
-  if (config.mode === "admin_key") {
+  if (["admin_key", "admin_password"].includes(config.mode)) {
     const url = new URL(request.url);
     if (
       !["preview", "production"].includes(config.environment) ||
@@ -82,7 +84,10 @@ export function consoleMode(request: Request, config: ConsoleBindings) {
       config.emails.length !== 1 ||
       !config.adminKey ||
       config.adminKey.length < 40 ||
-      config.adminKey.length > 200
+      config.adminKey.length > 200 ||
+      (config.mode === "admin_password" &&
+        (!/^[a-f0-9]{64}$/.test(config.credentialSalt || "") ||
+          !/^[a-f0-9]{64}$/.test(config.adminKey)))
     )
       throw new ApiError("SERVICE_UNAVAILABLE", "管理员登录尚未配置。");
     return "key" as const;
@@ -198,6 +203,8 @@ export async function createConsoleSession(
 ) {
   sameOrigin(request);
   const mode = consoleMode(request, config);
+  if (config.mode === "admin_password")
+    await consoleLimit(config, "password-login:global", 10, now);
   await consoleLimit(
     config,
     "login:" + (request.headers.get("CF-Connecting-IP") || "local"),
@@ -216,7 +223,11 @@ export async function createConsoleSession(
       .object({ key: z.string().min(40).max(200) })
       .strict()
       .parse(body);
-    if (!(await equal(parsed.key, credential.key)))
+    const presented =
+      config.mode === "admin_password"
+        ? await tokenHash(parsed.key)
+        : parsed.key;
+    if (!(await equal(presented, credential.key)))
       throw new ApiError("UNAUTHORIZED", "管理员身份无效或已撤销。");
     identity = {
       email: config.emails[0],

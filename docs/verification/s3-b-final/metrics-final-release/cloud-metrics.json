@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-10-17T15:35:40.672Z",
+  "start": "2026-10-17T15:28:00Z",
+  "end": "2026-10-17T15:35:40.672Z",
+  "actualCloudGraphQL": false,
+  "reason": "Cloudflare GraphQL metrics unavailable; raw errors withheld",
+  "perApiCpuVerified": false,
+  "longTermFreeCapacityVerified": false
+}

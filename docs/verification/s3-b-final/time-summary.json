@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-17T15:25:49.142Z",
+  "scope": "offline research diagnostics, no network or cloud writes",
+  "tests": 10,
+  "passed": 10,
+  "knownContractFailures": [],
+  "strictAssertionsUnchanged": true,
+  "reproductionPassed": true,
+  "campusContractAcceptancePassed": true,
+  "explanation": "Original R01/R02 now pass after the production parser fix; all ten strict diagnostics retained. This does not approve publication of real content."
+}

@@ -1,7 +1,7 @@
-// Verify reproduction of known contract failures without changing the strict assertions.
+// Regression gate after S3-B repair; the original ten assertions stay unchanged.
 import { spawnSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
-const output = "docs/verification/s3-wechat-resumed/campus-offline.json";
+const output = "docs/verification/s3-b-final/time-after.json";
 const result = spawnSync(
   process.execPath,
   [
@@ -20,17 +20,10 @@ const failures = raw.testResults
   .flatMap((file) => file.assertionResults)
   .filter((test) => test.status === "failed");
 const reproduced =
-  result.status === 1 &&
+  result.status === 0 &&
   raw.numTotalTests === 10 &&
-  raw.numPassedTests === 8 &&
-  failures.length === 2 &&
-  failures.every(
-    (test) =>
-      /R0[12] /.test(test.title) &&
-      test.failureMessages.some((message) =>
-        message.includes("expected null to be"),
-      ),
-  );
+  raw.numPassedTests === 10 &&
+  failures.length === 0;
 const summary = {
   checkedAt: new Date().toISOString(),
   scope: "offline research diagnostics, no network or cloud writes",
@@ -39,12 +32,12 @@ const summary = {
   knownContractFailures: failures.map((t) => t.title),
   strictAssertionsUnchanged: true,
   reproductionPassed: reproduced,
-  campusContractAcceptancePassed: false,
+  campusContractAcceptancePassed: reproduced,
   explanation:
-    "R01/R02 require exact times for Chinese 日HH:mm without whitespace; current parser returns null. These remain failed requirements, not fixed or approved.",
+    "Original R01/R02 now pass after the production parser fix; all ten strict diagnostics retained. This does not approve publication of real content.",
 };
 writeFileSync(
-  "docs/verification/s3-wechat-resumed/campus-summary.json",
+  "docs/verification/s3-b-final/time-summary.json",
   JSON.stringify(summary, null, 2) + "\n",
 );
 console.log(JSON.stringify(summary));

@@ -1,5 +1,7 @@
 # S3-0｜统一数据模型、协议与状态契约
 
+> 2026-10-17 D-047最终收尾：时间严格诊断10/10，有界人工导入/许可/出处/时间证据、匿名元数据门禁与审核按钮反馈已实现；增量0012/0013共55业务表。真实负责人发布闭环和最新测试/部署状态见[最终准入清单](S3_B_FINAL_ADMISSION.md)，下方旧阶段数字保持历史。
+
 > 当前检索裁决（2026-10-17，D-045）：自研 KnowledgeRetriever + D1KeywordRetriever；Dify 路线正式废弃。原冻结中已由S3-B实现的结构以0007–0011和实际DAO为准；本次不新增迁移。S3-D计划见 [验收目标](S3_D_RETRIEVAL_PLAN.md)。
 
 版本：`s3-freeze-2026-10-17.1`。基线：`7d0f9eb`。**本文件是设计冻结，不是已执行DDL；没有新增migration、API或表。** 实际45表/列/PK/FK见[只读Schema证据](verification/s3-0/repository-audit.json)，产品与阶段见[总体基线](S3_0_ARCHITECTURE_BASELINE.md)。

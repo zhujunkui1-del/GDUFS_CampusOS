@@ -14,6 +14,9 @@ const output = execFileSync(
   { token } = JSON.parse(output.slice(output.indexOf("{")));
 const start = process.argv[2],
   end = new Date().toISOString();
+const outputDirectory = process.argv[3] || "docs/verification/s3-b";
+if (!/^docs\/verification\/[\w/-]+$/.test(outputDirectory))
+  throw Error("Invalid report directory");
 if (
   !start ||
   !Number.isFinite(Date.parse(start)) ||
@@ -62,9 +65,9 @@ try {
     longTermFreeCapacityVerified: false,
   };
 }
-mkdirSync("docs/verification/s3-b", { recursive: true });
+mkdirSync(outputDirectory, { recursive: true });
 writeFileSync(
-  "docs/verification/s3-b/cloud-metrics.json",
+  outputDirectory + "/cloud-metrics.json",
   JSON.stringify(report, null, 2) + "\n",
 );
 console.log(JSON.stringify(report));

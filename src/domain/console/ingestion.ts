@@ -42,6 +42,22 @@ export const LeaseSchema = CommandSchema.extend({
   leaseToken: z.string().uuid(),
   fence: z.number().int().positive(),
 }).strict();
+export const TimeEvidenceSchema = z
+  .object({
+    field: z.enum(["startsAt", "endsAt", "registrationDeadline"]),
+    rawText: z.string().min(1).max(150),
+    startOffset: z.number().int().min(0).max(50000),
+    endOffset: z.number().int().min(1).max(50000),
+    date: z.iso.date().nullable(),
+    time: z
+      .string()
+      .regex(/^\d{2}:\d{2}:\d{2}$/)
+      .nullable(),
+    precision: z.enum(["unknown", "date", "exact_time"]),
+    inferred: z.literal(false),
+    verificationStatus: z.literal("pending"),
+  })
+  .strict();
 export const EventCandidateSchema = z
   .object({
     title: z.string().min(1).max(250),
@@ -60,6 +76,7 @@ export const EventCandidateSchema = z
     ]),
     audience: z.string().max(250).nullable(),
     changeStatus: z.enum(["unknown", "cancelled", "postponed"]),
+    timeEvidence: z.array(TimeEvidenceSchema).max(3).default([]),
   })
   .strict();
 export const CommitStepSchema = LeaseSchema.extend({

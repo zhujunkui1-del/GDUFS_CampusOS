@@ -1,0 +1,108 @@
+{
+  "recordedAt": "2026-10-17T10:46:33.324Z",
+  "realCloud": true,
+  "target": "campusos-preview",
+  "before": {
+    "recordedAt": "2026-10-17T10:46:32.303Z",
+    "counts": {
+      "sources": 220,
+      "verified": 3,
+      "enabled": 3,
+      "documents": 3,
+      "approved": 0,
+      "published": 0,
+      "jobs": 4,
+      "events": 0,
+      "conversations": 75,
+      "messages": 330,
+      "runs": 192
+    },
+    "migrations": [
+      "0001_platform_and_campus.sql",
+      "0002_knowledge_and_events.sql",
+      "0003_route_geometry_guards.sql",
+      "0004_assistant_shared_state.sql",
+      "0005_assistant_conversations.sql",
+      "0006_console_registry.sql",
+      "0007_content_contract.sql",
+      "0008_ingestion_pipeline.sql",
+      "0009_ingestion_clock_guards.sql",
+      "0010_document_topics.sql",
+      "0011_ingestion_daily_budget.sql"
+    ],
+    "sourceStateHash": "406539a9dad09b6ea7d7afbb10972da5046b382078ce65d1f304a4c36688ee10"
+  },
+  "counts": {
+    "sources": 220,
+    "verified": 3,
+    "enabled": 3,
+    "documents": 3,
+    "approved": 0,
+    "published": 0,
+    "jobs": 4,
+    "events": 0,
+    "conversations": 75,
+    "messages": 330,
+    "runs": 192
+  },
+  "migrations": [
+    "0001_platform_and_campus.sql",
+    "0002_knowledge_and_events.sql",
+    "0003_route_geometry_guards.sql",
+    "0004_assistant_shared_state.sql",
+    "0005_assistant_conversations.sql",
+    "0006_console_registry.sql",
+    "0007_content_contract.sql",
+    "0008_ingestion_pipeline.sql",
+    "0009_ingestion_clock_guards.sql",
+    "0010_document_topics.sql",
+    "0011_ingestion_daily_budget.sql"
+  ],
+  "sourceStatesPreserved": true,
+  "foreignKeyViolations": 0,
+  "documents": [
+    {
+      "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+      "source_id": "GDUFS-SRC-0010",
+      "title": "关于召开2025-2026学年“校长奖章”评审会的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68721.htm",
+      "published_at": "2026-10-16T14:14:18.000Z",
+      "version": 1,
+      "review_status": "pending",
+      "publication_status": "draft",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": "content-76b1fc0b-ace5-4db2-bb5f-b029dd771d78",
+      "source_id": "GDUFS-SRC-0008",
+      "title": "2026年第二届广东外语外贸大学“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛通知",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9648.htm",
+      "published_at": "2026-06-30",
+      "version": 1,
+      "review_status": "pending",
+      "publication_status": "draft",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+      "source_id": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学文印中心多功能印刷机维保服务采购项目询价公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3098.htm",
+      "published_at": "2026-10-16",
+      "version": 1,
+      "review_status": "pending",
+      "publication_status": "draft",
+      "rights_scope": "metadata_only"
+    }
+  ],
+  "bodyAvailable": 0,
+  "verifiedEventTimes": 0,
+  "workerVersions": [
+    {
+      "version_id": "21a72753-f951-4b91-9549-1390a2c7e49f",
+      "percentage": 100
+    }
+  ],
+  "migrationAppliedByThisRun": false,
+  "contentReviewedOrPublishedByThisRun": false
+}

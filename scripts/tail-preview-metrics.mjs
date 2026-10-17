@@ -8,9 +8,13 @@ assertPreviewTarget(
   process.env.CLOUDFLARE_ACCOUNT_ID,
 );
 const seconds = Number(process.argv[2] || 180);
+const outputDirectory = process.argv[3] || "docs/verification/s3-b";
+if (!/^docs\/verification\/[\w/-]+$/.test(outputDirectory))
+  throw Error("Invalid report directory");
 if (!Number.isInteger(seconds) || seconds < 10 || seconds > 300)
   throw Error("Telemetry window must be 10..300 seconds");
 const records = [];
+let processExitCode = null;
 let buffer = "",
   depth = 0,
   quoted = false,
@@ -33,13 +37,15 @@ const child = spawn(
   { env: process.env, stdio: ["ignore", "pipe", "pipe"], windowsHide: true },
 );
 const save = () => {
-  mkdirSync("docs/verification/s3-b", { recursive: true });
+  mkdirSync(outputDirectory, { recursive: true });
   writeFileSync(
-    "docs/verification/s3-b/cloud-invocations.json",
+    outputDirectory + "/cloud-invocations.json",
     JSON.stringify(
       {
         recordedAt: new Date().toISOString(),
-        actualCloudTail: true,
+        actualCloudTail: records.length > 0,
+        attemptedCloudTail: true,
+        processExitCode,
         rawLogsStored: false,
         records,
       },
@@ -118,6 +124,7 @@ const timer = setTimeout(stop, seconds * 1000);
 process.on("SIGINT", stop);
 process.on("SIGTERM", stop);
 child.on("exit", (code) => {
+  processExitCode = code;
   clearTimeout(timer);
   save();
   console.log(

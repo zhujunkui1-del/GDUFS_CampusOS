@@ -1,0 +1,13 @@
+{
+  "recordedAt": "2026-10-17T15:34:36.732Z",
+  "scope": "Only the failed E2E session, never owner sessions or long-lived keys",
+  "testSessions": 1,
+  "checks": [
+    {
+      "replayStatus": 401,
+      "revoked": true
+    }
+  ],
+  "cookieValuesStored": false,
+  "rawFailureCommitted": false
+}

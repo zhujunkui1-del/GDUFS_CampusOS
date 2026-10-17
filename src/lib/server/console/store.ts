@@ -60,7 +60,7 @@ function sourceLocator(value: z.infer<typeof SourceInputSchema>) {
     ? value.wechatId.toLowerCase()
     : null;
 }
-function normalizedContent(input: ContentInput): ContentInput {
+export function normalizedContent(input: ContentInput): ContentInput {
   const result = {
     ...input,
     validUntil: input.validUntil
@@ -214,6 +214,7 @@ export class ConsoleStore {
     statements: Statement[],
     permission = "write",
     sourceId?: string,
+    before: Statement[] = [],
   ) {
     consolePermission(this.actor, permission);
     const fingerprint = await tokenHash(json([action, id, payload]));
@@ -229,6 +230,8 @@ export class ConsoleStore {
         "restoredFrom",
         "fence",
         "leaseHash",
+        "sourceVersion",
+        "policyVersion",
       ]) {
         const value = (payload as Record<string, unknown>)[key];
         if (["string", "number", "boolean"].includes(typeof value))
@@ -261,6 +264,7 @@ export class ConsoleStore {
       throw new ApiError("RUN_LIMIT_EXCEEDED", "此记录已达到版本上限。");
     try {
       await this.db.batch([
+        ...before,
         this.db
           .prepare(
             "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
@@ -512,6 +516,33 @@ export class ConsoleStore {
     return {
       ...this.contentSummary(row),
       body: String(row.body),
+      bodyStatus: ContentInputSchema.shape.bodyStatus.parse(row.body_status),
+      discoveries: (
+        await this.db
+          .prepare(
+            "SELECT finder,entry_url FROM document_discoveries WHERE document_id=? ORDER BY id LIMIT 50",
+          )
+          .bind(id)
+          .all<{ finder: string; entry_url: string }>()
+      ).results.map((r) => ({ finder: r.finder, entryUrl: r.entry_url })),
+      timeEvidence: (
+        await this.db
+          .prepare(
+            "SELECT field_name,raw_span,date_value,time_value,precision,inferred,snapshot_version,content_revision,verification_status FROM extraction_evidence WHERE document_id=? AND content_revision=? ORDER BY snapshot_version,id LIMIT 30",
+          )
+          .bind(id, Number(row.content_revision))
+          .all<Row>()
+      ).results.map((e) => ({
+        field: String(e.field_name),
+        rawText: String(e.raw_span),
+        date: e.date_value ? String(e.date_value) : null,
+        time: e.time_value ? String(e.time_value) : null,
+        precision: String(e.precision),
+        inferred: !!e.inferred,
+        snapshotVersion: Number(e.snapshot_version),
+        contentRevision: Number(e.content_revision),
+        verificationStatus: String(e.verification_status),
+      })),
       campusScope: ContentInputSchema.shape.campusScope.parse(row.campus_scope),
       extractedFields: ExtractedFieldsSchema.parse(
         parse(row.extracted_fields_json),
@@ -580,7 +611,7 @@ export class ConsoleStore {
     return this.db
       .prepare(
         `INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at,content_revision,input_hash)
-    SELECT id,version,json_object('input',json_object('sourceId',source_id,'title',title,'url',url,'body',body,'kind',candidate_kind,'campusScope',campus_scope,'validUntil',valid_until,'publishedAt',published_at,'sourceUpdatedAt',source_updated_at,'contentType',content_type,'rightsScope',rights_scope,'radarCategory',radar_category,'knowledgeCategory',knowledge_category,'publisher',publisher,'summary',summary,'tags',json((SELECT json_group_array(tag) FROM document_tags t WHERE t.document_id=knowledge_documents.id AND t.content_revision=knowledge_documents.content_revision)),'extractedFields',json(extracted_fields_json)),'publicationStatus',publication_status,'reviewStatus',workflow_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'`,
+    SELECT id,version,json_object('input',json_object('sourceId',source_id,'title',title,'url',url,'body',body,'bodyStatus',body_status,'kind',candidate_kind,'campusScope',campus_scope,'validUntil',valid_until,'publishedAt',published_at,'sourceUpdatedAt',source_updated_at,'contentType',content_type,'rightsScope',rights_scope,'radarCategory',radar_category,'knowledgeCategory',knowledge_category,'publisher',publisher,'summary',summary,'tags',json((SELECT json_group_array(tag) FROM document_tags t WHERE t.document_id=knowledge_documents.id AND t.content_revision=knowledge_documents.content_revision)),'extractedFields',json(extracted_fields_json)),'publicationStatus',publication_status,'reviewStatus',workflow_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'`,
       )
       .bind(this.actor.id, this.now(), id);
   }
@@ -713,6 +744,9 @@ export class ConsoleStore {
       inputHash,
       statements: [
         ...statements,
+        this.db
+          .prepare("UPDATE knowledge_documents SET body_status=? WHERE id=?")
+          .bind(data.bodyStatus, key),
         ...data.tags.map((tag) =>
           this.db
             .prepare(
@@ -959,9 +993,17 @@ export async function filterPublicContent(
   if (hits.length > 50)
     throw new ApiError("INVALID_ARGUMENT", "检索候选过多。");
   if (!hits.length) return [];
+  const allowed =
+    purpose === "full_text"
+      ? "'licensed_full_text'"
+      : "'excerpt_and_link','licensed_full_text'";
+  const permissionGate =
+    purpose === "metadata"
+      ? ""
+      : ` AND NOT EXISTS(SELECT 1 FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE s.id=console_public_documents.source_id AND ((s.manual_policy_version>0 AND (s.manual_rights_scope NOT IN (${allowed}) OR s.manual_policy_expires_at_ms<=CAST((julianday('now')-2440587.5)*86400000 AS INTEGER))) OR (s.manual_policy_version=0 AND p.source_id IS NOT NULL AND (p.rights_scope NOT IN (${allowed}) OR p.expires_at_ms<=CAST((julianday('now')-2440587.5)*86400000 AS INTEGER)))))`;
   const rows = await db
     .prepare(
-      `SELECT id,version FROM console_public_documents WHERE id IN (${hits.map(() => "?").join(",")}) AND rights_scope IN (${purpose === "metadata" ? "'metadata_only','excerpt_and_link','licensed_full_text'" : purpose === "full_text" ? "'licensed_full_text'" : "'excerpt_and_link','licensed_full_text'"})`,
+      `SELECT id,version FROM console_public_documents WHERE id IN (${hits.map(() => "?").join(",")}) AND rights_scope IN (${purpose === "metadata" ? "'metadata_only','excerpt_and_link','licensed_full_text'" : allowed})${permissionGate}`,
     )
     .bind(...hits.map((h) => h.id))
     .all<{ id: string; version: number }>();

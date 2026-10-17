@@ -35,6 +35,7 @@ test("anonymous and forged student identity cannot access management", async ({
 
 test("source registry, review, versions, withdrawal, audit and secure logout", async ({
   page,
+  request: anonymous,
 }, info) => {
   const base = process.env.E2E_BASE_URL || "http://127.0.0.1:8787";
   expect(new URL(base).hostname).toMatch(/^(127\.0\.0\.1|localhost)$/);
@@ -97,6 +98,9 @@ test("source registry, review, versions, withdrawal, audit and secure logout", a
     .selectOption("manual_import");
   await page.getByLabel("所属机构", { exact: true }).fill("本地测试夹具");
   await page
+    .getByLabel("网站网址", { exact: true })
+    .fill("https://example.invalid/");
+  await page
     .getByLabel("证据链接", { exact: true })
     .fill("https://example.invalid/proof/" + randomUUID());
   await page.getByRole("button", { name: "保存信息源", exact: true }).click();
@@ -125,6 +129,24 @@ test("source registry, review, versions, withdrawal, audit and secure logout", a
     page.getByRole("button", { name: "暂停来源", exact: true }),
   ).toBeVisible();
   await page.screenshot({ path: prefix + "-source.png", fullPage: true });
+  const readySource = (
+    await (await page.request.get(`/api/admin/sources/${sourceId}`)).json()
+  ).data;
+  const policy = await page.request.post(
+    `/api/admin/sources/${sourceId}/import-policy`,
+    {
+      data: {
+        commandId: randomUUID(),
+        expectedVersion: readySource.version,
+        rightsScope: "licensed_full_text",
+        evidenceUrls: ["https://example.invalid/license"],
+        fullTextAuthorized: true,
+        note: "隔离夹具，仅授权自有测试正文",
+      },
+      headers: { Origin: base, "X-Console-CSRF": auth.csrf },
+    },
+  );
+  expect(policy.status()).toBe(200);
 
   await page.getByRole("link", { name: "采集任务", exact: true }).click();
   await expect(page.getByText("手动采集已就绪", { exact: true })).toBeVisible();
@@ -145,12 +167,14 @@ test("source registry, review, versions, withdrawal, audit and secure logout", a
     .getByRole("combobox", { name: "信息源", exact: true })
     .selectOption(sourceId);
   await page.getByLabel("标题", { exact: true }).fill("隔离审核夹具 " + name);
+  await expect(
+    page
+      .getByRole("combobox", { name: "正文状态", exact: true })
+      .locator('option[value="complete"]'),
+  ).toBeEnabled();
   await page
-    .getByRole("combobox", { name: "原文类型", exact: true })
-    .selectOption("guide");
-  await page
-    .getByRole("combobox", { name: "使用范围", exact: true })
-    .selectOption("licensed_full_text");
+    .getByRole("combobox", { name: "正文状态", exact: true })
+    .selectOption("complete");
   await page
     .getByRole("combobox", { name: "知识分类", exact: true })
     .selectOption("campus_life");
@@ -160,6 +184,11 @@ test("source registry, review, versions, withdrawal, audit and secure logout", a
   const body =
     "隔离测试，不是真实文章。<script>window.consoleXss=true</script><img src=x onerror=alert(1)>";
   await page.getByLabel("正文", { exact: true }).fill(body);
+  await page.getByRole("button", { name: "导入待审核", exact: true }).click();
+  await expect(page).toHaveURL(/\/admin\/content\?record=content-/);
+  await page
+    .getByRole("combobox", { name: "原文类型", exact: true })
+    .selectOption("guide");
   await page.getByRole("button", { name: "预览正文", exact: true }).click();
   await expect(page.getByTestId("content-safe-preview")).toHaveText(body);
   expect(
@@ -173,6 +202,24 @@ test("source registry, review, versions, withdrawal, audit and secure logout", a
   await page.getByRole("button", { name: "保存内容", exact: true }).click();
   await expect(page).toHaveURL(/\/admin\/content\?record=content-/);
   const contentId = new URL(page.url()).searchParams.get("record")!;
+  const beforeReview = (
+    await (await page.request.get(`/api/admin/content/${contentId}`)).json()
+  ).data;
+  for (const action of ["批准", "退回", "拒绝", "发布", "撤回"]) {
+    await page.getByRole("button", { name: action, exact: true }).click();
+    await expect(page.locator("#review-note-error")).toHaveText(
+      "请先填写至少两个字的审核说明。",
+    );
+    await expect(page.getByLabel("审核说明", { exact: true })).toBeFocused();
+  }
+  await page.getByLabel("审核说明", { exact: true }).fill("核");
+  await page.getByRole("button", { name: "批准", exact: true }).click();
+  await expect(page.locator("#review-note-error")).toBeVisible();
+  expect(
+    (await (await page.request.get(`/api/admin/content/${contentId}`)).json())
+      .data.version,
+  ).toBe(beforeReview.version);
+  await page.screenshot({ path: prefix + "-review-note.png", fullPage: true });
   await page
     .getByLabel("审核说明", { exact: true })
     .fill("隔离测试：确认人工审核及来源");
@@ -186,6 +233,77 @@ test("source registry, review, versions, withdrawal, audit and secure logout", a
   await expect(
     page.locator(".console-heading .console-badge").first(),
   ).toHaveText("已发布");
+  const published = (
+    await (await page.request.get(`/api/admin/content/${contentId}`)).json()
+  ).data;
+  const publicRead = await anonymous.get(
+    `/api/public/content?id=${contentId}&version=${published.version}`,
+  );
+  expect(publicRead.status()).toBe(200);
+  expect(publicRead.headers()["cache-control"]).toBe("no-store");
+  expect((await publicRead.json()).data.items[0]).not.toHaveProperty("body");
+  const importPolicy = (
+    await (
+      await page.request.get(`/api/admin/sources/${sourceId}/import-policy`)
+    ).json()
+  ).data;
+  const repeatBatch = {
+    commandId: randomUUID(),
+    sourceId,
+    sourceVersion: importPolicy.sourceVersion,
+    items: [
+      {
+        title: published.title,
+        url: published.url,
+        publishedAt: published.publishedAt,
+        campusScope: published.campusScope,
+        contentType: published.contentType,
+        knowledgeCategory: published.knowledgeCategory,
+        body: published.body,
+        bodyStatus: "complete",
+        discoveryUrls: [
+          "https://example.invalid/list-one",
+          "https://example.invalid/list-two",
+        ],
+      },
+    ],
+  };
+  expect(
+    (
+      await page.request.post("/api/admin/content/import", {
+        data: repeatBatch,
+        headers: { Origin: base },
+      })
+    ).status(),
+  ).toBe(403);
+  expect(
+    (
+      await anonymous.post("/api/admin/content/import", {
+        data: repeatBatch,
+        headers: { "X-User-Role": "admin" },
+      })
+    ).status(),
+  ).toBe(401);
+  const firstImport = await page.request.post("/api/admin/content/import", {
+    data: repeatBatch,
+    headers: { Origin: base, "X-Console-CSRF": auth.csrf },
+  });
+  expect(firstImport.status()).toBe(200);
+  expect((await firstImport.json()).data.items[0]).toMatchObject({
+    id: contentId,
+    outcome: "unchanged",
+  });
+  const replay = await page.request.post("/api/admin/content/import", {
+    data: repeatBatch,
+    headers: { Origin: base, "X-Console-CSRF": auth.csrf },
+  });
+  expect(replay.status()).toBe(200);
+  expect((await replay.json()).data.idempotent).toBe(true);
+  const afterImport = (
+    await (await page.request.get(`/api/admin/content/${contentId}`)).json()
+  ).data;
+  expect(afterImport.version).toBe(published.version);
+  expect(afterImport.discoveries).toHaveLength(3);
   await page.getByRole("button", { name: /^版本 1 ·/ }).click();
   await expect(
     page.getByRole("button", { name: "恢复为新版本", exact: true }),
@@ -218,6 +336,14 @@ test("source registry, review, versions, withdrawal, audit and secure logout", a
   await expect(
     page.locator(".console-heading .console-badge").first(),
   ).toHaveText("已撤回");
+  const withdrawnRead = await anonymous.get(
+    `/api/public/content?id=${contentId}`,
+  );
+  expect(withdrawnRead.status()).toBe(404);
+  expect(withdrawnRead.headers()["cache-control"]).toMatch(
+    /(?:^|,\s*)no-store(?:,|$)/,
+  );
+  expect((await withdrawnRead.json()).error.code).toBe("NOT_FOUND");
   await page.screenshot({ path: prefix + "-content.png", fullPage: true });
 
   await page.getByRole("link", { name: "审计日志", exact: true }).click();
