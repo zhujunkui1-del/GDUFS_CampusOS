@@ -1,4 +1,5 @@
 "use client";
+import { AutoPolicyPanel, ArticleChecks } from "./automation-panel";
 import Link from "next/link";
 import {
   useEffect,
@@ -1005,6 +1006,11 @@ function SourceWorkspace(props: WorkspaceProps) {
           返回信息源
         </Link>
         {props.article(article)}
+        <ArticleChecks
+          request={props.request}
+          id={article}
+          admin={props.actor.role === "admin"}
+        />
       </>
     );
   const source = data,
@@ -1162,6 +1168,13 @@ function SourceWorkspace(props: WorkspaceProps) {
         </>
       ) : tab === "sync" ? (
         <>
+          <AutoPolicyPanel
+            request={props.request}
+            sourceId={id}
+            version={source.version}
+            admin={props.actor.role === "admin"}
+            reload={reload}
+          />
           <section className="console-card">
             <h2>同步状态</h2>
             <dl className="console-details">

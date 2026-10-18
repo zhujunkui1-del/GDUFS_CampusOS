@@ -1,17 +1,21 @@
 {
-  "recordedAt": "2026-10-17T19:18:16.132Z",
+  "recordedAt": "2026-10-18T02:12:08.652Z",
   "emptyMigration": true,
   "populatedUpgrade": true,
   "oldRowsAndPrivateDataUnchanged": true,
   "failedMigrationRollback": true,
   "foreignKeyViolations": 0,
-  "businessTables": 57,
+  "businessTables": 63,
   "dangerousTableOperations": false,
   "remoteTouched": false,
   "migrations": [
     {
       "file": "0014_console_v2_governance.sql",
       "sha256": "558f4b59f84e2d823eedc822fa5166dca529f855ecb9355045828c8e9f1ca89d"
+    },
+    {
+      "file": "0015_console_v2_automation.sql",
+      "sha256": "4dfb674520b206c9bbcedbb4f782b65237034b1b62cabb1a2b37ba58803f2213"
     }
   ]
 }

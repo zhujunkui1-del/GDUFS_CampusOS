@@ -2,9 +2,9 @@ import { z } from "zod";
 import { ApiError } from "../errors";
 import { ConsoleIdSchema } from "@/domain/console/contracts";
 import { readJson } from "../assistant/http-context";
-import type { ConsoleGovernanceStore } from "./v2-governance";
+import type { ConsoleAutomationStore } from "./v2-automation";
 export async function consoleV2Api(
-  store: ConsoleGovernanceStore,
+  store: ConsoleAutomationStore,
   request: Request,
   path: string[],
   query: unknown,
@@ -16,11 +16,18 @@ export async function consoleV2Api(
   if (request.method === "GET") {
     if (section === "overview") return store.dashboard(query);
     if (section === "settings") return store.engineSettings();
-    if (section === "sources")
+    if (section === "sources" && !action)
       return id ? store.sourceV2(id) : store.sourcesV2(query);
     if (section === "articles") return store.articlesV2(query);
+    if (section === "sources" && id && action === "auto-policy")
+      return store.autoPolicy(id);
+    if (section === "checks" && id) return store.checkDetails(id);
   }
   if (request.method === "POST") {
+    if (section === "sources" && id && action === "auto-policy")
+      return store.setAutoPolicy(id, await read());
+    if (section === "checks" && id) return store.analyse(id);
+    if (section === "attest" && id) return store.attest(id, await read());
     if (section === "settings" && !id)
       return store.saveEngineSettings(await read());
     if (section === "sources" && !id)

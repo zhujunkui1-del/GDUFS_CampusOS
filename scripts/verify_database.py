@@ -7,9 +7,11 @@ db.execute("PRAGMA foreign_keys = ON")
 for migration in sorted(Path("migrations").glob("*.sql")):
     db.executescript(migration.read_text(encoding="utf-8"))
 tables = [row[0] for row in db.execute("SELECT name FROM sqlite_master WHERE type='table'")]
-seeded_controls = {'console_engine_settings': 1}
+seeded_controls = {'console_engine_settings': 1, 'console_admins': 3}
 assert all(db.execute(f'SELECT COUNT(*) FROM "{name}"').fetchone()[0] == seeded_controls.get(name, 0) for name in tables)
 assert db.execute("SELECT id,sync_hours,network_budget,earliest_import_day FROM console_engine_settings").fetchone() == ('console-v2-settings', 24, 20, None)
+
+assert set(db.execute("SELECT id,principal_type,system_capability FROM console_admins")) == {('sys-console-'+name,'system',cap) for name,cap in [('publisher','publisher'),('scheduler','scheduler'),('runner','ingestion')]}
 
 def rejects(sql, args=()):
     try:

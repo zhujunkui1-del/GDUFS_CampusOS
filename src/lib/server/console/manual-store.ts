@@ -321,7 +321,7 @@ export class ManualImportStore extends IngestionStore {
           radarCategory: item.radarCategory,
           knowledgeCategory: item.knowledgeCategory,
           publisher: source.displayName,
-          summary: item.summary,
+          summary: item.summary || `关于「${item.title.slice(0,100)}」的来源信息，请以原文为准。`,
           tags: [...item.tags].sort(),
           extractedFields: {},
         }),

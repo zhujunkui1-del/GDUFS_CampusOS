@@ -578,6 +578,10 @@ export class ConsoleGovernanceStore extends ManualImportStore {
           : "d.lifecycle_status='active' AND (d.valid_until IS NULL OR julianday(d.valid_until)>julianday('now'))",
       );
     if (q.protected === "1") where.push("0=1");
+    if (q.issues === "1")
+      where.push(
+        "EXISTS(SELECT 1 FROM console_content_checks c WHERE c.document_id=d.id AND c.content_revision=d.content_revision AND c.input_hash=d.input_hash AND c.outcome='review' AND c.source_version=s.version AND c.policy_version=COALESCE((SELECT version FROM console_publication_policies WHERE source_id=s.id),0) AND c.control_generation=COALESCE((SELECT generation FROM console_document_controls WHERE document_id=d.id),0))",
+      );
     if (q.eventAfter) {
       where.push(
         "date(json_extract(d.extracted_fields_json,'$.startAt'),'+8 hours')>=?",

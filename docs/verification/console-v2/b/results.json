@@ -1,0 +1,14 @@
+{
+  "unitPassed": 311,
+  "typecheck": "passed",
+  "lint": "passed",
+  "nextOpenNextBuild": "passed",
+  "credentialScan": {
+    "files": 1354,
+    "hits": 0
+  },
+  "migrationEmptyAndHistory": "passed",
+  "remoteTouched": false,
+  "realAutoPublishingPolicies": 0,
+  "realAutoPublishingRate": null
+}
