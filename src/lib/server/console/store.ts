@@ -297,6 +297,11 @@ export class ConsoleStore {
         throw new ApiError("FORBIDDEN", "管理权限已失效。");
       if (message.includes("CONSOLE_STALE"))
         throw new ApiError("CONFLICT", "记录已更新，请刷新后重试。");
+      if (message.includes("CONSOLE_RETENTION"))
+        throw new ApiError(
+          "INVALID_ARGUMENT",
+          "原文早于导入截止日期、日期未知或已被永久清理；请核对保留策略。",
+        );
       if (message.includes("CONSOLE_BUDGET"))
         throw new ApiError("RATE_LIMITED", "今日采集预算已用完，请稍后再试。");
       if (message.includes("CONSOLE_SOURCE_NOT_READY"))

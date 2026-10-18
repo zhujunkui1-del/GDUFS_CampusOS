@@ -1,4 +1,5 @@
 "use client";
+import { WhitelistWorkspace, RetentionWorkspace } from "./retention-workspace";
 import { AutoPolicyPanel, ArticleChecks } from "./automation-panel";
 import Link from "next/link";
 import {
@@ -9,7 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Plus, ArrowLeft, RefreshCw, Pause, ShieldCheck } from "lucide-react";
+import { Plus, ArrowLeft, RefreshCw, Pause } from "lucide-react";
 import {
   sourceTypeNames,
   safeExternalUrl,
@@ -1107,6 +1108,12 @@ function SourceWorkspace(props: WorkspaceProps) {
               </button>
             </>
           )}
+          <Link
+            className="text-link"
+            href={"/admin/whitelist?type=source&target=" + id}
+          >
+            白名单保护
+          </Link>
           <span>
             {source.automatic ? "自动同步可用" : "自动同步受限 / 需人工导入"}
           </span>
@@ -1436,17 +1443,21 @@ export function ConsoleV2Workspace(props: WorkspaceProps) {
         <ConsoleV2Articles request={props.request} exceptions />
       </>
     );
-  if (props.section === "retention" || props.section === "whitelist")
+  if (props.section === "whitelist")
     return (
-      <>
-        <div className="console-heading">
-          <h1>{props.section === "retention" ? "过时信息清理" : "白名单"}</h1>
-        </div>
-        <section className="console-card">
-          <ShieldCheck />
-          <p>保护与清理功能将在V2-C验证后启用。</p>
-        </section>
-      </>
+      <WhitelistWorkspace
+        request={props.request}
+        admin={props.actor.role === "admin"}
+        Dialog={props.Dialog}
+      />
+    );
+  if (props.section === "retention")
+    return (
+      <RetentionWorkspace
+        request={props.request}
+        admin={props.actor.role === "admin"}
+        Dialog={props.Dialog}
+      />
     );
   return <Dashboard {...props} />;
 }

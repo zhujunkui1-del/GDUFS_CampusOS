@@ -2,9 +2,9 @@ import { z } from "zod";
 import { ApiError } from "../errors";
 import { ConsoleIdSchema } from "@/domain/console/contracts";
 import { readJson } from "../assistant/http-context";
-import type { ConsoleAutomationStore } from "./v2-automation";
+import type { ConsoleRetentionStore } from "./v2-retention";
 export async function consoleV2Api(
-  store: ConsoleAutomationStore,
+  store: ConsoleRetentionStore,
   request: Request,
   path: string[],
   query: unknown,
@@ -14,6 +14,11 @@ export async function consoleV2Api(
   if (id) ConsoleIdSchema.parse(id);
   const read = () => readJson(request, 262144);
   if (request.method === "GET") {
+    if (section === "retention" && id && action === "items")
+      return store.planItems(id, query);
+    if (section === "whitelist") return store.protections(query);
+    if (section === "retention")
+      return id ? store.plan(id) : store.plans(query);
     if (section === "overview") return store.dashboard(query);
     if (section === "settings") return store.engineSettings();
     if (section === "sources" && !action)
@@ -24,6 +29,13 @@ export async function consoleV2Api(
     if (section === "checks" && id) return store.checkDetails(id);
   }
   if (request.method === "POST") {
+    if (section === "whitelist") return store.protection(await read());
+    if (section === "retention")
+      return id
+        ? store.actPlan(id, await read())
+        : store.createPlan(await read());
+    if (section === "tombstones" && id)
+      return store.releaseTombstone(id, await read());
     if (section === "sources" && id && action === "auto-policy")
       return store.setAutoPolicy(id, await read());
     if (section === "checks" && id) return store.analyse(id);

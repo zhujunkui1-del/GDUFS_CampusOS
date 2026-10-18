@@ -1,0 +1,13 @@
+{
+  "unitPassed": 317,
+  "newRetentionTests": 6,
+  "typecheck": "passed",
+  "lint": "passed",
+  "productionBuild": "passed",
+  "credentialScanFiles": 1354,
+  "credentialHits": 0,
+  "migrationUpgradeForeignKeys": "passed",
+  "remoteCleanupExecuted": false,
+  "parentDocumentsDeleted": 0,
+  "physicalBytesFreed": null
+}

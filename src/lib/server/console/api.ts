@@ -10,7 +10,7 @@ import {
   closeConsoleSession,
   consoleCookie,
 } from "./auth";
-import { ConsoleAutomationStore } from "./v2-automation";
+import { ConsoleRetentionStore } from "./v2-retention";
 import { consoleV2Api } from "./v2-api";
 
 export async function consoleAuthentication(request: Request) {
@@ -87,7 +87,7 @@ export const consoleAdministration = withApi(async (request) => {
     request,
     !["GET", "HEAD"].includes(request.method),
   );
-  const store = new ConsoleAutomationStore(
+  const store = new ConsoleRetentionStore(
     context.config.db,
     context.actor,
     undefined,

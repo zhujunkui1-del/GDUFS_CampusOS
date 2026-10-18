@@ -1,3 +1,4 @@
+import { protectedDocumentSql, protectedSourceSql } from "./v2-sql";
 import { ManualImportStore } from "./manual-store";
 import { sqlLegacyType, sourceLocator } from "./store";
 import { consolePermission } from "./auth";
@@ -407,7 +408,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       articleCount: Number(row.article_count || 0),
       publishedCount: Number(row.published_count || 0),
       lastError: row.last_error ? String(row.last_error).slice(0, 80) : null,
-      protected: false,
+      protected: !!row.protected,
       governanceCheckedAt: row.governance_checked_at
         ? String(row.governance_checked_at)
         : null,
@@ -421,7 +422,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     consolePermission(this.actor, "read");
     const row = await this.db
       .prepare(
-        `SELECT s.*,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,e.sync_hours AS global_hours,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE ${visible} AND s.id=?`,
+        `SELECT s.*,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,e.sync_hours AS global_hours,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE ${visible} AND s.id=?`,
       )
       .bind(id)
       .first<Row>();
@@ -492,7 +493,8 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       where.push(articleCount + "<=?");
       args.push(q.maxArticles);
     }
-    if (q.protected === "1") where.push("0=1");
+    if (q.protected)
+      where.push((q.protected === "0" ? "NOT " : "") + protectedSourceSql);
     const order = {
       name: "s.display_name",
       updated: "s.updated_at",
@@ -502,7 +504,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     const [rows, count] = await Promise.all([
       this.db
         .prepare(
-          `SELECT s.*,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,e.sync_hours AS global_hours,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE ${where.join(" AND ")} ORDER BY ${order} ${q.direction},s.id LIMIT ? OFFSET ?`,
+          `SELECT s.*,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,e.sync_hours AS global_hours,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE ${where.join(" AND ")} ORDER BY ${order} ${q.direction},s.id LIMIT ? OFFSET ?`,
         )
         .bind(...args, q.limit, q.offset)
         .all<Row>(),
@@ -577,7 +579,8 @@ export class ConsoleGovernanceStore extends ManualImportStore {
           ? "(d.lifecycle_status<>'active' OR julianday(d.valid_until)<=julianday('now'))"
           : "d.lifecycle_status='active' AND (d.valid_until IS NULL OR julianday(d.valid_until)>julianday('now'))",
       );
-    if (q.protected === "1") where.push("0=1");
+    if (q.protected)
+      where.push((q.protected === "0" ? "NOT " : "") + protectedDocumentSql());
     if (q.issues === "1")
       where.push(
         "EXISTS(SELECT 1 FROM console_content_checks c WHERE c.document_id=d.id AND c.content_revision=d.content_revision AND c.input_hash=d.input_hash AND c.outcome='review' AND c.source_version=s.version AND c.policy_version=COALESCE((SELECT version FROM console_publication_policies WHERE source_id=s.id),0) AND c.control_generation=COALESCE((SELECT generation FROM console_document_controls WHERE document_id=d.id),0))",

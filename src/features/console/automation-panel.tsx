@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { knowledgeCategories } from "@/domain/console/taxonomy";
 import { useConsoleV2Data } from "./v2-workspace";
@@ -206,6 +207,12 @@ export function ArticleChecks({
   return (
     <section className="console-card">
       <h2>完整性检查</h2>
+      <Link
+        className="text-link"
+        href={"/admin/whitelist?type=document&target=" + id}
+      >
+        保护这篇文章
+      </Link>
       <div className="console-actions">
         <button disabled={busy} onClick={() => void run(false)}>
           重新检查
