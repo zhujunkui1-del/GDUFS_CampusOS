@@ -1,8 +1,23 @@
 "use client";
-import { useState, type ComponentType, type FormEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentType,
+  type FormEvent,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useConsoleV2Data, type ConsoleV2DialogProps } from "./v2-workspace";
+import { sourceTypeNames } from "@/domain/console/contracts";
+import {
+  knowledgeCategories,
+  radarCategories,
+} from "@/domain/console/taxonomy";
+import {
+  useConsoleV2Data,
+  ConsoleV2Filters,
+  type ConsoleV2DialogProps,
+} from "./v2-workspace";
 type Client = <T>(path: string, method?: string, body?: unknown) => Promise<T>;
 type Row = Record<string, string | number | null>;
 type List = { items: Row[]; total: number; limit: number; offset: number };
@@ -28,6 +43,10 @@ export function WhitelistWorkspace({
   const params = useSearchParams(),
     [type, setType] = useState(params.get("type") || "source"),
     [search, setSearch] = useState(""),
+    [targetId, setTargetId] = useState(params.get("target") || ""),
+    [batchMode, setBatchMode] = useState(false),
+    [batchIds, setBatchIds] = useState<string[]>([]),
+    [filters, setFilters] = useState<Record<string, string>>({}),
     [filter, setFilter] = useState(""),
     [status, setStatus] = useState("active"),
     [offset, setOffset] = useState(0),
@@ -37,7 +56,7 @@ export function WhitelistWorkspace({
     [busy, setBusy] = useState(false);
   const state = useConsoleV2Data<List>(
     request,
-    `v2/whitelist?${new URLSearchParams({ q: filter, status, offset: String(offset), limit: "20" })}`,
+    `v2/whitelist?${new URLSearchParams({ ...filters, q: filter, status, offset: String(offset), limit: "20" })}`,
   );
   const choices = useConsoleV2Data<{
     items: (Row & { version: number; displayName?: string })[];
@@ -47,25 +66,55 @@ export function WhitelistWorkspace({
       ? `v2/sources?q=${encodeURIComponent(search)}&limit=20`
       : `v2/articles?q=${encodeURIComponent(search)}&limit=20`,
   );
+  const preselected = useConsoleV2Data<
+    Row & { version: number; displayName?: string }
+  >(
+    request,
+    params.get("target")
+      ? (type === "source" ? "v2/sources/" : "content/") + params.get("target")
+      : null,
+  );
+  const choiceRows = choices.data?.items || [];
+  const targets =
+    preselected.data && !choiceRows.some((x) => x.id === preselected.data?.id)
+      ? [preselected.data, ...choiceRows]
+      : choiceRows;
   async function add(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget),
-      id = String(f.get("target")),
-      target = choices.data?.items.find((x) => x.id === id);
-    if (!target) return;
+      ids = [...new Set(f.getAll("target").map(String))];
+    if (!ids.length || ids.length > 5) return;
+    const selectedTargets = ids.map((id) => targets.find((t) => t.id === id));
+    if (selectedTargets.some((t) => !t)) return;
     setBusy(true);
     try {
-      await request("v2/whitelist", "POST", {
-        ...cmd(target.version),
+      const values = selectedTargets.map((target) => ({
+        ...cmd(target!.version),
         type,
-        targetId: id,
+        targetId: String(target!.id),
         active: true,
         historyExempt: f.get("exempt") === "on",
         expiresAt: f.get("expires")
           ? new Date(String(f.get("expires")) + ":00+08:00").toISOString()
           : null,
         reason: f.get("reason"),
-      });
+      }));
+      if (values.length === 1) await request("v2/whitelist", "POST", values[0]);
+      else {
+        const r = await request<{ items: { ok: boolean }[] }>(
+          "v2/whitelist/batch",
+          "POST",
+          values,
+        );
+        if (r.items.some((t) => !t.ok)) {
+          setMessage(
+            `已保护${r.items.filter((t) => t.ok).length}项，部分失败，请刷新核对`,
+          );
+          state.reload();
+          choices.reload();
+          return;
+        }
+      }
       setMessage("已加入白名单");
       state.reload();
       choices.reload();
@@ -103,6 +152,75 @@ export function WhitelistWorkspace({
       <div className="console-heading">
         <h1>白名单</h1>
       </div>
+      <ConsoleV2Filters
+        fields={[
+          {
+            name: "type",
+            label: "白名单类型",
+            options: [
+              ["source", "信息源"],
+              ["document", "单篇文章"],
+            ],
+          },
+          {
+            name: "sourceType",
+            label: "来源载体",
+            options: Object.entries(sourceTypeNames),
+          },
+          {
+            name: "category",
+            label: "内容分类",
+            options: [...knowledgeCategories, ...radarCategories].map((c) => [
+              c.code,
+              c.label,
+            ]),
+          },
+          {
+            name: "permanent",
+            label: "保护期限",
+            options: [
+              ["1", "永久"],
+              ["0", "限期"],
+            ],
+          },
+          {
+            name: "operating",
+            label: "当前运营",
+            options: [
+              ["active", "正常"],
+              ["paused", "暂停"],
+              ["closed", "停运"],
+              ["unreachable", "失效"],
+              ["unknown", "待核"],
+            ],
+          },
+          { name: "addedAfter", label: "添加起日", type: "date" },
+          { name: "expiresBefore", label: "到期止日", type: "date" },
+          {
+            name: "sort",
+            label: "排序",
+            options: [
+              ["updated", "更新时间"],
+              ["expires", "到期时间"],
+              ["title", "名称"],
+            ],
+          },
+          {
+            name: "direction",
+            label: "顺序",
+            options: [
+              ["desc", "倒序"],
+              ["asc", "正序"],
+            ],
+          },
+        ]}
+        values={filters}
+        onChange={(v) => {
+          setFilters(v);
+          setOffset(0);
+          setSelected([]);
+        }}
+      />
       <section className="console-card">
         <div className="console-actions">
           <input
@@ -217,14 +335,34 @@ export function WhitelistWorkspace({
             <input value={search} onChange={(e) => setSearch(e.target.value)} />
           </label>
           <label>
+            <input
+              type="checkbox"
+              checked={batchMode}
+              onChange={(e) => setBatchMode(e.target.checked)}
+            />
+            批量选择（最多5项）
+          </label>
+          <label>
             选择对象
             <select
               name="target"
+              aria-label="选择对象"
               required
-              defaultValue={params.get("target") || ""}
+              multiple={batchMode}
+              value={batchMode ? batchIds : targetId}
+              onChange={(e) =>
+                batchMode
+                  ? setBatchIds(
+                      [...e.target.selectedOptions]
+                        .map((o) => o.value)
+                        .filter(Boolean)
+                        .slice(0, 5),
+                    )
+                  : setTargetId(e.target.value)
+              }
             >
               <option value="">请选择</option>
-              {choices.data?.items.map((x) => (
+              {targets.map((x) => (
                 <option key={String(x.id)} value={String(x.id)}>
                   {String(x.displayName || x.title)}
                 </option>
@@ -288,14 +426,24 @@ export function RetentionWorkspace({
     [busy, setBusy] = useState(false),
     [offset, setOffset] = useState(0),
     [q, setQ] = useState(""),
-    [itemOffset, setItemOffset] = useState(0);
+    [itemOffset, setItemOffset] = useState(0),
+    [runtimePlan, setRuntimePlan] = useState<Plan>();
+  const advancing = useRef(false),
+    pauseRequested = useRef(false);
+  useEffect(
+    () => () => {
+      advancing.current = false;
+      pauseRequested.current = true;
+    },
+    [],
+  );
   const list = useConsoleV2Data<List>(
       request,
       `v2/retention?offset=${offset}&q=${encodeURIComponent(q)}`,
     ),
     detail = useConsoleV2Data<Plan>(request, id ? `v2/retention/${id}` : null),
     settings = useConsoleV2Data<Row>(request, "v2/settings");
-  const p = detail.data;
+  const p = runtimePlan?.id === id ? runtimePlan : detail.data;
   const items = useConsoleV2Data<List>(
     request,
     id ? `v2/retention/${id}/items?offset=${itemOffset}` : null,
@@ -321,6 +469,7 @@ export function RetentionWorkspace({
         commandId: crypto.randomUUID(),
         filters,
       });
+      setRuntimePlan(undefined);
       setId(r.id);
       list.reload();
     } catch (e) {
@@ -332,22 +481,72 @@ export function RetentionWorkspace({
   async function action(a: string) {
     if (!id || !p) return;
     setBusy(true);
+    setPending(null);
+    pauseRequested.current = false;
+    advancing.current = ["scan", "mark", "purge"].includes(a);
+    let current = p;
     try {
-      await request(`v2/retention/${id}`, "POST", {
-        ...cmd(Number(p.version)),
-        action: a,
-        ...(a === "mark" || a === "purge"
-          ? { confirmation: (a === "purge" ? "永久" : "") + p.confirmation }
-          : {}),
-      });
+      do {
+        if (
+          pauseRequested.current &&
+          ["previewing", "marking", "purging"].includes(String(current.state))
+        ) {
+          await request(`v2/retention/${id}`, "POST", {
+            ...cmd(Number(current.version)),
+            action: "pause",
+          });
+          current = await request<Plan>(`v2/retention/${id}`);
+          setRuntimePlan(current);
+          break;
+        }
+        await request(`v2/retention/${id}`, "POST", {
+          ...cmd(Number(current.version)),
+          action: a,
+          ...(["mark", "purge"].includes(a)
+            ? {
+                confirmation:
+                  (a === "purge" ? "永久" : "") + current.confirmation,
+              }
+            : {}),
+        });
+        current = await request<Plan>(`v2/retention/${id}`);
+        setRuntimePlan(current);
+        if (
+          pauseRequested.current &&
+          ["previewing", "marking", "purging"].includes(String(current.state))
+        ) {
+          await request(`v2/retention/${id}`, "POST", {
+            ...cmd(Number(current.version)),
+            action: "pause",
+          });
+          current = await request<Plan>(`v2/retention/${id}`);
+          setRuntimePlan(current);
+          break;
+        }
+        const continuation =
+          a === "scan"
+            ? current.state === "previewing"
+            : a === "mark"
+              ? current.state === "marking"
+              : a === "purge"
+                ? current.state === "purging"
+                : false;
+        if (!continuation || !advancing.current) break;
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      } while (advancing.current);
+      setMessage(
+        current.state === "paused" ? "已暂停并保存断点" : "当前阶段已完成",
+      );
       detail.reload();
       items.reload();
       list.reload();
-      setPending(null);
-      setMessage("步骤已完成，请查看进度");
     } catch (e) {
-      setMessage(e instanceof Error ? e.message : "操作失败");
+      setMessage(e instanceof Error ? e.message : "步骤未完成，可安全重试。");
+      setRuntimePlan(undefined);
+      detail.reload();
+      items.reload();
     } finally {
+      advancing.current = false;
       setBusy(false);
     }
   }
@@ -381,6 +580,18 @@ export function RetentionWorkspace({
         <h1>过时信息清理</h1>
       </div>
       <p role="status">{message || detail.error || list.error}</p>
+      {busy && (
+        <div className="console-actions">
+          <span>保持此页开启以推进分批任务</span>
+          <button
+            onClick={() => {
+              pauseRequested.current = true;
+            }}
+          >
+            暂停推进并保存断点
+          </button>
+        </div>
+      )}
       <section className="console-card">
         <h2>最早允许导入发布日期</h2>
         {settings.data && (
@@ -567,7 +778,13 @@ export function RetentionWorkspace({
         />
         {list.data?.items.map((x) => (
           <article className="console-v2-row" key={String(x.id)}>
-            <button className="text-link" onClick={() => setId(String(x.id))}>
+            <button
+              className="text-link"
+              onClick={() => {
+                setRuntimePlan(undefined);
+                setId(String(x.id));
+              }}
+            >
               {String(x.created_at)} · {stages[String(x.state)]}
             </button>
             <p>检查 {x.scanned} 篇</p>

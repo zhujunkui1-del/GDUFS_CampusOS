@@ -6,6 +6,7 @@ test.skip(
   "Dedicated local Worker / isolated fixtures only",
 );
 test.use({ trace: "off" });
+test.setTimeout(90000);
 test("V2 five menus, governed non-web sources, soft deletion and legacy routes", async ({
   page,
 }, info) => {
@@ -106,7 +107,9 @@ test("V2 five menus, governed non-web sources, soft deletion and legacy routes",
   await expect(
     page.getByRole("button", { name: "暂停来源", exact: true }),
   ).toBeVisible();
-  const dir = "docs/verification/console-v2/a/browser";
+  const dir =
+    process.env.CONSOLE_V2_EVIDENCE_DIR ||
+    "docs/verification/console-v2/d/browser";
   mkdirSync(dir, { recursive: true });
   await page.screenshot({
     path: `${dir}/${process.env.PLAYWRIGHT_CHANNEL}-${info.project.name}-source.png`,
@@ -147,6 +150,89 @@ test("V2 five menus, governed non-web sources, soft deletion and legacy routes",
   await page.goto("/admin/audit");
   await expect(page).toHaveURL(/view=history/);
   await expect(page.locator(".console-audit-row").first()).toBeVisible();
+  await page.goto(`/admin/whitelist?type=source&target=${sourceId}`);
+  await page
+    .getByRole("combobox", { name: "选择对象", exact: true })
+    .selectOption(sourceId);
+  await page
+    .getByLabel("保护原因", { exact: true })
+    .fill("隔离来源长期保留测试，不代表真实来源许可");
+  await page.getByRole("button", { name: "添加保护", exact: true }).click();
+  await expect(page.getByText("已加入白名单", { exact: true })).toBeVisible();
+  await page.getByLabel("搜索白名单", { exact: true }).fill(name);
+  await expect(page.locator(".console-v2-row").first()).toContainText(name);
+  await page.screenshot({
+    path: `${dir}/${process.env.PLAYWRIGHT_CHANNEL}-${info.project.name}-whitelist.png`,
+    fullPage: true,
+  });
+  await page.locator(".console-v2-row").first().getByRole("checkbox").check();
+  await page.getByRole("button", { name: /移除所选/ }).click();
+  await page
+    .getByRole("alertdialog")
+    .getByRole("button", { name: "取消", exact: true })
+    .click();
+  await page.getByRole("button", { name: /移除所选/ }).click();
+  await page
+    .getByRole("alertdialog")
+    .getByRole("button", { name: "解除保护", exact: true })
+    .click();
+  await expect(page.getByText("已解除保护", { exact: true })).toBeVisible();
+  await page.goto("/admin/retention");
+  await page
+    .getByLabel("截止日期（不含当天，北京时间）", { exact: true })
+    .fill("1900-01-01");
+  await page
+    .getByRole("button", { name: "创建只读清理预览", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "继续预览（最多5篇）", exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole("button", { name: "继续预览（最多5篇）", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "预览完成", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "确认批量标记", exact: true }).click();
+  await page
+    .getByRole("alertdialog")
+    .getByRole("button", { name: "取消", exact: true })
+    .click();
+  await page.getByRole("button", { name: "确认批量标记", exact: true }).click();
+  await page
+    .getByRole("alertdialog")
+    .getByRole("button", { name: "确认标记", exact: true })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "永久清理（分批）", exact: true }),
+  ).toBeDisabled();
+  await page.screenshot({
+    path: `${dir}/${process.env.PLAYWRIGHT_CHANNEL}-${info.project.name}-retention.png`,
+    fullPage: true,
+  });
+  await page.goto("/admin");
+  await page.getByLabel("全局同步频率", { exact: true }).selectOption("3");
+  await page.getByRole("button", { name: "保存同步设置", exact: true }).click();
+  await expect(page.getByText("同步设置已保存", { exact: true })).toBeVisible();
+  const sync = (await (await page.request.get("/api/admin/v2/settings")).json())
+    .data;
+  expect(sync.sync_hours).toBe(3);
+  await page.getByLabel("全局同步频率", { exact: true }).selectOption("24");
+  await page.getByRole("button", { name: "保存同步设置", exact: true }).click();
+  await expect
+    .poll(
+      async () =>
+        (await (await page.request.get("/api/admin/v2/settings")).json()).data
+          .sync_hours,
+    )
+    .toBe(24);
+  await expect(
+    page.getByRole("heading", { name: "内容运营总览", exact: true }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: `${dir}/${process.env.PLAYWRIGHT_CHANNEL}-${info.project.name}-dashboard.png`,
+    fullPage: true,
+  });
   await page.getByRole("button", { name: "安全退出", exact: true }).click();
   await expect(
     page.getByRole("button", { name: "登录", exact: true }),

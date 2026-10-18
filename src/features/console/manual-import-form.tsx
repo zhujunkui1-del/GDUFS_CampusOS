@@ -32,6 +32,7 @@ export function ManualImportForm({
     [radarCategory, setRadar] = useState(""),
     [summary, setSummary] = useState(""),
     [own, setOwn] = useState(false),
+    [originalChecked, setOriginalChecked] = useState(false),
     [entries, setEntries] = useState(""),
     [expectedVersion, setVersion] = useState(""),
     [busy, setBusy] = useState(false),
@@ -44,7 +45,7 @@ export function ManualImportForm({
     let active = true;
     const timer = setTimeout(() => {
       request<{ items: SourceSummary[] }>(
-        `sources?limit=50&verification=verified&permission=approved&enabled=1&q=${encodeURIComponent(query)}`,
+        `v2/sources?limit=50&verification=verified&permission=approved&state=enabled&q=${encodeURIComponent(query)}`,
       )
         .then((r) => {
           if (active) setSources(r.items);
@@ -111,6 +112,7 @@ export function ManualImportForm({
               bodyStatus,
               summary,
               ownNoteConfirmed: own,
+              ...(originalChecked ? { originalChecked: true } : {}),
               discoveryUrls: entries
                 .split(/\n/)
                 .map((s) => s.trim())
@@ -307,6 +309,16 @@ export function ManualImportForm({
             onChange={(e) => setVersion(e.target.value)}
           />
         </label>
+        {actor.role === "admin" && (
+          <label className="console-wide">
+            <input
+              type="checkbox"
+              checked={originalChecked}
+              onChange={(e) => setOriginalChecked(e.target.checked)}
+            />
+            已对照原文核对来源、标题和发布时间
+          </label>
+        )}
         <div className="console-actions console-wide">
           <button
             className="primary-button"
@@ -322,7 +334,7 @@ export function ManualImportForm({
                     : 50000))
             }
           >
-            导入待审核
+            导入并处理
           </button>
         </div>
       </form>
@@ -334,6 +346,9 @@ export function ManualImportForm({
             onSubmit={(e) => {
               e.preventDefault();
               if (!policy) return;
+              const validityDays = Number(
+                new FormData(e.currentTarget).get("validityDays"),
+              );
               void work(async () => {
                 await request(`sources/${sourceId}/import-policy`, "POST", {
                   commandId: crypto.randomUUID(),
@@ -345,6 +360,7 @@ export function ManualImportForm({
                     .filter(Boolean),
                   note,
                   fullTextAuthorized: licenseConfirmed,
+                  validityDays,
                 });
                 setPolicy(
                   await request<Policy>(`sources/${sourceId}/import-policy`),
@@ -353,6 +369,16 @@ export function ManualImportForm({
               });
             }}
           >
+            <label>
+              有效天数
+              <input
+                name="validityDays"
+                type="number"
+                min="1"
+                max="30"
+                defaultValue="1"
+              />
+            </label>
             <label>
               使用范围
               <select

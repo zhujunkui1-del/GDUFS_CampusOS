@@ -19,6 +19,7 @@ export const PolicySchema = CommandSchema.extend({
   fullTextAuthorized: z.boolean().default(false),
   evidenceUrls: z.array(SafeUrlSchema).min(1).max(10),
   note: z.string().min(5).max(1000),
+  validityDays: z.number().int().min(1).max(30).optional(),
   robotsStatus: z.union([z.literal(200), z.literal(404)]),
   robotsHash: z
     .string()

@@ -157,7 +157,14 @@ export class OfficialWebConnector {
       imageCount: body.querySelectorAll("img").length,
     };
   }
-  normalize(parsed: ReturnType<OfficialWebConnector["parse"]>, url: string) {
+  normalize(
+    parsed: ReturnType<OfficialWebConnector["parse"]>,
+    url: string,
+    rightsScope:
+      | "metadata_only"
+      | "excerpt_and_link"
+      | "licensed_full_text" = "metadata_only",
+  ) {
     const title = parsed.title;
     const radarCategory = /讲座|论坛/.test(title)
       ? "lecture"
@@ -185,8 +192,18 @@ export class OfficialWebConnector {
       sourceId: this.sourceId,
       title,
       url: approvedUrl(this.profile, url),
-      body: "仅登记公开元数据，未保存第三方正文。",
-      bodyStatus: "not_provided",
+      body:
+        rightsScope === "metadata_only"
+          ? "仅登记公开元数据，未保存第三方正文。"
+          : rightsScope === "excerpt_and_link"
+            ? parsed.bodyText.slice(0, 500)
+            : parsed.bodyText,
+      bodyStatus:
+        rightsScope === "metadata_only"
+          ? "not_provided"
+          : rightsScope === "excerpt_and_link"
+            ? "partial"
+            : "complete",
       kind: "knowledge",
       campusScope: "unknown",
       publishedAt: parsed.publishedAt,
@@ -194,7 +211,7 @@ export class OfficialWebConnector {
       validUntil: null,
       extractedFields: {},
       contentType: /通知|公告/.test(title) ? "notice" : "news",
-      rightsScope: "metadata_only",
+      rightsScope,
       radarCategory,
       knowledgeCategory,
       publisher: this.profile.name,

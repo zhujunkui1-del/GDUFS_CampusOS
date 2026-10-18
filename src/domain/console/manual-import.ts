@@ -13,6 +13,7 @@ export const ImportPolicySchema = CommandSchema.extend({
   ]),
   evidenceUrls: z.array(SafeUrlSchema).min(1).max(5),
   note: z.string().trim().min(5).max(1000),
+  validityDays: z.number().int().min(1).max(30).optional(),
   fullTextAuthorized: z.boolean().default(false),
 })
   .strict()
@@ -38,6 +39,7 @@ export const ManualArticleSchema = ContentInputSchema.pick({
       .default("not_provided"),
     summary: z.string().trim().max(250).default(""),
     ownNoteConfirmed: z.boolean().default(false),
+    originalChecked: z.boolean().optional(),
     discoveryUrls: z.array(SafeUrlSchema).max(5).default([]),
     expectedVersion: z.number().int().nonnegative().optional(),
   })

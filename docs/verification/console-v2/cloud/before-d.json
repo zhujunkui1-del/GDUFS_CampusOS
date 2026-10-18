@@ -1,0 +1,168 @@
+{
+  "recordedAt": "2026-10-18T02:29:29.830Z",
+  "realCloud": true,
+  "target": "campusos-preview",
+  "before": {
+    "at": "2026-10-18T02:29:28.184Z",
+    "counts": {
+      "sources": 220,
+      "enabled": 4,
+      "verified": 4,
+      "documents": 3,
+      "published": 0,
+      "jobs": 4,
+      "conversations": 75,
+      "messages": 330,
+      "runs": 192
+    },
+    "migrations": [
+      "0001_platform_and_campus.sql",
+      "0002_knowledge_and_events.sql",
+      "0003_route_geometry_guards.sql",
+      "0004_assistant_shared_state.sql",
+      "0005_assistant_conversations.sql",
+      "0006_console_registry.sql",
+      "0007_content_contract.sql",
+      "0008_ingestion_pipeline.sql",
+      "0009_ingestion_clock_guards.sql",
+      "0010_document_topics.sql",
+      "0011_ingestion_daily_budget.sql",
+      "0012_manual_intake_and_evidence.sql",
+      "0013_content_edit_intake_guard.sql"
+    ],
+    "sourceHash": "9e553650442f83e85d6f81a41c1d6c8b9460187ea58c5fd7648a7316d5e35f33"
+  },
+  "after": {
+    "sources": 220,
+    "enabled": 4,
+    "verified": 4,
+    "documents": 3,
+    "published": 0,
+    "jobs": 4,
+    "conversations": 75,
+    "messages": 330,
+    "runs": 192
+  },
+  "migrations": [
+    "0001_platform_and_campus.sql",
+    "0002_knowledge_and_events.sql",
+    "0003_route_geometry_guards.sql",
+    "0004_assistant_shared_state.sql",
+    "0005_assistant_conversations.sql",
+    "0006_console_registry.sql",
+    "0007_content_contract.sql",
+    "0008_ingestion_pipeline.sql",
+    "0009_ingestion_clock_guards.sql",
+    "0010_document_topics.sql",
+    "0011_ingestion_daily_budget.sql",
+    "0012_manual_intake_and_evidence.sql",
+    "0013_content_edit_intake_guard.sql"
+  ],
+  "sourceStateUnchanged": true,
+  "foreignKeyViolations": 0,
+  "storage": {
+    "provider": "cloudflare_api",
+    "bytes": 2129920,
+    "measuredAt": "2026-10-18T02:29:28.184Z",
+    "estimated": false
+  },
+  "workerVersions": [
+    {
+      "version_id": "d5e3b763-0a9b-4031-b397-28b99475ad3d",
+      "percentage": 100
+    }
+  ],
+  "documents": [
+    {
+      "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+      "source_id": "GDUFS-SRC-0010",
+      "title": "关于召开2025-2026学年“校长奖章”评审会的通知",
+      "published_at": "2026-10-16T14:14:18.000Z",
+      "review_status": "approved",
+      "publication_status": "withdrawn",
+      "lifecycle_status": "withdrawn",
+      "version": 6
+    },
+    {
+      "id": "content-76b1fc0b-ace5-4db2-bb5f-b029dd771d78",
+      "source_id": "GDUFS-SRC-0008",
+      "title": "2026年第二届广东外语外贸大学“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛通知",
+      "published_at": "2026-06-30",
+      "review_status": "approved",
+      "publication_status": "withdrawn",
+      "lifecycle_status": "withdrawn",
+      "version": 5
+    },
+    {
+      "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+      "source_id": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学文印中心多功能印刷机维保服务采购项目询价公告",
+      "published_at": "2026-10-16",
+      "review_status": "approved",
+      "publication_status": "withdrawn",
+      "lifecycle_status": "withdrawn",
+      "version": 4
+    }
+  ],
+  "queries": [
+    {
+      "ordinal": 1,
+      "durationMs": 1.2928,
+      "wallMs": 445,
+      "rowsRead": 1264,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 2,
+      "durationMs": 0.2398,
+      "wallMs": 202,
+      "rowsRead": 13,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 3,
+      "durationMs": 2.4809,
+      "wallMs": 197,
+      "rowsRead": 220,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 4,
+      "durationMs": 0.9197,
+      "wallMs": 284,
+      "rowsRead": 1264,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 5,
+      "durationMs": 0.2067,
+      "wallMs": 321,
+      "rowsRead": 13,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 6,
+      "durationMs": 1.2123,
+      "wallMs": 195,
+      "rowsRead": 1198,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 7,
+      "durationMs": 1.5766,
+      "wallMs": 244,
+      "rowsRead": 220,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 8,
+      "durationMs": 0.3596,
+      "wallMs": 222,
+      "rowsRead": 3,
+      "rowsWritten": 0
+    }
+  ],
+  "migrationApplied": false,
+  "permanentDataCleanupExecuted": false,
+  "contentPublishedByThisRun": false
+}

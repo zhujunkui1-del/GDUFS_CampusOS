@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ManualImportForm } from "./manual-import-form";
-import { ConsoleV2Workspace } from "./v2-workspace";
+import { ConsoleV2Workspace, ConsoleV2Filters } from "./v2-workspace";
 import {
   deriveConsoleCredential,
   type ConsoleCredentialDerivation,
@@ -356,8 +356,10 @@ export function ConsoleApp() {
                 actor={auth.actor!}
               />
             )}
-            jobs={() => <Jobs request={request} />}
-            history={() => <Audit request={request} />}
+            jobs={(sourceId) => <Jobs request={request} sourceId={sourceId} />}
+            history={(sourceId) => (
+              <Audit request={request} sourceId={sourceId} />
+            )}
             advancedSource={(id) => (
               <SourceEditor id={id} request={request} actor={auth.actor!} />
             )}
@@ -1940,7 +1942,8 @@ function ExistingContentEditor({
     </>
   );
 }
-function Jobs({ request }: { request: Client }) {
+function Jobs({ request, sourceId }: { request: Client; sourceId?: string }) {
+  const [filters, setFilters] = useState<Record<string, string>>({});
   const [offset, setOffset] = useState(0),
     { data, error, reload } = useLoad(
       () =>
@@ -1955,18 +1958,64 @@ function Jobs({ request }: { request: Client }) {
             found_count: number;
             body_count: number;
             duplicate_count: number;
+            skipped_count?: number;
             version: number;
           }> & { collectorEnabled: boolean }
-        >("jobs?offset=" + offset),
-      [offset],
+        >(
+          (sourceId
+            ? "v2/sources/" + sourceId + "/jobs"
+            : "v2/operations/jobs") +
+            "?" +
+            new URLSearchParams({ ...filters, offset: String(offset) }),
+        ),
+      [offset, sourceId, filters],
     );
   const [message, setMessage] = useState("");
   return (
     <>
       <Heading title="采集任务" />
+      <ConsoleV2Filters
+        fields={[
+          { name: "q", label: "查找任务" },
+          {
+            name: "status",
+            label: "执行状态",
+            options: [
+              ["queued", "待运行"],
+              ["running", "运行中"],
+              ["completed", "完成"],
+              ["failed", "异常"],
+            ],
+          },
+          { name: "from", label: "创建起日", type: "date" },
+          { name: "to", label: "创建止日", type: "date" },
+          {
+            name: "sort",
+            label: "排序",
+            options: [
+              ["time", "创建时间"],
+              ["status", "状态"],
+              ["target", "任务编号"],
+            ],
+          },
+          {
+            name: "direction",
+            label: "顺序",
+            options: [
+              ["desc", "倒序"],
+              ["asc", "正序"],
+            ],
+          },
+        ]}
+        values={filters}
+        onChange={(v) => {
+          setFilters(v);
+          setOffset(0);
+        }}
+      />
       <section className="console-card">
         <Message>
-          {data?.collectorEnabled ? "手动采集已就绪" : "正在加载…"}
+          {data?.collectorEnabled ? "受控采集任务" : "正在加载…"}
         </Message>
       </section>
       {message && <p role="status">{message}</p>}
@@ -1992,7 +2041,7 @@ function Jobs({ request }: { request: Client }) {
                           failed: "未完成",
                         }[job.status] || job.status}{" "}
                   · 发现 {job.found_count} · 文本解析 {job.body_count} · 重复{" "}
-                  {job.duplicate_count}
+                  {job.duplicate_count} · 旧文跳过 {job.skipped_count || 0}
                 </p>
                 {job.error_code && <p>{job.error_code}</p>}
                 {job.phase !== "complete" &&
@@ -2048,7 +2097,8 @@ function Jobs({ request }: { request: Client }) {
     </>
   );
 }
-function Audit({ request }: { request: Client }) {
+function Audit({ request, sourceId }: { request: Client; sourceId?: string }) {
+  const [filters, setFilters] = useState<Record<string, string>>({});
   const [offset, setOffset] = useState(0),
     { data, error } = useLoad(
       () =>
@@ -2063,12 +2113,47 @@ function Audit({ request }: { request: Client }) {
             created_at: string;
             details_json: string;
           }>
-        >("audit?offset=" + offset),
-      [offset],
+        >(
+          (sourceId
+            ? "v2/sources/" + sourceId + "/history"
+            : "v2/operations/history") +
+            "?" +
+            new URLSearchParams({ ...filters, offset: String(offset) }),
+        ),
+      [offset, sourceId, filters],
     );
   return (
     <>
       <Heading title="审计日志" />
+      <ConsoleV2Filters
+        fields={[
+          { name: "q", label: "查找操作或对象" },
+          { name: "from", label: "操作起日", type: "date" },
+          { name: "to", label: "操作止日", type: "date" },
+          {
+            name: "sort",
+            label: "排序",
+            options: [
+              ["time", "操作时间"],
+              ["status", "操作类型"],
+              ["target", "对象编号"],
+            ],
+          },
+          {
+            name: "direction",
+            label: "顺序",
+            options: [
+              ["desc", "倒序"],
+              ["asc", "正序"],
+            ],
+          },
+        ]}
+        values={filters}
+        onChange={(v) => {
+          setFilters(v);
+          setOffset(0);
+        }}
+      />
       {error ? (
         <Message>{error}</Message>
       ) : !data ? (

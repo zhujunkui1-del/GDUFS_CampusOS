@@ -552,3 +552,5 @@
     font-size: 30px;
   }
 }
+
+.console-v2-select-row {display:flex;align-items:center;gap:12px}.console-v2-select-row>.console-source-row{flex:1;min-width:0}.console-v2-select-row>input{width:20px;height:20px;flex-shrink:0}

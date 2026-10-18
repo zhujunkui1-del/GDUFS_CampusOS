@@ -6,7 +6,7 @@ import {
   extractEvents,
 } from "../src/lib/ingestion/connector";
 import { SafeWebFetcher } from "../src/lib/ingestion/safe-fetch";
-import type { SourceDetail } from "../src/domain/console/contracts";
+import { pbkdf2Sync } from "node:crypto";
 const args = process.argv.slice(2),
   option = (key: string) => {
     const i = args.indexOf(key);
@@ -22,7 +22,7 @@ if (!args.includes("--run")) {
         ruleVersion: x.ruleVersion,
       })),
       usage:
-        "--run --source <id> [--job <id>] [--approve-metadata] --base <localhost8787|preview> --report <path>",
+        "--run --source <id> [--job <id>] [--token-file <ignored-path>] --base <localhost8787|preview> --report <path>",
       limits: { articles: 1, requests: 20, intervalMs: 10000 },
       modelCalls: 0,
     }),
@@ -38,15 +38,21 @@ if (!args.includes("--run")) {
   )
     throw Error("UNAPPROVED_API_ORIGIN");
   const remote = base.startsWith("https:");
-  const secrets = JSON.parse(
-    readFileSync(
-      remote
-        ? ".map-tools/s3-a/preview-secrets.json"
-        : ".map-tools/s3-a/local-secrets.json",
-      "utf8",
-    ),
-  );
-  const key = remote
+  const tokenPath = option("--token-file"),
+    runnerToken = tokenPath ? readFileSync(tokenPath, "utf8").trim() : "";
+  if (runnerToken && !/^[\w-]{40,100}$/.test(runnerToken))
+    throw Error("INVALID_RUNNER_TOKEN");
+  const secrets = runnerToken
+    ? {}
+    : JSON.parse(
+        readFileSync(
+          remote
+            ? ".map-tools/s3-a/preview-secrets.json"
+            : ".map-tools/s3-a/local-secrets.json",
+          "utf8",
+        ),
+      );
+  let key = remote
     ? secrets.CONSOLE_ADMIN_ACCESS_KEY
     : secrets.CONSOLE_LOCAL_ACCESS_KEY;
   let cookie = "",
@@ -58,10 +64,17 @@ if (!args.includes("--run")) {
     body?: unknown,
   ): Promise<T> => {
     const started = performance.now();
-    const r = await fetch(base + path, {
+    const target = runnerToken
+      ? path.replace("/api/admin/", "/api/console-runner/")
+      : path.replace(
+          /\/api\/admin\/jobs\/([\w-]+)\/permit$/,
+          "/api/admin/v2/permits/$1",
+        );
+    const r = await fetch(base + target, {
       method,
       headers: {
         Origin: base,
+        ...(runnerToken ? { Authorization: "Bearer " + runnerToken } : {}),
         "Content-Type": "application/json",
         ...(cookie ? { Cookie: cookie } : {}),
         ...(csrf ? { "X-Console-CSRF": csrf } : {}),
@@ -77,10 +90,28 @@ if (!args.includes("--run")) {
       cookie = r.headers.get("set-cookie")!.split(";")[0];
     return response.data as T;
   };
-  const auth = await api<{ csrf: string }>("/api/console-auth", "POST", {
-    key,
-  });
-  csrf = auth.csrf;
+  if (!runnerToken) {
+    const mode = await api<{ credentialDerivation?: { salt: string } }>(
+      "/api/console-auth",
+    );
+    if (mode.credentialDerivation) {
+      const password = readFileSync(
+        "CampusOS_Codex_完整设计文档_v2/key.md",
+        "utf8",
+      )
+        .replace(/^\uFEFF/, "")
+        .trim();
+      key = pbkdf2Sync(
+        password,
+        Buffer.from(mode.credentialDerivation.salt, "hex"),
+        600000,
+        32,
+        "sha256",
+      ).toString("hex");
+    }
+    csrf = (await api<{ csrf: string }>("/api/console-auth", "POST", { key }))
+      .csrf;
+  }
   const events: Record<string, unknown>[] = [];
   let websiteRequests = 0,
     jobId = option("--job") || "";
@@ -89,66 +120,10 @@ if (!args.includes("--run")) {
       sourceId = profile.sourceId;
     const connector = new OfficialWebConnector(profile),
       fetcher = new SafeWebFetcher(profile);
-    if (args.includes("--approve-metadata")) {
-      let source = await api<SourceDetail>("/api/admin/sources/" + sourceId);
-      if (source.websiteUrl?.replace(/\/$/, "") !== profile.origin)
-        throw Error("SOURCE_IDENTITY_CONFLICT");
-      if (source.verificationStatus !== "candidate" && !source.enabled)
-        throw Error("MANUAL_SOURCE_STATE_CONFLICT");
-      if (source.verificationStatus === "candidate" && !source.enabled) {
-        await api("/api/admin/sources/" + sourceId + "/verify", "POST", {
-          commandId: crypto.randomUUID(),
-          expectedVersion: source.version,
-          status: "verified",
-          officialStatus: "verified_official",
-          permissionStatus: "approved",
-          note: "S3-B逐站公开机构/栏目核验：只允许标题、链接、日期及HTTP元数据；robots404不是全文许可，禁止正文/图片镜像和外部模型处理。",
-          evidenceUrls: [
-            profile.origin + "/",
-            profile.entryUrl,
-            profile.origin + "/robots.txt",
-          ],
-          authorityConfirmed: true,
-        });
-        source = await api<SourceDetail>("/api/admin/sources/" + sourceId);
-      }
-      if (
-        source.verificationStatus !== "verified" ||
-        source.officialStatus !== "verified_official" ||
-        source.permissionStatus !== "approved"
-      )
-        throw Error("MANUAL_SOURCE_STATE_CONFLICT");
-      const current = await api<{ policy: { expires_at_ms: number } | null }>(
-        "/api/admin/sources/" + sourceId + "/collection-policy",
-      );
-      if (!current.policy || current.policy.expires_at_ms <= Date.now()) {
-        await api(
-          "/api/admin/sources/" + sourceId + "/collection-policy",
-          "POST",
-          {
-            commandId: crypto.randomUUID(),
-            expectedVersion: source.version,
-            ruleVersion: profile.ruleVersion,
-            rightsScope: "metadata_only",
-            evidenceUrls: [
-              profile.origin + "/",
-              profile.entryUrl,
-              profile.origin + "/robots.txt",
-            ],
-            note: "S3-B手动元数据小批次策略：20次/UTC日全局保守网络预算，每次间隔至少10秒，24小时到期；当日只读robots404已留证，执行时再次检查，遇限制即暂停；不含全文许可。",
-            robotsStatus: 404,
-            robotsHash: null,
-          },
-        );
-        source = await api<SourceDetail>("/api/admin/sources/" + sourceId);
-      }
-      if (!source.enabled)
-        await api("/api/admin/sources/" + sourceId + "/enabled", "POST", {
-          commandId: crypto.randomUUID(),
-          expectedVersion: source.version,
-          enabled: true,
-        });
-    }
+    if (args.includes("--approve-metadata"))
+      throw Error("SOURCE_POLICIES_MUST_BE_APPROVED_IN_CONSOLE");
+    if (runnerToken && !jobId)
+      throw Error("SCOPED_RUNNER_REQUIRES_REGISTERED_JOB");
     if (!jobId)
       jobId = (
         await api<{ id: string }>("/api/admin/jobs", "POST", {
@@ -158,6 +133,19 @@ if (!args.includes("--run")) {
           mode: args.includes("--revalidate") ? "revalidate" : "incremental",
         })
       ).id;
+    const policyRecord = await api<{
+      policy: { rights_scope: string; expires_at_ms: number } | null;
+    }>("/api/admin/sources/" + sourceId + "/collection-policy");
+    if (!policyRecord.policy || policyRecord.policy.expires_at_ms <= Date.now())
+      throw Error("SOURCE_POLICY_EXPIRED");
+    const policyRights = policyRecord.policy.rights_scope;
+    if (
+      policyRights !== "metadata_only" &&
+      policyRights !== "excerpt_and_link" &&
+      policyRights !== "licensed_full_text"
+    )
+      throw Error("POLICY_SCOPE_REQUIRED");
+    let licensedWrites = 0;
     const maxSteps = Number(option("--steps") || 6);
     if (!Number.isInteger(maxSteps) || maxSteps < 1 || maxSteps > 6)
       throw Error("INVALID_STEP_LIMIT");
@@ -190,6 +178,12 @@ if (!args.includes("--run")) {
         commandId: crypto.randomUUID(),
         expectedVersion: row.version,
       });
+      fetcher.beforeRequest = () =>
+        api("/api/admin/jobs/" + jobId + "/permit", "POST", {
+          leaseToken: lease.leaseToken,
+          fence: lease.fence,
+          version: lease.version,
+        }).then(() => {});
       const before = fetcher.requests;
       const started = performance.now();
       let result: Record<string, unknown> = {
@@ -232,9 +226,9 @@ if (!args.includes("--run")) {
           } else {
             const parsed = connector.parse(page.html, lease.url),
               article = connector.validate(
-                connector.normalize(parsed, lease.url),
+                connector.normalize(parsed, lease.url, policyRights),
               );
-            // Live policies are metadata-only. Licensed fixture extraction is tested separately.
+            // Only the current server-approved usage scope can retain text.
             result = {
               ...result,
               outcome: "ok",
@@ -246,7 +240,7 @@ if (!args.includes("--run")) {
               events:
                 article.rightsScope === "metadata_only"
                   ? []
-                  : extractEvents(parsed.bodyText),
+                  : extractEvents(article.body),
             };
             events.push({
               url: lease.url,
@@ -254,7 +248,7 @@ if (!args.includes("--run")) {
               publishedAt: parsed.publishedAt,
               bodyTextChars: parsed.bodyTextChars,
               imageCount: parsed.imageCount,
-              fullTextPersisted: false,
+              fullTextPersisted: policyRights !== "metadata_only",
             });
           }
         }
@@ -284,6 +278,12 @@ if (!args.includes("--run")) {
         fence: lease.fence,
       };
       await api("/api/admin/jobs/" + jobId + "/commit", "POST", commit);
+      if (
+        result.outcome === "ok" &&
+        lease.phase === "fetch" &&
+        policyRights !== "metadata_only"
+      )
+        licensedWrites++;
       events.push({
         phase: lease.phase,
         outcome: result.outcome,
@@ -314,9 +314,9 @@ if (!args.includes("--run")) {
       events,
       apiWallMs: rpcTimes,
       modelCalls: 0,
-      fullTextPersisted: false,
-      autoApproved: 0,
-      autoPublished: 0,
+      fullTextPersisted: licensedWrites > 0,
+      autoApproved: null,
+      autoPublished: null,
     };
     const path = option("--report");
     if (path) {
@@ -327,6 +327,6 @@ if (!args.includes("--run")) {
     if (final.status !== "completed" && !option("--steps"))
       process.exitCode = 1;
   } finally {
-    await api("/api/console-auth", "DELETE").catch(() => {});
+    if (!runnerToken) await api("/api/console-auth", "DELETE").catch(() => {});
   }
 }

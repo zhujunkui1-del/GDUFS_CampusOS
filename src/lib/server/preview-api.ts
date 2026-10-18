@@ -14,6 +14,7 @@ import { executeMapSkillHttp } from "./maps/http";
 import { GET as agentStatus } from "@/app/api/agent/status/route";
 import { GET as health } from "@/app/api/health/route";
 import { consoleAdministration, consoleAuthentication } from "./console/api";
+import { consoleRunnerApi } from "./console/runner-api";
 import { publicContent } from "./console/public-content";
 
 type Handler = (request: Request) => Promise<Response>;
@@ -33,6 +34,8 @@ export function previewApiHandler(
   path: string,
   method = "GET",
 ): { method: string; handle: Handler } | null {
+  if (/^\/api\/console-runner(?:\/[a-zA-Z0-9_-]+){1,3}$/.test(path))
+    return { method, handle: consoleRunnerApi };
   if (path === "/api/console-auth")
     return { method, handle: consoleAuthentication };
   if (/^\/api\/admin\/v2(?:\/[a-zA-Z0-9_-]+){1,3}$/.test(path))

@@ -3,7 +3,11 @@ import {
   AutoPolicySchema,
   AttestationSchema,
 } from "@/domain/console/automation";
-import { ContentWriteSchema, PublishSchema } from "@/domain/console/contracts";
+import {
+  ContentWriteSchema,
+  PublishSchema,
+  ReviewSchema,
+} from "@/domain/console/contracts";
 import { consolePermission } from "./auth";
 import { ApiError } from "../errors";
 import {
@@ -82,12 +86,17 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
   protected override snapshot(id: string): Statement {
     return this.db
       .prepare(
-        "INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at,content_revision,input_hash) SELECT id,version,json_object('inputRef',content_revision,'inputHash',input_hash,'publicationStatus',publication_status,'reviewStatus',workflow_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'",
+        "INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at,content_revision,input_hash) SELECT id,version,json_object('inputRef',CASE WHEN input_hash IS NOT NULL AND content_revision>0 THEN content_revision END,'inputAvailable',input_hash IS NOT NULL AND content_revision>0,'inputHash',input_hash,'publicationStatus',publication_status,'reviewStatus',workflow_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'",
       )
       .bind(this.actor.id, this.now(), id);
   }
   override async version(id: string, version: number) {
     const snapshot = await super.version(id, version);
+    if (snapshot.inputAvailable === 0 || snapshot.purged === 1)
+      throw new ApiError(
+        "NOT_FOUND",
+        "该修订正文已清理或没有可恢复的修订载荷。",
+      );
     if (!snapshot.inputRef) return snapshot;
     const payload = await this.db
       .prepare(
@@ -112,7 +121,10 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       .first<Row>();
     if (sourceFingerprint) {
       if (!value.summary)
-        value.summary = `关于「${value.title.slice(0, 100)}」的来源信息，请以原文为准。`;
+        value.summary =
+          value.rightsScope === "metadata_only"
+            ? `关于「${value.title.slice(0, 100)}」的来源信息，请以原文为准。`
+            : "原文摘录：" + value.body.replace(/\s+/g, " ").slice(0, 180);
       if (value.contentType === "unknown")
         value.contentType = /制度|办法|规定/.test(value.title)
           ? "policy"
@@ -136,16 +148,11 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
     );
     const changes =
       old && sourceFingerprint
-        ? [
-            "title",
-            "body",
-            "summary",
-            "publishedAt",
-            "contentType",
-            "knowledgeCategory",
-          ].filter(
+        ? Object.keys(value).filter(
             (k) =>
-              old[k as keyof typeof old] !== value[k as keyof typeof value],
+              !["commandId", "expectedVersion"].includes(k) &&
+              JSON.stringify(old[k as keyof typeof old]) !==
+                JSON.stringify(value[k as keyof typeof value]),
           )
         : [];
     if (!old || prepared.inputHash !== old.inputHash)
@@ -184,10 +191,53 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       this.pendingHold = undefined;
     }
   }
+  private pendingReview?: {
+    id: string;
+    decision: string;
+    revision: number;
+    hash: string | null;
+  };
+  override async review(id: string, raw: unknown) {
+    const v = ReviewSchema.parse(raw),
+      d = await this.document(id);
+    this.pendingReview = {
+      id,
+      decision: v.decision,
+      revision: d.contentRevision,
+      hash: d.inputHash,
+    };
+    try {
+      const r = await super.review(id, v);
+      try {
+        await this.analyse(id);
+      } catch {
+        /* Current input stays unavailable when checks cannot finish. */
+      }
+      return r;
+    } finally {
+      this.pendingReview = undefined;
+    }
+  }
   private pendingHold?: { id: string; withdraw: boolean };
   protected override async mutate(
     ...args: Parameters<ConsoleGovernanceStore["mutate"]>
   ) {
+    if (args[1] === "document.review" && this.pendingReview) {
+      const r = this.pendingReview;
+      args[5] = [
+        ...args[5],
+        this.db
+          .prepare(
+            "INSERT INTO console_document_controls(document_id,review_hold,review_hold_revision,review_hold_input_hash) VALUES(?,?,?,?) ON CONFLICT(document_id) DO UPDATE SET generation=generation+1,review_hold=excluded.review_hold,review_hold_revision=excluded.review_hold_revision,review_hold_input_hash=excluded.review_hold_input_hash",
+          )
+          .bind(
+            r.id,
+            r.decision === "approved" ? null : r.decision,
+            r.decision === "approved" ? null : r.revision,
+            r.decision === "approved" ? null : r.hash,
+          ),
+      ];
+    }
     if (
       this.pendingHold &&
       ["document.publish", "document.withdraw"].includes(args[1])
@@ -205,6 +255,33 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
             h.withdraw ? this.now() : null,
           ),
       ];
+    }
+    if (args[1] === "manual.import") {
+      const payload = args[4] as {
+        items: { originalChecked?: boolean; url: string }[];
+      };
+      for (const [ordinal, item] of payload.items.entries())
+        if (item.originalChecked) {
+          consolePermission(this.actor, "admin");
+          args[5].push(
+            this.db
+              .prepare(
+                "INSERT OR REPLACE INTO console_content_attestations(document_id,content_revision,input_hash,admin_id,evidence_urls_json,created_at) SELECT d.id,d.content_revision,d.input_hash,?,?,? FROM manual_import_items i JOIN knowledge_documents d ON d.id=i.document_id WHERE i.job_id=? AND i.ordinal=? AND NOT EXISTS(SELECT 1 FROM console_manual_links l WHERE l.job_id=i.job_id AND l.ordinal=i.ordinal)",
+              )
+              .bind(
+                this.actor.id,
+                JSON.stringify([item.url]),
+                this.now(),
+                args[3],
+                ordinal,
+              ),
+            this.db
+              .prepare(
+                "UPDATE console_document_controls SET generation=generation+1 WHERE document_id=(SELECT document_id FROM manual_import_items WHERE job_id=? AND ordinal=? AND NOT EXISTS(SELECT 1 FROM console_manual_links l WHERE l.job_id=manual_import_items.job_id AND l.ordinal=manual_import_items.ordinal))",
+              )
+              .bind(args[3], ordinal),
+          );
+        }
     }
     return super.mutate(...args);
   }
@@ -289,9 +366,19 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
         ranks.indexOf(d.rightsScope) > ranks.indexOf(String(p?.rights_scope)))
     )
       blocked = "正文使用范围未获许可";
+    if (
+      !blocked &&
+      (ranks.indexOf(d.rightsScope) < 0 ||
+        control?.lifecycle_status === "expired" ||
+        control?.lifecycle_status === "superseded" ||
+        (d.validUntil &&
+          (!Number.isFinite(Date.parse(d.validUntil)) ||
+            Date.parse(d.validUntil) <= Date.parse(this.now()))))
+    )
+      blocked = "内容已过期、被替代或使用范围未确认";
     const provenance = await this.db
       .prepare(
-        "SELECT 1 AS ok WHERE EXISTS(SELECT 1 FROM document_fetches f JOIN console_content_versions v ON v.document_id=f.document_id AND v.version=f.snapshot_version WHERE f.document_id=? AND f.status IN(200,304) AND v.content_revision=? AND v.input_hash=(SELECT input_hash FROM knowledge_documents WHERE id=f.document_id) AND f.outcome IN('ok','not_modified')) OR EXISTS(SELECT 1 FROM console_content_attestations WHERE document_id=? AND content_revision=? AND input_hash=?)",
+        "SELECT 1 AS ok WHERE EXISTS(SELECT 1 FROM document_fetches f JOIN console_content_versions v ON v.document_id=f.document_id AND v.version=f.snapshot_version WHERE f.document_id=? AND EXISTS(SELECT 1 FROM console_document_controls dc WHERE dc.document_id=f.document_id AND dc.last_change_origin='source_author') AND f.status IN(200,304) AND v.content_revision=? AND v.input_hash=(SELECT input_hash FROM knowledge_documents WHERE id=f.document_id) AND f.outcome IN('ok','not_modified')) OR EXISTS(SELECT 1 FROM console_content_attestations WHERE document_id=? AND content_revision=? AND input_hash=?)",
       )
       .bind(id, d.contentRevision, id, d.contentRevision, d.inputHash)
       .first();
@@ -301,6 +388,20 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       defaultCategory: String(p?.default_knowledge_category || ""),
       provenance: !!provenance,
     });
+    if (
+      control?.last_change_origin === "source_author" &&
+      JSON.parse(String(control.last_overridden_fields_json || "[]")).includes(
+        "validUntil",
+      ) &&
+      !d.validUntil
+    ) {
+      check.issues.push({
+        code: "validity_changed",
+        severity: "error",
+        message: "新原文不足以确认此前的有效期，请复核",
+      });
+      check.outcome = "review";
+    }
     if (blocked) {
       check.outcome = "review";
       check.issues.unshift({
@@ -309,7 +410,27 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
         message: blocked,
       });
     }
-    const outcome = blocked ? "blocked" : check.outcome;
+    if (control?.review_hold) {
+      check.issues.unshift({
+        code: "manual_review",
+        severity: "error",
+        message:
+          control.review_hold_revision === d.contentRevision &&
+          control.review_hold_input_hash === d.inputHash
+            ? control.review_hold === "rejected"
+              ? "当前修订已被人工拒绝"
+              : "当前修订已退回处理"
+            : "原文出现新修订，请复核此前的人工处理决定",
+      });
+      check.outcome = "review";
+    }
+    const outcome =
+      blocked ||
+      (control?.review_hold === "rejected" &&
+        control.review_hold_revision === d.contentRevision &&
+        control.review_hold_input_hash === d.inputHash)
+        ? "blocked"
+        : check.outcome;
     const checkId = crypto.randomUUID();
     const insert = this.db
       .prepare(
@@ -333,13 +454,22 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
         this.now(),
         publisher.id,
       );
-    if (outcome !== "pass" || d.publicationStatus === "published") {
+    const visible = await this.db
+      .prepare("SELECT 1 AS ok FROM console_public_documents WHERE id=?")
+      .bind(id)
+      .first();
+    const stillPublished =
+      d.publicationStatus === "published" &&
+      !!visible &&
+      (control?.last_publication_mode !== "auto" ||
+        Number(control?.auto_policy_version) === Number(p?.version));
+    if (outcome !== "pass" || stillPublished) {
       await this.db.batch([insert]);
       return {
         id,
         outcome,
         issues: check.issues,
-        published: d.publicationStatus === "published",
+        published: !!visible,
       };
     }
     const current = await this.db
@@ -387,7 +517,11 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       [insert],
       { checkId: usedId },
     );
-    return { id, outcome, issues: check.issues, published: true };
+    const publicReceipt = await this.db
+      .prepare("SELECT 1 AS ok FROM console_public_documents WHERE id=?")
+      .bind(id)
+      .first();
+    return { id, outcome, issues: check.issues, published: !!publicReceipt };
   }
   override async writeContent(
     id: string | undefined,
@@ -401,6 +535,15 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       /* Remains a draft when processing is unavailable. */
     }
     return result;
+  }
+  protected override async importDefaults(sourceId: string) {
+    const p = await this.db
+      .prepare(
+        "SELECT default_knowledge_category FROM console_publication_policies WHERE source_id=? AND enabled=1 AND expires_at_ms>?",
+      )
+      .bind(sourceId, Date.parse(this.now()))
+      .first<{ default_knowledge_category: string | null }>();
+    return { knowledgeCategory: p?.default_knowledge_category || null };
   }
   override async importBatch(raw: unknown) {
     const receipt = await super.importBatch(raw);

@@ -1,4 +1,5 @@
 "use client";
+import { SourceCollectionPolicy, RunnerTokens } from "./sync-panel";
 import { WhitelistWorkspace, RetentionWorkspace } from "./retention-workspace";
 import { AutoPolicyPanel, ArticleChecks } from "./automation-panel";
 import Link from "next/link";
@@ -43,8 +44,8 @@ type WorkspaceProps = {
   actor: ConsoleActor;
   Dialog: ComponentType<ConsoleV2DialogProps>;
   article: (id: string) => ReactNode;
-  jobs: () => ReactNode;
-  history: () => ReactNode;
+  jobs: (sourceId?: string) => ReactNode;
+  history: (sourceId?: string) => ReactNode;
   advancedSource: (id: string) => ReactNode;
   manualImport: () => ReactNode;
 };
@@ -364,32 +365,123 @@ export function ConsoleV2Articles({
   request,
   sourceId,
   exceptions = false,
+  canReview = false,
 }: {
   request: Client;
   sourceId?: string;
   exceptions?: boolean;
+  canReview?: boolean;
 }) {
   const [filters, setFilters] = useState<Record<string, string>>({}),
-    [offset, setOffset] = useState(0);
+    [offset, setOffset] = useState(0),
+    [selected, setSelected] = useState<
+      Record<string, string | number | null>[]
+    >([]),
+    [note, setNote] = useState(""),
+    [busy, setBusy] = useState(false),
+    [message, setMessage] = useState("");
   const query = new URLSearchParams({
     ...filters,
     offset: String(offset),
     ...(sourceId ? { sourceId } : {}),
     ...(exceptions ? { issues: "1" } : {}),
   });
-  const { data, error } = useConsoleV2Data<
+  const { data, error, reload } = useConsoleV2Data<
     List<Record<string, string | number | null>>
   >(request, "v2/articles?" + query);
+  async function batch(decision: string) {
+    setBusy(true);
+    let done = 0;
+    const errors = [];
+    for (const d of selected)
+      try {
+        await request("content/" + d.id + "/review", "POST", {
+          ...cmd(Number(d.version)),
+          decision,
+          note,
+        });
+        done++;
+      } catch (e) {
+        errors.push(e instanceof Error ? e.message : "处理失败");
+      }
+    setMessage(
+      `已处理${done}篇` + (errors.length ? "；" + errors.join("；") : ""),
+    );
+    setSelected([]);
+    setBusy(false);
+    reload();
+  }
   return (
     <>
       <ConsoleV2Filters
-        fields={articleFilters}
+        fields={
+          exceptions
+            ? [
+                ...articleFilters,
+                {
+                  name: "severity",
+                  label: "严重程度",
+                  options: [
+                    ["error", "错误"],
+                    ["warning", "警告"],
+                  ],
+                },
+                {
+                  name: "issue",
+                  label: "问题类型",
+                  options: [
+                    ["original_evidence", "原文证据"],
+                    ["published_at", "发布时间"],
+                    ["category", "主分类"],
+                    ["summary", "摘要"],
+                    ["body_incomplete", "正文完整性"],
+                    ["event_time", "活动举办时间"],
+                    ["deadline", "报名截止"],
+                    ["event_verification", "活动事实"],
+                    ["status_conflict", "取消或改期"],
+                  ],
+                },
+              ]
+            : articleFilters
+        }
         values={filters}
         onChange={(v) => {
           setFilters(v);
           setOffset(0);
+          setSelected([]);
         }}
       />
+      {exceptions && canReview && (
+        <div className="console-card console-actions">
+          <input
+            aria-label="批量审核说明"
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            maxLength={1000}
+            placeholder="填写统一审核理由"
+          />
+          <button
+            disabled={busy || !selected.length || note.trim().length < 2}
+            onClick={() => void batch("returned")}
+          >
+            批量退回
+          </button>
+          <button
+            disabled={busy || !selected.length || note.trim().length < 2}
+            onClick={() => void batch("rejected")}
+          >
+            批量拒绝
+          </button>
+          <button
+            disabled={busy || !selected.length || note.trim().length < 2}
+            onClick={() => void batch("approved")}
+          >
+            批量批准
+          </button>
+          <span>{selected.length}/5</span>
+          <p role="status">{message}</p>
+        </div>
+      )}
       {!data ? (
         <Loading error={error} />
       ) : (
@@ -397,27 +489,50 @@ export function ConsoleV2Articles({
           <div className="console-card console-list">
             {data.items.length ? (
               data.items.map((d) => (
-                <Link
-                  className="console-source-row"
-                  key={String(d.id)}
-                  href={`/admin/sources?record=${encodeURIComponent(String(d.source_id))}&article=${encodeURIComponent(String(d.id))}`}
-                >
-                  <div>
-                    <strong>{d.title}</strong>
+                <div key={String(d.id)} className="console-v2-select-row">
+                  {exceptions && canReview && (
+                    <input
+                      type="checkbox"
+                      aria-label={"选择" + d.title}
+                      checked={selected.some((s) => s.id === d.id)}
+                      disabled={
+                        busy ||
+                        (selected.length >= 5 &&
+                          !selected.some((s) => s.id === d.id))
+                      }
+                      onChange={(e) =>
+                        setSelected(
+                          e.target.checked
+                            ? [...selected, d]
+                            : selected.filter((s) => s.id !== d.id),
+                        )
+                      }
+                    />
+                  )}
+                  <Link
+                    className="console-source-row"
+                    key={String(d.id)}
+                    href={`/admin/sources?record=${encodeURIComponent(String(d.source_id))}&article=${encodeURIComponent(String(d.id))}`}
+                  >
+                    <div>
+                      <strong>{d.title}</strong>
+                      <span>
+                        {d.source_name} · {date(d.published_at)}
+                      </span>
+                    </div>
                     <span>
-                      {d.source_name} · {date(d.published_at)}
+                      {d.publication_status === "published"
+                        ? d.public_visible === 1
+                          ? "已公开"
+                          : "公开已失效"
+                        : d.publication_status === "withdrawn"
+                          ? "已撤回"
+                          : d.workflow_status === "approved"
+                            ? "已批准"
+                            : "待处理"}
                     </span>
-                  </div>
-                  <span>
-                    {d.publication_status === "published"
-                      ? "已公开"
-                      : d.publication_status === "withdrawn"
-                        ? "已撤回"
-                        : d.workflow_status === "approved"
-                          ? "已批准"
-                          : "待处理"}
-                  </span>
-                </Link>
+                  </Link>
+                </div>
               ))
             ) : (
               <p className="console-empty">
@@ -1030,7 +1145,7 @@ function SourceWorkspace(props: WorkspaceProps) {
           operatingEvidence: source.operatingEvidence,
           note: "管理员明确标记来源停运",
           enabled: false,
-          retainHistory: true,
+          retainHistory: source.retainHistory,
         });
       else if (action === "restore")
         await props.request(
@@ -1175,6 +1290,13 @@ function SourceWorkspace(props: WorkspaceProps) {
         </>
       ) : tab === "sync" ? (
         <>
+          <SourceCollectionPolicy
+            request={props.request}
+            id={id}
+            version={source.version}
+            admin={props.actor.role === "admin"}
+            reload={reload}
+          />
           <AutoPolicyPanel
             request={props.request}
             sourceId={id}
@@ -1184,6 +1306,31 @@ function SourceWorkspace(props: WorkspaceProps) {
           />
           <section className="console-card">
             <h2>同步状态</h2>
+            <button
+              disabled={
+                busy || !source.automatic || props.actor.role === "reviewer"
+              }
+              onClick={() => {
+                setBusy(true);
+                void props
+                  .request<{ registered: number }>("v2/sync", "POST", {
+                    commandId: crypto.randomUUID(),
+                    sourceId: id,
+                  })
+                  .then((r) => {
+                    setMessage(
+                      r.registered
+                        ? "已登记同步任务，等待执行器"
+                        : "当前无可登记任务，请检查许可和预算",
+                    );
+                    reload();
+                  })
+                  .catch((e) => setMessage(e.message))
+                  .finally(() => setBusy(false));
+              }}
+            >
+              手动同步
+            </button>
             <dl className="console-details">
               <dt>最近成功</dt>
               <dd>{date(source.lastSuccessAt)}</dd>
@@ -1229,10 +1376,10 @@ function SourceWorkspace(props: WorkspaceProps) {
               </button>
             </form>
           </section>
-          {props.jobs()}
+          {props.jobs(id)}
         </>
       ) : (
-        <>{props.history()}</>
+        <>{props.history(id)}</>
       )}
       <Dialog
         open={archive}
@@ -1263,6 +1410,7 @@ type Dashboard = {
   storage: { provider: string; measured_at: string; bytes: number }[];
   unsupported: number;
   scheduler: string;
+  runnerOnline: boolean;
   autoPublishedToday: number | null;
   protectedSources: number | null;
   protectedArticles: number | null;
@@ -1271,7 +1419,9 @@ type Dashboard = {
 function Dashboard(props: WorkspaceProps) {
   const params = useSearchParams(),
     [filters, setFilters] = useState<Record<string, string>>({}),
-    [message, setMessage] = useState("");
+    [message, setMessage] = useState(""),
+    [jobsOpen, setJobsOpen] = useState(params.get("view") === "jobs"),
+    [historyOpen, setHistoryOpen] = useState(params.get("view") === "history");
   const { data, error, reload } = useConsoleV2Data<Dashboard>(
     props.request,
     "v2/overview?" + new URLSearchParams(filters),
@@ -1283,12 +1433,23 @@ function Dashboard(props: WorkspaceProps) {
       ["已启用", stats.enabled],
       ["已暂停", stats.paused],
       ["停运或失效", stats.unavailable],
-      ["需人工导入", data.unsupported],
-      ["今日新增文章", stats.todayNew],
+      ["未配置自动连接器", data.unsupported],
+      [
+        filters.from || filters.to ? "范围内发现出处" : "今日发现出处",
+        stats.discoveredToday,
+      ],
+      [
+        filters.from || filters.to ? "范围内新增文章" : "今日新增文章",
+        stats.todayNew,
+      ],
       ["待人工处理", stats.pending],
       ["采集异常", stats.failed],
+      ["发布阻断", stats.blocked],
       ["撤回或过期", stats.inactive],
-      ["今日自动发布", data.autoPublishedToday],
+      [
+        filters.from || filters.to ? "范围内自动发布" : "今日自动发布",
+        data.autoPublishedToday,
+      ],
       ["白名单来源", data.protectedSources],
       ["白名单文章", data.protectedArticles],
     ];
@@ -1312,6 +1473,25 @@ function Dashboard(props: WorkspaceProps) {
       </div>
       <section className="console-card">
         <h2>信息源同步设置</h2>
+        <p>本地执行器在线时才会完成同步；任务登记不代表采集完成。</p>
+        <button
+          disabled={props.actor.role !== "admin"}
+          onClick={() =>
+            void props
+              .request<{ registered: number; state: string }>(
+                "v2/sync",
+                "POST",
+                { commandId: crypto.randomUUID() },
+              )
+              .then((r) => {
+                setMessage(`已登记${r.registered}个任务`);
+                reload();
+              })
+              .catch((e) => setMessage(e.message))
+          }
+        >
+          立即检查到期来源
+        </button>
         <div className="console-v2-sync-line">
           <div>
             <span>最近完成</span>
@@ -1325,7 +1505,8 @@ function Dashboard(props: WorkspaceProps) {
             <span>执行器</span>
             <strong>
               {data.settings.runner_last_at
-                ? "最近在线 " + date(data.settings.runner_last_at)
+                ? (!data.runnerOnline ? "离线；上次 " : "最近在线 ") +
+                  date(data.settings.runner_last_at)
                 : "未连接"}
             </strong>
           </div>
@@ -1340,7 +1521,7 @@ function Dashboard(props: WorkspaceProps) {
                 ...cmd(data.settings.version),
                 syncHours: Number(f.get("hours")),
                 autoSync: data.settings.auto_sync_enabled === 1,
-                networkBudget: data.settings.network_budget,
+                networkBudget: Number(f.get("budget")),
                 earliestImportDay: data.settings.earliest_import_day,
                 note: "管理员调整全局同步周期",
               })
@@ -1362,6 +1543,16 @@ function Dashboard(props: WorkspaceProps) {
               </option>
             ))}
           </select>
+          <label>
+            日请求预算
+            <input
+              name="budget"
+              type="number"
+              min="2"
+              max="20"
+              defaultValue={data.settings.network_budget}
+            />
+          </label>
           <button disabled={props.actor.role !== "admin"}>保存同步设置</button>
           <button
             type="button"
@@ -1399,11 +1590,21 @@ function Dashboard(props: WorkspaceProps) {
         </p>
         <Feedback message={message} />
       </section>
+      <RunnerTokens
+        request={props.request}
+        admin={props.actor.role === "admin"}
+      />
       <section className="console-card">
         <h2>D1存储</h2>
         {data.storage.length ? (
           <>
             <strong>{(data.storage[0].bytes / 1048576).toFixed(2)} MiB</strong>
+            {data.storage.length > 1 && (
+              <p>
+                相对上次实测变化 {data.storage[0].bytes - data.storage[1].bytes}{" "}
+                字节
+              </p>
+            )}
             <p>
               {data.storage[0].provider === "cloudflare_api"
                 ? "Cloudflare实测"
@@ -1416,18 +1617,30 @@ function Dashboard(props: WorkspaceProps) {
         )}
       </section>
       <ConsoleV2Filters
-        fields={sourceFilters.slice(0, 5)}
+        fields={[
+          ...sourceFilters.slice(0, 5),
+          { name: "from", label: "统计起日", type: "date" },
+          { name: "to", label: "统计止日", type: "date" },
+        ]}
         values={filters}
         onChange={setFilters}
       />
       <p>{data.filteredSources} 个来源符合筛选</p>
-      <details className="console-card" open={params.get("view") === "jobs"}>
+      <details
+        className="console-card"
+        open={jobsOpen}
+        onToggle={(e) => setJobsOpen(e.currentTarget.open)}
+      >
         <summary>最近运行与采集任务</summary>
-        {props.jobs()}
+        {jobsOpen && props.jobs()}
       </details>
-      <details className="console-card" open={params.get("view") === "history"}>
+      <details
+        className="console-card"
+        open={historyOpen}
+        onToggle={(e) => setHistoryOpen(e.currentTarget.open)}
+      >
         <summary>高级操作历史</summary>
-        {props.history()}
+        {historyOpen && props.history()}
       </details>
     </>
   );
@@ -1440,7 +1653,11 @@ export function ConsoleV2Workspace(props: WorkspaceProps) {
         <div className="console-heading">
           <h1>内容审核</h1>
         </div>
-        <ConsoleV2Articles request={props.request} exceptions />
+        <ConsoleV2Articles
+          request={props.request}
+          exceptions
+          canReview={["admin", "reviewer"].includes(props.actor.role)}
+        />
       </>
     );
   if (props.section === "whitelist")

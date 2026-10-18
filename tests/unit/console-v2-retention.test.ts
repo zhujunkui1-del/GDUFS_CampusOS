@@ -67,6 +67,54 @@ async function setup(purge = true) {
   return { ...f, store, s, doc, preview };
 }
 describe("V2 whitelist, cutoff and bounded retention (disposable DB only)", () => {
+  it("preserves a prior manual withdrawal across cleanup and explicit whitelist restoration", async () => {
+    const f = await setup();
+    try {
+      f.doc("withdrawn", "2020-01-01");
+      f.sqlite.exec(
+        "INSERT INTO console_document_controls(document_id,hold_reason,hold_at) VALUES('withdrawn','manual_withdrawal','2026-01-01')",
+      );
+      let p = await f.preview();
+      await f.store.actPlan(p.id, {
+        ...cmd(p.version),
+        action: "mark",
+        confirmation: p.confirmation,
+      });
+      p = await f.store.plan(p.id);
+      for (let i = 0; i < 10 && p.state !== "complete"; i++) {
+        await f.store.actPlan(p.id, {
+          ...cmd(p.version),
+          action: "purge",
+          confirmation: "永久" + p.confirmation,
+        });
+        p = await f.store.plan(p.id);
+      }
+      await f.store.protection({
+        ...cmd(2),
+        type: "document",
+        targetId: "withdrawn",
+        active: true,
+        historyExempt: true,
+        expiresAt: null,
+        reason: "明确保留并恢复资料供重新核验",
+      });
+      await f.store.releaseTombstone("withdrawn", cmd(3));
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT hold_reason FROM console_document_controls WHERE document_id='withdrawn'",
+          )
+          .get()?.hold_reason,
+      ).toBe("manual_withdrawal");
+      expect(
+        f.sqlite
+          .prepare("SELECT count(*) n FROM console_public_documents")
+          .get()?.n,
+      ).toBe(0);
+    } finally {
+      f.close();
+    }
+  });
   it("separates old/valid/unknown/protected/referenced and Shanghai cutoff dates", async () => {
     const f = await setup();
     try {
@@ -152,9 +200,29 @@ describe("V2 whitelist, cutoff and bounded retention (disposable DB only)", () =
       ).toBeGreaterThan(5);
       expect(() =>
         f.sqlite.exec(
-          "UPDATE knowledge_documents SET input_hash='new',body='late content' WHERE id='old'",
+          "UPDATE knowledge_documents SET input_hash='bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',body='late content' WHERE id='old'",
         ),
       ).toThrow(/RETENTION/);
+      await f.store.protection({
+        ...cmd(2),
+        type: "document",
+        targetId: "old",
+        active: true,
+        historyExempt: true,
+        expiresAt: null,
+        reason: "明确保留并重新导入长期政策",
+      });
+      await f.store.releaseTombstone("old", cmd(3));
+      f.sqlite.exec(
+        "UPDATE knowledge_documents SET input_hash='cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc',body='重新合法导入的内容',content_revision=content_revision+1 WHERE id='old'",
+      );
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT publication_status FROM knowledge_documents WHERE id='old'",
+          )
+          .get()?.publication_status,
+      ).toBe("withdrawn");
       expect(f.sqlite.prepare("PRAGMA foreign_key_check").all()).toEqual([]);
     } finally {
       f.close();

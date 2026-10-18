@@ -53,6 +53,30 @@ export class ConsoleRetentionStore extends ConsoleAutomationStore {
       where.push("s.channel_type=?");
       args.push(q.sourceType);
     }
+    if (q.operating) {
+      where.push("s.operating_status=?");
+      args.push(q.operating);
+    }
+    if (q.permanent)
+      where.push(
+        q.permanent === "1"
+          ? "p.expires_at_ms IS NULL"
+          : "p.expires_at_ms IS NOT NULL",
+      );
+    if (q.addedAfter) {
+      where.push("date(p.created_at,'+8 hours')>=?");
+      args.push(q.addedAfter);
+    }
+    if (q.expiresBefore) {
+      where.push("date(p.expires_at_ms/1000,'unixepoch','+8 hours')<=?");
+      args.push(q.expiresBefore);
+    }
+    if (q.category) {
+      where.push(
+        "(d.knowledge_category=? OR d.radar_category=? OR (p.target_type='source' AND EXISTS(SELECT 1 FROM knowledge_documents x WHERE (x.source_id=p.target_id OR EXISTS(SELECT 1 FROM document_origins o WHERE o.document_id=x.id AND o.source_id=p.target_id)) AND (x.knowledge_category=? OR x.radar_category=?))))",
+      );
+      args.push(q.category, q.category, q.category, q.category);
+    }
     where.push(
       q.status === "removed"
         ? "p.active=0"
@@ -65,7 +89,7 @@ export class ConsoleRetentionStore extends ConsoleAutomationStore {
       .prepare(
         "SELECT p.*,COALESCE(d.title,s.display_name) AS title,COALESCE(d.version,s.version) AS target_version,s.display_name AS source_name,s.channel_type,s.operating_status,(CASE WHEN p.target_type='source' THEN (SELECT count(DISTINCT x.id) FROM knowledge_documents x WHERE x.source_id=p.target_id OR EXISTS(SELECT 1 FROM document_origins o WHERE o.document_id=x.id AND o.source_id=p.target_id)) ELSE 1 END) AS protected_count" +
           base +
-          " ORDER BY p.updated_at DESC,p.target_id LIMIT ? OFFSET ?",
+          ` ORDER BY ${{ updated: "p.updated_at", expires: "p.expires_at_ms", title: "COALESCE(d.title,s.display_name)" }[q.sort]} ${q.direction},p.target_id LIMIT ? OFFSET ?`,
       )
       .bind(...args, q.limit, q.offset)
       .all<Row>();
@@ -188,7 +212,7 @@ export class ConsoleRetentionStore extends ConsoleAutomationStore {
           .bind(this.now(), id),
         this.db
           .prepare(
-            "UPDATE console_document_controls SET hold_reason=NULL,hold_at=NULL,generation=generation+1 WHERE document_id=?",
+            "UPDATE console_document_controls SET hold_reason=CASE WHEN hold_reason='retention' THEN NULL ELSE hold_reason END,hold_at=CASE WHEN hold_reason='retention' THEN NULL ELSE hold_at END,generation=generation+1 WHERE document_id=?",
           )
           .bind(id),
         this.db
@@ -489,7 +513,7 @@ export class ConsoleRetentionStore extends ConsoleAutomationStore {
             .bind(this.now(), did, item.document_version),
           this.db
             .prepare(
-              "INSERT INTO console_document_controls(document_id,hold_reason,hold_at) VALUES(?,'retention',?) ON CONFLICT(document_id) DO UPDATE SET generation=generation+1,hold_reason='retention',hold_at=excluded.hold_at",
+              "INSERT INTO console_document_controls(document_id,hold_reason,hold_at) VALUES(?,'retention',?) ON CONFLICT(document_id) DO UPDATE SET generation=generation+1,hold_reason=COALESCE(console_document_controls.hold_reason,'retention'),hold_at=COALESCE(console_document_controls.hold_at,excluded.hold_at)",
             )
             .bind(did, this.now()),
           this.snapshot(did),

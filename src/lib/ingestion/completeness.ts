@@ -19,10 +19,15 @@ export function contentCompleteness(
   const issues: Issue[] = [];
   const add = (code: string, message: string) =>
     issues.push({ code, severity: "error", message });
+  if (!d.summary.trim()) add("summary", "简短说明缺失");
   if (!d.title.trim()) add("title", "标题缺失");
   if (!context.provenance)
     add("original_evidence", "需要核对原文身份、标题与发布时间");
-  if (!d.publishedAt && context.unknownDate !== "metadata_unknown")
+  if (
+    !d.publishedAt &&
+    (context.unknownDate !== "metadata_unknown" ||
+      d.rightsScope !== "metadata_only")
+  )
     add("published_at", "原发布时间未知");
   if (d.contentType === "unknown") add("classification", "内容类型待确认");
   if (d.kind === "knowledge" && !d.knowledgeCategory)

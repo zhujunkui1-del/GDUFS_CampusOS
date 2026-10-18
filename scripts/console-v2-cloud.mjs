@@ -127,8 +127,11 @@ if (process.argv.includes("--migrate") && pending.length) {
 const after = await counts(),
   names = await migrations(),
   foreignKeys = await query("PRAGMA foreign_key_check");
-const size = Number.isSafeInteger(database.file_size)
-  ? database.file_size
+const latestDatabase = await call("/d1/database/" + id);
+if (latestDatabase.name !== "campusos-preview" || latestDatabase.uuid !== id)
+  throw Error("Preview identity changed");
+const size = Number.isSafeInteger(latestDatabase.file_size)
+  ? latestDatabase.file_size
   : null;
 if (process.argv.includes("--record-storage")) {
   if (size === null || !names.includes("0014_console_v2_governance.sql"))
@@ -144,6 +147,9 @@ const report = {
   realCloud: true,
   target: "campusos-preview",
   before,
+  storageBeforeBytes: Number.isSafeInteger(database.file_size)
+    ? database.file_size
+    : null,
   after,
   migrations: names,
   sourceStateUnchanged: before.sourceHash === (await fingerprint()),

@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { sqliteD1 } from "../fixtures/sqlite-d1";
+import { ConsoleSyncStore } from "@/lib/server/console/v2-sync";
 import { IngestionStore } from "@/lib/server/console/ingestion-store";
 import { ContentInputSchema } from "@/domain/console/contracts";
 import { webProfiles, approvedUrl } from "@/lib/ingestion/profiles";
@@ -19,7 +20,7 @@ const cmd = (expectedVersion: number) => ({
   commandId: crypto.randomUUID(),
   expectedVersion,
 });
-async function setup(rights = "metadata_only") {
+async function setup(rights = "metadata_only", v2 = false, automatic = false) {
   const f = sqliteD1();
   f.sqlite
     .prepare("INSERT INTO console_admins(id,email,role) VALUES(?,?,'admin')")
@@ -41,7 +42,27 @@ async function setup(rights = "metadata_only") {
       actor.id,
       new Date().toISOString(),
     );
-  const store = new IngestionStore(f.db, actor);
+  if (v2)
+    f.sqlite
+      .prepare(
+        "UPDATE knowledge_sources SET affiliation_status='confirmed',operating_status='active',governance_checked_at=?,affiliation_evidence_json='[\"https://example.invalid/relation\"]',operating_evidence_json='[\"https://example.invalid/current\"]' WHERE id=?",
+      )
+      .run(new Date().toISOString(), p.sourceId);
+  const store = v2
+    ? new ConsoleSyncStore(f.db, actor)
+    : new IngestionStore(f.db, actor);
+  if (automatic && store instanceof ConsoleSyncStore)
+    await store.setAutoPolicy(p.sourceId, {
+      ...cmd(1),
+      enabled: true,
+      rightsScope: "metadata_only",
+      defaultCategory: "administrative_services",
+      unknownDate: "review",
+      allowUnofficial: false,
+      validityDays: 1,
+      evidenceUrls: [p.origin + "/"],
+      note: "隔离来源级预先自动发布授权",
+    });
   const job = await store.createJob({
     commandId: crypto.randomUUID(),
     sourceId: p.sourceId,
@@ -94,6 +115,161 @@ async function setup(rights = "metadata_only") {
   return { ...f, store, job, url, article, claim, commit, discover };
 }
 describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
+  it("V2 preserves human correction on unchanged fetch and lets real author changes supersede it with history", async () => {
+    const f = await setup("metadata_only", true);
+    try {
+      await f.discover();
+      await f.commit(await f.claim(), {
+        article: f.article,
+        bodyHash: "a".repeat(64),
+      });
+      const origin = f.sqlite
+        .prepare("SELECT document_id FROM document_origins")
+        .get()!;
+      const id = String(origin.document_id);
+      let current = await f.store.document(id);
+      const input = (await f.store.version(id, current.version)).input;
+      await f.store.writeContent(id, {
+        ...input,
+        summary: "管理员修订的隔离说明",
+        commandId: crypto.randomUUID(),
+        expectedVersion: current.version,
+      });
+      current = await f.store.document(id);
+      const correctedVersion = current.version;
+      const job = await f.store.createJob({
+        commandId: crypto.randomUUID(),
+        sourceId: p.sourceId,
+        maxArticles: 1,
+        mode: "revalidate",
+      });
+      await f.discover(job.id);
+      await f.commit(await f.claim(job.id), {
+        article: f.article,
+        bodyHash: "a".repeat(64),
+      });
+      expect((await f.store.document(id)).summary).toBe("管理员修订的隔离说明");
+      const changed = await f.store.createJob({
+        commandId: crypto.randomUUID(),
+        sourceId: p.sourceId,
+        maxArticles: 1,
+        mode: "revalidate",
+      });
+      await f.discover(changed.id);
+      await f.commit(await f.claim(changed.id), {
+        article: { ...f.article, title: "来源作者的新通知" },
+        bodyHash: "b".repeat(64),
+      });
+      current = await f.store.document(id);
+      expect(current.title).toBe("来源作者的新通知");
+      expect(current.summary).not.toBe("管理员修订的隔离说明");
+      expect((await f.store.version(id, correctedVersion)).input.summary).toBe(
+        "管理员修订的隔离说明",
+      );
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT last_overridden_fields_json FROM console_document_controls WHERE document_id=?",
+          )
+          .get(id)?.last_overridden_fields_json,
+      ).toContain("summary");
+      expect(current.publicationStatus).toBe("draft");
+    } finally {
+      f.close();
+    }
+  });
+  it("auto-publishes a bounded eight-document cohort and routes only the two activity exceptions to review", async () => {
+    let published = 0,
+      review = 0;
+    for (let i = 0; i < 8; i++) {
+      const f = await setup("metadata_only", true, true);
+      try {
+        await f.discover();
+        await f.commit(await f.claim(), {
+          article: {
+            ...f.article,
+            title: i < 6 ? "正常校园通知 " + i : "讲座报名 " + i,
+            contentType: i < 6 ? "notice" : "event",
+          },
+          bodyHash: "a".repeat(64),
+          publishedRaw: "2020年1月1日",
+        });
+        const row = f.sqlite
+          .prepare("SELECT publication_status FROM knowledge_documents")
+          .get()!;
+        if (row.publication_status === "published") published++;
+        const check = f.sqlite
+          .prepare(
+            "SELECT outcome FROM console_content_checks ORDER BY rowid DESC LIMIT 1",
+          )
+          .get()!;
+        if (check.outcome === "review") review++;
+        expect(
+          f.sqlite
+            .prepare("SELECT count(*) n FROM console_public_documents")
+            .get()?.n,
+        ).toBe(i < 6 ? 1 : 0);
+      } finally {
+        f.close();
+      }
+    }
+    expect({ published, review, denominator: 8 }).toEqual({
+      published: 6,
+      review: 2,
+      denominator: 8,
+    });
+  });
+  it("keeps metadata-only as default and limits explicitly licensed body extraction", () => {
+    const c = new OfficialWebConnector(p),
+      url = p.origin + "/info/1056/1.htm",
+      parsed = c.parse(
+        '<html><head><title>隔离通知</title></head><body><div id="vsb_content_501"><div class="v_news_content"><p>' +
+          "隔离许可文本".repeat(120) +
+          "</p></div></div></body></html>",
+        url,
+      );
+    expect(c.normalize(parsed, url).bodyStatus).toBe("not_provided");
+    expect(c.normalize(parsed, url, "excerpt_and_link")).toMatchObject({
+      bodyStatus: "partial",
+      rightsScope: "excerpt_and_link",
+    });
+    expect(c.normalize(parsed, url, "excerpt_and_link").body.length).toBe(500);
+    expect(c.normalize(parsed, url, "licensed_full_text").body).toBe(
+      parsed.bodyText,
+    );
+  });
+  it("observes an old URL without creating an article and does not refetch its detail on the next run", async () => {
+    const f = await setup("metadata_only", true);
+    try {
+      f.sqlite.exec(
+        "UPDATE console_engine_settings SET earliest_import_day='2025-09-01'",
+      );
+      await f.discover();
+      await f.commit(await f.claim(), {
+        article: f.article,
+        bodyHash: "a".repeat(64),
+      });
+      expect(
+        f.sqlite.prepare("SELECT count(*) n FROM knowledge_documents").get()?.n,
+      ).toBe(0);
+      expect(
+        f.sqlite.prepare("SELECT reason FROM console_intake_skips").get()
+          ?.reason,
+      ).toBe("cutoff");
+      const next = await f.store.createJob({
+        commandId: crypto.randomUUID(),
+        sourceId: p.sourceId,
+        maxArticles: 1,
+      });
+      await f.discover(next.id);
+      expect((await f.store.job(next.id)).phase).toBe("complete");
+      expect(
+        f.sqlite.prepare("SELECT count(*) n FROM knowledge_documents").get()?.n,
+      ).toBe(0);
+    } finally {
+      f.close();
+    }
+  });
   it("requires policy reapproval after a parser release and rejects old queued or in-flight rules", async () => {
     const f = await setup();
     try {

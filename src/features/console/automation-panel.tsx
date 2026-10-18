@@ -191,7 +191,7 @@ export function ArticleChecks({
         {},
       );
       setMessage(
-        r.published
+        r.published && r.outcome === "pass"
           ? "已通过门禁并发布"
           : r.outcome === "blocked"
             ? "当前发布受限"

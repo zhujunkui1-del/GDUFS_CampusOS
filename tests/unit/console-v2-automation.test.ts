@@ -61,6 +61,69 @@ async function setup() {
   return { ...f, store, s, batch };
 }
 describe("V2 restricted system publisher", () => {
+  it("binds an explicit administrator original check to the same manual import transaction", async () => {
+    const f = await setup();
+    try {
+      const result = await f.store.importBatch({
+        ...f.batch,
+        items: f.batch.items.map((item) => ({
+          ...item,
+          originalChecked: true,
+        })),
+      });
+      expect(result.processing[0]).toMatchObject({
+        outcome: "pass",
+        published: true,
+      });
+      expect(
+        f.sqlite
+          .prepare("SELECT count(*) n FROM console_content_attestations")
+          .get()?.n,
+      ).toBe(1);
+    } finally {
+      f.close();
+    }
+  });
+  it("does not let automatic retries undo a human rejection/return, but can publish after explicit approval", async () => {
+    const f = await setup();
+    try {
+      const r = await f.store.importBatch({
+          ...f.batch,
+          items: f.batch.items.map((i) => ({ ...i, originalChecked: true })),
+        }),
+        id = r.items[0].id;
+      let d = await f.store.document(id);
+      await f.store.review(id, {
+        ...cmd(d.version),
+        decision: "rejected",
+        note: "人工明确拒绝此修订",
+      });
+      expect((await f.store.document(id)).publicationStatus).toBe("draft");
+      expect(await f.store.analyse(id)).toMatchObject({
+        outcome: "blocked",
+        published: false,
+      });
+      d = await f.store.document(id);
+      await f.store.review(id, {
+        ...cmd(d.version),
+        decision: "returned",
+        note: "退回补充核对理由",
+      });
+      expect(await f.store.analyse(id)).toMatchObject({
+        outcome: "review",
+        published: false,
+      });
+      d = await f.store.document(id);
+      await f.store.review(id, {
+        ...cmd(d.version),
+        decision: "approved",
+        note: "负责人已重新核对并批准",
+      });
+      expect((await f.store.document(id)).publicationStatus).toBe("published");
+    } finally {
+      f.close();
+    }
+  });
   it("requires original evidence, publishes ordinary notices without event fields, records system audit and idempotent checks", async () => {
     const f = await setup();
     try {

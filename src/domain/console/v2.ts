@@ -1,5 +1,8 @@
 import { z } from "zod";
 import {
+  VerificationSchema,
+  PermissionSchema,
+  OfficialStatusSchema,
   CommandSchema,
   SafeUrlSchema,
   SourceInputSchema,
@@ -64,6 +67,9 @@ export const SourceSyncSchema = CommandSchema.extend({
 export const SourcesV2Query = z
   .object({
     q: z.string().trim().max(100).optional(),
+    verification: VerificationSchema.optional(),
+    permission: PermissionSchema.optional(),
+    official: OfficialStatusSchema.optional(),
     type: SourceTypeSchema.optional(),
     organization: z.string().max(100).optional(),
     campus: CampusScopeSchema.optional(),
@@ -118,6 +124,9 @@ export const ArticleV2Query = z
   .strict();
 export type Governance = z.infer<typeof GovernanceSchema>;
 export type SourceV2 = {
+  verificationStatus: z.infer<typeof VerificationSchema>;
+  permissionStatus: z.infer<typeof PermissionSchema>;
+  officialStatus: z.infer<typeof OfficialStatusSchema>;
   id: string;
   displayName: string;
   sourceType: z.infer<typeof SourceTypeSchema>;

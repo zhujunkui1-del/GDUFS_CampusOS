@@ -1,0 +1,40 @@
+{
+  "recordedAt": "2026-10-18",
+  "unit": {
+    "passed": 335,
+    "failed": 0
+  },
+  "strictTime": {
+    "passed": 10,
+    "failed": 0
+  },
+  "consoleE2E": {
+    "chromeDesktop": 1,
+    "chromeMobileViewport": 1,
+    "edgeDesktop": 1,
+    "edgeMobileViewport": 1
+  },
+  "regression": {
+    "chromePassed": 62,
+    "edgePassed": 62,
+    "models": "mock UI only; real local map Skills"
+  },
+  "realPhoneHardware": false,
+  "modelCalls": 0,
+  "nextOpenNextBuild": "passed",
+  "credentialScan": {
+    "files": 1360,
+    "hits": 0
+  },
+  "migration": "empty/history/rollback/FK passed",
+  "businessTables": 72,
+  "remoteCleanup": false,
+  "cohort": {
+    "isolated": true,
+    "denominator": 8,
+    "autoPublished": 6,
+    "review": 2,
+    "autoRate": 0.75,
+    "reviewRate": 0.25
+  }
+}

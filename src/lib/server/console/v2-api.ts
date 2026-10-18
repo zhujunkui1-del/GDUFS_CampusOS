@@ -2,9 +2,9 @@ import { z } from "zod";
 import { ApiError } from "../errors";
 import { ConsoleIdSchema } from "@/domain/console/contracts";
 import { readJson } from "../assistant/http-context";
-import type { ConsoleRetentionStore } from "./v2-retention";
+import type { ConsoleSyncStore } from "./v2-sync";
 export async function consoleV2Api(
-  store: ConsoleRetentionStore,
+  store: ConsoleSyncStore,
   request: Request,
   path: string[],
   query: unknown,
@@ -14,6 +14,15 @@ export async function consoleV2Api(
   if (id) ConsoleIdSchema.parse(id);
   const read = () => readJson(request, 262144);
   if (request.method === "GET") {
+    if (section === "operations" && (id === "jobs" || id === "history"))
+      return store.operationRecords(undefined, id, query);
+    if (
+      section === "sources" &&
+      id &&
+      (action === "jobs" || action === "history")
+    )
+      return store.operationRecords(id, action, query);
+    if (section === "runner-tokens") return store.runnerTokens();
     if (section === "retention" && id && action === "items")
       return store.planItems(id, query);
     if (section === "whitelist") return store.protections(query);
@@ -29,6 +38,40 @@ export async function consoleV2Api(
     if (section === "checks" && id) return store.checkDetails(id);
   }
   if (request.method === "POST") {
+    if (section === "whitelist" && id === "batch") {
+      const { ProtectionSchema } = await import("@/domain/console/retention");
+      const items = z
+        .array(ProtectionSchema)
+        .min(1)
+        .max(5)
+        .refine(
+          (rows) =>
+            new Set(rows.map((r) => r.type + ":" + r.targetId)).size ===
+            rows.length,
+        )
+        .parse(await read());
+      const results = [];
+      for (const item of items)
+        try {
+          results.push({ ok: true, ...(await store.protection(item)) });
+        } catch (e) {
+          results.push({
+            ok: false,
+            id: item.targetId,
+            error: e instanceof ApiError ? e.message : "保存失败，请刷新重试。",
+          });
+        }
+      return { items: results };
+    }
+    if (section === "sources" && id && action === "operator-scope")
+      return store.assignOperator(id, await read());
+    if (section === "permits" && id) return store.permit(id, await read());
+    if (section === "runner-tokens")
+      return id
+        ? store.revokeRunnerToken(id, await read())
+        : store.createRunnerToken(await read());
+    if (section === "sync") return store.syncNow(await read());
+    if (section === "recheck") return store.recheckPending();
     if (section === "whitelist") return store.protection(await read());
     if (section === "retention")
       return id

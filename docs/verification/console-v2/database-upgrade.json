@@ -1,11 +1,11 @@
 {
-  "recordedAt": "2026-10-18T02:20:30.809Z",
+  "recordedAt": "2026-10-18T04:07:29.295Z",
   "emptyMigration": true,
   "populatedUpgrade": true,
   "oldRowsAndPrivateDataUnchanged": true,
   "failedMigrationRollback": true,
   "foreignKeyViolations": 0,
-  "businessTables": 68,
+  "businessTables": 72,
   "dangerousTableOperations": false,
   "remoteTouched": false,
   "migrations": [
@@ -20,6 +20,26 @@
     {
       "file": "0016_console_v2_retention.sql",
       "sha256": "8cb4cf5bb9447d73170baf3df742bd4c5ea8ebe26f0d817429008376b8133d0a"
+    },
+    {
+      "file": "0017_console_v2_scheduler.sql",
+      "sha256": "3d3632a86a72093111d5c2c2db626d1c7b6816e5475527c6ae32543d9ccf2c1f"
+    },
+    {
+      "file": "0018_console_v2_public_freshness.sql",
+      "sha256": "54d3b14109890a223b4ef426cfbaf342fff39e13937e23c02f0df04421634302"
+    },
+    {
+      "file": "0019_console_v2_stop_guards.sql",
+      "sha256": "7350644467eacd43629a3b5ff05e69ee608bf2dd28fd84a0456319acd6bb52a9"
+    },
+    {
+      "file": "0020_console_v2_intake_observations.sql",
+      "sha256": "359a4596128828c186b1ed1939849a9799c5684dec2e8fadfac7d677bc19cc29"
+    },
+    {
+      "file": "0021_console_v2_review_holds.sql",
+      "sha256": "b2be1b44db1abce96a556bdc671483eb8adbcbd5382cb5dc44d2f7612a25fd0e"
     }
   ]
 }

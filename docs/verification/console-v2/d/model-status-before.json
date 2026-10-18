@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-18T04:12:57.079Z",
+  "beforeV2Deployment": true,
+  "httpStatus": 200,
+  "chatAvailable": false,
+  "storageReady": true,
+  "modelReady": false,
+  "reason": "MODEL_TEST_REQUIRED",
+  "modelFieldNames": [
+    "ready",
+    "code"
+  ],
+  "modelCalls": 0
+}

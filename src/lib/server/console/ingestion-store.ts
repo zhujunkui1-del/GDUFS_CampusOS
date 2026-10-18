@@ -33,6 +33,68 @@ type Row = Record<string, string | number | null>;
 const json = JSON.stringify;
 
 export class IngestionStore extends ConsoleStore {
+  private async intakeBlock(
+    sourceId: string,
+    url: string,
+    publishedAt: string | null | undefined,
+    existingId: string | null = null,
+  ): Promise<"cutoff" | "tombstone" | null> {
+    const row = await this.db
+      .prepare(
+        `SELECT e.earliest_import_day,
+    EXISTS(SELECT 1 FROM console_cleanup_tombstones WHERE canonical_url=? AND released_at IS NULL) OR EXISTS(SELECT 1 FROM knowledge_documents d JOIN console_document_controls c ON c.document_id=d.id WHERE d.url=? AND c.hold_reason='retention') OR EXISTS(SELECT 1 FROM knowledge_documents d JOIN console_cleanup_items i ON i.document_id=d.id WHERE d.url=? AND i.stage IN('marked','versions','payloads','chunks')) AS tombstoned,
+    EXISTS(SELECT 1 FROM console_protections WHERE target_type='source' AND target_id=? AND active=1 AND history_exempt=1 AND (expires_at_ms IS NULL OR expires_at_ms>?)) OR EXISTS(SELECT 1 FROM knowledge_documents d JOIN console_history_exempt h ON h.id=d.id WHERE d.url=?) AS exempt,
+    EXISTS(SELECT 1 FROM knowledge_documents d WHERE d.source_id=? AND d.url=? AND d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND d.lifecycle_status='active' AND (d.valid_until IS NULL OR julianday(d.valid_until)>julianday('now'))) AS maintenance,
+    (SELECT published_at FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private') AS known_date FROM console_engine_settings e WHERE e.id='console-v2-settings'`,
+      )
+      .bind(
+        url,
+        url,
+        url,
+        sourceId,
+        Date.parse(this.now()),
+        url,
+        sourceId,
+        url,
+        existingId,
+      )
+      .first<Row>();
+    if (row?.tombstoned) return "tombstone";
+    if (!row?.earliest_import_day || row.exempt || row.maintenance) return null;
+    const date = publishedAt === undefined ? row.known_date : publishedAt;
+    const day = date
+      ? String(date).length === 10
+        ? String(date)
+        : new Date(Date.parse(String(date)) + 28800000)
+            .toISOString()
+            .slice(0, 10)
+      : null;
+    return !day || day < String(row.earliest_import_day) ? "cutoff" : null;
+  }
+  private skipStatement(
+    id: string,
+    jobId: string,
+    sourceId: string,
+    url: string,
+    reason: "cutoff" | "tombstone",
+    publishedAt: string | null,
+    documentId: string | null,
+  ) {
+    return this.db
+      .prepare(
+        "INSERT INTO console_intake_skips(id,job_id,source_id,document_id,canonical_url,reason,published_at,observed_at) VALUES(?,?,?,?,?,?,?,?)",
+      )
+      .bind(
+        id,
+        jobId,
+        sourceId,
+        documentId,
+        url,
+        reason,
+        publishedAt,
+        this.now(),
+      );
+  }
   async policy(sourceId: string) {
     await this.source(sourceId);
     const p = await this.db
@@ -76,7 +138,7 @@ export class IngestionStore extends ConsoleStore {
             value.note,
             value.robotsStatus,
             value.robotsHash,
-            Date.parse(this.now()) + 86400000,
+            Date.parse(this.now()) + (value.validityDays || 1) * 86400000,
             this.actor.id,
             this.now(),
           ),
@@ -262,6 +324,11 @@ export class IngestionStore extends ConsoleStore {
         "write",
         sourceId,
       );
+    if (
+      Number(row.lease_until_ms) <= Date.parse(this.now()) ||
+      row.control_state !== "active"
+    )
+      throw new ApiError("CONFLICT", "任务租约已失效，请停止提交。");
     if (row.rule_version !== profile.ruleVersion)
       throw new ApiError("CONFLICT", "采集规则已更新，请核验策略后新建任务。");
     const checkpoint = CheckpointSchema.parse(
@@ -300,6 +367,25 @@ export class IngestionStore extends ConsoleStore {
       }
     } else if (phase === "discover") {
       checkpoint.pagesSeen.push(value.url);
+      const ignored = new Set<string>();
+      if (value.discovered.length) {
+        const retired = await this.db
+          .prepare(
+            `SELECT canonical_url,published_at,document_id FROM console_intake_skips WHERE source_id=? AND canonical_url IN(${value.discovered.map(() => "?").join(",")}) GROUP BY canonical_url`,
+          )
+          .bind(sourceId, ...value.discovered)
+          .all<Row>();
+        for (const r of retired.results)
+          if (
+            await this.intakeBlock(
+              sourceId,
+              String(r.canonical_url),
+              r.published_at ? String(r.published_at) : null,
+              r.document_id ? String(r.document_id) : null,
+            )
+          )
+            ignored.add(String(r.canonical_url));
+      }
       const known = value.discovered.length
         ? (
             await this.db
@@ -308,9 +394,13 @@ export class IngestionStore extends ConsoleStore {
               )
               .bind(sourceId, ...value.discovered)
               .all<{ canonical_url: string }>()
-          ).results.map((x) => x.canonical_url)
+          ).results
+            .map((x) => x.canonical_url)
+            .filter((url) => !ignored.has(url))
         : [];
-      const unknown = value.discovered.filter((url) => !known.includes(url));
+      const unknown = value.discovered.filter(
+        (url) => !known.includes(url) && !ignored.has(url),
+      );
       checkpoint.urls = (
         checkpoint.revalidate && known.length ? known : [...unknown, ...known]
       ).slice(0, Number(row.max_articles));
@@ -330,17 +420,49 @@ export class IngestionStore extends ConsoleStore {
         status = "completed";
       }
     } else {
-      const origin = await this.db
+      let origin = await this.db
         .prepare(
           "SELECT * FROM document_origins WHERE source_id=? AND canonical_url=?",
         )
         .bind(sourceId, value.url)
         .first<Row>();
+      if (!origin) {
+        const same = await this.db
+          .prepare(
+            "SELECT id FROM knowledge_documents WHERE source_id=? AND url=? AND owner_user_id IS NULL AND data_domain<>'user_private' ORDER BY id LIMIT 2",
+          )
+          .bind(sourceId, value.url)
+          .all<{ id: string }>();
+        if (same.results.length > 1)
+          throw new ApiError("CONFLICT", "原文已有冲突记录，请核对原来源。");
+        if (same.results[0])
+          origin = { document_id: same.results[0].id, input_fingerprint: null };
+      }
       if (value.outcome === "not_modified") {
-        if (!origin)
+        if (!origin?.id)
           throw new ApiError("INVALID_ARGUMENT", "没有可复用的原文记录。");
-        duplicate = 1;
-        documentId = String(origin.document_id);
+        const reject = await this.intakeBlock(
+          sourceId,
+          value.url,
+          undefined,
+          String(origin.document_id),
+        );
+        if (reject)
+          statements.push(
+            this.skipStatement(
+              value.commandId,
+              id,
+              sourceId,
+              value.url,
+              reject,
+              null,
+              String(origin.document_id),
+            ),
+          );
+        else {
+          duplicate = 1;
+          documentId = String(origin.document_id);
+        }
       } else {
         if (
           !value.article ||
@@ -370,180 +492,209 @@ export class IngestionStore extends ConsoleStore {
             "INVALID_ARGUMENT",
             "当前策略只允许元数据，不接受正文或活动提取。",
           );
-        const fingerprint = await tokenHash(
-          json([value.article, value.bodyHash]),
+        const reject = await this.intakeBlock(
+          sourceId,
+          value.url,
+          value.article.publishedAt,
+          origin ? String(origin.document_id) : null,
         );
-        if (origin?.input_fingerprint === fingerprint) {
-          duplicate = 1;
-          documentId = String(origin.document_id);
-        } else {
-          const previous = origin
-            ? await this.document(String(origin.document_id))
-            : null;
-          const prepared = await this.prepareContentWrite(
-            previous?.id,
-            {
-              ...value.article,
-              commandId: value.commandId,
-              expectedVersion: previous?.version || 0,
-            },
-            fingerprint,
+        if (reject)
+          statements.push(
+            this.skipStatement(
+              value.commandId,
+              id,
+              sourceId,
+              value.url,
+              reject,
+              value.article.publishedAt,
+              origin ? String(origin.document_id) : null,
+            ),
           );
-          // Cross-URL equal fingerprints are review links, never inherited approval.
-          const possibleDuplicate = !origin
-            ? await this.db
-                .prepare(
-                  "SELECT DISTINCT d.id FROM document_origins o JOIN knowledge_documents d ON d.id=o.document_id JOIN document_fetches f ON f.document_id=d.id WHERE o.source_id=? AND f.body_hash=? AND d.title=? AND d.published_at IS ? AND d.publisher IS ? AND d.owner_user_id IS NULL AND d.data_domain<>'user_private' LIMIT 1",
-                )
-                .bind(
-                  sourceId,
-                  value.bodyHash,
-                  value.article.title,
-                  value.article.publishedAt,
-                  value.article.publisher,
-                )
-                .first<{ id: string }>()
-            : null;
-          documentId = prepared.key;
-          expectedDocumentVersion = previous?.version || 0;
-          statements.push(...prepared.statements);
-          const version = (previous?.version || 0) + 1;
-          for (const chunk of value.chunks) {
-            if (
-              value.article.body.slice(chunk.startOffset, chunk.endOffset) !==
-              chunk.text
-            )
-              throw new ApiError("INVALID_ARGUMENT", "知识片段与原文不一致。");
-            statements.push(
-              this.db
-                .prepare(
-                  "INSERT INTO knowledge_chunks(id,document_id,text,start_offset,end_offset,snapshot_version,content_revision,input_hash) VALUES(?,?,?,?,?,?,?,?)",
-                )
-                .bind(
-                  crypto.randomUUID(),
-                  documentId,
-                  chunk.text,
-                  chunk.startOffset,
-                  chunk.endOffset,
-                  version,
-                  prepared.contentRevision,
-                  prepared.inputHash,
-                ),
+        else {
+          const fingerprint = await tokenHash(
+            json([value.article, value.bodyHash]),
+          );
+          if (origin?.input_fingerprint === fingerprint) {
+            duplicate = 1;
+            documentId = String(origin.document_id);
+          } else {
+            const previous = origin
+              ? await this.document(String(origin.document_id))
+              : null;
+            const prepared = await this.prepareContentWrite(
+              previous?.id,
+              {
+                ...value.article,
+                commandId: value.commandId,
+                expectedVersion: previous?.version || 0,
+              },
+              fingerprint,
             );
-          }
-          // Only header title/date evidence is retained under metadata-only permission.
-          for (const [field, span] of [
-            ["title", value.article.title],
-            ["published_at", value.publishedRaw],
-          ] as const)
-            if (span)
+            // Cross-URL equal fingerprints are review links, never inherited approval.
+            const possibleDuplicate = !origin
+              ? await this.db
+                  .prepare(
+                    "SELECT DISTINCT d.id FROM document_origins o JOIN knowledge_documents d ON d.id=o.document_id JOIN document_fetches f ON f.document_id=d.id WHERE o.source_id=? AND f.body_hash=? AND d.title=? AND d.published_at IS ? AND d.publisher IS ? AND d.owner_user_id IS NULL AND d.data_domain<>'user_private' LIMIT 1",
+                  )
+                  .bind(
+                    sourceId,
+                    value.bodyHash,
+                    value.article.title,
+                    value.article.publishedAt,
+                    value.article.publisher,
+                  )
+                  .first<{ id: string }>()
+              : null;
+            documentId = prepared.key;
+            expectedDocumentVersion = previous?.version || 0;
+            statements.push(...prepared.statements);
+            const version = (previous?.version || 0) + 1;
+            for (const chunk of value.chunks) {
+              if (
+                value.article.body.slice(chunk.startOffset, chunk.endOffset) !==
+                chunk.text
+              )
+                throw new ApiError(
+                  "INVALID_ARGUMENT",
+                  "知识片段与原文不一致。",
+                );
               statements.push(
                 this.db
                   .prepare(
-                    "INSERT INTO extraction_evidence(id,document_id,snapshot_version,field_name,raw_span,confidence,extractor_version) VALUES(?,?,?,?,?,1,?)",
+                    "INSERT INTO knowledge_chunks(id,document_id,text,start_offset,end_offset,snapshot_version,content_revision,input_hash) VALUES(?,?,?,?,?,?,?,?)",
                   )
                   .bind(
                     crypto.randomUUID(),
                     documentId,
+                    chunk.text,
+                    chunk.startOffset,
+                    chunk.endOffset,
                     version,
-                    field,
-                    span.slice(0, 250),
-                    profile.ruleVersion,
+                    prepared.contentRevision,
+                    prepared.inputHash,
                   ),
               );
-          for (const a of value.attachments) {
-            approvedUrl(profile, a.url, "attachment");
-            statements.push(
-              this.db
-                .prepare(
-                  "INSERT INTO document_attachments(id,document_id,snapshot_version,url,name) VALUES(?,?,?,?,?)",
-                )
-                .bind(crypto.randomUUID(), documentId, version, a.url, a.name),
-            );
-          }
-          for (const [ordinal, event] of value.events.entries()) {
-            const eventId = crypto.randomUUID();
-            statements.push(
-              this.db
-                .prepare(
-                  "INSERT INTO event_candidates(id,document_id,snapshot_version,content_revision,input_hash,extractor_version,ordinal,title,organizer,starts_at,ends_at,registration_deadline,registration_url,raw_place_name,campus_scope,audience,change_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                )
-                .bind(
-                  eventId,
-                  documentId,
-                  version,
-                  prepared.contentRevision,
-                  prepared.inputHash,
-                  profile.ruleVersion,
-                  ordinal,
-                  event.title,
-                  event.organizer,
-                  event.startsAt,
-                  event.endsAt,
-                  event.registrationDeadline,
-                  event.registrationUrl,
-                  event.rawPlaceName,
-                  event.campusScope,
-                  event.audience,
-                  event.changeStatus,
-                ),
-            );
-            statements.push(
-              ...timeEvidenceStatements(
-                this.db,
-                event,
-                value.article.body,
-                documentId,
-                version,
-                eventId,
-                prepared.contentRevision,
-                prepared.inputHash,
-                profile.ruleVersion,
-              ),
-            );
+            }
+            // Only header title/date evidence is retained under metadata-only permission.
             for (const [field, span] of [
-              ["title", event.title],
-              ["organizer", event.organizer],
-              ["place", event.rawPlaceName],
+              ["title", value.article.title],
+              ["published_at", value.publishedRaw],
             ] as const)
-              if (span && value.article.body.includes(span))
+              if (span)
                 statements.push(
                   this.db
                     .prepare(
-                      "INSERT INTO extraction_evidence(id,document_id,snapshot_version,candidate_id,field_name,raw_span,confidence,extractor_version) VALUES(?,?,?,?,?,?,0.5,?)",
+                      "INSERT INTO extraction_evidence(id,document_id,snapshot_version,field_name,raw_span,confidence,extractor_version) VALUES(?,?,?,?,?,1,?)",
                     )
                     .bind(
                       crypto.randomUUID(),
                       documentId,
                       version,
-                      eventId,
                       field,
-                      span.slice(0, 200),
+                      span.slice(0, 250),
                       profile.ruleVersion,
                     ),
                 );
+            for (const a of value.attachments) {
+              approvedUrl(profile, a.url, "attachment");
+              statements.push(
+                this.db
+                  .prepare(
+                    "INSERT INTO document_attachments(id,document_id,snapshot_version,url,name) VALUES(?,?,?,?,?)",
+                  )
+                  .bind(
+                    crypto.randomUUID(),
+                    documentId,
+                    version,
+                    a.url,
+                    a.name,
+                  ),
+              );
+            }
+            for (const [ordinal, event] of value.events.entries()) {
+              const eventId = crypto.randomUUID();
+              statements.push(
+                this.db
+                  .prepare(
+                    "INSERT INTO event_candidates(id,document_id,snapshot_version,content_revision,input_hash,extractor_version,ordinal,title,organizer,starts_at,ends_at,registration_deadline,registration_url,raw_place_name,campus_scope,audience,change_status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                  )
+                  .bind(
+                    eventId,
+                    documentId,
+                    version,
+                    prepared.contentRevision,
+                    prepared.inputHash,
+                    profile.ruleVersion,
+                    ordinal,
+                    event.title,
+                    event.organizer,
+                    event.startsAt,
+                    event.endsAt,
+                    event.registrationDeadline,
+                    event.registrationUrl,
+                    event.rawPlaceName,
+                    event.campusScope,
+                    event.audience,
+                    event.changeStatus,
+                  ),
+              );
+              statements.push(
+                ...timeEvidenceStatements(
+                  this.db,
+                  event,
+                  value.article.body,
+                  documentId,
+                  version,
+                  eventId,
+                  prepared.contentRevision,
+                  prepared.inputHash,
+                  profile.ruleVersion,
+                ),
+              );
+              for (const [field, span] of [
+                ["title", event.title],
+                ["organizer", event.organizer],
+                ["place", event.rawPlaceName],
+              ] as const)
+                if (span && value.article.body.includes(span))
+                  statements.push(
+                    this.db
+                      .prepare(
+                        "INSERT INTO extraction_evidence(id,document_id,snapshot_version,candidate_id,field_name,raw_span,confidence,extractor_version) VALUES(?,?,?,?,?,?,0.5,?)",
+                      )
+                      .bind(
+                        crypto.randomUUID(),
+                        documentId,
+                        version,
+                        eventId,
+                        field,
+                        span.slice(0, 200),
+                        profile.ruleVersion,
+                      ),
+                  );
+            }
+            statements.push(
+              this.db
+                .prepare(
+                  "INSERT INTO document_origins(id,source_id,document_id,canonical_url,entry_url,first_seen_at,last_seen_at,etag,last_modified,input_fingerprint,duplicate_of) VALUES(?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(source_id,canonical_url) DO UPDATE SET last_seen_at=excluded.last_seen_at,etag=excluded.etag,last_modified=excluded.last_modified,input_fingerprint=excluded.input_fingerprint",
+                )
+                .bind(
+                  crypto.randomUUID(),
+                  sourceId,
+                  documentId,
+                  value.url,
+                  profile.entryUrl,
+                  now,
+                  now,
+                  value.etag,
+                  value.lastModified,
+                  fingerprint,
+                  possibleDuplicate?.id || null,
+                ),
+            );
           }
-          statements.push(
-            this.db
-              .prepare(
-                "INSERT INTO document_origins(id,source_id,document_id,canonical_url,entry_url,first_seen_at,last_seen_at,etag,last_modified,input_fingerprint,duplicate_of) VALUES(?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(source_id,canonical_url) DO UPDATE SET last_seen_at=excluded.last_seen_at,etag=excluded.etag,last_modified=excluded.last_modified,input_fingerprint=excluded.input_fingerprint",
-              )
-              .bind(
-                crypto.randomUUID(),
-                sourceId,
-                documentId,
-                value.url,
-                profile.entryUrl,
-                now,
-                now,
-                value.etag,
-                value.lastModified,
-                fingerprint,
-                possibleDuplicate?.id || null,
-              ),
-          );
+          bodyCount = value.bodyTextChars > 0 ? 1 : 0;
         }
-        bodyCount = value.bodyTextChars > 0 ? 1 : 0;
       }
       if (documentId)
         statements.push(

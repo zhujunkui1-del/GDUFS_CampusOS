@@ -1,3 +1,5 @@
+import { dispatchDue } from "./src/lib/server/console/scheduler";
+import type { SqlDatabase } from "./src/lib/server/assistant/database";
 import handler from "./.open-next/worker.js";
 import { runWithCloudflareRequestContext } from "./.open-next/cloudflare/init.js";
 import {
@@ -8,6 +10,10 @@ import {
 // The existing OpenNext ALS supplies exactly the same request-scoped bindings.
 // A thin preview-only dispatcher avoids Next routing overhead on small APIs.
 const previewWorker = {
+  async scheduled(_event: unknown, env: Record<string, unknown>) {
+    if (env.APP_ENV !== "preview" || !env.DB) return;
+    await dispatchDue(env.DB as SqlDatabase);
+  },
   async fetch(
     request: Request,
     env: Record<string, unknown>,

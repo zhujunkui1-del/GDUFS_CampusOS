@@ -1,3 +1,4 @@
+import { canonicalArticleUrl } from "@/lib/ingestion/canonical-url";
 import { IngestionStore } from "./ingestion-store";
 import { normalizedContent } from "./store";
 import { consolePermission } from "./auth";
@@ -56,7 +57,7 @@ export function importUrl(source: SourceDetail, raw: string, detail = true) {
       throw new ApiError("INVALID_ARGUMENT", "原文不在已批准栏目内。");
     }
   }
-  return u.toString();
+  return canonicalArticleUrl(u.toString());
 }
 function contentProjection(d: ContentDetail) {
   return ContentInputSchema.parse({
@@ -217,7 +218,7 @@ export class ManualImportStore extends IngestionStore {
             value.rightsScope,
             JSON.stringify(value.evidenceUrls),
             value.note,
-            Date.parse(this.now()) + 86400000,
+            Date.parse(this.now()) + (value.validityDays || 1) * 86400000,
             this.actor.id,
             this.now(),
             sourceId,
@@ -227,10 +228,15 @@ export class ManualImportStore extends IngestionStore {
       sourceId,
     );
   }
-  private async receipt(id: string, idempotent: boolean) {
+  private async receipt(
+    id: string,
+    idempotent: boolean,
+    linked: string[] = [],
+  ) {
     return {
       id,
       idempotent,
+      linked,
       items: (
         await this.db
           .prepare(
@@ -240,6 +246,12 @@ export class ManualImportStore extends IngestionStore {
           .all<{ id: string; outcome: string }>()
       ).results,
     };
+  }
+  protected async importDefaults(
+    _sourceId: string,
+  ): Promise<{ knowledgeCategory: string | null }> {
+    void _sourceId;
+    return { knowledgeCategory: null };
   }
   async importBatch(raw: unknown) {
     consolePermission(this.actor, "write");
@@ -282,6 +294,8 @@ export class ManualImportStore extends IngestionStore {
       );
     if (source.version !== value.sourceVersion)
       throw new ApiError("CONFLICT", "来源已更新，请刷新后重试。");
+    const defaults = await this.importDefaults(source.id),
+      linkedDocuments: string[] = [];
     const now = this.now(),
       statements: Statement[] = [],
       seen = new Set<string>();
@@ -319,9 +333,12 @@ export class ManualImportStore extends IngestionStore {
           contentType: item.contentType,
           rightsScope,
           radarCategory: item.radarCategory,
-          knowledgeCategory: item.knowledgeCategory,
+          knowledgeCategory:
+            item.knowledgeCategory || defaults.knowledgeCategory,
           publisher: source.displayName,
-          summary: item.summary || `关于「${item.title.slice(0,100)}」的来源信息，请以原文为准。`,
+          summary:
+            item.summary ||
+            `关于「${item.title.slice(0, 100)}」的来源信息，请以原文为准。`,
           tags: [...item.tags].sort(),
           extractedFields: {},
         }),
@@ -334,13 +351,48 @@ export class ManualImportStore extends IngestionStore {
         .all<{ id: string }>();
       if (existing.results.length > 1)
         throw new ApiError("CONFLICT", "原文存在多个记录，请先核对。");
-      const old = existing.results[0]
+      let old = existing.results[0]
         ? await this.document(existing.results[0].id)
         : null;
+      let linked = false;
+      if (!old) {
+        const shared = await this.db
+          .prepare(
+            "SELECT d.id FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE d.url=? AND d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND s.console_managed=1 ORDER BY d.id LIMIT 2",
+          )
+          .bind(url)
+          .all<{ id: string }>();
+        if (shared.results.length > 1)
+          throw new ApiError("CONFLICT", "原文已有冲突记录，请核对原来源。");
+        if (shared.results[0]) {
+          old = await this.document(shared.results[0].id);
+          if (
+            old.title !== input.title ||
+            (input.publishedAt &&
+              old.publishedAt &&
+              input.publishedAt !== old.publishedAt) ||
+            (item.bodyStatus !== "not_provided" && old.body !== input.body)
+          )
+            throw new ApiError(
+              "CONFLICT",
+              "同一原文已有不同修订，请在原来源下核对更新。",
+            );
+          linked = true;
+          linkedDocuments.push(old.id);
+          statements.push(
+            this.db
+              .prepare(
+                "INSERT INTO console_manual_links(job_id,ordinal,document_id,document_version,canonical_url,created_at) VALUES(?,?,?,?,?,?)",
+              )
+              .bind(id, ordinal, old.id, old.version, url, now),
+          );
+        }
+      }
       const unchanged =
-        !!old &&
-        JSON.stringify(input) ===
-          JSON.stringify(normalizedContent(contentProjection(old)));
+        linked ||
+        (!!old &&
+          JSON.stringify(input) ===
+            JSON.stringify(normalizedContent(contentProjection(old))));
       if (old && !unchanged && item.expectedVersion !== old.version)
         throw new ApiError("CONFLICT", "原文已有内容，请核对版本后更新。");
       if (!old && item.expectedVersion)
@@ -478,6 +530,6 @@ export class ManualImportStore extends IngestionStore {
           ),
       ],
     );
-    return this.receipt(id, outcome.idempotent);
+    return this.receipt(id, outcome.idempotent, linkedDocuments);
   }
 }

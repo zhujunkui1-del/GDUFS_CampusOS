@@ -266,7 +266,10 @@ export class ConsoleStore {
     };
     const old = await previous();
     if (old) return duplicate(old);
-    if (command.expectedVersion >= 1000)
+    if (
+      command.expectedVersion >=
+      (type === "job" && action.startsWith("retention.") ? 1000000 : 1000)
+    )
       throw new ApiError("RUN_LIMIT_EXCEEDED", "此记录已达到版本上限。");
     try {
       await this.db.batch([

@@ -5,6 +5,9 @@ import { consolePermission } from "./auth";
 import { ApiError } from "../errors";
 import type { Statement } from "../assistant/database";
 import {
+  VerificationSchema,
+  PermissionSchema,
+  OfficialStatusSchema,
   SourceTypeSchema,
   SourceEnableSchema,
   SourceVerifySchema,
@@ -352,6 +355,20 @@ export class ConsoleGovernanceStore extends ManualImportStore {
             Number(v.autoSync),
             this.now(),
           ),
+        ...(old?.sync_hours !== v.syncHours ||
+        old.auto_sync_enabled !== Number(v.autoSync)
+          ? [
+              this.db
+                .prepare(
+                  `UPDATE knowledge_sources SET next_sync_at_ms=CASE WHEN last_success_at IS NULL THEN ? ELSE CAST((julianday(last_success_at)-2440587.5)*86400000 AS INTEGER)+? END,sync_policy_version=(SELECT sync_revision FROM console_engine_settings WHERE id='console-v2-settings') WHERE console_managed=1 AND sync_hours_override IS NULL AND id IN(${webProfiles.map(() => "?").join(",")})`,
+                )
+                .bind(
+                  Date.parse(this.now()),
+                  v.syncHours * 3600000,
+                  ...webProfiles.map((p) => p.sourceId),
+                ),
+            ]
+          : []),
       ],
       "admin",
     );
@@ -373,6 +390,9 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       id: String(row.id),
       displayName: String(row.display_name),
       sourceType: SourceTypeSchema.parse(row.channel_type),
+      verificationStatus: VerificationSchema.parse(row.verification_status),
+      permissionStatus: PermissionSchema.parse(row.permission_status),
+      officialStatus: OfficialStatusSchema.parse(row.official_status),
       organization: String(row.organization),
       campusScope: String(row.campus_scope),
       websiteUrl: row.website_url ? String(row.website_url) : null,
@@ -390,16 +410,23 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       registeredEnabled: row.enabled === 1,
       version: Number(row.version),
       automatic:
+        row.sync_state !== "blocked" &&
         !!profile &&
         row.policy_rule === profile.ruleVersion &&
         Number(row.policy_expires) > Date.parse(this.now()) &&
+        row.official_status === "verified_official" &&
         row.permission_status === "approved" &&
         row.authorization_status === "approved" &&
         row.affiliation_status === "confirmed" &&
         row.operating_status === "active" &&
         row.enabled === 1,
       lastSuccessAt: row.last_success_at ? String(row.last_success_at) : null,
-      nextSyncAt: row.next_sync_at_ms ? Number(row.next_sync_at_ms) : null,
+      nextSyncAt:
+        profile &&
+        Number(row.policy_expires) > Date.parse(this.now()) &&
+        row.next_sync_at_ms
+          ? Number(row.next_sync_at_ms)
+          : null,
       syncHours: Number(row.sync_hours_override || row.global_hours || 24),
       syncOverride: row.sync_hours_override
         ? Number(row.sync_hours_override)
@@ -449,6 +476,9 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       args.push(...Array(4).fill(pattern(q.q)));
     }
     for (const [column, value] of [
+      ["s.verification_status", q.verification],
+      ["s.permission_status", q.permission],
+      ["s.official_status", q.official],
       ["s.channel_type", q.type],
       ["s.campus_scope", q.campus],
       ["s.affiliation_status", q.affiliation],
@@ -585,6 +615,29 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       where.push(
         "EXISTS(SELECT 1 FROM console_content_checks c WHERE c.document_id=d.id AND c.content_revision=d.content_revision AND c.input_hash=d.input_hash AND c.outcome='review' AND c.source_version=s.version AND c.policy_version=COALESCE((SELECT version FROM console_publication_policies WHERE source_id=s.id),0) AND c.control_generation=COALESCE((SELECT generation FROM console_document_controls WHERE document_id=d.id),0))",
       );
+    if (q.severity || q.issue) {
+      const clauses = [
+        "c.document_id=d.id",
+        "c.content_revision=d.content_revision",
+        "c.input_hash=d.input_hash",
+        "c.outcome='review'",
+      ];
+      if (q.severity) {
+        clauses.push("c.severity=?");
+        args.push(q.severity);
+      }
+      if (q.issue) {
+        clauses.push(
+          "EXISTS(SELECT 1 FROM json_each(c.issues_json) j WHERE json_extract(j.value,'$.code')=?)",
+        );
+        args.push(q.issue);
+      }
+      where.push(
+        "EXISTS(SELECT 1 FROM console_content_checks c WHERE " +
+          clauses.join(" AND ") +
+          ")",
+      );
+    }
     if (q.eventAfter) {
       where.push(
         "date(json_extract(d.extracted_fields_json,'$.startAt'),'+8 hours')>=?",
@@ -618,7 +671,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     const [rows, count] = await Promise.all([
       this.db
         .prepare(
-          `SELECT d.id,d.source_id,s.display_name AS source_name,d.title,d.published_at,d.fetched_at,d.updated_at,d.content_type,d.radar_category,d.knowledge_category,d.workflow_status,d.publication_status,d.lifecycle_status,d.body_status,d.version${base} ORDER BY ${order} ${q.direction},d.id LIMIT ? OFFSET ?`,
+          `SELECT EXISTS(SELECT 1 FROM console_public_documents pub WHERE pub.id=d.id) AS public_visible,d.id,d.source_id,s.display_name AS source_name,d.title,d.published_at,d.fetched_at,d.updated_at,d.content_type,d.radar_category,d.knowledge_category,d.workflow_status,d.publication_status,d.lifecycle_status,d.body_status,d.version${base} ORDER BY ${order} ${q.direction},d.id LIMIT ? OFFSET ?`,
         )
         .bind(...args, q.limit, q.offset)
         .all<Row>(),
@@ -639,7 +692,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     const sources = await this.sourcesV2({ ...q, limit: 1 });
     const stats = await this.db
       .prepare(
-        `SELECT (SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND archived_at IS NULL) AS sources,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND ${active}) AS enabled,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND archived_at IS NULL AND NOT(${active}) AND operating_status<>'closed') AS paused,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND operating_status IN('closed','unreachable') AND archived_at IS NULL) AS unavailable,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND date(d.fetched_at,'+8 hours')=date('now','+8 hours')) AS todayNew,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND d.workflow_status='pending') AS pending,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND (d.publication_status='withdrawn' OR d.lifecycle_status<>'active')) AS inactive,(SELECT count(*) FROM ingestion_jobs WHERE status='failed') AS failed,(SELECT max(last_success_at) FROM knowledge_sources WHERE console_managed=1) AS lastSync,(SELECT min(next_sync_at_ms) FROM knowledge_sources s WHERE ${visible} AND ${active}) AS nextSync`,
+        `SELECT (SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND archived_at IS NULL) AS sources,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND ${active}) AS enabled,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND archived_at IS NULL AND NOT(${active}) AND operating_status NOT IN('closed','unreachable')) AS paused,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND operating_status IN('closed','unreachable') AND archived_at IS NULL) AS unavailable,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND date((SELECT created_at FROM console_content_versions v WHERE v.document_id=d.id AND v.version=1),'+8 hours')=date('now','+8 hours')) AS todayNew,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND d.workflow_status='pending') AS pending,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND (d.publication_status='withdrawn' OR d.lifecycle_status<>'active' OR julianday(d.valid_until)<=julianday('now'))) AS inactive,(SELECT count(*) FROM ingestion_jobs WHERE status='failed') AS failed,(SELECT max(last_success_at) FROM knowledge_sources WHERE console_managed=1) AS lastSync,(SELECT min(next_sync_at_ms) FROM knowledge_sources s WHERE ${visible} AND ${active}) AS nextSync`,
       )
       .first<Row>();
     const storage = await this.db
@@ -661,12 +714,22 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       storage: storage.results,
       unsupported: Math.max(
         0,
-        Number(stats?.sources || 0) - webProfiles.length,
+        Number(stats?.sources || 0) -
+          Number(
+            (
+              await this.db
+                .prepare(
+                  `SELECT count(*) n FROM knowledge_sources WHERE console_managed=1 AND archived_at IS NULL AND id IN(${webProfiles.map(() => "?").join(",")})`,
+                )
+                .bind(...webProfiles.map((p) => p.sourceId))
+                .first<{ n: number }>()
+            )?.n || 0,
+          ),
       ),
       scheduler: "not_connected",
-      autoPublishedToday: null,
-      protectedSources: null,
-      protectedArticles: null,
+      autoPublishedToday: null as number | null,
+      protectedSources: null as number | null,
+      protectedArticles: null as number | null,
       latestJobs: (await this.jobs({ limit: 5 })).items,
     };
   }

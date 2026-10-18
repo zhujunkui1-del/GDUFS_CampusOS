@@ -38,6 +38,7 @@ export class SafeWebFetcher {
   requests = 0;
   lastStarted = 0;
   robots: string | null = null;
+  beforeRequest?: () => Promise<void>;
   constructor(
     readonly profile: WebProfile,
     readonly limit = 20,
@@ -67,6 +68,7 @@ export class SafeWebFetcher {
     if (!addresses.length || addresses.some((x) => !isPublicAddress(x.address)))
       throw Error("PRIVATE_ADDRESS");
     const address = addresses.find((x) => x.family === 4) || addresses[0];
+    await this.beforeRequest?.();
     this.requests++;
     this.lastStarted = Date.now();
     const started = Date.now();

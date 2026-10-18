@@ -10,6 +10,15 @@ export const ProtectionSchema = CommandSchema.extend({
 }).strict();
 export const ProtectionQuery = z
   .object({
+    category: z.string().max(50).optional(),
+    operating: z
+      .enum(["unknown", "active", "paused", "closed", "unreachable"])
+      .optional(),
+    permanent: z.enum(["1", "0"]).optional(),
+    addedAfter: z.iso.date().optional(),
+    expiresBefore: z.iso.date().optional(),
+    sort: z.enum(["updated", "expires", "title"]).default("updated"),
+    direction: z.enum(["asc", "desc"]).default("desc"),
     q: z.string().max(100).optional(),
     type: z.enum(["source", "document"]).optional(),
     status: z.enum(["active", "expired", "removed"]).default("active"),
