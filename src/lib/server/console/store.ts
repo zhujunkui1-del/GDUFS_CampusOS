@@ -774,6 +774,12 @@ export class ConsoleStore {
   }
   async review(id: string, raw: unknown) {
     const value = ReviewSchema.parse(raw);
+    if (!value.note || value.note === "管理员操作")
+      value.note =
+        "管理员" +
+        { approved: "批准", returned: "退回", rejected: "拒绝" }[
+          value.decision
+        ];
     await this.document(id);
     return this.mutate(
       value,
@@ -815,6 +821,8 @@ export class ConsoleStore {
   async publish(id: string, raw: unknown, withdraw = false) {
     const value = PublishSchema.parse(raw),
       document = await this.document(id);
+    if (!value.note || value.note === "管理员操作")
+      value.note = withdraw ? "管理员撤回" : "管理员发布";
     consolePermission(this.actor, "publish");
     if (!withdraw) {
       if (

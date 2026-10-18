@@ -49,7 +49,7 @@ export async function dispatchDue(
     }
     const stale = await db
       .prepare(
-        "SELECT j.id,j.source_id,j.version FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE j.job_kind='web' AND j.control_state='active' AND j.phase<>'complete' AND (j.source_version<>s.version OR j.policy_version<>p.version OR p.source_id IS NULL OR p.expires_at_ms<=? OR s.enabled=0 OR s.affiliation_status<>'confirmed' OR s.operating_status<>'active' OR s.permission_status<>'approved') ORDER BY j.created_at,j.id LIMIT 2",
+        "SELECT j.id,j.source_id,j.version FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE j.job_kind='web' AND j.control_state='active' AND j.phase<>'complete' AND (j.source_version<>s.version OR j.policy_version<>p.version OR p.source_id IS NULL OR p.expires_at_ms<=? OR s.enabled=0 OR s.operating_status<>'active' OR s.permission_status<>'approved') ORDER BY j.created_at,j.id LIMIT 2",
       )
       .bind(now)
       .all<{ id: string; source_id: string; version: number }>();
@@ -95,7 +95,7 @@ export async function dispatchDue(
       where = options.sourceId ? " AND s.id=?" : "";
     const rows = await db
       .prepare(
-        `SELECT s.id,s.version,p.version AS policy_version,p.rule_version,COALESCE(s.sync_hours_override,e.sync_hours) hours,s.next_sync_at_ms,e.sync_revision FROM knowledge_sources s JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE s.id IN(${profiles.map(() => "?").join(",")}) AND s.enabled=1 AND s.affiliation_status='confirmed' AND s.operating_status='active' AND s.governance_checked_at IS NOT NULL AND s.verification_status='verified' AND s.official_status='verified_official' AND s.permission_status='approved' AND s.authorization_status='approved' AND s.archived_at IS NULL AND s.sync_state<>'blocked' AND p.expires_at_ms>?${where}
+        `SELECT s.id,s.version,p.version AS policy_version,p.rule_version,COALESCE(s.sync_hours_override,e.sync_hours) hours,s.next_sync_at_ms,e.sync_revision FROM knowledge_sources s JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE s.id IN(${profiles.map(() => "?").join(",")}) AND s.enabled=1 AND s.operating_status='active' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.permission_status='approved' AND s.authorization_status='approved' AND s.archived_at IS NULL AND s.sync_state<>'blocked' AND p.expires_at_ms>?${where}
  AND (?=1 OR (CASE WHEN s.sync_policy_version>0 AND s.sync_policy_version<>e.sync_revision THEN COALESCE(CAST((julianday(s.last_success_at)-2440587.5)*86400000 AS INTEGER),0)+COALESCE(s.sync_hours_override,e.sync_hours)*3600000 ELSE COALESCE(s.next_sync_at_ms,0) END)<=?)
  AND NOT EXISTS(SELECT 1 FROM ingestion_jobs j WHERE j.source_id=s.id AND j.control_state='active' AND j.phase<>'complete' AND j.status IN('queued','running')) ORDER BY COALESCE(s.next_sync_at_ms,0),s.id LIMIT 2`,
       )

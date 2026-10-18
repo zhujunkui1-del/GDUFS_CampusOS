@@ -39,7 +39,7 @@ export function SourceCollectionPolicy({
         ruleVersion: data.profile.ruleVersion,
         rightsScope: f.get("rights"),
         evidenceUrls: String(f.get("evidence")).split(/\s+/).filter(Boolean),
-        note: f.get("note"),
+        note: "管理员保存来源同步许可",
         fullTextAuthorized: f.get("full") === "on",
         validityDays: Number(f.get("days")),
         robotsStatus: Number(f.get("robots")),
@@ -89,10 +89,7 @@ export function SourceCollectionPolicy({
           许可证据URL
           <textarea name="evidence" required />
         </label>
-        <label>
-          许可说明
-          <textarea name="note" minLength={5} required />
-        </label>
+
         <label>
           有效天数
           <input name="days" type="number" min="1" max="30" defaultValue="1" />

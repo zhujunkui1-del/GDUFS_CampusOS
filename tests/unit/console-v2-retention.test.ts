@@ -319,9 +319,16 @@ describe("V2 whitelist, cutoff and bounded retention (disposable DB only)", () =
       expect(
         f.sqlite.prepare("SELECT count(*) n FROM knowledge_documents").get()?.n,
       ).toBe(2);
-      await expect(f.store.archiveSource(f.s.id, cmd(2))).rejects.toMatchObject(
-        { code: "CONFIRMATION_REQUIRED" },
-      );
+      await f.store.archiveSource(f.s.id, cmd(2));
+      expect((await f.store.sourceV2(f.s.id)).archivedAt).toBeTruthy();
+      expect(
+        f.sqlite
+          .prepare("SELECT active FROM console_protections WHERE target_id=?")
+          .get(f.s.id)?.active,
+      ).toBe(1);
+      expect(
+        f.sqlite.prepare("SELECT count(*) n FROM knowledge_documents").get()?.n,
+      ).toBe(2);
     } finally {
       f.close();
     }

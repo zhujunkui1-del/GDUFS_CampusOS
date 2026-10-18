@@ -30,3 +30,7 @@ node scripts/console-sync-runner.mjs --run --watch --base https://campusos-previ
 电脑关闭、令牌失效、许可过期、预算不足时不能保证24小时完成。当前预算不适合数百来源全量自动更新；扩容必须先增加经过许可/测试的Connector和容量基准，不能悄悄放宽资源/模型预算。
 
 Worker CPU、D1 rows_read/rows_written和存储使用量以真实云端证据为准。未取得的内存、单接口CPU、自动发布/清理云端CPU显示未验证，不能用本地耗时替代。
+
+## 管理交互修订
+
+总览不展示执行器凭据、预算编辑和采集任务列表；凭据在来源同步详情中维护，任务/预算/租约/失败证据仍保留。注册状态统一enabled，管理员启用不依赖填写核验说明；scheduler与系统发布不再额外要求新的affiliation字段，既有采集许可、robots、profile、版权、全局暂停、源级停运、预算、租约和检查点照常生效。未知许可不会因一键启用被改为获准。

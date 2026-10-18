@@ -82,6 +82,25 @@ function contentProjection(d: ContentDetail) {
   });
 }
 export class ManualImportStore extends IngestionStore {
+  protected override async mutate(
+    ...args: Parameters<IngestionStore["mutate"]>
+  ) {
+    if (args[1] === "manual.import") {
+      const data = args[4] as {
+        items?: { bodyStatus?: string; body?: string }[];
+      };
+      args[9] = {
+        ...args[9],
+        registryMetadata: Number(
+          this.actor.role === "admin" &&
+            !!data.items?.length &&
+            data.items.every((i) => i.bodyStatus === "not_provided" && !i.body),
+        ),
+      };
+    }
+    return super.mutate(...args);
+  }
+
   // Editing/restoring must not become an alternate unlicensed intake path.
   override async writeContent(
     id: string | undefined,
@@ -282,11 +301,15 @@ export class ManualImportStore extends IngestionStore {
     }
     const source = await this.source(value.sourceId),
       { policy, effectiveRights } = await this.importPolicy(source.id);
+    const registryMetadata =
+      this.actor.role === "admin" &&
+      value.items.every((i) => i.bodyStatus === "not_provided");
     if (
       !source.enabled ||
-      source.verificationStatus !== "verified" ||
-      source.permissionStatus !== "approved" ||
-      effectiveRights === "expired"
+      (!registryMetadata &&
+        (source.verificationStatus !== "verified" ||
+          source.permissionStatus !== "approved" ||
+          effectiveRights === "expired"))
     )
       throw new ApiError(
         "INVALID_ARGUMENT",
@@ -393,7 +416,12 @@ export class ManualImportStore extends IngestionStore {
         (!!old &&
           JSON.stringify(input) ===
             JSON.stringify(normalizedContent(contentProjection(old))));
-      if (old && !unchanged && item.expectedVersion !== old.version)
+      if (
+        old &&
+        !unchanged &&
+        item.expectedVersion !== undefined &&
+        item.expectedVersion !== old.version
+      )
         throw new ApiError("CONFLICT", "原文已有内容，请核对版本后更新。");
       if (!old && item.expectedVersion)
         throw new ApiError("CONFLICT", "未找到需要更新的原文。");

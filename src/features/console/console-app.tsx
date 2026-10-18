@@ -1051,9 +1051,9 @@ function Verification({
   save: (value: Record<string, unknown>) => void;
 }) {
   const [status, setStatus] = useState("verified"),
+    [note, setNote] = useState(""),
     [official, setOfficial] = useState<string>(source.officialStatus),
     [permission, setPermission] = useState<string>(source.permissionStatus),
-    [note, setNote] = useState(""),
     [confirmed, setConfirmed] = useState(false);
   return (
     <AlertDialog.Root
@@ -1308,7 +1308,6 @@ function ExistingContentEditor({
     [sourceQuery, setSourceQuery] = useState(""),
     [sourceOptions, setSourceOptions] = useState<SourceSummary[]>([]),
     [message, setMessage] = useState(""),
-    [note, setNote] = useState(""),
     [busy, setBusy] = useState(false),
     [preview, setPreview] = useState(false),
     [withdraw, setWithdraw] = useState(false),
@@ -1316,14 +1315,6 @@ function ExistingContentEditor({
       input: ContentInput;
       version: number;
     } | null>(null);
-  const noteRef = useRef<HTMLTextAreaElement>(null);
-  const [noteError, setNoteError] = useState("");
-  function validateNote() {
-    if (note.trim().length >= 2) return true;
-    setNoteError("请先填写至少两个字的审核说明。");
-    noteRef.current?.focus();
-    return false;
-  }
   const form =
     draft ||
     (data
@@ -1812,31 +1803,6 @@ function ExistingContentEditor({
               <Badge value={data.reviewStatus} /> · 版本 {data.version}
             </p>
             <External url={data.url} label="查看原文" />
-            <label>
-              审核说明
-              <textarea
-                ref={noteRef}
-                aria-label="审核说明"
-                aria-invalid={!!noteError}
-                aria-describedby={noteError ? "review-note-error" : undefined}
-                value={note}
-                onChange={(e) => {
-                  setNote(e.target.value);
-                  if (noteError) setNoteError("");
-                }}
-                maxLength={1000}
-                rows={2}
-              />
-            </label>
-            {noteError && (
-              <p
-                id="review-note-error"
-                className="console-feedback"
-                role="alert"
-              >
-                {noteError}
-              </p>
-            )}
             <div className="console-actions">
               {[
                 ["approved", "批准"],
@@ -1847,12 +1813,10 @@ function ExistingContentEditor({
                   key={decision}
                   disabled={busy}
                   onClick={() =>
-                    validateNote() &&
                     void run(() =>
                       request("content/" + id + "/review", "POST", {
                         ...command(data.version),
                         decision,
-                        note,
                       }),
                     )
                   }
@@ -1864,11 +1828,9 @@ function ExistingContentEditor({
                 className="primary-button"
                 disabled={busy || !canPublish}
                 onClick={() =>
-                  validateNote() &&
                   void run(() =>
                     request("content/" + id + "/publish", "POST", {
                       ...command(data.version),
-                      note,
                     }),
                   )
                 }
@@ -1878,7 +1840,7 @@ function ExistingContentEditor({
               <button
                 disabled={busy || !canPublish}
                 onClick={() => {
-                  if (validateNote()) setWithdraw(true);
+                  setWithdraw(true);
                 }}
               >
                 撤回
@@ -1931,7 +1893,6 @@ function ExistingContentEditor({
               void run(async () => {
                 await request("content/" + id + "/withdraw", "POST", {
                   ...command(data.version),
-                  note,
                 });
                 setWithdraw(false);
               })
@@ -2124,7 +2085,6 @@ function Audit({ request, sourceId }: { request: Client; sourceId?: string }) {
     );
   return (
     <>
-      <Heading title="审计日志" />
       <ConsoleV2Filters
         fields={[
           { name: "q", label: "查找操作或对象" },

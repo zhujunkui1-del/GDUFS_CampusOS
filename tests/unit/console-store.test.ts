@@ -87,7 +87,7 @@ describe("Console public content governance", () => {
       })
     ).id;
   }
-  it("creates candidates, pages real sources, and refuses premature enabling", async () => {
+  it("creates candidates and allows an explicit registry enable without inventing verification", async () => {
     const id = await source(),
       s = await store.source(id);
     expect(s.verificationStatus).toBe("candidate");
@@ -99,12 +99,13 @@ describe("Console public content governance", () => {
         expectedVersion: 1,
         enabled: true,
       }),
-    ).rejects.toMatchObject({ code: "INVALID_ARGUMENT" });
+    ).resolves.toMatchObject({ version: 2 });
+    expect((await store.source(id)).verificationStatus).toBe("candidate");
     expect(
       fixture.sqlite
         .prepare("SELECT count(*) AS n FROM console_commands")
         .get(),
-    ).toMatchObject({ n: 1 });
+    ).toMatchObject({ n: 2 });
   });
   it("can reject a candidate without inventing evidence, but cannot verify it", async () => {
     const id = await source();

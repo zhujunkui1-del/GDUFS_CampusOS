@@ -43,7 +43,7 @@ export function AutoPolicyPanel({
         allowUnofficial: f.get("unofficial") === "on",
         validityDays: Number(f.get("days")),
         evidenceUrls: String(f.get("evidence")).split(/\s+/).filter(Boolean),
-        note: f.get("note"),
+        note: "管理员保存来源自动发布策略",
       });
       setMessage("来源级政策已保存");
       reload();
@@ -132,16 +132,7 @@ export function AutoPolicyPanel({
             disabled={!admin}
           />
         </label>
-        <label>
-          授权说明
-          <textarea
-            name="note"
-            minLength={5}
-            required
-            defaultValue={String(data?.note || "")}
-            disabled={!admin}
-          />
-        </label>
+
         <label>
           <input
             type="checkbox"

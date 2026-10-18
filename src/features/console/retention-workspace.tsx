@@ -25,128 +25,139 @@ const cmd = (expectedVersion: number) => ({
   commandId: crypto.randomUUID(),
   expectedVersion,
 });
-const shown = (v: unknown) =>
-  v
-    ? new Date(typeof v === "number" ? v : String(v)).toLocaleString("zh-CN", {
-        timeZone: "Asia/Shanghai",
-      })
-    : "永久";
 export function WhitelistWorkspace({
   request,
   admin,
-  Dialog,
 }: {
   request: Client;
   admin: boolean;
   Dialog: ComponentType<ConsoleV2DialogProps>;
 }) {
-  const params = useSearchParams(),
-    [type, setType] = useState(params.get("type") || "source"),
-    [search, setSearch] = useState(""),
-    [targetId, setTargetId] = useState(params.get("target") || ""),
-    [batchMode, setBatchMode] = useState(false),
-    [batchIds, setBatchIds] = useState<string[]>([]),
-    [filters, setFilters] = useState<Record<string, string>>({}),
-    [filter, setFilter] = useState(""),
-    [status, setStatus] = useState("active"),
-    [offset, setOffset] = useState(0),
-    [selected, setSelected] = useState<Row[]>([]),
-    [remove, setRemove] = useState(false),
-    [message, setMessage] = useState(""),
+  const params = useSearchParams();
+  const [type, setType] = useState(
+    params.get("type") === "document" ? "document" : "source",
+  );
+  const [search, setSearch] = useState(""),
+    [query, setQuery] = useState(""),
+    [choiceOffset, setChoiceOffset] = useState(0);
+  const [picked, setPicked] = useState<Row[] | null>(null),
+    [selected, setSelected] = useState<Row[]>([]);
+  const [filters, setFilters] = useState<Record<string, string>>({}),
+    [offset, setOffset] = useState(0);
+  const [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setQuery(search.trim());
+      setChoiceOffset(0);
+    }, 200);
+    return () => clearTimeout(timer);
+  }, [search]);
   const state = useConsoleV2Data<List>(
     request,
-    `v2/whitelist?${new URLSearchParams({ ...filters, q: filter, status, offset: String(offset), limit: "20" })}`,
+    `v2/whitelist?${new URLSearchParams({ ...filters, status: "active", offset: String(offset), limit: "20" })}`,
   );
-  const choices = useConsoleV2Data<{
-    items: (Row & { version: number; displayName?: string })[];
-  }>(
+  const choices = useConsoleV2Data<List>(
     request,
-    type === "source"
-      ? `v2/sources?q=${encodeURIComponent(search)}&limit=20`
-      : `v2/articles?q=${encodeURIComponent(search)}&limit=20`,
+    (type === "source" ? "v2/sources?" : "v2/articles?titleOnly=1&") +
+      new URLSearchParams({
+        q: query,
+        limit: "20",
+        offset: String(choiceOffset),
+      }),
   );
-  const preselected = useConsoleV2Data<
-    Row & { version: number; displayName?: string }
-  >(
+  const target = params.get("target"),
+    targetType = params.get("type") || "source";
+  const preselected = useConsoleV2Data<Row>(
     request,
-    params.get("target")
-      ? (type === "source" ? "v2/sources/" : "content/") + params.get("target")
+    target && targetType === type
+      ? (type === "source" ? "v2/sources/" : "content/") +
+          encodeURIComponent(target)
       : null,
   );
-  const choiceRows = choices.data?.items || [];
-  const targets =
-    preselected.data && !choiceRows.some((x) => x.id === preselected.data?.id)
-      ? [preselected.data, ...choiceRows]
-      : choiceRows;
+  const targets = search.trim() === query ? choices.data?.items || [] : [];
+  const pending =
+    picked !== null
+      ? picked
+      : preselected.data && !search
+        ? [preselected.data]
+        : [];
   async function add(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const f = new FormData(e.currentTarget),
-      ids = [...new Set(f.getAll("target").map(String))];
-    if (!ids.length || ids.length > 5) return;
-    const selectedTargets = ids.map((id) => targets.find((t) => t.id === id));
-    if (selectedTargets.some((t) => !t)) return;
+    if (!pending.length || busy) return;
     setBusy(true);
+    let done = 0;
+    const failed: Row[] = [];
     try {
-      const values = selectedTargets.map((target) => ({
-        ...cmd(target!.version),
-        type,
-        targetId: String(target!.id),
-        active: true,
-        historyExempt: f.get("exempt") === "on",
-        expiresAt: f.get("expires")
-          ? new Date(String(f.get("expires")) + ":00+08:00").toISOString()
-          : null,
-        reason: f.get("reason"),
-      }));
-      if (values.length === 1) await request("v2/whitelist", "POST", values[0]);
-      else {
-        const r = await request<{ items: { ok: boolean }[] }>(
+      for (let i = 0; i < pending.length; i += 5) {
+        const chunk = pending.slice(i, i + 5);
+        const result = await request<{
+          items: { ok: boolean; error?: string }[];
+        }>(
           "v2/whitelist/batch",
           "POST",
-          values,
+          chunk.map((t) => ({
+            ...cmd(Number(t.version)),
+            type,
+            targetId: String(t.id),
+            active: true,
+          })),
         );
-        if (r.items.some((t) => !t.ok)) {
-          setMessage(
-            `已保护${r.items.filter((t) => t.ok).length}项，部分失败，请刷新核对`,
-          );
-          state.reload();
-          choices.reload();
-          return;
-        }
+        result.items.forEach((r, j) => {
+          if (r.ok) done++;
+          else failed.push(chunk[j]);
+        });
       }
-      setMessage("已加入白名单");
-      state.reload();
-      choices.reload();
+      setPicked(failed);
+      setMessage(
+        `已加入${done}项` +
+          (failed.length ? `，${failed.length}项失败，请刷新后重试` : ""),
+      );
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "保存失败");
     } finally {
       setBusy(false);
+      state.reload();
+      choices.reload();
     }
   }
   async function removeSelected() {
+    if (busy) return;
     setBusy(true);
-    const errors = [];
-    for (const row of selected)
-      try {
-        await request("v2/whitelist", "POST", {
-          ...cmd(Number(row.target_version)),
-          type: row.target_type,
-          targetId: row.target_id,
-          active: false,
-          historyExempt: false,
-          expiresAt: null,
-          reason: "管理员明确解除白名单保护",
+    let done = 0;
+    const failed: Row[] = [];
+    try {
+      for (let i = 0; i < selected.length; i += 5) {
+        const chunk = selected.slice(i, i + 5);
+        const result = await request<{ items: { ok: boolean }[] }>(
+          "v2/whitelist/batch",
+          "POST",
+          chunk.map((r) => ({
+            ...cmd(Number(r.target_version)),
+            type: r.target_type,
+            targetId: r.target_id,
+            active: false,
+          })),
+        );
+        result.items.forEach((r, j) => {
+          if (r.ok) done++;
+          else failed.push(chunk[j]);
         });
-      } catch (e) {
-        errors.push(e instanceof Error ? e.message : "操作失败");
       }
-    setMessage(errors.length ? errors.join("；") : "已解除保护");
-    setBusy(false);
-    setRemove(false);
-    setSelected([]);
-    state.reload();
+      setSelected(failed);
+      setMessage(
+        `已移除${done}项` +
+          (failed.length ? `，${failed.length}项失败，请刷新后重试` : ""),
+      );
+    } catch (e) {
+      setMessage(e instanceof Error ? e.message : "移除失败");
+    } finally {
+      setBusy(false);
+      state.reload();
+      choices.reload();
+    }
   }
+  const key = (r: Row) => String(r.target_type) + r.target_id;
   return (
     <>
       <div className="console-heading">
@@ -154,6 +165,7 @@ export function WhitelistWorkspace({
       </div>
       <ConsoleV2Filters
         fields={[
+          { name: "q", label: "搜索白名单" },
           {
             name: "type",
             label: "白名单类型",
@@ -175,33 +187,12 @@ export function WhitelistWorkspace({
               c.label,
             ]),
           },
-          {
-            name: "permanent",
-            label: "保护期限",
-            options: [
-              ["1", "永久"],
-              ["0", "限期"],
-            ],
-          },
-          {
-            name: "operating",
-            label: "当前运营",
-            options: [
-              ["active", "正常"],
-              ["paused", "暂停"],
-              ["closed", "停运"],
-              ["unreachable", "失效"],
-              ["unknown", "待核"],
-            ],
-          },
           { name: "addedAfter", label: "添加起日", type: "date" },
-          { name: "expiresBefore", label: "到期止日", type: "date" },
           {
             name: "sort",
             label: "排序",
             options: [
-              ["updated", "更新时间"],
-              ["expires", "到期时间"],
+              ["updated", "添加时间"],
               ["title", "名称"],
             ],
           },
@@ -222,177 +213,177 @@ export function WhitelistWorkspace({
         }}
       />
       <section className="console-card">
-        <div className="console-actions">
-          <input
-            aria-label="搜索白名单"
-            placeholder="来源、文章或保护原因"
-            value={filter}
-            onChange={(e) => {
-              setFilter(e.target.value);
-              setOffset(0);
-            }}
-          />
-          <select
-            aria-label="白名单状态"
-            value={status}
-            onChange={(e) => {
-              setStatus(e.target.value);
-              setOffset(0);
-            }}
-          >
-            <option value="active">保护中</option>
-            <option value="expired">已到期</option>
-            <option value="removed">已移除</option>
-          </select>
-          <button
-            disabled={!admin || !selected.length || busy}
-            onClick={() => setRemove(true)}
-          >
-            移除所选（{selected.length}）
-          </button>
-        </div>
         <p role="status">{message || state.error}</p>
         <div className="console-v2-list">
           {state.data?.items.map((row) => (
-            <article
-              className="console-v2-row"
-              key={String(row.target_type) + row.target_id}
-            >
+            <article className="console-whitelist-row" key={key(row)}>
+              <div>
+                <strong>{row.title}</strong>
+                <p>
+                  {row.target_type === "source" ? "信息源" : "单篇文章"} ·
+                  永久保护 · 保护文章 {row.protected_count}
+                </p>
+                <Link
+                  className="text-link"
+                  href={
+                    row.target_type === "source"
+                      ? `/admin/sources?record=${row.target_id}`
+                      : `/admin/sources?article=${row.target_id}`
+                  }
+                >
+                  查看对象
+                </Link>
+              </div>
               <label>
                 <input
                   type="checkbox"
-                  disabled={
-                    !admin || (selected.length >= 5 && !selected.includes(row))
-                  }
-                  checked={selected.includes(row)}
+                  aria-label={"选择" + row.title}
+                  disabled={!admin || busy}
+                  checked={selected.some((r) => key(r) === key(row))}
                   onChange={(e) =>
                     setSelected(
                       e.target.checked
                         ? [...selected, row]
-                        : selected.filter((x) => x !== row),
+                        : selected.filter((r) => key(r) !== key(row)),
                     )
                   }
                 />
-                <strong>{row.title}</strong>
               </label>
-              <p>
-                {row.target_type === "source" ? "信息源" : "单篇文章"} ·{" "}
-                {row.reason}
-              </p>
-              <p>
-                截止：{shown(row.expires_at_ms)} · 保护文章{" "}
-                {row.protected_count} ·{" "}
-                {row.history_exempt ? "历史导入豁免" : "不豁免导入日期"}
-              </p>
-              <Link
-                className="text-link"
-                href={
-                  row.target_type === "source"
-                    ? `/admin/sources?record=${row.target_id}`
-                    : `/admin/sources?article=${row.target_id}`
-                }
-              >
-                查看对象
-              </Link>
             </article>
           ))}
         </div>
         {state.data?.total === 0 && <p className="console-empty">暂无记录</p>}
-        <div className="console-actions">
+        <div className="console-actions console-whitelist-footer">
           <button
-            disabled={!offset}
-            onClick={() => {
-              setOffset(Math.max(0, offset - 20));
-              setSelected([]);
-            }}
+            disabled={!offset || busy}
+            onClick={() => setOffset(Math.max(0, offset - 20))}
           >
             上一页
           </button>
           <span>{state.data?.total || 0} 条</span>
           <button
-            disabled={offset + 20 >= (state.data?.total || 0)}
-            onClick={() => {
-              setOffset(offset + 20);
-              setSelected([]);
-            }}
+            disabled={busy || offset + 20 >= (state.data?.total || 0)}
+            onClick={() => setOffset(offset + 20)}
           >
             下一页
           </button>
+          <button
+            disabled={!admin || !selected.length || busy}
+            onClick={() => void removeSelected()}
+          >
+            移除所选（{selected.length}）
+          </button>
         </div>
       </section>
-      <details className="console-card" open={!!params.get("target")}>
-        <summary>新增保护</summary>
+      <details className="console-card" open={!!target}>
+        <summary>加入白名单</summary>
         <form className="console-form" onSubmit={add}>
           <label>
             保护类型
-            <select value={type} onChange={(e) => setType(e.target.value)}>
+            <select
+              value={type}
+              onChange={(e) => {
+                setType(e.target.value);
+                setPicked([]);
+                setSearch("");
+                setChoiceOffset(0);
+              }}
+            >
               <option value="source">信息源</option>
               <option value="document">单篇文章</option>
             </select>
           </label>
-          <label>
-            查找对象
-            <input value={search} onChange={(e) => setSearch(e.target.value)} />
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={batchMode}
-              onChange={(e) => setBatchMode(e.target.checked)}
-            />
-            批量选择（最多5项）
-          </label>
-          <label>
-            选择对象
-            <select
-              name="target"
-              aria-label="选择对象"
-              required
-              multiple={batchMode}
-              value={batchMode ? batchIds : targetId}
-              onChange={(e) =>
-                batchMode
-                  ? setBatchIds(
-                      [...e.target.selectedOptions]
-                        .map((o) => o.value)
-                        .filter(Boolean)
-                        .slice(0, 5),
-                    )
-                  : setTargetId(e.target.value)
-              }
-            >
-              <option value="">请选择</option>
-              {targets.map((x) => (
-                <option key={String(x.id)} value={String(x.id)}>
-                  {String(x.displayName || x.title)}
-                </option>
+          <div className="console-target-picker console-wide">
+            <label>
+              搜索并选择对象
+              <input
+                aria-label="搜索并选择对象"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={
+                  type === "source" ? "按来源名称搜索" : "按文章标题搜索"
+                }
+              />
+            </label>
+            {pending.length > 0 && (
+              <div className="console-actions">
+                <span>已选 {pending.length} 项</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPicked([]);
+                    setSearch("");
+                  }}
+                >
+                  清空选择
+                </button>
+              </div>
+            )}
+            <div className="console-target-results">
+              {targets.map((row) => (
+                <label className="console-target-option" key={String(row.id)}>
+                  <span>
+                    {row.displayName || row.title}
+                    <small>
+                      {type === "source"
+                        ? sourceTypeNames[
+                            String(
+                              row.sourceType,
+                            ) as keyof typeof sourceTypeNames
+                          ]
+                        : row.source_name}
+                    </small>
+                  </span>
+                  <input
+                    type="checkbox"
+                    aria-label={"选择对象" + (row.displayName || row.title)}
+                    checked={pending.some((r) => r.id === row.id)}
+                    disabled={!admin || busy}
+                    onChange={(e) =>
+                      setPicked(
+                        e.target.checked
+                          ? [...pending, row]
+                          : pending.filter((r) => r.id !== row.id),
+                      )
+                    }
+                  />
+                </label>
               ))}
-            </select>
-          </label>
-          <label>
-            保护原因
-            <textarea name="reason" required minLength={5} maxLength={500} />
-          </label>
-          <label>
-            截止时间（北京时间，留空为永久）
-            <input type="datetime-local" name="expires" />
-          </label>
-          <label>
-            <input name="exempt" type="checkbox" />
-            批准历史导入日期豁免
-          </label>
-          <button disabled={!admin || busy}>添加保护</button>
+            </div>
+            {!targets.length && (
+              <p className="console-empty">
+                {choices.error ||
+                  (choices.data && search.trim() === query
+                    ? "没有匹配对象"
+                    : "正在查找…")}
+              </p>
+            )}
+            <div className="console-actions">
+              <button
+                type="button"
+                disabled={!choiceOffset}
+                onClick={() => setChoiceOffset(Math.max(0, choiceOffset - 20))}
+              >
+                上一页
+              </button>
+              <span>{choices.data?.total || 0} 项</span>
+              <button
+                type="button"
+                disabled={choiceOffset + 20 >= (choices.data?.total || 0)}
+                onClick={() => setChoiceOffset(choiceOffset + 20)}
+              >
+                下一页
+              </button>
+            </div>
+          </div>
+          <button
+            className="primary-button"
+            disabled={!admin || busy || !pending.length}
+          >
+            加入白名单
+          </button>
         </form>
       </details>
-      <Dialog
-        open={remove}
-        onClose={() => setRemove(false)}
-        title="解除白名单保护？"
-        description={`将解除${selected.length}个对象的保护，不会立即删除内容。`}
-        action="解除保护"
-        busy={busy}
-        confirm={() => void removeSelected()}
-      />
     </>
   );
 }
@@ -563,7 +554,7 @@ export function RetentionWorkspace({
         autoSync: !!s.auto_sync_enabled,
         networkBudget: s.network_budget,
         earliestImportDay: f.get("earliest") || null,
-        confirmImportCutoff: f.get("confirm") === "on",
+        confirmImportCutoff: true,
         note: "管理员明确调整最早允许导入发布日期",
       });
       settings.reload();
@@ -608,11 +599,9 @@ export function RetentionWorkspace({
                 defaultValue={String(settings.data.earliest_import_day || "")}
               />
             </label>
-            <label>
-              <input type="checkbox" name="confirm" required />
-              确认新门禁仅约束后续导入，不删除现有内容
-            </label>
-            <button disabled={!admin || busy}>保存导入日期门禁</button>
+            <button className="primary-button" disabled={!admin || busy}>
+              保存导入日期门禁
+            </button>
           </form>
         )}
       </section>
@@ -658,7 +647,9 @@ export function RetentionWorkspace({
               <option value="unknown">未知</option>
             </select>
           </label>
-          <button disabled={!admin || busy}>创建只读清理预览</button>
+          <button className="primary-button" disabled={!admin || busy}>
+            创建只读清理预览
+          </button>
         </form>
       </details>
       {p && (

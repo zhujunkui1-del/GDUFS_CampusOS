@@ -43,11 +43,9 @@ export class ConsoleRetentionStore extends ConsoleAutomationStore {
       args.push(q.type);
     }
     if (q.q) {
-      where.push(
-        "(COALESCE(d.title,s.display_name) LIKE ? ESCAPE '\\' OR p.reason LIKE ? ESCAPE '\\')",
-      );
+      where.push("COALESCE(d.title,s.display_name) LIKE ? ESCAPE '\\'");
       const v = "%" + q.q.replace(/[\\%_]/g, "\\$&") + "%";
-      args.push(v, v);
+      args.push(v);
     }
     if (q.sourceType) {
       where.push("s.channel_type=?");
@@ -107,8 +105,10 @@ export class ConsoleRetentionStore extends ConsoleAutomationStore {
   async protection(raw: unknown) {
     consolePermission(this.actor, "admin");
     const v = ProtectionSchema.parse(raw);
-    if (v.expiresAt && Date.parse(v.expiresAt) <= Date.parse(this.now()))
-      throw new ApiError("INVALID_ARGUMENT", "保护截止时间必须在将来。");
+    v.expiresAt = null;
+    v.historyExempt = v.active;
+    if (!v.reason)
+      v.reason = v.active ? "管理员加入白名单" : "管理员移除白名单";
     if (v.type === "source") await this.sourceV2(v.targetId);
     else await this.document(v.targetId);
     const statements = [
@@ -159,21 +159,6 @@ export class ConsoleRetentionStore extends ConsoleAutomationStore {
       statements,
       "admin",
     );
-  }
-  override async archiveSource(id: string, raw: unknown) {
-    if (
-      await this.db
-        .prepare(
-          "SELECT 1 AS ok FROM console_protections WHERE target_type='source' AND target_id=? AND active=1 AND (expires_at_ms IS NULL OR expires_at_ms>?)",
-        )
-        .bind(id, Date.parse(this.now()))
-        .first()
-    )
-      throw new ApiError(
-        "CONFIRMATION_REQUIRED",
-        "请先解除来源白名单保护，再删除来源。",
-      );
-    return super.archiveSource(id, raw);
   }
   override async publish(id: string, raw: unknown, withdraw = false) {
     if (

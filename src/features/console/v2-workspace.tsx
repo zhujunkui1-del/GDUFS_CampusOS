@@ -226,29 +226,8 @@ const sourceFilters: ConsoleFilter[] = [
     name: "state",
     label: "启用状态",
     options: [
-      ["enabled", "已启用"],
-      ["paused", "已暂停"],
-      ["closed", "已停运"],
-      ["archived", "已删除（保留记录）"],
-    ],
-  },
-  {
-    name: "affiliation",
-    label: "广外关联",
-    options: [
-      ["confirmed", "已确认"],
-      ["unknown", "待确认"],
-      ["unrelated", "不相关"],
-    ],
-  },
-  {
-    name: "operating",
-    label: "运营状态",
-    options: [
-      ["active", "正常"],
-      ["unknown", "待确认"],
+      ["enabled", "启用"],
       ["closed", "停运"],
-      ["unreachable", "失效"],
     ],
   },
   {
@@ -377,7 +356,6 @@ export function ConsoleV2Articles({
     [selected, setSelected] = useState<
       Record<string, string | number | null>[]
     >([]),
-    [note, setNote] = useState(""),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
   const query = new URLSearchParams({
@@ -398,7 +376,6 @@ export function ConsoleV2Articles({
         await request("content/" + d.id + "/review", "POST", {
           ...cmd(Number(d.version)),
           decision,
-          note,
         });
         done++;
       } catch (e) {
@@ -453,32 +430,25 @@ export function ConsoleV2Articles({
       />
       {exceptions && canReview && (
         <div className="console-card console-actions">
-          <input
-            aria-label="批量审核说明"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-            maxLength={1000}
-            placeholder="填写统一审核理由"
-          />
           <button
-            disabled={busy || !selected.length || note.trim().length < 2}
+            disabled={busy || !selected.length}
             onClick={() => void batch("returned")}
           >
             批量退回
           </button>
           <button
-            disabled={busy || !selected.length || note.trim().length < 2}
+            disabled={busy || !selected.length}
             onClick={() => void batch("rejected")}
           >
             批量拒绝
           </button>
           <button
-            disabled={busy || !selected.length || note.trim().length < 2}
+            disabled={busy || !selected.length}
             onClick={() => void batch("approved")}
           >
             批量批准
           </button>
-          <span>{selected.length}/5</span>
+          <span>已选 {selected.length} 篇</span>
           <p role="status">{message}</p>
         </div>
       )}
@@ -495,11 +465,7 @@ export function ConsoleV2Articles({
                       type="checkbox"
                       aria-label={"选择" + d.title}
                       checked={selected.some((s) => s.id === d.id)}
-                      disabled={
-                        busy ||
-                        (selected.length >= 5 &&
-                          !selected.some((s) => s.id === d.id))
-                      }
+                      disabled={busy}
                       onChange={(e) =>
                         setSelected(
                           e.target.checked
@@ -549,7 +515,6 @@ export function ConsoleV2Articles({
 function Sources({
   request,
   actor,
-  Dialog,
 }: {
   request: Client;
   actor: ConsoleActor;
@@ -558,7 +523,6 @@ function Sources({
   const [filters, setFilters] = useState<Record<string, string>>({}),
     [offset, setOffset] = useState(0),
     [selection, setSelection] = useState<string[]>([]),
-    [confirm, setConfirm] = useState(false),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState("");
   const { data, error, reload } = useConsoleV2Data<List<SourceV2>>(
@@ -587,7 +551,6 @@ function Sources({
         `完成 ${r.items.filter((i) => i.ok).length} 项${r.items.some((i) => !i.ok) ? "；" + r.items.find((i) => !i.ok)?.error : ""}`,
       );
       setSelection([]);
-      setConfirm(false);
       reload();
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "操作失败。");
@@ -623,9 +586,9 @@ function Sources({
             批量启用
           </button>
           <button disabled={busy} onClick={() => void bulk("pause")}>
-            批量暂停
+            批量停运
           </button>
-          <button disabled={busy} onClick={() => setConfirm(true)}>
+          <button disabled={busy} onClick={() => void bulk("archive")}>
             批量删除
           </button>
         </div>
@@ -674,16 +637,7 @@ function Sources({
                             : "console-status-pending")
                         }
                       >
-                        {s.enabled
-                          ? "已启用"
-                          : s.operating === "closed"
-                            ? "已停运"
-                            : "已暂停"}
-                      </span>
-                      <span>
-                        {s.affiliation === "confirmed"
-                          ? "关联已确认"
-                          : "关联待确认"}
+                        {s.enabled ? "启用" : "停运"}
                       </span>
                       <span>
                         {s.automatic ? "可自动同步" : "需人工导入 / 同步受限"}
@@ -713,15 +667,6 @@ function Sources({
           <ConsoleV2Pages data={data} onPage={setOffset} />
         </>
       )}
-      <Dialog
-        open={confirm}
-        onClose={() => setConfirm(false)}
-        title="删除这些信息源？"
-        description={`本批${selection.length}个来源将停用并保留记录，历史文章和审计不删除。`}
-        action="删除"
-        busy={busy}
-        confirm={() => void bulk("archive")}
-      />
     </>
   );
 }
@@ -743,8 +688,6 @@ function SourceForm({
   const [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
     [carrier, setCarrier] = useState<string | null>(null),
-    [related, setRelated] = useState(false),
-    [operating, setOperating] = useState(false),
     [similar, setSimilar] = useState<SourceV2[]>([]);
   if (id && !data) return <Loading error={error} />;
   const initial = id ? data : undefined;
@@ -785,19 +728,6 @@ function SourceForm({
             miniProgramId: String(f.get("miniProgramId") || "") || null,
             sourceNote: String(f.get("sourceNote") || ""),
           },
-          ...(!id && (related || operating)
-            ? {
-                governance: {
-                  affiliation: related ? "confirmed" : "unknown",
-                  operating: operating ? "active" : "unknown",
-                  affiliationEvidence: links("evidence"),
-                  operatingEvidence: links("operatingEvidence"),
-                  note: String(f.get("governanceNote")),
-                  enabled: related && operating,
-                  retainHistory: true,
-                },
-              }
-            : {}),
         },
       );
       setMessage("已保存");
@@ -899,13 +829,6 @@ function SourceForm({
         </label>
       )}
       <label className="console-wide">
-        关联证据链接
-        <textarea
-          name="evidence"
-          defaultValue={initial?.evidenceUrls.join("\n")}
-        />
-      </label>
-      <label className="console-wide">
         备注
         <textarea
           name="sourceNote"
@@ -913,39 +836,6 @@ function SourceForm({
           defaultValue={extra?.sourceNote || ""}
         />
       </label>
-      {!id && (
-        <>
-          <label className="console-checkbox">
-            <input
-              type="checkbox"
-              checked={related}
-              onChange={(e) => setRelated(e.target.checked)}
-            />
-            已确认与广外相关
-          </label>
-          <label className="console-checkbox">
-            <input
-              type="checkbox"
-              checked={operating}
-              onChange={(e) => setOperating(e.target.checked)}
-            />
-            已确认现在正常运作
-          </label>
-          <label className="console-wide">
-            当前运营证据链接
-            <textarea name="operatingEvidence" required={operating} />
-          </label>
-          <label className="console-wide">
-            关联及运营说明
-            <textarea
-              name="governanceNote"
-              required={related || operating}
-              minLength={5}
-              maxLength={1000}
-            />
-          </label>
-        </>
-      )}
       {similar.length > 0 && (
         <div className="console-wide">
           <p>相近来源（不会自动合并）</p>
@@ -970,117 +860,13 @@ function SourceForm({
     </form>
   );
 }
-function Governance({
-  request,
-  source,
-  onSaved,
-}: {
-  request: Client;
-  source: SourceV2;
-  onSaved: () => void;
-}) {
-  const [message, setMessage] = useState(""),
-    [busy, setBusy] = useState(false),
-    [related, setRelated] = useState(source.affiliation === "confirmed"),
-    [operating, setOperating] = useState(source.operating === "active");
-  async function submit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const f = new FormData(e.currentTarget),
-      links = (key: string) =>
-        String(f.get(key) || "")
-          .split("\n")
-          .map((v) => v.trim())
-          .filter(Boolean);
-    setBusy(true);
-    try {
-      await request("v2/sources/" + source.id + "/governance", "POST", {
-        ...cmd(source.version),
-        affiliation: related ? "confirmed" : "unknown",
-        operating: operating ? "active" : "unknown",
-        affiliationEvidence: links("affiliationEvidence"),
-        operatingEvidence: links("operatingEvidence"),
-        note: String(f.get("note")),
-        enabled: related && operating,
-        retainHistory: true,
-      });
-      setMessage("已保存核验");
-      onSaved();
-    } catch (e) {
-      setMessage(e instanceof Error ? e.message : "核验未保存。");
-    } finally {
-      setBusy(false);
-    }
-  }
-  return (
-    <section className="console-card">
-      <h2>关联与当前运营</h2>
-      <form className="console-form" onSubmit={submit}>
-        <label className="console-checkbox">
-          <input
-            type="checkbox"
-            checked={related}
-            onChange={(e) => setRelated(e.target.checked)}
-          />
-          已确认与广外相关
-        </label>
-        <label className="console-checkbox">
-          <input
-            type="checkbox"
-            checked={operating}
-            onChange={(e) => setOperating(e.target.checked)}
-          />
-          已确认现在正常运作
-        </label>
-        <label>
-          关联证据链接
-          <textarea
-            name="affiliationEvidence"
-            required={related}
-            defaultValue={source.affiliationEvidence.join("\n")}
-          />
-        </label>
-        <label>
-          当前运营证据链接
-          <textarea
-            name="operatingEvidence"
-            required={operating}
-            defaultValue={source.operatingEvidence.join("\n")}
-          />
-        </label>
-        <label className="console-wide">
-          核验说明
-          <textarea
-            name="note"
-            required
-            minLength={5}
-            maxLength={1000}
-            defaultValue={source.governanceNote}
-          />
-        </label>
-        <div className="console-actions">
-          <button className="primary-button" disabled={busy}>
-            保存关联与运营核验
-          </button>
-          <span>
-            {source.governanceCheckedAt
-              ? "最近核验 " + date(source.governanceCheckedAt)
-              : "尚未确认"}
-          </span>
-        </div>
-        <Feedback message={message} />
-      </form>
-    </section>
-  );
-}
 function SourceWorkspace(props: WorkspaceProps) {
   const router = useRouter(),
     params = useSearchParams(),
     article = params.get("article"),
     [tab, setTab] = useState(params.get("tab") || "articles"),
     [message, setMessage] = useState(""),
-    [busy, setBusy] = useState(false),
-    [archive, setArchive] = useState(false),
-    [advanced, setAdvanced] = useState(false);
+    [busy, setBusy] = useState(false);
   const lookup = useConsoleV2Data<{ sourceId: string }>(
     props.request,
     article ? "content/" + article : null,
@@ -1129,24 +915,12 @@ function SourceWorkspace(props: WorkspaceProps) {
         />
       </>
     );
-  const source = data,
-    Dialog = props.Dialog;
+  const source = data;
   async function operation(action: string) {
     setBusy(true);
     try {
       if (action === "archive")
         await props.request("sources/" + id, "DELETE", cmd(source.version));
-      else if (action === "closed")
-        await props.request("v2/sources/" + id + "/governance", "POST", {
-          ...cmd(source.version),
-          affiliation: source.affiliation,
-          operating: "closed",
-          affiliationEvidence: source.affiliationEvidence,
-          operatingEvidence: source.operatingEvidence,
-          note: "管理员明确标记来源停运",
-          enabled: false,
-          retainHistory: source.retainHistory,
-        });
       else if (action === "restore")
         await props.request(
           "v2/sources/" + id + "/restore",
@@ -1159,7 +933,6 @@ function SourceWorkspace(props: WorkspaceProps) {
           enabled: !source.enabled,
         });
       setMessage("已保存");
-      setArchive(false);
       reload();
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "操作失败。");
@@ -1176,7 +949,7 @@ function SourceWorkspace(props: WorkspaceProps) {
       <div className="console-heading">
         <h1>{source.displayName}</h1>
         <span className="console-badge">
-          {source.archivedAt ? "已删除" : source.enabled ? "已启用" : "已暂停"}
+          {source.enabled ? "启用" : "停运"}
         </span>
       </div>
       <div className="console-card console-v2-source-head">
@@ -1206,18 +979,12 @@ function SourceWorkspace(props: WorkspaceProps) {
                 {source.archivedAt
                   ? "恢复来源"
                   : source.enabled
-                    ? "暂停来源"
-                    : "启用来源"}
+                    ? "停运"
+                    : "启用"}
               </button>
               <button
                 disabled={busy || !!source.archivedAt}
-                onClick={() => void operation("closed")}
-              >
-                标记停运
-              </button>
-              <button
-                disabled={busy || !!source.archivedAt}
-                onClick={() => setArchive(true)}
+                onClick={() => void operation("archive")}
               >
                 删除来源
               </button>
@@ -1238,7 +1005,7 @@ function SourceWorkspace(props: WorkspaceProps) {
       <div className="console-v2-tabs" role="tablist" aria-label="信息源详情">
         {[
           ["articles", "全部文章"],
-          ["governance", "基本资料与核验"],
+          ["governance", "基本资料"],
           ["sync", "同步状态"],
           ["history", "操作历史"],
         ].map(([v, l]) => (
@@ -1266,12 +1033,6 @@ function SourceWorkspace(props: WorkspaceProps) {
         </>
       ) : tab === "governance" ? (
         <>
-          <Governance
-            key={source.version}
-            request={props.request}
-            source={source}
-            onSaved={reload}
-          />
           <SourceForm
             key={"form" + source.version}
             request={props.request}
@@ -1279,17 +1040,13 @@ function SourceWorkspace(props: WorkspaceProps) {
             extra={source}
             onSaved={() => reload()}
           />
-          <details
-            className="console-card"
-            open={advanced}
-            onToggle={(e) => setAdvanced(e.currentTarget.open)}
-          >
-            <summary>高级资料与使用许可</summary>
-            {advanced && props.advancedSource(id)}
-          </details>
         </>
       ) : tab === "sync" ? (
         <>
+          <RunnerTokens
+            request={props.request}
+            admin={props.actor.role === "admin"}
+          />
           <SourceCollectionPolicy
             request={props.request}
             id={id}
@@ -1381,15 +1138,6 @@ function SourceWorkspace(props: WorkspaceProps) {
       ) : (
         <>{props.history(id)}</>
       )}
-      <Dialog
-        open={archive}
-        onClose={() => setArchive(false)}
-        title="删除这个信息源？"
-        description={`将停用该来源；保留${source.articleCount}篇关联文章、历史版本和审计记录。`}
-        action="删除来源"
-        busy={busy}
-        confirm={() => void operation("archive")}
-      />
     </>
   );
 }
@@ -1418,9 +1166,8 @@ type Dashboard = {
 };
 function Dashboard(props: WorkspaceProps) {
   const params = useSearchParams(),
-    [filters, setFilters] = useState<Record<string, string>>({}),
+    [filters] = useState<Record<string, string>>({}),
     [message, setMessage] = useState(""),
-    [jobsOpen, setJobsOpen] = useState(params.get("view") === "jobs"),
     [historyOpen, setHistoryOpen] = useState(params.get("view") === "history");
   const { data, error, reload } = useConsoleV2Data<Dashboard>(
     props.request,
@@ -1430,9 +1177,8 @@ function Dashboard(props: WorkspaceProps) {
   const stats = data.stats,
     metrics: [string, unknown][] = [
       ["信息源总数", stats.sources],
-      ["已启用", stats.enabled],
-      ["已暂停", stats.paused],
-      ["停运或失效", stats.unavailable],
+      ["启用", stats.enabled],
+      ["停运", Number(stats.sources) - Number(stats.enabled)],
       ["未配置自动连接器", data.unsupported],
       [
         filters.from || filters.to ? "范围内发现出处" : "今日发现出处",
@@ -1521,7 +1267,7 @@ function Dashboard(props: WorkspaceProps) {
                 ...cmd(data.settings.version),
                 syncHours: Number(f.get("hours")),
                 autoSync: data.settings.auto_sync_enabled === 1,
-                networkBudget: Number(f.get("budget")),
+                networkBudget: data.settings.network_budget,
                 earliestImportDay: data.settings.earliest_import_day,
                 note: "管理员调整全局同步周期",
               })
@@ -1543,16 +1289,6 @@ function Dashboard(props: WorkspaceProps) {
               </option>
             ))}
           </select>
-          <label>
-            日请求预算
-            <input
-              name="budget"
-              type="number"
-              min="2"
-              max="20"
-              defaultValue={data.settings.network_budget}
-            />
-          </label>
           <button disabled={props.actor.role !== "admin"}>保存同步设置</button>
           <button
             type="button"
@@ -1584,16 +1320,8 @@ function Dashboard(props: WorkspaceProps) {
             )}
           </button>
         </form>
-        <p>
-          网络请求预留 {data.networkUsage} / {data.settings.network_budget}
-          （UTC日）
-        </p>
         <Feedback message={message} />
       </section>
-      <RunnerTokens
-        request={props.request}
-        admin={props.actor.role === "admin"}
-      />
       <section className="console-card">
         <h2>D1存储</h2>
         {data.storage.length ? (
@@ -1616,30 +1344,12 @@ function Dashboard(props: WorkspaceProps) {
           <p className="console-empty">暂无指标</p>
         )}
       </section>
-      <ConsoleV2Filters
-        fields={[
-          ...sourceFilters.slice(0, 5),
-          { name: "from", label: "统计起日", type: "date" },
-          { name: "to", label: "统计止日", type: "date" },
-        ]}
-        values={filters}
-        onChange={setFilters}
-      />
-      <p>{data.filteredSources} 个来源符合筛选</p>
-      <details
-        className="console-card"
-        open={jobsOpen}
-        onToggle={(e) => setJobsOpen(e.currentTarget.open)}
-      >
-        <summary>最近运行与采集任务</summary>
-        {jobsOpen && props.jobs()}
-      </details>
       <details
         className="console-card"
         open={historyOpen}
         onToggle={(e) => setHistoryOpen(e.currentTarget.open)}
       >
-        <summary>高级操作历史</summary>
+        <summary>审计日志</summary>
         {historyOpen && props.history()}
       </details>
     </>

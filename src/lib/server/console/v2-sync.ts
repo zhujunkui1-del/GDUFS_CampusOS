@@ -366,7 +366,7 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       hash = await tokenHash(this.actor.id + ":" + v.leaseToken);
     const row = await this.db
       .prepare(
-        "SELECT j.id FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE j.id=? AND j.version=? AND j.lease_fence=? AND j.lease_hash=? AND j.lease_until_ms>? AND j.control_state='active' AND j.status='running' AND s.enabled=1 AND s.sync_state<>'blocked' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.affiliation_status='confirmed' AND s.operating_status='active' AND s.permission_status='approved' AND s.authorization_status='approved' AND s.archived_at IS NULL AND s.version=j.source_version AND p.version=j.policy_version AND p.expires_at_ms>? AND (e.auto_sync_enabled=1 OR j.run_key NOT LIKE 'scheduled:%')",
+        "SELECT j.id FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE j.id=? AND j.version=? AND j.lease_fence=? AND j.lease_hash=? AND j.lease_until_ms>? AND j.control_state='active' AND j.status='running' AND s.enabled=1 AND s.sync_state<>'blocked' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.operating_status='active' AND s.permission_status='approved' AND s.authorization_status='approved' AND s.archived_at IS NULL AND s.version=j.source_version AND p.version=j.policy_version AND p.expires_at_ms>? AND (e.auto_sync_enabled=1 OR j.run_key NOT LIKE 'scheduled:%')",
       )
       .bind(
         id,
@@ -429,7 +429,7 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       args.push(q.campus);
     }
     const active =
-      "enabled=1 AND affiliation_status='confirmed' AND operating_status='active' AND governance_checked_at IS NOT NULL AND archived_at IS NULL";
+      "enabled=1 AND archived_at IS NULL";
     if (q.state === "enabled") where.push(active);
     if (q.state === "paused")
       where.push(

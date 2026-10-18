@@ -95,6 +95,7 @@ export const SourcesV2Query = z
   .strict();
 export const ArticleV2Query = z
   .object({
+    titleOnly: z.enum(["1"]).optional(),
     q: z.string().max(100).optional(),
     sourceId: z.string().max(100).optional(),
     type: z.string().max(40).optional(),

@@ -45,9 +45,11 @@ describe("Console V2 source governance (isolated SQLite)", () => {
         f.sqlite.prepare("SELECT count(*) n FROM knowledge_sources").get()?.n,
       ).toBe(0);
       const s = await f.store.createGovernedSource(sourceInput());
-      await expect(
-        f.store.enableSource(s.id, { ...cmd(1), enabled: true }),
-      ).rejects.toMatchObject({ code: "INVALID_ARGUMENT" });
+      await f.store.enableSource(s.id, { ...cmd(1), enabled: true });
+      expect((await f.store.sourceV2(s.id)).enabled).toBe(true);
+      expect((await f.store.sourceV2(s.id)).automatic).toBe(false);
+      expect((await f.store.sourceV2(s.id)).affiliation).toBe("unknown");
+      await f.store.enableSource(s.id, { ...cmd(2), enabled: false });
       expect((await f.store.sourceV2(s.id)).enabled).toBe(false);
     } finally {
       f.close();

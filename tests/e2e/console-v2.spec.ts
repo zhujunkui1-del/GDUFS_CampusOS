@@ -54,22 +54,12 @@ test("V2 five menus, governed non-web sources, soft deletion and legacy routes",
   await page
     .getByLabel("所属机构", { exact: true })
     .fill("隔离测试，不是真实来源");
-  await page
-    .getByLabel("关联证据链接", { exact: true })
-    .fill("https://example.invalid/relation");
-  await page
-    .getByLabel("当前运营证据链接", { exact: true })
-    .fill("https://example.invalid/current");
-  await page.getByLabel("已确认与广外相关", { exact: true }).check();
-  await page.getByLabel("已确认现在正常运作", { exact: true }).check();
-  await page
-    .getByLabel("关联及运营说明", { exact: true })
-    .fill("隔离夹具核验，不代表真实学校信息源");
   await page.getByRole("button", { name: "保存信息源", exact: true }).click();
   await expect(page).toHaveURL(/record=source-/);
   const sourceId = new URL(page.url()).searchParams.get("record")!;
+  await page.getByRole("button", { name: "启用", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "暂停来源", exact: true }),
+    page.getByRole("button", { name: "停运", exact: true }),
   ).toBeVisible();
   const stored = (
     await (await page.request.get("/api/admin/v2/sources/" + sourceId)).json()
@@ -99,39 +89,29 @@ test("V2 five menus, governed non-web sources, soft deletion and legacy routes",
       })
     ).status(),
   ).toBe(200);
-  await page.getByRole("button", { name: "暂停来源", exact: true }).click();
+  await page.getByRole("button", { name: "停运", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "启用来源", exact: true }),
+    page.getByRole("button", { name: "启用", exact: true }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "启用来源", exact: true }).click();
+  await page.getByRole("button", { name: "启用", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "暂停来源", exact: true }),
+    page.getByRole("button", { name: "停运", exact: true }),
   ).toBeVisible();
   const dir =
     process.env.CONSOLE_V2_EVIDENCE_DIR ||
-    "docs/verification/console-v2/d/browser";
+    "docs/verification/console-v2/e/browser";
   mkdirSync(dir, { recursive: true });
   await page.screenshot({
     path: `${dir}/${process.env.PLAYWRIGHT_CHANNEL}-${info.project.name}-source.png`,
     fullPage: true,
   });
   await page.getByRole("button", { name: "删除来源", exact: true }).click();
-  const dialog = page.getByRole("alertdialog");
-  await expect(
-    dialog.getByRole("button", { name: "取消", exact: true }),
-  ).toBeFocused();
-  await dialog.getByRole("button", { name: "取消", exact: true }).click();
-  await page.getByRole("button", { name: "删除来源", exact: true }).click();
-  await page
-    .getByRole("alertdialog")
-    .getByRole("button", { name: "删除来源", exact: true })
-    .click();
   await expect(
     page.getByRole("button", { name: "恢复来源", exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: "恢复来源", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "启用来源", exact: true }),
+    page.getByRole("button", { name: "启用", exact: true }),
   ).toBeVisible();
   await page.goto("/admin/sources");
   await page.getByText("筛选与排序", { exact: true }).click();
@@ -146,37 +126,45 @@ test("V2 five menus, governed non-web sources, soft deletion and legacy routes",
   await expect(page).toHaveURL(/\/admin\?view=jobs/);
   await expect(
     page.getByText("最近运行与采集任务", { exact: true }),
-  ).toBeVisible();
+  ).toHaveCount(0);
   await page.goto("/admin/audit");
   await expect(page).toHaveURL(/view=history/);
   await expect(page.locator(".console-audit-row").first()).toBeVisible();
   await page.goto(`/admin/whitelist?type=source&target=${sourceId}`);
-  await page
-    .getByRole("combobox", { name: "选择对象", exact: true })
-    .selectOption(sourceId);
-  await page
-    .getByLabel("保护原因", { exact: true })
-    .fill("隔离来源长期保留测试，不代表真实来源许可");
-  await page.getByRole("button", { name: "添加保护", exact: true }).click();
-  await expect(page.getByText("已加入白名单", { exact: true })).toBeVisible();
-  await page.getByLabel("搜索白名单", { exact: true }).fill(name);
-  await expect(page.locator(".console-v2-row").first()).toContainText(name);
+  await expect(page.getByLabel("保护原因", { exact: true })).toHaveCount(0);
+  await expect(
+    page.getByRole("combobox", { name: "白名单状态", exact: true }),
+  ).toHaveCount(0);
+  await page.getByRole("button", { name: "加入白名单", exact: true }).click();
+  await expect(page.getByText("已加入1项", { exact: true })).toBeVisible();
+  const row = page.locator(".console-whitelist-row").filter({ hasText: name });
+  await expect(row).toContainText("永久保护");
+  const cb = row.getByRole("checkbox");
+  const bounds = await cb.boundingBox(),
+    card = await row.boundingBox();
+  expect(bounds!.width).toBeLessThanOrEqual(20);
+  expect(bounds!.height).toBeLessThanOrEqual(20);
+  expect(card!.x + card!.width - (bounds!.x + bounds!.width)).toBeLessThan(24);
+  await cb.check();
   await page.screenshot({
     path: `${dir}/${process.env.PLAYWRIGHT_CHANNEL}-${info.project.name}-whitelist.png`,
     fullPage: true,
   });
-  await page.locator(".console-v2-row").first().getByRole("checkbox").check();
   await page.getByRole("button", { name: /移除所选/ }).click();
-  await page
-    .getByRole("alertdialog")
-    .getByRole("button", { name: "取消", exact: true })
-    .click();
-  await page.getByRole("button", { name: /移除所选/ }).click();
-  await page
-    .getByRole("alertdialog")
-    .getByRole("button", { name: "解除保护", exact: true })
-    .click();
-  await expect(page.getByText("已解除保护", { exact: true })).toBeVisible();
+  await expect(page.getByText("已移除1项", { exact: true })).toBeVisible();
+  await page.goto(`/admin/sources?view=import&source=${sourceId}`);
+  await expect(page.getByLabel("包含发布时间", { exact: true })).toHaveCount(0);
+  await expect(
+    page.getByLabel("原文发布日期", { exact: true }),
+  ).toHaveAttribute("type", "datetime-local");
+  await expect(page.getByLabel("原文发布日期", { exact: true })).toHaveValue(
+    "",
+  );
+  await expect(
+    page.getByLabel("更新版本（已有记录时）", { exact: true }),
+  ).toHaveCount(0);
+  await page.getByRole("link", { name: "返回信息源", exact: true }).click();
+  await expect(page).toHaveURL(new RegExp("record=" + sourceId));
   await page.goto("/admin/retention");
   await page
     .getByLabel("截止日期（不含当天，北京时间）", { exact: true })
@@ -211,6 +199,9 @@ test("V2 five menus, governed non-web sources, soft deletion and legacy routes",
     fullPage: true,
   });
   await page.goto("/admin");
+  await expect(page.locator("main > .console-v2-filters")).toHaveCount(0);
+  await expect(page.getByText("执行器授权", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("日请求预算", { exact: true })).toHaveCount(0);
   await page.getByLabel("全局同步频率", { exact: true }).selectOption("3");
   await page.getByRole("button", { name: "保存同步设置", exact: true }).click();
   await expect(page.getByText("同步设置已保存", { exact: true })).toBeVisible();

@@ -1,0 +1,122 @@
+{
+  "baseCommit": "70e83d4",
+  "workerVersion": "2b4bf577-bb85-47d1-97e6-874654d7ad87",
+  "previewUrl": "https://campusos-preview.zhujunkui1.workers.dev/admin",
+  "unit": {
+    "passed": 339,
+    "total": 339,
+    "failed": 0
+  },
+  "localBrowser": {
+    "passed": 4,
+    "cases": 4
+  },
+  "cloudReadOnlyBrowser": {
+    "passed": 4,
+    "cases": 4
+  },
+  "bulkTypographyExtra": [
+    {
+      "channel": "chrome",
+      "project": "desktop",
+      "startTime": "2026-10-18T08:12:46.869Z",
+      "duration": 3702.9170000000004,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "exit": 0
+    }
+  ],
+  "loadedCloudSnapshotExtra": [
+    {
+      "channel": "chrome",
+      "project": "desktop",
+      "startTime": "2026-10-18T08:21:41.152Z",
+      "duration": 11242.27,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "exit": 0
+    }
+  ],
+  "database": {
+    "migration": "0022_console_simple_admin_actions.sql",
+    "counts": {
+      "sources": 220,
+      "enabled": 4,
+      "verified": 4,
+      "documents": 3,
+      "published": 0,
+      "jobs": 4,
+      "conversations": 75,
+      "messages": 330,
+      "runs": 192
+    },
+    "sourceStateUnchanged": true,
+    "foreignKeyViolations": 0,
+    "bytes": 2420736,
+    "diagnosticSelects": 8,
+    "diagnosticRowsRead": 4244,
+    "diagnosticRowsWritten": 0
+  },
+  "actualWorkerMetrics": {
+    "recordedAt": "2026-10-18T08:19:59.895Z",
+    "start": "2026-10-18T08:16:40.000Z",
+    "end": "2026-10-18T08:19:59.895Z",
+    "actualCloudGraphQL": true,
+    "grouping": "Whole existing preview Worker, by invocation status; includes all routes/traffic in this window, not per-ingestion CPU.",
+    "sampled": true,
+    "fieldDescriptions": [
+      {
+        "description": "CPU time 50th percentile - microseconds",
+        "name": "cpuTimeP50"
+      },
+      {
+        "description": "CPU time 95th percentile - microseconds",
+        "name": "cpuTimeP95"
+      },
+      {
+        "description": "CPU time 99th percentile - microseconds",
+        "name": "cpuTimeP99"
+      },
+      {
+        "description": "Wall time 50th percentile - microseconds",
+        "name": "wallTimeP50"
+      },
+      {
+        "description": "Wall time 95th percentile - microseconds",
+        "name": "wallTimeP95"
+      }
+    ],
+    "groups": [
+      {
+        "dimensions": {
+          "status": "success"
+        },
+        "quantiles": {
+          "cpuTimeP50": 4186,
+          "cpuTimeP95": 15150,
+          "cpuTimeP99": 20282,
+          "wallTimeP50": 136478,
+          "wallTimeP95": 725803
+        },
+        "sum": {
+          "errors": 0,
+          "requests": 125,
+          "subrequests": 98
+        }
+      }
+    ],
+    "longTermFreeCapacityVerified": false
+  },
+  "publishedContentByThisRun": 0,
+  "permanentContentCleanupByThisRun": 0,
+  "realAutomaticPublicationRate": null,
+  "realExceptionRate": null,
+  "realAutomaticProcessingDenominator": 0,
+  "longTermFreeCapacityVerified": false,
+  "modelSpendThisRun": 0,
+  "productionModified": false
+}

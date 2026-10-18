@@ -28,8 +28,7 @@ import { webProfiles } from "@/lib/ingestion/profiles";
 type Row = Record<string, string | number | null>;
 const visible = "s.console_managed=1 AND s.source_type<>'user_private'";
 const docs = "d.owner_user_id IS NULL AND d.data_domain<>'user_private'";
-const active =
-  "s.enabled=1 AND s.affiliation_status='confirmed' AND s.operating_status='active' AND s.governance_checked_at IS NOT NULL AND s.archived_at IS NULL";
+const active = "s.enabled=1 AND s.archived_at IS NULL";
 const pattern = (s: string) => "%" + s.replace(/[\\%_]/g, "\\$&") + "%";
 const articleCount =
   "(SELECT count(DISTINCT d.id) FROM knowledge_documents d WHERE " +
@@ -87,21 +86,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     );
   }
   override async source(id: string) {
-    const base = await super.source(id);
-    const row = await this.db
-      .prepare(
-        "SELECT affiliation_status,operating_status,governance_checked_at FROM knowledge_sources WHERE id=?",
-      )
-      .bind(id)
-      .first<Row>();
-    return {
-      ...base,
-      enabled:
-        base.enabled &&
-        row?.affiliation_status === "confirmed" &&
-        row?.operating_status === "active" &&
-        !!row?.governance_checked_at,
-    };
+    return super.source(id);
   }
   async createGovernedSource(raw: unknown) {
     const v = SourceCreateV2Schema.parse(raw);
@@ -159,9 +144,10 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     const statements = [
       this.db
         .prepare(
-          "UPDATE knowledge_sources SET enabled=?,version=version+1,next_sync_at_ms=CASE WHEN ?=1 THEN ? ELSE NULL END,updated_at=? WHERE id=?",
+          "UPDATE knowledge_sources SET enabled=?,operating_status=CASE WHEN ?=1 THEN 'active' ELSE 'closed' END,version=version+1,next_sync_at_ms=CASE WHEN ?=1 THEN ? ELSE NULL END,updated_at=? WHERE id=?",
         )
         .bind(
+          Number(v.enabled),
           Number(v.enabled),
           Number(v.enabled),
           Date.parse(this.now()),
@@ -401,12 +387,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       sourceNote: String(row.source_note || ""),
       affiliation: String(row.affiliation_status),
       operating: String(row.operating_status),
-      enabled:
-        row.enabled === 1 &&
-        row.affiliation_status === "confirmed" &&
-        row.operating_status === "active" &&
-        !!row.governance_checked_at &&
-        !row.archived_at,
+      enabled: row.enabled === 1 && !row.archived_at,
       registeredEnabled: row.enabled === 1,
       version: Number(row.version),
       automatic:
@@ -417,7 +398,6 @@ export class ConsoleGovernanceStore extends ManualImportStore {
         row.official_status === "verified_official" &&
         row.permission_status === "approved" &&
         row.authorization_status === "approved" &&
-        row.affiliation_status === "confirmed" &&
         row.operating_status === "active" &&
         row.enabled === 1,
       lastSuccessAt: row.last_success_at ? String(row.last_success_at) : null,
@@ -470,10 +450,8 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       ],
       args: unknown[] = [];
     if (q.q) {
-      where.push(
-        "(s.display_name LIKE ? ESCAPE '\\' OR s.source_aliases_json LIKE ? ESCAPE '\\' OR s.id LIKE ? ESCAPE '\\' OR s.wechat_id LIKE ? ESCAPE '\\')",
-      );
-      args.push(...Array(4).fill(pattern(q.q)));
+      where.push("s.display_name LIKE ? ESCAPE '\\'");
+      args.push(pattern(q.q));
     }
     for (const [column, value] of [
       ["s.verification_status", q.verification],
@@ -495,7 +473,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     if (q.state === "enabled") where.push(active);
     if (q.state === "paused")
       where.push(`NOT(${active}) AND s.operating_status<>'closed'`);
-    if (q.state === "closed") where.push("s.operating_status='closed'");
+    if (q.state === "closed") where.push("s.enabled=0");
     if (q.error)
       where.push(
         q.error === "1" ? "s.last_error IS NOT NULL" : "s.last_error IS NULL",
@@ -559,9 +537,11 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       args: unknown[] = [];
     if (q.q) {
       where.push(
-        "(d.title LIKE ? ESCAPE '\\' OR d.body LIKE ? ESCAPE '\\' OR d.summary LIKE ? ESCAPE '\\')",
+        q.titleOnly === "1"
+          ? "d.title LIKE ? ESCAPE '\\'"
+          : "(d.title LIKE ? ESCAPE '\\' OR d.body LIKE ? ESCAPE '\\' OR d.summary LIKE ? ESCAPE '\\')",
       );
-      args.push(...Array(3).fill(pattern(q.q)));
+      args.push(...Array(q.titleOnly === "1" ? 1 : 3).fill(pattern(q.q)));
     }
     if (q.sourceId) {
       where.push(

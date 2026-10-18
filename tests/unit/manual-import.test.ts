@@ -252,7 +252,10 @@ describe("bounded manual intake and fresh anonymous metadata", () => {
         f.sqlite.prepare("SELECT * FROM knowledge_documents").all(),
       ).toHaveLength(2);
       await expect(
-        f.store.importBatch(f.batch([{ ...f.item, title: "改动标题" }])),
+        f.store.importBatch({
+          ...f.batch(),
+          items: [{ ...f.item, title: "改动标题", expectedVersion: 999 }],
+        }),
       ).rejects.toMatchObject({ code: "CONFLICT" });
       const v = (await f.store.document(id)).version;
       const changed = await f.store.importBatch({
@@ -309,9 +312,7 @@ describe("bounded manual intake and fresh anonymous metadata", () => {
       const original = f.db.batch;
       f.db.batch = async (statements) => {
         f.sqlite
-          .prepare(
-            "UPDATE knowledge_sources SET authorization_status='rejected' WHERE id=?",
-          )
+          .prepare("UPDATE knowledge_sources SET enabled=0 WHERE id=?")
           .run(f.source.id);
         return original(statements);
       };

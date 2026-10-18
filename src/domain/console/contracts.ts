@@ -207,10 +207,10 @@ export const ContentWriteSchema = ContentInputSchema.extend({
 }).strict();
 export const ReviewSchema = CommandSchema.extend({
   decision: z.enum(["approved", "returned", "rejected"]),
-  note: z.string().trim().min(2).max(1000),
+  note: z.string().trim().max(1000).default("管理员操作"),
 }).strict();
 export const PublishSchema = CommandSchema.extend({
-  note: z.string().trim().min(2).max(1000),
+  note: z.string().trim().max(1000).default("管理员操作"),
 }).strict();
 export const RestoreSchema = CommandSchema.extend({
   version: z.number().int().positive(),

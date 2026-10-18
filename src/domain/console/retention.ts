@@ -4,9 +4,9 @@ export const ProtectionSchema = CommandSchema.extend({
   type: z.enum(["source", "document"]),
   targetId: ConsoleIdSchema,
   active: z.boolean(),
-  historyExempt: z.boolean().default(false),
-  expiresAt: z.iso.datetime({ offset: true }).nullable(),
-  reason: z.string().trim().min(5).max(500),
+  historyExempt: z.boolean().default(true),
+  expiresAt: z.iso.datetime({ offset: true }).nullable().default(null),
+  reason: z.string().trim().max(500).default(""),
 }).strict();
 export const ProtectionQuery = z
   .object({

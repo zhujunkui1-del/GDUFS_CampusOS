@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { ConsoleActor, SourceSummary } from "@/domain/console/contracts";
 import {
   knowledgeCategories,
@@ -18,10 +18,10 @@ export function ManualImportForm({
   actor: ConsoleActor;
 }) {
   const router = useRouter();
-  const [publishedExact, setPublishedExact] = useState(false);
+  const params = useSearchParams();
   const [query, setQuery] = useState(""),
     [sources, setSources] = useState<SourceSummary[]>([]),
-    [sourceId, setSource] = useState(""),
+    [sourceId, setSource] = useState(params.get("source") || ""),
     [policy, setPolicy] = useState<Policy | null>(null),
     [title, setTitle] = useState(""),
     [url, setUrl] = useState(""),
@@ -31,21 +31,17 @@ export function ManualImportForm({
     [knowledgeCategory, setCategory] = useState(""),
     [radarCategory, setRadar] = useState(""),
     [summary, setSummary] = useState(""),
-    [own, setOwn] = useState(false),
-    [originalChecked, setOriginalChecked] = useState(false),
     [entries, setEntries] = useState(""),
-    [expectedVersion, setVersion] = useState(""),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState(""),
     [rights, setRights] = useState("metadata_only"),
     [evidence, setEvidence] = useState(""),
-    [note, setNote] = useState(""),
     [licenseConfirmed, setLicenseConfirmed] = useState(false);
   useEffect(() => {
     let active = true;
     const timer = setTimeout(() => {
       request<{ items: SourceSummary[] }>(
-        `v2/sources?limit=50&verification=verified&permission=approved&state=enabled&q=${encodeURIComponent(query)}`,
+        `v2/sources?limit=50&state=enabled&q=${encodeURIComponent(query)}`,
       )
         .then((r) => {
           if (active) setSources(r.items);
@@ -101,9 +97,7 @@ export function ManualImportForm({
               url,
               publishedAt: !publishedAt
                 ? null
-                : publishedExact
-                  ? new Date(publishedAt + ":00+08:00").toISOString()
-                  : publishedAt,
+                : new Date(publishedAt + ":00+08:00").toISOString(),
               campusScope: "unknown",
               contentType: "notice",
               knowledgeCategory: knowledgeCategory || null,
@@ -111,15 +105,11 @@ export function ManualImportForm({
               body: bodyStatus === "not_provided" ? "" : body,
               bodyStatus,
               summary,
-              ownNoteConfirmed: own,
-              ...(originalChecked ? { originalChecked: true } : {}),
+              ownNoteConfirmed: !!summary,
               discoveryUrls: entries
                 .split(/\n/)
                 .map((s) => s.trim())
                 .filter(Boolean),
-              ...(expectedVersion
-                ? { expectedVersion: Number(expectedVersion) }
-                : {}),
             },
           ],
         },
@@ -134,8 +124,16 @@ export function ManualImportForm({
     ["excerpt_and_link", "licensed_full_text"].includes(policy.effectiveRights);
   return (
     <>
-      <Link className="console-back" href="/admin/content">
-        返回内容记录
+      <Link
+        className="console-back"
+        href={
+          params.get("source")
+            ? "/admin/sources?record=" +
+              encodeURIComponent(params.get("source")!)
+            : "/admin/sources"
+        }
+      >
+        返回信息源
       </Link>
       <div className="console-heading">
         <h1>人工导入</h1>
@@ -173,6 +171,9 @@ export function ManualImportForm({
             }}
           >
             <option value="">请选择</option>
+            {sourceId && !sources.some((s) => s.id === sourceId) && (
+              <option value={sourceId}>当前信息源</option>
+            )}
             {sources.map((s) => (
               <option key={s.id} value={s.id}>
                 {s.displayName}
@@ -201,21 +202,10 @@ export function ManualImportForm({
         <label>
           原文发布日期
           <input
-            type={publishedExact ? "datetime-local" : "date"}
+            type="datetime-local"
             value={publishedAt}
             onChange={(e) => setPublished(e.target.value)}
           />
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={publishedExact}
-            onChange={(e) => {
-              setPublishedExact(e.target.checked);
-              setPublished("");
-            }}
-          />
-          包含发布时间
         </label>
         <label>
           正文状态
@@ -281,17 +271,6 @@ export function ManualImportForm({
             onChange={(e) => setSummary(e.target.value)}
           />
         </label>
-        {!!summary && (
-          <label className="console-wide">
-            <input
-              type="checkbox"
-              required
-              checked={own}
-              onChange={(e) => setOwn(e.target.checked)}
-            />
-            说明由我自行撰写
-          </label>
-        )}
         <label className="console-wide">
           发现栏目链接
           <textarea
@@ -300,32 +279,14 @@ export function ManualImportForm({
             placeholder="每行一个，最多5个"
           />
         </label>
-        <label>
-          更新版本（已有记录时）
-          <input
-            type="number"
-            min="1"
-            value={expectedVersion}
-            onChange={(e) => setVersion(e.target.value)}
-          />
-        </label>
-        {actor.role === "admin" && (
-          <label className="console-wide">
-            <input
-              type="checkbox"
-              checked={originalChecked}
-              onChange={(e) => setOriginalChecked(e.target.checked)}
-            />
-            已对照原文核对来源、标题和发布时间
-          </label>
-        )}
         <div className="console-actions console-wide">
           <button
             className="primary-button"
             disabled={
               busy ||
               !policy ||
-              policy.effectiveRights === "expired" ||
+              (bodyStatus !== "not_provided" &&
+                policy.effectiveRights === "expired") ||
               actor.role === "reviewer" ||
               (bodyStatus !== "not_provided" &&
                 body.length >
@@ -358,7 +319,7 @@ export function ManualImportForm({
                     .split(/\n/)
                     .map((s) => s.trim())
                     .filter(Boolean),
-                  note,
+                  note: "管理员保存人工导入用途",
                   fullTextAuthorized: licenseConfirmed,
                   validityDays,
                 });
@@ -402,15 +363,6 @@ export function ManualImportForm({
                 required
                 value={evidence}
                 onChange={(e) => setEvidence(e.target.value)}
-              />
-            </label>
-            <label className="console-wide">
-              核验说明
-              <textarea
-                required
-                minLength={5}
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
               />
             </label>
             {rights !== "metadata_only" && (
