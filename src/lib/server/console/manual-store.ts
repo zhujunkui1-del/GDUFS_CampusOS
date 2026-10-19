@@ -528,6 +528,11 @@ export class ManualImportStore extends IngestionStore {
           "UPDATE ingestion_jobs SET status='completed',phase='complete',version=1,found_count=?,body_count=?,duplicate_count=?,updated_at=? WHERE id=?",
         )
         .bind(value.items.length, bodies, duplicates, now, id),
+      this.db
+        .prepare(
+          "UPDATE knowledge_sources SET last_success_at=?,sync_state='completed',last_error=NULL,next_sync_at_ms=?+COALESCE(sync_hours_override,(SELECT sync_hours FROM console_engine_settings WHERE id='console-v2-settings'))*3600000 WHERE id=?",
+        )
+        .bind(now, Date.parse(now), source.id),
     );
     const outcome = await this.mutate(
       command,

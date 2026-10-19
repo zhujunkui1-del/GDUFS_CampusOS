@@ -1,0 +1,169 @@
+{
+  "sourceId": "GDUFS-SRC-0024",
+  "name": "校团委",
+  "entryUrl": "https://youth.gdufs.edu.cn/tzgg.htm",
+  "ruleVersion": "official-web-2026-10-17.2",
+  "robotsStatus": 404,
+  "robotsHash": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+  "nextPage": null,
+  "discovered": 8,
+  "requests": 9,
+  "items": [
+    {
+      "title": "第三届青春扬帆·全球学生交流大使团拟推荐名单",
+      "url": "https://youth.gdufs.edu.cn/info/1050/13012.htm",
+      "publishedAt": "2026-10-17",
+      "rawPublishedAt": "2026-10-17 点击数：",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0024",
+      "sourceName": "校团委",
+      "evidence": {
+        "status": 200,
+        "hash": "e113664a9ce4918d22fe97a20f4773fbaca25ec7843cbece790ab096eb8e2473",
+        "etag": "\"a3b8-65e0389306f3d-gzip\"",
+        "lastModified": "Sat, 17 Oct 2026 06:38:59 GMT",
+        "bodyHash": "b5e02b2d8321fea80e86ff50e0ebc86351782f0cee336bf29ba9195946d169a3"
+      },
+      "observedBodyLength": 578
+    },
+    {
+      "title": "关于广东外语外贸大学第四批“中国青年志愿者海外服务计划--服务联合国机构项目”拟推荐志愿者候选人名单的公示",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12902.htm",
+      "publishedAt": "2026-09-17",
+      "rawPublishedAt": "2026-09-17 点击数：",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0024",
+      "sourceName": "校团委",
+      "evidence": {
+        "status": 200,
+        "hash": "c313c50be99bc82faeaa2d4b6cef00b814640d9a0ae6fd7457d9aca6a716e936",
+        "etag": "\"918d-65e04a809401f-gzip\"",
+        "lastModified": "Sat, 17 Oct 2026 07:59:12 GMT",
+        "bodyHash": "c59f251f47e468241831dfe7fcdcc02300794b69624c20dff36eba5c6e0a9dc8"
+      },
+      "observedBodyLength": 558
+    },
+    {
+      "title": "关于评选广东外语外贸大学2025-2026学年度志愿服务先进集体、优秀个人的通知",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12802.htm",
+      "publishedAt": "2026-09-11",
+      "rawPublishedAt": "2026-09-11 点击数：",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0024",
+      "sourceName": "校团委",
+      "evidence": {
+        "status": 200,
+        "hash": "a64b6ed2356b9b4502deb6dcf69778049c2573e9c25eef885be08efe43f279af",
+        "etag": "\"110d1-65ba551cf44bd-gzip\"",
+        "lastModified": "Thu, 17 Sep 2026 03:24:20 GMT",
+        "bodyHash": "9c27aa48d77db290039a075e33f4bd9d362f508602f44f2c291dd9168f22f820"
+      },
+      "observedBodyLength": 3548
+    },
+    {
+      "title": "关于开展2026年广东外语外贸大学暑期社会实践活动评优工作的通知",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12792.htm",
+      "publishedAt": "2026-09-11",
+      "rawPublishedAt": "2026-09-11 点击数：",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0024",
+      "sourceName": "校团委",
+      "evidence": {
+        "status": 200,
+        "hash": "c1c53b6975d80472a697d74cc4bc80c538ccc4cbb9caec1835feeb847b30a462",
+        "etag": "\"13fbe-65b34d80dc00f-gzip\"",
+        "lastModified": "Fri, 11 Sep 2026 13:13:01 GMT",
+        "bodyHash": "da7af56eebfd74e80da88f5a902e753d820f789d226b94126067a332e1dbb89d"
+      },
+      "observedBodyLength": 3232
+    },
+    {
+      "title": "关于招募广东外语外贸大学第四批“中国青年志愿者海外服务计划——服务联合国机构项目”志愿者的通知",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12782.htm",
+      "publishedAt": "2026-09-09",
+      "rawPublishedAt": "2026-09-09 点击数：",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0024",
+      "sourceName": "校团委",
+      "evidence": {
+        "status": 200,
+        "hash": "c726ab68d47cf73a9420ac8860897286cca9ca3a9f5e37db88d88a9c2ff36d02",
+        "etag": "\"c2dd-65b3598d69292-gzip\"",
+        "lastModified": "Fri, 11 Sep 2026 14:06:55 GMT",
+        "bodyHash": "3cbaa75d4ef64dd34cc2ffdc5a8a2819fe3a031a4b8a76a323d4167c04e98126"
+      },
+      "observedBodyLength": 3585
+    },
+    {
+      "title": "中国青年志愿者第29届（广东外语外贸大学第13届）研究生支教团拟推荐名单公示",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12732.htm",
+      "publishedAt": "2026-09-01",
+      "rawPublishedAt": "2026-09-01 点击数：",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0024",
+      "sourceName": "校团委",
+      "evidence": {
+        "status": 200,
+        "hash": "16c08885a18068d255924a936bfd0c14794bec455cb547d73f90bf26d5d4530f",
+        "etag": "\"a3b0-65b0d27978a60-gzip\"",
+        "lastModified": "Wed, 09 Sep 2026 13:51:57 GMT",
+        "bodyHash": "3e70402fa50154ea471314c018861bfaeffdaacc242752119768b8d18370dffe"
+      },
+      "observedBodyLength": 586
+    },
+    {
+      "title": "关于做好第13届研究生支教团志愿者（推荐免试攻读硕士研究生）招募工作的通知",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12712.htm",
+      "publishedAt": "2026-08-28",
+      "rawPublishedAt": "2026-08-28 点击数：",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0024",
+      "sourceName": "校团委",
+      "evidence": {
+        "status": 200,
+        "hash": "30542172c8db1059d8435979e526264fa55882f187ef35ebd1e907987aa43ffb",
+        "etag": "\"cc4d-65a695adbc41d-gzip\"",
+        "lastModified": "Tue, 01 Sep 2026 10:26:42 GMT",
+        "bodyHash": "8a7f7b9cdb69c79e29b0956b65298d25317a3bf14cd4b5dde4eecbbde4bfdb31"
+      },
+      "observedBodyLength": 3712
+    },
+    {
+      "title": "关于我校学生跨校参加第十五届“挑战杯”中国大学生创业计划竞赛东北振兴产业升级专项赛的公示",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12702.htm",
+      "publishedAt": "2026-08-21",
+      "rawPublishedAt": "2026-08-21 点击数：",
+      "contentType": "news",
+      "radarCategory": "competition",
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0024",
+      "sourceName": "校团委",
+      "evidence": {
+        "status": 200,
+        "hash": "73c6cff275b1c1a18b292c508cbb541c6d92973a2a3af73c6b741fe18efdd52a",
+        "etag": "\"4c26-65a174a7c84d1-gzip\"",
+        "lastModified": "Fri, 28 Aug 2026 08:32:20 GMT",
+        "bodyHash": "555a1019a4231b175df35b0ad9b9329c64ffadd389f7ddce38074b5cfd2314bb"
+      },
+      "observedBodyLength": 386
+    }
+  ],
+  "errors": [],
+  "recordedAt": "2026-10-19T09:53:03.843Z",
+  "thirdPartyBodyPersisted": false,
+  "modelCalls": 0
+}

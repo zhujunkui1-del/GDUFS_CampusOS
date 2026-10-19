@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-19T10:25:07.436Z",
+  "records": [
+    {
+      "id": "content-76b1fc0b-ace5-4db2-bb5f-b029dd771d78",
+      "sourceId": "GDUFS-SRC-0008",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9648.htm",
+      "originalVersion": 5,
+      "originalStatus": "withdrawn",
+      "detectedStatus": "published",
+      "detectedPublicStatus": 200,
+      "detectedUpdatedAt": "2026-10-19T10:22:30.241Z",
+      "withdrawnAt": "2026-10-19T10:24:53.114Z",
+      "publicStatusAfter": 404,
+      "originalFieldsRestored": true,
+      "finalVersion": 12,
+      "finalStatus": "withdrawn"
+    },
+    {
+      "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+      "sourceId": "GDUFS-SRC-0017",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3098.htm",
+      "originalVersion": 4,
+      "originalStatus": "withdrawn",
+      "detectedStatus": "withdrawn",
+      "detectedPublicStatus": 404,
+      "detectedUpdatedAt": "2026-10-17T15:30:25.944Z",
+      "withdrawnAt": "2026-10-17T15:30:25.944Z",
+      "publicStatusAfter": 404
+    },
+    {
+      "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+      "sourceId": "GDUFS-SRC-0010",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68721.htm",
+      "originalVersion": 6,
+      "originalStatus": "withdrawn",
+      "detectedStatus": "withdrawn",
+      "detectedPublicStatus": 404,
+      "detectedUpdatedAt": "2026-10-17T15:30:11.497Z",
+      "withdrawnAt": "2026-10-17T15:30:11.497Z",
+      "publicStatusAfter": 404
+    }
+  ],
+  "allWithdrawn": true
+}

@@ -1,0 +1,683 @@
+{
+  "at": "2026-10-19T09:53:37.829Z",
+  "sources": [
+    {
+      "source": {
+        "id": "GDUFS-SRC-0024",
+        "displayName": "校团委",
+        "sourceType": "official_web",
+        "organization": "党政机构",
+        "officialStatus": "claimed_official",
+        "verificationStatus": "candidate",
+        "permissionStatus": "unreviewed",
+        "enabled": true,
+        "priority": 1,
+        "version": 2,
+        "updatedAt": "2026-10-19T09:30:55.674Z",
+        "sourceAliases": [],
+        "subtype": "党政机构",
+        "campusScope": "all",
+        "websiteUrl": "https://youth.gdufs.edu.cn/",
+        "wechatId": null,
+        "evidenceUrls": [
+          "https://www.gdufs.edu.cn/"
+        ],
+        "connectorType": "disabled",
+        "connectorConfig": {},
+        "fetchPolicy": {
+          "mode": "disabled",
+          "maxRequests": 0
+        },
+        "originalCatalogRefs": [
+          {
+            "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.xlsx",
+            "sheet": "全渠道去重总表",
+            "row": 25
+          },
+          {
+            "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.md",
+            "line": 284
+          },
+          {
+            "file": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx",
+            "raw": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜官方网站!52"
+          },
+          {
+            "file": "广东外语外贸大学官方公众号及官网—2026核实清单.xlsx",
+            "raw": "广东外语外贸大学官方公众号及官网—2026核实清单.xlsx｜官方网站!52"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行9"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行14"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行15"
+          }
+        ],
+        "catalogMetadata": {
+          "catalogStatus": "2026已核实",
+          "accountVerificationClaim": "官网域名归属：上传表列为校内机构",
+          "claimedNature": "学校官方/学校机构",
+          "claimedWebsiteOrEvidence": "https://youth.gdufs.edu.cn/",
+          "claimedWechatId": "",
+          "contentScope": "发布单位公告、新闻、业务信息；具体栏目信息须以站点为准；社团、志愿活动、学生组织、团学通知；学生组织、志愿活动、竞赛；社团活动和组织介绍；可优先发现（按机构职责推荐栏目，需网站核对）：社团活动、志愿服务、团学通知、竞赛及校园活动",
+          "accessBoundary": "公开网页优先；登录型站点仅收录公共教程和首页，不访问个人数据",
+          "radarSuggestion": "新闻/公告/活动栏目，按发布日期和截止日期提取",
+          "ragSuggestion": "公开政策、指南、常见问题和文档；保留引用和时效",
+          "notes": "",
+          "_importActor": "Cloudflare authorized catalog CLI"
+        },
+        "lastCheckedAt": null,
+        "lastSuccessAt": null,
+        "lastError": null,
+        "archivedAt": null
+      },
+      "collection": {
+        "profile": {
+          "sourceId": "GDUFS-SRC-0024",
+          "name": "校团委",
+          "origin": "https://youth.gdufs.edu.cn",
+          "entryUrl": "https://youth.gdufs.edu.cn/tzgg.htm",
+          "ruleVersion": "official-web-2026-10-17.2",
+          "titleSelector": "head > title",
+          "titleSuffix": "-团学时空",
+          "dateSelector": ".wzxxys",
+          "dateLabel": "时间",
+          "bodySelector": "#vsb_content .v_news_content",
+          "detailPath": "^/info/1050/[0-9]+\\.htm$"
+        },
+        "policy": null
+      },
+      "import": {
+        "sourceVersion": 2,
+        "policy": null,
+        "effectiveRights": "metadata_only"
+      },
+      "auto": null,
+      "articles": {
+        "items": [],
+        "total": 0,
+        "limit": 50,
+        "offset": 0
+      }
+    },
+    {
+      "source": {
+        "id": "GDUFS-SRC-0012",
+        "displayName": "广东外语外贸大学",
+        "sourceType": "official_web",
+        "organization": "校级/专题服务",
+        "officialStatus": "claimed_official",
+        "verificationStatus": "candidate",
+        "permissionStatus": "unreviewed",
+        "enabled": true,
+        "priority": 1,
+        "version": 2,
+        "updatedAt": "2026-10-19T09:30:13.406Z",
+        "sourceAliases": [],
+        "subtype": "校级/专题服务",
+        "campusScope": "all",
+        "websiteUrl": "https://www.gdufs.edu.cn/",
+        "wechatId": null,
+        "evidenceUrls": [
+          "https://www.gdufs.edu.cn/"
+        ],
+        "connectorType": "disabled",
+        "connectorConfig": {},
+        "fetchPolicy": {
+          "mode": "disabled",
+          "maxRequests": 0
+        },
+        "originalCatalogRefs": [
+          {
+            "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.xlsx",
+            "sheet": "全渠道去重总表",
+            "row": 13
+          },
+          {
+            "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.md",
+            "line": 152
+          },
+          {
+            "file": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx",
+            "raw": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜官方网站!2"
+          },
+          {
+            "file": "广东外语外贸大学官方公众号及官网—2026核实清单.xlsx",
+            "raw": "广东外语外贸大学官方公众号及官网—2026核实清单.xlsx｜官方网站!2"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行2"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行12"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行13"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行20"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行24"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行25"
+          },
+          {
+            "file": "广外链接deepseek.md",
+            "raw": "广外链接deepseek.md｜行15"
+          }
+        ],
+        "catalogMetadata": {
+          "catalogStatus": "2026已核实",
+          "accountVerificationClaim": "官网域名归属：上传表列为校内机构",
+          "claimedNature": "学校官方/学校机构",
+          "claimedWebsiteOrEvidence": "https://www.gdufs.edu.cn/",
+          "claimedWechatId": "",
+          "contentScope": "发布单位公告、新闻、业务信息；具体栏目信息须以站点为准；校级通知、公共服务、校园生活、学校概况；学术讲座时间、地点、主讲人；校园文艺、体育活动；学期安排、校历参考；生活服务统一入口；大学城食堂介绍；学校主站，综合信息发布；可优先发现（按机构职责推荐栏目，需网站核对）：学校介绍、校级公告、校园新闻、招生与校园生活综合导航",
+          "accessBoundary": "公开网页优先；登录型站点仅收录公共教程和首页，不访问个人数据",
+          "radarSuggestion": "新闻/公告/活动栏目，按发布日期和截止日期提取",
+          "ragSuggestion": "公开政策、指南、常见问题和文档；保留引用和时效",
+          "notes": "其他资料subtype描述：学校或学院官网；web备选或冲突：https://www.gdufs.edu.cn；Markdown 汇总声称2026活跃时，仍按逐站证据核验；其他来源状态：✅ 活跃",
+          "_importActor": "Cloudflare authorized catalog CLI"
+        },
+        "lastCheckedAt": null,
+        "lastSuccessAt": null,
+        "lastError": null,
+        "archivedAt": null
+      },
+      "collection": {
+        "profile": {
+          "sourceId": "GDUFS-SRC-0012",
+          "name": "广东外语外贸大学",
+          "origin": "https://www.gdufs.edu.cn",
+          "entryUrl": "https://www.gdufs.edu.cn/xkky/rdjz.htm",
+          "ruleVersion": "official-web-2026-10-17.2",
+          "titleSelector": "head > title",
+          "titleSuffix": "-广东外语外贸大学",
+          "dateSelector": "span",
+          "dateLabel": "发布时间",
+          "bodySelector": "#vsb_content .v_news_content, .v_news_content",
+          "detailPath": "^/info/1005/[0-9]+\\.htm$"
+        },
+        "policy": null
+      },
+      "import": {
+        "sourceVersion": 2,
+        "policy": null,
+        "effectiveRights": "metadata_only"
+      },
+      "auto": null,
+      "articles": {
+        "items": [],
+        "total": 0,
+        "limit": 50,
+        "offset": 0
+      }
+    },
+    {
+      "source": {
+        "id": "GDUFS-SRC-0008",
+        "displayName": "图书馆",
+        "sourceType": "official_web",
+        "organization": "教辅/其他机构",
+        "officialStatus": "verified_official",
+        "verificationStatus": "verified",
+        "permissionStatus": "approved",
+        "enabled": true,
+        "priority": 1,
+        "version": 4,
+        "updatedAt": "2026-10-17T04:54:34.928Z",
+        "sourceAliases": [
+          "广外图书馆"
+        ],
+        "subtype": "教辅/其他机构",
+        "campusScope": "all",
+        "websiteUrl": "https://lib.gdufs.edu.cn/",
+        "wechatId": null,
+        "evidenceUrls": [
+          "https://lib.gdufs.edu.cn/",
+          "https://lib.gdufs.edu.cn/xwzx/bgtg.htm",
+          "https://lib.gdufs.edu.cn/robots.txt"
+        ],
+        "connectorType": "official_web",
+        "connectorConfig": {
+          "entryUrl": "https://lib.gdufs.edu.cn/xwzx/bgtg.htm",
+          "parserProfile": "official-web-2026-10-17.1"
+        },
+        "fetchPolicy": {
+          "mode": "manual",
+          "maxRequests": 2
+        },
+        "originalCatalogRefs": [
+          {
+            "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.xlsx",
+            "sheet": "全渠道去重总表",
+            "row": 9
+          },
+          {
+            "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.md",
+            "line": 108
+          },
+          {
+            "file": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx",
+            "raw": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜官方网站!87"
+          },
+          {
+            "file": "广东外语外贸大学官方公众号及官网—2026核实清单.xlsx",
+            "raw": "广东外语外贸大学官方公众号及官网—2026核实清单.xlsx｜官方网站!87"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行8"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行29"
+          },
+          {
+            "file": "广外链接deepseek.md",
+            "raw": "广外链接deepseek.md｜行22"
+          }
+        ],
+        "catalogMetadata": {
+          "catalogStatus": "2026已核实",
+          "accountVerificationClaim": "官网域名归属：上传表列为校内机构",
+          "claimedNature": "学校官方/学校机构",
+          "claimedWebsiteOrEvidence": "https://lib.gdufs.edu.cn/",
+          "claimedWechatId": "",
+          "contentScope": "发布单位公告、新闻、业务信息；具体栏目信息须以站点为准；开放时间、借阅规则、座位与空间预约通知；图书馆各区域开放信息；图书检索、借阅、数据库；可优先发现（按机构职责推荐栏目，需网站核对）：馆舍开放、馆藏资源、借阅规则、培训讲座、研修空间预约",
+          "accessBoundary": "公开网页优先；登录型站点仅收录公共教程和首页，不访问个人数据",
+          "radarSuggestion": "新闻/公告/活动栏目，按发布日期和截止日期提取",
+          "ragSuggestion": "公开政策、指南、常见问题和文档；保留引用和时效",
+          "notes": "名称别名：广外图书馆；其他资料subtype描述：学校或学院官网；web备选或冲突：https://lib.gdufs.edu.cn；Markdown 汇总声称2026活跃时，仍按逐站证据核验；其他来源状态：✅ 活跃",
+          "_importActor": "Cloudflare authorized catalog CLI"
+        },
+        "lastCheckedAt": "2026-10-17T04:54:59.786Z",
+        "lastSuccessAt": "2026-10-17T04:54:59.786Z",
+        "lastError": null,
+        "archivedAt": null
+      },
+      "collection": {
+        "profile": {
+          "sourceId": "GDUFS-SRC-0008",
+          "name": "图书馆",
+          "origin": "https://lib.gdufs.edu.cn",
+          "entryUrl": "https://lib.gdufs.edu.cn/xwzx/bgtg.htm",
+          "ruleVersion": "official-web-2026-10-17.2",
+          "titleSelector": "head > title",
+          "titleSuffix": "-广东外语外贸大学图书馆",
+          "dateSelector": ".viewInfo1",
+          "dateLabel": "时间",
+          "bodySelector": "#vsb_content .v_news_content",
+          "detailPath": "^/info/1134/[0-9]+\\.htm$"
+        },
+        "policy": {
+          "source_id": "GDUFS-SRC-0008",
+          "rule_version": "official-web-2026-10-17.1",
+          "rights_scope": "metadata_only",
+          "evidence_urls_json": "[\"https://lib.gdufs.edu.cn/\",\"https://lib.gdufs.edu.cn/xwzx/bgtg.htm\",\"https://lib.gdufs.edu.cn/robots.txt\"]",
+          "note": "S3-B手动元数据小批次策略：20次/UTC日全局保守网络预算，每次间隔至少10秒，24小时到期；当日只读robots404已留证，执行时再次检查，遇限制即暂停；不含全文许可。",
+          "robots_status": 404,
+          "robots_hash": null,
+          "expires_at_ms": 1792299274178,
+          "version": 1,
+          "approved_by": "admin-0ed911e6dfd2350bf95ac708510bee33",
+          "updated_at": "2026-10-17T04:54:34.178Z"
+        }
+      },
+      "import": {
+        "sourceVersion": 4,
+        "policy": {
+          "version": 1,
+          "rule_version": "official-web-2026-10-17.1",
+          "rights_scope": "metadata_only",
+          "expires_at_ms": 1792299274178
+        },
+        "effectiveRights": "expired"
+      },
+      "auto": null,
+      "articles": {
+        "items": [
+          {
+            "public_visible": 0,
+            "id": "content-76b1fc0b-ace5-4db2-bb5f-b029dd771d78",
+            "source_id": "GDUFS-SRC-0008",
+            "source_name": "图书馆",
+            "title": "2026年第二届广东外语外贸大学“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛通知",
+            "published_at": "2026-06-30",
+            "fetched_at": "2026-10-17T04:54:59.910Z",
+            "updated_at": "2026-10-17T15:27:31.431Z",
+            "content_type": "notice",
+            "radar_category": "competition",
+            "knowledge_category": "administrative_services",
+            "workflow_status": "approved",
+            "publication_status": "withdrawn",
+            "lifecycle_status": "withdrawn",
+            "body_status": "unknown",
+            "version": 5
+          }
+        ],
+        "total": 1,
+        "limit": 50,
+        "offset": 0
+      }
+    },
+    {
+      "source": {
+        "id": "GDUFS-SRC-0017",
+        "displayName": "总务后勤部",
+        "sourceType": "official_web",
+        "organization": "党政机构",
+        "officialStatus": "verified_official",
+        "verificationStatus": "verified",
+        "permissionStatus": "approved",
+        "enabled": true,
+        "priority": 1,
+        "version": 4,
+        "updatedAt": "2026-10-17T04:53:02.005Z",
+        "sourceAliases": [],
+        "subtype": "党政机构",
+        "campusScope": "all",
+        "websiteUrl": "https://hqc.gdufs.edu.cn/",
+        "wechatId": null,
+        "evidenceUrls": [
+          "https://hqc.gdufs.edu.cn/",
+          "https://hqc.gdufs.edu.cn/tzgap.htm",
+          "https://hqc.gdufs.edu.cn/robots.txt"
+        ],
+        "connectorType": "official_web",
+        "connectorConfig": {
+          "entryUrl": "https://hqc.gdufs.edu.cn/tzgap.htm",
+          "parserProfile": "official-web-2026-10-17.1"
+        },
+        "fetchPolicy": {
+          "mode": "manual",
+          "maxRequests": 2
+        },
+        "originalCatalogRefs": [
+          {
+            "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.xlsx",
+            "sheet": "全渠道去重总表",
+            "row": 18
+          },
+          {
+            "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.md",
+            "line": 207
+          },
+          {
+            "file": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx",
+            "raw": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜官方网站!61"
+          },
+          {
+            "file": "广东外语外贸大学官方公众号及官网—2026核实清单.xlsx",
+            "raw": "广东外语外贸大学官方公众号及官网—2026核实清单.xlsx｜官方网站!61"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行7"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行26"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行27"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行28"
+          }
+        ],
+        "catalogMetadata": {
+          "catalogStatus": "2026已核实",
+          "accountVerificationClaim": "官网域名归属：上传表列为校内机构",
+          "claimedNature": "学校官方/学校机构",
+          "claimedWebsiteOrEvidence": "https://hqc.gdufs.edu.cn/",
+          "claimedWechatId": "",
+          "contentScope": "发布单位公告、新闻、业务信息；具体栏目信息须以站点为准；宿舍、食堂、维修、校园交通、后勤服务；文采园、博雅园、风采园等食堂信息；维修、公寓、教材、交通；宿舍、食堂、设施维护公告；可优先发现（按机构职责推荐栏目，需网站核对）：食堂服务、宿舍管理、修缮、交通与后勤服务公告",
+          "accessBoundary": "公开网页优先；登录型站点仅收录公共教程和首页，不访问个人数据",
+          "radarSuggestion": "新闻/公告/活动栏目，按发布日期和截止日期提取",
+          "ragSuggestion": "公开政策、指南、常见问题和文档；保留引用和时效",
+          "notes": "",
+          "_importActor": "Cloudflare authorized catalog CLI"
+        },
+        "lastCheckedAt": "2026-10-17T04:56:03.923Z",
+        "lastSuccessAt": "2026-10-17T04:56:03.923Z",
+        "lastError": null,
+        "archivedAt": null
+      },
+      "collection": {
+        "profile": {
+          "sourceId": "GDUFS-SRC-0017",
+          "name": "总务后勤部",
+          "origin": "https://hqc.gdufs.edu.cn",
+          "entryUrl": "https://hqc.gdufs.edu.cn/tzgap.htm",
+          "ruleVersion": "official-web-2026-10-17.2",
+          "titleSelector": "head > title",
+          "titleSuffix": "-广东外语外贸大学总务后勤部",
+          "dateSelector": ".wzxxys",
+          "dateLabel": "时间",
+          "bodySelector": "#vsb_content_2 .v_news_content",
+          "detailPath": "^/info/1006/[0-9]+\\.htm$"
+        },
+        "policy": {
+          "source_id": "GDUFS-SRC-0017",
+          "rule_version": "official-web-2026-10-17.1",
+          "rights_scope": "metadata_only",
+          "evidence_urls_json": "[\"https://hqc.gdufs.edu.cn/\",\"https://hqc.gdufs.edu.cn/tzgap.htm\",\"https://hqc.gdufs.edu.cn/robots.txt\"]",
+          "note": "S3-B手动元数据小批次策略：20次/UTC日全局保守网络预算，每次间隔至少10秒，24小时到期；当日只读robots404已留证，执行时再次检查，遇限制即暂停；不含全文许可。",
+          "robots_status": 404,
+          "robots_hash": null,
+          "expires_at_ms": 1792299181437,
+          "version": 1,
+          "approved_by": "admin-0ed911e6dfd2350bf95ac708510bee33",
+          "updated_at": "2026-10-17T04:53:01.437Z"
+        }
+      },
+      "import": {
+        "sourceVersion": 4,
+        "policy": {
+          "version": 1,
+          "rule_version": "official-web-2026-10-17.1",
+          "rights_scope": "metadata_only",
+          "expires_at_ms": 1792299181437
+        },
+        "effectiveRights": "expired"
+      },
+      "auto": null,
+      "articles": {
+        "items": [
+          {
+            "public_visible": 0,
+            "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+            "source_id": "GDUFS-SRC-0017",
+            "source_name": "总务后勤部",
+            "title": "广东外语外贸大学文印中心多功能印刷机维保服务采购项目询价公告",
+            "published_at": "2026-10-16",
+            "fetched_at": "2026-10-17T04:53:25.922Z",
+            "updated_at": "2026-10-17T15:30:25.944Z",
+            "content_type": "notice",
+            "radar_category": "campus_notice",
+            "knowledge_category": "administrative_services",
+            "workflow_status": "approved",
+            "publication_status": "withdrawn",
+            "lifecycle_status": "withdrawn",
+            "body_status": "unknown",
+            "version": 4
+          }
+        ],
+        "total": 1,
+        "limit": 50,
+        "offset": 0
+      }
+    },
+    {
+      "source": {
+        "id": "GDUFS-SRC-0010",
+        "displayName": "学生工作部",
+        "sourceType": "official_web",
+        "organization": "党政机构",
+        "officialStatus": "verified_official",
+        "verificationStatus": "verified",
+        "permissionStatus": "approved",
+        "enabled": true,
+        "priority": 1,
+        "version": 4,
+        "updatedAt": "2026-10-17T04:51:05.935Z",
+        "sourceAliases": [],
+        "subtype": "党政机构",
+        "campusScope": "all",
+        "websiteUrl": "https://nstu.gdufs.edu.cn/",
+        "wechatId": null,
+        "evidenceUrls": [
+          "https://nstu.gdufs.edu.cn/",
+          "https://nstu.gdufs.edu.cn/index/tzgg.htm",
+          "https://nstu.gdufs.edu.cn/robots.txt"
+        ],
+        "connectorType": "official_web",
+        "connectorConfig": {
+          "entryUrl": "https://nstu.gdufs.edu.cn/index/tzgg.htm",
+          "parserProfile": "official-web-2026-10-17.1"
+        },
+        "fetchPolicy": {
+          "mode": "manual",
+          "maxRequests": 2
+        },
+        "originalCatalogRefs": [
+          {
+            "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.xlsx",
+            "sheet": "全渠道去重总表",
+            "row": 11
+          },
+          {
+            "file": "CampusOS_Codex_完整设计文档_v2/CampusOS_广外信息源_去重详表_2026-10-17.md",
+            "line": 130
+          },
+          {
+            "file": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx",
+            "raw": "广东外语外贸大学_微信生态官方及非官方渠道_2026扩展清单.xlsx｜官方网站!50"
+          },
+          {
+            "file": "广东外语外贸大学官方公众号及官网—2026核实清单.xlsx",
+            "raw": "广东外语外贸大学官方公众号及官网—2026核实清单.xlsx｜官方网站!50"
+          },
+          {
+            "file": "广外链接.md",
+            "raw": "广外链接.md｜行5"
+          }
+        ],
+        "catalogMetadata": {
+          "catalogStatus": "2026已核实",
+          "accountVerificationClaim": "官网域名归属：上传表列为校内机构",
+          "claimedNature": "学校官方/学校机构",
+          "claimedWebsiteOrEvidence": "https://nstu.gdufs.edu.cn/",
+          "claimedWechatId": "",
+          "contentScope": "发布单位公告、新闻、业务信息；具体栏目信息须以站点为准；奖助学金、学生管理、资助政策、学工通知；可优先发现（按机构职责推荐栏目，需网站核对）：学生事务、资助、宿舍管理、思政与学生组织",
+          "accessBoundary": "公开网页优先；登录型站点仅收录公共教程和首页，不访问个人数据",
+          "radarSuggestion": "新闻/公告/活动栏目，按发布日期和截止日期提取",
+          "ragSuggestion": "公开政策、指南、常见问题和文档；保留引用和时效",
+          "notes": "",
+          "_importActor": "Cloudflare authorized catalog CLI"
+        },
+        "lastCheckedAt": "2026-10-17T04:52:22.557Z",
+        "lastSuccessAt": "2026-10-17T04:52:22.557Z",
+        "lastError": null,
+        "archivedAt": null
+      },
+      "collection": {
+        "profile": {
+          "sourceId": "GDUFS-SRC-0010",
+          "name": "学生工作部",
+          "origin": "https://nstu.gdufs.edu.cn",
+          "entryUrl": "https://nstu.gdufs.edu.cn/index/tzgg.htm",
+          "ruleVersion": "official-web-2026-10-17.2",
+          "titleSelector": "head > title",
+          "titleSuffix": "-广东外语外贸大学学生工作部",
+          "dateSelector": ".contenthead p",
+          "dateLabel": "发布时间",
+          "bodySelector": "#vsb_content_501 .v_news_content",
+          "detailPath": "^/info/1056/[0-9]+\\.htm$"
+        },
+        "policy": {
+          "source_id": "GDUFS-SRC-0010",
+          "rule_version": "official-web-2026-10-17.1",
+          "rights_scope": "metadata_only",
+          "evidence_urls_json": "[\"https://nstu.gdufs.edu.cn/\",\"https://nstu.gdufs.edu.cn/index/tzgg.htm\",\"https://nstu.gdufs.edu.cn/robots.txt\"]",
+          "note": "S3-B手动元数据小批次策略：20次/UTC日全局保守网络预算，每次间隔至少10秒，24小时到期；当日只读robots404已留证，执行时再次检查，遇限制即暂停；不含全文许可。",
+          "robots_status": 404,
+          "robots_hash": null,
+          "expires_at_ms": 1792299065201,
+          "version": 1,
+          "approved_by": "admin-0ed911e6dfd2350bf95ac708510bee33",
+          "updated_at": "2026-10-17T04:51:05.201Z"
+        }
+      },
+      "import": {
+        "sourceVersion": 4,
+        "policy": {
+          "version": 1,
+          "rule_version": "official-web-2026-10-17.1",
+          "rights_scope": "metadata_only",
+          "expires_at_ms": 1792299065201
+        },
+        "effectiveRights": "expired"
+      },
+      "auto": null,
+      "articles": {
+        "items": [
+          {
+            "public_visible": 0,
+            "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+            "source_id": "GDUFS-SRC-0010",
+            "source_name": "学生工作部",
+            "title": "关于召开2025-2026学年“校长奖章”评审会的通知",
+            "published_at": "2026-10-16T14:14:18.000Z",
+            "fetched_at": "2026-10-17T04:52:22.681Z",
+            "updated_at": "2026-10-17T15:30:11.497Z",
+            "content_type": "notice",
+            "radar_category": "campus_notice",
+            "knowledge_category": "administrative_services",
+            "workflow_status": "approved",
+            "publication_status": "withdrawn",
+            "lifecycle_status": "withdrawn",
+            "body_status": "unknown",
+            "version": 6
+          }
+        ],
+        "total": 1,
+        "limit": 50,
+        "offset": 0
+      }
+    }
+  ],
+  "settings": {
+    "id": "console-v2-settings",
+    "version": 8,
+    "sync_hours": 24,
+    "auto_sync_enabled": 1,
+    "network_budget": 20,
+    "sync_revision": 3,
+    "earliest_import_day": "2005-01-02",
+    "scheduler_last_at": "2026-10-19T09:34:16.959Z",
+    "scheduler_result_json": "{\"state\":\"no_eligible_due_source\",\"registered\":0,\"completed\":0}",
+    "scheduler_lease_until_ms": 0,
+    "runner_last_at": null,
+    "last_cleanup_json": "{}",
+    "updated_at": "2026-10-19T09:34:08.937Z",
+    "scheduler_lease_token": null
+  }
+}

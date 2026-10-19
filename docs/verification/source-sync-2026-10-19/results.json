@@ -1,0 +1,101 @@
+{
+  "completed": true,
+  "sources": [
+    {
+      "sourceId": "GDUFS-SRC-0024",
+      "name": "校团委",
+      "collected": 10,
+      "published": 10,
+      "priorWithdrawals": 0
+    },
+    {
+      "sourceId": "GDUFS-SRC-0012",
+      "name": "广东外语外贸大学",
+      "collected": 10,
+      "published": 10,
+      "priorWithdrawals": 0
+    },
+    {
+      "sourceId": "GDUFS-SRC-0008",
+      "name": "图书馆",
+      "collected": 10,
+      "published": 9,
+      "priorWithdrawals": 1
+    },
+    {
+      "sourceId": "GDUFS-SRC-0017",
+      "name": "总务后勤部",
+      "collected": 10,
+      "published": 9,
+      "priorWithdrawals": 1
+    },
+    {
+      "sourceId": "GDUFS-SRC-0010",
+      "name": "学生工作部",
+      "collected": 10,
+      "published": 9,
+      "priorWithdrawals": 1
+    }
+  ],
+  "collected": 50,
+  "published": 47,
+  "keptWithdrawn": 3,
+  "withdrawalIncident": {
+    "temporaryExposures": 1,
+    "metadataOnly": true,
+    "record": "content-76b1fc0b-ace5-4db2-bb5f-b029dd771d78",
+    "startedAtUtc": "2026-10-19T10:22:30.241Z",
+    "withdrawnAtUtc": "2026-10-19T10:24:53.114Z",
+    "originalFieldsRestored": true,
+    "allPriorWithdrawalsCurrentlyHidden": true
+  },
+  "unit": {
+    "passed": 346,
+    "total": 346,
+    "files": 46
+  },
+  "localBrowser": {
+    "cases": 4,
+    "passed": 4
+  },
+  "cloudBrowser": {
+    "cases": 4,
+    "passed": 4
+  },
+  "publicResults": {
+    "radar": {
+      "total": 47,
+      "matched": 47,
+      "bodyReturned": false
+    },
+    "knowledge": {
+      "total": 47,
+      "matched": 47,
+      "bodyReturned": false
+    }
+  },
+  "database": {
+    "migration": "0023_manual_metadata_batch_budget.sql",
+    "after": {
+      "sources": 220,
+      "enabled": 220,
+      "verified": 6,
+      "documents": 50,
+      "published": 47,
+      "jobs": 31,
+      "conversations": 1,
+      "messages": 2,
+      "runs": 1
+    },
+    "foreignKeyViolations": 0,
+    "storageBytes": 2711552,
+    "provider": "cloudflare_api"
+  },
+  "workerVersion": "47206527-8180-4838-b0ba-f75d3cd78880",
+  "workerGzipKiB": 2646.62,
+  "workerStartupMs": 108,
+  "modelCalls": 0,
+  "thirdPartyFullTextPersisted": false,
+  "productionChanged": false,
+  "longTermFreeCapacityPassed": false
+}

@@ -12,7 +12,7 @@ export type WebProfile = {
   bodySelector: string;
   detailPath: string;
 };
-const ruleVersion = "official-web-2026-10-17.2";
+const ruleVersion = "official-web-2026-10-19.3";
 export const webProfiles: WebProfile[] = [
   {
     sourceId: "GDUFS-SRC-0012",

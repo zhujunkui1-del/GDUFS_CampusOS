@@ -1,0 +1,223 @@
+{
+  "sourceId": "GDUFS-SRC-0017",
+  "name": "总务后勤部",
+  "entryUrl": "https://hqc.gdufs.edu.cn/tzgap.htm",
+  "ruleVersion": "official-web-2026-10-19.3",
+  "robotsStatus": 404,
+  "robotsHash": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+  "pages": [
+    {
+      "url": "https://hqc.gdufs.edu.cn/tzgap.htm",
+      "status": 200,
+      "hash": "937c9402b917034258ddc0e97ab152b8c352d3594d809c19beeb00706dae4ca3"
+    }
+  ],
+  "requests": 2,
+  "reused": 10,
+  "items": [
+    {
+      "title": "广东外语外贸大学文印中心多功能印刷机维保服务采购项目询价公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3098.htm",
+      "publishedAt": "2026-10-16",
+      "rawPublishedAt": "2026-10-16 点击数：",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0017",
+      "sourceName": "总务后勤部",
+      "evidence": {
+        "status": 200,
+        "hash": "5843f690ce7760cdad40f9071de5ee511d0b9bab1a78393b18b50bbfbba06f52",
+        "etag": "\"7093-65debaa596b11-gzip\"",
+        "lastModified": "Fri, 16 Oct 2026 02:10:16 GMT",
+        "bodyHash": "35b463dcf0b403722bf80ff2fe0a1a58abe5c4c4f69962d683fb1e354de22f2e"
+      },
+      "observedBodyLength": 2967,
+      "reusedObservation": true
+    },
+    {
+      "title": "广东外语外贸大学大学城校区北苑6栋智能电表采购项目询价结果公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3088.htm",
+      "publishedAt": "2026-08-10",
+      "rawPublishedAt": "2026-08-10 点击数：",
+      "sourceId": "GDUFS-SRC-0017",
+      "sourceName": "总务后勤部",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "evidence": {
+        "status": 200,
+        "hash": "bac186f7e992c3dd5aee75d30fb7c340a44045fa4bdfee0e9eed8512ad868b83",
+        "bodyHash": "750527c4afacb561992898dd8df777f03ad6f42a6e7faadc24b91d525be5ba1a",
+        "etag": "\"71bc-65dec37ab73be-gzip\"",
+        "lastModified": "Fri, 16 Oct 2026 02:49:47 GMT"
+      },
+      "observedBodyLength": 522,
+      "reusedObservation": true
+    },
+    {
+      "title": "广东外语外贸大学大学城校区北苑6栋智能电表采购项目询价公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3078.htm",
+      "publishedAt": "2026-07-31",
+      "rawPublishedAt": "2026-07-31 点击数：",
+      "sourceId": "GDUFS-SRC-0017",
+      "sourceName": "总务后勤部",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "evidence": {
+        "status": 200,
+        "hash": "7dd52ae6884f1f7a440094b091185da51a2974ad97534bf1a9a8242895bb1de4",
+        "bodyHash": "3276265853562cb72aea23b2ee302e42abfc242e0181b0faf020efedf1edb97d",
+        "etag": "\"a7b9-658a995b689ae-gzip\"",
+        "lastModified": "Mon, 10 Aug 2026 04:14:04 GMT"
+      },
+      "observedBodyLength": 1617,
+      "reusedObservation": true
+    },
+    {
+      "title": "广东外语外贸大学2026年白云山校区学生宿舍老旧家具修复保养服务采购询价结果公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3068.htm",
+      "publishedAt": "2026-07-24",
+      "rawPublishedAt": "2026-07-24 点击数：",
+      "sourceId": "GDUFS-SRC-0017",
+      "sourceName": "总务后勤部",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "evidence": {
+        "status": 200,
+        "hash": "b6cd1ef39a5058469918e848ed8b144687b537b769205049727d9b190a7134bd",
+        "bodyHash": "05eec6a877aade9abe9a52b922311a1c65841f19786bce1d7571dc59ed6cbc29",
+        "etag": "\"596f-657e2e6fbc993-gzip\"",
+        "lastModified": "Fri, 31 Jul 2026 07:11:49 GMT"
+      },
+      "observedBodyLength": 518,
+      "reusedObservation": true
+    },
+    {
+      "title": "广东外语外贸大学2026年白云山校区学生宿舍老旧家具修复保养服务采购询价公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3048.htm",
+      "publishedAt": "2026-07-20",
+      "rawPublishedAt": "2026-07-20 点击数：",
+      "sourceId": "GDUFS-SRC-0017",
+      "sourceName": "总务后勤部",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "evidence": {
+        "status": 200,
+        "hash": "b2c948680f6acd1281d099021a8c7f5ac3c018b51224a4ffb05600fe21384bf9",
+        "bodyHash": "ceb48d281c9476add72555a4bfa350734b28bea5ec4366b0882c0612b9743259",
+        "etag": "\"14db5-65755cfd7a596-gzip\"",
+        "lastModified": "Fri, 24 Jul 2026 06:52:11 GMT"
+      },
+      "observedBodyLength": 4272,
+      "reusedObservation": true
+    },
+    {
+      "title": "广东外语外贸大学校园零星维修工程设计服务项目 询价结果公示",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3038.htm",
+      "publishedAt": "2026-07-13",
+      "rawPublishedAt": "2026-07-13 点击数：",
+      "sourceId": "GDUFS-SRC-0017",
+      "sourceName": "总务后勤部",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "evidence": {
+        "status": 200,
+        "hash": "69bbc6b3bf43a2c03e9129ab7d37b4d05116190644afa54d111697bd3f3d1523",
+        "bodyHash": "8e13a48c43498730edd32a48e546ae81a45a685d24213ca717034ba022fcb88d",
+        "etag": "\"3033-6570264efc28a-gzip\"",
+        "lastModified": "Mon, 20 Jul 2026 03:20:55 GMT"
+      },
+      "observedBodyLength": 0,
+      "reusedObservation": true
+    },
+    {
+      "title": "广东外语外贸大学学生饭堂特色档口餐饮技术服务合作项目遴选结果公示",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3028.htm",
+      "publishedAt": "2026-07-07",
+      "rawPublishedAt": "2026-07-07 点击数：",
+      "sourceId": "GDUFS-SRC-0017",
+      "sourceName": "总务后勤部",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "evidence": {
+        "status": 200,
+        "hash": "0533beaa8a07d6d597708ba497b3d359484cca552b369d79dfce96e08c3f27e3",
+        "bodyHash": "1f51cc721ab447c009d39d9615ae91bfabc8a00fe3bad16728b81b838fc210a9",
+        "etag": "\"ee0b-65676632cc584-gzip\"",
+        "lastModified": "Mon, 13 Jul 2026 04:18:50 GMT"
+      },
+      "observedBodyLength": 1259,
+      "reusedObservation": true
+    },
+    {
+      "title": "广东外语外贸大学校园零星维修工程 设计服务项目询价公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3018.htm",
+      "publishedAt": "2026-07-06",
+      "rawPublishedAt": "2026-07-06 点击数：",
+      "sourceId": "GDUFS-SRC-0017",
+      "sourceName": "总务后勤部",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "evidence": {
+        "status": 200,
+        "hash": "ede3e969c5a07c7337c3a84f684698f48c817bc12d7d0731642684a96516dca8",
+        "bodyHash": "c7fcbe633bf5b1ffac38cefa81745f5af81eac1b8ac85c7c20c2aeead79830b6",
+        "etag": "\"5ed7-656002cd11429-gzip\"",
+        "lastModified": "Tue, 07 Jul 2026 07:16:52 GMT"
+      },
+      "observedBodyLength": 2064,
+      "reusedObservation": true
+    },
+    {
+      "title": "广东外语外贸大学2026-2028年 医保学生补充商业保险服务采购询价结果公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3008.htm",
+      "publishedAt": "2026-06-30",
+      "rawPublishedAt": "2026-06-30 点击数：",
+      "sourceId": "GDUFS-SRC-0017",
+      "sourceName": "总务后勤部",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "evidence": {
+        "status": 200,
+        "hash": "a11bb3d673366a7c547f81a9125bff176ab68d4f81d28e7c881f7c22dbdf3c3a",
+        "bodyHash": "79de087930a65a5f5994f58aef07b1f4e1f8c280b1f5a66440b7bff5332667a0",
+        "etag": "\"59b7-655ece61efbd4-gzip\"",
+        "lastModified": "Mon, 06 Jul 2026 08:17:01 GMT"
+      },
+      "observedBodyLength": 719,
+      "reusedObservation": true
+    },
+    {
+      "title": "广东外语外贸大学校园零星维修工程 工程造价咨询服务项目询价结果公示",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/2998.htm",
+      "publishedAt": "2026-06-17",
+      "rawPublishedAt": "2026-06-17 点击数：",
+      "sourceId": "GDUFS-SRC-0017",
+      "sourceName": "总务后勤部",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "evidence": {
+        "status": 200,
+        "hash": "8075eeaccdac81320256d7eb1dbbc332ee84dc7f0c7e9f34f449faf3c2209b7a",
+        "bodyHash": "f1a47ed9f05e2ca484e68bd824efa109d73cf1933e402aa697dc65dcc0c7d37a",
+        "etag": "\"9a4f-6557337623a56-gzip\"",
+        "lastModified": "Tue, 30 Jun 2026 07:06:39 GMT"
+      },
+      "observedBodyLength": 778,
+      "reusedObservation": true
+    }
+  ],
+  "errors": [],
+  "recordedAt": "2026-10-19T10:02:26.858Z",
+  "thirdPartyBodyPersisted": false,
+  "modelCalls": 0
+}

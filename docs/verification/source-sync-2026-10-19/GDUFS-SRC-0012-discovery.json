@@ -1,0 +1,63 @@
+{
+  "sourceId": "GDUFS-SRC-0012",
+  "name": "广东外语外贸大学",
+  "entryUrl": "https://www.gdufs.edu.cn/xkky/rdjz.htm",
+  "robotsStatus": 404,
+  "robotsHash": "ea22b3352e2bb3cbdc560eb751b68e56b38e4d8b16256caf67a242d479aa39cd",
+  "listStatus": 200,
+  "listHash": "f270ee6c7eec7e998e7e97b24c9ab674666340bbece82c0e8a8ec27d23c0015e",
+  "requests": 2,
+  "items": [
+    {
+      "url": "https://www.gdufs.edu.cn/info/1005/265076.htm",
+      "title": "22 2026/09 云山学术沙龙413期：Explaining China to the West：The Cultural,P... 2026年9月23日(周三) 15:30-17:00 白云山校区广东国际战略研究院304会议室",
+      "listingDate": "2026年9月23日"
+    },
+    {
+      "url": "https://www.gdufs.edu.cn/info/1005/264186.htm",
+      "title": "10 2026/09 云山学术沙龙412期：The Belt and Road Initiative in South America 2026年9月18日（周五）14：00-15：00 白云山校区广东国际战略研究院304会议室",
+      "listingDate": "2026年9月18日"
+    },
+    {
+      "url": "https://www.gdufs.edu.cn/info/1005/264176.htm",
+      "title": "10 2026/09 云山学术沙龙411期：Argentina-China Relations: From Strategic Partne... 2026年9月17日（周四）14：00-15：00 白云山校区广东国际战略研究院304会议室",
+      "listingDate": "2026年9月17日"
+    },
+    {
+      "url": "https://www.gdufs.edu.cn/info/1005/258246.htm",
+      "title": "23 2026/06 著名教授论坛第755讲：区域重塑与话语建构——近代以来西方视野下的中国... 2026年6月26日 14：30-16：30 白云山校区第一教学楼北楼547会议室",
+      "listingDate": "2026年6月26日"
+    },
+    {
+      "url": "https://www.gdufs.edu.cn/info/1005/256676.htm",
+      "title": "14 2026/06 云山学术沙龙405期：经济学研究前沿趋势 2026年6月18日（周四）15：30-17：00 白云山校区广东国际战略研究院304会议室",
+      "listingDate": "2026年6月18日"
+    },
+    {
+      "url": "https://www.gdufs.edu.cn/info/1005/256666.htm",
+      "title": "14 2026/06 云山学术沙龙404期：国际期刊写作以及投稿技巧 2026年6月17日（周三）9：00-10：30 白云山校区广东国际战略研究院304会议室",
+      "listingDate": "2026年6月17日"
+    },
+    {
+      "url": "https://www.gdufs.edu.cn/info/1005/256656.htm",
+      "title": "14 2026/06 云山学术沙龙403期：Speed matters: Decomposing systemic risk during ... 2026年6月16日（周二）9：30-11：00 白云山校区广东国际战略研究院304会议室",
+      "listingDate": "2026年6月16日"
+    },
+    {
+      "url": "https://www.gdufs.edu.cn/info/1005/256646.htm",
+      "title": "12 2026/06 著名教授论坛第754讲：知识驱动的数据合成：人工智能时代语言学的功能转... 2026年6月13日 10:00-11:30 白云山校区第七教学楼407会议室",
+      "listingDate": "2026年6月13日"
+    },
+    {
+      "url": "https://www.gdufs.edu.cn/info/1005/256636.htm",
+      "title": "12 2026/06 著名教授论坛第745讲：观物与观美 2026年06月17日 15：00-17：00 白云山校区第七教学楼607室",
+      "listingDate": "2026年06月17日"
+    },
+    {
+      "url": "https://www.gdufs.edu.cn/info/1005/255576.htm",
+      "title": "07 2026/06 云山学术沙龙402期：从中国的东南亚布局看中马关系的前景 2026年6月15日（周一）10：00-11：30 白云山校区广东国际战略研究院304会议室",
+      "listingDate": "2026年6月15日"
+    }
+  ],
+  "recordedAt": "2026-10-19T09:50:32.135Z"
+}

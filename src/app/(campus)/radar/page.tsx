@@ -1,4 +1,4 @@
-import { ModulePage } from "@/components/module-page";
+import { PublicFeed } from "@/features/content/public-feed";
 export default function RadarPage() {
-  return <ModulePage page="radar" />;
+  return <PublicFeed key="radar" surface="radar" />;
 }

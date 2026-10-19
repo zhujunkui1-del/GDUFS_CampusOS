@@ -1,4 +1,4 @@
-import { ModulePage } from "@/components/module-page";
+import { PublicFeed } from "@/features/content/public-feed";
 export default function KnowledgePage() {
-  return <ModulePage page="knowledge" />;
+  return <PublicFeed key="knowledge" surface="knowledge" />;
 }

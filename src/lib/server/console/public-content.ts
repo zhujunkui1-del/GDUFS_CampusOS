@@ -4,6 +4,10 @@ import { primaryDatabase, type SqlDatabase } from "../assistant/database";
 import { withApi } from "../http";
 import { ApiError } from "../errors";
 import { ConsoleIdSchema } from "@/domain/console/contracts";
+import {
+  KnowledgeCategorySchema,
+  RadarCategorySchema,
+} from "@/domain/console/taxonomy";
 
 const QuerySchema = z
   .object({
@@ -11,26 +15,56 @@ const QuerySchema = z
     version: z.coerce.number().int().positive().optional(),
     limit: z.coerce.number().int().min(1).max(20).default(10),
     offset: z.coerce.number().int().min(0).max(200).default(0),
+    surface: z.enum(["radar", "knowledge"]).optional(),
+    q: z.string().trim().max(100).optional(),
+    source: z.string().trim().max(100).optional(),
+    category: z.string().max(50).optional(),
   })
   .strict();
 export async function readPublicContent(db: SqlDatabase, raw: unknown) {
   const q = QuerySchema.parse(raw);
   if (q.version && !q.id)
     throw new ApiError("INVALID_ARGUMENT", "请指定内容记录。");
+  const where = ["(? IS NULL OR d.id=?)", "(? IS NULL OR d.version=?)"];
+  const params: unknown[] = [
+    q.id || null,
+    q.id || null,
+    q.version || null,
+    q.version || null,
+  ];
+  const pattern = (v: string) => "%" + v.replace(/[\\%_]/g, "\\$&") + "%";
+  if (q.surface)
+    where.push(
+      q.surface === "radar"
+        ? "d.radar_category IS NOT NULL"
+        : "d.knowledge_category IS NOT NULL",
+    );
+  if (q.category) {
+    if (!q.surface) throw new ApiError("INVALID_ARGUMENT", "请指定内容页面。");
+    const category = (
+      q.surface === "radar" ? RadarCategorySchema : KnowledgeCategorySchema
+    ).parse(q.category);
+    where.push(
+      q.surface === "radar" ? "d.radar_category=?" : "d.knowledge_category=?",
+    );
+    params.push(category);
+  }
+  if (q.q) {
+    where.push("d.title LIKE ? ESCAPE '\\'");
+    params.push(pattern(q.q));
+  }
+  if (q.source) {
+    where.push("s.display_name LIKE ? ESCAPE '\\'");
+    params.push(pattern(q.source));
+  }
+  const from = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where.join(" AND ")}`;
   const rows = await db
     .prepare(
-      `SELECT d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.summary,d.content_type,d.campus_scope,d.knowledge_category,d.radar_category,s.id AS source_id,s.display_name,s.channel_type,s.official_status FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE (? IS NULL OR d.id=?) AND (? IS NULL OR d.version=?) ORDER BY d.updated_at DESC,d.id LIMIT ? OFFSET ?`,
+      `SELECT d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.summary,d.content_type,d.campus_scope,d.knowledge_category,d.radar_category,s.id AS source_id,s.display_name,s.channel_type,s.official_status ${from} ORDER BY d.published_at DESC,d.id LIMIT ? OFFSET ?`,
     )
-    .bind(
-      q.id || null,
-      q.id || null,
-      q.version || null,
-      q.version || null,
-      q.id ? 1 : q.limit,
-      q.id ? 0 : q.offset,
-    )
+    .bind(...params, q.id ? 1 : q.limit + 1, q.id ? 0 : q.offset)
     .all<Record<string, string | number | null>>();
-  const items = rows.results.map((r) => ({
+  const items = rows.results.slice(0, q.id ? 1 : q.limit).map((r) => ({
     id: r.id,
     version: r.version,
     title: r.title,
@@ -51,7 +85,12 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
   }));
   if (q.id && !items.length)
     throw new ApiError("NOT_FOUND", "此内容尚未公开或已失效。");
-  return { items, limit: q.id ? 1 : q.limit, offset: q.id ? 0 : q.offset };
+  return {
+    items,
+    limit: q.id ? 1 : q.limit,
+    offset: q.id ? 0 : q.offset,
+    hasMore: !q.id && rows.results.length > q.limit,
+  };
 }
 export const publicContent = withApi(async (request) => {
   let env: Record<string, unknown>;

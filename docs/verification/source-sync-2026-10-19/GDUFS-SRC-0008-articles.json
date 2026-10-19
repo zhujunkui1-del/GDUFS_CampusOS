@@ -1,0 +1,207 @@
+{
+  "sourceId": "GDUFS-SRC-0008",
+  "name": "图书馆",
+  "entryUrl": "https://lib.gdufs.edu.cn/xwzx/bgtg.htm",
+  "ruleVersion": "official-web-2026-10-17.2",
+  "robotsStatus": 404,
+  "robotsHash": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+  "nextPage": null,
+  "discovered": 10,
+  "requests": 11,
+  "items": [
+    {
+      "title": "2026年第二届广东外语外贸大学“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛通知",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9648.htm",
+      "publishedAt": "2026-06-30",
+      "rawPublishedAt": "2026年06月30日 浏览人次：",
+      "contentType": "notice",
+      "radarCategory": "competition",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0008",
+      "sourceName": "图书馆",
+      "evidence": {
+        "status": 200,
+        "hash": "78d6e8be32fa9371f6c2bbe2f7ad7ee3d2e0a629bd291f7eea29961bd186d0bf",
+        "etag": "\"a773-65b2d7c681a70-gzip\"",
+        "lastModified": "Fri, 11 Sep 2026 04:26:19 GMT",
+        "bodyHash": "5449e3f1721c5c2f5df0c69e70593514f1eb477ed4f7fd282f773bf97e3d506c"
+      },
+      "observedBodyLength": 838
+    },
+    {
+      "title": "关于图书馆不再接收毕业生个人提交学位论文的通知",
+      "url": "https://lib.gdufs.edu.cn/info/1134/8331.htm",
+      "publishedAt": "2025-11-19",
+      "rawPublishedAt": "2025年11月19日 浏览人次：",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0008",
+      "sourceName": "图书馆",
+      "evidence": {
+        "status": 200,
+        "hash": "0659e3dbda764b4e1705061870945c9cffc8cff71041c30ebd1d0981c89d4ee9",
+        "etag": "\"7854-65b2d7b5f46bf-gzip\"",
+        "lastModified": "Fri, 11 Sep 2026 04:26:01 GMT",
+        "bodyHash": "cb8bcd2e7cbb5db7d1d4843a205a04c08c3a6bc7ccd852f2c3eec40f028da8fa"
+      },
+      "observedBodyLength": 219
+    },
+    {
+      "title": "白云山校区图书馆关于不定期清理占位及滞留物品的通知",
+      "url": "https://lib.gdufs.edu.cn/info/1134/6981.htm",
+      "publishedAt": "2023-05-30",
+      "rawPublishedAt": "2023年05月30日 浏览人次：",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0008",
+      "sourceName": "图书馆",
+      "evidence": {
+        "status": 200,
+        "hash": "f9f5ee8d28e1e8b9ce3384c55fcc7bc399413eb05e6e1cf288cb03a11a435e37",
+        "etag": "\"54dd-65b2b50eb3ba2-gzip\"",
+        "lastModified": "Fri, 11 Sep 2026 01:50:59 GMT",
+        "bodyHash": "719a534b3c2be592b8971fa624cad3755d83895ffed53357e1c61ee04cdf9ceb"
+      },
+      "observedBodyLength": 372
+    },
+    {
+      "title": "馆长关于质疑图书馆清理霸位行为的统一回复",
+      "url": "https://lib.gdufs.edu.cn/info/1134/3650.htm",
+      "publishedAt": "2019-10-28",
+      "rawPublishedAt": "2019年10月28日 浏览人次：",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0008",
+      "sourceName": "图书馆",
+      "evidence": {
+        "status": 200,
+        "hash": "7c2a60e2cda55329b033631c0826733abf95045cfd443f82aac8b6be43471656",
+        "etag": "\"44fe-65b2b99010eeb-gzip\"",
+        "lastModified": "Fri, 11 Sep 2026 02:11:08 GMT",
+        "bodyHash": "7574a3646aab3a86ecc05b822d943880a0d1ffbddacd30cca6df6992e8d97a19"
+      },
+      "observedBodyLength": 400
+    },
+    {
+      "title": "喜讯！我校2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛获奖名单出炉",
+      "url": "https://lib.gdufs.edu.cn/info/1134/10128.htm",
+      "publishedAt": "2026-10-10",
+      "rawPublishedAt": "2026年10月10日 浏览人次：",
+      "contentType": "news",
+      "radarCategory": "competition",
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0008",
+      "sourceName": "图书馆",
+      "evidence": {
+        "status": 200,
+        "hash": "9f281603586d5f920b8c9ea10727e913dbd5ae885bd2efc7ea031f3d4874773a",
+        "etag": "\"538a-65d7785bba573-gzip\"",
+        "lastModified": "Sat, 10 Oct 2026 07:36:26 GMT",
+        "bodyHash": "b2b75b18a10bfd4931590ae997a856397ae78509b7de3459359cb4179f615e84"
+      },
+      "observedBodyLength": 254
+    },
+    {
+      "title": "2026年CASHL庆祝教师节全国优惠活动通知",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9988.htm",
+      "publishedAt": "2026-09-17",
+      "rawPublishedAt": "2026年09月17日 浏览人次：",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0008",
+      "sourceName": "图书馆",
+      "evidence": {
+        "status": 200,
+        "hash": "4a1c1f665cf30950521b1b200e45fda385050936e104830f93691852be20f858",
+        "etag": "\"4ae6-65d7f37efcfc7-gzip\"",
+        "lastModified": "Sat, 10 Oct 2026 16:47:20 GMT",
+        "bodyHash": "48a5f72712085eca84a448ab8766c152a3ddbb0aad398090904df21d68fbaa12"
+      },
+      "observedBodyLength": 242
+    },
+    {
+      "title": "“让图书回家”——归还超期图书免滞纳金活动",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9938.htm",
+      "publishedAt": "2026-09-11",
+      "rawPublishedAt": "2026年09月11日 浏览人次：",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0008",
+      "sourceName": "图书馆",
+      "evidence": {
+        "status": 200,
+        "hash": "a453f6db61be91afbd0e1963ec2ddf6603093d4293a26b90a98117855b8e7950",
+        "etag": "\"60d4-65ba41c052070-gzip\"",
+        "lastModified": "Thu, 17 Sep 2026 01:57:43 GMT",
+        "bodyHash": "edf973dd392b85db3ff0b67eb8aac0f5c17b94c5fc0d502be56a8865a27982ce"
+      },
+      "observedBodyLength": 204
+    },
+    {
+      "title": "关于2026年暑假期间图书馆馆际互借与文献传递服务调整的通知",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9668.htm",
+      "publishedAt": "2026-07-06",
+      "rawPublishedAt": "2026年07月06日 浏览人次：",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0008",
+      "sourceName": "图书馆",
+      "evidence": {
+        "status": 200,
+        "hash": "71002e9a00ae203ca7c437ccbf7bba79d2f1e1c041575f178df9bdbdf631a9ef",
+        "etag": "\"6d43-65b35b1f92ee4-gzip\"",
+        "lastModified": "Fri, 11 Sep 2026 14:13:57 GMT",
+        "bodyHash": "6842e655323da01ed57399f86f0129c879de3d275ab0a74cf0e140a24335522c"
+      },
+      "observedBodyLength": 317
+    },
+    {
+      "title": "让图书回家——归还超期图书免滞纳金活动",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9578.htm",
+      "publishedAt": "2026-06-16",
+      "rawPublishedAt": "2026年06月16日 浏览人次：",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0008",
+      "sourceName": "图书馆",
+      "evidence": {
+        "status": 200,
+        "hash": "3acc870e5cad7a754a596541c9bc574bd5eaaa732bd8e7b08301ed0140b31723",
+        "etag": "\"576f-65b2b98e8eb57-gzip\"",
+        "lastModified": "Fri, 11 Sep 2026 02:11:07 GMT",
+        "bodyHash": "80138495184f665dd620abd7deb254581a67add6dc4879416a7d78d54752f011"
+      },
+      "observedBodyLength": 194
+    },
+    {
+      "title": "关于图书馆学习空间分批次开放预约使用的通知",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9498.htm",
+      "publishedAt": "2026-06-02",
+      "rawPublishedAt": "2026年06月02日 浏览人次：",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0008",
+      "sourceName": "图书馆",
+      "evidence": {
+        "status": 200,
+        "hash": "86fe583198004a8d49e602f504b1bca3b7ce5e30062bd91b42feac4ff4a8d2ec",
+        "etag": "\"852c-65b2bcee8b2cf-gzip\"",
+        "lastModified": "Fri, 11 Sep 2026 02:26:13 GMT",
+        "bodyHash": "3f33e16e900adb8e7efbb649b76feeb880b7c770cb64a4a7579c1333635329fe"
+      },
+      "observedBodyLength": 498
+    }
+  ],
+  "errors": [],
+  "recordedAt": "2026-10-19T09:53:23.853Z",
+  "thirdPartyBodyPersisted": false,
+  "modelCalls": 0
+}

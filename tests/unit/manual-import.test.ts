@@ -412,13 +412,13 @@ describe("bounded manual intake and fresh anonymous metadata", () => {
   it("the shared daily manual batch budget is atomic and does not reset unrelated quotas", async () => {
     const f = await setup();
     try {
-      for (let i = 0; i < 20; i++) await f.store.importBatch(f.batch());
+      for (let i = 0; i < 25; i++) await f.store.importBatch(f.batch());
       await expect(f.store.importBatch(f.batch())).rejects.toMatchObject({
         code: "RATE_LIMITED",
       });
       expect(
         f.sqlite.prepare("SELECT * FROM ingestion_jobs").all(),
-      ).toHaveLength(20);
+      ).toHaveLength(25);
       expect(
         f.sqlite.prepare("SELECT * FROM knowledge_documents").all(),
       ).toHaveLength(1);

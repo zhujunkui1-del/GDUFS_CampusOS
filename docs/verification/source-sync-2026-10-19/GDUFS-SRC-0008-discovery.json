@@ -1,0 +1,63 @@
+{
+  "sourceId": "GDUFS-SRC-0008",
+  "name": "图书馆",
+  "entryUrl": "https://lib.gdufs.edu.cn/xwzx/bgtg.htm",
+  "robotsStatus": 404,
+  "robotsHash": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+  "listStatus": 200,
+  "listHash": "9bb14397ffa555d56a46fb0322cfc6b2d151db4edff01b59ad0d38cbd8ec94af",
+  "requests": 2,
+  "items": [
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/9648.htm",
+      "title": "2026年第二届广东外语外贸大学“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛通知",
+      "listingDate": "2026年06月30日"
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/8331.htm",
+      "title": "关于图书馆不再接收毕业生个人提交学位论文的通知",
+      "listingDate": "2025年11月19日"
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/6981.htm",
+      "title": "白云山校区图书馆关于不定期清理占位及滞留物品的通知",
+      "listingDate": "2023年05月30日"
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/3650.htm",
+      "title": "馆长关于质疑图书馆清理霸位行为的统一回复",
+      "listingDate": "2019年10月28日"
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/10128.htm",
+      "title": "喜讯！我校2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛获奖名单出炉",
+      "listingDate": "2026年10月10日"
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/9988.htm",
+      "title": "2026年CASHL庆祝教师节全国优惠活动通知",
+      "listingDate": "2026年9月10日"
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/9938.htm",
+      "title": "“让图书回家”——归还超期图书免滞纳金活动",
+      "listingDate": "2026年9月14日"
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/9668.htm",
+      "title": "关于2026年暑假期间图书馆馆际互借与文献传递服务调整的通知",
+      "listingDate": "2026年7月6日"
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/9578.htm",
+      "title": "让图书回家——归还超期图书免滞纳金活动",
+      "listingDate": "2026年5月31日"
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1134/9498.htm",
+      "title": "关于图书馆学习空间分批次开放预约使用的通知",
+      "listingDate": "2026年06月02日"
+    }
+  ],
+  "recordedAt": "2026-10-19T09:50:32.146Z"
+}

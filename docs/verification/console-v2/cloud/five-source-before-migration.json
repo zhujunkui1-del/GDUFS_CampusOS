@@ -1,0 +1,187 @@
+{
+  "recordedAt": "2026-10-19T10:05:18.153Z",
+  "realCloud": true,
+  "target": "campusos-preview",
+  "before": {
+    "at": "2026-10-19T10:05:16.327Z",
+    "counts": {
+      "sources": 220,
+      "enabled": 220,
+      "verified": 4,
+      "documents": 3,
+      "published": 0,
+      "jobs": 4,
+      "conversations": 1,
+      "messages": 2,
+      "runs": 1
+    },
+    "migrations": [
+      "0001_platform_and_campus.sql",
+      "0002_knowledge_and_events.sql",
+      "0003_route_geometry_guards.sql",
+      "0004_assistant_shared_state.sql",
+      "0005_assistant_conversations.sql",
+      "0006_console_registry.sql",
+      "0007_content_contract.sql",
+      "0008_ingestion_pipeline.sql",
+      "0009_ingestion_clock_guards.sql",
+      "0010_document_topics.sql",
+      "0011_ingestion_daily_budget.sql",
+      "0012_manual_intake_and_evidence.sql",
+      "0013_content_edit_intake_guard.sql",
+      "0014_console_v2_governance.sql",
+      "0015_console_v2_automation.sql",
+      "0016_console_v2_retention.sql",
+      "0017_console_v2_scheduler.sql",
+      "0018_console_v2_public_freshness.sql",
+      "0019_console_v2_stop_guards.sql",
+      "0020_console_v2_intake_observations.sql",
+      "0021_console_v2_review_holds.sql",
+      "0022_console_simple_admin_actions.sql"
+    ],
+    "sourceHash": "d73e247d825fa6d5620bb27dac0df5c8da7317859caee459c41d3218353ed69e"
+  },
+  "storageBeforeBytes": 2072576,
+  "after": {
+    "sources": 220,
+    "enabled": 220,
+    "verified": 4,
+    "documents": 3,
+    "published": 0,
+    "jobs": 4,
+    "conversations": 1,
+    "messages": 2,
+    "runs": 1
+  },
+  "migrations": [
+    "0001_platform_and_campus.sql",
+    "0002_knowledge_and_events.sql",
+    "0003_route_geometry_guards.sql",
+    "0004_assistant_shared_state.sql",
+    "0005_assistant_conversations.sql",
+    "0006_console_registry.sql",
+    "0007_content_contract.sql",
+    "0008_ingestion_pipeline.sql",
+    "0009_ingestion_clock_guards.sql",
+    "0010_document_topics.sql",
+    "0011_ingestion_daily_budget.sql",
+    "0012_manual_intake_and_evidence.sql",
+    "0013_content_edit_intake_guard.sql",
+    "0014_console_v2_governance.sql",
+    "0015_console_v2_automation.sql",
+    "0016_console_v2_retention.sql",
+    "0017_console_v2_scheduler.sql",
+    "0018_console_v2_public_freshness.sql",
+    "0019_console_v2_stop_guards.sql",
+    "0020_console_v2_intake_observations.sql",
+    "0021_console_v2_review_holds.sql",
+    "0022_console_simple_admin_actions.sql"
+  ],
+  "sourceStateUnchanged": true,
+  "foreignKeyViolations": 0,
+  "storage": {
+    "provider": "cloudflare_api",
+    "bytes": 2072576,
+    "measuredAt": "2026-10-19T10:05:16.327Z",
+    "estimated": false
+  },
+  "workerVersions": [
+    {
+      "version_id": "2b4bf577-bb85-47d1-97e6-874654d7ad87",
+      "percentage": 100
+    }
+  ],
+  "documents": [
+    {
+      "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+      "source_id": "GDUFS-SRC-0010",
+      "title": "关于召开2025-2026学年“校长奖章”评审会的通知",
+      "published_at": "2026-10-16T14:14:18.000Z",
+      "review_status": "approved",
+      "publication_status": "withdrawn",
+      "lifecycle_status": "withdrawn",
+      "version": 6
+    },
+    {
+      "id": "content-76b1fc0b-ace5-4db2-bb5f-b029dd771d78",
+      "source_id": "GDUFS-SRC-0008",
+      "title": "2026年第二届广东外语外贸大学“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛通知",
+      "published_at": "2026-06-30",
+      "review_status": "approved",
+      "publication_status": "withdrawn",
+      "lifecycle_status": "withdrawn",
+      "version": 5
+    },
+    {
+      "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+      "source_id": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学文印中心多功能印刷机维保服务采购项目询价公告",
+      "published_at": "2026-10-16",
+      "review_status": "approved",
+      "publication_status": "withdrawn",
+      "lifecycle_status": "withdrawn",
+      "version": 4
+    }
+  ],
+  "queries": [
+    {
+      "ordinal": 1,
+      "durationMs": 2.1749,
+      "wallMs": 442,
+      "rowsRead": 671,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 2,
+      "durationMs": 0.5258,
+      "wallMs": 230,
+      "rowsRead": 22,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 3,
+      "durationMs": 2.2768,
+      "wallMs": 198,
+      "rowsRead": 220,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 4,
+      "durationMs": 1.6945,
+      "wallMs": 195,
+      "rowsRead": 671,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 5,
+      "durationMs": 0.6909,
+      "wallMs": 218,
+      "rowsRead": 22,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 6,
+      "durationMs": 2.8978,
+      "wallMs": 185,
+      "rowsRead": 655,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 7,
+      "durationMs": 2.9285,
+      "wallMs": 212,
+      "rowsRead": 220,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 8,
+      "durationMs": 0.4982,
+      "wallMs": 160,
+      "rowsRead": 3,
+      "rowsWritten": 0
+    }
+  ],
+  "migrationApplied": false,
+  "permanentDataCleanupExecuted": false,
+  "contentPublishedByThisRun": false
+}

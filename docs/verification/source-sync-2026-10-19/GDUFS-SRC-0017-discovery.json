@@ -1,0 +1,63 @@
+{
+  "sourceId": "GDUFS-SRC-0017",
+  "name": "总务后勤部",
+  "entryUrl": "https://hqc.gdufs.edu.cn/tzgap.htm",
+  "robotsStatus": 404,
+  "robotsHash": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+  "listStatus": 200,
+  "listHash": "937c9402b917034258ddc0e97ab152b8c352d3594d809c19beeb00706dae4ca3",
+  "requests": 2,
+  "items": [
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3098.htm",
+      "title": "广东外语外贸大学文印中心多功能印刷机维保服务采购项目询价公告",
+      "listingDate": "2026-10-16"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3088.htm",
+      "title": "广东外语外贸大学大学城校区北苑6栋智能电表采购项目询价结果公告",
+      "listingDate": "2026-08-10"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3078.htm",
+      "title": "广东外语外贸大学大学城校区北苑6栋智能电表采购项目询价公告",
+      "listingDate": "2026-07-31"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3068.htm",
+      "title": "广东外语外贸大学2026年白云山校区学生宿舍老旧家具修复保养服务采购询价结果公告",
+      "listingDate": "2026-07-24"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3048.htm",
+      "title": "广东外语外贸大学2026年白云山校区学生宿舍老旧家具修复保养服务采购询价公告",
+      "listingDate": "2026-07-20"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3038.htm",
+      "title": "广东外语外贸大学校园零星维修工程设计服务项目 询价结果公示",
+      "listingDate": "2026-07-13"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3028.htm",
+      "title": "广东外语外贸大学学生饭堂特色档口餐饮技术服务合作项目遴选结果公示",
+      "listingDate": "2026-07-07"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3018.htm",
+      "title": "广东外语外贸大学校园零星维修工程 设计服务项目询价公告",
+      "listingDate": "2026-07-06"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3008.htm",
+      "title": "广东外语外贸大学2026-2028年 医保学生补充商业保险服务采购询价结果公告",
+      "listingDate": "2026-06-30"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/2998.htm",
+      "title": "广东外语外贸大学校园零星维修工程 工程造价咨询服务项目询价结果公示",
+      "listingDate": "2026-06-17"
+    }
+  ],
+  "recordedAt": "2026-10-19T09:50:32.080Z"
+}

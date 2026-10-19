@@ -1,0 +1,133 @@
+{
+  "sourceId": "GDUFS-SRC-0010",
+  "name": "学生工作部",
+  "entryUrl": "https://nstu.gdufs.edu.cn/index/tzgg.htm",
+  "ruleVersion": "official-web-2026-10-17.2",
+  "robotsStatus": 404,
+  "robotsHash": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+  "nextPage": "https://nstu.gdufs.edu.cn/index/tzgg/37.htm",
+  "discovered": 10,
+  "requests": 12,
+  "items": [
+    {
+      "title": "广东外语外贸大学关于公布2026年“立志·修身·博学·报国”主题教育系列活动结果的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68731.htm",
+      "publishedAt": "2026-10-19T03:25:37.000Z",
+      "rawPublishedAt": "2026-10-19 11:25:37",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0010",
+      "sourceName": "学生工作部",
+      "evidence": {
+        "status": 200,
+        "hash": "e2e9650fa0b2a89cec8a3a80b64d98961ba2c0e957b31cd4534453d2268ec922",
+        "etag": "\"5006-65e2cf3f413a1-gzip\"",
+        "lastModified": "Mon, 19 Oct 2026 08:03:44 GMT",
+        "bodyHash": "3564017aa935ce8341e34811f54609de7fce5d03b464744e21b4885e09e50997"
+      },
+      "observedBodyLength": 247
+    },
+    {
+      "title": "关于召开2025-2026学年“校长奖章”评审会的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68721.htm",
+      "publishedAt": "2026-10-16T14:14:18.000Z",
+      "rawPublishedAt": "2026-10-16 22:14:18",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0010",
+      "sourceName": "学生工作部",
+      "evidence": {
+        "status": 200,
+        "hash": "11e05ab00b652443630d19e53ab077b1ec278d8089f9bac80970e619531f97d7",
+        "etag": "\"514e-65e29cc3d1d12-gzip\"",
+        "lastModified": "Mon, 19 Oct 2026 04:17:53 GMT",
+        "bodyHash": "ee322df1bfce5c39d75c407cb77d7f8dc379fe2edf8aa578d4d0514fc08c7ad7"
+      },
+      "observedBodyLength": 415
+    },
+    {
+      "title": "关于推荐2026年度港澳及华侨学生、台湾学生奖学金获得者候选人的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68651.htm",
+      "publishedAt": "2026-10-10T07:48:05.000Z",
+      "rawPublishedAt": "2026-10-10 15:48:05",
+      "contentType": "notice",
+      "radarCategory": "scholarship_opportunity",
+      "knowledgeCategory": "scholarship_policy",
+      "sourceId": "GDUFS-SRC-0010",
+      "sourceName": "学生工作部",
+      "evidence": {
+        "status": 200,
+        "hash": "238398877cb131e8b767ab4cd684515b51336b31b5300dad07e1e21cdc057a93",
+        "etag": "\"63b3-65db81cede0d5-gzip\"",
+        "lastModified": "Tue, 13 Oct 2026 12:40:00 GMT",
+        "bodyHash": "fc51ce75e62fb7b6b3f0cde5285d2df029f6861fa3a71bd5f755e344c5c867d7"
+      },
+      "observedBodyLength": 997
+    },
+    {
+      "title": "关于公布2025-2026学年度本科生社会专项奖学金名额分配的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68521.htm",
+      "publishedAt": "2026-09-28T06:17:37.000Z",
+      "rawPublishedAt": "2026-09-28 14:17:37",
+      "contentType": "notice",
+      "radarCategory": "scholarship_opportunity",
+      "knowledgeCategory": "scholarship_policy",
+      "sourceId": "GDUFS-SRC-0010",
+      "sourceName": "学生工作部",
+      "evidence": {
+        "status": 200,
+        "hash": "be0489432d40027efd2f7447651b69715d261265160e9788286b254c0fa910a3",
+        "etag": "\"6608-65d4f4c8148b4-gzip\"",
+        "lastModified": "Thu, 08 Oct 2026 07:37:07 GMT",
+        "bodyHash": "ba7022bffecad8ad45f47d1ef1eb386ed4b353162b938d44d333691bd057618a"
+      },
+      "observedBodyLength": 994
+    },
+    {
+      "title": "关于推报2025-2026学年度广东外语外贸大学“校长奖章”的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68391.htm",
+      "publishedAt": "2026-09-15T08:29:50.000Z",
+      "rawPublishedAt": "2026-09-15 16:29:50",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0010",
+      "sourceName": "学生工作部",
+      "evidence": {
+        "status": 200,
+        "hash": "52c5fb07db35c8758c2f3ed2b1c348618c4c9c982fec310fa9fe8f764ec91548",
+        "etag": "\"66e9-65c845b3361c8-gzip\"",
+        "lastModified": "Mon, 28 Sep 2026 05:29:55 GMT",
+        "bodyHash": "dfda7c0cc39134899857fe51f717133043bb57daaa582024cd9bd6f6312dca67"
+      },
+      "observedBodyLength": 1433
+    }
+  ],
+  "errors": [
+    {
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68751.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68661.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68581.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68561.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68511.htm",
+      "error": "PARSE_ERROR"
+    }
+  ],
+  "recordedAt": "2026-10-19T09:53:33.881Z",
+  "thirdPartyBodyPersisted": false,
+  "modelCalls": 0
+}

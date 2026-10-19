@@ -1,0 +1,193 @@
+{
+  "sourceId": "GDUFS-SRC-0012",
+  "name": "广东外语外贸大学",
+  "entryUrl": "https://www.gdufs.edu.cn/xkky/rdjz.htm",
+  "ruleVersion": "official-web-2026-10-17.2",
+  "robotsStatus": 404,
+  "robotsHash": "ea22b3352e2bb3cbdc560eb751b68e56b38e4d8b16256caf67a242d479aa39cd",
+  "nextPage": null,
+  "discovered": 10,
+  "requests": 11,
+  "items": [
+    {
+      "title": "云山学术沙龙413期：Explaining China to the West：The Cultural,Political, and Economic Logic Behind the Chinese Miracle",
+      "url": "https://www.gdufs.edu.cn/info/1005/265076.htm",
+      "publishedAt": "2026-09-22",
+      "rawPublishedAt": "2026-09-22",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0012",
+      "sourceName": "广东外语外贸大学",
+      "evidence": {
+        "status": 200,
+        "hash": "b03560b2310ba4d75d945b14c0708e4844adecd0b1fb510f856a578cfbd8e447",
+        "etag": "\"12b9e-65c0c370e2a3a-gzip\"",
+        "lastModified": "Tue, 22 Sep 2026 06:09:53 GMT",
+        "bodyHash": "8777ec99e74b5a4991e58e1d5fb9c296263c049dbac543002e68b321cc93e77e"
+      },
+      "observedBodyLength": 0
+    },
+    {
+      "title": "云山学术沙龙412期：The Belt and Road Initiative in South America",
+      "url": "https://www.gdufs.edu.cn/info/1005/264186.htm",
+      "publishedAt": "2026-09-10",
+      "rawPublishedAt": "2026-09-10",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0012",
+      "sourceName": "广东外语外贸大学",
+      "evidence": {
+        "status": 200,
+        "hash": "811d2c67f7fe5aebd3a9b438babae0f2eed66196eade1c38ef30442c540af977",
+        "etag": "\"12b6d-65c0dedb02302-gzip\"",
+        "lastModified": "Tue, 22 Sep 2026 08:12:32 GMT",
+        "bodyHash": "cddcd07bca49e39b55db9adec2047e2fef9bd7298dcca9cdf43ea563641dad92"
+      },
+      "observedBodyLength": 0
+    },
+    {
+      "title": "云山学术沙龙411期：Argentina-China Relations: From Strategic Partnership to Political Uncertainty",
+      "url": "https://www.gdufs.edu.cn/info/1005/264176.htm",
+      "publishedAt": "2026-09-10",
+      "rawPublishedAt": "2026-09-10",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0012",
+      "sourceName": "广东外语外贸大学",
+      "evidence": {
+        "status": 200,
+        "hash": "76eacd8dce02ed8022ba034450a51725dec45a1024a3572f2d13aa7e99968095",
+        "etag": "\"12bbb-65c0d319a24cf-gzip\"",
+        "lastModified": "Tue, 22 Sep 2026 07:19:56 GMT",
+        "bodyHash": "8a5b31fdbd6991b0f79a6cde8375808a2bd0d606e7331375b2da33db32c9b764"
+      },
+      "observedBodyLength": 0
+    },
+    {
+      "title": "著名教授论坛第755讲：区域重塑与话语建构——近代以来西方视野下的中国西南边疆",
+      "url": "https://www.gdufs.edu.cn/info/1005/258246.htm",
+      "publishedAt": "2026-06-23",
+      "rawPublishedAt": "2026-06-23",
+      "contentType": "news",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0012",
+      "sourceName": "广东外语外贸大学",
+      "evidence": {
+        "status": 200,
+        "hash": "9262b981f2e9c7a5b2ed4de11cb0d65feaa4edc0b6ab7e2a22e8b05b95c085c9",
+        "etag": "\"12b96-65c0d27656193-gzip\"",
+        "lastModified": "Tue, 22 Sep 2026 07:17:05 GMT",
+        "bodyHash": "ea32bb1eabd97d1d6746538c6407bf614644a024507941cfcdede098dfffdf9a"
+      },
+      "observedBodyLength": 0
+    },
+    {
+      "title": "云山学术沙龙404期：国际期刊写作以及投稿技巧",
+      "url": "https://www.gdufs.edu.cn/info/1005/256666.htm",
+      "publishedAt": "2026-06-14",
+      "rawPublishedAt": "2026-06-14",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0012",
+      "sourceName": "广东外语外贸大学",
+      "evidence": {
+        "status": 200,
+        "hash": "51dbd3ea3352942987f4d1617742626d7114a90d38528d590d2f4e5c0113bcc5",
+        "etag": "\"12ae6-65c0e1abddefc-gzip\"",
+        "lastModified": "Tue, 22 Sep 2026 08:25:08 GMT",
+        "bodyHash": "0efae877302623a00ea4f917a653ffaf88725d0dafa717e7ac7283b2c6439934"
+      },
+      "observedBodyLength": 0
+    },
+    {
+      "title": "云山学术沙龙403期：Speed matters: Decomposing systemic risk during China’s deleveraging campaign",
+      "url": "https://www.gdufs.edu.cn/info/1005/256656.htm",
+      "publishedAt": "2026-06-14",
+      "rawPublishedAt": "2026-06-14",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0012",
+      "sourceName": "广东外语外贸大学",
+      "evidence": {
+        "status": 200,
+        "hash": "6afe17deaebf3b40dfebd5d7df551a393b249335204d2a3c333e477d90193a05",
+        "etag": "\"12b9b-65c0c903d85ee-gzip\"",
+        "lastModified": "Tue, 22 Sep 2026 06:34:49 GMT",
+        "bodyHash": "005c3e9d62b307ac3b8e7da15997412a3bf544dd05634e4dc5b1579c5fb0c465"
+      },
+      "observedBodyLength": 0
+    },
+    {
+      "title": "著名教授论坛第754讲：知识驱动的数据合成：人工智能时代语言学的功能转型",
+      "url": "https://www.gdufs.edu.cn/info/1005/256646.htm",
+      "publishedAt": "2026-06-12",
+      "rawPublishedAt": "2026-06-12",
+      "contentType": "news",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0012",
+      "sourceName": "广东外语外贸大学",
+      "evidence": {
+        "status": 200,
+        "hash": "22fdc40e5098c182045abcedb4b61fc6afecc1bf4c00607316b7547da3a6eb39",
+        "etag": "\"12b61-65c0d2586ef56-gzip\"",
+        "lastModified": "Tue, 22 Sep 2026 07:16:34 GMT",
+        "bodyHash": "33f5e656083fea58bb10a1127cac19d9f10de5a1d84c2783881c5180abaa4428"
+      },
+      "observedBodyLength": 0
+    },
+    {
+      "title": "著名教授论坛第745讲：观物与观美",
+      "url": "https://www.gdufs.edu.cn/info/1005/256636.htm",
+      "publishedAt": "2026-06-12",
+      "rawPublishedAt": "2026-06-12",
+      "contentType": "news",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0012",
+      "sourceName": "广东外语外贸大学",
+      "evidence": {
+        "status": 200,
+        "hash": "9d49e163106d93f1f0808eefb7eeb1a5c160e0de8d6fd899dad4098ab06a7e30",
+        "etag": "\"12a93-65c0d319a28b7-gzip\"",
+        "lastModified": "Tue, 22 Sep 2026 07:19:56 GMT",
+        "bodyHash": "548a14b5d93826168d7ed5f354d896c488192dd242be2772be7b738bf8fd17d4"
+      },
+      "observedBodyLength": 0
+    },
+    {
+      "title": "云山学术沙龙402期：从中国的东南亚布局看中马关系的前景",
+      "url": "https://www.gdufs.edu.cn/info/1005/255576.htm",
+      "publishedAt": "2026-06-07",
+      "rawPublishedAt": "2026-06-07",
+      "contentType": "news",
+      "radarCategory": null,
+      "knowledgeCategory": null,
+      "sourceId": "GDUFS-SRC-0012",
+      "sourceName": "广东外语外贸大学",
+      "evidence": {
+        "status": 200,
+        "hash": "bb8c709169d5e9d71680f03ffeaf486c0001aba84b57ea3425c5b80f58d9f0bd",
+        "etag": "\"12b05-65c0dfb76d2e9-gzip\"",
+        "lastModified": "Tue, 22 Sep 2026 08:16:23 GMT",
+        "bodyHash": "b74fcf947f89b2ce14203d5789c14e76299ffb97285637e0462ab8555ca41eff"
+      },
+      "observedBodyLength": 0
+    }
+  ],
+  "errors": [
+    {
+      "url": "https://www.gdufs.edu.cn/info/1005/256676.htm",
+      "error": "read ECONNRESET"
+    }
+  ],
+  "recordedAt": "2026-10-19T09:53:23.812Z",
+  "thirdPartyBodyPersisted": false,
+  "modelCalls": 0
+}

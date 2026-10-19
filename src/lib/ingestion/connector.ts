@@ -54,7 +54,10 @@ export class OfficialWebConnector {
   discover(html: string, page = this.profile.entryUrl) {
     approvedUrl(this.profile, page, "list");
     const { document } = parseHTML(html);
-    const urls: string[] = [];
+    const candidates = new Map<
+      string,
+      { url: string; date: string | null; order: number }
+    >();
     let nextPage: string | null = null;
     for (const a of document.querySelectorAll("a[href]")) {
       const href = a.getAttribute("href")!;
@@ -62,7 +65,27 @@ export class OfficialWebConnector {
       try {
         resolved = new URL(href, page).toString();
         const u = approvedUrl(this.profile, resolved);
-        if (!urls.includes(u)) urls.push(u);
+        if (!candidates.has(u)) {
+          const rowNode = a.closest("li") || a.parentElement || a;
+          const row = text(rowNode);
+          const dateNode = [...rowNode.querySelectorAll("time,span")]
+            .map(text)
+            .filter((s) => /^20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?$/.test(s))
+            .at(-1);
+          const leading = row.match(
+            /(?:^|\s)(\d{1,2})\s+(20\d{2})[/.\-](\d{1,2})(?:\s|$)/,
+          );
+          const labeled = row.match(
+            /发布时间[：:]?\s*(20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?)/,
+          );
+          const raw = leading
+            ? `${leading[2]}-${leading[3].padStart(2, "0")}-${leading[1].padStart(2, "0")}`
+            : labeled?.[1] ||
+              dateNode ||
+              row.match(/20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?/)?.[0];
+          const date = raw ? parseCampusTime(raw).date : null;
+          candidates.set(u, { url: u, date, order: candidates.size });
+        }
       } catch {}
       if (/下一页|下页/.test(text(a)))
         try {
@@ -73,7 +96,10 @@ export class OfficialWebConnector {
           );
         } catch {}
     }
-    return { urls: urls.slice(0, 10), nextPage };
+    const rows = [...candidates.values()];
+    if (rows.every((r) => r.date))
+      rows.sort((a, b) => b.date!.localeCompare(a.date!) || a.order - b.order);
+    return { urls: rows.slice(0, 10).map((r) => r.url), nextPage };
   }
   async fetch(
     url: string,
@@ -118,7 +144,9 @@ export class OfficialWebConnector {
       ),
     ];
     const dateText = values.length === 1 ? values[0] : "";
-    const body = document.querySelector(this.profile.bodySelector);
+    const body =
+      document.querySelector(this.profile.bodySelector) ||
+      document.querySelector(".v_news_content");
     if (!title || !body) throw Error("PARSE_ERROR");
     const bodyText = cleanBodyText(body);
     if (bodyText.length > 50000) throw Error("TOO_LARGE");

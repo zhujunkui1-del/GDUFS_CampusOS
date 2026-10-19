@@ -1,0 +1,327 @@
+{
+  "startedAt": "2026-10-19T10:18:14.378Z",
+  "target": "https://campusos-preview.zhujunkui1.workers.dev",
+  "ownerAuthorization": "2026-10-19指定五来源，每源最近最多10篇，同步校园雷达和校园知识",
+  "sources": [
+    {
+      "sourceId": "GDUFS-SRC-0024",
+      "name": "校团委",
+      "collected": 10,
+      "records": [
+        {
+          "id": "content-af85e4e2-faa8-4c29-971a-b82d318d0dd6",
+          "url": "https://youth.gdufs.edu.cn/info/1050/13012.htm",
+          "title": "第三届青春扬帆·全球学生交流大使团拟推荐名单",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "1200c6c8-883f-4ddf-bffd-b7b740f6b3c3",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-77c42774-a451-410d-97d2-ffbf3c4b5da9",
+          "url": "https://youth.gdufs.edu.cn/info/1050/12902.htm",
+          "title": "关于广东外语外贸大学第四批“中国青年志愿者海外服务计划--服务联合国机构项目”拟推荐志愿者候选人名单的公示",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "1200c6c8-883f-4ddf-bffd-b7b740f6b3c3",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-71fec192-00ef-42bb-bdf4-454d47b14c5d",
+          "url": "https://youth.gdufs.edu.cn/info/1050/12802.htm",
+          "title": "关于评选广东外语外贸大学2025-2026学年度志愿服务先进集体、优秀个人的通知",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "d6b734f7-80c8-4f64-8856-117bffa6f17f",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-9bf11776-635c-4328-a910-8ce43bf1c587",
+          "url": "https://youth.gdufs.edu.cn/info/1050/12792.htm",
+          "title": "关于开展2026年广东外语外贸大学暑期社会实践活动评优工作的通知",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "d6b734f7-80c8-4f64-8856-117bffa6f17f",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-7a309711-c22b-4941-9ec5-1484b8dbc58a",
+          "url": "https://youth.gdufs.edu.cn/info/1050/12782.htm",
+          "title": "关于招募广东外语外贸大学第四批“中国青年志愿者海外服务计划——服务联合国机构项目”志愿者的通知",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "fc3f3224-9fc8-4922-87fe-c84fd983c244",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-1a952aa4-2e76-49e4-b32b-a61702fd7e64",
+          "url": "https://youth.gdufs.edu.cn/info/1050/12732.htm",
+          "title": "中国青年志愿者第29届（广东外语外贸大学第13届）研究生支教团拟推荐名单公示",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "fc3f3224-9fc8-4922-87fe-c84fd983c244",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-69078c91-fb02-4445-80f2-6df012df0b93",
+          "url": "https://youth.gdufs.edu.cn/info/1050/12712.htm",
+          "title": "关于做好第13届研究生支教团志愿者（推荐免试攻读硕士研究生）招募工作的通知",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "df78820d-f0cb-49b8-88df-4de8ba9c42a8",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-305cb649-40f0-4d2e-84af-dad2428ca9f7",
+          "url": "https://youth.gdufs.edu.cn/info/1050/12702.htm",
+          "title": "关于我校学生跨校参加第十五届“挑战杯”中国大学生创业计划竞赛东北振兴产业升级专项赛的公示",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "df78820d-f0cb-49b8-88df-4de8ba9c42a8",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-8e307a41-9f33-4d73-9dec-ff4464df21db",
+          "url": "https://youth.gdufs.edu.cn/info/1050/12692.htm",
+          "title": "关于我校学生跨校参加第十五届“挑战杯”中国大学生创业计划竞赛东北振兴产业升级专项赛的公示",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "7ed29fa4-f0cf-4833-8aec-a6749f99c1da",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-73bc2f12-de63-4402-a365-388092a253f0",
+          "url": "https://youth.gdufs.edu.cn/info/1050/12602.htm",
+          "title": "关于开展2025-2026学年度“i”志愿系统志愿时认定劳动实践学时的通知",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "7ed29fa4-f0cf-4833-8aec-a6749f99c1da",
+          "published": true,
+          "version": 3
+        }
+      ],
+      "skipped": [],
+      "published": 10,
+      "finishedAt": "2026-10-19T10:19:53.510Z"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0012",
+      "name": "广东外语外贸大学",
+      "collected": 10,
+      "records": [
+        {
+          "id": "content-f602d268-989a-4725-aa48-edda7c2f8561",
+          "url": "https://www.gdufs.edu.cn/info/1005/265076.htm",
+          "title": "云山学术沙龙413期：Explaining China to the West：The Cultural,Political, and Economic Logic Behind the Chinese Miracle",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "d4579cfb-2f48-42cb-b8ff-18dc18bfbfc2",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-aa636976-2010-462c-912a-29a9b23f5aa2",
+          "url": "https://www.gdufs.edu.cn/info/1005/264186.htm",
+          "title": "云山学术沙龙412期：The Belt and Road Initiative in South America",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "d4579cfb-2f48-42cb-b8ff-18dc18bfbfc2",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-b8837740-f489-40fe-a429-dc9c3a1a2a06",
+          "url": "https://www.gdufs.edu.cn/info/1005/264176.htm",
+          "title": "云山学术沙龙411期：Argentina-China Relations: From Strategic Partnership to Political Uncertainty",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "df3fbdce-b9ec-4de1-b067-fe5eb0bbd8ed",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-1ed334a4-15a1-4105-b6b9-3f29e30ad0ea",
+          "url": "https://www.gdufs.edu.cn/info/1005/258246.htm",
+          "title": "著名教授论坛第755讲：区域重塑与话语建构——近代以来西方视野下的中国西南边疆",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "df3fbdce-b9ec-4de1-b067-fe5eb0bbd8ed",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-ee98bf68-75a8-4c19-a33c-271eb62acf92",
+          "url": "https://www.gdufs.edu.cn/info/1005/256676.htm",
+          "title": "云山学术沙龙405期：经济学研究前沿趋势",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "dba184a1-0e39-4d13-b93c-7e0a22912c0c",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-c1de7f58-cfef-4ca9-a88d-570f60f03057",
+          "url": "https://www.gdufs.edu.cn/info/1005/256666.htm",
+          "title": "云山学术沙龙404期：国际期刊写作以及投稿技巧",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "dba184a1-0e39-4d13-b93c-7e0a22912c0c",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-222ef62d-15c4-47b7-b167-0c51cb281cff",
+          "url": "https://www.gdufs.edu.cn/info/1005/256656.htm",
+          "title": "云山学术沙龙403期：Speed matters: Decomposing systemic risk during China’s deleveraging campaign",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "81c53405-90d8-414a-bd92-d2fdb8524ce8",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-4a663b08-c81b-4d0f-a1d3-7812b0acc7c9",
+          "url": "https://www.gdufs.edu.cn/info/1005/256646.htm",
+          "title": "著名教授论坛第754讲：知识驱动的数据合成：人工智能时代语言学的功能转型",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "81c53405-90d8-414a-bd92-d2fdb8524ce8",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-195b42d9-da38-450b-9d14-2e07b28cbe1f",
+          "url": "https://www.gdufs.edu.cn/info/1005/256636.htm",
+          "title": "著名教授论坛第745讲：观物与观美",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "8340b42c-c171-48c2-9667-59c1854f1b84",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-f5678197-f689-49b8-98a0-41bd3592c600",
+          "url": "https://www.gdufs.edu.cn/info/1005/255576.htm",
+          "title": "云山学术沙龙402期：从中国的东南亚布局看中马关系的前景",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "8340b42c-c171-48c2-9667-59c1854f1b84",
+          "published": true,
+          "version": 3
+        }
+      ],
+      "skipped": [],
+      "published": 10,
+      "finishedAt": "2026-10-19T10:21:28.213Z"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0008",
+      "name": "图书馆",
+      "collected": 10,
+      "records": [
+        {
+          "id": "content-9227ee99-10d7-4a04-b257-13e61834b858",
+          "url": "https://lib.gdufs.edu.cn/info/1134/10128.htm",
+          "title": "喜讯！我校2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛获奖名单出炉",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "6eeb0d4e-a5b4-4db6-a903-82c632c0ae24",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-0a880db5-dfde-492d-ae6b-ffa6fbf3a007",
+          "url": "https://lib.gdufs.edu.cn/info/1134/9988.htm",
+          "title": "2026年CASHL庆祝教师节全国优惠活动通知",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "6eeb0d4e-a5b4-4db6-a903-82c632c0ae24",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-d3157439-c8ff-4680-9edb-26db61b0799e",
+          "url": "https://lib.gdufs.edu.cn/info/1134/9938.htm",
+          "title": "“让图书回家”——归还超期图书免滞纳金活动",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "584b9785-5117-4d70-bffb-e346c87858ff",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-973ab41e-8144-42cb-8d76-d1f0802c3d4a",
+          "url": "https://lib.gdufs.edu.cn/info/1134/9668.htm",
+          "title": "关于2026年暑假期间图书馆馆际互借与文献传递服务调整的通知",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "584b9785-5117-4d70-bffb-e346c87858ff",
+          "published": true,
+          "version": 3
+        },
+        {
+          "id": "content-76b1fc0b-ace5-4db2-bb5f-b029dd771d78",
+          "url": "https://lib.gdufs.edu.cn/info/1134/9648.htm",
+          "title": "2026年第二届广东外语外贸大学“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛通知",
+          "imported": false,
+          "outcome": "updated",
+          "importCommandId": "c9d258bc-6a97-46d5-b06e-4f7935722ddc"
+        },
+        {
+          "id": "content-2087905c-eebc-4878-b736-af05d05e185f",
+          "url": "https://lib.gdufs.edu.cn/info/1134/9578.htm",
+          "title": "让图书回家——归还超期图书免滞纳金活动",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "c9d258bc-6a97-46d5-b06e-4f7935722ddc"
+        },
+        {
+          "id": "content-049f8e2d-29cf-4b3a-acac-5427c5b36cd8",
+          "url": "https://lib.gdufs.edu.cn/info/1134/9498.htm",
+          "title": "关于图书馆学习空间分批次开放预约使用的通知",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "596aaa70-3fbf-4052-8236-e7206b626fbd"
+        },
+        {
+          "id": "content-eae44fc4-89b2-48ba-a485-c73ccfd07ed5",
+          "url": "https://lib.gdufs.edu.cn/info/1134/9228.htm",
+          "title": "CASHL华南区域文献服务优惠活动",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "596aaa70-3fbf-4052-8236-e7206b626fbd"
+        },
+        {
+          "id": "content-a17a36d5-a097-45fd-9ef1-ea1ede79db3e",
+          "url": "https://lib.gdufs.edu.cn/info/1134/8888.htm",
+          "title": "廿二风华绽 畅读惠意浓——2026年CASHL“畅读”优惠活动",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "e87a6e41-535d-4d69-8818-38ee465d49ac"
+        },
+        {
+          "id": "content-83540fdf-c393-4075-bf7e-2050c395baab",
+          "url": "https://lib.gdufs.edu.cn/info/1134/8858.htm",
+          "title": "“让图书回家”——归还超期图书免滞纳金活动",
+          "imported": true,
+          "outcome": "created",
+          "importCommandId": "e87a6e41-535d-4d69-8818-38ee465d49ac"
+        }
+      ],
+      "skipped": []
+    }
+  ],
+  "failures": [],
+  "complete": false,
+  "modelCalls": 0,
+  "thirdPartyFullTextPersisted": false
+}

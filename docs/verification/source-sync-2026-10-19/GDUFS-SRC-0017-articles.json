@@ -1,0 +1,73 @@
+{
+  "sourceId": "GDUFS-SRC-0017",
+  "name": "总务后勤部",
+  "entryUrl": "https://hqc.gdufs.edu.cn/tzgap.htm",
+  "ruleVersion": "official-web-2026-10-17.2",
+  "robotsStatus": 404,
+  "robotsHash": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+  "nextPage": null,
+  "discovered": 10,
+  "requests": 11,
+  "items": [
+    {
+      "title": "广东外语外贸大学文印中心多功能印刷机维保服务采购项目询价公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3098.htm",
+      "publishedAt": "2026-10-16",
+      "rawPublishedAt": "2026-10-16 点击数：",
+      "contentType": "notice",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": "administrative_services",
+      "sourceId": "GDUFS-SRC-0017",
+      "sourceName": "总务后勤部",
+      "evidence": {
+        "status": 200,
+        "hash": "5843f690ce7760cdad40f9071de5ee511d0b9bab1a78393b18b50bbfbba06f52",
+        "etag": "\"7093-65debaa596b11-gzip\"",
+        "lastModified": "Fri, 16 Oct 2026 02:10:16 GMT",
+        "bodyHash": "35b463dcf0b403722bf80ff2fe0a1a58abe5c4c4f69962d683fb1e354de22f2e"
+      },
+      "observedBodyLength": 2967
+    }
+  ],
+  "errors": [
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3088.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3078.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3068.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3048.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3038.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3028.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3018.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3008.htm",
+      "error": "PARSE_ERROR"
+    },
+    {
+      "url": "https://hqc.gdufs.edu.cn/info/1006/2998.htm",
+      "error": "PARSE_ERROR"
+    }
+  ],
+  "recordedAt": "2026-10-19T09:53:23.822Z",
+  "thirdPartyBodyPersisted": false,
+  "modelCalls": 0
+}

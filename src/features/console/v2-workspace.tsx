@@ -1220,24 +1220,6 @@ function Dashboard(props: WorkspaceProps) {
       <section className="console-card">
         <h2>信息源同步设置</h2>
         <p>本地执行器在线时才会完成同步；任务登记不代表采集完成。</p>
-        <button
-          disabled={props.actor.role !== "admin"}
-          onClick={() =>
-            void props
-              .request<{ registered: number; state: string }>(
-                "v2/sync",
-                "POST",
-                { commandId: crypto.randomUUID() },
-              )
-              .then((r) => {
-                setMessage(`已登记${r.registered}个任务`);
-                reload();
-              })
-              .catch((e) => setMessage(e.message))
-          }
-        >
-          立即检查到期来源
-        </button>
         <div className="console-v2-sync-line">
           <div>
             <span>最近完成</span>
@@ -1318,6 +1300,26 @@ function Dashboard(props: WorkspaceProps) {
             ) : (
               "恢复自动同步"
             )}
+          </button>
+          <button
+            type="button"
+            className="primary-button"
+            disabled={props.actor.role !== "admin"}
+            onClick={() =>
+              void props
+                .request<{ registered: number; state: string }>(
+                  "v2/sync",
+                  "POST",
+                  { commandId: crypto.randomUUID() },
+                )
+                .then((r) => {
+                  setMessage(`已登记${r.registered}个任务`);
+                  reload();
+                })
+                .catch((e) => setMessage(e.message))
+            }
+          >
+            立即检查到期来源
           </button>
         </form>
         <Feedback message={message} />

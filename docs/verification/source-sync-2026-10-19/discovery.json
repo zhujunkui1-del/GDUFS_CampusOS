@@ -1,0 +1,254 @@
+{
+  "at": "2026-10-19T09:50:32.149Z",
+  "sources": [
+    {
+      "sourceId": "GDUFS-SRC-0012",
+      "name": "广东外语外贸大学",
+      "entryUrl": "https://www.gdufs.edu.cn/xkky/rdjz.htm",
+      "robotsStatus": 404,
+      "robotsHash": "ea22b3352e2bb3cbdc560eb751b68e56b38e4d8b16256caf67a242d479aa39cd",
+      "listStatus": 200,
+      "listHash": "f270ee6c7eec7e998e7e97b24c9ab674666340bbece82c0e8a8ec27d23c0015e",
+      "requests": 2,
+      "items": [
+        {
+          "url": "https://www.gdufs.edu.cn/info/1005/265076.htm",
+          "title": "22 2026/09 云山学术沙龙413期：Explaining China to the West：The Cultural,P... 2026年9月23日(周三) 15:30-17:00 白云山校区广东国际战略研究院304会议室",
+          "listingDate": "2026年9月23日"
+        },
+        {
+          "url": "https://www.gdufs.edu.cn/info/1005/264186.htm",
+          "title": "10 2026/09 云山学术沙龙412期：The Belt and Road Initiative in South America 2026年9月18日（周五）14：00-15：00 白云山校区广东国际战略研究院304会议室",
+          "listingDate": "2026年9月18日"
+        },
+        {
+          "url": "https://www.gdufs.edu.cn/info/1005/264176.htm",
+          "title": "10 2026/09 云山学术沙龙411期：Argentina-China Relations: From Strategic Partne... 2026年9月17日（周四）14：00-15：00 白云山校区广东国际战略研究院304会议室",
+          "listingDate": "2026年9月17日"
+        },
+        {
+          "url": "https://www.gdufs.edu.cn/info/1005/258246.htm",
+          "title": "23 2026/06 著名教授论坛第755讲：区域重塑与话语建构——近代以来西方视野下的中国... 2026年6月26日 14：30-16：30 白云山校区第一教学楼北楼547会议室",
+          "listingDate": "2026年6月26日"
+        },
+        {
+          "url": "https://www.gdufs.edu.cn/info/1005/256676.htm",
+          "title": "14 2026/06 云山学术沙龙405期：经济学研究前沿趋势 2026年6月18日（周四）15：30-17：00 白云山校区广东国际战略研究院304会议室",
+          "listingDate": "2026年6月18日"
+        },
+        {
+          "url": "https://www.gdufs.edu.cn/info/1005/256666.htm",
+          "title": "14 2026/06 云山学术沙龙404期：国际期刊写作以及投稿技巧 2026年6月17日（周三）9：00-10：30 白云山校区广东国际战略研究院304会议室",
+          "listingDate": "2026年6月17日"
+        },
+        {
+          "url": "https://www.gdufs.edu.cn/info/1005/256656.htm",
+          "title": "14 2026/06 云山学术沙龙403期：Speed matters: Decomposing systemic risk during ... 2026年6月16日（周二）9：30-11：00 白云山校区广东国际战略研究院304会议室",
+          "listingDate": "2026年6月16日"
+        },
+        {
+          "url": "https://www.gdufs.edu.cn/info/1005/256646.htm",
+          "title": "12 2026/06 著名教授论坛第754讲：知识驱动的数据合成：人工智能时代语言学的功能转... 2026年6月13日 10:00-11:30 白云山校区第七教学楼407会议室",
+          "listingDate": "2026年6月13日"
+        },
+        {
+          "url": "https://www.gdufs.edu.cn/info/1005/256636.htm",
+          "title": "12 2026/06 著名教授论坛第745讲：观物与观美 2026年06月17日 15：00-17：00 白云山校区第七教学楼607室",
+          "listingDate": "2026年06月17日"
+        },
+        {
+          "url": "https://www.gdufs.edu.cn/info/1005/255576.htm",
+          "title": "07 2026/06 云山学术沙龙402期：从中国的东南亚布局看中马关系的前景 2026年6月15日（周一）10：00-11：30 白云山校区广东国际战略研究院304会议室",
+          "listingDate": "2026年6月15日"
+        }
+      ],
+      "recordedAt": "2026-10-19T09:50:32.135Z"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0010",
+      "name": "学生工作部",
+      "error": "Client network socket disconnected before secure TLS connection was established",
+      "requests": 1,
+      "items": []
+    },
+    {
+      "sourceId": "GDUFS-SRC-0017",
+      "name": "总务后勤部",
+      "entryUrl": "https://hqc.gdufs.edu.cn/tzgap.htm",
+      "robotsStatus": 404,
+      "robotsHash": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+      "listStatus": 200,
+      "listHash": "937c9402b917034258ddc0e97ab152b8c352d3594d809c19beeb00706dae4ca3",
+      "requests": 2,
+      "items": [
+        {
+          "url": "https://hqc.gdufs.edu.cn/info/1006/3098.htm",
+          "title": "广东外语外贸大学文印中心多功能印刷机维保服务采购项目询价公告",
+          "listingDate": "2026-10-16"
+        },
+        {
+          "url": "https://hqc.gdufs.edu.cn/info/1006/3088.htm",
+          "title": "广东外语外贸大学大学城校区北苑6栋智能电表采购项目询价结果公告",
+          "listingDate": "2026-08-10"
+        },
+        {
+          "url": "https://hqc.gdufs.edu.cn/info/1006/3078.htm",
+          "title": "广东外语外贸大学大学城校区北苑6栋智能电表采购项目询价公告",
+          "listingDate": "2026-07-31"
+        },
+        {
+          "url": "https://hqc.gdufs.edu.cn/info/1006/3068.htm",
+          "title": "广东外语外贸大学2026年白云山校区学生宿舍老旧家具修复保养服务采购询价结果公告",
+          "listingDate": "2026-07-24"
+        },
+        {
+          "url": "https://hqc.gdufs.edu.cn/info/1006/3048.htm",
+          "title": "广东外语外贸大学2026年白云山校区学生宿舍老旧家具修复保养服务采购询价公告",
+          "listingDate": "2026-07-20"
+        },
+        {
+          "url": "https://hqc.gdufs.edu.cn/info/1006/3038.htm",
+          "title": "广东外语外贸大学校园零星维修工程设计服务项目 询价结果公示",
+          "listingDate": "2026-07-13"
+        },
+        {
+          "url": "https://hqc.gdufs.edu.cn/info/1006/3028.htm",
+          "title": "广东外语外贸大学学生饭堂特色档口餐饮技术服务合作项目遴选结果公示",
+          "listingDate": "2026-07-07"
+        },
+        {
+          "url": "https://hqc.gdufs.edu.cn/info/1006/3018.htm",
+          "title": "广东外语外贸大学校园零星维修工程 设计服务项目询价公告",
+          "listingDate": "2026-07-06"
+        },
+        {
+          "url": "https://hqc.gdufs.edu.cn/info/1006/3008.htm",
+          "title": "广东外语外贸大学2026-2028年 医保学生补充商业保险服务采购询价结果公告",
+          "listingDate": "2026-06-30"
+        },
+        {
+          "url": "https://hqc.gdufs.edu.cn/info/1006/2998.htm",
+          "title": "广东外语外贸大学校园零星维修工程 工程造价咨询服务项目询价结果公示",
+          "listingDate": "2026-06-17"
+        }
+      ],
+      "recordedAt": "2026-10-19T09:50:32.080Z"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0024",
+      "name": "校团委",
+      "entryUrl": "https://youth.gdufs.edu.cn/tzgg.htm",
+      "robotsStatus": 404,
+      "robotsHash": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+      "listStatus": 200,
+      "listHash": "1106256cf03bf13161ddce10fb35bfbffcf16f218c54a6f6b44b2553c42cd527",
+      "requests": 2,
+      "items": [
+        {
+          "url": "https://youth.gdufs.edu.cn/info/1050/13012.htm",
+          "title": "第三届青春扬帆·全球学生交流大使团拟推荐名单",
+          "listingDate": null
+        },
+        {
+          "url": "https://youth.gdufs.edu.cn/info/1050/12902.htm",
+          "title": "关于广东外语外贸大学第四批“中国青年志愿者海外服务计划--服务联合国机构项目…",
+          "listingDate": "2026-09-17"
+        },
+        {
+          "url": "https://youth.gdufs.edu.cn/info/1050/12802.htm",
+          "title": "关于评选广东外语外贸大学2025-2026学年度志愿服务先进集体、优秀个人的通知",
+          "listingDate": "2026-09-11"
+        },
+        {
+          "url": "https://youth.gdufs.edu.cn/info/1050/12792.htm",
+          "title": "关于开展2026年广东外语外贸大学暑期社会实践活动评优工作的通知",
+          "listingDate": "2026-09-11"
+        },
+        {
+          "url": "https://youth.gdufs.edu.cn/info/1050/12782.htm",
+          "title": "关于招募广东外语外贸大学第四批“中国青年志愿者海外服务计划——服务联合国机…",
+          "listingDate": "2026-09-09"
+        },
+        {
+          "url": "https://youth.gdufs.edu.cn/info/1050/12732.htm",
+          "title": "中国青年志愿者第29届（广东外语外贸大学第13届）研究生支教团拟推荐名单公示",
+          "listingDate": "2026-09-01"
+        },
+        {
+          "url": "https://youth.gdufs.edu.cn/info/1050/12712.htm",
+          "title": "关于做好第13届研究生支教团志愿者（推荐免试攻读硕士研究生）招募工作的通知",
+          "listingDate": "2026-08-28"
+        },
+        {
+          "url": "https://youth.gdufs.edu.cn/info/1050/12702.htm",
+          "title": "关于我校学生跨校参加第十五届“挑战杯”中国大学生创业计划竞赛东北振兴产业升…",
+          "listingDate": "2026-08-21"
+        }
+      ],
+      "recordedAt": "2026-10-19T09:50:32.068Z"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0008",
+      "name": "图书馆",
+      "entryUrl": "https://lib.gdufs.edu.cn/xwzx/bgtg.htm",
+      "robotsStatus": 404,
+      "robotsHash": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+      "listStatus": 200,
+      "listHash": "9bb14397ffa555d56a46fb0322cfc6b2d151db4edff01b59ad0d38cbd8ec94af",
+      "requests": 2,
+      "items": [
+        {
+          "url": "https://lib.gdufs.edu.cn/info/1134/9648.htm",
+          "title": "2026年第二届广东外语外贸大学“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛通知",
+          "listingDate": "2026年06月30日"
+        },
+        {
+          "url": "https://lib.gdufs.edu.cn/info/1134/8331.htm",
+          "title": "关于图书馆不再接收毕业生个人提交学位论文的通知",
+          "listingDate": "2025年11月19日"
+        },
+        {
+          "url": "https://lib.gdufs.edu.cn/info/1134/6981.htm",
+          "title": "白云山校区图书馆关于不定期清理占位及滞留物品的通知",
+          "listingDate": "2023年05月30日"
+        },
+        {
+          "url": "https://lib.gdufs.edu.cn/info/1134/3650.htm",
+          "title": "馆长关于质疑图书馆清理霸位行为的统一回复",
+          "listingDate": "2019年10月28日"
+        },
+        {
+          "url": "https://lib.gdufs.edu.cn/info/1134/10128.htm",
+          "title": "喜讯！我校2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛获奖名单出炉",
+          "listingDate": "2026年10月10日"
+        },
+        {
+          "url": "https://lib.gdufs.edu.cn/info/1134/9988.htm",
+          "title": "2026年CASHL庆祝教师节全国优惠活动通知",
+          "listingDate": "2026年9月10日"
+        },
+        {
+          "url": "https://lib.gdufs.edu.cn/info/1134/9938.htm",
+          "title": "“让图书回家”——归还超期图书免滞纳金活动",
+          "listingDate": "2026年9月14日"
+        },
+        {
+          "url": "https://lib.gdufs.edu.cn/info/1134/9668.htm",
+          "title": "关于2026年暑假期间图书馆馆际互借与文献传递服务调整的通知",
+          "listingDate": "2026年7月6日"
+        },
+        {
+          "url": "https://lib.gdufs.edu.cn/info/1134/9578.htm",
+          "title": "让图书回家——归还超期图书免滞纳金活动",
+          "listingDate": "2026年5月31日"
+        },
+        {
+          "url": "https://lib.gdufs.edu.cn/info/1134/9498.htm",
+          "title": "关于图书馆学习空间分批次开放预约使用的通知",
+          "listingDate": "2026年06月02日"
+        }
+      ],
+      "recordedAt": "2026-10-19T09:50:32.146Z"
+    }
+  ]
+}

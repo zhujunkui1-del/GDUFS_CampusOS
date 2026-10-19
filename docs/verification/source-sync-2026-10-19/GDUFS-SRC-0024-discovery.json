@@ -1,0 +1,53 @@
+{
+  "sourceId": "GDUFS-SRC-0024",
+  "name": "校团委",
+  "entryUrl": "https://youth.gdufs.edu.cn/tzgg.htm",
+  "robotsStatus": 404,
+  "robotsHash": "29c0b0a5db57af93122bca27d4c301f5d1b7d34e5f410a85b4c1af2e747a1407",
+  "listStatus": 200,
+  "listHash": "1106256cf03bf13161ddce10fb35bfbffcf16f218c54a6f6b44b2553c42cd527",
+  "requests": 2,
+  "items": [
+    {
+      "url": "https://youth.gdufs.edu.cn/info/1050/13012.htm",
+      "title": "第三届青春扬帆·全球学生交流大使团拟推荐名单",
+      "listingDate": null
+    },
+    {
+      "url": "https://youth.gdufs.edu.cn/info/1050/12902.htm",
+      "title": "关于广东外语外贸大学第四批“中国青年志愿者海外服务计划--服务联合国机构项目…",
+      "listingDate": "2026-09-17"
+    },
+    {
+      "url": "https://youth.gdufs.edu.cn/info/1050/12802.htm",
+      "title": "关于评选广东外语外贸大学2025-2026学年度志愿服务先进集体、优秀个人的通知",
+      "listingDate": "2026-09-11"
+    },
+    {
+      "url": "https://youth.gdufs.edu.cn/info/1050/12792.htm",
+      "title": "关于开展2026年广东外语外贸大学暑期社会实践活动评优工作的通知",
+      "listingDate": "2026-09-11"
+    },
+    {
+      "url": "https://youth.gdufs.edu.cn/info/1050/12782.htm",
+      "title": "关于招募广东外语外贸大学第四批“中国青年志愿者海外服务计划——服务联合国机…",
+      "listingDate": "2026-09-09"
+    },
+    {
+      "url": "https://youth.gdufs.edu.cn/info/1050/12732.htm",
+      "title": "中国青年志愿者第29届（广东外语外贸大学第13届）研究生支教团拟推荐名单公示",
+      "listingDate": "2026-09-01"
+    },
+    {
+      "url": "https://youth.gdufs.edu.cn/info/1050/12712.htm",
+      "title": "关于做好第13届研究生支教团志愿者（推荐免试攻读硕士研究生）招募工作的通知",
+      "listingDate": "2026-08-28"
+    },
+    {
+      "url": "https://youth.gdufs.edu.cn/info/1050/12702.htm",
+      "title": "关于我校学生跨校参加第十五届“挑战杯”中国大学生创业计划竞赛东北振兴产业升…",
+      "listingDate": "2026-08-21"
+    }
+  ],
+  "recordedAt": "2026-10-19T09:50:32.068Z"
+}
