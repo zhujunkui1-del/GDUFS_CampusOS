@@ -314,3 +314,7 @@ GitHub公开源码/元数据/Issue/PR为维护与行为证据，上游自报不�
 同源规范URL复用文章并记录manual/official_web不同栏目出处；不同URL/年份/机构不凭标题合并。正文完整性为显式声明，旧记录unknown不倒填。举办/截止证据与原文偏移、内容修订/hash、字段精度绑定并待核验，获取时间不替代原发布时间。实际范围和证据见[S3-B最终准入](S3_B_FINAL_ADMISSION.md)。
 
 最终只读快照（负责人后台验收后）：220来源，4核验/4启用、216候选；额外1源由负责人操作，未当新增采集成功。3篇既有元数据均由负责人批准并发布后撤回，当前公开0、全文/图片/事件0。网页解析版本.2需重新确认策略，匹配有效策略0；本轮无新增官网/微信抓取或模型调用。详见verification/s3-b-final/preview-password-final.json与owner-publication-read/owner-withdrawal-read.json。
+
+## Console 来源登记状态更新（2026-10-19）
+
+依据负责人“把信息源全部来源设为启用”的明确要求，通过现有preview Console管理API完成215项启用操作；既有5项保留，最终220/220来源启用。此为登记状态变更，未新增来源或改写关联证据、官方核验、采集许可、正文版权字段；没有把来源启用视为已完成抓取。来源集合与权限/证据hash复验一致，具体命令和前后数量见verification/console-v2/operations/2026-10-19-enable-all.json。
