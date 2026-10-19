@@ -58,7 +58,7 @@ async function setup() {
             url: "https://example.invalid/" + crypto.randomUUID(),
             publishedAt: date,
             contentType: "notice",
-            knowledgeCategory: "campus_life",
+            knowledgeCategory: radar ? null : "campus_life",
             radarCategory: radar,
             campusScope: "all",
             bodyStatus: "not_provided",
@@ -82,7 +82,7 @@ describe("public radar and knowledge read the same fresh authoritative documents
       await f.add("后导入的旧通知", "2025-01-01");
       await f.add("待审核通知", "2026-10-20", false);
       const result = await readPublicContent(f.db, {
-        surface: "knowledge",
+        surface: "radar",
         limit: 1,
       });
       expect(result.items.map((x) => x.id)).toEqual([newer]);
@@ -90,7 +90,7 @@ describe("public radar and knowledge read the same fresh authoritative documents
       expect(result.items[0]).not.toHaveProperty("body");
       expect((await f.store.source(f.source.id)).lastSuccessAt).toBeTruthy();
       const next = await readPublicContent(f.db, {
-        surface: "knowledge",
+        surface: "radar",
         limit: 1,
         offset: 1,
       });
@@ -103,14 +103,14 @@ describe("public radar and knowledge read the same fresh authoritative documents
   it("filters literal titles, visible sources and the frozen category for each page", async () => {
     const f = await setup();
     try {
-      await f.add("100%办理指南", "2026-10-18");
-      await f.add("普通通知", "2026-10-17", true, null);
+      await f.add("100%办理指南", "2026-10-18", true, null);
+      await f.add("普通通知", "2026-10-17");
       expect(
         (await readPublicContent(f.db, { surface: "radar" })).items,
       ).toHaveLength(1);
       expect(
         (await readPublicContent(f.db, { surface: "knowledge" })).items,
-      ).toHaveLength(2);
+      ).toHaveLength(1);
       expect(
         (
           await readPublicContent(f.db, {

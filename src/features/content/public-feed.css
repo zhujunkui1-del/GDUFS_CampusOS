@@ -1,5 +1,9 @@
-.public-feed {
-  max-width: 1100px;
+.module-page.public-feed {
+  max-width: none;
+  width: auto;
+  margin: 16px 16px 16px 0;
+  padding: 40px 24px;
+  container-type: inline-size;
   font-family:
     "PingFang SC",
     "Microsoft YaHei",
@@ -62,8 +66,39 @@
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  margin: 22px 0;
+  margin: 0;
   padding-bottom: 8px;
+}
+.public-feed-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+}
+.public-feed-count {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+.public-feed-columns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  white-space: nowrap;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.public-feed-columns select {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: white;
+  color: var(--text-primary);
+  font: inherit;
 }
 .public-feed-categories button {
   white-space: nowrap;
@@ -77,6 +112,25 @@
 .public-feed-list {
   display: grid;
   gap: 16px;
+  grid-template-columns: repeat(
+    min(var(--article-columns), var(--fitting-columns, 4)),
+    minmax(0, 1fr)
+  );
+}
+@container (max-width: 1100px) {
+  .public-feed-list {
+    --fitting-columns: 3;
+  }
+}
+@container (max-width: 830px) {
+  .public-feed-list {
+    --fitting-columns: 2;
+  }
+}
+@container (max-width: 550px) {
+  .public-feed-list {
+    --fitting-columns: 1;
+  }
 }
 .public-feed-card {
   background: white;
@@ -84,6 +138,8 @@
   border-radius: 22px;
   padding: 24px;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 .public-feed-meta {
   display: flex;
@@ -106,6 +162,7 @@
   overflow-wrap: anywhere;
 }
 .public-feed-card footer {
+  margin-top: auto;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -133,8 +190,10 @@
   padding: 32px 0;
   color: var(--text-secondary);
 }
-@media (max-width: 600px) {
+@media (max-width: 760px) {
   .module-page.public-feed {
+    margin: 12px;
+    padding: 28px 20px;
     padding-bottom: calc(200px + env(safe-area-inset-bottom, 0px));
   }
   .public-feed-pagination {
@@ -151,5 +210,11 @@
   }
   .public-feed-pagination {
     justify-content: space-between;
+  }
+}
+
+@media (min-width: 761px) {
+  .assistant-visible .module-page.public-feed {
+    margin-right: 4px;
   }
 }

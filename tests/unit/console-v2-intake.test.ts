@@ -150,7 +150,7 @@ describe("V2 canonical intake and multiple discovery origins", () => {
         f.batch(a, {
           summary: "现存有效资料的人工修正",
           ownNoteConfirmed: true,
-          expectedVersion: 1,
+          expectedVersion: (await f.store.document(id)).version,
         }),
       );
       expect((await f.store.document(id)).summary).toBe(

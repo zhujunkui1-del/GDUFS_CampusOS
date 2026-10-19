@@ -61,9 +61,25 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       .parse(raw);
     if (v.sourceId) await this.source(v.sourceId);
     else consolePermission(this.actor, "admin");
+    const runners = await this.db
+      .prepare(
+        "SELECT t.source_ids_json FROM console_runner_tokens t JOIN console_admins a ON a.id=t.admin_id WHERE t.revoked_at_ms IS NULL AND t.expires_at_ms>? AND julianday(t.last_seen_at)>julianday(?,'-90 seconds') AND a.status='active' AND a.role='admin'",
+      )
+      .bind(Date.parse(this.now()), this.now())
+      .all<{ source_ids_json: string }>();
+    const allowedIds = [
+      ...new Set(
+        runners.results.flatMap(
+          (r) => JSON.parse(r.source_ids_json) as string[],
+        ),
+      ),
+    ];
+    if (!allowedIds.length || (v.sourceId && !allowedIds.includes(v.sourceId)))
+      return { state: "runner_offline", registered: 0, completed: 0 };
     return dispatchDue(this.db, {
       sourceId: v.sourceId,
-      manualId: v.sourceId ? v.commandId : undefined,
+      manualId: v.commandId,
+      allowedIds,
     });
   }
   async assignOperator(sourceId: string, raw: unknown) {
@@ -428,8 +444,7 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       where.push("s.campus_scope=?");
       args.push(q.campus);
     }
-    const active =
-      "enabled=1 AND archived_at IS NULL";
+    const active = "enabled=1 AND archived_at IS NULL";
     if (q.state === "enabled") where.push(active);
     if (q.state === "paused")
       where.push(

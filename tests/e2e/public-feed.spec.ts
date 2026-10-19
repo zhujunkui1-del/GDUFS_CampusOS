@@ -24,7 +24,7 @@ test("real D1 metadata reaches radar and knowledge, with filtering and immediate
     page.getByRole("heading", { name: "内容运营总览", exact: true }),
   ).toBeVisible();
   const sync = page.getByRole("button", {
-      name: "立即检查到期来源",
+      name: "立即同步",
       exact: true,
     }),
     pause = page.getByRole("button", { name: /^(暂停|恢复)自动同步$/ });
@@ -101,36 +101,32 @@ test("real D1 metadata reaches radar and knowledge, with filtering and immediate
     validityDays: 1,
   });
   const ids: string[] = [];
-  for (let i = 0; i < 3; i++) {
+  for (let start = 0; start < 5; start += 2) {
+    const indices = [start, start + 1].filter((i) => i < 5);
     const r = await request("content/import", "POST", {
       commandId: randomUUID(),
       sourceId: s.id,
       sourceVersion: 4,
-      items: [
-        {
-          title:
-            prefix +
-            (i === 0 ? "近期通知" : i === 1 ? "较早通知" : "未批准通知"),
-          url: origin + randomUUID(),
-          publishedAt: i === 1 ? "2025-11-19" : "2026-10-19",
-          contentType: "notice",
-          knowledgeCategory: "campus_life",
-          radarCategory: "campus_notice",
-          campusScope: "all",
-          bodyStatus: "not_provided",
-        },
-      ],
+      items: indices.map((i) => ({
+        title:
+          prefix +
+          (i === 4 ? "未批准通知" : i % 2 === 0 ? "近期通知" : "较早通知"),
+        url: origin + randomUUID(),
+        publishedAt: i % 2 === 1 ? "2025-11-19" : "2026-10-19",
+        contentType: "notice",
+        knowledgeCategory: i >= 2 && i < 4 ? "campus_life" : null,
+        radarCategory: i < 2 || i === 4 ? "campus_notice" : null,
+        originalChecked: i < 4,
+        campusScope: "all",
+        bodyStatus: "not_provided",
+      })),
     });
-    const id = r.items[0].id;
-    ids.push(id);
-    if (i < 2) {
-      let d = await request("content/" + id);
-      await request("content/" + id + "/review", "POST", {
-        ...cmd(d.version),
-        decision: "approved",
-      });
-      d = await request("content/" + id);
-      await request("content/" + id + "/publish", "POST", cmd(d.version));
+    for (const item of r.items) {
+      ids.push(item.id);
+      const detail = await request("content/" + item.id);
+      expect(detail.publicationStatus).toBe(
+        ids.length <= 4 ? "published" : "draft",
+      );
     }
   }
   for (const surface of ["radar", "knowledge"]) {
@@ -138,6 +134,21 @@ test("real D1 metadata reaches radar and knowledge, with filtering and immediate
     await page.getByLabel("搜索标题", { exact: true }).fill(prefix);
     await page.getByRole("button", { name: "搜索", exact: true }).click();
     await expect(page.locator(".public-feed-card")).toHaveCount(2);
+    await expect(
+      page.locator(".public-feed-categories button").first(),
+    ).toHaveText("全部2");
+    await expect(page.locator(".public-feed-meta")).not.toContainText([
+      "官方来源",
+      "官方来源",
+    ]);
+    await page.getByLabel("每行文章数量").selectOption("4");
+    const tracks = await page
+      .locator(".public-feed-list")
+      .evaluate(
+        (el) => getComputedStyle(el).gridTemplateColumns.split(" ").length,
+      );
+    expect(tracks).toBe(info.project.name === "mobile" ? 1 : 4);
+    await page.getByLabel("每行文章数量").selectOption("1");
     await expect(page.locator(".public-feed-card").first()).toContainText(
       "近期通知",
     );
@@ -157,6 +168,41 @@ test("real D1 metadata reaches radar and knowledge, with filtering and immediate
       fullPage: true,
     });
   }
+  await page.goto("/admin/sources?record=" + s.id + "&article=" + ids[0]);
+  await expect(
+    page.getByRole("link", { name: "加入白名单", exact: true }),
+  ).toBeVisible();
+  for (const name of [
+    "查找信息源",
+    "信息源",
+    "候选用途",
+    "发布机构",
+    "原文更新时间",
+    "使用范围",
+    "原文发布时间（北京时间）",
+  ])
+    await expect(page.getByLabel(name, { exact: true })).toHaveCount(0);
+  for (const name of ["批准", "退回", "拒绝"])
+    await expect(page.getByRole("button", { name, exact: true })).toHaveCount(
+      0,
+    );
+  await expect(page.getByText("完整性检查", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("版本记录", { exact: true })).toHaveCount(0);
+  await page
+    .getByRole("combobox", { name: "一级分类", exact: true })
+    .selectOption("knowledge");
+  await page
+    .getByRole("combobox", { name: "二级分类", exact: true })
+    .selectOption("campus_life");
+  await page.getByRole("button", { name: "保存内容", exact: true }).click();
+  await expect(page.getByText("已保存", { exact: true })).toBeVisible();
+  const moved = await request("content/" + ids[0]);
+  expect(moved.publicationStatus).toBe("published");
+  expect(moved.radarCategory).toBeNull();
+  await page.goto("/knowledge");
+  await page.getByLabel("搜索标题", { exact: true }).fill(prefix);
+  await page.getByRole("button", { name: "搜索", exact: true }).click();
+  await expect(page.locator(".public-feed-card")).toHaveCount(3);
   const current = await request("content/" + ids[0]);
   await request(
     "content/" + ids[0] + "/withdraw",
@@ -164,7 +210,7 @@ test("real D1 metadata reaches radar and knowledge, with filtering and immediate
     cmd(current.version),
   );
   await page.getByRole("button", { name: "刷新内容", exact: true }).click();
-  await expect(page.locator(".public-feed-card")).toHaveCount(1);
+  await expect(page.locator(".public-feed-card")).toHaveCount(2);
   expect(
     (await page.request.get("/api/public/content?id=" + ids[0])).status(),
   ).toBe(404);
@@ -174,6 +220,27 @@ test("real D1 metadata reaches radar and knowledge, with filtering and immediate
     "POST",
     cmd(remaining.version),
   );
+  for (const id of ids.slice(2, 4)) {
+    const d = await request("content/" + id);
+    await request("content/" + id + "/withdraw", "POST", cmd(d.version));
+  }
+  await page.goto("/admin/reviews");
+  await page.getByText("筛选与排序", { exact: true }).click();
+  await expect(
+    page
+      .getByRole("combobox", { name: "审核状态", exact: true })
+      .locator("option"),
+  ).toHaveText(["全部", "批准", "尚未批准"]);
+  for (const name of [
+    "公开状态",
+    "发布止日",
+    "发现起日",
+    "发现止日",
+    "生命周期",
+    "严重程度",
+    "问题类型",
+  ])
+    await expect(page.getByLabel(name, { exact: true })).toHaveCount(0);
   await page.request.delete(base + "/api/console-auth", {
     headers: { Origin: base, "X-Console-CSRF": auth.csrf },
   });

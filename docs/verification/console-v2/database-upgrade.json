@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-19T10:01:55.075Z",
+  "recordedAt": "2026-10-19T15:49:51.197Z",
   "emptyMigration": true,
   "populatedUpgrade": true,
   "oldRowsAndPrivateDataUnchanged": true,
@@ -48,6 +48,10 @@
     {
       "file": "0023_manual_metadata_batch_budget.sql",
       "sha256": "9faa7619c669ab64eaef114f65c7ebbc9bf37632bc18791f9106726e64e63e0f"
+    },
+    {
+      "file": "0024_article_placement_and_metadata.sql",
+      "sha256": "7b73bb76684d474c7b69b84122a1a9acfacde71abf4f8b629f7d1c33c51858be"
     }
   ]
 }

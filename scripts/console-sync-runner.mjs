@@ -11,7 +11,7 @@ if (!args.includes("--run")) {
       usage:
         "--run --base <approved-preview-or-local> --token-file <ignored-file> [--watch]",
       batchJobs: 2,
-      pollHours: 1,
+      pollSeconds: 30,
       models: 0,
       computerMustRemainOnline: true,
     }),
@@ -30,8 +30,8 @@ if (!args.includes("--run")) {
     throw Error("EXPLICIT_APPROVED_ORIGIN_AND_TOKEN_FILE_REQUIRED");
   const token = readFileSync(file, "utf8").trim();
   if (!/^[\w-]{40,100}$/.test(token)) throw Error("INVALID_RUNNER_TOKEN");
-  mkdirSync(".map-tools/console-v2", { recursive: true });
-  const bundle = ".map-tools/console-v2/ingest-runner.mjs";
+  mkdirSync("test-results/console-v2", { recursive: true });
+  const bundle = "test-results/console-v2/ingest-runner.mjs";
   await build({
     entryPoints: ["scripts/ingest-web-runner.ts"],
     outfile: bundle,
@@ -53,17 +53,23 @@ if (!args.includes("--run")) {
       throw Error("RUNNER_" + r.status + "_" + (body.error?.code || "FAILED"));
     return body.data;
   }
+  let lastDispatch = 0;
   do {
     try {
-      const dispatch = await api("dispatch", "POST"),
+      const dispatch =
+          Date.now() - lastDispatch >= 3600000
+            ? await api("dispatch", "POST")
+            : { registered: 0, state: "polling" },
         list = await api("jobs"),
         summaries = [];
+      if (dispatch.state !== "polling") lastDispatch = Date.now();
       for (const j of list.items
         .filter(
           (j) =>
             j.lease_until_ms <= Date.now() && j.next_run_after_ms <= Date.now(),
         )
         .slice(0, 2)) {
+        const reportPath = `test-results/console-v2/${j.id}.json`;
         const run = spawnSync(
           process.execPath,
           [
@@ -79,6 +85,8 @@ if (!args.includes("--run")) {
             file,
             "--steps",
             "6",
+            "--report",
+            reportPath,
           ],
           {
             encoding: "utf8",
@@ -87,7 +95,17 @@ if (!args.includes("--run")) {
             maxBuffer: 1048576,
           },
         );
-        summaries.push({ jobId: j.id, completedProcess: run.status === 0 });
+        let result;
+        try {
+          result = JSON.parse(readFileSync(reportPath, "utf8"));
+        } catch {
+          /* Keep failures explicit. */
+        }
+        summaries.push({
+          jobId: j.id,
+          completedProcess: run.status === 0,
+          final: result?.final || null,
+        });
       }
       console.log(
         JSON.stringify({
@@ -112,6 +130,6 @@ if (!args.includes("--run")) {
       if (!args.includes("--watch")) process.exitCode = 1;
     }
     if (!args.includes("--watch")) break;
-    await new Promise((resolve) => setTimeout(resolve, 3600000));
+    await new Promise((resolve) => setTimeout(resolve, 30000));
   } while (true);
 }

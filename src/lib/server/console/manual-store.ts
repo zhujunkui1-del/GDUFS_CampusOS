@@ -1,3 +1,4 @@
+import { classifyArticle } from "@/domain/console/article-classification";
 import { canonicalArticleUrl } from "@/lib/ingestion/canonical-url";
 import { IngestionStore } from "./ingestion-store";
 import { normalizedContent } from "./store";
@@ -355,9 +356,19 @@ export class ManualImportStore extends IngestionStore {
           sourceUpdatedAt: item.sourceUpdatedAt,
           contentType: item.contentType,
           rightsScope,
-          radarCategory: item.radarCategory,
-          knowledgeCategory:
-            item.knowledgeCategory || defaults.knowledgeCategory,
+          ...(item.radarCategory || item.knowledgeCategory
+            ? {
+                radarCategory: item.radarCategory || null,
+                knowledgeCategory: item.radarCategory
+                  ? null
+                  : item.knowledgeCategory,
+              }
+            : defaults.knowledgeCategory
+              ? {
+                  radarCategory: null,
+                  knowledgeCategory: defaults.knowledgeCategory,
+                }
+              : classifyArticle(item.title)),
           publisher: source.displayName,
           summary:
             item.summary ||

@@ -1,0 +1,62 @@
+{
+  "recordedAt": "2026-10-19T13:04:06.362Z",
+  "extraClassification": {
+    "id": "content-0c9c10b1-9ce7-4911-93ce-32be9c04dcab",
+    "title": "云山卓越讲坛第19讲：浅谈动机性推理在语言研究中的正负作用",
+    "commandId": "45abe956-44d3-401b-89c8-5392057db7c8",
+    "beforeVersion": 2,
+    "version": 3,
+    "radarCategory": "lecture",
+    "originalFactsUnchanged": true,
+    "factsHash": "5284eb56b7bdc998234f5e8572e16066ccec4aeb9ceeb2a7dd36600b4f319e18"
+  },
+  "policies": [
+    {
+      "sourceId": "GDUFS-SRC-0012",
+      "commandId": "506ab3eb-c4d2-42aa-ae54-24254bfcc7ca",
+      "fromRule": "official-web-2026-10-19.3",
+      "toRule": "official-web-2026-10-19.4",
+      "rightsScope": "metadata_only",
+      "robotsStatus": 404,
+      "expiresAt": 1792501430865
+    },
+    {
+      "sourceId": "GDUFS-SRC-0010",
+      "commandId": "67674493-40e9-492e-a80d-98d9be2e8028",
+      "fromRule": "official-web-2026-10-19.3",
+      "toRule": "official-web-2026-10-19.4",
+      "rightsScope": "metadata_only",
+      "robotsStatus": 404,
+      "expiresAt": 1792501433839
+    },
+    {
+      "sourceId": "GDUFS-SRC-0017",
+      "commandId": "0f12c51e-1fc1-4658-aed9-2409a75c1400",
+      "fromRule": "official-web-2026-10-19.3",
+      "toRule": "official-web-2026-10-19.4",
+      "rightsScope": "metadata_only",
+      "robotsStatus": 404,
+      "expiresAt": 1792501436807
+    },
+    {
+      "sourceId": "GDUFS-SRC-0024",
+      "commandId": "631c6c69-1732-49fe-9bec-9c03b66a5cf7",
+      "fromRule": "official-web-2026-10-19.3",
+      "toRule": "official-web-2026-10-19.4",
+      "rightsScope": "metadata_only",
+      "robotsStatus": 404,
+      "expiresAt": 1792501439782
+    },
+    {
+      "sourceId": "GDUFS-SRC-0008",
+      "commandId": "76f53d9d-1486-4390-b19c-c7bed18e670c",
+      "fromRule": "official-web-2026-10-19.3",
+      "toRule": "official-web-2026-10-19.4",
+      "rightsScope": "metadata_only",
+      "robotsStatus": 404,
+      "expiresAt": 1792501442674
+    }
+  ],
+  "offlineButtonVerified": true,
+  "modelCalls": 0
+}

@@ -173,12 +173,58 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
           )
           .get(id)?.last_overridden_fields_json,
       ).toContain("summary");
-      expect(current.publicationStatus).toBe("draft");
+      expect(current.publicationStatus).toBe("published");
     } finally {
       f.close();
     }
   });
-  it("auto-publishes a bounded eight-document cohort and routes only the two activity exceptions to review", async () => {
+  it("preserves verified fetch evidence and public visibility when an administrator changes only the article category", async () => {
+    const f = await setup("metadata_only", true, true);
+    try {
+      await f.discover();
+      await f.commit(await f.claim(), {
+        article: f.article,
+        bodyHash: "a".repeat(64),
+      });
+      const row = f.sqlite.prepare("SELECT id FROM knowledge_documents").get()!;
+      const store = new ConsoleSyncStore(f.db, actor),
+        d = await store.document(String(row.id));
+      expect(d.publicationStatus).toBe("published");
+      expect(
+        f.sqlite
+          .prepare("SELECT count(*) n FROM console_content_attestations")
+          .get()?.n,
+      ).toBe(0);
+      await store.classifyArticlePlacement(d.id, {
+        ...cmd(d.version),
+        radarCategory: "lecture",
+        knowledgeCategory: null,
+      });
+      const current = await store.document(d.id);
+      expect(current).toMatchObject({
+        publicationStatus: "published",
+        radarCategory: "lecture",
+        knowledgeCategory: null,
+        title: d.title,
+        url: d.url,
+        publishedAt: d.publishedAt,
+        body: d.body,
+      });
+      expect(
+        f.sqlite
+          .prepare("SELECT count(*) n FROM console_public_documents WHERE id=?")
+          .get(d.id)?.n,
+      ).toBe(1);
+      expect(
+        f.sqlite
+          .prepare("SELECT count(*) n FROM console_content_attestations")
+          .get()?.n,
+      ).toBe(1);
+    } finally {
+      f.close();
+    }
+  });
+  it("publishes eight captured metadata cards without creating unverified structured events", async () => {
     let published = 0,
       review = 0;
     for (let i = 0; i < 8; i++) {
@@ -208,14 +254,17 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
           f.sqlite
             .prepare("SELECT count(*) n FROM console_public_documents")
             .get()?.n,
-        ).toBe(i < 6 ? 1 : 0);
+        ).toBe(1);
+        expect(
+          f.sqlite.prepare("SELECT count(*) n FROM campus_events").get()?.n,
+        ).toBe(0);
       } finally {
         f.close();
       }
     }
     expect({ published, review, denominator: 8 }).toEqual({
-      published: 6,
-      review: 2,
+      published: 8,
+      review: 0,
       denominator: 8,
     });
   });

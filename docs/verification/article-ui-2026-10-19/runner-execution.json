@@ -1,0 +1,47 @@
+{
+  "boundedRuns": [
+    {
+      "at": "2026-10-19T12:50:19.445Z",
+      "registered": 1,
+      "registrationState": "registered",
+      "executions": [
+        {
+          "jobId": "job-bf37a165-f465-4dad-843a-0641356c846e",
+          "completedProcess": true
+        },
+        {
+          "jobId": "job-c29bceb7-9e01-4891-ad58-d591aae6bbf1",
+          "completedProcess": true
+        }
+      ],
+      "models": 0
+    },
+    {
+      "at": "2026-10-19T12:53:34.685Z",
+      "registered": 0,
+      "registrationState": "no_eligible_due_source",
+      "executions": [
+        {
+          "jobId": "job-c6e6449d-fdd4-4fe8-8ce1-ff8f1aef3ec0",
+          "completedProcess": true,
+          "final": {
+            "status": "completed",
+            "controlState": "active",
+            "phase": "complete",
+            "found": 20,
+            "bodyTextParsed": 0,
+            "duplicates": 0,
+            "errors": 0,
+            "reservedRequests": 6
+          }
+        }
+      ],
+      "models": 0
+    }
+  ],
+  "backgroundStart": {
+    "allowed": false,
+    "reviewReason": "blocked by policy; no detailed reason returned",
+    "persistentRunnerStarted": false
+  }
+}

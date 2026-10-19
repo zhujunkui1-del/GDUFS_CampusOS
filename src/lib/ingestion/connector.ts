@@ -1,3 +1,4 @@
+import { classifyArticle } from "@/domain/console/article-classification";
 // Node/local runner only: never imported by a Worker API or client bundle.
 import { parseHTML } from "linkedom";
 import { createHash } from "node:crypto";
@@ -194,28 +195,7 @@ export class OfficialWebConnector {
       | "licensed_full_text" = "metadata_only",
   ) {
     const title = parsed.title;
-    const radarCategory = /讲座|论坛/.test(title)
-      ? "lecture"
-      : /竞赛|大赛|比赛/.test(title)
-        ? "competition"
-        : /就业|招聘|升学/.test(title)
-          ? "education_career"
-          : /奖学金|助学金/.test(title)
-            ? "scholarship_opportunity"
-            : /通知|公告/.test(title)
-              ? "campus_notice"
-              : null;
-    const knowledgeCategory = /教务|选课|考试/.test(title)
-      ? "academic_affairs"
-      : /后勤|停水|停电|食堂/.test(title)
-        ? "campus_life"
-        : /奖学金|助学金/.test(title)
-          ? "scholarship_policy"
-          : /就业|招聘/.test(title)
-            ? "education_career"
-            : /通知|公告/.test(title)
-              ? "administrative_services"
-              : null;
+    const { radarCategory, knowledgeCategory } = classifyArticle(title);
     return ContentInputSchema.parse({
       sourceId: this.sourceId,
       title,

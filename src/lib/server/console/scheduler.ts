@@ -79,13 +79,18 @@ export async function dispatchDue(
       ]);
     const usage = await db
       .prepare(
-        "SELECT (SELECT count(*)*2 FROM console_commands WHERE action='job.claim' AND created_at>=strftime('%Y-%m-%dT00:00:00Z','now')) reserved,(SELECT count(*) FROM ingestion_jobs WHERE job_kind='web' AND created_at>=strftime('%Y-%m-%dT00:00:00Z','now')) jobs",
+        "SELECT (SELECT count(*)*2 FROM console_commands WHERE action='job.claim' AND created_at>=strftime('%Y-%m-%dT00:00:00Z','now')) reserved,(SELECT count(*) FROM ingestion_jobs WHERE job_kind='web' AND created_at>=strftime('%Y-%m-%dT00:00:00Z','now')) jobs,(SELECT COALESCE(sum(CASE WHEN phase='discover' THEN 4 ELSE 2 END),0) FROM ingestion_jobs WHERE job_kind='web' AND phase<>'complete' AND control_state='active' AND status IN('queued','running')) pendingCost",
       )
-      .first<{ reserved: number; jobs: number }>();
-    if (
-      (usage?.reserved || 0) >= Number(settings?.network_budget) ||
-      Number(usage?.jobs || 0) >= 10
-    ) {
+      .first<{ reserved: number; jobs: number; pendingCost: number }>();
+    // A useful article check needs discovery and a detail step. Do not enqueue
+    // another source when only enough network allowance for half a check remains.
+    const capacity = Math.floor(
+      (Number(settings?.network_budget) -
+        (usage?.reserved || 0) -
+        (usage?.pendingCost || 0)) /
+        4,
+    );
+    if (capacity <= 0 || Number(usage?.jobs || 0) >= 10) {
       result.state = "budget_exhausted";
       return result;
     }
@@ -97,7 +102,7 @@ export async function dispatchDue(
       .prepare(
         `SELECT s.id,s.version,p.version AS policy_version,p.rule_version,COALESCE(s.sync_hours_override,e.sync_hours) hours,s.next_sync_at_ms,e.sync_revision FROM knowledge_sources s JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE s.id IN(${profiles.map(() => "?").join(",")}) AND s.enabled=1 AND s.operating_status='active' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.permission_status='approved' AND s.authorization_status='approved' AND s.archived_at IS NULL AND s.sync_state<>'blocked' AND p.expires_at_ms>?${where}
  AND (?=1 OR (CASE WHEN s.sync_policy_version>0 AND s.sync_policy_version<>e.sync_revision THEN COALESCE(CAST((julianday(s.last_success_at)-2440587.5)*86400000 AS INTEGER),0)+COALESCE(s.sync_hours_override,e.sync_hours)*3600000 ELSE COALESCE(s.next_sync_at_ms,0) END)<=?)
- AND NOT EXISTS(SELECT 1 FROM ingestion_jobs j WHERE j.source_id=s.id AND j.control_state='active' AND j.phase<>'complete' AND j.status IN('queued','running')) ORDER BY COALESCE(s.next_sync_at_ms,0),s.id LIMIT 2`,
+ AND NOT EXISTS(SELECT 1 FROM ingestion_jobs j WHERE j.source_id=s.id AND j.control_state='active' AND j.phase<>'complete' AND j.status IN('queued','running')) ORDER BY COALESCE(s.next_sync_at_ms,0),s.id LIMIT ${Math.min(options.manualId ? 5 : 2, capacity)}`,
       )
       .bind(
         ...profiles,
@@ -111,7 +116,8 @@ export async function dispatchDue(
       if (result.registered + (usage?.jobs || 0) >= 10) break;
       const profile = webProfiles.find((p) => p.sourceId === s.id);
       if (profile?.ruleVersion !== s.rule_version) continue;
-      const commandId = options.manualId || crypto.randomUUID(),
+      const commandId =
+          (options.sourceId && options.manualId) || crypto.randomUUID(),
         id = "job-" + commandId,
         runKey = options.manualId
           ? `manual:${s.id}:${options.manualId}`

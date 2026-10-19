@@ -1,7 +1,7 @@
 "use client";
 import { SourceCollectionPolicy, RunnerTokens } from "./sync-panel";
 import { WhitelistWorkspace, RetentionWorkspace } from "./retention-workspace";
-import { AutoPolicyPanel, ArticleChecks } from "./automation-panel";
+import { AutoPolicyPanel } from "./automation-panel";
 import Link from "next/link";
 import {
   useEffect,
@@ -282,25 +282,11 @@ export const articleFilters: ConsoleFilter[] = [
     name: "review",
     label: "审核状态",
     options: [
-      ["pending", "待审核"],
-      ["approved", "已批准"],
-      ["returned", "已退回"],
-      ["rejected", "已拒绝"],
-    ],
-  },
-  {
-    name: "publication",
-    label: "公开状态",
-    options: [
-      ["draft", "未公开"],
-      ["published", "已公开"],
-      ["withdrawn", "已撤回"],
+      ["approved", "批准"],
+      ["unapproved", "尚未批准"],
     ],
   },
   { name: "publishedAfter", label: "发布起日", type: "date" },
-  { name: "publishedBefore", label: "发布止日", type: "date" },
-  { name: "fetchedAfter", label: "发现起日", type: "date" },
-  { name: "fetchedBefore", label: "发现止日", type: "date" },
   { name: "eventAfter", label: "活动起日", type: "date" },
   { name: "eventBefore", label: "活动止日", type: "date" },
   {
@@ -320,14 +306,6 @@ export const articleFilters: ConsoleFilter[] = [
       ["not_provided", "仅元数据"],
       ["partial", "部分正文"],
       ["complete", "声明完整"],
-    ],
-  },
-  {
-    name: "expired",
-    label: "生命周期",
-    options: [
-      ["1", "已失效"],
-      ["0", "有效"],
     ],
   },
   {
@@ -362,7 +340,6 @@ export function ConsoleV2Articles({
     ...filters,
     offset: String(offset),
     ...(sourceId ? { sourceId } : {}),
-    ...(exceptions ? { issues: "1" } : {}),
   });
   const { data, error, reload } = useConsoleV2Data<
     List<Record<string, string | number | null>>
@@ -391,36 +368,7 @@ export function ConsoleV2Articles({
   return (
     <>
       <ConsoleV2Filters
-        fields={
-          exceptions
-            ? [
-                ...articleFilters,
-                {
-                  name: "severity",
-                  label: "严重程度",
-                  options: [
-                    ["error", "错误"],
-                    ["warning", "警告"],
-                  ],
-                },
-                {
-                  name: "issue",
-                  label: "问题类型",
-                  options: [
-                    ["original_evidence", "原文证据"],
-                    ["published_at", "发布时间"],
-                    ["category", "主分类"],
-                    ["summary", "摘要"],
-                    ["body_incomplete", "正文完整性"],
-                    ["event_time", "活动举办时间"],
-                    ["deadline", "报名截止"],
-                    ["event_verification", "活动事实"],
-                    ["status_conflict", "取消或改期"],
-                  ],
-                },
-              ]
-            : articleFilters
-        }
+        fields={articleFilters}
         values={filters}
         onChange={(v) => {
           setFilters(v);
@@ -905,14 +853,9 @@ function SourceWorkspace(props: WorkspaceProps) {
       <>
         <Link className="console-back" href={"/admin/sources?record=" + id}>
           <ArrowLeft size={17} />
-          返回信息源
+          返回
         </Link>
         {props.article(article)}
-        <ArticleChecks
-          request={props.request}
-          id={article}
-          admin={props.actor.role === "admin"}
-        />
       </>
     );
   const source = data;
@@ -1070,16 +1013,16 @@ function SourceWorkspace(props: WorkspaceProps) {
               onClick={() => {
                 setBusy(true);
                 void props
-                  .request<{ registered: number }>("v2/sync", "POST", {
-                    commandId: crypto.randomUUID(),
-                    sourceId: id,
-                  })
+                  .request<{ registered: number; state: string }>(
+                    "v2/sync",
+                    "POST",
+                    {
+                      commandId: crypto.randomUUID(),
+                      sourceId: id,
+                    },
+                  )
                   .then((r) => {
-                    setMessage(
-                      r.registered
-                        ? "已登记同步任务，等待执行器"
-                        : "当前无可登记任务，请检查许可和预算",
-                    );
+                    setMessage(syncFeedback(r));
                     reload();
                   })
                   .catch((e) => setMessage(e.message))
@@ -1313,13 +1256,13 @@ function Dashboard(props: WorkspaceProps) {
                   { commandId: crypto.randomUUID() },
                 )
                 .then((r) => {
-                  setMessage(`已登记${r.registered}个任务`);
+                  setMessage(syncFeedback(r));
                   reload();
                 })
                 .catch((e) => setMessage(e.message))
             }
           >
-            立即检查到期来源
+            立即同步
           </button>
         </form>
         <Feedback message={message} />
@@ -1389,4 +1332,12 @@ export function ConsoleV2Workspace(props: WorkspaceProps) {
       />
     );
   return <Dashboard {...props} />;
+}
+
+function syncFeedback(r: { registered: number; state: string }) {
+  if (r.state === "runner_offline") return "采集器离线，启动后重试";
+  if (r.state === "budget_exhausted") return "今日同步额度已用完";
+  if (r.state === "busy") return "同步正在处理，请稍后查看";
+  if (r.registered) return `已加入同步队列，共${r.registered}个来源`;
+  return "当前来源已有任务，或访问许可暂不可用";
 }

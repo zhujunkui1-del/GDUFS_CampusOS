@@ -153,7 +153,7 @@ describe("V2 restricted system publisher", () => {
       expect(
         f.sqlite
           .prepare(
-            "SELECT actor_id FROM console_audit_logs WHERE action='document.auto_publish'",
+            "SELECT actor_id FROM console_audit_logs WHERE action='document.metadata_publish'",
           )
           .get()?.actor_id,
       ).toBe("sys-console-publisher");

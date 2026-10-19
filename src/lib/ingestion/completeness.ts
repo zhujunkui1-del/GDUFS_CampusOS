@@ -30,7 +30,7 @@ export function contentCompleteness(
   )
     add("published_at", "原发布时间未知");
   if (d.contentType === "unknown") add("classification", "内容类型待确认");
-  if (d.kind === "knowledge" && !d.knowledgeCategory)
+  if (!!d.radarCategory === !!d.knowledgeCategory)
     add("category", "主分类待确认");
   if (
     context.rights !== "metadata_only" &&

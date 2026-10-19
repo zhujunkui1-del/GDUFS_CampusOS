@@ -552,7 +552,6 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     for (const [column, value] of [
       ["d.content_type", q.type],
       ["d.campus_scope", q.campus],
-      ["d.workflow_status", q.review],
       ["d.publication_status", q.publication],
       ["d.body_status", q.body],
     ])
@@ -560,6 +559,14 @@ export class ConsoleGovernanceStore extends ManualImportStore {
         where.push(column + "=?");
         args.push(value);
       }
+    if (q.review) {
+      where.push(
+        q.review === "unapproved"
+          ? "d.workflow_status<>'approved'"
+          : "d.workflow_status=?",
+      );
+      if (q.review !== "unapproved") args.push(q.review);
+    }
     if (q.category) {
       where.push("(d.radar_category=? OR d.knowledge_category=?)");
       args.push(q.category, q.category);

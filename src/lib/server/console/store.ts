@@ -833,9 +833,8 @@ export class ConsoleStore {
           document.rightsScope,
         ) ||
         document.contentType === "unknown" ||
-        (document.kind === "knowledge"
-          ? !document.knowledgeCategory
-          : !document.radarCategory) ||
+        !!document.radarCategory === !!document.knowledgeCategory ||
+        (document.kind === "event" && !document.radarCategory) ||
         (document.validUntil &&
           Date.parse(document.validUntil) <= Date.parse(this.now()))
       )

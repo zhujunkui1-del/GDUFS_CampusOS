@@ -1,0 +1,388 @@
+{
+  "recordedAt": "2026-10-19T12:45:30.274Z",
+  "records": [
+    {
+      "id": "content-af85e4e2-faa8-4c29-971a-b82d318d0dd6",
+      "sourceId": "GDUFS-SRC-0024",
+      "title": "第三届青春扬帆·全球学生交流大使团拟推荐名单",
+      "url": "https://youth.gdufs.edu.cn/info/1050/13012.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-77c42774-a451-410d-97d2-ffbf3c4b5da9",
+      "sourceId": "GDUFS-SRC-0024",
+      "title": "关于广东外语外贸大学第四批“中国青年志愿者海外服务计划--服务联合国机构项目”拟推荐志愿者候选人名单的公示",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12902.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-71fec192-00ef-42bb-bdf4-454d47b14c5d",
+      "sourceId": "GDUFS-SRC-0024",
+      "title": "关于评选广东外语外贸大学2025-2026学年度志愿服务先进集体、优秀个人的通知",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12802.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-9bf11776-635c-4328-a910-8ce43bf1c587",
+      "sourceId": "GDUFS-SRC-0024",
+      "title": "关于开展2026年广东外语外贸大学暑期社会实践活动评优工作的通知",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12792.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-7a309711-c22b-4941-9ec5-1484b8dbc58a",
+      "sourceId": "GDUFS-SRC-0024",
+      "title": "关于招募广东外语外贸大学第四批“中国青年志愿者海外服务计划——服务联合国机构项目”志愿者的通知",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12782.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-1a952aa4-2e76-49e4-b32b-a61702fd7e64",
+      "sourceId": "GDUFS-SRC-0024",
+      "title": "中国青年志愿者第29届（广东外语外贸大学第13届）研究生支教团拟推荐名单公示",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12732.htm",
+      "radarCategory": "education_career",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-69078c91-fb02-4445-80f2-6df012df0b93",
+      "sourceId": "GDUFS-SRC-0024",
+      "title": "关于做好第13届研究生支教团志愿者（推荐免试攻读硕士研究生）招募工作的通知",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12712.htm",
+      "radarCategory": "education_career",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-305cb649-40f0-4d2e-84af-dad2428ca9f7",
+      "sourceId": "GDUFS-SRC-0024",
+      "title": "关于我校学生跨校参加第十五届“挑战杯”中国大学生创业计划竞赛东北振兴产业升级专项赛的公示",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12702.htm",
+      "radarCategory": "competition",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-8e307a41-9f33-4d73-9dec-ff4464df21db",
+      "sourceId": "GDUFS-SRC-0024",
+      "title": "关于我校学生跨校参加第十五届“挑战杯”中国大学生创业计划竞赛东北振兴产业升级专项赛的公示",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12692.htm",
+      "radarCategory": "competition",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-73bc2f12-de63-4402-a365-388092a253f0",
+      "sourceId": "GDUFS-SRC-0024",
+      "title": "关于开展2025-2026学年度“i”志愿系统志愿时认定劳动实践学时的通知",
+      "url": "https://youth.gdufs.edu.cn/info/1050/12602.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-f602d268-989a-4725-aa48-edda7c2f8561",
+      "sourceId": "GDUFS-SRC-0012",
+      "title": "云山学术沙龙413期：Explaining China to the West：The Cultural,Political, and Economic Logic Behind the Chinese Miracle",
+      "url": "https://www.gdufs.edu.cn/info/1005/265076.htm",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-aa636976-2010-462c-912a-29a9b23f5aa2",
+      "sourceId": "GDUFS-SRC-0012",
+      "title": "云山学术沙龙412期：The Belt and Road Initiative in South America",
+      "url": "https://www.gdufs.edu.cn/info/1005/264186.htm",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-b8837740-f489-40fe-a429-dc9c3a1a2a06",
+      "sourceId": "GDUFS-SRC-0012",
+      "title": "云山学术沙龙411期：Argentina-China Relations: From Strategic Partnership to Political Uncertainty",
+      "url": "https://www.gdufs.edu.cn/info/1005/264176.htm",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-1ed334a4-15a1-4105-b6b9-3f29e30ad0ea",
+      "sourceId": "GDUFS-SRC-0012",
+      "title": "著名教授论坛第755讲：区域重塑与话语建构——近代以来西方视野下的中国西南边疆",
+      "url": "https://www.gdufs.edu.cn/info/1005/258246.htm",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-ee98bf68-75a8-4c19-a33c-271eb62acf92",
+      "sourceId": "GDUFS-SRC-0012",
+      "title": "云山学术沙龙405期：经济学研究前沿趋势",
+      "url": "https://www.gdufs.edu.cn/info/1005/256676.htm",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-c1de7f58-cfef-4ca9-a88d-570f60f03057",
+      "sourceId": "GDUFS-SRC-0012",
+      "title": "云山学术沙龙404期：国际期刊写作以及投稿技巧",
+      "url": "https://www.gdufs.edu.cn/info/1005/256666.htm",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-222ef62d-15c4-47b7-b167-0c51cb281cff",
+      "sourceId": "GDUFS-SRC-0012",
+      "title": "云山学术沙龙403期：Speed matters: Decomposing systemic risk during China’s deleveraging campaign",
+      "url": "https://www.gdufs.edu.cn/info/1005/256656.htm",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-4a663b08-c81b-4d0f-a1d3-7812b0acc7c9",
+      "sourceId": "GDUFS-SRC-0012",
+      "title": "著名教授论坛第754讲：知识驱动的数据合成：人工智能时代语言学的功能转型",
+      "url": "https://www.gdufs.edu.cn/info/1005/256646.htm",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-195b42d9-da38-450b-9d14-2e07b28cbe1f",
+      "sourceId": "GDUFS-SRC-0012",
+      "title": "著名教授论坛第745讲：观物与观美",
+      "url": "https://www.gdufs.edu.cn/info/1005/256636.htm",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-f5678197-f689-49b8-98a0-41bd3592c600",
+      "sourceId": "GDUFS-SRC-0012",
+      "title": "云山学术沙龙402期：从中国的东南亚布局看中马关系的前景",
+      "url": "https://www.gdufs.edu.cn/info/1005/255576.htm",
+      "radarCategory": "lecture",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-9227ee99-10d7-4a04-b257-13e61834b858",
+      "sourceId": "GDUFS-SRC-0008",
+      "title": "喜讯！我校2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛获奖名单出炉",
+      "url": "https://lib.gdufs.edu.cn/info/1134/10128.htm",
+      "radarCategory": "competition",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-0a880db5-dfde-492d-ae6b-ffa6fbf3a007",
+      "sourceId": "GDUFS-SRC-0008",
+      "title": "2026年CASHL庆祝教师节全国优惠活动通知",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9988.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-d3157439-c8ff-4680-9edb-26db61b0799e",
+      "sourceId": "GDUFS-SRC-0008",
+      "title": "“让图书回家”——归还超期图书免滞纳金活动",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9938.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-973ab41e-8144-42cb-8d76-d1f0802c3d4a",
+      "sourceId": "GDUFS-SRC-0008",
+      "title": "关于2026年暑假期间图书馆馆际互借与文献传递服务调整的通知",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9668.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-2087905c-eebc-4878-b736-af05d05e185f",
+      "sourceId": "GDUFS-SRC-0008",
+      "title": "让图书回家——归还超期图书免滞纳金活动",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9578.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-049f8e2d-29cf-4b3a-acac-5427c5b36cd8",
+      "sourceId": "GDUFS-SRC-0008",
+      "title": "关于图书馆学习空间分批次开放预约使用的通知",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9498.htm",
+      "radarCategory": null,
+      "knowledgeCategory": "campus_life"
+    },
+    {
+      "id": "content-eae44fc4-89b2-48ba-a485-c73ccfd07ed5",
+      "sourceId": "GDUFS-SRC-0008",
+      "title": "CASHL华南区域文献服务优惠活动",
+      "url": "https://lib.gdufs.edu.cn/info/1134/9228.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-a17a36d5-a097-45fd-9ef1-ea1ede79db3e",
+      "sourceId": "GDUFS-SRC-0008",
+      "title": "廿二风华绽 畅读惠意浓——2026年CASHL“畅读”优惠活动",
+      "url": "https://lib.gdufs.edu.cn/info/1134/8888.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-83540fdf-c393-4075-bf7e-2050c395baab",
+      "sourceId": "GDUFS-SRC-0008",
+      "title": "“让图书回家”——归还超期图书免滞纳金活动",
+      "url": "https://lib.gdufs.edu.cn/info/1134/8858.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-1b30ab7b-10b3-4c3a-a305-18a5c6fb05e1",
+      "sourceId": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学大学城校区北苑6栋智能电表采购项目询价结果公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3088.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-14534921-b918-45d5-a12c-d3de3265a886",
+      "sourceId": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学大学城校区北苑6栋智能电表采购项目询价公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3078.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-b56a692c-17e1-47be-999c-8ea5f854c151",
+      "sourceId": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学2026年白云山校区学生宿舍老旧家具修复保养服务采购询价结果公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3068.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-971726ab-fba1-4756-b2f2-a42bfdc4fb77",
+      "sourceId": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学2026年白云山校区学生宿舍老旧家具修复保养服务采购询价公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3048.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-34a53f55-17d8-478d-be13-baa470668b36",
+      "sourceId": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学校园零星维修工程设计服务项目 询价结果公示",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3038.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-48cd5a55-d09e-4534-b6ce-e535a4504c64",
+      "sourceId": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学学生饭堂特色档口餐饮技术服务合作项目遴选结果公示",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3028.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-6f1ec2a1-ee81-4b71-afd1-3550beac9756",
+      "sourceId": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学校园零星维修工程 设计服务项目询价公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3018.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-d075c86f-cb4d-43ad-bc43-d6b4640b9de4",
+      "sourceId": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学2026-2028年 医保学生补充商业保险服务采购询价结果公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3008.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-45cb5a1c-345c-44e2-a463-3466257aa075",
+      "sourceId": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学校园零星维修工程 工程造价咨询服务项目询价结果公示",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/2998.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-14fc7569-3383-4bd0-8303-63633bc48f00",
+      "sourceId": "GDUFS-SRC-0010",
+      "title": "2026-2027学年（第二批）本科生社会助学金 拟资助学生名单公示",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68751.htm",
+      "radarCategory": "scholarship_opportunity",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-a84590da-5883-4223-9ab3-f9f6b43e142f",
+      "sourceId": "GDUFS-SRC-0010",
+      "title": "广东外语外贸大学关于公布2026年“立志·修身·博学·报国”主题教育系列活动结果的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68731.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-beac4f75-8f8e-44d1-b79e-49dc69241391",
+      "sourceId": "GDUFS-SRC-0010",
+      "title": "关于2026年辅导员管理岗位聘用推荐人员名单的公示",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68661.htm",
+      "radarCategory": "campus_notice",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-53cb4d86-f532-497d-9a56-77116c6f7440",
+      "sourceId": "GDUFS-SRC-0010",
+      "title": "关于推荐2026年度港澳及华侨学生、台湾学生奖学金获得者候选人的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68651.htm",
+      "radarCategory": "scholarship_opportunity",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-9606f837-246b-491b-a817-6788c43f7fa0",
+      "sourceId": "GDUFS-SRC-0010",
+      "title": "2026-2027学年（第一批）本科生社会助学金拟资助学生名单公示",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68581.htm",
+      "radarCategory": "scholarship_opportunity",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-d7a5902d-175b-4bba-9cef-58cee86b07b5",
+      "sourceId": "GDUFS-SRC-0010",
+      "title": "关于查收2026-2027学年第一学期第一批出国（境）学习奖助学金的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68561.htm",
+      "radarCategory": "scholarship_opportunity",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-71e97c8e-9cc0-4f60-8a80-df910485d0d6",
+      "sourceId": "GDUFS-SRC-0010",
+      "title": "关于公布2025-2026学年度本科生社会专项奖学金名额分配的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68521.htm",
+      "radarCategory": "scholarship_opportunity",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-701a4150-f783-4ab6-8ebc-79df36085b40",
+      "sourceId": "GDUFS-SRC-0010",
+      "title": "关于查收2026年9月学生临时困难补助的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68511.htm",
+      "radarCategory": "scholarship_opportunity",
+      "knowledgeCategory": null
+    },
+    {
+      "id": "content-b80605fa-5ce3-41ca-81e8-72b0fa551c4c",
+      "sourceId": "GDUFS-SRC-0010",
+      "title": "关于推报2025-2026学年度广东外语外贸大学“校长奖章”的通知",
+      "url": "https://nstu.gdufs.edu.cn/info/1056/68391.htm",
+      "radarCategory": "scholarship_opportunity",
+      "knowledgeCategory": null
+    }
+  ],
+  "protectedIds": [
+    "content-76b1fc0b-ace5-4db2-bb5f-b029dd771d78",
+    "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+    "content-2a1a1c4e-0833-4186-afa6-e7696982513b"
+  ],
+  "radar": 46,
+  "knowledge": 1
+}

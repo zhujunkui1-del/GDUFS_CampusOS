@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent, type CSSProperties } from "react";
 import { ArrowUpRight, Search, RefreshCw } from "lucide-react";
 import {
   knowledgeCategories,
@@ -20,10 +20,16 @@ type Item = {
   radarCategory: string | null;
   source: { name: string; official: boolean };
 };
-type Result = { items: Item[]; hasMore: boolean };
+type Result = {
+  items: Item[];
+  hasMore: boolean;
+  counts: Record<string, number>;
+  total: number;
+};
 export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
   const categories =
     surface === "radar" ? radarCategories : knowledgeCategories;
+  const [columns, setColumns] = useState(1);
   const [query, setQuery] = useState({
       q: "",
       source: "",
@@ -80,7 +86,10 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
   }
   const title = surface === "radar" ? "校园雷达" : "校园知识";
   return (
-    <section className="module-page public-feed">
+    <section
+      className="module-page public-feed"
+      style={{ "--article-columns": columns } as CSSProperties}
+    >
       <div className="page-heading">
         <Link className="module-brand" href="/map">
           广外通 <span>CampusOS</span>
@@ -113,17 +122,41 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
           <RefreshCw size={17} />
         </button>
       </form>
-      <nav className="public-feed-categories" aria-label={title + "分类"}>
-        {[{ code: "", label: "全部" }, ...categories].map((c) => (
-          <button
-            key={c.code}
-            aria-pressed={query.category === c.code}
-            onClick={() => setQuery({ ...query, category: c.code, offset: 0 })}
+      <div className="public-feed-toolbar">
+        <nav className="public-feed-categories" aria-label={title + "分类"}>
+          {[{ code: "", label: "全部" }, ...categories].map((c) => (
+            <button
+              key={c.code}
+              aria-pressed={query.category === c.code}
+              onClick={() =>
+                setQuery({ ...query, category: c.code, offset: 0 })
+              }
+            >
+              {c.label}
+              <span className="public-feed-count">
+                {data ? (c.code ? data.counts[c.code] || 0 : data.total) : "…"}
+              </span>
+            </button>
+          ))}
+        </nav>
+        <label className="public-feed-columns">
+          每行文章
+          <select
+            aria-label="每行文章数量"
+            value={columns}
+            onChange={(e) => {
+              const n = Number(e.target.value);
+              setColumns(n);
+            }}
           >
-            {c.label}
-          </button>
-        ))}
-      </nav>
+            {[1, 2, 3, 4].map((n) => (
+              <option key={n} value={n}>
+                {n} 列
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
       {!data && !error && (
         <p role="status" className="public-feed-status">
           正在加载…
@@ -147,7 +180,6 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
           <article className="public-feed-card" key={item.id}>
             <div className="public-feed-meta">
               <span>{item.source.name}</span>
-              <span>{item.source.official ? "官方来源" : "参考来源"}</span>
               <span>
                 {categories.find(
                   (c) =>

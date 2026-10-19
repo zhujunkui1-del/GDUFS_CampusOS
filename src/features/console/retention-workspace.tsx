@@ -682,16 +682,20 @@ export function RetentionWorkspace({
           </ul>
           <div className="console-v2-list">
             {items.data?.items.map((i) => (
-              <article className="console-v2-row" key={String(i.document_id)}>
+              <article
+                className="console-v2-row console-retention-row"
+                key={String(i.document_id)}
+              >
                 <Link
                   className="text-link"
                   href={"/admin/sources?article=" + i.document_id}
                 >
                   {i.title}
                 </Link>
-                <p>
-                  {i.published_at} · {i.classification} · {i.stage}
-                </p>
+                <span>
+                  {i.classification} · {i.stage}
+                </span>
+                <time>{i.published_at || "时间未知"}</time>
                 {i.error && <p>{i.error}</p>}
               </article>
             ))}
@@ -701,14 +705,14 @@ export function RetentionWorkspace({
               disabled={!itemOffset}
               onClick={() => setItemOffset(Math.max(0, itemOffset - 20))}
             >
-              上一组对象
+              上一页
             </button>
             <span>{items.data?.total || 0} 篇</span>
             <button
               disabled={itemOffset + 20 >= (items.data?.total || 0)}
               onClick={() => setItemOffset(itemOffset + 20)}
             >
-              下一组对象
+              下一页
             </button>
           </div>
           <div className="console-actions">
@@ -728,30 +732,22 @@ export function RetentionWorkspace({
                 确认批量标记
               </button>
             )}
-            {["marked", "purging"].includes(String(p.state)) && (
-              <button
-                className="danger-button"
-                disabled={!admin || busy || !p.purgeAllowed}
-                onClick={() => setPending("purge")}
-              >
-                永久清理（分批）
-              </button>
-            )}
-            {!p.purgeAllowed && <span>当前环境永久清理未授权</span>}
+            {p.purgeAllowed &&
+              ["marked", "purging"].includes(String(p.state)) && (
+                <button
+                  className="danger-button"
+                  disabled={!admin || busy || !p.purgeAllowed}
+                  onClick={() => setPending("purge")}
+                >
+                  永久清理（分批）
+                </button>
+              )}
             {["previewing", "marking", "purging"].includes(String(p.state)) && (
               <button
                 disabled={!admin || busy}
                 onClick={() => void action("pause")}
               >
                 暂停计划
-              </button>
-            )}
-            {p.state === "paused" && (
-              <button
-                disabled={!admin || busy}
-                onClick={() => void action("resume")}
-              >
-                恢复计划
               </button>
             )}
           </div>
@@ -768,7 +764,10 @@ export function RetentionWorkspace({
           }}
         />
         {list.data?.items.map((x) => (
-          <article className="console-v2-row" key={String(x.id)}>
+          <article
+            className="console-v2-row console-retention-row"
+            key={String(x.id)}
+          >
             <button
               className="text-link"
               onClick={() => {
@@ -776,9 +775,9 @@ export function RetentionWorkspace({
                 setId(String(x.id));
               }}
             >
-              {String(x.created_at)} · {stages[String(x.state)]}
+              {stages[String(x.state)]} · 检查 {x.scanned} 篇
             </button>
-            <p>检查 {x.scanned} 篇</p>
+            <time>{String(x.created_at)}</time>
           </article>
         ))}
         {list.data?.total === 0 && (

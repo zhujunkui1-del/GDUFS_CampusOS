@@ -1,8 +1,39 @@
 .console-shell {
+  font-family:
+    "PingFang SC",
+    "Microsoft YaHei",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   min-height: 100dvh;
   display: grid;
   grid-template-columns: 208px minmax(0, 1fr);
   background: var(--surface-page);
+}
+.console-article-whitelist {
+  margin-left: auto;
+  white-space: nowrap;
+}
+.console-retention-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.console-retention-row > a,
+.console-retention-row > button {
+  flex: 1 1 240px;
+  text-align: left;
+  min-width: 0;
+}
+.console-retention-row time {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+.console-retention-row > p {
+  flex-basis: 100%;
 }
 .console-v2-metrics {
   display: grid;

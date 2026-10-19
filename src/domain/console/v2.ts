@@ -102,7 +102,9 @@ export const ArticleV2Query = z
     category: z.string().max(50).optional(),
     tag: z.string().max(50).optional(),
     campus: CampusScopeSchema.optional(),
-    review: z.enum(["pending", "approved", "returned", "rejected"]).optional(),
+    review: z
+      .enum(["pending", "approved", "returned", "rejected", "unapproved"])
+      .optional(),
     publication: z.enum(["draft", "published", "withdrawn"]).optional(),
     publishedAfter: z.iso.date().optional(),
     publishedBefore: z.iso.date().optional(),

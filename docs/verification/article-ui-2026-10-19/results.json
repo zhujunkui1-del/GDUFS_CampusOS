@@ -1,0 +1,138 @@
+{
+  "recordedAt": "2026-10-19T15:51:49.380Z",
+  "workerVersion": "f92c5b8f-e789-42a1-ab8e-ba20368060b7",
+  "preview": "https://campusos-preview.zhujunkui1.workers.dev",
+  "unit": {
+    "passed": 352,
+    "failed": 0,
+    "files": 47
+  },
+  "typecheck": true,
+  "lint": true,
+  "workerBuild": true,
+  "databaseUpgrade": true,
+  "foreignKeyViolations": 0,
+  "counts": {
+    "sources": 220,
+    "enabled": 220,
+    "verified": 6,
+    "documents": 52,
+    "published": 49,
+    "jobs": 32,
+    "conversations": 0,
+    "messages": 0,
+    "runs": 0
+  },
+  "storageBytes": 3010560,
+  "public": {
+    "radar": 48,
+    "knowledge": 1,
+    "disjoint": true,
+    "protected404": 3
+  },
+  "original47Reclassified": 47,
+  "additionalArticleClassificationCorrected": 1,
+  "modelCalls": 0,
+  "thirdPartyFullTextPersisted": false,
+  "permanentCleanupExecuted": false,
+  "productionChanged": false,
+  "persistentRunnerStarted": false,
+  "persistentRunnerBlockedByAutomaticApproval": true,
+  "localBrowsers": [
+    {
+      "channel": "chrome",
+      "project": "desktop",
+      "startTime": "2026-10-19T12:39:25.372Z",
+      "duration": 4185.429,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "exit": 0
+    },
+    {
+      "channel": "chrome",
+      "project": "mobile",
+      "startTime": "2026-10-19T12:40:01.462Z",
+      "duration": 4182.826,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "exit": 0
+    },
+    {
+      "channel": "msedge",
+      "project": "desktop",
+      "startTime": "2026-10-19T12:41:01.473Z",
+      "duration": 4218.786,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "exit": 0
+    },
+    {
+      "channel": "msedge",
+      "project": "mobile",
+      "startTime": "2026-10-19T12:42:01.428Z",
+      "duration": 4332.924,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "exit": 0
+    }
+  ],
+  "finalCloudBrowsers": [
+    {
+      "channel": "chrome",
+      "project": "desktop",
+      "startTime": "2026-10-19T15:51:33.839Z",
+      "duration": 17833.518,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "exit": 0
+    },
+    {
+      "channel": "chrome",
+      "project": "mobile",
+      "startTime": "2026-10-19T15:52:01.425Z",
+      "duration": 15825.263,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "exit": 0
+    },
+    {
+      "channel": "msedge",
+      "project": "desktop",
+      "startTime": "2026-10-19T15:53:01.424Z",
+      "duration": 14413.545,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "exit": 0
+    },
+    {
+      "channel": "msedge",
+      "project": "mobile",
+      "startTime": "2026-10-19T15:54:01.420Z",
+      "duration": 17630.653000000002,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "exit": 0
+    }
+  ],
+  "finalCloudPassed": true,
+  "credentialScan": {
+    "actualPrivateValuesChecked": 10,
+    "hits": 0
+  }
+}

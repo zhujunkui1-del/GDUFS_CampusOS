@@ -43,7 +43,6 @@ import {
   radarCategories,
   knowledgeCategories,
   contentTypeNames,
-  rightsNames,
   topicNames,
 } from "@/domain/console/taxonomy";
 
@@ -1305,16 +1304,10 @@ function ExistingContentEditor({
       [id],
     );
   const [draft, setDraft] = useState<ContentInput | null>(null),
-    [sourceQuery, setSourceQuery] = useState(""),
-    [sourceOptions, setSourceOptions] = useState<SourceSummary[]>([]),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
     [preview, setPreview] = useState(false),
-    [withdraw, setWithdraw] = useState(false),
-    [snapshot, setSnapshot] = useState<{
-      input: ContentInput;
-      version: number;
-    } | null>(null);
+    [withdraw, setWithdraw] = useState(false);
   const form =
     draft ||
     (data
@@ -1339,22 +1332,6 @@ function ExistingContentEditor({
           extractedFields: data.extractedFields,
         }
       : emptyContent);
-  useEffect(() => {
-    let active = true;
-    const timer = setTimeout(() => {
-      request<List<SourceSummary>>(
-        "sources?limit=20&q=" + encodeURIComponent(sourceQuery),
-      )
-        .then((result) => {
-          if (active) setSourceOptions(result.items);
-        })
-        .catch(() => {});
-    }, 250);
-    return () => {
-      active = false;
-      clearTimeout(timer);
-    };
-  }, [request, sourceQuery]);
   const set = <K extends keyof ContentInput>(name: K, value: ContentInput[K]) =>
     setDraft({ ...form, [name]: value });
   async function run(work: () => Promise<unknown>) {
@@ -1371,27 +1348,33 @@ function ExistingContentEditor({
       setBusy(false);
     }
   }
-  async function inspectVersion(version: number) {
-    setBusy(true);
-    setMessage("");
-    try {
-      const result = await request<{ input: ContentInput }>(
-        `content/${id}/versions/${version}`,
-      );
-      setSnapshot({ ...result, version });
-    } catch (e) {
-      setMessage(e instanceof Error ? e.message : "版本加载失败。");
-    } finally {
-      setBusy(false);
-    }
-  }
   async function save(e: FormEvent) {
     e.preventDefault();
     await run(async () => {
+      const classificationOnly =
+        data &&
+        Object.keys(form).every(
+          (k) =>
+            ["radarCategory", "knowledgeCategory"].includes(k) ||
+            JSON.stringify(form[k as keyof ContentInput]) ===
+              JSON.stringify(data[k as keyof ContentDetail]),
+        );
       const result = await request<{ id: string }>(
-        isNew ? "content" : "content/" + id,
-        isNew ? "POST" : "PATCH",
-        { ...form, ...command(data?.version || 0) },
+        classificationOnly
+          ? "v2/classify/" + id
+          : isNew
+            ? "content"
+            : "content/" + id,
+        classificationOnly || isNew ? "POST" : "PATCH",
+        {
+          ...(classificationOnly
+            ? {
+                radarCategory: form.radarCategory,
+                knowledgeCategory: form.knowledgeCategory,
+              }
+            : form),
+          ...command(data?.version || 0),
+        },
       );
       if (isNew) router.replace(recordHref("content", result.id));
     });
@@ -1402,12 +1385,18 @@ function ExistingContentEditor({
     canPublish = actor.role === "admin";
   return (
     <>
-      <Link className="console-back" href="/admin/content">
-        <ArrowLeft size={17} />
-        内容记录
-      </Link>
       <Heading title={isNew ? "登记内容" : data!.title}>
-        {data && <Badge value={data.publicationStatus} />}
+        {data && (
+          <>
+            <Badge value={data.publicationStatus} />
+            <Link
+              className="text-link console-article-whitelist"
+              href={"/admin/whitelist?type=document&target=" + id}
+            >
+              加入白名单
+            </Link>
+          </>
+        )}
       </Heading>
       {data?.duplicateOf && (
         <Link
@@ -1427,19 +1416,6 @@ function ExistingContentEditor({
           <dd>{date(data.sourceUpdatedAt)}</dd>
           <dt>记录更新</dt>
           <dd>{date(data.updatedAt)}</dd>
-          <dt>内容修订</dt>
-          <dd>{data.contentRevision}</dd>
-          <dt>正文状态（声明）</dt>
-          <dd>
-            {
-              {
-                unknown: "未知",
-                not_provided: "仅元数据",
-                partial: "部分正文",
-                complete: "声明完整正文",
-              }[data.bodyStatus]
-            }
-          </dd>
         </dl>
       )}
       {!!data?.discoveries?.length && (
@@ -1511,32 +1487,6 @@ function ExistingContentEditor({
         </p>
       )}
       <form className="console-card console-form" onSubmit={save}>
-        <label>
-          查找信息源
-          <input
-            value={sourceQuery}
-            onChange={(e) => setSourceQuery(e.target.value)}
-            placeholder="名称或编号"
-          />
-        </label>
-        <label>
-          信息源
-          <select
-            required
-            value={form.sourceId}
-            onChange={(e) => set("sourceId", e.target.value)}
-          >
-            <option value="">请选择</option>
-            {data && !sourceOptions.some((s) => s.id === data.sourceId) && (
-              <option value={data.sourceId}>{data.sourceName}</option>
-            )}
-            {sourceOptions.map((source) => (
-              <option key={source.id} value={source.id}>
-                {source.displayName}
-              </option>
-            ))}
-          </select>
-        </label>
         <label className="console-wide">
           标题
           <input
@@ -1556,18 +1506,6 @@ function ExistingContentEditor({
           />
         </label>
         <label>
-          候选用途
-          <select
-            value={form.kind}
-            onChange={(e) =>
-              set("kind", e.target.value as ContentInput["kind"])
-            }
-          >
-            <option value="knowledge">知识候选</option>
-            <option value="event">活动候选</option>
-          </select>
-        </label>
-        <label>
           原文类型
           <select
             value={form.contentType}
@@ -1581,61 +1519,49 @@ function ExistingContentEditor({
           </select>
         </label>
         <label>
-          使用范围
+          一级分类
           <select
-            value={form.rightsScope}
-            onChange={(e) => set("rightsScope", e.target.value)}
+            value={form.radarCategory ? "radar" : "knowledge"}
+            onChange={(e) =>
+              setDraft({
+                ...form,
+                radarCategory:
+                  e.target.value === "radar" ? "campus_notice" : null,
+                knowledgeCategory:
+                  e.target.value === "knowledge"
+                    ? "administrative_services"
+                    : null,
+              })
+            }
           >
-            {Object.entries(rightsNames).map(([value, label]) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
+            <option value="radar">校园雷达</option>
+            <option value="knowledge">校园知识</option>
           </select>
         </label>
         <label>
-          雷达分类
+          二级分类
           <select
-            value={form.radarCategory || ""}
-            onChange={(e) => set("radarCategory", e.target.value || null)}
+            required
+            value={form.radarCategory || form.knowledgeCategory || ""}
+            onChange={(e) =>
+              setDraft({
+                ...form,
+                radarCategory: form.radarCategory ? e.target.value : null,
+                knowledgeCategory: form.radarCategory ? null : e.target.value,
+              })
+            }
           >
-            <option value="">待核实</option>
-            {radarCategories.map((x) => (
-              <option key={x.code} value={x.code}>
-                {x.label}
-              </option>
-            ))}
+            <option value="" disabled>
+              请选择
+            </option>
+            {(form.radarCategory ? radarCategories : knowledgeCategories).map(
+              (x) => (
+                <option key={x.code} value={x.code}>
+                  {x.label}
+                </option>
+              ),
+            )}
           </select>
-        </label>
-        <label>
-          知识分类
-          <select
-            value={form.knowledgeCategory || ""}
-            onChange={(e) => set("knowledgeCategory", e.target.value || null)}
-          >
-            <option value="">待核实</option>
-            {knowledgeCategories.map((x) => (
-              <option key={x.code} value={x.code}>
-                {x.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          发布机构
-          <input
-            value={form.publisher || ""}
-            onChange={(e) => set("publisher", e.target.value || null)}
-            maxLength={250}
-          />
-        </label>
-        <label>
-          原文更新时间
-          <input
-            type="datetime-local"
-            value={localDate(form.sourceUpdatedAt)}
-            onChange={(e) => set("sourceUpdatedAt", utcDate(e.target.value))}
-          />
         </label>
         <fieldset className="console-wide">
           <legend>辅助主题</legend>
@@ -1685,25 +1611,6 @@ function ExistingContentEditor({
               </option>
             ))}
           </select>
-        </label>
-        <label>
-          原文发布时间（北京时间）
-          <input
-            type={form.publishedAt?.length === 10 ? "date" : "datetime-local"}
-            value={
-              form.publishedAt?.length === 10
-                ? form.publishedAt
-                : localDate(form.publishedAt)
-            }
-            onChange={(e) =>
-              set(
-                "publishedAt",
-                form.publishedAt?.length === 10
-                  ? e.target.value || null
-                  : utcDate(e.target.value),
-              )
-            }
-          />
         </label>
         <label>
           有效期至（北京时间）
@@ -1800,30 +1707,10 @@ function ExistingContentEditor({
           <section className="console-card">
             <h2>审核与发布</h2>
             <p>
-              <Badge value={data.reviewStatus} /> · 版本 {data.version}
+              <Badge value={data.reviewStatus} />
             </p>
             <External url={data.url} label="查看原文" />
             <div className="console-actions">
-              {[
-                ["approved", "批准"],
-                ["returned", "退回"],
-                ["rejected", "拒绝"],
-              ].map(([decision, label]) => (
-                <button
-                  key={decision}
-                  disabled={busy}
-                  onClick={() =>
-                    void run(() =>
-                      request("content/" + id + "/review", "POST", {
-                        ...command(data.version),
-                        decision,
-                      }),
-                    )
-                  }
-                >
-                  {label}
-                </button>
-              ))}
               <button
                 className="primary-button"
                 disabled={busy || !canPublish}
@@ -1846,41 +1733,6 @@ function ExistingContentEditor({
                 撤回
               </button>
             </div>
-          </section>
-          <section className="console-card">
-            <h2>版本记录</h2>
-            <div className="console-versions">
-              {data.versions.map((version) => (
-                <button
-                  key={version.version}
-                  disabled={busy}
-                  onClick={() => void inspectVersion(version.version)}
-                >
-                  版本 {version.version} · {date(version.createdAt)}
-                </button>
-              ))}
-            </div>
-            {snapshot && (
-              <>
-                <h3>{snapshot.input.title}</h3>
-                <pre className="console-safe-preview">
-                  {snapshot.input.body}
-                </pre>
-                <button
-                  disabled={busy || !canWrite}
-                  onClick={() =>
-                    void run(() =>
-                      request(`content/${id}/restore`, "POST", {
-                        ...command(data.version),
-                        version: snapshot.version,
-                      }),
-                    )
-                  }
-                >
-                  恢复为新版本
-                </button>
-              </>
-            )}
           </section>
           <Confirm
             open={withdraw}

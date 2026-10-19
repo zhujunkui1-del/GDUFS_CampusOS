@@ -46,6 +46,57 @@ async function setup() {
   return { ...f, store, source };
 }
 describe("V2 bounded persistent scheduling and scoped runners", () => {
+  it("requires a live scoped runner and forces a manual check despite a future due date or paused automatic sync", async () => {
+    const f = await setup();
+    try {
+      const id = await f.source(),
+        commandId = crypto.randomUUID();
+      expect(await f.store.syncNow({ commandId })).toMatchObject({
+        state: "runner_offline",
+        registered: 0,
+      });
+      expect(
+        f.sqlite.prepare("SELECT count(*) n FROM ingestion_jobs").get()?.n,
+      ).toBe(0);
+      const token = await f.store.createRunnerToken({
+        ...cmd(1),
+        label: "隔离在线采集器",
+        sourceIds: [id],
+        validityDays: 1,
+      });
+      f.sqlite
+        .prepare("UPDATE console_runner_tokens SET last_seen_at=? WHERE id=?")
+        .run(new Date().toISOString(), token.id);
+      f.sqlite.exec("UPDATE console_engine_settings SET network_budget=2");
+      expect(await f.store.syncNow({ commandId })).toMatchObject({
+        state: "budget_exhausted",
+        registered: 0,
+      });
+      f.sqlite.exec("UPDATE console_engine_settings SET network_budget=20");
+      f.sqlite.exec(
+        "UPDATE console_engine_settings SET auto_sync_enabled=0; UPDATE knowledge_sources SET next_sync_at_ms=9999999999999",
+      );
+      expect(await f.store.syncNow({ commandId })).toMatchObject({
+        state: "registered",
+        registered: 1,
+        completed: 0,
+      });
+      expect(await f.store.syncNow({ commandId })).toMatchObject({
+        registered: 0,
+      });
+      expect(
+        f.sqlite.prepare("SELECT count(*) n FROM ingestion_jobs").get()?.n,
+      ).toBe(1);
+      f.sqlite.exec(
+        "UPDATE console_runner_tokens SET last_seen_at='2020-01-01'",
+      );
+      expect(
+        await f.store.syncNow({ commandId: crypto.randomUUID(), sourceId: id }),
+      ).toMatchObject({ state: "runner_offline", registered: 0 });
+    } finally {
+      f.close();
+    }
+  });
   it("registers due tasks, records registration separately from completion, prevents duplicates and honors pause", async () => {
     const f = await setup();
     try {

@@ -133,30 +133,20 @@ async function api(path, method = "GET", body) {
   }
 }
 const cmd = (expectedVersion) => ({ commandId: randomUUID(), expectedVersion });
+await build({
+  entryPoints: ["src/domain/console/article-classification.ts"],
+  outfile: "test-results/article-classification.mjs",
+  bundle: true,
+  platform: "node",
+  format: "esm",
+  logLevel: "silent",
+});
+const { classifyArticle } =
+  await import("../test-results/article-classification.mjs");
 function classify(item) {
-  const t = item.title;
-  const knowledgeCategory = /奖学金|助学金|奖助学金|困难补助/.test(t)
-    ? "scholarship_policy"
-    : /出国|联合国|支教|就业|招聘/.test(t)
-      ? "education_career"
-      : /讲座|论坛|学术沙龙/.test(t)
-        ? "research_innovation"
-        : /采购|询价|遴选|招标/.test(t)
-          ? "administrative_services"
-          : /教务|选课|考试/.test(t)
-            ? "academic_affairs"
-            : "campus_life";
-  const radarCategory = /讲座|论坛|学术沙龙/.test(t)
-    ? "lecture"
-    : /竞赛|比赛|大赛|挑战杯/.test(t)
-      ? "competition"
-      : /奖学金|助学金|奖助学金|困难补助/.test(t)
-        ? "scholarship_opportunity"
-        : /出国|联合国|支教|招聘/.test(t)
-          ? "education_career"
-          : "campus_notice";
-  return { knowledgeCategory, radarCategory };
+  return classifyArticle(item.title);
 }
+
 try {
   const page = await context.newPage();
   await page.goto(base + "/admin");

@@ -38,6 +38,8 @@ export async function consoleV2Api(
     if (section === "checks" && id) return store.checkDetails(id);
   }
   if (request.method === "POST") {
+    if (section === "classify" && id)
+      return store.classifyArticlePlacement(id, await read());
     if (section === "whitelist" && id === "batch") {
       const { ProtectionSchema } = await import("@/domain/console/retention");
       const items = z

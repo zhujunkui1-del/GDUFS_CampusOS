@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-10-19T12:47:55.362Z",
+  "created": true,
+  "tokenId": "runner-e54743e2-5a22-4b81-938b-a7a3f1b2638e",
+  "sourceIds": [
+    "GDUFS-SRC-0012",
+    "GDUFS-SRC-0010",
+    "GDUFS-SRC-0017",
+    "GDUFS-SRC-0024",
+    "GDUFS-SRC-0008"
+  ],
+  "validityDays": 1,
+  "credentialSavedOnlyInIgnoredFile": true,
+  "pendingJobs": [
+    {
+      "id": "job-bf37a165-f465-4dad-843a-0641356c846e",
+      "source_id": "GDUFS-SRC-0024",
+      "status": "queued",
+      "phase": "discover",
+      "control_state": "active",
+      "next_run_after_ms": 0,
+      "lease_until_ms": 0
+    },
+    {
+      "id": "job-c29bceb7-9e01-4891-ad58-d591aae6bbf1",
+      "source_id": "GDUFS-SRC-0012",
+      "status": "queued",
+      "phase": "discover",
+      "control_state": "active",
+      "next_run_after_ms": 0,
+      "lease_until_ms": 0
+    }
+  ],
+  "models": 0
+}

@@ -1,0 +1,13 @@
+[
+  {
+    "channel": "chrome",
+    "project": "desktop",
+    "startTime": "2026-10-19T12:35:05.666Z",
+    "duration": 90969.518,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0,
+    "exit": 1
+  }
+]

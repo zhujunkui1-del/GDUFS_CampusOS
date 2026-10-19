@@ -7,6 +7,8 @@ import {
   ContentWriteSchema,
   PublishSchema,
   ReviewSchema,
+  type ContentDetail,
+  type SourceDetail,
 } from "@/domain/console/contracts";
 import { consolePermission } from "./auth";
 import { ApiError } from "../errors";
@@ -15,6 +17,12 @@ import {
   completenessVersion,
 } from "@/lib/ingestion/completeness";
 import type { Statement } from "../assistant/database";
+import { tokenHash } from "../assistant/crypto";
+import { CommandSchema, ContentInputSchema } from "@/domain/console/contracts";
+import {
+  KnowledgeCategorySchema,
+  RadarCategorySchema,
+} from "@/domain/console/taxonomy";
 type Row = Record<string, string | number | null>;
 const publisher = {
   id: "sys-console-publisher",
@@ -22,6 +30,102 @@ const publisher = {
   role: "operator" as const,
 };
 export class ConsoleAutomationStore extends ConsoleGovernanceStore {
+  async classifyArticlePlacement(id: string, raw: unknown) {
+    consolePermission(this.actor, "publish");
+    const value = CommandSchema.extend({
+      radarCategory: RadarCategorySchema.nullable(),
+      knowledgeCategory: KnowledgeCategorySchema.nullable(),
+    })
+      .strict()
+      .refine((v) => !!v.radarCategory !== !!v.knowledgeCategory)
+      .parse(raw);
+    const d = await this.document(id);
+    if (!d.inputHash)
+      throw new ApiError(
+        "INVALID_ARGUMENT",
+        "此文章已清理或尚未形成可用修订。",
+      );
+    if (d.kind === "event" && !value.radarCategory)
+      throw new ApiError("INVALID_ARGUMENT", "结构化活动应归入校园雷达。");
+    const data = ContentInputSchema.parse(
+      Object.fromEntries(
+        Object.keys(ContentInputSchema.shape).map((k) => [
+          k,
+          d[k as keyof typeof d],
+        ]),
+      ),
+    );
+    const inputHash = await tokenHash(
+      JSON.stringify({
+        ...data,
+        radarCategory: value.radarCategory,
+        knowledgeCategory: value.knowledgeCategory,
+      }),
+    );
+    const revision = d.contentRevision + (inputHash !== d.inputHash ? 1 : 0);
+    const result = await this.mutate(
+      value,
+      "document.classify",
+      "document",
+      id,
+      value,
+      [
+        this.db
+          .prepare(
+            "UPDATE knowledge_documents SET radar_category=?,knowledge_category=?,content_revision=?,input_hash=?,approved_content_revision=CASE WHEN workflow_status='approved' THEN ? ELSE NULL END,approved_input_hash=CASE WHEN workflow_status='approved' THEN ? ELSE NULL END,version=version+1,updated_at=? WHERE id=?",
+          )
+          .bind(
+            value.radarCategory,
+            value.knowledgeCategory,
+            revision,
+            inputHash,
+            revision,
+            inputHash,
+            this.now(),
+            id,
+          ),
+        this.db
+          .prepare(
+            "INSERT OR IGNORE INTO document_tags(document_id,content_revision,tag) SELECT document_id,?,tag FROM document_tags WHERE document_id=? AND content_revision=?",
+          )
+          .bind(revision, id, d.contentRevision),
+        this.db
+          .prepare(
+            "INSERT OR IGNORE INTO console_content_attestations(document_id,content_revision,input_hash,admin_id,evidence_urls_json,created_at) SELECT document_id,?,?,?,evidence_urls_json,? FROM console_content_attestations WHERE document_id=? AND content_revision=? AND input_hash=?",
+          )
+          .bind(
+            revision,
+            inputHash,
+            this.actor.id,
+            this.now(),
+            id,
+            d.contentRevision,
+            d.inputHash,
+          ),
+        this.db
+          .prepare(
+            "INSERT OR IGNORE INTO console_content_attestations(document_id,content_revision,input_hash,admin_id,evidence_urls_json,created_at) SELECT ?,?,?,?,?,? WHERE EXISTS(SELECT 1 FROM document_fetches f JOIN console_content_versions v ON v.document_id=f.document_id AND v.version=f.snapshot_version WHERE f.document_id=? AND v.content_revision=? AND v.input_hash=? AND f.status IN(200,304) AND f.outcome IN('ok','not_modified') AND EXISTS(SELECT 1 FROM console_document_controls c WHERE c.document_id=f.document_id AND c.last_change_origin='source_author'))",
+          )
+          .bind(
+            id,
+            revision,
+            inputHash,
+            this.actor.id,
+            JSON.stringify([d.url]),
+            this.now(),
+            id,
+            d.contentRevision,
+            d.inputHash,
+          ),
+        this.snapshot(id),
+      ],
+      "publish",
+      d.sourceId,
+    );
+    await this.analyse(id);
+    return result;
+  }
+
   async autoPolicy(id: string) {
     await this.source(id);
     return this.db
@@ -135,6 +239,7 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
               : "notice";
       if (
         value.kind === "knowledge" &&
+        !value.radarCategory &&
         !value.knowledgeCategory &&
         p?.default_knowledge_category
       )
@@ -338,6 +443,146 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       id,
     );
   }
+  private async metadataPublication(
+    d: ContentDetail,
+    s: SourceDetail,
+    control: Row | null,
+  ) {
+    if (d.rightsScope !== "metadata_only" || d.kind !== "knowledge")
+      return null;
+    // A link card asserts only captured metadata. It does not assert an event's
+    // time/place or authorize third-party body text, indexing, or a map event.
+    const proof = await this.db
+      .prepare(
+        "SELECT 1 AS ok WHERE EXISTS(SELECT 1 FROM console_content_attestations WHERE document_id=? AND content_revision=? AND input_hash=?) OR EXISTS(SELECT 1 FROM document_fetches f JOIN console_content_versions v ON v.document_id=f.document_id AND v.version=f.snapshot_version WHERE f.document_id=? AND v.content_revision=? AND v.input_hash=? AND f.status IN(200,304) AND f.outcome IN('ok','not_modified') AND EXISTS(SELECT 1 FROM console_document_controls x WHERE x.document_id=f.document_id AND x.last_change_origin='source_author'))",
+      )
+      .bind(
+        d.id,
+        d.contentRevision,
+        d.inputHash,
+        d.id,
+        d.contentRevision,
+        d.inputHash,
+      )
+      .first();
+    const optOut = await this.db
+      .prepare(
+        "SELECT 1 AS ok FROM console_publication_policies WHERE source_id=? AND enabled=0",
+      )
+      .bind(s.id)
+      .first();
+    const blocked =
+      !!optOut ||
+      !s.enabled ||
+      s.permissionStatus === "denied" ||
+      !!control?.hold_reason ||
+      control?.review_hold === "rejected" ||
+      ["expired", "superseded"].includes(String(control?.lifecycle_status)) ||
+      !!(d.validUntil && Date.parse(d.validUntil) <= Date.parse(this.now()));
+    const issues =
+      blocked || control?.review_hold
+        ? [
+            {
+              code: "blocked",
+              severity: "error",
+              message: "文章已撤回、停用或失效",
+            },
+          ]
+        : !proof
+          ? [
+              {
+                code: "original_evidence",
+                severity: "error",
+                message: "原文身份、标题与发布时间尚未核对",
+              },
+            ]
+          : !!d.radarCategory === !!d.knowledgeCategory ||
+              d.contentType === "unknown"
+            ? [
+                {
+                  code: "category",
+                  severity: "error",
+                  message: "请选择唯一分类",
+                },
+              ]
+            : [];
+    const outcome = blocked ? "blocked" : issues.length ? "review" : "pass";
+    const checkId = crypto.randomUUID();
+    await this.db
+      .prepare(
+        "INSERT OR IGNORE INTO console_content_checks(id,document_id,document_version,content_revision,input_hash,source_version,policy_version,control_generation,rule_version,outcome,severity,issues_json,fields_json,evidence_json,created_at,created_by) VALUES(?,?,?,?,?,?,0,?,'console-metadata-v1',?,'error',?,'{}','[]',?,?)",
+      )
+      .bind(
+        checkId,
+        d.id,
+        d.version,
+        d.contentRevision,
+        d.inputHash,
+        s.version,
+        Number(control?.generation || 0),
+        outcome,
+        JSON.stringify(issues),
+        this.now(),
+        publisher.id,
+      )
+      .run();
+    const visible = await this.db
+      .prepare("SELECT 1 AS ok FROM console_public_documents WHERE id=?")
+      .bind(d.id)
+      .first();
+    if (
+      outcome !== "pass" ||
+      (visible &&
+        control?.last_publication_mode === "auto" &&
+        control.auto_policy_version === 0)
+    )
+      return { id: d.id, outcome, issues, published: !!visible };
+    const check = await this.db
+      .prepare(
+        "SELECT id FROM console_content_checks WHERE document_id=? AND content_revision=? AND input_hash=? AND source_version=? AND policy_version=0 AND control_generation=? AND rule_version='console-metadata-v1' AND outcome='pass'",
+      )
+      .bind(
+        d.id,
+        d.contentRevision,
+        d.inputHash,
+        s.version,
+        Number(control?.generation || 0),
+      )
+      .first<{ id: string }>();
+    if (!check)
+      return { id: d.id, outcome: "review", issues, published: false };
+    const commandId = crypto.randomUUID();
+    await this.mutate(
+      { commandId, expectedVersion: d.version },
+      "document.metadata_publish",
+      "document",
+      d.id,
+      { note: "按负责人默认公开要求发布已核对的文章元数据" },
+      [
+        this.db
+          .prepare(
+            "UPDATE knowledge_documents SET workflow_status='approved',review_status='approved',publication_status='published',lifecycle_status='active',approved_content_revision=content_revision,approved_input_hash=input_hash,version=version+1,updated_at=? WHERE id=?",
+          )
+          .bind(this.now(), d.id),
+        this.db
+          .prepare(
+            "INSERT INTO console_document_controls(document_id,last_publication_mode,auto_policy_version,auto_content_revision,auto_input_hash) VALUES(?,'auto',0,?,?) ON CONFLICT(document_id) DO UPDATE SET last_publication_mode='auto',auto_policy_version=0,auto_content_revision=excluded.auto_content_revision,auto_input_hash=excluded.auto_input_hash",
+          )
+          .bind(d.id, d.contentRevision, d.inputHash),
+        this.snapshot(d.id),
+        this.db
+          .prepare(
+            "INSERT INTO console_auto_publications(command_id,document_id,publication_version,check_id,policy_version,created_at) VALUES(?,?,?,?,0,?)",
+          )
+          .bind(commandId, d.id, d.version + 1, check.id, this.now()),
+      ],
+      "write",
+      s.id,
+      [],
+      { checkId: check.id },
+    );
+    return { id: d.id, outcome, issues, published: true };
+  }
   private async evaluate(id: string) {
     const d = await this.document(id),
       s = await this.source(d.sourceId),
@@ -346,6 +591,8 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       .prepare("SELECT * FROM console_document_controls WHERE document_id=?")
       .bind(id)
       .first<Row>();
+    const metadata = await this.metadataPublication(d, s, control);
+    if (metadata) return metadata;
     let blocked: string | null = null;
     if (!s.enabled || s.permissionStatus !== "approved")
       blocked = "来源暂停或访问许可失效";

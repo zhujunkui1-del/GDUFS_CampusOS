@@ -14,7 +14,9 @@ const single = process.argv.includes("--single");
 if (controls && !local)
   throw Error("Controls test requires isolated local environment");
 const dir =
-  "docs/verification/source-sync-2026-10-19/" +
+  (process.env.ARTICLE_UI_EVIDENCE_DIR ||
+    "docs/verification/source-sync-2026-10-19") +
+  "/" +
   (local ? "browser" : "cloud-browser");
 mkdirSync(dir, { recursive: true });
 const secretValues = Object.entries(

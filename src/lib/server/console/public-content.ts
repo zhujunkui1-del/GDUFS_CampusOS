@@ -37,18 +37,17 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
     where.push(
       q.surface === "radar"
         ? "d.radar_category IS NOT NULL"
-        : "d.knowledge_category IS NOT NULL",
+        : "d.knowledge_category IS NOT NULL AND d.radar_category IS NULL",
     );
-  if (q.category) {
-    if (!q.surface) throw new ApiError("INVALID_ARGUMENT", "请指定内容页面。");
-    const category = (
-      q.surface === "radar" ? RadarCategorySchema : KnowledgeCategorySchema
-    ).parse(q.category);
-    where.push(
-      q.surface === "radar" ? "d.radar_category=?" : "d.knowledge_category=?",
-    );
-    params.push(category);
-  }
+  const category = q.category
+    ? (() => {
+        if (!q.surface)
+          throw new ApiError("INVALID_ARGUMENT", "请指定内容页面。");
+        return (
+          q.surface === "radar" ? RadarCategorySchema : KnowledgeCategorySchema
+        ).parse(q.category);
+      })()
+    : null;
   if (q.q) {
     where.push("d.title LIKE ? ESCAPE '\\'");
     params.push(pattern(q.q));
@@ -56,6 +55,26 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
   if (q.source) {
     where.push("s.display_name LIKE ? ESCAPE '\\'");
     params.push(pattern(q.source));
+  }
+  const base = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where.join(" AND ")}`;
+  const categoryColumn =
+    q.surface === "radar" ? "d.radar_category" : "d.knowledge_category";
+  const facets =
+    q.surface && !q.id
+      ? await db
+          .prepare(
+            `SELECT ${categoryColumn} AS category,count(*) AS n ${base} GROUP BY ${categoryColumn}`,
+          )
+          .bind(...params)
+          .all<{ category: string; n: number }>()
+      : { results: [] };
+  const counts = Object.fromEntries(
+    facets.results.map((r) => [r.category, r.n]),
+  );
+  const total = facets.results.reduce((n, r) => n + r.n, 0);
+  if (category) {
+    where.push(categoryColumn + "=?");
+    params.push(category);
   }
   const from = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where.join(" AND ")}`;
   const rows = await db
@@ -90,6 +109,8 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
     limit: q.id ? 1 : q.limit,
     offset: q.id ? 0 : q.offset,
     hasMore: !q.id && rows.results.length > q.limit,
+    counts,
+    total,
   };
 }
 export const publicContent = withApi(async (request) => {

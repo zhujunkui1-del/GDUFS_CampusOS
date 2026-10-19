@@ -1,0 +1,198 @@
+{
+  "config": {
+    "argv": [
+      "D:\\nodejs\\node.exe",
+      "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "tests/e2e/public-feed.spec.ts",
+      "--project",
+      "desktop",
+      "--workers",
+      "1",
+      "--reporter",
+      "json",
+      "--output",
+      ".map-tools/console-v2/cloud-browser/chrome-desktop-single"
+    ],
+    "configFile": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\playwright.config.ts",
+    "rootDir": "D:/tlydcg/Codex_work/广外AI应用大赛/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/tlydcg/Codex_work/广外AI应用大赛/.map-tools/console-v2/cloud-browser/chrome-desktop-single",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "D:/tlydcg/Codex_work/广外AI应用大赛/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/tlydcg/Codex_work/广外AI应用大赛/.map-tools/console-v2/cloud-browser/chrome-desktop-single",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "D:/tlydcg/Codex_work/广外AI应用大赛/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\.map-tools\\console-v2\\cloud-browser\\chrome-desktop-single",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "desktop",
+        "testDir": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\tests\\e2e",
+        "snapshotDir": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\tests\\e2e",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:8787",
+          "trace": "retain-on-failure",
+          "channel": "chrome",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "desktop"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "public-feed.spec.ts",
+      "file": "public-feed.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "real D1 metadata reaches radar and knowledge, with filtering and immediate withdrawal",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 90023,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 90000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\tests\\e2e\\public-feed.spec.ts",
+                        "column": 50,
+                        "line": 190
+                      },
+                      "message": "Error: locator.selectOption: Test timeout of 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('一级分类', { exact: true })\u001b[22m\n\n\n  188 |   await expect(page.getByText(\"完整性检查\", { exact: true })).toHaveCount(0);\n  189 |   await expect(page.getByText(\"版本记录\", { exact: true })).toHaveCount(0);\n> 190 |   await page.getByLabel(\"一级分类\", { exact: true }).selectOption(\"knowledge\");\n      |                                                  ^\n  191 |   await page\n  192 |     .getByLabel(\"二级分类\", { exact: true })\n  193 |     .selectOption(\"campus_life\");\n    at D:\\tlydcg\\Codex_work\\广外AI应用大赛\\tests\\e2e\\public-feed.spec.ts:190:50"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T12:35:06.138Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\.map-tools\\console-v2\\cloud-browser\\chrome-desktop-single\\public-feed-real-D1-metada-09593-ng-and-immediate-withdrawal-desktop\\error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "24445ed6b00ae30c0b54-e8b744ab42d7c6faed5b",
+          "file": "public-feed.spec.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-19T12:35:05.666Z",
+    "duration": 90969.518,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
