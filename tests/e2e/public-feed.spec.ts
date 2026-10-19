@@ -227,10 +227,8 @@ test("real D1 metadata reaches radar and knowledge, with filtering and immediate
   await page.goto("/admin/reviews");
   await page.getByText("筛选与排序", { exact: true }).click();
   await expect(
-    page
-      .getByRole("combobox", { name: "审核状态", exact: true })
-      .locator("option"),
-  ).toHaveText(["全部", "批准", "尚未批准"]);
+    page.getByRole("combobox", { name: "状态", exact: true }).locator("option"),
+  ).toHaveText(["全部", "已发布", "待审核"]);
   for (const name of [
     "公开状态",
     "发布止日",

@@ -1,0 +1,64 @@
+{
+  "startedAt": "2026-10-19T17:59:15.470Z",
+  "ownerAuthorization": "2026-10-20 six browser comments; only the explicitly requested HQ article",
+  "targets": [
+    {
+      "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+      "sourceId": "GDUFS-SRC-0017"
+    }
+  ],
+  "steps": [
+    {
+      "at": "2026-10-19T17:59:30.737Z",
+      "receipts": [
+        {
+          "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+          "state": "published",
+          "version": 10,
+          "publicStatus": 200,
+          "originalFactsUnchanged": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T17:59:33.823Z",
+      "receipts": [
+        {
+          "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+          "state": "pending",
+          "version": 11,
+          "publicStatus": 404,
+          "originalFactsUnchanged": true
+        }
+      ]
+    },
+    {
+      "at": "2026-10-19T17:59:36.896Z",
+      "receipts": [
+        {
+          "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+          "state": "published",
+          "version": 12,
+          "publicStatus": 200,
+          "originalFactsUnchanged": true
+        }
+      ]
+    }
+  ],
+  "complete": true,
+  "before": [
+    {
+      "id": "content-8de39637-4cd5-4eff-8e3d-97ea4d788dc2",
+      "sourceId": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学文印中心多功能印刷机维保服务采购项目询价公告",
+      "url": "https://hqc.gdufs.edu.cn/info/1006/3098.htm",
+      "version": 7,
+      "state": "pending",
+      "factsHash": "2044bcc49e8343840c00449009dc76d89d125adcce94bcb6fcdb71c778e74897"
+    }
+  ],
+  "otherDocumentsUnchanged": 51,
+  "untouched404": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+  "library404": 404,
+  "finishedAt": "2026-10-19T17:59:37.897Z"
+}

@@ -1,0 +1,362 @@
+{
+  "recordedAt": "2026-10-19T17:57:26.216Z",
+  "realCloud": true,
+  "target": "campusos-preview",
+  "before": {
+    "at": "2026-10-19T17:57:22.949Z",
+    "counts": {
+      "sources": 220,
+      "enabled": 220,
+      "verified": 6,
+      "documents": 52,
+      "published": 49,
+      "jobs": 32,
+      "conversations": 0,
+      "messages": 0,
+      "runs": 0
+    },
+    "migrations": [
+      "0001_platform_and_campus.sql",
+      "0002_knowledge_and_events.sql",
+      "0003_route_geometry_guards.sql",
+      "0004_assistant_shared_state.sql",
+      "0005_assistant_conversations.sql",
+      "0006_console_registry.sql",
+      "0007_content_contract.sql",
+      "0008_ingestion_pipeline.sql",
+      "0009_ingestion_clock_guards.sql",
+      "0010_document_topics.sql",
+      "0011_ingestion_daily_budget.sql",
+      "0012_manual_intake_and_evidence.sql",
+      "0013_content_edit_intake_guard.sql",
+      "0014_console_v2_governance.sql",
+      "0015_console_v2_automation.sql",
+      "0016_console_v2_retention.sql",
+      "0017_console_v2_scheduler.sql",
+      "0018_console_v2_public_freshness.sql",
+      "0019_console_v2_stop_guards.sql",
+      "0020_console_v2_intake_observations.sql",
+      "0021_console_v2_review_holds.sql",
+      "0022_console_simple_admin_actions.sql",
+      "0023_manual_metadata_batch_budget.sql",
+      "0024_article_placement_and_metadata.sql"
+    ],
+    "sourceHash": "338992258759f1308eafeee95edc1d0826356b24a0577a3ab4d10b678c105049"
+  },
+  "storageBeforeBytes": 3014656,
+  "after": {
+    "sources": 220,
+    "enabled": 220,
+    "verified": 6,
+    "documents": 52,
+    "published": 49,
+    "jobs": 32,
+    "conversations": 0,
+    "messages": 0,
+    "runs": 0
+  },
+  "migrations": [
+    "0001_platform_and_campus.sql",
+    "0002_knowledge_and_events.sql",
+    "0003_route_geometry_guards.sql",
+    "0004_assistant_shared_state.sql",
+    "0005_assistant_conversations.sql",
+    "0006_console_registry.sql",
+    "0007_content_contract.sql",
+    "0008_ingestion_pipeline.sql",
+    "0009_ingestion_clock_guards.sql",
+    "0010_document_topics.sql",
+    "0011_ingestion_daily_budget.sql",
+    "0012_manual_intake_and_evidence.sql",
+    "0013_content_edit_intake_guard.sql",
+    "0014_console_v2_governance.sql",
+    "0015_console_v2_automation.sql",
+    "0016_console_v2_retention.sql",
+    "0017_console_v2_scheduler.sql",
+    "0018_console_v2_public_freshness.sql",
+    "0019_console_v2_stop_guards.sql",
+    "0020_console_v2_intake_observations.sql",
+    "0021_console_v2_review_holds.sql",
+    "0022_console_simple_admin_actions.sql",
+    "0023_manual_metadata_batch_budget.sql",
+    "0024_article_placement_and_metadata.sql",
+    "0025_administrator_publication.sql"
+  ],
+  "sourceStateUnchanged": true,
+  "foreignKeyViolations": 0,
+  "storage": {
+    "provider": "cloudflare_api",
+    "bytes": 3031040,
+    "measuredAt": "2026-10-19T17:57:22.949Z",
+    "estimated": false
+  },
+  "workerVersions": [
+    {
+      "version_id": "f92c5b8f-e789-42a1-ab8e-ba20368060b7",
+      "percentage": 100
+    }
+  ],
+  "documents": [
+    {
+      "id": "content-049f8e2d-29cf-4b3a-acac-5427c5b36cd8",
+      "source_id": "GDUFS-SRC-0008",
+      "title": "关于图书馆学习空间分批次开放预约使用的通知",
+      "published_at": "2026-06-02",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-0a880db5-dfde-492d-ae6b-ffa6fbf3a007",
+      "source_id": "GDUFS-SRC-0008",
+      "title": "2026年CASHL庆祝教师节全国优惠活动通知",
+      "published_at": "2026-09-17",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-0c9c10b1-9ce7-4911-93ce-32be9c04dcab",
+      "source_id": "GDUFS-SRC-0012",
+      "title": "云山卓越讲坛第19讲：浅谈动机性推理在语言研究中的正负作用",
+      "published_at": "2026-06-05",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 3
+    },
+    {
+      "id": "content-14534921-b918-45d5-a12c-d3de3265a886",
+      "source_id": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学大学城校区北苑6栋智能电表采购项目询价公告",
+      "published_at": "2026-07-31",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-14fc7569-3383-4bd0-8303-63633bc48f00",
+      "source_id": "GDUFS-SRC-0010",
+      "title": "2026-2027学年（第二批）本科生社会助学金 拟资助学生名单公示",
+      "published_at": "2026-10-19T06:08:20.000Z",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-195b42d9-da38-450b-9d14-2e07b28cbe1f",
+      "source_id": "GDUFS-SRC-0012",
+      "title": "著名教授论坛第745讲：观物与观美",
+      "published_at": "2026-06-12",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-1a952aa4-2e76-49e4-b32b-a61702fd7e64",
+      "source_id": "GDUFS-SRC-0024",
+      "title": "中国青年志愿者第29届（广东外语外贸大学第13届）研究生支教团拟推荐名单公示",
+      "published_at": "2026-09-01",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-1b30ab7b-10b3-4c3a-a305-18a5c6fb05e1",
+      "source_id": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学大学城校区北苑6栋智能电表采购项目询价结果公告",
+      "published_at": "2026-08-10",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-1ed334a4-15a1-4105-b6b9-3f29e30ad0ea",
+      "source_id": "GDUFS-SRC-0012",
+      "title": "著名教授论坛第755讲：区域重塑与话语建构——近代以来西方视野下的中国西南边疆",
+      "published_at": "2026-06-23",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-2087905c-eebc-4878-b736-af05d05e185f",
+      "source_id": "GDUFS-SRC-0008",
+      "title": "让图书回家——归还超期图书免滞纳金活动",
+      "published_at": "2026-06-16",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-222ef62d-15c4-47b7-b167-0c51cb281cff",
+      "source_id": "GDUFS-SRC-0012",
+      "title": "云山学术沙龙403期：Speed matters: Decomposing systemic risk during China’s deleveraging campaign",
+      "published_at": "2026-06-14",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-2a1a1c4e-0833-4186-afa6-e7696982513b",
+      "source_id": "GDUFS-SRC-0010",
+      "title": "关于召开2025-2026学年“校长奖章”评审会的通知",
+      "published_at": "2026-10-16T14:14:18.000Z",
+      "review_status": "approved",
+      "publication_status": "withdrawn",
+      "lifecycle_status": "withdrawn",
+      "version": 6
+    },
+    {
+      "id": "content-305cb649-40f0-4d2e-84af-dad2428ca9f7",
+      "source_id": "GDUFS-SRC-0024",
+      "title": "关于我校学生跨校参加第十五届“挑战杯”中国大学生创业计划竞赛东北振兴产业升级专项赛的公示",
+      "published_at": "2026-08-21",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-34a53f55-17d8-478d-be13-baa470668b36",
+      "source_id": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学校园零星维修工程设计服务项目 询价结果公示",
+      "published_at": "2026-07-13",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-3a97f649-6af6-4837-a09f-692b58553e1f",
+      "source_id": "GDUFS-SRC-0024",
+      "title": "关于开展“信天翁”计划——大学生海外实践（调研）活动的通知",
+      "published_at": "2026-07-14",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 2
+    },
+    {
+      "id": "content-45cb5a1c-345c-44e2-a463-3466257aa075",
+      "source_id": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学校园零星维修工程 工程造价咨询服务项目询价结果公示",
+      "published_at": "2026-06-17",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-48cd5a55-d09e-4534-b6ce-e535a4504c64",
+      "source_id": "GDUFS-SRC-0017",
+      "title": "广东外语外贸大学学生饭堂特色档口餐饮技术服务合作项目遴选结果公示",
+      "published_at": "2026-07-07",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-4a663b08-c81b-4d0f-a1d3-7812b0acc7c9",
+      "source_id": "GDUFS-SRC-0012",
+      "title": "著名教授论坛第754讲：知识驱动的数据合成：人工智能时代语言学的功能转型",
+      "published_at": "2026-06-12",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-53cb4d86-f532-497d-9a56-77116c6f7440",
+      "source_id": "GDUFS-SRC-0010",
+      "title": "关于推荐2026年度港澳及华侨学生、台湾学生奖学金获得者候选人的通知",
+      "published_at": "2026-10-10T07:48:05.000Z",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    },
+    {
+      "id": "content-69078c91-fb02-4445-80f2-6df012df0b93",
+      "source_id": "GDUFS-SRC-0024",
+      "title": "关于做好第13届研究生支教团志愿者（推荐免试攻读硕士研究生）招募工作的通知",
+      "published_at": "2026-08-28",
+      "review_status": "approved",
+      "publication_status": "published",
+      "lifecycle_status": "active",
+      "version": 5
+    }
+  ],
+  "queries": [
+    {
+      "ordinal": 1,
+      "durationMs": 1.3223,
+      "wallMs": 488,
+      "rowsRead": 990,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 2,
+      "durationMs": 0.2451,
+      "wallMs": 149,
+      "rowsRead": 24,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 3,
+      "durationMs": 2.0791,
+      "wallMs": 176,
+      "rowsRead": 220,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 4,
+      "durationMs": 1.5743,
+      "wallMs": 174,
+      "rowsRead": 1276,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 5,
+      "durationMs": 0.2185,
+      "wallMs": 149,
+      "rowsRead": 25,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 6,
+      "durationMs": 1.727,
+      "wallMs": 235,
+      "rowsRead": 2499,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 7,
+      "durationMs": 2.5632,
+      "wallMs": 183,
+      "rowsRead": 220,
+      "rowsWritten": 0
+    },
+    {
+      "ordinal": 8,
+      "durationMs": 0.3897,
+      "wallMs": 160,
+      "rowsRead": 20,
+      "rowsWritten": 0
+    }
+  ],
+  "migrationApplied": true,
+  "permanentDataCleanupExecuted": false,
+  "contentPublishedByThisRun": false
+}

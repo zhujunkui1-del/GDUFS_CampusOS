@@ -1,0 +1,46 @@
+[
+  {
+    "channel": "chrome",
+    "project": "desktop",
+    "startTime": "2026-10-19T18:02:55.589Z",
+    "duration": 11955.008,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0,
+    "exit": 0
+  },
+  {
+    "channel": "chrome",
+    "project": "mobile",
+    "startTime": "2026-10-19T18:04:01.459Z",
+    "duration": 10892.736,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0,
+    "exit": 0
+  },
+  {
+    "channel": "msedge",
+    "project": "desktop",
+    "startTime": "2026-10-19T18:05:01.426Z",
+    "duration": 10839.819,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0,
+    "exit": 0
+  },
+  {
+    "channel": "msedge",
+    "project": "mobile",
+    "startTime": "2026-10-19T18:06:01.398Z",
+    "duration": 11938.065999999999,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0,
+    "exit": 0
+  }
+]

@@ -1,0 +1,67 @@
+{
+  "recordedAt": "2026-10-19T18:02:19.756Z",
+  "start": "2026-10-19T17:42:18.533Z",
+  "end": "2026-10-19T18:02:19.756Z",
+  "actualCloudGraphQL": true,
+  "grouping": "Whole existing preview Worker, by invocation status; includes all routes/traffic in this window, not per-ingestion CPU.",
+  "sampled": true,
+  "fieldDescriptions": [
+    {
+      "description": "CPU time 50th percentile - microseconds",
+      "name": "cpuTimeP50"
+    },
+    {
+      "description": "CPU time 95th percentile - microseconds",
+      "name": "cpuTimeP95"
+    },
+    {
+      "description": "CPU time 99th percentile - microseconds",
+      "name": "cpuTimeP99"
+    },
+    {
+      "description": "Wall time 50th percentile - microseconds",
+      "name": "wallTimeP50"
+    },
+    {
+      "description": "Wall time 95th percentile - microseconds",
+      "name": "wallTimeP95"
+    }
+  ],
+  "groups": [
+    {
+      "dimensions": {
+        "status": "clientDisconnected"
+      },
+      "quantiles": {
+        "cpuTimeP50": 17426,
+        "cpuTimeP95": 17426,
+        "cpuTimeP99": 17426,
+        "wallTimeP50": 24430,
+        "wallTimeP95": 24430
+      },
+      "sum": {
+        "errors": 0,
+        "requests": 1,
+        "subrequests": 2
+      }
+    },
+    {
+      "dimensions": {
+        "status": "success"
+      },
+      "quantiles": {
+        "cpuTimeP50": 3403,
+        "cpuTimeP95": 14647,
+        "cpuTimeP99": 21281,
+        "wallTimeP50": 22789,
+        "wallTimeP95": 648121
+      },
+      "sum": {
+        "errors": 0,
+        "requests": 105,
+        "subrequests": 128
+      }
+    }
+  ],
+  "longTermFreeCapacityVerified": false
+}

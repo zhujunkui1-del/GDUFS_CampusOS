@@ -106,6 +106,7 @@ export const ArticleV2Query = z
       .enum(["pending", "approved", "returned", "rejected", "unapproved"])
       .optional(),
     publication: z.enum(["draft", "published", "withdrawn"]).optional(),
+    state: z.enum(["published", "pending"]).optional(),
     publishedAfter: z.iso.date().optional(),
     publishedBefore: z.iso.date().optional(),
     fetchedAfter: z.iso.date().optional(),

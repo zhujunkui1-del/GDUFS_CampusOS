@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { ArticlePublicationState } from "./article-publication";
 import {
   ContentTypeSchema,
   RightsScopeSchema,
@@ -242,6 +243,7 @@ export type SourceDetail = SourceSummary &
     archivedAt: string | null;
   };
 export type ContentSummary = {
+  publicationState: ArticlePublicationState;
   id: string;
   sourceId: string;
   sourceName: string;

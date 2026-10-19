@@ -480,7 +480,7 @@ export class ConsoleStore {
     const [rows, count] = await Promise.all([
       this.db
         .prepare(
-          `SELECT d.*,s.display_name AS source_name FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where} ORDER BY COALESCE(d.updated_at,d.fetched_at) DESC,d.id LIMIT ? OFFSET ?`,
+          `SELECT d.*,s.display_name AS source_name,EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id) AS public_visible FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where} ORDER BY COALESCE(d.updated_at,d.fetched_at) DESC,d.id LIMIT ? OFFSET ?`,
         )
         .bind(...args, q.limit, q.offset)
         .all<Row>(),
@@ -500,6 +500,7 @@ export class ConsoleStore {
   }
   private contentSummary(row: Row): ContentSummary {
     return {
+      publicationState: row.public_visible === 1 ? "published" : "pending",
       id: String(row.id),
       sourceId: String(row.source_id),
       sourceName: String(row.source_name),
@@ -516,7 +517,7 @@ export class ConsoleStore {
     consolePermission(this.actor, "read");
     const row = await this.db
       .prepare(
-        `SELECT d.*,s.display_name AS source_name FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE d.id=? AND ${documentScope}`,
+        `SELECT d.*,s.display_name AS source_name,EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id) AS public_visible FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE d.id=? AND ${documentScope}`,
       )
       .bind(id)
       .first<Row>();
@@ -826,7 +827,6 @@ export class ConsoleStore {
     consolePermission(this.actor, "publish");
     if (!withdraw) {
       if (
-        document.reviewStatus !== "approved" ||
         !document.inputHash ||
         document.contentRevision <= 0 ||
         !["metadata_only", "excerpt_and_link", "licensed_full_text"].includes(
@@ -869,11 +869,15 @@ export class ConsoleStore {
       [
         this.db
           .prepare(
-            "UPDATE knowledge_documents SET publication_status=?,lifecycle_status=?,version=version+1,updated_at=? WHERE id=?",
+            "UPDATE knowledge_documents SET publication_status=?,lifecycle_status=?,workflow_status=?,review_status=?,approved_content_revision=CASE WHEN ?=0 THEN content_revision ELSE NULL END,approved_input_hash=CASE WHEN ?=0 THEN input_hash ELSE NULL END,version=version+1,updated_at=? WHERE id=?",
           )
           .bind(
             withdraw ? "withdrawn" : "published",
             withdraw ? "withdrawn" : "active",
+            withdraw ? "pending" : "approved",
+            withdraw ? "pending" : "approved",
+            Number(withdraw),
+            Number(withdraw),
             this.now(),
             id,
           ),

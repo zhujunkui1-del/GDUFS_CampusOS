@@ -1222,8 +1222,7 @@ export function ContentList({
                       {row.sourceName} · 版本 {row.version}
                     </span>
                   </div>
-                  <Badge value={row.reviewStatus} />
-                  <Badge value={row.publicationStatus} />
+                  <Badge value={row.publicationState} />
                 </Link>
               ))
             ) : (
@@ -1306,8 +1305,7 @@ function ExistingContentEditor({
   const [draft, setDraft] = useState<ContentInput | null>(null),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
-    [preview, setPreview] = useState(false),
-    [withdraw, setWithdraw] = useState(false);
+    [preview, setPreview] = useState(false);
   const form =
     draft ||
     (data
@@ -1388,7 +1386,7 @@ function ExistingContentEditor({
       <Heading title={isNew ? "登记内容" : data!.title}>
         {data && (
           <>
-            <Badge value={data.publicationStatus} />
+            <Badge value={data.publicationState} />
             <Link
               className="text-link console-article-whitelist"
               href={"/admin/whitelist?type=document&target=" + id}
@@ -1707,7 +1705,7 @@ function ExistingContentEditor({
           <section className="console-card">
             <h2>审核与发布</h2>
             <p>
-              <Badge value={data.reviewStatus} />
+              <Badge value={data.publicationState} />
             </p>
             <External url={data.url} label="查看原文" />
             <div className="console-actions">
@@ -1726,30 +1724,20 @@ function ExistingContentEditor({
               </button>
               <button
                 disabled={busy || !canPublish}
-                onClick={() => {
-                  setWithdraw(true);
-                }}
+                onClick={() =>
+                  void run(() =>
+                    request(
+                      "content/" + id + "/withdraw",
+                      "POST",
+                      command(data.version),
+                    ),
+                  )
+                }
               >
                 撤回
               </button>
             </div>
           </section>
-          <Confirm
-            open={withdraw}
-            onClose={() => setWithdraw(false)}
-            title="撤回这条内容？"
-            description="内容会停止公开，检索结果将同步失效。历史版本保留。"
-            action="撤回"
-            busy={busy}
-            confirm={() =>
-              void run(async () => {
-                await request("content/" + id + "/withdraw", "POST", {
-                  ...command(data.version),
-                });
-                setWithdraw(false);
-              })
-            }
-          />
         </>
       )}
     </>

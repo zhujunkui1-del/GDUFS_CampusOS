@@ -567,6 +567,11 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       );
       if (q.review !== "unapproved") args.push(q.review);
     }
+    if (q.state)
+      where.push(
+        (q.state === "pending" ? "NOT " : "") +
+          "EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)",
+      );
     if (q.category) {
       where.push("(d.radar_category=? OR d.knowledge_category=?)");
       args.push(q.category, q.category);
@@ -668,7 +673,10 @@ export class ConsoleGovernanceStore extends ManualImportStore {
         .first<{ n: number }>(),
     ]);
     return {
-      items: rows.results,
+      items: rows.results.map((row) => ({
+        ...row,
+        publication_state: row.public_visible === 1 ? "published" : "pending",
+      })),
       total: count?.n || 0,
       limit: q.limit,
       offset: q.offset,
@@ -679,7 +687,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     const sources = await this.sourcesV2({ ...q, limit: 1 });
     const stats = await this.db
       .prepare(
-        `SELECT (SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND archived_at IS NULL) AS sources,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND ${active}) AS enabled,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND archived_at IS NULL AND NOT(${active}) AND operating_status NOT IN('closed','unreachable')) AS paused,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND operating_status IN('closed','unreachable') AND archived_at IS NULL) AS unavailable,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND date((SELECT created_at FROM console_content_versions v WHERE v.document_id=d.id AND v.version=1),'+8 hours')=date('now','+8 hours')) AS todayNew,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND d.workflow_status='pending') AS pending,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND (d.publication_status='withdrawn' OR d.lifecycle_status<>'active' OR julianday(d.valid_until)<=julianday('now'))) AS inactive,(SELECT count(*) FROM ingestion_jobs WHERE status='failed') AS failed,(SELECT max(last_success_at) FROM knowledge_sources WHERE console_managed=1) AS lastSync,(SELECT min(next_sync_at_ms) FROM knowledge_sources s WHERE ${visible} AND ${active}) AS nextSync`,
+        `SELECT (SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND archived_at IS NULL) AS sources,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND ${active}) AS enabled,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND archived_at IS NULL AND NOT(${active}) AND operating_status NOT IN('closed','unreachable')) AS paused,(SELECT count(*) FROM knowledge_sources s WHERE ${visible} AND operating_status IN('closed','unreachable') AND archived_at IS NULL) AS unavailable,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND date((SELECT created_at FROM console_content_versions v WHERE v.document_id=d.id AND v.version=1),'+8 hours')=date('now','+8 hours')) AS todayNew,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND NOT EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)) AS pending,(SELECT count(*) FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${docs} AND ${visible} AND (d.publication_status='withdrawn' OR d.lifecycle_status<>'active' OR julianday(d.valid_until)<=julianday('now'))) AS inactive,(SELECT count(*) FROM ingestion_jobs WHERE status='failed') AS failed,(SELECT max(last_success_at) FROM knowledge_sources WHERE console_managed=1) AS lastSync,(SELECT min(next_sync_at_ms) FROM knowledge_sources s WHERE ${visible} AND ${active}) AS nextSync`,
       )
       .first<Row>();
     const storage = await this.db

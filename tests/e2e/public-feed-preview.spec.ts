@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { readFileSync, mkdirSync } from "node:fs";
+import { readFileSync, mkdirSync, existsSync } from "node:fs";
 import { previewConsoleCredential } from "./helpers/console-credential";
 test.skip(
   process.env.SOURCE_SYNC_PUBLIC_E2E !== "1",
@@ -28,8 +28,18 @@ test("five real official sources are anonymously visible on radar and knowledge"
   );
   expect(classified.complete).toBe(true);
   const allIds: Record<string, string[]> = {};
+  // D-054: only explicit owner publication receipts release historical withdrawals.
+  const ownerFile =
+    "docs/verification/two-state-2026-10-20/owner-publication.json";
+  const owner = existsSync(ownerFile)
+    ? JSON.parse(readFileSync(ownerFile, "utf8"))
+    : null;
+  const released: string[] = owner?.complete
+    ? owner.targets.map((r: { id: string }) => r.id)
+    : [];
   const old: string[] = run.sources.flatMap(
-    (s: { skipped: { id: string }[] }) => s.skipped.map((r) => r.id),
+    (s: { skipped: { id: string }[] }) =>
+      s.skipped.filter((r) => !released.includes(r.id)).map((r) => r.id),
   );
   const dir =
     process.env.SOURCE_SYNC_EVIDENCE_DIR ||
@@ -212,10 +222,8 @@ test("five real official sources are anonymously visible on radar and knowledge"
   await page.goto("/admin/reviews");
   await page.getByText("筛选与排序", { exact: true }).click();
   await expect(
-    page
-      .getByRole("combobox", { name: "审核状态", exact: true })
-      .locator("option"),
-  ).toHaveText(["全部", "批准", "尚未批准"]);
+    page.getByRole("combobox", { name: "状态", exact: true }).locator("option"),
+  ).toHaveText(["全部", "已发布", "待审核"]);
   for (const label of [
     "公开状态",
     "发布止日",

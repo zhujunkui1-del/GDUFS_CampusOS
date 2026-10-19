@@ -19,6 +19,7 @@ import {
 import type { Statement } from "../assistant/database";
 import { tokenHash } from "../assistant/crypto";
 import { CommandSchema, ContentInputSchema } from "@/domain/console/contracts";
+import { classifyArticle } from "@/domain/console/article-classification";
 import {
   KnowledgeCategorySchema,
   RadarCategorySchema,
@@ -121,6 +122,10 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       ],
       "publish",
       d.sourceId,
+      [],
+      d.publicationState === "published"
+        ? { manualRevision: revision, manualInputHash: inputHash }
+        : {},
     );
     await this.analyse(id);
     return result;
@@ -288,6 +293,13 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
   }
   override async publish(id: string, raw: unknown, withdraw = false) {
     const v = PublishSchema.parse(raw);
+    const d = await this.document(id);
+    if (
+      !withdraw &&
+      d.kind === "knowledge" &&
+      d.rightsScope === "metadata_only"
+    )
+      return this.publishArticleMetadata(d, v);
     // The hold is written in the same command transaction as publication/withdrawal.
     this.pendingHold = { id, withdraw };
     try {
@@ -295,6 +307,85 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
     } finally {
       this.pendingHold = undefined;
     }
+  }
+  private async publishArticleMetadata(
+    d: ContentDetail,
+    v: ReturnType<typeof PublishSchema.parse>,
+  ) {
+    consolePermission(this.actor, "publish");
+    if (!d.inputHash || d.contentRevision <= 0)
+      throw new ApiError("INVALID_ARGUMENT", "文章内容已清理，请先恢复内容。");
+    const s = await this.source(d.sourceId);
+    if (!s.enabled || s.permissionStatus === "denied")
+      throw new ApiError(
+        "INVALID_ARGUMENT",
+        "请先启用来源并解除禁止发布状态。",
+      );
+    const categories =
+      !!d.radarCategory !== !!d.knowledgeCategory
+        ? {
+            radarCategory: d.radarCategory,
+            knowledgeCategory: d.knowledgeCategory,
+          }
+        : classifyArticle(d.title);
+    const data = ContentInputSchema.parse(
+      Object.fromEntries(
+        Object.keys(ContentInputSchema.shape).map((k) => [
+          k,
+          d[k as keyof typeof d],
+        ]),
+      ),
+    );
+    const input = {
+      ...data,
+      ...categories,
+      contentType: d.contentType === "unknown" ? "notice" : d.contentType,
+    };
+    const changed =
+      input.radarCategory !== d.radarCategory ||
+      input.knowledgeCategory !== d.knowledgeCategory ||
+      input.contentType !== d.contentType;
+    const hash = changed ? await tokenHash(JSON.stringify(input)) : d.inputHash;
+    const revision = d.contentRevision + Number(changed);
+    return this.mutate(
+      v,
+      "document.publish",
+      "document",
+      d.id,
+      { ...v, note: "管理员直接发布" },
+      [
+        this.db
+          .prepare(
+            "INSERT INTO console_document_controls(document_id,last_publication_mode) VALUES(?,'manual') ON CONFLICT(document_id) DO UPDATE SET generation=generation+1,hold_reason=NULL,hold_at=NULL,review_hold=NULL,review_hold_revision=NULL,review_hold_input_hash=NULL,last_publication_mode='manual'",
+          )
+          .bind(d.id),
+        this.db
+          .prepare(
+            "UPDATE knowledge_documents SET radar_category=?,knowledge_category=?,content_type=?,input_hash=?,content_revision=?,workflow_status='approved',review_status='approved',approved_content_revision=?,approved_input_hash=?,publication_status='published',lifecycle_status='active',version=version+1,updated_at=? WHERE id=?",
+          )
+          .bind(
+            input.radarCategory,
+            input.knowledgeCategory,
+            input.contentType,
+            hash,
+            revision,
+            revision,
+            hash,
+            this.now(),
+            d.id,
+          ),
+        this.db
+          .prepare(
+            "INSERT OR IGNORE INTO document_tags(document_id,content_revision,tag) SELECT document_id,?,tag FROM document_tags WHERE document_id=? AND content_revision=?",
+          )
+          .bind(revision, d.id, d.contentRevision),
+        this.snapshot(d.id),
+      ],
+      "publish",
+      d.sourceId,
+      [],
+      { manualRevision: revision, manualInputHash: hash },
+    );
   }
   private pendingReview?: {
     id: string;
@@ -352,7 +443,7 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
         ...args[5],
         this.db
           .prepare(
-            "INSERT INTO console_document_controls(document_id,hold_reason,hold_at,last_publication_mode) VALUES(?,?,?,'manual') ON CONFLICT(document_id) DO UPDATE SET generation=generation+1,hold_reason=excluded.hold_reason,hold_at=excluded.hold_at,last_publication_mode='manual'",
+            "INSERT INTO console_document_controls(document_id,hold_reason,hold_at,last_publication_mode) VALUES(?,?,?,'manual') ON CONFLICT(document_id) DO UPDATE SET generation=generation+1,hold_reason=excluded.hold_reason,hold_at=excluded.hold_at,last_publication_mode='manual',review_hold=NULL,review_hold_revision=NULL,review_hold_input_hash=NULL",
           )
           .bind(
             h.id,

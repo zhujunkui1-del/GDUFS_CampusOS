@@ -1,4 +1,5 @@
 "use client";
+import { articlePublicationNames } from "@/domain/console/article-publication";
 import { SourceCollectionPolicy, RunnerTokens } from "./sync-panel";
 import { WhitelistWorkspace, RetentionWorkspace } from "./retention-workspace";
 import { AutoPolicyPanel } from "./automation-panel";
@@ -279,11 +280,11 @@ export const articleFilters: ConsoleFilter[] = [
   { name: "tag", label: "辅助主题", options: topicNames.map((t) => [t, t]) },
   { name: "campus", label: "校区", options: campuses },
   {
-    name: "review",
-    label: "审核状态",
+    name: "state",
+    label: "状态",
     options: [
-      ["approved", "批准"],
-      ["unapproved", "尚未批准"],
+      ["published", "已发布"],
+      ["pending", "待审核"],
     ],
   },
   { name: "publishedAfter", label: "发布起日", type: "date" },
@@ -344,16 +345,17 @@ export function ConsoleV2Articles({
   const { data, error, reload } = useConsoleV2Data<
     List<Record<string, string | number | null>>
   >(request, "v2/articles?" + query);
-  async function batch(decision: string) {
+  async function batch(action: "publish" | "withdraw") {
     setBusy(true);
     let done = 0;
     const errors = [];
     for (const d of selected)
       try {
-        await request("content/" + d.id + "/review", "POST", {
-          ...cmd(Number(d.version)),
-          decision,
-        });
+        await request(
+          "content/" + d.id + "/" + action,
+          "POST",
+          cmd(Number(d.version)),
+        );
         done++;
       } catch (e) {
         errors.push(e instanceof Error ? e.message : "处理失败");
@@ -379,22 +381,17 @@ export function ConsoleV2Articles({
       {exceptions && canReview && (
         <div className="console-card console-actions">
           <button
+            className="primary-button"
             disabled={busy || !selected.length}
-            onClick={() => void batch("returned")}
+            onClick={() => void batch("publish")}
           >
-            批量退回
+            批量发布
           </button>
           <button
             disabled={busy || !selected.length}
-            onClick={() => void batch("rejected")}
+            onClick={() => void batch("withdraw")}
           >
-            批量拒绝
-          </button>
-          <button
-            disabled={busy || !selected.length}
-            onClick={() => void batch("approved")}
-          >
-            批量批准
+            批量撤回
           </button>
           <span>已选 {selected.length} 篇</span>
           <p role="status">{message}</p>
@@ -435,15 +432,13 @@ export function ConsoleV2Articles({
                       </span>
                     </div>
                     <span>
-                      {d.publication_status === "published"
-                        ? d.public_visible === 1
-                          ? "已公开"
-                          : "公开已失效"
-                        : d.publication_status === "withdrawn"
-                          ? "已撤回"
-                          : d.workflow_status === "approved"
-                            ? "已批准"
-                            : "待处理"}
+                      {
+                        articlePublicationNames[
+                          d.publication_state === "published"
+                            ? "published"
+                            : "pending"
+                        ]
+                      }
                     </span>
                   </Link>
                 </div>
@@ -595,7 +590,7 @@ function Sources({
                     <dl className="console-v2-inline">
                       <dt>文章</dt>
                       <dd>{s.articleCount}</dd>
-                      <dt>已公开</dt>
+                      <dt>已发布</dt>
                       <dd>{s.publishedCount}</dd>
                       <dt>最近成功</dt>
                       <dd>{date(s.lastSuccessAt)}</dd>
@@ -1311,7 +1306,7 @@ export function ConsoleV2Workspace(props: WorkspaceProps) {
         <ConsoleV2Articles
           request={props.request}
           exceptions
-          canReview={["admin", "reviewer"].includes(props.actor.role)}
+          canReview={props.actor.role === "admin"}
         />
       </>
     );
