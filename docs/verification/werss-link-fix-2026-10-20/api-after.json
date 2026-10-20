@@ -1,0 +1,57 @@
+{
+  "article_total": 6,
+  "feed_total": 81,
+  "task_total": 1,
+  "remaining_tilde_urls": 0,
+  "sample": {
+    "id": "3293703638-3293703638_oi~Lh3K0LZ92f~LtQBSljQ",
+    "mp_id": "MP_WXS_3293703638",
+    "title": "2027届毕业生生源信息和电子简历填报指南",
+    "url": "https://mp.weixin.qq.com/s/oi_Lh3K0LZ92f_LtQBSljQ"
+  },
+  "rows": [
+    {
+      "id": "3924009574-3924009574_h~HX7MLlvSPtKoSFIztQkA",
+      "mp_id": "MP_WXS_3924009574",
+      "title": "招新季 | 同“新”协力，共谱新章",
+      "url": "https://mp.weixin.qq.com/s/h_HX7MLlvSPtKoSFIztQkA"
+    },
+    {
+      "id": "3915495547-3915495547_yRwXwx0f08Yp0cRGY2qL-A",
+      "mp_id": "MP_WXS_3915495547",
+      "title": "主席团候选人｜冼坤南：笃行实干，聚力同行",
+      "url": "https://mp.weixin.qq.com/s/yRwXwx0f08Yp0cRGY2qL-A"
+    },
+    {
+      "id": "3899454627-3899454627_Hmzz0fXdE63VshjOxATSnA",
+      "mp_id": "MP_WXS_3899454627",
+      "title": "【Bilingual】国庆假期温馨提示",
+      "url": "https://mp.weixin.qq.com/s/Hmzz0fXdE63VshjOxATSnA"
+    },
+    {
+      "id": "3889818792-3889818792_b-j068~jhyDagOUOiqitOg",
+      "mp_id": "MP_WXS_3889818792",
+      "title": "广外学子，一起去趟台湾吧！",
+      "url": "https://mp.weixin.qq.com/s/b-j068_jhyDagOUOiqitOg"
+    },
+    {
+      "id": "2394225665-2394225665_NajG22g~84LL7E-uBF2~aQ",
+      "mp_id": "MP_WXS_2394225665",
+      "title": "数学分享会｜智慧在我心，数学伴我行",
+      "url": "https://mp.weixin.qq.com/s/NajG22g_84LL7E-uBF2_aQ"
+    },
+    {
+      "id": "3293703638-3293703638_oi~Lh3K0LZ92f~LtQBSljQ",
+      "mp_id": "MP_WXS_3293703638",
+      "title": "2027届毕业生生源信息和电子简历填报指南",
+      "url": "https://mp.weixin.qq.com/s/oi_Lh3K0LZ92f_LtQBSljQ"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "5ae1ea78-8556-4a29-a551-8f689a69a71c",
+      "status": 1,
+      "cron_exp": "0 2 * * *"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+[
+  {"requested_name":"广外商学院MBA","query":"广外MBA","reason":"保留学校与具体MBA项目，去掉学院通称"},
+  {"requested_name":"广州国关Youth","query":"广外国关Youth","reason":"原清单为广外渠道，核对广州/广外文字差异"},
+  {"requested_name":"广外大定协","query":"广外定向","reason":"展开定向协会简称"},
+  {"requested_name":"广外毽协","query":"广外毽球","reason":"按原目录毽球协会展开简称"},
+  {"requested_name":"广外绿色先锋","query":"广外绿色先锋环保","reason":"按原目录环保协会名称补充具体组织范围"},
+  {"requested_name":"潮汕文化协会","query":"广外潮汕文化协会","reason":"补充学校范围，避免同名外校社团"},
+  {"requested_name":"广外商院团委学生会","query":"广外商院团学","reason":"将团委学生会缩为常见团学名称进行核对"}
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "requested_name": "云山学生勤工助学",
+    "actual_name": "广外云山学生勤工助学",
+    "fakeid": "MjM5OTM1NTI4Mg==",
+    "reason": "名称完整保留云山学生勤工助学，仅增加广外前缀；结果微信号为 gwysqg，简介及关联结果均指向广外云山勤工。"
+  },
+  {
+    "requested_name": "广东外语外贸大学国际学院",
+    "actual_name": "广外国际学院",
+    "fakeid": "MzA3NTMwMTIyMA==",
+    "reason": "学校全称与广外简称对应；简介明确为广外国际学院，微信号 GDUFS_GJXY。该现名也独立列在用户清单中，按 ID 去重。"
+  },
+  {
+    "requested_name": "广外会计学院团委学生会",
+    "actual_name": "广外会院青年",
+    "fakeid": "MzU4MTc0NDAyMQ==",
+    "reason": "搜索结果简介明确为广东外语外贸大学会计学院团委、学生会官方公众平台。该现名也独立列在用户清单中，按 ID 去重。"
+  },
+  {
+    "requested_name": "广外留学生院",
+    "actual_name": "广外留学生院IIEGDUFS",
+    "fakeid": "Mzg5OTQ1NDYyNw==",
+    "reason": "完整中文名称一致，仅增加拉丁字母后缀；当前微信号 GDUFSIIE 与原目录的2026学校网页线索一致。"
+  },
+  {
+    "requested_name": "广外研招",
+    "actual_name": "广东外语外贸大学研究生招生",
+    "fakeid": "MzA3MDEwNDQ0Mw==",
+    "reason": "学校名和研究生招生的简称展开；简介明确为广外研究生招生平台，微信号 gwyjszs；按已有 ID 去重。"
+  },
+  {
+    "requested_name": "广外金融学院团委学生会",
+    "actual_name": "广外金融青年",
+    "fakeid": "Mzg2NzAzMjAwNg==",
+    "reason": "搜索结果为广外金融青年，微信号 gwjrtwxsh 对应广外金融团委学生会；没有使用其他学校的同名组织结果。"
+  },
+  {
+    "requested_name": "广外公开学院",
+    "actual_name": "广外高等继续教育公开学院",
+    "fakeid": "MzkzNDI2MzkwOQ==",
+    "reason": "保留广外及公开学院完整名称；简介明确为广外高等继续教育公开学院官方公众号，区别于院内各系账号。"
+  },
+  {
+    "requested_name": "广外继续教育",
+    "actual_name": "广外高等继续教育+",
+    "fakeid": "MzY5MzM0MjU3Mg==",
+    "reason": "当前名称增加高等及加号；简介明确为广东外语外贸大学高等继续教育学院、公开学院的官方公众号，区别于南国商学院继续教育。"
+  },
+  {
+    "requested_name": "广外商学院MBA",
+    "actual_name": "广外MBA",
+    "fakeid": "MjM5OTAzNjUzNg==",
+    "reason": "补充搜索广外MBA；简介明确为广东外语外贸大学商学院MBA教育中心官方公众平台，微信号 gw_mba。"
+  },
+  {
+    "requested_name": "广外商院团委学生会",
+    "actual_name": "广外商院团学",
+    "fakeid": "MzA3MDk4OTkxNg==",
+    "reason": "团委学生会对应团学简称，学校与商院完整保留；微信号 gwsxytx 与该名称对应，区别于仅外联部的子账号。"
+  },
+  {
+    "requested_name": "广外大定协",
+    "actual_name": "广外定向越野",
+    "fakeid": "MzAwMjEwMTY4Nw==",
+    "reason": "按定向协会展开简称，搜索到广外定向越野（guangwaidingxiang）；另一个结果明确为定向越野选项课程，未选择课程账号。该映射是名称线索匹配，不当作学校认证核验。"
+  },
+  {
+    "requested_name": "广外绿色先锋",
+    "actual_name": "广外环保绿色先锋",
+    "fakeid": "MzkzNzI4NTM3NA==",
+    "reason": "学校与绿色先锋完整名称一致，仅增加原目录中的环保业务限定；微信号 gwhblsxf 与名称对应。"
+  }
+]

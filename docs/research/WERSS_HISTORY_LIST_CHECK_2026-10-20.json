@@ -1,0 +1,11 @@
+{
+  "book_id": "MP_WXS_3200207390",
+  "requested_offset": 0,
+  "operation": "read_one_history_list_page",
+  "article_writes": 0,
+  "task_writes": 0,
+  "shelf_writes": 0,
+  "available": false,
+  "error_class": "WereadMPAPIError",
+  "error_code": -2012
+}

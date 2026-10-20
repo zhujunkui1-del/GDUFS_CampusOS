@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-20",
+  "timezone": "Asia/Shanghai",
+  "account_name": "广外就业中心",
+  "book_id": "MP_WXS_3293703638",
+  "published_from_inclusive": "2026-07-01T00:00:00+08:00",
+  "state": "uploaded_album_directory_extracted_account_history_incomplete",
+  "authorization_refreshed_by_user": true,
+  "history_list_requests": 2,
+  "requested_offset": 0,
+  "error_class": "WereadMPAPIError",
+  "error_code": -2041,
+  "attempts": [
+    {
+      "authorization_refresh_completed": false,
+      "offset": 0,
+      "error_code": -2012
+    },
+    {
+      "authorization_refresh_completed": true,
+      "offset": 0,
+      "error_code": -2041
+    }
+  ],
+  "article_writes": 0,
+  "task_writes": 0,
+  "shelf_writes": 0,
+  "current_conclusion": "当前部署的微信读书采集通道只能获取最新一篇；项目文档也说明无法回补历史。错误码不能单独证明用户缺少某项可开启权限，没有已确认可解决此问题的额外权限开关。",
+  "documentation": "https://github.com/rachelos/we-mp-rss/blob/d94db01372105bc479db81a0ac91829dac7f43e4/docs/weread-mp.md",
+  "automation_route_selected_by_user": true,
+  "user_provided_seed_url": "https://mp.weixin.qq.com/s/Q7fPDB7nhveYN5aafydkVQ",
+  "seed_page_observation": "微信域名已有明确浏览器站点安全拒绝，本轮没有重试合集页，也没有改用HTTP、WeRSS或其他接口获取页面。只离线解析了用户提供URL中的公开标识，未保存嵌套会话参数。",
+  "automation_assessment": "已完成候选静态评估，尚无通过验收的全号历史自动工具。已存单篇未发现合集线索，向用户询问是否存在正常可访问的公开合集入口；不要求逐篇整理81号链接。",
+  "next_action": "本合集目录已离线提取；7月起只有1篇目录项，正文未提供。全号历史仍需其他主题目录或正常可访问的总目录来源，不能将单一招聘会合集记为全号补齐。继续接受用户已有页面文件做离线分析，不绕过微信域名访问限制。",
+  "public_album": {
+    "account_id": "MP_WXS_3293703638",
+    "biz": "MzI5MzcwMzYzOA==",
+    "album_id": "3722479772895805441",
+    "canonical_url": "https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI5MzcwMzYzOA%3D%3D&action=getalbum&album_id=3722479772895805441",
+    "source": "user_provided_url",
+    "page_read": true,
+    "scope_coverage": "uploaded_album_complete_as_declared; entire_account_history_not_established",
+    "page_read_source": "user_uploaded_html_offline",
+    "title": "招聘会"
+  },
+  "offline_extraction": {
+    "source_sha256": "66a3524089ca1b8c1e1becd10418b63ec038bad618b8eaa186b67925b01fd72f",
+    "declared_article_count": 8,
+    "dom_unique_article_count": 8,
+    "script_article_count": 8,
+    "continue_flag": "0",
+    "reverse_continue_flag": "0",
+    "uploaded_album_directory_matches_declared_total": true,
+    "selected_count": 1,
+    "before_cutoff_count": 7,
+    "unknown_date_count": 0,
+    "body_downloads": 0,
+    "werss_writes": 0,
+    "report": "docs/research/wechat-history/MP_WXS_3293703638/album-3722479772895805441.md"
+  }
+}

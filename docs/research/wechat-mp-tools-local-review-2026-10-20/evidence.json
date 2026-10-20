@@ -1,0 +1,301 @@
+{
+  "schema": "campusos.wechat-mp-tools-local-review.v1",
+  "inspected_at": "2026-10-20T23:18:49.406914+08:00",
+  "method": "Python standard-library offline CArchive/PYZ and local JSON inspection; no target execution",
+  "rea": {
+    "local_source_version": "6.5.0",
+    "installed_skill_version": "42",
+    "connected_mcp_available": false,
+    "rea_cli_executed": false,
+    "note": "Workflow documentation read; these are ordinary offline observations, not REA Evidence IDs"
+  },
+  "upstream_commit": "5c0a6b7a3740f1e28087e2cc8577c3059e5a17f3",
+  "executable": {
+    "path": "D:\\WeChat MP Tools\\WeChat MP Tools.exe",
+    "size": 13296260,
+    "sha256": "b0d2be34d9a6adc3837f0196cf60f1eb6bb8d2b9b72c3b61b89bf4903094d516",
+    "cookie_offset": 13296172,
+    "archive_start": 369664,
+    "python_version": 312,
+    "pyz_module_count": 1827
+  },
+  "comparison": {
+    "normalization": "Recursive code bytecode, constants, names, arguments, stack and exception table; excludes filenames, first-line and line tables. Same Python 3.12 compiler, optimize=0; not a release-signature verification.",
+    "modules": [
+      {
+        "module": "backend.config",
+        "pyz_offset": 1603653,
+        "pyz_length": 8326,
+        "decompressed_sha256": "0e24d2092dc6af3f976cacd32e06672745807edafeb26ee12d6b2b9d21d0c716",
+        "source_sha256": "94551e76f257a59bb86780ea58e91b92f53fb55a7e02f2bfdfe8171226116019",
+        "normalized_local_sha256": "de83ee262dacfd33b1197ae114af34ed5339a3bde4473414d92999e2ae6916e9",
+        "normalized_upstream_sha256": "de83ee262dacfd33b1197ae114af34ed5339a3bde4473414d92999e2ae6916e9",
+        "normalized_equal": true,
+        "version_constants": [
+          "2.2.4"
+        ]
+      },
+      {
+        "module": "backend.articles",
+        "pyz_offset": 1496752,
+        "pyz_length": 33913,
+        "decompressed_sha256": "f8e8398dc61f496301e969f2519f0cc9ed7f4c511fc8f62ad5c2b38cecede416",
+        "source_sha256": "ecbcb2384277a18bf769ad29f13c153f7bcd02a9b370c5efe1f93bae352d0105",
+        "normalized_local_sha256": "22598606315c9ab71683fbf150b57a34fdcccbac3a53ab61e6195ed49c235578",
+        "normalized_upstream_sha256": "22598606315c9ab71683fbf150b57a34fdcccbac3a53ab61e6195ed49c235578",
+        "normalized_equal": true,
+        "selected_functions": [
+          {
+            "name": "_resolve_review_doc_url",
+            "first_line": 70,
+            "code_sha256": "85f48c34276f54e634f030733fc6e0c93ce0b5dce5845ef0bd40469bc5751eda"
+          },
+          {
+            "name": "_fetch_articles_page",
+            "first_line": 110,
+            "code_sha256": "b517f1eb2b15e83aebc7b0e95c65af42ac5d80566439ee6615cb9eb8b7abeb5f"
+          },
+          {
+            "name": "_do_range_download",
+            "first_line": 1003,
+            "code_sha256": "41d6833e1c3d30987f64472932c1eb6b4f23ab0eef591c0f6f0ae9906f28a50a"
+          }
+        ]
+      },
+      {
+        "module": "backend.downloader",
+        "pyz_offset": 1718204,
+        "pyz_length": 32669,
+        "decompressed_sha256": "d7dec2d63caab62e0b66a606b3f05fd3b7fd3cbb4c40beb07758d311d33c94f1",
+        "source_sha256": "a5b2e121552649aa8d7a9b47ea678fb57cf96cc41de4054327c363eb8f9af409",
+        "normalized_local_sha256": "a02e12d49c31c332804c8ce4d49c4f6e92c49cf83ae330ac326e231bbd4b294c",
+        "normalized_upstream_sha256": "a02e12d49c31c332804c8ce4d49c4f6e92c49cf83ae330ac326e231bbd4b294c",
+        "normalized_equal": true
+      },
+      {
+        "module": "backend.auth",
+        "pyz_offset": 1530665,
+        "pyz_length": 8851,
+        "decompressed_sha256": "7ffcd09aed9d49c9feb96687280c0a9f00bc51c9eb23bb0e2fb50ab140d2d8fb",
+        "source_sha256": "25751cc5eb4ba968f1ac761179786da06c421b2b03e1f57e1211ec01c70f79e9",
+        "normalized_local_sha256": "b439e9db533efeb56b207696f73474ffd03c86503aa57cd31c982275b1ac8bbd",
+        "normalized_upstream_sha256": "b439e9db533efeb56b207696f73474ffd03c86503aa57cd31c982275b1ac8bbd",
+        "normalized_equal": true
+      },
+      {
+        "module": "backend.accounts",
+        "pyz_offset": 1486311,
+        "pyz_length": 10441,
+        "decompressed_sha256": "294142ca60460f4ad2257b626f6813be4824c2559df978dda53648d51aaf8372",
+        "source_sha256": "e81648ca56e8892c6bb1ccd4931a93ea082f1ed0d0669020c882f2e16c6926bc",
+        "normalized_local_sha256": "fa1f3a320c4a4a9a2e1c2421216920452f9772bc966095948c67ac0fdba292f7",
+        "normalized_upstream_sha256": "fa1f3a320c4a4a9a2e1c2421216920452f9772bc966095948c67ac0fdba292f7",
+        "normalized_equal": true
+      },
+      {
+        "module": "backend.rss_scheduler",
+        "pyz_offset": 1850228,
+        "pyz_length": 24115,
+        "decompressed_sha256": "1a356b75e05feb60b1e02ceaa68671bdbe767b88e2810b24bdac0fd370e75f50",
+        "source_sha256": "7b71d88fe956899b20eff14475772b8d39988f11b2146b02bf3a29ad01cee4e5",
+        "normalized_local_sha256": "4ef28136afe42cb01d0514ab7d0eb67b86c252dd2dce128f7369cb3422c61d48",
+        "normalized_upstream_sha256": "4ef28136afe42cb01d0514ab7d0eb67b86c252dd2dce128f7369cb3422c61d48",
+        "normalized_equal": true
+      },
+      {
+        "module": "backend.refresh_queue",
+        "pyz_offset": 1847146,
+        "pyz_length": 3082,
+        "decompressed_sha256": "c789e0e243af166c879010927c95c7986d44c0aa68a43373e2bfd04ac582c248",
+        "source_sha256": "63eea936860c5bc6181ca549f849c63ca4a623e0496d94262e51c3b4aff6b4d9",
+        "normalized_local_sha256": "23f70ff1ef2a5e0ef599d15c1f780f1f75ea27a3531e2191e3455d9a649469e7",
+        "normalized_upstream_sha256": "23f70ff1ef2a5e0ef599d15c1f780f1f75ea27a3531e2191e3455d9a649469e7",
+        "normalized_equal": true
+      }
+    ]
+  },
+  "accounts": [
+    {
+      "nickname": "广外就业",
+      "fakeid": "MzA4MzAwNzYxOA==",
+      "bookId": "MP_WXS_3083007618"
+    },
+    {
+      "nickname": "广外就业中心",
+      "fakeid": "MzI5MzcwMzYzOA==",
+      "bookId": "MP_WXS_3293703638"
+    }
+  ],
+  "history": [
+    {
+      "title": "【10月20日宣讲】欧派家居股份有限公司",
+      "account": "广外就业",
+      "success": true,
+      "publish_time": 1792423190,
+      "has_markdown": true,
+      "has_pdf": true,
+      "url": "https://mp.weixin.qq.com/s/GuvM9YkhG5rKFRyRGbcOeA",
+      "downloaded_at": "2026-10-20T22:58:14.424981+08:00",
+      "recorded_publication_time": "2026-10-19T23:19:50+08:00",
+      "error_present": false
+    },
+    {
+      "title": "2027届毕业生生源信息和电子简历填报指南",
+      "account": "广外就业中心",
+      "success": false,
+      "publish_time": 1792508361,
+      "has_markdown": false,
+      "has_pdf": false,
+      "url": "https://mp.weixin.qq.com/s/oi~Lh3K0LZ92f~LtQBSljQ",
+      "downloaded_at": "2026-10-20T22:59:21.028873+08:00",
+      "recorded_publication_time": "2026-10-20T22:59:21+08:00",
+      "error_present": true
+    },
+    {
+      "title": "2027届毕业生生源信息和电子简历填报指南",
+      "account": "广外就业中心",
+      "success": false,
+      "publish_time": 1792508398,
+      "has_markdown": false,
+      "has_pdf": false,
+      "url": "https://mp.weixin.qq.com/s/oi~Lh3K0LZ92f~LtQBSljQ",
+      "downloaded_at": "2026-10-20T22:59:58.872600+08:00",
+      "recorded_publication_time": "2026-10-20T22:59:58+08:00",
+      "error_present": true
+    },
+    {
+      "title": "【用人单位邀请函】广东省2027届普通高校毕业生系列供需对接活动——外语外贸类专场",
+      "account": "广外就业中心",
+      "success": true,
+      "publish_time": 1790753234,
+      "has_markdown": true,
+      "has_pdf": true,
+      "url": "https://mp.weixin.qq.com/s/CRPBDHqjrFWUGJk24alWNQ",
+      "downloaded_at": "2026-10-20T23:00:29.252646+08:00",
+      "recorded_publication_time": "2026-09-30T15:27:14+08:00",
+      "error_present": false
+    }
+  ],
+  "subscriptions": [
+    {
+      "nickname": "广外就业",
+      "fakeid": "MzA4MzAwNzYxOA==",
+      "enabled": true,
+      "interval_minutes": 60,
+      "last_fetch_time": 0,
+      "last_fetch_count": 0,
+      "total_articles": 0
+    },
+    {
+      "nickname": "广外就业中心",
+      "fakeid": "MzI5MzcwMzYzOA==",
+      "enabled": true,
+      "interval_minutes": 60,
+      "last_fetch_time": 0,
+      "last_fetch_count": 0,
+      "total_articles": 0
+    }
+  ],
+  "exports": [
+    {
+      "source": "广外就业",
+      "title": "【10月20日宣讲】欧派家居股份有限公司",
+      "url": "https://mp.weixin.qq.com/s/GuvM9YkhG5rKFRyRGbcOeA",
+      "metadata_path": "D:\\WeChat MP Tools\\data\\articles_full\\广外就业\\【10月20日宣讲】欧派家居股份有限公司\\metadata.json",
+      "data_path": "D:\\WeChat MP Tools\\data\\articles_full\\广外就业\\【10月20日宣讲】欧派家居股份有限公司\\data.json",
+      "data_schema": [
+        "source",
+        "author",
+        "title",
+        "url",
+        "cover_url",
+        "publish_time",
+        "content"
+      ],
+      "recorded_publication_time": "2026-10-19T23:19:50+08:00",
+      "publish_time": 1792423190,
+      "saved_at": "2026-10-20T14:58:14+00:00",
+      "content_chars": 80972,
+      "clean_text_chars": 3218,
+      "has_markdown": true,
+      "has_pdf": true
+    },
+    {
+      "source": "广外就业中心",
+      "title": "【用人单位邀请函】广东省2027届普通高校毕业生系列供需对接活动——外语外贸类专场",
+      "url": "https://mp.weixin.qq.com/s/CRPBDHqjrFWUGJk24alWNQ",
+      "metadata_path": "D:\\WeChat MP Tools\\data\\articles_full\\广外就业中心\\【用人单位邀请函】广东省2027届普通高校毕业生系列供需对接活动——外语外贸类专场\\metadata.json",
+      "data_path": "D:\\WeChat MP Tools\\data\\articles_full\\广外就业中心\\【用人单位邀请函】广东省2027届普通高校毕业生系列供需对接活动——外语外贸类专场\\data.json",
+      "data_schema": [
+        "source",
+        "author",
+        "title",
+        "url",
+        "cover_url",
+        "publish_time",
+        "content"
+      ],
+      "recorded_publication_time": "2026-09-30T15:27:14+08:00",
+      "publish_time": 1790753234,
+      "saved_at": "2026-10-20T15:00:29+00:00",
+      "content_chars": 43403,
+      "clean_text_chars": 1412,
+      "has_markdown": true,
+      "has_pdf": true
+    }
+  ],
+  "counts": {
+    "accounts": 2,
+    "history": 4,
+    "successful_history": 2,
+    "failed_history": 2,
+    "exported_articles": 2,
+    "target_exported_articles": 1,
+    "failed_urls_with_tilde": 2
+  },
+  "file_hashes": {
+    "D:\\WeChat MP Tools\\WeChat MP Tools.exe": "b0d2be34d9a6adc3837f0196cf60f1eb6bb8d2b9b72c3b61b89bf4903094d516",
+    "D:\\WeChat MP Tools\\data\\accounts.json": "7254efead9c638f67002cf66bb5a80ec55da311886b3d271efe0288a1fe1bb07",
+    "D:\\WeChat MP Tools\\data\\download_history.json": "2c442e73880d038db0fff833e64cf9e376daef0061556d1245fe0b07aeb70716",
+    "D:\\WeChat MP Tools\\data\\rss_subscriptions.json": "2d712b990d3e71a9cb1b827fd3559253cf541eb4768d6d44f3d3840a18aecf8b",
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业\\【10月20日宣讲】欧派家居股份有限公司\\metadata.json": "0293bc4a726b9a76730fe1ff689607e4fa9741f2641b37d927417703fc264711",
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业\\【10月20日宣讲】欧派家居股份有限公司\\data.json": "eec73c2cd0a3ae1f774cfc342a057ac0b7404c10b402b23556f9bab3baac8112",
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业\\【10月20日宣讲】欧派家居股份有限公司\\content.txt": "329f8a9d3bcdbbbc1e9964ee826fb85f255bf433968af1cefea7119addc0654c",
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业中心\\【用人单位邀请函】广东省2027届普通高校毕业生系列供需对接活动——外语外贸类专场\\metadata.json": "2b8d0c18f0dda3594247ecaa4443f8dda71915dcae053efe7ee940ed4a4a985e",
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业中心\\【用人单位邀请函】广东省2027届普通高校毕业生系列供需对接活动——外语外贸类专场\\data.json": "209e1928d084cd1c9284e0749b8f2896f0ad1003ea34558bc506975b272e307a",
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业中心\\【用人单位邀请函】广东省2027届普通高校毕业生系列供需对接活动——外语外贸类专场\\content.txt": "032f0bfe78f6dce26b773d30cb6e9c43a8fdb70bc7c768dbf6345fb6d2ac0910"
+  },
+  "read_files_unchanged_at_end": {
+    "D:\\WeChat MP Tools\\WeChat MP Tools.exe": true,
+    "D:\\WeChat MP Tools\\data\\accounts.json": true,
+    "D:\\WeChat MP Tools\\data\\download_history.json": true,
+    "D:\\WeChat MP Tools\\data\\rss_subscriptions.json": true,
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业\\【10月20日宣讲】欧派家居股份有限公司\\metadata.json": true,
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业\\【10月20日宣讲】欧派家居股份有限公司\\data.json": true,
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业\\【10月20日宣讲】欧派家居股份有限公司\\content.txt": true,
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业中心\\【用人单位邀请函】广东省2027届普通高校毕业生系列供需对接活动——外语外贸类专场\\metadata.json": true,
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业中心\\【用人单位邀请函】广东省2027届普通高校毕业生系列供需对接活动——外语外贸类专场\\data.json": true,
+    "D:\\WeChat MP Tools\\data\\articles_full\\广外就业中心\\【用人单位邀请函】广东省2027届普通高校毕业生系列供需对接活动——外语外贸类专场\\content.txt": true
+  },
+  "excluded_files": [
+    "account_pool.json",
+    "proxy_config.json",
+    "login credentials",
+    "browser profiles"
+  ],
+  "actions": {
+    "target_launched": false,
+    "target_network_requests": 0,
+    "source_installation_writes": 0,
+    "credential_reads": 0,
+    "werss_writes": 0,
+    "campusos_business_writes": 0,
+    "tests_run": false
+  },
+  "coverage": {
+    "from_date": "2026-07-01",
+    "timezone": "Asia/Shanghai",
+    "full_target_history_verified": false,
+    "reason": "Saved exports do not contain successful page-chain or start-boundary evidence; publication times were not independently verified against the remote original."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "completed_at": "2026-10-21T01:51:55.745317+08:00",
+  "target_count": 78,
+  "added": 76,
+  "already_present": 2,
+  "final_count": 78,
+  "missing": [],
+  "extra": [],
+  "duplicates": [],
+  "original_accounts_unchanged": true,
+  "disk_matches_api_readback": true,
+  "ui_count": 78,
+  "methods": {
+    "名称搜索": 68,
+    "账号标识解析": 8,
+    "原有，按ID核对保留": 2
+  },
+  "other_files_unchanged": {
+    "download_history.json": true,
+    "rss_subscriptions.json": true
+  },
+  "result_path": "D:\\WeChat MP Tools\\data\\CampusOS_imports\\78-accounts-2026-10-21\\results.json",
+  "credentials_copied_or_exported": false,
+  "direct_accounts_file_edits": false,
+  "article_download_jobs_started": false,
+  "rss_jobs_enabled": false
+}

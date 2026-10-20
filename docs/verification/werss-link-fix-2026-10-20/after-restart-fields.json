@@ -1,0 +1,135 @@
+{
+  "articles": {
+    "before_count": 6,
+    "after_count": 6,
+    "same_ids": true,
+    "changes": [
+      {
+        "id": "2394225665-2394225665_NajG22g~84LL7E-uBF2~aQ",
+        "changed_columns": [
+          "url",
+          "description",
+          "fix_fail_count",
+          "has_content",
+          "content",
+          "content_html"
+        ],
+        "content_metadata": {
+          "before": {
+            "has_content": 0,
+            "fix_fail_count": 2,
+            "content_length": 0,
+            "content_html_length": 0,
+            "description_length": 0
+          },
+          "after": {
+            "has_content": 1,
+            "fix_fail_count": 0,
+            "content_length": 61995,
+            "content_html_length": 6485,
+            "description_length": 203
+          }
+        }
+      },
+      {
+        "id": "3293703638-3293703638_oi~Lh3K0LZ92f~LtQBSljQ",
+        "changed_columns": [
+          "url",
+          "description",
+          "fix_fail_count",
+          "has_content",
+          "content",
+          "content_html"
+        ],
+        "content_metadata": {
+          "before": {
+            "has_content": 0,
+            "fix_fail_count": 2,
+            "content_length": 0,
+            "content_html_length": 0,
+            "description_length": 0
+          },
+          "after": {
+            "has_content": 1,
+            "fix_fail_count": 0,
+            "content_length": 77067,
+            "content_html_length": 9811,
+            "description_length": 203
+          }
+        }
+      },
+      {
+        "id": "3889818792-3889818792_b-j068~jhyDagOUOiqitOg",
+        "changed_columns": [
+          "url",
+          "description",
+          "fix_fail_count",
+          "has_content",
+          "content",
+          "content_html"
+        ],
+        "content_metadata": {
+          "before": {
+            "has_content": 0,
+            "fix_fail_count": 2,
+            "content_length": 0,
+            "content_html_length": 0,
+            "description_length": 0
+          },
+          "after": {
+            "has_content": 1,
+            "fix_fail_count": 0,
+            "content_length": 47996,
+            "content_html_length": 8345,
+            "description_length": 203
+          }
+        }
+      },
+      {
+        "id": "3924009574-3924009574_h~HX7MLlvSPtKoSFIztQkA",
+        "changed_columns": [
+          "url",
+          "description",
+          "fix_fail_count",
+          "has_content",
+          "content",
+          "content_html"
+        ],
+        "content_metadata": {
+          "before": {
+            "has_content": 0,
+            "fix_fail_count": 2,
+            "content_length": 0,
+            "content_html_length": 0,
+            "description_length": 0
+          },
+          "after": {
+            "has_content": 1,
+            "fix_fail_count": 0,
+            "content_length": 201302,
+            "content_html_length": 20554,
+            "description_length": 203
+          }
+        }
+      }
+    ]
+  },
+  "feeds": {
+    "before_count": 81,
+    "after_count": 81,
+    "same_ids": true,
+    "changes": []
+  },
+  "message_tasks": {
+    "before_count": 1,
+    "after_count": 1,
+    "same_ids": true,
+    "changes": []
+  },
+  "users": {
+    "before_count": 1,
+    "after_count": 1,
+    "same_ids": true,
+    "changes": []
+  }
+}

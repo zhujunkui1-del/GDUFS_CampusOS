@@ -1,0 +1,46 @@
+{
+  "articles": 6,
+  "repaired_count": 4,
+  "repairs": [
+    {
+      "id": "2394225665-2394225665_NajG22g~84LL7E-uBF2~aQ",
+      "old_url": "https://mp.weixin.qq.com/s/NajG22g~84LL7E-uBF2~aQ",
+      "new_url": "https://mp.weixin.qq.com/s/NajG22g_84LL7E-uBF2_aQ"
+    },
+    {
+      "id": "3293703638-3293703638_oi~Lh3K0LZ92f~LtQBSljQ",
+      "old_url": "https://mp.weixin.qq.com/s/oi~Lh3K0LZ92f~LtQBSljQ",
+      "new_url": "https://mp.weixin.qq.com/s/oi_Lh3K0LZ92f_LtQBSljQ"
+    },
+    {
+      "id": "3889818792-3889818792_b-j068~jhyDagOUOiqitOg",
+      "old_url": "https://mp.weixin.qq.com/s/b-j068~jhyDagOUOiqitOg",
+      "new_url": "https://mp.weixin.qq.com/s/b-j068_jhyDagOUOiqitOg"
+    },
+    {
+      "id": "3924009574-3924009574_h~HX7MLlvSPtKoSFIztQkA",
+      "old_url": "https://mp.weixin.qq.com/s/h~HX7MLlvSPtKoSFIztQkA",
+      "new_url": "https://mp.weixin.qq.com/s/h_HX7MLlvSPtKoSFIztQkA"
+    }
+  ],
+  "non_url_article_fields_preserved": true,
+  "preserved": {
+    "feeds": {
+      "count": 81,
+      "all_fields_preserved": true
+    },
+    "message_tasks": {
+      "count": 1,
+      "all_fields_preserved": true
+    },
+    "users": {
+      "count": 1,
+      "all_fields_preserved": true
+    }
+  },
+  "cache_cleared": {
+    "articles_list": true,
+    "article_detail": true
+  },
+  "updated_cache_files": []
+}

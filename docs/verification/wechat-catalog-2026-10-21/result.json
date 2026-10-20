@@ -1,0 +1,22 @@
+{
+  "completedAt": "2026-10-20T17:04:31.850Z",
+  "database": "campusos-preview",
+  "planHash": "d9ad4844ff8f0a554a94d303f8b756f7bf4a501c7460557cb8b0b3d75edcb6c5",
+  "beforeSources": 220,
+  "afterSources": 206,
+  "wechatBefore": 92,
+  "wechatAfter": 78,
+  "updated": 54,
+  "inserted": 24,
+  "deletedOldSourceRows": 38,
+  "deletedArticles": 0,
+  "preservedWebsiteSources": 109,
+  "preservedWebsiteArticles": 52,
+  "allNonWechatSourcesUnchanged": true,
+  "allExistingArticlesUnchanged": true,
+  "foreignKeyViolations": 0,
+  "protectedSourceHash": "2a6dd291bba26e0fa8b3723f139584d6d2e79364f0a0e9c26ce2f20e9a75a461",
+  "protectedArticleHash": "87c12330160f4e8191339f648a9c814de01cf0253dc94b567526aff1b5c8bbdd",
+  "collector": "wechat-mp-tools",
+  "applicationCodeChanged": false
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "campusos.wechat-local-existing-subset.v1",
+  "checked_at": "2026-10-20T23:30:46.973864+08:00",
+  "account_name": "广外就业",
+  "book_id": "MP_WXS_3083007618",
+  "biz": "MzA4MzAwNzYxOA==",
+  "requested_from": "2026-10-17T00:00:00+08:00",
+  "source": "existing_local_exports_only",
+  "new_downloads": 0,
+  "remote_requests": 0,
+  "complete": false,
+  "coverage_status": "not_verified",
+  "reason": "Existing exports do not provide a successful pagination chain or evidence crossing the requested date boundary. No online retrieval was started because the previously denied access route remains restricted.",
+  "count": 1,
+  "articles": [
+    {
+      "title": "【10月20日宣讲】欧派家居股份有限公司",
+      "source": "广外就业",
+      "book_id": "MP_WXS_3083007618",
+      "url": "https://mp.weixin.qq.com/s/GuvM9YkhG5rKFRyRGbcOeA",
+      "recorded_publish_time": 1792423190,
+      "recorded_published_at": "2026-10-19T23:19:50+08:00",
+      "publication_time_independently_verified": false,
+      "local_directory": "D:\\WeChat MP Tools\\data\\articles_full\\广外就业\\【10月20日宣讲】欧派家居股份有限公司",
+      "metadata_sha256": "0293bc4a726b9a76730fe1ff689607e4fa9741f2641b37d927417703fc264711",
+      "content_file_exists": true,
+      "data_file_exists": true
+    }
+  ],
+  "source_metadata_unchanged": true
+}
