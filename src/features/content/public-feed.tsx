@@ -13,6 +13,7 @@ type Item = {
   version: number;
   title: string;
   url: string;
+  readable?: boolean;
   publishedAt: string | null;
   summary: string;
   contentType: string;
@@ -25,11 +26,13 @@ type Result = {
   hasMore: boolean;
   counts: Record<string, number>;
   total: number;
+  nextCursor: string | null;
 };
 export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
   const categories =
     surface === "radar" ? radarCategories : knowledgeCategories;
   const [columns, setColumns] = useState(1);
+  const [cursors, setCursors] = useState<string[]>([""]);
   const [query, setQuery] = useState({
       q: "",
       source: "",
@@ -45,8 +48,9 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
   const params = new URLSearchParams({
     surface,
     limit: "12",
-    offset: String(query.offset),
   });
+  if (cursors[query.offset / 12])
+    params.set("cursor", cursors[query.offset / 12]);
   for (const field of ["q", "source", "category"] as const)
     if (query[field]) params.set(field, query[field]);
   const path = "/api/public/content?" + params.toString(),
@@ -191,9 +195,13 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
               </span>
             </div>
             <h2>
-              <a href={item.url} target="_blank" rel="noopener noreferrer">
-                {item.title}
-              </a>
+              {item.readable ? (
+                <Link href={"/articles/" + item.id}>{item.title}</Link>
+              ) : (
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  {item.title}
+                </a>
+              )}
             </h2>
             {item.summary &&
               item.summary !==
@@ -212,6 +220,11 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
                         hour12: false,
                       })}
               </span>
+              {item.readable && (
+                <Link className="text-link" href={"/articles/" + item.id}>
+                  阅读全文
+                </Link>
+              )}
               <a
                 className="text-link"
                 href={item.url}
@@ -237,8 +250,14 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
           </button>
           <span>第 {query.offset / 12 + 1} 页</span>
           <button
-            disabled={!data.hasMore || query.offset + 12 > 200}
-            onClick={() => setQuery({ ...query, offset: query.offset + 12 })}
+            disabled={!data.hasMore || !data.nextCursor}
+            onClick={() => {
+              setCursors((c) => [
+                ...c.slice(0, query.offset / 12 + 1),
+                data.nextCursor!,
+              ]);
+              setQuery({ ...query, offset: query.offset + 12 });
+            }}
           >
             下一页
           </button>

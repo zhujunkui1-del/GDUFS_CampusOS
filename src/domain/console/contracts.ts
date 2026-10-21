@@ -256,6 +256,7 @@ export type ContentSummary = {
   validUntil: string | null;
 };
 export type ContentDetail = ContentSummary & {
+  collectionManaged?: boolean;
   body: string;
   bodyStatus: "unknown" | "not_provided" | "partial" | "complete";
   discoveries?: { finder: string; entryUrl: string }[];

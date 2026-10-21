@@ -1,0 +1,11 @@
+{
+  "articles": 67,
+  "local_image_files": 495,
+  "image_bytes": 82783670,
+  "deduplicated_image_bytes": 72732327,
+  "projected_3000_image_bytes": 3706731493,
+  "note": "Existing three-account local sample, includes covers; not 78-account coverage.",
+  "html_bytes": 3237061,
+  "projected_3000_html_bytes": 144943030,
+  "projected_3000_html_and_images_bytes": 3851674523
+}

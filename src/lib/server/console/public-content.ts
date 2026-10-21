@@ -15,6 +15,7 @@ const QuerySchema = z
     version: z.coerce.number().int().positive().optional(),
     limit: z.coerce.number().int().min(1).max(20).default(10),
     offset: z.coerce.number().int().min(0).max(200).default(0),
+    cursor: z.string().max(500).optional(),
     surface: z.enum(["radar", "knowledge"]).optional(),
     q: z.string().trim().max(100).optional(),
     source: z.string().trim().max(100).optional(),
@@ -76,10 +77,31 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
     where.push(categoryColumn + "=?");
     params.push(category);
   }
+  if (q.cursor) {
+    if (q.id || q.offset)
+      throw new ApiError("INVALID_ARGUMENT", "分页参数冲突。");
+    let cursor: [string | null, string];
+    try {
+      cursor = z
+        .tuple([z.string().max(100).nullable(), ConsoleIdSchema])
+        .parse(JSON.parse(atob(q.cursor)));
+    } catch {
+      throw new ApiError("INVALID_ARGUMENT", "分页位置无效。");
+    }
+    if (cursor[0] === null) {
+      where.push("d.published_at IS NULL AND d.id>?");
+      params.push(cursor[1]);
+    } else {
+      where.push(
+        "(d.published_at<? OR (d.published_at=? AND d.id>?) OR d.published_at IS NULL)",
+      );
+      params.push(cursor[0], cursor[0], cursor[1]);
+    }
+  }
   const from = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where.join(" AND ")}`;
   const rows = await db
     .prepare(
-      `SELECT d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.summary,d.content_type,d.campus_scope,d.knowledge_category,d.radar_category,s.id AS source_id,s.display_name,s.channel_type,s.official_status ${from} ORDER BY d.published_at DESC,d.id LIMIT ? OFFSET ?`,
+      `SELECT d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.summary,d.content_type,d.campus_scope,d.knowledge_category,d.radar_category,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status ${from} ORDER BY d.published_at DESC,d.id LIMIT ? OFFSET ?`,
     )
     .bind(...params, q.id ? 1 : q.limit + 1, q.id ? 0 : q.offset)
     .all<Record<string, string | number | null>>();
@@ -95,6 +117,9 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
     campusScope: r.campus_scope,
     knowledgeCategory: r.knowledge_category,
     radarCategory: r.radar_category,
+    readable:
+      r.body_format === "reading_html" &&
+      r.rights_scope === "licensed_full_text",
     source: {
       id: r.source_id,
       name: r.display_name,
@@ -109,6 +134,10 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
     limit: q.id ? 1 : q.limit,
     offset: q.id ? 0 : q.offset,
     hasMore: !q.id && rows.results.length > q.limit,
+    nextCursor:
+      !q.id && rows.results.length > q.limit && items.length
+        ? btoa(JSON.stringify([items.at(-1)!.publishedAt, items.at(-1)!.id]))
+        : null,
     counts,
     total,
   };

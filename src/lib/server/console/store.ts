@@ -522,14 +522,9 @@ export class ConsoleStore {
       .bind(id)
       .first<Row>();
     if (!row) throw new ApiError("NOT_FOUND", "未找到该内容。");
-    const versions = await this.db
-      .prepare(
-        "SELECT version,created_at FROM console_content_versions WHERE document_id=? ORDER BY version DESC LIMIT 100",
-      )
-      .bind(id)
-      .all<{ version: number; created_at: string }>();
     return {
       ...this.contentSummary(row),
+      collectionManaged: row.body_format === "reading_html",
       body: String(row.body),
       bodyStatus: ContentInputSchema.shape.bodyStatus.parse(row.body_status),
       discoveries: (
@@ -616,17 +611,14 @@ export class ConsoleStore {
         rawPlaceName: e.raw_place_name ? String(e.raw_place_name) : null,
         verificationStatus: String(e.verification_status),
       })),
-      versions: versions.results.map((v) => ({
-        version: v.version,
-        createdAt: v.created_at,
-      })),
+      versions: [],
     };
   }
   protected snapshot(id: string) {
     return this.db
       .prepare(
         `INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at,content_revision,input_hash)
-    SELECT id,version,json_object('input',json_object('sourceId',source_id,'title',title,'url',url,'body',body,'bodyStatus',body_status,'kind',candidate_kind,'campusScope',campus_scope,'validUntil',valid_until,'publishedAt',published_at,'sourceUpdatedAt',source_updated_at,'contentType',content_type,'rightsScope',rights_scope,'radarCategory',radar_category,'knowledgeCategory',knowledge_category,'publisher',publisher,'summary',summary,'tags',json((SELECT json_group_array(tag) FROM document_tags t WHERE t.document_id=knowledge_documents.id AND t.content_revision=knowledge_documents.content_revision)),'extractedFields',json(extracted_fields_json)),'publicationStatus',publication_status,'reviewStatus',workflow_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'`,
+    SELECT id,version,json_object('contentRevision',content_revision,'inputHash',input_hash,'publicationStatus',publication_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'`,
       )
       .bind(this.actor.id, this.now(), id);
   }

@@ -10,6 +10,14 @@ export async function consoleV2Api(
   query: unknown,
 ) {
   const [section, id, action] = path;
+  if (
+    ["recheck", "attest", "checks"].includes(section) ||
+    (section === "sources" && action === "auto-policy")
+  )
+    throw new ApiError(
+      "FORBIDDEN",
+      "人工审核已关闭，采集结果由同步程序校验并发布。",
+    );
   if (path.length > 3) throw new ApiError("NOT_FOUND", "未找到管理接口。");
   if (id) ConsoleIdSchema.parse(id);
   const read = () => readJson(request, 262144);

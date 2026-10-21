@@ -98,7 +98,7 @@ export function ManualImportForm({
               publishedAt: !publishedAt
                 ? null
                 : new Date(publishedAt + ":00+08:00").toISOString(),
-              campusScope: "unknown",
+              campusScope: "all",
               contentType: "notice",
               knowledgeCategory: knowledgeCategory || null,
               radarCategory: radarCategory || null,

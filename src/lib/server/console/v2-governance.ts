@@ -36,6 +36,8 @@ const articleCount =
   " AND (d.source_id=s.id OR EXISTS(SELECT 1 FROM document_origins o WHERE o.document_id=d.id AND o.source_id=s.id)))";
 const publishedCount =
   "(SELECT count(DISTINCT d.id) FROM console_public_documents d WHERE d.source_id=s.id OR EXISTS(SELECT 1 FROM document_origins o WHERE o.document_id=d.id AND o.source_id=s.id))";
+const collectorState =
+  "(SELECT enabled FROM campus_collector_sources WHERE source_id=s.id)";
 export class ConsoleGovernanceStore extends ManualImportStore {
   private pendingCreate?: {
     governance?: Omit<Governance, "commandId" | "expectedVersion">;
@@ -389,6 +391,8 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       operating: String(row.operating_status),
       enabled: row.enabled === 1 && !row.archived_at,
       registeredEnabled: row.enabled === 1,
+      collectorEnabled:
+        row.collector_enabled == null ? null : row.collector_enabled === 1,
       version: Number(row.version),
       automatic:
         row.sync_state !== "blocked" &&
@@ -429,7 +433,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     consolePermission(this.actor, "read");
     const row = await this.db
       .prepare(
-        `SELECT s.*,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,e.sync_hours AS global_hours,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE ${visible} AND s.id=?`,
+        `SELECT s.*,${collectorState} AS collector_enabled,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,e.sync_hours AS global_hours,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE ${visible} AND s.id=?`,
       )
       .bind(id)
       .first<Row>();
@@ -458,7 +462,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       ["s.permission_status", q.permission],
       ["s.official_status", q.official],
       ["s.channel_type", q.type],
-      ["s.campus_scope", q.campus],
+
       ["s.affiliation_status", q.affiliation],
       ["s.operating_status", q.operating],
     ])
@@ -466,10 +470,6 @@ export class ConsoleGovernanceStore extends ManualImportStore {
         where.push(column + "=?");
         args.push(value);
       }
-    if (q.organization) {
-      where.push("s.organization LIKE ? ESCAPE '\\'");
-      args.push(pattern(q.organization));
-    }
     if (q.state === "enabled") where.push(active);
     if (q.state === "paused")
       where.push(`NOT(${active}) AND s.operating_status<>'closed'`);
@@ -493,14 +493,6 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       );
       args.push(...ids);
     }
-    if (q.minArticles !== undefined) {
-      where.push(articleCount + ">=?");
-      args.push(q.minArticles);
-    }
-    if (q.maxArticles !== undefined) {
-      where.push(articleCount + "<=?");
-      args.push(q.maxArticles);
-    }
     if (q.protected)
       where.push((q.protected === "0" ? "NOT " : "") + protectedSourceSql);
     const order = {
@@ -512,7 +504,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     const [rows, count] = await Promise.all([
       this.db
         .prepare(
-          `SELECT s.*,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,e.sync_hours AS global_hours,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE ${where.join(" AND ")} ORDER BY ${order} ${q.direction},s.id LIMIT ? OFFSET ?`,
+          `SELECT s.*,${collectorState} AS collector_enabled,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,e.sync_hours AS global_hours,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE ${where.join(" AND ")} ORDER BY ${order} ${q.direction},s.id LIMIT ? OFFSET ?`,
         )
         .bind(...args, q.limit, q.offset)
         .all<Row>(),
@@ -551,9 +543,8 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     }
     for (const [column, value] of [
       ["d.content_type", q.type],
-      ["d.campus_scope", q.campus],
+
       ["d.publication_status", q.publication],
-      ["d.body_status", q.body],
     ])
       if (value) {
         where.push(column + "=?");
@@ -630,30 +621,6 @@ export class ConsoleGovernanceStore extends ManualImportStore {
           ")",
       );
     }
-    if (q.eventAfter) {
-      where.push(
-        "date(json_extract(d.extracted_fields_json,'$.startAt'),'+8 hours')>=?",
-      );
-      args.push(q.eventAfter);
-    }
-    if (q.eventBefore) {
-      where.push(
-        "date(json_extract(d.extracted_fields_json,'$.startAt'),'+8 hours')<=?",
-      );
-      args.push(q.eventBefore);
-    }
-    if (q.deadline === "unknown")
-      where.push(
-        "json_extract(d.extracted_fields_json,'$.registrationDeadline') IS NULL",
-      );
-    if (q.deadline === "open")
-      where.push(
-        "julianday(json_extract(d.extracted_fields_json,'$.registrationDeadline'))>julianday('now')",
-      );
-    if (q.deadline === "closed")
-      where.push(
-        "julianday(json_extract(d.extracted_fields_json,'$.registrationDeadline'))<=julianday('now')",
-      );
     const order = {
       updated: "d.updated_at",
       published: "d.published_at",

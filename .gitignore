@@ -20,6 +20,9 @@ CampusOS_Codex_完整设计文档_v2/key.md
 docs/research/s1/osm-reference.json
 docs/research/s1/local-context.osm
 .map-tools/
+services/wechat-collector/__pycache__/
+services/wechat-collector/config.json
+services/wechat-collector/data/
 
 # Local generated pilot diagnostics; final model images and window evidence stay tracked.
 docs/screenshots/s1/nanyuan7-model/chrome-dev/

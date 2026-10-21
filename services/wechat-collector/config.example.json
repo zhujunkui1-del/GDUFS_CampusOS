@@ -1,0 +1,6 @@
+{
+  "campusosOrigin": "https://campusos-preview.zhujunkui1.workers.dev",
+  "token": "FILL_FROM_CAMPUSOS_ADMIN_COLLECTOR",
+  "dataDirectory": "D:\\WeChat MP Tools\\data\\CampusOS_collector",
+  "exportDirectories": ["D:\\WeChat MP Tools\\data\\articles_full"]
+}

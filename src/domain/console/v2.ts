@@ -8,7 +8,6 @@ import {
   SourceInputSchema,
   SourceEditSchema,
   SourceTypeSchema,
-  CampusScopeSchema,
 } from "./contracts";
 export const SyncHoursSchema = z.union([
   z.literal(1),
@@ -71,8 +70,6 @@ export const SourcesV2Query = z
     permission: PermissionSchema.optional(),
     official: OfficialStatusSchema.optional(),
     type: SourceTypeSchema.optional(),
-    organization: z.string().max(100).optional(),
-    campus: CampusScopeSchema.optional(),
     state: z.enum(["enabled", "paused", "closed", "archived"]).optional(),
     affiliation: z.enum(["unknown", "confirmed", "unrelated"]).optional(),
     operating: z
@@ -83,8 +80,6 @@ export const SourcesV2Query = z
     protected: z.enum(["1", "0"]).optional(),
     updatedAfter: z.iso.date().optional(),
     updatedBefore: z.iso.date().optional(),
-    minArticles: z.coerce.number().int().min(0).optional(),
-    maxArticles: z.coerce.number().int().min(0).optional(),
     sort: z
       .enum(["name", "updated", "articles", "next_sync"])
       .default("updated"),
@@ -101,7 +96,6 @@ export const ArticleV2Query = z
     type: z.string().max(40).optional(),
     category: z.string().max(50).optional(),
     tag: z.string().max(50).optional(),
-    campus: CampusScopeSchema.optional(),
     review: z
       .enum(["pending", "approved", "returned", "rejected", "unapproved"])
       .optional(),
@@ -111,12 +105,8 @@ export const ArticleV2Query = z
     publishedBefore: z.iso.date().optional(),
     fetchedAfter: z.iso.date().optional(),
     fetchedBefore: z.iso.date().optional(),
-    body: z.enum(["unknown", "not_provided", "partial", "complete"]).optional(),
     expired: z.enum(["1", "0"]).optional(),
     protected: z.enum(["1", "0"]).optional(),
-    eventAfter: z.iso.date().optional(),
-    eventBefore: z.iso.date().optional(),
-    deadline: z.enum(["open", "closed", "unknown"]).optional(),
     issues: z.enum(["1", "0"]).optional(),
     severity: z.enum(["warning", "error"]).optional(),
     issue: z.string().max(60).optional(),
@@ -146,6 +136,7 @@ export type SourceV2 = {
   registeredEnabled: boolean;
   version: number;
   automatic: boolean;
+  collectorEnabled?: boolean | null;
   lastSuccessAt: string | null;
   nextSyncAt: number | null;
   syncHours: number;

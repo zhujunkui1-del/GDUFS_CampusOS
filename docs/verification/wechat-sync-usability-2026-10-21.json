@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-21",
+  "timezone": "Asia/Shanghai",
+  "previewVersion": "5a09e259-28bb-4d8d-a614-d9faaf162a48",
+  "upstreamFetchesStarted": 0,
+  "businessArticleDeletions": 0,
+  "rssSubscriptionsChanged": 0,
+  "sourceSettingsChanged": false,
+  "databaseMigrations": [],
+  "observations": {
+    "readerId": "wx-053d73d7f83c37e7f596e778340c5b24b23373ef",
+    "gutterWheelBefore": { "pointerEvents": "none", "mainScrollTopAfter": 0 },
+    "gutterWheelAfter": { "pointerEvents": "auto", "mainScrollTopAfter": 871.3333129882812 },
+    "sameOriginBackObserved": "/map",
+    "sourceId": "GDUFS-SRC-0114",
+    "sourceSyncLabel": "本地下载自动同步",
+    "sourceSyncTab": "查看同步状态与使用方法",
+    "removedArticleFilters": ["eventAfter", "eventBefore", "deadline", "body"],
+    "collectorSourceCount": 78,
+    "collectorCheckboxCount": 0,
+    "savedSinceDay": "2026-10-01",
+    "heartbeatFontWeight": "600",
+    "heartbeatTimezone": "Asia/Shanghai"
+  },
+  "localWorker": {
+    "pid": 29984,
+    "lastSyncAt": "2026-10-21T13:05:40.105623+00:00",
+    "unchanged": 54,
+    "skippedBeforeRange": 13,
+    "failed": 0,
+    "newlyPublished": 0,
+    "removals": 0
+  },
+  "localRssConfiguration": {
+    "enabledSubscriptions": 1,
+    "account": "外环东路178号的猫",
+    "intervalMinutesSetting": 720
+  },
+  "checks": {
+    "typescript": "passed",
+    "changedFileEslint": "passed",
+    "workerBuild": "passed",
+    "generatedCredentialScan": "passed, 1394 files",
+    "newOrExecutedTestSuites": 0
+  },
+  "evidence": [
+    "collector-usage-2026-10-21.png",
+    "article-filters-2026-10-21.png",
+    "article-return-2026-10-21.png"
+  ],
+  "limitations": [
+    "The website imports completed local exports; it does not initiate upstream history collection.",
+    "Only 67 local articles from 3 accounts have been imported; full coverage of all 78 accounts is unproven.",
+    "No independent scheduled original-page update/removal checker is connected.",
+    "No boot autostart is installed; restart the local worker after reboot."
+  ]
+}

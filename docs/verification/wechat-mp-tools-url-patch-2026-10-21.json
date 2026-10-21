@@ -1,0 +1,29 @@
+{
+  "patch": "2026-10-21-short-url-v1",
+  "installed_exe": "D:\\WeChat MP Tools\\WeChat MP Tools.exe",
+  "original_sha256": "b0d2be34d9a6adc3837f0196cf60f1eb6bb8d2b9b72c3b61b89bf4903094d516",
+  "patched_sha256": "107b7f37ff53c4d8e59adbec9c628386ebfe8dcbcf1ab1ef97ebbda7a554cd58",
+  "backup_exe": "D:\\WeChat MP Tools\\data\\patches\\short-url-2026-10-21\\WeChat MP Tools.original.exe",
+  "unchanged_modules": 1825,
+  "bootloader_unchanged": true,
+  "original_pe_certificate_directory": [
+    0,
+    0
+  ],
+  "package_data_unchanged_during_install": true,
+  "post_start_unchanged_files": {
+    "accounts.json": true,
+    "account_pool.json": true,
+    "rss_articles.json": true,
+    "rss_subscriptions.json": true,
+    "proxy_config.json": true
+  },
+  "history_records_at_repair": 95,
+  "history_urls_fixed": 29,
+  "unique_retry_links": 27,
+  "success_records_unchanged": true,
+  "failed_status_and_errors_unchanged": true,
+  "startup_ui_78_confirmed": true,
+  "network_article_retries": 0,
+  "tests_run": false
+}

@@ -24,6 +24,7 @@
 }
 .main-content:has(.map-workspace) {
   overflow: clip;
+  pointer-events: none;
 }
 .assistant-launcher,
 .skip-link {
@@ -32,7 +33,7 @@
 .main-content {
   position: relative;
   z-index: 10;
-  pointer-events: none;
+  pointer-events: auto;
 }
 .main-content > *,
 .sidebar,

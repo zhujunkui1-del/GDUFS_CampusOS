@@ -12,6 +12,7 @@ import {
 } from "./auth";
 import { ConsoleSyncStore } from "./v2-sync";
 import { consoleV2Api } from "./v2-api";
+import { collectorAdministration } from "./collector-api";
 
 export async function consoleAuthentication(request: Request) {
   let setCookie: string | undefined;
@@ -100,6 +101,21 @@ export const consoleAdministration = withApi(async (request) => {
     .map(decodeURIComponent);
   const [section, id, action, version] = path;
   if (path.length > 4) throw new ApiError("NOT_FOUND", "未找到该管理接口。");
+  if (section === "collector")
+    return collectorAdministration(
+      context.config.db,
+      context.actor,
+      request,
+      path.slice(1),
+    );
+  if (
+    section === "content" &&
+    (action === "versions" || action === "restore" || action === "review")
+  )
+    throw new ApiError(
+      "FORBIDDEN",
+      "人工审核和版本管理已关闭，文章由采集程序同步。",
+    );
   if (id) ConsoleIdSchema.parse(id);
   const query = Object.fromEntries(new URL(request.url).searchParams);
   const read = () => readJson(request, 262144);
@@ -159,8 +175,14 @@ export const consoleAdministration = withApi(async (request) => {
       return store.importBatch(await read());
     if (request.method === "POST" && !id)
       throw new ApiError("INVALID_ARGUMENT", "请使用人工导入入口登记内容。");
-    if (request.method === "PATCH" && id && !action)
+    if (request.method === "PATCH" && id && !action) {
+      if ((await store.document(id)).collectionManaged)
+        throw new ApiError(
+          "FORBIDDEN",
+          "此文章由采集器维护，请更新原文后同步。",
+        );
       return store.writeContent(id, await read());
+    }
     if (request.method === "POST" && id) {
       if (action === "review") return store.review(id, await read());
       if (action === "publish") return store.publish(id, await read());

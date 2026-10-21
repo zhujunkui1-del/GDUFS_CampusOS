@@ -14,6 +14,8 @@ export function generateStaticParams() {
     ["sources"],
     ["jobs"],
     ["reviews"],
+    ["articles"],
+    ["collector"],
     ["content"],
     ["audit"],
     ["retention"],

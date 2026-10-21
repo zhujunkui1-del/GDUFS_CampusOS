@@ -2,7 +2,7 @@
 import { articlePublicationNames } from "@/domain/console/article-publication";
 import { SourceCollectionPolicy, RunnerTokens } from "./sync-panel";
 import { WhitelistWorkspace, RetentionWorkspace } from "./retention-workspace";
-import { AutoPolicyPanel } from "./automation-panel";
+import { CollectorPanel } from "./collector-panel";
 import Link from "next/link";
 import {
   useEffect,
@@ -63,13 +63,6 @@ const date = (v: unknown) =>
           "zh-CN",
           { timeZone: "Asia/Shanghai", hour12: false },
         );
-const campuses: [string, string][] = [
-  ["all", "全校"],
-  ["university_town", "大学城"],
-  ["baiyun", "白云山"],
-  ["online", "线上"],
-  ["unknown", "待核实"],
-];
 const hours = [1, 3, 6, 12, 24];
 export function useConsoleV2Data<T>(request: Client, path: string | null) {
   const [state, setState] = useState<{
@@ -149,38 +142,60 @@ export function ConsoleV2Filters({
               .map(([k, v]) => [k, String(v)])
               .filter(([, v]) => v),
           );
+          if (values.sort?.includes(":")) {
+            const [sort, direction] = values.sort.split(":");
+            values.sort = sort;
+            values.direction = direction;
+          }
           onChange(values);
         }}
       >
-        {fields.map((f) => (
-          <label key={f.name}>
-            {f.label}
-            {f.options ? (
-              <select name={f.name} defaultValue={values[f.name] || ""}>
-                <option value="">全部</option>
-                {f.options.map(([v, l]) => (
-                  <option key={v} value={v}>
-                    {l}
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <input
-                name={f.name}
-                type={f.type || "text"}
-                defaultValue={values[f.name] || ""}
-                maxLength={100}
-              />
-            )}
-          </label>
-        ))}
-        <label>
-          排序方向
-          <select name="direction" defaultValue={values.direction || "desc"}>
-            <option value="desc">从新到旧 / 降序</option>
-            <option value="asc">从旧到新 / 升序</option>
-          </select>
-        </label>
+        {fields
+          .filter(
+            (f) => !["direction", "campus", "organization"].includes(f.name),
+          )
+          .map((f) => (
+            <label key={f.name}>
+              {f.label}
+              {f.name === "sort" && f.options ? (
+                <select
+                  name="sort"
+                  defaultValue={
+                    (values.sort || f.options[0][0]) +
+                    ":" +
+                    (values.direction || "desc")
+                  }
+                >
+                  {f.options.flatMap(([value, label]) =>
+                    (["desc", "asc"] as const).map((direction) => (
+                      <option
+                        key={value + direction}
+                        value={value + ":" + direction}
+                      >
+                        {sortLabel(value, label, direction)}
+                      </option>
+                    )),
+                  )}
+                </select>
+              ) : f.options ? (
+                <select name={f.name} defaultValue={values[f.name] || ""}>
+                  <option value="">全部</option>
+                  {f.options.map(([v, l]) => (
+                    <option key={v} value={v}>
+                      {l}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  name={f.name}
+                  type={f.type || "text"}
+                  defaultValue={values[f.name] || ""}
+                  maxLength={100}
+                />
+              )}
+            </label>
+          ))}
         <div className="console-actions console-wide">
           <button className="primary-button">应用筛选</button>
           <button type="button" onClick={() => onChange({})}>
@@ -190,6 +205,15 @@ export function ConsoleV2Filters({
       </form>
     </details>
   );
+}
+function sortLabel(value: string, label: string, direction: "asc" | "desc") {
+  if (value === "articles")
+    return "文章数量" + (direction === "asc" ? "升序" : "降序");
+  if (value === "next_sync")
+    return label + (direction === "asc" ? "（从早到晚）" : "（从晚到早）");
+  if (/时间|更新|发布/.test(label))
+    return label + (direction === "asc" ? "（从旧到新）" : "（从新到旧）");
+  return label + (direction === "asc" ? "升序" : "降序");
 }
 export function ConsoleV2Pages({
   data,
@@ -221,8 +245,6 @@ export function ConsoleV2Pages({
 const sourceFilters: ConsoleFilter[] = [
   { name: "q", label: "搜索信息源" },
   { name: "type", label: "载体", options: Object.entries(sourceTypeNames) },
-  { name: "organization", label: "学院、部门或社团" },
-  { name: "campus", label: "校区", options: campuses },
   {
     name: "state",
     label: "启用状态",
@@ -236,7 +258,7 @@ const sourceFilters: ConsoleFilter[] = [
     label: "自动采集",
     options: [
       ["1", "支持官网连接器"],
-      ["0", "需人工导入"],
+      ["0", "其他来源"],
     ],
   },
   {
@@ -249,8 +271,6 @@ const sourceFilters: ConsoleFilter[] = [
   },
   { name: "updatedAfter", label: "更新起日", type: "date" },
   { name: "updatedBefore", label: "更新止日", type: "date" },
-  { name: "minArticles", label: "最少文章数", type: "number" },
-  { name: "maxArticles", label: "最多文章数", type: "number" },
   {
     name: "sort",
     label: "排序",
@@ -278,37 +298,15 @@ export const articleFilters: ConsoleFilter[] = [
     ]),
   },
   { name: "tag", label: "辅助主题", options: topicNames.map((t) => [t, t]) },
-  { name: "campus", label: "校区", options: campuses },
   {
     name: "state",
     label: "状态",
     options: [
       ["published", "已发布"],
-      ["pending", "待审核"],
+      ["pending", "未发布"],
     ],
   },
   { name: "publishedAfter", label: "发布起日", type: "date" },
-  { name: "eventAfter", label: "活动起日", type: "date" },
-  { name: "eventBefore", label: "活动止日", type: "date" },
-  {
-    name: "deadline",
-    label: "报名截止",
-    options: [
-      ["open", "尚未截止"],
-      ["closed", "已截止"],
-      ["unknown", "未知"],
-    ],
-  },
-  {
-    name: "body",
-    label: "正文完整性",
-    options: [
-      ["unknown", "未知"],
-      ["not_provided", "仅元数据"],
-      ["partial", "部分正文"],
-      ["complete", "声明完整"],
-    ],
-  },
   {
     name: "sort",
     label: "排序",
@@ -568,8 +566,7 @@ function Sources({
                     <h2>{s.displayName}</h2>
                     <p>
                       {s.organization || "机构待补充"} ·{" "}
-                      {sourceTypeNames[s.sourceType]} ·{" "}
-                      {campuses.find((c) => c[0] === s.campusScope)?.[1]}
+                      {sourceTypeNames[s.sourceType]}
                     </p>
                     <div className="console-v2-source-status">
                       <span
@@ -583,7 +580,13 @@ function Sources({
                         {s.enabled ? "启用" : "停运"}
                       </span>
                       <span>
-                        {s.automatic ? "可自动同步" : "需人工导入 / 同步受限"}
+                        {s.collectorEnabled != null
+                          ? s.collectorEnabled && s.enabled
+                            ? "本地下载自动同步"
+                            : "公众号同步已暂停"
+                          : s.automatic
+                            ? "可自动同步"
+                            : "需人工导入 / 同步受限"}
                       </span>
                       {s.protected && <span>白名单保护</span>}
                     </div>
@@ -652,7 +655,7 @@ function SourceForm({
       organization: String(f.get("organization") || ""),
       websiteUrl: String(f.get("websiteUrl") || "") || null,
       wechatId: String(f.get("wechatId") || "") || null,
-      campusScope: String(f.get("campusScope")) as SourceInput["campusScope"],
+      campusScope: "all",
       evidenceUrls: links("evidence"),
       priority: initial?.priority || 3,
       connectorType: initial?.connectorType || "disabled",
@@ -726,19 +729,7 @@ function SourceForm({
           defaultValue={initial?.organization}
         />
       </label>
-      <label>
-        校区
-        <select
-          name="campusScope"
-          defaultValue={initial?.campusScope || "unknown"}
-        >
-          {campuses.map(([v, l]) => (
-            <option key={v} value={v}>
-              {l}
-            </option>
-          ))}
-        </select>
-      </label>
+
       {currentCarrier !== "mini_program" && (
         <label>
           官网或公开账号链接
@@ -934,9 +925,17 @@ function SourceWorkspace(props: WorkspaceProps) {
           >
             白名单保护
           </Link>
-          <span>
-            {source.automatic ? "自动同步可用" : "自动同步受限 / 需人工导入"}
-          </span>
+          {source.collectorEnabled != null ? (
+            <Link className="text-link" href="/admin/collector">
+              {source.collectorEnabled && source.enabled
+                ? "本地下载自动同步"
+                : "公众号同步已暂停"}
+            </Link>
+          ) : (
+            <span>
+              {source.automatic ? "自动同步可用" : "自动同步受限 / 需人工导入"}
+            </span>
+          )}
         </div>
         <Feedback message={message} />
       </div>
@@ -979,6 +978,18 @@ function SourceWorkspace(props: WorkspaceProps) {
             onSaved={() => reload()}
           />
         </>
+      ) : tab === "sync" && source.collectorEnabled != null ? (
+        <section className="console-card">
+          <h2>公众号同步</h2>
+          <p>
+            {source.collectorEnabled && source.enabled
+              ? "MP Tools 下载完成后自动同步。"
+              : "此来源已暂停同步。"}
+          </p>
+          <Link className="text-link" href="/admin/collector">
+            查看同步状态与使用方法
+          </Link>
+        </section>
       ) : tab === "sync" ? (
         <>
           <RunnerTokens
@@ -988,13 +999,6 @@ function SourceWorkspace(props: WorkspaceProps) {
           <SourceCollectionPolicy
             request={props.request}
             id={id}
-            version={source.version}
-            admin={props.actor.role === "admin"}
-            reload={reload}
-          />
-          <AutoPolicyPanel
-            request={props.request}
-            sourceId={id}
             version={source.version}
             admin={props.actor.role === "admin"}
             reload={reload}
@@ -1126,7 +1130,7 @@ function Dashboard(props: WorkspaceProps) {
         filters.from || filters.to ? "范围内新增文章" : "今日新增文章",
         stats.todayNew,
       ],
-      ["待人工处理", stats.pending],
+      ["未发布", stats.pending],
       ["采集异常", stats.failed],
       ["发布阻断", stats.blocked],
       ["撤回或过期", stats.inactive],
@@ -1156,7 +1160,10 @@ function Dashboard(props: WorkspaceProps) {
         ))}
       </div>
       <section className="console-card">
-        <h2>信息源同步设置</h2>
+        <h2>官网同步设置</h2>
+        <p>
+          公众号文章同步请使用<Link href="/admin/collector">公众号采集</Link>。
+        </p>
         <p>本地执行器在线时才会完成同步；任务登记不代表采集完成。</p>
         <div className="console-v2-sync-line">
           <div>
@@ -1296,18 +1303,16 @@ function Dashboard(props: WorkspaceProps) {
   );
 }
 export function ConsoleV2Workspace(props: WorkspaceProps) {
+  if (props.section === "collector")
+    return <CollectorPanel request={props.request} />;
   if (props.section === "sources") return <SourceWorkspace {...props} />;
-  if (props.section === "reviews")
+  if (props.section === "articles" || props.section === "reviews")
     return (
       <>
         <div className="console-heading">
-          <h1>内容审核</h1>
+          <h1>文章</h1>
         </div>
-        <ConsoleV2Articles
-          request={props.request}
-          exceptions
-          canReview={props.actor.role === "admin"}
-        />
+        <ConsoleV2Articles request={props.request} />
       </>
     );
   if (props.section === "whitelist")

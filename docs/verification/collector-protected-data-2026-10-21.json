@@ -1,0 +1,22 @@
+{
+  "protected": [
+    {
+      "dataset": "all_sources",
+      "beforeCount": 206,
+      "afterCount": 206,
+      "beforeSha256": "ca40038e141811feb06fbecdc02bde9ec2fe1d0ef85075689bab494a5fd32575",
+      "afterSha256": "ca40038e141811feb06fbecdc02bde9ec2fe1d0ef85075689bab494a5fd32575",
+      "unchanged": true
+    },
+    {
+      "dataset": "existing_website_documents",
+      "beforeCount": 52,
+      "afterCount": 52,
+      "beforeSha256": "354de4ecb9e4ee44830d4cd3ef2e216b4d7d562bcba521174163c0ad05f2b6db",
+      "afterSha256": "354de4ecb9e4ee44830d4cd3ef2e216b4d7d562bcba521174163c0ad05f2b6db",
+      "unchanged": true
+    }
+  ],
+  "foreignKeyViolations": 0,
+  "backupSha256": "b3016170a1f8525e65043c486984b716b00d8c16b60023d2f34b29b3024d4181"
+}

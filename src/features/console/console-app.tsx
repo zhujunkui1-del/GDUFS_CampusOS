@@ -21,6 +21,7 @@ import {
   LayoutDashboard,
   Library,
   ClipboardCheck,
+  RefreshCw,
   Archive,
   ShieldCheck,
   LogOut,
@@ -59,7 +60,8 @@ type List<T> = { items: T[]; total?: number; offset: number; limit: number };
 const navigation = [
   { id: "", label: "总览", icon: LayoutDashboard },
   { id: "sources", label: "信息源", icon: Library },
-  { id: "reviews", label: "内容审核", icon: ClipboardCheck },
+  { id: "articles", label: "文章", icon: ClipboardCheck },
+  { id: "collector", label: "公众号采集", icon: RefreshCw },
   { id: "retention", label: "过时信息清理", icon: Archive },
   { id: "whitelist", label: "白名单", icon: ShieldCheck },
 ];
@@ -117,6 +119,7 @@ export function ConsoleApp() {
     section = parts[0] || "",
     id = useSearchParams().get("record");
   useEffect(() => {
+    if (section === "reviews") router.replace("/admin/articles");
     if (section === "jobs") router.replace("/admin?view=jobs");
     if (section === "audit") router.replace("/admin?view=history");
     if (section === "content")
@@ -622,7 +625,7 @@ const emptySource: SourceInput = {
   sourceType: "manual_import",
   subtype: "",
   organization: "",
-  campusScope: "unknown",
+  campusScope: "all",
   websiteUrl: null,
   wechatId: null,
   evidenceUrls: [],
@@ -768,27 +771,7 @@ function SourceEditor({
             onChange={(e) => set("organization", e.target.value)}
           />
         </label>
-        <label>
-          校区范围
-          <select
-            value={form.campusScope}
-            onChange={(e) =>
-              set("campusScope", e.target.value as SourceInput["campusScope"])
-            }
-          >
-            {[
-              ["unknown", "待核实"],
-              ["all", "全校"],
-              ["university_town", "大学城"],
-              ["baiyun", "白云山"],
-              ["online", "线上"],
-            ].map(([v, l]) => (
-              <option key={v} value={v}>
-                {l}
-              </option>
-            ))}
-          </select>
-        </label>
+
         <label>
           网站网址
           <input
@@ -1249,7 +1232,7 @@ const emptyContent: ContentInput = {
   body: "",
   bodyStatus: "unknown",
   kind: "knowledge",
-  campusScope: "unknown",
+  campusScope: "all",
   validUntil: null,
   publishedAt: null,
   sourceUpdatedAt: null,
@@ -1381,6 +1364,33 @@ function ExistingContentEditor({
   if (!isNew && !data) return <Message>正在加载…</Message>;
   const canWrite = actor.role !== "reviewer",
     canPublish = actor.role === "admin";
+  if (data?.collectionManaged)
+    return (
+      <>
+        <Heading title={data.title} />
+        <section className="console-card">
+          <h2>采集文章</h2>
+          <p>
+            此文章由公众号采集程序维护，成功采集后自动发布，后续更新覆盖当前阅读版。
+          </p>
+          <dl className="console-details">
+            <dt>来源</dt>
+            <dd>{data.sourceName}</dd>
+            <dt>原文发布</dt>
+            <dd>{date(data.publishedAt)}</dd>
+            <dt>最近采集</dt>
+            <dd>{date(data.fetchedAt)}</dd>
+          </dl>
+          <div className="console-actions">
+            <Link className="text-link" href={"/articles/" + data.id}>
+              站内阅读
+            </Link>
+            <External url={data.url} label="查看原文" />
+            <Link href="/admin/collector">采集设置</Link>
+          </div>
+        </section>
+      </>
+    );
   return (
     <>
       <Heading title={isNew ? "登记内容" : data!.title}>
@@ -1589,27 +1599,7 @@ function ExistingContentEditor({
             maxLength={500}
           />
         </label>
-        <label>
-          校区
-          <select
-            value={form.campusScope}
-            onChange={(e) =>
-              set("campusScope", e.target.value as ContentInput["campusScope"])
-            }
-          >
-            {[
-              ["unknown", "待核实"],
-              ["all", "全校"],
-              ["university_town", "大学城"],
-              ["baiyun", "白云山"],
-              ["online", "线上"],
-            ].map(([v, l]) => (
-              <option key={v} value={v}>
-                {l}
-              </option>
-            ))}
-          </select>
-        </label>
+
         <label>
           有效期至（北京时间）
           <input
@@ -1664,7 +1654,7 @@ function ExistingContentEditor({
             </label>
             {[
               ["timeVerified", "时间已核验"],
-              ["placeVerified", "校区地点已核验"],
+              ["placeVerified", "地点已核验"],
               ["deadlineVerified", "截止日期已核验"],
             ].map(([field, label]) => (
               <label key={field} className="console-checkbox">
@@ -1703,7 +1693,7 @@ function ExistingContentEditor({
       {data && (
         <>
           <section className="console-card">
-            <h2>审核与发布</h2>
+            <h2>发布状态</h2>
             <p>
               <Badge value={data.publicationState} />
             </p>

@@ -195,7 +195,7 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
   protected override snapshot(id: string): Statement {
     return this.db
       .prepare(
-        "INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at,content_revision,input_hash) SELECT id,version,json_object('inputRef',CASE WHEN input_hash IS NOT NULL AND content_revision>0 THEN content_revision END,'inputAvailable',input_hash IS NOT NULL AND content_revision>0,'inputHash',input_hash,'publicationStatus',publication_status,'reviewStatus',workflow_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'",
+        "INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at,content_revision,input_hash) SELECT id,version,json_object('contentRevision',content_revision,'inputHash',input_hash,'publicationStatus',publication_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'",
       )
       .bind(this.actor.id, this.now(), id);
   }

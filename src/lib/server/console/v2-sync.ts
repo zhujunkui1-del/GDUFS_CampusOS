@@ -401,8 +401,6 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
     const q = SourcesV2Query.pick({
       q: true,
       type: true,
-      organization: true,
-      campus: true,
       state: true,
     })
       .extend({ from: z.iso.date().optional(), to: z.iso.date().optional() })
@@ -436,14 +434,6 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       where.push("s.channel_type=?");
       args.push(q.type);
     }
-    if (q.organization) {
-      where.push("s.organization LIKE ? ESCAPE '\\'");
-      args.push("%" + q.organization.replace(/[\\%_]/g, "\\$&") + "%");
-    }
-    if (q.campus) {
-      where.push("s.campus_scope=?");
-      args.push(q.campus);
-    }
     const active = "enabled=1 AND archived_at IS NULL";
     if (q.state === "enabled") where.push(active);
     if (q.state === "paused")
@@ -457,10 +447,11 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
     const metrics = await this.db
       .prepare(
         `WITH fs AS(SELECT s.* FROM knowledge_sources s WHERE ${where.join(" AND ")}),ds AS(SELECT d.* FROM knowledge_documents d WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND d.source_id IN(SELECT id FROM fs)),dates AS(SELECT ? a,? b),checks AS(SELECT c.* FROM console_content_checks c JOIN ds d ON d.id=c.document_id JOIN fs s ON s.id=d.source_id WHERE c.content_revision=d.content_revision AND c.input_hash=d.input_hash AND c.source_version=s.version AND c.policy_version=COALESCE((SELECT version FROM console_publication_policies WHERE source_id=s.id),0) AND c.control_generation=COALESCE((SELECT generation FROM console_document_controls WHERE document_id=d.id),0))
-    SELECT (SELECT count(*) FROM fs) sources,(SELECT count(*) FROM fs WHERE id NOT IN(${webProfiles.map(() => "?").join(",")})) unsupported,(SELECT max(last_success_at) FROM fs) lastSync,(SELECT min(next_sync_at_ms) FROM fs WHERE ${active} AND id IN(${webProfiles.map(() => "?").join(",")})) nextSync,(SELECT count(*) FROM fs WHERE ${active}) enabled,(SELECT count(*) FROM fs WHERE NOT(${active}) AND operating_status NOT IN('closed','unreachable')) paused,(SELECT count(*) FROM fs WHERE operating_status IN('closed','unreachable')) unavailable,
-    (SELECT count(*) FROM ds d,dates WHERE date((SELECT created_at FROM console_content_versions v WHERE v.document_id=d.id AND v.version=1),'+8 hours') BETWEEN dates.a AND dates.b) todayNew,
+    SELECT (SELECT count(*) FROM fs) sources,(SELECT count(*) FROM fs WHERE id NOT IN(${webProfiles.map(() => "?").join(",")}) AND NOT EXISTS(SELECT 1 FROM campus_collector_sources c WHERE c.source_id=fs.id)) unsupported,(SELECT max(last_success_at) FROM fs) lastSync,(SELECT min(next_sync_at_ms) FROM fs WHERE ${active} AND id IN(${webProfiles.map(() => "?").join(",")})) nextSync,(SELECT count(*) FROM fs WHERE ${active}) enabled,(SELECT count(*) FROM fs WHERE NOT(${active}) AND operating_status NOT IN('closed','unreachable')) paused,(SELECT count(*) FROM fs WHERE operating_status IN('closed','unreachable')) unavailable,
+    (SELECT count(*) FROM ds d,dates WHERE date(COALESCE((SELECT min(r.created_at) FROM campus_collector_receipts r WHERE r.document_id=d.id),(SELECT created_at FROM console_content_versions v WHERE v.document_id=d.id AND v.version=1)),'+8 hours') BETWEEN dates.a AND dates.b) todayNew,
     (SELECT count(*) FROM document_discoveries x,dates WHERE x.source_id IN(SELECT id FROM fs) AND date(x.first_seen_at,'+8 hours') BETWEEN dates.a AND dates.b) discoveredToday,
-    (SELECT count(*) FROM console_auto_publications p,dates WHERE p.document_id IN(SELECT id FROM ds) AND date(p.created_at,'+8 hours') BETWEEN dates.a AND dates.b) autoToday,
+    ((SELECT count(*) FROM console_auto_publications p,dates WHERE p.document_id IN(SELECT id FROM ds) AND date(p.created_at,'+8 hours') BETWEEN dates.a AND dates.b)+(SELECT count(DISTINCT r.document_id) FROM campus_collector_receipts r,dates WHERE r.document_id IN(SELECT id FROM ds) AND json_extract(r.result_json,'$.changed')=1 AND json_extract(r.result_json,'$.state')='published' AND date(r.created_at,'+8 hours') BETWEEN dates.a AND dates.b)) autoToday,
+    (SELECT count(*) FROM ds d WHERE NOT EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)) pending,
     (SELECT count(DISTINCT document_id) FROM checks,dates WHERE outcome='review' AND date(created_at,'+8 hours') BETWEEN dates.a AND dates.b) exceptions,
     (SELECT count(DISTINCT document_id) FROM checks WHERE outcome='blocked') blocked,
     (SELECT count(*) FROM ds WHERE publication_status='withdrawn' OR lifecycle_status<>'active' OR julianday(valid_until)<=julianday('now')) inactive,
@@ -484,6 +475,7 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
           | "todayNew"
           | "discoveredToday"
           | "autoToday"
+          | "pending"
           | "exceptions"
           | "blocked"
           | "inactive"
@@ -496,7 +488,7 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       >();
     return {
       ...base,
-      stats: { ...base.stats, ...metrics, pending: metrics?.exceptions || 0 },
+      stats: { ...base.stats, ...metrics, pending: metrics?.pending || 0 },
       unsupported: metrics?.unsupported || 0,
       autoPublishedToday: metrics?.autoToday || 0,
       protectedSources: metrics?.protectedSources || 0,

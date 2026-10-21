@@ -1,0 +1,43 @@
+{
+  "deployedAt": "2026-10-21T12:04:31.464575+00:00",
+  "workerVersion": "b43728df-ad90-4474-966b-818622b761a1",
+  "nativePackage": {
+    "patch": "campusos-reading-html-v2-styled",
+    "built_at": "2026-10-21T11:15:20.436158+00:00",
+    "previous_sha256": "8cd99711ec61cb0df9ab961425422e6d6159d3a4f212f6d928a33f7e1b912612",
+    "base_sha256": "107b7f37ff53c4d8e59adbec9c628386ebfe8dcbcf1ab1ef97ebbda7a554cd58",
+    "patched_sha256": "56575d06d9fd0b05d67c9e2d87b390cc0f55aa4c87a3efd9fc28df66f483e48e",
+    "changed_modules": [
+      "backend.downloader"
+    ],
+    "network_requests": 0,
+    "installed": true
+  },
+  "migrations": [
+    "0028_styled_reading_html.sql"
+  ],
+  "testsRun": false,
+  "at": "2026-10-21T12:10:03.018342+00:00",
+  "imported": {
+    "articles": 67,
+    "html_bytes": 3237061,
+    "min_bytes": 4638,
+    "max_bytes": 488624
+  },
+  "publicArticles": 119,
+  "restorationFailed": 0,
+  "targetArticle": {
+    "id": "wx-87e9d8e6dd3d601f4ed9b8ade7af01f3ff111d5c",
+    "imageCount": 24,
+    "backgroundPreserved": true,
+    "originImagesObservedInBrowser": true
+  },
+  "imageBinariesUploaded": 0,
+  "readerSandboxScripts": false,
+  "filters": {
+    "articleCountRange": false,
+    "campus": false,
+    "organization": false,
+    "sortDirectionMerged": true
+  }
+}

@@ -352,3 +352,17 @@ GitHub公开源码/元数据/Issue/PR为维护与行为证据，上游自报不�
 负责人声明已人工核对WeRSS当前78个账号仍在正常更新，授权按此名单替换CampusOS公众号/服务号登记并清理旧条目；唯一后续公众号采集器选WeChat MP Tools。名单、MP_WXS、biz和简介见[78账号Markdown](微信公众号与服务号_78个有效账号_2026-10-21.md)。这是人工运营核对及本地订阅名录证据，不是微信平台认证、学校关联或全文再发布许可。
 
 精确映射54项沿用来源ID，24项新建；38个旧行清理。官网109来源、19其他载体来源、52现有官网文章全部保持，未新抓文章或删除官网内容。旧2026-10-17原始目录只作历史参考，不应重新导入恢复被清理条目。当前绑定文件data/console/wechat-source-registry-2026-10-21.json，具体证据和备份边界见[本轮操作记录](WECHAT_SOURCE_RECONCILIATION_2026-10-21.md)。
+
+## 阅读HTML实际接入（2026-10-21，D-056）
+
+负责人现已授权站内阅读与自动发布。本轮使用 `D:\WeChat MP Tools\data\articles_full` 的67份既有成功导出：广外就业53、广外就业中心7、外环东路178号的猫7，均匹配当前78来源并带原文发布时间。清理HTML后真实入库公开，凭据、原始导出及阅读版留本地数据目录；仓库只留散列、计数、接口与运行摘要，不收录第三方完整正文。
+
+本轮新上游网络抓取0，未证明78源9月起目录完整；其余75账号没有本轮导入正文。源站更新/删除在线巡检未验证。原52篇官网文章与206条原来源字段散列保持，细节见[整合记录](WECHAT_COLLECTOR_INTEGRATION.md)。
+
+### D-057图文恢复
+
+负责人提供台湾研修文章的原始HTML、raw HTML与本地media目录，明确要求保留图片与背景。现按本地原HTML恢复67篇图文，图片引用来源为原文中的微信图片CDN，不额外抓取上游文章或复制图片到Cloudflare。目标文章24图及背景已实见；本批HTML3.24MB。本地图片495文件/82.8MB仅为容量评估，不作为已上传资产或全78号覆盖。详见styled-reading-correction-2026-10-21.json与styled-html-storage-sample-2026-10-21.json。
+
+### D-058操作事实（2026-10-21）
+
+使用流程按钮依据为本机安装包_internal/frontend/js/components中的accounts.js、articles.js、settings.js，以及此前只读保留的upstream/rss_scheduler.py；未据此调用上游历史接口。本轮只读rss_subscriptions.json的名称、启用和间隔字段：1个启用账号外环东路178号的猫、720分钟，不复制凭据。线上已观察78来源、当前导入起日2026-10-01、53/7/7文章计数、加粗在线时间及指定阅读页；未获取新上游正文。操作步骤见WECHAT_SYNC_USER_GUIDE.md，运行证据见verification/wechat-sync-usability-2026-10-21.json。
