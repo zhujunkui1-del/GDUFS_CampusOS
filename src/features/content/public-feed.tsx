@@ -1,6 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState, type FormEvent, type CSSProperties } from "react";
+import {
+  useEffect,
+  useState,
+  useSyncExternalStore,
+  type FormEvent,
+  type CSSProperties,
+} from "react";
 import { ArrowUpRight, Search, RefreshCw } from "lucide-react";
 import {
   knowledgeCategories,
@@ -28,10 +34,32 @@ type Result = {
   total: number;
   nextCursor: string | null;
 };
+const columnMemory: Record<string, number> = {};
+function subscribeColumns(update: () => void) {
+  window.addEventListener("storage", update);
+  window.addEventListener("campusos:article-columns", update);
+  return () => {
+    window.removeEventListener("storage", update);
+    window.removeEventListener("campusos:article-columns", update);
+  };
+}
+function savedColumns(surface: string) {
+  try {
+    const n = Number(
+      localStorage.getItem("campusos:article-columns:" + surface),
+    );
+    if ([1, 2, 3, 4].includes(n)) return n;
+  } catch {}
+  return columnMemory[surface] || 1;
+}
 export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
   const categories =
     surface === "radar" ? radarCategories : knowledgeCategories;
-  const [columns, setColumns] = useState(1);
+  const columns = useSyncExternalStore(
+    subscribeColumns,
+    () => savedColumns(surface),
+    () => 1,
+  );
   const [cursors, setCursors] = useState<string[]>([""]);
   const [query, setQuery] = useState({
       q: "",
@@ -150,7 +178,16 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
             value={columns}
             onChange={(e) => {
               const n = Number(e.target.value);
-              setColumns(n);
+              columnMemory[surface] = n;
+              try {
+                localStorage.setItem(
+                  "campusos:article-columns:" + surface,
+                  String(n),
+                );
+              } catch {
+                /* Keep this visit's preference. */
+              }
+              window.dispatchEvent(new Event("campusos:article-columns"));
             }}
           >
             {[1, 2, 3, 4].map((n) => (

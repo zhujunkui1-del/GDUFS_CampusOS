@@ -18,6 +18,8 @@ import { sanitizeReadingHtml } from "./reading-html";
 type Credential = { id: string; source_ids_json: string };
 type Row = Record<string, string | number | null>;
 const now = () => new Date().toISOString();
+const importCutoffSql =
+  "COALESCE((SELECT earliest_import_day FROM console_engine_settings WHERE id='console-v2-settings'),'2000-01-01')";
 function canonical(raw: string) {
   try {
     return canonicalWechatUrl(raw);
@@ -50,7 +52,7 @@ async function authenticate(request: Request, db: SqlDatabase) {
     throw new ApiError("UNAUTHORIZED", "需要采集器凭据。");
   const row = await db
     .prepare(
-      "SELECT t.id,t.source_ids_json FROM campus_collector_tokens t JOIN console_admins a ON a.id=t.admin_id WHERE t.token_hash=? AND t.revoked_at IS NULL AND t.expires_at_ms>? AND a.status='active' AND a.role='admin' AND a.principal_type='human'",
+      "SELECT t.id,t.source_ids_json FROM campus_collector_tokens t JOIN console_admins a ON a.id=t.admin_id WHERE t.token_hash=? AND t.revoked_at IS NULL AND (t.expires_at_ms=0 OR t.expires_at_ms>?) AND a.status='active' AND a.role='admin' AND a.principal_type='human'",
     )
     .bind(await tokenHash(header.slice(7)), Date.now())
     .first<Credential>();
@@ -62,17 +64,17 @@ async function source(
   db: SqlDatabase,
   credential: Credential,
   sourceId: string,
-) {
+): Promise<Row> {
   if (!(JSON.parse(credential.source_ids_json) as string[]).includes(sourceId))
     throw new ApiError("FORBIDDEN", "账号不在此采集器的范围内。");
   const p = await db
     .prepare(
-      "SELECT p.*,s.display_name,s.catalog_metadata_json FROM campus_collector_sources p JOIN knowledge_sources s ON s.id=p.source_id JOIN console_admins a ON a.id=p.approved_by WHERE p.source_id=? AND p.enabled=1 AND s.enabled=1 AND s.archived_at IS NULL AND s.console_managed=1 AND s.permission_status<>'denied' AND s.channel_type IN('wechat_subscription','wechat_service') AND a.principal_type='human' AND a.role='admin' AND a.status='active'",
+      `SELECT p.*,${importCutoffSql} AS global_since_day,s.display_name,s.catalog_metadata_json FROM campus_collector_sources p JOIN knowledge_sources s ON s.id=p.source_id JOIN console_admins a ON a.id=p.approved_by WHERE p.source_id=? AND p.enabled=1 AND s.enabled=1 AND s.archived_at IS NULL AND s.console_managed=1 AND s.permission_status<>'denied' AND s.channel_type IN('wechat_subscription','wechat_service') AND a.principal_type='human' AND a.role='admin' AND a.status='active'`,
     )
     .bind(sourceId)
     .first<Row>();
   if (!p) throw new ApiError("FORBIDDEN", "此公众号已暂停或不允许同步。");
-  return p;
+  return { ...p, since_day: p.global_since_day };
 }
 async function existing(db: SqlDatabase, url: string) {
   return db
@@ -441,7 +443,7 @@ export const collectorApi = withApi(async (request) => {
   if (request.method === "GET" && path === "sources") {
     const r = await db
       .prepare(
-        `SELECT p.source_id,p.account_id,p.enabled,p.since_day,p.interval_minutes,p.requested_at,s.display_name,s.catalog_metadata_json FROM campus_collector_sources p JOIN knowledge_sources s ON s.id=p.source_id WHERE p.source_id IN(${scopes.map(() => "?").join(",")}) AND p.enabled=1 AND s.enabled=1 AND s.archived_at IS NULL AND s.permission_status<>'denied' ORDER BY p.source_id`,
+        `SELECT p.source_id,p.account_id,p.enabled,${importCutoffSql} AS since_day,p.interval_minutes,p.requested_at,s.display_name,s.catalog_metadata_json FROM campus_collector_sources p JOIN knowledge_sources s ON s.id=p.source_id WHERE p.source_id IN(${scopes.map(() => "?").join(",")}) AND p.enabled=1 AND s.enabled=1 AND s.archived_at IS NULL AND s.permission_status<>'denied' ORDER BY p.source_id`,
       )
       .bind(...scopes)
       .all<Row>();
@@ -531,7 +533,7 @@ export async function collectorAdministration(
     const [sources, tokens, heartbeats] = await Promise.all([
       db
         .prepare(
-          "SELECT p.source_id,p.account_id,p.since_day,p.interval_minutes,CASE WHEN p.enabled=1 AND s.enabled=1 AND s.archived_at IS NULL AND s.permission_status<>'denied' THEN 1 ELSE 0 END AS enabled,s.display_name,(SELECT count(*) FROM campus_collector_articles c WHERE c.source_id=p.source_id) AS article_count,(SELECT count(*) FROM campus_collector_articles c WHERE c.source_id=p.source_id AND c.state='removed') AS removed_count,(SELECT max(observed_at) FROM campus_collector_articles c WHERE c.source_id=p.source_id) AS last_observed_at FROM campus_collector_sources p JOIN knowledge_sources s ON s.id=p.source_id ORDER BY s.display_name",
+          `SELECT p.source_id,p.account_id,${importCutoffSql} AS since_day,p.interval_minutes,CASE WHEN p.enabled=1 AND s.enabled=1 AND s.archived_at IS NULL AND s.permission_status<>'denied' THEN 1 ELSE 0 END AS enabled,s.display_name,(SELECT count(*) FROM campus_collector_articles c WHERE c.source_id=p.source_id AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=c.document_id AND t.released_at IS NULL)) AS article_count,(SELECT count(*) FROM campus_collector_articles c WHERE c.source_id=p.source_id AND c.state='removed' AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=c.document_id AND t.released_at IS NULL)) AS removed_count,(SELECT max(observed_at) FROM campus_collector_articles c WHERE c.source_id=p.source_id) AS last_observed_at FROM campus_collector_sources p JOIN knowledge_sources s ON s.id=p.source_id ORDER BY s.display_name`,
         )
         .all(),
       db
@@ -541,7 +543,7 @@ export async function collectorAdministration(
         .all(),
       db
         .prepare(
-          "SELECT h.*,t.label FROM campus_collector_heartbeats h JOIN campus_collector_tokens t ON t.id=h.token_id WHERE t.revoked_at IS NULL AND t.expires_at_ms>? ORDER BY h.last_seen_at DESC LIMIT 5",
+          "SELECT h.*,t.label FROM campus_collector_heartbeats h JOIN campus_collector_tokens t ON t.id=h.token_id WHERE t.revoked_at IS NULL AND (t.expires_at_ms=0 OR t.expires_at_ms>?) ORDER BY h.last_seen_at DESC LIMIT 5",
         )
         .bind(Date.now())
         .all(),
@@ -554,6 +556,30 @@ export async function collectorAdministration(
       versionsEnabled: false,
     };
   }
+  if (request.method === "POST" && section === "connection" && !id) {
+    const v = z
+      .object({ tokenId: ConsoleIdSchema, permanent: z.literal(true) })
+      .strict()
+      .parse(await readJson(request, 4096));
+    const result = await db
+      .prepare(
+        "UPDATE campus_collector_tokens SET expires_at_ms=0 WHERE id=? AND revoked_at IS NULL",
+      )
+      .bind(v.tokenId)
+      .run();
+    if (!result.meta.changes)
+      throw new ApiError("NOT_FOUND", "未找到可用的本机连接。");
+    return { permanent: true };
+  }
+  if (
+    request.method === "POST" &&
+    ["range", "sources"].includes(section) &&
+    !id
+  )
+    throw new ApiError(
+      "INVALID_ARGUMENT",
+      "文章门禁已统一到过时信息清理，请先预览并确认日期。",
+    );
   if (request.method === "POST" && section === "credentials" && !id) {
     const v = z
       .object({
@@ -564,6 +590,7 @@ export async function collectorAdministration(
           .max(100)
           .refine((a) => new Set(a).size === a.length),
         validityDays: z.number().int().min(1).max(365).default(90),
+        permanent: z.boolean().default(false),
       })
       .strict()
       .parse(await readJson(request, 20000));
@@ -588,7 +615,7 @@ export async function collectorAdministration(
         JSON.stringify(v.sourceIds),
         actor.id,
         now(),
-        Date.now() + v.validityDays * 86400000,
+        v.permanent ? 0 : Date.now() + v.validityDays * 86400000,
       )
       .run();
     return { id: tokenId, token };

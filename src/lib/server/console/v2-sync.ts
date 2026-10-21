@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ConsoleRetentionStore } from "./v2-retention";
+import { ConsoleDateGateStore as ConsoleRetentionStore } from "./date-gate-store";
 import { consolePermission } from "./auth";
 import { dispatchDue } from "./scheduler";
 import { CreateJobSchema } from "@/domain/console/ingestion";

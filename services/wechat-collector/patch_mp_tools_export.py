@@ -88,7 +88,7 @@ if settings.get('campusos_reading_only', False):
     staged = OUT / "WeChat MP Tools.reading.exe"
     staged.write_bytes(output)
     (OUT / "downloader.reading.py").write_text(patched_source, encoding="utf-8")
-    report = {"patch": "campusos-reading-html-v2-styled", "built_at": datetime.now(timezone.utc).isoformat(),
+    report = {"patch": "campusos-reading-html-v3-single-file", "built_at": datetime.now(timezone.utc).isoformat(),
               "previous_sha256": installed_hash, "base_sha256": EXPECTED, "patched_sha256": hashlib.sha256(output).hexdigest(),
               "changed_modules": ["backend.downloader"], "network_requests": 0, "installed": False}
     if "--install" in sys.argv:

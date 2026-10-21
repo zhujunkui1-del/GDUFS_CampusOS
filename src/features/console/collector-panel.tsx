@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 type Client = <T>(path: string, method?: string, body?: unknown) => Promise<T>;
 type Source = {
   source_id: string;
@@ -36,11 +36,9 @@ export function CollectorPanel({ request }: { request: Client }) {
   const [data, setData] = useState<Data | null>(null),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
-    [sinceDay, setSinceDay] = useState("");
+    [disconnect, setDisconnect] = useState<string | null>(null);
   function receive(d: Data) {
     setData(d);
-    const days = new Set(d.sources.map((s) => s.since_day));
-    setSinceDay(days.size === 1 ? d.sources[0].since_day : "");
   }
   const load = () =>
     request<Data>("collector")
@@ -52,8 +50,6 @@ export function CollectorPanel({ request }: { request: Client }) {
       .then((d) => {
         if (live) {
           setData(d);
-          const days = new Set(d.sources.map((s) => s.since_day));
-          setSinceDay(days.size === 1 ? d.sources[0].since_day : "");
         }
       })
       .catch((e) => {
@@ -74,19 +70,6 @@ export function CollectorPanel({ request }: { request: Client }) {
     } finally {
       setBusy(false);
     }
-  }
-  const ids = data?.sources.map((s) => s.source_id) || [];
-  function save(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    void run(
-      () =>
-        request("collector/range", "POST", {
-          sourceIds: ids,
-          sinceDay: f.get("sinceDay"),
-        }),
-      "已保存。新起日仅约束后续导入，不会批量删除已有文章。",
-    );
   }
   return (
     <>
@@ -125,23 +108,9 @@ export function CollectorPanel({ request }: { request: Client }) {
         )}
       </section>
       <section className="console-card">
-        <h2>文章起日</h2>
-        <p>统一应用到 {data?.sources.length || 0} 个公众号。</p>
-        <form className="console-form" onSubmit={save}>
-          <label>
-            文章起日（北京时间）
-            <input
-              type="date"
-              name="sinceDay"
-              value={sinceDay}
-              onChange={(e) => setSinceDay(e.target.value)}
-              required
-            />
-          </label>
-          <div className="console-actions console-wide">
-            <button disabled={busy || !ids.length}>保存文章起日</button>
-          </div>
-        </form>
+        <Link className="text-link" href="/admin/retention">
+          文章日期门禁与清理记录
+        </Link>
       </section>
       <details className="console-card">
         <summary>使用方法</summary>
@@ -153,9 +122,7 @@ export function CollectorPanel({ request }: { request: Client }) {
           <li>双击本机“启动 CampusOS 同步.cmd”，保持电脑运行。</li>
           <li>约一分钟后刷新本页；点击下方公众号查看已发布文章。</li>
         </ol>
-        <p>
-          本页的文章起日仅筛选导入文件，不会启动或改变 MP Tools 的下载任务。
-        </p>
+        <p>文章门禁统一在“过时信息清理”设置；下载日期在 MP Tools 中设置。</p>
       </details>
       <details className="console-card">
         <summary>连接状态</summary>
@@ -164,10 +131,38 @@ export function CollectorPanel({ request }: { request: Client }) {
           .map((t) => (
             <p key={t.id}>
               {t.source_count} 个来源 ·{" "}
-              {new Date(t.expires_at_ms).toLocaleDateString("zh-CN", {
-                timeZone: "Asia/Shanghai",
-              })}{" "}
-              到期
+              {t.expires_at_ms === 0
+                ? "长期有效（可撤销）"
+                : new Date(t.expires_at_ms).toLocaleDateString("zh-CN", {
+                    timeZone: "Asia/Shanghai",
+                  }) + " 到期"}
+              {disconnect === t.id ? (
+                <span className="console-actions">
+                  <button
+                    className="console-danger-button"
+                    disabled={busy}
+                    onClick={() =>
+                      void run(async () => {
+                        await request(
+                          "collector/credentials/" + t.id,
+                          "POST",
+                          {},
+                        );
+                        setDisconnect(null);
+                      }, "本机连接已撤销；已发布文章仍可阅读。")
+                    }
+                  >
+                    确认撤销连接
+                  </button>
+                  <button disabled={busy} onClick={() => setDisconnect(null)}>
+                    取消
+                  </button>
+                </span>
+              ) : (
+                <button disabled={busy} onClick={() => setDisconnect(t.id)}>
+                  撤销连接
+                </button>
+              )}
             </p>
           ))}
       </details>

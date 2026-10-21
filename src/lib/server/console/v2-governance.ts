@@ -33,7 +33,7 @@ const pattern = (s: string) => "%" + s.replace(/[\\%_]/g, "\\$&") + "%";
 const articleCount =
   "(SELECT count(DISTINCT d.id) FROM knowledge_documents d WHERE " +
   docs +
-  " AND (d.source_id=s.id OR EXISTS(SELECT 1 FROM document_origins o WHERE o.document_id=d.id AND o.source_id=s.id)))";
+  " AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL) AND (d.source_id=s.id OR EXISTS(SELECT 1 FROM document_origins o WHERE o.document_id=d.id AND o.source_id=s.id)))";
 const publishedCount =
   "(SELECT count(DISTINCT d.id) FROM console_public_documents d WHERE d.source_id=s.id OR EXISTS(SELECT 1 FROM document_origins o WHERE o.document_id=d.id AND o.source_id=s.id))";
 const collectorState =
@@ -315,13 +315,10 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     const v = EngineSettingsSchema.parse(raw);
     consolePermission(this.actor, "admin");
     const old = await this.engineSettings();
-    if (
-      v.earliestImportDay !== old?.earliest_import_day &&
-      !v.confirmImportCutoff
-    )
+    if (v.earliestImportDay !== old?.earliest_import_day)
       throw new ApiError(
-        "CONFIRMATION_REQUIRED",
-        "请确认最早导入日期变更；已有内容不会自动删除。",
+        "INVALID_ARGUMENT",
+        "请在过时信息清理中预览并确认门禁时间。",
       );
     return this.mutate(
       v,
@@ -525,7 +522,11 @@ export class ConsoleGovernanceStore extends ManualImportStore {
   async articlesV2(raw: unknown) {
     const q = ArticleV2Query.parse(raw);
     consolePermission(this.actor, "read");
-    const where = [docs, visible],
+    const where = [
+        docs,
+        visible,
+        "NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)",
+      ],
       args: unknown[] = [];
     if (q.q) {
       where.push(

@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-21",
+  "timezone": "Asia/Shanghai",
+  "previewVersion": "a4921557-36ac-4dad-afaa-3c7c35d319ae",
+  "migration": "0029_date_gate_and_permanent_connection.sql",
+  "backupSha256": "06825d9ca626ff4893928bc335dc9b7b11a127413982053524e737ac815b0937",
+  "confirmedRequirements": {"deleteBeforeDate": true, "keepBoundaryDay": true, "permanentRevocableConnection": true},
+  "actualOperations": {
+    "gateDate": "2026-10-01", "gateDateChanged": false,
+    "previewCandidates": 55, "previewProtected": 0,
+    "confirmedCleanupPlans": 0, "deletedArticles": 0,
+    "sources": 206, "visibleArticles": 119, "tombstones": 0, "foreignKeyViolations": 0,
+    "connectionPermanent": true, "credentialReplaced": false, "scopedSources": 78,
+    "workerPid": 15240, "unchanged": 54, "beforeRange": 13, "uploadFailures": 0
+  },
+  "nativePatch": {
+    "id": "campusos-reading-html-v3-single-file",
+    "installedSha256": "08731c6c18532dd11ee76d5d6bfb683b9b2ca2dd48812c2642f93170ab6d0763",
+    "previousSha256": "56575d06d9fd0b05d67c9e2d87b390cc0f55aa4c87a3efd9fc28df66f483e48e",
+    "changedModules": ["backend.downloader"],
+    "newArticleFiles": ["reading.html"], "metadata": "non-executable HTML meta tag",
+    "imageAndBackgroundStorage": "original CDN references",
+    "upstreamRequestsStarted": 0, "onlineDownloadValidation": false
+  },
+  "observations": {
+    "confirmationBackground": "rgb(180, 35, 24)", "confirmationColor": "rgb(255, 255, 255)",
+    "whitelistFiltersAndListShareCard": true,
+    "radarColumnsAfterChoiceAndReload": 2,
+    "connectionUi": "78 个来源 · 长期有效（可撤销）"
+  },
+  "checks": {"typescript": "passed", "changedFileEslint": "passed", "pythonSyntax": "passed", "workerBuild": "passed", "generatedCredentialScan": "passed", "testSuitesAddedOrRun": 0},
+  "screenshots": ["date-gate-preview-2026-10-21.png", "date-gate-confirmation-2026-10-21.png", "permanent-connection-2026-10-21.png", "whitelist-merged-2026-10-21.png", "article-columns-persisted-2026-10-21.png"],
+  "unverified": ["Actual cleanup and historical cleanup detail after deleting real articles", "New native HTML output during an upstream download", "Full history coverage for all 78 accounts", "Scheduled source-page update and removal inspection"]
+}

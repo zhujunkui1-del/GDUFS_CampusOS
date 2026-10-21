@@ -14,6 +14,7 @@ import type { SqlDatabase, Statement } from "../assistant/database";
 import type { ConsoleActor } from "@/domain/console/contracts";
 type Row = Record<string, string | number | null>;
 type PlanRow = {
+  mode?: string;
   id: string;
   version: number;
   filters_json: string;
@@ -379,6 +380,8 @@ export class ConsoleRetentionStore extends ConsoleAutomationStore {
       p = await this.plan(id),
       f = RetentionFilters.parse(JSON.parse(String(p.filters_json))),
       statements: Statement[] = [];
+    if (p.mode === "date_gate")
+      throw new ApiError("INVALID_ARGUMENT", "请使用日期门禁的预览确认流程。");
     let next = String(p.state),
       cursor = String(p.cursor),
       scanned = Number(p.scanned),

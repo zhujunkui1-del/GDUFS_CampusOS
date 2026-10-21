@@ -17,13 +17,13 @@ python services/wechat-collector/collector.py --config "D:\WeChat MP Tools\data\
 
 `--watch` 每60秒同步已完成导出；中断后依靠 SQLite 回执续传。同一个请求重试不产生第二篇文章。更新替换当前正文，不保存正文历史。没有本地正文、没有原文时间、来源不在范围内时跳过，并在 `last-sync.json` 记录原因。原始发布时间不使用文件修改时间或下载时间代替。
 
-Windows 常驻启动/停止入口是本目录 `start.ps1` / `stop.ps1`；`install-shortcuts.ps1` 在 MP Tools 目录生成双击入口。启动只连接 CampusOS，自带单进程锁；不是自动开机任务，重启电脑后需要再次启动。凭据90天到期后由管理员重新配置连接并重启进程，签发/撤销认证接口仍保留。日志不含凭据或正文，只在状态改变时写入。
+Windows 常驻启动/停止入口是本目录 `start.ps1` / `stop.ps1`；`install-shortcuts.ps1` 在 MP Tools 目录生成双击入口。启动只连接 CampusOS，自带单进程锁；不是自动开机任务，重启电脑后需要再次启动。当前连接已设为长期有效、可撤销（expires_at_ms=0），管理员与来源作用域校验仍保留。日志不含凭据或正文，只在状态改变时写入。
 
-`patch_mp_tools_export.py --install` 为已审阅的 2.2.4 + 短链修补版安装 HTML 输出适配器，程序必须先关闭。离线修改 `backend.downloader` 输出分支，保留短链补丁与原抓取、登录功能。新下载按稳定URL目录覆盖 `reading.html`，只另存不含正文的 `metadata.json`；原文时间取不到时失败，不伪造下载时间。补丁和备份在 `D:\WeChat MP Tools\data\patches\campusos-reading-2026-10-21`。不自动重试文章或启动上游网络任务。
+`patch_mp_tools_export.py --install` 为已审阅的 2.2.4 + 短链修补版安装 HTML 输出适配器，程序必须先关闭。离线修改 `backend.downloader` 输出分支，保留短链补丁与原抓取、登录功能。v3新下载按稳定URL目录原子覆盖 `reading.html`，元信息嵌入不执行代码的meta标签，不另存JSON；原文时间取不到时失败，不伪造下载时间。补丁和备份在 `D:\WeChat MP Tools\data\patches\campusos-reading-2026-10-21`。不自动重试文章或启动上游网络任务。
 
 ## 格式与空间
 
-每篇集成产物只有 `reading.html` 和不含正文的 `metadata.json`。不另存媒体、原始网页、PDF、Markdown、纯文本副本；不删除用户原有的其他格式下载。HTML保留原文图片地址、背景CSS、文字、标题、列表、表格和链接；图片由浏览器按原地址加载。
+每篇新下载只输出 `reading.html`。旧metadata.json/data.json导出继续兼容。HTML保留原文图片地址、背景CSS、文字、标题、列表、表格和链接；图片由浏览器按原地址加载，不另存媒体、原始网页、PDF、Markdown、纯文本副本。不会删除用户原有的其他格式下载。
 
 服务端保留样式和图片引用，移除脚本、事件处理器、表单和不安全链接；正文通过禁止脚本的独立HTML框架展示，原文CSS不会覆盖CampusOS界面。列表只返回元信息，单篇阅读才请求HTML。正文上限1.5MB。公众号身份标识必须与信息源范围一致，不会把同名或改名账号自动合并。
 

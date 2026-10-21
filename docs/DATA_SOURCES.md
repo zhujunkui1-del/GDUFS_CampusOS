@@ -366,3 +366,7 @@ GitHub公开源码/元数据/Issue/PR为维护与行为证据，上游自报不�
 ### D-058操作事实（2026-10-21）
 
 使用流程按钮依据为本机安装包_internal/frontend/js/components中的accounts.js、articles.js、settings.js，以及此前只读保留的upstream/rss_scheduler.py；未据此调用上游历史接口。本轮只读rss_subscriptions.json的名称、启用和间隔字段：1个启用账号外环东路178号的猫、720分钟，不复制凭据。线上已观察78来源、当前导入起日2026-10-01、53/7/7文章计数、加粗在线时间及指定阅读页；未获取新上游正文。操作步骤见WECHAT_SYNC_USER_GUIDE.md，运行证据见verification/wechat-sync-usability-2026-10-21.json。
+
+### D-059实际证据（2026-10-21）
+
+使用已授权本机EXE及原审阅包源码离线生成单HTML补丁，安装后文件SHA08731c6c18532dd11ee76d5d6bfb683b9b2ca2dd48812c2642f93170ab6d0763；仅downloader模块变更。旧实际文章仍为3账号67篇，无新增上游来源/正文。线上日期预览使用当前D1中的55篇真实旧文章，展示原标题、原文日期、来源和原文URL，未确认清理。长期连接只取消原有效期、不改变78来源。快照只存清理需要的公共元信息，不收录全文；实际截图用于工程记录、不放入public资源。

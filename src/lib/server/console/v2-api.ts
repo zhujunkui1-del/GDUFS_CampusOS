@@ -22,6 +22,12 @@ export async function consoleV2Api(
   if (id) ConsoleIdSchema.parse(id);
   const read = () => readJson(request, 262144);
   if (request.method === "GET") {
+    if (section === "date-gate")
+      return id === "history"
+        ? store.gateHistory(query)
+        : id
+          ? store.gateDetail(id, query)
+          : store.gateSettings();
     if (section === "operations" && (id === "jobs" || id === "history"))
       return store.operationRecords(undefined, id, query);
     if (
@@ -46,6 +52,10 @@ export async function consoleV2Api(
     if (section === "checks" && id) return store.checkDetails(id);
   }
   if (request.method === "POST") {
+    if (section === "date-gate")
+      return id
+        ? store.actGate(id, await read())
+        : store.previewGate(await read());
     if (section === "classify" && id)
       return store.classifyArticlePlacement(id, await read());
     if (section === "whitelist" && id === "batch") {

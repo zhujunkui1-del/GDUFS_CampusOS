@@ -131,11 +131,29 @@ def native_removal_observations(config, sources):
 
 
 def export_payload(path, sources):
-    meta = read_json(path)
+    single_html = path.suffix.lower() == ".html"
+    if single_html:
+        from html.parser import HTMLParser
+        class MetadataParser(HTMLParser):
+            metadata = None
+            def handle_starttag(self, tag, attrs):
+                values = dict(attrs)
+                if tag == "meta" and values.get("name") == "campusos-article":
+                    if self.metadata is not None:
+                        raise ValueError("EXPORT_METADATA_DUPLICATE")
+                    self.metadata = json.loads(values.get("content", ""))
+        content = path.read_text(encoding="utf-8-sig")
+        parser = MetadataParser()
+        parser.feed(content)
+        meta = parser.metadata
+        if not isinstance(meta, dict) or meta.get("format") != "reading_html" or meta.get("rendering_version") != 3:
+            raise ValueError("EXPORT_METADATA_MISSING")
+    else:
+        meta = read_json(path)
     data_file = path.parent / "data.json"
     if data_file.exists() and data_file.resolve().parent != path.parent.resolve():
         raise ValueError("UNSAFE_EXPORT_PATH")
-    data = read_json(data_file) if data_file.is_file() else {}
+    data = read_json(data_file) if not single_html and data_file.is_file() else {}
     account_id = meta.get("account_id") or data.get("account_id")
     name = meta.get("source") or data.get("source") or path.parent.parent.name
     matches = [s for s in sources if (s["accountId"] == account_id if account_id else s["name"] == name)]
@@ -156,7 +174,8 @@ def export_payload(path, sources):
     original_html = next(iter(path.parent.glob("*_raw.html")), None)
     if original_html and original_html.resolve().parent != path.parent.resolve():
         raise ValueError("UNSAFE_EXPORT_PATH")
-    content = original_html.read_text(encoding="utf-8-sig") if original_html else data.get("content") or (reading.read_text(encoding="utf-8-sig") if reading.is_file() else None)
+    if not single_html:
+        content = original_html.read_text(encoding="utf-8-sig") if original_html else data.get("content") or (reading.read_text(encoding="utf-8-sig") if reading.is_file() else None)
     if not content:
         raise ValueError("READING_BODY_MISSING")
     fragment, media_omitted = reading_fragment(content)
@@ -183,7 +202,15 @@ def sync_once(config, db, cloud):
         if not root.is_dir():
             stats["errors"]["EXPORT_UNAVAILABLE"] = stats["errors"].get("EXPORT_UNAVAILABLE", 0) + 1
             continue
-        for path in root.glob("*/*/metadata.json"):
+        single_exports = []
+        for candidate in root.glob("*/*/reading.html"):
+            try:
+                if '<meta name="campusos-article"' in candidate.read_text(encoding="utf-8-sig")[:30000]:
+                    single_exports.append(candidate)
+            except OSError:
+                continue
+        exports = [p for p in root.glob("*/*/metadata.json") if p.parent / "reading.html" not in single_exports] + single_exports
+        for path in exports:
             if root not in path.resolve().parents:
                 continue
             try:

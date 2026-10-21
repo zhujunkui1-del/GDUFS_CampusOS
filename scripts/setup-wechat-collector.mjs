@@ -7,6 +7,7 @@ import { assertPreviewTarget } from "./preview-config.mjs";
 const base = "https://campusos-preview.zhujunkui1.workers.dev";
 const directory = "D:/WeChat MP Tools/data/CampusOS_collector";
 const configPath = directory + "/config.json";
+let existingTokenId = null;
 assertPreviewTarget(
   parse(readFileSync("wrangler.jsonc", "utf8")),
   process.env.CLOUDFLARE_ACCOUNT_ID,
@@ -30,17 +31,24 @@ if (existsSync(configPath)) {
     headers: { Authorization: "Bearer " + previous.token },
   });
   if (r.ok) {
-    console.log(
-      JSON.stringify({
-        configured: true,
-        reusedCredential: true,
-        configPath,
-        sources: (await r.json()).data.sources.length,
-      }),
-    );
-    process.exit(0);
+    if (process.argv.includes("--make-permanent")) {
+      existingTokenId = JSON.parse(
+        readFileSync(directory + "/credential-receipt.json", "utf8"),
+      ).id;
+    } else {
+      console.log(
+        JSON.stringify({
+          configured: true,
+          reusedCredential: true,
+          configPath,
+          sources: (await r.json()).data.sources.length,
+        }),
+      );
+      process.exit(0);
+    }
+  } else {
+    throw Error("EXISTING_CREDENTIAL_REQUIRES_EXPLICIT_ROTATION");
   }
-  throw Error("EXISTING_CREDENTIAL_REQUIRES_EXPLICIT_ROTATION");
 }
 const secrets = JSON.parse(
   readFileSync(".map-tools/s3-a/preview-secrets.json", "utf8"),
@@ -88,47 +96,76 @@ try {
   const overview = await call("");
   const sourceIds = overview.sources.map((s) => s.source_id);
   if (sourceIds.length !== 78) throw Error("EXPECTED_78_REGISTRY_SOURCES");
-  const credential = await call("/credentials", {
-    label: "CampusOS 本地阅读HTML同步",
-    sourceIds,
-    validityDays: 90,
-  });
-  mkdirSync(directory, { recursive: true });
-  writeFileSync(
-    configPath,
-    JSON.stringify(
-      {
-        campusosOrigin: base,
-        token: credential.token,
-        dataDirectory: directory,
-        exportDirectories: ["D:/WeChat MP Tools/data/articles_full"],
-      },
-      null,
-      2,
-    ) + "\n",
-    { mode: 0o600 },
-  );
-  writeFileSync(
-    directory + "/credential-receipt.json",
-    JSON.stringify(
-      {
-        id: credential.id,
-        issuedAt: new Date().toISOString(),
-        validityDays: 90,
+  if (existingTokenId) {
+    await call("/connection", { tokenId: existingTokenId, permanent: true });
+    const receiptPath = directory + "/credential-receipt.json";
+    const receipt = JSON.parse(readFileSync(receiptPath, "utf8"));
+    writeFileSync(
+      receiptPath,
+      JSON.stringify(
+        {
+          ...receipt,
+          validityDays: null,
+          permanent: true,
+          updatedAt: new Date().toISOString(),
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+    console.log(
+      JSON.stringify({
+        configured: true,
+        permanent: true,
         sourceCount: sourceIds.length,
-      },
-      null,
-      2,
-    ) + "\n",
-  );
-  console.log(
-    JSON.stringify({
-      configured: true,
-      credentialPrinted: false,
-      sources: sourceIds.length,
+        credentialPrinted: false,
+      }),
+    );
+  } else {
+    const credential = await call("/credentials", {
+      label: "CampusOS 本地阅读HTML同步",
+      sourceIds,
+      validityDays: 90,
+      permanent: true,
+    });
+    mkdirSync(directory, { recursive: true });
+    writeFileSync(
       configPath,
-    }),
-  );
+      JSON.stringify(
+        {
+          campusosOrigin: base,
+          token: credential.token,
+          dataDirectory: directory,
+          exportDirectories: ["D:/WeChat MP Tools/data/articles_full"],
+        },
+        null,
+        2,
+      ) + "\n",
+      { mode: 0o600 },
+    );
+    writeFileSync(
+      directory + "/credential-receipt.json",
+      JSON.stringify(
+        {
+          id: credential.id,
+          issuedAt: new Date().toISOString(),
+          validityDays: null,
+          permanent: true,
+          sourceCount: sourceIds.length,
+        },
+        null,
+        2,
+      ) + "\n",
+    );
+    console.log(
+      JSON.stringify({
+        configured: true,
+        credentialPrinted: false,
+        sources: sourceIds.length,
+        configPath,
+      }),
+    );
+  }
 } finally {
   await fetch(base + "/api/console-auth", { method: "DELETE", headers });
 }

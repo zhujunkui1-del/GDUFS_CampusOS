@@ -124,13 +124,19 @@ export function ConsoleV2Filters({
   fields,
   values,
   onChange,
+  embedded = false,
 }: {
   fields: ConsoleFilter[];
   values: Record<string, string>;
   onChange: (v: Record<string, string>) => void;
+  embedded?: boolean;
 }) {
   return (
-    <details className="console-card console-v2-filters">
+    <details
+      className={
+        embedded ? "console-v2-filters" : "console-card console-v2-filters"
+      }
+    >
       <summary>筛选与排序</summary>
       <form
         key={JSON.stringify(values)}

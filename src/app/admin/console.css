@@ -814,3 +814,25 @@
   height: 20px;
   flex-shrink: 0;
 }
+.console-danger-button,
+.console-actions .console-danger-button {
+  background: #b42318;
+  color: #fff;
+  border-color: #b42318;
+}
+.console-danger-button:hover {
+  background: #912018;
+}
+.console-date-gate-preview {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5eaf0;
+}
+.console-date-gate-row {
+  padding: 18px 0;
+  border-bottom: 1px solid #e5eaf0;
+  overflow-wrap: anywhere;
+}
+.console-date-gate-row > span {
+  margin-left: 16px;
+}
