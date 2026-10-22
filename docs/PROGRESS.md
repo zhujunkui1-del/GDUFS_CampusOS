@@ -693,3 +693,10 @@ WeRSS本轮31条活跃记录全已存在共享目录，实际created0/existing31
 验证：Python19项、云端SQLite17项专项通过；最终全仓372项=360通过/12失败，全部12与HEAD d05e035隔离基线355项中的同12一致。全仓ESLint仍有原CJS导入3错及本机忽略备份1警告，修改文件ESLint通过；类型生成/TS与最终Worker生产构建通过，3个真实浏览器阅读场景无pageerror。期间基线快照跨盘移动错误遍历node_modules junction，将依赖移至临时目录；已停止进一步移动并以验证路径的只复制方式还原原包，package-lock未变，最终TS/构建/372项检查均已重做。未触及源码、文章或数据库；该操作失误保留可追溯。
 
 当前设计/操作见WECHAT_SHARED_LIBRARY.md；机器可重复验收记录见verification/shared-library-2026-10-22.json。完整RAG、事件日历/地图联动和Free长期CPU等其他阶段未在本轮实现。
+
+
+## 2026-10-22｜校园雷达与校园知识前台分组和文章详情窗
+
+“全部”页按栏目分组展示文章，每组显示首批12篇并可进入该栏目分页；新增的分组列表接口在一次请求中返回分类计数和每类首批文章，避免前台按栏目重复请求。搜索标题/来源改为输入后1秒更新，刷新按钮移至列数设置旁。卡片仅显示标题、日期（年月日时分）和来源浅色徽标；点击卡片原地打开站内详情窗，支持关闭按钮、Esc和点遮罩关闭，原文链接放在详情窗内。校园雷达、校园知识、个人日程、我的账号、我的收藏标题统一为“广外通 CampusOS | 页面名”。
+
+验证：`npm run typecheck`、修改文件 ESLint、`tests/unit/public-feed.test.ts`（4/4）、模拟文章 API 的 Edge 桌面/手机 E2E（2/2）及 `npm run build:worker` 通过。全仓单测372项中360通过、12失败；与D-066记录的原有12项失败相同。全仓 lint 仍报告未修改文件 `tests/regression/test_mp_tools_browsing_ui.cjs` 的3个CJS导入错误，以及忽略备份 `backups/wechat-catalog-2026-10-21/inspect.mjs` 的1条未使用变量警告；本轮修改文件 lint 通过。E2E仅使用拦截的模拟接口数据；未访问预览或正式数据库，未部署。

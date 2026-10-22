@@ -16,6 +16,7 @@ const QuerySchema = z
     limit: z.coerce.number().int().min(1).max(20).default(10),
     offset: z.coerce.number().int().min(0).max(200).default(0),
     cursor: z.string().max(500).optional(),
+    grouped: z.literal("1").optional(),
     surface: z.enum(["radar", "knowledge"]).optional(),
     q: z.string().trim().max(100).optional(),
     source: z.string().trim().max(100).optional(),
@@ -26,6 +27,8 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
   const q = QuerySchema.parse(raw);
   if (q.version && !q.id)
     throw new ApiError("INVALID_ARGUMENT", "请指定内容记录。");
+  if (q.grouped && (!q.surface || q.id || q.category || q.cursor || q.offset))
+    throw new ApiError("INVALID_ARGUMENT", "分组列表参数无效。");
   const where = ["(? IS NULL OR d.id=?)", "(? IS NULL OR d.version=?)"];
   const params: unknown[] = [
     q.id || null,
@@ -60,6 +63,8 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
   const base = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where.join(" AND ")}`;
   const categoryColumn =
     q.surface === "radar" ? "d.radar_category" : "d.knowledge_category";
+  const groupColumn =
+    q.surface === "radar" ? "radar_category" : "knowledge_category";
   const facets =
     q.surface && !q.id
       ? await db
@@ -99,13 +104,27 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
     }
   }
   const from = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where.join(" AND ")}`;
-  const rows = await db
-    .prepare(
-      `SELECT d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.summary,d.content_type,d.campus_scope,d.knowledge_category,d.radar_category,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status ${from} ORDER BY d.published_at DESC,d.id LIMIT ? OFFSET ?`,
-    )
-    .bind(...params, q.id ? 1 : q.limit + 1, q.id ? 0 : q.offset)
-    .all<Record<string, string | number | null>>();
-  const items = rows.results.slice(0, q.id ? 1 : q.limit).map((r) => ({
+  const projection =
+    "d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.summary,d.content_type,d.campus_scope,d.knowledge_category,d.radar_category,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status";
+  const rows = q.grouped
+    ? await db
+        .prepare(
+          `SELECT * FROM (SELECT ${projection},ROW_NUMBER() OVER(PARTITION BY d.${groupColumn} ORDER BY d.published_at DESC,d.id) AS group_position ${base}) WHERE group_position<=? ORDER BY ${groupColumn},published_at DESC,id`,
+        )
+        .bind(...params, q.limit)
+        .all<Record<string, string | number | null>>()
+    : await db
+        .prepare(
+          `SELECT ${projection} ${from} ORDER BY d.published_at DESC,d.id LIMIT ? OFFSET ?`,
+        )
+        .bind(...params, q.id ? 1 : q.limit + 1, q.id ? 0 : q.offset)
+        .all<Record<string, string | number | null>>();
+  const selectedRows = q.id
+    ? rows.results.slice(0, 1)
+    : q.grouped
+      ? rows.results
+      : rows.results.slice(0, q.limit);
+  const items = selectedRows.map((r) => ({
     id: r.id,
     version: r.version,
     title: r.title,
@@ -127,15 +146,25 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
       official: r.official_status === "verified_official",
     },
   }));
+  const groups = q.grouped
+    ? items.reduce<Record<string, typeof items>>((result, item) => {
+        const code = item.radarCategory || item.knowledgeCategory;
+        if (code) (result[code] ||= []).push(item);
+        return result;
+      }, {})
+    : undefined;
   if (q.id && !items.length)
     throw new ApiError("NOT_FOUND", "此内容尚未公开或已失效。");
   return {
     items,
+    groups,
     limit: q.id ? 1 : q.limit,
     offset: q.id ? 0 : q.offset,
-    hasMore: !q.id && rows.results.length > q.limit,
+    hasMore: q.grouped
+      ? Object.values(counts).some((count) => count > q.limit)
+      : !q.id && rows.results.length > q.limit,
     nextCursor:
-      !q.id && rows.results.length > q.limit && items.length
+      !q.grouped && !q.id && rows.results.length > q.limit && items.length
         ? btoa(JSON.stringify([items.at(-1)!.publishedAt, items.at(-1)!.id]))
         : null,
     counts,

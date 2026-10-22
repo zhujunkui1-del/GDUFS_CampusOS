@@ -132,18 +132,39 @@ test("real D1 metadata reaches radar and knowledge, with filtering and immediate
   for (const surface of ["radar", "knowledge"]) {
     await page.goto("/" + surface);
     await page.getByLabel("搜索标题", { exact: true }).fill(prefix);
-    await page.getByRole("button", { name: "搜索", exact: true }).click();
     await expect(page.locator(".public-feed-card")).toHaveCount(2);
     await expect(
       page.locator(".public-feed-categories button").first(),
     ).toHaveText("全部2");
-    await expect(page.locator(".public-feed-meta")).not.toContainText([
-      "官方来源",
-      "官方来源",
-    ]);
+    await expect(page.locator(".public-feed-meta")).toHaveCount(0);
+    await expect(page.locator(".public-feed-source").first()).toContainText(
+      prefix + "来源",
+    );
+    const card = page.locator(".public-feed-card").first();
+    await expect(card).not.toContainText("来源信息，请以原文为准");
+    const pageUrl = page.url();
+    await card.click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(page).toHaveURL(pageUrl);
+    await expect(
+      page.getByText("站内暂未提供正文，请查看原文。", { exact: true }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("link", { name: "查看原文", exact: true }),
+    ).toBeVisible();
+    await page
+      .locator(".public-article-dialog")
+      .click({ position: { x: 4, y: 4 } });
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await card.click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page
+      .getByRole("button", { name: "关闭文章详情", exact: true })
+      .click();
+    await expect(page.getByRole("dialog")).toHaveCount(0);
     await page.getByLabel("每行文章数量").selectOption("4");
     const tracks = await page
-      .locator(".public-feed-list")
+      .locator(".public-feed-group-list")
       .evaluate(
         (el) => getComputedStyle(el).gridTemplateColumns.split(" ").length,
       );
@@ -153,7 +174,7 @@ test("real D1 metadata reaches radar and knowledge, with filtering and immediate
       "近期通知",
     );
     await expect(page.locator(".public-feed-card").first()).toContainText(
-      "原文发布：2026-10-19",
+      "2026/10/19",
     );
     await expect(
       page.getByText(prefix + "未批准通知", { exact: true }),
@@ -201,7 +222,6 @@ test("real D1 metadata reaches radar and knowledge, with filtering and immediate
   expect(moved.radarCategory).toBeNull();
   await page.goto("/knowledge");
   await page.getByLabel("搜索标题", { exact: true }).fill(prefix);
-  await page.getByRole("button", { name: "搜索", exact: true }).click();
   await expect(page.locator(".public-feed-card")).toHaveCount(3);
   const current = await request("content/" + ids[0]);
   await request(

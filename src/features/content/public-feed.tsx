@@ -4,17 +4,18 @@ import {
   useEffect,
   useState,
   useSyncExternalStore,
-  type FormEvent,
   type CSSProperties,
+  type KeyboardEvent,
 } from "react";
-import { ArrowUpRight, Search, RefreshCw } from "lucide-react";
+import { ArrowRight, RefreshCw, Search } from "lucide-react";
 import {
   knowledgeCategories,
   radarCategories,
-  contentTypeNames,
 } from "@/domain/console/taxonomy";
+import { PublicArticleDialog } from "./public-article-dialog";
 import "./public-feed.css";
-type Item = {
+
+export type PublicArticleSummary = {
   id: string;
   version: number;
   title: string;
@@ -27,14 +28,32 @@ type Item = {
   radarCategory: string | null;
   source: { name: string; official: boolean };
 };
+
 type Result = {
-  items: Item[];
+  items: PublicArticleSummary[];
+  groups?: Record<string, PublicArticleSummary[]>;
   hasMore: boolean;
   counts: Record<string, number>;
   total: number;
   nextCursor: string | null;
 };
+type FeedGroup = {
+  category: { code: string; label: string };
+  count: number;
+  items: PublicArticleSummary[];
+};
+type FeedState = {
+  key: string;
+  data?: Result;
+  groups?: FeedGroup[];
+  counts?: Record<string, number>;
+  total?: number;
+  error?: string;
+};
+
+const pageSize = 12;
 const columnMemory: Record<string, number> = {};
+
 function subscribeColumns(update: () => void) {
   window.addEventListener("storage", update);
   window.addEventListener("campusos:article-columns", update);
@@ -52,6 +71,41 @@ function savedColumns(surface: string) {
   } catch {}
   return columnMemory[surface] || 1;
 }
+function themeFor(code: string) {
+  let hash = 0;
+  for (const char of code) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+  const hue = hash % 360;
+  return {
+    accent: `hsl(${hue} 43% 38%)`,
+    tint: `hsl(${hue} 58% 96%)`,
+  };
+}
+function themeStyle(code: string) {
+  const theme = themeFor(code);
+  return {
+    "--feed-accent": theme.accent,
+    "--feed-tint": theme.tint,
+  } as CSSProperties;
+}
+function formatPublishTime(value: string | null) {
+  if (!value) return "时间未知";
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value.replaceAll("-", "/");
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  const parts = new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(date);
+  const part = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((item) => item.type === type)?.value || "";
+  return `${part("year")}/${part("month")}/${part("day")} ${part("hour")}:${part("minute")}`;
+}
+
 export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
   const categories =
     surface === "radar" ? radarCategories : knowledgeCategories;
@@ -61,244 +115,433 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
     () => 1,
   );
   const [cursors, setCursors] = useState<string[]>([""]);
+  const [searchDraft, setSearchDraft] = useState({ q: "", source: "" });
   const [query, setQuery] = useState({
-      q: "",
-      source: "",
-      category: "",
-      offset: 0,
-    }),
-    [revision, setRevision] = useState(0);
-  const [state, setState] = useState<{
-    key: string;
-    data?: Result;
-    error?: string;
-  }>({ key: "" });
-  const params = new URLSearchParams({
-    surface,
-    limit: "12",
+    q: "",
+    source: "",
+    category: "",
+    offset: 0,
   });
-  if (cursors[query.offset / 12])
-    params.set("cursor", cursors[query.offset / 12]);
-  for (const field of ["q", "source", "category"] as const)
-    if (query[field]) params.set(field, query[field]);
-  const path = "/api/public/content?" + params.toString(),
-    key = path + ":" + revision;
+  const [revision, setRevision] = useState(0);
+  const [state, setState] = useState<FeedState>({ key: "" });
+  const [selectedArticle, setSelectedArticle] =
+    useState<PublicArticleSummary | null>(null);
+  const pageIndex = Math.floor(query.offset / pageSize);
+  const pageCursor = cursors[pageIndex] || "";
+  const key = JSON.stringify([
+    surface,
+    query.q,
+    query.source,
+    query.category,
+    query.offset,
+    pageCursor,
+    revision,
+  ]);
+
+  useEffect(() => {
+    if (
+      searchDraft.q.trim() === query.q &&
+      searchDraft.source.trim() === query.source
+    )
+      return;
+    const timeout = window.setTimeout(() => {
+      setCursors([""]);
+      setQuery((current) => ({
+        ...current,
+        q: searchDraft.q.trim(),
+        source: searchDraft.source.trim(),
+        offset: 0,
+      }));
+    }, 1000);
+    return () => window.clearTimeout(timeout);
+  }, [searchDraft.q, searchDraft.source, query.q, query.source]);
+
   useEffect(() => {
     const abort = new AbortController();
-    fetch(path, { cache: "no-store", signal: abort.signal })
-      .then(async (r) => {
-        const body = await r.json();
-        if (!r.ok || !body.ok)
-          throw Error(body.error?.message || "内容暂时无法加载");
-        return body.data as Result;
-      })
-      .then((data) => {
-        if (!abort.signal.aborted) setState({ key, data });
-      })
-      .catch((e) => {
+    async function fetchCategory(
+      category: string,
+      cursor = "",
+    ): Promise<Result> {
+      const params = new URLSearchParams({
+        surface,
+        limit: String(pageSize),
+        category,
+      });
+      if (query.q) params.set("q", query.q);
+      if (query.source) params.set("source", query.source);
+      if (cursor) params.set("cursor", cursor);
+      return fetchResult(params);
+    }
+    async function fetchGrouped(): Promise<Result> {
+      const params = new URLSearchParams({
+        surface,
+        limit: String(pageSize),
+        grouped: "1",
+      });
+      if (query.q) params.set("q", query.q);
+      if (query.source) params.set("source", query.source);
+      return fetchResult(params);
+    }
+    async function fetchResult(params: URLSearchParams): Promise<Result> {
+      const response = await fetch("/api/public/content?" + params.toString(), {
+        cache: "no-store",
+        signal: abort.signal,
+      });
+      const body = await response.json();
+      if (!response.ok || !body.ok)
+        throw Error(body.error?.message || "内容暂时无法加载");
+      return body.data as Result;
+    }
+    async function load() {
+      try {
+        if (query.category) {
+          const data = await fetchCategory(query.category, pageCursor);
+          if (!abort.signal.aborted)
+            setState({
+              key,
+              data,
+              counts: data.counts,
+              total: data.counts[query.category] || 0,
+            });
+          return;
+        }
+        if (!categories.length) {
+          setState({ key, groups: [], counts: {}, total: 0 });
+          return;
+        }
+        const grouped = await fetchGrouped();
+        const visibleCategories = categories.filter(
+          (category) => (grouped.counts[category.code] || 0) > 0,
+        );
         if (!abort.signal.aborted)
           setState({
             key,
-            error: e instanceof Error ? e.message : "内容暂时无法加载",
+            groups: visibleCategories.map((category) => ({
+              category,
+              count: grouped.counts[category.code] || 0,
+              items: grouped.groups?.[category.code] || [],
+            })),
+            counts: grouped.counts,
+            total: grouped.total,
           });
-      });
+      } catch (error) {
+        if (!abort.signal.aborted)
+          setState({
+            key,
+            error: error instanceof Error ? error.message : "内容暂时无法加载",
+          });
+      }
+    }
+    void load();
     return () => abort.abort();
-  }, [path, key]);
-  const data = state.key === key ? state.data : undefined,
-    error = state.key === key ? state.error : undefined;
-  function search(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    setQuery({
-      ...query,
-      q: String(f.get("q") || "").trim(),
-      source: String(f.get("source") || "").trim(),
-      offset: 0,
-    });
-  }
+  }, [
+    categories,
+    key,
+    pageCursor,
+    query.category,
+    query.q,
+    query.source,
+    surface,
+  ]);
+
+  const current = state.key === key ? state : undefined;
   const title = surface === "radar" ? "校园雷达" : "校园知识";
+  const selectedCategory = categories.find(
+    (category) => category.code === query.category,
+  );
+  function chooseCategory(code: string) {
+    setCursors([""]);
+    setQuery((current) => ({ ...current, category: code, offset: 0 }));
+  }
+  function setColumns(value: number) {
+    columnMemory[surface] = value;
+    try {
+      localStorage.setItem(
+        "campusos:article-columns:" + surface,
+        String(value),
+      );
+    } catch {
+      /* Keep this visit's preference. */
+    }
+    window.dispatchEvent(new Event("campusos:article-columns"));
+  }
+  function openCard(
+    event: KeyboardEvent<HTMLElement>,
+    item: PublicArticleSummary,
+  ) {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    setSelectedArticle(item);
+  }
+  function renderCard(item: PublicArticleSummary) {
+    return (
+      <article
+        className="public-feed-card"
+        key={item.id}
+        role="button"
+        tabIndex={0}
+        aria-haspopup="dialog"
+        aria-label={`打开文章详情：${item.title}`}
+        onClick={() => setSelectedArticle(item)}
+        onKeyDown={(event) => openCard(event, item)}
+      >
+        <span className="public-feed-card-title">{item.title}</span>
+        <footer>
+          <time dateTime={item.publishedAt || undefined}>
+            {formatPublishTime(item.publishedAt)}
+          </time>
+          <span className="public-feed-source" title={item.source.name}>
+            {item.source.name}
+          </span>
+        </footer>
+      </article>
+    );
+  }
+  function retry() {
+    setRevision((value) => value + 1);
+  }
+  const articleCategory = selectedArticle
+    ? categories.find(
+        (category) =>
+          category.code ===
+          (surface === "radar"
+            ? selectedArticle.radarCategory
+            : selectedArticle.knowledgeCategory),
+      )?.label || title
+    : title;
+
   return (
     <section
       className="module-page public-feed"
       style={{ "--article-columns": columns } as CSSProperties}
     >
       <div className="page-heading">
-        <Link className="module-brand" href="/map">
-          广外通 <span>CampusOS</span>
-        </Link>
-        <h1>{title}</h1>
+        <h1
+          className="module-heading-title"
+          aria-label={`广外通 CampusOS | ${title}`}
+        >
+          <Link className="module-brand" href="/map">
+            广外通 <span>CampusOS</span>
+          </Link>
+          <span className="module-heading-separator" aria-hidden="true">
+            {" | "}
+          </span>
+          <strong>{title}</strong>
+        </h1>
       </div>
-      <form className="public-feed-search" onSubmit={search}>
-        <label>
-          <span>搜索标题</span>
+
+      <div className="public-feed-search" role="search">
+        <label className="public-feed-search-field">
+          <Search size={18} aria-hidden="true" />
           <input
-            name="q"
+            aria-label="搜索标题"
             type="search"
             placeholder="搜索标题"
             maxLength={100}
+            value={searchDraft.q}
+            onChange={(event) => {
+              const value = event.currentTarget.value;
+              setSearchDraft((current) => ({
+                ...current,
+                q: value,
+              }));
+            }}
           />
         </label>
-        <label>
-          <span>来源名称</span>
-          <input name="source" placeholder="学校、部门或机构" maxLength={100} />
-        </label>
-        <button className="public-feed-primary">
-          <Search size={17} />
-          搜索
-        </button>
-        <button
-          type="button"
-          aria-label="刷新内容"
-          onClick={() => setRevision((r) => r + 1)}
-        >
-          <RefreshCw size={17} />
-        </button>
-      </form>
-      <div className="public-feed-toolbar">
-        <nav className="public-feed-categories" aria-label={title + "分类"}>
-          {[{ code: "", label: "全部" }, ...categories].map((c) => (
-            <button
-              key={c.code}
-              aria-pressed={query.category === c.code}
-              onClick={() =>
-                setQuery({ ...query, category: c.code, offset: 0 })
-              }
-            >
-              {c.label}
-              <span className="public-feed-count">
-                {data ? (c.code ? data.counts[c.code] || 0 : data.total) : "…"}
-              </span>
-            </button>
-          ))}
-        </nav>
-        <label className="public-feed-columns">
-          每行文章
-          <select
-            aria-label="每行文章数量"
-            value={columns}
-            onChange={(e) => {
-              const n = Number(e.target.value);
-              columnMemory[surface] = n;
-              try {
-                localStorage.setItem(
-                  "campusos:article-columns:" + surface,
-                  String(n),
-                );
-              } catch {
-                /* Keep this visit's preference. */
-              }
-              window.dispatchEvent(new Event("campusos:article-columns"));
+        <label className="public-feed-search-field">
+          <Search size={18} aria-hidden="true" />
+          <input
+            aria-label="搜索来源名称"
+            type="search"
+            placeholder="学校、部门或机构"
+            maxLength={100}
+            value={searchDraft.source}
+            onChange={(event) => {
+              const value = event.currentTarget.value;
+              setSearchDraft((current) => ({
+                ...current,
+                source: value,
+              }));
             }}
-          >
-            {[1, 2, 3, 4].map((n) => (
-              <option key={n} value={n}>
-                {n} 列
-              </option>
-            ))}
-          </select>
+          />
         </label>
       </div>
-      {!data && !error && (
+
+      <nav className="public-feed-categories" aria-label={title + "分类"}>
+        {[{ code: "", label: "全部" }, ...categories].map((category) => (
+          <button
+            key={category.code || "all"}
+            type="button"
+            style={category.code ? themeStyle(category.code) : undefined}
+            aria-pressed={query.category === category.code}
+            onClick={() => chooseCategory(category.code)}
+          >
+            {category.label}
+            <span className="public-feed-count">
+              {current?.counts
+                ? category.code
+                  ? current.counts[category.code] || 0
+                  : (current.total ?? 0)
+                : "…"}
+            </span>
+          </button>
+        ))}
+      </nav>
+
+      <div className="public-feed-toolbar">
+        <h2>
+          {selectedCategory?.label || "全部"}
+          <span className="public-feed-total">
+            {current?.total === undefined ? "…" : `${current.total} 篇`}
+          </span>
+        </h2>
+        <div className="public-feed-tools">
+          <label className="public-feed-columns">
+            每行文章
+            <select
+              aria-label="每行文章数量"
+              value={columns}
+              onChange={(event) =>
+                setColumns(Number(event.currentTarget.value))
+              }
+            >
+              {[1, 2, 3, 4].map((number) => (
+                <option key={number} value={number}>
+                  {number} 列
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="button"
+            className="public-feed-refresh"
+            aria-label="刷新内容"
+            title="刷新内容"
+            onClick={retry}
+          >
+            <RefreshCw size={18} aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      {!current && (
         <p role="status" className="public-feed-status">
           正在加载…
         </p>
       )}
-      {error && (
+      {current?.error && (
         <div className="public-feed-status" role="alert">
-          <p>{error}</p>
-          <button onClick={() => setRevision((r) => r + 1)}>重试</button>
+          <p>{current.error}</p>
+          <button type="button" onClick={retry}>
+            重试
+          </button>
         </div>
       )}
-      {data?.items.length === 0 && (
-        <p className="public-feed-status">
-          {query.q || query.source || query.category
-            ? "没有找到匹配内容"
-            : "暂无已发布内容"}
-        </p>
-      )}
-      <div className="public-feed-list">
-        {data?.items.map((item) => (
-          <article className="public-feed-card" key={item.id}>
-            <div className="public-feed-meta">
-              <span>{item.source.name}</span>
-              <span>
-                {categories.find(
-                  (c) =>
-                    c.code ===
-                    (surface === "radar"
-                      ? item.radarCategory
-                      : item.knowledgeCategory),
-                )?.label || contentTypeNames[item.contentType]}
-              </span>
-            </div>
-            <h2>
-              {item.readable ? (
-                <Link href={"/articles/" + item.id}>{item.title}</Link>
-              ) : (
-                <a href={item.url} target="_blank" rel="noopener noreferrer">
-                  {item.title}
-                </a>
-              )}
-            </h2>
-            {item.summary &&
-              item.summary !==
-                `关于「${item.title.slice(0, 100)}」的来源信息，请以原文为准。` && (
-                <p>{item.summary}</p>
-              )}
-            <footer>
-              <span>
-                原文发布：
-                {!item.publishedAt
-                  ? "时间未知"
-                  : item.publishedAt.length === 10
-                    ? item.publishedAt
-                    : new Date(item.publishedAt).toLocaleString("zh-CN", {
-                        timeZone: "Asia/Shanghai",
-                        hour12: false,
-                      })}
-              </span>
-              {item.readable && (
-                <Link className="text-link" href={"/articles/" + item.id}>
-                  阅读全文
-                </Link>
-              )}
-              <a
-                className="text-link"
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
+
+      {current &&
+        !current.error &&
+        !query.category &&
+        (current.groups?.length ? (
+          <div className="public-feed-groups">
+            {current.groups.map((group) => (
+              <section
+                className="public-feed-group"
+                style={themeStyle(group.category.code)}
+                key={group.category.code}
+                aria-labelledby={`feed-group-${group.category.code}`}
               >
-                查看原文
-                <ArrowUpRight size={16} />
-              </a>
-            </footer>
-          </article>
+                <div className="public-feed-group-heading">
+                  <h2 id={`feed-group-${group.category.code}`}>
+                    <span className="public-feed-topic-tag">
+                      {group.category.label}
+                    </span>
+                    <span className="public-feed-group-count">
+                      {group.count} 篇
+                    </span>
+                  </h2>
+                  <button
+                    type="button"
+                    className="public-feed-more"
+                    onClick={() => chooseCategory(group.category.code)}
+                  >
+                    查看更多
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </button>
+                </div>
+                <div className="public-feed-group-list">
+                  {group.items.map(renderCard)}
+                </div>
+              </section>
+            ))}
+          </div>
+        ) : (
+          <p className="public-feed-status">
+            {query.q || query.source ? "没有找到匹配内容" : "暂无已发布内容"}
+          </p>
         ))}
-      </div>
-      {data && (
-        <div className="public-feed-pagination">
-          <button
-            disabled={!query.offset}
-            onClick={() =>
-              setQuery({ ...query, offset: Math.max(0, query.offset - 12) })
-            }
-          >
-            上一页
-          </button>
-          <span>第 {query.offset / 12 + 1} 页</span>
-          <button
-            disabled={!data.hasMore || !data.nextCursor}
-            onClick={() => {
-              setCursors((c) => [
-                ...c.slice(0, query.offset / 12 + 1),
-                data.nextCursor!,
-              ]);
-              setQuery({ ...query, offset: query.offset + 12 });
-            }}
-          >
-            下一页
-          </button>
-        </div>
+
+      {current && !current.error && query.category && (
+        <>
+          {current.data?.items.length ? (
+            <section
+              className="public-feed-group public-feed-selected-group"
+              style={themeStyle(query.category)}
+              aria-label={selectedCategory?.label || title}
+            >
+              <div className="public-feed-group-list">
+                {current.data.items.map(renderCard)}
+              </div>
+            </section>
+          ) : (
+            <p className="public-feed-status">
+              {query.q || query.source ? "没有找到匹配内容" : "暂无已发布内容"}
+            </p>
+          )}
+          {current.data && (
+            <div className="public-feed-pagination">
+              <button
+                type="button"
+                disabled={!pageIndex}
+                onClick={() =>
+                  setQuery((current) => ({
+                    ...current,
+                    offset: Math.max(0, current.offset - pageSize),
+                  }))
+                }
+              >
+                上一页
+              </button>
+              <span>
+                第 {pageIndex + 1} 页 · 共 {current.total || 0} 篇
+              </span>
+              <button
+                type="button"
+                disabled={!current.data.hasMore || !current.data.nextCursor}
+                onClick={() => {
+                  setCursors((values) => [
+                    ...values.slice(0, pageIndex + 1),
+                    current.data!.nextCursor!,
+                  ]);
+                  setQuery((current) => ({
+                    ...current,
+                    offset: current.offset + pageSize,
+                  }));
+                }}
+              >
+                下一页
+              </button>
+            </div>
+          )}
+        </>
+      )}
+
+      {selectedArticle && (
+        <PublicArticleDialog
+          key={selectedArticle.id}
+          article={selectedArticle}
+          categoryLabel={articleCategory}
+          onClose={() => setSelectedArticle(null)}
+        />
       )}
     </section>
   );

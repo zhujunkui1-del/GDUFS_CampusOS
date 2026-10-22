@@ -117,7 +117,7 @@ export function ArticleReader({ id }: { id: string }) {
   );
 }
 
-function ReadingFrame({ html, title }: { html: string; title: string }) {
+export function ReadingFrame({ html, title }: { html: string; title: string }) {
   const frame = useRef<HTMLIFrameElement>(null),
     cleanup = useRef<(() => void) | null>(null);
   const [height, setHeight] = useState(600),

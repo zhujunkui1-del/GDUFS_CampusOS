@@ -60,10 +60,18 @@ export function ModulePage({ page }: { page: keyof typeof pages }) {
   return (
     <section className="module-page">
       <div className="page-heading">
-        <Link className="module-brand" href="/map">
-          广外通 <span>CampusOS</span>
-        </Link>
-        <h1>{content.title}</h1>
+        <h1
+          className="module-heading-title"
+          aria-label={`广外通 CampusOS | ${content.title}`}
+        >
+          <Link className="module-brand" href="/map">
+            广外通 <span>CampusOS</span>
+          </Link>
+          <span className="module-heading-separator" aria-hidden="true">
+            {" | "}
+          </span>
+          <strong>{content.title}</strong>
+        </h1>
         <p>{content.text}</p>
       </div>
       <div className="module-empty">

@@ -78,12 +78,9 @@ test("five real official sources are anonymously visible on radar and knowledge"
     expect(expected.every((id: string) => ids.includes(id))).toBe(true);
     expect(old.some((id) => ids.includes(id))).toBe(false);
     await page.goto("/" + surface);
-    await expect(
-      page.getByRole("heading", {
-        name: surface === "radar" ? "校园雷达" : "校园知识",
-        exact: true,
-      }),
-    ).toBeVisible();
+    await expect(page.locator(".module-heading-title")).toContainText(
+      surface === "radar" ? "校园雷达" : "校园知识",
+    );
     await expect(page.locator(".public-feed-card").first()).toBeVisible();
     if (info.project.name === "desktop") {
       const gaps = async (rightSelector?: string) => {
@@ -122,11 +119,11 @@ test("five real official sources are anonymously visible on radar and knowledge"
     await expect(
       page.locator(".public-feed-categories button").first(),
     ).toHaveText("全部" + ids.length);
-    await expect(page.getByText("官方来源", { exact: true })).toHaveCount(0);
+    await expect(page.locator(".public-feed-meta")).toHaveCount(0);
     for (const columns of [1, 2, 3, 4]) {
       await page.getByLabel("每行文章数量").selectOption(String(columns));
       const tracks = await page
-        .locator(".public-feed-list")
+        .locator(".public-feed-group-list")
         .evaluate(
           (el) => getComputedStyle(el).gridTemplateColumns.split(" ").length,
         );
@@ -134,8 +131,14 @@ test("five real official sources are anonymously visible on radar and knowledge"
     }
     await page.getByLabel("每行文章数量").selectOption("1");
     if (ids.length > 12) {
+      await page
+        .locator(".public-feed-group .public-feed-more")
+        .first()
+        .click();
       await page.getByRole("button", { name: "下一页", exact: true }).click();
-      await expect(page.getByText("第 2 页", { exact: true })).toBeVisible();
+      await expect(page.locator(".public-feed-pagination")).toContainText(
+        "第 2 页",
+      );
       await expect(page.locator(".public-feed-card").first()).toBeVisible();
       await page.getByRole("button", { name: "上一页", exact: true }).click();
     }
@@ -144,17 +147,16 @@ test("five real official sources are anonymously visible on radar and knowledge"
       .getByRole("button", { name: new RegExp("^" + category + "\\s*[0-9]+$") })
       .click();
     await expect(page.locator(".public-feed-card").first()).toBeVisible();
-    await expect(
-      page.locator(".public-feed-card").first().locator(".public-feed-meta"),
-    ).toContainText(category);
+    await expect(page.locator(".public-feed-toolbar > h2")).toContainText(
+      category,
+    );
     await page.getByRole("button", { name: /^全部\s*[0-9]+$/ }).click();
-    await page.getByLabel("来源名称", { exact: true }).fill("图书馆");
-    await page.getByRole("button", { name: "搜索", exact: true }).click();
-    await expect(page.locator(".public-feed-card").first()).toContainText(
+    await page.getByLabel("搜索来源名称", { exact: true }).fill("图书馆");
+    await expect(page.locator(".public-feed-source").first()).toContainText(
       "图书馆",
     );
     for (const row of await page.locator(".public-feed-card").all())
-      await expect(row.locator(".public-feed-meta")).toContainText("图书馆");
+      await expect(row.locator(".public-feed-source")).toContainText("图书馆");
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= window.innerWidth + 1,
