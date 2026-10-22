@@ -1,9 +1,7 @@
 import { z } from "zod";
 import {
   CollectorArticleSchema,
-  CollectorObservationSchema,
   canonicalWechatUrl,
-  REMOVAL_CONFIRMATION_MS,
 } from "@/domain/console/collector";
 import { classifyArticle } from "@/domain/console/article-classification";
 import { ConsoleIdSchema, type ConsoleActor } from "@/domain/console/contracts";
@@ -153,28 +151,49 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
       throw new ApiError("FORBIDDEN", "长链接的公众号标识与信息源不一致。");
   }
   const safe = sanitizeReadingHtml(v.readingHtml),
-    mediaOmitted = safe.mediaOmitted || v.mediaOmitted;
+    submittedMediaOmitted = safe.mediaOmitted || v.mediaOmitted;
   const placement = classifyArticle(v.title);
-  const hash = await tokenHash(
-    JSON.stringify([
-      v.sourceId,
-      v.title,
-      url,
-      published,
-      v.sourceUpdatedAt,
-      safe.html,
-      mediaOmitted,
-      placement,
-    ]),
-  );
-  const requestHash = await tokenHash(
-    JSON.stringify([hash, seen, v.provenance]),
-  );
-  const prior = await replay(db, c, v.requestId, requestHash);
-  if (prior) return prior;
   const old = await existing(db, url);
   if (old && old.source_id !== v.sourceId)
     throw new ApiError("CONFLICT", "该链接已属于另一个信息源。");
+  // A saved export can have already lost its iframe and omission metadata.
+  // Preserve the known partial flag only for byte-identical content and facts.
+  const matchesStoredContent =
+    old?.state === "available" &&
+    old.body === safe.html &&
+    old.source_id === v.sourceId &&
+    old.canonical_url === url &&
+    old.title === v.title &&
+    old.published_at === published &&
+    old.source_updated_at === v.sourceUpdatedAt &&
+    old.radar_category === placement.radarCategory &&
+    old.knowledge_category === placement.knowledgeCategory;
+  const mediaOmitted =
+    submittedMediaOmitted || (matchesStoredContent && !!old.media_omitted);
+  const hashFields = [
+    v.sourceId,
+    v.title,
+    url,
+    published,
+    v.sourceUpdatedAt,
+    safe.html,
+  ];
+  const submittedHash = await tokenHash(
+    JSON.stringify([...hashFields, submittedMediaOmitted, placement]),
+  );
+  const hash =
+    mediaOmitted === submittedMediaOmitted
+      ? submittedHash
+      : await tokenHash(
+          JSON.stringify([...hashFields, mediaOmitted, placement]),
+        );
+  // Receipts describe the submitted payload, so later document updates cannot
+  // change the identity of a previously accepted request.
+  const requestHash = await tokenHash(
+    JSON.stringify([submittedHash, seen, v.provenance]),
+  );
+  const prior = await replay(db, c, v.requestId, requestHash);
+  if (prior) return prior;
   if (old && String(old.observed_at) > seen) {
     const result: Row = {
       documentId: String(old.document_id),
@@ -195,9 +214,13 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
     ]);
     return result;
   }
+  if (old && old.observed_at === seen && old.media_omitted && !mediaOmitted)
+    throw new ApiError("CONFLICT", "同一采集时间不能撤销已有的媒体省略标记。");
   if (old && old.observed_at === seen && old.current_hash !== hash) {
     // A cleaner may compact the same observed article. Source facts and the
     // newly canonical reading fragment must still be identical before rewriting.
+    // Attribute ordering can make a second sanitization differ, so compare the
+    // incoming safe fragment to the stored fragment before normalizing it again.
     const normalizedOldHash =
       old.state !== "removed" && old.body
         ? await tokenHash(
@@ -222,7 +245,11 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
       old.title === v.title &&
       old.published_at === published &&
       old.source_updated_at === v.sourceUpdatedAt;
-    if (normalizedOldHash !== hash && !restoringSourceLayout)
+    if (
+      normalizedOldHash !== hash &&
+      !matchesStoredContent &&
+      !restoringSourceLayout
+    )
       throw new ApiError("CONFLICT", "同一采集时间出现不同内容，请重新采集。");
   }
   const id = old
@@ -357,88 +384,24 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
   return result;
 }
 
-async function observeRemoval(db: SqlDatabase, c: Credential, raw: unknown) {
-  const v = CollectorObservationSchema.parse(raw);
-  await source(db, c, v.sourceId);
-  const url = canonical(v.url),
-    seen = observed(v.observedAt);
-  // Old exports can be imported. Deletion observations must be recent direct observations.
-  if (Date.now() - Date.parse(seen) > 3600000)
-    throw new ApiError(
-      "INVALID_ARGUMENT",
-      "下架确认必须来自最近一小时的原文检查。",
-    );
-  const hash = await tokenHash(
-    JSON.stringify([v.sourceId, url, seen, v.outcome]),
-  );
-  const prior = await replay(db, c, v.requestId, hash);
-  if (prior) return prior;
-  const old = await existing(db, url);
-  if (!old || old.source_id !== v.sourceId)
-    throw new ApiError("NOT_FOUND", "未找到此来源的同步文章。");
-  if (String(old.observed_at) >= seen)
-    throw new ApiError("CONFLICT", "重复或过期的下架检查已忽略。");
-  const failure = v.outcome === "access_failed";
-  const since = failure
-    ? null
-    : Number(old.missing_since_ms || Date.parse(seen));
-  const count = failure ? 0 : Number(old.missing_count || 0) + 1;
-  const removed =
-    old.state === "removed" ||
-    (!failure &&
-      count >= 2 &&
-      Date.parse(seen) - Number(since) >= REMOVAL_CONFIRMATION_MS);
-  const state = removed
-    ? "removed"
-    : failure
-      ? "available"
-      : "suspected_missing";
-  const id = String(old.document_id),
-    result: Row = {
-      documentId: id,
-      state,
-      changed: removed && old.state !== "removed" ? 1 : 0,
-    };
-  const statements = [
-    receipt(db, c, v.requestId, v.sourceId, id, hash, result),
-    assertion(
-      db,
-      "EXISTS(SELECT 1 FROM knowledge_documents d JOIN campus_collector_articles c ON c.document_id=d.id WHERE d.id=? AND d.version=? AND c.observed_at=?)",
-      [id, old.version, old.observed_at],
-    ),
-  ];
-  if (removed && old.state !== "removed") {
-    const tombstoneHash = await tokenHash("removed:" + id + ":" + seen);
-    statements.push(
-      db
-        .prepare(
-          "UPDATE knowledge_documents SET body='',summary='',body_status='not_provided',input_hash=?,content_hash=?,approved_input_hash=NULL,approved_content_revision=NULL,publication_status='withdrawn',lifecycle_status='withdrawn',content_revision=content_revision+1,version=version+1,updated_at=? WHERE id=?",
-        )
-        .bind(tombstoneHash, tombstoneHash, now(), id),
-    );
-    statements.push(
-      db.prepare("DELETE FROM knowledge_facts WHERE document_id=?").bind(id),
-      db.prepare("DELETE FROM knowledge_chunks WHERE document_id=?").bind(id),
-    );
-  }
-  statements.push(
-    db
-      .prepare(
-        "UPDATE campus_collector_articles SET state=?,observed_at=?,missing_since_ms=?,missing_count=?,last_outcome=?,last_changed_at=CASE WHEN state<>? THEN ? ELSE last_changed_at END WHERE document_id=?",
-      )
-      .bind(state, seen, since, count, v.outcome, state, now(), id),
-  );
-  await commit(db, statements);
-  return result;
-}
-
 export const collectorApi = withApi(async (request) => {
-  const db = consoleBindings().db,
-    c = await authenticate(request, db);
   const path = new URL(request.url).pathname.replace(
     /^\/api\/collector\/?/,
     "",
   );
+  // Files and upstream observations are never authority to remove cloud articles.
+  // Reject the legacy route before bindings/auth/body reads, even when D1 is down.
+  if (
+    request.method === "DELETE" ||
+    path === "observations" ||
+    path.startsWith("observations/")
+  )
+    throw new ApiError(
+      "FORBIDDEN",
+      "文章同步只允许新增和更新，不允许删除或下架。",
+    );
+  const db = consoleBindings().db,
+    c = await authenticate(request, db);
   const scopes = JSON.parse(c.source_ids_json) as string[];
   if (request.method === "GET" && path === "sources") {
     const r = await db
@@ -485,8 +448,6 @@ export const collectorApi = withApi(async (request) => {
   }
   if (request.method === "POST" && path === "articles")
     return ingest(db, c, await readJson(request, 3000000));
-  if (request.method === "POST" && path === "observations")
-    return observeRemoval(db, c, await readJson(request, 8192));
   if (request.method === "POST" && path === "heartbeat") {
     const v = z
       .object({

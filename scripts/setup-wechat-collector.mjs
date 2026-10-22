@@ -2,10 +2,15 @@
 // No token is printed or committed; --apply is required for writes.
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { pbkdf2Sync } from "node:crypto";
+import { resolve, join } from "node:path";
 import { parse } from "comment-json";
 import { assertPreviewTarget } from "./preview-config.mjs";
 const base = "https://campusos-preview.zhujunkui1.workers.dev";
-const directory = "D:/WeChat MP Tools/data/CampusOS_collector";
+const toolsFlag = process.argv.indexOf("--tools-directory");
+const toolsDirectory = resolve(
+  toolsFlag >= 0 ? process.argv[toolsFlag + 1] : "D:/WeChat MP Tools_v2.3.1",
+);
+const directory = join(toolsDirectory, "data", "CampusOS_collector");
 const configPath = directory + "/config.json";
 let existingTokenId = null;
 assertPreviewTarget(
@@ -19,7 +24,7 @@ if (!process.argv.includes("--apply")) {
       base,
       configPath,
       operation:
-        "issue a 90-day credential scoped to the existing collector registry",
+        "issue a revocable permanent credential scoped to the existing collector registry",
     }),
   );
   process.exit(0);
@@ -136,7 +141,8 @@ try {
           campusosOrigin: base,
           token: credential.token,
           dataDirectory: directory,
-          exportDirectories: ["D:/WeChat MP Tools/data/articles_full"],
+          exportDirectories: [join(toolsDirectory, "data", "articles_full")],
+          maxUploadsPerCycle: 20,
         },
         null,
         2,

@@ -1,6 +1,14 @@
 {
   "campusosOrigin": "https://campusos-preview.zhujunkui1.workers.dev",
   "token": "FILL_FROM_CAMPUSOS_ADMIN_COLLECTOR",
-  "dataDirectory": "D:\\WeChat MP Tools\\data\\CampusOS_collector",
-  "exportDirectories": ["D:\\WeChat MP Tools\\data\\articles_full"]
+  "dataDirectory": "D:\\WeChat MP Tools_v2.3.1\\data\\CampusOS_collector",
+  "exportDirectories": ["D:\\WeChat MP Tools_v2.3.1\\data\\articles_full"],
+  "maxUploadsPerCycle": 20,
+  "werss": {
+    "enabled": true,
+    "origin": "http://localhost:8001",
+    "credentialsFile": "ABSOLUTE_PATH_TO_LOCAL_WERSS_KEY_FILE",
+    "sinceDay": "2026-10-01",
+    "maxNewArticlesPerCycle": 20
+  }
 }

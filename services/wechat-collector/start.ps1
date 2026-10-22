@@ -1,4 +1,4 @@
-param([string]$ConfigPath = 'D:\WeChat MP Tools\data\CampusOS_collector\config.json')
+param([string]$ConfigPath = 'D:\WeChat MP Tools_v2.3.1\data\CampusOS_collector\config.json')
 $ErrorActionPreference = 'Stop'
 $collectorScript = Join-Path $PSScriptRoot 'collector.py'
 $collectorData = Split-Path -Parent $ConfigPath
@@ -13,7 +13,9 @@ if (Test-Path -LiteralPath $processFile) {
     }
 }
 $pythonPath = (Get-Command python -ErrorAction Stop).Source
-$collectorArgs = @('"' + $collectorScript + '"', '--config', '"' + $ConfigPath + '"', '--watch')
+$collectorArgs = '-X utf8 "{0}" --config "{1}" --watch' -f $collectorScript, $ConfigPath
 $collectorProcess = Start-Process -FilePath $pythonPath -ArgumentList $collectorArgs -WindowStyle Hidden -RedirectStandardOutput (Join-Path $collectorData 'worker.stdout.log') -RedirectStandardError (Join-Path $collectorData 'worker.stderr.log') -PassThru
+Start-Sleep -Milliseconds 500
+if ($collectorProcess.HasExited) { throw 'Collector did not start; check worker.stderr.log in the configured data directory.' }
 @{ pid = $collectorProcess.Id; startedAt = (Get-Date).ToUniversalTime().ToString('o'); script = $collectorScript } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $collectorData 'process.json') -Encoding utf8
 Write-Output ('Collector process started: ' + $collectorProcess.Id)

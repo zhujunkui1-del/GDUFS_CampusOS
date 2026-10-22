@@ -18,24 +18,6 @@ export const CollectorArticleSchema = z
   })
   .strict();
 
-export const CollectorObservationSchema = z
-  .object({
-    requestId: z.string().uuid(),
-    sourceId: ConsoleIdSchema,
-    url: z.string().url().max(2000),
-    observedAt: z.iso.datetime({ offset: true }),
-    outcome: z.enum([
-      "http404",
-      "http410",
-      "platform_deleted",
-      "access_failed",
-    ]),
-  })
-  .strict();
-
-// A failed request, a list omission, or an expired login never proves deletion.
-export const REMOVAL_CONFIRMATION_MS = 30 * 60 * 1000;
-
 export function canonicalWechatUrl(raw: string) {
   const u = new URL(raw);
   if (

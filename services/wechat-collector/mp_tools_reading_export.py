@@ -10,6 +10,11 @@ from html.parser import HTMLParser
 from threading import RLock
 from urllib.parse import urlsplit, urlunsplit, parse_qs, urlencode
 
+try:
+    from reading_html import reading_fragment
+except ModuleNotFoundError:
+    from backend.campusos_reading_html import reading_fragment
+
 # The installer embeds reading_html.py above this module, without another runtime dependency.
 _campusos_directory_lock = RLock()
 _campusos_directory_index = {}
@@ -74,39 +79,20 @@ def campusos_folder_name(title, root, suffix=""):
 
 
 def campusos_article_folder(out_dir, title, url):
-    root = Path(out_dir).resolve()
-    root.mkdir(parents=True, exist_ok=True)
-    key = _campusos_article_key(url)
-    if not key:
+    try:
+        from article_library import article_folder
+    except ModuleNotFoundError:
+        from backend.campusos_article_library import article_folder
+    if not _campusos_article_key(url):
         raise ValueError("ARTICLE_URL_INVALID")
-    index = _campusos_directory_index.get(str(root))
-    if index is None or (key in index and (not index[key].is_dir() or _campusos_article_key(campusos_article_metadata(index[key]).get("url")) != key)):
-        index = {}
-        for folder in root.iterdir():
-            if folder.is_dir() and not folder.is_symlink():
-                existing_key = _campusos_article_key(campusos_article_metadata(folder).get("url"))
-                if existing_key:
-                    index.setdefault(existing_key, folder)
-        _campusos_directory_index[str(root)] = index
-    digest = hashlib.sha256(key.encode()).hexdigest()
-    for suffix in ("", " ["+digest[:8]+"]", " ["+digest[:16]+"]", " ["+digest[:32]+"]"):
-        candidate = root / campusos_folder_name(title, root, suffix)
-        if candidate.is_symlink() or candidate.resolve().parent != root:
-            raise ValueError("UNSAFE_ARTICLE_DIRECTORY")
-        if candidate.exists() and (not candidate.is_dir() or _campusos_article_key(campusos_article_metadata(candidate).get("url")) != key):
-            continue
-        previous = index.get(key)
-        if previous and previous != candidate and not candidate.exists():
-            if previous.is_symlink() or previous.resolve().parent != root or _campusos_article_key(campusos_article_metadata(previous).get("url")) != key:
-                raise ValueError("UNSAFE_ARTICLE_DIRECTORY")
-            previous.rename(candidate)
-        candidate.mkdir(exist_ok=True)
-        index[key] = candidate
-        return candidate
-    raise ValueError("ARTICLE_DIRECTORY_COLLISION")
+    return article_folder(out_dir, title, url)
 
 
 def campusos_save_reading(raw_html, url, out_dir, title, content_html, publish_time, review_id):
+    try:
+        from article_library import article_lock, find_existing, register_history, reading_document, read_metadata
+    except ModuleNotFoundError:
+        from backend.campusos_article_library import article_lock, find_existing, register_history, reading_document, read_metadata
     title = unescape(str(title)).strip() or "未命名文章"
     # Never use MP Tools' download-time fallback as an original publication time.
     original_time = re.search(r"\b(?:ct|publish_time)[\"']?\s*[:=]\s*[\"']?(\d{10})", raw_html)
@@ -127,10 +113,13 @@ def campusos_save_reading(raw_html, url, out_dir, title, content_html, publish_t
             "time": datetime.now(timezone.utc).isoformat(), "media_omitted": omitted,
             "format": "reading_html", "rendering_version": 3, "has_markdown": False, "has_pdf": False,
             "resources_count": 0, "videos_count": 0}
-    # One atomic HTML carries both the reading body and its non-executable metadata.
-    csp = "default-src 'none'; script-src 'none'; style-src 'unsafe-inline'; img-src https: data:; media-src https:; font-src data:; frame-src 'none'; object-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'"
-    document = '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="' + escape(csp, quote=True) + '"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="campusos-article" content="' + escape(json.dumps(meta, ensure_ascii=False, separators=(',', ':')), quote=True) + '"><title>' + escape(title) + '</title><style>body{margin:0 auto;padding:20px;max-width:677px;overflow-wrap:anywhere}img,video{max-width:100%;height:auto}table{max-width:100%}</style></head><body>' + fragment + '</body></html>'
-    with _campusos_directory_lock:
+    document = reading_document(meta, fragment)
+    export_root = Path(out_dir).resolve().parent
+    with _campusos_directory_lock, article_lock(export_root, url):
+        previous = find_existing(export_root, url, account_id)
+        if previous:
+            register_history(export_root, previous)
+            return campusos_reading_result(previous, read_metadata(previous), skipped=True)
         folder = campusos_article_folder(out_dir, title, url)
         target = folder / (folder.name + ".html")
         if target.is_symlink() or target.resolve().parent != folder.resolve():
@@ -142,12 +131,30 @@ def campusos_save_reading(raw_html, url, out_dir, title, content_html, publish_t
             raise ValueError("UNSAFE_ARTICLE_FILE")
         pending.write_text(document, encoding="utf-8")
         os.replace(pending, target)
-        # Remove only another HTML export of this exact article after success.
-        # Old media, raw pages and unrelated files are left intact.
-        for previous in folder.glob("*.html"):
-            if previous != target and not previous.is_symlink() and previous.resolve().parent == folder.resolve():
-                if _campusos_article_key(campusos_file_metadata(previous).get("url")) == _campusos_article_key(url):
-                    previous.unlink()
-    return {"success": True, "title": title, "author": name, "path": str(folder),
-            "resources": 0, "cover_url": "", "digest": "", "publish_time": publish_time,
-            "has_markdown": False, "markdown_path": "", "has_pdf": False, "pdf_path": ""}
+        register_history(export_root, target)
+    return campusos_reading_result(target, meta)
+
+
+def campusos_reading_result(path, meta, skipped=False):
+    return {"success": True, "title": meta.get("title") or path.parent.name,
+            "source": meta.get("source") or path.parent.parent.name, "author": meta.get("source", ""),
+            "path": str(path.parent), "resources": 0, "cover_url": "", "digest": "",
+            "publish_time": meta.get("publish_time"), "has_markdown": False, "markdown_path": "",
+            "has_pdf": False, "pdf_path": "", "already_exists": skipped}
+
+
+def campusos_existing_reading(url, out_dir):
+    """Skip an existing bridge export before MP Tools requests the source page."""
+    try:
+        from article_library import article_lock, canonical_url, find_existing, read_metadata, register_history
+    except ModuleNotFoundError:
+        from backend.campusos_article_library import article_lock, canonical_url, find_existing, read_metadata, register_history
+    if not canonical_url(url):
+        return None
+    export_root = Path(out_dir).resolve().parent
+    with article_lock(export_root, url):
+        previous = find_existing(export_root, url)
+        if previous:
+            register_history(export_root, previous)
+            return campusos_reading_result(previous, read_metadata(previous), skipped=True)
+    return None

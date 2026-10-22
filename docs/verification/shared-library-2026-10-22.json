@@ -1,0 +1,160 @@
+{
+  "atBeijing": "2026-10-22T20:19:01.977627+08:00",
+  "decision": "D-066",
+  "preview": "https://campusos-preview.zhujunkui1.workers.dev",
+  "workerVersion": "dabdafdf-910a-411b-b32d-7cda08eb82e7",
+  "productionChanged": false,
+  "sharedRoot": "D:\\WeChat MP Tools_v2.3.1\\data\\articles_full",
+  "sourceScope": 78,
+  "migration": {
+    "credentialReused": true,
+    "statePathsRelocated": 445,
+    "oldStatePreserved": true
+  },
+  "nativePatch": {
+    "installed": true,
+    "sha256": "ef19c6c450e9c128e87df607f11fbd4b31c96c981da13573955a7568719ef8f4",
+    "originalSha256": "01565eeac2918813017a41289a2597e654c4d0cbc2e162f5e198928addf2b8e3",
+    "backupDirectory": "D:\\WeChat MP Tools_v2.3.1\\data\\patches\\shared-article-library-2026-10-22"
+  },
+  "lifecycle": {
+    "startStopRestartVerified": true,
+    "duplicateStartPrevented": true,
+    "activePid": 39224,
+    "logonTask": "CampusOS-WeChat-SharedLibrary",
+    "windowsRebootTested": false,
+    "dockerRestartPolicy": "unless-stopped",
+    "containerRecreated": false
+  },
+  "syncMode": "add_update_only",
+  "noDeleteLiveProbes": [
+    {
+      "method": "POST",
+      "path": "observations",
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "method": "DELETE",
+      "path": "articles",
+      "status": 403,
+      "code": "FORBIDDEN"
+    }
+  ],
+  "coverage": {
+    "localFiles": 474,
+    "eligibleFiles": 438,
+    "eligibleAccounts": 57,
+    "registeredSources": 78,
+    "skipped": {
+      "BEFORE_RANGE": 36
+    },
+    "remote": {
+      "matched": 438,
+      "public_articles": 438,
+      "with_body": 438
+    },
+    "readOnly": true,
+    "rowsWritten": 0
+  },
+  "lastCloudCycle": {
+    "at": "2026-10-22T12:17:53.108811+00:00",
+    "syncMode": "add_update_only",
+    "sources": 78,
+    "published": 0,
+    "unchanged": 438,
+    "skipped": 36,
+    "deferred": 0,
+    "failed": 0,
+    "errors": {
+      "BEFORE_RANGE": 36
+    }
+  },
+  "lastWeRSSCycle": {
+    "at": "2026-10-22T12:18:57.097607+00:00",
+    "seen": 31,
+    "created": 0,
+    "existing": 31,
+    "pendingBody": 0,
+    "deferred": 0,
+    "outOfScope": 0,
+    "failed": 0,
+    "errors": {}
+  },
+  "outbox": [
+    [
+      "acknowledged",
+      505
+    ]
+  ],
+  "runtimePilot": {
+    "actualWeRSSBodyConvertedInIsolatedRoot": {
+      "title": "校友风采，三十而立：从留校教师到跨国公司法总，20 年涉外律师的 \"闯\" 与 \"守\"——海云",
+      "path": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\test-results\\shared-library-live-pilot\\articles_full\\广外法学青年\\校友风采，三十而立：从留校教师到跨国公司法总，20 年涉外律师的 _闯_ 与 _守_——海云\\reading.html",
+      "bytes": 212278,
+      "cdnReferences": 67,
+      "styleAttributes": 1176
+    },
+    "mpToolsReadingHtml": {
+      "path": "D:\\WeChat MP Tools_v2.3.1\\data\\articles_full\\GDUFS广外学生会\\主席团候选人｜冼坤南：笃行实干，聚力同行\\reading.html",
+      "title": "主席团候选人｜冼坤南：笃行实干，聚力同行",
+      "serveHttp": 200,
+      "historyVisible": true,
+      "downloadTaskStatus": "completed",
+      "completed": 1,
+      "failed": 0,
+      "articleBytesUnchanged": true,
+      "historyEntryExists": true,
+      "historyTotal": 476
+    },
+    "sandboxHtml": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\test-results\\shared-library-live-pilot\\articles_full\\广外法学青年\\校友风采，三十而立：从留校教师到跨国公司法总，20 年涉外律师的 _闯_ 与 _守_——海云\\reading.html",
+    "nativeReaderUrl": "http://127.0.0.1:5200/api/articles/serve-file?path=D%3A%5CWeChat+MP+Tools_v2.3.1%5Cdata%5Carticles_full%5CGDUFS%E5%B9%BF%E5%A4%96%E5%AD%A6%E7%94%9F%E4%BC%9A%5C%E4%B8%BB%E5%B8%AD%E5%9B%A2%E5%80%99%E9%80%89%E4%BA%BA%EF%BD%9C%E5%86%BC%E5%9D%A4%E5%8D%97%EF%BC%9A%E7%AC%83%E8%A1%8C%E5%AE%9E%E5%B9%B2%EF%BC%8C%E8%81%9A%E5%8A%9B%E5%90%8C%E8%A1%8C%5Creading.html"
+  },
+  "browser": {
+    "native": {
+      "http": 200,
+      "textChars": 1409,
+      "images": 21,
+      "imagesLoaded": 21,
+      "styles": 225,
+      "pageErrors": [],
+      "screenshot": "test-results/shared-library-live-pilot/native-reading.png"
+    },
+    "werss": {
+      "http": 200,
+      "textChars": 6162,
+      "images": 51,
+      "imagesLoaded": 51,
+      "styles": 1176,
+      "pageErrors": [],
+      "screenshot": "test-results/shared-library-live-pilot/werss-reading.png"
+    },
+    "campusos": {
+      "http": 200,
+      "textChars": 137,
+      "images": 2,
+      "imagesLoaded": 2,
+      "styles": 59,
+      "pageErrors": [],
+      "screenshot": "test-results/shared-library-live-pilot/campusos-reading.png"
+    }
+  },
+  "checks": {
+    "pythonRegressionPassed": 19,
+    "cloudRegressionPassed": 17,
+    "fullUnitTotal": 372,
+    "fullUnitPassed": 360,
+    "fullUnitFailed": 12,
+    "sameBaselineFailures": 12,
+    "typecheck": true,
+    "scopedEslint": true,
+    "workerProductionBuild": true,
+    "fullEslint": "existing 3 CommonJS import errors and 1 ignored local backup warning"
+  },
+  "upstreamRefreshCallsByNewBridge": 0,
+  "newWeRSSArticlesWrittenToRealLibraryThisRun": 0,
+  "newWeRSSBranchEvidence": "actual saved body converted in isolated directory; shared writer concurrency and actual packaged-function regressions",
+  "databaseRebuilt": false,
+  "newPaidServices": false,
+  "dependenciesRecovery": "baseline junction cross-volume move accidentally relocated node_modules; original files restored by verified copy-only robocopy; package lock unchanged"
+}

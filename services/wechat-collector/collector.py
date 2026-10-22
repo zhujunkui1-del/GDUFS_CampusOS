@@ -1,7 +1,7 @@
 """CampusOS local collector bridge. Credentials and state stay beside MP Tools data.
 
-Consumes completed MP Tools exports, never treats an incomplete scan as deletion.
-The cloud API is the sole authority for publication, deduplication and removal.
+Consumes completed shared-library exports. This channel only adds or updates;
+no local directory, history entry or upstream observation can remove cloud data.
 """
 import argparse
 import hashlib
@@ -75,6 +75,8 @@ class Cloud:
         self.token = config["token"]
 
     def call(self, path, value=None):
+        if path not in {"sources", "articles", "heartbeat"}:
+            raise ValueError("COLLECTOR_ADD_UPDATE_ONLY")
         headers = {"Authorization": "Bearer " + self.token, "Accept": "application/json", "User-Agent": "CampusOS-WeChatCollector/1.0"}
         data = None
         if value is not None:
@@ -102,32 +104,8 @@ def database(path):
     db = sqlite3.connect(path)
     db.execute("PRAGMA journal_mode=WAL")
     db.execute("CREATE TABLE IF NOT EXISTS files(path TEXT PRIMARY KEY,fingerprint TEXT NOT NULL,request_id TEXT NOT NULL,status TEXT NOT NULL,document_id TEXT,last_error TEXT,updated_at TEXT NOT NULL)")
-    db.execute("CREATE TABLE IF NOT EXISTS observations(fingerprint TEXT PRIMARY KEY,request_id TEXT NOT NULL,status TEXT NOT NULL)")
     db.commit()
     return db
-
-
-def native_removal_observations(config, sources):
-    """Only explicit deletion messages from MP Tools' completed direct-page checks."""
-    history_path = Path(config["dataDirectory"]).parent / "download_history.json"
-    if not history_path.is_file():
-        return []
-    try:
-        history = read_json(history_path)
-    except (ValueError, OSError):
-        return []
-    items = []
-    for row in history if isinstance(history, list) else []:
-        if row.get("success") is not False or row.get("error") not in {"文章已被作者删除", "内容已被作者删除"}:
-            continue
-        matching = [s for s in sources if s["name"] == row.get("account")]
-        if len(matching) != 1:
-            continue
-        try:
-            items.append({"sourceId": matching[0]["sourceId"], "url": canonical(row.get("link", "")), "observedAt": iso(row.get("time")), "outcome": "platform_deleted"})
-        except (ValueError, TypeError):
-            continue
-    return items
 
 
 def export_payload(path, sources):
@@ -146,7 +124,7 @@ def export_payload(path, sources):
         parser = MetadataParser()
         parser.feed(content)
         meta = parser.metadata
-        if not isinstance(meta, dict) or meta.get("format") != "reading_html" or meta.get("rendering_version") != 3:
+        if not isinstance(meta, dict) or meta.get("format") != "reading_html" or meta.get("rendering_version") not in {2, 3}:
             raise ValueError("EXPORT_METADATA_MISSING")
     else:
         meta = read_json(path)
@@ -189,14 +167,16 @@ def export_payload(path, sources):
     return {"sourceId": source["sourceId"], "accountId": source["accountId"], "title": title,
             "url": canonical(data.get("url") or meta.get("url") or ""), "publishedAt": published,
             "sourceUpdatedAt": iso(source_updated) if source_updated else None, "observedAt": seen,
-            "readingHtml": fragment, "renderingVersion": 2, "mediaOmitted": bool(media_omitted),
+            "readingHtml": fragment, "renderingVersion": 2,
+            "mediaOmitted": bool(media_omitted or meta.get("media_omitted") or data.get("media_omitted")),
             "provenance": "local_export"}
 
 
 def sync_once(config, db, cloud):
     sources = cloud.call("sources")["sources"]
-    source_ids = {s["sourceId"] for s in sources}
-    stats = {"sources": len(sources), "published": 0, "unchanged": 0, "skipped": 0, "failed": 0, "removals": 0, "errors": {}}
+    stats = {"syncMode": "add_update_only", "sources": len(sources), "published": 0, "unchanged": 0, "skipped": 0, "deferred": 0, "failed": 0, "errors": {}}
+    attempted = 0
+    budget = max(1, min(100, int(config.get("maxUploadsPerCycle", 20))))
     for root_name in config["exportDirectories"]:
         root = Path(root_name).resolve()
         if not root.is_dir():
@@ -211,6 +191,8 @@ def sync_once(config, db, cloud):
                 continue
         single_directories = {p.parent for p in single_exports}
         exports = [p for p in root.glob("*/*/metadata.json") if p.parent not in single_directories] + single_exports
+        # Newly completed files get sent before the initial existing-library queue.
+        exports.sort(key=lambda p: p.stat().st_mtime if p.exists() else 0, reverse=True)
         for path in exports:
             if root not in path.resolve().parents:
                 continue
@@ -227,6 +209,10 @@ def sync_once(config, db, cloud):
             if row and row[0] == fingerprint and row[2] == "acknowledged":
                 stats["unchanged"] += 1
                 continue
+            if attempted >= budget:
+                stats["deferred"] += 1
+                continue
+            attempted += 1
             request_id = row[1] if row and row[0] == fingerprint else str(uuid.uuid4())
             stamp = datetime.now(timezone.utc).isoformat()
             db.execute("INSERT INTO files(path,fingerprint,request_id,status,updated_at) VALUES(?,?,?,'pending',?) ON CONFLICT(path) DO UPDATE SET fingerprint=excluded.fingerprint,request_id=excluded.request_id,status='pending',updated_at=excluded.updated_at", (str(path), fingerprint, request_id, stamp))
@@ -253,47 +239,14 @@ def sync_once(config, db, cloud):
                 db.execute("UPDATE files SET status='failed',last_error=? WHERE path=?", (str(exc), str(path)))
                 stats["failed"] += 1
                 stats["errors"][str(exc)] = stats["errors"].get(str(exc), 0) + 1
-                if str(exc) in {"UNAUTHORIZED", "FORBIDDEN", "RATE_LIMITED"}:
+                if str(exc) in {"UNAUTHORIZED", "FORBIDDEN", "RATE_LIMITED", "SERVICE_UNAVAILABLE", "CLOUD_UNAVAILABLE", "HTTP_429", "HTTP_502", "HTTP_503", "HTTP_504"}:
                     db.commit()
                     raise
             db.commit()
-    # An upstream adapter may append explicit direct-page observations here.
-    # Directory absence and article-list omissions are deliberately never emitted.
-    observations = Path(config["dataDirectory"]) / "upstream-observations.jsonl"
-    observation_lines = [json.dumps(item) for item in native_removal_observations(config, sources)]
-    if observations.is_file():
-        observation_lines.extend(observations.read_text(encoding="utf-8-sig").splitlines())
-    if observation_lines:
-        for line in observation_lines:
-            if not line.strip():
-                continue
-            try:
-                item = json.loads(line)
-                if item.get("sourceId") not in source_ids:
-                    continue
-                item["url"] = canonical(item["url"])
-                item["observedAt"] = iso(item["observedAt"])
-                # Do not replay stale deletion claims after a long offline period.
-                if datetime.now(timezone.utc) - datetime.fromisoformat(item["observedAt"].replace("Z", "+00:00")) > timedelta(hours=1):
-                    continue
-                digest = hashlib.sha256(json.dumps(item, sort_keys=True).encode()).hexdigest()
-                row = db.execute("SELECT request_id,status FROM observations WHERE fingerprint=?", (digest,)).fetchone()
-                if row and row[1] == "acknowledged":
-                    continue
-                request_id = row[0] if row else str(uuid.uuid4())
-                db.execute("INSERT OR IGNORE INTO observations VALUES(?,?,'pending')", (digest, request_id))
-                db.commit()
-                result = cloud.call("observations", {**item, "requestId": request_id})
-                db.execute("UPDATE observations SET status='acknowledged' WHERE fingerprint=?", (digest,))
-                db.commit()
-                if result["state"] == "removed":
-                    output = Path(config["dataDirectory"]) / "reading" / next(s["accountId"] for s in sources if s["sourceId"] == item["sourceId"]) / result["documentId"] / "reading.html"
-                    output.unlink(missing_ok=True)
-                stats["removals"] += int(bool(result["changed"]))
-            except (ValueError, KeyError, RuntimeError):
-                stats["failed"] += 1
-    cloud.call("heartbeat", {"mode": "local_exports", "status": "error" if stats["failed"] else "idle", "imported": stats["published"], "errorCode": "SYNC_FAILED" if stats["failed"] else "EXPORT_UNAVAILABLE" if "EXPORT_UNAVAILABLE" in stats["errors"] else None})
+    # Missing files, native failure history and legacy observation JSONL are
+    # deliberately ignored. There is no outbound removal capability.
     atomic(Path(config["dataDirectory"]) / "last-sync.json", json.dumps({"at": datetime.now(timezone.utc).isoformat(), **stats}, ensure_ascii=False, indent=2))
+    cloud.call("heartbeat", {"mode": "local_exports", "status": "error" if stats["failed"] else "idle", "imported": stats["published"], "errorCode": "SYNC_FAILED" if stats["failed"] else "EXPORT_UNAVAILABLE" if "EXPORT_UNAVAILABLE" in stats["errors"] else None})
     return stats
 
 
@@ -306,7 +259,6 @@ def main():
     data_dir = Path(config["dataDirectory"])
     data_dir.mkdir(parents=True, exist_ok=True)
     db = database(data_dir / "state.sqlite3")
-    cloud = Cloud(config)
     # One local worker owns the outbox, including across repeated launches.
     lock = (data_dir / "collector.lock").open("a+b")
     if lock.tell() == 0:
@@ -328,17 +280,33 @@ def main():
     try:
         last_output = None
         while True:
+            config = read_json(args.config)
+            if Path(config["dataDirectory"]).resolve() != data_dir.resolve():
+                raise ValueError("RESTART_REQUIRED_FOR_DATA_DIRECTORY")
+            local_result = None
+            if config.get("werss", {}).get("enabled"):
+                try:
+                    from werss_sync import sync_once as import_werss
+                    local_result = import_werss(config)
+                except (RuntimeError, OSError, ValueError) as exc:
+                    local_result = {"failed": 1, "error": str(exc) if isinstance(exc, RuntimeError) else "WERSS_IMPORT_FAILED"}
+                atomic(data_dir / "last-werss-sync.json", json.dumps({"at": datetime.now(timezone.utc).isoformat(), **local_result}, ensure_ascii=False, indent=2))
             try:
+                cloud = Cloud(config)
                 result = sync_once(config, db, cloud)
-                output = json.dumps(result, ensure_ascii=False)
+                output = json.dumps({"werss": local_result, "campusos": result}, ensure_ascii=False)
                 if output != last_output:
                     print(output, flush=True)
                     last_output = output
             except (RuntimeError, OSError, ValueError) as exc:
                 # Log codes only. Never credentials, raw HTML, headers or private paths.
                 code = str(exc) if isinstance(exc, RuntimeError) else "SYNC_FAILED"
-                print(json.dumps({"error": code}), flush=True)
-                if not args.watch or code in {"UNAUTHORIZED", "FORBIDDEN"}:
+                output = json.dumps({"werss": local_result, "campusos": {"error": code, "syncMode": "add_update_only"}}, ensure_ascii=False)
+                if output != last_output:
+                    print(output, flush=True)
+                    last_output = output
+                atomic(data_dir / "last-sync.json", json.dumps({"at": datetime.now(timezone.utc).isoformat(), "syncMode": "add_update_only", "error": code}, ensure_ascii=False, indent=2))
+                if not args.watch:
                     return 1
             if not args.watch:
                 return 0

@@ -1,4 +1,4 @@
-param([string]$ConfigPath = 'D:\WeChat MP Tools\data\CampusOS_collector\config.json')
+param([string]$ConfigPath = 'D:\WeChat MP Tools_v2.3.1\data\CampusOS_collector\config.json')
 $ErrorActionPreference = 'Stop'
 $collectorScript = Join-Path $PSScriptRoot 'collector.py'
 $processFile = Join-Path (Split-Path -Parent $ConfigPath) 'process.json'
@@ -9,4 +9,5 @@ $collectorProcess = Get-CimInstance Win32_Process -Filter ('ProcessId = ' + $col
 if (-not $collectorProcess) { return }
 if (-not ($collectorProcess.CommandLine.Contains($collectorScript) -and $collectorProcess.CommandLine.Contains($ConfigPath))) { throw 'Process identity differs; not stopping it.' }
 Stop-Process -Id $collectorProcessId
+Wait-Process -Id $collectorProcessId -Timeout 10 -ErrorAction SilentlyContinue
 Write-Output ('Collector stopped: ' + $collectorProcessId)
