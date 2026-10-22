@@ -1,5 +1,7 @@
 # CampusOS 公众号采集同步进程
 
+> 2026-10-22 D-065：D盘MP Tools当前为v7目录错误/标题HTML修正，新下载文件为`公众号/标题/标题.html`；旧reading.html继续兼容。最新安装入口是`patch_mp_tools_browsing.py`，补丁备份在data/patches/history-browse-2026-10-22。25+4项离线回归通过，真实目录仍499/-2014，不能称历史已恢复。下文v4/v5构建说明保留历史。桥接扫描已适配任意带合法内嵌元信息的标题HTML，本轮没有重启桥接或部署网站。
+
 > 2026-10-21 D-057修正：阅读HTML保留图片引用、背景和原排版。先前文字版实现已废弃；下文旧“移除媒体样式”说明由本条取代。图片文件仍在原图CDN，本地旧media为备份，Cloudflare不新增媒体副本。
 
 Python 3.12 标准库即可运行，无新云服务、媒体存储或数据库依赖。当前适配 WeChat MP Tools 完成下载后的本地导出。它不调用 WeRSS，也不把桌面程序开放到公网。
@@ -19,9 +21,11 @@ python services/wechat-collector/collector.py --config "D:\WeChat MP Tools\data\
 
 Windows 常驻启动/停止入口是本目录 `start.ps1` / `stop.ps1`；`install-shortcuts.ps1` 在 MP Tools 目录生成双击入口。启动只连接 CampusOS，自带单进程锁；不是自动开机任务，重启电脑后需要再次启动。当前连接已设为长期有效、可撤销（expires_at_ms=0），管理员与来源作用域校验仍保留。日志不含凭据或正文，只在状态改变时写入。
 
-`patch_mp_tools_export.py --install` 为已审阅的 2.2.4 + 短链修补版安装 HTML 输出适配器，程序必须先关闭。离线修改 `backend.downloader` 输出分支，保留短链补丁与原抓取、登录功能。v3新下载按稳定URL目录原子覆盖 `reading.html`，元信息嵌入不执行代码的meta标签，不另存JSON；原文时间取不到时失败，不伪造下载时间。补丁和备份在 `D:\WeChat MP Tools\data\patches\campusos-reading-2026-10-21`。不自动重试文章或启动上游网络任务。
+`patch_mp_tools_export.py --install` 为已审阅的 2.2.4 + 短链修补版安装 HTML 输出适配器，程序必须先关闭。v4修正了此前把保存钩子插到网络获取前的错误：现在在获取、页面错误判断、日期解析和标题确定完成后，创建媒体目录之前保存。只有 `backend.downloader` 输出分支变化，保留短链补丁与原抓取、登录功能。新下载按稳定URL目录原子覆盖 `reading.html`，元信息嵌入不执行代码的meta标签，不另存JSON；原文时间取不到仍保存HTML并标记未知，同步跳过该文件，不伪造下载时间。补丁和备份在 `D:\WeChat MP Tools\data\patches\campusos-reading-2026-10-21`。只构建时写staged-report.json，成功安装才更新report.json，避免覆盖当前安装身份。
 
 ## 格式与空间
+
+v5以文章标题作为目录名，通过HTML内规范原文URL识别同一篇文章；同URL覆盖、改标题移动原目录、不同URL重名追加短后缀。命名处理Windows保留设备名、非法字符和路径长度，移动前检查解析后的绝对路径属于当前公众号目录；URL身份缓存失效时重新核对元信息，保护不相关目录。rename_article_folders.py --root 指定单个账号 --apply 可迁移既有campusos-哈希目录，同步修正下载历史/RSS/本地回执路径，备份在程序data/patches，HTML字节保持。
 
 每篇新下载只输出 `reading.html`。旧metadata.json/data.json导出继续兼容。HTML保留原文图片地址、背景CSS、文字、标题、列表、表格和链接；图片由浏览器按原地址加载，不另存媒体、原始网页、PDF、Markdown、纯文本副本。不会删除用户原有的其他格式下载。
 

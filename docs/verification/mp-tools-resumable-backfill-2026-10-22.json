@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-10-22T13:31:07.664663+08:00",
+  "scope": {
+    "since": "2026-10-01",
+    "through": "2026-10-22",
+    "accounts": 75,
+    "excluded": [
+      "外环东路178号的猫",
+      "广东外语外贸大学",
+      "数智广外"
+    ]
+  },
+  "state": {
+    "status": "waiting_for_upstream",
+    "completed": false,
+    "pid": 26664,
+    "nextAttemptAt": 1792647658.7908266,
+    "completedAccounts": 0,
+    "newDownloads": 0,
+    "previouslyInaccessible": 2
+  },
+  "realProbe": {
+    "at": "2026-10-22T13:25:58+08:00",
+    "httpStatus": 499,
+    "errorCode": -2014,
+    "returnedListOrigin": "local_downloads",
+    "cursorAdvanced": false
+  },
+  "offlineRegressionPassed": 7,
+  "workerScriptSha256": "6f05818458e22b32ce3bf9a9fe8109bf68158a197dcbe74bd901e491cb30d401",
+  "dataDirectory": "D:\\WeChat MP Tools\\data\\CampusOS_downloads\\since-2026-10-01\\resumable-backfill-2026-10-22",
+  "goalAchieved": false
+}

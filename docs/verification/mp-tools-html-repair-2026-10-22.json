@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-22",
+  "timezone": "Asia/Shanghai",
+  "reportedFailures": {"count":10,"error":"cannot access local variable 'raw_html' where it is not associated with a value"},
+  "rootCause": "The export hook was inserted before the first art_dir assignment, preceding page acquisition and assignments to raw_html, clean_url and publish_time.",
+  "fix": "Anchor the hook after successful-page checks, original date parsing and title selection, before creating any media directory.",
+  "patch": "campusos-reading-html-v4-export-boundary",
+  "installedSha256": "a4db4ec443b9d08364667bb7a04813493e6343972e3ac9b6d5d86f08a1b01b03",
+  "failedV3Sha256": "08731c6c18532dd11ee76d5d6bfb683b9b2ca2dd48812c2642f93170ab6d0763",
+  "changedModules": ["backend.downloader"],
+  "regression": {
+    "authorizedByUser": true,
+    "path":"tests/regression/test_mp_tools_html_patch.py",
+    "source":"actual downloader code extracted from the installed EXE",
+    "input":"real locally saved Taiwan article HTML; dated cases reconstruct the page timestamp envelope from saved article metadata",
+    "reproducedBeforeFix": "3 original cases failed with the same UnboundLocalError",
+    "afterFix": "5 tests passed against installed executable code",
+    "cases":["manual download","RSS download and overwrite","original acquisition failure","readable content without publication time","SVG script and event-handler removal"],
+    "retainedImageReferences":24,
+    "retainedBackgroundImageReferences":5,
+    "outputFiles":["reading.html"],
+    "unknownDate":"HTML still downloads; metadata date is null, so CampusOS skips publication",
+    "staticSvgLayout":"kept in standalone export, scripts and event attributes removed, script-src none CSP added",
+    "network":"page acquisition replaced at the boundary; requests and socket connections blocked",
+    "upstreamDownloadsStarted":0
+  },
+  "preserved":["short URL underscore repair","original acquisition routes","account and authorization data","existing download history and files","cloud ingestion sanitizer policy"],
+  "previewVersion":"f3da28cc-7e33-4801-9e1d-411a013910e7",
+  "collectorCard":{"removedFromCode":true,"deployed":true,"authenticatedUiObserved":false},
+  "runtimeBlocker":{"code":"D1_DAILY_ROW_READ_LIMIT","httpStatus":503,"oldVersionAlsoReproduced":true,"reset":"00:00 UTC / 08:00 Asia/Shanghai","paidServicesEnabled":false,"dataDeleted":false,"publicQuotaMessageObserved":true,"source":"https://developers.cloudflare.com/changelog/post/2026-09-01-d1-free-tier-limit-enforcement/"},
+  "screenshots":["collector-login-required-2026-10-22.png","d1-quota-message-2026-10-22.png"],
+  "limitations":["No live WeChat acquisition was exercised; original access failures can still occur.","Cloud ingestion keeps its separate existing sanitizer; standalone SVG export does not widen the cloud policy.","The database daily read quota prevents final authenticated UI observation until reset."]
+}

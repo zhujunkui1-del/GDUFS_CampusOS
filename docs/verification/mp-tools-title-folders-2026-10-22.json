@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-22",
+  "timezone": "Asia/Shanghai",
+  "patch": "campusos-reading-html-v5-title-folders",
+  "installedSha256": "02611609175a1aa1f6b4ec2720004f961f5bbf3c9e420fd572e6d6212f023570",
+  "changedModules": ["backend.downloader"],
+  "account": "广外青年",
+  "renamedFolders": 2,
+  "names": ["广外关于开展第六届粤港澳大湾区大学生艺术节的通知", "决赛倒计时 ︱十位_青春广外合伙人_，即将开讲！"],
+  "historyReferencesUpdated": 2,
+  "collectorReferencesUpdated": 0,
+  "htmlBytesUnchanged": true,
+  "historyUnchangedExceptPaths": true,
+  "successfulHistoryPathsExist": true,
+  "successfulRecords": 2,
+  "backupReport": "D:/WeChat MP Tools/data/patches/title-folders-2026-10-22/20261022-021121/report.json",
+  "validation": {"installedExeOfflineTests": 10, "passed": 10, "pythonSyntax": "passed", "liveUpstreamAcquisition": false, "transientFixtureRenameError": "One WinError 5 occurred; rerunning the same package passed. The real two-directory migration succeeded."},
+  "upstreamRequestsStarted": 0,
+  "cloudWrites": 0,
+  "websiteDeployment": false,
+  "naming": {"default": "article title", "sameUrl": "overwrite and reuse", "sameTitleDifferentUrl": "title with short URL identity suffix", "unsafeWindowsCharacters": "underscore", "articleFormat": "single reading.html"}
+}

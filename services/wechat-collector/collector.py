@@ -203,13 +203,14 @@ def sync_once(config, db, cloud):
             stats["errors"]["EXPORT_UNAVAILABLE"] = stats["errors"].get("EXPORT_UNAVAILABLE", 0) + 1
             continue
         single_exports = []
-        for candidate in root.glob("*/*/reading.html"):
+        for candidate in root.glob("*/*/*.html"):
             try:
                 if '<meta name="campusos-article"' in candidate.read_text(encoding="utf-8-sig")[:30000]:
                     single_exports.append(candidate)
             except OSError:
                 continue
-        exports = [p for p in root.glob("*/*/metadata.json") if p.parent / "reading.html" not in single_exports] + single_exports
+        single_directories = {p.parent for p in single_exports}
+        exports = [p for p in root.glob("*/*/metadata.json") if p.parent not in single_directories] + single_exports
         for path in exports:
             if root not in path.resolve().parents:
                 continue
@@ -238,7 +239,7 @@ def sync_once(config, db, cloud):
                     db.commit()
                     stats["unchanged"] += 1
                     continue
-                if not (path.parent / "reading.html").is_file():
+                if path.suffix.lower() != ".html" and not (path.parent / "reading.html").is_file():
                     # Legacy multi-format exports get one reading conversion. The new
                     # HTML-only native exporter already has it and is never duplicated.
                     output = Path(config["dataDirectory"]) / "reading" / payload["accountId"] / result["documentId"]

@@ -1,0 +1,51 @@
+{
+  "checkedAt": "2026-10-22T12:58:12.078531+08:00",
+  "patch": "campusos-history-directory-v6.1-local-visibility",
+  "installed": true,
+  "exeSha256": "caf292b52d9689d76bc8dceb8fc540bbb359cc717dcfa1e65fa010d5f34fbb6a",
+  "changedModules": [
+    "backend.articles",
+    "backend.account_pool"
+  ],
+  "htmlDownloaderModuleByteIdentical": true,
+  "applicationDataUnchangedDuringInstall": true,
+  "offlineRegression": {
+    "historyAndVisibility": {
+      "passed": 11,
+      "failed": 0
+    },
+    "htmlOutput": {
+      "passed": 10,
+      "failed": 0
+    },
+    "initialMinimalReproduction": {
+      "failed": 4,
+      "healthyControlPassed": 1
+    },
+    "networkForbidden": true
+  },
+  "uiObserved": {
+    "surface": "same running application at localhost:5200",
+    "guangwaiYouthCount": 7,
+    "employmentCount": 54,
+    "employmentPageSize": 20,
+    "directoryOrigin": "local_downloads",
+    "historyComplete": false,
+    "screenshot": "docs/verification/mp-tools-local-articles-restored-2026-10-22.png"
+  },
+  "localRecovery": {
+    "count": 53,
+    "newUpstreamRequests": 0,
+    "originalTimesPreserved": true,
+    "existingFilesOverwritten": 0
+  },
+  "existingEligibleArticles": 412,
+  "newOnlineArticleDownloadsThisRepair": 0,
+  "upstream": {
+    "httpStatus": 499,
+    "code": -2014,
+    "historyAvailable": false
+  },
+  "missingArticleBackfillComplete": false,
+  "pendingState": "D:\\WeChat MP Tools\\data\\patches\\history-directory-2026-10-22\\resume-missing-state.json"
+}

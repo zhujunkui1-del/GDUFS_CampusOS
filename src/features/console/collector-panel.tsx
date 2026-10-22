@@ -107,11 +107,6 @@ export function CollectorPanel({ request }: { request: Client }) {
           <p>尚未连接。请在本机启动 CampusOS 同步。</p>
         )}
       </section>
-      <section className="console-card">
-        <Link className="text-link" href="/admin/retention">
-          文章日期门禁与清理记录
-        </Link>
-      </section>
       <details className="console-card">
         <summary>使用方法</summary>
         <ol>

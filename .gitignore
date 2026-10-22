@@ -21,6 +21,7 @@ docs/research/s1/osm-reference.json
 docs/research/s1/local-context.osm
 .map-tools/
 services/wechat-collector/__pycache__/
+tests/regression/__pycache__/
 services/wechat-collector/config.json
 services/wechat-collector/data/
 

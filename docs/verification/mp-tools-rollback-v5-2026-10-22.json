@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-22T13:42:19.474075+08:00",
+  "requestedVersion": "v5-title-folders-before-bulk-download",
+  "exeSha256": "02611609175a1aa1f6b4ec2720004f961f5bbf3c9e420fd572e6d6212f023570",
+  "frontendSha256": "6e551d02b4b6ca6f6696a3e8059c809295fec119d373d4bfb76ee56fbaf4d160",
+  "backfillCancelled": true,
+  "applicationDataUnchanged": true,
+  "articleFilesPreserved": 460,
+  "report": "D:\\WeChat MP Tools\\data\\patches\\rollback-to-v5-2026-10-22\\20261022-134048\\report.json",
+  "applicationLaunched": false
+}

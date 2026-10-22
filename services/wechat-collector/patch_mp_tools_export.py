@@ -44,17 +44,32 @@ def main():
         raise RuntimeError("Source differs from the installed downloader")
     tree = ast.parse(source)
     function = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == "download_single_article")
-    index = next(i for i, n in enumerate(function.body) if isinstance(n, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "art_dir" for t in n.targets))
+    # The first art_dir assignment precedes acquisition. Insert only after the
+    # successful-page checks, original date extraction and final title selection.
+    anchors = [i for i, n in enumerate(function.body)
+               if isinstance(n, ast.If) and isinstance(n.test, ast.Name) and n.test.id == "page_title"
+               and any(isinstance(a, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "safe_title" for t in a.targets) for a in n.body)]
+    if len(anchors) != 1:
+        raise RuntimeError("The reviewed successful-page export boundary changed")
+    index = anchors[0] + 1
+    assignments = {name.id for node in function.body[:index] if isinstance(node, ast.Assign)
+                   for target in node.targets for name in ast.walk(target) if isinstance(name, ast.Name)}
+    if not {"raw_html", "clean_url", "publish_time"}.issubset(assignments):
+        raise RuntimeError("Reading export inputs are not assigned before the hook")
     hook = ast.parse("""
 if settings.get('campusos_reading_only', False):
     try:
-        return campusos_save_reading(raw_html, clean_url, out_dir, safe_title, extract_article_content(raw_html), publish_time, review_id)
+        return campusos_save_reading(raw_html, clean_url, out_dir, page_title or title_hint or safe_title, extract_article_content(raw_html), publish_time, review_id)
     except (ValueError, OSError):
         return {'success': False, 'title': safe_title, 'error': '阅读HTML保存失败，未发布', 'is_permanent': False}
 """).body
     function.body[index:index] = hook
     here = Path(__file__).resolve().parent
     tree.body.extend(ast.parse((here / "reading_html.py").read_text(encoding="utf-8")).body)
+    # The standalone export preserves static SVG/HTML layout. Child nodes still
+    # pass the same allowlists; the fixed document CSP prohibits script execution.
+    # Keep this export-specific policy out of the cloud ingestion sanitizer.
+    tree.body.extend(ast.parse("TAGS.add('foreignobject')\nDROP.discard('foreignobject')\n").body)
     tree.body.extend(ast.parse((here / "mp_tools_reading_export.py").read_text(encoding="utf-8")).body)
     ast.fix_missing_locations(tree)
     patched_source = ast.unparse(tree) + "\n"
@@ -88,7 +103,7 @@ if settings.get('campusos_reading_only', False):
     staged = OUT / "WeChat MP Tools.reading.exe"
     staged.write_bytes(output)
     (OUT / "downloader.reading.py").write_text(patched_source, encoding="utf-8")
-    report = {"patch": "campusos-reading-html-v3-single-file", "built_at": datetime.now(timezone.utc).isoformat(),
+    report = {"patch": "campusos-reading-html-v5-title-folders", "built_at": datetime.now(timezone.utc).isoformat(),
               "previous_sha256": installed_hash, "base_sha256": EXPECTED, "patched_sha256": hashlib.sha256(output).hexdigest(),
               "changed_modules": ["backend.downloader"], "network_requests": 0, "installed": False}
     if "--install" in sys.argv:
@@ -108,7 +123,7 @@ if settings.get('campusos_reading_only', False):
         settings.update({"campusos_reading_only": True, "auto_save_images": False, "auto_save_videos": False, "save_markdown": False, "save_pdf": False})
         settings_path.write_text(json.dumps(settings, ensure_ascii=False, indent=2), encoding="utf-8")
         report["installed"] = True
-    (OUT / "report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    (OUT / ("report.json" if report["installed"] else "staged-report.json")).write_text(json.dumps(report, indent=2), encoding="utf-8")
     (OUT / ("report-" + report["patched_sha256"][:12] + ".json")).write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps(report))
 
