@@ -1,4 +1,5 @@
 import { dispatchDue } from "./src/lib/server/console/scheduler";
+import { runCloudWebBatch } from "./src/lib/server/console/cloud-web-runner";
 import type { SqlDatabase } from "./src/lib/server/assistant/database";
 import handler from "./.open-next/worker.js";
 import { runWithCloudflareRequestContext } from "./.open-next/cloudflare/init.js";
@@ -12,7 +13,14 @@ import {
 const previewWorker = {
   async scheduled(_event: unknown, env: Record<string, unknown>) {
     if (env.APP_ENV !== "preview" || !env.DB) return;
+    await (env.DB as SqlDatabase)
+      .prepare(
+        "UPDATE console_engine_settings SET cloud_runner_last_at=? WHERE id='console-v2-settings'",
+      )
+      .bind(new Date().toISOString())
+      .run();
     await dispatchDue(env.DB as SqlDatabase);
+    await runCloudWebBatch(env.DB as SqlDatabase);
   },
   async fetch(
     request: Request,

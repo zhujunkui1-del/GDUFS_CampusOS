@@ -25,7 +25,7 @@ test("V2 five menus, governed non-web sources, soft deletion and legacy routes",
   ).toBeVisible();
   await expect(
     page.getByRole("navigation", { name: "后台导航" }).getByRole("link"),
-  ).toHaveText(["总览", "信息源", "内容审核", "过时信息清理", "白名单"]);
+  ).toHaveText(["总览", "信息源", "文章", "官网采集", "公众号采集", "过时信息清理", "白名单"]);
   const auth = (await (await page.request.get("/api/console-auth")).json())
     .data;
   expect(
@@ -123,10 +123,10 @@ test("V2 five menus, governed non-web sources, soft deletion and legacy routes",
     fullPage: true,
   });
   await page.goto("/admin/jobs");
-  await expect(page).toHaveURL(/\/admin\?view=jobs/);
+  await expect(page).toHaveURL(/\/admin\/web-collection\?view=jobs/);
   await expect(
-    page.getByText("最近运行与采集任务", { exact: true }),
-  ).toHaveCount(0);
+    page.getByRole("heading", { name: "官网采集", exact: true }),
+  ).toBeVisible();
   await page.goto("/admin/audit");
   await expect(page).toHaveURL(/view=history/);
   await expect(page.locator(".console-audit-row").first()).toBeVisible();
@@ -200,16 +200,20 @@ test("V2 five menus, governed non-web sources, soft deletion and legacy routes",
   });
   await page.goto("/admin");
   await expect(page.locator("main > .console-v2-filters")).toHaveCount(0);
+  await expect(page.getByText("官网同步设置", { exact: true })).toHaveCount(0);
   await expect(page.getByText("执行器授权", { exact: true })).toHaveCount(0);
-  await expect(page.getByText("日请求预算", { exact: true })).toHaveCount(0);
-  await page.getByLabel("全局同步频率", { exact: true }).selectOption("3");
-  await page.getByRole("button", { name: "保存同步设置", exact: true }).click();
-  await expect(page.getByText("同步设置已保存", { exact: true })).toBeVisible();
+  await page.goto("/admin/web-collection");
+  await expect(
+    page.getByRole("heading", { name: "官网采集", exact: true }),
+  ).toBeVisible();
+  await page.getByLabel("统一采集间隔", { exact: true }).selectOption("3");
+  await page.getByRole("button", { name: "保存", exact: true }).click();
+  await expect(page.getByText("已保存统一间隔", { exact: true })).toBeVisible();
   const sync = (await (await page.request.get("/api/admin/v2/settings")).json())
     .data;
   expect(sync.sync_hours).toBe(3);
-  await page.getByLabel("全局同步频率", { exact: true }).selectOption("24");
-  await page.getByRole("button", { name: "保存同步设置", exact: true }).click();
+  await page.getByLabel("统一采集间隔", { exact: true }).selectOption("24");
+  await page.getByRole("button", { name: "保存", exact: true }).click();
   await expect
     .poll(
       async () =>

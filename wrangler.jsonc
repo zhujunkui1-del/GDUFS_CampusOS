@@ -31,6 +31,7 @@
       "workers_dev": true,
       "preview_urls": false,
       "routes": [],
+      "triggers": { "crons": ["* * * * *"] },
       "vars": { "APP_ENV": "preview" },
       "ratelimits": [
         {

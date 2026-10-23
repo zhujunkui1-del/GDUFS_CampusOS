@@ -133,7 +133,7 @@
       "specs": [
         {
           "title": "deployed V2 five-page console, permissions, retained withdrawal and responsive layout (read only)",
-          "ok": true,
+          "ok": false,
           "tags": [],
           "tests": [
             {
@@ -146,18 +146,48 @@
                 {
                   "workerIndex": 0,
                   "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 10118,
-                  "errors": [],
+                  "status": "failed",
+                  "duration": 193,
+                  "error": {
+                    "message": "Error: apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:12451\nCall log:\n\u001b[2m  - → GET https://campusos-preview.zhujunkui1.workers.dev/api/admin/v2/overview\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n",
+                    "stack": "Error: apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:12451\nCall log:\n\u001b[2m  - → GET https://campusos-preview.zhujunkui1.workers.dev/api/admin/v2/overview\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\n    at D:\\tlydcg\\Codex_work\\广外AI应用大赛\\tests\\e2e\\console-v2-preview.spec.ts:16:35",
+                    "location": {
+                      "file": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\tests\\e2e\\console-v2-preview.spec.ts",
+                      "column": 35,
+                      "line": 16
+                    },
+                    "snippet": "  14 |     \"https://campusos-preview.zhujunkui1.workers.dev\",\n  15 |   );\n> 16 |   const anonymous = await request.get(\"/api/admin/v2/overview\");\n     |                                   ^\n  17 |   expect([401, 403]).toContain(anonymous.status());\n  18 |   await page.goto(\"/admin\");\n  19 |   const values = JSON.parse("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\tests\\e2e\\console-v2-preview.spec.ts",
+                        "column": 35,
+                        "line": 16
+                      },
+                      "message": "Error: apiRequestContext.get: connect ECONNREFUSED 127.0.0.1:12451\nCall log:\n\u001b[2m  - → GET https://campusos-preview.zhujunkui1.workers.dev/api/admin/v2/overview\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\n\n  14 |     \"https://campusos-preview.zhujunkui1.workers.dev\",\n  15 |   );\n> 16 |   const anonymous = await request.get(\"/api/admin/v2/overview\");\n     |                                   ^\n  17 |   expect([401, 403]).toContain(anonymous.status());\n  18 |   await page.goto(\"/admin\");\n  19 |   const values = JSON.parse(\n    at D:\\tlydcg\\Codex_work\\广外AI应用大赛\\tests\\e2e\\console-v2-preview.spec.ts:16:35"
+                    }
+                  ],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T08:21:41.689Z",
+                  "startTime": "2026-10-23T04:26:55.884Z",
                   "annotations": [],
-                  "attachments": []
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\.map-tools\\console-v2\\cloud-browser\\chrome-desktop-single\\console-v2-preview-deploye-feb58-esponsive-layout-read-only--desktop\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\tests\\e2e\\console-v2-preview.spec.ts",
+                    "column": 35,
+                    "line": 16
+                  }
                 }
               ],
-              "status": "expected"
+              "status": "unexpected"
             }
           ],
           "id": "e4747a6003b240947fca-06f18d52828e6090bcbb",
@@ -170,11 +200,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-18T08:21:41.152Z",
-    "duration": 11242.27,
-    "expected": 1,
+    "startTime": "2026-10-23T04:26:55.322Z",
+    "duration": 1867.2799999999997,
+    "expected": 0,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 1,
     "flaky": 0
   }
 }

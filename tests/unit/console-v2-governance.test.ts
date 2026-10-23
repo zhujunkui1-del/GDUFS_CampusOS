@@ -126,14 +126,13 @@ describe("Console V2 source governance (isolated SQLite)", () => {
       f.close();
     }
   });
-  it("stores bounded global/source cadence, rejects >24 hours, enforces admin/CAS and explicit import-cutoff confirmation", async () => {
+  it("stores one bounded global cadence, clears legacy source overrides, rejects source cadence, and enforces admin/CAS", async () => {
     const f = await consoleV2Fixture();
     try {
       const policy = {
         ...cmd(1),
         syncHours: 6,
         autoSync: true,
-        networkBudget: 20,
         earliestImportDay: null,
         note: "隔离全局配置",
       };
@@ -151,7 +150,7 @@ describe("Console V2 source governance (isolated SQLite)", () => {
           ...cmd(2),
           earliestImportDay: "2025-09-01",
         }),
-      ).rejects.toMatchObject({ code: "CONFIRMATION_REQUIRED" });
+      ).rejects.toMatchObject({ code: "INVALID_ARGUMENT" });
       const operator = new ConsoleGovernanceStore(f.db, {
         ...actor,
         role: "operator",
@@ -162,12 +161,32 @@ describe("Console V2 source governance (isolated SQLite)", () => {
       const s = await f.store.createGovernedSource(
         sourceInput({ governance: confirmed }),
       );
-      await f.store.saveSourceSync(s.id, {
-        ...cmd(1),
-        hours: 1,
-        note: "隔离单源周期",
+      f.sqlite
+        .prepare(
+          "UPDATE knowledge_sources SET sync_hours_override=1 WHERE id=?",
+        )
+        .run(s.id);
+      await f.store.saveEngineSettings({
+        ...policy,
+        ...cmd(2),
+        syncHours: 3,
+        note: "隔离统一间隔",
       });
-      expect((await f.store.sourceV2(s.id)).syncHours).toBe(1);
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT sync_hours_override FROM knowledge_sources WHERE id=?",
+          )
+          .get(s.id)?.sync_hours_override,
+      ).toBeNull();
+      await expect(
+        f.store.saveSourceSync(s.id, {
+          ...cmd(1),
+          hours: 1,
+          note: "隔离单站间隔",
+        }),
+      ).rejects.toMatchObject({ code: "INVALID_ARGUMENT" });
+      expect("syncOverride" in (await f.store.sourceV2(s.id))).toBe(false);
     } finally {
       f.close();
     }
@@ -203,6 +222,58 @@ describe("Console V2 source governance (isolated SQLite)", () => {
       expect(f.sqlite.prepare("PRAGMA foreign_key_check").all()).toHaveLength(
         0,
       );
+    } finally {
+      f.close();
+    }
+  });
+  it("summarizes configured, candidate, and missing official website profiles globally", async () => {
+    const f = await consoleV2Fixture();
+    try {
+      const created = await f.store.createGovernedSource(
+        sourceInput({
+          displayName: "入口状态隔离官网",
+          websiteUrl: "https://profile.example.invalid/",
+          governance: confirmed,
+        }),
+      );
+      expect(await f.store.officialWebCollection({})).toMatchObject({
+        allTotal: 1,
+        configuredTotal: 0,
+        readiness: {
+          candidateTotal: 0,
+          missingProfileTotal: 1,
+          policyPendingTotal: 0,
+          sourcePendingTotal: 0,
+          activeJobTotal: 0,
+          readyTotal: 0,
+        },
+      });
+      const source = await f.store.source(created.id);
+      await f.store.saveWebProfile(created.id, {
+        ...cmd(source.version),
+        configurationStatus: "discovered",
+        entryUrls: ["https://profile.example.invalid/news/"],
+        articlePathPrefixes: ["/news/"],
+        titleSelector: "h1",
+        titleSuffix: "",
+        dateSelector: "time",
+        dateLabel: "发布时间",
+        bodySelector: "article",
+        allowQueryUrls: false,
+        requestIntervalMs: 1000,
+      });
+      expect(await f.store.officialWebCollection({})).toMatchObject({
+        allTotal: 1,
+        configuredTotal: 1,
+        readiness: {
+          candidateTotal: 1,
+          missingProfileTotal: 0,
+          policyPendingTotal: 0,
+          sourcePendingTotal: 0,
+          activeJobTotal: 0,
+          readyTotal: 0,
+        },
+      });
     } finally {
       f.close();
     }

@@ -195,7 +195,7 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
   protected override snapshot(id: string): Statement {
     return this.db
       .prepare(
-        "INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at,content_revision,input_hash) SELECT id,version,json_object('contentRevision',content_revision,'inputHash',input_hash,'publicationStatus',publication_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'",
+        "INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at,content_revision,input_hash) SELECT id,version,json_object('inputRef',content_revision,'contentRevision',content_revision,'inputHash',input_hash,'publicationStatus',publication_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'",
       )
       .bind(this.actor.id, this.now(), id);
   }
@@ -206,12 +206,14 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
         "NOT_FOUND",
         "该修订正文已清理或没有可恢复的修订载荷。",
       );
-    if (!snapshot.inputRef) return snapshot;
+    if (snapshot.input) return snapshot;
+    const inputRef = snapshot.inputRef ?? snapshot.contentRevision;
+    if (!inputRef || !snapshot.inputHash) return snapshot;
     const payload = await this.db
       .prepare(
         "SELECT input_json FROM console_revision_payloads WHERE document_id=? AND content_revision=? AND input_hash=?",
       )
-      .bind(id, snapshot.inputRef, snapshot.inputHash)
+      .bind(id, inputRef, snapshot.inputHash)
       .first<{ input_json: string }>();
     if (!payload) throw new ApiError("NOT_FOUND", "此修订的内容已清理。");
     return { ...snapshot, input: JSON.parse(payload.input_json) };

@@ -54,14 +54,9 @@ export const SourceEditV2Schema = SourceEditSchema.extend({
 export const EngineSettingsSchema = CommandSchema.extend({
   syncHours: SyncHoursSchema,
   autoSync: z.boolean(),
-  networkBudget: z.number().int().min(2).max(20),
   earliestImportDay: z.iso.date().nullable(),
   confirmImportCutoff: z.boolean().default(false),
   note: z.string().trim().min(2).max(1000),
-}).strict();
-export const SourceSyncSchema = CommandSchema.extend({
-  hours: SyncHoursSchema.nullable(),
-  note: z.string().min(2).max(1000),
 }).strict();
 export const SourcesV2Query = z
   .object({
@@ -139,8 +134,6 @@ export type SourceV2 = {
   collectorEnabled?: boolean | null;
   lastSuccessAt: string | null;
   nextSyncAt: number | null;
-  syncHours: number;
-  syncOverride: number | null;
   syncState: string;
   articleCount: number;
   publishedCount: number;

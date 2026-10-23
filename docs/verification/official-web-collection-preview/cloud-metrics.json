@@ -1,0 +1,84 @@
+{
+  "recordedAt": "2026-10-23T04:31:25.161Z",
+  "start": "2026-10-23T04:25:00Z",
+  "end": "2026-10-23T04:31:25.161Z",
+  "actualCloudGraphQL": true,
+  "grouping": "Whole existing preview Worker, by invocation status; includes all routes/traffic in this window, not per-ingestion CPU.",
+  "sampled": true,
+  "fieldDescriptions": [
+    {
+      "description": "CPU time 50th percentile - microseconds",
+      "name": "cpuTimeP50"
+    },
+    {
+      "description": "CPU time 95th percentile - microseconds",
+      "name": "cpuTimeP95"
+    },
+    {
+      "description": "CPU time 99th percentile - microseconds",
+      "name": "cpuTimeP99"
+    },
+    {
+      "description": "Wall time 50th percentile - microseconds",
+      "name": "wallTimeP50"
+    },
+    {
+      "description": "Wall time 95th percentile - microseconds",
+      "name": "wallTimeP95"
+    }
+  ],
+  "groups": [
+    {
+      "dimensions": {
+        "status": "clientDisconnected"
+      },
+      "quantiles": {
+        "cpuTimeP50": 7983,
+        "cpuTimeP95": 12965,
+        "cpuTimeP99": 12965,
+        "wallTimeP50": 62208,
+        "wallTimeP95": 3338149
+      },
+      "sum": {
+        "errors": 0,
+        "requests": 4,
+        "subrequests": 2
+      }
+    },
+    {
+      "dimensions": {
+        "status": "exceededResources"
+      },
+      "quantiles": {
+        "cpuTimeP50": 199863,
+        "cpuTimeP95": 199863,
+        "cpuTimeP99": 199863,
+        "wallTimeP50": 518155,
+        "wallTimeP95": 518155
+      },
+      "sum": {
+        "errors": 1,
+        "requests": 1,
+        "subrequests": 0
+      }
+    },
+    {
+      "dimensions": {
+        "status": "success"
+      },
+      "quantiles": {
+        "cpuTimeP50": 4968,
+        "cpuTimeP95": 156820,
+        "cpuTimeP99": 539423,
+        "wallTimeP50": 25792,
+        "wallTimeP95": 643732
+      },
+      "sum": {
+        "errors": 0,
+        "requests": 145,
+        "subrequests": 154
+      }
+    }
+  ],
+  "longTermFreeCapacityVerified": false
+}

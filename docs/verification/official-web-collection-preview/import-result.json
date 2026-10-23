@@ -1,0 +1,305 @@
+{
+  "mode": "applied",
+  "target": "https://campusos-preview.zhujunkui1.workers.dev",
+  "previewSourceCount": 109,
+  "discoveredProfileCount": 73,
+  "operations": [],
+  "skipped": [
+    {
+      "sourceId": "GDUFS-SRC-0002",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0003",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0004",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0005",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0006",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0007",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0008",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0009",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0010",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0012",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0013",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0014",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0015",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0016",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0017",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0019",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0020",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0021",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0023",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0024",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0025",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0026",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0027",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0028",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0029",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0030",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0031",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0033",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0034",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0036",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0038",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0040",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0042",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0044",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0045",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0047",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0048",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0050",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0051",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0052",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0053",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0054",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0057",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0058",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0059",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0060",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0061",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0062",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0063",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0067",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0069",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0070",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0071",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0072",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0073",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0077",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0078",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0081",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0082",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0083",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0084",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0085",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0086",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0088",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0090",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0091",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0093",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0094",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0096",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0098",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0099",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0100",
+      "reason": "already_imported"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0101",
+      "reason": "already_imported"
+    }
+  ],
+  "appliedCount": 0,
+  "failedCount": 0,
+  "applied": [],
+  "failed": []
+}

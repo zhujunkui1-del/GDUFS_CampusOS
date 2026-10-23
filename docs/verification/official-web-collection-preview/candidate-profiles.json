@@ -1,0 +1,1777 @@
+{
+  "generatedAt": "2026-10-23T07:00:55.677Z",
+  "sourceCount": 109,
+  "profileCount": 73,
+  "entryPageCount": 203,
+  "detailPathPrefixCount": 217,
+  "profiles": [
+    {
+      "sourceId": "GDUFS-SRC-0002",
+      "name": "会计学院",
+      "websiteUrl": "https://kjxy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://kjxy.gdufs.edu.cn/xkky/xszx.htm",
+        "https://kjxy.gdufs.edu.cn/zsjy/bkszs.htm",
+        "https://kjxy.gdufs.edu.cn/zsjy/xsxsszs.htm",
+        "https://kjxy.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1443/",
+        "/info/1444/",
+        "/info/1445/",
+        "/info/1107/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 38,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0003",
+      "name": "体育部",
+      "websiteUrl": "https://tyb.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://tyb.gdufs.edu.cn/djsz/djgz.htm",
+        "https://tyb.gdufs.edu.cn/kyxs/kycg.htm",
+        "https://tyb.gdufs.edu.cn/jsqt/yddjs.htm",
+        "https://tyb.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1040/",
+        "/info/1049/",
+        "/info/1053/",
+        "/info/1032/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 33,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0004",
+      "name": "信息科学与技术学院（网络空间安全学院）",
+      "websiteUrl": "https://sist.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://sist.gdufs.edu.cn/index/xyxw.htm",
+        "https://sist.gdufs.edu.cn/index/xshd.htm",
+        "https://sist.gdufs.edu.cn/index/tzgg.htm",
+        "https://sist.gdufs.edu.cn/gjjl/tzgg.htm",
+        "https://sist.gdufs.edu.cn/xyzj/xydt/xwdt.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1191/",
+        "/info/1702/",
+        "/info/1701/",
+        "/info/1636/",
+        "/info/1690/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 5,
+        "sampledPathCount": 5,
+        "observedListLinks": 80,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0005",
+      "name": "出国人员培训部",
+      "websiteUrl": "https://gwpxb.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://gwpxb.gdufs.edu.cn/gspdxgpyjs.htm",
+        "https://gwpxb.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1012/",
+        "/info/1060/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 15,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0006",
+      "name": "区域国别学院（区域国别研究院）",
+      "websiteUrl": "https://sgas-iir.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://sgas-iir.gdufs.edu.cn/xsky/kydt.htm",
+        "https://sgas-iir.gdufs.edu.cn/ywgk/tzgg.htm",
+        "https://sgas-iir.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1243/",
+        "/info/1260/",
+        "/info/1050/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 16,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0007",
+      "name": "商学院",
+      "websiteUrl": "https://bs.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://bs.gdufs.edu.cn/djsz/djdt.htm",
+        "https://bs.gdufs.edu.cn/djsz/djyj.htm",
+        "https://bs.gdufs.edu.cn/rcpy/yjs/sszsxx.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1031/",
+        "/info/1032/",
+        "/info/1131/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 23,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0008",
+      "name": "图书馆",
+      "websiteUrl": "https://lib.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://lib.gdufs.edu.cn/xwzx/twxw.htm",
+        "https://lib.gdufs.edu.cn/xwzx/bgtg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1133/",
+        "/info/1134/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 36,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0009",
+      "name": "学生就业创业服务平台",
+      "websiteUrl": "https://gwcareer.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://gwcareer.gdufs.edu.cn/jyfw/zpxx.htm",
+        "https://gwcareer.gdufs.edu.cn/jyyj.htm",
+        "https://gwcareer.gdufs.edu.cn/xwdt.htm",
+        "https://gwcareer.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1021/",
+        "/info/1031/",
+        "/info/1033/",
+        "/info/1032/",
+        "/info/1007/",
+        "/info/1008/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 6,
+        "observedListLinks": 53,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0010",
+      "name": "学生工作部",
+      "websiteUrl": "https://nstu.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://nstu.gdufs.edu.cn/xszz/pjpy/yjs.htm",
+        "https://nstu.gdufs.edu.cn/yjsjy/djsz.htm",
+        "https://nstu.gdufs.edu.cn/yjsjy/xswh.htm",
+        "https://nstu.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1721/",
+        "/info/1112/",
+        "/info/1113/",
+        "/info/1056/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 32,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0012",
+      "name": "广东外语外贸大学",
+      "websiteUrl": "https://www.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://www.gdufs.edu.cn/gwxw/gwxw1.htm",
+        "https://www.gdufs.edu.cn/xkky/rdjz.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1106/",
+        "/info/1005/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 20,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0013",
+      "name": "广东外语外贸大学英文网",
+      "websiteUrl": "https://english.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://english.gdufs.edu.cn/News_Events.htm",
+        "https://english.gdufs.edu.cn/News_Events/News.htm",
+        "https://english.gdufs.edu.cn/News_Events/Video.htm",
+        "https://english.gdufs.edu.cn/News_Events/Gallery.htm",
+        "https://english.gdufs.edu.cn/News_Events/Features.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1023/",
+        "/info/1026/",
+        "/info/1027/",
+        "/info/1091/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 5,
+        "sampledPathCount": 4,
+        "observedListLinks": 43,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0014",
+      "name": "广外新闻网／党委宣传部",
+      "websiteUrl": "https://news.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://news.gdufs.edu.cn/xyxw.htm",
+        "https://news.gdufs.edu.cn/jzjj.htm",
+        "https://news.gdufs.edu.cn/tpxw.htm",
+        "https://news.gdufs.edu.cn/ztbd/xww20n.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1003/",
+        "/info/1010/",
+        "/info/1008/",
+        "/info/1002/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 79,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0015",
+      "name": "建校六十周年专题网",
+      "websiteUrl": "https://gdufs60.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://gdufs60.gdufs.edu.cn/xqxw/xqyw.htm",
+        "https://gdufs60.gdufs.edu.cn/tzgg/tzgg.htm",
+        "https://gdufs60.gdufs.edu.cn/tzgg/hdyg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1002/",
+        "/info/1004/",
+        "/info/1005/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 25,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0016",
+      "name": "开放课程平台",
+      "websiteUrl": "https://jpkc.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://jpkc.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1007/",
+        "/jpspgkk/sj/",
+        "/jpzygxk1/sj/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 3,
+        "observedListLinks": 17,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0017",
+      "name": "总务后勤部",
+      "websiteUrl": "https://hqc.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://hqc.gdufs.edu.cn/tzgap.htm",
+        "https://hqc.gdufs.edu.cn/bszn.htm",
+        "https://hqc.gdufs.edu.cn/djgz.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1006/",
+        "/info/1002/",
+        "/info/1004/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 29,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0019",
+      "name": "教务部",
+      "websiteUrl": "https://jwb.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://jwb.gdufs.edu.cn/xwtz/jxtz.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1044/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 1,
+        "observedListLinks": 5,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0020",
+      "name": "数学与统计学院",
+      "websiteUrl": "https://stxy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://stxy.gdufs.edu.cn/kyyxkjs1/kydt.htm",
+        "https://stxy.gdufs.edu.cn/kyyxkjs1/xsbg/jzyg.htm",
+        "https://stxy.gdufs.edu.cn/jlhz1/tzgg.htm",
+        "https://stxy.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1745/",
+        "/info/1748/",
+        "/info/1759/",
+        "/info/1850/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 33,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0021",
+      "name": "新闻与传播学院",
+      "websiteUrl": "https://xwxy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://xwxy.gdufs.edu.cn/info/xyld.htm"
+      ],
+      "articlePathPrefixes": [
+        "/1663/",
+        "/info/1733/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 2,
+        "observedListLinks": 6,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0023",
+      "name": "本科招生网",
+      "websiteUrl": "https://zs.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://zs.gdufs.edu.cn/gkgs.htm",
+        "https://zs.gdufs.edu.cn/tslzs.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1004/",
+        "/info/1015/",
+        "/info/1016/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 3,
+        "observedListLinks": 13,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0024",
+      "name": "校团委",
+      "websiteUrl": "https://youth.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://youth.gdufs.edu.cn/bszy.htm",
+        "https://youth.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1051/",
+        "/info/1050/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 23,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0025",
+      "name": "法学院（涉外法治学院）",
+      "websiteUrl": "https://fxy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://fxy.gdufs.edu.cn/szdw/ysgzssxzj.htm",
+        "https://fxy.gdufs.edu.cn/rcpy/yjsjx.htm",
+        "https://fxy.gdufs.edu.cn/kxyj/kycg.htm",
+        "https://fxy.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1535/",
+        "/info/1635/",
+        "/info/1665/",
+        "/info/1099/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 29,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0026",
+      "name": "现代教育技术中心、信息化建设与管理办公室",
+      "websiteUrl": "https://etr.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://etr.gdufs.edu.cn/xwdt.htm",
+        "https://etr.gdufs.edu.cn/tzgg/tzgg.htm",
+        "https://etr.gdufs.edu.cn/tzgg/xjgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1032/",
+        "/info/1033/",
+        "/info/1191/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 29,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0027",
+      "name": "研究生招生信息网",
+      "websiteUrl": "https://yz.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://yz.gdufs.edu.cn/index.htm",
+        "https://yz.gdufs.edu.cn/bs/zsjz.htm",
+        "https://yz.gdufs.edu.cn/bs/zsml.htm",
+        "https://yz.gdufs.edu.cn/ss/xxgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1009/",
+        "/info/1019/",
+        "/info/1011/",
+        "/info/1012/",
+        "/info/1017/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 5,
+        "observedListLinks": 28,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0028",
+      "name": "社会与公共管理学院",
+      "websiteUrl": "https://zg.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://zg.gdufs.edu.cn/rcpy/yjsjy.htm",
+        "https://zg.gdufs.edu.cn/index/tzgg1.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1071/",
+        "/info/1003/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 20,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0029",
+      "name": "经济贸易学院",
+      "websiteUrl": "https://jingmao.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://jingmao.gdufs.edu.cn/bksjy/tzgg.htm",
+        "https://jingmao.gdufs.edu.cn/yjsjy/tzgg.htm",
+        "https://jingmao.gdufs.edu.cn/gjhz/tzgg.htm",
+        "https://jingmao.gdufs.edu.cn/xstd/tzgg.htm",
+        "https://jingmao.gdufs.edu.cn/xwzx.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1694/",
+        "/info/1695/",
+        "/info/1462/",
+        "/info/1703/",
+        "/info/1033/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 5,
+        "sampledPathCount": 5,
+        "observedListLinks": 56,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0030",
+      "name": "艺术学院",
+      "websiteUrl": "https://art.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://art.gdufs.edu.cn/djzc/djdt.htm",
+        "https://art.gdufs.edu.cn/zsjy.htm",
+        "https://art.gdufs.edu.cn/zsjy/zsxx.htm",
+        "https://art.gdufs.edu.cn/yszs/xwly.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1136/",
+        "/info/1144/",
+        "/info/1057/",
+        "/sjkj/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 31,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0031",
+      "name": "英语教育学院",
+      "websiteUrl": "https://see.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://see.gdufs.edu.cn/kxyj/xsdt.htm",
+        "https://see.gdufs.edu.cn/zsjy/bkszs.htm",
+        "https://see.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1103/",
+        "/info/1112/",
+        "/info/1154/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 30,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0033",
+      "name": "马克思主义学院",
+      "websiteUrl": "https://marxism.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://marxism.gdufs.edu.cn/index/xyxw.htm",
+        "https://marxism.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1320/",
+        "/info/1321/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 20,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0034",
+      "name": "高等学历继续教育招生网",
+      "websiteUrl": "https://gwpx.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://gwpx.gdufs.edu.cn/enroll.htm",
+        "https://gwpx.gdufs.edu.cn/index/notice.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1014/",
+        "/info/1182/",
+        "/info/1012/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 3,
+        "observedListLinks": 12,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0036",
+      "name": "东南亚学院（东南亚研究院）",
+      "websiteUrl": "https://fsas.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://fsas.gdufs.edu.cn/yjsjy/tzgg.htm",
+        "https://fsas.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1084/",
+        "/info/1059/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 20,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0038",
+      "name": "中国语言文化学院",
+      "websiteUrl": "https://zwxy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://zwxy.gdufs.edu.cn/bksjy/jxhd.htm",
+        "https://zwxy.gdufs.edu.cn/yjsjy/xszyjs.htm",
+        "https://zwxy.gdufs.edu.cn/English/News.htm",
+        "https://zwxy.gdufs.edu.cn/index/xwdt.htm",
+        "https://zwxy.gdufs.edu.cn/index/tzgg1.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1133/",
+        "/info/1220/",
+        "/info/1250/",
+        "/info/1170/",
+        "/info/1168/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 5,
+        "sampledPathCount": 5,
+        "observedListLinks": 53,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0040",
+      "name": "人力资源部",
+      "websiteUrl": "https://rsc.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://rsc.gdufs.edu.cn/gzdt.htm",
+        "https://rsc.gdufs.edu.cn/gzdt/ybtz.htm",
+        "https://rsc.gdufs.edu.cn/zpxx.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1071/",
+        "/info/1093/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 2,
+        "observedListLinks": 40,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0042",
+      "name": "信息公开网站",
+      "websiteUrl": "https://xxgk.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://xxgk.gdufs.edu.cn/xxgkml1/sfgzgl.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1224/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 1,
+        "observedListLinks": 16,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0044",
+      "name": "创新创业学院",
+      "websiteUrl": "https://gwcxcy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://gwcxcy.gdufs.edu.cn/xsyj/xsdt.htm",
+        "https://gwcxcy.gdufs.edu.cn/jshd/scss.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1181/",
+        "/info/1184/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 23,
+        "rejected": [
+          {
+            "url": "https://gwcxcy.gdufs.edu.cn/tzgg.htm",
+            "reason": "no_successful_article_path_sample"
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0045",
+      "name": "区域国别研究院",
+      "websiteUrl": "https://gbqy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://gbqy.gdufs.edu.cn/dtxw.htm",
+        "https://gbqy.gdufs.edu.cn/xsky.htm",
+        "https://gbqy.gdufs.edu.cn/xsky/ztjz.htm",
+        "https://gbqy.gdufs.edu.cn/xsky/xshy.htm",
+        "https://gbqy.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1004/",
+        "/info/1011/",
+        "/info/1012/",
+        "/info/1013/",
+        "/info/1015/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 5,
+        "sampledPathCount": 5,
+        "observedListLinks": 62,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0047",
+      "name": "国家安全研究院",
+      "websiteUrl": "https://gjaqyjy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://gjaqyjy.gdufs.edu.cn/yjtd/zzyjy.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1008/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 1,
+        "observedListLinks": 6,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0048",
+      "name": "国际交流合作部（港澳台事务工作部）",
+      "websiteUrl": "https://internationaloffice.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://internationaloffice.gdufs.edu.cn/kzxy/kyxw.htm",
+        "https://internationaloffice.gdufs.edu.cn/xwzx.htm",
+        "https://internationaloffice.gdufs.edu.cn/tzgg1/gjxm.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1023/",
+        "/info/1029/",
+        "/info/1069/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 29,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0050",
+      "name": "国际商务英语学院",
+      "websiteUrl": "https://syxy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://syxy.gdufs.edu.cn/rcpy/yjsjy.htm",
+        "https://syxy.gdufs.edu.cn/zsjy/bkszs.htm",
+        "https://syxy.gdufs.edu.cn/zsjy/yjszs.htm",
+        "https://syxy.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1039/",
+        "/info/1044/",
+        "/info/1135/",
+        "/info/1057/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 40,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0051",
+      "name": "国际学院（出国留学培训部）",
+      "websiteUrl": "https://ic.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://ic.gdufs.edu.cn/zsxx/cglxpxxm1/zsjz.htm",
+        "https://ic.gdufs.edu.cn/xsgz/xshd.htm",
+        "https://ic.gdufs.edu.cn/jwgl1/xxgg.htm",
+        "https://ic.gdufs.edu.cn/xygz.htm",
+        "https://ic.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1490/",
+        "/info/1496/",
+        "/info/1551/",
+        "/info/1555/",
+        "/info/1558/",
+        "/info/1486/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 5,
+        "sampledPathCount": 6,
+        "observedListLinks": 66,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0052",
+      "name": "国际治理创新学院",
+      "websiteUrl": "https://sigi.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://sigi.gdufs.edu.cn/gywy/xszdwyh.htm",
+        "https://sigi.gdufs.edu.cn/gywy/gztd.htm",
+        "https://sigi.gdufs.edu.cn/yjyxw/tzgg.htm",
+        "https://sigi.gdufs.edu.cn/index/xwzx1.htm",
+        "https://sigi.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/xsxx/",
+        "/zsxx/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 5,
+        "sampledPathCount": 2,
+        "observedListLinks": 83,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0053",
+      "name": "国际移民研究中心",
+      "websiteUrl": "https://gjymyj.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://gjymyj.gdufs.edu.cn/xscg.htm",
+        "https://gjymyj.gdufs.edu.cn/index/tzgg.htm",
+        "https://gjymyj.gdufs.edu.cn/index/xwdt.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1071/",
+        "/info/1070/",
+        "/info/1069/",
+        "/info/1068/",
+        "/info/1073/",
+        "/info/1072/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 6,
+        "observedListLinks": 23,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0054",
+      "name": "国际经济贸易研究院",
+      "websiteUrl": "https://rcite.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://rcite.gdufs.edu.cn/kxyj/lps.htm",
+        "https://rcite.gdufs.edu.cn/kxyj/xslz.htm",
+        "https://rcite.gdufs.edu.cn/xwdt.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1106/",
+        "/info/1107/",
+        "/info/1100/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 36,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0057",
+      "name": "土地法制研究院",
+      "websiteUrl": "https://illss.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://illss.gdufs.edu.cn/yjdt.htm",
+        "https://illss.gdufs.edu.cn/pjyj.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1098/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 1,
+        "observedListLinks": 54,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0058",
+      "name": "基础建设部",
+      "websiteUrl": "https://jbjszx.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://jbjszx.gdufs.edu.cn/jjdt.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1012/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 1,
+        "observedListLinks": 5,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0059",
+      "name": "外国文学文化研究院",
+      "websiteUrl": "https://cflc.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://cflc.gdufs.edu.cn/xwgg/xwdt.htm",
+        "https://cflc.gdufs.edu.cn/xwgg/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1066/",
+        "/info/1163/",
+        "/info/1067/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 3,
+        "observedListLinks": 32,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0060",
+      "name": "外国语言学及应用语言学研究中心",
+      "websiteUrl": "https://clal.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://clal.gdufs.edu.cn/yjry1/zzyjy.htm",
+        "https://clal.gdufs.edu.cn/zxgz/xwdt.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1464/",
+        "/info/1596/",
+        "/info/1676/",
+        "/info/1689/",
+        "/info/1706/",
+        "/info/1034/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 6,
+        "observedListLinks": 30,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0061",
+      "name": "审计工作部",
+      "websiteUrl": "https://sjc.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://sjc.gdufs.edu.cn/index.htm",
+        "https://sjc.gdufs.edu.cn/sjdt.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1015/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 1,
+        "observedListLinks": 36,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0062",
+      "name": "密茨凯维奇创新学院",
+      "websiteUrl": "https://mii.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://mii.gdufs.edu.cn/xwytz/xwdt.htm",
+        "https://mii.gdufs.edu.cn/xwytz/tzgg.htm",
+        "https://mii.gdufs.edu.cn/xwytz/jzjltyg.htm",
+        "https://mii.gdufs.edu.cn/szdw/yjsds/gjswzy.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1085/",
+        "/info/1086/",
+        "/info/1087/",
+        "/info/1147/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 37,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0063",
+      "name": "广东国际战略研究院（海上丝绸之路研究院）",
+      "websiteUrl": "https://giis.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://giis.gdufs.edu.cn/index/index/rczp.htm",
+        "https://giis.gdufs.edu.cn/index/xsky/xszz.htm",
+        "https://giis.gdufs.edu.cn/index/rcpy/tzgg.htm",
+        "https://giis.gdufs.edu.cn/index/xsky/xslw.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1624/",
+        "/info/1602/",
+        "/info/1643/",
+        "/info/1603/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 37,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0067",
+      "name": "招标采购中心",
+      "websiteUrl": "https://zcc.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://zcc.gdufs.edu.cn/djlz/djgz.htm",
+        "https://zcc.gdufs.edu.cn/ywdt/tzgg.htm",
+        "https://zcc.gdufs.edu.cn/ywdt/gzdt.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1016/",
+        "/info/1037/",
+        "/info/1038/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 25,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0069",
+      "name": "教学质量监测与评估中心",
+      "websiteUrl": "https://pgzx.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://pgzx.gdufs.edu.cn/tzdt/tzgg.htm",
+        "https://pgzx.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1016/",
+        "/info/1027/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 20,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0070",
+      "name": "教师发展中心",
+      "websiteUrl": "https://ctd.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://ctd.gdufs.edu.cn/xwdt.htm",
+        "https://ctd.gdufs.edu.cn/tzgg.htm",
+        "https://ctd.gdufs.edu.cn/sszx.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1005/",
+        "/info/1064/",
+        "/info/1252/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 40,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0071",
+      "name": "教育合作与发展中心",
+      "websiteUrl": "https://eg.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://eg.gdufs.edu.cn/xw.htm",
+        "https://eg.gdufs.edu.cn/xw/tzgg.htm",
+        "https://eg.gdufs.edu.cn/djsz/ghhd.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1002/",
+        "/info/1042/",
+        "/info/1041/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 40,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0072",
+      "name": "日语语言文化学院（东方学研究院）",
+      "websiteUrl": "https://ryxy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://ryxy.gdufs.edu.cn/yjsjy/yjsjx/zyjs.htm",
+        "https://ryxy.gdufs.edu.cn/kxyj/xsdt.htm",
+        "https://ryxy.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1058/",
+        "/info/1063/",
+        "/info/1016/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 33,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0073",
+      "name": "机关党委",
+      "websiteUrl": "https://jgdw.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://jgdw.gdufs.edu.cn/gzdt.htm",
+        "https://jgdw.gdufs.edu.cn/tpxw.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1003/",
+        "/info/1007/",
+        "/info/1010/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 3,
+        "observedListLinks": 24,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0077",
+      "name": "校工会",
+      "websiteUrl": "https://gh.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://gh.gdufs.edu.cn/ghxw/ghdt.htm",
+        "https://gh.gdufs.edu.cn/ghxw/ejghdt.htm",
+        "https://gh.gdufs.edu.cn/bszn.htm",
+        "https://gh.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1015/",
+        "/info/1010/",
+        "/info/1009/",
+        "/info/1016/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 40,
+        "rejected": [
+          {
+            "url": "https://gh.gdufs.edu.cn/nggz.htm",
+            "reason": "no_successful_article_path_sample"
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0078",
+      "name": "档案馆",
+      "websiteUrl": "https://archives.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://archives.gdufs.edu.cn/CPC/CPC_Activities1.htm",
+        "https://archives.gdufs.edu.cn/Announcement.htm",
+        "https://archives.gdufs.edu.cn/news/UniBigNews.htm",
+        "https://archives.gdufs.edu.cn/news/bgdt.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1091/",
+        "/info/1015/",
+        "/info/1004/",
+        "/info/1041/",
+        "/info/1021/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 5,
+        "observedListLinks": 56,
+        "rejected": [
+          {
+            "url": "https://archives.gdufs.edu.cn/news.htm",
+            "reason": "no_successful_article_path_sample"
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0081",
+      "name": "研究生院",
+      "websiteUrl": "https://gwyjs.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://gwyjs.gdufs.edu.cn/index/tzgg.htm",
+        "https://gwyjs.gdufs.edu.cn/index/xwdt.htm",
+        "https://gwyjs.gdufs.edu.cn/index/zsxx.htm",
+        "https://gwyjs.gdufs.edu.cn/rcpy2/tzgg.htm",
+        "https://gwyjs.gdufs.edu.cn/gjjl/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1035/",
+        "/info/1036/",
+        "/info/1052/",
+        "/info/1272/",
+        "/info/1582/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 5,
+        "sampledPathCount": 5,
+        "observedListLinks": 50,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0082",
+      "name": "离退休人员工作部",
+      "websiteUrl": "https://ltb.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://ltb.gdufs.edu.cn/index.htm",
+        "https://ltb.gdufs.edu.cn/tpxw.htm",
+        "https://ltb.gdufs.edu.cn/djgz/ltxdwgz.htm",
+        "https://ltb.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1014/",
+        "/info/1015/",
+        "/info/1019/",
+        "/info/1038/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 4,
+        "sampledPathCount": 4,
+        "observedListLinks": 85,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0083",
+      "name": "科研部",
+      "websiteUrl": "https://kyc.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://kyc.gdufs.edu.cn/kydt.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1012/",
+        "/info/1111/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 2,
+        "observedListLinks": 4,
+        "rejected": [
+          {
+            "url": "https://kyc.gdufs.edu.cn/tzgg.htm",
+            "reason": "no_successful_article_path_sample"
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0084",
+      "name": "粤港澳大湾区研究院",
+      "websiteUrl": "https://ygadwq.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://ygadwq.gdufs.edu.cn/rczp/zpxx.htm",
+        "https://ygadwq.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1553/",
+        "/info/1557/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 19,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0085",
+      "name": "纪检监察室",
+      "websiteUrl": "https://jwjc.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://jwjc.gdufs.edu.cn/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1048/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 1,
+        "observedListLinks": 13,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0086",
+      "name": "纪检监察研究院",
+      "websiteUrl": "https://jjjcyjy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://jjjcyjy.gdufs.edu.cn/yjtd/yjry.htm",
+        "https://jjjcyjy.gdufs.edu.cn/kxyj1/xslw.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1161/",
+        "/info/1191/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 22,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0088",
+      "name": "组织部",
+      "websiteUrl": "https://zzb.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://zzb.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1040/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 1,
+        "observedListLinks": 10,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0090",
+      "name": "翻译学研究中心",
+      "websiteUrl": "https://cts.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://cts.gdufs.edu.cn/zxgz.htm",
+        "https://cts.gdufs.edu.cn/shhd.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1038/",
+        "/info/1039/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 30,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0091",
+      "name": "考试中心",
+      "websiteUrl": "https://gwkszx.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://gwkszx.gdufs.edu.cn/zxdt/xwdt.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1070/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 1,
+        "observedListLinks": 19,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0093",
+      "name": "西方语言文化学院",
+      "websiteUrl": "https://xiyu.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://xiyu.gdufs.edu.cn/xygz/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1178/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 1,
+        "observedListLinks": 8,
+        "rejected": [
+          {
+            "url": "https://xiyu.gdufs.edu.cn/kyxs/xshd.htm",
+            "reason": "no_successful_article_path_sample"
+          },
+          {
+            "url": "https://xiyu.gdufs.edu.cn/djgh/djdt.htm",
+            "reason": "no_successful_article_path_sample"
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0094",
+      "name": "语言学习与人工智能研究院",
+      "websiteUrl": "https://llai.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://llai.gdufs.edu.cn/dt/gg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1027/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 1,
+        "observedListLinks": 3,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0096",
+      "name": "跨国并购与创新战略研究中心",
+      "websiteUrl": "https://kgbg.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://kgbg.gdufs.edu.cn/yjtd.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1253/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 1,
+        "sampledPathCount": 1,
+        "observedListLinks": 4,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0098",
+      "name": "金融开放发展研究院",
+      "websiteUrl": "https://jrkf.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://jrkf.gdufs.edu.cn/xsyj/zzylw.htm",
+        "https://jrkf.gdufs.edu.cn/gzwj/zdwj.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1006/",
+        "/info/1025/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 20,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0099",
+      "name": "阐释与国际传播研究院",
+      "websiteUrl": "https://ih.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://ih.gdufs.edu.cn/xwgg/xwdt.htm",
+        "https://ih.gdufs.edu.cn/xwgg/tzgg.htm",
+        "https://ih.gdufs.edu.cn/yjdw/yjry.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1066/",
+        "/info/1067/",
+        "/info/1126/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 3,
+        "observedListLinks": 33,
+        "rejected": []
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0100",
+      "name": "高等继续教育学院（公开学院）",
+      "websiteUrl": "https://jxjy.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://jxjy.gdufs.edu.cn/xsgz/gzzd.htm",
+        "https://jxjy.gdufs.edu.cn/djgz/dwdt.htm",
+        "https://jxjy.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1029/",
+        "/info/1012/",
+        "/info/1039/",
+        "/info/1056/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 3,
+        "sampledPathCount": 4,
+        "observedListLinks": 49,
+        "rejected": [
+          {
+            "url": "https://jxjy.gdufs.edu.cn/xwzx.htm",
+            "reason": "no_successful_article_path_sample"
+          }
+        ]
+      }
+    },
+    {
+      "sourceId": "GDUFS-SRC-0101",
+      "name": "高级翻译学院",
+      "websiteUrl": "https://sits.gdufs.edu.cn/",
+      "entryUrls": [
+        "https://sits.gdufs.edu.cn/yjsjy/gzdt.htm",
+        "https://sits.gdufs.edu.cn/index/tzgg.htm"
+      ],
+      "articlePathPrefixes": [
+        "/info/1151/",
+        "/info/1186/"
+      ],
+      "allowQueryUrls": false,
+      "evidence": {
+        "entryCount": 2,
+        "sampledPathCount": 2,
+        "observedListLinks": 19,
+        "rejected": []
+      }
+    }
+  ],
+  "excluded": [
+    {
+      "sourceId": "GDUFS-SRC-0001",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0011",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0018",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0022",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0032",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0035",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0037",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0039",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0041",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0043",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0046",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0049",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0055",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0056",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0064",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0065",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0066",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0068",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0074",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0075",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0076",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0079",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0080",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0087",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0089",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0092",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0095",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0097",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0102",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0103",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0104",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0105",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0106",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0107",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0108",
+      "reason": "no_confirmed_list_page"
+    },
+    {
+      "sourceId": "GDUFS-SRC-0109",
+      "reason": "no_confirmed_list_page"
+    }
+  ]
+}

@@ -122,15 +122,6 @@ export function PublicArticleDialog({
             </div>
           </header>
 
-          {article.summary &&
-            article.summary !==
-              `关于「${article.title.slice(0, 100)}」的来源信息，请以原文为准。` && (
-              <section className="public-article-summary">
-                <h3>摘要</h3>
-                <p>{article.summary}</p>
-              </section>
-            )}
-
           <section className="public-article-body">
             <h3>正文</h3>
             {error ? (

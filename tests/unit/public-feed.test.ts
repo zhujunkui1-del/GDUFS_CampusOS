@@ -88,6 +88,7 @@ describe("public radar and knowledge read the same fresh authoritative documents
       expect(result.items.map((x) => x.id)).toEqual([newer]);
       expect(result.hasMore).toBe(true);
       expect(result.items[0]).not.toHaveProperty("body");
+      expect(result.items[0]).not.toHaveProperty("summary");
       const grouped = await readPublicContent(f.db, {
         surface: "radar",
         limit: 1,

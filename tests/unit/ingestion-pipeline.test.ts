@@ -3,7 +3,11 @@ import { sqliteD1 } from "../fixtures/sqlite-d1";
 import { ConsoleSyncStore } from "@/lib/server/console/v2-sync";
 import { IngestionStore } from "@/lib/server/console/ingestion-store";
 import { ContentInputSchema } from "@/domain/console/contracts";
-import { webProfiles, approvedUrl } from "@/lib/ingestion/profiles";
+import {
+  webProfiles,
+  approvedUrl,
+  profileFromSource,
+} from "@/lib/ingestion/profiles";
 import {
   OfficialWebConnector,
   originalDate,
@@ -115,6 +119,34 @@ async function setup(rights = "metadata_only", v2 = false, automatic = false) {
   return { ...f, store, job, url, article, claim, commit, discover };
 }
 describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
+  it("accepts multiple configured article columns while keeping them on the source host", () => {
+    const profile = profileFromSource({
+      sourceId: "GDUFS-SRC-1099",
+      name: "隔离部门官网",
+      websiteUrl: "https://dept.example.edu/",
+      webProfileJson: JSON.stringify({
+        ruleVersion: "official-web-isolated.1",
+        entryUrls: [
+          "https://dept.example.edu/news/",
+          "https://dept.example.edu/notices/",
+        ],
+        articlePathPrefixes: ["/news/detail/", "/notices/article/"],
+      }),
+    });
+    expect(profile?.entryUrls).toHaveLength(2);
+    expect(approvedUrl(profile!, "https://dept.example.edu/news/", "list")).toBe(
+      "https://dept.example.edu/news/",
+    );
+    expect(
+      approvedUrl(profile!, "https://dept.example.edu/notices/article/42"),
+    ).toBe("https://dept.example.edu/notices/article/42");
+    expect(() =>
+      approvedUrl(profile!, "https://elsewhere.example.edu/news/42"),
+    ).toThrow("URL_NOT_ALLOWED");
+    expect(() =>
+      approvedUrl(profile!, "https://dept.example.edu/private/42"),
+    ).toThrow("URL_NOT_ALLOWED");
+  });
   it("V2 preserves human correction on unchanged fetch and lets real author changes supersede it with history", async () => {
     const f = await setup("metadata_only", true);
     try {
@@ -571,7 +603,7 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
       f.close();
     }
   });
-  it("retains bounded failure/checkpoint and enforces reserved daily request budget", async () => {
+  it("retains failure checkpoints and allows a job to pass the former daily request ceiling", async () => {
     const f = await setup();
     try {
       const lease = await f.claim();
@@ -587,7 +619,9 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
           "UPDATE ingestion_jobs SET request_count=20,next_run_after_ms=0",
         )
         .run();
-      await expect(f.claim()).rejects.toMatchObject({ code: "RATE_LIMITED" });
+      const resumed = await f.claim();
+      expect(resumed.id).toBe(f.job.id);
+      expect((await f.store.job(f.job.id)).request_count).toBe(22);
       expect((await f.store.audit({})).items.length).toBeGreaterThan(0);
     } finally {
       f.close();
@@ -595,7 +629,7 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
   });
 });
 describe("ingestion lease identity, clock and write races", () => {
-  it("counts today's reservations for jobs created before midnight, so new jobs cannot bypass daily limits", async () => {
+  it("continues jobs created before midnight without a daily application request cap", async () => {
     const f = await setup();
     try {
       f.sqlite
@@ -609,9 +643,8 @@ describe("ingestion lease identity, clock and write races", () => {
         commandId: crypto.randomUUID(),
         sourceId: p.sourceId,
       });
-      await expect(f.claim(next.id)).rejects.toMatchObject({
-        code: "RATE_LIMITED",
-      });
+      const lease = await f.claim(next.id);
+      expect(lease.id).toBe(next.id);
     } finally {
       f.close();
     }

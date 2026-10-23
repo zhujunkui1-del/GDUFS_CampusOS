@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { protectedDocumentSql, protectedSourceSql } from "./v2-sql";
 import { ManualImportStore } from "./manual-store";
 import { sqlLegacyType, sourceLocator } from "./store";
@@ -20,11 +21,11 @@ import {
   SourcesV2Query,
   ArticleV2Query,
   EngineSettingsSchema,
-  SourceSyncSchema,
   type Governance,
   type SourceV2,
 } from "@/domain/console/v2";
-import { webProfiles } from "@/lib/ingestion/profiles";
+import { WebProfileSaveSchema } from "@/domain/console/web-profile";
+import { profileFromSource, webProfiles } from "@/lib/ingestion/profiles";
 type Row = Record<string, string | number | null>;
 const visible = "s.console_managed=1 AND s.source_type<>'user_private'";
 const docs = "d.owner_user_id IS NULL AND d.data_domain<>'user_private'";
@@ -305,11 +306,13 @@ export class ConsoleGovernanceStore extends ManualImportStore {
   }
   async engineSettings() {
     consolePermission(this.actor, "read");
-    return this.db
+    const row = await this.db
       .prepare(
         "SELECT * FROM console_engine_settings WHERE id='console-v2-settings'",
       )
       .first<Row>();
+    if (row) delete row.network_budget;
+    return row;
   }
   async saveEngineSettings(raw: unknown) {
     const v = EngineSettingsSchema.parse(raw);
@@ -329,12 +332,11 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       [
         this.db
           .prepare(
-            "UPDATE console_engine_settings SET sync_hours=?,auto_sync_enabled=?,network_budget=?,earliest_import_day=?,sync_revision=sync_revision+CASE WHEN sync_hours<>? OR auto_sync_enabled<>? THEN 1 ELSE 0 END,version=version+1,updated_at=? WHERE id='console-v2-settings'",
+            "UPDATE console_engine_settings SET sync_hours=?,auto_sync_enabled=?,earliest_import_day=?,sync_revision=sync_revision+CASE WHEN sync_hours<>? OR auto_sync_enabled<>? THEN 1 ELSE 0 END,version=version+1,updated_at=? WHERE id='console-v2-settings'",
           )
           .bind(
             v.syncHours,
             Number(v.autoSync),
-            v.networkBudget,
             v.earliestImportDay,
             v.syncHours,
             Number(v.autoSync),
@@ -345,13 +347,9 @@ export class ConsoleGovernanceStore extends ManualImportStore {
           ? [
               this.db
                 .prepare(
-                  `UPDATE knowledge_sources SET next_sync_at_ms=CASE WHEN last_success_at IS NULL THEN ? ELSE CAST((julianday(last_success_at)-2440587.5)*86400000 AS INTEGER)+? END,sync_policy_version=(SELECT sync_revision FROM console_engine_settings WHERE id='console-v2-settings') WHERE console_managed=1 AND sync_hours_override IS NULL AND id IN(${webProfiles.map(() => "?").join(",")})`,
+                  "UPDATE knowledge_sources SET sync_hours_override=NULL,next_sync_at_ms=CASE WHEN last_success_at IS NULL THEN ? ELSE CAST((julianday(last_success_at)-2440587.5)*86400000 AS INTEGER)+? END,sync_policy_version=(SELECT sync_revision FROM console_engine_settings WHERE id='console-v2-settings') WHERE console_managed=1 AND channel_type='official_web' AND source_type='official_web' AND archived_at IS NULL",
                 )
-                .bind(
-                  Date.parse(this.now()),
-                  v.syncHours * 3600000,
-                  ...webProfiles.map((p) => p.sourceId),
-                ),
+                .bind(Date.parse(this.now()), v.syncHours * 3600000),
             ]
           : []),
       ],
@@ -359,18 +357,99 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     );
   }
   async saveSourceSync(id: string, raw: unknown) {
-    const v = SourceSyncSchema.parse(raw);
-    await super.source(id);
-    return this.mutate(v, "source.sync-settings", "source", id, v, [
-      this.db
+    void raw;
+    consolePermission(this.actor, "admin");
+    const source = await this.sourceV2(id);
+    if (source.sourceType !== "official_web")
+      throw new ApiError("INVALID_ARGUMENT", "采集间隔仅适用于官网来源。");
+    throw new ApiError(
+      "INVALID_ARGUMENT",
+      "所有官网使用官网采集中的统一间隔。",
+    );
+  }
+  async saveWebProfile(id: string, raw: unknown) {
+    consolePermission(this.actor, "admin");
+    const value = WebProfileSaveSchema.parse(raw),
+      source = await this.db
         .prepare(
-          "UPDATE knowledge_sources SET sync_hours_override=?,next_sync_at_ms=?,sync_policy_version=0,version=version+1,updated_at=? WHERE id=?",
+          "SELECT id,display_name,website_url,channel_type,source_type,console_managed,archived_at,version FROM knowledge_sources WHERE id=?",
         )
-        .bind(v.hours, Date.parse(this.now()), this.now(), id),
-    ]);
+        .bind(id)
+        .first<Row>();
+    if (
+      !source ||
+      source.console_managed !== 1 ||
+      source.archived_at ||
+      source.channel_type !== "official_web" ||
+      source.source_type !== "official_web" ||
+      !source.website_url
+    )
+      throw new ApiError("INVALID_ARGUMENT", "该来源没有可用的官网地址。");
+    const ruleVersion = `official-web-${new Date(this.now())
+      .toISOString()
+      .slice(0, 10)}.${Number(source.version) + 1}`;
+    const config = {
+      configurationStatus: value.configurationStatus,
+      entryUrls: value.entryUrls,
+      articlePathPrefixes: value.articlePathPrefixes,
+      titleSelector: value.titleSelector,
+      titleSuffix: value.titleSuffix,
+      dateSelector: value.dateSelector,
+      dateLabel: value.dateLabel,
+      bodySelector: value.bodySelector,
+      allowQueryUrls: value.allowQueryUrls,
+      requestIntervalMs: value.requestIntervalMs,
+      ruleVersion,
+    };
+    try {
+      profileFromSource({
+        sourceId: id,
+        name: String(source.display_name),
+        websiteUrl: String(source.website_url),
+        webProfileJson: JSON.stringify(config),
+      });
+    } catch {
+      throw new ApiError(
+        "INVALID_ARGUMENT",
+        "列表入口和文章路径必须属于该官网的 HTTPS 域名。",
+      );
+    }
+    return this.mutate(
+      value,
+      "source.web-profile",
+      "source",
+      id,
+      { ...value, ruleVersion },
+      [
+        this.db
+          .prepare(
+            "UPDATE knowledge_sources SET web_profile_json=?,connector_type='official_web',sync_state='ready',next_sync_at_ms=?,version=version+1,updated_at=? WHERE id=?",
+          )
+          .bind(JSON.stringify(config), Date.parse(this.now()), this.now(), id),
+        this.db
+          .prepare(
+            "UPDATE source_collection_policies SET expires_at_ms=?,version=version+1,updated_at=? WHERE source_id=?",
+          )
+          .bind(Date.parse(this.now()), this.now(), id),
+      ],
+      "admin",
+      id,
+    );
   }
   private sourceProjection(row: Row): SourceV2 {
-    const profile = webProfiles.find((p) => p.sourceId === row.id);
+    let profile: ReturnType<typeof profileFromSource> = null;
+    try {
+      profile = profileFromSource({
+        sourceId: String(row.id),
+        name: String(row.display_name),
+        websiteUrl: row.website_url ? String(row.website_url) : null,
+        webProfileJson: row.web_profile_json
+          ? String(row.web_profile_json)
+          : "{}",
+      });
+    } catch {
+      profile = null;
+    }
     return {
       id: String(row.id),
       displayName: String(row.display_name),
@@ -408,10 +487,6 @@ export class ConsoleGovernanceStore extends ManualImportStore {
         row.next_sync_at_ms
           ? Number(row.next_sync_at_ms)
           : null,
-      syncHours: Number(row.sync_hours_override || row.global_hours || 24),
-      syncOverride: row.sync_hours_override
-        ? Number(row.sync_hours_override)
-        : null,
       syncState: String(row.sync_state),
       articleCount: Number(row.article_count || 0),
       publishedCount: Number(row.published_count || 0),
@@ -430,7 +505,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     consolePermission(this.actor, "read");
     const row = await this.db
       .prepare(
-        `SELECT s.*,${collectorState} AS collector_enabled,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,e.sync_hours AS global_hours,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE ${visible} AND s.id=?`,
+        `SELECT s.*,${collectorState} AS collector_enabled,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE ${visible} AND s.id=?`,
       )
       .bind(id)
       .first<Row>();
@@ -485,8 +560,12 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     }
     const ids = webProfiles.map((p) => p.sourceId);
     if (q.automatic) {
+      const configured =
+        "(s.web_profile_json<>'{}' AND json_array_length(json_extract(s.web_profile_json,'$.entryUrls'))>0 AND json_array_length(json_extract(s.web_profile_json,'$.articlePathPrefixes'))>0)";
       where.push(
-        `s.id ${q.automatic === "1" ? "IN" : "NOT IN"} (${ids.map(() => "?").join(",")})`,
+        q.automatic === "1"
+          ? `(${configured} OR s.id IN (${ids.map(() => "?").join(",")}))`
+          : `NOT(${configured} OR s.id IN (${ids.map(() => "?").join(",")}))`,
       );
       args.push(...ids);
     }
@@ -498,10 +577,14 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       articles: "article_count",
       next_sync: "s.next_sync_at_ms",
     }[q.sort];
+    const inlineCounts = q.sort === "articles",
+      countColumns = inlineCounts
+        ? `${articleCount} AS article_count,${publishedCount} AS published_count`
+        : "0 AS article_count,0 AS published_count";
     const [rows, count] = await Promise.all([
       this.db
         .prepare(
-          `SELECT s.*,${collectorState} AS collector_enabled,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,e.sync_hours AS global_hours,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE ${where.join(" AND ")} ORDER BY ${order} ${q.direction},s.id LIMIT ? OFFSET ?`,
+          `SELECT s.*,${collectorState} AS collector_enabled,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,${countColumns} FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE ${where.join(" AND ")} ORDER BY ${order} ${q.direction},s.id LIMIT ? OFFSET ?`,
         )
         .bind(...args, q.limit, q.offset)
         .all<Row>(),
@@ -512,8 +595,54 @@ export class ConsoleGovernanceStore extends ManualImportStore {
         .bind(...args)
         .first<{ n: number }>(),
     ]);
+    const articleCounts = new Map<string, number>(),
+      publishedCounts = new Map<string, number>();
+    if (!inlineCounts && rows.results.length) {
+      const ids = rows.results.map((row) => String(row.id)),
+        selected = ids.map(() => "(?)").join(","),
+        articleRows = await this.db
+          .prepare(
+            `WITH selected(source_id) AS(VALUES ${selected}),pairs AS(
+              SELECT d.source_id,d.id AS document_id FROM knowledge_documents d JOIN selected x ON x.source_id=d.source_id
+              WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
+                AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
+              UNION
+              SELECT o.source_id,d.id FROM document_origins o JOIN selected x ON x.source_id=o.source_id
+                JOIN knowledge_documents d ON d.id=o.document_id
+              WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
+                AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
+            ) SELECT source_id,count(*) AS article_count FROM pairs GROUP BY source_id`,
+          )
+          .bind(...ids)
+          .all<{ source_id: string; article_count: number }>(),
+        publishedRows = await this.db
+          .prepare(
+            `WITH selected(source_id) AS(VALUES ${selected}),pairs AS(
+              SELECT d.source_id,d.id AS document_id FROM console_public_documents d JOIN selected x ON x.source_id=d.source_id
+              UNION
+              SELECT o.source_id,d.id FROM document_origins o JOIN selected x ON x.source_id=o.source_id
+                JOIN console_public_documents d ON d.id=o.document_id
+            ) SELECT source_id,count(*) AS published_count FROM pairs GROUP BY source_id`,
+          )
+          .bind(...ids)
+          .all<{ source_id: string; published_count: number }>();
+      for (const row of articleRows.results)
+        articleCounts.set(row.source_id, Number(row.article_count));
+      for (const row of publishedRows.results)
+        publishedCounts.set(row.source_id, Number(row.published_count));
+    }
     return {
-      items: rows.results.map((r) => this.sourceProjection(r)),
+      items: rows.results.map((r) =>
+        this.sourceProjection(
+          inlineCounts
+            ? r
+            : {
+                ...r,
+                article_count: articleCounts.get(String(r.id)) || 0,
+                published_count: publishedCounts.get(String(r.id)) || 0,
+              },
+        ),
+      ),
       total: count?.n || 0,
       limit: q.limit,
       offset: q.offset,
@@ -648,6 +777,205 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       total: count?.n || 0,
       limit: q.limit,
       offset: q.offset,
+    };
+  }
+  async officialWebCollection(raw: unknown) {
+    consolePermission(this.actor, "read");
+    const q = z
+        .object({
+          q: z.string().trim().max(100).optional(),
+          limit: z.coerce.number().int().min(1).max(2000).default(50),
+          offset: z.coerce.number().int().min(0).max(10000).default(0),
+        })
+        .strict()
+        .parse(raw),
+      where = [
+        "s.console_managed=1",
+        "s.source_type='official_web'",
+        "s.channel_type='official_web'",
+        "s.archived_at IS NULL",
+      ],
+      args: unknown[] = [];
+    if (q.q) {
+      where.push("s.display_name LIKE ? ESCAPE '\\'");
+      args.push(pattern(q.q));
+    }
+    const filter = where.join(" AND "),
+      staticProfiles = webProfiles.map((profile) => ({
+        id: profile.sourceId,
+        ruleVersion: profile.ruleVersion,
+      })),
+      staticProfilesSql = staticProfiles.map(() => "(?,?)").join(","),
+      now = Date.parse(this.now()),
+      [rows, count, summary, settings] = await Promise.all([
+        this.db
+          .prepare(
+            `SELECT s.id,s.display_name,s.website_url,s.web_profile_json,s.enabled,s.operating_status,s.verification_status,s.official_status,s.permission_status,s.authorization_status,s.version,s.sync_hours_override,s.next_sync_at_ms,s.last_success_at,s.last_error,s.last_executor,s.sync_state,p.version AS policy_version,p.rule_version AS policy_rule,p.rights_scope,p.expires_at_ms AS policy_expires FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE ${filter} ORDER BY s.display_name,s.id LIMIT ? OFFSET ?`,
+          )
+          .bind(...args, q.limit, q.offset)
+          .all<Row>(),
+        this.db
+          .prepare(
+            `SELECT count(*) AS n FROM knowledge_sources s WHERE ${filter}`,
+          )
+          .bind(...args)
+          .first<{ n: number }>(),
+        this.db
+          .prepare(
+            `WITH static_profiles(id,rule_version) AS (VALUES ${staticProfilesSql}),
+              source_rows AS (
+                SELECT s.id,s.web_profile_json,s.enabled,s.operating_status,s.verification_status,s.official_status,s.permission_status,s.authorization_status,s.sync_state,
+                  p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,sp.id AS static_id,sp.rule_version AS static_rule,
+                  CASE
+                    WHEN s.web_profile_json IS NOT NULL AND s.web_profile_json<>'{}' THEN
+                      CASE WHEN json_valid(s.web_profile_json) THEN
+                        CASE WHEN json_type(s.web_profile_json,'$.ruleVersion')='text'
+                          AND json_type(s.web_profile_json,'$.entryUrls')='array'
+                          AND json_array_length(s.web_profile_json,'$.entryUrls')>0
+                          AND json_type(s.web_profile_json,'$.articlePathPrefixes')='array'
+                          AND json_array_length(s.web_profile_json,'$.articlePathPrefixes')>0 THEN 1 ELSE 0 END
+                      ELSE 0 END
+                    WHEN sp.id IS NOT NULL THEN 1 ELSE 0
+                  END AS profile_configured,
+                  CASE WHEN json_valid(s.web_profile_json) THEN
+                    CASE WHEN json_extract(s.web_profile_json,'$.configurationStatus')='discovered' THEN 1 ELSE 0 END
+                  ELSE 0 END AS profile_candidate,
+                  CASE
+                    WHEN s.web_profile_json IS NOT NULL AND s.web_profile_json<>'{}' THEN
+                      CASE WHEN json_valid(s.web_profile_json) AND json_type(s.web_profile_json,'$.ruleVersion')='text' THEN json_extract(s.web_profile_json,'$.ruleVersion') ELSE NULL END
+                    ELSE sp.rule_version
+                  END AS profile_rule
+                FROM knowledge_sources s
+                LEFT JOIN source_collection_policies p ON p.source_id=s.id
+                LEFT JOIN static_profiles sp ON sp.id=s.id
+                WHERE s.console_managed=1 AND s.source_type='official_web' AND s.channel_type='official_web' AND s.archived_at IS NULL
+              ), readiness AS (
+                SELECT *,
+                  CASE WHEN profile_rule IS NOT NULL AND policy_rule=profile_rule AND COALESCE(policy_expires,0)>? THEN 1 ELSE 0 END AS policy_ready,
+                  CASE WHEN enabled=1 AND operating_status='active' AND verification_status='verified' AND official_status='verified_official' AND permission_status='approved' AND authorization_status='approved' AND sync_state<>'blocked' THEN 1 ELSE 0 END AS source_ready,
+                  CASE WHEN sync_state IN('queued','running') THEN 1 ELSE 0 END AS active_job
+                FROM source_rows
+              )
+              SELECT count(*) AS all_total,
+                COALESCE(sum(profile_configured),0) AS configured_total,
+                COALESCE(sum(profile_candidate),0) AS candidate_total,
+                COALESCE(sum(CASE WHEN profile_configured=0 THEN 1 ELSE 0 END),0) AS missing_profile_total,
+                COALESCE(sum(CASE WHEN profile_configured=1 AND profile_candidate=0 AND policy_ready=0 THEN 1 ELSE 0 END),0) AS policy_pending_total,
+                COALESCE(sum(CASE WHEN profile_configured=1 AND profile_candidate=0 AND policy_ready=1 AND source_ready=0 THEN 1 ELSE 0 END),0) AS source_pending_total,
+                COALESCE(sum(CASE WHEN profile_configured=1 AND profile_candidate=0 AND policy_ready=1 AND source_ready=1 AND active_job=1 THEN 1 ELSE 0 END),0) AS active_job_total,
+                COALESCE(sum(CASE WHEN profile_configured=1 AND profile_candidate=0 AND policy_ready=1 AND source_ready=1 AND active_job=0 THEN 1 ELSE 0 END),0) AS ready_total
+              FROM readiness`,
+          )
+          .bind(
+            ...staticProfiles.flatMap((profile) => [
+              profile.id,
+              profile.ruleVersion,
+            ]),
+            now,
+          )
+          .first<{
+            all_total: number;
+            configured_total: number | null;
+            candidate_total: number | null;
+            missing_profile_total: number | null;
+            policy_pending_total: number | null;
+            source_pending_total: number | null;
+            active_job_total: number | null;
+            ready_total: number | null;
+          }>(),
+        this.engineSettings(),
+      ]);
+    const items = rows.results.map((row) => {
+      let profile: ReturnType<typeof profileFromSource> = null;
+      try {
+        profile = profileFromSource({
+          sourceId: String(row.id),
+          name: String(row.display_name),
+          websiteUrl: row.website_url ? String(row.website_url) : null,
+          webProfileJson: row.web_profile_json
+            ? String(row.web_profile_json)
+            : "{}",
+        });
+      } catch {
+        profile = null;
+      }
+      const policyReady =
+        !!profile &&
+        row.policy_rule === profile.ruleVersion &&
+        Number(row.policy_expires) > now;
+      return {
+        id: String(row.id),
+        displayName: String(row.display_name),
+        websiteUrl: row.website_url ? String(row.website_url) : null,
+        enabled: row.enabled === 1,
+        operatingStatus: String(row.operating_status),
+        verificationStatus: String(row.verification_status),
+        officialStatus: String(row.official_status),
+        permissionStatus: String(row.permission_status),
+        authorizationStatus: String(row.authorization_status),
+        version: Number(row.version),
+        profileConfigured: !!profile,
+        entryUrls: profile?.entryUrls || (profile ? [profile.entryUrl] : []),
+        articlePathPrefixes: profile?.detailPathPrefixes || [],
+        profile: profile
+          ? {
+              configurationStatus: profile.configurationStatus || "verified",
+              titleSelector: profile.titleSelector,
+              titleSuffix: profile.titleSuffix,
+              dateSelector: profile.dateSelector,
+              dateLabel: profile.dateLabel,
+              bodySelector: profile.bodySelector,
+              allowQueryUrls: profile.allowQueryUrls || false,
+              requestIntervalMs: profile.requestIntervalMs ?? 1000,
+            }
+          : null,
+        ruleVersion: profile?.ruleVersion || null,
+        policyReady,
+        policyRule: row.policy_rule ? String(row.policy_rule) : null,
+        policyExpires: Number(row.policy_expires) || null,
+        rightsScope: row.rights_scope ? String(row.rights_scope) : null,
+        lastSuccessAt: row.last_success_at ? String(row.last_success_at) : null,
+        lastExecutor: row.last_executor ? String(row.last_executor) : null,
+        nextSyncAt: policyReady
+          ? row.sync_hours_override !== null
+            ? row.last_success_at
+              ? Date.parse(String(row.last_success_at)) +
+                Number(settings?.sync_hours || 24) * 3600000
+              : now
+            : row.next_sync_at_ms
+              ? Number(row.next_sync_at_ms)
+              : null
+          : null,
+        syncState: String(row.sync_state),
+        lastError: row.last_error ? String(row.last_error).slice(0, 100) : null,
+        automatic:
+          policyReady &&
+          row.enabled === 1 &&
+          row.operating_status === "active" &&
+          row.verification_status === "verified" &&
+          row.official_status === "verified_official" &&
+          row.permission_status === "approved" &&
+          row.authorization_status === "approved" &&
+          profile?.configurationStatus !== "discovered" &&
+          row.sync_state !== "blocked",
+      };
+    });
+    return {
+      items,
+      total: count?.n || 0,
+      allTotal: Number(summary?.all_total || 0),
+      configuredTotal: Number(summary?.configured_total || 0),
+      readiness: {
+        candidateTotal: Number(summary?.candidate_total || 0),
+        missingProfileTotal: Number(summary?.missing_profile_total || 0),
+        policyPendingTotal: Number(summary?.policy_pending_total || 0),
+        sourcePendingTotal: Number(summary?.source_pending_total || 0),
+        activeJobTotal: Number(summary?.active_job_total || 0),
+        readyTotal: Number(summary?.ready_total || 0),
+      },
+      offset: q.offset,
+      limit: q.limit,
+      settings,
     };
   }
   async dashboard(raw: unknown) {

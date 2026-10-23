@@ -24,6 +24,32 @@ import {
 } from "maplibre-gl";
 import { modelPilot, type PilotModelState } from "../data/model-pilot";
 
+type ModelAsset = (typeof modelPilot.assets)[keyof typeof modelPilot.assets];
+const modelBuffers = new Map<string, Promise<ArrayBuffer>>();
+
+function readModelBuffer(asset: ModelAsset) {
+  const cached = modelBuffers.get(asset.url);
+  if (cached) return cached;
+  const pending = fetch(asset.url, { cache: "force-cache" })
+    .then((response) => {
+      if (!response.ok) throw new Error("Model asset unavailable");
+      return response.arrayBuffer();
+    })
+    .catch((error) => {
+      if (modelBuffers.get(asset.url) === pending)
+        modelBuffers.delete(asset.url);
+      throw error;
+    });
+  modelBuffers.set(asset.url, pending);
+  return pending;
+}
+
+export function preloadNanyuan7Model() {
+  const low = window.matchMedia("(max-width: 760px)").matches;
+  const asset = low ? modelPilot.assets.low : modelPilot.assets.full;
+  return readModelBuffer(asset);
+}
+
 // MapLibre owns the canvas, camera and WebGL context. This layer owns only its assets.
 export class Nanyuan7ModelLayer implements CustomLayerInterface {
   readonly id = "nanyuan7-model";
@@ -36,7 +62,6 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
   private scene = new Scene();
   private camera = new Camera();
   private root?: Object3D;
-  private abort = new AbortController();
   private disposed = false;
   private selected = false;
   private routeVisible = false;
@@ -102,12 +127,7 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
     try {
       const low = window.matchMedia("(max-width: 760px)").matches;
       const asset = low ? modelPilot.assets.low : modelPilot.assets.full;
-      const response = await fetch(asset.url, {
-        signal: this.abort.signal,
-        cache: "force-cache",
-      });
-      if (!response.ok) throw new Error("Model asset unavailable");
-      const buffer = await response.arrayBuffer();
+      const buffer = await readModelBuffer(asset);
       const hash = Array.from(
         new Uint8Array(await crypto.subtle.digest("SHA-256", buffer)),
       )
@@ -239,7 +259,6 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
   }
   onRemove() {
     this.disposed = true;
-    this.abort.abort();
     this.map
       ?.getCanvas()
       .removeEventListener("webglcontextrestored", this.restoreShadows);

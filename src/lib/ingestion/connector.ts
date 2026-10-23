@@ -1,5 +1,5 @@
 import { classifyArticle } from "@/domain/console/article-classification";
-// Node/local runner only: never imported by a Worker API or client bundle.
+// Server-only parser shared by the local Node runner and scheduled Worker.
 import { parseHTML } from "linkedom";
 import { createHash } from "node:crypto";
 import { ContentInputSchema } from "@/domain/console/contracts";
@@ -100,7 +100,7 @@ export class OfficialWebConnector {
     const rows = [...candidates.values()];
     if (rows.every((r) => r.date))
       rows.sort((a, b) => b.date!.localeCompare(a.date!) || a.order - b.order);
-    return { urls: rows.slice(0, 10).map((r) => r.url), nextPage };
+    return { urls: rows.slice(0, 50).map((r) => r.url), nextPage };
   }
   async fetch(
     url: string,

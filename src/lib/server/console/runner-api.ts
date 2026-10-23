@@ -39,7 +39,7 @@ export const consoleRunnerApi = withApi(async (request) => {
   if (section === "jobs" && !id && request.method === "GET") {
     const rows = await config.db
       .prepare(
-        `SELECT id,source_id,status,phase,control_state,next_run_after_ms,lease_until_ms FROM ingestion_jobs WHERE source_id IN(${scopes.map(() => "?").join(",")}) AND job_kind='web' AND control_state='active' AND phase<>'complete' AND status IN('queued','running') AND ((SELECT auto_sync_enabled FROM console_engine_settings WHERE id='console-v2-settings')=1 OR run_key NOT LIKE 'scheduled:%') ORDER BY created_at,id LIMIT 5`,
+        `SELECT id,source_id,status,phase,control_state,next_run_after_ms,lease_until_ms FROM ingestion_jobs WHERE source_id IN(${scopes.map(() => "?").join(",")}) AND job_kind='web' AND control_state='active' AND phase<>'complete' AND status IN('queued','running') AND ((SELECT auto_sync_enabled FROM console_engine_settings WHERE id='console-v2-settings')=1 OR run_key NOT LIKE 'scheduled:%') ORDER BY created_at,id LIMIT 50`,
       )
       .bind(...scopes)
       .all();

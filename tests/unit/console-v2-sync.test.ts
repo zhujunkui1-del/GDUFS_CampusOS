@@ -1,4 +1,4 @@
-import { it, expect, describe } from "vitest";
+import { it, expect, describe, vi } from "vitest";
 import {
   consoleV2Fixture,
   sourceInput,
@@ -6,6 +6,7 @@ import {
 } from "../fixtures/console-v2";
 import { ConsoleSyncStore, runnerActor } from "@/lib/server/console/v2-sync";
 import { dispatchDue } from "@/lib/server/console/scheduler";
+import { runCloudWebBatch } from "@/lib/server/console/cloud-web-runner";
 import { webProfiles } from "@/lib/ingestion/profiles";
 const cmd = (expectedVersion: number) => ({
   commandId: crypto.randomUUID(),
@@ -45,54 +46,49 @@ async function setup() {
   }
   return { ...f, store, source };
 }
-describe("V2 bounded persistent scheduling and scoped runners", () => {
-  it("requires a live scoped runner and forces a manual check despite a future due date or paused automatic sync", async () => {
+describe("V2 persistent scheduling and dual executors", () => {
+  it("queues a manual check without a local runner and despite a future due date or paused automatic sync", async () => {
     const f = await setup();
     try {
       const id = await f.source(),
         commandId = crypto.randomUUID();
-      expect(await f.store.syncNow({ commandId })).toMatchObject({
-        state: "runner_offline",
-        registered: 0,
-      });
-      expect(
-        f.sqlite.prepare("SELECT count(*) n FROM ingestion_jobs").get()?.n,
-      ).toBe(0);
-      const token = await f.store.createRunnerToken({
-        ...cmd(1),
-        label: "隔离在线采集器",
-        sourceIds: [id],
-        validityDays: 1,
-      });
-      f.sqlite
-        .prepare("UPDATE console_runner_tokens SET last_seen_at=? WHERE id=?")
-        .run(new Date().toISOString(), token.id);
-      f.sqlite.exec("UPDATE console_engine_settings SET network_budget=2");
-      expect(await f.store.syncNow({ commandId })).toMatchObject({
-        state: "budget_exhausted",
-        registered: 0,
-      });
-      f.sqlite.exec("UPDATE console_engine_settings SET network_budget=20");
       f.sqlite.exec(
         "UPDATE console_engine_settings SET auto_sync_enabled=0; UPDATE knowledge_sources SET next_sync_at_ms=9999999999999",
       );
-      expect(await f.store.syncNow({ commandId })).toMatchObject({
+      expect(await f.store.syncNow({ commandId, sourceId: id })).toMatchObject({
         state: "registered",
         registered: 1,
         completed: 0,
       });
-      expect(await f.store.syncNow({ commandId })).toMatchObject({
+      expect(await f.store.syncNow({ commandId, sourceId: id })).toMatchObject({
         registered: 0,
       });
       expect(
         f.sqlite.prepare("SELECT count(*) n FROM ingestion_jobs").get()?.n,
       ).toBe(1);
+    } finally {
+      f.close();
+    }
+  });
+  it("registers one global manual run across every eligible official website", async () => {
+    const f = await setup();
+    try {
+      await f.source(0);
+      await f.source(1);
       f.sqlite.exec(
-        "UPDATE console_runner_tokens SET last_seen_at='2020-01-01'",
+        "UPDATE console_engine_settings SET auto_sync_enabled=0; UPDATE knowledge_sources SET next_sync_at_ms=9999999999999",
       );
+
       expect(
-        await f.store.syncNow({ commandId: crypto.randomUUID(), sourceId: id }),
-      ).toMatchObject({ state: "runner_offline", registered: 0 });
+        await f.store.syncNow({ commandId: crypto.randomUUID() }),
+      ).toMatchObject({
+        state: "registered",
+        registered: 2,
+        completed: 0,
+      });
+      expect(
+        f.sqlite.prepare("SELECT count(*) n FROM ingestion_jobs").get()?.n,
+      ).toBe(2);
     } finally {
       f.close();
     }
@@ -133,7 +129,163 @@ describe("V2 bounded persistent scheduling and scoped runners", () => {
       f.close();
     }
   });
-  it("uses global/override cadence, current permission and lease; >24h remains forbidden", async () => {
+  it("runs a registered step in the cloud worker using the shared D1 lease", async () => {
+    const f = await setup();
+    const originalFetch = globalThis.fetch;
+    try {
+      const id = await f.source(),
+        profile = webProfiles.find((item) => item.sourceId === id)!,
+        detailPath = profile.detailPathPrefixes![0] + "999001.htm";
+      f.sqlite
+        .prepare("UPDATE knowledge_sources SET web_profile_json=? WHERE id=?")
+        .run(
+          JSON.stringify({
+            ruleVersion: profile.ruleVersion,
+            entryUrls: [profile.entryUrl],
+            articlePathPrefixes: profile.detailPathPrefixes,
+            titleSelector: profile.titleSelector,
+            titleSuffix: profile.titleSuffix,
+            dateSelector: profile.dateSelector,
+            dateLabel: profile.dateLabel,
+            bodySelector: profile.bodySelector,
+            allowQueryUrls: false,
+            requestIntervalMs: 0,
+          }),
+          id,
+        );
+      await dispatchDue(f.db);
+      vi.stubGlobal("fetch", async (input: RequestInfo | URL) => {
+        const url = new URL(String(input));
+        if (url.pathname === "/robots.txt")
+          return new Response("", { status: 404 });
+        return new Response(
+          `<html><head><title>校内通知</title></head><body><ul><li><a href="${detailPath}">隔离通知</a>2026-10-23</li></ul></body></html>`,
+          {
+            status: 200,
+            headers: { "content-type": "text/html; charset=utf-8" },
+          },
+        );
+      });
+      expect(await runCloudWebBatch(f.db, { maxSteps: 1 })).toMatchObject({
+        processed: 1,
+        results: [
+          { jobId: expect.any(String), phase: "discover", outcome: "ok" },
+        ],
+      });
+      expect(
+        f.sqlite
+          .prepare("SELECT phase,status FROM ingestion_jobs WHERE source_id=?")
+          .get(id),
+      ).toMatchObject({ phase: "fetch", status: "queued" });
+      expect(
+        f.sqlite
+          .prepare("SELECT last_executor FROM knowledge_sources WHERE id=?")
+          .get(id),
+      ).toMatchObject({ last_executor: "cloud" });
+    } finally {
+      globalThis.fetch = originalFetch;
+      f.close();
+    }
+  });
+  it("registers custom sources with multiple article paths through the shared scheduler", async () => {
+    const f = await setup();
+    try {
+      const created = await f.store.createGovernedSource(
+        sourceInput({
+          displayName: "隔离动态官网",
+          websiteUrl: "https://dynamic.example.edu/",
+          governance: confirmed,
+        }),
+      );
+      const sourceId = created.id;
+      await f.store.verifySource(sourceId, {
+        ...cmd(created.version),
+        status: "verified",
+        officialStatus: "verified_official",
+        permissionStatus: "approved",
+        authorityConfirmed: true,
+        note: "隔离官网核验",
+        evidenceUrls: ["https://dynamic.example.edu/"],
+      });
+      const verified = await f.store.sourceV2(sourceId);
+      await f.store.saveWebProfile(sourceId, {
+        ...cmd(verified.version),
+        configurationStatus: "discovered",
+        entryUrls: [
+          "https://dynamic.example.edu/news/",
+          "https://dynamic.example.edu/notices/",
+        ],
+        articlePathPrefixes: ["/news/detail/", "/notices/article/"],
+        titleSelector: "h1, title",
+        titleSuffix: "",
+        dateSelector: "time, .date",
+        dateLabel: "发布时间",
+        bodySelector: "article, main",
+        allowQueryUrls: false,
+        requestIntervalMs: 0,
+      });
+      const candidate = await f.store.policy(sourceId),
+        current = await f.store.sourceV2(sourceId);
+      expect(candidate.profile.entryUrls).toHaveLength(2);
+      expect(candidate.profile.configurationStatus).toBe("discovered");
+      await f.store.setPolicy(sourceId, {
+        ...cmd(current.version),
+        ruleVersion: candidate.profile.ruleVersion,
+        rightsScope: "metadata_only",
+        evidenceUrls: ["https://dynamic.example.edu/robots.txt"],
+        note: "隔离元数据采集许可",
+        robotsStatus: 404,
+        robotsHash: null,
+        validityDays: 30,
+      });
+      expect(await dispatchDue(f.db)).toMatchObject({
+        state: "no_eligible_due_source",
+        registered: 0,
+      });
+      const candidateSource = await f.store.sourceV2(sourceId);
+      await f.store.saveWebProfile(sourceId, {
+        ...cmd(candidateSource.version),
+        configurationStatus: "verified",
+        entryUrls: [
+          "https://dynamic.example.edu/news/",
+          "https://dynamic.example.edu/notices/",
+        ],
+        articlePathPrefixes: ["/news/detail/", "/notices/article/"],
+        titleSelector: "h1, title",
+        titleSuffix: "",
+        dateSelector: "time, .date",
+        dateLabel: "发布时间",
+        bodySelector: "article, main",
+        allowQueryUrls: false,
+        requestIntervalMs: 0,
+      });
+      const configured = await f.store.policy(sourceId),
+        reviewed = await f.store.sourceV2(sourceId);
+      expect(configured.profile.configurationStatus).toBe("verified");
+      await f.store.setPolicy(sourceId, {
+        ...cmd(reviewed.version),
+        ruleVersion: configured.profile.ruleVersion,
+        rightsScope: "metadata_only",
+        evidenceUrls: ["https://dynamic.example.edu/robots.txt"],
+        note: "隔离元数据采集许可复核",
+        robotsStatus: 404,
+        robotsHash: null,
+        validityDays: 30,
+      });
+      expect(await dispatchDue(f.db)).toMatchObject({
+        state: "registered",
+        registered: 1,
+      });
+      expect(
+        f.sqlite
+          .prepare("SELECT source_id FROM ingestion_jobs WHERE source_id=?")
+          .get(sourceId),
+      ).toMatchObject({ source_id: sourceId });
+    } finally {
+      f.close();
+    }
+  });
+  it("uses global cadence, current permission and lease; source overrides are rejected", async () => {
     const f = await setup();
     try {
       const id = await f.source();
@@ -144,16 +296,39 @@ describe("V2 bounded persistent scheduling and scoped runners", () => {
         .run(Date.now() + 30000);
       expect(await dispatchDue(f.db)).toMatchObject({ state: "busy" });
       f.sqlite.exec(
-        "UPDATE console_engine_settings SET scheduler_lease_until_ms=0;UPDATE knowledge_sources SET next_sync_at_ms=9999999999999,sync_policy_version=1",
+        "UPDATE console_engine_settings SET scheduler_lease_until_ms=0",
       );
+      f.sqlite
+        .prepare(
+          "UPDATE knowledge_sources SET last_success_at=?,next_sync_at_ms=?,sync_policy_version=(SELECT sync_revision FROM console_engine_settings WHERE id='console-v2-settings'),sync_hours_override=1 WHERE id=?",
+        )
+        .run(
+          new Date(Date.now() - 2 * 3600000).toISOString(),
+          Date.now() - 3600000,
+          id,
+        );
       expect((await dispatchDue(f.db)).registered).toBe(0);
-      await f.store.saveSourceSync(id, {
-        ...cmd(3),
-        hours: 1,
-        note: "隔离单源一小时更新",
+      await expect(
+        f.store.saveSourceSync(id, {
+          ...cmd(3),
+          hours: 1,
+          note: "隔离单站一小时更新",
+        }),
+      ).rejects.toMatchObject({ code: "INVALID_ARGUMENT" });
+      const settings = await f.store.engineSettings();
+      await f.store.saveEngineSettings({
+        ...cmd(Number(settings?.version || 1)),
+        syncHours: 1,
+        autoSync: true,
+        earliestImportDay: settings?.earliest_import_day || null,
+        note: "隔离官网统一一小时间隔",
       });
       expect((await dispatchDue(f.db)).registered).toBe(1);
-      await f.store.enableSource(id, { ...cmd(4), enabled: false });
+      const scheduledSource = await f.store.sourceV2(id);
+      await f.store.enableSource(id, {
+        ...cmd(scheduledSource.version),
+        enabled: false,
+      });
       expect((await dispatchDue(f.db)).registered).toBe(0);
       expect(
         f.sqlite.prepare("SELECT control_state FROM ingestion_jobs").get()
@@ -161,7 +336,7 @@ describe("V2 bounded persistent scheduling and scoped runners", () => {
       ).toBe("paused");
       await expect(
         f.store.saveSourceSync(id, { ...cmd(5), hours: 25, note: "非法周期" }),
-      ).rejects.toThrow();
+      ).rejects.toMatchObject({ code: "INVALID_ARGUMENT" });
     } finally {
       f.close();
     }
@@ -264,6 +439,13 @@ describe("V2 bounded persistent scheduling and scoped runners", () => {
           "INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at) VALUES('old',1,'{}',?,'2020-01-01')",
         )
         .run(f.actor.id);
+      const sourceList = await f.store.sourcesV2({});
+      expect(sourceList.items.find((source) => source.id === id)).toMatchObject(
+        {
+          articleCount: 1,
+          publishedCount: 0,
+        },
+      );
       expect(
         (await f.store.dashboard({ from: "2020-01-01", to: "2020-01-02" }))
           .stats.todayNew,
@@ -279,7 +461,7 @@ describe("V2 bounded persistent scheduling and scoped runners", () => {
       f.close();
     }
   });
-  it("preserves the global network hard budget and never schedules unsupported/manual sources", async () => {
+  it("removes the global daily job budget while leaving unconfigured sources out of the queue", async () => {
     const f = await setup();
     try {
       await f.store.createGovernedSource(
@@ -287,16 +469,25 @@ describe("V2 bounded persistent scheduling and scoped runners", () => {
       );
       expect((await dispatchDue(f.db)).registered).toBe(0);
       const id = await f.source();
-      await dispatchDue(f.db);
       f.sqlite.exec("UPDATE console_engine_settings SET network_budget=2");
-      const job = f.sqlite
-        .prepare("SELECT * FROM ingestion_jobs WHERE source_id=?")
-        .get(id)!;
-      await f.store.claim(String(job.id), cmd(Number(job.version)));
-      expect(await dispatchDue(f.db)).toMatchObject({
-        state: "budget_exhausted",
-        registered: 0,
-      });
+      for (let index = 0; index < 12; index++) {
+        const job = await f.store.createJob({
+          commandId: crypto.randomUUID(),
+          sourceId: id,
+          maxArticles: 2,
+          mode: "incremental",
+        });
+        f.sqlite
+          .prepare(
+            "UPDATE ingestion_jobs SET phase='complete',status='completed',control_state='active',lease_hash=NULL,lease_until_ms=0 WHERE id=?",
+          )
+          .run(job.id);
+      }
+      expect(
+        f.sqlite
+          .prepare("SELECT count(*) AS n FROM ingestion_jobs WHERE source_id=?")
+          .get(id)?.n,
+      ).toBe(12);
     } finally {
       f.close();
     }

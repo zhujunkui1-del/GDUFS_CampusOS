@@ -57,7 +57,7 @@ if (!args.includes("--run")) {
   do {
     try {
       const dispatch =
-          Date.now() - lastDispatch >= 3600000
+        Date.now() - lastDispatch >= 300000
             ? await api("dispatch", "POST")
             : { registered: 0, state: "polling" },
         list = await api("jobs"),
@@ -67,8 +67,7 @@ if (!args.includes("--run")) {
         .filter(
           (j) =>
             j.lease_until_ms <= Date.now() && j.next_run_after_ms <= Date.now(),
-        )
-        .slice(0, 2)) {
+        )) {
         const reportPath = `test-results/console-v2/${j.id}.json`;
         const run = spawnSync(
           process.execPath,
@@ -84,14 +83,14 @@ if (!args.includes("--run")) {
             "--token-file",
             file,
             "--steps",
-            "6",
+            "1000",
             "--report",
             reportPath,
           ],
           {
             encoding: "utf8",
             env: process.env,
-            timeout: 240000,
+            timeout: 3600000,
             maxBuffer: 1048576,
           },
         );

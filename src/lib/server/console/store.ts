@@ -197,6 +197,9 @@ export class ConsoleStore {
         connectorConfig: parse(row.connector_config_json),
         fetchPolicy: parse(row.fetch_policy_json),
       }),
+      webProfileJson: row.web_profile_json
+        ? String(row.web_profile_json)
+        : null,
       originalCatalogRefs: parse(row.original_catalog_refs_json) || [],
       catalogMetadata: parse(row.catalog_metadata_json) || {},
       lastCheckedAt: row.last_checked_at ? String(row.last_checked_at) : null,
@@ -236,7 +239,6 @@ export class ConsoleStore {
         "syncHours",
         "hours",
         "autoSync",
-        "networkBudget",
         "earliestImportDay",
       ]) {
         const value = (payload as Record<string, unknown>)[key];
@@ -618,7 +620,7 @@ export class ConsoleStore {
     return this.db
       .prepare(
         `INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at,content_revision,input_hash)
-    SELECT id,version,json_object('contentRevision',content_revision,'inputHash',input_hash,'publicationStatus',publication_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'`,
+    SELECT id,version,json_object('inputRef',content_revision,'contentRevision',content_revision,'inputHash',input_hash,'publicationStatus',publication_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'`,
       )
       .bind(this.actor.id, this.now(), id);
   }
@@ -903,7 +905,18 @@ export class ConsoleStore {
       .bind(id, version)
       .first<{ snapshot_json: string }>();
     if (!row) throw new ApiError("NOT_FOUND", "未找到该内容版本。");
-    return parse(row.snapshot_json);
+    const snapshot = parse(row.snapshot_json);
+    if (snapshot.input || !snapshot.inputHash) return snapshot;
+    const inputRef = snapshot.inputRef ?? snapshot.contentRevision;
+    if (!inputRef) return snapshot;
+    const payload = await this.db
+      .prepare(
+        "SELECT input_json FROM console_revision_payloads WHERE document_id=? AND content_revision=? AND input_hash=?",
+      )
+      .bind(id, inputRef, snapshot.inputHash)
+      .first<{ input_json: string }>();
+    if (!payload) throw new ApiError("NOT_FOUND", "此修订的内容已清理。");
+    return { ...snapshot, input: parse(payload.input_json) };
   }
   async restore(id: string, raw: unknown) {
     const input = RestoreSchema.parse(raw),

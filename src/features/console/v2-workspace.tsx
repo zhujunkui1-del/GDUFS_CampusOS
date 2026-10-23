@@ -1,8 +1,8 @@
 "use client";
 import { articlePublicationNames } from "@/domain/console/article-publication";
-import { SourceCollectionPolicy, RunnerTokens } from "./sync-panel";
 import { WhitelistWorkspace, RetentionWorkspace } from "./retention-workspace";
 import { CollectorPanel } from "./collector-panel";
+import { OfficialWebCollectionPanel } from "./official-web-collection-panel";
 import Link from "next/link";
 import {
   useEffect,
@@ -12,7 +12,7 @@ import {
   type ReactNode,
 } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Plus, ArrowLeft, RefreshCw, Pause } from "lucide-react";
+import { Plus, ArrowLeft, RefreshCw } from "lucide-react";
 import {
   sourceTypeNames,
   safeExternalUrl,
@@ -63,7 +63,6 @@ const date = (v: unknown) =>
           "zh-CN",
           { timeZone: "Asia/Shanghai", hour12: false },
         );
-const hours = [1, 3, 6, 12, 24];
 export function useConsoleV2Data<T>(request: Client, path: string | null) {
   const [state, setState] = useState<{
     path: string;
@@ -259,22 +258,6 @@ const sourceFilters: ConsoleFilter[] = [
       ["closed", "停运"],
     ],
   },
-  {
-    name: "automatic",
-    label: "自动采集",
-    options: [
-      ["1", "支持官网连接器"],
-      ["0", "其他来源"],
-    ],
-  },
-  {
-    name: "error",
-    label: "同步错误",
-    options: [
-      ["1", "有异常"],
-      ["0", "无异常"],
-    ],
-  },
   { name: "updatedAfter", label: "更新起日", type: "date" },
   { name: "updatedBefore", label: "更新止日", type: "date" },
   {
@@ -284,7 +267,6 @@ const sourceFilters: ConsoleFilter[] = [
       ["updated", "最近更新"],
       ["name", "名称"],
       ["articles", "文章数量"],
-      ["next_sync", "计划时间"],
     ],
   },
 ];
@@ -567,6 +549,7 @@ function Sources({
                     />
                   </label>
                   <Link
+                    className="console-v2-source-link"
                     href={"/admin/sources?record=" + encodeURIComponent(s.id)}
                   >
                     <h2>{s.displayName}</h2>
@@ -585,31 +568,26 @@ function Sources({
                       >
                         {s.enabled ? "启用" : "停运"}
                       </span>
-                      <span>
-                        {s.collectorEnabled != null
-                          ? s.collectorEnabled && s.enabled
-                            ? "本地下载自动同步"
-                            : "公众号同步已暂停"
-                          : s.automatic
-                            ? "可自动同步"
-                            : "需人工导入 / 同步受限"}
-                      </span>
+                      {s.collectorEnabled != null && (
+                        <span>
+                          {s.collectorEnabled && s.enabled
+                            ? "公众号文章库"
+                            : "公众号未启用"}
+                        </span>
+                      )}
                       {s.protected && <span>白名单保护</span>}
                     </div>
-                    <dl className="console-v2-inline">
-                      <dt>文章</dt>
-                      <dd>{s.articleCount}</dd>
-                      <dt>已发布</dt>
-                      <dd>{s.publishedCount}</dd>
-                      <dt>最近成功</dt>
-                      <dd>{date(s.lastSuccessAt)}</dd>
-                      <dt>下次计划</dt>
-                      <dd>{date(s.nextSyncAt)}</dd>
-                    </dl>
-                    {s.lastError && (
-                      <p className="console-error">{s.lastError}</p>
-                    )}
                   </Link>
+                  <div className="console-v2-source-counts" aria-label="文章数量">
+                    <span>
+                      <strong>{s.articleCount}</strong>
+                      <small>文章</small>
+                    </span>
+                    <span>
+                      <strong>{s.publishedCount}</strong>
+                      <small>已发布</small>
+                    </span>
+                  </div>
                 </article>
               ))
             ) : (
@@ -933,14 +911,12 @@ function SourceWorkspace(props: WorkspaceProps) {
           </Link>
           {source.collectorEnabled != null ? (
             <Link className="text-link" href="/admin/collector">
-              {source.collectorEnabled && source.enabled
-                ? "本地下载自动同步"
-                : "公众号同步已暂停"}
+              公众号采集
             </Link>
           ) : (
-            <span>
-              {source.automatic ? "自动同步可用" : "自动同步受限 / 需人工导入"}
-            </span>
+            <Link className="text-link" href="/admin/web-collection">
+              官网采集设置
+            </Link>
           )}
         </div>
         <Feedback message={message} />
@@ -949,7 +925,9 @@ function SourceWorkspace(props: WorkspaceProps) {
         {[
           ["articles", "全部文章"],
           ["governance", "基本资料"],
-          ["sync", "同步状态"],
+          ...(source.collectorEnabled != null
+            ? [["sync", "公众号采集"]]
+            : []),
           ["history", "操作历史"],
         ].map(([v, l]) => (
           <button
@@ -997,125 +975,28 @@ function SourceWorkspace(props: WorkspaceProps) {
           </Link>
         </section>
       ) : tab === "sync" ? (
-        <>
-          <RunnerTokens
-            request={props.request}
-            admin={props.actor.role === "admin"}
-          />
-          <SourceCollectionPolicy
-            request={props.request}
-            id={id}
-            version={source.version}
-            admin={props.actor.role === "admin"}
-            reload={reload}
-          />
-          <section className="console-card">
-            <h2>同步状态</h2>
-            <button
-              disabled={
-                busy || !source.automatic || props.actor.role === "reviewer"
-              }
-              onClick={() => {
-                setBusy(true);
-                void props
-                  .request<{ registered: number; state: string }>(
-                    "v2/sync",
-                    "POST",
-                    {
-                      commandId: crypto.randomUUID(),
-                      sourceId: id,
-                    },
-                  )
-                  .then((r) => {
-                    setMessage(syncFeedback(r));
-                    reload();
-                  })
-                  .catch((e) => setMessage(e.message))
-                  .finally(() => setBusy(false));
-              }}
-            >
-              手动同步
-            </button>
-            <dl className="console-details">
-              <dt>最近成功</dt>
-              <dd>{date(source.lastSuccessAt)}</dd>
-              <dt>下次计划</dt>
-              <dd>{date(source.nextSyncAt)}</dd>
-              <dt>同步间隔</dt>
-              <dd>{source.syncHours}小时</dd>
-              <dt>最近异常</dt>
-              <dd>{source.lastError || "无记录"}</dd>
-            </dl>
-            <form
-              className="console-actions"
-              onSubmit={(e) => {
-                e.preventDefault();
-                const f = new FormData(e.currentTarget);
-                void props
-                  .request("v2/sources/" + id + "/sync-settings", "POST", {
-                    ...cmd(source.version),
-                    hours: f.get("hours") ? Number(f.get("hours")) : null,
-                    note: "管理员调整单源同步周期",
-                  })
-                  .then(() => {
-                    reload();
-                    setMessage("已保存周期");
-                  })
-                  .catch((e) => setMessage(e.message));
-              }}
-            >
-              <select
-                name="hours"
-                aria-label="单源同步频率"
-                defaultValue={source.syncOverride || ""}
-              >
-                <option value="">继承全局</option>
-                {hours.map((h) => (
-                  <option key={h} value={h}>
-                    每{h}小时
-                  </option>
-                ))}
-              </select>
-              <button disabled={props.actor.role === "reviewer"}>
-                保存周期
-              </button>
-            </form>
-          </section>
-          {props.jobs(id)}
-        </>
+        <section className="console-card">
+          <h2>公众号采集</h2>
+          <p>公众号上游采集继续在本地运行。</p>
+          <Link className="text-link" href="/admin/collector">
+            打开公众号采集
+          </Link>
+        </section>
       ) : (
         <>{props.history(id)}</>
       )}
     </>
   );
 }
-type Engine = {
-  version: number;
-  sync_hours: number;
-  auto_sync_enabled: number;
-  network_budget: number;
-  earliest_import_day: string | null;
-  runner_last_at: string | null;
-  last_cleanup_json: string;
-};
 type Dashboard = {
-  stats: Record<string, string | number | null>;
-  filteredSources: number;
-  settings: Engine;
-  networkUsage: number;
+  stats: { sources: number; enabled: number; todayNew: number };
   storage: { provider: string; measured_at: string; bytes: number }[];
-  unsupported: number;
-  scheduler: string;
-  runnerOnline: boolean;
-  autoPublishedToday: number | null;
   protectedSources: number | null;
   protectedArticles: number | null;
-  latestJobs: Record<string, unknown>[];
 };
 function Dashboard(props: WorkspaceProps) {
   const params = useSearchParams(),
     [filters] = useState<Record<string, string>>({}),
-    [message, setMessage] = useState(""),
     [historyOpen, setHistoryOpen] = useState(params.get("view") === "history");
   const { data, error, reload } = useConsoleV2Data<Dashboard>(
     props.request,
@@ -1127,23 +1008,7 @@ function Dashboard(props: WorkspaceProps) {
       ["信息源总数", stats.sources],
       ["启用", stats.enabled],
       ["停运", Number(stats.sources) - Number(stats.enabled)],
-      ["未配置自动连接器", data.unsupported],
-      [
-        filters.from || filters.to ? "范围内发现出处" : "今日发现出处",
-        stats.discoveredToday,
-      ],
-      [
-        filters.from || filters.to ? "范围内新增文章" : "今日新增文章",
-        stats.todayNew,
-      ],
-      ["未发布", stats.pending],
-      ["采集异常", stats.failed],
-      ["发布阻断", stats.blocked],
-      ["撤回或过期", stats.inactive],
-      [
-        filters.from || filters.to ? "范围内自动发布" : "今日自动发布",
-        data.autoPublishedToday,
-      ],
+      ["今日新增文章", stats.todayNew],
       ["白名单来源", data.protectedSources],
       ["白名单文章", data.protectedArticles],
     ];
@@ -1166,116 +1031,6 @@ function Dashboard(props: WorkspaceProps) {
         ))}
       </div>
       <section className="console-card">
-        <h2>官网同步设置</h2>
-        <p>
-          公众号文章同步请使用<Link href="/admin/collector">公众号采集</Link>。
-        </p>
-        <p>本地执行器在线时才会完成同步；任务登记不代表采集完成。</p>
-        <div className="console-v2-sync-line">
-          <div>
-            <span>最近完成</span>
-            <strong>{date(stats.lastSync)}</strong>
-          </div>
-          <div>
-            <span>下次计划检查</span>
-            <strong>{date(stats.nextSync)}</strong>
-          </div>
-          <div>
-            <span>执行器</span>
-            <strong>
-              {data.settings.runner_last_at
-                ? (!data.runnerOnline ? "离线；上次 " : "最近在线 ") +
-                  date(data.settings.runner_last_at)
-                : "未连接"}
-            </strong>
-          </div>
-        </div>
-        <form
-          className="console-actions"
-          onSubmit={(e) => {
-            e.preventDefault();
-            const f = new FormData(e.currentTarget);
-            void props
-              .request("v2/settings", "POST", {
-                ...cmd(data.settings.version),
-                syncHours: Number(f.get("hours")),
-                autoSync: data.settings.auto_sync_enabled === 1,
-                networkBudget: data.settings.network_budget,
-                earliestImportDay: data.settings.earliest_import_day,
-                note: "管理员调整全局同步周期",
-              })
-              .then(() => {
-                reload();
-                setMessage("同步设置已保存");
-              })
-              .catch((e) => setMessage(e.message));
-          }}
-        >
-          <select
-            aria-label="全局同步频率"
-            name="hours"
-            defaultValue={data.settings.sync_hours}
-          >
-            {hours.map((h) => (
-              <option key={h} value={h}>
-                每{h}小时
-              </option>
-            ))}
-          </select>
-          <button disabled={props.actor.role !== "admin"}>保存同步设置</button>
-          <button
-            type="button"
-            disabled={props.actor.role !== "admin"}
-            onClick={() =>
-              void props
-                .request("v2/settings", "POST", {
-                  ...cmd(data.settings.version),
-                  syncHours: data.settings.sync_hours,
-                  autoSync: !data.settings.auto_sync_enabled,
-                  networkBudget: data.settings.network_budget,
-                  earliestImportDay: data.settings.earliest_import_day,
-                  note:
-                    "管理员" +
-                    (data.settings.auto_sync_enabled ? "暂停" : "恢复") +
-                    "自动同步",
-                })
-                .then(reload)
-                .catch((e) => setMessage(e.message))
-            }
-          >
-            {data.settings.auto_sync_enabled ? (
-              <>
-                <Pause size={16} />
-                暂停自动同步
-              </>
-            ) : (
-              "恢复自动同步"
-            )}
-          </button>
-          <button
-            type="button"
-            className="primary-button"
-            disabled={props.actor.role !== "admin"}
-            onClick={() =>
-              void props
-                .request<{ registered: number; state: string }>(
-                  "v2/sync",
-                  "POST",
-                  { commandId: crypto.randomUUID() },
-                )
-                .then((r) => {
-                  setMessage(syncFeedback(r));
-                  reload();
-                })
-                .catch((e) => setMessage(e.message))
-            }
-          >
-            立即同步
-          </button>
-        </form>
-        <Feedback message={message} />
-      </section>
-      <section className="console-card">
         <h2>D1存储</h2>
         {data.storage.length ? (
           <>
@@ -1288,7 +1043,7 @@ function Dashboard(props: WorkspaceProps) {
             )}
             <p>
               {data.storage[0].provider === "cloudflare_api"
-                ? "Cloudflare实测"
+                ? "Cloudflare当前"
                 : "本地测试库"}{" "}
               · {date(data.storage[0].measured_at)}
             </p>
@@ -1309,6 +1064,13 @@ function Dashboard(props: WorkspaceProps) {
   );
 }
 export function ConsoleV2Workspace(props: WorkspaceProps) {
+  if (props.section === "web-collection")
+    return (
+      <OfficialWebCollectionPanel
+        request={props.request}
+        admin={props.actor.role === "admin"}
+      />
+    );
   if (props.section === "collector")
     return <CollectorPanel request={props.request} />;
   if (props.section === "sources") return <SourceWorkspace {...props} />;
@@ -1338,12 +1100,4 @@ export function ConsoleV2Workspace(props: WorkspaceProps) {
       />
     );
   return <Dashboard {...props} />;
-}
-
-function syncFeedback(r: { registered: number; state: string }) {
-  if (r.state === "runner_offline") return "采集器离线，启动后重试";
-  if (r.state === "budget_exhausted") return "今日同步额度已用完";
-  if (r.state === "busy") return "同步正在处理，请稍后查看";
-  if (r.registered) return `已加入同步队列，共${r.registered}个来源`;
-  return "当前来源已有任务，或访问许可暂不可用";
 }

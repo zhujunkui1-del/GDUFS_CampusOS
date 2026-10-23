@@ -117,8 +117,28 @@ const tables = empty
     "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'",
   )
   .all();
-for (const { name } of tables)
-  assert.equal(empty.prepare(`SELECT count(*) AS n FROM "${name}"`).get().n, 0);
+for (const { name } of tables) {
+  const count = empty.prepare(`SELECT count(*) AS n FROM "${name}"`).get().n;
+  const expected =
+    name === "console_admins"
+      ? 4
+      : name === "console_engine_settings"
+        ? 1
+        : 0;
+  assert.equal(count, expected, name);
+}
+assert.deepEqual(
+  empty
+    .prepare("SELECT id FROM console_admins ORDER BY id")
+    .all()
+    .map(({ id }) => id),
+  [
+    "sys-console-cloud",
+    "sys-console-publisher",
+    "sys-console-runner",
+    "sys-console-scheduler",
+  ],
+);
 const report = {
   recordedAt: new Date().toISOString(),
   fixturesOnly: true,

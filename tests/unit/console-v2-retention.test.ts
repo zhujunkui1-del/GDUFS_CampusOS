@@ -298,7 +298,6 @@ describe("V2 whitelist, cutoff and bounded retention (disposable DB only)", () =
         ...cmd(Number(settings?.version)),
         syncHours: 24,
         autoSync: true,
-        networkBudget: 20,
         earliestImportDay: "2025-09-01",
         confirmImportCutoff: true,
         note: "批准全局导入日期门禁",

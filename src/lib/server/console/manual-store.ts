@@ -17,7 +17,7 @@ import {
 } from "@/domain/console/manual-import";
 import { tokenHash } from "../assistant/crypto";
 import type { Statement } from "../assistant/database";
-import { webProfiles, approvedUrl } from "@/lib/ingestion/profiles";
+import { approvedUrl, profileFromSource } from "@/lib/ingestion/profiles";
 import {
   discoveryStatement,
   eventCandidateStatements,
@@ -50,7 +50,12 @@ export function importUrl(source: SourceDetail, raw: string, detail = true) {
   if (u.hostname !== host)
     throw new ApiError("INVALID_ARGUMENT", "原文链接与已核验来源不一致。");
   u.hash = "";
-  const profile = webProfiles.find((p) => p.sourceId === source.id);
+  const profile = profileFromSource({
+    sourceId: source.id,
+    name: source.displayName,
+    websiteUrl: source.websiteUrl,
+    webProfileJson: source.webProfileJson,
+  });
   if (detail && profile) {
     try {
       return approvedUrl(profile, u.toString());
@@ -541,7 +546,7 @@ export class ManualImportStore extends IngestionStore {
         .bind(value.items.length, bodies, duplicates, now, id),
       this.db
         .prepare(
-          "UPDATE knowledge_sources SET last_success_at=?,sync_state='completed',last_error=NULL,next_sync_at_ms=?+COALESCE(sync_hours_override,(SELECT sync_hours FROM console_engine_settings WHERE id='console-v2-settings'))*3600000 WHERE id=?",
+          "UPDATE knowledge_sources SET last_success_at=?,sync_state='completed',last_error=NULL,next_sync_at_ms=?+(SELECT sync_hours FROM console_engine_settings WHERE id='console-v2-settings')*3600000 WHERE id=?",
         )
         .bind(now, Date.parse(now), source.id),
     );

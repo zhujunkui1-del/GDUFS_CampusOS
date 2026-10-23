@@ -7,7 +7,6 @@ type MockItem = {
   url: string;
   readable: boolean;
   publishedAt: string;
-  summary: string;
   contentType: string;
   knowledgeCategory: string | null;
   radarCategory: string | null;
@@ -46,7 +45,6 @@ function makeItem(
     url: `https://mp.weixin.qq.com/s/${id.padEnd(20, "x")}`,
     readable: true,
     publishedAt: "2026-10-22T06:56:48.000Z",
-    summary: `摘要：${title}`,
     contentType: surface === "radar" ? "notice" : "guide",
     knowledgeCategory: surface === "knowledge" ? category : null,
     radarCategory: surface === "radar" ? category : null,
@@ -178,6 +176,9 @@ test("radar and knowledge grouped feed, live search, and article dialog", async 
       page.getByRole("button", { name: "搜索", exact: true }),
     ).toHaveCount(0);
     await expect(page.locator(".public-feed-refresh")).toBeVisible();
+    const allTab = page.getByRole("button", { name: /^全部/ });
+    const allTabCount = allTab.locator(".public-feed-count");
+    await expect(allTabCount).toHaveText(surface === "radar" ? "14" : "2");
     expect(
       await page
         .locator(".public-feed-group")
@@ -206,6 +207,11 @@ test("radar and knowledge grouped feed, live search, and article dialog", async 
         );
       expect(new Set(groupColors).size).toBeGreaterThan(1);
 
+      await page.getByRole("button", { name: /^校园公告/ }).click();
+      await expect(allTabCount).toHaveText("14");
+      await expect(page.locator(".public-feed-total")).toHaveText("1 篇");
+      await allTab.click();
+
       await page
         .locator(".public-feed-group")
         .first()
@@ -215,15 +221,18 @@ test("radar and knowledge grouped feed, live search, and article dialog", async 
       await page.getByRole("button", { name: "下一页", exact: true }).click();
       await expect(page.locator(".public-feed-card")).toHaveCount(1);
       await page.getByRole("button", { name: /^全部/ }).click();
+    } else {
+      await page.getByRole("button", { name: /^科研创新/ }).click();
+      await expect(allTabCount).toHaveText("2");
+      await expect(page.locator(".public-feed-total")).toHaveText("0 篇");
+      await allTab.click();
     }
 
     const pageUrl = page.url();
     await firstCard.click();
     await expect(page.getByRole("dialog")).toBeVisible();
     await expect(page).toHaveURL(pageUrl);
-    await expect(page.locator(".public-article-summary")).toContainText(
-      "摘要：",
-    );
+    await expect(page.locator(".public-article-summary")).toHaveCount(0);
     await expect(
       page.frameLocator(".article-reading-frame").locator("body"),
     ).toContainText("站内正文测试内容");

@@ -28,7 +28,7 @@ test("deployed V2 five-page console, permissions, retained withdrawal and respon
   ).toBeVisible();
   await expect(
     page.getByRole("navigation", { name: "后台导航" }).getByRole("link"),
-  ).toHaveText(["总览", "信息源", "内容审核", "过时信息清理", "白名单"]);
+  ).toHaveText(["总览", "信息源", "文章", "官网采集", "公众号采集", "过时信息清理", "白名单"]);
   const dir = "docs/verification/console-v2/e/cloud-browser";
   mkdirSync(dir, { recursive: true });
   await page.screenshot({
@@ -89,7 +89,7 @@ test("deployed V2 five-page console, permissions, retained withdrawal and respon
     path: `${dir}/${process.env.PLAYWRIGHT_CHANNEL}-${info.project.name}-sources.png`,
     fullPage: true,
   });
-  await page.getByRole("link", { name: "内容审核", exact: true }).click();
+  await page.getByRole("link", { name: "文章", exact: true }).click();
   await expect(
     page.getByText("暂无待处理异常。", { exact: true }),
   ).toBeVisible();

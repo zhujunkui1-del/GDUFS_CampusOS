@@ -17,16 +17,21 @@ async function focusDorm(page: Page) {
   return map;
 }
 
-test("South 7 native 2.5D and lazy 3D keep their geography and label semantics", async ({
+test("South 7 native 2.5D and prewarmed 3D keep their geography and label semantics", async ({
   page,
 }, info) => {
   const errors: string[] = [],
     assets: string[] = [];
+  let modelAssetFinished = false;
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("request", (r) => {
     if (r.url().endsWith(".glb")) assets.push(r.url());
   });
+  page.on("requestfinished", (r) => {
+    if (r.url().endsWith(".glb")) modelAssetFinished = true;
+  });
   const map = await focusDorm(page);
+  await expect.poll(() => assets.length, { timeout: 30000 }).toBe(1);
   await page.getByLabel("搜索校园地点").focus();
   await expect(page.locator(".map-search-results")).toHaveCount(0);
   await page.getByLabel("搜索校园地点").press("ArrowDown");
@@ -45,7 +50,6 @@ test("South 7 native 2.5D and lazy 3D keep their geography and label semantics",
   );
   await expect(page.getByTestId("map-mode-trigger")).toHaveCount(1);
   await expect(page.getByTestId("map-mode-trigger")).toHaveText("2D");
-  expect(assets).toHaveLength(0);
   const dir =
     process.env.E2E_CAPTURE_DIR || "docs/screenshots/s1/nanyuan7-model";
   await mkdir(dir, { recursive: true });
@@ -57,7 +61,11 @@ test("South 7 native 2.5D and lazy 3D keep their geography and label semantics",
   await selectMapMode(page, "2.5D");
   await expect(map).toHaveAttribute("data-model-volume", "visible");
   await expect(map).toHaveAttribute("data-camera-moving", "false");
+  expect(assets).toHaveLength(1);
+  await expect.poll(() => modelAssetFinished, { timeout: 30000 }).toBe(true);
+  await expect(map).toHaveAttribute("data-model-state", "idle");
   await page.screenshot({ path: `${dir}/${name}-2.5d.png` });
+  const threeDClickAt = Date.now();
   await selectMapMode(page, "3D");
   await expect(map).toHaveAttribute("data-model-state", "ready", {
     timeout: 30000,
@@ -68,6 +76,7 @@ test("South 7 native 2.5D and lazy 3D keep their geography and label semantics",
     .toBeGreaterThan(0);
   await expect(map).toHaveAttribute("data-model-volume", "none");
   await expect(map).toHaveAttribute("data-camera-moving", "false");
+  expect(Date.now() - threeDClickAt).toBeLessThan(5000);
   expect(assets).toHaveLength(1);
   expect(assets[0]).toContain("nanyuan7-v2-54cc55342ae5.glb");
   await expect(map).toHaveAttribute(

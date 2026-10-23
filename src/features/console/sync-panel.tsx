@@ -136,6 +136,7 @@ function RunnerTokenBody({
       admin ? "v2/runner-tokens" : null,
     ),
     [token, setToken] = useState(""),
+    [allWebSources, setAllWebSources] = useState(true),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false);
   if (!admin) return null;
@@ -145,13 +146,23 @@ function RunnerTokenBody({
     const f = new FormData(e.currentTarget);
     setBusy(true);
     try {
+      const sourceIds = allWebSources
+        ? (
+            await request<{ items: { id: string }[] }>(
+              "v2/web-collection?limit=2000&offset=0",
+            )
+          ).items.map((source) => source.id)
+        : String(f.get("sources"))
+            .split(/\s+/)
+            .filter(Boolean);
+      if (!sourceIds.length) throw Error("没有官网来源可授权。");
       const r = await request<{ token: string | null }>(
         "v2/runner-tokens",
         "POST",
         {
           ...cmd(state.data.adminVersion),
           label: f.get("label"),
-          sourceIds: String(f.get("sources")).split(/\s+/).filter(Boolean),
+          sourceIds,
           validityDays: Number(f.get("days")),
         },
       );
@@ -211,9 +222,19 @@ function RunnerTokenBody({
           <input name="label" minLength={2} maxLength={80} required />
         </label>
         <label>
-          允许来源ID（每行一个）
-          <textarea name="sources" required />
+          <input
+            type="checkbox"
+            checked={allWebSources}
+            onChange={(event) => setAllWebSources(event.target.checked)}
+          />
+          授权全部官网来源
         </label>
+        {!allWebSources && (
+          <label>
+            允许来源ID（每行一个）
+            <textarea name="sources" required />
+          </label>
+        )}
         <label>
           有效天数
           <input

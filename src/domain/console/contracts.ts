@@ -235,6 +235,7 @@ export type SourceSummary = {
 };
 export type SourceDetail = SourceSummary &
   SourceInput & {
+    webProfileJson?: string | null;
     originalCatalogRefs: z.infer<typeof CatalogRefSchema>[];
     catalogMetadata: Record<string, unknown>;
     lastCheckedAt: string | null;

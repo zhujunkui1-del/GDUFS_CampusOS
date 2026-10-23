@@ -1,6 +1,7 @@
 import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
-import { webProfiles, profileFor } from "../src/lib/ingestion/profiles";
+import { webProfiles } from "../src/lib/ingestion/profiles";
+import type { WebProfile } from "../src/lib/ingestion/profiles";
 import {
   OfficialWebConnector,
   extractEvents,
@@ -23,7 +24,7 @@ if (!args.includes("--run")) {
       })),
       usage:
         "--run --source <id> [--job <id>] [--token-file <ignored-path>] --base <localhost8787|preview> --report <path>",
-      limits: { articles: 1, requests: 20, intervalMs: 10000 },
+      requestPacing: "per-source setting",
       modelCalls: 0,
     }),
   );
@@ -116,8 +117,13 @@ if (!args.includes("--run")) {
   let websiteRequests = 0,
     jobId = option("--job") || "";
   try {
-    const profile = profileFor(option("--source") || ""),
-      sourceId = profile.sourceId;
+    const sourceId = option("--source") || "";
+    if (!sourceId) throw Error("SOURCE_ID_REQUIRED");
+    const policyRecord = await api<{
+      profile: WebProfile;
+      policy: { rights_scope: string; expires_at_ms: number } | null;
+    }>("/api/admin/sources/" + sourceId + "/collection-policy");
+    const profile = policyRecord.profile;
     const connector = new OfficialWebConnector(profile),
       fetcher = new SafeWebFetcher(profile);
     if (args.includes("--approve-metadata"))
@@ -133,9 +139,6 @@ if (!args.includes("--run")) {
           mode: args.includes("--revalidate") ? "revalidate" : "incremental",
         })
       ).id;
-    const policyRecord = await api<{
-      policy: { rights_scope: string; expires_at_ms: number } | null;
-    }>("/api/admin/sources/" + sourceId + "/collection-policy");
     if (!policyRecord.policy || policyRecord.policy.expires_at_ms <= Date.now())
       throw Error("SOURCE_POLICY_EXPIRED");
     const policyRights = policyRecord.policy.rights_scope;
@@ -146,8 +149,8 @@ if (!args.includes("--run")) {
     )
       throw Error("POLICY_SCOPE_REQUIRED");
     let licensedWrites = 0;
-    const maxSteps = Number(option("--steps") || 6);
-    if (!Number.isInteger(maxSteps) || maxSteps < 1 || maxSteps > 6)
+    const maxSteps = Number(option("--steps") || 1000);
+    if (!Number.isInteger(maxSteps) || maxSteps < 1 || maxSteps > 1000)
       throw Error("INVALID_STEP_LIMIT");
     for (let step = 0; step < maxSteps; step++) {
       const row = await api<Record<string, unknown>>(

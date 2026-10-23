@@ -836,3 +836,251 @@
 .console-date-gate-row > span {
   margin-left: 16px;
 }
+
+.console-web-global-controls {
+  display: grid;
+  grid-template-columns: minmax(210px, 240px) auto auto auto;
+  justify-content: start;
+  align-items: end;
+  gap: 10px;
+  margin-top: 12px;
+}
+.console-web-global-controls label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.console-web-global-controls select {
+  width: 100%;
+  max-width: 240px;
+}
+.console-web-global-controls > button {
+  min-width: 112px;
+}
+.console-web-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.console-web-search > svg {
+  position: absolute;
+  left: 14px;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+.console-web-search > input {
+  padding-left: 42px !important;
+  padding-right: 42px !important;
+}
+.console-web-search-clear {
+  position: absolute;
+  right: 6px;
+  display: grid;
+  width: 32px;
+  min-height: 32px !important;
+  place-items: center;
+  padding: 0 !important;
+  border: 0 !important;
+  color: var(--text-secondary);
+  background: transparent !important;
+}
+.console-web-source-row {
+  grid-template-columns: minmax(0, 1fr) minmax(360px, auto);
+  align-items: center;
+  gap: 12px;
+  padding: 9px 16px;
+  min-height: 0;
+}
+.console-web-source-main {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+.console-web-source-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+}
+.console-web-source-heading > strong {
+  min-width: 110px;
+  max-width: 55%;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.console-web-source-url {
+  color: var(--text-secondary);
+  font-size: 12px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.console-web-source-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+}
+.console-web-source-status .console-badge {
+  padding: 2px 6px;
+  font-size: 11px;
+}
+.console-web-source-side {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 12px;
+}
+.console-web-source-times {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  font-size: 12px;
+}
+.console-web-source-times > div {
+  display: grid;
+  gap: 2px;
+  min-width: 96px;
+}
+.console-web-source-times dt {
+  color: var(--text-secondary);
+}
+.console-web-source-times dd {
+  margin: 0;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.console-web-source-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.console-web-source-actions button {
+  min-height: 34px;
+  padding: 5px 8px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.console-web-source-error,
+.console-web-source-message {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 13px;
+}
+.console-web-source-error {
+  color: #b42318;
+}
+.console-web-source-editor {
+  grid-column: 1 / -1;
+  padding: 12px 0 4px;
+  border-top: 1px solid var(--border-subtle);
+}
+.console-v2-source {
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px 7px 6px;
+}
+.console-v2-source > .console-v2-source-link {
+  padding: 5px 0;
+}
+.console-v2-source h2 {
+  margin: 0 0 3px;
+  font-size: 16px;
+}
+.console-v2-source p {
+  margin: 4px 0;
+  font-size: 13px;
+}
+.console-v2-source .console-v2-source-status {
+  gap: 6px;
+  margin: 6px 0 0;
+  font-size: 12px;
+}
+.console-v2-source-counts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(58px, auto));
+  gap: 8px;
+  align-items: center;
+  min-width: 132px;
+  text-align: right;
+}
+.console-v2-source-counts span {
+  display: grid;
+  gap: 2px;
+}
+.console-v2-source-counts strong {
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+.console-v2-source-counts small {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+@media (max-width: 780px) {
+  .console-web-global-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .console-web-global-controls label {
+    grid-column: 1 / -1;
+  }
+  .console-web-global-controls select {
+    max-width: none;
+  }
+  .console-web-global-controls > button {
+    min-width: 0;
+  }
+  .console-web-global-controls > button:last-child {
+    grid-column: 1 / -1;
+  }
+  .console-web-source-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+  }
+  .console-web-source-heading {
+    flex-wrap: wrap;
+    gap: 2px 8px;
+  }
+  .console-web-source-heading > strong {
+    max-width: 100%;
+  }
+  .console-web-source-url {
+    flex-basis: 100%;
+  }
+  .console-web-source-side {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .console-web-source-times {
+    flex-wrap: wrap;
+  }
+  .console-v2-source {
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .console-web-source-side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .console-web-source-actions {
+    justify-content: flex-end;
+  }
+  .console-v2-source {
+    grid-template-columns: 28px minmax(0, 1fr);
+    padding-right: 12px;
+  }
+  .console-v2-source-counts {
+    grid-column: 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+}

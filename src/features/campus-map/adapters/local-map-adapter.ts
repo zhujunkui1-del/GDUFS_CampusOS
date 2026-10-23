@@ -96,6 +96,7 @@ export class LocalMapAdapter implements MapAdapter {
   private displayMode: MapMode = "2d";
   private modelLayer?: Nanyuan7ModelLayer;
   private modelLoading = false;
+  private modelPreloading = false;
   private modelState: PilotModelState = "idle";
   private modelListeners = new Set<(state: PilotModelState) => void>();
   get modelAvailable() {
@@ -359,7 +360,7 @@ export class LocalMapAdapter implements MapAdapter {
       await new Promise<void>((resolve, reject) => {
         const timeout = setTimeout(
           () => reject(new Error("本地地图数据加载超时，请重试。")),
-          15000,
+          45000,
         );
         const cancel = () => {
           clearTimeout(timeout);
@@ -412,6 +413,7 @@ export class LocalMapAdapter implements MapAdapter {
       }
       adapter.updateLabels();
       element.dataset.renderState = "ready";
+      void adapter.preloadDetailedModel();
       return adapter;
     } catch (error) {
       adapter.destroy();
@@ -608,6 +610,7 @@ export class LocalMapAdapter implements MapAdapter {
     if (mode === "2d" && this.modelState === "error")
       this.setModelState("idle");
     this.updateModelVisibility();
+    if (mode === "2.5d") void this.preloadDetailedModel();
     if (mode === "3d") void this.loadDetailedModel();
     if (animate) this.setPitch(mode === "2d" ? 0 : CAMPUS_PITCH);
   }
@@ -646,6 +649,20 @@ export class LocalMapAdapter implements MapAdapter {
       if (!this.destroyed) this.setModelState("error");
     } finally {
       this.modelLoading = false;
+    }
+  }
+  private async preloadDetailedModel() {
+    if (!this.modelAvailable || this.modelPreloading || this.modelLayer?.ready)
+      return;
+    this.modelPreloading = true;
+    try {
+      const { preloadNanyuan7Model } =
+        await import("../layers/nanyuan7-model-layer");
+      await preloadNanyuan7Model();
+    } catch {
+      // Keep 2.5D usable; an explicit 3D request will report/retry the failure.
+    } finally {
+      this.modelPreloading = false;
     }
   }
   private updateModelVisibility() {

@@ -1,16 +1,19 @@
 import type { SqlDatabase } from "../assistant/database";
-import { webProfiles } from "@/lib/ingestion/profiles";
+import { profileFromSource, webProfiles } from "@/lib/ingestion/profiles";
 type Due = {
   id: string;
   version: number;
   policy_version: number;
   rule_version: string;
+  display_name: string;
+  website_url: string | null;
+  web_profile_json: string | null;
   hours: number;
   next_sync_at_ms: number | null;
   sync_revision: number;
 };
-// No HTTP fetch, HTML parse, model call, Console/Next authentication or cleanup here.
-// Cron only registers bounded tasks. An online, scoped Node runner executes them.
+// Task registration is separate from execution. Both the cloud Worker and the
+// local Node runner may claim work; D1 leases ensure only one executor owns a job.
 export async function dispatchDue(
   db: SqlDatabase,
   options: {
@@ -18,9 +21,11 @@ export async function dispatchDue(
     sourceId?: string;
     allowedIds?: string[];
     manualId?: string;
+    limit?: number;
   } = {},
 ) {
   const now = options.now || Date.now(),
+    limit = Math.max(1, Math.floor(options.limit ?? 50)),
     stamp = new Date(now).toISOString(),
     lease = crypto.randomUUID();
   const locked = await db
@@ -30,7 +35,12 @@ export async function dispatchDue(
     .bind(now + 30000, lease, now)
     .run();
   if (!locked.meta.changes)
-    return { state: "busy", registered: 0, completed: 0 };
+    return {
+      state: "busy",
+      registered: 0,
+      completed: 0,
+      retryAfterMs: 1200,
+    };
   let result: {
     state: string;
     registered: number;
@@ -40,16 +50,16 @@ export async function dispatchDue(
   try {
     const settings = await db
       .prepare(
-        "SELECT auto_sync_enabled,network_budget FROM console_engine_settings WHERE id='console-v2-settings'",
+        "SELECT auto_sync_enabled FROM console_engine_settings WHERE id='console-v2-settings'",
       )
-      .first<{ auto_sync_enabled: number; network_budget: number }>();
+      .first<{ auto_sync_enabled: number }>();
     if (!settings?.auto_sync_enabled && !options.manualId) {
       result.state = "paused";
       return result;
     }
     const stale = await db
       .prepare(
-        "SELECT j.id,j.source_id,j.version FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE j.job_kind='web' AND j.control_state='active' AND j.phase<>'complete' AND (j.source_version<>s.version OR j.policy_version<>p.version OR p.source_id IS NULL OR p.expires_at_ms<=? OR s.enabled=0 OR s.operating_status<>'active' OR s.permission_status<>'approved') ORDER BY j.created_at,j.id LIMIT 2",
+        "SELECT j.id,j.source_id,j.version FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE j.job_kind='web' AND j.control_state='active' AND j.phase<>'complete' AND (j.source_version<>s.version OR j.policy_version<>p.version OR p.source_id IS NULL OR p.expires_at_ms<=? OR s.enabled=0 OR s.operating_status<>'active' OR s.permission_status<>'approved') ORDER BY j.created_at,j.id LIMIT 50",
       )
       .bind(now)
       .all<{ id: string; source_id: string; version: number }>();
@@ -77,45 +87,48 @@ export async function dispatchDue(
           )
           .bind(stamp, j.id),
       ]);
-    const usage = await db
-      .prepare(
-        "SELECT (SELECT count(*)*2 FROM console_commands WHERE action='job.claim' AND created_at>=strftime('%Y-%m-%dT00:00:00Z','now')) reserved,(SELECT count(*) FROM ingestion_jobs WHERE job_kind='web' AND created_at>=strftime('%Y-%m-%dT00:00:00Z','now')) jobs,(SELECT COALESCE(sum(CASE WHEN phase='discover' THEN 4 ELSE 2 END),0) FROM ingestion_jobs WHERE job_kind='web' AND phase<>'complete' AND control_state='active' AND status IN('queued','running')) pendingCost",
-      )
-      .first<{ reserved: number; jobs: number; pendingCost: number }>();
-    // A useful article check needs discovery and a detail step. Do not enqueue
-    // another source when only enough network allowance for half a check remains.
-    const capacity = Math.floor(
-      (Number(settings?.network_budget) -
-        (usage?.reserved || 0) -
-        (usage?.pendingCost || 0)) /
-        4,
-    );
-    if (capacity <= 0 || Number(usage?.jobs || 0) >= 10) {
-      result.state = "budget_exhausted";
-      return result;
-    }
-    const profiles = webProfiles
-        .map((p) => p.sourceId)
-        .filter((id) => !options.allowedIds || options.allowedIds.includes(id)),
+    const staticIds = webProfiles.map((p) => p.sourceId),
+      allowedIds = options.allowedIds,
+      profileSql = `(s.web_profile_json<>'{}' OR s.id IN(${staticIds
+        .map(() => "?")
+        .join(",")}))`,
+      scopeSql = allowedIds
+        ? ` AND s.id IN(${allowedIds.map(() => "?").join(",")})`
+        : "",
       where = options.sourceId ? " AND s.id=?" : "";
     const rows = await db
       .prepare(
-        `SELECT s.id,s.version,p.version AS policy_version,p.rule_version,COALESCE(s.sync_hours_override,e.sync_hours) hours,s.next_sync_at_ms,e.sync_revision FROM knowledge_sources s JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE s.id IN(${profiles.map(() => "?").join(",")}) AND s.enabled=1 AND s.operating_status='active' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.permission_status='approved' AND s.authorization_status='approved' AND s.archived_at IS NULL AND s.sync_state<>'blocked' AND p.expires_at_ms>?${where}
- AND (?=1 OR (CASE WHEN s.sync_policy_version>0 AND s.sync_policy_version<>e.sync_revision THEN COALESCE(CAST((julianday(s.last_success_at)-2440587.5)*86400000 AS INTEGER),0)+COALESCE(s.sync_hours_override,e.sync_hours)*3600000 ELSE COALESCE(s.next_sync_at_ms,0) END)<=?)
- AND NOT EXISTS(SELECT 1 FROM ingestion_jobs j WHERE j.source_id=s.id AND j.control_state='active' AND j.phase<>'complete' AND j.status IN('queued','running')) ORDER BY COALESCE(s.next_sync_at_ms,0),s.id LIMIT ${Math.min(options.manualId ? 5 : 2, capacity)}`,
+        `SELECT s.id,s.display_name,s.website_url,s.web_profile_json,s.version,p.version AS policy_version,p.rule_version,e.sync_hours hours,s.next_sync_at_ms,e.sync_revision FROM knowledge_sources s JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE s.source_type='official_web' AND s.channel_type='official_web' AND ${profileSql}${scopeSql} AND s.enabled=1 AND s.operating_status='active' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.permission_status='approved' AND s.authorization_status='approved' AND s.archived_at IS NULL AND s.sync_state<>'blocked' AND p.expires_at_ms>?${where}
+ AND (?=1 OR (CASE WHEN s.sync_hours_override IS NOT NULL OR (s.sync_policy_version>0 AND s.sync_policy_version<>e.sync_revision) THEN COALESCE(CAST((julianday(s.last_success_at)-2440587.5)*86400000 AS INTEGER),0)+e.sync_hours*3600000 ELSE COALESCE(s.next_sync_at_ms,0) END)<=?)
+ AND NOT EXISTS(SELECT 1 FROM ingestion_jobs j WHERE j.source_id=s.id AND j.control_state='active' AND j.phase<>'complete' AND j.status IN('queued','running')) ORDER BY COALESCE(s.next_sync_at_ms,0),s.id LIMIT ?`,
       )
       .bind(
-        ...profiles,
+        ...staticIds,
+        ...(allowedIds || []),
         now,
         ...(options.sourceId ? [options.sourceId] : []),
         Number(!!options.manualId),
         now,
+        limit,
       )
       .all<Due>();
     for (const s of rows.results) {
-      if (result.registered + (usage?.jobs || 0) >= 10) break;
-      const profile = webProfiles.find((p) => p.sourceId === s.id);
-      if (profile?.ruleVersion !== s.rule_version) continue;
+      let profile: ReturnType<typeof profileFromSource> = null;
+      try {
+        profile = profileFromSource({
+          sourceId: s.id,
+          name: s.display_name,
+          websiteUrl: s.website_url,
+          webProfileJson: s.web_profile_json || "{}",
+        });
+      } catch {
+        profile = null;
+      }
+      if (
+        profile?.configurationStatus === "discovered" ||
+        profile?.ruleVersion !== s.rule_version
+      )
+        continue;
       const commandId =
           (options.sourceId && options.manualId) || crypto.randomUUID(),
         id = "job-" + commandId,
@@ -140,12 +153,12 @@ export async function dispatchDue(
             JSON.stringify({
               v2: 1,
               schedulerLease: lease,
-              note: "有界定时增量任务登记",
+              note: "官网采集到期任务登记",
             }),
           ),
         db
           .prepare(
-            "INSERT INTO ingestion_jobs(id,source_id,status,rule_version,source_version,policy_version,run_key,max_articles,updated_at,checkpoint_json) VALUES(?,?,'queued',?,?,?,?,1,?,'{}')",
+            "INSERT INTO ingestion_jobs(id,source_id,status,rule_version,source_version,policy_version,run_key,max_articles,updated_at,checkpoint_json) VALUES(?,?,'queued',?,?,?,?,2,?,'{}')",
           )
           .bind(
             id,
@@ -158,7 +171,7 @@ export async function dispatchDue(
           ),
         db
           .prepare(
-            "UPDATE knowledge_sources SET sync_state='queued',next_sync_at_ms=?,sync_policy_version=? WHERE id=?",
+            "UPDATE knowledge_sources SET sync_hours_override=NULL,sync_state='queued',next_sync_at_ms=?,sync_policy_version=? WHERE id=?",
           )
           .bind(now + s.hours * 3600000, s.sync_revision, s.id),
       ]);
@@ -170,11 +183,9 @@ export async function dispatchDue(
     result = {
       ...result,
       state: "failed",
-      reason: String(e).includes("CONSOLE_BUDGET")
-        ? "BUDGET"
-        : String(e).includes("CONSOLE_")
-          ? "POLICY_OR_VERSION_CHANGED"
-          : "REGISTRATION_FAILED",
+      reason: String(e).includes("CONSOLE_")
+        ? "POLICY_OR_VERSION_CHANGED"
+        : "REGISTRATION_FAILED",
     };
     return result;
   } finally {

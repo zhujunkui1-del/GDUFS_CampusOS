@@ -1,5 +1,5 @@
 {
-  "recordedAt": "2026-10-17T05:18:51.366Z",
+  "recordedAt": "2026-10-23T06:25:54.610Z",
   "fixturesOnly": true,
   "migrationHashMode": "sha256 UTF-8 LF with one final newline",
   "realCloud": false,
@@ -10,7 +10,7 @@
   "legacyApplicationCannotBypassPublicationGate": true,
   "sourceHumanStatesPreserved": true,
   "privateDataAndSnapshotsPreserved": true,
-  "businessTables": 53,
+  "businessTables": 77,
   "foreignKeyViolations": 0,
   "migrations": [
     {
@@ -36,6 +36,106 @@
     {
       "file": "0011_ingestion_daily_budget.sql",
       "sha256": "08b6237d8e14bdb50a6b53d45a4621bb920edfb7ff3555ca491f739a159bcb33",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0012_manual_intake_and_evidence.sql",
+      "sha256": "8839c22d2e417ad0f1d87a78060013babb8533d609d2d7324c2b44ea04326f48",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0013_content_edit_intake_guard.sql",
+      "sha256": "b55a0e80f9e240f5b4da8a8a8078378089b586cb46a58a0a168d25c1408efa57",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0014_console_v2_governance.sql",
+      "sha256": "558f4b59f84e2d823eedc822fa5166dca529f855ecb9355045828c8e9f1ca89d",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0015_console_v2_automation.sql",
+      "sha256": "4dfb674520b206c9bbcedbb4f782b65237034b1b62cabb1a2b37ba58803f2213",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0016_console_v2_retention.sql",
+      "sha256": "8cb4cf5bb9447d73170baf3df742bd4c5ea8ebe26f0d817429008376b8133d0a",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0017_console_v2_scheduler.sql",
+      "sha256": "3d3632a86a72093111d5c2c2db626d1c7b6816e5475527c6ae32543d9ccf2c1f",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0018_console_v2_public_freshness.sql",
+      "sha256": "54d3b14109890a223b4ef426cfbaf342fff39e13937e23c02f0df04421634302",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0019_console_v2_stop_guards.sql",
+      "sha256": "7350644467eacd43629a3b5ff05e69ee608bf2dd28fd84a0456319acd6bb52a9",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0020_console_v2_intake_observations.sql",
+      "sha256": "359a4596128828c186b1ed1939849a9799c5684dec2e8fadfac7d677bc19cc29",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0021_console_v2_review_holds.sql",
+      "sha256": "b2be1b44db1abce96a556bdc671483eb8adbcbd5382cb5dc44d2f7612a25fd0e",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0022_console_simple_admin_actions.sql",
+      "sha256": "10c1a70cba078373d7d6ac20a973b48c999d4a4fdce3d8885452845f638fc4ba",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0023_manual_metadata_batch_budget.sql",
+      "sha256": "9faa7619c669ab64eaef114f65c7ebbc9bf37632bc18791f9106726e64e63e0f",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0024_article_placement_and_metadata.sql",
+      "sha256": "7b73bb76684d474c7b69b84122a1a9acfacde71abf4f8b629f7d1c33c51858be",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0025_administrator_publication.sql",
+      "sha256": "617d3afddbc215c1ac10741ab842a34de63d5a398d3e0bbe947c4b78f1cfdad6",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0026_reading_collector.sql",
+      "sha256": "3ccb4bcb99deba0d0332c62e60d68cd11d04e554b37eaf1db8490c4f22f75797",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0027_collector_receipts_and_reader.sql",
+      "sha256": "2e26e149557699c92ba82f7a9b9075c87e6bfdbaf129476c0b4189ed1a7dc168",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0028_styled_reading_html.sql",
+      "sha256": "3989ed0b3e88830a77ee40d9ec554a8d107bcf90c5deb82c180cc1275c7de24a",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0029_date_gate_and_permanent_connection.sql",
+      "sha256": "9483c15a40ab78d32f4dfe95c2cd6fa2fa67355cf17cea076df1459e634d6308",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0030_official_web_cloud_runner.sql",
+      "sha256": "356a088e8fabd5d9800d59ebd3029d9412592e0c8998bff72647d5bcba0f7bf8",
+      "populatedUpgradePassed": true
+    },
+    {
+      "file": "0031_official_web_global_cadence.sql",
+      "sha256": "33f44f29c41ac5d86433167c3281abfe456ec7e16b335fd1d7e16af68b96da1d",
       "populatedUpgradePassed": true
     }
   ],

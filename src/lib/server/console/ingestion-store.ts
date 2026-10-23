@@ -13,14 +13,28 @@ import {
 } from "@/domain/console/ingestion";
 import {
   approvedUrl as configuredUrl,
-  profileFor as configuredProfile,
+  profileFromSource,
 } from "@/lib/ingestion/profiles";
-function profileFor(id: string) {
+async function profileFor(db: IngestionStore["db"], id: string) {
+  const row = await db
+    .prepare(
+      "SELECT id,display_name,website_url,web_profile_json FROM knowledge_sources WHERE id=? AND channel_type='official_web' AND source_type='official_web'",
+    )
+    .bind(id)
+    .first<Record<string, string | number | null>>();
+  if (!row) throw new ApiError("UNSUPPORTED_INTEGRATION", "此来源尚未配置官网连接器。");
   try {
-    return configuredProfile(id);
+    const profile = profileFromSource({
+      sourceId: String(row.id),
+      name: String(row.display_name),
+      websiteUrl: row.website_url ? String(row.website_url) : null,
+      webProfileJson: row.web_profile_json ? String(row.web_profile_json) : "{}",
+    });
+    if (profile) return profile;
   } catch {
-    throw new ApiError("UNSUPPORTED_INTEGRATION", "此来源尚未配置官网连接器。");
+    throw new ApiError("UNSUPPORTED_INTEGRATION", "官网采集入口或解析规则尚未配置。");
   }
+  throw new ApiError("UNSUPPORTED_INTEGRATION", "官网采集入口或解析规则尚未配置。");
 }
 function approvedUrl(...args: Parameters<typeof configuredUrl>) {
   try {
@@ -97,20 +111,24 @@ export class IngestionStore extends ConsoleStore {
   }
   async policy(sourceId: string) {
     await this.source(sourceId);
-    const p = await this.db
+    const [p, profile] = await Promise.all([
+      this.db
       .prepare("SELECT * FROM source_collection_policies WHERE source_id=?")
       .bind(sourceId)
-      .first<Row>();
-    return { profile: profileFor(sourceId), policy: p };
+      .first<Row>(),
+      profileFor(this.db, sourceId),
+    ]);
+    return { profile, policy: p };
   }
   async setPolicy(sourceId: string, raw: unknown) {
     consolePermission(this.actor, "admin");
     const value = PolicySchema.parse(raw),
       source = await this.source(sourceId),
-      p = profileFor(sourceId);
+      p = await profileFor(this.db, sourceId);
     if (
       value.ruleVersion !== p.ruleVersion ||
-      source.websiteUrl?.replace(/\/$/, "") !== p.origin ||
+      !source.websiteUrl ||
+      new URL(source.websiteUrl).origin !== p.origin ||
       source.verificationStatus !== "verified" ||
       source.officialStatus !== "verified_official" ||
       source.permissionStatus !== "approved"
@@ -209,7 +227,7 @@ export class IngestionStore extends ConsoleStore {
     const value = CommandSchema.parse(raw),
       row = await this.job(id),
       sourceId = String(row.source_id),
-      profile = profileFor(sourceId);
+      profile = await profileFor(this.db, sourceId);
     if (row.rule_version !== profile.ruleVersion)
       throw new ApiError("CONFLICT", "采集规则已更新，请核验策略后新建任务。");
     const leaseToken = crypto.randomUUID(),
@@ -239,7 +257,7 @@ export class IngestionStore extends ConsoleStore {
     );
     const url =
       claimed.phase === "discover"
-        ? checkpoint.page || profile.entryUrl
+        ? checkpoint.page || profile.entryUrls?.[checkpoint.entryIndex] || profile.entryUrl
         : checkpoint.urls[checkpoint.index];
     if (!url) throw new ApiError("CONFLICT", "任务检查点无效，请暂停并检查。");
     const origin = await this.db
@@ -303,7 +321,7 @@ export class IngestionStore extends ConsoleStore {
     const value = IngestionResultSchema.parse(raw),
       row = await this.job(id),
       sourceId = String(row.source_id),
-      profile = profileFor(sourceId);
+      profile = await profileFor(this.db, sourceId);
     const payload = {
       ...value,
       leaseHash: await tokenHash(this.actor.id + ":" + value.leaseToken),
@@ -337,7 +355,7 @@ export class IngestionStore extends ConsoleStore {
       phase = String(row.phase),
       url =
         phase === "discover"
-          ? checkpoint.page || profile.entryUrl
+        ? checkpoint.page || profile.entryUrls?.[checkpoint.entryIndex] || profile.entryUrl
           : checkpoint.urls[checkpoint.index];
     const { policy } = await this.policy(sourceId);
     if (value.url !== url)
@@ -366,7 +384,20 @@ export class IngestionStore extends ConsoleStore {
         controlState = "paused";
       }
     } else if (phase === "discover") {
-      checkpoint.pagesSeen.push(value.url);
+      const pageHash = await tokenHash(value.url),
+        nextPageHash = value.nextPage
+          ? await tokenHash(value.nextPage)
+          : null,
+        repeatedPage =
+          !!value.nextPage &&
+          (value.nextPage === value.url ||
+            checkpoint.pagesSeen.includes(value.nextPage) ||
+            checkpoint.visitedPageHashes.includes(nextPageHash || ""));
+      checkpoint.pagesSeen = [...checkpoint.pagesSeen, value.url].slice(-10);
+      checkpoint.visitedPageHashes = [
+        ...checkpoint.visitedPageHashes.filter((hash) => hash !== pageHash),
+        pageHash,
+      ].slice(-100);
       const ignored = new Set<string>();
       if (value.discovered.length) {
         const retired = await this.db
@@ -401,20 +432,25 @@ export class IngestionStore extends ConsoleStore {
       const unknown = value.discovered.filter(
         (url) => !known.includes(url) && !ignored.has(url),
       );
+      const nextPage =
+        value.nextPage &&
+        !repeatedPage &&
+        !checkpoint.visitedPageHashes.includes(nextPageHash || "")
+          ? value.nextPage
+          : null;
       checkpoint.urls = (
         checkpoint.revalidate && known.length ? known : [...unknown, ...known]
-      ).slice(0, Number(row.max_articles));
+      );
       checkpoint.index = 0;
-      if (
-        !checkpoint.revalidate &&
-        !unknown.length &&
-        value.nextPage &&
-        !checkpoint.pagesSeen.includes(value.nextPage) &&
-        checkpoint.pagesSeen.length < 3
-      ) {
-        checkpoint.page = value.nextPage;
+      checkpoint.page = nextPage;
+      if (checkpoint.urls.length) nextPhase = "fetch";
+      else if (nextPage) nextPhase = "discover";
+      else if (checkpoint.entryIndex + 1 < (profile.entryUrls?.length || 1)) {
+        checkpoint.entryIndex++;
+        checkpoint.page = null;
         checkpoint.urls = [];
-      } else if (checkpoint.urls.length) nextPhase = "fetch";
+        checkpoint.index = 0;
+      }
       else {
         nextPhase = "complete";
         status = "completed";
@@ -715,8 +751,20 @@ export class IngestionStore extends ConsoleStore {
         );
       checkpoint.index++;
       if (checkpoint.index >= checkpoint.urls.length) {
-        nextPhase = "complete";
-        status = "completed";
+        if (checkpoint.page) {
+          nextPhase = "discover";
+          checkpoint.urls = [];
+          checkpoint.index = 0;
+        } else if (checkpoint.entryIndex + 1 < (profile.entryUrls?.length || 1)) {
+          nextPhase = "discover";
+          checkpoint.entryIndex++;
+          checkpoint.page = null;
+          checkpoint.urls = [];
+          checkpoint.index = 0;
+        } else {
+          nextPhase = "complete";
+          status = "completed";
+        }
       }
     }
     // Guard the exact old document version inside the same batch before any write.
@@ -776,7 +824,7 @@ export class IngestionStore extends ConsoleStore {
           bodyCount,
           duplicate,
           value.bytes,
-          Date.parse(now) + (error ? 30000 : 10000),
+          Date.parse(now) + (error ? 30000 : 0),
           now,
           id,
         ),

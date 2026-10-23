@@ -4,6 +4,8 @@ import { request, Agent } from "node:https";
 import { isIP } from "node:net";
 import { createHash } from "node:crypto";
 import { approvedUrl, type WebProfile } from "./profiles";
+import { robotsAllow, robotsCrawlDelay } from "./robots";
+export { robotsAllow } from "./robots";
 export function isPublicAddress(ip: string) {
   if (isIP(ip) === 6)
     return /^[23][0-9a-f]{3}:/i.test(ip) && !/^2001:db8:/i.test(ip);
@@ -39,14 +41,17 @@ export class SafeWebFetcher {
   lastStarted = 0;
   robots: string | null = null;
   beforeRequest?: () => Promise<void>;
+  private delayMs: number;
   constructor(
     readonly profile: WebProfile,
-    readonly limit = 20,
-    readonly delayMs = 10000,
-  ) {}
+    readonly limit = Number.MAX_SAFE_INTEGER,
+    delayMs = profile.requestIntervalMs ?? 1000,
+  ) {
+    this.delayMs = delayMs;
+  }
   async get(
     raw: string,
-    kind: "robots" | "list" | "detail",
+    kind: "robots" | "sitemap" | "list" | "detail",
     validators?: { etag?: string | null; lastModified?: string | null },
   ): Promise<PageObservation> {
     const url = new URL(approvedUrl(this.profile, raw, kind));
@@ -110,7 +115,10 @@ export class SafeWebFetcher {
           const mime = String(res.headers["content-type"] || "");
           if (
             status === 200 &&
-            !/^(text\/html|text\/plain|application\/xhtml\+xml)/i.test(mime)
+            !(
+              /^(text\/html|text\/plain|application\/xhtml\+xml)/i.test(mime) ||
+              (kind === "sitemap" && /^(application|text)\/xml/i.test(mime))
+            )
           ) {
             res.resume();
             reject(Error("MIME_NOT_ALLOWED"));
@@ -152,6 +160,10 @@ export class SafeWebFetcher {
                 return;
               }
               this.robots = status === 404 ? "" : html;
+              this.delayMs = Math.max(
+                this.delayMs,
+                robotsCrawlDelay(this.robots),
+              );
             }
             resolve({
               status,
@@ -172,53 +184,4 @@ export class SafeWebFetcher {
       req.end();
     });
   }
-}
-export function robotsAllow(body: string, path: string) {
-  const groups: {
-    agents: string[];
-    rules: { allow: boolean; pattern: string }[];
-  }[] = [];
-  let group = {
-    agents: [] as string[],
-    rules: [] as { allow: boolean; pattern: string }[],
-  };
-  for (const line of body.split(/\r?\n/)) {
-    const pair = line.split("#")[0].match(/^\s*([\w-]+)\s*:\s*(.*?)\s*$/);
-    if (!pair) continue;
-    const [, key, value] = pair;
-    if (key.toLowerCase() === "user-agent") {
-      if (group.rules.length) {
-        groups.push(group);
-        group = { agents: [], rules: [] };
-      }
-      group.agents.push(value.toLowerCase());
-    } else if (["allow", "disallow"].includes(key.toLowerCase()) && value)
-      group.rules.push({
-        allow: key.toLowerCase() === "allow",
-        pattern: value,
-      });
-  }
-  groups.push(group);
-  const specific = groups.filter((g) =>
-    g.agents.some((a) => a !== "*" && "campusos-research".includes(a)),
-  );
-  const active = specific.length
-    ? specific
-    : groups.filter((g) => g.agents.includes("*"));
-  let best = -1,
-    allowed = true;
-  for (const r of active.flatMap((g) => g.rules)) {
-    const pattern = r.pattern
-      .replace(/[.+?^{}()|[\]\\]/g, "\\$&")
-      .replace(/\*/g, ".*")
-      .replace(/\$$/, "$");
-    if (
-      new RegExp("^" + pattern).test(path) &&
-      (r.pattern.length > best || (r.pattern.length === best && r.allow))
-    ) {
-      best = r.pattern.length;
-      allowed = r.allow;
-    }
-  }
-  return allowed;
 }

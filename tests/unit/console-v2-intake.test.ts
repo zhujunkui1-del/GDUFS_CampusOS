@@ -135,7 +135,6 @@ describe("V2 canonical intake and multiple discovery origins", () => {
         ...cmd(1),
         syncHours: 24,
         autoSync: true,
-        networkBudget: 20,
         earliestImportDay: "2025-09-01",
         confirmImportCutoff: true,
         note: "明确批准新的导入截止规则",

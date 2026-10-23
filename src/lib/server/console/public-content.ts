@@ -105,7 +105,7 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
   }
   const from = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where.join(" AND ")}`;
   const projection =
-    "d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.summary,d.content_type,d.campus_scope,d.knowledge_category,d.radar_category,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status";
+    "d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.content_type,d.campus_scope,d.knowledge_category,d.radar_category,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status";
   const rows = q.grouped
     ? await db
         .prepare(
@@ -131,7 +131,6 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
     url: r.url,
     publishedAt: r.published_at,
     updatedAt: r.updated_at,
-    summary: r.summary,
     contentType: r.content_type,
     campusScope: r.campus_scope,
     knowledgeCategory: r.knowledge_category,

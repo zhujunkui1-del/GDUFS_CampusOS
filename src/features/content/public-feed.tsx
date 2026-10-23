@@ -22,7 +22,6 @@ export type PublicArticleSummary = {
   url: string;
   readable?: boolean;
   publishedAt: string | null;
-  summary: string;
   contentType: string;
   knowledgeCategory: string | null;
   radarCategory: string | null;
@@ -48,6 +47,7 @@ type FeedState = {
   groups?: FeedGroup[];
   counts?: Record<string, number>;
   total?: number;
+  allTotal?: number;
   error?: string;
 };
 
@@ -202,11 +202,12 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
               data,
               counts: data.counts,
               total: data.counts[query.category] || 0,
+              allTotal: data.total,
             });
           return;
         }
         if (!categories.length) {
-          setState({ key, groups: [], counts: {}, total: 0 });
+          setState({ key, groups: [], counts: {}, total: 0, allTotal: 0 });
           return;
         }
         const grouped = await fetchGrouped();
@@ -223,6 +224,7 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
             })),
             counts: grouped.counts,
             total: grouped.total,
+            allTotal: grouped.total,
           });
       } catch (error) {
         if (!abort.signal.aborted)
@@ -381,7 +383,7 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
               {current?.counts
                 ? category.code
                   ? current.counts[category.code] || 0
-                  : (current.total ?? 0)
+                  : (current.allTotal ?? 0)
                 : "…"}
             </span>
           </button>

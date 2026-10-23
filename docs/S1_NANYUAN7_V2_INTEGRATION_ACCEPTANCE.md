@@ -54,3 +54,9 @@ npx playwright test --workers=2 --reporter=list --output=test-results/nanyuan7-v
 ```
 
 显式原生窗口快速检查：同浏览器环境下设置E2E_WINDOW_LAYOUT=1、E2E_WINDOW_QUICK=1，运行tests/e2e/map-window-layout.spec.ts，project=desktop。来源/许可记录SRC-046，负责人决定D-030，未解除的资料/实机依赖见BLOCKERS。
+
+## 2026-10-23 冷启动预热更新
+
+上文“进入3D时才加载”的行为已由这次性能修复取代：地图基础数据ready后，后台导入3D模块并预取GLB；3D图层复用已取回并通过SHA校验的buffer。用户仍可先在2D/2.5D浏览；失败不阻塞基础地图，2.5D体块保留作为回退。地图路由提前预载本地GeoJSON及MapLibre worker依赖，初始化超时由15秒改为45秒。
+
+本机Chrome/Edge与公网campusos-preview的桌面模型专项均通过。公网测试确认模型文件在3D切换前已下载，并验证切换后模型ready在5秒内；冷缓存地图专项Chrome约1.8分钟、Edge约58秒完成整项流程。该时间包含首次页面和地图资产加载，受网络和设备影响，不代表其他网络环境的冷启动时长。3D点击等待回归断言位于 `tests/e2e/building-model.spec.ts`。

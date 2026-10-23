@@ -485,28 +485,11 @@
   color: #4e4b60;
 }
 
-.public-article-summary {
-  margin-bottom: 22px;
-  border-radius: 18px;
-  padding: 19px 22px;
-  background: #f5f1fa;
-}
-
-.public-article-summary h3,
 .public-article-body h3 {
   margin: 0;
   color: #343341;
   font-size: 17px;
   font-weight: 600;
-}
-
-.public-article-summary p {
-  margin: 12px 0 0;
-  color: #4e4d5a;
-  font-size: 16px;
-  line-height: 1.85;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
 }
 
 .public-article-body h3 {
@@ -605,10 +588,6 @@
 
   .public-article-dialog-content {
     padding: 21px 19px 30px;
-  }
-
-  .public-article-summary {
-    padding: 16px 17px;
   }
 }
 

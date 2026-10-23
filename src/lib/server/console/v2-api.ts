@@ -43,6 +43,8 @@ export async function consoleV2Api(
     if (section === "retention")
       return id ? store.plan(id) : store.plans(query);
     if (section === "overview") return store.dashboard(query);
+    if (section === "web-collection" && !id)
+      return store.officialWebCollection(query);
     if (section === "settings") return store.engineSettings();
     if (section === "sources" && !action)
       return id ? store.sourceV2(id) : store.sourcesV2(query);
@@ -91,6 +93,8 @@ export async function consoleV2Api(
         ? store.revokeRunnerToken(id, await read())
         : store.createRunnerToken(await read());
     if (section === "sync") return store.syncNow(await read());
+    if (section === "web-collection" && id && action === "profile")
+      return store.saveWebProfile(id, await read());
     if (section === "recheck") return store.recheckPending();
     if (section === "whitelist") return store.protection(await read());
     if (section === "retention")

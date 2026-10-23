@@ -6,13 +6,18 @@ import { CreateJobSchema } from "@/domain/console/ingestion";
 import { ConsoleIdSchema, CommandSchema } from "@/domain/console/contracts";
 import { tokenHash, randomToken } from "../assistant/crypto";
 
-import { webProfiles } from "@/lib/ingestion/profiles";
 import { SourcesV2Query } from "@/domain/console/v2";
 import { protectedDocumentSql } from "./v2-sql";
 import { ApiError } from "../errors";
+type Row = Record<string, string | number | null>;
 export const runnerActor = {
   id: "sys-console-runner",
   email: "ingestion@system.invalid",
+  role: "operator" as const,
+};
+export const cloudRunnerActor = {
+  id: "sys-console-cloud",
+  email: "web-runner@system.invalid",
   role: "operator" as const,
 };
 export class ConsoleSyncStore extends ConsoleRetentionStore {
@@ -34,6 +39,14 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
     if (args[1] === "job.commit")
       args[5] = [
         ...args[5],
+        this.db
+          .prepare(
+            "UPDATE knowledge_sources SET last_executor=? WHERE id=(SELECT source_id FROM ingestion_jobs WHERE id=?)",
+          )
+          .bind(
+            this.actor.id === cloudRunnerActor.id ? "cloud" : "local",
+            args[3],
+          ),
         this.db
           .prepare(
             "UPDATE knowledge_sources SET last_success_at=CASE WHEN EXISTS(SELECT 1 FROM ingestion_jobs WHERE id=? AND phase='complete' AND status='completed') THEN ? ELSE ? END,sync_state=(SELECT CASE WHEN status='failed' THEN 'blocked' WHEN phase='complete' THEN 'completed' ELSE 'queued' END FROM ingestion_jobs WHERE id=?),next_sync_at_ms=CASE WHEN EXISTS(SELECT 1 FROM ingestion_jobs WHERE id=? AND status='failed') THEN ? ELSE next_sync_at_ms END WHERE id=(SELECT source_id FROM ingestion_jobs WHERE id=?)",
@@ -61,25 +74,21 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       .parse(raw);
     if (v.sourceId) await this.source(v.sourceId);
     else consolePermission(this.actor, "admin");
-    const runners = await this.db
-      .prepare(
-        "SELECT t.source_ids_json FROM console_runner_tokens t JOIN console_admins a ON a.id=t.admin_id WHERE t.revoked_at_ms IS NULL AND t.expires_at_ms>? AND julianday(t.last_seen_at)>julianday(?,'-90 seconds') AND a.status='active' AND a.role='admin'",
-      )
-      .bind(Date.parse(this.now()), this.now())
-      .all<{ source_ids_json: string }>();
-    const allowedIds = [
-      ...new Set(
-        runners.results.flatMap(
-          (r) => JSON.parse(r.source_ids_json) as string[],
-        ),
-      ),
-    ];
-    if (!allowedIds.length || (v.sourceId && !allowedIds.includes(v.sourceId)))
-      return { state: "runner_offline", registered: 0, completed: 0 };
+    const globalLimit = v.sourceId
+      ? undefined
+      : Number(
+          (
+            await this.db
+              .prepare(
+                "SELECT count(*) AS n FROM knowledge_sources WHERE console_managed=1 AND source_type='official_web' AND channel_type='official_web' AND archived_at IS NULL",
+              )
+              .first<{ n: number }>()
+          )?.n || 0,
+        );
     return dispatchDue(this.db, {
       sourceId: v.sourceId,
       manualId: v.commandId,
-      allowedIds,
+      limit: globalLimit === undefined ? undefined : Math.max(50, globalLimit),
     });
   }
   async assignOperator(sourceId: string, raw: unknown) {
@@ -247,7 +256,7 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
     consolePermission(this.actor, "admin");
     const v = CommandSchema.extend({
       label: z.string().trim().min(2).max(80),
-      sourceIds: z.array(ConsoleIdSchema).min(1).max(20),
+      sourceIds: z.array(ConsoleIdSchema).min(1).max(2000),
       validityDays: z.number().int().min(1).max(30),
     })
       .strict()
@@ -406,15 +415,12 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       .extend({ from: z.iso.date().optional(), to: z.iso.date().optional() })
       .strict()
       .parse(raw);
-    const { from, to, ...sourceQuery } = q,
+    const { from, to } = q,
       day = new Date(Date.parse(this.now()) + 28800000)
         .toISOString()
         .slice(0, 10),
       start = from || day,
-      end = to || day;
-    if (start > end)
-      throw new ApiError("INVALID_ARGUMENT", "统计起日不能晚于止日。");
-    const base = await super.dashboard(sourceQuery),
+      end = to || day,
       where = [
         "s.console_managed=1",
         "s.source_type<>'user_private'",
@@ -423,6 +429,8 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
           : "s.archived_at IS NULL",
       ],
       args: unknown[] = [];
+    if (start > end)
+      throw new ApiError("INVALID_ARGUMENT", "统计起日不能晚于止日。");
     if (q.q) {
       where.push(
         "(s.display_name LIKE ? ESCAPE '\\' OR s.id LIKE ? ESCAPE '\\' OR s.organization LIKE ? ESCAPE '\\')",
@@ -434,7 +442,7 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       where.push("s.channel_type=?");
       args.push(q.type);
     }
-    const active = "enabled=1 AND archived_at IS NULL";
+    const active = "s.enabled=1 AND s.archived_at IS NULL";
     if (q.state === "enabled") where.push(active);
     if (q.state === "paused")
       where.push(
@@ -443,64 +451,57 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
           ") AND operating_status NOT IN('closed','unreachable')",
       );
     if (q.state === "closed")
-      where.push("operating_status IN('closed','unreachable')");
-    const metrics = await this.db
+      where.push("s.operating_status IN('closed','unreachable')");
+    const metricsResult = await this.db
       .prepare(
-        `WITH fs AS(SELECT s.* FROM knowledge_sources s WHERE ${where.join(" AND ")}),ds AS(SELECT d.* FROM knowledge_documents d WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND d.source_id IN(SELECT id FROM fs)),dates AS(SELECT ? a,? b),checks AS(SELECT c.* FROM console_content_checks c JOIN ds d ON d.id=c.document_id JOIN fs s ON s.id=d.source_id WHERE c.content_revision=d.content_revision AND c.input_hash=d.input_hash AND c.source_version=s.version AND c.policy_version=COALESCE((SELECT version FROM console_publication_policies WHERE source_id=s.id),0) AND c.control_generation=COALESCE((SELECT generation FROM console_document_controls WHERE document_id=d.id),0))
-    SELECT (SELECT count(*) FROM fs) sources,(SELECT count(*) FROM fs WHERE id NOT IN(${webProfiles.map(() => "?").join(",")}) AND NOT EXISTS(SELECT 1 FROM campus_collector_sources c WHERE c.source_id=fs.id)) unsupported,(SELECT max(last_success_at) FROM fs) lastSync,(SELECT min(next_sync_at_ms) FROM fs WHERE ${active} AND id IN(${webProfiles.map(() => "?").join(",")})) nextSync,(SELECT count(*) FROM fs WHERE ${active}) enabled,(SELECT count(*) FROM fs WHERE NOT(${active}) AND operating_status NOT IN('closed','unreachable')) paused,(SELECT count(*) FROM fs WHERE operating_status IN('closed','unreachable')) unavailable,
-    (SELECT count(*) FROM ds d,dates WHERE date(COALESCE((SELECT min(r.created_at) FROM campus_collector_receipts r WHERE r.document_id=d.id),(SELECT created_at FROM console_content_versions v WHERE v.document_id=d.id AND v.version=1)),'+8 hours') BETWEEN dates.a AND dates.b) todayNew,
-    (SELECT count(*) FROM document_discoveries x,dates WHERE x.source_id IN(SELECT id FROM fs) AND date(x.first_seen_at,'+8 hours') BETWEEN dates.a AND dates.b) discoveredToday,
-    ((SELECT count(*) FROM console_auto_publications p,dates WHERE p.document_id IN(SELECT id FROM ds) AND date(p.created_at,'+8 hours') BETWEEN dates.a AND dates.b)+(SELECT count(DISTINCT r.document_id) FROM campus_collector_receipts r,dates WHERE r.document_id IN(SELECT id FROM ds) AND json_extract(r.result_json,'$.changed')=1 AND json_extract(r.result_json,'$.state')='published' AND date(r.created_at,'+8 hours') BETWEEN dates.a AND dates.b)) autoToday,
-    (SELECT count(*) FROM ds d WHERE NOT EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)) pending,
-    (SELECT count(DISTINCT document_id) FROM checks,dates WHERE outcome='review' AND date(created_at,'+8 hours') BETWEEN dates.a AND dates.b) exceptions,
-    (SELECT count(DISTINCT document_id) FROM checks WHERE outcome='blocked') blocked,
-    (SELECT count(*) FROM ds WHERE publication_status='withdrawn' OR lifecycle_status<>'active' OR julianday(valid_until)<=julianday('now')) inactive,
-    (SELECT count(*) FROM ingestion_jobs j,dates WHERE j.source_id IN(SELECT id FROM fs) AND j.status='failed' AND date(j.updated_at,'+8 hours') BETWEEN dates.a AND dates.b) failed,
+        `WITH fs AS(SELECT s.id,s.enabled,s.archived_at FROM knowledge_sources s WHERE ${where.join(" AND ")}),ds AS(SELECT d.id,d.source_id FROM knowledge_documents d JOIN fs s ON s.id=d.source_id WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private')
+    SELECT (SELECT count(*) FROM fs) sources,(SELECT count(*) FROM fs WHERE enabled=1 AND archived_at IS NULL) enabled,
+    (SELECT count(*) FROM ds d WHERE date(COALESCE((SELECT min(r.created_at) FROM campus_collector_receipts r WHERE r.document_id=d.id),(SELECT created_at FROM console_content_versions v WHERE v.document_id=d.id AND v.version=1)),'+8 hours') BETWEEN ? AND ?) todayNew,
     (SELECT count(*) FROM console_protections p WHERE p.target_type='source' AND p.target_id IN(SELECT id FROM fs) AND p.active=1 AND (p.expires_at_ms IS NULL OR p.expires_at_ms>CAST((julianday('now')-2440587.5)*86400000 AS INTEGER))) protectedSources,
     (SELECT count(*) FROM ds d WHERE ${protectedDocumentSql()}) protectedArticles`,
       )
-      .bind(
-        ...args,
-        start,
-        end,
-        ...webProfiles.map((p) => p.sourceId),
-        ...webProfiles.map((p) => p.sourceId),
-      )
-      .first<
-        Record<
-          | "sources"
-          | "enabled"
-          | "paused"
-          | "unavailable"
-          | "todayNew"
-          | "discoveredToday"
-          | "autoToday"
-          | "pending"
-          | "exceptions"
-          | "blocked"
-          | "inactive"
-          | "failed"
-          | "protectedSources"
-          | "protectedArticles"
-          | "unsupported",
-          number
-        > & { lastSync: string | null; nextSync: number | null }
-      >();
+      .bind(...args, start, end)
+      .all<{
+        sources: number;
+        enabled: number;
+        todayNew: number;
+        protectedSources: number;
+        protectedArticles: number;
+      }>();
+    const metrics = metricsResult.results[0],
+      storage =
+        typeof metricsResult.meta?.size_after === "number"
+          ? [
+              {
+                provider: "cloudflare_api",
+                measured_at: this.now(),
+                bytes: metricsResult.meta.size_after,
+              },
+            ]
+          : (
+              await this.db
+                .prepare(
+                  "SELECT * FROM console_storage_samples ORDER BY measured_at DESC,id DESC LIMIT 2",
+                )
+                .all<Row>()
+            ).results;
     return {
-      ...base,
-      stats: { ...base.stats, ...metrics, pending: metrics?.pending || 0 },
-      unsupported: metrics?.unsupported || 0,
-      autoPublishedToday: metrics?.autoToday || 0,
+      stats: {
+        sources: Number(metrics?.sources || 0),
+        enabled: Number(metrics?.enabled || 0),
+        todayNew: Number(metrics?.todayNew || 0),
+      },
+      filteredSources: Number(metrics?.sources || 0),
+      settings: null,
+      networkUsage: 0,
+      storage,
+      unsupported: 0,
+      runnerOnline: false,
       protectedSources: metrics?.protectedSources || 0,
       protectedArticles: metrics?.protectedArticles || 0,
-      range: { from: start, to: end },
-      runnerOnline:
-        !!base.settings?.runner_last_at &&
-        Date.now() - Date.parse(String(base.settings.runner_last_at)) <=
-          7200000,
-      scheduler: base.settings?.scheduler_last_at
-        ? "registered_only"
-        : "runner_or_manual_required",
+      scheduler: "not_connected",
+      autoPublishedToday: null,
+      latestJobs: [],
     };
   }
   async recheckPending() {

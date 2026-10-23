@@ -61,6 +61,7 @@ const navigation = [
   { id: "", label: "总览", icon: LayoutDashboard },
   { id: "sources", label: "信息源", icon: Library },
   { id: "articles", label: "文章", icon: ClipboardCheck },
+  { id: "web-collection", label: "官网采集", icon: RefreshCw },
   { id: "collector", label: "公众号采集", icon: RefreshCw },
   { id: "retention", label: "过时信息清理", icon: Archive },
   { id: "whitelist", label: "白名单", icon: ShieldCheck },
@@ -120,7 +121,7 @@ export function ConsoleApp() {
     id = useSearchParams().get("record");
   useEffect(() => {
     if (section === "reviews") router.replace("/admin/articles");
-    if (section === "jobs") router.replace("/admin?view=jobs");
+    if (section === "jobs") router.replace("/admin/web-collection?view=jobs");
     if (section === "audit") router.replace("/admin?view=history");
     if (section === "content")
       router.replace(

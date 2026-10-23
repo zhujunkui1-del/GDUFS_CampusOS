@@ -1,9 +1,17 @@
-// Audited public columns only. Changes require a new ruleVersion and policy review.
+// A source may configure multiple article columns. Rule changes invalidate the
+// source policy and require a fresh administrator review.
+import {
+  WebProfileConfigSchema,
+  type WebProfileConfig,
+} from "@/domain/console/web-profile";
+
 export type WebProfile = {
   sourceId: string;
   name: string;
   origin: string;
+  configurationStatus?: "discovered" | "verified";
   entryUrl: string;
+  entryUrls?: string[];
   ruleVersion: string;
   titleSelector: string;
   titleSuffix: string;
@@ -11,6 +19,9 @@ export type WebProfile = {
   dateLabel: string;
   bodySelector: string;
   detailPath: string;
+  detailPathPrefixes?: string[];
+  allowQueryUrls?: boolean;
+  requestIntervalMs?: number;
 };
 const ruleVersion = "official-web-2026-10-19.4";
 export const webProfiles: WebProfile[] = [
@@ -26,6 +37,7 @@ export const webProfiles: WebProfile[] = [
     dateLabel: "发布时间",
     bodySelector: "#vsb_content .v_news_content, .v_news_content",
     detailPath: "^/info/1005/[0-9]+\\.htm$",
+    detailPathPrefixes: ["/info/1005/"],
   },
   {
     sourceId: "GDUFS-SRC-0010",
@@ -39,6 +51,7 @@ export const webProfiles: WebProfile[] = [
     dateLabel: "发布时间",
     bodySelector: "#vsb_content_501 .v_news_content",
     detailPath: "^/info/1056/[0-9]+\\.htm$",
+    detailPathPrefixes: ["/info/1056/"],
   },
   {
     sourceId: "GDUFS-SRC-0017",
@@ -52,6 +65,7 @@ export const webProfiles: WebProfile[] = [
     dateLabel: "时间",
     bodySelector: "#vsb_content_2 .v_news_content",
     detailPath: "^/info/1006/[0-9]+\\.htm$",
+    detailPathPrefixes: ["/info/1006/"],
   },
   {
     sourceId: "GDUFS-SRC-0024",
@@ -65,6 +79,7 @@ export const webProfiles: WebProfile[] = [
     dateLabel: "时间",
     bodySelector: "#vsb_content .v_news_content",
     detailPath: "^/info/1050/[0-9]+\\.htm$",
+    detailPathPrefixes: ["/info/1050/"],
   },
   {
     sourceId: "GDUFS-SRC-0008",
@@ -78,6 +93,7 @@ export const webProfiles: WebProfile[] = [
     dateLabel: "时间",
     bodySelector: "#vsb_content .v_news_content",
     detailPath: "^/info/1134/[0-9]+\\.htm$",
+    detailPathPrefixes: ["/info/1134/"],
   },
 ];
 export function profileFor(sourceId: string) {
@@ -85,10 +101,68 @@ export function profileFor(sourceId: string) {
   if (!p) throw Error("UNAPPROVED_SOURCE");
   return p;
 }
+export function profileFromSource(input: {
+  sourceId: string;
+  name: string;
+  websiteUrl: string | null;
+  webProfileJson?: string | null;
+}) {
+  const raw = input.webProfileJson;
+  if (raw && raw !== "{}") {
+    const config: WebProfileConfig = WebProfileConfigSchema.parse(
+      JSON.parse(raw),
+    );
+    const homepage = input.websiteUrl ? new URL(input.websiteUrl) : null;
+    if (!homepage || homepage.protocol !== "https:")
+      throw Error("PROFILE_ORIGIN_REQUIRED");
+    const origin = homepage.origin;
+    if (
+      config.entryUrls.some((value) => {
+        const entry = new URL(value);
+        return (
+          entry.origin !== origin ||
+          entry.protocol !== "https:" ||
+          !!entry.username ||
+          !!entry.password ||
+          !!entry.port ||
+          (!!entry.search && !config.allowQueryUrls) ||
+          !!entry.hash
+        );
+      })
+    )
+      throw Error("PROFILE_ENTRY_ORIGIN_MISMATCH");
+    return {
+      sourceId: input.sourceId,
+      name: input.name,
+      origin,
+      configurationStatus: config.configurationStatus,
+      entryUrl: config.entryUrls[0],
+      entryUrls: config.entryUrls,
+      ruleVersion: config.ruleVersion,
+      titleSelector: config.titleSelector,
+      titleSuffix: config.titleSuffix,
+      dateSelector: config.dateSelector,
+      dateLabel: config.dateLabel,
+      bodySelector: config.bodySelector,
+      detailPath: "",
+      detailPathPrefixes: config.articlePathPrefixes,
+      allowQueryUrls: config.allowQueryUrls,
+      requestIntervalMs: config.requestIntervalMs,
+    } satisfies WebProfile;
+  }
+  const existing = webProfiles.find(
+    (profile) => profile.sourceId === input.sourceId,
+  );
+  return existing &&
+    input.websiteUrl &&
+    new URL(input.websiteUrl).origin === existing.origin
+    ? { ...existing, name: input.name, entryUrls: [existing.entryUrl] }
+    : null;
+}
 export function approvedUrl(
   p: WebProfile,
   raw: string,
-  kind: "robots" | "list" | "detail" | "attachment" = "detail",
+  kind: "robots" | "sitemap" | "list" | "detail" | "attachment" = "detail",
 ) {
   const u = new URL(raw, p.entryUrl);
   u.hash = "";
@@ -97,21 +171,43 @@ export function approvedUrl(
     u.protocol !== "https:" ||
     u.username ||
     u.password ||
-    u.search ||
+    [...u.searchParams.keys()].some((key) =>
+      /^(uin|key|pass_ticket|appmsg_token|token|code)$/i.test(key),
+    ) ||
+    (u.search &&
+      !p.allowQueryUrls &&
+      !(p.entryUrls || [p.entryUrl]).some((entryUrl) => {
+        const entry = new URL(entryUrl);
+        return entry.pathname === u.pathname && entry.search === u.search;
+      })) ||
     u.port
   )
     throw Error("URL_NOT_ALLOWED");
-  const entry = new URL(p.entryUrl).pathname;
   const allowed =
     kind === "robots"
       ? u.pathname === "/robots.txt"
-      : kind === "list"
-        ? u.pathname === entry ||
-          (u.pathname.startsWith(entry.replace(/\.htm$/, "/")) &&
-            /\/[0-9]+\.htm$/.test(u.pathname))
-        : kind === "detail"
-          ? new RegExp(p.detailPath).test(u.pathname)
-          : /\.(pdf|docx?|xlsx?|zip)$/i.test(u.pathname);
+      : kind === "sitemap"
+        ? (p.entryUrls || [p.entryUrl]).some((entryUrl) => {
+            const entry = new URL(entryUrl);
+            return entry.pathname === u.pathname && entry.search === u.search;
+          })
+        : kind === "list"
+          ? (p.entryUrls || [p.entryUrl]).some((entryUrl) => {
+              const path = new URL(entryUrl).pathname;
+              return (
+                u.pathname === path ||
+                (u.pathname.startsWith(path.replace(/\.htm$/, "/")) &&
+                  /\/[0-9]+\.htm$/.test(u.pathname))
+              );
+            })
+          : kind === "detail"
+            ? p.detailPathPrefixes?.some(
+                (prefix) =>
+                  u.pathname.startsWith(prefix) &&
+                  (!p.detailPath || new RegExp(p.detailPath).test(u.pathname)),
+              ) ||
+              (!!p.detailPath && new RegExp(p.detailPath).test(u.pathname))
+            : /\.(pdf|docx?|xlsx?|zip)$/i.test(u.pathname);
   if (!allowed) throw Error("URL_NOT_ALLOWED");
   return u.toString();
 }

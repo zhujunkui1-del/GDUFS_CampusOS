@@ -174,7 +174,7 @@ describe("exclusive article placement and captured metadata publication", () => 
       );
       expect(
         await f.store.syncNow({ commandId: crypto.randomUUID() }),
-      ).toMatchObject({ state: "runner_offline", registered: 0 });
+      ).toMatchObject({ state: "no_eligible_due_source", registered: 0 });
     } finally {
       f.close();
     }
