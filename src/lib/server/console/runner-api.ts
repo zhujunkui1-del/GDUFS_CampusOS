@@ -65,7 +65,10 @@ export const consoleRunnerApi = withApi(async (request) => {
     check(String(job.source_id));
     if (request.method === "GET" && !action) return job;
     if (request.method === "POST") {
-      const raw = await readJson(request, 262144);
+      const raw = await readJson(
+        request,
+        action === "commit" ? 1800000 : 262144,
+      );
       if (action === "claim") return store.claim(id, raw);
       if (action === "commit") return store.commit(id, raw);
       if (action === "permit") return store.permit(id, raw);

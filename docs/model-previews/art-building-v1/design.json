@@ -1,0 +1,68 @@
+{
+  "version": "art-building-v1-2026-10-24",
+  "placeId": "osm-way-1389970391",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "levels": 5,
+  "levelsSource": "负责人2026-10-24确认：5层",
+  "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+  "floorElevationsMeters": [0.7, 4.9, 9, 13.1, 17.2, 21.3],
+  "roofTopMeters": 21.55,
+  "parapetTopMeters": 22.15,
+  "annexTopMeters": 11.8,
+  "annexOpenGroundMeters": 3.8,
+  "appearanceAccuracy": "photo_informed_simplification",
+  "courtyardAccuracy": "open_recess_retained_in_source_outer_ring",
+  "coordinateBasis": "WGS84 footprint -> local east/up/south meters, no additional bearing rotation",
+  "performance": {
+    "triangleBudget": 10000,
+    "modelDrawCallBudget": 16,
+    "glbByteBudget": 300000
+  },
+  "notes": [
+    "图片文件名数字无建筑层数或尺寸意义。",
+    "主体5层由负责人确认；层高、屋面、女儿墙、弧形采光顶和低附楼米制参数仅为显示近似。",
+    "源OSM轮廓已包括弧线折段、开放院落及灰色附楼；不添加封闭院落，不改变正式GIS。",
+    "共享几何/材质与实例化，保留主要窗带/竖肋和低附楼架空层；不做精细室内或逐个空调。",
+    "6张照片仅内部参考，零照片纹理，不复制到public或预览服务。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/艺术楼2.png",
+      "bytes": 1681699,
+      "sha256": "9c1a4c236403c19c3bf2f6aecd65b0afd7ad66c699a74ef971ce731b6aacd088",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/艺术楼0.png",
+      "bytes": 315657,
+      "sha256": "608e027ea5df4bea4330956b3d7edbb92d2880aa9f088b6c1987cf945c2a4f54",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/艺术楼1.png",
+      "bytes": 2357045,
+      "sha256": "33e2ed5c2d28031bbe00dab51560313f5c17d5abd50793c99d387776a903cc54",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/艺术楼右侧面1.jpg",
+      "bytes": 99894,
+      "sha256": "fec39956154979b80044b66f733b6cf82ac7153091a06f558af3e7958b3f0235",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/艺术楼背面3.png",
+      "bytes": 2161448,
+      "sha256": "72ac666e64d6dbc5502aa15406677beaf250ec421e99684a91d52db2f4a4a2d1",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/art-building-v1/艺术楼俯视.png",
+      "bytes": 664322,
+      "sha256": "742cec6cf9dc69399d303a2954e72a52c7a056f00cac0fcb0b1fccfdc26d8f69",
+      "usage": "internal_visual_reference_only"
+    }
+  ]
+}

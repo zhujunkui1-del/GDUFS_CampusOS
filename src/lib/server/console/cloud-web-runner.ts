@@ -3,14 +3,20 @@ import { OfficialWebConnector, extractEvents } from "@/lib/ingestion/connector";
 import { WorkerSafeWebFetcher } from "@/lib/ingestion/worker-safe-fetch";
 import { ConsoleSyncStore, cloudRunnerActor } from "./v2-sync";
 
-const MAX_STEPS_PER_TICK = 4;
+const MAX_STEPS_PER_TICK = 12;
 
 function outcomeFor(error: unknown) {
   const code = error instanceof Error ? error.message : "NETWORK_ERROR";
   if (/BLOCKED|DENIED|REDIRECT|PRIVATE|ROBOTS|MIME/.test(code))
     return "blocked" as const;
   if (/TOO_LARGE/.test(code)) return "too_large" as const;
-  if (/PARSE|ENCODING/.test(code)) return "parse_error" as const;
+  if (
+    (error instanceof Error &&
+      "code" in error &&
+      error.code === "INVALID_ARGUMENT") ||
+    /PARSE|ENCODING/.test(code)
+  )
+    return "parse_error" as const;
   return "network_error" as const;
 }
 
@@ -66,6 +72,7 @@ export async function runCloudWebBatch(
       publishedRaw: null,
       bodyTextChars: 0,
       discovered: [],
+      discoveredDates: [],
       nextPage: null,
       article: null,
       events: [],
@@ -105,15 +112,39 @@ export async function runCloudWebBatch(
             page.html,
             lease.url,
           );
+          let nextPage = found.nextPage;
+          if (found.allDatedBeforeCutoff && found.undatedUrls.length) {
+            const known = await db
+              .prepare(
+                `SELECT canonical_url FROM document_origins WHERE source_id=? AND canonical_url IN (${found.undatedUrls.map(() => "?").join(",")}) UNION SELECT canonical_url FROM console_intake_skips WHERE source_id=? AND canonical_url IN (${found.undatedUrls.map(() => "?").join(",")}) AND (job_id=? OR (published_at IS NOT NULL AND date(published_at,'+8 hours')<?)) UNION SELECT canonical_url FROM console_cleanup_tombstones WHERE canonical_url IN (${found.undatedUrls.map(() => "?").join(",")}) AND released_at IS NULL`,
+              )
+              .bind(
+                lease.sourceId,
+                ...found.undatedUrls,
+                lease.sourceId,
+                ...found.undatedUrls,
+                row.id,
+                profile.earliestImportDay,
+                ...found.undatedUrls,
+              )
+              .all<{ canonical_url: string }>();
+            if (known.results.length === found.undatedUrls.length)
+              nextPage = null;
+          }
           result = {
             ...result,
             outcome: "ok",
             discovered: found.urls,
-            nextPage: found.nextPage,
+            discoveredDates: found.dates,
+            nextPage,
           };
         } else {
           const connector = new OfficialWebConnector(profile),
-            parsed = connector.parse(page.html, lease.url),
+            parsed = connector.parse(
+              page.html,
+              lease.url,
+              lease.publishedAtFromList,
+            ),
             policy = await store.policy(lease.sourceId),
             rightsScope = String(policy.policy?.rights_scope || "");
           if (
@@ -127,9 +158,7 @@ export async function runCloudWebBatch(
               parsed,
               lease.url,
               rightsScope as
-                | "metadata_only"
-                | "excerpt_and_link"
-                | "licensed_full_text",
+                "metadata_only" | "excerpt_and_link" | "licensed_full_text",
             ),
           );
           result = {

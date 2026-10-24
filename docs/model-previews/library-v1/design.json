@@ -1,0 +1,73 @@
+{
+  "version": "library-v1-2026-10-24",
+  "placeId": "osm-way-307250998",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "levels": 6,
+  "levelsSource": "负责人2026-10-24确认：一共6层楼高",
+  "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+  "floorElevationsMeters": [1, 5.8, 10, 14.2, 18.4, 22.6, 26.8],
+  "roofTopMeters": 27.25,
+  "annexTopMeters": 14.4,
+  "appearanceAccuracy": "photo_informed_simplification",
+  "coordinateBasis": "WGS84 footprint -> local east/up/south meters; aligned design coordinates originate at footprint vertex0, x follows vertex0->1, z points inward",
+  "courtyardAlignedMeters": [
+    [37, 16],
+    [72.5, 15],
+    [72, 23],
+    [54, 47],
+    [36.5, 34]
+  ],
+  "courtyardAccuracy": "photo_informed_visual_approximation_not_source_GIS",
+  "performance": {
+    "triangleBudget": 12000,
+    "modelDrawCallBudget": 16,
+    "glbByteBudget": 350000
+  },
+  "notes": [
+    "文件名数字不代表层数、尺寸或顺序。",
+    "6层已由负责人确认；层高、约27米屋面、约30米顶部构件及附楼高度仅为视觉设计参数，不是实测事实，不回写正式地图。",
+    "OSM外轮廓和稳定ID保留；中庭、入口柱廊、圆形屋顶构件和立面分区是照片参考的显示近似。",
+    "屋面光伏/设备按照片做少量几何概括，不逐片复制，不制作室内或导航入口。",
+    "原图不进入预览服务/public，不作为照片纹理；自有模型零图片纹理。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/图书馆正面.jpg",
+      "bytes": 90140,
+      "sha256": "5e46a9009da28247598037a5bcaef9c765f745cbe413c35da86b93a5eb6e3cfd",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/图书馆侧面.png",
+      "bytes": 1755667,
+      "sha256": "66e9e74cf7815bd8102155aec05100094db67ace398531378852d9756491216f",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/图书馆正面.png",
+      "bytes": 1414758,
+      "sha256": "faa20ed51700f2fd4d98ef07951749fe3b8c0a2e20ea87a39a7ef046e3c564e8",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/图书馆正面6.png",
+      "bytes": 3281252,
+      "sha256": "4e8652876b0d8b95493bdf7d7f64b2e1ea2a00596b58670606268821dfa5109f",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/图书馆正面2.png",
+      "bytes": 3909977,
+      "sha256": "3c1b9d735d462c7bfb2670b148979278256b8a727d10491c1e608d4b0dac5d64",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/library-v1/图书馆俯视.png",
+      "bytes": 981956,
+      "sha256": "eca543a1c86a5324e254ba97f94088139d7b7d2bfbc00fdb9176b88eab66485e",
+      "usage": "internal_visual_reference_only"
+    }
+  ]
+}

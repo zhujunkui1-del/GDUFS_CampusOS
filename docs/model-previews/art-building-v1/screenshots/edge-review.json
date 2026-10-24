@@ -1,0 +1,119 @@
+{
+  "recordedAt": "2026-10-24T06:30:27.375Z",
+  "browser": "149.0.4022.80",
+  "mode": "headed msedge; mobile viewport uses desktop GPU, not a physical phone",
+  "desktop": [
+    {
+      "engine": "three.js r186",
+      "frames": "5",
+      "drawCalls": "13",
+      "renderTriangles": "6074",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[81.7818026826284,169.17811974545498,1083.515876806764,881.7597464123547]",
+      "modelVersion": "art-building-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "6",
+      "drawCalls": "13",
+      "renderTriangles": "6074",
+      "mode": "3d",
+      "view": "front",
+      "modelExtent": "[85.41152824169055,259.97848725577535,1236.5912245335303,721.0367948176659]",
+      "modelVersion": "art-building-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "7",
+      "drawCalls": "13",
+      "renderTriangles": "6074",
+      "mode": "3d",
+      "view": "side",
+      "modelExtent": "[200.6754411684232,266.66158975837897,1127.9382548204132,886.7524770431111]",
+      "modelVersion": "art-building-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "8",
+      "drawCalls": "13",
+      "renderTriangles": "6074",
+      "mode": "3d",
+      "view": "roof",
+      "modelExtent": "[385.3915797030368,126.94436070654253,1054.5412460384293,888.6534637181834]",
+      "modelVersion": "art-building-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "10",
+      "drawCalls": "3",
+      "renderTriangles": "186",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[81.71508411095564,184.2477457032821,1083.5706277880577,885.2737210099895]",
+      "modelVersion": "art-building-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "11",
+      "drawCalls": "3",
+      "renderTriangles": "186",
+      "mode": "2.5d",
+      "view": "roof",
+      "modelExtent": "[385.3919520093056,127.00917231923347,1054.5408738816295,888.7175512534251]",
+      "modelVersion": "art-building-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    }
+  ],
+  "mobile": [
+    {
+      "engine": "three.js r186",
+      "frames": "14",
+      "drawCalls": "13",
+      "renderTriangles": "6074",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[22.11149516145097,316.33425650820374,285.2950298607619,508.1618338082512]",
+      "modelVersion": "art-building-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "16",
+      "drawCalls": "3",
+      "renderTriangles": "186",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[22.105694635994897,321.1526382812757,285.29794086293913,508.3724962214912]",
+      "modelVersion": "art-building-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    }
+  ],
+  "errors": [],
+  "shortWindow": {
+    "engine": "three.js r186",
+    "frames": "28",
+    "drawCalls": "13",
+    "renderTriangles": "6074",
+    "mode": "3d",
+    "view": "side",
+    "modelExtent": "[245.16972860686204,163.1228370326655,659.1350383556872,431.78219559781576]",
+    "modelVersion": "art-building-v1-2026-10-24",
+    "mapIntegrated": "false",
+    "ready": "true"
+  },
+  "noIdleLoop": true
+}

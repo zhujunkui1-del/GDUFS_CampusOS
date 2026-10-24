@@ -1,0 +1,226 @@
+{
+  "type": "FeatureCollection",
+  "stage": "visual_review_only_not_navigation_GIS",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "auditorium-preview-main",
+      "properties": {
+        "placeId": "osm-way-307250997",
+        "part": "main",
+        "height": 22.42,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "heightScaleLevels": 4,
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39154927762382,
+              23.06886560676682
+            ],
+            [
+              113.39163339999999,
+              23.068924699999997
+            ],
+            [
+              113.39195808094848,
+              23.069152777562635
+            ],
+            [
+              113.39193510000001,
+              23.069180499999987
+            ],
+            [
+              113.39167409999999,
+              23.06950900000001
+            ],
+            [
+              113.39149910000003,
+              23.06971990000001
+            ],
+            [
+              113.39108299999998,
+              23.069427500000018
+            ],
+            [
+              113.39124429999998,
+              23.069233100000005
+            ],
+            [
+              113.39154927762382,
+              23.06886560676682
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "auditorium-preview-entrance_platform",
+      "properties": {
+        "placeId": "osm-way-307250997",
+        "part": "entrance_platform",
+        "height": 1.8,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "heightScaleLevels": null,
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39163339999999,
+              23.068924699999997
+            ],
+            [
+              113.39167050000003,
+              23.068879899999985
+            ],
+            [
+              113.3919952,
+              23.069108
+            ],
+            [
+              113.39195808094848,
+              23.069152777562635
+            ],
+            [
+              113.39163339999999,
+              23.068924699999997
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "auditorium-preview-left_annex",
+      "properties": {
+        "placeId": "osm-way-307250997",
+        "part": "left_annex",
+        "height": 7.6,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "heightScaleLevels": null,
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39134569999999,
+              23.068722600000015
+            ],
+            [
+              113.39154927762382,
+              23.06886560676682
+            ],
+            [
+              113.39124429999998,
+              23.069233100000005
+            ],
+            [
+              113.39104079999998,
+              23.069090099999997
+            ],
+            [
+              113.39134569999999,
+              23.068722600000015
+            ]
+          ],
+          [
+            [
+              113.3913190843262,
+              23.06885099741602
+            ],
+            [
+              113.39146126040254,
+              23.06895087148105
+            ],
+            [
+              113.39127143794593,
+              23.06917960452448
+            ],
+            [
+              113.3911292618696,
+              23.069079730629255
+            ],
+            [
+              113.3913190843262,
+              23.06885099741602
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "auditorium-preview-right_annex",
+      "properties": {
+        "placeId": "osm-way-307250997",
+        "part": "right_annex",
+        "height": 5.2,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "heightScaleLevels": null,
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39193510000001,
+              23.069180499999987
+            ],
+            [
+              113.3921191,
+              23.069309700000005
+            ],
+            [
+              113.39185070000002,
+              23.06963310000002
+            ],
+            [
+              113.39167409999999,
+              23.06950900000001
+            ],
+            [
+              113.39193510000001,
+              23.069180499999987
+            ]
+          ],
+          [
+            [
+              113.39189054448053,
+              23.06926940145412
+            ],
+            [
+              113.39200941300334,
+              23.06935290246699
+            ],
+            [
+              113.39184331835378,
+              23.069553043303173
+            ],
+            [
+              113.39172444983103,
+              23.069469542414524
+            ],
+            [
+              113.39189054448053,
+              23.06926940145412
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

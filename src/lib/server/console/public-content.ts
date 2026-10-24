@@ -6,7 +6,9 @@ import { ApiError } from "../errors";
 import { ConsoleIdSchema } from "@/domain/console/contracts";
 import {
   KnowledgeCategorySchema,
+  knowledgeCategories,
   RadarCategorySchema,
+  radarCategories,
 } from "@/domain/console/taxonomy";
 
 const QuerySchema = z
@@ -23,19 +25,26 @@ const QuerySchema = z
     category: z.string().max(50).optional(),
   })
   .strict();
+const groupedCountsCache = new Map<
+  string,
+  { expiresAt: number; counts: Record<string, number> }
+>();
 export async function readPublicContent(db: SqlDatabase, raw: unknown) {
   const q = QuerySchema.parse(raw);
   if (q.version && !q.id)
     throw new ApiError("INVALID_ARGUMENT", "请指定内容记录。");
   if (q.grouped && (!q.surface || q.id || q.category || q.cursor || q.offset))
     throw new ApiError("INVALID_ARGUMENT", "分组列表参数无效。");
-  const where = ["(? IS NULL OR d.id=?)", "(? IS NULL OR d.version=?)"];
-  const params: unknown[] = [
-    q.id || null,
-    q.id || null,
-    q.version || null,
-    q.version || null,
-  ];
+  const where = ["1=1"];
+  const params: unknown[] = [];
+  if (q.id) {
+    where.push("d.id=?");
+    params.push(q.id);
+  }
+  if (q.version) {
+    where.push("d.version=?");
+    params.push(q.version);
+  }
   const pattern = (v: string) => "%" + v.replace(/[\\%_]/g, "\\$&") + "%";
   if (q.surface)
     where.push(
@@ -65,19 +74,60 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
     q.surface === "radar" ? "d.radar_category" : "d.knowledge_category";
   const groupColumn =
     q.surface === "radar" ? "radar_category" : "knowledge_category";
+  let cachedGroupedCounts: Record<string, number> | null = null;
+  if (q.grouped && q.surface && !q.q && !q.source) {
+    const cacheKey = q.surface;
+    const cached = groupedCountsCache.get(cacheKey);
+    if (cached && cached.expiresAt > Date.now()) {
+      cachedGroupedCounts = cached.counts;
+    } else {
+      const condition =
+        q.surface === "radar"
+          ? "d.radar_category IS NOT NULL"
+          : "d.knowledge_category IS NOT NULL AND d.radar_category IS NULL";
+      const result = await db
+        .prepare(
+          `SELECT ${categoryColumn} AS category,count(*) AS n
+           FROM console_public_documents d WHERE ${condition}
+           GROUP BY ${categoryColumn}`,
+        )
+        .all<{ category: string; n: number }>();
+      cachedGroupedCounts = Object.fromEntries(
+        result.results.map((row) => [row.category, row.n]),
+      );
+      groupedCountsCache.set(cacheKey, {
+        expiresAt: Date.now() + 30_000,
+        counts: cachedGroupedCounts,
+      });
+    }
+  }
   const facets =
-    q.surface && !q.id
+    q.surface && !q.id && !q.grouped
       ? await db
           .prepare(
-            `SELECT ${categoryColumn} AS category,count(*) AS n ${base} GROUP BY ${categoryColumn}`,
+            q.source
+              ? `WITH matched_sources(id) AS MATERIALIZED (
+                   SELECT id FROM knowledge_sources WHERE display_name LIKE ? ESCAPE '\\'
+                 )
+                 SELECT ${categoryColumn} AS category,count(*) AS n
+                 FROM console_public_documents d
+                 JOIN matched_sources m ON m.id=d.source_id
+                 WHERE ${q.surface === "radar" ? "d.radar_category IS NOT NULL" : "d.knowledge_category IS NOT NULL AND d.radar_category IS NULL"}
+                   ${q.q ? "AND d.title LIKE ? ESCAPE '\\'" : ""}
+                 GROUP BY ${categoryColumn}`
+              : `SELECT ${categoryColumn} AS category,count(*) AS n ${base} GROUP BY ${categoryColumn}`,
           )
-          .bind(...params)
+          .bind(
+            ...(q.source
+              ? [pattern(q.source), ...(q.q ? [pattern(q.q)] : [])]
+              : params),
+          )
           .all<{ category: string; n: number }>()
       : { results: [] };
-  const counts = Object.fromEntries(
+  const counts: Record<string, number> = Object.fromEntries(
     facets.results.map((r) => [r.category, r.n]),
   );
-  const total = facets.results.reduce((n, r) => n + r.n, 0);
+  if (cachedGroupedCounts) Object.assign(counts, cachedGroupedCounts);
   if (category) {
     where.push(categoryColumn + "=?");
     params.push(category);
@@ -106,19 +156,50 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
   const from = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where.join(" AND ")}`;
   const projection =
     "d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.content_type,d.campus_scope,d.knowledge_category,d.radar_category,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status";
-  const rows = q.grouped
-    ? await db
-        .prepare(
-          `SELECT * FROM (SELECT ${projection},ROW_NUMBER() OVER(PARTITION BY d.${groupColumn} ORDER BY d.published_at DESC,d.id) AS group_position ${base}) WHERE group_position<=? ORDER BY ${groupColumn},published_at DESC,id`,
-        )
-        .bind(...params, q.limit)
-        .all<Record<string, string | number | null>>()
-    : await db
-        .prepare(
-          `SELECT ${projection} ${from} ORDER BY d.published_at DESC,d.id LIMIT ? OFFSET ?`,
-        )
-        .bind(...params, q.id ? 1 : q.limit + 1, q.id ? 0 : q.offset)
-        .all<Record<string, string | number | null>>();
+  const rows =
+    q.grouped && q.surface && !q.q && !q.source
+      ? {
+          results: (
+            await Promise.all(
+              (q.surface === "radar" ? radarCategories : knowledgeCategories)
+                .filter((entry) => (cachedGroupedCounts?.[entry.code] || 0) > 0)
+                .map(async (entry) => {
+                  const condition =
+                    q.surface === "radar"
+                      ? "d.radar_category IS NOT NULL"
+                      : "d.knowledge_category IS NOT NULL AND d.radar_category IS NULL";
+                  return (
+                    await db
+                      .prepare(
+                        `SELECT ${projection} FROM console_public_documents d
+                       JOIN knowledge_sources s ON s.id=d.source_id
+                       WHERE ${condition} AND d.${groupColumn}=?
+                       ORDER BY d.published_at DESC,d.id LIMIT ?`,
+                      )
+                      .bind(entry.code, q.limit)
+                      .all<Record<string, string | number | null>>()
+                  ).results;
+                }),
+            )
+          ).flat(),
+        }
+      : q.grouped
+        ? await db
+            .prepare(
+              `SELECT * FROM (SELECT ${projection},count(*) OVER(PARTITION BY d.${groupColumn}) AS category_count,ROW_NUMBER() OVER(PARTITION BY d.${groupColumn} ORDER BY d.published_at DESC,d.id) AS group_position ${base}) WHERE group_position<=? ORDER BY ${groupColumn},published_at DESC,id`,
+            )
+            .bind(...params, q.limit)
+            .all<Record<string, string | number | null>>()
+        : await db
+            .prepare(
+              `SELECT ${projection} ${from} ORDER BY d.published_at DESC,d.id LIMIT ? OFFSET ?`,
+            )
+            .bind(...params, q.id ? 1 : q.limit + 1, q.id ? 0 : q.offset)
+            .all<Record<string, string | number | null>>();
+  if (q.grouped && (q.q || q.source))
+    for (const row of rows.results)
+      counts[String(row[groupColumn])] = Number(row.category_count);
+  const total = Object.values(counts).reduce((n, count) => n + count, 0);
   const selectedRows = q.id
     ? rows.results.slice(0, 1)
     : q.grouped

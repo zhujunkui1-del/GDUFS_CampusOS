@@ -1,0 +1,25 @@
+{
+  "recordedAt": "2026-10-23T20:42:01.340Z",
+  "sourceFootprintUnchanged": true,
+  "levels": 6,
+  "referenceHashesChecked": 6,
+  "approvedSouth7HashUnchanged": true,
+  "localCoordinateFrameRetained": true,
+  "courtyardInDisplayVolumeOnly": true,
+  "assets": [
+    {
+      "mode": "2.5d",
+      "sha256": "9ce5a5da90dba8b137308f4769aadc02e6c6d55d52ece8952080ec4e1c3f4803",
+      "bytes": 15932,
+      "embeddedImages": 0,
+      "retainedLocalFrame": true
+    },
+    {
+      "mode": "3d",
+      "sha256": "0b93289ff027e3918966b729b563142e8f4cf56c5b1f56207b639bffd6de27d3",
+      "bytes": 91572,
+      "embeddedImages": 0,
+      "retainedLocalFrame": true
+    }
+  ]
+}

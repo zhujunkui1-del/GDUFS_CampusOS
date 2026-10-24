@@ -3,10 +3,21 @@ import { CommandSchema, ContentInputSchema, SafeUrlSchema } from "./contracts";
 export const CheckpointSchema = z
   .object({
     urls: z.array(SafeUrlSchema).max(50).default([]),
+    publishedDates: z
+      .array(
+        z
+          .object({ url: SafeUrlSchema, publishedAt: z.iso.date().nullable() })
+          .strict(),
+      )
+      .max(50)
+      .default([]),
     index: z.number().int().min(0).max(50).default(0),
     page: SafeUrlSchema.nullable().default(null),
     pagesSeen: z.array(SafeUrlSchema).max(10).default([]),
-    visitedPageHashes: z.array(z.string().regex(/^[a-f0-9]{64}$/)).max(100).default([]),
+    visitedPageHashes: z
+      .array(z.string().regex(/^[a-f0-9]{64}$/))
+      .max(100)
+      .default([]),
     entryIndex: z.number().int().min(0).max(49).default(0),
     revalidate: z.boolean().default(false),
   })
@@ -21,7 +32,7 @@ export const PolicySchema = CommandSchema.extend({
   fullTextAuthorized: z.boolean().default(false),
   evidenceUrls: z.array(SafeUrlSchema).min(1).max(10),
   note: z.string().min(5).max(1000),
-  validityDays: z.number().int().min(1).max(30).optional(),
+  validityDays: z.number().int().min(1).max(36500).optional(),
   robotsStatus: z.union([z.literal(200), z.literal(404)]),
   robotsHash: z
     .string()
@@ -104,6 +115,14 @@ export const CommitStepSchema = LeaseSchema.extend({
   publishedRaw: z.string().max(100).nullable(),
   bodyTextChars: z.number().int().min(0).max(50000).default(0),
   discovered: z.array(SafeUrlSchema).max(50).default([]),
+  discoveredDates: z
+    .array(
+      z
+        .object({ url: SafeUrlSchema, publishedAt: z.iso.date().nullable() })
+        .strict(),
+    )
+    .max(50)
+    .default([]),
   nextPage: SafeUrlSchema.nullable().default(null),
   article: ContentInputSchema.nullable().default(null),
   events: z.array(EventCandidateSchema).max(3).default([]),

@@ -22,19 +22,28 @@ async function profileFor(db: IngestionStore["db"], id: string) {
     )
     .bind(id)
     .first<Record<string, string | number | null>>();
-  if (!row) throw new ApiError("UNSUPPORTED_INTEGRATION", "此来源尚未配置官网连接器。");
+  if (!row)
+    throw new ApiError("UNSUPPORTED_INTEGRATION", "此来源尚未配置官网连接器。");
   try {
     const profile = profileFromSource({
       sourceId: String(row.id),
       name: String(row.display_name),
       websiteUrl: row.website_url ? String(row.website_url) : null,
-      webProfileJson: row.web_profile_json ? String(row.web_profile_json) : "{}",
+      webProfileJson: row.web_profile_json
+        ? String(row.web_profile_json)
+        : "{}",
     });
     if (profile) return profile;
   } catch {
-    throw new ApiError("UNSUPPORTED_INTEGRATION", "官网采集入口或解析规则尚未配置。");
+    throw new ApiError(
+      "UNSUPPORTED_INTEGRATION",
+      "官网采集入口或解析规则尚未配置。",
+    );
   }
-  throw new ApiError("UNSUPPORTED_INTEGRATION", "官网采集入口或解析规则尚未配置。");
+  throw new ApiError(
+    "UNSUPPORTED_INTEGRATION",
+    "官网采集入口或解析规则尚未配置。",
+  );
 }
 function approvedUrl(...args: Parameters<typeof configuredUrl>) {
   try {
@@ -52,6 +61,8 @@ export class IngestionStore extends ConsoleStore {
     url: string,
     publishedAt: string | null | undefined,
     existingId: string | null = null,
+    earliestImportDay?: string,
+    latestImportDay?: string,
   ): Promise<"cutoff" | "tombstone" | null> {
     const row = await this.db
       .prepare(
@@ -74,7 +85,9 @@ export class IngestionStore extends ConsoleStore {
       )
       .first<Row>();
     if (row?.tombstoned) return "tombstone";
-    if (!row?.earliest_import_day || row.exempt || row.maintenance) return null;
+    if (!row || row.exempt || row.maintenance) return null;
+    const cutoff = earliestImportDay || String(row.earliest_import_day || "");
+    if (!cutoff) return null;
     const date = publishedAt === undefined ? row.known_date : publishedAt;
     const day = date
       ? String(date).length === 10
@@ -83,7 +96,9 @@ export class IngestionStore extends ConsoleStore {
             .toISOString()
             .slice(0, 10)
       : null;
-    return !day || day < String(row.earliest_import_day) ? "cutoff" : null;
+    return !day || day < cutoff || (!!latestImportDay && day > latestImportDay)
+      ? "cutoff"
+      : null;
   }
   private skipStatement(
     id: string,
@@ -113,9 +128,9 @@ export class IngestionStore extends ConsoleStore {
     await this.source(sourceId);
     const [p, profile] = await Promise.all([
       this.db
-      .prepare("SELECT * FROM source_collection_policies WHERE source_id=?")
-      .bind(sourceId)
-      .first<Row>(),
+        .prepare("SELECT * FROM source_collection_policies WHERE source_id=?")
+        .bind(sourceId)
+        .first<Row>(),
       profileFor(this.db, sourceId),
     ]);
     return { profile, policy: p };
@@ -257,7 +272,9 @@ export class IngestionStore extends ConsoleStore {
     );
     const url =
       claimed.phase === "discover"
-        ? checkpoint.page || profile.entryUrls?.[checkpoint.entryIndex] || profile.entryUrl
+        ? checkpoint.page ||
+          profile.entryUrls?.[checkpoint.entryIndex] ||
+          profile.entryUrl
         : checkpoint.urls[checkpoint.index];
     if (!url) throw new ApiError("CONFLICT", "任务检查点无效，请暂停并检查。");
     const origin = await this.db
@@ -275,6 +292,9 @@ export class IngestionStore extends ConsoleStore {
       fence: Number(claimed.lease_fence),
       leaseToken,
       url,
+      publishedAtFromList:
+        checkpoint.publishedDates.find((entry) => entry.url === url)
+          ?.publishedAt || null,
       validators: {
         etag: origin?.etag || null,
         lastModified: origin?.last_modified || null,
@@ -355,13 +375,16 @@ export class IngestionStore extends ConsoleStore {
       phase = String(row.phase),
       url =
         phase === "discover"
-        ? checkpoint.page || profile.entryUrls?.[checkpoint.entryIndex] || profile.entryUrl
+          ? checkpoint.page ||
+            profile.entryUrls?.[checkpoint.entryIndex] ||
+            profile.entryUrl
           : checkpoint.urls[checkpoint.index];
     const { policy } = await this.policy(sourceId);
     if (value.url !== url)
       throw new ApiError("INVALID_ARGUMENT", "采集结果与任务目标不一致。");
     approvedUrl(profile, value.url, phase === "discover" ? "list" : "detail");
     for (const u of value.discovered) approvedUrl(profile, u);
+    for (const item of value.discoveredDates) approvedUrl(profile, item.url);
     if (value.nextPage) approvedUrl(profile, value.nextPage, "list");
     const statements: Statement[] = [],
       now = this.now();
@@ -385,9 +408,7 @@ export class IngestionStore extends ConsoleStore {
       }
     } else if (phase === "discover") {
       const pageHash = await tokenHash(value.url),
-        nextPageHash = value.nextPage
-          ? await tokenHash(value.nextPage)
-          : null,
+        nextPageHash = value.nextPage ? await tokenHash(value.nextPage) : null,
         repeatedPage =
           !!value.nextPage &&
           (value.nextPage === value.url ||
@@ -398,24 +419,37 @@ export class IngestionStore extends ConsoleStore {
         ...checkpoint.visitedPageHashes.filter((hash) => hash !== pageHash),
         pageHash,
       ].slice(-100);
+      const discoveredDates = new Map(
+        value.discoveredDates.map((item) => [item.url, item.publishedAt]),
+      );
       const ignored = new Set<string>();
       if (value.discovered.length) {
         const retired = await this.db
           .prepare(
-            `SELECT canonical_url,published_at,document_id FROM console_intake_skips WHERE source_id=? AND canonical_url IN(${value.discovered.map(() => "?").join(",")}) GROUP BY canonical_url`,
+            `SELECT canonical_url,MAX(CASE WHEN job_id=? THEN 1 ELSE 0 END) AS checked_this_job,MAX(published_at) AS published_at FROM console_intake_skips WHERE source_id=? AND canonical_url IN(${value.discovered.map(() => "?").join(",")}) GROUP BY canonical_url`,
           )
-          .bind(sourceId, ...value.discovered)
+          .bind(id, sourceId, ...value.discovered)
           .all<Row>();
-        for (const r of retired.results)
-          if (
-            await this.intakeBlock(
+        for (const r of retired.results) {
+          const url = String(r.canonical_url);
+          if (Number(r.checked_this_job)) {
+            ignored.add(url);
+            continue;
+          }
+          const publishedAt = r.published_at
+            ? String(r.published_at)
+            : discoveredDates.get(url) || null;
+          const block = await this.intakeBlock(
               sourceId,
-              String(r.canonical_url),
-              r.published_at ? String(r.published_at) : null,
-              r.document_id ? String(r.document_id) : null,
-            )
-          )
-            ignored.add(String(r.canonical_url));
+              url,
+              publishedAt,
+              null,
+              profile.earliestImportDay,
+              profile.latestImportDay,
+            );
+          if (block === "tombstone" || (block === "cutoff" && publishedAt))
+            ignored.add(url);
+        }
       }
       const known = value.discovered.length
         ? (
@@ -432,15 +466,27 @@ export class IngestionStore extends ConsoleStore {
       const unknown = value.discovered.filter(
         (url) => !known.includes(url) && !ignored.has(url),
       );
+      const cutoff = profile.earliestImportDay;
+      const allUnknownArticlesAreBeforeCutoff =
+        !!cutoff &&
+        unknown.length > 0 &&
+        unknown.every((url) => {
+          const publishedAt = discoveredDates.get(url);
+          return !!publishedAt && publishedAt < cutoff;
+        });
       const nextPage =
         value.nextPage &&
+        !allUnknownArticlesAreBeforeCutoff &&
         !repeatedPage &&
         !checkpoint.visitedPageHashes.includes(nextPageHash || "")
           ? value.nextPage
           : null;
-      checkpoint.urls = (
-        checkpoint.revalidate && known.length ? known : [...unknown, ...known]
-      );
+      checkpoint.urls =
+        checkpoint.revalidate && known.length ? known : [...unknown, ...known];
+      checkpoint.publishedDates = checkpoint.urls.map((url) => ({
+        url,
+        publishedAt: discoveredDates.get(url) || null,
+      }));
       checkpoint.index = 0;
       checkpoint.page = nextPage;
       if (checkpoint.urls.length) nextPhase = "fetch";
@@ -450,8 +496,7 @@ export class IngestionStore extends ConsoleStore {
         checkpoint.page = null;
         checkpoint.urls = [];
         checkpoint.index = 0;
-      }
-      else {
+      } else {
         nextPhase = "complete";
         status = "completed";
       }
@@ -482,6 +527,8 @@ export class IngestionStore extends ConsoleStore {
           value.url,
           undefined,
           String(origin.document_id),
+          profile.earliestImportDay,
+          profile.latestImportDay,
         );
         if (reject)
           statements.push(
@@ -533,6 +580,8 @@ export class IngestionStore extends ConsoleStore {
           value.url,
           value.article.publishedAt,
           origin ? String(origin.document_id) : null,
+          profile.earliestImportDay,
+          profile.latestImportDay,
         );
         if (reject)
           statements.push(
@@ -755,7 +804,10 @@ export class IngestionStore extends ConsoleStore {
           nextPhase = "discover";
           checkpoint.urls = [];
           checkpoint.index = 0;
-        } else if (checkpoint.entryIndex + 1 < (profile.entryUrls?.length || 1)) {
+        } else if (
+          checkpoint.entryIndex + 1 <
+          (profile.entryUrls?.length || 1)
+        ) {
           nextPhase = "discover";
           checkpoint.entryIndex++;
           checkpoint.page = null;

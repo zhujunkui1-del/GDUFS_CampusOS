@@ -85,8 +85,16 @@ if (!args.includes("--run")) {
     });
     rpcTimes.push(Math.round(performance.now() - started));
     const response = await r.json();
-    if (!r.ok || !response.ok)
-      throw Error(`API_${r.status}_${response.error?.code || "ERROR"}`);
+    if (!r.ok || !response.ok) {
+      const message = String(response.error?.message || "")
+        .replace(/[\r\n]+/g, " ")
+        .slice(0, 120);
+      throw Error(
+        `API_${r.status}_${response.error?.code || "ERROR"}_${target}${
+          message ? `:${message}` : ""
+        }`,
+      );
+    }
     if (path === "/api/console-auth" && method === "POST")
       cookie = r.headers.get("set-cookie")!.split(";")[0];
     return response.data as T;
@@ -176,6 +184,7 @@ if (!args.includes("--run")) {
         leaseToken: string;
         phase: string;
         url: string;
+        publishedAtFromList: string | null;
         validators: { etag: string | null; lastModified: string | null };
       }>("/api/admin/jobs/" + jobId + "/claim", "POST", {
         commandId: crypto.randomUUID(),
@@ -199,6 +208,9 @@ if (!args.includes("--run")) {
         lastModified: null,
         bodyHash: null,
         publishedRaw: null,
+        discovered: [],
+        discoveredDates: [],
+        nextPage: null,
       };
       try {
         if (fetcher.robots === null)
@@ -224,10 +236,15 @@ if (!args.includes("--run")) {
               ...result,
               outcome: "ok",
               discovered: found.urls,
+              discoveredDates: found.dates,
               nextPage: found.nextPage,
             };
           } else {
-            const parsed = connector.parse(page.html, lease.url),
+            const parsed = connector.parse(
+                page.html,
+                lease.url,
+                lease.publishedAtFromList,
+              ),
               article = connector.validate(
                 connector.normalize(parsed, lease.url, policyRights),
               );
@@ -257,18 +274,27 @@ if (!args.includes("--run")) {
         }
       } catch (error) {
         const code = error instanceof Error ? error.message : "NETWORK_ERROR";
+        const invalidArgument =
+          error instanceof Error &&
+          "code" in error &&
+          error.code === "INVALID_ARGUMENT";
         result.outcome = /BLOCKED|DENIED|REDIRECT|PRIVATE|ROBOTS|MIME/.test(
           code,
         )
           ? "blocked"
           : /TOO_LARGE/.test(code)
             ? "too_large"
-            : /PARSE|ENCODING/.test(code)
+            : invalidArgument || /PARSE|ENCODING/.test(code)
               ? "parse_error"
               : "network_error";
         events.push({
           url: lease.url,
-          error: code.replace(/[^A-Z_]/g, "").slice(0, 40),
+          error:
+            error instanceof Error &&
+            "code" in error &&
+            typeof error.code === "string"
+              ? error.code
+              : code.replace(/[^A-Z_]/g, "").slice(0, 40),
         });
       }
       result.requests = fetcher.requests - before;

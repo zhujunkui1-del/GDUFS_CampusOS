@@ -1,0 +1,117 @@
+{
+  "version": "auditorium-v1-2026-10-25",
+  "placeId": "osm-way-307250997",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "heightScaleLevels": 4,
+  "levelsAccuracy": "owner_external_height_description_only",
+  "levelsSource": "负责人2026-10-25确认：4层楼高；不作为会堂内部实际楼层核验",
+  "interiorLevelsVerified": false,
+  "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+  "baseMeters": 1.8,
+  "eavesMeters": 17.5,
+  "vaultRiseMeters": 4.8,
+  "vaultFrontMeters": 17.6,
+  "frontSpurTopMeters": 18.7,
+  "canopyTopMeters": 17,
+  "leftAnnexTopMeters": 7.6,
+  "rightAnnexTopMeters": 5.2,
+  "courtyardAlignedMeters": {
+    "left": [
+      [
+        6.5,
+        -13
+      ],
+      [
+        24.8,
+        -13
+      ],
+      [
+        24.8,
+        -45
+      ],
+      [
+        6.5,
+        -45
+      ]
+    ],
+    "right": [
+      [
+        81.2,
+        -14.5
+      ],
+      [
+        96.5,
+        -14.5
+      ],
+      [
+        96.5,
+        -42.5
+      ],
+      [
+        81.2,
+        -42.5
+      ]
+    ]
+  },
+  "courtyardAccuracy": "photo_informed_visual_approximation_not_source_GIS",
+  "appearanceAccuracy": "photo_informed_simplification",
+  "performance": {
+    "triangleBudget": 10000,
+    "modelDrawCallBudget": 16,
+    "glbByteBudget": 300000
+  },
+  "notes": [
+    "文件名数字不代表层数、尺寸或顺序。",
+    "4层楼高作为外部体量描述，不制作或声称已知室内四层平面。",
+    "屋檐、拱顶、红色侧墙和低附楼米制高度为照片比例设计，不写入正式GIS。",
+    "保留原外轮廓；两侧院落在OSM中无内环，本稿只作显示近似开洞。",
+    "保留拱形金属屋面、白色柱廊、透光雨棚、红砖侧墙、角部玻璃和低附楼，不逐条复制屋面波纹或机电。",
+    "七张照片仅内部参考，模型零图片纹理，不复制照片至public。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/大会堂正面1.jpg",
+      "bytes": 106889,
+      "sha256": "15f530b94852cfe6b95dc9fa601b068e135690daf334c26f251e3e2da0b0b434",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/大会堂右侧298.png",
+      "bytes": 298567,
+      "sha256": "134600bacea9f043b2a910264677a92419b506af94ad4d130fa7668b80b7090a",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/大会堂8.png",
+      "bytes": 433763,
+      "sha256": "8e68a16d7b88f00841c04ebb12b553f5138ddff3c10dfb3d79fc97b9ff09f035",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/大会堂2.png",
+      "bytes": 1877717,
+      "sha256": "3a15cff7cea9a8dacd82ea57e206c0d3f1af98ddca36a6181c6d98ac0a3af88a",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/大会堂1.png",
+      "bytes": 1850112,
+      "sha256": "39305fea9dfa2e6b5fafaa04780d02554eb910be93909aa7bb0906b539acf1a0",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/大会堂正面29.png",
+      "bytes": 2432553,
+      "sha256": "610a546ba2a356bacec94034ad843970f1a9d0a3de4e7257325d92536e3f1658",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/auditorium-v1/大会堂俯视.png",
+      "bytes": 807278,
+      "sha256": "eaa0fa34b959b13b98f3180848888ec26700b51820771bf98921f8e7b67bc574",
+      "usage": "internal_visual_reference_only"
+    }
+  ]
+}

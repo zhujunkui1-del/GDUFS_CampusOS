@@ -26,6 +26,7 @@ export async function dispatchDue(
 ) {
   const now = options.now || Date.now(),
     limit = Math.max(1, Math.floor(options.limit ?? 50)),
+    manualRun = !!options.manualId,
     stamp = new Date(now).toISOString(),
     lease = crypto.randomUUID();
   const locked = await db
@@ -46,6 +47,7 @@ export async function dispatchDue(
     registered: number;
     completed: number;
     reason?: string;
+    detail?: string;
   } = { state: "idle", registered: 0, completed: 0 };
   try {
     const settings = await db
@@ -59,7 +61,7 @@ export async function dispatchDue(
     }
     const stale = await db
       .prepare(
-        "SELECT j.id,j.source_id,j.version FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE j.job_kind='web' AND j.control_state='active' AND j.phase<>'complete' AND (j.source_version<>s.version OR j.policy_version<>p.version OR p.source_id IS NULL OR p.expires_at_ms<=? OR s.enabled=0 OR s.operating_status<>'active' OR s.permission_status<>'approved') ORDER BY j.created_at,j.id LIMIT 50",
+        "SELECT j.id,j.source_id,j.version FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE j.job_kind='web' AND j.run_key NOT LIKE 'manual:%' AND j.control_state='active' AND j.phase<>'complete' AND (j.source_version<>s.version OR j.policy_version<>p.version OR p.source_id IS NULL OR p.expires_at_ms<=? OR s.enabled=0 OR s.operating_status<>'active' OR s.permission_status<>'approved') ORDER BY j.created_at,j.id LIMIT 50",
       )
       .bind(now)
       .all<{ id: string; source_id: string; version: number }>();
@@ -98,14 +100,14 @@ export async function dispatchDue(
       where = options.sourceId ? " AND s.id=?" : "";
     const rows = await db
       .prepare(
-        `SELECT s.id,s.display_name,s.website_url,s.web_profile_json,s.version,p.version AS policy_version,p.rule_version,e.sync_hours hours,s.next_sync_at_ms,e.sync_revision FROM knowledge_sources s JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE s.source_type='official_web' AND s.channel_type='official_web' AND ${profileSql}${scopeSql} AND s.enabled=1 AND s.operating_status='active' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.permission_status='approved' AND s.authorization_status='approved' AND s.archived_at IS NULL AND s.sync_state<>'blocked' AND p.expires_at_ms>?${where}
+        `SELECT s.id,s.display_name,s.website_url,s.web_profile_json,s.version,p.version AS policy_version,p.rule_version,e.sync_hours hours,s.next_sync_at_ms,e.sync_revision FROM knowledge_sources s JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE s.console_managed=1 AND s.source_type='official_web' AND s.channel_type='official_web' AND ${profileSql}${scopeSql} AND s.enabled=1 AND s.archived_at IS NULL AND (${manualRun ? "s.operating_status='active' AND s.verification_status='verified' AND s.official_status='verified_official'" : "s.operating_status='active' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.permission_status='approved' AND s.authorization_status='approved' AND s.sync_state<>'blocked' AND p.expires_at_ms>?"})${where}
  AND (?=1 OR (CASE WHEN s.sync_hours_override IS NOT NULL OR (s.sync_policy_version>0 AND s.sync_policy_version<>e.sync_revision) THEN COALESCE(CAST((julianday(s.last_success_at)-2440587.5)*86400000 AS INTEGER),0)+e.sync_hours*3600000 ELSE COALESCE(s.next_sync_at_ms,0) END)<=?)
  AND NOT EXISTS(SELECT 1 FROM ingestion_jobs j WHERE j.source_id=s.id AND j.control_state='active' AND j.phase<>'complete' AND j.status IN('queued','running')) ORDER BY COALESCE(s.next_sync_at_ms,0),s.id LIMIT ?`,
       )
       .bind(
         ...staticIds,
         ...(allowedIds || []),
-        now,
+        ...(manualRun ? [] : [now]),
         ...(options.sourceId ? [options.sourceId] : []),
         Number(!!options.manualId),
         now,
@@ -125,14 +127,15 @@ export async function dispatchDue(
         profile = null;
       }
       if (
-        profile?.configurationStatus === "discovered" ||
-        profile?.ruleVersion !== s.rule_version
+        !profile ||
+        profile.configurationStatus === "discovered" ||
+        profile.ruleVersion !== s.rule_version
       )
         continue;
       const commandId =
           (options.sourceId && options.manualId) || crypto.randomUUID(),
         id = "job-" + commandId,
-        runKey = options.manualId
+        runKey = manualRun
           ? `manual:${s.id}:${options.manualId}`
           : `scheduled:${s.id}:${s.version}:${s.next_sync_at_ms || 0}`;
       const old = await db
@@ -154,6 +157,7 @@ export async function dispatchDue(
               v2: 1,
               schedulerLease: lease,
               note: "官网采集到期任务登记",
+              manualOverride: manualRun,
             }),
           ),
         db
@@ -180,12 +184,14 @@ export async function dispatchDue(
     result.state = result.registered ? "registered" : "no_eligible_due_source";
     return result;
   } catch (e) {
+    const detail = e instanceof Error ? e.message : String(e);
     result = {
       ...result,
       state: "failed",
-      reason: String(e).includes("CONSOLE_")
+      reason: detail.includes("CONSOLE_")
         ? "POLICY_OR_VERSION_CHANGED"
         : "REGISTRATION_FAILED",
+      detail: detail.slice(0, 180),
     };
     return result;
   } finally {

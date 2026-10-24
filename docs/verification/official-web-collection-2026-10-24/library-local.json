@@ -1,0 +1,411 @@
+{
+  "recordedAt": "2026-10-24T06:27:33.699Z",
+  "environment": "real-cloudflare-preview",
+  "sourceId": "GDUFS-SRC-0008",
+  "jobId": "job-f109f73c-7db5-42e8-b393-9a2e3ac15647",
+  "final": {
+    "status": "completed",
+    "controlState": "active",
+    "phase": "complete",
+    "found": 22,
+    "bodyTextParsed": 22,
+    "duplicates": 0,
+    "errors": 0,
+    "reservedRequests": 72
+  },
+  "websiteRequests": 27,
+  "events": [
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1133/10178.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-10-20",
+      "bodyTextChars": 741,
+      "imageCount": 3,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 7633,
+      "requests": 2
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1133/10118.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-30",
+      "bodyTextChars": 1135,
+      "imageCount": 3,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 5800,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1133/10108.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-28",
+      "bodyTextChars": 558,
+      "imageCount": 4,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 6136,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1133/10098.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-25",
+      "bodyTextChars": 1180,
+      "imageCount": 2,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 6195,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1133/10038.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-22",
+      "bodyTextChars": 747,
+      "imageCount": 2,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 5892,
+      "requests": 1
+    },
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 2549,
+      "requests": 1
+    },
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 2701,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1135/10068.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-22",
+      "bodyTextChars": 1794,
+      "imageCount": 0,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 5871,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1135/10058.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-20",
+      "bodyTextChars": 398,
+      "imageCount": 0,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 5675,
+      "requests": 1
+    },
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 2652,
+      "requests": 1
+    },
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 2938,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1167/10048.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-22",
+      "bodyTextChars": 1794,
+      "imageCount": 0,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 5833,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1167/10008.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-20",
+      "bodyTextChars": 398,
+      "imageCount": 0,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 5799,
+      "requests": 1
+    },
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 2458,
+      "requests": 1
+    },
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 2659,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1227/10088.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-28",
+      "bodyTextChars": 85,
+      "imageCount": 0,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 5821,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1227/10078.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-28",
+      "bodyTextChars": 86,
+      "imageCount": 0,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 5767,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1227/9958.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-14",
+      "bodyTextChars": 87,
+      "imageCount": 1,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 5689,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1227/9948.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-09-14",
+      "bodyTextChars": 92,
+      "imageCount": 1,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 5927,
+      "requests": 1
+    },
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 2649,
+      "requests": 1
+    },
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 2597,
+      "requests": 1
+    },
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 2530,
+      "requests": 1
+    },
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 2752,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1359/10248.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-10-23",
+      "bodyTextChars": 1317,
+      "imageCount": 0,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 5888,
+      "requests": 1
+    },
+    {
+      "url": "https://lib.gdufs.edu.cn/info/1359/10238.htm",
+      "parse": "metadata_ok",
+      "publishedAt": "2026-10-23",
+      "bodyTextChars": 1093,
+      "imageCount": 0,
+      "fullTextPersisted": true
+    },
+    {
+      "phase": "fetch",
+      "outcome": "ok",
+      "wallMs": 6556,
+      "requests": 1
+    },
+    {
+      "phase": "discover",
+      "outcome": "ok",
+      "wallMs": 2503,
+      "requests": 1
+    }
+  ],
+  "apiWallMs": [
+    1124,
+    1044,
+    775,
+    646,
+    1425,
+    676,
+    664,
+    5080,
+    641,
+    1371,
+    624,
+    5007,
+    645,
+    1396,
+    629,
+    5324,
+    668,
+    1421,
+    884,
+    5061,
+    692,
+    1383,
+    658,
+    5095,
+    648,
+    1352,
+    703,
+    1725,
+    616,
+    1337,
+    630,
+    1934,
+    630,
+    1366,
+    641,
+    5070,
+    648,
+    1347,
+    605,
+    4961,
+    649,
+    1430,
+    697,
+    1770,
+    661,
+    1407,
+    665,
+    2054,
+    681,
+    1400,
+    650,
+    4988,
+    671,
+    1410,
+    645,
+    4992,
+    664,
+    1410,
+    596,
+    1759,
+    662,
+    1399,
+    611,
+    1951,
+    631,
+    1349,
+    636,
+    5068,
+    617,
+    1370,
+    666,
+    4973,
+    654,
+    1404,
+    648,
+    4951,
+    668,
+    1394,
+    666,
+    5082,
+    687,
+    1379,
+    662,
+    1790,
+    673,
+    1457,
+    676,
+    1775,
+    813,
+    1408,
+    638,
+    1770,
+    614,
+    1396,
+    670,
+    1995,
+    709,
+    1436,
+    667,
+    5014,
+    668,
+    1385,
+    650,
+    5418,
+    665,
+    1702,
+    639,
+    1735,
+    944,
+    669
+  ],
+  "modelCalls": 0,
+  "fullTextPersisted": true,
+  "autoApproved": null,
+  "autoPublished": null
+}

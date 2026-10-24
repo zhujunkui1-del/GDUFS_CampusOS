@@ -181,7 +181,8 @@ export const ContentInputSchema = z
     sourceId: ConsoleIdSchema,
     title: z.string().trim().min(1).max(250),
     url: SafeUrlSchema,
-    body: z.string().trim().min(1).max(50000),
+    body: z.string().trim().min(1).max(1_500_000),
+    bodyFormat: z.enum(["plain", "reading_html"]).optional(),
     bodyStatus: z
       .enum(["unknown", "not_provided", "partial", "complete"])
       .default("unknown"),
@@ -259,6 +260,7 @@ export type ContentSummary = {
 export type ContentDetail = ContentSummary & {
   collectionManaged?: boolean;
   body: string;
+  bodyFormat: "plain" | "reading_html";
   bodyStatus: "unknown" | "not_provided" | "partial" | "complete";
   discoveries?: { finder: string; entryUrl: string }[];
   timeEvidence?: {

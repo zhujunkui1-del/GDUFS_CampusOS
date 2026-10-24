@@ -10,6 +10,8 @@ export type WebProfile = {
   name: string;
   origin: string;
   configurationStatus?: "discovered" | "verified";
+  earliestImportDay?: string;
+  latestImportDay?: string;
   entryUrl: string;
   entryUrls?: string[];
   ruleVersion: string;
@@ -136,6 +138,8 @@ export function profileFromSource(input: {
       name: input.name,
       origin,
       configurationStatus: config.configurationStatus,
+      earliestImportDay: config.earliestImportDay,
+      latestImportDay: config.latestImportDay,
       entryUrl: config.entryUrls[0],
       entryUrls: config.entryUrls,
       ruleVersion: config.ruleVersion,

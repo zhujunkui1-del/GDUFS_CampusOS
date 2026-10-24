@@ -7,7 +7,6 @@ import { ConsoleIdSchema, CommandSchema } from "@/domain/console/contracts";
 import { tokenHash, randomToken } from "../assistant/crypto";
 
 import { SourcesV2Query } from "@/domain/console/v2";
-import { protectedDocumentSql } from "./v2-sql";
 import { ApiError } from "../errors";
 type Row = Record<string, string | number | null>;
 export const runnerActor = {
@@ -349,13 +348,15 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
     action: "pause" | "resume" | "cancel",
   ) {
     if (action === "resume") {
-      const job = await this.job(id),
-        source = await this.sourceV2(String(job.source_id));
-      if (source.syncState === "blocked")
-        throw new ApiError(
-          "CONFLICT",
-          "请先重新核对来源访问许可，再重试同步。",
-        );
+      const job = await this.job(id);
+      if (!String(job.run_key || "").startsWith("manual:")) {
+        const source = await this.sourceV2(String(job.source_id));
+        if (source.syncState === "blocked")
+          throw new ApiError(
+            "CONFLICT",
+            "请先重新核对来源访问许可，再重试同步。",
+          );
+      }
     }
     return super.control(id, raw, action);
   }
@@ -391,7 +392,7 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       hash = await tokenHash(this.actor.id + ":" + v.leaseToken);
     const row = await this.db
       .prepare(
-        "SELECT j.id FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE j.id=? AND j.version=? AND j.lease_fence=? AND j.lease_hash=? AND j.lease_until_ms>? AND j.control_state='active' AND j.status='running' AND s.enabled=1 AND s.sync_state<>'blocked' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.operating_status='active' AND s.permission_status='approved' AND s.authorization_status='approved' AND s.archived_at IS NULL AND s.version=j.source_version AND p.version=j.policy_version AND p.expires_at_ms>? AND (e.auto_sync_enabled=1 OR j.run_key NOT LIKE 'scheduled:%')",
+        "SELECT j.id FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE j.id=? AND j.version=? AND j.lease_fence=? AND j.lease_hash=? AND j.lease_until_ms>? AND j.control_state='active' AND j.status='running' AND s.archived_at IS NULL AND s.version=j.source_version AND p.version IS j.policy_version AND (j.run_key LIKE 'manual:%' OR (s.enabled=1 AND s.sync_state<>'blocked' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.operating_status='active' AND s.permission_status='approved' AND s.authorization_status='approved' AND p.expires_at_ms>?)) AND (e.auto_sync_enabled=1 OR j.run_key NOT LIKE 'scheduled:%')",
       )
       .bind(
         id,
@@ -454,13 +455,57 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       where.push("s.operating_status IN('closed','unreachable')");
     const metricsResult = await this.db
       .prepare(
-        `WITH fs AS(SELECT s.id,s.enabled,s.archived_at FROM knowledge_sources s WHERE ${where.join(" AND ")}),ds AS(SELECT d.id,d.source_id FROM knowledge_documents d JOIN fs s ON s.id=d.source_id WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private')
-    SELECT (SELECT count(*) FROM fs) sources,(SELECT count(*) FROM fs WHERE enabled=1 AND archived_at IS NULL) enabled,
-    (SELECT count(*) FROM ds d WHERE date(COALESCE((SELECT min(r.created_at) FROM campus_collector_receipts r WHERE r.document_id=d.id),(SELECT created_at FROM console_content_versions v WHERE v.document_id=d.id AND v.version=1)),'+8 hours') BETWEEN ? AND ?) todayNew,
-    (SELECT count(*) FROM console_protections p WHERE p.target_type='source' AND p.target_id IN(SELECT id FROM fs) AND p.active=1 AND (p.expires_at_ms IS NULL OR p.expires_at_ms>CAST((julianday('now')-2440587.5)*86400000 AS INTEGER))) protectedSources,
-    (SELECT count(*) FROM ds d WHERE ${protectedDocumentSql()}) protectedArticles`,
+        `WITH fs AS MATERIALIZED (
+          SELECT s.id,s.enabled,s.archived_at FROM knowledge_sources s WHERE ${where.join(" AND ")}
+        ), active_protections AS MATERIALIZED (
+          SELECT target_type,target_id FROM console_protections
+          WHERE active=1 AND (expires_at_ms IS NULL OR expires_at_ms>CAST((julianday('now')-2440587.5)*86400000 AS INTEGER))
+        ), today_receipts AS (
+          SELECT count(DISTINCT r.document_id) AS n
+          FROM campus_collector_receipts r
+          JOIN knowledge_documents d ON d.id=r.document_id
+          JOIN fs f ON f.id=d.source_id
+          WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
+            AND date(r.created_at,'+8 hours') BETWEEN ? AND ?
+            AND NOT EXISTS(
+              SELECT 1 FROM campus_collector_receipts prior
+              WHERE prior.document_id=r.document_id AND prior.created_at<r.created_at
+            )
+        ), today_first_versions AS (
+          SELECT count(*) AS n
+          FROM console_content_versions v
+          JOIN knowledge_documents d ON d.id=v.document_id
+          JOIN fs f ON f.id=d.source_id
+          WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND v.version=1
+            AND date(v.created_at,'+8 hours') BETWEEN ? AND ?
+            AND NOT EXISTS(SELECT 1 FROM campus_collector_receipts r WHERE r.document_id=d.id)
+        ), protected_documents AS (
+          SELECT d.id
+          FROM active_protections p
+          JOIN knowledge_documents d ON d.id=p.target_id
+          JOIN fs f ON f.id=d.source_id
+          WHERE p.target_type='document' AND d.owner_user_id IS NULL AND d.data_domain<>'user_private'
+          UNION
+          SELECT d.id
+          FROM active_protections p
+          JOIN fs f ON f.id=p.target_id
+          JOIN knowledge_documents d ON d.source_id=f.id
+          WHERE p.target_type='source' AND d.owner_user_id IS NULL AND d.data_domain<>'user_private'
+          UNION
+          SELECT d.id
+          FROM active_protections p
+          JOIN document_origins o ON o.source_id=p.target_id
+          JOIN knowledge_documents d ON d.id=o.document_id
+          JOIN fs f ON f.id=d.source_id
+          WHERE p.target_type='source' AND d.owner_user_id IS NULL AND d.data_domain<>'user_private'
+        )
+        SELECT (SELECT count(*) FROM fs) sources,
+          (SELECT count(*) FROM fs WHERE enabled=1 AND archived_at IS NULL) enabled,
+          (SELECT n FROM today_receipts)+(SELECT n FROM today_first_versions) todayNew,
+          (SELECT count(*) FROM active_protections p WHERE p.target_type='source' AND p.target_id IN(SELECT id FROM fs)) protectedSources,
+          (SELECT count(*) FROM protected_documents) protectedArticles`,
       )
-      .bind(...args, start, end)
+      .bind(...args, start, end, start, end)
       .all<{
         sources: number;
         enabled: number;

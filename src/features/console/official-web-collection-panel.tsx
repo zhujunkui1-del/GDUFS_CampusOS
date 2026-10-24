@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState, type FormEvent } from "react";
 import { RefreshCw, Search, X } from "lucide-react";
-import { SourceCollectionPolicy } from "./sync-panel";
 
 type Client = <T>(path: string, method?: string, body?: unknown) => Promise<T>;
 type OfficialWebSource = {
@@ -20,6 +19,8 @@ type OfficialWebSource = {
   articlePathPrefixes: string[];
   profile: {
     configurationStatus: "discovered" | "verified";
+    earliestImportDay?: string | null;
+    latestImportDay?: string | null;
     titleSelector: string;
     titleSuffix: string;
     dateSelector: string;
@@ -82,6 +83,8 @@ type SyncResult = {
   registered: number;
   state: string;
   retryAfterMs?: number;
+  reason?: string;
+  detail?: string;
 };
 
 async function requestManualSync(
@@ -101,48 +104,23 @@ async function requestManualSync(
   }
 }
 
-function sourceCollectionBlock(source: OfficialWebSource) {
-  if (source.syncState === "queued" || source.syncState === "running")
-    return "该官网已有采集任务在运行";
-  if (!source.enabled || source.operatingStatus !== "active")
-    return "该官网已停运，请先在信息源中启用";
-  if (!source.profileConfigured)
-    return "还没有配置文章栏目入口，请先添加列表页地址";
-  if (source.profile?.configurationStatus === "discovered")
-    return "入口仍是候选，先核对栏目和解析规则并保存";
-  if (
-    source.verificationStatus !== "verified" ||
-    source.officialStatus !== "verified_official"
-  )
-    return "官网主体尚未核验，请先在信息源中完成核验";
-  if (
-    source.permissionStatus !== "approved" ||
-    source.authorizationStatus !== "approved" ||
-    !source.policyReady
-  )
-    return "该官网的采集许可待核验或已过期，请先完成许可复核";
-  if (source.syncState === "blocked")
-    return source.lastError || "上次采集被阻止，请先检查站点响应";
-  return "该官网当前已有任务或正在等待调度";
+function sourceCollectionBlock() {
+  return "没有可启动任务：该官网或入口尚未核验，或已有任务正在采集";
 }
 
-function globalCollectionBlock(readiness: Page["readiness"]) {
-  const reasons = [
-    readiness.missingProfileTotal > 0 &&
-      `${readiness.missingProfileTotal} 个未配置入口`,
-    readiness.candidateTotal > 0 && `${readiness.candidateTotal} 个入口待核对`,
-    readiness.policyPendingTotal > 0 &&
-      `${readiness.policyPendingTotal} 个许可待核验`,
-    readiness.sourcePendingTotal > 0 &&
-      `${readiness.sourcePendingTotal} 个来源状态待核验`,
-    readiness.activeJobTotal > 0 &&
-      `${readiness.activeJobTotal} 个来源状态显示排队中或采集中`,
-    readiness.readyTotal > 0 &&
-      `${readiness.readyTotal} 个官网符合条件但未登记，请刷新后重试`,
-  ].filter(Boolean);
-  return reasons.length
-    ? `未登记任务：${reasons.join("；")}`
-    : "未登记任务：当前没有可采集官网";
+function globalCollectionBlock() {
+  return "没有新的已核验官网任务可启动；已在采集的来源不会重复登记";
+}
+
+function canCollectSource(source: OfficialWebSource) {
+  return (
+    source.enabled &&
+    source.operatingStatus === "active" &&
+    source.verificationStatus === "verified" &&
+    source.officialStatus === "verified_official" &&
+    source.profileConfigured &&
+    source.profile?.configurationStatus !== "discovered"
+  );
 }
 
 function useResource<T>(request: Client, path: string) {
@@ -206,8 +184,7 @@ export function OfficialWebCollectionPanel({
   }, [query, search]);
   if (!data)
     return <p className="console-empty">{error || "正在加载官网采集…"}</p>;
-  const settings = data.settings,
-    readiness = data.readiness;
+  const settings = data.settings;
   async function saveSettings(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!settings) return;
@@ -256,12 +233,14 @@ export function OfficialWebCollectionPanel({
       );
       setMessage(
         result.registered > 0
-          ? `已登记 ${result.registered} 个采集任务，等待执行器处理`
+          ? `已登记 ${result.registered} 个已核验官网采集任务，等待执行器处理`
           : result.state === "no_eligible_due_source"
-            ? globalCollectionBlock(readiness)
+            ? globalCollectionBlock()
             : result.state === "busy"
               ? "调度器仍在登记其他任务，请稍后重试"
-              : "未能登记采集任务，请刷新后重试",
+              : result.state === "failed"
+                ? `采集任务登记失败：${result.detail || result.reason || "未知错误"}`
+                : "采集任务未登记，请刷新页面后重试",
       );
       reload();
     } catch (error) {
@@ -409,9 +388,9 @@ function OfficialWebSourceRow({
       );
       setMessage(
         result.registered > 0
-          ? "已登记采集任务，等待执行器处理"
+          ? "已登记该已核验官网采集任务，等待执行器处理"
           : result.state === "no_eligible_due_source"
-            ? sourceCollectionBlock(source)
+            ? sourceCollectionBlock()
             : result.state === "busy"
               ? "调度器仍在登记其他任务，请稍后重试"
               : "未能登记采集任务，请刷新后重试",
@@ -455,25 +434,11 @@ function OfficialWebSourceRow({
           </span>
           <span className="console-badge">
             {source.profileConfigured
-              ? source.profile?.configurationStatus === "discovered"
-                ? `${source.entryUrls.length} 个候选入口`
-                : `${source.entryUrls.length} 个入口`
-              : "待配置入口"}
-          </span>
-          <span
-            className={
-              "console-badge " +
-              (source.policyReady
-                ? "console-status-approved"
-                : "console-status-pending")
-            }
-          >
-            {source.policyReady ? "许可有效" : "许可需核验"}
+              ? `${source.entryUrls.length} 个入口`
+              : "未配置入口"}
           </span>
           <span className="console-badge">
-            {source.profile?.configurationStatus === "discovered"
-              ? "待核对规则"
-              : syncStateLabels[source.syncState] || source.syncState}
+            {syncStateLabels[source.syncState] || source.syncState}
           </span>
         </div>
       </div>
@@ -503,7 +468,12 @@ function OfficialWebSourceRow({
           </button>
           <button
             type="button"
-            disabled={!admin || busy}
+            disabled={!admin || busy || !canCollectSource(source)}
+            title={
+              canCollectSource(source)
+                ? undefined
+                : "只采集已核验且入口已确认的官网"
+            }
             onClick={() => void runNow()}
           >
             立即采集
@@ -528,15 +498,6 @@ function OfficialWebSourceRow({
             admin={admin}
             reload={reload}
           />
-          {source.profileConfigured && (
-            <SourceCollectionPolicy
-              request={request}
-              id={source.id}
-              version={source.version}
-              admin={admin}
-              reload={reload}
-            />
-          )}
         </div>
       )}
     </article>
@@ -569,8 +530,10 @@ function ProfileEditor({
     try {
       await request("v2/web-collection/" + source.id + "/profile", "POST", {
         ...command(source.version),
-        configurationStatus:
-          form.get("configurationStatus") === "on" ? "verified" : "discovered",
+        configurationStatus: "verified",
+        earliestImportDay:
+          String(form.get("earliestImportDay") || "") || undefined,
+        latestImportDay: String(form.get("latestImportDay") || "") || undefined,
         entryUrls,
         articlePathPrefixes,
         titleSelector: String(form.get("titleSelector")),
@@ -581,7 +544,7 @@ function ProfileEditor({
         allowQueryUrls: form.get("allowQueryUrls") === "on",
         requestIntervalMs: source.profile?.requestIntervalMs ?? 1000,
       });
-      setMessage("入口规则已保存；访问许可需重新核对");
+      setMessage("入口规则已保存");
       reload();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "保存失败");
@@ -607,6 +570,24 @@ function ProfileEditor({
           placeholder="/info/1005/"
         />
       </label>
+      <div className="console-form-row">
+        <label>
+          最早发布日期
+          <input
+            type="date"
+            name="earliestImportDay"
+            defaultValue={source.profile?.earliestImportDay || ""}
+          />
+        </label>
+        <label>
+          最晚发布日期
+          <input
+            type="date"
+            name="latestImportDay"
+            defaultValue={source.profile?.latestImportDay || ""}
+          />
+        </label>
+      </div>
       <label>
         标题选择器
         <input
@@ -653,14 +634,6 @@ function ProfileEditor({
           defaultChecked={source.profile?.allowQueryUrls || false}
         />
         允许文章链接携带查询参数
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          name="configurationStatus"
-          defaultChecked={source.profile?.configurationStatus !== "discovered"}
-        />
-        已核对栏目入口和解析规则
       </label>
       <button disabled={!admin}>保存采集规则</button>
       {message && <p role="status">{message}</p>}

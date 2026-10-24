@@ -118,7 +118,7 @@ export const consoleAdministration = withApi(async (request) => {
     );
   if (id) ConsoleIdSchema.parse(id);
   const query = Object.fromEntries(new URL(request.url).searchParams);
-  const read = () => readJson(request, 262144);
+  const read = (maxBytes = 262144) => readJson(request, maxBytes);
   if (section === "v2")
     return consoleV2Api(store, request, path.slice(1), query);
   if (request.method === "GET") {
@@ -181,7 +181,7 @@ export const consoleAdministration = withApi(async (request) => {
           "FORBIDDEN",
           "此文章由采集器维护，请更新原文后同步。",
         );
-      return store.writeContent(id, await read());
+      return store.writeContent(id, await read(1800000));
     }
     if (request.method === "POST" && id) {
       if (action === "review") return store.review(id, await read());

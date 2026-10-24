@@ -494,7 +494,22 @@ export async function collectorAdministration(
     const [sources, tokens, heartbeats] = await Promise.all([
       db
         .prepare(
-          `SELECT p.source_id,p.account_id,${importCutoffSql} AS since_day,p.interval_minutes,CASE WHEN p.enabled=1 AND s.enabled=1 AND s.archived_at IS NULL AND s.permission_status<>'denied' THEN 1 ELSE 0 END AS enabled,s.display_name,(SELECT count(*) FROM campus_collector_articles c WHERE c.source_id=p.source_id AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=c.document_id AND t.released_at IS NULL)) AS article_count,(SELECT count(*) FROM campus_collector_articles c WHERE c.source_id=p.source_id AND c.state='removed' AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=c.document_id AND t.released_at IS NULL)) AS removed_count,(SELECT max(observed_at) FROM campus_collector_articles c WHERE c.source_id=p.source_id) AS last_observed_at FROM campus_collector_sources p JOIN knowledge_sources s ON s.id=p.source_id ORDER BY s.display_name`,
+          `WITH article_rows AS MATERIALIZED (
+            SELECT c.source_id,c.state,c.observed_at,
+              NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=c.document_id AND t.released_at IS NULL) AS kept
+            FROM campus_collector_articles c
+          ), article_stats AS (
+            SELECT source_id,SUM(kept) AS article_count,
+              SUM(CASE WHEN state='removed' AND kept THEN 1 ELSE 0 END) AS removed_count,
+              MAX(observed_at) AS last_observed_at
+            FROM article_rows GROUP BY source_id
+          )
+          SELECT p.source_id,p.account_id,${importCutoffSql} AS since_day,p.interval_minutes,
+            CASE WHEN p.enabled=1 AND s.enabled=1 AND s.archived_at IS NULL AND s.permission_status<>'denied' THEN 1 ELSE 0 END AS enabled,
+            s.display_name,COALESCE(a.article_count,0) AS article_count,COALESCE(a.removed_count,0) AS removed_count,a.last_observed_at
+          FROM campus_collector_sources p JOIN knowledge_sources s ON s.id=p.source_id
+          LEFT JOIN article_stats a ON a.source_id=p.source_id
+          ORDER BY s.display_name`,
         )
         .all(),
       db

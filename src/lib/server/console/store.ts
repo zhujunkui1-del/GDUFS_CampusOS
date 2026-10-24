@@ -528,6 +528,7 @@ export class ConsoleStore {
       ...this.contentSummary(row),
       collectionManaged: row.body_format === "reading_html",
       body: String(row.body),
+      bodyFormat: row.body_format === "reading_html" ? "reading_html" : "plain",
       bodyStatus: ContentInputSchema.shape.bodyStatus.parse(row.body_status),
       discoveries: (
         await this.db
@@ -677,13 +678,14 @@ export class ConsoleStore {
       ? [
           this.db
             .prepare(
-              "UPDATE knowledge_documents SET source_id=?,title=?,url=?,body=?,content_hash=?,candidate_kind=?,campus_scope=?,valid_until=?,published_at=?,extracted_fields_json=?,data_domain=?,version=version+1,review_status='pending',workflow_status='pending',publication_status='draft',lifecycle_status='active',updated_at=?,source_updated_at=?,content_revision=?,input_hash=?,approved_content_revision=NULL,approved_input_hash=NULL,content_type=?,rights_scope=?,radar_category=?,knowledge_category=?,publisher=?,summary=? WHERE id=?",
+              "UPDATE knowledge_documents SET source_id=?,title=?,url=?,body=?,body_format=?,content_hash=?,candidate_kind=?,campus_scope=?,valid_until=?,published_at=?,extracted_fields_json=?,data_domain=?,version=version+1,review_status='pending',workflow_status='pending',publication_status='draft',lifecycle_status='active',updated_at=?,source_updated_at=?,content_revision=?,input_hash=?,approved_content_revision=NULL,approved_input_hash=NULL,content_type=?,rights_scope=?,radar_category=?,knowledge_category=?,publisher=?,summary=? WHERE id=?",
             )
             .bind(
               data.sourceId,
               data.title,
               data.url,
               data.body,
+              data.bodyFormat || previous?.bodyFormat || "plain",
               contentHash,
               data.kind,
               data.campusScope,
@@ -709,7 +711,7 @@ export class ConsoleStore {
       : [
           this.db
             .prepare(
-              "INSERT INTO knowledge_documents(id,source_id,title,url,body,content_hash,fetched_at,campus_scope,data_domain,candidate_kind,valid_until,published_at,extracted_fields_json,updated_at,source_updated_at,content_revision,input_hash,content_type,rights_scope,radar_category,knowledge_category,publisher,summary) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+              "INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,content_hash,fetched_at,campus_scope,data_domain,candidate_kind,valid_until,published_at,extracted_fields_json,updated_at,source_updated_at,content_revision,input_hash,content_type,rights_scope,radar_category,knowledge_category,publisher,summary) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             )
             .bind(
               key,
@@ -717,6 +719,7 @@ export class ConsoleStore {
               data.title,
               data.url,
               data.body,
+              data.bodyFormat || "plain",
               contentHash,
               this.now(),
               data.campusScope,

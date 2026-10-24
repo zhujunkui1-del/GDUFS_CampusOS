@@ -20,6 +20,7 @@ import type { Statement } from "../assistant/database";
 import { tokenHash } from "../assistant/crypto";
 import { CommandSchema, ContentInputSchema } from "@/domain/console/contracts";
 import { classifyArticle } from "@/domain/console/article-classification";
+import { normalizedContent } from "./store";
 import {
   KnowledgeCategorySchema,
   RadarCategorySchema,
@@ -226,7 +227,7 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
     const value = ContentWriteSchema.parse(raw);
     const p = await this.db
       .prepare(
-        "SELECT default_knowledge_category FROM console_publication_policies WHERE source_id=? AND enabled=1",
+        "SELECT p.default_knowledge_category,s.source_type,e.official_web_auto_publish FROM knowledge_sources s CROSS JOIN console_engine_settings e LEFT JOIN console_publication_policies p ON p.source_id=s.id AND p.enabled=1 WHERE s.id=? AND e.id='console-v2-settings'",
       )
       .bind(value.sourceId)
       .first<Row>();
@@ -245,12 +246,22 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
               ? "event"
               : "notice";
       if (
+        p?.source_type === "official_web" &&
+        Number(p.official_web_auto_publish)
+      ) {
+        if (!!value.radarCategory === !!value.knowledgeCategory) {
+          const placement = classifyArticle(value.title);
+          value.radarCategory = placement.radarCategory;
+          value.knowledgeCategory = placement.knowledgeCategory;
+        }
+      } else if (
         value.kind === "knowledge" &&
         !value.radarCategory &&
         !value.knowledgeCategory &&
         p?.default_knowledge_category
-      )
+      ) {
         value.knowledgeCategory = String(p.default_knowledge_category);
+      }
     }
     const old = id ? await this.document(id) : null;
     const prepared = await super.prepareContentWrite(
@@ -566,6 +577,9 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       .first();
     const blocked =
       !!optOut ||
+      (s.sourceType === "official_web" &&
+        (s.verificationStatus !== "verified" ||
+          s.officialStatus !== "verified_official")) ||
       !s.enabled ||
       s.permissionStatus === "denied" ||
       !!control?.hold_reason ||
@@ -645,7 +659,11 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
     if (!check)
       return { id: d.id, outcome: "review", issues, published: false };
     const commandId = crypto.randomUUID();
-    await this.mutate(
+    const publisherStore =
+      this.actor.id === publisher.id
+        ? this
+        : new ConsoleAutomationStore(this.db, publisher, this.now);
+    await publisherStore.mutate(
       { commandId, expectedVersion: d.version },
       "document.metadata_publish",
       "document",
@@ -689,6 +707,12 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
     let blocked: string | null = null;
     if (!s.enabled || s.permissionStatus !== "approved")
       blocked = "来源暂停或访问许可失效";
+    else if (
+      s.sourceType === "official_web" &&
+      (s.verificationStatus !== "verified" ||
+        s.officialStatus !== "verified_official")
+    )
+      blocked = "官网主体尚未核验";
     else if (control?.hold_reason) blocked = "内容已撤回、取消或待清理";
     else if (!p?.enabled || Number(p.expires_at_ms) <= Date.parse(this.now()))
       blocked = "来源尚未授权自动发布或授权过期";
@@ -906,10 +930,163 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       .first<{ document_id: string }>();
     if (row?.document_id)
       try {
-        await this.analyse(row.document_id);
+        const published = await this.publishOwnerDirectedWeb(row.document_id);
+        if (!published) await this.analyse(row.document_id);
       } catch {
-        /* The draft remains unavailable; bounded recheck is safe. */
+        /* A repeated job.commit is idempotent and retries this publication step. */
+        throw new ApiError(
+          "INTERNAL_ERROR",
+          "官网文章已抓取，但自动发布未完成；重试采集任务可继续发布。",
+          true,
+        );
       }
     return result;
+  }
+  private async publishOwnerDirectedWeb(id: string) {
+    const d = await this.document(id);
+    const setting = await this.db
+      .prepare(
+        "SELECT e.official_web_auto_publish,s.source_type,s.channel_type,s.enabled,s.verification_status,s.official_status,s.archived_at FROM knowledge_sources s CROSS JOIN console_engine_settings e WHERE s.id=? AND e.id='console-v2-settings'",
+      )
+      .bind(d.sourceId)
+      .first<Row>();
+    if (
+      setting?.source_type !== "official_web" ||
+      setting.channel_type !== "official_web" ||
+      !Number(setting.official_web_auto_publish) ||
+      !Number(setting.enabled) ||
+      setting.verification_status !== "verified" ||
+      setting.official_status !== "verified_official" ||
+      setting.archived_at
+    )
+      return false;
+    if (!d.inputHash || d.contentRevision <= 0)
+      throw new ApiError("INVALID_ARGUMENT", "官网文章缺少可发布的内容修订。");
+    if (d.publicationStatus === "published") return true;
+    const control = await this.db
+      .prepare(
+        "SELECT hold_reason,review_hold FROM console_document_controls WHERE document_id=?",
+      )
+      .bind(id)
+      .first<Row>();
+    // A manual withdrawal is the owner's explicit override and stays in place.
+    if (control?.hold_reason) return true;
+    const placement =
+      !!d.radarCategory !== !!d.knowledgeCategory
+        ? {
+            radarCategory: d.radarCategory,
+            knowledgeCategory: d.knowledgeCategory,
+          }
+        : classifyArticle(d.title);
+    if (d.kind === "event" && !placement.radarCategory)
+      throw new ApiError("INVALID_ARGUMENT", "官网活动文章缺少雷达分类。");
+    const input = ContentInputSchema.parse({
+      sourceId: d.sourceId,
+      title: d.title,
+      url: d.url,
+      body: d.body,
+      bodyFormat: d.bodyFormat,
+      bodyStatus: d.bodyStatus,
+      kind: d.kind,
+      campusScope: d.campusScope,
+      validUntil: d.validUntil,
+      publishedAt: d.publishedAt,
+      sourceUpdatedAt: d.sourceUpdatedAt,
+      contentType: d.contentType === "unknown" ? "notice" : d.contentType,
+      rightsScope: d.rightsScope,
+      ...placement,
+      publisher: d.publisher,
+      summary: d.summary,
+      tags: d.tags,
+      extractedFields: {},
+    });
+    const changed =
+      input.bodyFormat !== d.bodyFormat ||
+      input.contentType !== d.contentType ||
+      input.radarCategory !== d.radarCategory ||
+      input.knowledgeCategory !== d.knowledgeCategory;
+    const inputHash = changed
+      ? await tokenHash(
+          JSON.stringify([
+            normalizedContent(input),
+            (
+              await this.db
+                .prepare(
+                  "SELECT input_fingerprint FROM document_origins WHERE document_id=? AND source_id=? ORDER BY last_seen_at DESC LIMIT 1",
+                )
+                .bind(id, d.sourceId)
+                .first<{ input_fingerprint: string | null }>()
+            )?.input_fingerprint || "",
+          ]),
+        )
+      : d.inputHash;
+    const revision = d.contentRevision + Number(changed);
+    const commandId = crypto.randomUUID();
+    const statements: Statement[] = [];
+    if (changed) {
+      statements.push(
+        this.db
+          .prepare(
+            "UPDATE knowledge_documents SET content_type=?,radar_category=?,knowledge_category=?,input_hash=?,content_revision=?,version=version+1,updated_at=? WHERE id=? AND version=?",
+          )
+          .bind(
+            input.contentType,
+            input.radarCategory,
+            input.knowledgeCategory,
+            inputHash,
+            revision,
+            this.now(),
+            id,
+            d.version,
+          ),
+        this.db
+          .prepare(
+            "INSERT OR IGNORE INTO document_tags(document_id,content_revision,tag) SELECT document_id,?,tag FROM document_tags WHERE document_id=? AND content_revision=?",
+          )
+          .bind(revision, id, d.contentRevision),
+      );
+    }
+    statements.push(
+      this.db
+        .prepare(
+          "INSERT INTO console_document_controls(document_id,last_publication_mode,auto_policy_version,auto_content_revision,auto_input_hash) VALUES(?,'auto',0,?,?) ON CONFLICT(document_id) DO UPDATE SET generation=generation+1,review_hold=NULL,review_hold_revision=NULL,review_hold_input_hash=NULL,last_publication_mode='auto',auto_policy_version=0,auto_content_revision=excluded.auto_content_revision,auto_input_hash=excluded.auto_input_hash",
+        )
+        .bind(id, revision, inputHash),
+      this.db
+        .prepare(
+          "INSERT INTO console_owner_publications(command_id,document_id,publication_version,content_revision,input_hash,created_at) VALUES(?,?,?,?,?,?)",
+        )
+        .bind(
+          commandId,
+          id,
+          d.version + Number(changed) + 1,
+          revision,
+          inputHash,
+          this.now(),
+        ),
+      this.db
+        .prepare(
+          "UPDATE knowledge_documents SET workflow_status='approved',review_status='approved',publication_status='published',lifecycle_status='active',approved_content_revision=?,approved_input_hash=?,version=version+1,updated_at=? WHERE id=?",
+        )
+        .bind(revision, inputHash, this.now(), id),
+      this.snapshot(id),
+    );
+    const publisherStore =
+      this.actor.id === publisher.id
+        ? this
+        : new ConsoleAutomationStore(this.db, publisher, this.now);
+    await publisherStore.mutate(
+      { commandId, expectedVersion: d.version },
+      "document.owner_auto_publish",
+      "document",
+      id,
+      { note: "按负责人要求直接公开官网采集文章" },
+      statements,
+      "write",
+      d.sourceId,
+      [],
+      { ownerPublicationRevision: revision, ownerPublicationHash: inputHash },
+    );
+    return true;
   }
 }

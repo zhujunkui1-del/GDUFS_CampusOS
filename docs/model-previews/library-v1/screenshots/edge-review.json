@@ -1,0 +1,119 @@
+{
+  "recordedAt": "2026-10-23T20:42:33.451Z",
+  "browser": "149.0.4022.80",
+  "mode": "headed msedge; mobile is desktop viewport, not physical phone",
+  "desktop": [
+    {
+      "engine": "three.js r186",
+      "frames": "5",
+      "drawCalls": "14",
+      "renderTriangles": "5492",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[324.21997221171654,248.03122195595822,1287.7754852649005,886.8639361663193]",
+      "modelVersion": "library-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "6",
+      "drawCalls": "14",
+      "renderTriangles": "5492",
+      "mode": "3d",
+      "view": "front",
+      "modelExtent": "[193.46866605695652,316.928069961281,1356.465290050531,638.3019270772915]",
+      "modelVersion": "library-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "7",
+      "drawCalls": "14",
+      "renderTriangles": "5492",
+      "mode": "3d",
+      "view": "side",
+      "modelExtent": "[258.9032211942095,190.35460572171547,1356.4895839215837,775.8098532657551]",
+      "modelVersion": "library-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "8",
+      "drawCalls": "14",
+      "renderTriangles": "5492",
+      "mode": "3d",
+      "view": "roof",
+      "modelExtent": "[153.6301184179842,101.48725231472838,1060.515232802597,856.831215524363]",
+      "modelVersion": "library-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "10",
+      "drawCalls": "3",
+      "renderTriangles": "138",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[328.32871242976256,271.70626212587,1283.4395635054955,886.8690958313039]",
+      "modelVersion": "library-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "11",
+      "drawCalls": "3",
+      "renderTriangles": "138",
+      "mode": "2.5d",
+      "view": "roof",
+      "modelExtent": "[151.51075851273478,101.39295732246106,1061.777207838496,859.5975162376797]",
+      "modelVersion": "library-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    }
+  ],
+  "mobile": [
+    {
+      "engine": "three.js r186",
+      "frames": "14",
+      "drawCalls": "14",
+      "renderTriangles": "5492",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[96.07060927229918,340.7914704246481,367.96069075396866,512.2074623570318]",
+      "modelVersion": "library-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "16",
+      "drawCalls": "3",
+      "renderTriangles": "138",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[96.0670220019032,347.9015204629475,367.9671391310148,512.5939213715126]",
+      "modelVersion": "library-v1-2026-10-24",
+      "mapIntegrated": "false",
+      "ready": "true"
+    }
+  ],
+  "errors": [],
+  "shortWindow": {
+    "engine": "three.js r186",
+    "frames": "28",
+    "drawCalls": "14",
+    "renderTriangles": "5492",
+    "mode": "3d",
+    "view": "side",
+    "modelExtent": "[209.68772170196203,96.91476846219621,838.5039911364406,427.83433264809446]",
+    "modelVersion": "library-v1-2026-10-24",
+    "mapIntegrated": "false",
+    "ready": "true"
+  },
+  "noIdleLoop": true
+}

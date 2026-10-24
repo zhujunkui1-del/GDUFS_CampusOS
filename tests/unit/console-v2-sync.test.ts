@@ -8,6 +8,7 @@ import { ConsoleSyncStore, runnerActor } from "@/lib/server/console/v2-sync";
 import { dispatchDue } from "@/lib/server/console/scheduler";
 import { runCloudWebBatch } from "@/lib/server/console/cloud-web-runner";
 import { webProfiles } from "@/lib/ingestion/profiles";
+import { ContentInputSchema } from "@/domain/console/contracts";
 const cmd = (expectedVersion: number) => ({
   commandId: crypto.randomUUID(),
   expectedVersion,
@@ -89,6 +90,200 @@ describe("V2 persistent scheduling and dual executors", () => {
       expect(
         f.sqlite.prepare("SELECT count(*) n FROM ingestion_jobs").get()?.n,
       ).toBe(2);
+    } finally {
+      f.close();
+    }
+  });
+  it("limits global manual collection to verified official websites with verified entry profiles", async () => {
+    const f = await setup();
+    try {
+      const readyId = await f.source(0),
+        unverifiedSourceId = await f.source(1),
+        candidateEntryId = await f.source(2),
+        candidateProfile = webProfiles.find(
+          (profile) => profile.sourceId === candidateEntryId,
+        )!;
+      f.sqlite
+        .prepare(
+          "UPDATE knowledge_sources SET verification_status='pending' WHERE id=?",
+        )
+        .run(unverifiedSourceId);
+      f.sqlite
+        .prepare(
+          "UPDATE knowledge_sources SET permission_status='unreviewed' WHERE id=?",
+        )
+        .run(readyId);
+      f.sqlite
+        .prepare("UPDATE knowledge_sources SET web_profile_json=? WHERE id=?")
+        .run(
+          JSON.stringify({
+            ruleVersion: candidateProfile.ruleVersion,
+            configurationStatus: "discovered",
+            entryUrls: [candidateProfile.entryUrl],
+            articlePathPrefixes: candidateProfile.detailPathPrefixes,
+            titleSelector: candidateProfile.titleSelector,
+            titleSuffix: candidateProfile.titleSuffix,
+            dateSelector: candidateProfile.dateSelector,
+            dateLabel: candidateProfile.dateLabel,
+            bodySelector: candidateProfile.bodySelector,
+            allowQueryUrls: false,
+            requestIntervalMs: 0,
+          }),
+          candidateEntryId,
+        );
+
+      expect(
+        await f.store.syncNow({ commandId: crypto.randomUUID() }),
+      ).toMatchObject({
+        state: "registered",
+        registered: 1,
+        completed: 0,
+      });
+      expect(
+        f.sqlite
+          .prepare("SELECT source_id FROM ingestion_jobs")
+          .all()
+          .map((job) => job.source_id),
+      ).toEqual([readyId]);
+    } finally {
+      f.close();
+    }
+  });
+  it("automatically publishes a fetched official website article without a human review", async () => {
+    const f = await setup();
+    try {
+      const id = await f.source(0),
+        profile = webProfiles.find((item) => item.sourceId === id)!,
+        current = await f.store.sourceV2(id);
+      await f.store.setPolicy(id, {
+        ...cmd(current.version),
+        ruleVersion: profile.ruleVersion,
+        rightsScope: "licensed_full_text",
+        fullTextAuthorized: true,
+        evidenceUrls: [profile.origin + "/robots.txt"],
+        note: "隔离正文采集策略",
+        robotsStatus: 404,
+        robotsHash: null,
+        validityDays: 30,
+      });
+      f.sqlite
+        .prepare(
+          "UPDATE knowledge_sources SET permission_status='unreviewed' WHERE id=?",
+        )
+        .run(id);
+      await f.store.syncNow({
+        commandId: crypto.randomUUID(),
+        sourceId: id,
+      });
+      const jobId = String(
+        f.sqlite.prepare("SELECT id FROM ingestion_jobs").get()?.id,
+      );
+      let job = await f.store.job(jobId),
+        lease = await f.store.claim(jobId, cmd(Number(job.version)));
+      const articleUrl = profile.detailPathPrefixes![0] + "999123.htm",
+        absoluteArticleUrl = profile.origin + articleUrl;
+      await f.store.commit(jobId, {
+        ...cmd(lease.version),
+        leaseToken: lease.leaseToken,
+        fence: lease.fence,
+        url: lease.url,
+        status: 200,
+        bytes: 120,
+        requests: 1,
+        outcome: "ok",
+        etag: null,
+        lastModified: null,
+        bodyHash: null,
+        publishedRaw: null,
+        discovered: [absoluteArticleUrl],
+        discoveredDates: [
+          { url: absoluteArticleUrl, publishedAt: "2026-10-24" },
+        ],
+      });
+      job = await f.store.job(jobId);
+      lease = await f.store.claim(jobId, cmd(Number(job.version)));
+      const article = ContentInputSchema.parse({
+        sourceId: id,
+        title: "官网自动发布测试",
+        url: absoluteArticleUrl,
+        body: "<article><p>官网文章正文</p></article>",
+        bodyFormat: "reading_html",
+        bodyStatus: "complete",
+        kind: "knowledge",
+        campusScope: "all",
+        validUntil: null,
+        publishedAt: "2026-10-24",
+        sourceUpdatedAt: null,
+        contentType: "notice",
+        rightsScope: "licensed_full_text",
+        radarCategory: null,
+        knowledgeCategory: "campus_life",
+        publisher: null,
+        summary: "官网文章摘要",
+        tags: [],
+        extractedFields: {},
+      });
+      await f.store.commit(jobId, {
+        ...cmd(lease.version),
+        leaseToken: lease.leaseToken,
+        fence: lease.fence,
+        url: lease.url,
+        status: 200,
+        bytes: 120,
+        requests: 1,
+        outcome: "ok",
+        etag: null,
+        lastModified: null,
+        bodyHash: "a".repeat(64),
+        publishedRaw: "2026-10-24",
+        article,
+        bodyTextChars: 6,
+      });
+
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT review_status,workflow_status,publication_status FROM knowledge_documents WHERE url=?",
+          )
+          .get(absoluteArticleUrl),
+      ).toMatchObject({
+        review_status: "approved",
+        workflow_status: "approved",
+        publication_status: "published",
+      });
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT last_publication_mode FROM console_document_controls WHERE document_id=(SELECT id FROM knowledge_documents WHERE url=?)",
+          )
+          .get(absoluteArticleUrl),
+      ).toMatchObject({ last_publication_mode: "auto" });
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT count(*) AS n FROM console_public_documents WHERE url=?",
+          )
+          .get(absoluteArticleUrl),
+      ).toMatchObject({ n: 1 });
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT count(*) AS n FROM console_commands WHERE action='document.review'",
+          )
+          .get(),
+      ).toMatchObject({ n: 0 });
+      f.sqlite
+        .prepare(
+          "UPDATE knowledge_sources SET verification_status='pending' WHERE id=?",
+        )
+        .run(id);
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT count(*) AS n FROM console_public_documents WHERE url=?",
+          )
+          .get(absoluteArticleUrl),
+      ).toMatchObject({ n: 0 });
     } finally {
       f.close();
     }

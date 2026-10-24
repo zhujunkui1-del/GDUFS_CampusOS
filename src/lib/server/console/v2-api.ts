@@ -95,6 +95,8 @@ export async function consoleV2Api(
     if (section === "sync") return store.syncNow(await read());
     if (section === "web-collection" && id && action === "profile")
       return store.saveWebProfile(id, await read());
+    if (section === "web-collection" && id && action === "owner-policy")
+      return store.setOwnerWebCollectionPolicy(id, await read());
     if (section === "recheck") return store.recheckPending();
     if (section === "whitelist") return store.protection(await read());
     if (section === "retention")

@@ -13,6 +13,8 @@ export const WebProfileConfigSchema = z
   .object({
     ruleVersion: z.string().min(1).max(80),
     configurationStatus: z.enum(["discovered", "verified"]).default("verified"),
+    earliestImportDay: z.iso.date().optional(),
+    latestImportDay: z.iso.date().optional(),
     entryUrls: z.array(SafeUrlSchema).min(1).max(50),
     articlePathPrefixes: z.array(PathPrefixSchema).min(1).max(50),
     titleSelector: z.string().trim().min(1).max(200).default("h1, title"),
@@ -32,6 +34,8 @@ export const WebProfileConfigSchema = z
 
 export const WebProfileSaveSchema = CommandSchema.extend({
   configurationStatus: z.enum(["discovered", "verified"]).default("verified"),
+  earliestImportDay: z.iso.date().optional(),
+  latestImportDay: z.iso.date().optional(),
   entryUrls: z.array(SafeUrlSchema).min(1).max(50),
   articlePathPrefixes: z.array(PathPrefixSchema).min(1).max(50),
   titleSelector: z.string().trim().min(1).max(200),

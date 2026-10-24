@@ -1,0 +1,25 @@
+{
+  "recordedAt": "2026-10-24T06:30:26.141Z",
+  "levels": 5,
+  "referenceHashesChecked": 6,
+  "sourceFootprintUnchanged": true,
+  "sourceAreaMeters2": 3386.892749731437,
+  "partsAreaMeters2": 3386.892749769607,
+  "openCourtyardRetainedInOuterRing": true,
+  "inventedInteriorRings": 0,
+  "south7AndLibraryHashesUnchanged": true,
+  "assets": [
+    {
+      "mode": "2.5d",
+      "sha256": "2fba3f18d533d1f1e47e4f8bd6058e12f260bad207d899218fc9c42d55f8546c",
+      "bytes": 20492,
+      "embeddedImages": 0
+    },
+    {
+      "mode": "3d",
+      "sha256": "c03288b92bd3aa2cd75675f00bb51fbea7a8333634ed2feb074982a57d0a8a3e",
+      "bytes": 139608,
+      "embeddedImages": 0
+    }
+  ]
+}

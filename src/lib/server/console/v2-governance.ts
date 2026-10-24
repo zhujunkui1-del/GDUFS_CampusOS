@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { protectedDocumentSql, protectedSourceSql } from "./v2-sql";
+import { readSourceCounts, sourceDocumentPairs } from "./source-counts";
 import { ManualImportStore } from "./manual-store";
 import { sqlLegacyType, sourceLocator } from "./store";
 import { consolePermission } from "./auth";
@@ -31,12 +32,6 @@ const visible = "s.console_managed=1 AND s.source_type<>'user_private'";
 const docs = "d.owner_user_id IS NULL AND d.data_domain<>'user_private'";
 const active = "s.enabled=1 AND s.archived_at IS NULL";
 const pattern = (s: string) => "%" + s.replace(/[\\%_]/g, "\\$&") + "%";
-const articleCount =
-  "(SELECT count(DISTINCT d.id) FROM knowledge_documents d WHERE " +
-  docs +
-  " AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL) AND (d.source_id=s.id OR EXISTS(SELECT 1 FROM document_origins o WHERE o.document_id=d.id AND o.source_id=s.id)))";
-const publishedCount =
-  "(SELECT count(DISTINCT d.id) FROM console_public_documents d WHERE d.source_id=s.id OR EXISTS(SELECT 1 FROM document_origins o WHERE o.document_id=d.id AND o.source_id=s.id))";
 const collectorState =
   "(SELECT enabled FROM campus_collector_sources WHERE source_id=s.id)";
 export class ConsoleGovernanceStore extends ManualImportStore {
@@ -390,6 +385,8 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       .slice(0, 10)}.${Number(source.version) + 1}`;
     const config = {
       configurationStatus: value.configurationStatus,
+      earliestImportDay: value.earliestImportDay,
+      latestImportDay: value.latestImportDay,
       entryUrls: value.entryUrls,
       articlePathPrefixes: value.articlePathPrefixes,
       titleSelector: value.titleSelector,
@@ -431,6 +428,84 @@ export class ConsoleGovernanceStore extends ManualImportStore {
             "UPDATE source_collection_policies SET expires_at_ms=?,version=version+1,updated_at=? WHERE source_id=?",
           )
           .bind(Date.parse(this.now()), this.now(), id),
+      ],
+      "admin",
+      id,
+    );
+  }
+  async setOwnerWebCollectionPolicy(id: string, raw: unknown) {
+    consolePermission(this.actor, "admin");
+    const value = CommandSchema.extend({
+        robotsStatus: z.union([z.literal(200), z.literal(404)]),
+        robotsHash: z
+          .string()
+          .regex(/^[a-f0-9]{64}$/)
+          .nullable(),
+      })
+        .strict()
+        .parse(raw),
+      source = await this.db
+        .prepare(
+          "SELECT id,display_name,website_url,web_profile_json,enabled,archived_at,channel_type,source_type,version FROM knowledge_sources WHERE id=?",
+        )
+        .bind(id)
+        .first<Row>();
+    if (
+      !source ||
+      source.archived_at ||
+      source.enabled !== 1 ||
+      source.channel_type !== "official_web" ||
+      source.source_type !== "official_web"
+    )
+      throw new ApiError(
+        "INVALID_ARGUMENT",
+        "只能为启用中的官网来源登记本次采集任务。",
+      );
+    let profile: ReturnType<typeof profileFromSource> = null;
+    try {
+      profile = profileFromSource({
+        sourceId: String(source.id),
+        name: String(source.display_name),
+        websiteUrl: source.website_url ? String(source.website_url) : null,
+        webProfileJson: source.web_profile_json
+          ? String(source.web_profile_json)
+          : "{}",
+      });
+    } catch {
+      profile = null;
+    }
+    if (!profile)
+      throw new ApiError("INVALID_ARGUMENT", "该官网没有可复用的已配置入口。");
+    const now = this.now(),
+      note =
+        "负责人指定官网文章采集并直接发布；此记录依据负责人指令，不代表另行核验来源方许可。";
+    return this.mutate(
+      value,
+      "source.owner-web-policy",
+      "source",
+      id,
+      { ...value, note, ruleVersion: profile.ruleVersion },
+      [
+        this.db
+          .prepare(
+            "INSERT INTO source_collection_policies(source_id,rule_version,rights_scope,evidence_urls_json,note,robots_status,robots_hash,expires_at_ms,approved_by,updated_at) VALUES(?,?,'licensed_full_text',?,?,?,?,?,?,?) ON CONFLICT(source_id) DO UPDATE SET rule_version=excluded.rule_version,rights_scope=excluded.rights_scope,evidence_urls_json=excluded.evidence_urls_json,note=excluded.note,robots_status=excluded.robots_status,robots_hash=excluded.robots_hash,expires_at_ms=excluded.expires_at_ms,approved_by=excluded.approved_by,updated_at=excluded.updated_at,version=source_collection_policies.version+1",
+          )
+          .bind(
+            id,
+            profile.ruleVersion,
+            JSON.stringify(profile.entryUrls.slice(0, 10)),
+            note,
+            value.robotsStatus,
+            value.robotsHash,
+            Date.parse(now) + 36500 * 86400000,
+            this.actor.id,
+            now,
+          ),
+        this.db
+          .prepare(
+            "UPDATE knowledge_sources SET connector_type='official_web',sync_state='ready',next_sync_at_ms=?,version=version+1,updated_at=? WHERE id=?",
+          )
+          .bind(Date.parse(now), now, id),
       ],
       "admin",
       id,
@@ -505,13 +580,14 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     consolePermission(this.actor, "read");
     const row = await this.db
       .prepare(
-        `SELECT s.*,${collectorState} AS collector_enabled,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,${articleCount} AS article_count,${publishedCount} AS published_count FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE ${visible} AND s.id=?`,
+        `SELECT s.*,${collectorState} AS collector_enabled,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE ${visible} AND s.id=?`,
       )
       .bind(id)
       .first<Row>();
     if (!row) throw new ApiError("NOT_FOUND", "未找到信息源。");
+    const counts = (await readSourceCounts(this.db, [id])).get(id);
     return {
-      ...this.sourceProjection(row),
+      ...this.sourceProjection({ ...row, ...counts }),
       archivedAt: row.archived_at ? String(row.archived_at) : null,
     };
   }
@@ -574,17 +650,24 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     const order = {
       name: "s.display_name",
       updated: "s.updated_at",
-      articles: "article_count",
+      articles: "COALESCE(c.article_count,0)",
       next_sync: "s.next_sync_at_ms",
     }[q.sort];
-    const inlineCounts = q.sort === "articles",
-      countColumns = inlineCounts
-        ? `${articleCount} AS article_count,${publishedCount} AS published_count`
-        : "0 AS article_count,0 AS published_count";
+    const byArticles = q.sort === "articles";
+    const selectedSources = byArticles
+      ? `WITH selected(source_id) AS MATERIALIZED(SELECT s.id FROM knowledge_sources s WHERE ${where.join(" AND ")}),
+          ${sourceDocumentPairs},
+          article_counts AS(SELECT source_id,count(*) AS article_count FROM pairs
+            WHERE NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=pairs.document_id AND t.released_at IS NULL)
+            GROUP BY source_id)`
+      : "";
+    const sourceFrom = byArticles
+      ? "selected x JOIN knowledge_sources s ON s.id=x.source_id LEFT JOIN article_counts c ON c.source_id=s.id"
+      : "knowledge_sources s";
     const [rows, count] = await Promise.all([
       this.db
         .prepare(
-          `SELECT s.*,${collectorState} AS collector_enabled,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires,${countColumns} FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE ${where.join(" AND ")} ORDER BY ${order} ${q.direction},s.id LIMIT ? OFFSET ?`,
+          `${selectedSources} SELECT s.*,${collectorState} AS collector_enabled,${protectedSourceSql} AS protected,p.rule_version AS policy_rule,p.expires_at_ms AS policy_expires FROM ${sourceFrom} LEFT JOIN source_collection_policies p ON p.source_id=s.id ${byArticles ? "" : `WHERE ${where.join(" AND ")}`} ORDER BY ${order} ${q.direction},s.id LIMIT ? OFFSET ?`,
         )
         .bind(...args, q.limit, q.offset)
         .all<Row>(),
@@ -595,53 +678,13 @@ export class ConsoleGovernanceStore extends ManualImportStore {
         .bind(...args)
         .first<{ n: number }>(),
     ]);
-    const articleCounts = new Map<string, number>(),
-      publishedCounts = new Map<string, number>();
-    if (!inlineCounts && rows.results.length) {
-      const ids = rows.results.map((row) => String(row.id)),
-        selected = ids.map(() => "(?)").join(","),
-        articleRows = await this.db
-          .prepare(
-            `WITH selected(source_id) AS(VALUES ${selected}),pairs AS(
-              SELECT d.source_id,d.id AS document_id FROM knowledge_documents d JOIN selected x ON x.source_id=d.source_id
-              WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
-                AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
-              UNION
-              SELECT o.source_id,d.id FROM document_origins o JOIN selected x ON x.source_id=o.source_id
-                JOIN knowledge_documents d ON d.id=o.document_id
-              WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
-                AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
-            ) SELECT source_id,count(*) AS article_count FROM pairs GROUP BY source_id`,
-          )
-          .bind(...ids)
-          .all<{ source_id: string; article_count: number }>(),
-        publishedRows = await this.db
-          .prepare(
-            `WITH selected(source_id) AS(VALUES ${selected}),pairs AS(
-              SELECT d.source_id,d.id AS document_id FROM console_public_documents d JOIN selected x ON x.source_id=d.source_id
-              UNION
-              SELECT o.source_id,d.id FROM document_origins o JOIN selected x ON x.source_id=o.source_id
-                JOIN console_public_documents d ON d.id=o.document_id
-            ) SELECT source_id,count(*) AS published_count FROM pairs GROUP BY source_id`,
-          )
-          .bind(...ids)
-          .all<{ source_id: string; published_count: number }>();
-      for (const row of articleRows.results)
-        articleCounts.set(row.source_id, Number(row.article_count));
-      for (const row of publishedRows.results)
-        publishedCounts.set(row.source_id, Number(row.published_count));
-    }
+    const counts = await readSourceCounts(
+      this.db,
+      rows.results.map((row) => String(row.id)),
+    );
     return {
       items: rows.results.map((r) =>
-        this.sourceProjection(
-          inlineCounts
-            ? r
-            : {
-                ...r,
-                article_count: articleCounts.get(String(r.id)) || 0,
-                published_count: publishedCounts.get(String(r.id)) || 0,
-              },
-        ),
+        this.sourceProjection({ ...r, ...counts.get(String(r.id)) }),
       ),
       total: count?.n || 0,
       limit: q.limit,
@@ -651,12 +694,19 @@ export class ConsoleGovernanceStore extends ManualImportStore {
   async articlesV2(raw: unknown) {
     const q = ArticleV2Query.parse(raw);
     consolePermission(this.actor, "read");
+    const selectedDocsCte = q.sourceId
+      ? `WITH selected_docs(id) AS MATERIALIZED (
+          SELECT id FROM knowledge_documents WHERE source_id=?
+          UNION
+          SELECT document_id FROM document_origins WHERE source_id=?
+        )`
+      : "";
     const where = [
         docs,
         visible,
         "NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)",
       ],
-      args: unknown[] = [];
+      args: unknown[] = q.sourceId ? [q.sourceId, q.sourceId] : [];
     if (q.q) {
       where.push(
         q.titleOnly === "1"
@@ -666,10 +716,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       args.push(...Array(q.titleOnly === "1" ? 1 : 3).fill(pattern(q.q)));
     }
     if (q.sourceId) {
-      where.push(
-        "(d.source_id=? OR EXISTS(SELECT 1 FROM document_origins o WHERE o.document_id=d.id AND o.source_id=?))",
-      );
-      args.push(q.sourceId, q.sourceId);
+      where.push("d.id IN(SELECT id FROM selected_docs)");
     }
     for (const [column, value] of [
       ["d.content_type", q.type],
@@ -760,12 +807,12 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     const [rows, count] = await Promise.all([
       this.db
         .prepare(
-          `SELECT EXISTS(SELECT 1 FROM console_public_documents pub WHERE pub.id=d.id) AS public_visible,d.id,d.source_id,s.display_name AS source_name,d.title,d.published_at,d.fetched_at,d.updated_at,d.content_type,d.radar_category,d.knowledge_category,d.workflow_status,d.publication_status,d.lifecycle_status,d.body_status,d.version${base} ORDER BY ${order} ${q.direction},d.id LIMIT ? OFFSET ?`,
+          `${selectedDocsCte} SELECT EXISTS(SELECT 1 FROM console_public_documents pub WHERE pub.id=d.id) AS public_visible,d.id,d.source_id,s.display_name AS source_name,d.title,d.published_at,d.fetched_at,d.updated_at,d.content_type,d.radar_category,d.knowledge_category,d.workflow_status,d.publication_status,d.lifecycle_status,d.body_status,d.version${base} ORDER BY ${order} ${q.direction},d.id LIMIT ? OFFSET ?`,
         )
         .bind(...args, q.limit, q.offset)
         .all<Row>(),
       this.db
-        .prepare("SELECT count(*) AS n" + base)
+        .prepare(selectedDocsCte + " SELECT count(*) AS n" + base)
         .bind(...args)
         .first<{ n: number }>(),
     ]);
@@ -920,6 +967,8 @@ export class ConsoleGovernanceStore extends ManualImportStore {
         profile: profile
           ? {
               configurationStatus: profile.configurationStatus || "verified",
+              earliestImportDay: profile.earliestImportDay || null,
+              latestImportDay: profile.latestImportDay || null,
               titleSelector: profile.titleSelector,
               titleSuffix: profile.titleSuffix,
               dateSelector: profile.dateSelector,

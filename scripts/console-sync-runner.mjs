@@ -1,6 +1,6 @@
 // Existing desktop execution only. No service installation, model or paid resource.
-import { readFileSync, mkdirSync } from "node:fs";
-import { spawnSync } from "node:child_process";
+import { readFileSync, mkdirSync, rmSync } from "node:fs";
+import { spawn } from "node:child_process";
 import { build } from "esbuild";
 const args = process.argv.slice(2),
   option = (k) => args[args.indexOf(k) + 1];
@@ -54,6 +54,7 @@ if (!args.includes("--run")) {
     return body.data;
   }
   let lastDispatch = 0;
+  const skippedJobIds = new Set();
   do {
     try {
       const dispatch =
@@ -66,12 +67,17 @@ if (!args.includes("--run")) {
       for (const j of list.items
         .filter(
           (j) =>
-            j.lease_until_ms <= Date.now() && j.next_run_after_ms <= Date.now(),
-        )) {
+            !skippedJobIds.has(j.id) &&
+            j.lease_until_ms <= Date.now() &&
+            j.next_run_after_ms <= Date.now(),
+        )
+        .slice(0, 2)) {
         const reportPath = `test-results/console-v2/${j.id}.json`;
-        const run = spawnSync(
-          process.execPath,
-          [
+        rmSync(reportPath, { force: true });
+        const run = await new Promise((resolve) => {
+          const child = spawn(
+              process.execPath,
+              [
             bundle,
             "--run",
             "--source",
@@ -88,22 +94,71 @@ if (!args.includes("--run")) {
             reportPath,
           ],
           {
-            encoding: "utf8",
             env: process.env,
-            timeout: 3600000,
-            maxBuffer: 1048576,
+            stdio: ["ignore", "ignore", "pipe"],
+            windowsHide: true,
           },
-        );
+            ),
+            stderr = [];
+          let spawnError = null,
+            heartbeatInFlight = false;
+          child.stderr.setEncoding("utf8");
+          child.stderr.on("data", (chunk) => {
+            if (stderr.join("").length < 1048576) stderr.push(chunk);
+          });
+          child.on("error", (error) => {
+            spawnError = error;
+          });
+          const heartbeat = setInterval(() => {
+              if (heartbeatInFlight) return;
+              heartbeatInFlight = true;
+              void api("jobs")
+                .catch(() => {})
+                .finally(() => {
+                  heartbeatInFlight = false;
+                });
+            }, 30000),
+            timeout = setTimeout(() => child.kill(), 3600000);
+          child.on("close", (status, signal) => {
+            clearInterval(heartbeat);
+            clearTimeout(timeout);
+            resolve({
+              status,
+              signal,
+              error: spawnError,
+              stderr: stderr.join("").slice(0, 1048576),
+            });
+          });
+        });
         let result;
         try {
           result = JSON.parse(readFileSync(reportPath, "utf8"));
         } catch {
           /* Keep failures explicit. */
         }
+        const stderrError = String(run.stderr || "")
+          .split(/\r?\n/)
+          .map((line) => line.trim())
+          .find((line) =>
+            /^(?:Error|TypeError|RangeError|ReferenceError|SyntaxError):/.test(
+              line,
+            ),
+          )
+          ?.replace(/Bearer\s+[\w-]+/gi, "Bearer <REDACTED>")
+          .slice(0, 180);
+        const failed = run.status !== 0 || !!run.error;
+        if (failed) skippedJobIds.add(j.id);
         summaries.push({
           jobId: j.id,
           completedProcess: run.status === 0,
           final: result?.final || null,
+          failure: failed
+            ? {
+                exitCode: run.status,
+                signal: run.signal,
+                reason: run.error?.code || stderrError || "CHILD_PROCESS_FAILED",
+              }
+            : null,
         });
       }
       console.log(
