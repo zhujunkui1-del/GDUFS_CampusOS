@@ -1,7 +1,7 @@
 {
-  "at": "2026-10-25T18:41:51.125Z",
-  "total": 453,
-  "passed": 439,
+  "at": "2026-10-25T19:01:11.392Z",
+  "total": 454,
+  "passed": 440,
   "failed": 14,
   "pending": 0,
   "files": 113,
@@ -80,7 +80,6 @@
   "baseline": {
     "ref": "67bc9d4",
     "storedReport": "docs/verification/article-analysis-2026-10-25/unit-summary.json",
-    "newFailures": [],
-    "fixedBaselineFailures": []
+    "newFailures": []
   }
 }

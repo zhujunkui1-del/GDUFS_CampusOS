@@ -1,0 +1,78 @@
+{
+  "recordedAt": "2026-10-25T19:08:21.567Z",
+  "environment": "preview",
+  "url": "https://campusos-preview.zhujunkui1.workers.dev",
+  "workerVersion": "39442eb9-37ff-4152-9435-0104a35e0b8a",
+  "cpuSampleWorkerVersion": "131c4b8b-d6ca-43ef-a8cb-85e59d9b4036",
+  "commits": {
+    "initialUnfinished": "22c2123",
+    "D1": "845345d",
+    "D2D3": "e362342"
+  },
+  "migration": "0049_shared_article_retrieval.sql",
+  "counts": {
+    "documents": 1780,
+    "chunks": 3776,
+    "knowledge": 29,
+    "radar": 944,
+    "unknown": 807,
+    "reclassified": 0
+  },
+  "desktop": {
+    "browser": "149.0.4022.80",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "pass": true,
+    "testDurationSeconds": 51.8,
+    "rounds": 5,
+    "realModel": true,
+    "modelRequests": 15,
+    "toolCalls": 15,
+    "promptTokens": 85589,
+    "completionTokens": 2206,
+    "totalTokens": 87795,
+    "mapReceiptMs": 3574,
+    "pageErrors": []
+  },
+  "mobile": {
+    "browser": "149.0.4022.80",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "simulatedViewport": true,
+    "realPhone": false,
+    "pass": true,
+    "testDurationSeconds": 18.3,
+    "realModel": true,
+    "tools": [
+      "search_campus_events",
+      "search_places",
+      "plan_route",
+      "control_map"
+    ],
+    "mapReceiptMs": 3569,
+    "pageErrors": []
+  },
+  "unit": {
+    "targetedPassed": 18,
+    "total": 454,
+    "passed": 440,
+    "failed": 14,
+    "newFailures": 0
+  },
+  "typecheck": true,
+  "changedFilesEslint": true,
+  "build": true,
+  "productionChanged": false,
+  "paidServicePurchased": false,
+  "remaining": [
+    "No independent relevance-labelled evaluation set",
+    "No real-phone performance acceptance",
+    "Not every one of the 26 combinations has a live test",
+    "Some article dates remain unstructured; raw evidence only",
+    "Per-chat first() row metadata is incomplete; exact Skill query costs separately recorded"
+  ]
+}

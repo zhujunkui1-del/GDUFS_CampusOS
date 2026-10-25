@@ -1,0 +1,151 @@
+{
+  "browser": "149.0.4022.80",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "realModel": true,
+  "preview": true,
+  "outcomes": [
+    {
+      "prompt": "用“金秋阅新｜图书馆2026秋季中文新书展活动”做历史活动技术验收。查出原文举办地点，从南苑7栋规划到那里，并在地图显示路线，明确注明这是历史活动。",
+      "answer": "历史活动技术验收：金秋阅新｜图书馆2026秋季中文新书展活动\n\n- 原文举办地点：大学城校区图书馆一楼大厅[来源1]。该活动是历史活动，举办时间为2026年9月22日至24日9:00—17:00；目前不可再参加，也不建议作为当前活动推荐[来源1]。\n- 路线已在地图显示：从南苑7栋步行至图书馆（大学城校区），约848米、预计12分钟，途经下沉隧道与台阶；浏览器已回执显示成功。\n- 该活动的场地核验为图书馆建筑（placeId osm-way-307250998）；原文未提供报名信息，只说明了现场借阅规则[来源1]。\n\n金秋阅新｜图书馆2026秋季中文新书展活动\n来源1 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 有效性待确认\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源2 · 广外图书馆 · 2026/09/06\n查看证据\n正文证据 · 有效性待确认\n2026年国庆节图书馆开放安排通知\n来源3 · 悦读广外 · 2026/09/30\n查看证据\n正文证据 · 有效性待确认\n2026年中秋节图书馆开放安排通知\n来源4 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 有效性待确认\n图书馆\n南苑7栋 → 图书馆\n848 米 · 约 12 分钟\n清除路线\n开始导航",
+      "sources": [
+        {
+          "title": "金秋阅新｜图书馆2026秋季中文新书展活动",
+          "url": "https://mp.weixin.qq.com/s/NBtUOT9gSaFqSSM4BImKIQ"
+        },
+        {
+          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
+        },
+        {
+          "title": "2026年国庆节图书馆开放安排通知",
+          "url": "https://mp.weixin.qq.com/s/2LWH-iz-nW_FD8RZHnygIA"
+        },
+        {
+          "title": "2026年中秋节图书馆开放安排通知",
+          "url": "https://mp.weixin.qq.com/s/GxE-t-mXddgTOMqhT-Z1Kg"
+        }
+      ]
+    }
+  ],
+  "records": [
+    {
+      "prompt": "用“金秋阅新｜图书馆2026秋季中文新书展活动”做历史活动技术验收。查出原文举办地点，从南苑7栋规划到那里，并在地图显示路线，明确注明这是历史活动。",
+      "tools": [
+        "search_campus_events",
+        "search_places",
+        "plan_route",
+        "control_map"
+      ],
+      "actions": [
+        {
+          "type": "SHOW_ROUTE",
+          "routeId": "3a22ab27-a6aa-4f70-b727-89f5b2fea403"
+        }
+      ],
+      "result": {
+        "conversationId": "84027525-797b-4d54-ae51-4d1e80db8ff4",
+        "requestId": "fecc2e7b-1431-410d-a6d0-0451823c8603",
+        "metrics": {
+          "requests": 5,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 900,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 910,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1074,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 834,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1415,
+              "firstTextMs": 503
+            }
+          ],
+          "promptTokens": 18594,
+          "completionTokens": 430,
+          "cachedPromptTokens": 6016,
+          "totalTokens": 19024,
+          "usageComplete": true,
+          "chargedTokens": 19024,
+          "durationMs": 10681,
+          "estimatedUsdRange": [
+            0.0021627479999999995,
+            0.004325495999999999
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1172,
+            "serverElapsedMs": 11853,
+            "firstTextMs": 10832,
+            "mapActionMs": 3569,
+            "skills": [
+              {
+                "name": "search_campus_events",
+                "durationMs": 358,
+                "ok": true
+              },
+              {
+                "name": "search_places",
+                "durationMs": 0,
+                "ok": true
+              },
+              {
+                "name": "plan_route",
+                "durationMs": 232,
+                "ok": true
+              },
+              {
+                "name": "control_map",
+                "durationMs": 110,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 23,
+              "writeQueries": 16,
+              "calls": 30,
+              "failures": 0,
+              "durationMs": 3720,
+              "maxCallMs": 258,
+              "rowsRead": 1072,
+              "rowsWritten": 23,
+              "rowUsageStatements": 20,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_events",
+                "rowsRead": 867,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 358,
+                "candidateChunks": 96,
+                "usageAvailable": true
+              }
+            ]
+          }
+        }
+      },
+      "response": "**历史活动技术验收：金秋阅新｜图书馆2026秋季中文新书展活动**\n\n- 原文举办地点：大学城校区图书馆一楼大厅[来源1]。该活动是历史活动，举办时间为2026年9月22日至24日9:00—17:00；目前不可再参加，也不建议作为当前活动推荐[来源1]。\n- 路线已在地图显示：从南苑7栋步行至图书馆（大学城校区），约848米、预计12分钟，途经下沉隧道与台阶；浏览器已回执显示成功。\n- 该活动的场地核验为图书馆建筑（placeId osm-way-307250998）；原文未提供报名信息，只说明了现场借阅规则[来源1]。",
+      "responseHeadersMs": 1445,
+      "firstTextMs": 12202,
+      "completeMs": 12696
+    }
+  ],
+  "pageErrors": []
+}

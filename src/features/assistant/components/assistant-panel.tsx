@@ -11,6 +11,7 @@ import {
   useSyncExternalStore,
 } from "react";
 import { useAssistant } from "../use-assistant";
+import { sourcePublicationDate } from "@/lib/retrieval/source-date";
 import {
   ArrowUp,
   Maximize2,
@@ -386,9 +387,7 @@ export function AssistantPanel({
                                   </a>
                                   <span>
                                     来源{index + 1} · {card.sourceName} ·{" "}
-                                    {card.publishedAt
-                                      ? card.publishedAt.slice(0, 10)
-                                      : "发布日期未知"}
+                                    {sourcePublicationDate(card.publishedAt)}
                                   </span>
                                   <details>
                                     <summary>查看证据</summary>

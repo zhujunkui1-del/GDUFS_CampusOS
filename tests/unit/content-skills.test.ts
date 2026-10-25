@@ -8,11 +8,18 @@ import {
 } from "@/lib/server/retrieval/skills";
 import { SkillRegistry } from "@/lib/server/agent/skill-registry";
 import { sqliteD1 } from "../fixtures/sqlite-d1";
+import { sourcePublicationDate } from "@/lib/retrieval/source-date";
 import {
   receiptPollDelay,
   RECEIPT_QUERY_SOFT_LIMIT,
 } from "@/lib/server/assistant/receipt-policy";
 const now = "2026-10-25T12:00:00+08:00";
+it("source cards display the publication day in Shanghai, including UTC midnight and year boundaries", () => {
+  expect(sourcePublicationDate("2026-10-25T18:00:00Z")).toBe("2026/10/26");
+  expect(sourcePublicationDate("2026-12-31T20:00:00Z")).toBe("2027/01/01");
+  expect(sourcePublicationDate("2026-10-25")).toBe("2026/10/25");
+  expect(sourcePublicationDate(null)).toBe("发布日期未知");
+});
 it("RAG map receipts poll within the existing query guard while the map mounts", () => {
   expect(RECEIPT_QUERY_SOFT_LIMIT).toBe(40);
   expect([0, 1, 2, 10].map((n) => receiptPollDelay(n, true))).toEqual([
