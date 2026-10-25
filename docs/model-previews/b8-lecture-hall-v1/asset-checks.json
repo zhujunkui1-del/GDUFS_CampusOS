@@ -1,0 +1,25 @@
+{
+  "recordedAt": "2026-10-24T18:23:35.844Z",
+  "heightScaleLevels": 2,
+  "interiorLevelsVerified": false,
+  "referenceHashesChecked": 6,
+  "sourceFootprintUnchanged": true,
+  "sourceAreaMeters2": 1554.7296089719448,
+  "sourcePlinthAreaMeters2": 1554.72960890602,
+  "otherComponentShapesAreDisplayApproximations": true,
+  "south7LibraryArtAuditoriumHashesUnchanged": true,
+  "assets": [
+    {
+      "mode": "2.5d",
+      "sha256": "f39ed5be06c056864f6ee65398a1f209ca789e38f3291626789176a9026f690a",
+      "bytes": 27624,
+      "embeddedImages": 0
+    },
+    {
+      "mode": "3d",
+      "sha256": "2cd95473155704192b0127127435a35a5589c3af79054c8e7d4a82289d5b1692",
+      "bytes": 61116,
+      "embeddedImages": 0
+    }
+  ]
+}

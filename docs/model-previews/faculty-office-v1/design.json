@@ -1,0 +1,89 @@
+{
+  "version": "faculty-office-v1-2026-10-25",
+  "placeId": "osm-way-307437431",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "heightScaleLevels": 4,
+  "levelsSource": "负责人2026-10-25明确：4层楼高",
+  "interiorLevelsVerified": false,
+  "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+  "floorElevationsMeters": [0.55, 4.05, 7.55, 11.05, 14.55],
+  "roofEavesMeters": 14.75,
+  "roofPeakMeters": 17.85,
+  "roofOverhangMeters": 0.65,
+  "roofModules": [
+    {
+      "x0": -49,
+      "x1": -30.1,
+      "z0": -33.6,
+      "z1": 34
+    },
+    {
+      "x0": -43,
+      "x1": 20.1,
+      "z0": -39.8,
+      "z1": -22.4
+    },
+    {
+      "x0": -32,
+      "x1": 49.1,
+      "z0": -8.65,
+      "z1": 8.7
+    },
+    {
+      "x0": -37,
+      "x1": 19.4,
+      "z0": 26,
+      "z1": 39.9
+    }
+  ],
+  "portico": {
+    "x0": -57.5,
+    "x1": -46.8,
+    "z0": -8,
+    "z1": 8,
+    "eavesMeters": 10.7,
+    "ridgeMeters": 13
+  },
+  "appearanceAccuracy": "photo_informed_simplification",
+  "geometryAccuracy": "original_E_outline_with_photo_informed_roofs_and_portico",
+  "performance": {
+    "triangleBudget": 14000,
+    "modelDrawCallBudget": 18,
+    "glbByteBudget": 400000
+  },
+  "notes": [
+    "文件名数字无建筑层数、尺寸或拍摄顺序意义。",
+    "4层楼高为负责人外部体量描述，不制作或声称已核验室内四层布局。",
+    "原E形轮廓与两处庭院凹口保留；屋顶、门廊、角塔和轻型连接构件是照片比例显示，不写入GIS或导航。",
+    "保留灰色坡顶、红白封闭窗墙、灰色立柱、山墙门廊与简化弧形台阶，不逐瓦/逐砖制作。",
+    "四图仅内部研究，原照片不进入public、预览图片端点或GLB纹理。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/院系办公楼.png",
+      "bytes": 290473,
+      "sha256": "efb03a696d2a736b68dccf742648b17ddde21664425be5caeadc1a23e842efa1",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/院系办公楼正面11.png",
+      "bytes": 2050161,
+      "sha256": "163c0d2fa54e9f3826cdfec4672d3049d4e0b1c6c7a3183fee878f3501db54ae",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/院系办公楼89.png",
+      "bytes": 284551,
+      "sha256": "9f11fa0cd73b94b11ae9596a07c97a8d79075b6603a19fc81fdd567a9499cdaf",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/faculty-office-v1/院系办公楼俯视.png",
+      "bytes": 605563,
+      "sha256": "4735549897848d6f7f0464beaa15d57a579e6c1fdfed21f4545e00405ac36488",
+      "usage": "internal_visual_reference_only"
+    }
+  ]
+}

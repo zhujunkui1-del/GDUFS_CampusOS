@@ -1,0 +1,168 @@
+{
+  "recordedAt": "2026-10-24T19:40:55.658Z",
+  "browser": "149.0.4022.80",
+  "headed": true,
+  "records": [
+    {
+      "name": "desktop-3d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "5",
+      "drawCalls": "16",
+      "renderTriangles": "15902",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[89.06920701819368,285.1872955132803,1216.4026138957443,886.891686095828]",
+      "modelVersion": "laboratory-a-e-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-3d-front",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "7",
+      "drawCalls": "16",
+      "renderTriangles": "15902",
+      "mode": "3d",
+      "view": "front",
+      "modelExtent": "[82.96563953899316,413.62825474259864,1259.008055930971,580.7104240216476]",
+      "modelVersion": "laboratory-a-e-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-3d-side",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "9",
+      "drawCalls": "16",
+      "renderTriangles": "15902",
+      "mode": "3d",
+      "view": "side",
+      "modelExtent": "[84.34887031872148,243.99392575645322,1107.7777178962308,787.3317071910828]",
+      "modelVersion": "laboratory-a-e-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-3d-roof",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "11",
+      "drawCalls": "16",
+      "renderTriangles": "15902",
+      "mode": "3d",
+      "view": "roof",
+      "modelExtent": "[81.99161804019164,251.39006626784982,1357.4919277991878,713.6107737688226]",
+      "modelVersion": "laboratory-a-e-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-2.5d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "13",
+      "drawCalls": "6",
+      "renderTriangles": "2322",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[89.06920701819368,285.1872955132803,1216.4026138957443,886.891686095828]",
+      "modelVersion": "laboratory-a-e-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-2.5d-roof",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "15",
+      "drawCalls": "6",
+      "renderTriangles": "2322",
+      "mode": "2.5d",
+      "view": "roof",
+      "modelExtent": "[81.99161804019164,251.39006626784982,1357.4919277991878,713.6107737688226]",
+      "modelVersion": "laboratory-a-e-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "mobile-3d-overall",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "engine": "three.js r186",
+      "frames": "18",
+      "drawCalls": "16",
+      "renderTriangles": "15902",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[22.412353540007175,341.4170396822028,363.81454247568786,527.3150394859268]",
+      "modelVersion": "laboratory-a-e-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "mobile-2.5d-overall",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "engine": "three.js r186",
+      "frames": "20",
+      "drawCalls": "6",
+      "renderTriangles": "2322",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[22.412353540007175,341.4170396822028,363.81454247568786,527.3150394859268]",
+      "modelVersion": "laboratory-a-e-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "short-3d-before-interaction",
+      "viewport": {
+        "width": 950,
+        "height": 540
+      },
+      "engine": "three.js r186",
+      "frames": "23",
+      "drawCalls": "16",
+      "renderTriangles": "15902",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[210.66927886875695,171.12315313298134,697.3995575218406,431.82616654437976]",
+      "modelVersion": "laboratory-a-e-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    }
+  ],
+  "pageErrors": [],
+  "idleFrames": {
+    "before": "31",
+    "after": "31",
+    "stable": true
+  },
+  "interaction": "drag orbit, wheel zoom, resize to short window",
+  "physicalPhoneTested": false
+}

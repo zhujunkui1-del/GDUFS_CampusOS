@@ -1,0 +1,146 @@
+{
+  "type": "FeatureCollection",
+  "stage": "visual_review_only_not_navigation_GIS",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "faculty-office-preview-source_main",
+      "properties": {
+        "placeId": "osm-way-307437431",
+        "part": "source_main",
+        "height": 18.1,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "heightScaleLevels": 4,
+        "heightKind": "maximum_visual_envelope_roofs_in_GLB",
+        "geometryAccuracy": "original_source_ring",
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39573740000003,
+              23.065345100000002
+            ],
+            [
+              113.39520649999997,
+              23.06535070000001
+            ],
+            [
+              113.3952071,
+              23.065396199999995
+            ],
+            [
+              113.39513699999998,
+              23.065396899999996
+            ],
+            [
+              113.39513779999999,
+              23.065457800000004
+            ],
+            [
+              113.39508390000003,
+              23.065458300000017
+            ],
+            [
+              113.39509029999999,
+              23.065978300000026
+            ],
+            [
+              113.3951442,
+              23.065977799999985
+            ],
+            [
+              113.39514509999998,
+              23.066048500000008
+            ],
+            [
+              113.39574600000003,
+              23.0660422
+            ],
+            [
+              113.39574429999999,
+              23.065904000000018
+            ],
+            [
+              113.39525470000001,
+              23.065909100000013
+            ],
+            [
+              113.39525300000003,
+              23.065767899999983
+            ],
+            [
+              113.39602839999998,
+              23.065759799999995
+            ],
+            [
+              113.3960267,
+              23.065625600000004
+            ],
+            [
+              113.39525129999998,
+              23.0656338
+            ],
+            [
+              113.3952491,
+              23.065456600000005
+            ],
+            [
+              113.39573869999998,
+              23.06545149999998
+            ],
+            [
+              113.39573740000003,
+              23.065345100000002
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "faculty-office-preview-portico_display_overlay",
+      "properties": {
+        "placeId": "osm-way-307437431",
+        "part": "portico_display_overlay",
+        "height": 13,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "heightScaleLevels": 4,
+        "heightKind": "maximum_visual_envelope_roofs_in_GLB",
+        "geometryAccuracy": "photo_informed_display_overlay_not_source_GIS",
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39499410912202,
+              23.06576874560986
+            ],
+            [
+              113.39509869759843,
+              23.06576874560986
+            ],
+            [
+              113.39509869759843,
+              23.065624854351668
+            ],
+            [
+              113.39499410912202,
+              23.065624854351668
+            ],
+            [
+              113.39499410912202,
+              23.06576874560986
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

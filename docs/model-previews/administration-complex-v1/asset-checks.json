@@ -1,0 +1,66 @@
+{
+  "recordedAt": "2026-10-24T18:54:18.638Z",
+  "heightScales": {
+    "administration": 4,
+    "bajiaolou": 1
+  },
+  "referenceHashesChecked": 6,
+  "sourceGeometriesUnchanged": true,
+  "parentSourceAreaMeters2": 5012.679465256133,
+  "partitionAreaMeters2": 5012.679465219362,
+  "octagonUsesExactEightParentVertices": true,
+  "pavilionNotInsideAnyOtherSourcePart": true,
+  "pavilionRenderedExactlyOnce": true,
+  "allAssetsShareExplicitParentOrigin": true,
+  "previousFiveModelFamiliesUnchanged": true,
+  "assets": [
+    {
+      "part": "complex",
+      "mode": "2.5d",
+      "sha256": "3124d96904f6b62c09b27df62aaa094844fe78006453d09ffa4b152c417f024b",
+      "bytes": 44672,
+      "embeddedImages": 0,
+      "pavilionRenderedCount": 1
+    },
+    {
+      "part": "complex",
+      "mode": "3d",
+      "sha256": "51c0dcb3a283f361f3de3ad9bd4960b46c508ff5ac3d2f409de2dcd6f63e33bc",
+      "bytes": 145696,
+      "embeddedImages": 0,
+      "pavilionRenderedCount": 1
+    },
+    {
+      "part": "administration",
+      "mode": "2.5d",
+      "sha256": "e00f035ae0c8ab7f1659b0e1fae6731b640be6dd742840cd82467ff67a65ea65",
+      "bytes": 38532,
+      "embeddedImages": 0,
+      "pavilionRenderedCount": 0
+    },
+    {
+      "part": "administration",
+      "mode": "3d",
+      "sha256": "e3c89bc87a4cd7f65ab6773da8a2a32cc6ae10f522b6dceb0881234d6fbfa6d4",
+      "bytes": 137248,
+      "embeddedImages": 0,
+      "pavilionRenderedCount": 0
+    },
+    {
+      "part": "pavilion",
+      "mode": "2.5d",
+      "sha256": "5c3b917e2d03d76772c1eb02163c3723c92cb277bc921f10a5c68b0aec6a423e",
+      "bytes": 9112,
+      "embeddedImages": 0,
+      "pavilionRenderedCount": 1
+    },
+    {
+      "part": "pavilion",
+      "mode": "3d",
+      "sha256": "8d94f7df161484a5a934d950998ee1fab5e3640cfbf375d371ba947766d7dd0b",
+      "bytes": 17664,
+      "embeddedImages": 0,
+      "pavilionRenderedCount": 1
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "version": "b8-lecture-hall-v1-2026-10-25",
+  "placeId": "osm-way-651642991",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "heightScaleLevels": 2,
+  "levelsSource": "负责人2026-10-25明确：2层楼高；作为外部体量描述",
+  "levelsAccuracy": "owner_external_height_description_only",
+  "interiorLevelsVerified": false,
+  "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+  "baseMeters": 0.95,
+  "foyerRoofMeters": 5.6,
+  "sideTowerTopMeters": 6.7,
+  "mainEavesMeters": 7.05,
+  "mainRidgeMeters": 7.5,
+  "rearBlockTopMeters": 10.6,
+  "rearParapetTopMeters": 10.95,
+  "screenTopMeters": 8.9,
+  "screenThicknessMeters": 0.4,
+  "screenPathAlignedMeters": [
+    [0.3, 0.5],
+    [0.3, -48.8],
+    [0.35778327993363845, -49.976205683954724],
+    [0.5305766351612355, -51.14108386419353],
+    [0.8167159712134939, -52.28341612705354],
+    [1.2134456098645607, -53.39220118838107],
+    [1.7169448278197397, -54.45676084191197],
+    [2.3223646523694583, -55.46684279623523],
+    [3.0238745596471563, -56.41271940996374],
+    [3.8147186257614294, -57.285281374238565],
+    [4.687280590036255, -58.07612544035284],
+    [5.633157203764773, -58.777635347630536],
+    [6.6432391580880275, -59.383055172180256],
+    [7.707798811618923, -59.88655439013544],
+    [8.816583872946453, -60.283284028786504],
+    [9.958916135806462, -60.56942336483876],
+    [11.123794316045272, -60.74221672006636],
+    [12.3, -60.8],
+    [25, -60.8],
+    [25, -47]
+  ],
+  "appearanceAccuracy": "photo_informed_simplification",
+  "geometryAccuracy": "original_footprint_retained_as_anchor_and_plinth; component_extents_and_screen_display_approximations",
+  "performance": {
+    "triangleBudget": 7000,
+    "modelDrawCallBudget": 16,
+    "glbByteBudget": 250000
+  },
+  "notes": [
+    "文件名数字无建筑层数、尺寸或时间顺序意义。",
+    "2层楼高为负责人外部体量描述；不制作或宣称已核验室内两层布局。",
+    "后部高体块按照片单独表现，其米制高度为视觉估算，不当作额外楼层。",
+    "原OSM矩形轮廓保留；弧形红色屏墙、主体/前厅分界、屋面轮廓及入口雨棚/台阶均是显示近似，不写入GIS。",
+    "保留玻璃入口与浅色板墙，不逐砖建模，不制作临时脚手架/施工残料、室内或逐台空调。",
+    "六张照片仅内部参考，模型零图片纹理，不复制原图至public或预览端点。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/学术报告厅234.png",
+      "bytes": 1445716,
+      "sha256": "ab45141249d26da3417d47e217dc800bdbb7faa88599ddc9d564dd2541cdbf7d",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/学术报告厅背面29.png",
+      "bytes": 661946,
+      "sha256": "fd7a5ae81606fb8e28e2029808db02816ad7dfcede47e2a2404ab1cd8fabb401",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/学术报告厅1.png",
+      "bytes": 1179319,
+      "sha256": "7a817cfd4cf30d82e2548a300c9b0b5c4898aaf06927f3fa74401b03097e2f1e",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/学术报告厅2.png",
+      "bytes": 608075,
+      "sha256": "b0f20cfd763abe51584cbeb00a3801d1dd1eb395d94c0e1ccd1caa91cc91b4db",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/B8学术报告厅正门.jpg",
+      "bytes": 210290,
+      "sha256": "5d0d4301ce0d50a8fc813b2be0dec2630f6dfb1f5230dbef2868204b48fcb931",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/b8-lecture-hall-v1/报告厅俯视.png",
+      "bytes": 340481,
+      "sha256": "ab586ead28d22f60cb9ffef9762ef408a28adb01129378272366dd88e9fa9899",
+      "usage": "internal_visual_reference_only"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "version": "administration-complex-v1-2026-10-25",
+  "parentPlaceId": "osm-way-307437432",
+  "pavilionPlaceId": "owner-bajiaolou",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "heightScales": {
+    "administration": 4,
+    "bajiaolou": 1
+  },
+  "heightSource": "负责人2026-10-25明确：校行政办公楼4层楼高；八角楼1层楼高",
+  "interiorLevelsVerified": false,
+  "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+  "floorElevationsMeters": [0.55, 4.05, 7.55, 11.05, 14.55],
+  "officeRoofEavesMeters": 14.75,
+  "officeRoofPeakMeters": 18.1,
+  "galleryDepthMeters": 1.25,
+  "pavilionEavesMeters": 4.15,
+  "pavilionRoofPeakMeters": 7.1,
+  "neckTopMeters": 4.1,
+  "roundAnnexTopMeters": 4.4,
+  "porticoEavesMeters": 12.8,
+  "porticoRoofPeakMeters": 14.4,
+  "porticoUpperEavesMeters": 14.55,
+  "porticoUpperPeakMeters": 15.85,
+  "partitionCornerLocalMeters": [16.35, 32.7],
+  "roofModules": [
+    {
+      "x0": -49.2,
+      "x1": 20.8,
+      "z0": -20,
+      "z1": 2.1
+    },
+    {
+      "x0": 20.8,
+      "x1": 36.9,
+      "z0": -25.2,
+      "z1": 33.8
+    },
+    {
+      "x0": -38.2,
+      "x1": 20.8,
+      "z0": 20.1,
+      "z1": 45.1
+    },
+    {
+      "x0": -38.2,
+      "x1": -19.6,
+      "z0": 10.2,
+      "z1": 20.1
+    }
+  ],
+  "appearanceAccuracy": "photo_informed_simplification",
+  "partitionAccuracy": "original_parent_vertices_and_photo_informed_internal_partition",
+  "performance": {
+    "triangleBudget": 14000,
+    "modelDrawCallBudget": 20,
+    "glbByteBudget": 450000
+  },
+  "notes": [
+    "文件名数字无层数、尺寸或时间意义。",
+    "八角楼原8顶点来自行政楼父轮廓；主楼中切除八角楼，仅按一层体量绘制一次。",
+    "连接段、弧形低附楼与入口门廊分部来自照片显示近似，原边界/标签/路网不改。",
+    "四层/一层为负责人高度描述；米制层高、坡屋顶、塔亭和细部尺寸均为视觉估算。",
+    "整体与单体GLB统一使用行政楼WGS84原点，以manifest为准，不按子标签坐标重复平移。",
+    "灰色坡顶、红白廊道、门廊叠檐与八角屋顶使用纯色简化几何，不逐瓦/逐砖建模。",
+    "六图仅内部研究，不进入public、预览图片端点或GLB纹理。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/校行政办公楼123.jpg",
+      "bytes": 91886,
+      "sha256": "87f657e257be99eaa6340e63892ecb268460f9a3363502e7494e4f73b038e51e",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/校行政办公楼正面99.png",
+      "bytes": 1604535,
+      "sha256": "a53621a20e07d662750c5e2505c52727d81af8614d465f17907cfb9362caf864",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/校行政办公楼34.png",
+      "bytes": 311088,
+      "sha256": "c50357806069ab351fb750ce8f58ddff99ed8fe13c991663337f73096efbcd81",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/校行政办公楼.png",
+      "bytes": 152861,
+      "sha256": "e7a7d8060bd8c868e58e100d84b9770dd7799294456620920ae8053b994979e0",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/八角楼9.png",
+      "bytes": 45738,
+      "sha256": "5130f763d4b2614bb862a64450459611dccf05d5436f72cfc0bffa49d6a19f76",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/administration-complex-v1/校行政办公楼和八角楼俯视.png",
+      "bytes": 725535,
+      "sha256": "aafce2afae72b83c043bcfc04f372d29e6392830896ae8a6672423af2674e847",
+      "usage": "internal_visual_reference_only"
+    }
+  ]
+}

@@ -1,0 +1,632 @@
+{
+  "type": "FeatureCollection",
+  "stage": "visual_review_only_not_navigation_GIS",
+  "note": "Open galleries, stairs and perforated roof frame are in the GLBs; these display volumes do not define five separate buildings.",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "laboratory-source-base",
+      "properties": {
+        "placeId": "osm-relation-4105911",
+        "part": "source_parent_base",
+        "base": 0.08,
+        "height": 3.7,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.3936021,
+              23.0678748
+            ],
+            [
+              113.3941996,
+              23.0678807
+            ],
+            [
+              113.3941986,
+              23.0680048
+            ],
+            [
+              113.3941326,
+              23.0680044
+            ],
+            [
+              113.3941306,
+              23.0682316
+            ],
+            [
+              113.3940797,
+              23.0682312
+            ],
+            [
+              113.3940787,
+              23.0683424
+            ],
+            [
+              113.3932111,
+              23.0683359
+            ],
+            [
+              113.3931586,
+              23.0683979
+            ],
+            [
+              113.3930395,
+              23.0683065
+            ],
+            [
+              113.3944075,
+              23.0666873
+            ],
+            [
+              113.3945328,
+              23.0667772
+            ],
+            [
+              113.3950759,
+              23.0667826
+            ],
+            [
+              113.3950746,
+              23.0668934
+            ],
+            [
+              113.3949889,
+              23.0668925
+            ],
+            [
+              113.3949862,
+              23.0671247
+            ],
+            [
+              113.3948816,
+              23.0671237
+            ],
+            [
+              113.3948802,
+              23.0672383
+            ],
+            [
+              113.3947675,
+              23.0672372
+            ],
+            [
+              113.3947648,
+              23.0674616
+            ],
+            [
+              113.394716,
+              23.0674611
+            ],
+            [
+              113.3947143,
+              23.0676095
+            ],
+            [
+              113.3944361,
+              23.0676067
+            ],
+            [
+              113.3944364,
+              23.0675775
+            ],
+            [
+              113.3938632,
+              23.0675669
+            ],
+            [
+              113.3936021,
+              23.0678748
+            ]
+          ],
+          [
+            [
+              113.3934966,
+              23.0679992
+            ],
+            [
+              113.3933056,
+              23.0682245
+            ],
+            [
+              113.3939532,
+              23.0682303
+            ],
+            [
+              113.3939552,
+              23.0680026
+            ],
+            [
+              113.3934966,
+              23.0679992
+            ]
+          ],
+          [
+            [
+              113.3948227,
+              23.0668908
+            ],
+            [
+              113.3948199,
+              23.0671231
+            ],
+            [
+              113.3942443,
+              23.0671174
+            ],
+            [
+              113.3944396,
+              23.066887
+            ],
+            [
+              113.3948227,
+              23.0668908
+            ]
+          ],
+          [
+            [
+              113.3945903,
+              23.0672354
+            ],
+            [
+              113.3945877,
+              23.0674599
+            ],
+            [
+              113.3939592,
+              23.0674536
+            ],
+            [
+              113.394148,
+              23.067231
+            ],
+            [
+              113.3945903,
+              23.0672354
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "laboratory-display-0",
+      "properties": {
+        "placeId": "osm-relation-4105911",
+        "part": "rear_courtyard_cluster",
+        "base": 3.7,
+        "height": 18.45,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "photo_informed_display_part_not_A_E_boundary",
+        "heightScaleLevels": 5,
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39360210000001,
+              23.067874799999984
+            ],
+            [
+              113.39419959999998,
+              23.067880700000018
+            ],
+            [
+              113.39419859999998,
+              23.068004800000026
+            ],
+            [
+              113.39413260000003,
+              23.068004400000007
+            ],
+            [
+              113.39413059999998,
+              23.068231600000004
+            ],
+            [
+              113.39407970000002,
+              23.068231200000014
+            ],
+            [
+              113.39407870000002,
+              23.068342400000006
+            ],
+            [
+              113.39321110000003,
+              23.068335900000008
+            ],
+            [
+              113.39315859999999,
+              23.068397900000008
+            ],
+            [
+              113.3931469034136,
+              23.0683889237811
+            ],
+            [
+              113.39358911475631,
+              23.067865513509517
+            ],
+            [
+              113.39360210000001,
+              23.067874799999984
+            ]
+          ],
+          [
+            [
+              113.39349659999999,
+              23.067999200000003
+            ],
+            [
+              113.39330560000002,
+              23.068224500000014
+            ],
+            [
+              113.3939532,
+              23.068230299999982
+            ],
+            [
+              113.3939552,
+              23.068002600000014
+            ],
+            [
+              113.39349659999999,
+              23.067999200000003
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "laboratory-display-1",
+      "properties": {
+        "placeId": "osm-relation-4105911",
+        "part": "rear_courtyard_cluster",
+        "base": 3.7,
+        "height": 18.45,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "photo_informed_display_part_not_A_E_boundary",
+        "heightScaleLevels": 5,
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39451772554241,
+              23.066766384410712
+            ],
+            [
+              113.39453279999998,
+              23.066777200000004
+            ],
+            [
+              113.3950759,
+              23.066782599999982
+            ],
+            [
+              113.39507459999999,
+              23.066893399999998
+            ],
+            [
+              113.39498889999999,
+              23.06689250000001
+            ],
+            [
+              113.3949862,
+              23.067124700000008
+            ],
+            [
+              113.39488160000002,
+              23.067123699999982
+            ],
+            [
+              113.39488019999999,
+              23.067238300000014
+            ],
+            [
+              113.3947675,
+              23.067237200000008
+            ],
+            [
+              113.39476480000002,
+              23.0674616
+            ],
+            [
+              113.39471600000002,
+              23.06746109999999
+            ],
+            [
+              113.39471430000003,
+              23.067609500000017
+            ],
+            [
+              113.39443610000001,
+              23.0676067
+            ],
+            [
+              113.39443640000002,
+              23.067577500000013
+            ],
+            [
+              113.3938632,
+              23.06756689999999
+            ],
+            [
+              113.39384961217837,
+              23.067557182549322
+            ],
+            [
+              113.39451772554241,
+              23.066766384410712
+            ]
+          ],
+          [
+            [
+              113.39482270000002,
+              23.066890799999996
+            ],
+            [
+              113.39481990000002,
+              23.067123100000003
+            ],
+            [
+              113.39424429999997,
+              23.0671174
+            ],
+            [
+              113.3944396,
+              23.06688699999998
+            ],
+            [
+              113.39482270000002,
+              23.066890799999996
+            ]
+          ],
+          [
+            [
+              113.3945903,
+              23.0672354
+            ],
+            [
+              113.39458769999999,
+              23.067459900000003
+            ],
+            [
+              113.39395919999998,
+              23.067453600000007
+            ],
+            [
+              113.39414799999997,
+              23.067231000000007
+            ],
+            [
+              113.3945903,
+              23.0672354
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "laboratory-display-2",
+      "properties": {
+        "placeId": "osm-relation-4105911",
+        "part": "orange_front_room",
+        "base": 3.7,
+        "height": 18.45,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "photo_informed_display_part_not_A_E_boundary",
+        "heightScaleLevels": 5,
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39310292591784,
+              23.06826073537603
+            ],
+            [
+              113.39322290332876,
+              23.06811872775667
+            ],
+            [
+              113.39331782829277,
+              23.06818661388529
+            ],
+            [
+              113.39319785088185,
+              23.068328621433025
+            ],
+            [
+              113.39310292591784,
+              23.06826073537603
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "laboratory-display-3",
+      "properties": {
+        "placeId": "osm-relation-4105911",
+        "part": "orange_front_room",
+        "base": 3.7,
+        "height": 18.45,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "photo_informed_display_part_not_A_E_boundary",
+        "heightScaleLevels": 5,
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39339687057458,
+              23.067912816442316
+            ],
+            [
+              113.39355284120876,
+              23.06772820603048
+            ],
+            [
+              113.3936477661727,
+              23.067796092356176
+            ],
+            [
+              113.39349179553852,
+              23.06798070267483
+            ],
+            [
+              113.39339687057458,
+              23.067912816442316
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "laboratory-display-4",
+      "properties": {
+        "placeId": "osm-relation-4105911",
+        "part": "orange_front_room",
+        "base": 3.7,
+        "height": 18.45,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "photo_informed_display_part_not_A_E_boundary",
+        "heightScaleLevels": 5,
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39379279603054,
+              23.06744418951763
+            ],
+            [
+              113.3939067745709,
+              23.06730928146399
+            ],
+            [
+              113.3940016995349,
+              23.067377168001045
+            ],
+            [
+              113.39388772099454,
+              23.06751207598664
+            ],
+            [
+              113.39379279603054,
+              23.06744418951763
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "laboratory-display-5",
+      "properties": {
+        "placeId": "osm-relation-4105911",
+        "part": "orange_front_room",
+        "base": 3.7,
+        "height": 18.45,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "photo_informed_display_part_not_A_E_boundary",
+        "heightScaleLevels": 5,
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39402675198176,
+              23.067167272840322
+            ],
+            [
+              113.3941647260043,
+              23.0670039627378
+            ],
+            [
+              113.39425965096831,
+              23.067071849428928
+            ],
+            [
+              113.39412167694576,
+              23.06723515944907
+            ],
+            [
+              113.39402675198176,
+              23.067167272840322
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "laboratory-display-6",
+      "properties": {
+        "placeId": "osm-relation-4105911",
+        "part": "orange_front_room",
+        "base": 3.7,
+        "height": 18.45,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "photo_informed_display_part_not_A_E_boundary",
+        "heightScaleLevels": 5,
+        "interiorLevelsVerified": false,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39428470341517,
+              23.06686195379187
+            ],
+            [
+              113.39440468082609,
+              23.066719944696075
+            ],
+            [
+              113.39449960579014,
+              23.066787831530505
+            ],
+            [
+              113.39437962837917,
+              23.06692984055468
+            ],
+            [
+              113.39428470341517,
+              23.06686195379187
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

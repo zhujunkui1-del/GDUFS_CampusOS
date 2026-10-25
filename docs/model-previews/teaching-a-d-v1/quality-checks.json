@@ -1,0 +1,24 @@
+{
+  "recordedAt": "2026-10-24T19:59:54.872Z",
+  "changedFilesESLint": "passed",
+  "typecheck": "passed",
+  "productionBuild": "passed",
+  "existingModelUnitTests": {
+    "files": 3,
+    "passed": 9
+  },
+  "browser": "headed Edge149; all 10 assets; desktop/mobile viewport/short window; 23 screenshots; no page errors or idle render loop",
+  "sourceFootprintAndPriorModelHashes": "passed",
+  "sourceCourtyardRayChecks": "clear in combined and respective B/D assets in both modes",
+  "portalRayChecks": "A and C ground openings clear in combined and component assets in both modes",
+  "clockPartitionAreaAndHeightChecks": "passed; clock photo match remains an approximate location",
+  "fullRepositoryLint": {
+    "status": "failed_existing_unrelated_files",
+    "details": [
+      "backups/wechat-catalog-2026-10-21/inspect.mjs: unused readFileSync warning",
+      "tests/regression/test_mp_tools_browsing_ui.cjs: three forbidden require imports"
+    ]
+  },
+  "physicalPhoneTested": false,
+  "formalMapIntegrated": false
+}

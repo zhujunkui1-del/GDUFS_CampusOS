@@ -1,0 +1,119 @@
+{
+  "recordedAt": "2026-10-24T18:23:37.145Z",
+  "browser": "149.0.4022.80",
+  "mode": "headed msedge; mobile viewport uses desktop GPU, not a physical phone",
+  "desktop": [
+    {
+      "engine": "three.js r186",
+      "frames": "5",
+      "drawCalls": "14",
+      "renderTriangles": "1350",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[347.9406903610805,252.6455617526431,1266.7984875661232,886.8945013112965]",
+      "modelVersion": "b8-lecture-hall-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "6",
+      "drawCalls": "14",
+      "renderTriangles": "1350",
+      "mode": "3d",
+      "view": "front",
+      "modelExtent": "[118.49792935323761,324.8460714349245,1349.794839831058,879.4998820860025]",
+      "modelVersion": "b8-lecture-hall-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "7",
+      "drawCalls": "14",
+      "renderTriangles": "1350",
+      "mode": "3d",
+      "view": "side",
+      "modelExtent": "[157.01237052219597,247.0451700167423,1358.1541136629958,786.96100119226]",
+      "modelVersion": "b8-lecture-hall-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "8",
+      "drawCalls": "14",
+      "renderTriangles": "1350",
+      "mode": "3d",
+      "view": "roof",
+      "modelExtent": "[560.9757825944804,101.30137930715665,861.4954685963991,842.7420984003882]",
+      "modelVersion": "b8-lecture-hall-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "10",
+      "drawCalls": "3",
+      "renderTriangles": "260",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[348.18041697994516,254.502088739809,1266.3012990183186,886.8945013112965]",
+      "modelVersion": "b8-lecture-hall-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "11",
+      "drawCalls": "3",
+      "renderTriangles": "260",
+      "mode": "2.5d",
+      "view": "roof",
+      "modelExtent": "[560.9722278942378,101.29351700639245,861.4986321414494,842.7508110288379]",
+      "modelVersion": "b8-lecture-hall-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    }
+  ],
+  "mobile": [
+    {
+      "engine": "three.js r186",
+      "frames": "14",
+      "drawCalls": "14",
+      "renderTriangles": "1350",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[51.30616441949133,320.8189445205883,367.63992510952977,537.6777638292319]",
+      "modelVersion": "b8-lecture-hall-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "16",
+      "drawCalls": "3",
+      "renderTriangles": "260",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[51.30535420734861,321.51974357774213,367.64104840777827,537.7191861455]",
+      "modelVersion": "b8-lecture-hall-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    }
+  ],
+  "errors": [],
+  "shortWindow": {
+    "engine": "three.js r186",
+    "frames": "28",
+    "drawCalls": "14",
+    "renderTriangles": "1350",
+    "mode": "3d",
+    "view": "side",
+    "modelExtent": "[159.67620188649045,129.25075483278505,832.4450352034868,431.9586795162855]",
+    "modelVersion": "b8-lecture-hall-v1-2026-10-25",
+    "mapIntegrated": "false",
+    "ready": "true"
+  },
+  "noIdleLoop": true
+}

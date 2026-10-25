@@ -1,0 +1,312 @@
+{
+  "type": "FeatureCollection",
+  "stage": "visual_review_only_not_navigation_GIS",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "administration-preview-office",
+      "properties": {
+        "placeId": "osm-way-307437432",
+        "parentId": null,
+        "part": "office",
+        "heightScaleLevels": 4,
+        "height": 18.5,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "heightKind": "maximum_visual_envelope_roof_in_GLB",
+        "partitionAccuracy": "original_parent_vertices_and_photo_informed_internal_partition",
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.3947632,
+              23.064713699999984
+            ],
+            [
+              113.39476489999998,
+              23.06485670000002
+            ],
+            [
+              113.39476689999998,
+              23.065014799999986
+            ],
+            [
+              113.39476960000002,
+              23.065230099999994
+            ],
+            [
+              113.39456610000002,
+              23.06523229999999
+            ],
+            [
+              113.3944535,
+              23.065177000000006
+            ],
+            [
+              113.39394390000001,
+              23.065182399999998
+            ],
+            [
+              113.3939416,
+              23.065002599999985
+            ],
+            [
+              113.39462839999999,
+              23.0649954
+            ],
+            [
+              113.3946262,
+              23.064819999999997
+            ],
+            [
+              113.39421670000002,
+              23.064824200000018
+            ],
+            [
+              113.39421779999998,
+              23.0649126
+            ],
+            [
+              113.39405349999998,
+              23.064914399999978
+            ],
+            [
+              113.3940498,
+              23.064615499999988
+            ],
+            [
+              113.39457490000001,
+              23.064610000000016
+            ],
+            [
+              113.39457611428571,
+              23.064715621919703
+            ],
+            [
+              113.3947632,
+              23.064713699999984
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "administration-preview-neck",
+      "properties": {
+        "placeId": "osm-way-307437432",
+        "parentId": null,
+        "part": "neck",
+        "heightScaleLevels": null,
+        "height": 4.28,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "heightKind": "maximum_visual_envelope_roof_in_GLB",
+        "partitionAccuracy": "original_parent_vertices_and_photo_informed_internal_partition",
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39456610000002,
+              23.06523229999999
+            ],
+            [
+              113.3945665,
+              23.06526430000001
+            ],
+            [
+              113.3945084,
+              23.065337900000003
+            ],
+            [
+              113.39442539999999,
+              23.06529359999999
+            ],
+            [
+              113.3944545,
+              23.06525330000001
+            ],
+            [
+              113.3944535,
+              23.065177000000006
+            ],
+            [
+              113.39456610000002,
+              23.06523229999999
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "administration-preview-roundAnnex",
+      "properties": {
+        "placeId": "osm-way-307437432",
+        "parentId": null,
+        "part": "roundAnnex",
+        "heightScaleLevels": null,
+        "height": 4.62,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "heightKind": "maximum_visual_envelope_roof_in_GLB",
+        "partitionAccuracy": "original_parent_vertices_and_photo_informed_internal_partition",
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39457611428571,
+              23.064715621919703
+            ],
+            [
+              113.39457490000001,
+              23.064610000000016
+            ],
+            [
+              113.39457370000002,
+              23.064511900000014
+            ],
+            [
+              113.39463290000003,
+              23.064515299999997
+            ],
+            [
+              113.39468870000002,
+              23.0645339
+            ],
+            [
+              113.39473650000002,
+              23.06456639999999
+            ],
+            [
+              113.39477190000002,
+              23.0646093
+            ],
+            [
+              113.3947928,
+              23.064659600000013
+            ],
+            [
+              113.3947976,
+              23.064713299999994
+            ],
+            [
+              113.3947632,
+              23.064713699999984
+            ],
+            [
+              113.39457611428571,
+              23.064715621919703
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "administration-preview-portico",
+      "properties": {
+        "placeId": "osm-way-307437432",
+        "parentId": null,
+        "part": "portico",
+        "heightScaleLevels": null,
+        "height": 15.85,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "heightKind": "maximum_visual_envelope_roof_in_GLB",
+        "partitionAccuracy": "original_parent_vertices_and_photo_informed_internal_partition",
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39476489999998,
+              23.06485670000002
+            ],
+            [
+              113.39488900000003,
+              23.064855399999985
+            ],
+            [
+              113.39489100000003,
+              23.065013499999992
+            ],
+            [
+              113.39476689999998,
+              23.065014799999986
+            ],
+            [
+              113.39476489999998,
+              23.06485670000002
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "administration-preview-pavilion",
+      "properties": {
+        "placeId": "owner-bajiaolou",
+        "parentId": "osm-way-307437432",
+        "part": "pavilion",
+        "heightScaleLevels": 1,
+        "height": 7.1,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "heightKind": "maximum_visual_envelope_roof_in_GLB",
+        "partitionAccuracy": "original_parent_vertices_and_photo_informed_internal_partition",
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.3945084,
+              23.065337900000003
+            ],
+            [
+              113.39450950000003,
+              23.065432
+            ],
+            [
+              113.39446399999997,
+              23.065506499999998
+            ],
+            [
+              113.39437049999998,
+              23.065507499999995
+            ],
+            [
+              113.3942902,
+              23.065465900000007
+            ],
+            [
+              113.39428900000001,
+              23.065367800000004
+            ],
+            [
+              113.39433380000003,
+              23.065294499999993
+            ],
+            [
+              113.39442539999999,
+              23.06529359999999
+            ],
+            [
+              113.3945084,
+              23.065337900000003
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

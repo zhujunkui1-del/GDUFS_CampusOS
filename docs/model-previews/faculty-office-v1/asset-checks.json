@@ -1,0 +1,28 @@
+{
+  "recordedAt": "2026-10-24T19:15:59.238Z",
+  "heightScaleLevels": 4,
+  "interiorLevelsVerified": false,
+  "referenceHashesChecked": 4,
+  "sourceFootprintUnchanged": true,
+  "sourceAreaMeters2": 3711.463319336233,
+  "displayMainAreaMeters2": 3711.463319336233,
+  "twoCourtProbePointsOutsideSourceBuilding": true,
+  "porticoIsDisplayOverlayOnly": true,
+  "previousSixModelFamiliesUnchanged": true,
+  "assets": [
+    {
+      "mode": "2.5d",
+      "sha256": "ce0dd3ff6f35ea7118f74ccb49525b792916e8d93e0a7f468ca3915372d050ba",
+      "bytes": 53980,
+      "embeddedImages": 0,
+      "roofTriangles": 345
+    },
+    {
+      "mode": "3d",
+      "sha256": "aa908ef5a2af35dbb5fcc037a0e91c30b6c60f36d51187ed57c471508f35cb4d",
+      "bytes": 198672,
+      "embeddedImages": 0,
+      "roofTriangles": 345
+    }
+  ]
+}

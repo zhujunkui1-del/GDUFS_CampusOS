@@ -1,0 +1,189 @@
+{
+  "version": "laboratory-a-e-v1-2026-10-25",
+  "placeId": "osm-relation-4105911",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "heightScaleLevels": 5,
+  "levelsSource": "负责人2026-10-25明确：5层楼高",
+  "levelsAccuracy": "owner_external_height_description_only",
+  "interiorLevelsVerified": false,
+  "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+  "geometryAccuracy": "original_parent_outer_and_three_inner_rings_retained; opened_frontage_and_component_bounds_are_display_approximations",
+  "appearanceAccuracy": "photo_informed_simplification",
+  "floorDatumsMeters": [
+    0.1,
+    3.7,
+    7.3,
+    10.9,
+    14.5,
+    18.1
+  ],
+  "roofTopMeters": 18.45,
+  "rearFacadeAlignedZ": -14.3,
+  "frontRoomIntervalsAlignedMeters": [
+    [
+      8,
+      28
+    ],
+    [
+      57,
+      83
+    ],
+    [
+      123,
+      142
+    ],
+    [
+      162,
+      185
+    ],
+    [
+      205,
+      225
+    ]
+  ],
+  "openGalleryIntervalsAlignedMeters": [
+    [
+      0,
+      8
+    ],
+    [
+      28,
+      57
+    ],
+    [
+      83,
+      123
+    ],
+    [
+      142,
+      162
+    ],
+    [
+      185,
+      205
+    ],
+    [
+      225,
+      228
+    ]
+  ],
+  "stairAtriumIntervalsAlignedMeters": [
+    [
+      84,
+      121
+    ],
+    [
+      185.5,
+      204.5
+    ]
+  ],
+  "columnAlignedX": [
+    1,
+    30,
+    38,
+    47,
+    55,
+    85,
+    94,
+    104,
+    114,
+    121,
+    145,
+    154,
+    160,
+    187,
+    195,
+    203,
+    227
+  ],
+  "orangeRearEdgeIndices": [
+    1,
+    3,
+    5,
+    12,
+    14,
+    16,
+    18,
+    20
+  ],
+  "roofCoreEdgeIndices": [
+    1,
+    3,
+    12,
+    16,
+    20
+  ],
+  "performance": {
+    "triangleBudget": 22000,
+    "modelDrawCallBudget": 18,
+    "glbByteBudget": 650000
+  },
+  "notes": [
+    "文件名数字无建筑层数、尺寸或时序意义。",
+    "A—E共用一个OSM relation；标签不作为精确分栋边界，不生成五个重复父楼。",
+    "原有三个内环完整保留，前廊体块/两处大楼梯/玻璃与屋架均为显示近似。",
+    "楼高为负责人描述；层高、屋顶18.45米、屋顶服务房最高20米为视觉估算。",
+    "保留沿湖连续蓝边白框、橙色房间、白柱与开放廊道，屋顶网格为有空隙几何。",
+    "不制作室内、逐台设备、树木自行车或水桥；原照片仅内部参考，不作为纹理或公开资源。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼侧面1.png",
+      "bytes": 1754976,
+      "sha256": "00f0d03efca66ad1ffbc134fe17023283c976e1550f62293b9b447e6bb1cc0fa",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼1.jpg",
+      "bytes": 90506,
+      "sha256": "55b20605d120547caa813fba334e759945ed8b320b233dff09172ca8f00032aa",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼2.jpg",
+      "bytes": 1271485,
+      "sha256": "8504ea2540fdb22e15cbe5faa7002335616b24110eb5675b6c808e18e4e03bdf",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼3.png",
+      "bytes": 2275820,
+      "sha256": "a24eca7bff4d5c26a0183c6c4422f8efe62749e2838282f8e534dce3a9ecaadf",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼A-B栋.png",
+      "bytes": 2417052,
+      "sha256": "8e0e2173dfcb3f55ee71b9872b5cd010fc65f39011a40a87853a2dadf2bce1df",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼D-E连接处.png",
+      "bytes": 2975405,
+      "sha256": "040009595147055fdb841f6066a77a8dd6389248ad0b0aefffa0b27d32c3679e",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼E栋11.png",
+      "bytes": 2456979,
+      "sha256": "0568064258eef9c478bbf8e376c2b248dcb58ad07d86f66b241d77a7289c0265",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/laboratory-a-e-v1/实验楼A-E栋俯视.png",
+      "bytes": 1486180,
+      "sha256": "ef94c17fb8591ed0219df1d7eb0529fad3f690e0ffc2fd088938ee7236ab96d1",
+      "usage": "internal_visual_reference_only"
+    }
+  ],
+  "exteriorStairAlignedX": [
+    34,
+    117
+  ],
+  "asymmetricRoomIndices": [
+    1,
+    3
+  ]
+}

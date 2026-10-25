@@ -1,0 +1,71 @@
+{
+  "modelVersion": "b8-lecture-hall-v1-2026-10-25",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "placeId": "osm-way-651642991",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "origin": [113.3932707, 23.06863825],
+  "footprintSha256": "909ae93228e3ef5e7f098d2a47f7ba5c777eb19c725b4ec73b6fb7d560b7943f",
+  "sourceGeometryWgs84": [
+    [113.3929555, 23.0685671],
+    [113.3931017, 23.0683833],
+    [113.3935859, 23.0687094],
+    [113.3934397, 23.0688932],
+    [113.3929555, 23.0685671]
+  ],
+  "footprintAlignedMeters": [
+    [0, 0],
+    [25.325910301775643, 0],
+    [25.31825869270562, -61.38883036987822],
+    [-0.007691587702133518, -61.3888596272423]
+  ],
+  "previewEnvelopeAlignedMeters": [
+    [0, 0],
+    [25.325910301775643, 0],
+    [25.31825869270562, -61.38883036987822],
+    [-0.007691587702133518, -61.3888596272423],
+    [26.9, -10],
+    [26.9, 0],
+    [23, 5],
+    [1, 5]
+  ],
+  "heightScaleLevels": 2,
+  "levelsSource": "负责人2026-10-25明确：2层楼高；作为外部体量描述",
+  "levelsAccuracy": "owner_external_height_description_only",
+  "interiorLevelsVerified": false,
+  "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+  "appearanceAccuracy": "photo_informed_simplification",
+  "geometryAccuracy": "original_footprint_retained_as_anchor_and_plinth; component_extents_and_screen_display_approximations",
+  "alignedToLocal": {
+    "anchor": [-32.24605981113387, 7.91152786534803],
+    "rotationYRadians": -0.9390290233978974
+  },
+  "assets": {
+    "2.5d": {
+      "url": "./b8-lecture-hall-2.5d.glb",
+      "sha256": "f39ed5be06c056864f6ee65398a1f209ca789e38f3291626789176a9026f690a",
+      "bytes": 27624,
+      "triangles": 258,
+      "drawCalls": 2,
+      "materialCount": 2,
+      "textureCount": 0,
+      "bounds": {
+        "min": [-32.59049514828426, 0, -28.349212076737633],
+        "max": [32.24606095244186, 10.779999732971191, 28.349159057408716]
+      }
+    },
+    "3d": {
+      "url": "./b8-lecture-hall-3d.glb",
+      "sha256": "2cd95473155704192b0127127435a35a5589c3af79054c8e7d4a82289d5b1692",
+      "bytes": 61116,
+      "triangles": 1348,
+      "drawCalls": 13,
+      "materialCount": 8,
+      "textureCount": 0,
+      "bounds": {
+        "min": [-34.89827777820641, 0, -28.349212076737633],
+        "max": [32.24606095244186, 10.949999615550041, 29.140616951340213]
+      }
+    }
+  }
+}

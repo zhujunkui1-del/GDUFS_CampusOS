@@ -453,3 +453,47 @@ Rows read基线来自Cloudflare Wrangler只读命令`wrangler d1 insights campus
 ## 2026-10-24｜官网正文中的VSB媒体附件
 
 官网详情页可能不含HTML正文，而是通过VSB iframe或固定`showVsbpdfIframe`/`showVsbVideo`调用呈现附件。采集器从这些节点只提取同源HTTPS的`/virtual_attach_file.vsb`链接，校验`afc/oid/tid/nid/e`参数后，PDF以文章内链接展示，MP4以视频播放器展示。此数据来自官网已配置文章详情页，不是新入口发现；未执行页面脚本，也未下载外站附件文件。实见样例为信息公开网站 `/info/1224/3438.htm`、`/info/1224/3261.htm`、`/info/1224/2983.htm` 和中国语言文化学院 `/info/1133/9057.htm`。
+
+
+## 2026-10-25｜大会堂单栋建模资料
+
+负责人交付文档包assets/source_maps/广外地图/细节中的大会堂正面1.jpg、大会堂右侧298.png、大会堂8.png、大会堂2.png、大会堂1.png、大会堂正面29.png和Downloads/大会堂俯视.png；后者原像素复制到文档包assets/model_references/auditorium-v1。七图字节、原路径、SHA记录docs/model-previews/auditorium-v1/design.json，文件名数字无层数/尺寸意义。原发布链接、年份和照片公开再利用许可尚未补齐；仅内部几何参考，原图不进入public、预览端点或GLB纹理。本轮未采集外网影像、地图瓦片或供应商模型。
+
+平面继续使用负责人map.osm及现行campus.json的OpenStreetMap way307250997（https://www.openstreetmap.org/way/307250997），原对象无height/building:levels。负责人4层楼高为外观体量描述，不作为已核验室内层数。照片近似拱顶/层高/低翼和院落尺寸保存在显示稿，最高约22.4米等不是实测事实。两院落原OSM无内环，显示开洞不写回地理/导航数据。自有零照片纹理几何保留OSM署名，哈希及外环面积核对见manifest.json/asset-checks.json。
+
+
+## 2026-10-25｜B8学术报告厅建模资料
+
+负责人提供文档包assets/source_maps/广外地图/细节中的学术报告厅234.png、学术报告厅背面29.png、学术报告厅1.png、学术报告厅2.png、B8学术报告厅正门.jpg及Downloads/报告厅俯视.png，后者原像素复制到文档包assets/model_references/b8-lecture-hall-v1。六图路径/字节/SHA记录docs/model-previews/b8-lecture-hall-v1/design.json。文件名数字不代表建筑参数或拍摄先后；参考图中的施工状态不据此解释为当前状态，临时脚手架/残料未制作成永久构件。原发布链接、年份和照片公开再利用许可待补，只内部观察，不复制到public、预览图片端点或GLB纹理；本轮无外网影像/瓦片/供应商模型采集。
+
+平面继续使用负责人map.osm及固定campus.json的OpenStreetMap way651642991（https://www.openstreetmap.org/way/651642991），名称沿用负责人确认的B8学术报告厅。原way无height/building:levels。负责人2层楼高是外部体量依据；屋檐7.05米/浅脊7.5米、屏墙8.9米、后部高体块10.6米/女儿墙10.95米、前厅5.6米等为视觉估算，不是实测楼高或室内分层证据。原矩形轮廓保持，曲墙/分部为照片近似显示，零图片纹理的自有程序几何保留OSM署名，不写入正式GIS/导航入口。
+
+
+## 2026-10-25｜行政楼与八角楼建模资料
+
+负责人提供文档包assets/source_maps/广外地图/细节中的校行政办公楼123.jpg、校行政办公楼正面99.png、校行政办公楼34.png、校行政办公楼.png、八角楼9.png，以及Downloads/校行政办公楼和八角楼俯视.png；后者原像素复制到文档包assets/model_references/administration-complex-v1。六图路径/字节/SHA见docs/model-previews/administration-complex-v1/design.json，文件名数字无建筑参数意义。原发布链接、拍摄年份和照片公开再利用许可待补，只内部观察，不放入public、预览图片端点或GLB纹理；本轮无外网图像/瓦片/供应商模型采集。
+
+平面为固定campus.json/map.osm的OpenStreetMap way307437432（https://www.openstreetmap.org/way/307437432）及既有负责人确认owner-bajiaolou原8顶点/父ID。八角楼来自父轮廓，不虚构独立OSM way。父/子原GIS和标签坐标保持；主楼/低附楼/门廊/连接段的内部切分是显示近似。行政4层/八角1层高度依据为本轮负责人说明；米制层高、坡顶峰值、门廊/角塔/连接段尺寸未实测，原height覆盖率不提升。自有几何零照片纹理，保留OSM署名；六文件共用父楼WGS84原点，以清单origin加载，避免子楼二次偏移。
+
+
+## 2026-10-25｜院系办公楼建模资料
+
+负责人交付文档包assets/source_maps/广外地图/细节中的院系办公楼.png、院系办公楼正面11.png、院系办公楼89.png和Downloads/院系办公楼俯视.png；后者原像素存文档包assets/model_references/faculty-office-v1。四图路径/字节/SHA在docs/model-previews/faculty-office-v1/design.json，文件名数字不代表层数、尺寸或时序。原发布URL、拍摄年份、照片公开再利用许可待补，仅内部观察，不放入public、预览图片端点或GLB纹理。本轮无外网影像/瓦片/供应商模型采集。
+
+地理依据为负责人map.osm及固定campus.json的OpenStreetMap way307437431（https://www.openstreetmap.org/way/307437431），原E形轮廓、名称、原点和两处庭院凹口保持，原way无height/building:levels。负责人本轮4层楼高为外部体量依据，层间距、屋檐14.75米、主坡顶17.85米/角塔18.1米、门廊峰13米等为视觉设计参数；内部楼层布局未核验。门廊/台阶/轻型连接为显示近似，不新增正式GIS分部、通行事实或入口。自有零照片纹理几何保留OSM署名，原资料和模型SHA见manifest/asset-checks。
+
+
+## 2026-10-25｜实验楼A—E建筑群建模资料
+
+负责人提供文档包assets/source_maps/广外地图/细节中的实验楼侧面1.png、实验楼1.jpg、实验楼2.jpg、实验楼3.png、实验楼A-B栋.png、实验楼D-E连接处.png、实验楼E栋11.png及Downloads/实验楼A-E栋俯视.png；后者原像素复制到文档包assets/model_references/laboratory-a-e-v1。八图路径/大小/SHA见docs/model-previews/laboratory-a-e-v1/design.json，文件名数字不表示层数、尺寸或时序。原发布URL/拍摄年份/公开再利用许可待补，仅内部观察；不放入public、预览图片端点或GLB纹理。本轮无外网影像、瓦片或供应商模型采集。
+
+地理依据为负责人map.osm及现行campus.json中的OpenStreetMap relation4105911（https://www.openstreetmap.org/relation/4105911），外环/三个真实中庭内环及A—E五标签保持。标签已绑定父楼，不能视作精确分栋边界。负责人5层楼高为外部体量依据，层间距/屋架18.45米/服务房最高20米及各立面内部切分是视觉估算，不回写高度或室内楼层事实。自有程序几何零图片纹理，保留OSM署名；照片不提供新的GIS/导航入口或通行事实。
+
+
+## 2026-10-25｜教学楼A—D与C栋钟楼建模资料
+
+负责人提供文档包assets/source_maps/广外地图/细节的教学楼c栋1.jpg、教学楼c栋.jpg、教学楼A栋正面.png、教学楼C栋左部分.png、教学楼C栋2093.png、教学楼C栋及其与D栋连接处.png、教学楼B、C栋.png、教学楼A栋.png、教学楼D栋.png、教学楼C、D栋.png、教学楼整体.png，以及Downloads/教学楼C-D栋俯视.png、教学楼A-B栋.png；两俯视原像素副本保留文档包assets/model_references/teaching-a-d-v1，13图路径/大小/SHA见docs/model-previews/teaching-a-d-v1/design.json。文件名数字无参数/时序意义，整体照片不扩大E/F/G范围。原发布URL/年份/公开再利用许可待补，只内部观察；不放入public、图片端点或GLB纹理，本轮无外网影像/瓦片/供应商模型采集。
+
+地理依据为负责人map.osm与现行campus.json中的OSM way1410412694（A，https://www.openstreetmap.org/way/1410412694）、relation19299171（B，https://www.openstreetmap.org/relation/19299171）、way1410412691（C，https://www.openstreetmap.org/way/1410412691）、relation19299170（D，https://www.openstreetmap.org/relation/19299170）。四外环与B/D真实内环保留；C原北侧五顶点凸出处按照片匹配为钟楼、和主体分部面积保持，不另造独立clock ID。
+
+主体5层/钟楼8层楼高来自负责人说明，米制主屋面18.1米/构架21.4米/钟楼顶31.2米/侧鳍32.05米等为视觉参数；钟楼位置匹配、架空门洞/廊道与两跨栋连接细部不是实测新GIS。十GLB共用C原点，组件位置已编码。自有纯几何模型保留OSM署名，双面钟刻度/固定指针不使用照片或实时校钟数据，不宣称室内楼层/入口/通行核验。

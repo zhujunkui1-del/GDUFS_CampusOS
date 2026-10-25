@@ -1,0 +1,251 @@
+{
+  "recordedAt": "2026-10-24T19:58:13.090Z",
+  "heightScaleLevels": 5,
+  "clockHeightScaleLevels": 8,
+  "interiorLevelsVerified": false,
+  "sourceFootprintsUnchanged": 4,
+  "sourceCourtyards": 2,
+  "referenceHashesChecked": 13,
+  "overheadCopiesMatchOriginals": true,
+  "sourceCClockPartitionArea": {
+    "source": 1738.4800320379456,
+    "sum": 1738.4800320379454
+  },
+  "clockRenderedExactlyOnceByPartition": true,
+  "clockLocationIsPhotoMatchedDisplayApproximation": true,
+  "allTenAssetsUseCOrigin": true,
+  "previousEightModelFamiliesUnchanged": true,
+  "previousAssetHashes": [
+    {
+      "family": "library-v1",
+      "url": "./library-2.5d.glb",
+      "sha256": "9ce5a5da90dba8b137308f4769aadc02e6c6d55d52ece8952080ec4e1c3f4803"
+    },
+    {
+      "family": "library-v1",
+      "url": "./library-3d.glb",
+      "sha256": "0b93289ff027e3918966b729b563142e8f4cf56c5b1f56207b639bffd6de27d3"
+    },
+    {
+      "family": "art-building-v1",
+      "url": "./art-building-2.5d.glb",
+      "sha256": "2fba3f18d533d1f1e47e4f8bd6058e12f260bad207d899218fc9c42d55f8546c"
+    },
+    {
+      "family": "art-building-v1",
+      "url": "./art-building-3d.glb",
+      "sha256": "c03288b92bd3aa2cd75675f00bb51fbea7a8333634ed2feb074982a57d0a8a3e"
+    },
+    {
+      "family": "auditorium-v1",
+      "url": "./auditorium-2.5d.glb",
+      "sha256": "416e632521dd32a2fd91c1c87f8223953c8a6c1dde759e03824c6b77a2de4fea"
+    },
+    {
+      "family": "auditorium-v1",
+      "url": "./auditorium-3d.glb",
+      "sha256": "6f76dfb37c8fb2f0d75de2bbbe0ef703f10325860cad39b274230049b170cd43"
+    },
+    {
+      "family": "b8-lecture-hall-v1",
+      "url": "./b8-lecture-hall-2.5d.glb",
+      "sha256": "f39ed5be06c056864f6ee65398a1f209ca789e38f3291626789176a9026f690a"
+    },
+    {
+      "family": "b8-lecture-hall-v1",
+      "url": "./b8-lecture-hall-3d.glb",
+      "sha256": "2cd95473155704192b0127127435a35a5589c3af79054c8e7d4a82289d5b1692"
+    },
+    {
+      "family": "administration-complex-v1",
+      "url": "./administration-complex-2.5d.glb",
+      "sha256": "3124d96904f6b62c09b27df62aaa094844fe78006453d09ffa4b152c417f024b"
+    },
+    {
+      "family": "administration-complex-v1",
+      "url": "./administration-complex-3d.glb",
+      "sha256": "51c0dcb3a283f361f3de3ad9bd4960b46c508ff5ac3d2f409de2dcd6f63e33bc"
+    },
+    {
+      "family": "administration-complex-v1",
+      "url": "./administration-2.5d.glb",
+      "sha256": "e00f035ae0c8ab7f1659b0e1fae6731b640be6dd742840cd82467ff67a65ea65"
+    },
+    {
+      "family": "administration-complex-v1",
+      "url": "./administration-3d.glb",
+      "sha256": "e3c89bc87a4cd7f65ab6773da8a2a32cc6ae10f522b6dceb0881234d6fbfa6d4"
+    },
+    {
+      "family": "administration-complex-v1",
+      "url": "./bajiaolou-2.5d.glb",
+      "sha256": "5c3b917e2d03d76772c1eb02163c3723c92cb277bc921f10a5c68b0aec6a423e"
+    },
+    {
+      "family": "administration-complex-v1",
+      "url": "./bajiaolou-3d.glb",
+      "sha256": "8d94f7df161484a5a934d950998ee1fab5e3640cfbf375d371ba947766d7dd0b"
+    },
+    {
+      "family": "faculty-office-v1",
+      "url": "./faculty-office-2.5d.glb",
+      "sha256": "ce0dd3ff6f35ea7118f74ccb49525b792916e8d93e0a7f468ca3915372d050ba"
+    },
+    {
+      "family": "faculty-office-v1",
+      "url": "./faculty-office-3d.glb",
+      "sha256": "aa908ef5a2af35dbb5fcc037a0e91c30b6c60f36d51187ed57c471508f35cb4d"
+    },
+    {
+      "family": "laboratory-a-e-v1",
+      "url": "./laboratory-a-e-2.5d.glb",
+      "sha256": "cc238d1956b9ed603c8c3a1cf537fed308869e8301790f76742594a2f7a06a48"
+    },
+    {
+      "family": "laboratory-a-e-v1",
+      "url": "./laboratory-a-e-3d.glb",
+      "sha256": "b4c51ce5622d67cb6e84bf70362a9c001419024039cee58448393d5ceac51b87"
+    },
+    {
+      "family": "nanyuan7-v2",
+      "url": "public/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+      "sha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a"
+    }
+  ],
+  "assets": [
+    {
+      "part": "complex",
+      "mode": "2.5d",
+      "bytes": 179236,
+      "triangles": 4472,
+      "drawCalls": 4,
+      "sha256": "003b5dbbb016e1573c9e5b152b621ab1bc3367f9a1241f07a736c36d7e7fbd73",
+      "embeddedImages": 0,
+      "sourceCourtRaysClear": 2,
+      "commonCOrigin": true,
+      "portalChecks": [
+        "A",
+        "C"
+      ]
+    },
+    {
+      "part": "complex",
+      "mode": "3d",
+      "bytes": 562900,
+      "triangles": 27570,
+      "drawCalls": 13,
+      "sha256": "be3e89b3558fd72a615cad416ca98d318fb4a821b533430d74f884c4296fc7b6",
+      "embeddedImages": 0,
+      "sourceCourtRaysClear": 2,
+      "commonCOrigin": true,
+      "portalChecks": [
+        "A",
+        "C"
+      ]
+    },
+    {
+      "part": "A",
+      "mode": "2.5d",
+      "bytes": 30708,
+      "triangles": 600,
+      "drawCalls": 3,
+      "sha256": "040e4961b1804eb7f50bac32565933d0735a029321d0702c6a6c856a1cc1fa72",
+      "embeddedImages": 0,
+      "sourceCourtRaysClear": 0,
+      "commonCOrigin": true,
+      "portalChecks": [
+        "A"
+      ]
+    },
+    {
+      "part": "A",
+      "mode": "3d",
+      "bytes": 87748,
+      "triangles": 3620,
+      "drawCalls": 10,
+      "sha256": "09f1269ba6321064d70baf52808c83d7a6feec824b3f02b1e8b0464f71bc1657",
+      "embeddedImages": 0,
+      "sourceCourtRaysClear": 0,
+      "commonCOrigin": true,
+      "portalChecks": [
+        "A"
+      ]
+    },
+    {
+      "part": "B",
+      "mode": "2.5d",
+      "bytes": 60180,
+      "triangles": 1392,
+      "drawCalls": 4,
+      "sha256": "d7c70fb436ca2329a44d53c7f1029587265e97c45024b611448086cf0a0ac1b6",
+      "embeddedImages": 0,
+      "sourceCourtRaysClear": 1,
+      "commonCOrigin": true,
+      "portalChecks": []
+    },
+    {
+      "part": "B",
+      "mode": "3d",
+      "bytes": 180708,
+      "triangles": 8490,
+      "drawCalls": 11,
+      "sha256": "387456cdafcee837f72754ea7acadf03a7170e320688a7c3690cf7d9391b198a",
+      "embeddedImages": 0,
+      "sourceCourtRaysClear": 1,
+      "commonCOrigin": true,
+      "portalChecks": []
+    },
+    {
+      "part": "C",
+      "mode": "2.5d",
+      "bytes": 44560,
+      "triangles": 788,
+      "drawCalls": 4,
+      "sha256": "8cecfa2b9deefdfe535abc2d5fa87ba7d0ab9bbc34998f5ea5612381329de402",
+      "embeddedImages": 0,
+      "sourceCourtRaysClear": 0,
+      "commonCOrigin": true,
+      "portalChecks": [
+        "C"
+      ]
+    },
+    {
+      "part": "C",
+      "mode": "3d",
+      "bytes": 144516,
+      "triangles": 5494,
+      "drawCalls": 12,
+      "sha256": "def95bbf089c2e6a6678887206fcc88f628fca4693871e4d5e6e54029cd6d47e",
+      "embeddedImages": 0,
+      "sourceCourtRaysClear": 0,
+      "commonCOrigin": true,
+      "portalChecks": [
+        "C"
+      ]
+    },
+    {
+      "part": "D",
+      "mode": "2.5d",
+      "bytes": 64308,
+      "triangles": 1620,
+      "drawCalls": 4,
+      "sha256": "4e9564f1def64010027d73239955dddc7a206a5678a55c61e7b49767503bb22e",
+      "embeddedImages": 0,
+      "sourceCourtRaysClear": 1,
+      "commonCOrigin": true,
+      "portalChecks": []
+    },
+    {
+      "part": "D",
+      "mode": "3d",
+      "bytes": 202696,
+      "triangles": 9798,
+      "drawCalls": 11,
+      "sha256": "cb7d919e5351b97b616176abf09316f568af5a6a739796cd991fc3a062a88fc0",
+      "embeddedImages": 0,
+      "sourceCourtRaysClear": 1,
+      "commonCOrigin": true,
+      "portalChecks": []
+    }
+  ]
+}

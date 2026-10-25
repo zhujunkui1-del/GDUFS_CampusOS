@@ -1,0 +1,477 @@
+{
+  "recordedAt": "2026-10-24T19:56:10.753Z",
+  "browser": "149.0.4022.80",
+  "headed": true,
+  "records": [
+    {
+      "name": "desktop-complex-3d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "6",
+      "drawCalls": "14",
+      "renderTriangles": "27572",
+      "part": "complex",
+      "mode": "3d",
+      "modelBytes": "562900",
+      "modelTriangles": "27570",
+      "modelDrawCalls": "13",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[82.07136611856076,359.09086342364117,1349.0537239533103,677.3717120966039]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-complex-3d-front",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "9",
+      "drawCalls": "14",
+      "renderTriangles": "27572",
+      "part": "complex",
+      "mode": "3d",
+      "modelBytes": "562900",
+      "modelTriangles": "27570",
+      "modelDrawCalls": "13",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "front",
+      "modelExtent": "[293.4698666376651,356.99307690214334,1354.9594964116952,692.4233792382506]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-complex-3d-side",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "12",
+      "drawCalls": "14",
+      "renderTriangles": "27572",
+      "part": "complex",
+      "mode": "3d",
+      "modelBytes": "562900",
+      "modelTriangles": "27570",
+      "modelDrawCalls": "13",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "side",
+      "modelExtent": "[82.28627149394235,343.82994128820644,1281.5909003536246,600.2361108518386]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-complex-3d-roof",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "15",
+      "drawCalls": "14",
+      "renderTriangles": "27572",
+      "part": "complex",
+      "mode": "3d",
+      "modelBytes": "562900",
+      "modelTriangles": "27570",
+      "modelDrawCalls": "13",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "roof",
+      "modelExtent": "[269.24547136438264,111.13740613338935,1170.749470107521,888.8822263249117]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-complex-2.5d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "18",
+      "drawCalls": "5",
+      "renderTriangles": "4474",
+      "part": "complex",
+      "mode": "2.5d",
+      "modelBytes": "179236",
+      "modelTriangles": "4472",
+      "modelDrawCalls": "4",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[82.07318590858759,359.1930245434347,1348.7459877545168,677.4076076810338]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-complex-2.5d-front",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "21",
+      "drawCalls": "5",
+      "renderTriangles": "4474",
+      "part": "complex",
+      "mode": "2.5d",
+      "modelBytes": "179236",
+      "modelTriangles": "4472",
+      "modelDrawCalls": "4",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "front",
+      "modelExtent": "[293.15359571727714,356.9556318399384,1354.957749394799,692.5062897289872]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-complex-2.5d-side",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "24",
+      "drawCalls": "5",
+      "renderTriangles": "4474",
+      "part": "complex",
+      "mode": "2.5d",
+      "modelBytes": "179236",
+      "modelTriangles": "4472",
+      "modelDrawCalls": "4",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "side",
+      "modelExtent": "[82.28570285817987,343.73656365967713,1281.8411879540236,600.1832810659154]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-complex-2.5d-roof",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "27",
+      "drawCalls": "5",
+      "renderTriangles": "4474",
+      "part": "complex",
+      "mode": "2.5d",
+      "modelBytes": "179236",
+      "modelTriangles": "4472",
+      "modelDrawCalls": "4",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "roof",
+      "modelExtent": "[269.04510218311026,111.13748492479408,1170.5490739231511,888.8823051481804]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-A-3d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "30",
+      "drawCalls": "11",
+      "renderTriangles": "3622",
+      "part": "A",
+      "mode": "3d",
+      "modelBytes": "87748",
+      "modelTriangles": "3620",
+      "modelDrawCalls": "10",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[99.60864140861482,192.15554493086424,1130.2819428292244,887.5815119228436]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-A-2.5d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "33",
+      "drawCalls": "4",
+      "renderTriangles": "602",
+      "part": "A",
+      "mode": "2.5d",
+      "modelBytes": "30708",
+      "modelTriangles": "600",
+      "modelDrawCalls": "3",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[99.45988308237548,192.5404259171557,1129.5886570391267,887.5825553918493]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-B-3d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "36",
+      "drawCalls": "12",
+      "renderTriangles": "8492",
+      "part": "B",
+      "mode": "3d",
+      "modelBytes": "180708",
+      "modelTriangles": "8490",
+      "modelDrawCalls": "11",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[239.3207839949259,213.42530137764055,1161.598454553955,887.5001616448947]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-B-2.5d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "39",
+      "drawCalls": "5",
+      "renderTriangles": "1394",
+      "part": "B",
+      "mode": "2.5d",
+      "modelBytes": "60180",
+      "modelTriangles": "1392",
+      "modelDrawCalls": "4",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[239.23124204789008,213.38552707699964,1161.582950925339,887.5032659094575]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-C-3d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "42",
+      "drawCalls": "13",
+      "renderTriangles": "5496",
+      "part": "C",
+      "mode": "3d",
+      "modelBytes": "144516",
+      "modelTriangles": "5494",
+      "modelDrawCalls": "12",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[413.4702683165637,171.7289502579757,1211.719017949723,887.6716203992419]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-C-2.5d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "45",
+      "drawCalls": "5",
+      "renderTriangles": "790",
+      "part": "C",
+      "mode": "2.5d",
+      "modelBytes": "44560",
+      "modelTriangles": "788",
+      "modelDrawCalls": "4",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[413.6987626492542,171.38055202911812,1212.624426118729,887.6718016098193]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-D-3d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "48",
+      "drawCalls": "12",
+      "renderTriangles": "9800",
+      "part": "D",
+      "mode": "3d",
+      "modelBytes": "202696",
+      "modelTriangles": "9798",
+      "modelDrawCalls": "11",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[251.77773115257116,235.69790123768803,1148.7509407182097,887.3936753357704]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-D-2.5d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "51",
+      "drawCalls": "5",
+      "renderTriangles": "1622",
+      "part": "D",
+      "mode": "2.5d",
+      "modelBytes": "64308",
+      "modelTriangles": "1620",
+      "modelDrawCalls": "4",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[251.77921604864696,235.69772503548353,1148.752026945213,887.393139603928]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-A-3d-front",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "54",
+      "drawCalls": "11",
+      "renderTriangles": "3622",
+      "part": "A",
+      "mode": "3d",
+      "modelBytes": "87748",
+      "modelTriangles": "3620",
+      "modelDrawCalls": "10",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "front",
+      "modelExtent": "[86.18694310915049,323.70516825250485,1357.6721207042822,611.9253269713315]",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-C-3d-roof",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "57",
+      "drawCalls": "13",
+      "renderTriangles": "5496",
+      "part": "C",
+      "mode": "3d",
+      "modelBytes": "144516",
+      "modelTriangles": "5494",
+      "modelDrawCalls": "12",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "roof",
+      "modelExtent": "[83.05302410444641,215.78115502007233,1356.9480631412264,785.0175973851278]",
+      "ready": "true"
+    },
+    {
+      "name": "mobile-complex-3d",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "engine": "three.js r186",
+      "frames": "61",
+      "drawCalls": "14",
+      "renderTriangles": "27572",
+      "part": "complex",
+      "mode": "3d",
+      "modelBytes": "562900",
+      "modelTriangles": "27570",
+      "modelDrawCalls": "13",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[24.333037012941652,381.3439263378622,367.8973857104477,467.18481279846543]",
+      "ready": "true"
+    },
+    {
+      "name": "mobile-complex-2.5d",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "engine": "three.js r186",
+      "frames": "64",
+      "drawCalls": "5",
+      "renderTriangles": "4474",
+      "part": "complex",
+      "mode": "2.5d",
+      "modelBytes": "179236",
+      "modelTriangles": "4472",
+      "modelDrawCalls": "4",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[24.247821175836467,381.35446884050623,367.897326145933,467.21774507731124]",
+      "ready": "true"
+    },
+    {
+      "name": "mobile-C-3d",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "engine": "three.js r186",
+      "frames": "67",
+      "drawCalls": "13",
+      "renderTriangles": "5496",
+      "part": "C",
+      "mode": "3d",
+      "modelBytes": "144516",
+      "modelTriangles": "5494",
+      "modelDrawCalls": "12",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[70.25386902185758,276.2103671918943,367.5727494461755,561.4309761542646]",
+      "ready": "true"
+    },
+    {
+      "name": "short-complex-3d",
+      "viewport": {
+        "width": 950,
+        "height": 540
+      },
+      "engine": "three.js r186",
+      "frames": "71",
+      "drawCalls": "14",
+      "renderTriangles": "27572",
+      "part": "complex",
+      "mode": "3d",
+      "modelBytes": "562900",
+      "modelTriangles": "27570",
+      "modelDrawCalls": "13",
+      "modelVersion": "teaching-a-d-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "view": "overall",
+      "modelExtent": "[54.21760180484899,179.19786882695269,886.3754980056665,388.9315431887549]",
+      "ready": "true"
+    }
+  ],
+  "pageErrors": [],
+  "idleFrames": {
+    "before": "77",
+    "after": "77",
+    "stable": true
+  },
+  "interaction": "object/mode/view changes; drag, wheel, viewport resize",
+  "physicalPhoneTested": false
+}

@@ -1,0 +1,26 @@
+{
+  "recordedAt": "2026-10-24T18:08:03.870Z",
+  "heightScaleLevels": 4,
+  "interiorLevelsVerified": false,
+  "referenceHashesChecked": 7,
+  "sourceFootprintUnchanged": true,
+  "sourceAreaMeters2": 6844.40798932797,
+  "partsOuterAreaMeters2": 6844.407989353026,
+  "displayCourtyardAreaMeters2": 1013.9999999886899,
+  "courtyardsAreDisplayApproximations": true,
+  "south7LibraryArtHashesUnchanged": true,
+  "assets": [
+    {
+      "mode": "2.5d",
+      "sha256": "416e632521dd32a2fd91c1c87f8223953c8a6c1dde759e03824c6b77a2de4fea",
+      "bytes": 40224,
+      "embeddedImages": 0
+    },
+    {
+      "mode": "3d",
+      "sha256": "6f76dfb37c8fb2f0d75de2bbbe0ef703f10325860cad39b274230049b170cd43",
+      "bytes": 170236,
+      "embeddedImages": 0
+    }
+  ]
+}

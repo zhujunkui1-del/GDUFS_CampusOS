@@ -1,0 +1,119 @@
+{
+  "recordedAt": "2026-10-24T19:16:00.352Z",
+  "browser": "149.0.4022.80",
+  "mode": "headed msedge; mobile viewport uses desktop GPU, not a physical phone",
+  "desktop": [
+    {
+      "engine": "three.js r186",
+      "frames": "5",
+      "drawCalls": "11",
+      "renderTriangles": "8310",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[100.3900693093889,274.5985345883581,1164.4888659799344,886.7696378358913]",
+      "modelVersion": "faculty-office-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "6",
+      "drawCalls": "11",
+      "renderTriangles": "8310",
+      "mode": "3d",
+      "view": "front",
+      "modelExtent": "[85.96176912405828,333.81182031627606,1305.7433571095305,817.4918239153802]",
+      "modelVersion": "faculty-office-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "7",
+      "drawCalls": "11",
+      "renderTriangles": "8310",
+      "mode": "3d",
+      "view": "side",
+      "modelExtent": "[165.92295001744512,196.91669937197153,1358.48407341062,864.2514593564243]",
+      "modelVersion": "faculty-office-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "8",
+      "drawCalls": "11",
+      "renderTriangles": "8310",
+      "mode": "3d",
+      "view": "roof",
+      "modelExtent": "[108.67571424807713,111.26533113512133,1200.229015579125,888.716559475321]",
+      "modelVersion": "faculty-office-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "10",
+      "drawCalls": "3",
+      "renderTriangles": "535",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[100.06936254843929,274.5260328294438,1164.6795756180857,886.7687845197555]",
+      "modelVersion": "faculty-office-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "11",
+      "drawCalls": "3",
+      "renderTriangles": "535",
+      "mode": "2.5d",
+      "view": "roof",
+      "modelExtent": "[108.67571424807713,111.26533113512133,1200.229015579125,888.716559475321]",
+      "modelVersion": "faculty-office-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    }
+  ],
+  "mobile": [
+    {
+      "engine": "three.js r186",
+      "frames": "14",
+      "drawCalls": "11",
+      "renderTriangles": "8310",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[22.15135707277083,344.69725005882805,322.23164049760993,516.1661539220755]",
+      "modelVersion": "faculty-office-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "engine": "three.js r186",
+      "frames": "16",
+      "drawCalls": "3",
+      "renderTriangles": "535",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[22.15135707277083,344.69725005882805,322.23164049760993,516.1098843446358]",
+      "modelVersion": "faculty-office-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    }
+  ],
+  "errors": [],
+  "shortWindow": {
+    "engine": "three.js r186",
+    "frames": "28",
+    "drawCalls": "11",
+    "renderTriangles": "8310",
+    "mode": "3d",
+    "view": "front",
+    "modelExtent": "[150.39818797876976,182.72474819549856,775.8331407867801,430.83016847319936]",
+    "modelVersion": "faculty-office-v1-2026-10-25",
+    "mapIntegrated": "false",
+    "ready": "true"
+  },
+  "noIdleLoop": true
+}

@@ -1,0 +1,408 @@
+{
+  "type": "FeatureCollection",
+  "stage": "visual_review_only_not_navigation_GIS",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "b8-preview-source_plinth",
+      "properties": {
+        "placeId": "osm-way-651642991",
+        "part": "source_plinth",
+        "base": 0,
+        "height": 0.18,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "original_source_ring",
+        "heightScaleLevels": 2,
+        "interiorLevelsVerified": false,
+        "roofProfile": null,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39295549999997,
+              23.06856710000001
+            ],
+            [
+              113.39310169999999,
+              23.068383300000008
+            ],
+            [
+              113.3935859,
+              23.068709400000003
+            ],
+            [
+              113.39343969999999,
+              23.06889319999999
+            ],
+            [
+              113.39295549999997,
+              23.06856710000001
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "b8-preview-main",
+      "properties": {
+        "placeId": "osm-way-651642991",
+        "part": "main",
+        "base": 0.15,
+        "height": 7.5,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "maximum_visual_envelope",
+        "heightScaleLevels": 2,
+        "interiorLevelsVerified": false,
+        "roofProfile": "shallow_gable_in_GLB_and_generator",
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.3930667445386,
+              23.06861302664953
+            ],
+            [
+              113.39318450851886,
+              23.0684649759703
+            ],
+            [
+              113.39346296013821,
+              23.06865245907821
+            ],
+            [
+              113.39334519615795,
+              23.068800509551096
+            ],
+            [
+              113.3930667445386,
+              23.06861302664953
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "b8-preview-foyer",
+      "properties": {
+        "placeId": "osm-way-651642991",
+        "part": "foyer",
+        "base": 0.15,
+        "height": 5.6,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "photo_informed_display_part",
+        "heightScaleLevels": 2,
+        "interiorLevelsVerified": false,
+        "roofProfile": null,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39297266403867,
+              23.068548567287152
+            ],
+            [
+              113.39308292345157,
+              23.068409951148496
+            ],
+            [
+              113.39317758122587,
+              23.068473684838295
+            ],
+            [
+              113.39306732181296,
+              23.068612300911298
+            ],
+            [
+              113.39297266403867,
+              23.068548567287152
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "b8-preview-rear_high_volume",
+      "properties": {
+        "placeId": "osm-way-651642991",
+        "part": "rear_high_volume",
+        "base": 0.15,
+        "height": 10.6,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "photo_informed_display_part",
+        "heightScaleLevels": 2,
+        "interiorLevelsVerified": false,
+        "roofProfile": null,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39336482348801,
+              23.06877583448359
+            ],
+            [
+              113.39345141464997,
+              23.06866697383765
+            ],
+            [
+              113.39353976190597,
+              23.0687264585021
+            ],
+            [
+              113.39345317074401,
+              23.06883531909989
+            ],
+            [
+              113.39336482348801,
+              23.06877583448359
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "b8-preview-side_glass_volume",
+      "properties": {
+        "placeId": "osm-way-651642991",
+        "part": "side_glass_volume",
+        "base": 0.15,
+        "height": 6.7,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "photo_informed_display_part",
+        "heightScaleLevels": 2,
+        "interiorLevelsVerified": false,
+        "roofProfile": null,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.39308292345157,
+              23.068409951148496
+            ],
+            [
+              113.3931013962328,
+              23.06838672748826
+            ],
+            [
+              113.39317870008176,
+              23.0684387766795
+            ],
+            [
+              113.39316022730054,
+              23.068462000330754
+            ],
+            [
+              113.39308292345157,
+              23.068409951148496
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "b8-preview-curved_screen",
+      "properties": {
+        "placeId": "osm-way-651642991",
+        "part": "curved_screen",
+        "base": 0.15,
+        "height": 8.9,
+        "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+        "geometryAccuracy": "photo_informed_display_part",
+        "heightScaleLevels": 2,
+        "interiorLevelsVerified": false,
+        "roofProfile": null,
+        "approvedForMap": false
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              113.3929544422981,
+              23.06856081573956
+            ],
+            [
+              113.3933432892589,
+              23.068822628419227
+            ],
+            [
+              113.39335278064493,
+              23.068828383122295
+            ],
+            [
+              113.39336279689292,
+              23.06883323359874
+            ],
+            [
+              113.39337328166198,
+              23.068837157461687
+            ],
+            [
+              113.39338413397803,
+              23.068840116922246
+            ],
+            [
+              113.39339524932734,
+              23.06884208347924
+            ],
+            [
+              113.393406520663,
+              23.068843038193705
+            ],
+            [
+              113.39341783943593,
+              23.068842971871277
+            ],
+            [
+              113.39342909664003,
+              23.06884188515062
+            ],
+            [
+              113.39344018386242,
+              23.068839788497456
+            ],
+            [
+              113.393450994327,
+              23.068836702103667
+            ],
+            [
+              113.39346142392316,
+              23.068832655692788
+            ],
+            [
+              113.39347137220818,
+              23.068827688233966
+            ],
+            [
+              113.39348074337454,
+              23.068821847566355
+            ],
+            [
+              113.39348944717284,
+              23.06881518993876
+            ],
+            [
+              113.39349739978076,
+              23.068807779467548
+            ],
+            [
+              113.39350455485555,
+              23.068799653168924
+            ],
+            [
+              113.3935766858146,
+              23.06870897161788
+            ],
+            [
+              113.39346940700375,
+              23.068636740226836
+            ],
+            [
+              113.39347171610137,
+              23.068633837274405
+            ],
+            [
+              113.39358215017143,
+              23.06870819311915
+            ],
+            [
+              113.39350765342954,
+              23.068801848882984
+            ],
+            [
+              113.3935003170293,
+              23.068810181119886
+            ],
+            [
+              113.3934920945108,
+              23.068817843101428
+            ],
+            [
+              113.39348309530664,
+              23.06882472668798
+            ],
+            [
+              113.39347340608396,
+              23.06883076558701
+            ],
+            [
+              113.39346312015539,
+              23.068835901640696
+            ],
+            [
+              113.39345233658003,
+              23.068840085386157
+            ],
+            [
+              113.39344115920954,
+              23.068843276531723
+            ],
+            [
+              113.39342969568816,
+              23.068845444344973
+            ],
+            [
+              113.39341805641584,
+              23.068846567948768
+            ],
+            [
+              113.39340635348515,
+              23.068846636522196
+            ],
+            [
+              113.39339469960174,
+              23.068845649404835
+            ],
+            [
+              113.3933832069988,
+              23.06884361610318
+            ],
+            [
+              113.39337198635644,
+              23.068840556198964
+            ],
+            [
+              113.39336114573564,
+              23.068836499160682
+            ],
+            [
+              113.3933507895373,
+              23.068831484059743
+            ],
+            [
+              113.3933410576185,
+              23.06882558351991
+            ],
+            [
+              113.39295213320042,
+              23.06856371869354
+            ],
+            [
+              113.3929544422981,
+              23.06856081573956
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
