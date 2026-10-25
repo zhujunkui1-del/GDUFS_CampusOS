@@ -1,0 +1,84 @@
+{
+  "version": "gymnasium-v1-2026-10-25",
+  "placeId": "osm-way-1389756844",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "heightScaleLevels": 5,
+  "levelsSource": "负责人2026-10-25明确：5层楼高，作为外部体量尺度",
+  "levelsAccuracy": "owner_external_height_description_only",
+  "interiorLevelsVerified": false,
+  "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+  "roofOrientation": "east_west_arch_with_north_south_shell_halves",
+  "roofHalfLengthMeters": 61,
+  "roofHalfWidthMeters": 44.5,
+  "roofTipMeters": 2.6,
+  "roofCrownMeters": 24.4,
+  "eaveMiddleMeters": 12.9,
+  "archPower": 0.64,
+  "roofCrossPower": 1.6,
+  "wallRoofClearanceMeters": 0.35,
+  "plinthTopMeters": 1.2,
+  "archBandWidthMeters": 5.2,
+  "archBandLiftMeters": 1.15,
+  "louverLevelsMeters": [
+    3.1,
+    4.25,
+    5.4,
+    6.55,
+    7.7,
+    8.85,
+    10,
+    11.15
+  ],
+  "skylightCentersXMeters": [
+    -18,
+    -9,
+    0,
+    9,
+    18
+  ],
+  "skylightCount": 10,
+  "geometryAccuracy": "original_80_vertex_ellipse_base; lens_roof_overhang_and_entrance_approximate_display_geometry",
+  "performance": {
+    "triangleBudget": 24000,
+    "modelDrawCallBudget": 18,
+    "glbByteBudget": 500000
+  },
+  "notes": [
+    "文件名数字无层数、尺寸或时序意义。",
+    "五层楼高为外部尺度描述，体育馆大空间不据此虚构五层室内楼板。",
+    "原OSM椭圆地面轮廓保留，东西向尖端悬挑屋面与入口台阶为照片近似显示，不改GIS/入口或路网。",
+    "银灰屋面中央拱带沿东西向，南北两屋面各五条采光条。",
+    "屋脊/拱带顶约25.55米、椭圆外墙顶随屋面变化约10.0–14.1米及尺寸均为视觉估算。",
+    "前景高杆/拉索归属和锚点未核验，当前首稿保留可确定的屋面、立面和入口，未固化这些遮挡物。",
+    "四图仅内部参考，不作为纹理/公开图片，零图片GLB保留OSM署名。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/体育馆3.png",
+      "bytes": 1249051,
+      "sha256": "35900c0390fdcd6464c5e2d4b16a0ec9ade1cfe7b84957618dd3ceca17f25dfa",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/体育馆.png",
+      "bytes": 208924,
+      "sha256": "cf688b8616047067cb173b8f526a6d31b6d540e75e5c709885715ad0c07c69d4",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/体育馆19283.png",
+      "bytes": 302434,
+      "sha256": "252bb97162678373bb87f88e647f0f42df5f3ea6dcfd30fc7c532f96a0feca23",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/gymnasium-v1/体育馆俯视.png",
+      "bytes": 534181,
+      "sha256": "5409a02094f8e74fae8523a95e0896892f26aa7f5dcd9012ecb353c4b8512655",
+      "usage": "internal_visual_reference_only"
+    }
+  ],
+  "archBandDepthMeters": 0.95
+}

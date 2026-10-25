@@ -1,0 +1,21 @@
+{
+  "recordedAt": "2026-10-25T08:38:32.445Z",
+  "changedFilesESLint": "passed",
+  "typecheck": "passed",
+  "productionBuild": "passed",
+  "existingModelUnitTests": {
+    "files": 3,
+    "passed": 9
+  },
+  "browser": "headed Edge149, desktop/mobile viewport/short window, 20 screenshots, no page errors or idle loop, only two GLB requests across E/F/G focus changes",
+  "sourceAndAssetChecks": "passed; source parent/four rings/labels retained; three courts and raised projector/connector spaces clear; F entrance recess clear; prior39 asset hashes unchanged",
+  "fullRepositoryLint": {
+    "status": "failed_existing_unrelated_files",
+    "details": [
+      "backups/wechat-catalog-2026-10-21/inspect.mjs: unused readFileSync warning",
+      "tests/regression/test_mp_tools_browsing_ui.cjs: three forbidden require imports"
+    ]
+  },
+  "physicalPhoneTested": false,
+  "formalMapIntegrated": false
+}

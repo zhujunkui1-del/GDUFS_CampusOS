@@ -10,8 +10,8 @@
   "strictJsonSchema": "not_tested",
   "requests": 3,
   "maxOutputTokensPerRequest": 256,
-  "durationMs": 5268,
-  "testedAt": "2026-10-14T20:20:15.727Z",
+  "durationMs": 2840,
+  "testedAt": "2026-10-25T15:46:21.191Z",
   "events": [
     {
       "type": "tool.started",
@@ -21,6 +21,15 @@
       "type": "tool.finished",
       "name": "campusos_diagnostic",
       "ok": true
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
     },
     {
       "type": "message.delta"

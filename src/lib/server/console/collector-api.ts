@@ -378,6 +378,11 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
           id,
         ),
     );
+  if (changed && old) {
+    // Delete the previous derived projections before creating the new index.
+    statements.push(db.prepare("DELETE FROM knowledge_facts WHERE document_id=?").bind(id));
+    statements.push(db.prepare("DELETE FROM knowledge_chunks WHERE document_id=?").bind(id));
+  }
   statements.push(
     ...(await analysisStatements(
       db,
@@ -386,6 +391,7 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
       hash,
       analysisInput,
       analysis,
+      "licensed_full_text",
     )),
   );
   if (!old || changed || (!held && old.publication_status !== "published")) {
@@ -402,15 +408,6 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
           "UPDATE knowledge_documents SET review_status='approved',workflow_status='approved',approved_content_revision=content_revision,approved_input_hash=input_hash,publication_status=?,lifecycle_status='active' WHERE id=?",
         )
         .bind(held ? "draft" : "published", id),
-    );
-  }
-  if (changed && old) {
-    // Search chunks are derived, never historical body storage.
-    statements.push(
-      db.prepare("DELETE FROM knowledge_facts WHERE document_id=?").bind(id),
-    );
-    statements.push(
-      db.prepare("DELETE FROM knowledge_chunks WHERE document_id=?").bind(id),
     );
   }
   await commit(db, statements);

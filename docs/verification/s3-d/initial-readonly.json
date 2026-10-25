@@ -1,0 +1,242 @@
+{
+  "at": "2026-10-25T15:25:35.411Z",
+  "results": [
+    {
+      "sql": "SELECT sqlite_version() version",
+      "available": false
+    },
+    {
+      "sql": "SELECT sqlite_compileoption_used('ENABLE_FTS5') fts5",
+      "available": false
+    },
+    {
+      "sql": "SELECT name,type,sql FROM sqlite_master WHERE name IN('knowledge_chunks','knowledge_documents','document_origins','document_article_analysis','console_article_classifications','content_index_invalidations')",
+      "results": [
+        {
+          "name": "knowledge_documents",
+          "type": "table",
+          "sql": "CREATE TABLE knowledge_documents (\n  id TEXT PRIMARY KEY,\n  source_id TEXT NOT NULL REFERENCES knowledge_sources(id),\n  owner_user_id TEXT REFERENCES users(id) ON DELETE CASCADE,\n  title TEXT NOT NULL,\n  url TEXT NOT NULL,\n  body TEXT NOT NULL,\n  content_hash TEXT NOT NULL,\n  published_at TEXT,\n  fetched_at TEXT NOT NULL,\n  verified_at TEXT,\n  valid_until TEXT,\n  academic_year TEXT,\n  campus_scope TEXT NOT NULL CHECK (campus_scope IN ('university_town', 'baiyun', 'all', 'online', 'unknown')),\n  data_domain TEXT NOT NULL CHECK (data_domain IN ('official_policy', 'campus_announcements', 'approved_life_experience', 'user_private')),\n  review_status TEXT NOT NULL DEFAULT 'pending' CHECK (review_status IN ('pending', 'approved', 'rejected')),\n  lifecycle_status TEXT NOT NULL DEFAULT 'active' CHECK (lifecycle_status IN ('active', 'expired', 'superseded', 'withdrawn')),\n  superseded_by TEXT REFERENCES knowledge_documents(id), version INTEGER NOT NULL DEFAULT 1, publication_status TEXT NOT NULL DEFAULT 'draft' CHECK(publication_status IN('draft','published','withdrawn')), workflow_status TEXT NOT NULL DEFAULT 'pending' CHECK(workflow_status IN('pending','approved','returned','rejected')), candidate_kind TEXT NOT NULL DEFAULT 'knowledge' CHECK(candidate_kind IN('knowledge','event')), extracted_fields_json TEXT NOT NULL DEFAULT '{}' CHECK(json_valid(extracted_fields_json)), source_updated_at TEXT, updated_at TEXT, content_revision INTEGER NOT NULL DEFAULT 0 CHECK(content_revision>=0), input_hash TEXT CHECK(input_hash IS NULL OR length(input_hash)=64), approved_content_revision INTEGER, approved_input_hash TEXT, content_type TEXT NOT NULL DEFAULT 'unknown' CHECK(content_type IN('event','notice','policy','guide','news','unknown')), rights_scope TEXT NOT NULL DEFAULT 'unknown' CHECK(rights_scope IN('metadata_only','excerpt_and_link','licensed_full_text','no_collection','unknown')), publisher TEXT, summary TEXT NOT NULL DEFAULT '' CHECK(length(summary)<=500), radar_category TEXT CHECK(radar_category IS NULL OR radar_category IN('lecture','culture_sports','competition','education_career','academic_research','scholarship_opportunity','campus_notice')), knowledge_category TEXT CHECK(knowledge_category IS NULL OR knowledge_category IN('academic_affairs','campus_life','administrative_services','scholarship_policy','education_career','research_innovation')), body_status TEXT NOT NULL DEFAULT 'unknown' CHECK(body_status IN('unknown','not_provided','partial','complete')), body_format TEXT NOT NULL DEFAULT 'plain' CHECK(body_format IN('plain','reading_html')),\n  CHECK ((data_domain = 'user_private' AND owner_user_id IS NOT NULL) OR (data_domain <> 'user_private' AND owner_user_id IS NULL)),\n  UNIQUE(url, content_hash)\n)"
+        },
+        {
+          "name": "knowledge_chunks",
+          "type": "table",
+          "sql": "CREATE TABLE knowledge_chunks (\n  id TEXT PRIMARY KEY,\n  document_id TEXT NOT NULL REFERENCES knowledge_documents(id) ON DELETE CASCADE,\n  text TEXT NOT NULL,\n  vector_key TEXT UNIQUE,\n  start_offset INTEGER NOT NULL CHECK (start_offset >= 0),\n  end_offset INTEGER NOT NULL CHECK (end_offset >= start_offset),\n  page_number INTEGER CHECK (page_number IS NULL OR page_number > 0)\n, snapshot_version INTEGER, content_revision INTEGER, input_hash TEXT)"
+        },
+        {
+          "name": "content_index_invalidations",
+          "type": "table",
+          "sql": "CREATE TABLE content_index_invalidations (\n id INTEGER PRIMARY KEY AUTOINCREMENT, document_id TEXT NOT NULL REFERENCES knowledge_documents(id), version INTEGER NOT NULL,\n reason TEXT NOT NULL, state TEXT NOT NULL DEFAULT 'pending' CHECK(state IN('pending','processed')),\n created_at TEXT NOT NULL DEFAULT(strftime('%Y-%m-%dT%H:%M:%fZ','now'))\n)"
+        },
+        {
+          "name": "document_origins",
+          "type": "table",
+          "sql": "CREATE TABLE document_origins (\n id TEXT PRIMARY KEY, source_id TEXT NOT NULL REFERENCES knowledge_sources(id), document_id TEXT NOT NULL REFERENCES knowledge_documents(id),\n canonical_url TEXT NOT NULL, entry_url TEXT NOT NULL, first_seen_at TEXT NOT NULL, last_seen_at TEXT NOT NULL,\n etag TEXT, last_modified TEXT, input_fingerprint TEXT, duplicate_of TEXT REFERENCES knowledge_documents(id),\n UNIQUE(source_id,canonical_url)\n)"
+        },
+        {
+          "name": "document_article_analysis",
+          "type": "table",
+          "sql": "CREATE TABLE document_article_analysis (\n document_id TEXT PRIMARY KEY REFERENCES knowledge_documents(id) ON DELETE CASCADE,\n content_revision INTEGER NOT NULL,input_hash TEXT NOT NULL,classifier_version TEXT NOT NULL,\n input_digest TEXT NOT NULL,projection_hash TEXT NOT NULL,processed_at TEXT NOT NULL,\n primary_destination TEXT NOT NULL CHECK(primary_destination IN('radar','knowledge','unknown')),\n radar_category TEXT,knowledge_category TEXT,has_registration INTEGER NOT NULL CHECK(has_registration IN(0,1)),\n analysis_json TEXT NOT NULL CHECK(json_valid(analysis_json)),\n CHECK((primary_destination='unknown' AND radar_category IS NULL AND knowledge_category IS NULL)\n  OR (primary_destination='radar' AND radar_category IS NOT NULL AND knowledge_category IS NULL)\n  OR (primary_destination='knowledge' AND knowledge_category IS NOT NULL AND radar_category IS NULL))\n)"
+        },
+        {
+          "name": "console_article_classifications",
+          "type": "view",
+          "sql": "CREATE VIEW console_article_classifications AS\n SELECT d.id AS document_id,\n  CASE WHEN m.document_id IS NOT NULL THEN CASE WHEN m.radar_category IS NOT NULL THEN 'radar' ELSE 'knowledge' END\n       WHEN a.document_id IS NOT NULL THEN a.primary_destination\n       WHEN d.radar_category IS NOT NULL THEN 'radar' WHEN d.knowledge_category IS NOT NULL THEN 'knowledge' ELSE 'unknown' END AS primary_destination,\n  CASE WHEN m.document_id IS NOT NULL THEN m.radar_category WHEN a.document_id IS NOT NULL THEN a.radar_category ELSE d.radar_category END AS radar_category,\n  CASE WHEN m.document_id IS NOT NULL THEN m.knowledge_category WHEN a.document_id IS NOT NULL THEN a.knowledge_category ELSE d.knowledge_category END AS knowledge_category,\n  COALESCE(a.has_registration,0) AS has_registration,a.analysis_json,a.classifier_version,\n  CASE WHEN m.document_id IS NOT NULL THEN 'manual' WHEN a.document_id IS NOT NULL THEN 'automatic' ELSE 'legacy' END AS classification_origin\n FROM knowledge_documents d\n LEFT JOIN document_article_analysis a ON a.document_id=d.id AND a.content_revision=d.content_revision AND a.input_hash=d.input_hash\n LEFT JOIN document_classification_overrides m ON m.document_id=d.id\n WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'"
+        }
+      ],
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "APAC",
+        "served_by_colo": "NRT",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 0.4988
+        },
+        "duration": 0.4988,
+        "changes": 0,
+        "last_row_id": 9807,
+        "changed_db": false,
+        "size_after": 122454016,
+        "rows_read": 346,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    },
+    {
+      "sql": "SELECT c.primary_destination,s.channel_type,count(*) n FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications c ON c.document_id=d.id WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND s.console_managed=1 GROUP BY c.primary_destination,s.channel_type",
+      "results": [
+        {
+          "primary_destination": "knowledge",
+          "channel_type": "official_web",
+          "n": 3
+        },
+        {
+          "primary_destination": "knowledge",
+          "channel_type": "wechat_service",
+          "n": 9
+        },
+        {
+          "primary_destination": "knowledge",
+          "channel_type": "wechat_subscription",
+          "n": 17
+        },
+        {
+          "primary_destination": "radar",
+          "channel_type": "official_web",
+          "n": 570
+        },
+        {
+          "primary_destination": "radar",
+          "channel_type": "wechat_service",
+          "n": 24
+        },
+        {
+          "primary_destination": "radar",
+          "channel_type": "wechat_subscription",
+          "n": 350
+        },
+        {
+          "primary_destination": "unknown",
+          "channel_type": "official_web",
+          "n": 224
+        },
+        {
+          "primary_destination": "unknown",
+          "channel_type": "wechat_service",
+          "n": 27
+        },
+        {
+          "primary_destination": "unknown",
+          "channel_type": "wechat_subscription",
+          "n": 556
+        }
+      ],
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "APAC",
+        "served_by_colo": "NRT",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 117.185
+        },
+        "duration": 117.185,
+        "changes": 0,
+        "last_row_id": 9807,
+        "changed_db": false,
+        "size_after": 122454016,
+        "rows_read": 7495,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    },
+    {
+      "sql": "SELECT d.rights_scope,d.body_status,s.channel_type,count(*) n,sum(CASE WHEN p.source_id IS NOT NULL AND p.expires_at_ms<=CAST((julianday('now')-2440587.5)*86400000 AS INTEGER) THEN 1 ELSE 0 END) expired_policy FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND s.console_managed=1 GROUP BY d.rights_scope,d.body_status,s.channel_type",
+      "results": [
+        {
+          "rights_scope": "licensed_full_text",
+          "body_status": "complete",
+          "channel_type": "official_web",
+          "n": 758,
+          "expired_policy": 0
+        },
+        {
+          "rights_scope": "licensed_full_text",
+          "body_status": "complete",
+          "channel_type": "wechat_service",
+          "n": 59,
+          "expired_policy": 0
+        },
+        {
+          "rights_scope": "licensed_full_text",
+          "body_status": "complete",
+          "channel_type": "wechat_subscription",
+          "n": 890,
+          "expired_policy": 0
+        },
+        {
+          "rights_scope": "licensed_full_text",
+          "body_status": "partial",
+          "channel_type": "wechat_service",
+          "n": 1,
+          "expired_policy": 0
+        },
+        {
+          "rights_scope": "licensed_full_text",
+          "body_status": "partial",
+          "channel_type": "wechat_subscription",
+          "n": 33,
+          "expired_policy": 0
+        },
+        {
+          "rights_scope": "metadata_only",
+          "body_status": "not_provided",
+          "channel_type": "official_web",
+          "n": 39,
+          "expired_policy": 0
+        }
+      ],
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "APAC",
+        "served_by_colo": "NRT",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 33.6488
+        },
+        "duration": 33.6488,
+        "changes": 0,
+        "last_row_id": 9807,
+        "changed_db": false,
+        "size_after": 122454016,
+        "rows_read": 4684,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    },
+    {
+      "sql": "SELECT count(*) chunks FROM knowledge_chunks",
+      "results": [
+        {
+          "chunks": 0
+        }
+      ],
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "APAC",
+        "served_by_colo": "NRT",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 0.3028
+        },
+        "duration": 0.3028,
+        "changes": 0,
+        "last_row_id": 9807,
+        "changed_db": false,
+        "size_after": 122454016,
+        "rows_read": 0,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    },
+    {
+      "sql": "SELECT name FROM sqlite_master WHERE type='table' AND name LIKE '%fts%'",
+      "results": [],
+      "meta": {
+        "served_by": "v3-prod",
+        "served_by_region": "APAC",
+        "served_by_colo": "NRT",
+        "served_by_primary": true,
+        "timings": {
+          "sql_duration_ms": 1.6333
+        },
+        "duration": 1.6333,
+        "changes": 0,
+        "last_row_id": 9807,
+        "changed_db": false,
+        "size_after": 122454016,
+        "rows_read": 346,
+        "rows_written": 0,
+        "total_attempts": 1
+      }
+    }
+  ]
+}

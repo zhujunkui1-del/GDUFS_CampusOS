@@ -1,0 +1,168 @@
+{
+  "recordedAt": "2026-10-25T09:26:14.679Z",
+  "browser": "149.0.4022.80",
+  "headed": true,
+  "records": [
+    {
+      "name": "desktop-3d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "5",
+      "drawCalls": "12",
+      "renderTriangles": "14840",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[85.24540101908332,203.17917944741154,1196.7224418904702,842.7820888160688]",
+      "modelVersion": "gymnasium-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-3d-front",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "7",
+      "drawCalls": "12",
+      "renderTriangles": "14840",
+      "mode": "3d",
+      "view": "front",
+      "modelExtent": "[82.02246017134432,283.6809224645134,1357.9775398286558,732.3398897319622]",
+      "modelVersion": "gymnasium-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-3d-side",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "9",
+      "drawCalls": "12",
+      "renderTriangles": "14840",
+      "mode": "3d",
+      "view": "side",
+      "modelExtent": "[274.13551158592185,220.1846536060143,1138.5296322820861,886.5734435783102]",
+      "modelVersion": "gymnasium-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-3d-roof",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "11",
+      "drawCalls": "12",
+      "renderTriangles": "14840",
+      "mode": "3d",
+      "view": "roof",
+      "modelExtent": "[193.10324390630427,101.58855729642934,1246.8967560936956,881.2117231535293]",
+      "modelVersion": "gymnasium-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-2.5d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "13",
+      "drawCalls": "4",
+      "renderTriangles": "1466",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[85.24540101908332,203.17917944741154,1196.7224418904702,842.7820888160688]",
+      "modelVersion": "gymnasium-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-2.5d-roof",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "15",
+      "drawCalls": "4",
+      "renderTriangles": "1466",
+      "mode": "2.5d",
+      "view": "roof",
+      "modelExtent": "[193.10324390630427,101.58855729642934,1246.8967560936956,881.2117231535293]",
+      "modelVersion": "gymnasium-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "mobile-3d",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "engine": "three.js r186",
+      "frames": "18",
+      "drawCalls": "12",
+      "renderTriangles": "14840",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[22.413985172516913,311.0999241174191,347.6313608901124,518.3424010172924]",
+      "modelVersion": "gymnasium-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "mobile-2.5d",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "engine": "three.js r186",
+      "frames": "20",
+      "drawCalls": "4",
+      "renderTriangles": "1466",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[22.413985172516913,311.0999241174191,347.6313608901124,518.3424010172924]",
+      "modelVersion": "gymnasium-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "short-3d",
+      "viewport": {
+        "width": 950,
+        "height": 540
+      },
+      "engine": "three.js r186",
+      "frames": "23",
+      "drawCalls": "12",
+      "renderTriangles": "14840",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[177.11221546141124,122.97027566987224,704.6387306369943,431.8860507381749]",
+      "modelVersion": "gymnasium-v1-2026-10-25",
+      "mapIntegrated": "false",
+      "ready": "true"
+    }
+  ],
+  "pageErrors": [],
+  "idleFrames": {
+    "before": "29",
+    "after": "29",
+    "stable": true
+  },
+  "interaction": "modes/views, drag/zoom, viewport resize",
+  "physicalPhoneTested": false
+}

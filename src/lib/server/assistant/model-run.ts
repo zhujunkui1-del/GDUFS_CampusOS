@@ -7,6 +7,8 @@ import { ApiError } from "../errors";
 import type { AssistantStore } from "./store";
 import type { MapAction } from "@/domain/maps/contracts";
 import { ControlMapInputSchema } from "@/domain/maps/skill-contracts";
+import type {ContentTool} from './content-intent';
+type RequiredTool='control_map'|'search_places'|'plan_route'|ContentTool;
 
 export function meteredClient(
   client: ModelClient,
@@ -16,8 +18,8 @@ export function meteredClient(
   runId: string,
   answerPhase = () => false,
   beforeAnswer?: () => Promise<false | { mode: string | null }>,
-  requiredTool?: "control_map" | "search_places" | "plan_route",
-  nextRequiredTool?: () => "control_map" | undefined,
+  requiredTool?: RequiredTool,
+  nextRequiredTool?: () => RequiredTool | undefined,
   requiredAction?: MapAction | null,
 ) {
   let requests = 0,

@@ -349,7 +349,7 @@ export function AssistantPanel({
                         <p role="status">正在打开对话…</p>
                       )}
                       {!chat.messages.length && !chat.loadingConversation && (
-                        <h3>想去哪里？</h3>
+                        <h3>想了解校园里的什么？</h3>
                       )}
                       <div
                         role="log"
@@ -372,7 +372,14 @@ export function AssistantPanel({
                                 </p>
                               )}
                             {message.cards.map((card, index) =>
-                              card.kind === "place" ? (
+                              card.kind === 'source' ? (
+                                <article className="assistant-source-card" key={'source:'+card.documentId}>
+                                  <a href={card.originalUrl} target="_blank" rel="noopener noreferrer"><strong>{card.title}</strong></a>
+                                  <span>{card.sourceName} · {card.publishedAt ? card.publishedAt.slice(0,10) : '发布日期未知'}</span>
+                                  <p>{card.snippet}</p>
+                                  <small>{card.evidenceType==='metadata'?'仅元数据':card.evidenceType==='excerpt'?'原文摘录':'正文证据'}{card.classificationState==='unknown'?' · 校园资讯':''}{card.validity==='unknown'?' · 有效性待确认':card.validity==='expired'?' · 已失效':card.validity==='historical'?' · 历史资料':''}</small>
+                                </article>
+                              ) : card.kind === "place" ? (
                                 <button
                                   key={card.place.placeId + index}
                                   className="assistant-place-card"
@@ -451,7 +458,7 @@ export function AssistantPanel({
                       <textarea
                         ref={messageInput}
                         id="assistant-message"
-                        placeholder="问地点、路线…"
+                        placeholder="问政策、活动、地点或路线…"
                         value={input}
                         onChange={(event) => setInput(event.target.value)}
                         onKeyDown={(event) => {

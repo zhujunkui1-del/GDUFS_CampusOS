@@ -5,6 +5,10 @@ import {
 } from "@/domain/maps/skill-contracts";
 import { MapActionSchema } from "@/domain/maps/contracts";
 export const AssistantCardSchema = z.discriminatedUnion("kind", [
+  z.object({
+    kind:z.literal('source'),documentId:z.string(),title:z.string().max(250),sourceName:z.string().max(250),originalUrl:z.url().refine(v=>/^https?:\/\//.test(v)),publishedAt:z.string().nullable(),
+    snippet:z.string().max(800),evidenceType:z.enum(['full_text','excerpt','metadata']),classificationState:z.enum(['knowledge','radar','unknown']),validity:z.enum(['current','historical','expired','unknown']),readable:z.boolean(),
+  }).strict(),
   z
     .object({
       kind: z.literal("place"),

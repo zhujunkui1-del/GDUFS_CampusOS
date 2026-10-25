@@ -569,6 +569,10 @@ p {
 .assistant-route-card > strong, .assistant-route-card > span { display: block; margin-bottom: 9px; }
 .assistant-route-card div { display: flex; gap: 12px; }
 .assistant-route-card button, .assistant-error button { border: 0; background: transparent; padding: 8px 0; min-height: 44px; color: var(--brand-primary); font-size: 1rem; }
+.assistant-source-card { margin-top: 10px; padding: 14px; border: 1px solid #e5e9ef; border-radius: 17px; background: #f8fafd; overflow-wrap: anywhere; }
+.assistant-source-card a { color: var(--brand-primary); text-decoration: underline; text-underline-offset: 3px; }
+.assistant-source-card > span, .assistant-source-card > small { display: block; margin-top: 7px; color: #656b78; font-size: .85rem; }
+.assistant-source-card p { margin: 9px 0; font-size: .9rem; line-height: 1.65; white-space: pre-wrap; }
 .assistant-chat .assistant-status { font-size: 1rem; color: var(--text-secondary); }
 .assistant-error { font-size: 1rem; line-height: 1.6; color: #a13d31; padding: 10px 0; }
 .assistant-error button { display: block; }

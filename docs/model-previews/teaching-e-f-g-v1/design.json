@@ -1,0 +1,111 @@
+{
+  "version": "teaching-e-f-g-v1-2026-10-25",
+  "placeId": "osm-relation-4105730",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "heightScaleLevels": 5,
+  "levelsSource": "负责人2026-10-25明确：5层楼高",
+  "levelsAccuracy": "owner_external_height_description_only",
+  "interiorLevelsVerified": false,
+  "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+  "geometryAccuracy": "original_parent_outer_and_three_inner_rings_retained; display_partitions_not_verified_independent_EFG_boundaries",
+  "floorDatumsMeters": [
+    0.1,
+    3.7,
+    7.3,
+    10.9,
+    14.5,
+    18.1
+  ],
+  "mainRoofMeters": 18.1,
+  "mainParapetMeters": 18.52,
+  "galleryDepthMeters": 2.4,
+  "projectorRoofMeters": 14.5,
+  "projectorPergolaTopMeters": 18.6,
+  "projectorPergolaDepthMeters": 6.5,
+  "blueBandSourceEdgeIndices": [
+    0,
+    1,
+    2,
+    8,
+    9,
+    10,
+    15,
+    16,
+    17,
+    23,
+    24,
+    25,
+    33,
+    34,
+    35,
+    45,
+    46,
+    47
+  ],
+  "performance": {
+    "triangleBudget": 30000,
+    "modelDrawCallBudget": 20,
+    "glbByteBudget": 650000
+  },
+  "notes": [
+    "文件名数字无层数、尺寸或时序意义。",
+    "E/F/G共用一个父轮廓，标签绑定保持；内部体量分段只为构建外观，未创建三个独立GIS建筑。",
+    "三处真实内环保持；白色廊道向室内退让、两连接段开放楼层、前方橙色体块架空。",
+    "主体五层依据来自负责人；米制高度、投影块屋顶14.5米/屋架18.6米及小屋面约19.63米为视觉估算。",
+    "整体和E/F/G观察按钮只改变视角，同一个整组模型始终显示，不导出三份重复父轮廓。",
+    "照片中的B栋钟楼只为上下文，本组不制作钟楼；已修正A-D资产保持。",
+    "八图仅内部参考，不发布原图或用作照片纹理。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼G栋.png",
+      "bytes": 1426897,
+      "sha256": "6f8d2d3e72ab4958b6af1b6fc20b5057dced400446c0046bef21ab6a49be50b9",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼E栋43.png",
+      "bytes": 964914,
+      "sha256": "83c07e793a764da34b751fef1eb0d4b8467a18091205b7708ac529821b1f7a3b",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼E栋.png",
+      "bytes": 2027514,
+      "sha256": "5da27960c830b49318e72a04495e19c0fdaf8f2163d71697c7f2489524fea4f1",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼整体.png",
+      "bytes": 1127579,
+      "sha256": "a10e9924912ced9ea2578820f04815cfb51fa9c5f872e8d991caabad224e801d",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼F栋.png",
+      "bytes": 2841506,
+      "sha256": "d3092f94656b4b0059a1fcf00348547fc863d3094d11ad77ae31f7b3f7eeb2d3",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼F-G栋连接处及G栋.png",
+      "bytes": 3019897,
+      "sha256": "0ff8d1e6cb10de99f89ffa18985f81a82767aa3ca488c97f14585150988f2c36",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼EFG.png",
+      "bytes": 4294722,
+      "sha256": "eebc3e17d4a0e821318e7eb1c9fce1ce20049740a26283d27da2c2e90a76e655",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/teaching-e-f-g-v1/教学楼EFG栋俯视.png",
+      "bytes": 773658,
+      "sha256": "f849d3905b18cf2d1734f0bf933fb025ccd426bc5f99cee244f17c5e460ccfdb",
+      "usage": "internal_visual_reference_only"
+    }
+  ]
+}

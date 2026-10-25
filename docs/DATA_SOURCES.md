@@ -506,6 +506,20 @@ Rows read基线来自Cloudflare Wrangler只读命令`wrangler d1 insights campus
 当前clock实体绑定B osm-relation-19299171（https://www.openstreetmap.org/relation/19299171），沿原转角边界切出估算6.4×9米体量，B剩余外环与塔体面积之和保持，两个院落不封顶；C osm-way-1410412691原高塔恢复五层。主钟面/下方玻璃面按箭头朝外，局部平面法向约[0.99994,0.01111]。米制尺寸和现场精度未实测，不把红框当成新增精确GIS。十GLB继续共用既有C坐标原点。原V1留作错误位置历史，当前3021服务为V2。
 
 
+## 2026-10-25｜教学楼E—G建模资料
+
+负责人交付文档包细节目录的教学楼G栋.png、教学楼E栋43.png、教学楼E栋.png、教学楼整体.png、教学楼F栋.png、教学楼F-G栋连接处及G栋.png、教学楼EFG.png，及Downloads/教学楼EFG栋俯视.png。俯视原像素副本存文档包assets/model_references/teaching-e-f-g-v1，八图路径/字节/SHA见docs/model-previews/teaching-e-f-g-v1/design.json。文件名数字无尺寸/层数/时序意义；原URL/年份/公开复用许可待补，仅内部参考，不公开原图或用作纹理。无新增外网图像/瓦片/供应商模型采集。
+
+平面沿用现行campus.json/map.osm的OpenStreetMap relation4105730（https://www.openstreetmap.org/relation/4105730），原四环及E/F/G三个节点/父关系保持，不把节点当分栋足迹。主楼5层为负责人本轮依据；米制高度/院落廊道退让/前部体块高低和架空/屋顶构架/入口/梯均为照片近似显示。内部显示分部面积与原父净面积保持，不改正式GIS或导航。整体照片中钟楼只作上下文，现有B栋钟楼修正不变。本组自有零照片纹理几何保留OSM署名。
+
+
+## 2026-10-25｜体育馆建模资料
+
+负责人交付文档包细节目录的体育馆3.png、体育馆.png、体育馆19283.png和Downloads/体育馆俯视.png；俯视原像素副本存文档包assets/model_references/gymnasium-v1，四图路径/字节/SHA见docs/model-previews/gymnasium-v1/design.json。文件名数字无层数/尺寸/时序意义，原URL/年份/公开复用许可仍待补，仅内部观察；不公开原图/瓦片或作为GLB纹理。本轮无外网影像/供应商模型采集。
+
+地理依据为现行campus.json/map.osm的OpenStreetMap way1389756844（https://www.openstreetmap.org/way/1389756844），原80点椭圆和名称体育馆（羽毛球场）保持。负责人5层楼高为外部尺度依据；主屋面24.4米/拱带25.55米、墙顶随曲面变化、东西尖端悬挑/入口尺寸为视觉估算，不能回填为实测GIS。南北各五条采光条来自俯视观察；前景杆索归属未核验。原点沿用体育馆WGS84标签点，自有纯几何模型保留OSM署名，无室内平面或新增通行事实。
+
+
 ## 2026-10-25｜统一内容分析的真实语料与报名标记
 
 只读快照来自现有Preview D1官网/公众号文章1773篇，保留既有来源用途权限，没有新增抓取平台或下载图片至D1；原reading HTML/CDN不改。真实标注/核对样本只提交有限摘录、标题、ID和原文地址，不将全量文章正文放入测试仓库；本地分析语料在忽略目录。

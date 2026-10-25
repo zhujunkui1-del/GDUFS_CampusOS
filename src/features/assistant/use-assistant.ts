@@ -449,6 +449,7 @@ export function useAssistant(
       : semanticPlace.current;
   };
   const showCard = async (card: AssistantCard, navigate = false) => {
+    if(card.kind==='source')return;
     if (pending.current) cancel();
     setError("");
     cardWork.current?.abort();

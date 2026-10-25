@@ -8,6 +8,7 @@ import { articleText } from "@/lib/ingestion/article-text";
 import type { SqlDatabase } from "../assistant/database";
 import { tokenHash } from "../assistant/crypto";
 import { validateArticleAnalysis } from "@/lib/ingestion/article-validation";
+import { retrievalIndexStatements } from "../retrieval/indexer";
 
 export async function analysisStatements(
   db: SqlDatabase,
@@ -16,6 +17,7 @@ export async function analysisStatements(
   inputHash: string,
   input: ArticleAnalysisInput,
   provided?: ArticleAnalysis,
+  rights?: string,
 ) {
   const analysis = validateArticleAnalysis(
       input,
@@ -87,6 +89,7 @@ export async function analysisStatements(
         `INSERT OR IGNORE INTO document_tags(document_id,content_revision,tag) SELECT ?,?,value FROM json_each(?,'$.tags') WHERE ${guard} LIMIT max(0,12-(SELECT count(*) FROM document_tags WHERE document_id=? AND content_revision=?))`,
       )
       .bind(id, revision, projection, ...args, id, revision),
+    ...(rights ? await retrievalIndexStatements(db,id,revision,inputHash,input,rights):[]),
   ];
 }
 
@@ -94,7 +97,7 @@ export async function analysisStatements(
 export async function ensureArticleAnalysis(db: SqlDatabase, id: string) {
   const d = await db
     .prepare(
-      `SELECT d.id,d.content_revision,d.input_hash,d.title,d.body,d.body_format,d.body_status,d.source_id,d.url,d.published_at,d.content_type,s.display_name
+      `SELECT d.id,d.content_revision,d.input_hash,d.title,d.body,d.body_format,d.body_status,d.source_id,d.url,d.published_at,d.content_type,d.rights_scope,s.display_name
    FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id
    WHERE d.id=? AND d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND d.input_hash IS NOT NULL
     AND NOT EXISTS(SELECT 1 FROM document_article_analysis a WHERE a.document_id=d.id AND a.content_revision=d.content_revision AND a.input_hash=d.input_hash AND a.classifier_version=?)`,
@@ -120,6 +123,8 @@ export async function ensureArticleAnalysis(db: SqlDatabase, id: string) {
       Number(d.content_revision),
       String(d.input_hash),
       input,
+      undefined,
+      String(d.rights_scope),
     ),
   );
   return true;

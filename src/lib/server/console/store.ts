@@ -805,7 +805,7 @@ export class ConsoleStore {
           originalUrl: data.url,
           publishedAt: data.publishedAt,
           contentType: data.contentType,
-        })),
+        }, undefined, data.rightsScope)),
         this.snapshot(key),
       ],
     };
