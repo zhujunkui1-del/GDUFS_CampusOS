@@ -1,0 +1,236 @@
+{
+  "status": "initial human-reviewed targeted sample, not population estimate",
+  "labelledAt": "2026-10-25T13:10:34.012Z",
+  "documents": [
+    {
+      "id": "content-049f8e2d-29cf-4b3a-acac-5427c5b36cd8",
+      "title": "关于图书馆学习空间分批次开放预约使用的通知",
+      "sourceType": "official_web",
+      "sourceUrl": "https://lib.gdufs.edu.cn/info/1134/9498.htm",
+      "expectedDestination": "unknown",
+      "expectedCategory": null,
+      "rationale": "正文不可用，不能以标题冒充证据",
+      "evidenceExcerpt": ""
+    },
+    {
+      "id": "content-059dd20c-9798-4461-8dc9-1df713415083",
+      "title": "2027年推免硕士研究生考核实施细则（线下）-广东国际战略研究院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://giis.gdufs.edu.cn/info/1643/20715.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "本轮推免考核的具体时间安排",
+      "evidenceExcerpt": "专业代码专业名称考核具体安排联系老师电话监督邮箱\n笔试时间和地点（如有请填写）面试时间和地点\n0502Z4欧洲学无9月20日9:30-11:30\n白云山校区五教304杨老师：020-36641366giis2009@gdufs.edu.cn\n0202Z2全球经济治理无9月20日9:30-11:30\n白云山校区五教304杨老师：020-36641366giis2009@gdufs.edu.cn\n025800数字经济无9月20日9:30-11:30\n白云山校区五教304杨老师：020-36641366giis2009@"
+    },
+    {
+      "id": "content-0e672df7-bf72-4e35-8bdd-eebc011f0674",
+      "title": "广东外语外贸大学社会与公共管理学院2026年心理学硕士研究生招生调剂工作办法和程序-社会与公共管理学院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://zg.gdufs.edu.cn/info/1003/12769.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "2026年招生调剂批次与申请程序，主意图为当期招生",
+      "evidenceExcerpt": "广东外语外贸大学社会与公共管理学院（以下简称“公管学院”）心理学硕士(专业代码：040200，培养方式为全日制非定向就业) 2026年接受调剂，有关信息将发布于“全国硕士研究生招生考试复试调剂系统”（以下简称“调剂系统”，网站：https://yz.chsi.com.cn/yztj/）。具体工作办法和程序公布如下：\n一、拟接受调剂专业情况\n学院名称\n专业代码\n专业名称\n专业类型\n学习方式\n调入专业范围\n调剂名额\n公管学院\n040200\n心理学\n学术学位\n全日制\n心理学\n（0402）\n8\n二、考生调剂要求\n（一）调入"
+    },
+    {
+      "id": "content-0ed2221d-d705-45b5-802a-db64bd807a90",
+      "title": "广东外语外贸大学社会与公共管理学院2026年心理学硕士研究生调剂复试实施细则及调剂考生复试名单（第二次）-社会与公共管理学院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://zg.gdufs.edu.cn/info/1003/12909.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "第二次复试名单与具体考场安排",
+      "evidenceExcerpt": "广东外语外贸大学社会与公共管理学院2026年心理学硕士研究生调剂复试实施细则（第二次）\n序号\n专业代码\n专业名称\n专业课笔试和面试所占比例\n调剂复试具体安排\n联系老师电话\n监督邮箱\n备注\n专业课笔试时间及地点\n面试时间及地点\n1\n040200\n心理学\n专业课笔试占50%，面试占50%\n4月12日8:30-10:30，大学城校区MPA教育中心第三会议室\n（如有同等学力加试，具体考试时间地点后续发布通知）\n4月12日11:00-13:00，大学城校区MPA教育中心第二会议室\n（4月12日10：40准时进入候考场：大学城"
+    },
+    {
+      "id": "content-1dfd7bfe-471c-481b-8d89-ea5c9167ee50",
+      "title": "​广东外语外贸大学密茨凯维奇创新学院 2026年新闻与传播（中华文化国际传播方向）硕士研究生 招生调剂工作办法和程序-广东外语外贸大学密茨凯维奇创新学院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://mii.gdufs.edu.cn/info/1086/2016.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "当年招生调剂申请批次",
+      "evidenceExcerpt": "广东外语外贸大学密茨凯维奇创新学院\n2026年新闻与传播（中华文化国际传播方向）硕士研究生\n招生调剂工作办法和程序\n广东外语外贸大学密茨凯维奇创新学院新闻与传播（中华文化国际传播方向）专业硕士（专业代码：055200）接受考生调剂，调剂余额充足，具体工作办法公布如下：\n一、拟接受调剂的专业情况\n学院名称\n专业代码\n专业名称\n专业类型\n学习方式\n调入专业范围\n密茨凯维奇创新学院\n055200\n新闻与传播（中华文化国际传播方向）\n专业学位\n全日制\n055200 新闻与传播\n050301 新闻学\n050302 传播学\n0"
+    },
+    {
+      "id": "content-244c01fc-28a7-4b4f-92eb-b9f343c14d56",
+      "title": "广东外语外贸大学密茨凯维奇创新学院2026年专业硕士研究生调剂复试实施细则-广东外语外贸大学密茨凯维奇创新学院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://mii.gdufs.edu.cn/info/1086/2056.htm",
+      "expectedDestination": "unknown",
+      "expectedCategory": null,
+      "rationale": "未取得可用文本",
+      "evidenceExcerpt": ""
+    },
+    {
+      "id": "content-2bb22714-9733-446a-b2d6-8989b8cb1baa",
+      "title": "广东外语外贸大学中文学院2026年港澳台硕士研究生复试实施细则-中国语言文化学院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://zwxy.gdufs.edu.cn/info/1168/9979.htm",
+      "expectedDestination": "unknown",
+      "expectedCategory": null,
+      "rationale": "未取得可用文本",
+      "evidenceExcerpt": ""
+    },
+    {
+      "id": "content-31b24cb1-c854-48d0-b13a-d28a139cf9af",
+      "title": "广东外语外贸大学东南亚学院2026年博士研究生综合考核实施细则-广东外语外贸大学东南亚学院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://fsas.gdufs.edu.cn/info/1059/3492.htm",
+      "expectedDestination": "unknown",
+      "expectedCategory": null,
+      "rationale": "未取得可用文本",
+      "evidenceExcerpt": ""
+    },
+    {
+      "id": "wx-50f7e8e90985ace6005ee12960dc95b9a819b99b",
+      "title": "【就业协议书】2027届毕业生电子就业协议书签订操作指南",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/2lvGVw97fFI_sg2ZBqrjSQ",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "education_career",
+      "rationale": "就业协议长期操作步骤，适用届别独立保存",
+      "evidenceExcerpt": "2027届毕业生与用人单位双向选择，确定聘录用关系的，可通过“广东大学生就业创业”微信小程序申请《普通高等学校毕业生、毕业研究生就业协议书》。\n“广东大学生就业创业”微信小程序葵花码\n注意事项\n1.毕业生在申请就业协议书前务必慎重考虑，因为一旦填写“电子就业协议”的内容，协议就开始生效，无法撤回。\n2.毕业生提交“协议申报”时，必须检查“就业单位名称（必须为单位加盖公章的全称）”与“统一社会信用代码”这两项是否有误，一旦有误，该协议无法撤回修改。其余内容在学院或者学校审核前可直接修改，一旦学院或学校审核后，毕业生无"
+    },
+    {
+      "id": "wx-478e4479fc6e30cf7588b8d8f8b9815d4c08c84d",
+      "title": "金融学院第六届金融热点分析大赛参赛指南",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/yyaRAenHDPn8OtRXYLKCCw",
+      "expectedDestination": "radar",
+      "expectedCategory": "competition",
+      "rationale": "具体比赛报名与复赛决赛日期",
+      "evidenceExcerpt": "第六届金融\n热点分析大赛\n2026-2027\nFinancial Hotspot Analysis Competition\n格物致知析热点，砺剑明理究金融。为更好地帮助同学们将所学金融知识融会贯通，金融学院从2016年开始举办第一届金融投资分析大赛，到如今已经成功开展了五届。大赛也陪伴了近千名学子，在理论与实践的交锋中成长。\n为了更好适应时代发展，我们推陈出新，再续华章！现拟举办第六届金融热点分析大赛。我们继承初心——搭建最贴近实战的金融思辨平台；我们力求新意——引导更具前瞻的跨维视角，鼓励更紧跟时代热点的金融问题"
+    },
+    {
+      "id": "content-f0909ec5-809a-47d1-a7d3-67ec783f3a09",
+      "title": "我院召开国家级科研项目申报经验交流及动员会-国际经济贸易研究院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://rcite.gdufs.edu.cn/info/1100/3097.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "academic_research",
+      "rationale": "科研申报动员会议报道",
+      "evidenceExcerpt": "10月13日上午，国家级科研项目申报经验交流及动员会在行政楼408会议室召开。会议总结了研究院2026年国家级科研项目立项情况，邀请相关教师交流项目申报经验，并对下一阶段申报工作作出部署。我校原副校长何传添教授出席会议，研究院相关负责人及教师参加会议。\n何传添教授在会上肯定了研究院2026年国家级科研项目申报工作取得的成效，对获得立项的教师表示祝贺。他结合研究院科研工作实际，对国家级项目申报组织工作提出建议，强调研究院应将项目申报融入日常科研工作，申报个人选题需主动对接国家重大需求，交流研讨环节应前置至选题阶段，鼓"
+    },
+    {
+      "id": "content-034070b7-ada3-4a82-930b-c74509520340",
+      "title": "【个人申请】研究生院关于国家留基委2026年墨西哥政府互换奖学金项目申请工作的通知-研究生院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://gwyjs.gdufs.edu.cn/info/1035/15933.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "scholarship_opportunity",
+      "rationale": "本年度奖学金项目申请机会",
+      "evidenceExcerpt": "各研究生培养单位：\n为提高我校研究生国际化水平，根据国家留学基金委《2026年墨西哥政府互换奖学金遴选通知》（https://www.csc.edu.cn/chuguo/s/4214），学校现启动2026年墨西哥政府互换奖学金项目遴选工作。\n请有意向的申请人和各培养单位根据通知要求，做好申请材料准备、网上申报和人选推荐等各项工作。现就有关事宜通知如下：\n一、提交申请\n申请人于6月11日前完成国家公派出国留学网上申请，并提交申请材料纸质版和电子版至所在培养单位。\n二、校内审核及材料递交\n研究生培养单位在对申请材料进行"
+    },
+    {
+      "id": "wx-003eed69569ae566729e4b1eb1573eb5626e03e6",
+      "title": "关于大学城校区图书馆临时闭馆的通知",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/NO0cKHImxRw8AlSDz0Pkrg",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "临时闭馆与恢复安排",
+      "evidenceExcerpt": "各位读者：\n为切实保障校园用电安全，总务后勤部将对大学城校区全校高压电房及配套电气设备开展深度检修维护。根据检修工作安排，大学城校区图书馆将于8月19日（周三）临时闭馆，暂停对外开放；8月20日（周四）恢复开馆。\n由此给各位读者带来不便，敬请谅解。\n图书馆（档案馆）\n2026年8月17日"
+    },
+    {
+      "id": "content-35e48212-1580-4f80-9637-c1b4cd8c47f1",
+      "title": "深圳大学Péter Hajdu教授讲座：城市景观与文学-阐释学研究院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://ih.gdufs.edu.cn/info/1066/1724.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "lecture",
+      "rationale": "已经举办的真实讲座报道，结束不改变栏目",
+      "evidenceExcerpt": "2026年6月26日下午，深圳大学特聘教授、匈牙利科学院文学研究所高级研究员、《世界比较文学评论》（Neohelicon，A&HCI）杂志主编Péter Hajdu教授受广东外语外贸大学阐释与国际传播研究院邀请，在科研楼一楼演播厅举办了一场题为“城市景观与文学”的学术讲座。讲座由阐释与国际传播研究院院长陈开举教授主持，吸引了英文学院、亚非学院及其他多个院系的教师代表和博士、硕士研究生前来聆听。\nPéter Hajdu教授在讲座中\n讲座伊始，Péter Hajdu教授以雅典两座标志性神庙对比，阐释建筑本身就是政治思想"
+    },
+    {
+      "id": "content-34658af0-f3d9-4930-9187-532ef32113a4",
+      "title": "国际学院（北校区）学生生活指南-国际学院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://ic.gdufs.edu.cn/info/1486/4730.htm",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "campus_life",
+      "rationale": "可重复查询的学生生活服务目录与渠道",
+      "evidenceExcerpt": "以下内容如有变动，请留意相关部门的最新通知\n1.紧急求助，必存必记\n校内报警电话\n(020)36206999（保卫处咨询电话：(020)36207167）\n黄石派出所\n(020)86335030\n宿管电话\n(020)36207394\n门诊部\n急诊室电话：(020)36206729【急诊24小时值班，按铃就诊】\n普通门诊：周一至周五： 8:30—12:00，14:00—17:10\n周六日及节假日： 8:30—12:00，14:30—17:30\n（1）南方医院\n（2）广州中医药大学附属第一医院\n地址：广州市广州大道北1"
+    },
+    {
+      "id": "content-07d82489-deeb-4391-8df6-6af9db6841e0",
+      "title": "【个人申请】广东外语外贸大学“面向联合国系统高端传译人才培养项目”报名通知（2026年第二次选拔）-研究生院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://gwyjs.gdufs.edu.cn/info/1035/15803.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "本轮双硕士培养项目选拔报名",
+      "evidenceExcerpt": "一、培养目标\n面向联合国系统高端传译人才培养项目（以下简称“高端传译人才培养项目”）是在国家留学基金委支持下，广东外语外贸大学联合澳大利亚麦考瑞大学共同规划与实施的中外双硕士教育合作项目。该项目面向联合国系统等国际组织，旨在培养具备国际传播能力的高端语言服务人才，努力打造一支胸怀祖国、政治坚定、业务精湛、融通中外、甘于奉献的高素质、实践型、创新型的传译人才队伍；使其能够在国际组织中实习和任职、未来有潜力竞争国际机构中、高级职位；为我国国际舞台开展传播、加强人文交流、提升国际话语权提供有力人才支撑。\n二、培养模式*\n"
+    },
+    {
+      "id": "content-0804b236-4900-4cb2-9a3b-8a09dac85419",
+      "title": "关于在校研究生参加2026年上半年大学英语四、六级考试报名的预通知-研究生院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://gwyjs.gdufs.edu.cn/info/1035/14093.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "当期四六级考试报名通知",
+      "evidenceExcerpt": "各研究生培养单位：\n为做好2026年上半年大学英语四、六级考试报名工作，及时汇总计划报考研究生学籍数据信息及照片，以便对接学校四、六级报名系统，现就我校研究生参加2026年上半年大学英语四、六级考试报名工作预通知如下:\n一、报名规定\n1.在籍在校的非英语专业硕士研究生方可报名；大学英语四级成绩达到425分的学生方可报考英语六级；\n2.研究生报名必须以学院为单位，个人报名的不予受理；\n3.研究生在校学习期间原则上可报名参加CET4-6共3次（含缺考）；\n4.研究生专业是英语的研究生不得报考CET4-6级；\n5.如果C"
+    },
+    {
+      "id": "content-0e7424f9-11c2-4426-a3f6-bc72fc162bca",
+      "title": "数学与统计学院关于办理2026-2027-1学期本科生各项课程调整手续的通知-数学与统计学院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://stxy.gdufs.edu.cn/info/1850/6265.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "具体学期课程调整受理窗口",
+      "evidenceExcerpt": "一、办理时间及地点\n1. 学生提交申请时间：2026年9月4日至11日（上午9:00-11:30，下午2:30-5：00），逾期不予受理。\n2. 办理方式\n（1）线上办理：转专业学生课程补报、删除请填写表单https://f.wps.cn/g/VB7ZEYbX/\n（2）线下办理：复学课程调整、课程冲抵、转专业替代免修，请至大学城校区院办公楼154办公室办理。\n二、办理流程\n1. 材料提交\n因复学需要办理课程调整的，请填写相应申请表一式两份，经开课单位审核批准后，1份自行保留，1份交所在学院。数统学院转专业办理课程替"
+    },
+    {
+      "id": "content-1507f200-9427-44be-bff1-ebd80d377985",
+      "title": "关于教育服务关系终止的公告-广外教育集团",
+      "sourceType": "official_web",
+      "sourceUrl": "https://eg.gdufs.edu.cn/info/1042/7009.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "服务关系终止的动态公告",
+      "evidenceExcerpt": "2017年广东外语外贸大学（以下简称“广外”）与广东大安教育控股有限公司（以下简称“大安教育公司”）签署《合作办学协议书》，合作举办广东外语外贸大学附设大亚湾外国语学校（现已更名为“惠州大亚湾区外语实验学校”，以下简称“惠州大亚湾外校”）。2022年6月6日，根据“公参民”改革要求，广外与大安教育公司、惠州大亚湾外校签署《终止合作办学协议书》，广外与大安教育公司在惠州大亚湾外校义务教育学段的合作办学关系终止。但基于前期有较好的合作基础，广外与大安教育公司签署《教育服务合作协议书》，向惠州大亚湾外校提供教育服务，服务"
+    },
+    {
+      "id": "content-178b8349-4591-492a-86fb-5e433b0f596a",
+      "title": "广东外语外贸大学区域国别学院（区域国别研究院）2026年科研课题招标方案-区域国别学院（区域国别研究院）",
+      "sourceType": "official_web",
+      "sourceUrl": "https://sgas-iir.gdufs.edu.cn/info/1050/9437.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "academic_research",
+      "rationale": "年度科研课题招标机会与提交节点",
+      "evidenceExcerpt": "为深入贯彻落实国家高质量发展战略部署，服务中国式现代化和广东高水平对外开放，聚焦全球重点区域国别政治、经济、社会、文化及对外合作前沿动态，提升区域国别研究的系统性、前瞻性、战略性水平，依据《广东外语外贸大学科学研究项目管理办法》《广东外语外贸大学校级人文社会科学重点研究基地管理办法》等规定，现发布广东外语外贸大学区域国别学院（区域国别研究院）2026年度科研课题招标方案。具体事项公告如下：\n一、目标任务\n本次招标以国家重大需求为导向，服务国家外交战略和广东高水平对外开放部署，聚焦东南亚、太平洋岛国、印尼、欧洲、亚太"
+    },
+    {
+      "id": "content-1f3714e4-bfba-424c-93ee-aeeae5d651fc",
+      "title": "关于开展2026—2027学年第一学期研究生教材选用审核工作的通知-研究生院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://gwyjs.gdufs.edu.cn/info/1035/15593.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "本学期教材审核的阶段工作",
+      "evidenceExcerpt": "各研究生培养单位：\n为进一步贯彻落实教育部《普通高等学校教材管理办法》（附件1）文件精神，严格规范我校研究生教材选用管理，全面落实立德树人根本任务，学校现开展2026—2027学年第一学期研究生教材选用审核工作，有关事项通知如下：\n一、教材选用原则\n（一）凡选必审。所有研究生课程选用教材必须经过审核。每门课程可选用公开出版的教材或自编讲义。\n（二）严格执行“马工程”重点教材首选与全覆盖。课程有对应已出版马克思主义理论研究和建设工程重点教材（以下简称“马工程”重点教材）的，必须统一选用“马工程”重点教材。\n（已出版“"
+    },
+    {
+      "id": "content-22e3d518-ed54-4830-99c9-888a74f9859d",
+      "title": "经济贸易学院2026级国际经济与贸易（国际组织创新班）选拔考试-笔试通知-经济贸易学院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://jingmao.gdufs.edu.cn/info/1694/19509.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "本年级具体选拔考试时间地点",
+      "evidenceExcerpt": "经济贸易学院\n2026级国际经济与贸易（国际组织创新班）选拔考试-笔试通知\n一、笔试考试时间：2026年9月7日（周一）上午9:00-11:30\n笔试考试地点：广东外语外贸大学 大学城校区（南校区）南C507\n二、考核形式与安排：\n第一部分（9:00-10:00）：英语测试\n第二部分（10:30-11:30）：综合素质测试\n三、注意事项：\n1、请考生按照规定的考试时间至少提前15分钟进入考场，迟到超过15 分钟者均作缺考论处；\n2、考生凭有效身份证进入考场，并将证件放在课桌左上角，以备检查；\n3、不准将手机、具有存"
+    },
+    {
+      "id": "content-23bda702-5829-4417-a2da-14414bca4c13",
+      "title": "关于开展2026年“党建好案例、书记好党课、党员好榜样”优秀成果征集活动的预通知-党委组织部",
+      "sourceType": "official_web",
+      "sourceUrl": "https://zzb.gdufs.edu.cn/info/1040/3832.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "当期优秀成果征集活动",
+      "evidenceExcerpt": "各二级党组织：\n为进一步牢固树立抓好党建是最大政绩的理念，建立健全常态化发掘、培育、选树和推广党建工作先进典型的长效机制，根据有关工作计划，学校拟开展2026年“党建好案例、书记好党课、党员好榜样”优秀成果征集活动，现将有关事项预通知如下。\n一、活动主题\n以习近平新时代中国特色社会主义思想为指导，全面贯彻党的二十大和二十届历次全会精神，深入学习贯彻习近平党建思想，聚焦基层党组织建设重点任务，挖掘一批可复制、可推广的党建创新成果，选树一批扎根教学科研一线的优秀典型，激励全校各级党组织和广大党员在加快建设高水平大学中担"
+    }
+  ]
+}

@@ -10,6 +10,26 @@ export const topicNames = [
   "语言学习",
   "体育",
   "学术交流",
+  "校园招聘",
+  "毕业生",
+  "就业服务",
+  "就业协议",
+  "奖学金",
+  "助学金",
+  "学生资助",
+  "选课",
+  "考试",
+  "图书借阅",
+  "图书馆服务",
+  "科研项目",
+  "科研管理",
+  "学术诚信",
+  "办事流程",
+  "宿舍管理",
+  "后勤服务",
+  "校园交通",
+  "创新创业",
+  "心理健康",
 ] as const;
 export const TopicTagsSchema = z
   .array(z.enum(topicNames))
@@ -22,6 +42,11 @@ export const RadarCategorySchema = z.enum(radarCategories.map((x) => x.code));
 export const KnowledgeCategorySchema = z.enum(
   knowledgeCategories.map((x) => x.code),
 );
+export const RegistrationRequirementSchema = z.enum(
+  taxonomy.registration_requirement,
+);
+export const RegistrationStateSchema = z.enum(taxonomy.registration_state);
+export const DerivedEventStatusSchema = z.enum(taxonomy.event_status_derived);
 export const contentTypeNames: Record<string, string> = {
   event: "活动",
   notice: "通知",
