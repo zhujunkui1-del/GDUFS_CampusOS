@@ -59,7 +59,7 @@ const pageSize = 12;
 const columnMemory: Record<string, number> = {};
 const radarFeedCategories = [
   ...radarCategories,
-  { code: "unclassified", label: "待分类" },
+  { code: "unclassified", label: "校园资讯" },
 ];
 
 function subscribeColumns(update: () => void) {
