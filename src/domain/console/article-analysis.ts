@@ -116,6 +116,7 @@ export const ArticleAnalysisSchema = z
     classifierVersion: z.string(),
     method: z.literal("rules"),
     needsAssistance: z.boolean(),
+    bodyAvailable: z.boolean(),
     registrationStatus: RegistrationRequirementSchema,
     hasRegistration: z.boolean(),
     activities: z.array(ArticleActivitySchema).max(12),

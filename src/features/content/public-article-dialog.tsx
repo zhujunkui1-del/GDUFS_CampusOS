@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, X } from "lucide-react";
 import { ReadingFrame } from "./article-reader";
 import type { PublicArticleSummary } from "./public-feed";
+import { RegistrationBadge } from "./registration-badge";
 
 type ArticleDetail = {
   id: string;
@@ -110,7 +111,13 @@ export function PublicArticleDialog({
 
         <div className="public-article-dialog-content">
           <header className="public-article-heading">
-            <h2 id="public-article-title">{article.title}</h2>
+            <h2 id="public-article-title">
+              <RegistrationBadge
+                show={article.hasRegistration}
+                category={article.radarCategory || article.knowledgeCategory}
+              />
+              {article.title}
+            </h2>
             <div className="public-article-meta">
               <span>
                 发布时间：

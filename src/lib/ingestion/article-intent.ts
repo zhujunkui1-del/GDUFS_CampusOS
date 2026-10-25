@@ -356,6 +356,7 @@ export function classifyArticleContent(
     classifierVersion: ARTICLE_CLASSIFIER_VERSION,
     method: "rules",
     needsAssistance: destination === "unknown",
+    bodyAvailable: text.bodyAvailable,
     registrationStatus: "unknown",
     hasRegistration: false,
     activities: [],

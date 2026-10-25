@@ -1,0 +1,13 @@
+.article-registration-badge {
+  display: inline-block;
+  margin-inline-end: 0.4em;
+  padding: 0.05em 0.3em;
+  border-radius: 0.3em;
+  background: var(--feed-tint);
+  color: var(--feed-accent);
+  font-size: 0.78em;
+  line-height: 1.35;
+  font-weight: 800;
+  vertical-align: 0.06em;
+  white-space: nowrap;
+}

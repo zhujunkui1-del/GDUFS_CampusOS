@@ -14,6 +14,8 @@ import {
 } from "@/domain/console/taxonomy";
 import { PublicArticleDialog } from "./public-article-dialog";
 import "./public-feed.css";
+import { RegistrationBadge } from "./registration-badge";
+import { articleThemeStyle as themeStyle } from "./article-theme";
 
 export type PublicArticleSummary = {
   id: string;
@@ -25,6 +27,8 @@ export type PublicArticleSummary = {
   contentType: string;
   knowledgeCategory: string | null;
   radarCategory: string | null;
+  primaryDestination?: "radar" | "knowledge" | "unknown";
+  hasRegistration?: boolean;
   source: { name: string; official: boolean };
 };
 
@@ -53,6 +57,10 @@ type FeedState = {
 
 const pageSize = 12;
 const columnMemory: Record<string, number> = {};
+const radarFeedCategories = [
+  ...radarCategories,
+  { code: "unclassified", label: "待分类" },
+];
 
 function subscribeColumns(update: () => void) {
   window.addEventListener("storage", update);
@@ -70,22 +78,6 @@ function savedColumns(surface: string) {
     if ([1, 2, 3, 4].includes(n)) return n;
   } catch {}
   return columnMemory[surface] || 1;
-}
-function themeFor(code: string) {
-  let hash = 0;
-  for (const char of code) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
-  const hue = hash % 360;
-  return {
-    accent: `hsl(${hue} 43% 38%)`,
-    tint: `hsl(${hue} 58% 96%)`,
-  };
-}
-function themeStyle(code: string) {
-  const theme = themeFor(code);
-  return {
-    "--feed-accent": theme.accent,
-    "--feed-tint": theme.tint,
-  } as CSSProperties;
 }
 function formatPublishTime(value: string | null) {
   if (!value) return "时间未知";
@@ -108,7 +100,7 @@ function formatPublishTime(value: string | null) {
 
 export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
   const categories =
-    surface === "radar" ? radarCategories : knowledgeCategories;
+    surface === "radar" ? radarFeedCategories : knowledgeCategories;
   const columns = useSyncExternalStore(
     subscribeColumns,
     () => savedColumns(surface),
@@ -287,7 +279,13 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
         onClick={() => setSelectedArticle(item)}
         onKeyDown={(event) => openCard(event, item)}
       >
-        <span className="public-feed-card-title">{item.title}</span>
+        <span className="public-feed-card-title">
+          <RegistrationBadge
+            show={item.hasRegistration}
+            category={item.radarCategory || item.knowledgeCategory}
+          />
+          {item.title}
+        </span>
         <footer>
           <time dateTime={item.publishedAt || undefined}>
             {formatPublishTime(item.publishedAt)}

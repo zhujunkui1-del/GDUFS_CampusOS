@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { useEffect, useState, useRef, useMemo } from "react";
 import { readingDocument } from "@/domain/console/reading-document";
 import "./article-reader.css";
+import { RegistrationBadge } from "./registration-badge";
 type Article = {
   id: string;
   title: string;
@@ -13,6 +14,8 @@ type Article = {
   publishedAt: string;
   updatedAt: string;
   sourceName: string;
+  hasRegistration?: boolean;
+  category?: string | null;
 };
 export function ArticleReader({ id }: { id: string }) {
   const router = useRouter();
@@ -93,7 +96,13 @@ export function ArticleReader({ id }: { id: string }) {
         <article>
           <header>
             <p className="article-source">{article.sourceName}</p>
-            <h1>{article.title}</h1>
+            <h1>
+              <RegistrationBadge
+                show={article.hasRegistration}
+                category={article.category}
+              />
+              {article.title}
+            </h1>
             <p className="article-date">
               原文发布：
               {new Date(article.publishedAt).toLocaleString("zh-CN", {

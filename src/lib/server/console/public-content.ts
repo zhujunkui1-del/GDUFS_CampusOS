@@ -6,9 +6,7 @@ import { ApiError } from "../errors";
 import { ConsoleIdSchema } from "@/domain/console/contracts";
 import {
   KnowledgeCategorySchema,
-  knowledgeCategories,
   RadarCategorySchema,
-  radarCategories,
 } from "@/domain/console/taxonomy";
 
 const QuerySchema = z
@@ -53,16 +51,19 @@ export async function readPublicContent(
   if (q.surface)
     where.push(
       q.surface === "radar"
-        ? "d.radar_category IS NOT NULL"
-        : "d.knowledge_category IS NOT NULL AND d.radar_category IS NULL",
+        ? "a.primary_destination IN('radar','unknown')"
+        : "a.primary_destination='knowledge'",
     );
   const category = q.category
     ? (() => {
         if (!q.surface)
           throw new ApiError("INVALID_ARGUMENT", "请指定内容页面。");
-        return (
-          q.surface === "radar" ? RadarCategorySchema : KnowledgeCategorySchema
-        ).parse(q.category);
+        return q.surface === "radar" && q.category === "unclassified"
+          ? q.category
+          : (q.surface === "radar"
+              ? RadarCategorySchema
+              : KnowledgeCategorySchema
+            ).parse(q.category);
       })()
     : null;
   if (q.q) {
@@ -73,11 +74,11 @@ export async function readPublicContent(
     where.push("s.display_name LIKE ? ESCAPE '\\'");
     params.push(pattern(q.source));
   }
-  const base = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where.join(" AND ")}`;
+  const base = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")}`;
   const categoryColumn =
-    q.surface === "radar" ? "d.radar_category" : "d.knowledge_category";
-  const groupColumn =
-    q.surface === "radar" ? "radar_category" : "knowledge_category";
+    q.surface === "radar"
+      ? "COALESCE(a.radar_category,'unclassified')"
+      : "a.knowledge_category";
   let cachedGroupedCounts: Record<string, number> | null = null;
   if (q.grouped && q.surface && !q.q && !q.source) {
     const revision = await db
@@ -97,12 +98,12 @@ export async function readPublicContent(
     } else {
       const condition =
         q.surface === "radar"
-          ? "d.radar_category IS NOT NULL"
-          : "d.knowledge_category IS NOT NULL AND d.radar_category IS NULL";
+          ? "a.primary_destination IN('radar','unknown')"
+          : "a.primary_destination='knowledge'";
       const result = await db
         .prepare(
           `SELECT ${categoryColumn} AS category,count(*) AS n
-           FROM console_public_documents d WHERE ${condition}
+           FROM console_public_documents d JOIN console_article_classifications a ON a.document_id=d.id WHERE ${condition}
            GROUP BY ${categoryColumn}`,
         )
         .all<{ category: string; n: number }>();
@@ -125,9 +126,9 @@ export async function readPublicContent(
                    SELECT id FROM knowledge_sources WHERE display_name LIKE ? ESCAPE '\\'
                  )
                  SELECT ${categoryColumn} AS category,count(*) AS n
-                 FROM console_public_documents d
+                 FROM console_public_documents d JOIN console_article_classifications a ON a.document_id=d.id
                  JOIN matched_sources m ON m.id=d.source_id
-                 WHERE ${q.surface === "radar" ? "d.radar_category IS NOT NULL" : "d.knowledge_category IS NOT NULL AND d.radar_category IS NULL"}
+                 WHERE ${q.surface === "radar" ? "a.primary_destination IN('radar','unknown')" : "a.primary_destination='knowledge'"}
                    ${q.q ? "AND d.title LIKE ? ESCAPE '\\'" : ""}
                  GROUP BY ${categoryColumn}`
               : `SELECT ${categoryColumn} AS category,count(*) AS n ${base} GROUP BY ${categoryColumn}`,
@@ -168,52 +169,25 @@ export async function readPublicContent(
       params.push(cursor[0], cursor[0], cursor[1]);
     }
   }
-  const from = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where.join(" AND ")}`;
+  const from = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")}`;
   const projection =
-    "d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.content_type,d.campus_scope,d.knowledge_category,d.radar_category,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status";
-  const rows =
-    q.grouped && q.surface && !q.q && !q.source
-      ? {
-          results: (
-            await Promise.all(
-              (q.surface === "radar" ? radarCategories : knowledgeCategories)
-                .filter((entry) => (cachedGroupedCounts?.[entry.code] || 0) > 0)
-                .map(async (entry) => {
-                  const condition =
-                    q.surface === "radar"
-                      ? "d.radar_category IS NOT NULL"
-                      : "d.knowledge_category IS NOT NULL AND d.radar_category IS NULL";
-                  return (
-                    await db
-                      .prepare(
-                        `SELECT ${projection} FROM console_public_documents d
-                       JOIN knowledge_sources s ON s.id=d.source_id
-                       WHERE ${condition} AND d.${groupColumn}=?
-                       ORDER BY d.published_at DESC,d.id LIMIT ?`,
-                      )
-                      .bind(entry.code, q.limit)
-                      .all<Record<string, string | number | null>>()
-                  ).results;
-                }),
-            )
-          ).flat(),
-        }
-      : q.grouped
-        ? await db
-            .prepare(
-              `SELECT * FROM (SELECT ${projection},count(*) OVER(PARTITION BY d.${groupColumn}) AS category_count,ROW_NUMBER() OVER(PARTITION BY d.${groupColumn} ORDER BY d.published_at DESC,d.id) AS group_position ${base}) WHERE group_position<=? ORDER BY ${groupColumn},published_at DESC,id`,
-            )
-            .bind(...params, q.limit)
-            .all<Record<string, string | number | null>>()
-        : await db
-            .prepare(
-              `SELECT ${projection} ${from} ORDER BY d.published_at DESC,d.id LIMIT ? OFFSET ?`,
-            )
-            .bind(...params, q.id ? 1 : q.limit + 1, q.id ? 0 : q.offset)
-            .all<Record<string, string | number | null>>();
+    "d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.content_type,d.campus_scope,a.knowledge_category,a.radar_category,a.primary_destination,a.has_registration,a.classification_origin,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status";
+  const rows = q.grouped
+    ? await db
+        .prepare(
+          `SELECT * FROM (SELECT ${projection},${categoryColumn} AS feed_category,count(*) OVER(PARTITION BY ${categoryColumn}) AS category_count,ROW_NUMBER() OVER(PARTITION BY ${categoryColumn} ORDER BY d.published_at DESC,d.id) AS group_position ${base}) WHERE group_position<=? ORDER BY feed_category,published_at DESC,id`,
+        )
+        .bind(...params, q.limit)
+        .all<Record<string, string | number | null>>()
+    : await db
+        .prepare(
+          `SELECT ${projection} ${from} ORDER BY d.published_at DESC,d.id LIMIT ? OFFSET ?`,
+        )
+        .bind(...params, q.id ? 1 : q.limit + 1, q.id ? 0 : q.offset)
+        .all<Record<string, string | number | null>>();
   if (q.grouped && (q.q || q.source))
     for (const row of rows.results)
-      counts[String(row[groupColumn])] = Number(row.category_count);
+      counts[String(row.feed_category)] = Number(row.category_count);
   const total = Object.values(counts).reduce((n, count) => n + count, 0);
   const selectedRows = q.id
     ? rows.results.slice(0, 1)
@@ -231,6 +205,9 @@ export async function readPublicContent(
     campusScope: r.campus_scope,
     knowledgeCategory: r.knowledge_category,
     radarCategory: r.radar_category,
+    primaryDestination: r.primary_destination,
+    hasRegistration: r.has_registration === 1,
+    classificationOrigin: r.classification_origin,
     readable:
       r.body_format === "reading_html" &&
       r.rights_scope === "licensed_full_text",
@@ -243,7 +220,8 @@ export async function readPublicContent(
   }));
   const groups = q.grouped
     ? items.reduce<Record<string, typeof items>>((result, item) => {
-        const code = item.radarCategory || item.knowledgeCategory;
+        const code =
+          item.radarCategory || item.knowledgeCategory || "unclassified";
         if (code) (result[code] ||= []).push(item);
         return result;
       }, {})
