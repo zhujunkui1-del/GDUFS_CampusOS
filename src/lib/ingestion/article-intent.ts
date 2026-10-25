@@ -54,7 +54,7 @@ const topics: Partial<Record<(typeof topicNames)[number], RegExp>> = {
   心理健康: /心理健康|心理咨询/g,
 };
 const radarSignals = [
-  ["lecture", /讲座|讲坛|论坛|研讨会|学术沙龙/],
+  ["lecture", /讲座|讲坛|论坛|研讨会|学术沙龙|主题.*培训/],
   ["competition", /竞赛|大赛|比赛|挑战杯/],
   [
     "scholarship_opportunity",
@@ -62,19 +62,26 @@ const radarSignals = [
   ],
   [
     "education_career",
-    /招聘|就业|宣讲会|实习|升学|招募|推免|复试|调剂|研究生招生|培养项目.*选拔/,
+    /招聘|就业|宣讲|实习|升学|推免|复试|调剂|研考|研招|研究生招生|访学|国际培养|培养项目.*选拔/,
   ],
-  ["academic_research", /科研|课题|项目申报|基金申报|学术项目/],
-  ["culture_sports", /文体|文艺|演出|音乐会|运动会|体育|歌唱|电影|游园|舞蹈/],
+  ["academic_research", /科研|课题|项目申报|基金申报|学术项目|创新工作坊/],
+  [
+    "culture_sports",
+    /文体|文艺|演出|音乐会|运动会|体育|歌唱|电影|游园|舞蹈|书展|展览/,
+  ],
 ] as const;
 const knowledgeSignals = [
+  [
+    "administrative_services",
+    /信息化应用|办事大厅|办事平台|诉求建议|行政办事|证明办理/,
+  ],
   ["scholarship_policy", /奖学金|助学金|资助|助学贷款|困难补助/],
   ["academic_affairs", /教务|选课|考试|学籍|课程|成绩|学分|转专业|补考/],
-  ["education_career", /就业|招聘|升学|毕业|协议|留学申请/],
+  ["education_career", /就业|招聘|升学|毕业|协议|留学|考研|云享|生涯/],
   ["research_innovation", /科研|课题|学术|科研经费|知识产权|创业|专利/],
   [
     "campus_life",
-    /图书|借阅|宿舍|食堂|后勤|生活|校车|心理|入馆|健康|校园网|报修/,
+    /图书|借阅|宿舍|食堂|后勤|生活|校车|心理|入馆|健康|校园网|报修|校园卡|一卡|微校卡|文化场馆/,
   ],
 ] as const;
 function category<T extends string>(
@@ -86,6 +93,10 @@ function category<T extends string>(
       code,
       score:
         (re.test(text.title) ? 5 : 0) +
+        (/[|｜丨]/.test(text.title) &&
+        re.test(text.title.split(/[|｜丨]/).at(-1)!)
+          ? 4
+          : 0) +
         Math.min(
           4,
           text.paragraphs.slice(0, 12).filter((p) => re.test(p.text)).length,
@@ -108,7 +119,7 @@ export function classifyArticleContent(
   const policy = add(
     hit(
       text,
-      /(?:办法|条例|规章|管理规定|实施细则|章程|借阅规则|借阅须知|选课规则)(?:[》）)]|$|的通知)/,
+      /(?:办法|条例|规章|管理规定|实施细则|章程|借阅规则|借阅须知|选课规则)(?:说明|解读|[》）)]|$|的通知)/,
       "standing_rule",
       "title",
     ),
@@ -124,7 +135,7 @@ export function classifyArticleContent(
   const titleCall = add(
     hit(
       text,
-      /申请通知|申报通知|报名|征集|评选通知|招生通知|关于举办|邀请.*参加|招聘会|选课安排|考试安排|临时.*(?:调整|闭馆|停)|停水|停电/,
+      /申请通知|申报通知|申请工作|申报工作|报名|征集|评选通知|招生通知|关于举办|邀请.*参加|招聘会|宣讲】|选课安排|考试安排|临时.*(?:调整|闭馆|停)|停水|停电/,
       "current_call",
       "title",
     ),
@@ -132,7 +143,7 @@ export function classifyArticleContent(
   const eventTitle = add(
     hit(
       text,
-      /讲座|论坛|竞赛|大赛|比赛|演出|宣讲会|招聘会|运动会/,
+      /讲座|论坛|竞赛|大赛|比赛|演出|宣讲|招聘会|运动会|书展|展览|主题.*培训/,
       "event_purpose",
       "title",
     ),
@@ -156,15 +167,15 @@ export function classifyArticleContent(
       p.text,
     ),
   );
+  const procedureLabel = add(
+    hit(
+      text,
+      /操作步骤|办理流程|常见问题|具体操作如下|使用方法/,
+      "procedure_structure",
+    ),
+  );
   const procedure =
-    procedureParagraphs.length >= 2 ||
-    add(
-      hit(
-        text,
-        /操作步骤|办理流程|所需材料|常见问题|具体操作如下|使用方法/,
-        "procedure_structure",
-      ),
-    );
+    procedureParagraphs.length >= 2 || (procedureLabel && (guide || policy));
   for (const p of procedureParagraphs.slice(0, 3))
     hits.push({
       field: "body",
@@ -196,7 +207,7 @@ export function classifyArticleContent(
   const datedCall = add(
     hit(
       text,
-      /(?:20\d{2}(?:年|级|[—-]20\d{2})|本学期|本年度|秋季|春季).{0,65}(?:招生|调剂|复试|推免|选拔|审核工作|课程调整|课题招标|征集|选课|考试|笔试)/,
+      /(?:20\d{2}(?:年|级|[—-]20\d{2})|本学期|本年度|秋季|春季).{0,65}(?:招生|调剂|复试|推免|选拔|审核工作|课程调整|课题招标|征集|选课|考试|笔试|学籍异动|填报年度|申请工作|申报工作|考核和培养)/,
       "scoped_batch",
       "title",
     ),
@@ -220,18 +231,59 @@ export function classifyArticleContent(
         "service_directory",
       ),
     );
+  const lead = text.text.slice(0, 900);
+  const bodyReference = add(
+    hit(
+      text,
+      /补办流程|怎么办|办理指南|平台.{0,8}(?:操作|使用)|场馆.{0,8}(?:开放|预约)|[使用操作]指南/,
+      "body_reference",
+    ),
+  );
+  const experience =
+    /云享|留学|考研/.test(text.title) &&
+    add(hit(text, /参考学习|申请经验|经验分享/, "experience_reference"));
+  const serviceOperations =
+    procedure &&
+    add(hit(text, /提交工单|办理进度|诉求.{0,20}受理/, "reusable_service"));
+  const referencePurpose =
+    guide ||
+    policy ||
+    experience ||
+    (bodyReference && procedure) ||
+    serviceOperations;
+  const datedEvent =
+    eventTitle &&
+    add(
+      hit(
+        text,
+        /(?:时间|日期)[：:]?\s*(?:20\d{2}[年./-])?\d{1,2}(?:月|[./-])/,
+        "scoped_event",
+      ),
+    );
+  const leadTask =
+    !policy &&
+    ((/考试|报到|宣讲|研考|研招/.test(text.title) &&
+      /(?:时间|报名|报到|\d{1,2}月\d{1,2}日)/.test(lead)) ||
+      (/指南/.test(text.title) &&
+        /时间安排[\s\S]{0,60}(?:即日|\d{1,2}月\d{1,2}日)/.test(lead)));
+  const reportPurpose =
+    /回顾|收官|成功举办|顺利举行/.test(text.title) &&
+    add(hit(text, /本次|参加|举办|回顾|分批有序进行/, "retrospective_purpose"));
   let reference =
     (policy ? 6 : 0) +
     (guide ? 3 : 0) +
-    (procedure ? 4 : 0) +
-    (norms ? 3 : 0) +
-    (serviceDirectory ? 4 : 0);
+    (procedure && referencePurpose ? 4 : 0) +
+    (norms && referencePurpose ? 3 : 0) +
+    (serviceDirectory ? 4 : 0) +
+    (experience ? 7 : 0) +
+    (bodyReference && procedure ? 3 : 0) +
+    (serviceOperations ? 3 : 0);
   const referenceSection = text.paragraphs.find(
     (p) =>
       p.text.length < 35 &&
       /评定条件|申请条件|适用范围|管理办法|操作流程|所需材料/.test(p.text),
   );
-  if (referenceSection) {
+  if (referenceSection && referencePurpose) {
     reference += 3;
     hits.push({
       field: "body",
@@ -248,12 +300,16 @@ export function classifyArticleContent(
     (temporary ? 5 : 0) +
     (report ? 6 : 0) +
     (datedCall ? 6 : 0) +
-    (noticePurpose && noticeBody ? 5 : 0);
+    (noticePurpose && noticeBody ? 5 : 0) +
+    (datedEvent ? 5 : 0) +
+    (leadTask ? 8 : 0) +
+    (reportPurpose ? 8 : 0);
   // A policy-announcement wrapper does not turn the attached rules into a one-off opportunity.
   if (policy && !window && !timed && !titleCall) reference += 2;
   if (guide && eventTitle && (window || timed)) timely += 4;
   if (titleCall && window) timely += 3;
-  if (procedure && !window && !timed && !temporary) reference += 2;
+  if (procedure && referencePurpose && !window && !timed && !temporary)
+    reference += 2;
   const mixed = reference >= 6 && timely >= 6;
   let destination: ArticleAnalysis["primaryDestination"] = "unknown";
   if (text.bodyAvailable) {
@@ -261,6 +317,8 @@ export function classifyArticleContent(
       destination =
         titleCall ||
         datedCall ||
+        leadTask ||
+        reportPurpose ||
         (eventTitle && window) ||
         (noticePurpose && noticeBody && window && !policy && !guide)
           ? "radar"
@@ -288,7 +346,10 @@ export function classifyArticleContent(
       report ||
       timed ||
       datedCall ||
-      (noticePurpose && noticeBody)
+      (noticePurpose && noticeBody) ||
+      datedEvent ||
+      leadTask ||
+      reportPurpose
     )
       radarCategory = "campus_notice";
     else destination = "unknown";
@@ -318,7 +379,7 @@ export function classifyArticleContent(
         ? "policy"
         : "guide"
       : destination === "radar"
-        ? eventTitle && !report
+        ? eventTitle && (!report || titleCall || datedEvent)
           ? "event"
           : report
             ? "news"

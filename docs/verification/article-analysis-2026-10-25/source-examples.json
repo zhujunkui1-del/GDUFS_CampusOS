@@ -1,0 +1,30 @@
+[
+  {
+    "source": "国际学院（出国留学培训部）",
+    "type": "official_web",
+    "radar": {
+      "id": "content-bcb5e741-b66a-4dc9-aacb-3cedf75b03cf",
+      "title": "广外国际学院校友会企业参访活动圆满举行-国际学院",
+      "url": "https://ic.gdufs.edu.cn/info/1558/6887.htm"
+    },
+    "knowledge": {
+      "id": "content-34658af0-f3d9-4930-9187-532ef32113a4",
+      "title": "国际学院（北校区）学生生活指南-国际学院",
+      "url": "https://ic.gdufs.edu.cn/info/1486/4730.htm"
+    }
+  },
+  {
+    "source": "广外就业",
+    "type": "wechat_subscription",
+    "radar": {
+      "id": "wx-053d73d7f83c37e7f596e778340c5b24b23373ef",
+      "title": "【10月21日宣讲】福建恒安集团有限公司",
+      "url": "https://mp.weixin.qq.com/s/yzCQHsCBVXaXTmdd4NIyeQ"
+    },
+    "knowledge": {
+      "id": "wx-50f7e8e90985ace6005ee12960dc95b9a819b99b",
+      "title": "【就业协议书】2027届毕业生电子就业协议书签订操作指南",
+      "url": "https://mp.weixin.qq.com/s/2lvGVw97fFI_sg2ZBqrjSQ"
+    }
+  }
+]

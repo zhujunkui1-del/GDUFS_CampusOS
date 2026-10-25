@@ -1,0 +1,116 @@
+{
+  "capturedAt": "2026-10-25T13:56:35.443Z",
+  "usage": {
+    "rowsRead": 42141,
+    "rowsWritten": 0,
+    "queries": 91
+  },
+  "applied": 1753,
+  "sourceChangesDuringProjection": [],
+  "counts": [
+    {
+      "primary_destination": "knowledge",
+      "radar_category": null,
+      "knowledge_category": "administrative_services",
+      "n": 4,
+      "registration": 0
+    },
+    {
+      "primary_destination": "knowledge",
+      "radar_category": null,
+      "knowledge_category": "campus_life",
+      "n": 12,
+      "registration": 0
+    },
+    {
+      "primary_destination": "knowledge",
+      "radar_category": null,
+      "knowledge_category": "education_career",
+      "n": 13,
+      "registration": 2
+    },
+    {
+      "primary_destination": "radar",
+      "radar_category": "academic_research",
+      "knowledge_category": null,
+      "n": 59,
+      "registration": 4
+    },
+    {
+      "primary_destination": "radar",
+      "radar_category": "campus_notice",
+      "knowledge_category": null,
+      "n": 439,
+      "registration": 111
+    },
+    {
+      "primary_destination": "radar",
+      "radar_category": "competition",
+      "knowledge_category": null,
+      "n": 72,
+      "registration": 30
+    },
+    {
+      "primary_destination": "radar",
+      "radar_category": "culture_sports",
+      "knowledge_category": null,
+      "n": 21,
+      "registration": 5
+    },
+    {
+      "primary_destination": "radar",
+      "radar_category": "education_career",
+      "knowledge_category": null,
+      "n": 200,
+      "registration": 72
+    },
+    {
+      "primary_destination": "radar",
+      "radar_category": "lecture",
+      "knowledge_category": null,
+      "n": 111,
+      "registration": 13
+    },
+    {
+      "primary_destination": "radar",
+      "radar_category": "scholarship_opportunity",
+      "knowledge_category": null,
+      "n": 37,
+      "registration": 2
+    },
+    {
+      "primary_destination": "unknown",
+      "radar_category": null,
+      "knowledge_category": null,
+      "n": 805,
+      "registration": 56
+    }
+  ],
+  "publicCounts": [
+    {
+      "primary_destination": "knowledge",
+      "n": 29
+    },
+    {
+      "primary_destination": "radar",
+      "n": 939
+    },
+    {
+      "primary_destination": "unknown",
+      "n": 805
+    }
+  ],
+  "queryPlan": [
+    {
+      "id": 3,
+      "parent": 0,
+      "notused": 46,
+      "detail": "SEARCH article_activity_index USING COVERING INDEX article_activity_date (category=? AND starts_day>? AND starts_day<?)"
+    }
+  ],
+  "applicationUsage": {
+    "rowsRead": 30096,
+    "rowsWritten": 13117,
+    "queries": 8854
+  }
+}

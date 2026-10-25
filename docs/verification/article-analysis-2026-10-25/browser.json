@@ -1,0 +1,65 @@
+{
+  "executedAt": "2026-10-25T14:46:58.478Z",
+  "browser": "Edge",
+  "realPreview": true,
+  "records": [
+    {
+      "mode": "desktop",
+      "errors": [],
+      "responses": [
+        {
+          "status": 200,
+          "path": "/api/public/content"
+        },
+        {
+          "status": 200,
+          "path": "/api/public/content"
+        },
+        {
+          "status": 200,
+          "path": "/api/public/article"
+        },
+        {
+          "status": 200,
+          "path": "/api/public/content"
+        }
+      ],
+      "colors": {
+        "color": "rgb(55, 139, 121)",
+        "background": "rgb(239, 251, 248)",
+        "radius": "3.51px",
+        "weight": "800"
+      },
+      "badgePresentAfterDeadline": true
+    },
+    {
+      "mode": "mobile",
+      "errors": [],
+      "responses": [
+        {
+          "status": 200,
+          "path": "/api/public/content"
+        },
+        {
+          "status": 200,
+          "path": "/api/public/content"
+        },
+        {
+          "status": 200,
+          "path": "/api/public/article"
+        },
+        {
+          "status": 200,
+          "path": "/api/public/content"
+        }
+      ],
+      "colors": {
+        "color": "rgb(55, 139, 121)",
+        "background": "rgb(239, 251, 248)",
+        "radius": "3.276px",
+        "weight": "800"
+      },
+      "badgePresentAfterDeadline": true
+    }
+  ]
+}

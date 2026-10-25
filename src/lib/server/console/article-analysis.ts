@@ -1,6 +1,5 @@
 import {
   ARTICLE_CLASSIFIER_VERSION,
-  ArticleAnalysisSchema,
   type ArticleAnalysis,
   type ArticleAnalysisInput,
 } from "@/domain/console/article-analysis";
@@ -8,6 +7,7 @@ import { analyzeArticle } from "@/lib/ingestion/article-analysis";
 import { articleText } from "@/lib/ingestion/article-text";
 import type { SqlDatabase } from "../assistant/database";
 import { tokenHash } from "../assistant/crypto";
+import { validateArticleAnalysis } from "@/lib/ingestion/article-validation";
 
 export async function analysisStatements(
   db: SqlDatabase,
@@ -17,7 +17,8 @@ export async function analysisStatements(
   input: ArticleAnalysisInput,
   provided?: ArticleAnalysis,
 ) {
-  const analysis = ArticleAnalysisSchema.parse(
+  const analysis = validateArticleAnalysis(
+      input,
       provided || analyzeArticle(input),
     ),
     canonical = articleText(input);
@@ -70,7 +71,7 @@ export async function analysisStatements(
       .prepare(
         `INSERT INTO article_activity_index(document_id,activity_key,title,kind,category,starts_day,starts_at,ends_day,ends_at,place_raw,registration_requirement,group_key)
      SELECT ?,json_extract(value,'$.key'),json_extract(value,'$.title'),json_extract(value,'$.kind'),json_extract(value,'$.category'),json_extract(value,'$.startsAt.date'),json_extract(value,'$.startsAt.at'),json_extract(value,'$.endsAt.date'),json_extract(value,'$.endsAt.at'),json_extract(value,'$.placeRaw'),json_extract(value,'$.registrationStatus'),
-     CASE WHEN json_extract(value,'$.startsAt.date') IS NOT NULL AND json_extract(value,'$.placeRaw') IS NOT NULL THEN json_extract(value,'$.title')||'|'||json_extract(value,'$.startsAt.date')||'|'||json_extract(value,'$.placeRaw') ELSE NULL END
+     CASE WHEN json_extract(value,'$.startsAt.at') IS NOT NULL AND json_extract(value,'$.placeRaw') IS NOT NULL THEN json_extract(value,'$.title')||'|'||json_extract(value,'$.startsAt.at')||'|'||json_extract(value,'$.placeRaw') ELSE NULL END
      FROM json_each(?,'$.activities') WHERE ${guard}`,
       )
       .bind(id, projection, ...args),

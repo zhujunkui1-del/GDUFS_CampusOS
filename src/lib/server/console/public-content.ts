@@ -23,9 +23,19 @@ const QuerySchema = z
     category: z.string().max(50).optional(),
   })
   .strict();
-const groupedCountsCache = new WeakMap<
+type PublicResult = {
+  items: Record<string, unknown>[];
+  groups?: Record<string, Record<string, unknown>[]>;
+  limit: number;
+  offset: number;
+  hasMore: boolean;
+  nextCursor: string | null;
+  counts: Record<string, number>;
+  total: number;
+};
+const groupedResultCache = new WeakMap<
   object,
-  Map<string, { expiresAt: number; counts: Record<string, number> }>
+  Map<string, { expiresAt: number; result: PublicResult }>
 >();
 export async function readPublicContent(
   db: SqlDatabase,
@@ -37,6 +47,39 @@ export async function readPublicContent(
     throw new ApiError("INVALID_ARGUMENT", "请指定内容记录。");
   if (q.grouped && (!q.surface || q.id || q.category || q.cursor || q.offset))
     throw new ApiError("INVALID_ARGUMENT", "分组列表参数无效。");
+  let cacheKey: string | null = null;
+  let cache:
+    Map<string, { expiresAt: number; result: PublicResult }> | undefined;
+  if (q.grouped && !q.q && !q.source) {
+    const revision = await db
+      .prepare(
+        "SELECT public_visibility_revision AS revision FROM console_engine_settings WHERE id='console-v2-settings'",
+      )
+      .first<{ revision: number }>();
+    cacheKey = q.surface + ":" + q.limit + ":" + (revision?.revision || 0);
+    cache = groupedResultCache.get(cacheScope);
+    if (!cache) {
+      cache = new Map();
+      groupedResultCache.set(cacheScope, cache);
+    }
+    const hit = cache.get(cacheKey);
+    if (hit && hit.expiresAt > Date.now()) {
+      const fresh = new Map<string, number>();
+      for (let i = 0; i < hit.result.items.length; i += 50) {
+        const ids = hit.result.items.slice(i, i + 50).map((r) => r.id);
+        const rows = await db
+          .prepare(
+            `WITH ids(id) AS (VALUES ${ids.map(() => "(?)").join(",")}) SELECT id,(SELECT version FROM console_public_documents p WHERE p.id=ids.id) AS version FROM ids`,
+          )
+          .bind(...ids)
+          .all<{ id: string; version: number }>();
+        for (const r of rows.results) fresh.set(r.id, r.version);
+      }
+      if (hit.result.items.every((r) => fresh.get(String(r.id)) === r.version))
+        return hit.result;
+      cache.delete(cacheKey);
+    }
+  }
   const where = ["1=1"];
   const params: unknown[] = [];
   if (q.id) {
@@ -74,49 +117,11 @@ export async function readPublicContent(
     where.push("s.display_name LIKE ? ESCAPE '\\'");
     params.push(pattern(q.source));
   }
-  const base = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")}`;
+  const base = `FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)`;
   const categoryColumn =
     q.surface === "radar"
       ? "COALESCE(a.radar_category,'unclassified')"
       : "a.knowledge_category";
-  let cachedGroupedCounts: Record<string, number> | null = null;
-  if (q.grouped && q.surface && !q.q && !q.source) {
-    const revision = await db
-      .prepare(
-        "SELECT public_visibility_revision AS revision FROM console_engine_settings WHERE id='console-v2-settings'",
-      )
-      .first<{ revision: number }>();
-    const cacheKey = q.surface + ":" + (revision?.revision || 0);
-    let cache = groupedCountsCache.get(cacheScope);
-    if (!cache) {
-      cache = new Map();
-      groupedCountsCache.set(cacheScope, cache);
-    }
-    const cached = cache.get(cacheKey);
-    if (cached && cached.expiresAt > Date.now()) {
-      cachedGroupedCounts = cached.counts;
-    } else {
-      const condition =
-        q.surface === "radar"
-          ? "a.primary_destination IN('radar','unknown')"
-          : "a.primary_destination='knowledge'";
-      const result = await db
-        .prepare(
-          `SELECT ${categoryColumn} AS category,count(*) AS n
-           FROM console_public_documents d JOIN console_article_classifications a ON a.document_id=d.id WHERE ${condition}
-           GROUP BY ${categoryColumn}`,
-        )
-        .all<{ category: string; n: number }>();
-      cachedGroupedCounts = Object.fromEntries(
-        result.results.map((row) => [row.category, row.n]),
-      );
-      if (cache.size > 4) cache.clear();
-      cache.set(cacheKey, {
-        expiresAt: Date.now() + 30_000,
-        counts: cachedGroupedCounts,
-      });
-    }
-  }
   const facets =
     q.surface && !q.id && !q.grouped
       ? await db
@@ -126,9 +131,9 @@ export async function readPublicContent(
                    SELECT id FROM knowledge_sources WHERE display_name LIKE ? ESCAPE '\\'
                  )
                  SELECT ${categoryColumn} AS category,count(*) AS n
-                 FROM console_public_documents d JOIN console_article_classifications a ON a.document_id=d.id
+                 FROM knowledge_documents d JOIN console_article_classifications a ON a.document_id=d.id
                  JOIN matched_sources m ON m.id=d.source_id
-                 WHERE ${q.surface === "radar" ? "a.primary_destination IN('radar','unknown')" : "a.primary_destination='knowledge'"}
+                 WHERE ${q.surface === "radar" ? "a.primary_destination IN('radar','unknown')" : "a.primary_destination='knowledge'"} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)
                    ${q.q ? "AND d.title LIKE ? ESCAPE '\\'" : ""}
                  GROUP BY ${categoryColumn}`
               : `SELECT ${categoryColumn} AS category,count(*) AS n ${base} GROUP BY ${categoryColumn}`,
@@ -143,7 +148,6 @@ export async function readPublicContent(
   const counts: Record<string, number> = Object.fromEntries(
     facets.results.map((r) => [r.category, r.n]),
   );
-  if (cachedGroupedCounts) Object.assign(counts, cachedGroupedCounts);
   if (category) {
     where.push(categoryColumn + "=?");
     params.push(category);
@@ -169,13 +173,14 @@ export async function readPublicContent(
       params.push(cursor[0], cursor[0], cursor[1]);
     }
   }
-  const from = `FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")}`;
+  const from = `FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)`;
   const projection =
     "d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.content_type,d.campus_scope,a.knowledge_category,a.radar_category,a.primary_destination,a.has_registration,a.classification_origin,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status";
+  const candidateBase = `FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")}`;
   const rows = q.grouped
     ? await db
         .prepare(
-          `SELECT * FROM (SELECT ${projection},${categoryColumn} AS feed_category,count(*) OVER(PARTITION BY ${categoryColumn}) AS category_count,ROW_NUMBER() OVER(PARTITION BY ${categoryColumn} ORDER BY d.published_at DESC,d.id) AS group_position ${base}) WHERE group_position<=? ORDER BY feed_category,published_at DESC,id`,
+          `WITH candidates AS MATERIALIZED(SELECT ${projection},${categoryColumn} AS feed_category ${candidateBase}),visible AS MATERIALIZED(SELECT * FROM candidates c WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=c.id AND p.version=c.version)) SELECT * FROM (SELECT *,count(*) OVER(PARTITION BY feed_category) AS category_count,ROW_NUMBER() OVER(PARTITION BY feed_category ORDER BY published_at DESC,id) AS group_position FROM visible) WHERE group_position<=? ORDER BY feed_category,published_at DESC,id`,
         )
         .bind(...params, q.limit)
         .all<Record<string, string | number | null>>()
@@ -185,7 +190,7 @@ export async function readPublicContent(
         )
         .bind(...params, q.id ? 1 : q.limit + 1, q.id ? 0 : q.offset)
         .all<Record<string, string | number | null>>();
-  if (q.grouped && (q.q || q.source))
+  if (q.grouped)
     for (const row of rows.results)
       counts[String(row.feed_category)] = Number(row.category_count);
   const total = Object.values(counts).reduce((n, count) => n + count, 0);
@@ -228,7 +233,7 @@ export async function readPublicContent(
     : undefined;
   if (q.id && !items.length)
     throw new ApiError("NOT_FOUND", "此内容尚未公开或已失效。");
-  return {
+  const result = {
     items,
     groups,
     limit: q.id ? 1 : q.limit,
@@ -243,6 +248,11 @@ export async function readPublicContent(
     counts,
     total,
   };
+  if (cacheKey && cache) {
+    if (cache.size > 4) cache.clear();
+    cache.set(cacheKey, { expiresAt: Date.now() + 30_000, result });
+  }
+  return result;
 }
 export const publicContent = withApi(async (request) => {
   let env: Record<string, unknown>;

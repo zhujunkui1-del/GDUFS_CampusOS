@@ -654,6 +654,7 @@ export class ConsoleStore {
     id: string | undefined,
     raw: unknown,
     sourceFingerprint?: string,
+    manualPlacement = true,
   ) {
     const value = ContentWriteSchema.parse(raw),
       source = await this.source(value.sourceId);
@@ -761,6 +762,31 @@ export class ConsoleStore {
       inputHash,
       statements: [
         ...statements,
+        ...(!sourceFingerprint &&
+        manualPlacement &&
+        !!data.radarCategory !== !!data.knowledgeCategory
+          ? [
+              this.db
+                .prepare(
+                  "INSERT INTO document_classification_overrides(document_id,radar_category,knowledge_category,updated_by,updated_at) VALUES(?,?,?,?,?) ON CONFLICT(document_id) DO UPDATE SET radar_category=excluded.radar_category,knowledge_category=excluded.knowledge_category,updated_by=excluded.updated_by,updated_at=excluded.updated_at",
+                )
+                .bind(
+                  key,
+                  data.radarCategory,
+                  data.knowledgeCategory,
+                  this.actor.id,
+                  this.now(),
+                ),
+            ]
+          : !sourceFingerprint && manualPlacement
+            ? [
+                this.db
+                  .prepare(
+                    "DELETE FROM document_classification_overrides WHERE document_id=?",
+                  )
+                  .bind(key),
+              ]
+            : []),
         ...data.tags.map((tag) =>
           this.db
             .prepare(
@@ -837,6 +863,16 @@ export class ConsoleStore {
       value.note = withdraw ? "管理员撤回" : "管理员发布";
     consolePermission(this.actor, "publish");
     if (!withdraw) {
+      const unclassified =
+        !document.radarCategory &&
+        !document.knowledgeCategory &&
+        document.kind === "knowledge" &&
+        (await this.db
+          .prepare(
+            "SELECT 1 AS ok FROM document_article_analysis WHERE document_id=? AND content_revision=? AND input_hash=? AND primary_destination='unknown'",
+          )
+          .bind(id, document.contentRevision, document.inputHash)
+          .first());
       if (
         !document.inputHash ||
         document.contentRevision <= 0 ||
@@ -844,7 +880,8 @@ export class ConsoleStore {
           document.rightsScope,
         ) ||
         document.contentType === "unknown" ||
-        !!document.radarCategory === !!document.knowledgeCategory ||
+        (!!document.radarCategory === !!document.knowledgeCategory &&
+          !unclassified) ||
         (document.kind === "event" && !document.radarCategory) ||
         (document.validUntil &&
           Date.parse(document.validUntil) <= Date.parse(this.now()))

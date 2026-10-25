@@ -267,9 +267,12 @@ describe("S3 content contract compatibility", () => {
         decision: "approved",
         note: "分类未确定",
       });
-      await expect(
-        f.store.publish(f.id, { ...command(8), note: "不应发布" }),
-      ).rejects.toMatchObject({ code: "INVALID_ARGUMENT" });
+      await f.store.publish(f.id, {
+        ...command(8),
+        note: "明确发布待分类文章",
+      });
+      expect((await f.store.document(f.id)).radarCategory).toBeNull();
+      expect((await f.store.document(f.id)).knowledgeCategory).toBeNull();
     } finally {
       f.close();
     }

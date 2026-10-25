@@ -98,3 +98,52 @@ it("indexed activities expose source evidence and disappear immediately on manua
     f.close();
   }
 });
+it("a warm grouped result rechecks visibility and invalidates counts after a withdrawal", async () => {
+  const f = await dateGateFixture();
+  try {
+    const initial = await readPublicContent(f.db, {
+      surface: "knowledge",
+      grouped: "1",
+    });
+    expect(initial.total).toBe(3);
+    const warm = await readPublicContent(f.db, {
+      surface: "knowledge",
+      grouped: "1",
+    });
+    expect(warm).toEqual(initial);
+    const d = await f.store.document("spring");
+    await f.store.publish(
+      d.id,
+      { ...command(d.version), note: "缓存下架核对" },
+      true,
+    );
+    const after = await readPublicContent(f.db, {
+      surface: "knowledge",
+      grouped: "1",
+    });
+    expect(after.total).toBe(2);
+    expect(after.items.map((d) => d.id)).not.toContain("spring");
+  } finally {
+    f.close();
+  }
+});
+it("does not merge same-title activities at the same venue on the same day but different times", async () => {
+  const f = await dateGateFixture();
+  try {
+    const d = await f.store.document("spring");
+    await f.db.batch(
+      await analysisStatements(f.db, d.id, d.contentRevision, d.inputHash!, {
+        title: "讲座汇总",
+        publishedAt: "2026-10-25",
+        body: "活动名称：人工智能讲座\n讲座时间：2026年11月5日15:00\n地点：大学城图书馆\n活动名称：人工智能讲座\n讲座时间：2026年11月5日19:00\n地点：大学城图书馆",
+      }),
+    );
+    const results = await readPublicActivities(f.db, {
+      after: "2026-11-05",
+      before: "2026-11-05",
+    });
+    expect(results.items).toHaveLength(2);
+  } finally {
+    f.close();
+  }
+});

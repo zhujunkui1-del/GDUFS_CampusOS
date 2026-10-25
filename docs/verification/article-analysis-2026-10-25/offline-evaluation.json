@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-10-25T13:50:48.563Z",
+  "snapshotAt": "2026-10-25T13:06:27.652Z",
+  "documents": 1773,
+  "counts": {
+    "radar": 898,
+    "unknown": 847,
+    "knowledge": 28
+  },
+  "transitions": {
+    "radar -> radar": 878,
+    "radar -> unknown": 830,
+    "knowledge -> unknown": 17,
+    "knowledge -> radar": 20,
+    "radar -> knowledge": 27,
+    "knowledge -> knowledge": 1
+  },
+  "categories": {
+    "radar/academic_research": 59,
+    "unknown/unknown": 847,
+    "radar/campus_notice": 416,
+    "radar/culture_sports": 21,
+    "radar/scholarship_opportunity": 34,
+    "radar/lecture": 100,
+    "radar/education_career": 198,
+    "radar/competition": 70,
+    "knowledge/campus_life": 11,
+    "knowledge/administrative_services": 4,
+    "knowledge/education_career": 13
+  },
+  "gold": {
+    "sample": 61,
+    "correct": 61,
+    "errors": [],
+    "limitation": "Targeted initial reviewed sample; not an independent population accuracy estimate"
+  },
+  "cloudUsage": {
+    "rowsRead": 9192,
+    "rowsWritten": 0,
+    "queries": 90
+  },
+  "modelCalls": 0
+}

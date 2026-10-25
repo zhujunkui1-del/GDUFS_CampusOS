@@ -1,0 +1,19 @@
+{
+  "recordedAt": "2026-10-25T14:46:51.047Z",
+  "environment": "preview",
+  "url": "https://campusos-preview.zhujunkui1.workers.dev",
+  "workerVersion": "de5fb2b3-583e-4c4b-bd19-135cd0f788f7",
+  "classifierVersion": "article-content-v3",
+  "migrations": [
+    "0045_article_content_analysis.sql",
+    "0046_article_feed_cache_revision.sql",
+    "0047_unknown_article_publication.sql",
+    "0048_exact_activity_identity.sql"
+  ],
+  "typecheck": true,
+  "targetedLint": true,
+  "productionBuild": true,
+  "deployDryRun": true,
+  "productionDeployed": false,
+  "modelsCalled": 0
+}

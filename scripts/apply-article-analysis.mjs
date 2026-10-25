@@ -1,5 +1,11 @@
 // Controlled Preview-only derived projection update. Source documents are never updated.
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import {
+  readFileSync,
+  writeFileSync,
+  mkdirSync,
+  existsSync,
+  copyFileSync,
+} from "node:fs";
 import { execFileSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 import path from "node:path";
@@ -47,6 +53,19 @@ const auth = execFileSync(
 );
 const { token } = JSON.parse(auth.slice(auth.indexOf("{")));
 const dbId = config.env.preview.d1_databases[0].database_id;
+const evaluation = JSON.parse(readFileSync(dir + "/evaluation.json", "utf8"));
+if (
+  evaluation.gold.errors.length ||
+  [...predictions.values()].some(
+    (a) => a.classifierVersion !== ARTICLE_CLASSIFIER_VERSION,
+  )
+)
+  throw Error("Offline evaluation/version gate failed");
+if (existsSync(dir + "/application.json"))
+  copyFileSync(
+    dir + "/application.json",
+    dir + "/application-" + Date.now() + ".json",
+  );
 const usage = { rowsRead: 0, rowsWritten: 0, queries: 0 },
   report = {
     startedAt: new Date().toISOString(),
@@ -86,8 +105,8 @@ let stopping = false;
 process.on("SIGINT", () => {
   stopping = true;
 });
-for (let i = 0; i < Math.min(limit, corpus.length) && !stopping; i += 4) {
-  const chunk = corpus.slice(i, Math.min(i + 4, limit));
+for (let i = 0; i < Math.min(limit, corpus.length) && !stopping; i += 20) {
+  const chunk = corpus.slice(i, Math.min(i + 20, limit));
   const [result] = await request({
     sql: `SELECT d.id,d.input_hash,d.content_revision,d.content_hash,d.publication_status,d.lifecycle_status,d.version,a.input_hash AS analysis_hash,a.content_revision AS analysis_revision,a.classifier_version FROM knowledge_documents d LEFT JOIN document_article_analysis a ON a.document_id=d.id WHERE d.id IN(${chunk.map(() => "?").join(",")}) AND d.owner_user_id IS NULL AND d.data_domain<>'user_private'`,
     params: chunk.map((d) => d.id),

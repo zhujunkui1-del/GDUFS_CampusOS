@@ -1,0 +1,127 @@
+{
+  "measuredAt": "2026-10-25T14:25:57.902Z",
+  "scope": "Actual Preview D1, exact runtime query functions; REST orchestration client wall time is not Worker CPU",
+  "records": [
+    {
+      "name": "radar-cold",
+      "rowsRead": 42363,
+      "rowsWritten": 0,
+      "sqlDurationMs": 514.1435,
+      "queries": [
+        {
+          "sql": "SELECT public_visibility_revision AS revision FROM console_engine_settings WHERE id='console-v2-settings'",
+          "rowsRead": 1,
+          "rowsWritten": 0,
+          "durationMs": 0.3853
+        },
+        {
+          "sql": "WITH candidates AS MATERIALIZED(SELECT d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.content_type,d.campus_scope,a.knowledge_category,a.radar_category,a.primary_destination,a.has_registration,a.classification_origin,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status,COALESCE(a.radar_category,'unclassified') AS feed_category FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE 1=1 AND a.primary_destination IN('radar','unknown')),visible AS MATERIALIZED(SELECT * FROM candidates c WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=c.id AND p.version=c.version)) SELECT * FROM (SELECT *,count(*) OVER(PARTITION BY feed_category) AS category_count,ROW_NUMBER() OVER(PARTITION BY feed_category ORDER BY published_at DESC,id) AS group_position FROM visible) WHERE group_position<=? ORDER BY feed_category,published_at DESC,id",
+          "rowsRead": 42362,
+          "rowsWritten": 0,
+          "durationMs": 513.7582
+        }
+      ],
+      "clientWallMs": 2255,
+      "returned": 96,
+      "total": 1749
+    },
+    {
+      "name": "radar-warm",
+      "rowsRead": 1295,
+      "rowsWritten": 0,
+      "sqlDurationMs": 35.87949999999999,
+      "queries": [
+        {
+          "sql": "SELECT public_visibility_revision AS revision FROM console_engine_settings WHERE id='console-v2-settings'",
+          "rowsRead": 1,
+          "rowsWritten": 0,
+          "durationMs": 0.4822
+        },
+        {
+          "sql": "WITH ids(id) AS (VALUES (?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?)) SELECT id,(SELECT version FROM console_public_documents p WHERE p.id=ids.id) AS version FROM ids",
+          "rowsRead": 672,
+          "rowsWritten": 0,
+          "durationMs": 17.2091
+        },
+        {
+          "sql": "WITH ids(id) AS (VALUES (?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?),(?)) SELECT id,(SELECT version FROM console_public_documents p WHERE p.id=ids.id) AS version FROM ids",
+          "rowsRead": 622,
+          "rowsWritten": 0,
+          "durationMs": 18.1882
+        }
+      ],
+      "clientWallMs": 1292,
+      "returned": 96,
+      "total": 1749
+    },
+    {
+      "name": "knowledge-cold",
+      "rowsRead": 7776,
+      "rowsWritten": 0,
+      "sqlDurationMs": 65.9825,
+      "queries": [
+        {
+          "sql": "SELECT public_visibility_revision AS revision FROM console_engine_settings WHERE id='console-v2-settings'",
+          "rowsRead": 1,
+          "rowsWritten": 0,
+          "durationMs": 0.3664
+        },
+        {
+          "sql": "WITH candidates AS MATERIALIZED(SELECT d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.content_type,d.campus_scope,a.knowledge_category,a.radar_category,a.primary_destination,a.has_registration,a.classification_origin,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status,a.knowledge_category AS feed_category FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE 1=1 AND a.primary_destination='knowledge'),visible AS MATERIALIZED(SELECT * FROM candidates c WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=c.id AND p.version=c.version)) SELECT * FROM (SELECT *,count(*) OVER(PARTITION BY feed_category) AS category_count,ROW_NUMBER() OVER(PARTITION BY feed_category ORDER BY published_at DESC,id) AS group_position FROM visible) WHERE group_position<=? ORDER BY feed_category,published_at DESC,id",
+          "rowsRead": 7775,
+          "rowsWritten": 0,
+          "durationMs": 65.6161
+        }
+      ],
+      "clientWallMs": 1118,
+      "returned": 28,
+      "total": 29
+    },
+    {
+      "name": "analysis-one",
+      "rowsRead": 19,
+      "rowsWritten": 0,
+      "sqlDurationMs": 8.8431,
+      "queries": [
+        {
+          "sql": "SELECT d.id,d.version,d.title,d.url,d.published_at,d.source_id,d.body_status,d.rights_scope,s.display_name,c.primary_destination,c.radar_category,c.knowledge_category,c.classification_origin,c.analysis_json\n FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications c ON c.document_id=d.id WHERE d.id=?",
+          "rowsRead": 19,
+          "rowsWritten": 0,
+          "durationMs": 8.8431
+        }
+      ],
+      "clientWallMs": 438,
+      "returned": 1,
+      "total": null
+    },
+    {
+      "name": "competition-window",
+      "rowsRead": 90,
+      "rowsWritten": 0,
+      "sqlDurationMs": 48.8356,
+      "queries": [
+        {
+          "sql": "SELECT a.document_id,a.activity_key,a.group_key FROM article_activity_index a JOIN knowledge_documents d ON d.id=a.document_id JOIN document_article_analysis x ON x.document_id=d.id WHERE a.kind<>'notice' AND x.content_revision=d.content_revision AND x.input_hash=d.input_hash AND a.category=? AND a.starts_day>=? AND a.starts_day<=? AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=a.document_id) ORDER BY a.starts_day,a.document_id,a.activity_key LIMIT ?",
+          "rowsRead": 52,
+          "rowsWritten": 0,
+          "durationMs": 25.6658
+        },
+        {
+          "sql": "SELECT d.id,d.version,d.title,d.url,d.published_at,d.source_id,d.body_status,d.rights_scope,s.display_name,c.primary_destination,c.radar_category,c.knowledge_category,c.classification_origin,c.analysis_json\n FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications c ON c.document_id=d.id WHERE d.id=?",
+          "rowsRead": 19,
+          "rowsWritten": 0,
+          "durationMs": 12.8377
+        },
+        {
+          "sql": "SELECT d.id,d.version,d.title,d.url,d.published_at,d.source_id,d.body_status,d.rights_scope,s.display_name,c.primary_destination,c.radar_category,c.knowledge_category,c.classification_origin,c.analysis_json\n FROM console_public_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications c ON c.document_id=d.id WHERE d.id=?",
+          "rowsRead": 19,
+          "rowsWritten": 0,
+          "durationMs": 10.3321
+        }
+      ],
+      "clientWallMs": 1482,
+      "returned": 3,
+      "total": null
+    }
+  ]
+}

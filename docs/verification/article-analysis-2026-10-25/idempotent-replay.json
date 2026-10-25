@@ -1,0 +1,35 @@
+{
+  "startedAt": "2026-10-25T14:21:35.540Z",
+  "target": "campusos-preview",
+  "classifierVersion": "article-content-v3",
+  "applied": [],
+  "unchanged": [
+    "content-00ae5ff2-7000-4378-af5e-6f51eea49d56",
+    "content-00bc4c7d-85b8-49a5-8e94-ef1d8d7a72b0",
+    "content-00f061c1-3d90-4bd9-952d-a9a72cd1328e",
+    "content-00fc25b7-43ee-4ae1-9ccd-4d532b4e9f57",
+    "content-0114d0d1-96c4-4e71-8ad5-fb6de51d1f84",
+    "content-014ccd63-d99a-482f-b1b5-33264a3dacb6",
+    "content-0169ff35-6677-49de-b7b2-b32209a073d9",
+    "content-01eb703a-461c-4e74-adcf-db9e1867f981",
+    "content-02d91e9f-d6ea-4866-9426-86b36f8d08a3",
+    "content-02db6b75-e2c9-4ae7-9162-0fbda48d8e36",
+    "content-030f429d-7e86-4564-a61b-357672e17f5b",
+    "content-034070b7-ada3-4a82-930b-c74509520340",
+    "content-036ec3b0-4d88-4cdd-98ef-14d0d357e176",
+    "content-03ed1c4a-3722-4316-85cc-769f8ed70c9a",
+    "content-044c36ce-a546-49c8-9bfd-6e0341b8c953",
+    "content-049f8e2d-29cf-4b3a-acac-5427c5b36cd8",
+    "content-050b7aee-8bab-43ff-afed-99b26a95bc34",
+    "content-052f7a3e-d03b-408f-b406-7402253eea2d",
+    "content-056ff806-8a1a-4f08-a99b-4cdf7562c080",
+    "content-057dc2f1-c48a-40ce-8089-2cfdc1f27ecc"
+  ],
+  "stale": [],
+  "usage": {
+    "rowsRead": 60,
+    "rowsWritten": 0,
+    "queries": 1
+  },
+  "completedAt": "2026-10-25T14:21:36.991Z"
+}

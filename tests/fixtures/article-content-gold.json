@@ -1,5 +1,5 @@
 {
-  "status": "initial human-reviewed targeted sample, not population estimate",
+  "status": "assistant-reviewed targeted sample; not independent human annotation or population estimate",
   "labelledAt": "2026-10-25T13:10:34.012Z",
   "documents": [
     {
@@ -231,6 +231,386 @@
       "expectedCategory": "campus_notice",
       "rationale": "当期优秀成果征集活动",
       "evidenceExcerpt": "各二级党组织：\n为进一步牢固树立抓好党建是最大政绩的理念，建立健全常态化发掘、培育、选树和推广党建工作先进典型的长效机制，根据有关工作计划，学校拟开展2026年“党建好案例、书记好党课、党员好榜样”优秀成果征集活动，现将有关事项预通知如下。\n一、活动主题\n以习近平新时代中国特色社会主义思想为指导，全面贯彻党的二十大和二十届历次全会精神，深入学习贯彻习近平党建思想，聚焦基层党组织建设重点任务，挖掘一批可复制、可推广的党建创新成果，选树一批扎根教学科研一线的优秀典型，激励全校各级党组织和广大党员在加快建设高水平大学中担"
+    },
+    {
+      "id": "content-354bf5da-3b2a-4c4f-9848-4744adccded7",
+      "title": "【个人申请】研究生院关于2026年研究生短期国（境）外访学和参加国际学术会议申请工作的通知-研究生院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://gwyjs.gdufs.edu.cn/info/1035/17003.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "各研究生培养单位：\n为促进我校与国（境）外高校、科研机构的学术交流与合作，了解学科国际前沿动态，提高研究生培养质量以及研究生教育的国际化水平，根据《广东外语外贸大学研究生短期国（境）外访学和参加国际学术会议资助办法》（广外校〔2022〕42号）规定，现就本年度有关申请工作通知如下：\n一、研究生可申请的项目类型\n1.短期国（境）外访学项目\n2.国际学术会议\n（1）境内国际学术会议\n（2）境外国际学术会议\n二、申请资格和期限\n1.适用于已取得我校学籍的全日制在读在校博士、硕士研究生，不适用于已超出基本学习年限的延期生；"
+    },
+    {
+      "id": "content-62b63554-b15c-4ee7-9e1a-8ca54dcc4503",
+      "title": "【项目申报】研究生院关于2026年秋季学期“智汇湾”研究生协同创新工作坊申报工作的通知-研究生院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://gwyjs.gdufs.edu.cn/info/1035/17693.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "academic_research",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "各研究生培养单位：\n为积极响应粤港澳大湾区建设，深化与港澳联合培养研究生的国际化项目合作，努力培养服务湾区的高层次人才，结合广东省粤港澳人才培养专项招生计划，现开展2026年秋季学期“智汇湾”粤港澳大湾区研究生协同创新工作坊项目的申报工作，相关事项通知如下：\n一、申报要求\n（一）申报单位应结合各自学科优势、培养特色、港澳合作基础以及计划参与研究生数等设计并申报。\n（二）项目采取“项目制”模式实施。由申报单位提交项目申报书，经费预算可参考资助政策填写。经学校评审后，确认资助项目、选派人数、资助经费等立项信息。\n（三）"
+    },
+    {
+      "id": "content-7c06e883-d638-41a3-a0ab-6d354c7c682c",
+      "title": "2026-2027学年第一学期办理研究生学籍异动业务的通知-研究生院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://gwyjs.gdufs.edu.cn/info/1035/16123.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "各研究生培养单位和研究生：\n为方便广大师生、提高办事效率，研究生学籍异动业务通过线上办事大厅办理，现就2026-2027学年第一学期相关工作通知如下：\n一、研究生学籍异动类型\n保留入学资格、恢复入学资格、保留学籍、休学、复学、延长学习年限、退学等。\n二、办理时间\n1.研究生申请\n本学期第十七周和下学期第一周接受研究生学籍异动线上申请，原则上其他时间不予受理。\n2.各培养单位和相关职能部门审批\n本学期第十八、十九周和下学期第二、三周各培养单位和相关职能部门完成线上审批。\n3.学籍异动申请材料备案\n下学期第三周各培养单"
+    },
+    {
+      "id": "content-ac02e631-42d1-4eb4-be9e-472148266987",
+      "title": "【个人申请】研究生院关于广东省教育厅2026年“青年优秀科研人才国际培养计划”申请工作的通知-研究生院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://gwyjs.gdufs.edu.cn/info/1035/17043.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "各博士研究生培养单位：\n为进一步加快研究生培养国际化步伐，努力培养和集聚一大批具有国际视野的拔尖创新人才，现就申请2026年广东省青年优秀科研人才国际培养计划的相关事项通知如下：\n一、申请对象\n已取得我校学籍的全日制在读在校博士研究生。\n二、申请条件\n（一）拥护中国共产党的领导，热爱社会主义祖国，具有良好的思想品德和政治素质，无违法违纪记录，具有学成回国为祖国建设服务的事业心和责任感。\n（二）遵纪守法，品行端正，身心健康，成绩优秀，无重修记录，具有良好的专业基础、较强的科研创新能力和发展潜力，出国研修方向应与本人研"
+    },
+    {
+      "id": "content-b1e4ce5d-770d-475e-b64e-014a73db3a10",
+      "title": "【项目申报】研究生院关于2026年春季学期“智汇湾”研究生协同创新工作坊申报工作的通知-研究生院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://gwyjs.gdufs.edu.cn/info/1035/15183.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "academic_research",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "各研究生培养单位：\n为积极响应粤港澳大湾区建设，深化与港澳联合培养研究生的国际化项目合作，努力培养服务湾区的高层次人才，结合广东省粤港澳人才培养专项招生计划，现开展2026年春季学期“智汇湾”粤港澳大湾区研究生协同创新工作坊项目的申报工作，相关事项通知如下：\n一、申报要求\n（一）申报单位应结合各自学科优势、培养特色、港澳合作基础以及计划参与研究生数等设计并申报。\n（二）项目采取“项目制”模式实施。由申报单位提交项目申报书，经费预算可参考资助政策填写。经学校评审后，确认资助项目、选派人数、资助经费等立项信息。\n（三）"
+    },
+    {
+      "id": "content-db43eb51-cd1a-4d2a-ba65-69f04c2ff17c",
+      "title": "关于组织开展2026年博士研究生填报年度考核和培养计划书的通知-研究生院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://gwyjs.gdufs.edu.cn/info/1035/17343.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "各博士研究生培养单位、博士研究生：\n为进一步加强研究生培养环节质量监控，提升研究生培养质量，结合研究生培养方案，请各博士研究生培养单位组织本单位博士研究生科学有效地完成老生年度考核和新生培养计划填报工作。\n1.全体博士研究生（包括延期生，不包括2026级新生）于10月28日前登录研究生教育系统→进入系统首页→点击左边菜单【培养管理】→【博士年度考核】→【考核申请】完成年度考核，操作指引详见附件1-1：博士年度考核(学生操作指南）。\n2.2026级博士研究生新生需在导师指导下填写2026级博士研究生培养计划，于10月"
+    },
+    {
+      "id": "content-e3a114fe-7b18-43b8-b7c7-cdb4ac16f9b8",
+      "title": "【个人申请】研究生院关于广东省教育厅2026年“青年优秀科研人才国际培养计划”申请工作的通知-研究生院",
+      "sourceType": "official_web",
+      "sourceUrl": "https://gwyjs.gdufs.edu.cn/info/1035/14823.htm",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "各博士研究生培养单位：\n为进一步加快研究生培养国际化步伐，努力培养和集聚一大批具有国际视野的拔尖创新人才，现就申请2026年广东省青年优秀科研人才国际培养计划的相关事项通知如下：\n一、申报对象\n已取得我校学籍的全日制在读在校博士研究生。\n二、申报条件\n（一）拥护中国共产党的领导，热爱社会主义祖国，具有良好的思想品德和政治素质，无违法违纪记录，具有学成回国为祖国建设服务的事业心和责任感。\n（二）遵纪守法，品行端正，身心健康，成绩优秀，无重修记录，具有良好的专业基础、较强的科研创新能力和发展潜力，出国研修方向应与本人研"
+    },
+    {
+      "id": "wx-03842acbdd6235422361c9695a3ba133634b00a6",
+      "title": "资讯 _ 热水卡补办",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/Ujt4gb250_mtdIa1wV-NHQ",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "campus_life",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "热水卡遗失或损坏怎么办？别担心，以下为大家整理了完整的热水卡补办流程，按照步骤办理即可。\n第一步：线上挂失与冻结\n请先在微信小程序上进行挂失操作，确保账户安全：\n打开微信小程序 “塔内生活”。\n点击 “实体卡” 选项。\n选择 “立即挂失”。\n（注：挂失成功后，旧卡内的线上账户金额将被冻结，保障您的资金安全。）\n第二步：补办新卡并重新绑定\n请前往指定地点办理新卡，并完成余额转移：\n办理地点：云山1栋宿舍水电窗口旁或二饭对面小木屋外的自助发卡机。\n补办新卡：在自助发卡机上补办新卡。\n重新绑定：打开 “塔内生活” 小程序"
+    },
+    {
+      "id": "wx-18b501ef8056e175bc882119df32a776f1950b33",
+      "title": "活动回顾｜体检保障暖心护航，摊宣纳新圆满收官",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/4maySBS433yaJKFlvGlNbQ",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "广外红十字会学生分会活动回顾\n携暖赴新，红会相伴\nWarmth & New Journey\n心怀热忱，守护健康\n这个秋日，邂逅红会\n以爱传递人道力量\n暖心体检，守护安康\n9月10日、11日、14日、17日、18日，我校新生体检工作在校医院分批有序进行。\n本次体检以班级为单位开展，同学们遵照辅导员通知，在校医院门口统一集合，有序领取、核对体检表与条形码。随后大家分批排队，依次完成抽血、内外科、视力、耳鼻喉、口腔、胸透等全部体检项目。\n所有体检项目完成后，同学们统一上交体检表。体检数据由校医院统一汇总归档，不单独发放纸"
+    },
+    {
+      "id": "wx-1a93c9897f764c1c89af669335f5fe7b6748ae9a",
+      "title": "主题书展｜生活与日常",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/kG2XJmK5q7G9EZFLJH_ABA",
+      "expectedDestination": "radar",
+      "expectedCategory": "culture_sports",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "金秋十月，书香如约而至。广外图书馆大学城校区全新主题书展——「生活与日常」正式上线啦！本次书展精选30本与日常生活息息相关的好书：从一日三餐到四季流转，从睡眠运动到情绪整理，从一杯茶的温度到一间屋子的秩序。它们不谈宏大的道理，只认真回答一个问题——怎样把寻常日子，过得踏实又舒展。\n快来书展，给自己挑一本，从好好生活开始。\n书展信息\nInformation\n展题：生活与日常\n时间：2026.10-2026.11\n地点：大学城校区图书馆一楼自习区\n展单：扫码获取相关主题书单\n书目推荐\nRecommendation\n一\n"
+    },
+    {
+      "id": "wx-1c68da9d5159a0903ea1ed76a7218d86b28ae530",
+      "title": "@2026届毕业生，档案信息上报及毕业去向登记确认指南来啦",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/oKuP6yfcAv0ZimW7aMqBkw",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "亲爱的毕业生：\n根据教育部和广东省教育厅相关文件要求，为做好我校毕业去向登记、确认工作及档案寄送工作，现就有关事项通知如下：\n时间安排\n1、即日至6月4日\n毕业生通过“广东大学生就业创业”微信小程序“档案去向转递”模块点击“查看档案去向”报送毕业生初始档案去向信息；\n2、6月5日-6月8日\n暂停档案去向信息上报，学院（研究院）审核档案去向信息；\n3、6月9日-6月14日\n学校审核档案去向信息；\n4、6月15日-6月22日\n需要调整档案信息的毕业生通过“广东大学生就业创业”小程序“档案去向转递”模块，点击“变更档案去"
+    },
+    {
+      "id": "wx-246a47644507ac394b6758d136cb26ecc1a91a67",
+      "title": "2026届毕业生毕业去向登记填报指南",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/iFqEpuHAEvdSH4AviYKZqA",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "毕业去向登记填报指南\n2026届毕业生\n亲爱的2026届毕业生，如果你已经确定了毕业去向，就可以在“广东大学生就业创业”微信小程序上填报毕业去向信息啦！\n根据国家相关政策要求，毕业去向登记是每位毕业生离校前的重要环节，大家都需要完成这项操作哦！\n毕业去向信息填报指引\n一、打开手机微信，扫码或搜索“广东大学生就业创业”小程序；\n二、点击“头像”或“智慧办事大厅”的任一业务，会显示授权温馨提示，点击“开始授权”弹出小程序授权窗口，允许微信授权后，即完成登录；\n三、点击“毕业去向登记”功能按钮，进入信息填报页面；\n四、进"
+    },
+    {
+      "id": "wx-2955c1abf3f3a68e8a9422a502885501d4a72761",
+      "title": "@2027研考生，务必及时上传核验材料",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/9jXj02WulYlUBXR8_xxPbQ",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "2027年研招统考预报名现已开始，考生可登录中国研究生招生信息网（研招网，https://yz.chsi.com.cn），填写报考信息并交费、上传报考点要求材料等。\n预报名：2026年10月9日—10月12日，每日9:00-22:00。\n正式报名：2026年10月15日—10月24日，每日9:00-22:00。\n重要提示：\n1.考生须先完成考生信息填写，才可填写报考信息，但采集照片可以在填写报考信息后进行；考生填写报考信息、生成报名号，并完成网上交费及照片采集后，方可上传提交报考点所需材料。\n2.报名期间考生均可采"
+    },
+    {
+      "id": "wx-2c8ba1a068f788c4c986b57704820d79eaf53692",
+      "title": "山育佳木，水滋美兰 | 本学期校史文化场馆参观指南",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/sjvyC5wy9-MAI_LYmSaYAg",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "campus_life",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "校史文化馆参观指南\n山育佳木，水滋美兰\n推开校史，让阳光照亮那泛黄的手稿与斑驳的勋章，看一代代广外人如何在时光长廊上留下深深浅浅的足迹。新学期，愿你在历史的褶皱里寻见属于自己的起点，从这里，再出发。\n开放对象\n校史文化场馆作为展示和传播学校历史的重要公益性场所，开放对象为校内师生、校友、学生家长和社会各界友好人士。\n场馆分布及开放时间\n白云山校区\n白云山校区校史馆：第一教学楼一楼\n日常开放时间：周一至周五 上午9:00-11:30 下午2:30–5:00\n彰风馆：碧云路49栋\n日常开放时间：周一至周五 上午9:00"
+    },
+    {
+      "id": "wx-30cce44b0d4d5f6652d41957a0de55603fa2a0ec",
+      "title": "使用指南 | 广外校园卡充值全攻略",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/jAZLj0S6cgFS8YXhVLYwXQ",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "campus_life",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "广外校园卡充值全攻略\n2026\n现代教育技术中心\n亲爱的新同学们：\n校园卡是大家在校的 “校园通行证”，吃饭就餐、超市购物、图书馆借书、宿舍热水缴费、门禁通行样样离不开它。校园卡不能透支，需要充值后才可以消费，本篇整理全部充值渠道，手机、电脑、线下设备都能操作，新手也能快速上手！\n01\n数智广外公众号充值\n微信关注 “数智广外” 服务号。\n2.底部菜单栏选择【日常服务】→【校园卡】\n使用学号 + 统一身份认证密码登录校园卡服务平台。\n3.点击功能区【充值】。\n4.核对学工号，输入充值金额，点击【立即充值】\n5.选择"
+    },
+    {
+      "id": "wx-4709b1695e94ff9d3f6eba98e215c8c2d9d7df22",
+      "title": "【10月19日宣讲】得力集团有限公司",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/UA08h1Dc_CjdCxxQuxaZSw",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "10月19日（星期一）14:00\n大学城校区E202\n形式\n宣讲会+面试（现场接收简历）\n一、公司简介\n得力集团是多工作学习场景整体解决方案的倡导者和领导者，自1981年发展至今，现已成为集办公、文具、工具、家具、打印机、儿童益智、B2B等业务板块为一体的全球化文创科技产业集团。四十多年来，得力通过持续不断的产品创新、科研攻坚和多产业布局，奠定了全球领先的市场地位，产品及服务遍及150多个国家和地区。\n多年来，得力基于工作、学习两大场景构建多元化产业集群，始终围绕用户需求提供整体解决方案。目前旗下拥有得力办公、得力"
+    },
+    {
+      "id": "wx-4c949bcf71f81007113be05bbae71b5e8f191080",
+      "title": "【10月20日宣讲】欧派家居股份有限公司",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/GuvM9YkhG5rKFRyRGbcOeA",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "10月20日（星期二）14:00\n白云山校区二教 219\n形式\n宣讲会+面试（现场接收简历）\n一、企业简介\n欧派家居集团股份有限公司创立于1994年，股票代码603833，是中国定制家居业首个市值破千亿的上市企业。现有员工近15000人，开设天津、清远、无锡、成都、武汉五大智能化生产基地，总建筑面积超315万平米。迄今，欧派全球门店已突破8000家，产品旺销6大洲146个国家和地区，服务超1500万家庭。欧派凭借完善的薪酬体系、多元化的激励机制、立体化的培训模式、人性化的员工福利，连续多年荣获“中国年度最佳雇主”称"
+    },
+    {
+      "id": "wx-535a1db44423ec058b145cb9b5bf7a2a2bd97196",
+      "title": "耿弘明｜无限组合与有限意义：机器写作的组合术问题",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/to06xdvizH92v7_rV1YHJA",
+      "expectedDestination": "unknown",
+      "expectedCategory": null,
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "无限组合与有限意义：机器写作的组合术问题\n耿弘明\n摘要：机器写作依赖基于算法的生成原理，在很长的历史时期内，这一生成原理都与组合术有关。从阿拉伯自动写作装置萨拉札到拉蒙·卢尔的“组合术”转盘，可以发现早期写作机器如何随机组合以输出文本，又如何引入逻辑规则来约束随机，由此通向莱布尼茨普遍机器语言的设想。为了厘清机器写作的底层逻辑，文字组合术可被抽象为由“符号有限性与可重组性公理”及“潜在无限生成命题”“语义涌现命题”“算法可判定性与同构命题”三条衍生命题构成的体系。通过对比早期写作机器、乌力波实验与现代大语言模型，呈"
+    },
+    {
+      "id": "wx-63d97cb8858cc1762f7678feabbdf74fce56c123",
+      "title": "自强社｜法蕴星芒熠熠，自强声声不息！自强之星访谈第一期来啦~",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/00gbgi-S0V17_F44hIgGEQ",
+      "expectedDestination": "unknown",
+      "expectedCategory": null,
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "自强声声不息\n自强之星访谈系列∣吴炜欣\n法蕴星芒熠熠\n卷首语\n广外法学院的校园里，青年学子于书卷中求索，于磨砺中成长。有人沉心钻研学术，在思辨赛场突破边界；有人兼顾多元成长，在实务与公益中践行初心。\n“法蕴星芒，自强有声”自强之星系列访谈，带我们走近法学院优秀在校生。在这里，我们聆听他们求学路上的坚守、逆境中的成长，探寻竞赛与实践背后的故事。\n借同龄人的亲身经历，窥见青年法学生丰富的成长轨迹，为同学们带去共情的思考与奋进的力量。\n以同辈之光，照亮前行者之路。让我们一同对话身边榜样，感受广外法学青年自强不息的朝气与担"
+    },
+    {
+      "id": "wx-65ac8da1abc8c7adede9eb6365dcb6de464a546a",
+      "title": "广外速办，诉求建议一站直达",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/-CJbAUfInD4e9OxhgvTGqQ",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "administrative_services",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "前言\n开学第一个月，是新鲜、是探索；\n到了第二个月，才是真正的“校园实战”。\n宿舍设备坏了去哪里报修？\n对食堂、宿舍、校园管理有建议，\n该跟谁说？\n想咨询办事流程，\n又不知道找哪个部门……\n别急，这些“不知道找谁”的问题，\n现在有一个统一入口了。\n广外师生专属的\n诉求反映、建言献策、问题咨询\n“一站式”平台——“广外速办”！\n2025年11月，“广外速办”开启试运行；\n如今，平台面向全校师生接收各类诉求，\n并流转对应部门处置回应。\n学习、工作、生活中的困难诉求，\n都可以在这里提交。\n一\n四大栏目，一站直达\n01\n接"
+    },
+    {
+      "id": "wx-774c1b5b78f5a16d3823f0aa968f24cbb1ec2fc1",
+      "title": "【云享 · 留学 · 第80期】余尚恩：从广外外交到LSE国际关系理论与历史",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/OlRDyMA8izpWaSWj_UGDfA",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "点击上方蓝字关注我们\n阅读须知\n全文约11525字，阅读需约35分钟。本文首发于“云谷之声”微信公众平台，内容均为原创，仅供有需要的师弟师妹进行参考学习。如欲转载，请联系作者本人，未经授权，严禁一切形式的转载、商用。（师兄师姐的分享案例提供的信息与各校竞争情况可能会随着考试时间的不同而产生较大差异，内容仅供参考）\n基本信息\n姓名：余尚恩\n学院：原国际关系学院，现区域国别学院（国际关系研究院）\n本科专业：外交学\n绩点：3.84/4.0\n英语水平：雅思7.5\n海外经历：\nLSE Summer School Public"
+    },
+    {
+      "id": "wx-842057f7dbb817017efe76ba1137bc0efd5b4f3d",
+      "title": "使用指南 | 微校卡领卡",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/NPa4STjnXSw82rcrjF_kqg",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "campus_life",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "吗\n本篇目录\n1.临时卡人员包含哪些\n2.微信虚拟校园卡领取方法\n3.微信虚拟校园卡使用方法\n4.微信虚拟校园卡解绑方法\nPart.01\n临时卡人员包含哪些？\n使用如上卡样的留学生院人员、部分教职工等\n使用如上卡样但无法登录\n智慧广外的公开学院学生及其他人员\nPart.02\n微信虚拟校园卡领取方法\n临时卡适用于没有统一认证的师生\n搜索【数智广外】公众号，\n选择【日常服务】，点击【校园卡】\n点击【微校卡（临时卡）】\n点击【激活校园卡】\n填写以上信息，需要注意，\n手机号实名认证与微信实名认证需为同一人\nPart.03\n"
+    },
+    {
+      "id": "wx-8cdb4cbcd0e98c121b8f4ed149c736f8bb533123",
+      "title": "使用指南 | 校园网上网",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/BmuzTaqZhx4dPEyqDPXflQ",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "campus_life",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "校园网使用指南\nCampus Network\n2026\n快快收藏起来吧\n亲爱的 2026 级广外新同学们：：\n步入校园，校园网是大家学习查阅资料、线上选课、日常娱乐的必备工具。这份校园网使用指南，能帮助你们快速上手，轻松搞定登录、充值缴费，开启校园线上生活。\n登录方式\nCampus Network\n01\n01\n进入缴费页面\nCampus Network\n用户可根据使用习惯，任选以下方式进入：\n方式一：电脑端登录\"智慧广外\" → 进入\"应用中心\" → 选择\"校园网缴费\"\n方式二：移动端微信进入\"数智广外\"服务号 → "
+    },
+    {
+      "id": "wx-8d0cf63a141c2b806b2e359a7dc18e69061353ca",
+      "title": "GESP考试-广外大学城考点指南",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/Kgm2RVmHgDkCAgLjli1ZzA",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "考试时间\n2026年GESP考试将于6月27日举行。请各位考生提前做好准备，仔细阅读准考证内容，按要求参加考试。\n考点地址\n番禺区小谷围街道外环东路178号，正大门（主校门）（面向外环路，地图APP上显示的[东北门] ，请从此门进，进校有考场指示牌。\n01\n交通推荐\n地铁：地铁四号线或十二号线[大学城北]、七号线[大学城南]，到考场距离较远（步行大约1.2km，共享单车约15分钟），建议大家一定要预留出尽可能多的时间，避免迟到。\n公交：广外正门（361路）。\n广外站（内环）（乘坐大学城环线1路、番201路、番202"
+    },
+    {
+      "id": "wx-8db535c17927f1a2537d14f0e75538396c5aadd1",
+      "title": "资讯 _ 校园卡补办",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/SPj4AK7hww_SQWkxDTHXAQ",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "campus_life",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "校园卡遗失或损坏怎么办？别担心，以下为大家整理了完整的校园卡补办流程，按照步骤办理即可。\n第一步：线上挂失\n请先在线上进行挂失操作：\n1.打开微信小程序 “数智广外”。关注后点击“日常服务”—点击“校园卡”\n2.确保卡内余额大于15元以便扣除工本费点击“挂失”\n（注：若找回校园卡则在同一界面点击“解挂”）\n第二步：补办新卡并重新绑定\n请前往指定地点办理新卡：\n办理地点：第二教学楼大厅自助补卡机（若补卡过程中有任何问题移步二教103教室。）\n补办新卡：按照提示将二代身份证放至左下角感应，输入查询密码，出现个人信息界面"
+    },
+    {
+      "id": "wx-904da11df7ec9e85fdddf1abe0715cddaf99ac0b",
+      "title": "智慧广外，一卡通行丨校园信息化应用指南",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/3EeBiQxLPBEeC8au9xfwkg",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "administrative_services",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "GDUFS\n校园信息化应用指南\n智慧广外，一卡通行\n前言\n恭喜 26 级小饼成功登陆广外，\n踏入校园，除了课堂、食堂、宿舍的日常，\n你即将体验到“一网通办，一卡通行”\n的智慧校园服务体系，\n涵盖了从日常消费、网络使用，\n到选课上课、科研创新，\n再到校务办事、校园成长等全场景。\n这份攻略带你一次性解锁全部玩法，\n轻松玩转数智广外。\n校务办事：\n足不出户一键通\n线上办事大厅\n校园事务的线上总入口，已上线130余项业务，故障报修、入校申请、财务报账、用印申请、缓考申请等高频事项全覆盖。 AI 线上办事大厅一句话就能智能填"
+    },
+    {
+      "id": "wx-9a05d99b6def8a532c0436d1eb04e12c87968795",
+      "title": "2026新生指南｜广外白云山校区生活指南",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/0b30pjozPKNHRO4tsBoEQg",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "campus_life",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "校园卡\n功能用途\n校园卡兼具学生凭证、饭卡、借书证等功能。相当于我们的身份凭证，在考试时也会用到，非常重要！校园卡丢失需要补办，补办方式详见下文。\n充值方式\n关注【数智广外】公众号\n点击下方菜单栏“日常服务”“校园卡服务”“校园卡”“卡片充值”进入充值界面\n输入校园卡卡号（非学号）与卡号对应的身份证号（或护照号）\n选取或输入金额，点击“确认充值”\n成功后持卡到校内饭堂窗口机“嘀卡”消费，转账金额即可更新到校园卡上。\n补办指引\n地址：校园卡管理办公室（第二教学楼103室）\n电话：020-86312111\n时间：周一至"
+    },
+    {
+      "id": "wx-9f25c002764195574c87fb8ff11e4c550226d35b",
+      "title": "使用指南 | 故障报修全攻略",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/xySs70_ObZYIsDO2OFHNmA",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "campus_life",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "故障报修全攻略\n2026\n现代教育技术中心\n亲爱的新同学们：\n刚入住宿舍、开始上课，难免遇到各种 \"小状况\"：空调制冷不给力、宿舍门锁门窗出问题、WiFi 掉线连不上网、食堂设备不灵光…… 这些该找谁？怎么报修？别慌！这份故障报修指南带你一次搞懂报修流程，遇到问题不再手足无措，动动手指就能轻松解决！\n01\n故障类型\n校园里的故障大致分两类，\n信息化类故障和后勤保障类故障\n信息化类故障\n校园网类故障\n频繁掉线、WiFi 信号问题、认证（密码）问题、端口问题、自助缴费问题等\n应用系统类故障\n统一身份认证、线上办事大厅、"
+    },
+    {
+      "id": "wx-9f26244bfd618f46e1a570e9cc11a7e9cdff7c6c",
+      "title": "开学第二个月，作业Pre论文齐上阵？广外正版软件来救场！",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/dG68JmpK8VKUdD6-Wb_mQQ",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "administrative_services",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "广外正版软件\n现代教育技术中心\n前言 /INTRODUCTION\n开学第一个月，忙着认路、认食堂、认教学楼。\n到了第二个月，课程进入正轨，作业、小组展示、实验报告、课程论文开始排队报到。\n电脑里没个趁手的办公软件怎么行，\n还在用破解版？\n担心病毒、弹窗、隐私泄露？\n想用AI辅助写作、整理资料，又怕来源不安全？\n别急，学校正版软件平台已经为你准备好了。\n所有在校师生均可免费下载使用正版软件。\nPART.01\n正版软件有哪些？\n所有在校师生可登录正版化服务网站（https://dl.gdufs.edu.cn/），下载安"
+    },
+    {
+      "id": "wx-a077c69b575fb8fab57964e6acb7d4268edac9ff",
+      "title": "2027届毕业生生源信息和电子简历填报指南",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/oi_Lh3K0LZ92f_LtQBSljQ",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "2027届毕业生生源信息和电子简历填报指南\n根据广东省教育厅的相关要求，现开展个人信息的收集和上报工作。毕业生生源信息上报是非常重要的基础性工作，请2027届毕业生按照以下指引进行生源信息绑定、核对及完善个人简历。\n01\n绑定学籍信息\n学籍信息是学生在教育部管理系统备案的资料，用来证明学历。\n02\n生源信息上报\n准确的生源信息是毕业生去向填报、线上签约、学生档案转寄等多项工作顺利开展的基础，请2027届毕业生务必准确上报。\n03\n填写并提交电子简历\n广东大学生就业创业智慧服务平台将根据毕业生提交电子简历中的个人岗位"
+    },
+    {
+      "id": "wx-a319444232f9230b4fffbdde22b6a7186b49457b",
+      "title": "我校成功举办“AI时代下学生如何使用AI辅助学习”主题线上培训",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/AW2YJdvzO1dio2RfVpMPLA",
+      "expectedDestination": "radar",
+      "expectedCategory": "lecture",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "9月16日，现代教育技术中心联合学生工作部，面向全校学生开展2026年秋季学期线上直播培训，培训主题为 “AI 时代下学生如何使用AI辅助学习”，共计174名学生在线参加。培训参照《清华大学人工智能教育应用指导原则》，结合我校办学与专业特色开展讲解，引导学生科学、规范用好AI工具，树立并强化学术诚信意识，合理借助人工智能助力自主学习。\n培训围绕三大核心内容展开：一是学生使用AI的准则及基调，基于清华大学人工智能教育应用指导原则，强调主体责任、诚信披露、禁止代创三条底线，帮助同学们守住学术规范；二是AI在不同学科中的"
+    },
+    {
+      "id": "wx-cff4a39015ca2e5bc27700f2a96ad579e338ceda",
+      "title": "【云享·考研·第264期】伍宇杰：从广外中文到北师大学科语文",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/5W47-YP0GWiqEkVVoyqe5g",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "点击上方蓝字关注我们\n阅读须知\n全文约4291字，阅读需约18分钟。本文首发于“云谷之声”微信公众平台，内容均为原创，仅供有需要的师弟师妹进行参考学习。如欲转载，请联系作者本人，未经授权，严禁一切形式的转载、商用。（师兄师姐的分享案例提供的信息与各校竞争情况可能会随着考试时间的不同而产生较大差异，内容仅供参考）\n基本信息\n姓名：伍宇杰\n年级：2021级\n学院：中国语言文化学院\n录取年份：2025年\n本科专业：汉语言文学（创意写作）\n报考院校：北京师范大学\n报考专业：学科教学（语文）\n备考方式：独立备考\n初试成绩：一"
+    },
+    {
+      "id": "wx-d76580dd45e1355fe66cf521932264ec3909b1bb",
+      "title": "2026新生指南｜开学报到交通指引",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/2wbUpord77VQPyNI5W-6dQ",
+      "expectedDestination": "radar",
+      "expectedCategory": "campus_notice",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "亲爱的2026级新生：\n恭喜你，成功解锁了人生中最重要的“新地图”——白云山脚下的广外国际学院。\n我们将在这座背靠白云山、面朝广州城的校园里，陪你一起完成第一关：如何安全、精准地抵达你的“新家”。\n第一步：确认“报到时间”\n报到时间：2026年9月5日9:00-15:00\n报到地点：广外国际学院一楼大厅\n报到流程：2026新生指南｜开学报到办理指引\n请务必在规定时间内抵达，不要错过你的“签到”时刻哦！\n第二步：选择你的“通关模式”\n模式一：自驾\n如选择自驾返校，请直接导航至【广东外语外贸大学北校区国际学院】。\n报到"
+    },
+    {
+      "id": "wx-d888ff91eb8717334d290c1fdf222a9a044b82c7",
+      "title": "【10月20日宣讲】信永中和会计师事务所（特殊普通合伙）广州分所",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/DsUJi90gwfxw-4YZKHwDjQ",
+      "expectedDestination": "radar",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "10月20日（星期二）14:30\n大学城校区 F208\n形式\n宣讲会+面试（现场接收简历）\n一.关于我们\n信永中和会计师事务所（特殊普通合伙）广州分所是信永中和会计师事务所（特殊普通合伙）在中国大陆 设立的28家分支机构之一，成立于2009年10月，位于广州市天河区。现有17位资深合伙人及近400余人的\n专业团队，其中注册会计师70余人，平均年龄30岁，下设审计、造价、税务、业务支持等部门，形成高效协同的服务体系。\n信永中和广州分所为省、市及区属国有企业集团、上市公司、大中型民营企业、金融企业等超百家优质企 业提供"
+    },
+    {
+      "id": "wx-e431d110cda6ddb0477dafe8b2be1a2a65e98f85",
+      "title": "广外生涯发展一体化平台上线啦！",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/CuM1SFBTo9Lv76-ZfHIm3A",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "广东外语外贸大学\n生涯发展一体化平台已上线\n解锁你的求职 “全能实验室”✨\n(一)\n平台总览\n平台以 “生涯赋能・精准助力” 为核心，整合了简历优化实验室、面试优化实验室、职业测评、求职课程实验室、AI 就业助手五大功能模块，覆盖自我探索、简历打磨、面试模拟、技能提升、智能答疑等全场景需求，为广外学子量身定制个性化求职成长方案。\n同学们快用起来！超强求职搭子已就位，offer拿到手软不费力～\n(二)\n模块简介\n1\nAI简历优化实验室\n✅免费精美模板随心用：\n平台内置多套适配幼教及各类求职场景的免费精美简历模板，满足"
+    },
+    {
+      "id": "wx-e65f3688d0c219ed305ca5c944f2751660067122",
+      "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+      "sourceType": "wechat_service",
+      "sourceUrl": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "campus_life",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "欢迎新同学\n亲爱的2026级新同学，欢迎加入广东外语外贸大学！\n步入大学校园，图书馆将是你大学生活里最重要的学习阵地。在这里，你可以博览群书、静心自习、查阅文献、参与丰富的阅读活动。为帮助大家快速上手图书馆各项功能，我们整理了这份完整的入馆指南，从入馆权限、借阅规则到空间预约、电子资源，一文带你玩转广外图书馆。\n另外，今年新同学们将继续通过“新生闯馆”环节自助开通借书等权限。（点击“阅读原文”直达“新生闯馆”）\n图书馆简介\n广东外语外贸大学图书馆始建于1965年，前身为广州外国语学院图书馆（始建于1965年），19"
+    },
+    {
+      "id": "wx-e7d64c893a0a6f05d9465b1936bee4567b6daed9",
+      "title": "学活场地预约指南丨云山公益服务栈（大学城校区）",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/53lINN2VHWUBMGU0Na0TkQ",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "campus_life",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "▷▷▷\n关于学活\n.\n—————»»»»\n学活使用指南\n广外大学城校区学生活动中心（以下简称\"学活\"）面向全校师生开放，用于举办各类大型活动。中心内配备完善的灯光、音响、麦克风及空调系统，场地由云山公益服务栈负责管理。我们秉承为师生办实事的服务宗旨，为全校师生提供优质的场地使用服务。\n>>学生活动中心<<\n❤\n❤\n❤\n00目录\n01一如何预约及申请学活场地\n02一学活设备简介\n03一特别注意事项\n04一常见问题Q&A\n学活位置\n01 如何预约及申请学活场地\n学生活动中心的使用报批程序\n❤\n❤\n❤\n申请流程\n智慧广外"
+    },
+    {
+      "id": "wx-eac6dcaa945e4e6acea0f2fd4916dff7e0eafdff",
+      "title": "【云享 · 留学 · 第80期】尹易阳：从广外英文到港中文语言学",
+      "sourceType": "wechat_subscription",
+      "sourceUrl": "https://mp.weixin.qq.com/s/QsmSfSvjmJO9Qiyg2TKmmQ",
+      "expectedDestination": "knowledge",
+      "expectedCategory": "education_career",
+      "rationale": "根据正文主要目的逐篇核对；当期任务/事件与可重复查询的服务分开，回忆/访谈不凭操作词判为办事指南",
+      "evidenceExcerpt": "点击上方蓝字关注我们\n阅读须知\n全文约9869字，阅读需约25分钟。本文首发于“云谷之声”微信公众平台，内容均为原创，仅供有需要的师弟师妹进行参考学习。如欲转载，请联系作者本人，未经授权，严禁一切形式的转载、商用。（师兄师姐的分享案例提供的信息与各校竞争情况可能会随着考试时间的不同而产生较大差异，内容仅供参考）\n基本信息\n姓名: 尹易阳\n学院：英语语言文化学院\n专业：英语\n绩点：3.81/4（89.5）\n语言成绩：雅思7.5（6.5）、专四87 、catti三笔\n实习经历：教育、银行、运营、翻译…\n学生活动：校团委"
     }
   ]
 }

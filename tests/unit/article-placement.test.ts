@@ -43,12 +43,22 @@ describe("exclusive article placement and captured metadata publication", () => 
   it("classifies standing services and dated opportunities separately", () => {
     expect(
       classifyArticle("关于图书馆学习空间分批次开放预约使用的通知"),
-    ).toEqual({ radarCategory: null, knowledgeCategory: "campus_life" });
-    expect(classifyArticle("2026学年助学金拟资助名单公示")).toEqual({
+    ).toEqual({ radarCategory: null, knowledgeCategory: null });
+    expect(
+      classifyArticle({
+        title: "2026学年助学金拟资助名单公示",
+        body: "现将本年度助学金拟资助名单公示，请同学核对。",
+      }),
+    ).toEqual({
       radarCategory: "scholarship_opportunity",
       knowledgeCategory: null,
     });
-    expect(classifyArticle("云山学术沙龙413期")).toEqual({
+    expect(
+      classifyArticle({
+        title: "关于举办云山学术沙龙413期讲座的通知",
+        body: "讲座时间：2026年11月5日，欢迎师生参加。",
+      }),
+    ).toEqual({
       radarCategory: "lecture",
       knowledgeCategory: null,
     });

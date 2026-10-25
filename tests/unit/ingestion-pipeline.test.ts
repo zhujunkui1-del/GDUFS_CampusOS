@@ -134,9 +134,9 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
       }),
     });
     expect(profile?.entryUrls).toHaveLength(2);
-    expect(approvedUrl(profile!, "https://dept.example.edu/news/", "list")).toBe(
-      "https://dept.example.edu/news/",
-    );
+    expect(
+      approvedUrl(profile!, "https://dept.example.edu/news/", "list"),
+    ).toBe("https://dept.example.edu/news/");
     expect(
       approvedUrl(profile!, "https://dept.example.edu/notices/article/42"),
     ).toBe("https://dept.example.edu/notices/article/42");
@@ -233,6 +233,8 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
         knowledgeCategory: null,
       });
       const current = await store.document(d.id);
+      expect(current.inputHash).toBe(d.inputHash);
+      expect(current.contentRevision).toBe(d.contentRevision);
       expect(current).toMatchObject({
         publicationStatus: "published",
         radarCategory: "lecture",
@@ -251,7 +253,7 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
         f.sqlite
           .prepare("SELECT count(*) n FROM console_content_attestations")
           .get()?.n,
-      ).toBe(1);
+      ).toBe(0);
     } finally {
       f.close();
     }

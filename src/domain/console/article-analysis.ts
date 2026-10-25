@@ -8,7 +8,7 @@ import {
   DerivedEventStatusSchema,
 } from "./taxonomy";
 
-export const ARTICLE_CLASSIFIER_VERSION = "article-content-v1";
+export const ARTICLE_CLASSIFIER_VERSION = "article-content-v3";
 export const ArticleAnalysisInputSchema = z
   .object({
     documentId: z.string().optional(),

@@ -96,3 +96,5 @@ const report = {
 writeFileSync(dir + "/predictions.json", JSON.stringify(predictions) + "\n");
 writeFileSync(dir + "/evaluation.json", JSON.stringify(report, null, 2) + "\n");
 console.log(JSON.stringify(report, null, 2));
+
+if (errors.length) process.exitCode = 1;

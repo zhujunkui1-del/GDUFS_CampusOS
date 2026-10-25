@@ -175,6 +175,7 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
     id: string | undefined,
     raw: unknown,
     sourceFingerprint?: string,
+    manualPlacement = true,
   ) {
     const value = ContentWriteSchema.parse(raw);
     const p = await this.db
@@ -227,6 +228,7 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       id,
       value,
       sourceFingerprint,
+      manualPlacement,
     );
     const changes =
       old && sourceFingerprint

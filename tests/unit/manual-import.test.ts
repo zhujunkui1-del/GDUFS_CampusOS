@@ -75,6 +75,38 @@ async function setup(
   });
   return { ...f, store, source, item, batch };
 }
+it("does not mistake an automatic body classification for an administrator override", async () => {
+  const f = await setup("licensed_full_text");
+  try {
+    const result = await f.store.importBatch({
+      commandId: crypto.randomUUID(),
+      sourceId: f.source.id,
+      sourceVersion: 4,
+      items: [
+        {
+          ...f.item,
+          title: "校园卡补办指南",
+          knowledgeCategory: null,
+          radarCategory: null,
+          bodyStatus: "complete",
+          body: "办理流程\n1.登录校园卡服务并选择挂失。\n2.填写材料并提交补办申请。",
+        },
+      ],
+    });
+    const row = f.sqlite
+      .prepare(
+        "SELECT primary_destination,knowledge_category,classification_origin FROM console_article_classifications WHERE document_id=?",
+      )
+      .get(result.items[0].id);
+    expect(row).toMatchObject({
+      primary_destination: "knowledge",
+      knowledge_category: "campus_life",
+      classification_origin: "automatic",
+    });
+  } finally {
+    f.close();
+  }
+});
 describe("bounded manual intake and fresh anonymous metadata", () => {
   it("atomically imports metadata, separate timestamps, all discovery observations and real receipts", async () => {
     const f = await setup();

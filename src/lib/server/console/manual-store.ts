@@ -450,11 +450,16 @@ export class ManualImportStore extends IngestionStore {
         throw new ApiError("CONFLICT", "未找到需要更新的原文。");
       const prepared = unchanged
         ? null
-        : await this.prepareContentWrite(old?.id, {
-            ...input,
-            commandId: crypto.randomUUID(),
-            expectedVersion: old?.version || 0,
-          });
+        : await this.prepareContentWrite(
+            old?.id,
+            {
+              ...input,
+              commandId: crypto.randomUUID(),
+              expectedVersion: old?.version || 0,
+            },
+            undefined,
+            !!(item.radarCategory || item.knowledgeCategory),
+          );
       const documentId = old?.id || prepared!.key,
         version = old ? old.version + (unchanged ? 0 : 1) : 1;
       statements.push(

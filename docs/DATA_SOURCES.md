@@ -504,3 +504,12 @@ Rows read基线来自Cloudflare Wrangler只读命令`wrangler d1 insights campus
 负责人新提供Downloads中的钟楼2.jpg、钟楼1.jpg、b栋钟楼.png、b栋钟楼位置.png、b栋钟楼俯视.png，以及消息内主钟面向外箭头，明确钟楼属于B栋红框外侧转角，撤销此前C凸出处照片匹配。五图原像素副本存文档包assets/model_references/teaching-a-d-v2，与旧13图共18条SHA见docs/model-previews/teaching-a-d-v2/design.json。旧照片文件名C栋字样不作为归属依据。图片仍仅内部参考，不上传public、预览图片服务或GLB纹理。
 
 当前clock实体绑定B osm-relation-19299171（https://www.openstreetmap.org/relation/19299171），沿原转角边界切出估算6.4×9米体量，B剩余外环与塔体面积之和保持，两个院落不封顶；C osm-way-1410412691原高塔恢复五层。主钟面/下方玻璃面按箭头朝外，局部平面法向约[0.99994,0.01111]。米制尺寸和现场精度未实测，不把红框当成新增精确GIS。十GLB继续共用既有C坐标原点。原V1留作错误位置历史，当前3021服务为V2。
+
+
+## 2026-10-25｜统一内容分析的真实语料与报名标记
+
+只读快照来自现有Preview D1官网/公众号文章1773篇，保留既有来源用途权限，没有新增抓取平台或下载图片至D1；原reading HTML/CDN不改。真实标注/核对样本只提交有限摘录、标题、ID和原文地址，不将全量文章正文放入测试仓库；本地分析语料在忽略目录。
+
+同源双栏目例：国际学院官网 https://ic.gdufs.edu.cn/info/1558/6887.htm （参访动态）与 https://ic.gdufs.edu.cn/info/1486/4730.htm （生活指南）；广外就业 https://mp.weixin.qq.com/s/yzCQHsCBVXaXTmdd4NIyeQ （招聘宣讲）与 https://mp.weixin.qq.com/s/2lvGVw97fFI_sg2ZBqrjSQ （就业协议指南）。金融大赛报名证据来自 https://mp.weixin.qq.com/s/yyaRAenHDPn8OtRXYLKCCw 。来源许可沿用已有入库/公开依据，不把分类视作新增正文授权。
+
+负责人提供pkuknow.cn“报”字截图为交互样式参考；实际使用自有CSS/文本，不复制原站图片/代码。公开截图和当前源站新增5篇实测记录见docs/verification/article-analysis-2026-10-25。

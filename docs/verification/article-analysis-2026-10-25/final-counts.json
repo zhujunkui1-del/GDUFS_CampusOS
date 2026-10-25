@@ -1,0 +1,251 @@
+{
+  "capturedAt": "2026-10-25T14:30:34.499Z",
+  "results": {
+    "origins": {
+      "rows": [
+        {
+          "classification_origin": "automatic",
+          "n": 1730
+        },
+        {
+          "classification_origin": "manual",
+          "n": 48
+        }
+      ],
+      "rowsRead": 7487,
+      "rowsWritten": 0,
+      "durationMs": 59.811
+    },
+    "versions": {
+      "rows": [
+        {
+          "classifier_version": "article-content-v3",
+          "n": 1778,
+          "registration_articles": 296
+        }
+      ],
+      "rowsRead": 5661,
+      "rowsWritten": 0,
+      "durationMs": 44.8025
+    },
+    "tags": {
+      "rows": [
+        {
+          "tag": "AI",
+          "n": 184
+        },
+        {
+          "tag": "考试",
+          "n": 137
+        },
+        {
+          "tag": "毕业生",
+          "n": 104
+        },
+        {
+          "tag": "奖学金",
+          "n": 82
+        },
+        {
+          "tag": "图书馆服务",
+          "n": 80
+        },
+        {
+          "tag": "校园招聘",
+          "n": 71
+        },
+        {
+          "tag": "志愿服务",
+          "n": 65
+        },
+        {
+          "tag": "选课",
+          "n": 56
+        },
+        {
+          "tag": "学术交流",
+          "n": 40
+        },
+        {
+          "tag": "科研项目",
+          "n": 39
+        },
+        {
+          "tag": "宿舍管理",
+          "n": 38
+        },
+        {
+          "tag": "创新创业",
+          "n": 31
+        },
+        {
+          "tag": "语言学习",
+          "n": 21
+        },
+        {
+          "tag": "就业服务",
+          "n": 14
+        },
+        {
+          "tag": "助学金",
+          "n": 14
+        },
+        {
+          "tag": "信息素养",
+          "n": 12
+        },
+        {
+          "tag": "心理健康",
+          "n": 8
+        },
+        {
+          "tag": "学生资助",
+          "n": 8
+        },
+        {
+          "tag": "后勤服务",
+          "n": 6
+        },
+        {
+          "tag": "图书借阅",
+          "n": 5
+        },
+        {
+          "tag": "体育",
+          "n": 5
+        },
+        {
+          "tag": "科研管理",
+          "n": 3
+        },
+        {
+          "tag": "就业协议",
+          "n": 3
+        },
+        {
+          "tag": "学术诚信",
+          "n": 1
+        },
+        {
+          "tag": "办事流程",
+          "n": 1
+        }
+      ],
+      "rowsRead": 4949,
+      "rowsWritten": 0,
+      "durationMs": 13.198
+    },
+    "registration": {
+      "rows": [
+        {
+          "documents": 125,
+          "windows": 187
+        }
+      ],
+      "rowsRead": 187,
+      "rowsWritten": 0,
+      "durationMs": 0.4075
+    },
+    "public": {
+      "rows": [
+        {
+          "primary_destination": "knowledge",
+          "n": 29
+        },
+        {
+          "primary_destination": "radar",
+          "n": 943
+        },
+        {
+          "primary_destination": "unknown",
+          "n": 806
+        }
+      ],
+      "rowsRead": 31267,
+      "rowsWritten": 0,
+      "durationMs": 379.4602
+    },
+    "gate": {
+      "rows": [
+        {
+          "earliest_import_day": "2026-01-01"
+        }
+      ],
+      "rowsRead": 1,
+      "rowsWritten": 0,
+      "durationMs": 0.3098
+    }
+  },
+  "newDocumentsSinceSnapshot": {
+    "snapshotAt": "2026-10-25T13:06:27.652Z",
+    "rowsRead": 3913,
+    "rowsWritten": 0,
+    "documents": [
+      {
+        "id": "content-150d5c48-c02b-4395-b012-b2c99cab9e1b",
+        "title": "2026-2027学年度广东外语外贸大学博士研究生助学金名单公示-经济贸易学院",
+        "url": "https://jingmao.gdufs.edu.cn/info/1703/20289.htm",
+        "publication_status": "published",
+        "published_at": "2026-09-23",
+        "display_name": "经济贸易学院",
+        "channel_type": "official_web",
+        "classifier_version": "article-content-v3",
+        "primary_destination": "radar",
+        "radar_category": "scholarship_opportunity",
+        "knowledge_category": null
+      },
+      {
+        "id": "content-8ca4da2a-de70-444b-9c66-dd9a5db46a71",
+        "title": "经贸学院2026年暑期香港经管类+AI跨学科名企名校实习实训项目圆满结束-经济贸易学院",
+        "url": "https://jingmao.gdufs.edu.cn/info/1703/19529.htm",
+        "publication_status": "published",
+        "published_at": "2026-09-01",
+        "display_name": "经济贸易学院",
+        "channel_type": "official_web",
+        "classifier_version": "article-content-v3",
+        "primary_destination": "unknown",
+        "radar_category": null,
+        "knowledge_category": null
+      },
+      {
+        "id": "content-96cdf465-a4ad-440d-96c9-f0343523f398",
+        "title": "境外实习｜关于2026年暑期香港经管类+AI跨学科名企名校实习实训项目选拔的通知-经济贸易学院",
+        "url": "https://jingmao.gdufs.edu.cn/info/1703/18559.htm",
+        "publication_status": "published",
+        "published_at": "2026-05-18",
+        "display_name": "经济贸易学院",
+        "channel_type": "official_web",
+        "classifier_version": "article-content-v3",
+        "primary_destination": "radar",
+        "radar_category": "education_career",
+        "knowledge_category": null
+      },
+      {
+        "id": "content-9c2b351f-56c7-4429-ba28-ec08bb09f0e5",
+        "title": "2026年暑期香港经管类+AI跨学科名企名校实习实训项目拟录取人员名单公示-经济贸易学院",
+        "url": "https://jingmao.gdufs.edu.cn/info/1703/18919.htm",
+        "publication_status": "published",
+        "published_at": "2026-06-16",
+        "display_name": "经济贸易学院",
+        "channel_type": "official_web",
+        "classifier_version": "article-content-v3",
+        "primary_destination": "radar",
+        "radar_category": "education_career",
+        "knowledge_category": null
+      },
+      {
+        "id": "content-aa29144e-ab74-4421-aa7f-8a5c3f85f01a",
+        "title": "经济贸易学院2025-2026学年度毕业班优秀学生奖学金、毕业班三好学生及优秀大学生奖章候选人建议名单公示-经济贸易学院",
+        "url": "https://jingmao.gdufs.edu.cn/info/1703/18739.htm",
+        "publication_status": "published",
+        "published_at": "2026-05-29",
+        "display_name": "经济贸易学院",
+        "channel_type": "official_web",
+        "classifier_version": "article-content-v3",
+        "primary_destination": "radar",
+        "radar_category": "scholarship_opportunity",
+        "knowledge_category": null
+      }
+    ]
+  }
+}
