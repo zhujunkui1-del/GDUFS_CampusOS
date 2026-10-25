@@ -2,7 +2,7 @@
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
 import { resolve, extname } from "node:path";
-const root = resolve("docs/model-previews/teaching-a-d-v1");
+const root = resolve("docs/model-previews/teaching-a-d-v2");
 const files = new Set([
   "index.html",
   "preview.js",

@@ -1,0 +1,281 @@
+{
+  "version": "teaching-a-d-v2-b-clock-2026-10-25",
+  "placeIds": {
+    "A": "osm-way-1410412694",
+    "B": "osm-relation-19299171",
+    "C": "osm-way-1410412691",
+    "D": "osm-relation-19299170"
+  },
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "heightScaleLevels": 5,
+  "clockHeightScaleLevels": 8,
+  "levelsSource": "负责人修正：主体5层楼高，钟楼属于B栋、8层楼高",
+  "levelsAccuracy": "owner_external_height_description_only",
+  "interiorLevelsVerified": false,
+  "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+  "floorDatumsMeters": [
+    0.1,
+    3.7,
+    7.3,
+    10.9,
+    14.5,
+    18.1
+  ],
+  "mainRoofMeters": 18.1,
+  "mainParapetMeters": 18.55,
+  "clockTopMeters": 31.2,
+  "clockFinTopMeters": 32.05,
+  "clockCenterMeters": 27.7,
+  "galleryDepthMeters": 2.4,
+  "pergolaTopMeters": 21.4,
+  "aPortalRectMeters": [
+    94,
+    94,
+    114,
+    108
+  ],
+  "cPortalRectMeters": [
+    -48,
+    -4,
+    -36,
+    4
+  ],
+  "pergolas": {
+    "B": [
+      [
+        17.4,
+        26,
+        28.4,
+        37.1
+      ],
+      [
+        18.2,
+        60.2,
+        30.1,
+        72.8
+      ]
+    ],
+    "C": [
+      [
+        -49,
+        -11,
+        -40,
+        1
+      ]
+    ],
+    "D": [
+      [
+        -86.8,
+        -50.8,
+        -73,
+        -38.2
+      ],
+      [
+        -85.5,
+        -88,
+        -74,
+        -74
+      ],
+      [
+        -73,
+        -93.5,
+        -61,
+        -87
+      ]
+    ]
+  },
+  "roofCores": {
+    "A": [
+      [
+        80,
+        99,
+        85,
+        103
+      ],
+      [
+        132,
+        99,
+        141,
+        103
+      ]
+    ],
+    "B": [],
+    "D": [
+      [
+        -19.5,
+        -70,
+        -15,
+        -64
+      ]
+    ]
+  },
+  "displayConnectors": [
+    {
+      "name": "A-B",
+      "rectMeters": [
+        72.6,
+        83.15,
+        2.6,
+        26.1
+      ],
+      "floorDatumsMeters": [
+        14.5
+      ]
+    },
+    {
+      "name": "C-D",
+      "rectMeters": [
+        -24.3,
+        -31.2,
+        2.6,
+        17.3
+      ],
+      "floorDatumsMeters": [
+        7.3,
+        10.9,
+        14.5
+      ]
+    }
+  ],
+  "performance": {
+    "triangleBudget": 30000,
+    "modelDrawCallBudget": 20,
+    "glbByteBudget": 650000
+  },
+  "notes": [
+    "文件名数字无建筑尺寸/层数/时序意义。",
+    "A—D沿用四个独立源轮廓，B/D原内环保留；依负责人红框将钟楼改至B栋指定转角。",
+    "钟楼从B栋五层主体切出为单独八层体量，C栋旧塔恢复五层；原GIS保持。",
+    "所有GLB共用C栋WGS84原点；组件相对位置已编码，不能再按各标签原点二次平移。",
+    "米制层高、钟楼总高/位置匹配、架空入口、外廊、屋顶构架与楼间连廊为照片近似显示，不改GIS/通行。",
+    "钟面为纯几何刻度与固定指针，无时钟动画、照片贴图或真实室内。",
+    "原13图与本轮5张修正图只内部参考，不作为照片纹理。",
+    "主钟面/下方玻璃立面朝局部+X楼外方向，第二钟面朝局部-Z；以负责人箭头为朝向依据。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼c栋1.jpg",
+      "bytes": 26911,
+      "sha256": "3d21e6f99510579cac22b310887596634a496a82d47369c293e2a94850eb01a8",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼c栋.jpg",
+      "bytes": 95478,
+      "sha256": "72029dfeb8bdf33d910be1ec2d3c397319d1433e240a85c21d8a854bfead81a9",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼A栋正面.png",
+      "bytes": 2093946,
+      "sha256": "0fc9e7e10abd8017ccda5fd69bf66a50884e6a4ae77e1081ff093c2852270159",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼C栋左部分.png",
+      "bytes": 1583919,
+      "sha256": "cf0fdc0c4d363fb480a6e60d10deb816c97c8d939f865f7c6baf511e524ea7ed",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼C栋2093.png",
+      "bytes": 1341462,
+      "sha256": "8f42c2bdf6350c24c814e428247f747c37c6ba9ef7be0b7a631d30d0573371ca",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼C栋及其与D栋连接处.png",
+      "bytes": 2030255,
+      "sha256": "b79abdf81ab5067d495be413fc5af92d0a9b5214c7c390ae74d64ef88a5664fc",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼B、C栋.png",
+      "bytes": 1476056,
+      "sha256": "0f7a0c9e185490952834ce38ba5b974b93a120cdbe636501b043c6add963a2a6",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼A栋.png",
+      "bytes": 875596,
+      "sha256": "a6dcc5a1c7340e4e83e22ffff30b7adc109fdb0c5596bc3ebff9c5df02c5bd9c",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼D栋.png",
+      "bytes": 3629325,
+      "sha256": "befcd6ac6bf8f84f0be0dad362a06735791e12dca35fec73fe8d80f17ef1ce30",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼C、D栋.png",
+      "bytes": 3232826,
+      "sha256": "bf4a2aa489c9d9e426018c0a852b0d5a81f546ee899e98b17b582ca09115e06e",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼整体.png",
+      "bytes": 1127579,
+      "sha256": "a10e9924912ced9ea2578820f04815cfb51fa9c5f872e8d991caabad224e801d",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/teaching-a-d-v1/教学楼C-D栋俯视.png",
+      "bytes": 466219,
+      "sha256": "4c979b00f3db9c0307c76dda03cb0d2b7c476fb72decee4f63e4d4a82dcae520",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/teaching-a-d-v1/教学楼A-B栋.png",
+      "bytes": 632622,
+      "sha256": "8f0a0ddba41b3052012824382a1ef02d628081772dd43604f99dd3523b99acef",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/teaching-a-d-v2/钟楼2.jpg",
+      "bytes": 95478,
+      "sha256": "72029dfeb8bdf33d910be1ec2d3c397319d1433e240a85c21d8a854bfead81a9",
+      "usage": "owner_clock_placement_and_facing_correction_internal_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/teaching-a-d-v2/钟楼1.jpg",
+      "bytes": 26911,
+      "sha256": "3d21e6f99510579cac22b310887596634a496a82d47369c293e2a94850eb01a8",
+      "usage": "owner_clock_placement_and_facing_correction_internal_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/teaching-a-d-v2/b栋钟楼.png",
+      "bytes": 154430,
+      "sha256": "59c6f32843cace365c80918a821148e0d51c070835d9b2b462107f2ca14da8fe",
+      "usage": "owner_clock_placement_and_facing_correction_internal_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/teaching-a-d-v2/b栋钟楼位置.png",
+      "bytes": 350913,
+      "sha256": "cfeb23f49b4a898f61e97f7684bf48b00a37bc553f3549d5af230371aac77d70",
+      "usage": "owner_clock_placement_and_facing_correction_internal_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/teaching-a-d-v2/b栋钟楼俯视.png",
+      "bytes": 724748,
+      "sha256": "02674fbda4094f42103572b5e543bc34ddafb084bf751f343d1a77e0ef39d627",
+      "usage": "owner_clock_placement_and_facing_correction_internal_only"
+    }
+  ],
+  "replaces": "teaching-a-d-v1-2026-10-25",
+  "clockBuildingKey": "B",
+  "clockCornerOuterIndex": 5,
+  "clockFootprintWidthMeters": 6.4,
+  "clockFootprintDepthMeters": 9,
+  "clockMainFaceDirectionLocalXZ": [
+    1,
+    0
+  ],
+  "clockSecondaryFaceDirectionLocalXZ": [
+    0,
+    -1
+  ],
+  "clockPlacementSource": "负责人2026-10-25红框/箭头修正：B栋标注外侧转角，主钟面与玻璃立面向外"
+}

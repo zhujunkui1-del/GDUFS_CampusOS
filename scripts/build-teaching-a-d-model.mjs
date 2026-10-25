@@ -34,7 +34,7 @@ globalThis.FileReader = class {
       .catch((error) => this.onerror?.(error));
   }
 };
-const folder = "docs/model-previews/teaching-a-d-v1";
+const folder = "docs/model-previews/teaching-a-d-v2";
 const design = JSON.parse(await readFile(`${folder}/design.json`, "utf8"));
 const campus = JSON.parse(
   await readFile("src/features/campus-map/data/campus.json", "utf8"),
@@ -158,8 +158,32 @@ function removeRect(ring, [x0, z0, x1, z1]) {
     clip(middle, 1, z1, false),
   ].filter((r) => r.length >= 3 && Math.abs(area(r)) > 0.001);
 }
-const clockRing = [0, 1, 2, 3, 4].map((i) => buildings.C.rings[0][i]);
-const cBody = buildings.C.rings[0].filter((_, i) => ![1, 2, 3].includes(i));
+// Owner's red box identifies B's external corner; the arrow faces the local +X exterior.
+const bOuter = buildings.B.rings[0],
+  clockCorner = design.clockCornerOuterIndex;
+const clockNE = bOuter[clockCorner],
+  eastPrevious = bOuter[clockCorner - 1],
+  northNext = bOuter[clockCorner + 1];
+const along = (point, towards, distance) => {
+  const dx = towards[0] - point[0],
+    dz = towards[1] - point[1],
+    length = Math.hypot(dx, dz);
+  return [
+    point[0] + (dx * distance) / length,
+    point[1] + (dz * distance) / length,
+  ];
+};
+const clockSE = along(clockNE, eastPrevious, design.clockFootprintDepthMeters);
+const clockNW = along(clockNE, northNext, design.clockFootprintWidthMeters);
+const clockSW = [
+  clockNW[0] + clockSE[0] - clockNE[0],
+  clockNW[1] + clockSE[1] - clockNE[1],
+];
+const clockRing = [clockNE, clockSE, clockSW, clockNW];
+const bBody = bOuter.flatMap((p, i) =>
+  i === clockCorner ? [clockSE, clockSW, clockNW] : [p],
+);
+const cBody = buildings.C.rings[0];
 const palettes = {
   "2.5d": { volume: "#dedbd3", cap: "#efede6" },
   "3d": {
@@ -384,15 +408,43 @@ function pergola(b, [x0, z0, x1, z1], mode) {
 function courtyardBlock(b, key, mode) {
   const detail = mode === "3d",
     { rings } = buildings[key],
-    outer = rings[0],
-    hole = rings[1],
-    roomHole = expand(hole, design.galleryDepthMeters);
+    outer = key === "B" ? bBody : rings[0],
+    hole = rings[1];
+  let roomHole = expand(hole, design.galleryDepthMeters);
+  if (key === "B") {
+    // Recessed galleries meet the solid stair tower; keep the room void inside its body.
+    const surround = expand(clockRing, 0.12),
+      a = roomHole[2],
+      c = roomHole[3],
+      d = roomHole[0];
+    const delta = (p, q) => [q[0] - p[0], q[1] - p[1]];
+    roomHole = [
+      roomHole[0],
+      roomHole[1],
+      a,
+      lineIntersection(
+        a,
+        delta(a, c),
+        surround[1],
+        delta(surround[1], surround[2]),
+      ),
+      surround[2],
+      lineIntersection(
+        c,
+        delta(c, d),
+        surround[2],
+        delta(surround[2], surround[3]),
+      ),
+    ];
+  }
   b.shape(detail ? "ivory" : "volume", outer, 0.1, 17.95, [roomHole]);
   b.shape(detail ? "roof" : "cap", outer, 18.05, 0.12, [hole]);
   for (const e of edges(hole, true)) gallery(b, e, mode);
   if (detail)
-    for (const e of edges(outer))
+    for (const [i, e] of edges(outer).entries()) {
+      if (key === "B" && [clockCorner, clockCorner + 1].includes(i)) continue;
       windows(b, e, { orange: e.normal[0] < -0.6 || e.normal[1] > 0.6 });
+    }
   for (const r of design.pergolas[key]) pergola(b, r, mode);
   for (const r of design.roofCores[key]) {
     b.shape(detail ? "terracotta" : "volume", rect(...r), 18.17, 1.4);
@@ -495,32 +547,33 @@ function clock(b, mode) {
   const detail = mode === "3d",
     mat = detail ? "terracotta" : "volume";
   b.shape(mat, clockRing, 0.1, design.clockTopMeters - 0.1);
-  const es = edges([clockRing[0], clockRing[1], clockRing[3], clockRing[4]]);
-  const north = es.find((e) => e.normal[1] < -0.9),
-    west = es.find((e) => e.normal[0] < -0.9);
+  const es = edges(clockRing);
+  const frontEdge = es.find((e) => e.normal[0] > 0.9),
+    sideEdge = es.find((e) => e.normal[1] < -0.9);
   if (detail) {
-    const front = at(north, north.length / 2, 12.35, 0.06),
-      bearing = angle(north);
-    b.plane("glazing", [north.length - 1.15, 24.1], front, bearing);
+    const front = at(frontEdge, frontEdge.length / 2, 12.35, 0.06),
+      bearing = angle(frontEdge);
+    b.plane("glazing", [frontEdge.length - 1.15, 24.1], front, bearing);
     for (let y = 0.5; y < 24.5; y += 2.95)
       b.plane(
         "ivory",
-        [north.length - 1.05, 0.09],
-        at(north, north.length / 2, y, 0.12),
+        [frontEdge.length - 1.05, 0.09],
+        at(frontEdge, frontEdge.length / 2, y, 0.12),
         bearing,
       );
     for (const d of [
       0.55,
-      north.length / 3,
-      (north.length * 2) / 3,
-      north.length - 0.55,
+      frontEdge.length / 3,
+      (frontEdge.length * 2) / 3,
+      frontEdge.length - 0.55,
     ])
-      b.plane("ivory", [0.08, 24.15], at(north, d, 12.35, 0.13), bearing);
-    for (const e of [north, west]) {
+      b.plane("ivory", [0.08, 24.15], at(frontEdge, d, 12.35, 0.13), bearing);
+    for (const e of [frontEdge, sideEdge]) {
       const size = Math.min(e.length - 0.45, 5.6),
         center = at(e, e.length / 2, design.clockCenterMeters, 0.15),
         a = angle(e);
-      if (e === north) b.plane("ivory", [size + 0.25, size + 0.25], center, a);
+      if (e === frontEdge)
+        b.plane("ivory", [size + 0.25, size + 0.25], center, a);
       const transform = (x, y, z = 0.04) => [
         center[0] + x * Math.cos(a) + z * Math.sin(a),
         center[1] + y,
@@ -572,11 +625,11 @@ function clock(b, mode) {
     );
   }
   b.shape(detail ? "roofDark" : "cap", clockRing, design.clockTopMeters, 0.09);
-  const fin = clockRing[1];
   b.box(
     mat,
-    [0.22, 1.0, 6.2],
-    [fin[0] + 0.15, design.clockTopMeters + 0.35, fin[1] + 3.1],
+    [sideEdge.length, 1.0, 0.22],
+    at(sideEdge, sideEdge.length / 2, design.clockTopMeters + 0.35, -0.1),
+    angle(sideEdge),
   );
 }
 function teachingC(b, mode) {
@@ -634,7 +687,6 @@ function teachingC(b, mode) {
         });
     }
   for (const r of design.pergolas.C) pergola(b, r, mode);
-  clock(b, mode);
 }
 function connectors(b, mode) {
   const mat = mode === "3d" ? "ivory" : "volume";
@@ -664,10 +716,12 @@ function make(mode, selection) {
     else courtyardBlock(b, key, mode);
   }
   if (selection === "complex") connectors(b, mode);
+  if (keys.includes("B")) clock(b, mode);
   const scene = b.finish();
   scene.name = `CampusOS-Teaching-A-D-${selection}-${mode}`;
   scene.userData.placeIds = keys.map((k) => places[k].id);
-  scene.userData.clockTowerHeightScaleLevels = keys.includes("C") ? 8 : null;
+  scene.userData.clockTowerHeightScaleLevels = keys.includes("B") ? 8 : null;
+  scene.userData.clockTowerPlaceId = keys.includes("B") ? places.B.id : null;
   return scene;
 }
 await mkdir(folder, { recursive: true });
@@ -707,7 +761,7 @@ for (const selection of ["complex", "A", "B", "C", "D"]) {
       await new GLTFExporter().parseAsync(scene, {
         binary: true,
         copyright:
-          "OSM footprints © OpenStreetMap contributors (ODbL-1.0). CampusOS original simplified teaching A-D geometry. Owner describes five-storey main blocks and eight-storey C clock tower. Metric heights, facade subdivisions and connectors are visual approximations. Original B/D courtyard holes retained. No photo textures, surveyed interiors or new GIS/navigation facts.",
+          "OSM footprints © OpenStreetMap contributors (ODbL-1.0). CampusOS original simplified teaching A-D geometry. Owner describes five-storey main blocks and eight-storey B clock tower corrected from owner red box and outward arrow. Metric heights, facade subdivisions and connectors are visual approximations. Original B/D courtyard holes retained. No photo textures, surveyed interiors or new GIS/navigation facts.",
       }),
     );
     if (
@@ -779,24 +833,24 @@ for (const [key, building] of Object.entries(buildings)) {
     geometry: {
       type: "Polygon",
       coordinates:
-        key === "C"
-          ? [close(cBody)]
+        key === "B"
+          ? [close(bBody), ...building.rings.slice(1).map(close)]
           : building.place.geometryRings || [building.place.geometry],
     },
   });
 }
 features.push({
   type: "Feature",
-  id: "teaching-C-clock",
+  id: "teaching-B-clock",
   properties: {
-    placeId: places.C.id,
-    part: "C-clock-tower",
+    placeId: places.B.id,
+    part: "B-clock-tower",
     base: 0.1,
     height: design.clockFinTopMeters,
     heightScaleLevels: 8,
     heightAccuracy: design.heightAccuracy,
     geometryAccuracy:
-      "original_C_protrusion_photo_matched_to_clock; not_independent_OSM_clock_ID",
+      "owner_red_box_matched_B_outer_corner; not_independent_OSM_clock_ID",
     approvedForMap: false,
   },
   geometry: { type: "Polygon", coordinates: [close(clockRing)] },
@@ -836,10 +890,14 @@ const partEnvelopes = {
     Object.entries(buildings).map(([key, b]) => [key, b.rings[0]]),
   ),
 };
-const sourceArea = Math.abs(area(buildings.C.rings[0])),
-  cPartsArea = Math.abs(area(cBody)) + Math.abs(area(clockRing));
-if (Math.abs(sourceArea - cPartsArea) > 0.0001)
-  throw new Error("Clock tower partition changed C source area.");
+const sourceArea =
+    Math.abs(area(bOuter)) - Math.abs(area(buildings.B.rings[1])),
+  bPartsArea =
+    Math.abs(area(bBody)) -
+    Math.abs(area(buildings.B.rings[1])) +
+    Math.abs(area(clockRing));
+if (Math.abs(sourceArea - bPartsArea) > 0.0001)
+  throw new Error("Clock tower partition changed B source area.");
 const manifest = {
   modelVersion: design.version,
   stage: design.stage,
@@ -854,14 +912,18 @@ const manifest = {
   heightAccuracy: design.heightAccuracy,
   interiorLevelsVerified: false,
   clockTowerPart: {
-    placeId: places.C.id,
+    placeId: places.B.id,
     ringLocalMeters: clockRing,
     heightScaleLevels: 8,
     maximumMeters: design.clockFinTopMeters,
-    positionAccuracy:
-      "photo_matched_original_C_north_protrusion_not_surveyed_clock_location",
+    positionAccuracy: "owner_corrected_B_outer_corner_red_box",
     renderedExactlyOnce: true,
-    partitionAreaMeters2: { source: sourceArea, sum: cPartsArea },
+    partitionAreaMeters2: { source: sourceArea, sum: bPartsArea },
+    mainFaceNormalLocalXZ: edges(clockRing).find((e) => e.normal[0] > 0.9)
+      .normal,
+    secondaryFaceNormalLocalXZ: edges(clockRing).find((e) => e.normal[1] < -0.9)
+      .normal,
+    facingSource: design.clockPlacementSource,
   },
   sourceCourtyards: 2,
   displayConnectors: design.displayConnectors,

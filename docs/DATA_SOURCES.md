@@ -497,3 +497,10 @@ Rows read基线来自Cloudflare Wrangler只读命令`wrangler d1 insights campus
 地理依据为负责人map.osm与现行campus.json中的OSM way1410412694（A，https://www.openstreetmap.org/way/1410412694）、relation19299171（B，https://www.openstreetmap.org/relation/19299171）、way1410412691（C，https://www.openstreetmap.org/way/1410412691）、relation19299170（D，https://www.openstreetmap.org/relation/19299170）。四外环与B/D真实内环保留；C原北侧五顶点凸出处按照片匹配为钟楼、和主体分部面积保持，不另造独立clock ID。
 
 主体5层/钟楼8层楼高来自负责人说明，米制主屋面18.1米/构架21.4米/钟楼顶31.2米/侧鳍32.05米等为视觉参数；钟楼位置匹配、架空门洞/廊道与两跨栋连接细部不是实测新GIS。十GLB共用C原点，组件位置已编码。自有纯几何模型保留OSM署名，双面钟刻度/固定指针不使用照片或实时校钟数据，不宣称室内楼层/入口/通行核验。
+
+
+## 2026-10-25｜B栋钟楼位置与朝向负责人更正
+
+负责人新提供Downloads中的钟楼2.jpg、钟楼1.jpg、b栋钟楼.png、b栋钟楼位置.png、b栋钟楼俯视.png，以及消息内主钟面向外箭头，明确钟楼属于B栋红框外侧转角，撤销此前C凸出处照片匹配。五图原像素副本存文档包assets/model_references/teaching-a-d-v2，与旧13图共18条SHA见docs/model-previews/teaching-a-d-v2/design.json。旧照片文件名C栋字样不作为归属依据。图片仍仅内部参考，不上传public、预览图片服务或GLB纹理。
+
+当前clock实体绑定B osm-relation-19299171（https://www.openstreetmap.org/relation/19299171），沿原转角边界切出估算6.4×9米体量，B剩余外环与塔体面积之和保持，两个院落不封顶；C osm-way-1410412691原高塔恢复五层。主钟面/下方玻璃面按箭头朝外，局部平面法向约[0.99994,0.01111]。米制尺寸和现场精度未实测，不把红框当成新增精确GIS。十GLB继续共用既有C坐标原点。原V1留作错误位置历史，当前3021服务为V2。
