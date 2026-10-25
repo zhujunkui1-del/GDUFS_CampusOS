@@ -527,3 +527,7 @@ Rows read基线来自Cloudflare Wrangler只读命令`wrangler d1 insights campus
 同源双栏目例：国际学院官网 https://ic.gdufs.edu.cn/info/1558/6887.htm （参访动态）与 https://ic.gdufs.edu.cn/info/1486/4730.htm （生活指南）；广外就业 https://mp.weixin.qq.com/s/yzCQHsCBVXaXTmdd4NIyeQ （招聘宣讲）与 https://mp.weixin.qq.com/s/2lvGVw97fFI_sg2ZBqrjSQ （就业协议指南）。金融大赛报名证据来自 https://mp.weixin.qq.com/s/yyaRAenHDPn8OtRXYLKCCw 。来源许可沿用已有入库/公开依据，不把分类视作新增正文授权。
 
 负责人提供pkuknow.cn“报”字截图为交互样式参考；实际使用自有CSS/文本，不复制原站图片/代码。公开截图和当前源站新增5篇实测记录见docs/verification/article-analysis-2026-10-25。
+
+## 2026-10-26｜S3-D真实检索验收语料
+
+复用Preview中已有、当前可公开且正文用途允许的官网/公众号文章，未重新抓取入口或改变来源许可。实例：广外图书馆《新生入馆指南》https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw；《金秋阅新》https://mp.weixin.qq.com/s/NBtUOT9gSaFqSSM4BImKIQ（原文书展日期2026.9.22—9.24，技术验收明确历史，不当作当前可参加）；既有官网研究生奖学金通知。具体documentId、来源、发布日期、正文片段与当前分类见docs/verification/s3-d各真实查询JSON。来源使用权限沿现有公开与正文范围复核，不把检索命中升级为新的来源许可。

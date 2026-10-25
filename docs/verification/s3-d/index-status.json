@@ -1,0 +1,50 @@
+{
+  "mode": "status",
+  "at": "2026-10-25T17:58:42.810Z",
+  "counts": [
+    {
+      "status": "ready",
+      "index_version": "campus-fts-v1",
+      "n": 1780,
+      "chunks": 3776
+    }
+  ],
+  "public": [
+    {
+      "primary_destination": "knowledge",
+      "source_type": "official_account",
+      "n": 26
+    },
+    {
+      "primary_destination": "knowledge",
+      "source_type": "official_web",
+      "n": 3
+    },
+    {
+      "primary_destination": "radar",
+      "source_type": "official_account",
+      "n": 374
+    },
+    {
+      "primary_destination": "radar",
+      "source_type": "official_web",
+      "n": 570
+    },
+    {
+      "primary_destination": "unknown",
+      "source_type": "official_account",
+      "n": 583
+    },
+    {
+      "primary_destination": "unknown",
+      "source_type": "official_web",
+      "n": 224
+    }
+  ],
+  "cost": {
+    "rowsRead": 34862,
+    "rowsWritten": 0,
+    "queries": 2,
+    "sqlDurationMs": 631.1372
+  }
+}

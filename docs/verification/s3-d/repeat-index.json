@@ -1,0 +1,13 @@
+{
+  "mode": "backfill",
+  "at": "2026-10-25T18:14:52.852Z",
+  "processed": 0,
+  "changed": 0,
+  "cursor": "",
+  "cost": {
+    "rowsRead": 3560,
+    "rowsWritten": 0,
+    "queries": 1,
+    "sqlDurationMs": 21.5719
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "mode": "search",
+  "at": "2026-10-25T17:58:42.691Z",
+  "result": {
+    "hits": [
+      {
+        "documentId": "content-6706569a-2265-4810-88bf-ac52fb2fdd3a",
+        "chunkId": "content-6706569a-2265-4810-88bf-ac52fb2fdd3a:fts:d67404df4b95ee1c:0",
+        "title": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲-数学与统计学院",
+        "sourceId": "GDUFS-SRC-0020",
+        "sourceName": "数学与统计学院",
+        "originalUrl": "https://stxy.gdufs.edu.cn/info/1748/6135.htm",
+        "publishedAt": "2026-07-08",
+        "contentSnippet": "年7月10日（周五）14:30\n地点\n腾讯会议 ID号：623-225-129\n报告内容简介\n分析AI对大学数学课程建设与教学的影响，特别是大模型给大学数学教学带来的机遇与挑战，介绍当前课程建设的热点，分享教材建设的思考和发展趋势，重点介绍本团队已经开展的高等数学数字教材建设的思路、建设的模式、建设的内容和使用方面的开创性工作。\n报告人简介\n朱士信，合肥工业大学二级教授、国家级教学名师暨首届国家万人计划教学名师、全国模范教师、享受国务院政府特殊津贴专家，安徽省政府参事、《大学数学》常务副主编、中国密码学会监事、中国高等教育学会教育数学专业委员会副理事长、安徽省数学会副监事长、安徽省工业与应用数学会副理事长、国防科技大学兼职教授。曾任两届国家大学数学教学指导委员会委员、数学学院四任院长。\n主要研究方向是代数编码与密码，以主持人身份获得安徽省自然科学奖一等奖一项、主持国家自然科学基金联合基金重点项目一项、国家自然科学基金面上项目五项、发表三百多篇SCI论文。主编的高等数学教材获得国家首届教材奖二等奖，获批4本国家十四五规划教材，以主持人身份获得国家教学成果二等奖一项、安徽省教学成果特等奖三项、一等奖五项，2019年获得安徽省教学重大成就奖。是数学一级学科博士点开点负责人、国家级一流专业负责人、国家级一流课程负责人、国家级精品课程负责人、国家级资源共享课程负责人、国家级教学团队负责人、国家首批虚拟教研室负责人。\n数学与统计学院“前沿学术论坛”由广东外语外贸大学数学与统计学院发起创办，是数学统计学科高层次常态化学术交流平台。论坛不定期邀请国内外知名学者围绕数学统计国际前沿动态及热点研究领域展开交流与探讨，通过学术报告、学术沙龙、研讨会等形式为师生提供向国内外同行学习交流的机会，接触学术前沿，拓宽学术视野，激发学术热情，提升我校师生的创新能力。",
+        "startOffset": 58,
+        "endOffset": 838,
+        "evidenceBasis": "normalized_text",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "bodyPartial": false,
+        "relevanceScore": 31.49,
+        "rankingReasons": [
+          "标题词组匹配 2",
+          "片段词组匹配 3",
+          "正文用途特征加权"
+        ],
+        "classificationState": "radar",
+        "radarCategory": "lecture",
+        "knowledgeCategory": null,
+        "classificationOrigin": "automatic",
+        "contentRevision": 1,
+        "inputHash": "46b8ade3f986cf0135bbc6665e492e1527e622f0d7c36433237ac285891503fc",
+        "documentVersion": 2,
+        "publicAvailable": true,
+        "validity": "unknown",
+        "official": false,
+        "readable": true,
+        "linkedSources": []
+      },
+      {
+        "documentId": "content-2374c64d-50ad-4882-8ae4-c06fe1051253",
+        "chunkId": "content-2374c64d-50ad-4882-8ae4-c06fe1051253:fts:2d1482c7fd50ad5d:0",
+        "title": "数学与统计学院“前沿学术论坛”第49讲 -数学与统计学院",
+        "sourceId": "GDUFS-SRC-0020",
+        "sourceName": "数学与统计学院",
+        "originalUrl": "https://stxy.gdufs.edu.cn/info/1748/6075.htm",
+        "publishedAt": "2026-06-25",
+        "contentSnippet": "大学数学课程建设与课堂教学\n报告人\n刘三阳 教授、国家级教学名师（西安电子科技大学）\n时间\n2026年6月26日（周五）10:10\n地点\n大学城校区院系楼152室\n报告内容简介\n课程建设与课堂教学是人才培养的核心要素，是教学工作的关键环节，讲座为此讲述以下内容：1.介绍课程建设涉及的诸多因素以及本世纪以来教育部在课程建设方面的几次大的举措；2.教学内容研究举例；3. 聚焦课堂教学，包括名家大师的启示、教学中的“十个关系”“讲课十忌”“讲课十法”“开场十例”等；4.教学竞赛策略。\n报告人简介\n刘三阳，西安电子科技大学二级教授、博士生导师，国家级教学名师，享受国务院政府特殊津贴。担任学校数学与交叉科学研究中心主任、国家教材委员会专家委员、教育部教学指导委员会委员、陕西省教材委员会专家委员、陕西省教学指导委员会数理类工作委员会副主任兼数学组组长、陕西省高考综合改革专家组成员、陕西省教育考试与评价研究会副会长、西安市数学会理事长，曾任陕西省数学会副理事长20年，陕西省工业与应用数学学会副理事长16年、西安市科协常务理事10年。还曾担任陕西省全国高考数学命题组组长、陕西省高考数学评卷中心组组长多年。曾评为陕西省首批科技新星、陕西省有突出贡献中青年专家、全国电子工业系统优秀教师、陕西省新长征突击手、陕西省有突出贡献专家、教育部跨世纪优秀人才、陕西省首批师德楷模、陕西省教书育人楷模。先后任应用数学系主任、理学院院长、数学与统计学院院长、第九届和第十届全国人大代表、第十三届全国政协委员、第十二届陕西省政协委员。\n数学与统计学院“前沿学术论坛”由广东外语外贸大学数学与统计学院发起创办，是数学统计学科高层次常态化学术交流平台。论坛不定期邀请国内外知名学者围绕数学统计国际前沿动态及热点研究领域展开交流与探讨，通过学术报告、学术沙龙、研讨会等形式为师生提供向",
+        "startOffset": 5,
+        "endOffset": 785,
+        "evidenceBasis": "normalized_text",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "bodyPartial": false,
+        "relevanceScore": 31.38,
+        "rankingReasons": [
+          "标题词组匹配 1",
+          "片段词组匹配 5",
+          "正文用途特征加权"
+        ],
+        "classificationState": "radar",
+        "radarCategory": "lecture",
+        "knowledgeCategory": null,
+        "classificationOrigin": "automatic",
+        "contentRevision": 1,
+        "inputHash": "755c8aa73ecbf4f6b0953edd14f78385e5c7ffac12bddf17e063edb074660f18",
+        "documentVersion": 2,
+        "publicAvailable": true,
+        "validity": "unknown",
+        "official": false,
+        "readable": true,
+        "linkedSources": []
+      },
+      {
+        "documentId": "wx-68fe346319ff9b98a0756121f358bd6a81156789",
+        "chunkId": "wx-68fe346319ff9b98a0756121f358bd6a81156789:fts:6502e12787976bcf:0",
+        "title": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲",
+        "sourceId": "GDUFS-SRC-0146",
+        "sourceName": "广外数学与统计学院",
+        "originalUrl": "https://mp.weixin.qq.com/s/rOMCzSB-LE64Dzi1Omfs5A",
+        "publishedAt": "2026-07-08T06:35:16.000Z",
+        "contentSnippet": "届国家万人计划教学名师、全国模范教师、享受国务院政府特殊津贴专家，安徽省政府参事、《大学数学》常务副主编、中国密码学会监事、中国高等教育学会教育数学专业委员会副理事长、安徽省数学会副监事长、安徽省工业与应用数学会副理事长、国防科技大学兼职教授。曾任两届国家大学数学教学指导委员会委员、数学学院四任院长。\n主要研究方向是代数编码与密码，以主持人身份获得安徽省自然科学奖一等奖一项、主持国家自然科学基金联合基金重点项目一项、国家自然科学基金面上项目五项、发表三百多篇SCI论文。主编的高等数学教材获得国家首届教材奖二等奖，获批4本国家十四五规划教材，以主持人身份获得国家教学成果二等奖一项、安徽省教学成果特等奖三项、一等奖五项，2019年获得安徽省教学重大成就奖。是数学一级学科博士点开点负责人、国家级一流专业负责人、国家级一流课程负责人、国家级精品课程负责人、国家级资源共享课程负责人、国家级教学团队负责人、国家首批虚拟教研室负责人。\n报告内容简介\n分析AI对大学数学课程建设与教学的影响，特别是大模型给大学数学教学带来的机遇与挑战，介绍当前课程建设的热点，分享教材建设的思考和发展趋势，重点介绍本团队己经开展的高等数学数字教材建设的思路、建设的模式、建设的内容和使用方面的开创性工作。\n数学与统计学院“前沿学术论坛”由广东外语外贸大学数学与统计学院发起创办，是数学统计学科高层次常态化学术交流平台。论坛不定期邀请国内外知名学者围绕数学统计国际前沿动态及热点研究领域展开交流与探讨，通过学术报告、学术沙龙、研讨会等形式为师生提供向国内外同行学习交流的机会，接触学术前沿，拓宽学术视野，激发学术热情，提升我校师生的创新能力。\n文图 |数学与统计学院办公室\n编辑 | 陈曦慧\n初审 | 毛 竹\n复审 | 龙会典\n终审 | 王军威\n欢迎关注广外数学与统计学院官方平台：",
+        "startOffset": 101,
+        "endOffset": 881,
+        "evidenceBasis": "normalized_text",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "bodyPartial": false,
+        "relevanceScore": 31.36,
+        "rankingReasons": [
+          "标题词组匹配 2",
+          "片段词组匹配 3",
+          "正文用途特征加权"
+        ],
+        "classificationState": "radar",
+        "radarCategory": "lecture",
+        "knowledgeCategory": null,
+        "classificationOrigin": "automatic",
+        "contentRevision": 1,
+        "inputHash": "8ec913f58b5ee8e2b4ff15a9f2f08e7c939a8ba69390797559edd037f6aefcf4",
+        "documentVersion": 1,
+        "publicAvailable": true,
+        "validity": "unknown",
+        "official": false,
+        "readable": true,
+        "linkedSources": []
+      },
+      {
+        "documentId": "content-fe27a19d-080b-484c-8ebb-a31169f8603e",
+        "chunkId": "content-fe27a19d-080b-484c-8ebb-a31169f8603e:fts:e50dd82b2a6dc413:0",
+        "title": "云山学术沙龙414期：学术论文写作全过程",
+        "sourceId": "GDUFS-SRC-0012",
+        "sourceName": "广东外语外贸大学",
+        "originalUrl": "https://www.gdufs.edu.cn/info/1005/266556.htm",
+        "publishedAt": "2026-10-24",
+        "contentSnippet": "云山学术沙龙414期：学术论文写作全过程",
+        "startOffset": 0,
+        "endOffset": 20,
+        "evidenceBasis": "title",
+        "evidenceType": "metadata",
+        "bodyAvailable": false,
+        "bodyPartial": false,
+        "relevanceScore": 29.23,
+        "rankingReasons": [
+          "标题词组匹配 2",
+          "片段词组匹配 0"
+        ],
+        "classificationState": "unknown",
+        "radarCategory": null,
+        "knowledgeCategory": null,
+        "classificationOrigin": "automatic",
+        "contentRevision": 1,
+        "inputHash": "7bab1066d05e13252ba01e258c5dff690ecb95392c2561091d0408882b49f30f",
+        "documentVersion": 2,
+        "publicAvailable": true,
+        "validity": "unknown",
+        "official": true,
+        "readable": true,
+        "linkedSources": []
+      }
+    ],
+    "metrics": {
+      "rowsRead": 1032,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 2955,
+      "candidateChunks": 96,
+      "usageAvailable": true
+    },
+    "indexVersion": "campus-fts-v1",
+    "method": "fts5_keywords_and_domain_expansion",
+    "warnings": [
+      "部分结果仅有元数据，不能据此回答正文中的规则或要求。"
+    ]
+  },
+  "cost": {
+    "rowsRead": 1032,
+    "rowsWritten": 0,
+    "queries": 3,
+    "sqlDurationMs": 161.15099999999998,
+    "queriesByStage": [
+      {
+        "kind": "fts",
+        "read": 383,
+        "written": 0,
+        "durationMs": 152.2772
+      },
+      {
+        "kind": "evidence",
+        "read": 204,
+        "written": 0,
+        "durationMs": 2.3901
+      },
+      {
+        "kind": "public_gate",
+        "read": 445,
+        "written": 0,
+        "durationMs": 6.4837
+      }
+    ]
+  }
+}
