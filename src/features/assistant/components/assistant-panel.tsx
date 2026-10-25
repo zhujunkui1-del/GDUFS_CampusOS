@@ -372,12 +372,45 @@ export function AssistantPanel({
                                 </p>
                               )}
                             {message.cards.map((card, index) =>
-                              card.kind === 'source' ? (
-                                <article className="assistant-source-card" key={'source:'+card.documentId}>
-                                  <a href={card.originalUrl} target="_blank" rel="noopener noreferrer"><strong>{card.title}</strong></a>
-                                  <span>{card.sourceName} · {card.publishedAt ? card.publishedAt.slice(0,10) : '发布日期未知'}</span>
-                                  <p>{card.snippet}</p>
-                                  <small>{card.evidenceType==='metadata'?'仅元数据':card.evidenceType==='excerpt'?'原文摘录':'正文证据'}{card.classificationState==='unknown'?' · 校园资讯':''}{card.validity==='unknown'?' · 有效性待确认':card.validity==='expired'?' · 已失效':card.validity==='historical'?' · 历史资料':''}</small>
+                              card.kind === "source" ? (
+                                <article
+                                  className="assistant-source-card"
+                                  key={"source:" + card.documentId}
+                                >
+                                  <a
+                                    href={card.originalUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <strong>{card.title}</strong>
+                                  </a>
+                                  <span>
+                                    来源{index + 1} · {card.sourceName} ·{" "}
+                                    {card.publishedAt
+                                      ? card.publishedAt.slice(0, 10)
+                                      : "发布日期未知"}
+                                  </span>
+                                  <details>
+                                    <summary>查看证据</summary>
+                                    <p>{card.snippet}</p>
+                                  </details>
+                                  <small>
+                                    {card.evidenceType === "metadata"
+                                      ? "仅元数据"
+                                      : card.evidenceType === "excerpt"
+                                        ? "原文摘录"
+                                        : "正文证据"}
+                                    {card.classificationState === "unknown"
+                                      ? " · 校园资讯"
+                                      : ""}
+                                    {card.validity === "unknown"
+                                      ? " · 有效性待确认"
+                                      : card.validity === "expired"
+                                        ? " · 已失效"
+                                        : card.validity === "historical"
+                                          ? " · 历史资料"
+                                          : ""}
+                                  </small>
                                 </article>
                               ) : card.kind === "place" ? (
                                 <button

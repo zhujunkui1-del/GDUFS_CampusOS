@@ -599,7 +599,18 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
         f.sqlite.prepare("SELECT count(*) AS n FROM campus_events").get(),
       ).toMatchObject({ n: 0 });
       expect(
-        f.sqlite.prepare("SELECT count(*) AS n FROM knowledge_chunks").get(),
+        f.sqlite
+          .prepare(
+            "SELECT count(*) AS n FROM knowledge_chunks WHERE index_version IS NULL",
+          )
+          .get(),
+      ).toMatchObject({ n: 1 });
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT count(*) AS n FROM knowledge_chunks WHERE index_version='campus-fts-v1'",
+          )
+          .get(),
       ).toMatchObject({ n: 1 });
     } finally {
       f.close();

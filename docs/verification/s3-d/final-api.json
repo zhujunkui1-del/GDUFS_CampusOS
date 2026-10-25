@@ -1,0 +1,1292 @@
+[
+  {
+    "query": {
+      "purpose": "knowledge",
+      "query": "图书馆借阅规则"
+    },
+    "status": 200,
+    "latencyMs": 1429,
+    "result": {
+      "ok": true,
+      "data": {
+        "hits": [
+          {
+            "documentId": "wx-e65f3688d0c219ed305ca5c944f2751660067122",
+            "chunkId": "wx-e65f3688d0c219ed305ca5c944f2751660067122:fts:1e319c84bf750df9:0",
+            "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+            "sourceId": "GDUFS-SRC-0199",
+            "sourceName": "广外图书馆",
+            "originalUrl": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw",
+            "publishedAt": "2026-09-06T04:12:00.000Z",
+            "contentSnippet": "欢迎新同学\n亲爱的2026级新同学，欢迎加入广东外语外贸大学！\n步入大学校园，图书馆将是你大学生活里最重要的学习阵地。在这里，你可以博览群书、静心自习、查阅文献、参与丰富的阅读活动。为帮助大家快速上手图书馆各项功能，我们整理了这份完整的入馆指南，从入馆权限、借阅规则到空间预约、电子资源，一文带你玩转广外图书馆。\n另外，今年新同学们将继续通过“新生闯馆”环节自助开通借书等权限。（点击“阅读原文”直达“新生闯馆”）\n图书馆简介\n广东外语外贸大学图书馆始建于1965年，前身为广州外国语学院图书馆（始建于1965年），1995年6月原广州对外贸易学院图书馆（始建于1980年）合并，2008年10月，原广东财经职业学院图书馆划转并入。\n现图书馆拥有三个馆舍。其中白云山校区图书馆位于白云山北麓，面积2.3万平方米；大学城校区图书馆位于番禺广州大学城，面积2.8万平方米；此外白云山校区还设有外国语言学及应用语言学基地图书室。图书馆总面积5.31万平方米，实行藏、借、阅、研一体化的开放式管理模式，提供阅览座位5000余个，信息节点2700个；拥有2个多功能报告厅和多间小型会议室、读者个人研修室。\n新生闯馆\n刚入学时，你只有刷卡入馆的基础权限。想借还图书、使用数字资源、预约学习空间，需要完成以下三个步骤：\n设置图书馆密码\n关注\"广外图书馆\"微信公众号，点击\"服务—服务大厅—密码重置\"。学工号就是你的学号，输入密码时请注意大小写。密码每半年会自动过期，记得及时重置。\n完成新生闯馆\n在公众号菜单栏点击\"资源—新生闯馆\"，或进入\"服务—服务大厅—新生闯馆\"。输入学号及密码登录后，至少完成前四步学习，答题成绩在60分以上，方可解锁图书借阅、空间预约等各项权限。\n开通刷脸入馆\n图书馆支持刷脸入馆。在公众号菜单点击\"服务—人脸识别注册\"，识别回复的二维码，按提示上",
+            "startOffset": 0,
+            "endOffset": 780,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 33.23,
+            "rankingReasons": [
+              "标题词组匹配 2.5",
+              "片段词组匹配 9.5",
+              "正文用途特征加权"
+            ],
+            "classificationState": "knowledge",
+            "radarCategory": null,
+            "knowledgeCategory": "campus_life",
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "8f435b613623e7ee1c36ae78ce363d468acdced8196c17b2afaef22145061523",
+            "documentVersion": 1,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          },
+          {
+            "documentId": "wx-e5450047f5a0769ccbc2c16d4b67303aa4aaca44",
+            "chunkId": "wx-e5450047f5a0769ccbc2c16d4b67303aa4aaca44:fts:db4629f93a38ddb2:0",
+            "title": "金秋阅新｜图书馆2026秋季中文新书展活动",
+            "sourceId": "GDUFS-SRC-0199",
+            "sourceName": "广外图书馆",
+            "originalUrl": "https://mp.weixin.qq.com/s/NBtUOT9gSaFqSSM4BImKIQ",
+            "publishedAt": "2026-09-16T04:12:00.000Z",
+            "contentSnippet": "为满足全校师生新学期教学、科研与课外阅读需求，图书馆2026秋季中文新书展正式开启。\n本次书展集中展出本年度出版中文新书4000余册，覆盖外语文学、经管法学、教育心理、艺术通识等多元类目，大家可近距离翻阅、直观挑选心仪纸质新书，现场人工办理借阅，即可带走。\n“芸台购”借购服务\n本次书展还特设“芸台购”借购服务专属咨询摊位，工作人员现场一对一讲解线上借购流程。\n“芸台购”一扫即入\n凡在活动现场完成“芸台购”下单借购，均可领取精美文创小礼品，礼品数量有限，赠完即止。\n书展信息\n借阅规则：现场借阅每人限5册，借期30天，不可续借。\n书展时间：2026.9.22—9.24 9:00-17:00\n书展地点：大学城校区图书馆一楼大厅\n联系方式：王老师 020-39328165\n主办单位：广东外语外贸大学图书馆（档案馆）\n承办单位：北京人天书店有限公司，浙江省新华书店集团有限公司\n一册新书面见，一份书香好礼\n期待各位师生前来赴约！\n来源：文献采编部\n编辑：咨询推广部\n初审：祖迪 张苑 王路\n复审：王悦\n终审：何越晖 陈红霞",
+            "startOffset": 0,
+            "endOffset": 461,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 26.56,
+            "rankingReasons": [
+              "标题词组匹配 1.5",
+              "片段词组匹配 5.5"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "culture_sports",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "4c81d04b54b694df4ab3eb3fc48418488847d9befb17972562b8e2e4cf176685",
+            "documentVersion": 1,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          },
+          {
+            "documentId": "wx-5906fa0e4b7b009525bcb0a9a2155ac3894804ee",
+            "chunkId": "wx-5906fa0e4b7b009525bcb0a9a2155ac3894804ee:fts:0297e26805675fb4:0",
+            "title": "热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？",
+            "sourceId": "GDUFS-SRC-0199",
+            "sourceName": "广外图书馆",
+            "originalUrl": "https://mp.weixin.qq.com/s/B0woO8Ni8zcHw1INndCKeg",
+            "publishedAt": "2026-10-23T06:50:54.000Z",
+            "contentSnippet": "循着秋日阅读足迹，\n我们为大家甄选10本广受读者青睐的好书。\n题材多元，意蕴万千，不妨轻展卷册，\n于笔墨之间邂逅别样山河。\n01\n《小屁孩日记》\n作者：(美) 杰夫·金尼\n出版社：广东新世纪出版社\n索书号：I712.84/J455/1\n馆藏地：大学城馆 5楼42架B面6列\n白云山馆 3楼38架B面5列\n推荐理由：以诙谐日记搭配趣味图文，还原少年真实的校园与家庭生活，没有生硬的说教，在一桩桩啼笑皆非的日常故事中看见青春期的小虚荣、小笨拙与善意，轻松治愈，非常适合闲暇阅读，读懂少年独有的成长心境。\n02\n《灿烂千阳》\n作者：（美）卡勒德・胡赛尼\n出版：上海人民出版社\n索书号：I712.45/H787-4\n馆藏地：大学城馆 5楼68架B面6列\n白云山馆 2楼93架B面12列\n推荐理由：置身动荡的时代背景之下，见证两位女性从隔阂走向彼此依靠的人生历程。战争碾碎安稳的生活，苦难层层叠加，但人性的温情与女性的坚韧从未消散。透过普通人的命运沉浮，感受绝境之中互相救赎的力量。\n03\n《夜晚的潜水艇》\n作者：陈春成\n出版：上海三联书店\n索书号：I247.7/C325.11\n馆藏地：大学城馆 5楼47架A面7列\n白云山馆 2楼79架B面1列\n推荐理由：一部文字极具美感的短篇集，现实与幻境相互交织。故事守护着人内心那份珍贵的想象力与浪漫，在山海、旧梦与古意之间穿梭，阅读如同一场精神漫游，唤醒藏在心底的幻想与诗意。\n04\n《卡拉马佐夫兄弟》\n作者：（俄）陀思妥耶夫斯基著\n出版：上海译文出版社\n索书号：I512.44/T877-86/1\n馆藏地：大学城馆 5楼62架A面2列\n白云山馆 2楼89架B面14列\n推荐理由：文学史上不朽的思想巨著，借一桩扑朔迷离的家庭凶案，剖开人性的复杂多面。围绕善恶、信仰、自由与原罪展开深刻叩问，人物灵魂的拉扯与挣扎直击内心，读完引",
+            "startOffset": 0,
+            "endOffset": 780,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 12.61,
+            "rankingReasons": [
+              "标题词组匹配 1",
+              "片段词组匹配 1"
+            ],
+            "classificationState": "unknown",
+            "radarCategory": null,
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "cf82d652a8f6a82ee927227667a99925f1c08081ebf23e204081f79d66992a29",
+            "documentVersion": 1,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": [
+              {
+                "documentId": "wx-a6b2eccc88d88c9903bb7fa053d6e7791450fb23",
+                "sourceName": "悦读广外",
+                "url": "https://mp.weixin.qq.com/s/z72CjToSasfWOHh5RDGYrw"
+              }
+            ]
+          }
+        ],
+        "metrics": {
+          "rowsRead": 346,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 338,
+          "candidateChunks": 22,
+          "usageAvailable": true
+        },
+        "indexVersion": "campus-fts-v1",
+        "method": "fts5_keywords_and_domain_expansion",
+        "warnings": [],
+        "purpose": "knowledge",
+        "query": "图书馆借阅规则",
+        "now": "2026-10-25T18:43:26.017Z",
+        "timeZone": "Asia/Shanghai",
+        "activities": [
+          {
+            "eventId": "wx-e5450047f5a0769ccbc2c16d4b67303aa4aaca44/activity-1",
+            "documentId": "wx-e5450047f5a0769ccbc2c16d4b67303aa4aaca44",
+            "activityKey": "activity-1",
+            "name": "金秋阅新｜图书馆2026秋季中文新书展活动",
+            "kind": "event",
+            "category": "culture_sports",
+            "startsAt": null,
+            "endsAt": null,
+            "placeRaw": "大学城校区图书馆一楼大厅",
+            "organizer": "广东外语外贸大学图书馆（档案馆）",
+            "eventStatus": "unknown",
+            "historical": false,
+            "registrationRequirement": "unknown",
+            "registrationState": "unknown",
+            "registrationWindows": [],
+            "otherDeadlines": [],
+            "registrationUrl": null,
+            "evidence": [
+              "书展地点：大学城校区图书馆一楼大厅"
+            ],
+            "mapPlace": {
+              "placeId": "osm-way-307250998",
+              "name": "图书馆",
+              "precision": "building"
+            }
+          }
+        ],
+        "knowledge": [
+          {
+            "documentId": "wx-e65f3688d0c219ed305ca5c944f2751660067122",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": [
+              "在公众号菜单栏点击\"资源—新生闯馆\"，或进入\"服务—服务大厅—新生闯馆\"。输入学号及密码登录后，至少完成前四步学习，答题成绩在60分以上，方可解锁图书借阅、空间预约等各项权限。",
+              "图书馆支持刷脸入馆。在公众号菜单点击\"服务—人脸识别注册\"，识别回复的二维码，按提示上传照片即可。新生注册时若学校系统已开通人脸识别权限，则无需重复操作。",
+              "1、读者登录数字广外点击“图书荐购”进入，或使用自己的数字广外账号从图书馆主页右上方的“图书荐购”进入，登录“芸台购”图书平台进行荐购，将自己检索到的喜爱的图书进行提交，工作人员会及时对读者荐购意见进行回复处理，同意购买的图书我馆将会尽快采购。"
+            ]
+          },
+          {
+            "documentId": "wx-e5450047f5a0769ccbc2c16d4b67303aa4aaca44",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": []
+          },
+          {
+            "documentId": "wx-5906fa0e4b7b009525bcb0a9a2155ac3894804ee",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": []
+          }
+        ]
+      },
+      "requestId": "dc7815ae-acdd-4f98-bdf1-4fef805b0641"
+    }
+  },
+  {
+    "query": {
+      "purpose": "events",
+      "query": "竞赛报名"
+    },
+    "status": 200,
+    "latencyMs": 766,
+    "result": {
+      "ok": true,
+      "data": {
+        "hits": [
+          {
+            "documentId": "content-b7f3826a-2a60-42f9-a85f-8ac9a127741a",
+            "chunkId": "content-b7f3826a-2a60-42f9-a85f-8ac9a127741a:fts:6b94bc8cd2222592:1",
+            "title": "我院学子在全国大学生信息安全竞赛（创新实践能力赛）暨“长城杯”网数智安全大赛（防护赛）半决赛斩获佳绩-信息科学与技术学院、网络空间安全学院",
+            "sourceId": "GDUFS-SRC-0004",
+            "sourceName": "信息科学与技术学院（网络空间安全学院）",
+            "originalUrl": "https://sist.gdufs.edu.cn/info/1191/11392.htm",
+            "publishedAt": "2026-03-24",
+            "contentSnippet": "到行业与高校的广泛认可。未来，我院将继续深耕网络空间安全学科建设，持续强化科研与教学融合、理论与实践结合，不断提升人才培养质量，为国家网络安全事业、数字湾区建设输送更多实战型人才。\n据悉，本届大赛共吸引全国804所高校的4153支战队，共计13692名选手报名参赛，经过层层筛选，最终600支队伍成功晋级半决赛。半决赛于3月22日在广东、辽宁、浙江、湖北、重庆、陕西六大赛区同步举办。六大赛区半决赛选拔出150支队伍晋级“长城杯”网数智安全大赛（防护赛）总决赛，以及80支队伍晋级全国大学生信息安全竞赛（创新实践能力赛）总决赛。\n初稿：杨媛媛\n初审：吴笛\n复审：谢柏林\n终审：王常吉",
+            "startOffset": 784,
+            "endOffset": 1075,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 22.89,
+            "rankingReasons": [
+              "标题词组匹配 2",
+              "片段词组匹配 3",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "competition",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "ffb368a6d37c8ac1cdc77d89fb89ddce0527d1babc7ffb5d1d0db3e5d58e79ca",
+            "documentVersion": 2,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          },
+          {
+            "documentId": "wx-a5efbd1c6a392c00a674e8d8f48d32ee6d729820",
+            "chunkId": "wx-a5efbd1c6a392c00a674e8d8f48d32ee6d729820:fts:cc7f9789c090a046:0",
+            "title": "喜讯！我校2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛获奖",
+            "sourceId": "GDUFS-SRC-0167",
+            "sourceName": "悦读广外",
+            "originalUrl": "https://mp.weixin.qq.com/s/6SGy-SZWindWNK5INaYfBQ",
+            "publishedAt": "2026-10-17T04:12:00.000Z",
+            "contentSnippet": "由图书馆（档案馆）与校团委联合举办的2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛（本科生、研究生赛道）广东赛区比赛校内选拔赛，已于2026年9月顺利举办。\n本次大赛广东省赛区共有26所本科院校、五千余名学生报名，四千余名学生参赛；校内选拔赛吸引了全校19个学院的学生踊跃参加。经过赛前练习和正式比赛的激烈角逐，按照评分规则评选，现将校内获奖名单公布如下：\n恭喜获奖同学！获奖证书和奖品发放事宜请留意后续电话或短信通知。\n图书馆（档案馆）、校团委\n2026年10月10日\n点击 在看，你会更好看\n来源：学科服务部\n编辑：咨询推广部\n初审：田梅梅\n复审：王悦\n终审：何越晖 陈红霞",
+            "startOffset": 0,
+            "endOffset": 308,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 22.71,
+            "rankingReasons": [
+              "标题词组匹配 2",
+              "片段词组匹配 3",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "competition",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "93d0826d6eca2d773b75c7f3b80ff40d61c8d208dd5b966490243fc51f6bf2ed",
+            "documentVersion": 1,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": [
+              {
+                "documentId": "wx-ed57d5cb4f2353fc77582c4de3fb6f5ca52db974",
+                "sourceName": "广外图书馆",
+                "url": "https://mp.weixin.qq.com/s/rnlsSc8MjKOoVgWOT-2-tA"
+              }
+            ]
+          },
+          {
+            "documentId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6",
+            "chunkId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6:fts:6aa9888a7520abe0:6",
+            "title": "第二届多语种游戏翻译本地化与国际化大赛报名通知-广东外语外贸大学高级翻译学院",
+            "sourceId": "GDUFS-SRC-0101",
+            "sourceName": "高级翻译学院",
+            "originalUrl": "https://sits.gdufs.edu.cn/info/1186/7406.htm",
+            "publishedAt": "2026-06-10",
+            "contentSnippet": "参赛，独立完成全部赛题。\n(二) 初赛和决赛举办期间直至比赛结束前，参赛选手不得以任何方式在任何渠道发布、交流赛题和答案，违者将取消参赛资格并承担由此造成的一切后果和相关法律责任。\n(三) 参赛选手答卷将进行抄袭检测，一经发现抄袭或者雷同（如采用各类人工智能手段辅助答题），将取消涉事者参赛资格。\n(四) 参赛选手答卷一经提交并在比赛结果公布之后，大赛组委会即享有比赛内容使用权与发表权。\n(五) 参赛选手报名成功并参加比赛，即视为选手本人同意并自愿遵守本公告的各项规定。\n(六) 大赛所有细则和规则最终解释权归主办和承办单位所有。\n十、大赛联系方式\n参赛选手报名缴费成功后，请加入大赛官方QQ群（群号：107548706），及时了解大赛系列培训活动以及赛程信息最新资讯。大赛组委会联系人：邹老师（transconference@foxmail.com）。\n广东外语外贸大学高级翻译学院\n中国翻译协会国际化服务专业委员会\n广东对外传播翻译基地\n北京译禾信息技术有限公司\n上海一者信息科技有限公司\n2026年6月11日",
+            "startOffset": 4599,
+            "endOffset": 5057,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 21.94,
+            "rankingReasons": [
+              "标题词组匹配 2",
+              "片段词组匹配 3",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "competition",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "d10f552e52cad5eeab8d1016cf8f2bace776c62555bef229de88dd7fd50b28ee",
+            "documentVersion": 2,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          }
+        ],
+        "metrics": {
+          "rowsRead": 995,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 508,
+          "candidateChunks": 96,
+          "usageAvailable": true
+        },
+        "indexVersion": "campus-fts-v1",
+        "method": "fts5_keywords_and_domain_expansion",
+        "warnings": [],
+        "purpose": "events",
+        "query": "竞赛报名",
+        "now": "2026-10-25T18:43:26.782Z",
+        "timeZone": "Asia/Shanghai",
+        "activities": [
+          {
+            "eventId": "content-b7f3826a-2a60-42f9-a85f-8ac9a127741a/activity-1",
+            "documentId": "content-b7f3826a-2a60-42f9-a85f-8ac9a127741a",
+            "activityKey": "activity-1",
+            "name": "我院学子在全国大学生信息安全竞赛（创新实践能力赛）暨“长城杯”网数智安全大赛（防护赛）半决赛斩获佳绩-信息科学与技术学院、网络空间安全学院",
+            "kind": "notice",
+            "category": "competition",
+            "startsAt": null,
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": false,
+            "registrationRequirement": "unknown",
+            "registrationState": "unknown",
+            "registrationWindows": [],
+            "otherDeadlines": [],
+            "registrationUrl": null,
+            "evidence": [],
+            "mapPlace": null
+          },
+          {
+            "eventId": "wx-a5efbd1c6a392c00a674e8d8f48d32ee6d729820/activity-1",
+            "documentId": "wx-a5efbd1c6a392c00a674e8d8f48d32ee6d729820",
+            "activityKey": "activity-1",
+            "name": "喜讯！我校2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛获奖",
+            "kind": "notice",
+            "category": "competition",
+            "startsAt": null,
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": false,
+            "registrationRequirement": "unknown",
+            "registrationState": "unknown",
+            "registrationWindows": [],
+            "otherDeadlines": [],
+            "registrationUrl": null,
+            "evidence": [],
+            "mapPlace": null
+          },
+          {
+            "eventId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6/activity-1",
+            "documentId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6",
+            "activityKey": "activity-1",
+            "name": "第二届多语种游戏翻译本地化与国际化大赛报名通知-广东外语外贸大学高级翻译学院",
+            "kind": "event",
+            "category": "competition",
+            "startsAt": {
+              "raw": "8月3日",
+              "date": "2026-08-03",
+              "at": null,
+              "timezone": "Asia/Shanghai",
+              "precision": "date",
+              "resolution": "day",
+              "inferred": true,
+              "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+              "evidence": "8月3日"
+            },
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": true,
+            "registrationRequirement": "required",
+            "registrationState": "unknown",
+            "registrationWindows": [
+              {
+                "roundLabel": null,
+                "start": {
+                  "raw": "2026年6月11日",
+                  "date": "2026-06-11",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": false,
+                  "inferenceBasis": null,
+                  "evidence": "2026年6月11日"
+                },
+                "end": {
+                  "raw": "7月31日",
+                  "date": "2026-07-31",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": true,
+                  "inferenceBasis": "同一区间起始年份，跨月/跨年顺序",
+                  "evidence": "7月31日"
+                },
+                "deadlineSemantics": "unspecified",
+                "capacityLimited": false,
+                "state": "closed",
+                "evidence": [
+                  "(一) 报名时间：\n2026年6月11日至7月31日"
+                ]
+              },
+              {
+                "roundLabel": null,
+                "start": null,
+                "end": null,
+                "deadlineSemantics": "unspecified",
+                "capacityLimited": false,
+                "state": "unknown",
+                "evidence": [
+                  "团队及优惠报名：10人以上组团报名、首届游戏翻译本地化与国际化大赛选手报名、大赛主办/承办/协办/支持单位人员报名"
+                ]
+              },
+              {
+                "roundLabel": null,
+                "start": null,
+                "end": null,
+                "deadlineSemantics": "unspecified",
+                "capacityLimited": false,
+                "state": "unknown",
+                "evidence": [
+                  "请考虑清楚后再报名缴费。\n(三) 报名方式：\n进入YiCAT平台（https://www.yicat.vip/）"
+                ]
+              }
+            ],
+            "otherDeadlines": [
+              {
+                "role": "results",
+                "time": {
+                  "raw": "8月21日",
+                  "date": "2026-08-21",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": true,
+                  "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                  "evidence": "8月21日"
+                }
+              },
+              {
+                "role": "results",
+                "time": {
+                  "raw": "8月30日",
+                  "date": "2026-08-30",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": true,
+                  "inferenceBasis": "同一区间起始年份，跨月/跨年顺序",
+                  "evidence": "8月30日"
+                }
+              },
+              {
+                "role": "results",
+                "time": {
+                  "raw": "9月21日",
+                  "date": "2026-09-21",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": true,
+                  "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                  "evidence": "9月21日"
+                }
+              }
+            ],
+            "registrationUrl": "https://www.yicat.vip/yicat/public-exam?groupId=900015930831&examId=98004ad43e694cfdb2f7bdee3bb92866",
+            "evidence": [
+              "(一) 报名时间：\n2026年6月11日至7月31日",
+              "团队及优惠报名：10人以上组团报名、首届游戏翻译本地化与国际化大赛选手报名、大赛主办/承办/协办/支持单位人员报名",
+              "请考虑清楚后再报名缴费。\n(三) 报名方式：\n进入YiCAT平台（https://www.yicat.vip/）"
+            ],
+            "mapPlace": null
+          }
+        ],
+        "knowledge": [
+          {
+            "documentId": "content-b7f3826a-2a60-42f9-a85f-8ac9a127741a",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": []
+          },
+          {
+            "documentId": "wx-a5efbd1c6a392c00a674e8d8f48d32ee6d729820",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": []
+          },
+          {
+            "documentId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": [
+              "登录YiCAT个人账号后，点击左侧导航栏【考试中心-考试广场】，找到本次大赛，点击右上角【考试详情-报名考试】，填写报名信息、缴纳报名费，完成报名。",
+              "第一步：支付宝扫码或银行转账。缴费时请备注优惠类型和您的个人与单位信息。如为首届参赛选手或者主办/承办/协办/支持单位人员，个人自行缴费即可（需缴纳48元），缴费时备注格式为“姓名-个人优惠-XX单位”。如为10人以上组团报名，需由一人作为负责人，代为缴纳团内所有人费用（例如，若为12人团报，则需一次性缴纳576元），缴费时备注负责人的信息即可，格式为“姓名-团报优惠-XX单位”。",
+              "第二步：填写表单。缴费完成后，保存支付成功截图（带有支付时间、付款金额、付款对象信息），微信扫描以下在线表单二维码链接，填写报名信息，上传支付成功截图，填写个人基本信息、联系方式、发票信息等。团队报名由负责人代为填写全部成员信息。只有填写报名信息并提交，才算最终完成报名。"
+            ]
+          }
+        ]
+      },
+      "requestId": "472ea227-d47f-4b31-b126-a5ef32d1d7a3"
+    }
+  },
+  {
+    "query": {
+      "purpose": "events",
+      "query": "讲座",
+      "after": "2026-10-01",
+      "before": "2026-12-31"
+    },
+    "status": 200,
+    "latencyMs": 842,
+    "result": {
+      "ok": true,
+      "data": {
+        "hits": [
+          {
+            "documentId": "wx-b05e377e2a5729862202f267d4e2874d1b18157f",
+            "chunkId": "wx-b05e377e2a5729862202f267d4e2874d1b18157f:fts:ec26017e39c1cfd9:0",
+            "title": "【职业发展力讲坛】考研备考指导",
+            "sourceId": "GDUFS-SRC-0114",
+            "sourceName": "广外就业",
+            "originalUrl": "https://mp.weixin.qq.com/s/UiGNP5SPoDKDfRrI2erp7Q",
+            "publishedAt": "2026-10-13T12:02:32.000Z",
+            "contentSnippet": "职业发展力讲坛\n考研备考指导\n主讲内容\n01\n考研最新竞争形式与发展趋势解析\n02\n考研完整备考流程与核心环节梳理\n03\n考研各科复习规划与阶段节点指导\n讲座时间\n10月15日（周四）下午15：00\n讲座地点\n白云山校区第二教学楼312\n备注\n为帮助大家更高效的备考，了解备考需求。\n请扫码下方二维码进行讲座资料预约！\n编辑 | 姜 丽\n初审 | 李 鑫 曹婷婷\n复审 | 苗 磊\n终审 | 徐昶斌",
+            "startOffset": 0,
+            "endOffset": 199,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 23.43,
+            "rankingReasons": [
+              "标题词组匹配 1",
+              "片段词组匹配 2",
+              "正文用途特征加权"
+            ],
+            "classificationState": "unknown",
+            "radarCategory": null,
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 3,
+            "inputHash": "96898cf523fa2c52b096cd3d327dc7a3a7dbc8fc5dc55d0e29eca8aaa6879ef3",
+            "documentVersion": 3,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          },
+          {
+            "documentId": "wx-9977522b17e80f273cf113d3d3265bec981842ee",
+            "chunkId": "wx-9977522b17e80f273cf113d3d3265bec981842ee:fts:9422765664577259:2",
+            "title": "预热报名 | 创客讲坛第47讲 探寻AI融媒赋能岭南文旅全球传播之路",
+            "sourceId": "GDUFS-SRC-0112",
+            "sourceName": "广外创新创业学院",
+            "originalUrl": "https://mp.weixin.qq.com/s/cPEFMeczT683QwO2AXhkfQ",
+            "publishedAt": "2026-10-23T04:01:15.000Z",
+            "contentSnippet": "E带驿路”与埃及艾因夏姆斯大学合作\n21世纪经济报道\n专题报道，项目联合创始人郑安琪受邀参加“中国潮经济”项目\n中国日报网、南方网等\n受邀参加第十届中国文化节\n搜狐网、南方人才网等\n参与 2019 年毕业生就业供需见面会\n注队\n意\n事\n项\n本次创客讲坛的参与观众可获得\n2个劳动学时\n请有意参加的同学进入“劳动学时”小程序，点击“日常性劳动”并进入创客讲坛栏口报名。\n注：本次活动在大学城校区举行，请注意防止误报。\n图文 | 创新创业学院\n排版 | 陈雯钰、张靖涵\n初审 | 张斐然\n复审 | 陈 欣\n终审 | 刘方龙",
+            "startOffset": 1569,
+            "endOffset": 1828,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 17.3,
+            "rankingReasons": [
+              "标题词组匹配 1",
+              "片段词组匹配 1",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "lecture",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "d6bc44273ca3934674373932aa456707c783352d5bf06d0ebfdeb4170d5bb78f",
+            "documentVersion": 1,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          },
+          {
+            "documentId": "wx-ea08ff4b4d6a7613b154fbaa9d3bed48f917b139",
+            "chunkId": "wx-ea08ff4b4d6a7613b154fbaa9d3bed48f917b139:fts:a15021a4304fe071:2",
+            "title": "2026年广东省研究生学术论坛——区域国别视域下的多边治理创新研究分论坛征稿启事（一号通知）",
+            "sourceId": "GDUFS-SRC-0133",
+            "sourceName": "广外区域国别学院",
+            "originalUrl": "https://mp.weixin.qq.com/s/sjF7avwdJAXbxXJbS-2R0Q",
+            "publishedAt": "2026-10-01T00:59:20.000Z",
+            "contentSnippet": "奖项设置\n专家组成评审委员会，根据评审结果，设一等奖，二等奖，三等奖，并颁发获奖证书与奖金，论坛亦将邀请相关的专业期刊编辑与会，获奖论文将优先推荐至国内优秀期刊发表。\n七\n参会费用\n本次论坛不收取任何费用，主办方将为入围并参加论坛的研究生提供食宿（广州市内地区不报销住宿费用），来回交通费自理。\n八\n日程安排\n论文题目及摘要提交截止时间：\n2026年10月16日24时\n论文提交截止时间：\n2026年11月13日24时\n论文通知入选时间：\n2026年11月18日前后\n论坛举办时间：\n2026年12月4日（周五）报到\n12月5日（周六）学术论坛\n12月6日（周日）工作坊及离会\n论坛举办地点：\n广州市白云大道北2号广东外语外贸大学（白云山校区）\n九\n联系方式\n如有任何问题，请通过邮件联系大会筹委会的工作人员。\n投稿及联系邮箱：\ngdyjsxslt2026@163.com\n附件1 2026年广东省研究生学术论坛区域国别分论坛参会回执.xlsx\n附件2 《战略决策研究》注释规范.pdf\n编辑：梁咏楠\n初审：谭珺如\n复审：徐恒祎\n终审：茅银辉、周 鹏",
+            "startOffset": 1524,
+            "endOffset": 1999,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 12.54,
+            "rankingReasons": [
+              "标题词组匹配 1",
+              "片段词组匹配 1",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "lecture",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "64120a32e92580d8361259880d7ce613a7b8558936856dc8cc4fb228f51e0132",
+            "documentVersion": 1,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          }
+        ],
+        "metrics": {
+          "rowsRead": 2055,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 291,
+          "candidateChunks": 15,
+          "usageAvailable": true
+        },
+        "indexVersion": "campus-fts-v1",
+        "method": "fts5_keywords_and_domain_expansion",
+        "warnings": [],
+        "purpose": "events",
+        "query": "讲座",
+        "now": "2026-10-25T18:43:27.562Z",
+        "timeZone": "Asia/Shanghai",
+        "activities": [
+          {
+            "eventId": "wx-b05e377e2a5729862202f267d4e2874d1b18157f/activity-1",
+            "documentId": "wx-b05e377e2a5729862202f267d4e2874d1b18157f",
+            "activityKey": "activity-1",
+            "name": "【职业发展力讲坛】考研备考指导",
+            "kind": "event",
+            "category": null,
+            "startsAt": {
+              "raw": "10月15日（周四）下午15：00",
+              "date": "2026-10-15",
+              "at": "2026-10-15T15:00:00+08:00",
+              "timezone": "Asia/Shanghai",
+              "precision": "exact_time",
+              "resolution": "minute",
+              "inferred": true,
+              "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+              "evidence": "10月15日（周四）下午15：00"
+            },
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": true,
+            "registrationRequirement": "unknown",
+            "registrationState": "unknown",
+            "registrationWindows": [],
+            "otherDeadlines": [],
+            "registrationUrl": null,
+            "evidence": [
+              "讲座时间\n10月15日（周四）下午15：00"
+            ],
+            "mapPlace": null
+          },
+          {
+            "eventId": "wx-9977522b17e80f273cf113d3d3265bec981842ee/activity-1",
+            "documentId": "wx-9977522b17e80f273cf113d3d3265bec981842ee",
+            "activityKey": "activity-1",
+            "name": "预热报名 | 创客讲坛第47讲 探寻AI融媒赋能岭南文旅全球传播之路",
+            "kind": "event",
+            "category": "lecture",
+            "startsAt": {
+              "raw": "2026年10月24日",
+              "date": "2026-10-24",
+              "at": null,
+              "timezone": "Asia/Shanghai",
+              "precision": "date",
+              "resolution": "day",
+              "inferred": false,
+              "inferenceBasis": null,
+              "evidence": "2026年10月24日"
+            },
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": true,
+            "registrationRequirement": "required",
+            "registrationState": "unknown",
+            "registrationWindows": [
+              {
+                "roundLabel": null,
+                "start": null,
+                "end": null,
+                "deadlineSemantics": "unspecified",
+                "capacityLimited": false,
+                "state": "unknown",
+                "evidence": []
+              }
+            ],
+            "otherDeadlines": [],
+            "registrationUrl": null,
+            "evidence": [
+              "活动时间\n2026年10月24日星期六9：30-12：00"
+            ],
+            "mapPlace": null
+          },
+          {
+            "eventId": "wx-ea08ff4b4d6a7613b154fbaa9d3bed48f917b139/activity-1",
+            "documentId": "wx-ea08ff4b4d6a7613b154fbaa9d3bed48f917b139",
+            "activityKey": "activity-1",
+            "name": "2026年广东省研究生学术论坛——区域国别视域下的多边治理创新研究分论坛征稿启事（一号通知）",
+            "kind": "event",
+            "category": "lecture",
+            "startsAt": {
+              "raw": "2026年12月4日（周五）",
+              "date": "2026-12-04",
+              "at": null,
+              "timezone": "Asia/Shanghai",
+              "precision": "date",
+              "resolution": "day",
+              "inferred": false,
+              "inferenceBasis": null,
+              "evidence": "2026年12月4日（周五）"
+            },
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": false,
+            "registrationRequirement": "required",
+            "registrationState": "unknown",
+            "registrationWindows": [
+              {
+                "roundLabel": null,
+                "start": null,
+                "end": null,
+                "deadlineSemantics": "unspecified",
+                "capacityLimited": false,
+                "state": "unknown",
+                "evidence": [
+                  "附件1 2026年广东省研究生学术论坛区域国别分论坛参会回执.xlsx"
+                ]
+              }
+            ],
+            "otherDeadlines": [
+              {
+                "role": "work_submission",
+                "time": {
+                  "raw": "2026年11月13日",
+                  "date": "2026-11-13",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": false,
+                  "inferenceBasis": null,
+                  "evidence": "2026年11月13日"
+                }
+              }
+            ],
+            "registrationUrl": null,
+            "evidence": [
+              "论坛举办时间：\n2026年12月4日（周五）报到",
+              "附件1 2026年广东省研究生学术论坛区域国别分论坛参会回执.xlsx"
+            ],
+            "mapPlace": null
+          }
+        ],
+        "knowledge": [
+          {
+            "documentId": "wx-b05e377e2a5729862202f267d4e2874d1b18157f",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": []
+          },
+          {
+            "documentId": "wx-9977522b17e80f273cf113d3d3265bec981842ee",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": [
+              "请有意参加的同学进入“劳动学时”小程序，点击“日常性劳动”并进入创客讲坛栏口报名。"
+            ]
+          },
+          {
+            "documentId": "wx-ea08ff4b4d6a7613b154fbaa9d3bed48f917b139",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": []
+          }
+        ]
+      },
+      "requestId": "6e495e1f-83e9-4c55-97b5-cf439bb18b80"
+    }
+  },
+  {
+    "query": {
+      "purpose": "events",
+      "query": "竞赛",
+      "registrationState": "open"
+    },
+    "status": 200,
+    "latencyMs": 622,
+    "result": {
+      "ok": true,
+      "data": {
+        "hits": [
+          {
+            "documentId": "wx-9f8f302c6a900e20aead6f8e7d9dad93578dd9b3",
+            "chunkId": "wx-9f8f302c6a900e20aead6f8e7d9dad93578dd9b3:fts:fcf9af322d6d57fd:0",
+            "title": "校园公益摄影大赛丨“拾校园盛景，赴青春之约”",
+            "sourceId": "GDUFS-SRC-0193",
+            "sourceName": "广外西语团委学生会",
+            "originalUrl": "https://mp.weixin.qq.com/s/oR9gIa3X5pZ3-VRc6V3YdA",
+            "publishedAt": "2026-10-20T04:00:00.000Z",
+            "contentSnippet": "镜揽校景·光寄童心\n校园公益摄影大赛\n一个个按下快门的瞬间\n可以跨越山川，连接心灵\n让我们携手，用镜头定格校园盛景\n将照片与手写祝愿送到乡村孩子手中\n每一幅校园光影\n都是一份温柔的力量\n托举乡村孩童的小小梦想奔赴远方\n加入我们的公益摄影活动\n让温暖随镜头传递\n01.参赛形式\n以 “摄影作品＋寄语” 的形式自主报名参赛表现手法和题材不限。\n文字内容：作品介绍可描绘校园风光、记录院运会热血瞬间，也可写下送给乡村孩童的暖心寄语。\n本次征集设置两大赛道：\n01\n日常之遇\n记录学院学习生活里不期而遇的温暖与美好。倡导随手实拍，留住那些不经意打动你的真实瞬间。\n02\n赛场之跃\n聚焦10月24日院运会现场。不止冲刺与夺冠，还有汗水、呐喊、并肩陪伴、咬牙坚持……\n赛场上每一份鲜活的力量，都值得被镜头收藏。\n02.活动规则\n将作品上传至指定平台进行爱心值积累，参与者可宣传自己的作品，邀请他人献爱心，每个微信号一天可献一次爱心。\n每满40有效爱心值：1个劳动时；每满75有效爱心值：2个劳动时；每满105有效爱心值：3个劳动时。\n本次活动将依据爱心值进行评选排名，表现优异者将为其发放相应奖品及证书。\n须知\n线上积攒爱心值决定活动名次\n依据爱心指数量排名发放奖品及证书\n活动中虚拟礼物为平台自带\n与主办方无关\n03.报名详情\n报名条件\n广东外语外贸大学全体在校生\n皆可参与本次活动\n活动时间\n报名时间：10月20日~10月27日\n献爱心时间：10月21日~10月27日\n活动报名方式\n微信扫码加入活动群\n请参与活动的同学\n务必加入活动qq群1124854149\n04.活动奖品\n特等奖（1名）：大疆Pocket3+国家级公益证书（满足28888爱心值）+以个人名义捐赠30份爱心物资\n一等奖（1名）：联想平板电脑+省级公益证书（满足5888爱心值）+以个人名义捐赠20",
+            "startOffset": 0,
+            "endOffset": 780,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 10.94,
+            "rankingReasons": [
+              "标题词组匹配 1",
+              "片段词组匹配 1",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "competition",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "b4084cf1d56e1545305fbf58ac2864c547e376299010aae8328481149728cd84",
+            "documentVersion": 1,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          }
+        ],
+        "metrics": {
+          "rowsRead": 1166,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 261,
+          "candidateChunks": 2,
+          "usageAvailable": true
+        },
+        "indexVersion": "campus-fts-v1",
+        "method": "fts5_keywords_and_domain_expansion",
+        "warnings": [],
+        "purpose": "events",
+        "query": "竞赛",
+        "now": "2026-10-25T18:43:28.377Z",
+        "timeZone": "Asia/Shanghai",
+        "activities": [
+          {
+            "eventId": "wx-9f8f302c6a900e20aead6f8e7d9dad93578dd9b3/activity-1",
+            "documentId": "wx-9f8f302c6a900e20aead6f8e7d9dad93578dd9b3",
+            "activityKey": "activity-1",
+            "name": "校园公益摄影大赛丨“拾校园盛景，赴青春之约”",
+            "kind": "event",
+            "category": "competition",
+            "startsAt": null,
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": false,
+            "registrationRequirement": "required",
+            "registrationState": "open",
+            "registrationWindows": [
+              {
+                "roundLabel": null,
+                "start": {
+                  "raw": "10月20日",
+                  "date": "2026-10-20",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": true,
+                  "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                  "evidence": "10月20日"
+                },
+                "end": {
+                  "raw": "10月27日",
+                  "date": "2026-10-27",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": true,
+                  "inferenceBasis": "同一区间起始年份，跨月/跨年顺序",
+                  "evidence": "10月27日"
+                },
+                "deadlineSemantics": "unspecified",
+                "capacityLimited": false,
+                "state": "open",
+                "evidence": [
+                  "活动时间\n报名时间：10月20日~10月27日"
+                ]
+              },
+              {
+                "roundLabel": null,
+                "start": null,
+                "end": null,
+                "deadlineSemantics": "unspecified",
+                "capacityLimited": false,
+                "state": "unknown",
+                "evidence": [
+                  "活动报名方式\n微信扫码加入活动群\n请参与活动的同学\n务必加入活动qq群1124854149"
+                ]
+              }
+            ],
+            "otherDeadlines": [],
+            "registrationUrl": null,
+            "evidence": [
+              "活动时间\n报名时间：10月20日~10月27日",
+              "活动报名方式\n微信扫码加入活动群\n请参与活动的同学\n务必加入活动qq群1124854149"
+            ],
+            "mapPlace": null
+          }
+        ],
+        "knowledge": [
+          {
+            "documentId": "wx-9f8f302c6a900e20aead6f8e7d9dad93578dd9b3",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": []
+          }
+        ]
+      },
+      "requestId": "e3ff1a83-c412-468a-90a0-24950215f5f4"
+    }
+  },
+  {
+    "query": {
+      "purpose": "knowledge",
+      "query": "奖学金申请条件",
+      "sourceTypes": "official_web"
+    },
+    "status": 200,
+    "latencyMs": 700,
+    "result": {
+      "ok": true,
+      "data": {
+        "hits": [
+          {
+            "documentId": "content-830894fd-2a5d-4bf3-9720-6e1886ef0ec0",
+            "chunkId": "content-830894fd-2a5d-4bf3-9720-6e1886ef0ec0:fts:e17388b908c67d75:2",
+            "title": "2026年国际治理创新学院学业奖学金评审通知-国际治理创新学院",
+            "sourceId": "GDUFS-SRC-0052",
+            "sourceName": "国际治理创新学院",
+            "originalUrl": "https://sigi.gdufs.edu.cn/info/1003/6775.htm",
+            "publishedAt": "2026-09-15",
+            "contentSnippet": "研究生不低于5000元/年/人；\n3.三等奖学金标准为硕士研究生不低于3000元/年/人。\n按照“就高不就低”的原则，同一学生每年只能获得1个等级的学业奖学金。\n（二）获奖名额分配\n根据2026年学校确定的具体研究生学业奖学金名额分配方案，结合学院实际情况，国际治理创新学院硕士研究生的奖学金名额分配方案如下：\n年级\n一等奖\n二等奖\n三等奖\n国际事务\n国际商务\n国际事务\n国际商务\n国际事务\n国际商务\n2025级\n1\n3\n3\n9\n5\n13\n2026级\n1\n4\n4\n11\n6\n17\n（注：以上名额按照年级与专业人数比例进行分配）\n四、评审工作要求\n（一）基本要求\n1.学院成立研究生奖助学金评审委员会（以下简称评审委员会），由单位主要负责人担任主任委员，分管研究生教育工作和分管学生工作负责人担任副主任委员，研究生办公室主任、研究生导师代表、研究生辅导员代表、研究生代表担任委员，人数为5至9人的单数。评审委员会负责本单位研究生学业奖学金评定方案的制定、宣传组织、资格审查、初步评审等工作。\n2.研究生学业奖学金充分体现党和国家对研究生的关怀和重视。评审委员会与各级审核人员应准确把握政策，依照申请条件，严格把关，做到公开、公平、公正。\n（二）评审程序及时间\n1.评审程序：\n（1）自评与年级材料审核\n（2）系统填报申请\n（3）学院评审\n（4）学院公示与材料提交\n（5）学校评审及在校园网上公示\n（6）确定结果\n2.时间要求：\n（1）自评与材料提交\n2026年9月15日-9月17日， 参评同学须将所有申请材料电子版提交至年级测评小组指定邮箱（材料提交要求参见附件5）。逾期未申请的，视为放弃评选。同时将相关成果按照成果库填写要求完成线上填写。\n（2）班/年级小组材料审核\n9月17日-9月18日，研究生学业奖学金一、二、三等奖材料审核。年级测评小组将认真负责、",
+            "startOffset": 1558,
+            "endOffset": 2338,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 25.12,
+            "rankingReasons": [
+              "标题词组匹配 1.5",
+              "片段词组匹配 5.5",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "scholarship_opportunity",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "e7cde205eb1514584798e80d133336f5f4648ff08fc5fe09032a4a350546ee57",
+            "documentVersion": 2,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          },
+          {
+            "documentId": "content-822764b5-6c3a-40d0-a298-46152f7f540c",
+            "chunkId": "content-822764b5-6c3a-40d0-a298-46152f7f540c:fts:fd410f0977b8c5f6:0",
+            "title": "【个人申请】研究生院关于2026年研究生出国（境）访学奖学金申请工作的通知-研究生院",
+            "sourceId": "GDUFS-SRC-0081",
+            "sourceName": "研究生院",
+            "originalUrl": "https://gwyjs.gdufs.edu.cn/info/1035/15693.htm",
+            "publishedAt": "2026-05-27",
+            "contentSnippet": "各研究生培养单位：\n根据《广东外语外贸大学研究生出国（境）访学奖学金评选办法》（附件1）的有关规定，现就学校2026年研究生出国（境）奖学金评选工作通知如下：\n一、申请人\n研究生出国（境）奖学金申请人为具有我校学籍的在校研究生。\n二、申请条件\n（一）申请人应按照《广东外语外贸大学研究生短期国（境）外访学和参加国际学术会议资助办法》（附件2）要求，于2025年5月30日至本次申请截止时间（2026年6月3日）成功申请短期国（境）外访学资助项目并完成结项工作。如未申请研究生短期国（境）外访学资助项目或者尚未完成项目结项，则不能申请此次奖学金。\n（二）申请人访学单位应是国（境）外知名大学或科研机构，原则上应为全球位列前300名的国际知名高校或前150名的学科领域，或非通用语种所在国排名前3的大学，具体排名以上海交通大学世界大学学术排名、QS世界大学综合排名、泰晤士高等教育世界大学排名为参考，以奖学金申请当年度最新发布榜单为准，符合其中一项排名要求即可。\n（三）申请人须按学校规定缴清学宿费等应缴费用。\n（四）已通过其他途径获得出国（境）奖学金奖励的研究生不能同时申请本奖学金。\n三、奖励标准\n（一）申请4-6个月出国(境)访学项目者,赴非港澳台地区的奖励人民币10000元，赴港澳台地区的奖励人民币5000元；\n（二）申请7-12个月研究生出国（境）访学项目者，赴非港澳台地区的奖励人民币20000元，赴港澳台地区的奖励人民币10000元。\n四、评选程序\n研究生出国（境）奖学金评审按照“公平、公正、公开”的原则，采取“个人申请、导师推荐、专家评审、择优奖励”的方式进行。\n（一）请申请人于2026年5月27日至6月3日期间登录研究生综合服务平台系统（https://yjsxt.gdufs.edu.cn/gsapp/sys/yjsemaphome/po",
+            "startOffset": 0,
+            "endOffset": 780,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 24.32,
+            "rankingReasons": [
+              "标题词组匹配 1.5",
+              "片段词组匹配 4.5",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "scholarship_opportunity",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "dcf009b701ded11ca6ae6f02732d4f69b2c0334f0c74f775dbc38a5c4657fd4a",
+            "documentVersion": 2,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          },
+          {
+            "documentId": "content-48e16439-07a9-48d6-824d-2f9dd013b95c",
+            "chunkId": "content-48e16439-07a9-48d6-824d-2f9dd013b95c:fts:0842694592ff55f2:1",
+            "title": "【个人申请】研究生院关于国家留基委2026年与部分国外院校合作奖学金申请工作的通知-研究生院",
+            "sourceId": "GDUFS-SRC-0081",
+            "sourceName": "研究生院",
+            "originalUrl": "https://gwyjs.gdufs.edu.cn/info/1035/14105.htm",
+            "publishedAt": "2026-01-15",
+            "contentSnippet": "lobal Affairs\n国际法律研究International Legal Studies\n商业分析与数据科学Business Analytics and Data Science\n二、资助内容\n资助内容为一次往返国际旅费和资助期限内的奖学金。奖学金是指用于资助留学人员在外学习期间的基本学习生活费用，可用于支付生活费、注册费、医疗保险费、书籍资料费、板凳费、签证延长费等。奖学金资助标准及方式按照国家现行有关规定执行。同时按照与外方签署的协议提供学费资助。\n三、申请条件\n1.符合《2026年国家留学基金资助出国留学人员选派指南》（以下简称选派指南）规定的基本条件。\n2.具备扎实的专业基础，较强的学习、工作和交流能力，综合素质良好，学习成绩优异或工作业绩突出，具有较强的发展潜力。\n3.具有到国际组织工作任职的强烈意愿。\n4.申请时年龄不超过28周岁（1997年1月1日以后生）。\n5.同时符合下列条件之一：\n-处于硕士学位课程最后一年；\n-已获得硕士学位。\n6.获得意向院校的录取通知书。\n7.外语水平应符合国家留学基金资助出国留学外语条件及意向院校学位项目的语言要求。\n8.申请时应承诺，如被录取，应在录取院校学位课程期间或毕业一年内赴国际组织工作（含实习）至少6个月。\n四、申请受理\n1. 申请人于2026年3月31日前先行完成意向院校的入学申请并获得入学通知书。\n2. 获得入学通知的人员于2026年4月1-6日登录国家公派留学管理信息平台（https://sa.csc.edu.cn/student）完成网上报名，按照应提交材料及说明准备申请材料并在线提交后，将申请材料纸质版和电子版提交至所在培养单位。\n3. 研究生培养单位在对申请材料进行认真审核、推荐人员名单公示3日后,于4月10日前提交审核通过的纸质版和电子版申请材料、审核意见表可编",
+            "startOffset": 837,
+            "endOffset": 1617,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 23.41,
+            "rankingReasons": [
+              "标题词组匹配 1.5",
+              "片段词组匹配 4.5",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "scholarship_opportunity",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "4cb2795d6d41dd32d2695ae150ca2ad15c477204c69664979c9ffbdc0860a8b7",
+            "documentVersion": 2,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          }
+        ],
+        "metrics": {
+          "rowsRead": 1076,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 435,
+          "candidateChunks": 96,
+          "usageAvailable": true
+        },
+        "indexVersion": "campus-fts-v1",
+        "method": "fts5_keywords_and_domain_expansion",
+        "warnings": [],
+        "purpose": "knowledge",
+        "query": "奖学金申请条件",
+        "now": "2026-10-25T18:43:29.015Z",
+        "timeZone": "Asia/Shanghai",
+        "activities": [
+          {
+            "eventId": "content-830894fd-2a5d-4bf3-9720-6e1886ef0ec0/activity-1",
+            "documentId": "content-830894fd-2a5d-4bf3-9720-6e1886ef0ec0",
+            "activityKey": "activity-1",
+            "name": "2026年国际治理创新学院学业奖学金评审通知-国际治理创新学院",
+            "kind": "notice",
+            "category": "scholarship_opportunity",
+            "startsAt": null,
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": false,
+            "registrationRequirement": "unknown",
+            "registrationState": "unknown",
+            "registrationWindows": [],
+            "otherDeadlines": [],
+            "registrationUrl": null,
+            "evidence": [],
+            "mapPlace": null
+          },
+          {
+            "eventId": "content-822764b5-6c3a-40d0-a298-46152f7f540c/activity-1",
+            "documentId": "content-822764b5-6c3a-40d0-a298-46152f7f540c",
+            "activityKey": "activity-1",
+            "name": "【个人申请】研究生院关于2026年研究生出国（境）访学奖学金申请工作的通知-研究生院",
+            "kind": "opportunity",
+            "category": "scholarship_opportunity",
+            "startsAt": null,
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "registration_closed",
+            "historical": false,
+            "registrationRequirement": "required",
+            "registrationState": "closed",
+            "registrationWindows": [
+              {
+                "roundLabel": null,
+                "start": {
+                  "raw": "2025年5月30日",
+                  "date": "2025-05-30",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": false,
+                  "inferenceBasis": null,
+                  "evidence": "2025年5月30日"
+                },
+                "end": {
+                  "raw": "2026年6月3日",
+                  "date": "2026-06-03",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": false,
+                  "inferenceBasis": null,
+                  "evidence": "2026年6月3日"
+                },
+                "deadlineSemantics": "inclusive",
+                "capacityLimited": false,
+                "state": "closed",
+                "evidence": [
+                  "于2025年5月30日至本次申请截止时间（2026年6月3日）成功申请短期国（境）外访学资助项目并完成结项工作"
+                ]
+              }
+            ],
+            "otherDeadlines": [],
+            "registrationUrl": null,
+            "evidence": [
+              "于2025年5月30日至本次申请截止时间（2026年6月3日）成功申请短期国（境）外访学资助项目并完成结项工作"
+            ],
+            "mapPlace": null
+          },
+          {
+            "eventId": "content-48e16439-07a9-48d6-824d-2f9dd013b95c/activity-1",
+            "documentId": "content-48e16439-07a9-48d6-824d-2f9dd013b95c",
+            "activityKey": "activity-1",
+            "name": "【个人申请】研究生院关于国家留基委2026年与部分国外院校合作奖学金申请工作的通知-研究生院",
+            "kind": "notice",
+            "category": "scholarship_opportunity",
+            "startsAt": null,
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": false,
+            "registrationRequirement": "unknown",
+            "registrationState": "unknown",
+            "registrationWindows": [],
+            "otherDeadlines": [
+              {
+                "role": "material_submission",
+                "time": {
+                  "raw": "4月10日",
+                  "date": "2026-04-10",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": true,
+                  "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                  "evidence": "4月10日"
+                }
+              }
+            ],
+            "registrationUrl": null,
+            "evidence": [],
+            "mapPlace": null
+          }
+        ],
+        "knowledge": [
+          {
+            "documentId": "content-830894fd-2a5d-4bf3-9720-6e1886ef0ec0",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [
+              "依照申请条件"
+            ],
+            "materials": [],
+            "steps": [
+              "2026年9月15日-9月17日， 参评同学须将所有申请材料电子版提交至年级测评小组指定邮箱（材料提交要求参见附件5）。逾期未申请的，视为放弃评选。同时将相关成果按照成果库填写要求完成线上填写。",
+              "9月17日-9月18日，研究生学业奖学金一、二、三等奖材料审核。年级测评小组将认真负责、客观公正地审核每一位同学各项测评的分数，发现错误者，年级测评小组有权按照有关规定予以更正。进入本阶段后，参评学生不得对已提交的材料进行增补。审核完成后向班级同学公布审核结果。",
+              "9月18日-9月19日，学生在学在广外-奖学金模块填写申请，相关填写要求参考附件2《2026年研究生学业奖学金申请表》，向所在培养单位提出申请，其中申请表中的论文、专利信息、著作、科研成果、学科竞赛等需从成果库选择。未录入成果库的成果无法选用，不予计分。"
+            ]
+          },
+          {
+            "documentId": "content-822764b5-6c3a-40d0-a298-46152f7f540c",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [
+              "二、申请条件"
+            ],
+            "materials": [],
+            "steps": [
+              "1.在线填写“出国（境）访学奖学金”申请表，选择“出国（境）访学奖学金”栏目。本人填写过程中，可选择“暂存”按钮。填写完整确认无误后，方可提交，一旦提交，不再修改。请打印系统生成的最终版项目申请表（一式三份），签名确认后提交所在研究生培养单位汇总。",
+              "（二）各研究生培养单位严格对照评选办法，于2025年6月10日前，完成系统在线审核、拟推荐名单公示3个工作日，并将研究生提交的纸质申请表（一式三份）及系统生成的汇总表签字盖章后提交至研究生院国际项目办，逾期不予受理。"
+            ]
+          },
+          {
+            "documentId": "content-48e16439-07a9-48d6-824d-2f9dd013b95c",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [
+              "三、申请条件"
+            ],
+            "materials": [],
+            "steps": [
+              "2. 获得入学通知的人员于2026年4月1-6日登录国家公派留学管理信息平台（https://sa.csc.edu.cn/student）完成网上报名，按照应提交材料及说明准备申请材料并在线提交后，将申请材料纸质版和电子版提交至所在培养单位。"
+            ]
+          }
+        ]
+      },
+      "requestId": "88b15507-3ff2-4228-8ef2-a8dce17fa298"
+    }
+  }
+]

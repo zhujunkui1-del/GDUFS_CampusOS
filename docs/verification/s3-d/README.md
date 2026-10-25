@@ -30,19 +30,40 @@ Preview 数据库 `campusos-preview` 已应用 0049，FTS5 虚拟表和查询已
 
 ## D2、D3：双 Skills 与真实模型
 
-已有真实浏览器成功记录见 [第二次尝试](browser/attempt-2.json) 前四轮：借阅知识、讲座/竞赛、奖学金条件+当前机会、材料追问。分别实际调用 `search_campus_knowledge`、`search_campus_events`，混合与追问都调用了两类，最终有可点击来源卡片。使用现有 DeepSeek 默认服务；没有新建 Agent、向量库、付费服务或购买套餐。
+最终 [Edge 真实会话](browser/live.json) 五轮全部通过，浏览器 149.0.4022.80、1440×900，Playwright 1项通过/51.8秒，页面异常0。前四轮依次为借阅知识、讲座/竞赛、奖学金条件+当前机会、材料追问；分别实际调用 `search_campus_knowledge`、`search_campus_events`，混合与追问都调用了两类，最终有可点击来源卡片。使用现有 DeepSeek 默认服务；没有新建 Agent、向量库、付费服务或购买套餐。
+
+最终五轮模型请求15次、实际工具调用15次，记录总 token 87,795、usageComplete 全部为 true；单轮浏览器耗时5,627—13,489ms。这里记录真实 usage，不将现有代码按2026-10-15旧价表给出的范围估计当成当前账单。首次生成失败的250,000 chargedTokens是原额度系统的保守预留，不是上游真实账单用量。
+
+补充真实只读查询见 [additional-searches.json](additional-searches.json)：《2027届毕业生电子就业协议书签订操作指南》及毕业去向登记指南可检索；unknown的《阅启新学期》正文可作为知识参考，主栏目仍为校园资讯；招聘信息可检索。就业政策+招聘的组合自然语言问答未单独跑模型验收，不能把奖学金场景代替所有跨栏目问题。
+
+两个Skills接口及公开查询契约见 [S3_D_RETRIEVAL_CONTRACT.md](../../S3_D_RETRIEVAL_CONTRACT.md)。原13类、专题tags、阅读HTML、校园资讯名称及“报”标记保持；本轮没有新增/改类文章，知识29、雷达944、校园资讯807。
 
 第一次雷达生成超出既有单次输出上限，完整失败记录在 browser/attempt-1.json。随后限制答复长度、精简模型上下文并提供固定来源编号；未增大既有模型额度。各次记录保存真实模型 tokens/工具/延迟，不将失败计作通过。
 
 ## D4：地图联动状态
 
-此节在真实浏览器最终回执完成后补充。已使用原文《金秋阅新｜图书馆2026秋季中文新书展活动》及真实图书馆 ID；截至本节写入，已实际执行到 search_campus_events → search_places → plan_route → control_map，但地图回执仍在排查，不能记为通过。
+真实地图回执与截图在 D4 独立交付记录中追加。D2/D3代码已经接入原地图Registry与文章建筑匹配，不把接口注册本身当作地图执行验收。
 
 ## CPU 与容量边界
 
-[真实 Invocation Trace](retrieval-invocations.json) 中两个 GET `/api/content/search` 样本 HTTP200、异常0：CPU 分别 **377ms、43ms**，Wall **789ms、468ms**。这不是浏览器耗时或 SQL 时间；[Cloudflare 字段说明](https://developers.cloudflare.com/logs/logpush/logpush-job/datasets/account/workers_trace_events/)将 CPUTimeMs 定义为毫秒。原 Wrangler tail 在 Windows 退出；改用相同现有 Trace WebSocket 后成功取样，尾随会话已删除，未保存原始日志/请求头/密钥。
+[最终真实 Invocation Trace](retrieval-invocations.json) 共10个HTTP200样本、异常0：5个检索GET的CPU **7—222ms**、Wall **383—532ms**；5个真实聊天POST的CPU **53—115ms**、Wall **5,403—13,279ms**。[初始两条](retrieval-invocations-initial.json)还记录过CPU377ms、43ms，不能挑低值冒充稳定性能。这不是浏览器耗时或 SQL 时间；[Cloudflare 字段说明](https://developers.cloudflare.com/logs/logpush/logpush-job/datasets/account/workers_trace_events/)将 CPUTimeMs 定义为毫秒。原 Wrangler tail 在 Windows 退出；改用相同现有 Trace WebSocket 后成功取样，尾随会话已删除，未保存原始日志/请求头/密钥。
 
 样本少且包含既有 OpenNext 运行开销，不据此承诺免费套餐容量或长期稳定性。聊天 metrics 的 database.rowUsageComplete=false 表示部分原 first() 调用没有提供用量 metadata，不能将已测行数冒充整个聊天请求完整账单；每个检索 Skill 的 rows_read/rows_written 则为完整的该次查询 metadata。
+
+最终 [只读接口样本](final-api.json)：借阅346读、竞赛995读、带实际活动日期的讲座2,055读、明确开放报名筛选1,166读、官网奖学金条件1,076读，均0写。明确开放的实例为《校园公益摄影大赛》：原文报名10月20日—27日，保留日期精度、年份推断标记和依据；未补23:59。`报`标记与这一open判断是独立的。
+
+## 测试与工程状态
+
+- 类型检查、修改文件ESLint、Next/OpenNext完整构建和Preview部署通过。
+- 本轮三文件针对性17项通过；全仓453项，439通过、14失败。失败名称与上一轮保存的独立67bc9d4基线报告逐项相同，新增失败0，见 [unit-summary.json](unit-summary.json)。没有将全仓描述为全绿。
+- 两个测试夹具适配：多类片段共用knowledge_chunks后，原解析器证据计数按index_version IS NULL统计并另验新增派生段；午夜后的门禁测试按Asia/Shanghai取当天，避免UTC日期导致假失败。没有为过旧用例恢复生产的旧删除/核验流程。
+- 初始数据、迁移、边界及D1提交845345d均保留。Preview当前代码不修改Production、模型套餐、采集入口或全量分类。
+
+## 已知限制与后续
+
+关键词排序仍会夹杂相关但非最佳用途的文章（如就业协议查询中招聘文可能排在指南之前）；未宣称排序准确率达标。正文只返回有限片段，附件/图片没有可靠文本时保持未知。没有实时名额来源，capacity_unknown不能保证可报名。事件去重只用精确时间及地点，不冒险合并仅有日期的不同场次。
+
+未执行全套26个场景的每一种公网组合：下架、版本、仅元数据、来源许可和精确正文去重使用隔离SQLite验证，未为测试下架真实文章。下一步应补独立相关性样本、更多政策版本冲突及就业组合问答、真实手机验收和持续资源曲线。当前交付以已记录的真实代表性链路为准。
 
 ## 复现
 

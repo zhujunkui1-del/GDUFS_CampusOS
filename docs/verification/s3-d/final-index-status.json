@@ -1,0 +1,65 @@
+{
+  "mode": "status",
+  "at": "2026-10-25T18:49:24.231Z",
+  "counts": [
+    {
+      "status": "ready",
+      "index_version": "campus-fts-v1",
+      "n": 1780,
+      "chunks": 3776
+    }
+  ],
+  "public": [
+    {
+      "primary_destination": "knowledge",
+      "channel_type": "official_web",
+      "n": 3
+    },
+    {
+      "primary_destination": "knowledge",
+      "channel_type": "wechat_service",
+      "n": 9
+    },
+    {
+      "primary_destination": "knowledge",
+      "channel_type": "wechat_subscription",
+      "n": 17
+    },
+    {
+      "primary_destination": "radar",
+      "channel_type": "official_web",
+      "n": 570
+    },
+    {
+      "primary_destination": "radar",
+      "channel_type": "wechat_service",
+      "n": 24
+    },
+    {
+      "primary_destination": "radar",
+      "channel_type": "wechat_subscription",
+      "n": 350
+    },
+    {
+      "primary_destination": "unknown",
+      "channel_type": "official_web",
+      "n": 224
+    },
+    {
+      "primary_destination": "unknown",
+      "channel_type": "wechat_service",
+      "n": 27
+    },
+    {
+      "primary_destination": "unknown",
+      "channel_type": "wechat_subscription",
+      "n": 556
+    }
+  ],
+  "cost": {
+    "rowsRead": 34862,
+    "rowsWritten": 0,
+    "queries": 2,
+    "sqlDurationMs": 321.2547
+  }
+}

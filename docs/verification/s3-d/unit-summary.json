@@ -1,0 +1,86 @@
+{
+  "at": "2026-10-25T18:41:51.125Z",
+  "total": 453,
+  "passed": 439,
+  "failed": 14,
+  "pending": 0,
+  "files": 113,
+  "failures": [
+    {
+      "file": "article-placement.test.ts",
+      "test": "exclusive article placement and captured metadata publication publishes captured metadata without an extra source auto-policy and keeps unknown original evidence private",
+      "message": "AssertionError: expected 'draft' to be 'published' // Object.is equality\n    at D:/tlydcg/Codex_work/广外AI应用大赛/tests/unit/article-placement.test.ts:71:35\n    at async file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    },
+    {
+      "file": "article-placement.test.ts",
+      "test": "exclusive article placement and captured metadata publication moves published articles atomically with history, preserves original facts, and never clears withdrawal/rejection holds",
+      "message": "AssertionError: expected { publicationState: 'pending', …(34) } to match object { title: '办理服务通知', …(6) }\n(31 matching properties omitted from actual)\n    at Proxy.<anonymous> (file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:2050:10)\n    at Proxy.<anonymous> (file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:1944:14)\n    at "
+    },
+    {
+      "file": "article-placement.test.ts",
+      "test": "exclusive article placement and captured metadata publication returns real category facets under search independently of the selected category",
+      "message": "AssertionError: expected [] to have a length of 1 but got +0\n    at Proxy.<anonymous> (file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:2147:20)\n    at Proxy.<anonymous> (file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:1944:14)\n    at Proxy.methodWrapper (file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E"
+    },
+    {
+      "file": "console-store.test.ts",
+      "test": "Console public content governance withdraws through one authoritative gate and invalidation queue, preserving other sources",
+      "message": "AssertionError: expected [] to have a length of 4 but got +0\n    at Proxy.<anonymous> (file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:2147:20)\n    at Proxy.<anonymous> (file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:1944:14)\n    at Proxy.methodWrapper (file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E"
+    },
+    {
+      "file": "console-v2-governance.test.ts",
+      "test": "Console V2 source governance (isolated SQLite) requires actual evidence and does not assume candidate activity from the catalog",
+      "message": "ApiError: 请先核验来源并确认采集许可。\n    at ConsoleGovernanceStore.mutate (D:/tlydcg/Codex_work/广外AI应用大赛/src/lib/server/console/store.ts:314:15)\n    at D:/tlydcg/Codex_work/广外AI应用大赛/tests/unit/console-v2-governance.test.ts:48:7\n    at async file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    },
+    {
+      "file": "console-v2-intake.test.ts",
+      "test": "V2 canonical intake and multiple discovery origins enforces cutoff on a new origin, permits explicit history exemption and continues existing valid-source maintenance",
+      "message": "ApiError: 请在过时信息清理中预览并确认门禁时间。\n    at ConsoleSyncStore.saveEngineSettings (D:/tlydcg/Codex_work/广外AI应用大赛/src/lib/server/console/v2-governance.ts:317:13)\n    at D:/tlydcg/Codex_work/广外AI应用大赛/tests/unit/console-v2-intake.test.ts:134:7\n    at async file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    },
+    {
+      "file": "console-v2-retention.test.ts",
+      "test": "V2 whitelist, cutoff and bounded retention (disposable DB only) preserves a prior manual withdrawal across cleanup and explicit whitelist restoration",
+      "message": "ApiError: 记录已更新，请刷新后重试。\n    at ConsoleRetentionStore.mutate (D:/tlydcg/Codex_work/广外AI应用大赛/src/lib/server/console/store.ts:305:15)\n    at D:/tlydcg/Codex_work/广外AI应用大赛/tests/unit/console-v2-retention.test.ts:92:7\n    at async file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    },
+    {
+      "file": "console-v2-retention.test.ts",
+      "test": "V2 whitelist, cutoff and bounded retention (disposable DB only) requires both confirmations, purges bounded large payloads and blocks reintroduction without deleting parents/audit",
+      "message": "ApiError: 记录已更新，请刷新后重试。\n    at ConsoleRetentionStore.mutate (D:/tlydcg/Codex_work/广外AI应用大赛/src/lib/server/console/store.ts:305:15)\n    at D:/tlydcg/Codex_work/广外AI应用大赛/tests/unit/console-v2-retention.test.ts:206:7\n    at async file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    },
+    {
+      "file": "console-v2-retention.test.ts",
+      "test": "V2 whitelist, cutoff and bounded retention (disposable DB only) enforces cutoff on every intake and permits only explicit whitelist history exemption",
+      "message": "ApiError: 请在过时信息清理中预览并确认门禁时间。\n    at ConsoleRetentionStore.saveEngineSettings (D:/tlydcg/Codex_work/广外AI应用大赛/src/lib/server/console/v2-governance.ts:317:13)\n    at D:/tlydcg/Codex_work/广外AI应用大赛/tests/unit/console-v2-retention.test.ts:297:7\n    at async file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    },
+    {
+      "file": "console-v2-simple-actions.test.ts",
+      "test": "Console administrator simplification one switch persists enabled/closed without fabricating evidence or collection permission",
+      "message": "ApiError: 请先核验来源并确认采集许可。\n    at ConsoleGovernanceStore.mutate (D:/tlydcg/Codex_work/广外AI应用大赛/src/lib/server/console/store.ts:314:15)\n    at D:/tlydcg/Codex_work/广外AI应用大赛/tests/unit/console-v2-simple-actions.test.ts:40:7\n    at async file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    },
+    {
+      "file": "console-v2-simple-actions.test.ts",
+      "test": "Console administrator simplification imports administrator metadata and reviews without notes or invented publication dates; document versions resolve on the server",
+      "message": "ApiError: 请先核验来源并确认采集许可。\n    at ConsoleRetentionStore.mutate (D:/tlydcg/Codex_work/广外AI应用大赛/src/lib/server/console/store.ts:314:15)\n    at D:/tlydcg/Codex_work/广外AI应用大赛/tests/unit/console-v2-simple-actions.test.ts:114:7\n    at async file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    },
+    {
+      "file": "ingestion-pipeline.test.ts",
+      "test": "bounded ingestion, real SQLite, isolated fixtures only publishes eight captured metadata cards without creating unverified structured events",
+      "message": "TypeError: Cannot read properties of undefined (reading 'outcome')\n    at D:/tlydcg/Codex_work/广外AI应用大赛/tests/unit/ingestion-pipeline.test.ts:286:19\n    at async file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    },
+    {
+      "file": "ingestion-pipeline.test.ts",
+      "test": "bounded ingestion, real SQLite, isolated fixtures only keeps metadata-only as default and limits explicitly licensed body extraction",
+      "message": "AssertionError: expected '<div class=\"v_news_content\"><p class=…' to be '隔离许可文本隔离许可文本隔离许可文本隔离许可文本隔离许可文本隔离许可文本隔…' // Object.is equality\n    at D:/tlydcg/Codex_work/广外AI应用大赛/tests/unit/ingestion-pipeline.test.ts:320:65\n    at file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFX"
+    },
+    {
+      "file": "ingestion-pipeline.test.ts",
+      "test": "independent site parsing and safety discovers same-column URLs, real next-page links, and leaves ambiguous dates unknown",
+      "message": "AssertionError: expected { …(5) } to deeply equal { …(2) }\n    at D:/tlydcg/Codex_work/广外AI应用大赛/tests/unit/ingestion-pipeline.test.ts:926:7\n    at file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA%94%E7%94%A8%E5%A4%A7%E8%B5%9B/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///D:/tlydcg/Codex_work/%E5%B9%BF%E5%A4%96AI%E5%BA"
+    }
+  ],
+  "baseline": {
+    "ref": "67bc9d4",
+    "storedReport": "docs/verification/article-analysis-2026-10-25/unit-summary.json",
+    "newFailures": [],
+    "fixedBaselineFailures": []
+  }
+}

@@ -1,0 +1,545 @@
+[
+  {
+    "purpose": "knowledge",
+    "query": "图书馆借阅规则",
+    "status": 200,
+    "latencyMs": 1720,
+    "result": {
+      "ok": true,
+      "data": {
+        "hits": [
+          {
+            "documentId": "wx-e65f3688d0c219ed305ca5c944f2751660067122",
+            "chunkId": "wx-e65f3688d0c219ed305ca5c944f2751660067122:fts:1e319c84bf750df9:0",
+            "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+            "sourceId": "GDUFS-SRC-0199",
+            "sourceName": "广外图书馆",
+            "originalUrl": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw",
+            "publishedAt": "2026-09-06T04:12:00.000Z",
+            "contentSnippet": "欢迎新同学\n亲爱的2026级新同学，欢迎加入广东外语外贸大学！\n步入大学校园，图书馆将是你大学生活里最重要的学习阵地。在这里，你可以博览群书、静心自习、查阅文献、参与丰富的阅读活动。为帮助大家快速上手图书馆各项功能，我们整理了这份完整的入馆指南，从入馆权限、借阅规则到空间预约、电子资源，一文带你玩转广外图书馆。\n另外，今年新同学们将继续通过“新生闯馆”环节自助开通借书等权限。（点击“阅读原文”直达“新生闯馆”）\n图书馆简介\n广东外语外贸大学图书馆始建于1965年，前身为广州外国语学院图书馆（始建于1965年），1995年6月原广州对外贸易学院图书馆（始建于1980年）合并，2008年10月，原广东财经职业学院图书馆划转并入。\n现图书馆拥有三个馆舍。其中白云山校区图书馆位于白云山北麓，面积2.3万平方米；大学城校区图书馆位于番禺广州大学城，面积2.8万平方米；此外白云山校区还设有外国语言学及应用语言学基地图书室。图书馆总面积5.31万平方米，实行藏、借、阅、研一体化的开放式管理模式，提供阅览座位5000余个，信息节点2700个；拥有2个多功能报告厅和多间小型会议室、读者个人研修室。\n新生闯馆\n刚入学时，你只有刷卡入馆的基础权限。想借还图书、使用数字资源、预约学习空间，需要完成以下三个步骤：\n设置图书馆密码\n关注\"广外图书馆\"微信公众号，点击\"服务—服务大厅—密码重置\"。学工号就是你的学号，输入密码时请注意大小写。密码每半年会自动过期，记得及时重置。\n完成新生闯馆\n在公众号菜单栏点击\"资源—新生闯馆\"，或进入\"服务—服务大厅—新生闯馆\"。输入学号及密码登录后，至少完成前四步学习，答题成绩在60分以上，方可解锁图书借阅、空间预约等各项权限。\n开通刷脸入馆\n图书馆支持刷脸入馆。在公众号菜单点击\"服务—人脸识别注册\"，识别回复的二维码，按提示上",
+            "startOffset": 0,
+            "endOffset": 780,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 33.23,
+            "rankingReasons": [
+              "标题词组匹配 2.5",
+              "片段词组匹配 9.5",
+              "正文用途特征加权"
+            ],
+            "classificationState": "knowledge",
+            "radarCategory": null,
+            "knowledgeCategory": "campus_life",
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "8f435b613623e7ee1c36ae78ce363d468acdced8196c17b2afaef22145061523",
+            "documentVersion": 1,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          },
+          {
+            "documentId": "wx-e5450047f5a0769ccbc2c16d4b67303aa4aaca44",
+            "chunkId": "wx-e5450047f5a0769ccbc2c16d4b67303aa4aaca44:fts:db4629f93a38ddb2:0",
+            "title": "金秋阅新｜图书馆2026秋季中文新书展活动",
+            "sourceId": "GDUFS-SRC-0199",
+            "sourceName": "广外图书馆",
+            "originalUrl": "https://mp.weixin.qq.com/s/NBtUOT9gSaFqSSM4BImKIQ",
+            "publishedAt": "2026-09-16T04:12:00.000Z",
+            "contentSnippet": "为满足全校师生新学期教学、科研与课外阅读需求，图书馆2026秋季中文新书展正式开启。\n本次书展集中展出本年度出版中文新书4000余册，覆盖外语文学、经管法学、教育心理、艺术通识等多元类目，大家可近距离翻阅、直观挑选心仪纸质新书，现场人工办理借阅，即可带走。\n“芸台购”借购服务\n本次书展还特设“芸台购”借购服务专属咨询摊位，工作人员现场一对一讲解线上借购流程。\n“芸台购”一扫即入\n凡在活动现场完成“芸台购”下单借购，均可领取精美文创小礼品，礼品数量有限，赠完即止。\n书展信息\n借阅规则：现场借阅每人限5册，借期30天，不可续借。\n书展时间：2026.9.22—9.24 9:00-17:00\n书展地点：大学城校区图书馆一楼大厅\n联系方式：王老师 020-39328165\n主办单位：广东外语外贸大学图书馆（档案馆）\n承办单位：北京人天书店有限公司，浙江省新华书店集团有限公司\n一册新书面见，一份书香好礼\n期待各位师生前来赴约！\n来源：文献采编部\n编辑：咨询推广部\n初审：祖迪 张苑 王路\n复审：王悦\n终审：何越晖 陈红霞",
+            "startOffset": 0,
+            "endOffset": 461,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 26.56,
+            "rankingReasons": [
+              "标题词组匹配 1.5",
+              "片段词组匹配 5.5"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "culture_sports",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "4c81d04b54b694df4ab3eb3fc48418488847d9befb17972562b8e2e4cf176685",
+            "documentVersion": 1,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          },
+          {
+            "documentId": "wx-5906fa0e4b7b009525bcb0a9a2155ac3894804ee",
+            "chunkId": "wx-5906fa0e4b7b009525bcb0a9a2155ac3894804ee:fts:0297e26805675fb4:0",
+            "title": "热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？",
+            "sourceId": "GDUFS-SRC-0199",
+            "sourceName": "广外图书馆",
+            "originalUrl": "https://mp.weixin.qq.com/s/B0woO8Ni8zcHw1INndCKeg",
+            "publishedAt": "2026-10-23T06:50:54.000Z",
+            "contentSnippet": "循着秋日阅读足迹，\n我们为大家甄选10本广受读者青睐的好书。\n题材多元，意蕴万千，不妨轻展卷册，\n于笔墨之间邂逅别样山河。\n01\n《小屁孩日记》\n作者：(美) 杰夫·金尼\n出版社：广东新世纪出版社\n索书号：I712.84/J455/1\n馆藏地：大学城馆 5楼42架B面6列\n白云山馆 3楼38架B面5列\n推荐理由：以诙谐日记搭配趣味图文，还原少年真实的校园与家庭生活，没有生硬的说教，在一桩桩啼笑皆非的日常故事中看见青春期的小虚荣、小笨拙与善意，轻松治愈，非常适合闲暇阅读，读懂少年独有的成长心境。\n02\n《灿烂千阳》\n作者：（美）卡勒德・胡赛尼\n出版：上海人民出版社\n索书号：I712.45/H787-4\n馆藏地：大学城馆 5楼68架B面6列\n白云山馆 2楼93架B面12列\n推荐理由：置身动荡的时代背景之下，见证两位女性从隔阂走向彼此依靠的人生历程。战争碾碎安稳的生活，苦难层层叠加，但人性的温情与女性的坚韧从未消散。透过普通人的命运沉浮，感受绝境之中互相救赎的力量。\n03\n《夜晚的潜水艇》\n作者：陈春成\n出版：上海三联书店\n索书号：I247.7/C325.11\n馆藏地：大学城馆 5楼47架A面7列\n白云山馆 2楼79架B面1列\n推荐理由：一部文字极具美感的短篇集，现实与幻境相互交织。故事守护着人内心那份珍贵的想象力与浪漫，在山海、旧梦与古意之间穿梭，阅读如同一场精神漫游，唤醒藏在心底的幻想与诗意。\n04\n《卡拉马佐夫兄弟》\n作者：（俄）陀思妥耶夫斯基著\n出版：上海译文出版社\n索书号：I512.44/T877-86/1\n馆藏地：大学城馆 5楼62架A面2列\n白云山馆 2楼89架B面14列\n推荐理由：文学史上不朽的思想巨著，借一桩扑朔迷离的家庭凶案，剖开人性的复杂多面。围绕善恶、信仰、自由与原罪展开深刻叩问，人物灵魂的拉扯与挣扎直击内心，读完引",
+            "startOffset": 0,
+            "endOffset": 780,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 12.61,
+            "rankingReasons": [
+              "标题词组匹配 1",
+              "片段词组匹配 1"
+            ],
+            "classificationState": "unknown",
+            "radarCategory": null,
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "cf82d652a8f6a82ee927227667a99925f1c08081ebf23e204081f79d66992a29",
+            "documentVersion": 1,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": [
+              {
+                "documentId": "wx-a6b2eccc88d88c9903bb7fa053d6e7791450fb23",
+                "sourceName": "悦读广外",
+                "url": "https://mp.weixin.qq.com/s/z72CjToSasfWOHh5RDGYrw"
+              }
+            ]
+          }
+        ],
+        "metrics": {
+          "rowsRead": 394,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 520,
+          "candidateChunks": 22,
+          "usageAvailable": true
+        },
+        "indexVersion": "campus-fts-v1",
+        "method": "fts5_keywords_and_domain_expansion",
+        "warnings": [],
+        "purpose": "knowledge",
+        "query": "图书馆借阅规则",
+        "now": "2026-10-25T18:18:09.908Z",
+        "timeZone": "Asia/Shanghai",
+        "activities": [
+          {
+            "eventId": "wx-e5450047f5a0769ccbc2c16d4b67303aa4aaca44/activity-1",
+            "documentId": "wx-e5450047f5a0769ccbc2c16d4b67303aa4aaca44",
+            "activityKey": "activity-1",
+            "name": "金秋阅新｜图书馆2026秋季中文新书展活动",
+            "kind": "event",
+            "category": "culture_sports",
+            "startsAt": null,
+            "endsAt": null,
+            "placeRaw": "大学城校区图书馆一楼大厅",
+            "organizer": "广东外语外贸大学图书馆（档案馆）",
+            "eventStatus": "unknown",
+            "historical": false,
+            "registrationRequirement": "unknown",
+            "registrationState": "unknown",
+            "registrationWindows": [],
+            "otherDeadlines": [],
+            "registrationUrl": null,
+            "evidence": [
+              "书展地点：大学城校区图书馆一楼大厅"
+            ],
+            "mapPlace": {
+              "placeId": "osm-way-307250998",
+              "name": "图书馆",
+              "precision": "building"
+            }
+          }
+        ],
+        "knowledge": [
+          {
+            "documentId": "wx-e65f3688d0c219ed305ca5c944f2751660067122",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": [
+              "在公众号菜单栏点击\"资源—新生闯馆\"，或进入\"服务—服务大厅—新生闯馆\"。输入学号及密码登录后，至少完成前四步学习，答题成绩在60分以上，方可解锁图书借阅、空间预约等各项权限。",
+              "图书馆支持刷脸入馆。在公众号菜单点击\"服务—人脸识别注册\"，识别回复的二维码，按提示上传照片即可。新生注册时若学校系统已开通人脸识别权限，则无需重复操作。",
+              "1、读者登录数字广外点击“图书荐购”进入，或使用自己的数字广外账号从图书馆主页右上方的“图书荐购”进入，登录“芸台购”图书平台进行荐购，将自己检索到的喜爱的图书进行提交，工作人员会及时对读者荐购意见进行回复处理，同意购买的图书我馆将会尽快采购。"
+            ]
+          },
+          {
+            "documentId": "wx-e5450047f5a0769ccbc2c16d4b67303aa4aaca44",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": []
+          },
+          {
+            "documentId": "wx-5906fa0e4b7b009525bcb0a9a2155ac3894804ee",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": []
+          }
+        ]
+      },
+      "requestId": "9cb94e9d-8122-49b4-81bb-02008a620ff6"
+    }
+  },
+  {
+    "purpose": "events",
+    "query": "竞赛报名",
+    "status": 200,
+    "latencyMs": 755,
+    "result": {
+      "ok": true,
+      "data": {
+        "hits": [
+          {
+            "documentId": "content-b7f3826a-2a60-42f9-a85f-8ac9a127741a",
+            "chunkId": "content-b7f3826a-2a60-42f9-a85f-8ac9a127741a:fts:6b94bc8cd2222592:1",
+            "title": "我院学子在全国大学生信息安全竞赛（创新实践能力赛）暨“长城杯”网数智安全大赛（防护赛）半决赛斩获佳绩-信息科学与技术学院、网络空间安全学院",
+            "sourceId": "GDUFS-SRC-0004",
+            "sourceName": "信息科学与技术学院（网络空间安全学院）",
+            "originalUrl": "https://sist.gdufs.edu.cn/info/1191/11392.htm",
+            "publishedAt": "2026-03-24",
+            "contentSnippet": "到行业与高校的广泛认可。未来，我院将继续深耕网络空间安全学科建设，持续强化科研与教学融合、理论与实践结合，不断提升人才培养质量，为国家网络安全事业、数字湾区建设输送更多实战型人才。\n据悉，本届大赛共吸引全国804所高校的4153支战队，共计13692名选手报名参赛，经过层层筛选，最终600支队伍成功晋级半决赛。半决赛于3月22日在广东、辽宁、浙江、湖北、重庆、陕西六大赛区同步举办。六大赛区半决赛选拔出150支队伍晋级“长城杯”网数智安全大赛（防护赛）总决赛，以及80支队伍晋级全国大学生信息安全竞赛（创新实践能力赛）总决赛。\n初稿：杨媛媛\n初审：吴笛\n复审：谢柏林\n终审：王常吉",
+            "startOffset": 784,
+            "endOffset": 1075,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 22.89,
+            "rankingReasons": [
+              "标题词组匹配 2",
+              "片段词组匹配 3",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "competition",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "ffb368a6d37c8ac1cdc77d89fb89ddce0527d1babc7ffb5d1d0db3e5d58e79ca",
+            "documentVersion": 2,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          },
+          {
+            "documentId": "wx-a5efbd1c6a392c00a674e8d8f48d32ee6d729820",
+            "chunkId": "wx-a5efbd1c6a392c00a674e8d8f48d32ee6d729820:fts:cc7f9789c090a046:0",
+            "title": "喜讯！我校2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛获奖",
+            "sourceId": "GDUFS-SRC-0167",
+            "sourceName": "悦读广外",
+            "originalUrl": "https://mp.weixin.qq.com/s/6SGy-SZWindWNK5INaYfBQ",
+            "publishedAt": "2026-10-17T04:12:00.000Z",
+            "contentSnippet": "由图书馆（档案馆）与校团委联合举办的2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛（本科生、研究生赛道）广东赛区比赛校内选拔赛，已于2026年9月顺利举办。\n本次大赛广东省赛区共有26所本科院校、五千余名学生报名，四千余名学生参赛；校内选拔赛吸引了全校19个学院的学生踊跃参加。经过赛前练习和正式比赛的激烈角逐，按照评分规则评选，现将校内获奖名单公布如下：\n恭喜获奖同学！获奖证书和奖品发放事宜请留意后续电话或短信通知。\n图书馆（档案馆）、校团委\n2026年10月10日\n点击 在看，你会更好看\n来源：学科服务部\n编辑：咨询推广部\n初审：田梅梅\n复审：王悦\n终审：何越晖 陈红霞",
+            "startOffset": 0,
+            "endOffset": 308,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 22.71,
+            "rankingReasons": [
+              "标题词组匹配 2",
+              "片段词组匹配 3",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "competition",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "93d0826d6eca2d773b75c7f3b80ff40d61c8d208dd5b966490243fc51f6bf2ed",
+            "documentVersion": 1,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": [
+              {
+                "documentId": "wx-ed57d5cb4f2353fc77582c4de3fb6f5ca52db974",
+                "sourceName": "广外图书馆",
+                "url": "https://mp.weixin.qq.com/s/rnlsSc8MjKOoVgWOT-2-tA"
+              }
+            ]
+          },
+          {
+            "documentId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6",
+            "chunkId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6:fts:6aa9888a7520abe0:6",
+            "title": "第二届多语种游戏翻译本地化与国际化大赛报名通知-广东外语外贸大学高级翻译学院",
+            "sourceId": "GDUFS-SRC-0101",
+            "sourceName": "高级翻译学院",
+            "originalUrl": "https://sits.gdufs.edu.cn/info/1186/7406.htm",
+            "publishedAt": "2026-06-10",
+            "contentSnippet": "参赛，独立完成全部赛题。\n(二) 初赛和决赛举办期间直至比赛结束前，参赛选手不得以任何方式在任何渠道发布、交流赛题和答案，违者将取消参赛资格并承担由此造成的一切后果和相关法律责任。\n(三) 参赛选手答卷将进行抄袭检测，一经发现抄袭或者雷同（如采用各类人工智能手段辅助答题），将取消涉事者参赛资格。\n(四) 参赛选手答卷一经提交并在比赛结果公布之后，大赛组委会即享有比赛内容使用权与发表权。\n(五) 参赛选手报名成功并参加比赛，即视为选手本人同意并自愿遵守本公告的各项规定。\n(六) 大赛所有细则和规则最终解释权归主办和承办单位所有。\n十、大赛联系方式\n参赛选手报名缴费成功后，请加入大赛官方QQ群（群号：107548706），及时了解大赛系列培训活动以及赛程信息最新资讯。大赛组委会联系人：邹老师（transconference@foxmail.com）。\n广东外语外贸大学高级翻译学院\n中国翻译协会国际化服务专业委员会\n广东对外传播翻译基地\n北京译禾信息技术有限公司\n上海一者信息科技有限公司\n2026年6月11日",
+            "startOffset": 4599,
+            "endOffset": 5057,
+            "evidenceBasis": "normalized_text",
+            "evidenceType": "full_text",
+            "bodyAvailable": true,
+            "bodyPartial": false,
+            "relevanceScore": 21.94,
+            "rankingReasons": [
+              "标题词组匹配 2",
+              "片段词组匹配 3",
+              "正文用途特征加权"
+            ],
+            "classificationState": "radar",
+            "radarCategory": "competition",
+            "knowledgeCategory": null,
+            "classificationOrigin": "automatic",
+            "contentRevision": 1,
+            "inputHash": "d10f552e52cad5eeab8d1016cf8f2bace776c62555bef229de88dd7fd50b28ee",
+            "documentVersion": 2,
+            "publicAvailable": true,
+            "validity": "unknown",
+            "official": false,
+            "readable": true,
+            "linkedSources": []
+          }
+        ],
+        "metrics": {
+          "rowsRead": 1043,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 417,
+          "candidateChunks": 96,
+          "usageAvailable": true
+        },
+        "indexVersion": "campus-fts-v1",
+        "method": "fts5_keywords_and_domain_expansion",
+        "warnings": [],
+        "purpose": "events",
+        "query": "竞赛报名",
+        "now": "2026-10-25T18:18:10.976Z",
+        "timeZone": "Asia/Shanghai",
+        "activities": [
+          {
+            "eventId": "content-b7f3826a-2a60-42f9-a85f-8ac9a127741a/activity-1",
+            "documentId": "content-b7f3826a-2a60-42f9-a85f-8ac9a127741a",
+            "activityKey": "activity-1",
+            "name": "我院学子在全国大学生信息安全竞赛（创新实践能力赛）暨“长城杯”网数智安全大赛（防护赛）半决赛斩获佳绩-信息科学与技术学院、网络空间安全学院",
+            "kind": "notice",
+            "category": "competition",
+            "startsAt": null,
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": false,
+            "registrationRequirement": "unknown",
+            "registrationState": "unknown",
+            "registrationWindows": [],
+            "otherDeadlines": [],
+            "registrationUrl": null,
+            "evidence": [],
+            "mapPlace": null
+          },
+          {
+            "eventId": "wx-a5efbd1c6a392c00a674e8d8f48d32ee6d729820/activity-1",
+            "documentId": "wx-a5efbd1c6a392c00a674e8d8f48d32ee6d729820",
+            "activityKey": "activity-1",
+            "name": "喜讯！我校2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛获奖",
+            "kind": "notice",
+            "category": "competition",
+            "startsAt": null,
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": false,
+            "registrationRequirement": "unknown",
+            "registrationState": "unknown",
+            "registrationWindows": [],
+            "otherDeadlines": [],
+            "registrationUrl": null,
+            "evidence": [],
+            "mapPlace": null
+          },
+          {
+            "eventId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6/activity-1",
+            "documentId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6",
+            "activityKey": "activity-1",
+            "name": "第二届多语种游戏翻译本地化与国际化大赛报名通知-广东外语外贸大学高级翻译学院",
+            "kind": "event",
+            "category": "competition",
+            "startsAt": {
+              "raw": "8月3日",
+              "date": "2026-08-03",
+              "at": null,
+              "timezone": "Asia/Shanghai",
+              "precision": "date",
+              "resolution": "day",
+              "inferred": true,
+              "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+              "evidence": "8月3日"
+            },
+            "endsAt": null,
+            "placeRaw": null,
+            "organizer": null,
+            "eventStatus": "unknown",
+            "historical": true,
+            "registrationRequirement": "required",
+            "registrationState": "unknown",
+            "registrationWindows": [
+              {
+                "roundLabel": null,
+                "start": {
+                  "raw": "2026年6月11日",
+                  "date": "2026-06-11",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": false,
+                  "inferenceBasis": null,
+                  "evidence": "2026年6月11日"
+                },
+                "end": {
+                  "raw": "7月31日",
+                  "date": "2026-07-31",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": true,
+                  "inferenceBasis": "同一区间起始年份，跨月/跨年顺序",
+                  "evidence": "7月31日"
+                },
+                "deadlineSemantics": "unspecified",
+                "capacityLimited": false,
+                "state": "closed",
+                "evidence": [
+                  "(一) 报名时间：\n2026年6月11日至7月31日"
+                ]
+              },
+              {
+                "roundLabel": null,
+                "start": null,
+                "end": null,
+                "deadlineSemantics": "unspecified",
+                "capacityLimited": false,
+                "state": "unknown",
+                "evidence": [
+                  "团队及优惠报名：10人以上组团报名、首届游戏翻译本地化与国际化大赛选手报名、大赛主办/承办/协办/支持单位人员报名"
+                ]
+              },
+              {
+                "roundLabel": null,
+                "start": null,
+                "end": null,
+                "deadlineSemantics": "unspecified",
+                "capacityLimited": false,
+                "state": "unknown",
+                "evidence": [
+                  "请考虑清楚后再报名缴费。\n(三) 报名方式：\n进入YiCAT平台（https://www.yicat.vip/）"
+                ]
+              }
+            ],
+            "otherDeadlines": [
+              {
+                "role": "results",
+                "time": {
+                  "raw": "8月21日",
+                  "date": "2026-08-21",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": true,
+                  "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                  "evidence": "8月21日"
+                }
+              },
+              {
+                "role": "results",
+                "time": {
+                  "raw": "8月30日",
+                  "date": "2026-08-30",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": true,
+                  "inferenceBasis": "同一区间起始年份，跨月/跨年顺序",
+                  "evidence": "8月30日"
+                }
+              },
+              {
+                "role": "results",
+                "time": {
+                  "raw": "9月21日",
+                  "date": "2026-09-21",
+                  "at": null,
+                  "timezone": "Asia/Shanghai",
+                  "precision": "date",
+                  "resolution": "day",
+                  "inferred": true,
+                  "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                  "evidence": "9月21日"
+                }
+              }
+            ],
+            "registrationUrl": "https://www.yicat.vip/yicat/public-exam?groupId=900015930831&examId=98004ad43e694cfdb2f7bdee3bb92866",
+            "evidence": [
+              "(一) 报名时间：\n2026年6月11日至7月31日",
+              "团队及优惠报名：10人以上组团报名、首届游戏翻译本地化与国际化大赛选手报名、大赛主办/承办/协办/支持单位人员报名",
+              "请考虑清楚后再报名缴费。\n(三) 报名方式：\n进入YiCAT平台（https://www.yicat.vip/）"
+            ],
+            "mapPlace": null
+          }
+        ],
+        "knowledge": [
+          {
+            "documentId": "content-b7f3826a-2a60-42f9-a85f-8ac9a127741a",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": []
+          },
+          {
+            "documentId": "wx-a5efbd1c6a392c00a674e8d8f48d32ee6d729820",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": []
+          },
+          {
+            "documentId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6",
+            "validity": "unknown",
+            "effectiveFrom": null,
+            "effectiveUntil": null,
+            "conditions": [],
+            "materials": [],
+            "steps": [
+              "登录YiCAT个人账号后，点击左侧导航栏【考试中心-考试广场】，找到本次大赛，点击右上角【考试详情-报名考试】，填写报名信息、缴纳报名费，完成报名。",
+              "第一步：支付宝扫码或银行转账。缴费时请备注优惠类型和您的个人与单位信息。如为首届参赛选手或者主办/承办/协办/支持单位人员，个人自行缴费即可（需缴纳48元），缴费时备注格式为“姓名-个人优惠-XX单位”。如为10人以上组团报名，需由一人作为负责人，代为缴纳团内所有人费用（例如，若为12人团报，则需一次性缴纳576元），缴费时备注负责人的信息即可，格式为“姓名-团报优惠-XX单位”。",
+              "第二步：填写表单。缴费完成后，保存支付成功截图（带有支付时间、付款金额、付款对象信息），微信扫描以下在线表单二维码链接，填写报名信息，上传支付成功截图，填写个人基本信息、联系方式、发票信息等。团队报名由负责人代为填写全部成员信息。只有填写报名信息并提交，才算最终完成报名。"
+            ]
+          }
+        ]
+      },
+      "requestId": "29ef14ab-33e4-4095-9f54-50ae7c3ebd66"
+    }
+  }
+]

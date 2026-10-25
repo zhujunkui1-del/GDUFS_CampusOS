@@ -1,0 +1,29 @@
+{
+  "startedAt": "2026-10-25T18:17:55.361Z",
+  "actualCloudTail": true,
+  "rawLogsStored": false,
+  "cleanup": true,
+  "records": [
+    {
+      "at": 1792952289906,
+      "path": "/api/content/search",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 377,
+      "wallTimeMs": 789,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792952290976,
+      "path": "/api/content/search",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 43,
+      "wallTimeMs": 468,
+      "exceptionCount": 0
+    }
+  ],
+  "finishedAt": "2026-10-25T18:18:57.803Z"
+}

@@ -185,16 +185,15 @@ if (mode === "status") {
 } else {
   output.plan = (
     await query(
-      "EXPLAIN QUERY PLAN SELECT k.document_id,k.id FROM article_chunk_fts JOIN knowledge_chunks k ON k.rowid=article_chunk_fts.rowid WHERE article_chunk_fts MATCH ? ORDER BY bm25(article_chunk_fts,4,1,0) LIMIT 96",
+      "EXPLAIN QUERY PLAN SELECT k.document_id,k.id FROM article_chunk_fts JOIN knowledge_chunks k ON k.rowid=article_chunk_fts.rowid WHERE article_chunk_fts MATCH ? AND rank MATCH 'bm25(4.0,1.0,0.0)' ORDER BY rank LIMIT 96",
       ["h56fex4e66"],
     )
   ).results;
-  output.gatePlan = (
-    await query(
-      "EXPLAIN QUERY PLAN SELECT d.id FROM knowledge_documents d WHERE d.id=? AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)",
-      ["wx-e65f3688d0c219ed305ca5c944f2751660067122"],
-    )
-  ).results;
+  output.gatePlan = await lib.currentPublicArticles(
+    db,
+    ["wx-e65f3688d0c219ed305ca5c944f2751660067122"],
+    (sql, params) => query("EXPLAIN QUERY PLAN " + sql, params),
+  );
 }
 output.cost = {
   rowsRead: costs.reduce((n, r) => n + r.read, 0),

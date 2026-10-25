@@ -14,6 +14,26 @@ export function databaseTimings(
     calls = 0,
     failures = 0,
     durationMs = 0;
+  let rowsRead = 0,
+    rowsWritten = 0,
+    rowUsageStatements = 0,
+    unmeteredStatements = 0;
+  function record(value: unknown) {
+    const items = Array.isArray(value) ? value : [value];
+    for (const item of items) {
+      const meta = (
+        item as { meta?: { rows_read?: number; rows_written?: number } } | null
+      )?.meta;
+      if (
+        typeof meta?.rows_read === "number" &&
+        typeof meta.rows_written === "number"
+      ) {
+        rowsRead += meta.rows_read;
+        rowsWritten += meta.rows_written;
+        rowUsageStatements++;
+      } else unmeteredStatements++;
+    }
+  }
   const samples: number[] = [];
   async function timed<T>(
     work: () => Promise<T>,
@@ -39,8 +59,26 @@ export function databaseTimings(
     const value: Statement = {
       bind: (...values) => wrap(raw.bind(...values), write),
       first: <T>() => timed(() => raw.first<T>(), write ? 0 : 1, write ? 1 : 0),
-      all: <T>() => timed(() => raw.all<T>(), write ? 0 : 1, write ? 1 : 0),
-      run: () => timed(() => raw.run(), write ? 0 : 1, write ? 1 : 0),
+      all: <T>() =>
+        timed(
+          async () => {
+            const r = await raw.all<T>();
+            record(r);
+            return r;
+          },
+          write ? 0 : 1,
+          write ? 1 : 0,
+        ),
+      run: () =>
+        timed(
+          async () => {
+            const r = await raw.run();
+            record(r);
+            return r;
+          },
+          write ? 0 : 1,
+          write ? 1 : 0,
+        ),
     };
     statements.set(value, { raw, write });
     return value;
@@ -48,14 +86,18 @@ export function databaseTimings(
   return {
     db: {
       prepare: (sql: string) =>
-        wrap(db.prepare(sql), !/^\s*(?:SELECT|PRAGMA)\b/i.test(sql)),
+        wrap(db.prepare(sql), !/^\s*(?:SELECT|PRAGMA|WITH)\b/i.test(sql)),
       batch: (items: Statement[]) => {
         const entries = items.map(
           (item) => statements.get(item) || { raw: item, write: true },
         );
         const writes = entries.filter((item) => item.write).length;
         return timed(
-          () => db.batch(entries.map((item) => item.raw)),
+          async () => {
+            const r = await db.batch(entries.map((item) => item.raw));
+            record(r);
+            return r;
+          },
           entries.length - writes,
           writes,
         );
@@ -68,6 +110,12 @@ export function databaseTimings(
       failures,
       durationMs: Math.round(durationMs * 100) / 100,
       maxCallMs: Math.round(Math.max(0, ...samples) * 100) / 100,
+      rowsRead,
+      rowsWritten,
+      rowUsageStatements,
+      rowUsageComplete:
+        unmeteredStatements === 0 &&
+        readQueries + writeQueries === rowUsageStatements,
     }),
   };
 }

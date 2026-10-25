@@ -355,7 +355,7 @@ describe("collector only adds or updates cloud articles", () => {
     expect(wrongAccount.status).toBe(403);
     fixture.sqlite
       .prepare("UPDATE console_engine_settings SET earliest_import_day=?")
-      .run(new Date().toISOString().slice(0, 10));
+      .run(new Date(Date.now() + 8 * 3600000).toISOString().slice(0, 10));
     const beforeGate = await submit(input);
     expect(beforeGate.status).toBe(400);
     fixture.sqlite

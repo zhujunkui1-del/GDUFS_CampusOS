@@ -1,0 +1,109 @@
+{
+  "startedAt": "2026-10-25T18:43:09.182Z",
+  "actualCloudTail": true,
+  "rawLogsStored": false,
+  "cleanup": true,
+  "records": [
+    {
+      "at": 1792953800264,
+      "path": "/api/agent/chat",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 79,
+      "wallTimeMs": 5403,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792953806017,
+      "path": "/api/content/search",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 222,
+      "wallTimeMs": 512,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792953806782,
+      "path": "/api/content/search",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 23,
+      "wallTimeMs": 532,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792953807562,
+      "path": "/api/content/search",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 14,
+      "wallTimeMs": 426,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792953808377,
+      "path": "/api/content/search",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 7,
+      "wallTimeMs": 383,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792953809015,
+      "path": "/api/content/search",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 14,
+      "wallTimeMs": 455,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792953806504,
+      "path": "/api/agent/chat",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 53,
+      "wallTimeMs": 5943,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792953813233,
+      "path": "/api/agent/chat",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 81,
+      "wallTimeMs": 8945,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792953823104,
+      "path": "/api/agent/chat",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 115,
+      "wallTimeMs": 9402,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1792953832974,
+      "path": "/api/agent/chat",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 81,
+      "wallTimeMs": 13279,
+      "exceptionCount": 0
+    }
+  ],
+  "finishedAt": "2026-10-25T18:45:31.478Z"
+}
