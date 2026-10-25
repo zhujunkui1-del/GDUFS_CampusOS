@@ -1,0 +1,256 @@
+{
+  "browser": "149.0.4022.80",
+  "realModel": true,
+  "preview": true,
+  "outcomes": [
+    {
+      "prompt": "广外图书馆怎么借书？请按内部文章概述借书操作步骤。",
+      "answer": "按内部《新生入馆指南》，借书前要先开通借阅权限，具体步骤如下：\n\n1. 设置图书馆密码：关注“广外图书馆”微信公众号，进入“服务—服务大厅—密码重置”，学工号即学号，密码每半年自动过期需重置[来源1]。\n2. 完成“新生闯馆”：在公众号“资源—新生闯馆”（或“服务—服务大厅—新生闯馆”）输入学号密码登录，至少完成前四步学习并答题60分以上，即可解锁图书借阅等权限[来源1]。\n3. 刷脸入馆（可选）：公众号“服务—人脸识别注册”，按提示上传照片；若学校已开通该权限则无需重复[来源1]。\n\n补充：校园卡兼具借书证功能，需先充值后方可在图书馆借书使用[来源2]。该指南发布于2026-09-06，属新生指南，现行有效性以图书馆最新通知为准[来源1]。\n\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源1 · 广外图书馆 · 2026/09/06\n查看证据\n正文证据 · 有效性待确认\n使用指南 | 广外校园卡充值全攻略\n来源2 · 数智广外 · 2026/08/31\n查看证据\n正文证据 · 有效性待确认\n2026新生指南｜广外白云山校区生活指南\n来源3 · 数智广外 · 2026/09/03\n查看证据\n正文证据 · 有效性待确认\n学活场地预约指南丨云山公益服务栈（大学城校区）\n来源4 · 广外云山学生勤工助学 · 2026/09/30\n查看证据\n正文证据 · 有效性待确认",
+      "sources": [
+        {
+          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
+        },
+        {
+          "title": "使用指南 | 广外校园卡充值全攻略",
+          "url": "https://mp.weixin.qq.com/s/jAZLj0S6cgFS8YXhVLYwXQ"
+        },
+        {
+          "title": "2026新生指南｜广外白云山校区生活指南",
+          "url": "https://mp.weixin.qq.com/s/0b30pjozPKNHRO4tsBoEQg"
+        },
+        {
+          "title": "学活场地预约指南丨云山公益服务栈（大学城校区）",
+          "url": "https://mp.weixin.qq.com/s/53lINN2VHWUBMGU0Na0TkQ"
+        }
+      ]
+    },
+    {
+      "prompt": "请联网查询广外图书馆读者借阅权限表中本科生的借阅上限和借期，以官方原文为准。",
+      "answer": "1. 借阅上限：完成“新生闯馆”后自动获得借书权限，可借册数为 35册，可预约 15册[来源1]。\n2. 借期：30天，可续借1次，续借期15天（自原应还日期起算）[来源1]。\n3. 说明：以上来自广外图书馆《新生入馆指南》（2026-09-06），该文有效性标注为“待确认”，并非《读者借阅权限表》原文；校外官方网页搜索当前不可用，未取得权限表原文，建议以图书馆主页“服务指南”栏目《读者手册》为准[来源1]。另：书展现场借阅限5册、借期30天、不可续借，仅适用于该活动[来源2]。\n\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源1 · 广外图书馆 · 2026/09/06\n查看证据\n正文证据 · 有效性待确认\n金秋阅新｜图书馆2026秋季中文新书展活动\n来源2 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 有效性待确认\n热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？\n来源3 · 广外图书馆 · 2026/10/23\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉\n来源4 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 校园资讯 · 有效性待确认",
+      "sources": [
+        {
+          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
+        },
+        {
+          "title": "金秋阅新｜图书馆2026秋季中文新书展活动",
+          "url": "https://mp.weixin.qq.com/s/NBtUOT9gSaFqSSM4BImKIQ"
+        },
+        {
+          "title": "热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？",
+          "url": "https://mp.weixin.qq.com/s/B0woO8Ni8zcHw1INndCKeg"
+        },
+        {
+          "title": "阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉",
+          "url": "https://mp.weixin.qq.com/s/nInLIXklodjGsd0UwKF5sw"
+        }
+      ]
+    }
+  ],
+  "records": [
+    {
+      "prompt": "广外图书馆怎么借书？请按内部文章概述借书操作步骤。",
+      "tools": [
+        "search_campus_knowledge"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "2229378b-9e34-465c-a182-58672aa11be1",
+        "requestId": "18d19a36-5296-41b1-bb60-001699f75a23",
+        "metrics": {
+          "requests": 2,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1095,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1856,
+              "firstTextMs": null
+            }
+          ],
+          "promptTokens": 6173,
+          "completionTokens": 293,
+          "cachedPromptTokens": 768,
+          "totalTokens": 6466,
+          "usageComplete": true,
+          "chargedTokens": 6466,
+          "durationMs": 3694,
+          "estimatedUsdRange": [
+            0.000988854,
+            0.001977708
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1386,
+            "serverElapsedMs": 5080,
+            "firstTextMs": 4970,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 288,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 11,
+              "writeQueries": 12,
+              "calls": 15,
+              "failures": 0,
+              "durationMs": 2129,
+              "maxCallMs": 448,
+              "rowsRead": 460,
+              "rowsWritten": 15,
+              "rowUsageStatements": 15,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 346,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 288,
+                "candidateChunks": 22,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      },
+      "response": "按内部《新生入馆指南》，借书前要先开通借阅权限，具体步骤如下：\n\n1. **设置图书馆密码**：关注“广外图书馆”微信公众号，进入“服务—服务大厅—密码重置”，学工号即学号，密码每半年自动过期需重置[来源1]。\n2. **完成“新生闯馆”**：在公众号“资源—新生闯馆”（或“服务—服务大厅—新生闯馆”）输入学号密码登录，至少完成前四步学习并答题60分以上，即可解锁图书借阅等权限[来源1]。\n3. **刷脸入馆（可选）**：公众号“服务—人脸识别注册”，按提示上传照片；若学校已开通该权限则无需重复[来源1]。\n\n补充：校园卡兼具借书证功能，需先充值后方可在图书馆借书使用[来源2]。该指南发布于2026-09-06，属新生指南，现行有效性以图书馆最新通知为准[来源1]。",
+      "responseHeadersMs": 1623,
+      "firstTextMs": 5423,
+      "completeMs": 5811
+    },
+    {
+      "prompt": "请联网查询广外图书馆读者借阅权限表中本科生的借阅上限和借期，以官方原文为准。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "2229378b-9e34-465c-a182-58672aa11be1",
+        "requestId": "79e4bb6e-762c-4b5d-ab70-803e5174aeef",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1234,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 995,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1540,
+              "firstTextMs": 688
+            }
+          ],
+          "promptTokens": 16927,
+          "completionTokens": 403,
+          "cachedPromptTokens": 1280,
+          "totalTokens": 17330,
+          "usageComplete": true,
+          "chargedTokens": 17330,
+          "durationMs": 4994,
+          "estimatedUsdRange": [
+            0.00259269,
+            0.00518538
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 949,
+            "serverElapsedMs": 5943,
+            "firstTextMs": 4973,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 262,
+                "ok": true
+              },
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 267,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 0,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 15,
+              "writeQueries": 11,
+              "calls": 18,
+              "failures": 0,
+              "durationMs": 2174,
+              "maxCallMs": 143,
+              "rowsRead": 813,
+              "rowsWritten": 11,
+              "rowUsageStatements": 16,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 346,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 262,
+                "candidateChunks": 22,
+                "usageAvailable": true
+              },
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 346,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 267,
+                "candidateChunks": 22,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "unavailable",
+                "durationMs": 0,
+                "providers": [
+                  {
+                    "provider": "exa_web",
+                    "status": "unavailable",
+                    "durationMs": 0,
+                    "count": 0
+                  }
+                ],
+                "rowsRead": 0,
+                "rowsWritten": 0
+              }
+            ]
+          }
+        }
+      },
+      "response": "1. **借阅上限**：完成“新生闯馆”后自动获得借书权限，可借册数为 **35册**，可预约 **15册**[来源1]。\n2. **借期**：**30天**，可续借1次，续借期15天（自原应还日期起算）[来源1]。\n3. **说明**：以上来自广外图书馆《新生入馆指南》（2026-09-06），该文有效性标注为“待确认”，并非《读者借阅权限表》原文；校外官方网页搜索当前不可用，未取得权限表原文，建议以图书馆主页“服务指南”栏目《读者手册》为准[来源1]。另：书展现场借阅限5册、借期30天、不可续借，仅适用于该活动[来源2]。",
+      "responseHeadersMs": 1330,
+      "firstTextMs": 6320,
+      "completeMs": 6699
+    }
+  ],
+  "pageErrors": []
+}

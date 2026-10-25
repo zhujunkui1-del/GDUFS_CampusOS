@@ -24,6 +24,7 @@ services/wechat-collector/__pycache__/
 tests/regression/__pycache__/
 services/wechat-collector/config.json
 services/wechat-collector/data/
+services/external-search/runtime/
 
 # Local generated pilot diagnostics; final model images and window evidence stay tracked.
 docs/screenshots/s1/nanyuan7-model/chrome-dev/

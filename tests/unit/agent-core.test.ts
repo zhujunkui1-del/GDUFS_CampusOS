@@ -203,10 +203,11 @@ it("does not reuse unapproved reads or allow write/identity scoped cache policie
 });
 
 describe("Skill Registry / Tool Executor (Mock only)", () => {
-  it("keeps exactly the documented 16 names across four logical domains", () => {
+  it("keeps the original 16 names plus the authorized external-search extension across four domains", () => {
     const names = Object.values(DOMAIN_SKILLS).flat();
-    expect(names).toHaveLength(16);
-    expect(new Set(names).size).toBe(16);
+    expect(names).toHaveLength(17);
+    expect(new Set(names).size).toBe(17);
+    expect(names).toContain("search_external_campus_info");
     expect(new SkillRegistry().manifest()).toEqual([]);
   });
   it("exports strict JSON schemas and rejects duplicate names/unsafe writes", () => {

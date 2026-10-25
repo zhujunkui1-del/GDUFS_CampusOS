@@ -49,5 +49,18 @@ export function assistantBindings() {
     db: primaryDatabase(env.DB as SqlDatabase),
     signingSecret,
     environment: String(env.APP_ENV || "local"),
+    externalSearch: {
+      exaApiKey:
+        typeof env.EXA_API_KEY === "string" ? env.EXA_API_KEY : undefined,
+      gatewayUrl:
+        typeof env.EXTERNAL_SEARCH_GATEWAY_URL === "string"
+          ? env.EXTERNAL_SEARCH_GATEWAY_URL
+          : undefined,
+      gatewayToken:
+        typeof env.EXTERNAL_SEARCH_GATEWAY_TOKEN === "string"
+          ? env.EXTERNAL_SEARCH_GATEWAY_TOKEN
+          : undefined,
+      webEnabled: env.EXTERNAL_WEB_SEARCH_ENABLED !== "false",
+    },
   };
 }

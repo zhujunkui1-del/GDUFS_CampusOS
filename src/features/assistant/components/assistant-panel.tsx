@@ -411,6 +411,42 @@ export function AssistantPanel({
                                           : ""}
                                   </small>
                                 </article>
+                              ) : card.kind === "external_source" ? (
+                                <article
+                                  className="assistant-source-card"
+                                  key={card.originalUrl}
+                                >
+                                  <a
+                                    href={card.originalUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <strong>{card.title}</strong>
+                                  </a>
+                                  <span>
+                                    来源{index + 1} · {card.sourceName} ·{" "}
+                                    {sourcePublicationDate(card.publishedAt)}
+                                  </span>
+                                  <details>
+                                    <summary>查看证据</summary>
+                                    <p>{card.snippet}</p>
+                                  </details>
+                                  <small>
+                                    {card.authority === "official"
+                                      ? "官方网页"
+                                      : card.authority === "student_experience"
+                                        ? "学生经验"
+                                        : "外部资料"}
+                                    {card.evidenceKind === "title_only"
+                                      ? " · 仅标题"
+                                      : card.evidenceKind === "search_excerpt"
+                                        ? " · 搜索摘录"
+                                        : " · 原文摘录"}
+                                    {card.searchMode === "public_web"
+                                      ? " · 公开网页"
+                                      : ""}
+                                  </small>
+                                </article>
                               ) : card.kind === "place" ? (
                                 <button
                                   key={card.place.placeId + index}

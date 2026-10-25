@@ -1,0 +1,113 @@
+{
+  "browser": "149.0.4022.80",
+  "realModel": true,
+  "preview": true,
+  "outcomes": [
+    {
+      "prompt": "广外图书馆怎么借书？只用内部文章概述借书操作，不要联网。",
+      "answer": "根据内部文章，借书的前提是先开通借阅权限，并分两步操作：\n\n1. 先设密码、再开通权限：关注“广外图书馆”微信公众号，通过“服务—服务大厅—密码重置”设置密码（学号即工号，密码每半年过期需重置）；再进入“资源—新生闯馆”或“服务—服务大厅—新生闯馆”，完成至少前四步学习并答对60%以上，才能开通图书借阅等权限。已完成以上步骤的老生可直接借阅 [来源1]。\n\n2. 到馆借书就是选书、刷证借出：先在馆内按索书号找书，再到服务台或自助借还机用校园一卡通办理借阅。活动书展曾支持现场人工借阅，每人5册、借期30天、不可续借，但该规则只适用于书展，不是日常借阅规则 [来源2]。\n\n3. 另一种“借新书”的途径是“芸台购”线上闪借：通过公众号“资源—图书荐购”或PC端芸台购平台登录下单；此前宣传为省内包邮、一次最多15本，原活动到2026年10月10日截止，现行是否仍开放待确认 [来源4]。\n\n补充：目前检索到的文章没有写明日常借阅的册数上限和借期；这类规则正文未提及，无法确认。\n\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源1 · 广外图书馆 · 2026/09/06\n查看证据\n正文证据 · 有效性待确认\n金秋阅新｜图书馆2026秋季中文新书展活动\n来源2 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 有效性待确认\n热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？\n来源3 · 广外图书馆 · 2026/10/23\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉\n来源4 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 校园资讯 · 有效性待确认",
+      "sources": [
+        {
+          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
+        },
+        {
+          "title": "金秋阅新｜图书馆2026秋季中文新书展活动",
+          "url": "https://mp.weixin.qq.com/s/NBtUOT9gSaFqSSM4BImKIQ"
+        },
+        {
+          "title": "热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？",
+          "url": "https://mp.weixin.qq.com/s/B0woO8Ni8zcHw1INndCKeg"
+        },
+        {
+          "title": "阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉",
+          "url": "https://mp.weixin.qq.com/s/nInLIXklodjGsd0UwKF5sw"
+        }
+      ]
+    }
+  ],
+  "records": [
+    {
+      "prompt": "广外图书馆怎么借书？只用内部文章概述借书操作，不要联网。",
+      "tools": [
+        "search_campus_knowledge"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "d39fd7f0-418b-4f40-a3b0-b9d82c8ea9b6",
+        "requestId": "777a81bf-fbe2-4e15-a087-5f26174c095c",
+        "metrics": {
+          "requests": 2,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1098,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 2752,
+              "firstTextMs": 679
+            }
+          ],
+          "promptTokens": 5414,
+          "completionTokens": 368,
+          "cachedPromptTokens": 512,
+          "totalTokens": 5782,
+          "usageComplete": true,
+          "chargedTokens": 5782,
+          "durationMs": 4599,
+          "estimatedUsdRange": [
+            0.0009576359999999999,
+            0.0019152719999999998
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1071,
+            "serverElapsedMs": 5670,
+            "firstTextMs": 3478,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 281,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 11,
+              "writeQueries": 12,
+              "calls": 15,
+              "failures": 0,
+              "durationMs": 1820,
+              "maxCallMs": 144,
+              "rowsRead": 527,
+              "rowsWritten": 15,
+              "rowUsageStatements": 15,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 346,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 281,
+                "candidateChunks": 22,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      },
+      "response": "根据内部文章，借书的前提是先开通借阅权限，并分两步操作：\n\n1. **先设密码、再开通权限**：关注“广外图书馆”微信公众号，通过“服务—服务大厅—密码重置”设置密码（学号即工号，密码每半年过期需重置）；再进入“资源—新生闯馆”或“服务—服务大厅—新生闯馆”，完成至少前四步学习并答对60%以上，才能开通图书借阅等权限。已完成以上步骤的老生可直接借阅 [来源1]。\n\n2. **到馆借书就是选书、刷证借出**：先在馆内按索书号找书，再到服务台或自助借还机用校园一卡通办理借阅。活动书展曾支持现场人工借阅，每人5册、借期30天、不可续借，但该规则只适用于书展，不是日常借阅规则 [来源2]。\n\n3. **另一种“借新书”的途径是“芸台购”线上闪借**：通过公众号“资源—图书荐购”或PC端芸台购平台登录下单；此前宣传为省内包邮、一次最多15本，原活动到2026年10月10日截止，现行是否仍开放待确认 [来源4]。\n\n补充：目前检索到的文章没有写明日常借阅的册数上限和借期；这类规则正文未提及，无法确认。",
+      "responseHeadersMs": 1294,
+      "firstTextMs": 6026,
+      "completeMs": 6409
+    }
+  ],
+  "pageErrors": []
+}

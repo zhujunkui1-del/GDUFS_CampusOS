@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-25T20:01:41.291Z",
+  "previewVersion": "c720d29f-9f09-476a-b794-28f2c23583d2",
+  "productionChanged": false,
+  "d1Migrations": [],
+  "externalPublicAcceptance": false,
+  "internalBrowserAcceptance": true,
+  "localWebAcceptance": true,
+  "nativeXhsAcceptance": false,
+  "branch": "main",
+  "baseCommit": "387386d",
+  "pending": [
+    "Search endpoint denies Preview HTTP403; awaiting usable provider credentials/backend",
+    "XHS QR login and reachable HTTPS read-only gateway"
+  ]
+}

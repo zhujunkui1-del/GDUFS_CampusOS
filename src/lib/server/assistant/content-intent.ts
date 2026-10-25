@@ -1,9 +1,10 @@
 import type { StoredMessage } from "@/domain/agent/assistant-contracts";
+import { externalPolicy } from "../external-search/policy";
 export type ContentTool = "search_campus_knowledge" | "search_campus_events";
 /** Routing only; relevance, classification and dates still come from real tools. */
 export function contentIntent(message: string, history: StoredMessage[] = []) {
   const followup =
-    /^(那|那么|还|具体|需要|要|申请|报名).{0,25}(材料|条件|流程|截止|费用|在哪里|时间)/.test(
+    /^(那|那么|还|具体|需要|要|申请|报名).{0,25}(材料|条件|流程|截止|费用|在哪里|时间|怎么样|口味|体验)/.test(
       message,
     ) && message.length < 50;
   const previous = followup
@@ -22,5 +23,11 @@ export function contentIntent(message: string, history: StoredMessage[] = []) {
   const tools: ContentTool[] = [];
   if (knowledge) tools.push("search_campus_knowledge");
   if (events) tools.push("search_campus_events");
+  if (
+    !tools.length &&
+    (externalPolicy(query).active ||
+      /只用内部|只查内部|仅用内部|仅查内部/.test(query))
+  )
+    tools.push("search_campus_knowledge");
   return { active: tools.length > 0, tools, query: query.slice(-300), map };
 }

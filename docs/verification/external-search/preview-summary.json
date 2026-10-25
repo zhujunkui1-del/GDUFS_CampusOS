@@ -1,0 +1,183 @@
+{
+  "at": "2026-10-25T19:56:30.978Z",
+  "previewExternalAcceptance": "failed",
+  "reason": "Exa HTTP403 from Worker, native XHS not configured/logged in",
+  "questions": [
+    {
+      "prompt": "广外图书馆怎么借书？请按内部文章概述借书操作步骤。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "external": [
+        {
+          "status": "unavailable",
+          "durationMs": 5,
+          "providers": [
+            {
+              "provider": "exa_web",
+              "status": "unavailable",
+              "durationMs": 5,
+              "count": 0,
+              "httpStatus": 403,
+              "failureCode": "HTTP_ERROR"
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ],
+      "latencyMs": 7617,
+      "modelRequests": 3,
+      "tokens": 10985,
+      "database": {
+        "readQueries": 13,
+        "writeQueries": 12,
+        "calls": 17,
+        "failures": 0,
+        "durationMs": 2015,
+        "maxCallMs": 144,
+        "rowsRead": 504,
+        "rowsWritten": 15,
+        "rowUsageStatements": 15,
+        "rowUsageComplete": false
+      }
+    },
+    {
+      "prompt": "请联网查询广外图书馆读者借阅权限表中本科生的借阅上限和借期，以官方原文为准。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "external": [
+        {
+          "status": "unavailable",
+          "durationMs": 4,
+          "providers": [
+            {
+              "provider": "exa_web",
+              "status": "unavailable",
+              "durationMs": 4,
+              "count": 0,
+              "httpStatus": 403,
+              "failureCode": "HTTP_ERROR"
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ],
+      "latencyMs": 7831,
+      "modelRequests": 3,
+      "tokens": 14851,
+      "database": {
+        "readQueries": 15,
+        "writeQueries": 11,
+        "calls": 18,
+        "failures": 0,
+        "durationMs": 2188,
+        "maxCallMs": 148,
+        "rowsRead": 851,
+        "rowsWritten": 11,
+        "rowUsageStatements": 16,
+        "rowUsageComplete": false
+      }
+    },
+    {
+      "prompt": "广外大学城哪个食堂的饭好吃？请查学生体验，资料年代不明要说明。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "external": [
+        {
+          "status": "unavailable",
+          "durationMs": 4,
+          "providers": [
+            {
+              "provider": "xiaohongshu_mcp",
+              "status": "not_configured",
+              "durationMs": 0,
+              "count": 0
+            },
+            {
+              "provider": "exa_web",
+              "status": "unavailable",
+              "durationMs": 2,
+              "count": 0,
+              "httpStatus": 403,
+              "failureCode": "HTTP_ERROR"
+            },
+            {
+              "provider": "exa_xiaohongshu_public",
+              "status": "unavailable",
+              "durationMs": 2,
+              "count": 0,
+              "httpStatus": 403,
+              "failureCode": "HTTP_ERROR"
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ],
+      "latencyMs": 7513,
+      "modelRequests": 3,
+      "tokens": 10023,
+      "database": {
+        "readQueries": 13,
+        "writeQueries": 11,
+        "calls": 16,
+        "failures": 0,
+        "durationMs": 2171,
+        "maxCallMs": 226,
+        "rowsRead": 309,
+        "rowsWritten": 11,
+        "rowUsageStatements": 14,
+        "rowUsageComplete": false
+      }
+    },
+    {
+      "prompt": "JavaScript 的 AbortSignal 是什么？请联网找真实资料简要说明。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "external": [
+        {
+          "status": "unavailable",
+          "durationMs": 3,
+          "providers": [
+            {
+              "provider": "exa_web",
+              "status": "unavailable",
+              "durationMs": 3,
+              "count": 0,
+              "httpStatus": 403,
+              "failureCode": "HTTP_ERROR"
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ],
+      "latencyMs": 7087,
+      "modelRequests": 3,
+      "tokens": 11063,
+      "database": {
+        "readQueries": 13,
+        "writeQueries": 11,
+        "calls": 16,
+        "failures": 0,
+        "durationMs": 1918,
+        "maxCallMs": 138,
+        "rowsRead": 407,
+        "rowsWritten": 11,
+        "rowUsageStatements": 14,
+        "rowUsageComplete": false
+      }
+    }
+  ],
+  "pageErrors": []
+}

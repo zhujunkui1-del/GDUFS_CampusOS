@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-25T19:58:15.468Z",
+  "total": 476,
+  "passed": 462,
+  "failed": 14,
+  "failures": [
+    {
+      "test": "exclusive article placement and captured metadata publication publishes captured metadata without an extra source auto-policy and keeps unknown original evidence private",
+      "file": "article-placement.test.ts"
+    },
+    {
+      "test": "exclusive article placement and captured metadata publication moves published articles atomically with history, preserves original facts, and never clears withdrawal/rejection holds",
+      "file": "article-placement.test.ts"
+    },
+    {
+      "test": "exclusive article placement and captured metadata publication returns real category facets under search independently of the selected category",
+      "file": "article-placement.test.ts"
+    },
+    {
+      "test": "Console public content governance withdraws through one authoritative gate and invalidation queue, preserving other sources",
+      "file": "console-store.test.ts"
+    },
+    {
+      "test": "Console V2 source governance (isolated SQLite) requires actual evidence and does not assume candidate activity from the catalog",
+      "file": "console-v2-governance.test.ts"
+    },
+    {
+      "test": "V2 canonical intake and multiple discovery origins enforces cutoff on a new origin, permits explicit history exemption and continues existing valid-source maintenance",
+      "file": "console-v2-intake.test.ts"
+    },
+    {
+      "test": "V2 whitelist, cutoff and bounded retention (disposable DB only) preserves a prior manual withdrawal across cleanup and explicit whitelist restoration",
+      "file": "console-v2-retention.test.ts"
+    },
+    {
+      "test": "V2 whitelist, cutoff and bounded retention (disposable DB only) requires both confirmations, purges bounded large payloads and blocks reintroduction without deleting parents/audit",
+      "file": "console-v2-retention.test.ts"
+    },
+    {
+      "test": "V2 whitelist, cutoff and bounded retention (disposable DB only) enforces cutoff on every intake and permits only explicit whitelist history exemption",
+      "file": "console-v2-retention.test.ts"
+    },
+    {
+      "test": "Console administrator simplification one switch persists enabled/closed without fabricating evidence or collection permission",
+      "file": "console-v2-simple-actions.test.ts"
+    },
+    {
+      "test": "Console administrator simplification imports administrator metadata and reviews without notes or invented publication dates; document versions resolve on the server",
+      "file": "console-v2-simple-actions.test.ts"
+    },
+    {
+      "test": "bounded ingestion, real SQLite, isolated fixtures only publishes eight captured metadata cards without creating unverified structured events",
+      "file": "ingestion-pipeline.test.ts"
+    },
+    {
+      "test": "bounded ingestion, real SQLite, isolated fixtures only keeps metadata-only as default and limits explicitly licensed body extraction",
+      "file": "ingestion-pipeline.test.ts"
+    },
+    {
+      "test": "independent site parsing and safety discovers same-column URLs, real next-page links, and leaves ambiguous dates unknown",
+      "file": "ingestion-pipeline.test.ts"
+    }
+  ],
+  "baseline": {
+    "ref": "387386d",
+    "report": "docs/verification/s3-d/unit-summary.json",
+    "newFailures": []
+  }
+}

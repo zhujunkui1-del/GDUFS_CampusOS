@@ -1,0 +1,42 @@
+{
+  "at": "2026-10-25T19:42:16.172Z",
+  "localOnly": true,
+  "results": [
+    {
+      "path": "/health",
+      "authorized": false,
+      "http": 200,
+      "response": {
+        "status": "ok",
+        "items": []
+      }
+    },
+    {
+      "path": "/v1/search",
+      "authorized": false,
+      "http": 401,
+      "response": {
+        "status": "unavailable",
+        "items": []
+      }
+    },
+    {
+      "path": "/api/v1/publish",
+      "authorized": true,
+      "http": 404,
+      "response": {
+        "status": "unavailable",
+        "items": []
+      }
+    },
+    {
+      "path": "/v1/search",
+      "authorized": true,
+      "http": 200,
+      "response": {
+        "status": "login_required",
+        "items": []
+      }
+    }
+  ]
+}

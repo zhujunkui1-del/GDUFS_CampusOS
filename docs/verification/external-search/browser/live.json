@@ -1,0 +1,559 @@
+{
+  "browser": "149.0.4022.80",
+  "realModel": true,
+  "preview": true,
+  "outcomes": [
+    {
+      "prompt": "广外图书馆怎么借书？请按内部文章概述借书操作步骤。",
+      "answer": "广外图书馆借书操作步骤（基于内部文章）\n\n1. 设置图书馆密码：关注“广外图书馆”微信公众号，依次进入“服务—服务大厅—密码重置”。学工号就是你的学号，输入密码时要注意大小写。密码每半年会自动过期，请记得及时重置。[来源1]\n\n2. 完成“新生闯馆”以解锁借阅权限：在公众号菜单栏点击“资源—新生闯馆”，或依次进入“服务—服务大厅—新生闯馆”，输入学号和密码登录后，至少完成前四步学习，且答题成绩达到60分以上，才能解锁图书借阅、空间预约等权限。[来源1]\n\n3. 刷脸入馆：在公众号菜单点击“服务—人脸识别注册”，扫描识别后回复的二维码，按提示上传照片。新生注册时，如果学校系统已开通人脸识别权限，则无需重复操作。[来源1]\n\n说明：内部文章只说明了权限开通流程；借阅册数、借期、续借、超期规则，以及具体的刷卡或扫码借书动作，都没有找到相应证据。外部官方信息检索本轮不可用，无法确认这些细节。[来源1]\n\n另外，校园卡具有借书证功能，可以用来借书。[来源3] 图书馆借阅等规则是否仍然有效，建议以馆方最新通知为准。\n\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源1 · 广外图书馆 · 2026/09/06\n查看证据\n正文证据 · 有效性待确认\n使用指南 | 广外校园卡充值全攻略\n来源2 · 数智广外 · 2026/08/31\n查看证据\n正文证据 · 有效性待确认\n2026新生指南｜广外白云山校区生活指南\n来源3 · 数智广外 · 2026/09/03\n查看证据\n正文证据 · 有效性待确认\n学活场地预约指南丨云山公益服务栈（大学城校区）\n来源4 · 广外云山学生勤工助学 · 2026/09/30\n查看证据\n正文证据 · 有效性待确认",
+      "sources": [
+        {
+          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
+        },
+        {
+          "title": "使用指南 | 广外校园卡充值全攻略",
+          "url": "https://mp.weixin.qq.com/s/jAZLj0S6cgFS8YXhVLYwXQ"
+        },
+        {
+          "title": "2026新生指南｜广外白云山校区生活指南",
+          "url": "https://mp.weixin.qq.com/s/0b30pjozPKNHRO4tsBoEQg"
+        },
+        {
+          "title": "学活场地预约指南丨云山公益服务栈（大学城校区）",
+          "url": "https://mp.weixin.qq.com/s/53lINN2VHWUBMGU0Na0TkQ"
+        }
+      ]
+    },
+    {
+      "prompt": "请联网查询广外图书馆读者借阅权限表中本科生的借阅上限和借期，以官方原文为准。",
+      "answer": "广外本科生借阅上限与借期\n\n1. 借阅上限：可借 35 册，可预约 15 册，并支持架上预约。[来源1]\n2. 借期与续借：借期 30 天，可续借 1 次，续借期为 15 天（自原应还日期起算）。[来源1]\n3. 前提：完成“新生闯馆”后，会自动获得借书权限。[来源1]\n\n说明：以上数据来自广外图书馆《新生入馆指南》正文，该指南发布日期为 2026-09-06；但该来源没有标注生效时间或有效期，所以现行有效性仍需以馆方最新《读者手册》或通知为准。我尝试检索外部官网原文，但外部搜索暂不可用，未取得“读者借阅权限表”页面证据，因此无法核对表格原文。[来源1]\n\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源1 · 广外图书馆 · 2026/09/06\n查看证据\n正文证据 · 有效性待确认\n使用指南 | 广外校园卡充值全攻略\n来源2 · 数智广外 · 2026/08/31\n查看证据\n正文证据 · 有效性待确认\n2026新生指南｜广外白云山校区生活指南\n来源3 · 数智广外 · 2026/09/03\n查看证据\n正文证据 · 有效性待确认\n热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？\n来源4 · 广外图书馆 · 2026/10/23\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉\n来源5 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n主题书展 | 人文艺术经典纸电融合展\n来源6 · 广外图书馆 · 2026/09/30\n查看证据\n正文证据 · 校园资讯 · 有效性待确认",
+      "sources": [
+        {
+          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
+        },
+        {
+          "title": "使用指南 | 广外校园卡充值全攻略",
+          "url": "https://mp.weixin.qq.com/s/jAZLj0S6cgFS8YXhVLYwXQ"
+        },
+        {
+          "title": "2026新生指南｜广外白云山校区生活指南",
+          "url": "https://mp.weixin.qq.com/s/0b30pjozPKNHRO4tsBoEQg"
+        },
+        {
+          "title": "热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？",
+          "url": "https://mp.weixin.qq.com/s/B0woO8Ni8zcHw1INndCKeg"
+        },
+        {
+          "title": "阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉",
+          "url": "https://mp.weixin.qq.com/s/nInLIXklodjGsd0UwKF5sw"
+        },
+        {
+          "title": "主题书展 | 人文艺术经典纸电融合展",
+          "url": "https://mp.weixin.qq.com/s/p3ixregLA12bVnXQAIt77Q"
+        }
+      ]
+    },
+    {
+      "prompt": "广外大学城哪个食堂的饭好吃？请查学生体验，资料年代不明要说明。",
+      "answer": "目前无法确认广外大学城校区哪个食堂更好吃。\n\n1. 内部资料：我检索后返回的校园文章是留学排名、招生和社团招新内容，与食堂口味无关，因此不能作为依据。[来源1][来源2][来源3]\n2. 学生体验：外部学生体验搜索本次没有取得可用结果，系统返回不可用（unavailable），这并不表示“没有学生评价”，只是未能获得证据；因此不能据此推荐具体食堂或菜品。\n3. 资料年代：本轮没有取得可用于食堂评价的资料，年代问题无从判断；建议查看校内学生社区或亲自试吃，并结合营业时间选择。\n\n如需，我可以再帮你查询各食堂的位置和开放时间（仅限大学城校区地图）。\n\n最新！2027《麦考林》加拿大大学排名发布！分类规则迎来重大调整！！\n来源1 · 广外留学服务中心 · 2026/10/19\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n27fall招生！莱斯大学全新人工智能硕士重磅上线，已开放申请！\n来源2 · 广外留学服务中心 · 2026/10/23\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n入驻团队招新｜十佳青年团队招新｜和爱豆一起为老人做酷酷的事！！！\n来源3 · 广外创新创业学院 · 2026/10/08\n查看证据\n正文证据 · 校园资讯 · 有效性待确认",
+      "sources": [
+        {
+          "title": "最新！2027《麦考林》加拿大大学排名发布！分类规则迎来重大调整！！",
+          "url": "https://mp.weixin.qq.com/s/IFijxYVhBmFv0a5LUYeRPQ"
+        },
+        {
+          "title": "27fall招生！莱斯大学全新人工智能硕士重磅上线，已开放申请！",
+          "url": "https://mp.weixin.qq.com/s/sW-qhGVSK5pW8htloj9SKA"
+        },
+        {
+          "title": "入驻团队招新｜十佳青年团队招新｜和爱豆一起为老人做酷酷的事！！！",
+          "url": "https://mp.weixin.qq.com/s/pd60peFdHzbfSmKgq0SK6w"
+        }
+      ]
+    },
+    {
+      "prompt": "JavaScript 的 AbortSignal 是什么？请联网找真实资料简要说明。",
+      "answer": "AbortSignal 简介（据我对该标准的了解，本轮未取得可引用资料）\n\n1. 定义：`AbortSignal` 是 Web 平台（WHATWG DOM 规范）提供的一种信号对象，用来表示“某个操作是否需要中止”。它通常由 `AbortController` 创建：调用 `controller.abort()` 时，信号对象就会变为已中止状态。代码可以通过 `signal.aborted` 查看信号是否已中止，通过 `signal.reason` 查看中止原因，也可以通过监听 `abort` 事件获知中止发生。\n\n2. 典型用途：`fetch(url, { signal })` 接收该信号；中止后，请求会被取消，Promise 会以 `AbortError` 被拒绝。`addEventListener(..., { signal })` 和 `AbortSignal.timeout(ms)` 等场景也会用到它，用于统一取消异步任务。\n\n3. 本次检索情况：本轮校内知识检索返回的是招生和培训内容，与这个问题无关，因此不作为依据[来源1][来源2]；外部联网搜索此次不可用（`unavailable`），没有取得 MDN 等原文，因此无法提供带引用的官方说明，以上内容仅供参考。建议核对 MDN《AbortSignal》文档。\n\n广东外语外贸大学高等继续教育学院2026年秋季外语培训招生简章-广东外语外贸大学 公开教育|外语培训|成人教育 招生网\n来源1 · 高等学历继续教育招生网 · 2026/06/02\n查看证据\n正文证据 · 有效性待确认\n欢迎报考！广东外语外贸大学法学院2027年硕士研究生招生目录和招生简章发布\n来源2 · 广外法学 · 2026/10/08\n查看证据\n正文证据 · 有效性待确认\n广东外语外贸大学2027年硕士研究生招生简章及目录\n来源3 · 广东外语外贸大学 · 2026/10/03\n查看证据\n正文证据 · 有效性待确认",
+      "sources": [
+        {
+          "title": "广东外语外贸大学高等继续教育学院2026年秋季外语培训招生简章-广东外语外贸大学 公开教育|外语培训|成人教育 招生网",
+          "url": "https://gwpx.gdufs.edu.cn/info/1014/6869.htm"
+        },
+        {
+          "title": "欢迎报考！广东外语外贸大学法学院2027年硕士研究生招生目录和招生简章发布",
+          "url": "https://mp.weixin.qq.com/s/mxAvJKDd-c80QyWH4reFcg"
+        },
+        {
+          "title": "广东外语外贸大学2027年硕士研究生招生简章及目录",
+          "url": "https://mp.weixin.qq.com/s/accnCrY2CrKprGOjDMybRQ"
+        }
+      ]
+    }
+  ],
+  "records": [
+    {
+      "prompt": "广外图书馆怎么借书？请按内部文章概述借书操作步骤。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "5d09ca07-db91-4eca-b5a3-5e4a1ab0074d",
+        "requestId": "379f5640-7a61-4307-a218-c89fd4c670b0",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1162,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1444,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 2244,
+              "firstTextMs": 710
+            }
+          ],
+          "promptTokens": 10502,
+          "completionTokens": 483,
+          "cachedPromptTokens": 5632,
+          "totalTokens": 10985,
+          "usageComplete": true,
+          "chargedTokens": 10985,
+          "durationMs": 5810,
+          "estimatedUsdRange": [
+            0.001037196,
+            0.002074392
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1060,
+            "serverElapsedMs": 6870,
+            "firstTextMs": 5224,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 271,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 5,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 13,
+              "writeQueries": 12,
+              "calls": 17,
+              "failures": 0,
+              "durationMs": 2015,
+              "maxCallMs": 144,
+              "rowsRead": 504,
+              "rowsWritten": 15,
+              "rowUsageStatements": 15,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 346,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 271,
+                "candidateChunks": 22,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "unavailable",
+                "durationMs": 5,
+                "providers": [
+                  {
+                    "provider": "exa_web",
+                    "status": "unavailable",
+                    "durationMs": 5,
+                    "count": 0,
+                    "httpStatus": 403,
+                    "failureCode": "HTTP_ERROR"
+                  }
+                ],
+                "rowsRead": 0,
+                "rowsWritten": 0
+              }
+            ]
+          }
+        }
+      },
+      "response": "**广外图书馆借书操作步骤（基于内部文章）**\n\n1. **设置图书馆密码**：关注“广外图书馆”微信公众号，依次进入“服务—服务大厅—密码重置”。学工号就是你的学号，输入密码时要注意大小写。密码每半年会自动过期，请记得及时重置。[来源1]\n\n2. **完成“新生闯馆”以解锁借阅权限**：在公众号菜单栏点击“资源—新生闯馆”，或依次进入“服务—服务大厅—新生闯馆”，输入学号和密码登录后，至少完成前四步学习，且答题成绩达到60分以上，才能解锁图书借阅、空间预约等权限。[来源1]\n\n3. **刷脸入馆**：在公众号菜单点击“服务—人脸识别注册”，扫描识别后回复的二维码，按提示上传照片。新生注册时，如果学校系统已开通人脸识别权限，则无需重复操作。[来源1]\n\n说明：内部文章只说明了权限开通流程；借阅册数、借期、续借、超期规则，以及具体的刷卡或扫码借书动作，都没有找到相应证据。外部官方信息检索本轮不可用，无法确认这些细节。[来源1]\n\n另外，校园卡具有借书证功能，可以用来借书。[来源3] 图书馆借阅等规则是否仍然有效，建议以馆方最新通知为准。",
+      "responseHeadersMs": 1379,
+      "firstTextMs": 7233,
+      "completeMs": 7617
+    },
+    {
+      "prompt": "请联网查询广外图书馆读者借阅权限表中本科生的借阅上限和借期，以官方原文为准。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "5d09ca07-db91-4eca-b5a3-5e4a1ab0074d",
+        "requestId": "6e313a42-0485-4f62-a397-797c81542de5",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1437,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1379,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1966,
+              "firstTextMs": 914
+            }
+          ],
+          "promptTokens": 14421,
+          "completionTokens": 430,
+          "cachedPromptTokens": 2944,
+          "totalTokens": 14851,
+          "usageComplete": true,
+          "chargedTokens": 14851,
+          "durationMs": 6038,
+          "estimatedUsdRange": [
+            0.001988382,
+            0.003976764
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 936,
+            "serverElapsedMs": 6974,
+            "firstTextMs": 5807,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 274,
+                "ok": true
+              },
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 285,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 4,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 15,
+              "writeQueries": 11,
+              "calls": 18,
+              "failures": 0,
+              "durationMs": 2188,
+              "maxCallMs": 148,
+              "rowsRead": 851,
+              "rowsWritten": 11,
+              "rowUsageStatements": 16,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 346,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 274,
+                "candidateChunks": 22,
+                "usageAvailable": true
+              },
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 346,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 285,
+                "candidateChunks": 22,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "unavailable",
+                "durationMs": 4,
+                "providers": [
+                  {
+                    "provider": "exa_web",
+                    "status": "unavailable",
+                    "durationMs": 4,
+                    "count": 0,
+                    "httpStatus": 403,
+                    "failureCode": "HTTP_ERROR"
+                  }
+                ],
+                "rowsRead": 0,
+                "rowsWritten": 0
+              }
+            ]
+          }
+        }
+      },
+      "response": "**广外本科生借阅上限与借期**\n\n1. **借阅上限**：可借 **35 册**，可预约 **15 册**，并支持架上预约。[来源1]\n2. **借期与续借**：借期 **30 天**，可续借 **1 次**，续借期为 **15 天**（自原应还日期起算）。[来源1]\n3. **前提**：完成“新生闯馆”后，会自动获得借书权限。[来源1]\n\n说明：以上数据来自广外图书馆《新生入馆指南》正文，该指南发布日期为 2026-09-06；但该来源没有标注生效时间或有效期，所以**现行有效性仍需以馆方最新《读者手册》或通知为准**。我尝试检索外部官网原文，但外部搜索暂不可用，未取得“读者借阅权限表”页面证据，因此无法核对表格原文。[来源1]",
+      "responseHeadersMs": 1212,
+      "firstTextMs": 7481,
+      "completeMs": 7831
+    },
+    {
+      "prompt": "广外大学城哪个食堂的饭好吃？请查学生体验，资料年代不明要说明。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "5d09ca07-db91-4eca-b5a3-5e4a1ab0074d",
+        "requestId": "99b28832-2201-48c6-b012-4972f62031ba",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1105,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1217,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1728,
+              "firstTextMs": 638
+            }
+          ],
+          "promptTokens": 9699,
+          "completionTokens": 324,
+          "cachedPromptTokens": 2944,
+          "totalTokens": 10023,
+          "usageComplete": true,
+          "chargedTokens": 10023,
+          "durationMs": 5157,
+          "estimatedUsdRange": [
+            0.001216482,
+            0.002432964
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1068,
+            "serverElapsedMs": 6225,
+            "firstTextMs": 4973,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 357,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 4,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 13,
+              "writeQueries": 11,
+              "calls": 16,
+              "failures": 0,
+              "durationMs": 2171,
+              "maxCallMs": 226,
+              "rowsRead": 309,
+              "rowsWritten": 11,
+              "rowUsageStatements": 14,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 129,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 357,
+                "candidateChunks": 7,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "unavailable",
+                "durationMs": 4,
+                "providers": [
+                  {
+                    "provider": "xiaohongshu_mcp",
+                    "status": "not_configured",
+                    "durationMs": 0,
+                    "count": 0
+                  },
+                  {
+                    "provider": "exa_web",
+                    "status": "unavailable",
+                    "durationMs": 2,
+                    "count": 0,
+                    "httpStatus": 403,
+                    "failureCode": "HTTP_ERROR"
+                  },
+                  {
+                    "provider": "exa_xiaohongshu_public",
+                    "status": "unavailable",
+                    "durationMs": 2,
+                    "count": 0,
+                    "httpStatus": 403,
+                    "failureCode": "HTTP_ERROR"
+                  }
+                ],
+                "rowsRead": 0,
+                "rowsWritten": 0
+              }
+            ]
+          }
+        }
+      },
+      "response": "目前无法确认广外大学城校区哪个食堂更好吃。\n\n1. **内部资料**：我检索后返回的校园文章是留学排名、招生和社团招新内容，与食堂口味无关，因此不能作为依据。[来源1][来源2][来源3]\n2. **学生体验**：外部学生体验搜索本次没有取得可用结果，系统返回不可用（unavailable），这并不表示“没有学生评价”，只是未能获得证据；因此不能据此推荐具体食堂或菜品。\n3. **资料年代**：本轮没有取得可用于食堂评价的资料，年代问题无从判断；建议查看校内学生社区或亲自试吃，并结合营业时间选择。\n\n如需，我可以再帮你查询各食堂的位置和开放时间（仅限大学城校区地图）。",
+      "responseHeadersMs": 1870,
+      "firstTextMs": 7133,
+      "completeMs": 7513
+    },
+    {
+      "prompt": "JavaScript 的 AbortSignal 是什么？请联网找真实资料简要说明。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "5d09ca07-db91-4eca-b5a3-5e4a1ab0074d",
+        "requestId": "d0aa317e-d668-4370-a403-9a0f3675b626",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 941,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 929,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 2544,
+              "firstTextMs": 986
+            }
+          ],
+          "promptTokens": 10639,
+          "completionTokens": 424,
+          "cachedPromptTokens": 2944,
+          "totalTokens": 11063,
+          "usageComplete": true,
+          "chargedTokens": 11063,
+          "durationMs": 5376,
+          "estimatedUsdRange": [
+            0.001417482,
+            0.002834964
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 959,
+            "serverElapsedMs": 6335,
+            "firstTextMs": 4663,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 271,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 3,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 13,
+              "writeQueries": 11,
+              "calls": 16,
+              "failures": 0,
+              "durationMs": 1918,
+              "maxCallMs": 138,
+              "rowsRead": 407,
+              "rowsWritten": 11,
+              "rowUsageStatements": 14,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 206,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 271,
+                "candidateChunks": 11,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "unavailable",
+                "durationMs": 3,
+                "providers": [
+                  {
+                    "provider": "exa_web",
+                    "status": "unavailable",
+                    "durationMs": 3,
+                    "count": 0,
+                    "httpStatus": 403,
+                    "failureCode": "HTTP_ERROR"
+                  }
+                ],
+                "rowsRead": 0,
+                "rowsWritten": 0
+              }
+            ]
+          }
+        }
+      },
+      "response": "**AbortSignal 简介（据我对该标准的了解，本轮未取得可引用资料）**\n\n1. **定义**：`AbortSignal` 是 Web 平台（WHATWG DOM 规范）提供的一种信号对象，用来表示“某个操作是否需要中止”。它通常由 `AbortController` 创建：调用 `controller.abort()` 时，信号对象就会变为已中止状态。代码可以通过 `signal.aborted` 查看信号是否已中止，通过 `signal.reason` 查看中止原因，也可以通过监听 `abort` 事件获知中止发生。\n\n2. **典型用途**：`fetch(url, { signal })` 接收该信号；中止后，请求会被取消，Promise 会以 `AbortError` 被拒绝。`addEventListener(..., { signal })` 和 `AbortSignal.timeout(ms)` 等场景也会用到它，用于统一取消异步任务。\n\n3. **本次检索情况**：本轮校内知识检索返回的是招生和培训内容，与这个问题无关，因此不作为依据[来源1][来源2]；外部联网搜索此次不可用（`unavailable`），没有取得 MDN 等原文，因此无法提供带引用的官方说明，以上内容仅供参考。建议核对 MDN《AbortSignal》文档。",
+      "responseHeadersMs": 1200,
+      "firstTextMs": 6707,
+      "completeMs": 7087
+    }
+  ],
+  "pageErrors": []
+}

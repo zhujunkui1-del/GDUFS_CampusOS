@@ -7,8 +7,13 @@ import { ApiError } from "../errors";
 import type { AssistantStore } from "./store";
 import type { MapAction } from "@/domain/maps/contracts";
 import { ControlMapInputSchema } from "@/domain/maps/skill-contracts";
-import type {ContentTool} from './content-intent';
-type RequiredTool='control_map'|'search_places'|'plan_route'|ContentTool;
+import type { ContentTool } from "./content-intent";
+type RequiredTool =
+  | "control_map"
+  | "search_places"
+  | "plan_route"
+  | "search_external_campus_info"
+  | ContentTool;
 
 export function meteredClient(
   client: ModelClient,
@@ -21,6 +26,7 @@ export function meteredClient(
   requiredTool?: RequiredTool,
   nextRequiredTool?: () => RequiredTool | undefined,
   requiredAction?: MapAction | null,
+  optionalTools?: () => string[] | undefined,
 ) {
   let requests = 0,
     promptTokens = 0,
@@ -126,7 +132,11 @@ export function meteredClient(
                           }
                         : tool,
                     )
-                : request.tools,
+                : request.tools.filter(
+                    (tool) =>
+                      !optionalTools?.() ||
+                      optionalTools()!.includes(tool.function.name),
+                  ),
             ...(required
               ? {
                   toolChoice: {

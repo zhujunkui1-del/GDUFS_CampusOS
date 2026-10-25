@@ -531,3 +531,9 @@ Rows read基线来自Cloudflare Wrangler只读命令`wrangler d1 insights campus
 ## 2026-10-26｜S3-D真实检索验收语料
 
 复用Preview中已有、当前可公开且正文用途允许的官网/公众号文章，未重新抓取入口或改变来源许可。实例：广外图书馆《新生入馆指南》https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw；《金秋阅新》https://mp.weixin.qq.com/s/NBtUOT9gSaFqSSM4BImKIQ（原文书展日期2026.9.22—9.24，技术验收明确历史，不当作当前可参加）；既有官网研究生奖学金通知。具体documentId、来源、发布日期、正文片段与当前分类见docs/verification/s3-d各真实查询JSON。来源使用权限沿现有公开与正文范围复核，不把检索命中升级为新的来源许可。
+
+## 2026-10-26｜按需外部搜索来源及使用边界
+
+负责人授权参考https://github.com/xpzouying/xiaohongshu-mcp及https://github.com/Panniantong/Agent-Reach。采用专用小红书只读本地会话，不导入社交正文至公开D1语料，不下载图片或作为地图资料。实际镜像v2.5.5、固定digest见services/external-search/setup.mjs；本轮未登录、未取得真实笔记，不声称平台授权或公开检索成功。
+
+通用网页适配Exa MCP（https://exa.ai/docs/get-started/exa-mcp），官方文档说明免Key限流及x-api-key认证。本机真实搜索得到https://lib.gdufs.edu.cn/fwzn/fwqykfsj/dzjyqxb.htm与https://lib.gdufs.edu.cn/fwzn/fwqykfsj/tsjygz.htm，结果仅搜索摘录，不冒充全文/当前有效性。Preview被403拒绝，尚无公网外部证据。来源分级、真实响应与网络边界见docs/verification/external-search。

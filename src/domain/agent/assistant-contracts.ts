@@ -7,6 +7,19 @@ import { MapActionSchema } from "@/domain/maps/contracts";
 export const AssistantCardSchema = z.discriminatedUnion("kind", [
   z
     .object({
+      kind: z.literal("external_source"),
+      title: z.string().max(250),
+      sourceName: z.string().max(160),
+      originalUrl: z.url().refine((v) => /^https:\/\//.test(v)),
+      publishedAt: z.string().nullable(),
+      snippet: z.string().max(700),
+      authority: z.enum(["official", "student_experience", "unverified"]),
+      evidenceKind: z.enum(["page_excerpt", "search_excerpt", "title_only"]),
+      searchMode: z.enum(["web", "platform", "public_web"]),
+    })
+    .strict(),
+  z
+    .object({
       kind: z.literal("source"),
       documentId: z.string(),
       title: z.string().max(250),

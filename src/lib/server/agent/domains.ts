@@ -8,7 +8,11 @@ export type AgentDomain = (typeof AGENT_DOMAINS)[number];
 
 // Logical capability modules, all coordinated by one model/run. Unimplemented skills are absent.
 export const DOMAIN_SKILLS = {
-  "knowledge-domain": ["search_campus_knowledge", "find_official_service"],
+  "knowledge-domain": [
+    "search_campus_knowledge",
+    "find_official_service",
+    "search_external_campus_info",
+  ],
   "spatial-domain": [
     "search_places",
     "get_place_details",
