@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-25T10:03:46.449Z",
+  "browser": "Edge headless",
+  "isolatedDatabase": true,
+  "realComponent": true,
+  "realStore": true,
+  "productionGateChanged": false,
+  "records": [
+    {
+      "date": "2026-07-01",
+      "visible": [
+        "autumn",
+        "white"
+      ],
+      "message": "门禁已生效，下架 1 篇，恢复 0 篇。后台全文保留。",
+      "contentAndHistoryUnchanged": true
+    },
+    {
+      "date": "2026-01-01",
+      "visible": [
+        "autumn",
+        "spring",
+        "white"
+      ],
+      "message": "门禁已生效，下架 0 篇，恢复 1 篇。后台全文保留。",
+      "contentAndHistoryUnchanged": true
+    }
+  ],
+  "errors": []
+}

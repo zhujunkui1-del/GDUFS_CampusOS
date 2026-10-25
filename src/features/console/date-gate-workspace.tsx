@@ -66,15 +66,21 @@ function Articles({
               {item.classification === "protected"
                 ? "白名单保留"
                 : item.stage === "complete"
-                  ? "已清理"
+                  ? plan.gate_behavior === "visibility"
+                    ? item.gate_action === "restore"
+                      ? "已恢复上线"
+                      : "已下架，后台保留"
+                    : "已清理"
                   : item.stage === "blocked"
                     ? "已变化，跳过"
-                    : "待清理"}
+                    : item.gate_action === "restore"
+                      ? "待恢复上线"
+                      : "待下架"}
             </span>
           </article>
         ))}
       </div>
-      {Number(plan.total) === 0 && <p>此日期以前没有待清理文章。</p>}
+      {Number(plan.total) === 0 && <p>没有需要调整的文章。</p>}
       <div className="console-actions">
         <button
           disabled={!plan.offset}
@@ -186,12 +192,12 @@ export function DateGateWorkspace({
       if (active.current)
         setMessage(
           current.state === "complete"
-            ? `门禁已生效，清理 ${current.cleaned_count || 0} 篇，跳过 ${current.skipped_count || 0} 篇。`
-            : "清理进度已保存，可在清理记录中继续。",
+            ? `门禁已生效，下架 ${current.hidden_count || 0} 篇，恢复 ${current.restored_count || 0} 篇。后台全文保留。`
+            : "处理进度已保存，可在门禁记录中继续。",
         );
     } catch (e) {
       if (active.current)
-        setMessage(e instanceof Error ? e.message : "清理中断，可从记录继续。");
+        setMessage(e instanceof Error ? e.message : "处理中断，可从记录继续。");
     } finally {
       if (active.current) {
         setBusy(false);
@@ -214,8 +220,9 @@ export function DateGateWorkspace({
         <h2>文章日期门禁</h2>
         <p>
           当前门禁：{date(settings.data?.earliest_import_day)} ·
-          保留当天及以后的文章
+          展示当天及以后的文章，白名单不受影响
         </p>
+        <p>门禁外文章仅前台下架，后台保留全文；日期调早后自动恢复上线。</p>
         <form className="console-form" onSubmit={create}>
           <label>
             门禁日期（北京时间）
@@ -231,23 +238,25 @@ export function DateGateWorkspace({
           </label>
           <div className="console-actions">
             <button disabled={!admin || busy || !settings.data}>
-              预览清理文章
+              预览门禁文章
             </button>
           </div>
         </form>
         {settings.error && <p role="alert">{settings.error}</p>}
         {preview && (
           <div className="console-date-gate-preview">
-            <h3>{preview.confirmed_at ? "清理进度" : "确认前预览"}</h3>
+            <h3>{preview.confirmed_at ? "处理进度" : "确认前预览"}</h3>
             <p>
               门禁日期：{JSON.parse(String(preview.filters_json)).cutoff} ·
-              将清理 {preview.candidates || 0} 篇 · 白名单保留{" "}
+              将下架 {preview.hide_count || 0} 篇 · 将恢复{" "}
+              {preview.restore_count || 0} 篇 · 白名单保留{" "}
               {preview.protected_count || 0} 篇
             </p>
             {preview.confirmed_at && (
               <p role="status">
-                已清理 {preview.cleaned_count || 0} 篇 ·{" "}
-                {preview.state === "complete" ? "已完成" : "清理中"}
+                已下架 {preview.hidden_count || 0} 篇 · 已恢复{" "}
+                {preview.restored_count || 0} 篇 ·{" "}
+                {preview.state === "complete" ? "已完成" : "处理中"}
               </p>
             )}
             <Articles
@@ -257,7 +266,7 @@ export function DateGateWorkspace({
             {!preview.confirmed_at && (
               <div className="console-actions">
                 <button
-                  className="console-danger-button"
+                  className="primary-button"
                   disabled={!admin || busy}
                   onClick={() => void clean(preview, true)}
                 >
@@ -272,16 +281,19 @@ export function DateGateWorkspace({
         )}
       </section>
       <section className="console-card">
-        <h2>清理记录</h2>
+        <h2>门禁记录</h2>
         {history.error && <p role="alert">{history.error}</p>}
-        {history.data?.items.length === 0 && <p>暂无清理记录</p>}
+        {history.data?.items.length === 0 && <p>暂无门禁记录</p>}
         {history.data?.items.map((row) => (
           <article className="console-date-gate-row" key={String(row.id)}>
             <strong>
-              {date(row.confirmed_at)} · 清理 {row.cleaned_count || 0} 篇
+              {date(row.confirmed_at)} ·{" "}
+              {row.gate_behavior === "visibility"
+                ? `下架 ${row.hidden_count || 0} 篇 · 恢复 ${row.restored_count || 0} 篇`
+                : `历史清理 ${row.cleaned_count || 0} 篇`}
             </strong>
             <p>
-              清理前门禁：{date(row.previous_cutoff)} · 本次门禁：
+              原门禁：{date(row.previous_cutoff)} · 本次门禁：
               {JSON.parse(String(row.filters_json)).cutoff}
             </p>
             <div className="console-actions">
@@ -295,24 +307,30 @@ export function DateGateWorkspace({
               >
                 查看详情
               </button>
-              {row.mode === "date_gate" && row.state === "purging" && (
-                <button
-                  disabled={!admin || busy}
-                  onClick={() =>
-                    void request<Plan>("v2/date-gate/" + row.id)
-                      .then((p) => clean(p, false))
-                      .catch((e) => setMessage(e.message))
-                  }
-                >
-                  继续清理
-                </button>
-              )}
+              {row.mode === "date_gate" &&
+                row.gate_behavior === "visibility" &&
+                row.state === "purging" && (
+                  <button
+                    disabled={!admin || busy}
+                    onClick={() =>
+                      void request<Plan>("v2/date-gate/" + row.id)
+                        .then((p) => clean(p, false))
+                        .catch((e) => setMessage(e.message))
+                    }
+                  >
+                    继续处理
+                  </button>
+                )}
             </div>
           </article>
         ))}
         {detail && (
           <div className="console-date-gate-preview">
-            <h3>清理详情 · 已清理 {detail.cleaned_count || 0} 篇</h3>
+            <h3>
+              {detail.gate_behavior === "visibility"
+                ? `门禁详情 · 下架 ${detail.hidden_count || 0} 篇 · 恢复 ${detail.restored_count || 0} 篇`
+                : `历史清理详情 · 已清理 ${detail.cleaned_count || 0} 篇`}
+            </h3>
             <Articles
               plan={detail}
               changePage={(next) => void page(detail, next, "history")}

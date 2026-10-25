@@ -1,0 +1,117 @@
+{
+  "fixture": {
+    "documents": 1000,
+    "fetches": 4000,
+    "jobSteps": 4000,
+    "externalRequests": 0,
+    "listPages": 5,
+    "newArticles": 1
+  },
+  "baselineRef": "9794d9e",
+  "versions": {
+    "before": {
+      "read": 8619,
+      "written": 224,
+      "published": 1,
+      "sqlCalls": 199,
+      "topReads": [
+        {
+          "sql": "INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,content_hash,fetched_at,campus_scope,data_domain,candidate_kind,valid_until,published_at,extracted_fields_json,updated_at,source_updated_at,content_revision,input_hash,content_type,rights_scope,radar_category,knowledge_category,publisher,summary) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+          "read": 4018,
+          "written": 10
+        },
+        {
+          "sql": "SELECT DISTINCT d.id FROM document_origins o JOIN knowledge_documents d ON d.id=o.document_id JOIN document_fetches f ON f.document_id=d.id WHERE o.source_id=? AND f.body_hash=? AND d.title=? AND d.published_at IS ? AND d.publisher IS ? AND d.owner_user_id IS NULL AND d.data_domain<>'user_private' LIMIT 1",
+          "read": 4005,
+          "written": 0
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        }
+      ],
+      "provenanceProbe": {
+        "read": 4000,
+        "written": 0
+      }
+    },
+    "after": {
+      "read": 516,
+      "written": 200,
+      "published": 1,
+      "sqlCalls": 168,
+      "topReads": [
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 21,
+          "written": 6
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 19,
+          "written": 5
+        },
+        {
+          "sql": "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,session_hash,details_json) VALUES(?,?,?,?,?,?,?,?,?,?)",
+          "read": 19,
+          "written": 5
+        }
+      ],
+      "provenanceProbe": {
+        "read": 3,
+        "written": 0
+      }
+    }
+  }
+}

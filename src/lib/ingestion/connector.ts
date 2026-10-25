@@ -103,8 +103,7 @@ function embeddedAttachments(
     for (const match of source.matchAll(
       /\bshowVsb(pdfIframe|Video)\s*\(\s*(["'])(.*?)\2/gi,
     )) {
-      const extension =
-          match[1].toLowerCase() === "pdfiframe" ? "pdf" : "mp4",
+      const extension = match[1].toLowerCase() === "pdfiframe" ? "pdf" : "mp4",
         url = embeddedAttachmentUrl(match[3], pageUrl, profile, extension);
       if (url) found.set(url, extension);
     }
@@ -303,8 +302,25 @@ export class OfficialWebConnector {
           .filter(Boolean),
       ),
     ];
+    // This CMS puts an explicit publication timestamp in its header rather than
+    // the configured date node. Read only that labeled header, never body dates.
+    const headerDates = values.length
+      ? values
+      : [
+          ...new Set(
+            [...document.querySelectorAll(".other-s")]
+              .map(text)
+              .map(
+                (s) =>
+                  s.match(
+                    /发布日期[：:]\s*(\d{4}年\d{1,2}月\d{1,2}日(?:\s+\d{1,2}:\d{2})?)/,
+                  )?.[1],
+              )
+              .filter((value): value is string => !!value),
+          ),
+        ];
     const dateText =
-      values.length === 1 ? values[0] : publishedAtFromList || "";
+      headerDates.length === 1 ? headerDates[0] : publishedAtFromList || "";
     const configuredBody = document.querySelector(this.profile.bodySelector),
       legacyBody = document.querySelector(".v_news_content"),
       galleryBody = document.querySelector("#content .pagepic_tablestyle_1"),
@@ -327,8 +343,8 @@ export class OfficialWebConnector {
         document.querySelector("#content > span")?.textContent || "";
       const imageUrls = [
         ...new Set(
-          [...encodedRefs.matchAll(/\/virtual_attach_file\.vsb\?[^\s"'<>]+/g)].map(
-            ([reference]) => {
+          [...encodedRefs.matchAll(/\/virtual_attach_file\.vsb\?[^\s"'<>]+/g)]
+            .map(([reference]) => {
               try {
                 const imageUrl = new URL(reference, url);
                 return imageUrl.protocol === "https:" &&
@@ -336,22 +352,27 @@ export class OfficialWebConnector {
                   !imageUrl.username &&
                   !imageUrl.password &&
                   ![...imageUrl.searchParams.keys()].some((key) =>
-                    /^(uin|key|pass_ticket|appmsg_token|token|code)$/i.test(key),
+                    /^(uin|key|pass_ticket|appmsg_token|token|code)$/i.test(
+                      key,
+                    ),
                   )
                   ? imageUrl.href
                   : null;
               } catch {
                 return null;
               }
-            },
-          ).filter((value): value is string => !!value),
+            })
+            .filter((value): value is string => !!value),
         ),
       ].slice(0, 50);
       for (const imageUrl of imageUrls) {
         const image = document.createElement("img");
         image.setAttribute("src", imageUrl);
         image.setAttribute("alt", title);
-        image.setAttribute("style", "display:block;max-width:100%;height:auto;margin:0 auto 16px");
+        image.setAttribute(
+          "style",
+          "display:block;max-width:100%;height:auto;margin:0 auto 16px",
+        );
         body.appendChild(image);
       }
     }

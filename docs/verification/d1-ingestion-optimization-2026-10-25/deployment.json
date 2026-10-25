@@ -1,0 +1,31 @@
+{
+  "environment": "preview",
+  "url": "https://campusos-preview.zhujunkui1.workers.dev",
+  "workerVersion": "9ad72f3d-d9e1-454c-8c18-a78444c448ec",
+  "build": "passed",
+  "wranglerDryRun": "passed",
+  "healthStatus": 200,
+  "targetedTestsPassed": 20,
+  "expandedTestsPassed": 52,
+  "expandedExistingFailures": 9,
+  "expandedNewFailures": 0,
+  "remoteMigrationApplied": true,
+  "pendingMigrations": [],
+  "remoteDatabaseError": null,
+  "liveCollectionRevalidated": false,
+  "appliedMigrations": [
+    {
+      "name": "0041_verified_official_web_publication.sql",
+      "applied_at": "2026-10-25 08:58:24"
+    },
+    {
+      "name": "0042_ingestion_lookup_indexes.sql",
+      "applied_at": "2026-10-25 08:58:25"
+    }
+  ],
+  "previousRemoteDatabaseError": 7500,
+  "remoteIndexCount": 15,
+  "liveQueriesVerified": true,
+  "indexVerificationAt": "2026-10-25T08:59:59.882Z",
+  "migrationsListEmpty": true
+}

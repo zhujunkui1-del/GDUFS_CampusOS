@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-25T10:06:55.159Z",
+  "environment": "preview",
+  "workerVersion": "0a8ac5d1-79ae-4373-b3e5-c12c3f32d055",
+  "settings": {
+    "earliest_import_day": "2026-01-01",
+    "version": 14,
+    "public_visibility_revision": 1
+  },
+  "migration": {
+    "name": "0044_reversible_date_gate.sql",
+    "applied_at": "2026-10-25 10:05:06"
+  },
+  "schema": [
+    {
+      "name": "console_date_gate_no_purge",
+      "type": "trigger"
+    },
+    {
+      "name": "console_date_unrestricted_documents",
+      "type": "view"
+    },
+    {
+      "name": "console_public_documents",
+      "type": "view"
+    }
+  ],
+  "articles": {
+    "documents": 1756,
+    "body_chars": 58396597
+  },
+  "verificationRowsRead": 2082,
+  "verificationRowsWritten": 0,
+  "liveGateChanged": false
+}

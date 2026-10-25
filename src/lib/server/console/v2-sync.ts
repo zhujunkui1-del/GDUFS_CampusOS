@@ -21,7 +21,39 @@ export const cloudRunnerActor = {
 };
 export class ConsoleSyncStore extends ConsoleRetentionStore {
   runnerId?: string;
-  private priorSuccess: string | null | undefined;
+  protected override sourceProgressStatement(
+    sourceId: string,
+    now: string,
+    errorCode: string | null,
+    completed: boolean,
+    failed: boolean,
+  ) {
+    return this.db
+      .prepare(
+        `UPDATE knowledge_sources SET
+      last_checked_at=?,last_error=?,last_executor=?,
+      last_success_at=CASE WHEN ? THEN ? ELSE last_success_at END,
+      sync_state=?,
+      next_sync_at_ms=CASE WHEN ? THEN ?+(SELECT sync_hours*3600000 FROM console_engine_settings WHERE id='console-v2-settings')
+        WHEN ? THEN ?+3600000 ELSE next_sync_at_ms END,
+      sync_policy_version=CASE WHEN ? THEN (SELECT sync_revision FROM console_engine_settings WHERE id='console-v2-settings') ELSE sync_policy_version END
+      WHERE id=?`,
+      )
+      .bind(
+        now,
+        errorCode,
+        this.actor.id === cloudRunnerActor.id ? "cloud" : "local",
+        Number(completed),
+        now,
+        failed ? "blocked" : completed ? "completed" : "running",
+        Number(completed),
+        Date.parse(now),
+        Number(failed),
+        Date.parse(now),
+        Number(completed),
+        sourceId,
+      );
+  }
   protected override async mutate(
     ...args: Parameters<ConsoleRetentionStore["mutate"]>
   ) {
@@ -35,29 +67,17 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
           )
           .bind(Date.parse(this.now()), args[3]),
       ];
-    if (args[1] === "job.commit")
+    if (args[1] === "job.claim")
       args[5] = [
         ...args[5],
         this.db
           .prepare(
-            "UPDATE knowledge_sources SET last_executor=? WHERE id=(SELECT source_id FROM ingestion_jobs WHERE id=?)",
+            "UPDATE knowledge_sources SET sync_state='running',last_executor=? WHERE id=(SELECT source_id FROM ingestion_jobs WHERE id=?) AND (sync_state<>'running' OR last_executor IS NOT ?)",
           )
           .bind(
             this.actor.id === cloudRunnerActor.id ? "cloud" : "local",
             args[3],
-          ),
-        this.db
-          .prepare(
-            "UPDATE knowledge_sources SET last_success_at=CASE WHEN EXISTS(SELECT 1 FROM ingestion_jobs WHERE id=? AND phase='complete' AND status='completed') THEN ? ELSE ? END,sync_state=(SELECT CASE WHEN status='failed' THEN 'blocked' WHEN phase='complete' THEN 'completed' ELSE 'queued' END FROM ingestion_jobs WHERE id=?),next_sync_at_ms=CASE WHEN EXISTS(SELECT 1 FROM ingestion_jobs WHERE id=? AND status='failed') THEN ? ELSE next_sync_at_ms END WHERE id=(SELECT source_id FROM ingestion_jobs WHERE id=?)",
-          )
-          .bind(
-            args[3],
-            this.now(),
-            this.priorSuccess || null,
-            args[3],
-            args[3],
-            Date.parse(this.now()) + 3600000,
-            args[3],
+            this.actor.id === cloudRunnerActor.id ? "cloud" : "local",
           ),
       ];
     return super.mutate(...args);
@@ -334,14 +354,6 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       .run();
     return r;
   }
-  override async claim(id: string, raw: unknown) {
-    const r = await super.claim(id, raw);
-    await this.db
-      .prepare("UPDATE knowledge_sources SET sync_state='running' WHERE id=?")
-      .bind(r.sourceId)
-      .run();
-    return r;
-  }
   override async control(
     id: string,
     raw: unknown,
@@ -369,16 +381,6 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       .bind(Date.parse(this.now()), id)
       .run();
     return r;
-  }
-  override async commit(id: string, raw: unknown) {
-    const j = await this.job(id),
-      s = await this.source(String(j.source_id));
-    this.priorSuccess = s.lastSuccessAt;
-    try {
-      return await super.commit(id, raw);
-    } finally {
-      this.priorSuccess = undefined;
-    }
   }
   async permit(id: string, raw: unknown) {
     const v = z

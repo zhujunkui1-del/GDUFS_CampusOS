@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-25T10:06:55.507Z",
+  "results": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "path": "/api/public/content?surface=radar&grouped=1",
+      "status": 200,
+      "ok": true,
+      "total": 1718
+    },
+    {
+      "path": "/api/public/content?surface=knowledge&grouped=1",
+      "status": 200,
+      "ok": true,
+      "total": 38
+    },
+    {
+      "path": "/api/public/article?id=content-d11706f5-411d-4190-8645-569cef798f74",
+      "status": 200,
+      "ok": true,
+      "bodyChars": 2067,
+      "publishedAt": "2026-04-03T01:34:00.000Z"
+    }
+  ]
+}

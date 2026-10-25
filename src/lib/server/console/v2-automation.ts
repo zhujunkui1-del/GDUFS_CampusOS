@@ -21,6 +21,7 @@ import { tokenHash } from "../assistant/crypto";
 import { CommandSchema, ContentInputSchema } from "@/domain/console/contracts";
 import { classifyArticle } from "@/domain/console/article-classification";
 import { normalizedContent } from "./store";
+import { contentProvenanceSql } from "./ingestion-queries";
 import {
   KnowledgeCategorySchema,
   RadarCategorySchema,
@@ -741,10 +742,15 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
     )
       blocked = "内容已过期、被替代或使用范围未确认";
     const provenance = await this.db
-      .prepare(
-        "SELECT 1 AS ok WHERE EXISTS(SELECT 1 FROM document_fetches f JOIN console_content_versions v ON v.document_id=f.document_id AND v.version=f.snapshot_version WHERE f.document_id=? AND EXISTS(SELECT 1 FROM console_document_controls dc WHERE dc.document_id=f.document_id AND dc.last_change_origin='source_author') AND f.status IN(200,304) AND v.content_revision=? AND v.input_hash=(SELECT input_hash FROM knowledge_documents WHERE id=f.document_id) AND f.outcome IN('ok','not_modified')) OR EXISTS(SELECT 1 FROM console_content_attestations WHERE document_id=? AND content_revision=? AND input_hash=?)",
+      .prepare(contentProvenanceSql)
+      .bind(
+        id,
+        d.contentRevision,
+        d.inputHash,
+        id,
+        d.contentRevision,
+        d.inputHash,
       )
-      .bind(id, d.contentRevision, id, d.contentRevision, d.inputHash)
       .first();
     const check = contentCompleteness(d, {
       rights: String(p?.rights_scope || "metadata_only"),
@@ -942,11 +948,20 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       }
     return result;
   }
+  async publishCollectedWebArticle(id: string) {
+    consolePermission(this.actor, "write");
+    await this.publishOwnerDirectedWeb(id);
+    const visible = await this.db
+      .prepare("SELECT 1 AS ok FROM console_public_documents WHERE id=?")
+      .bind(id)
+      .first();
+    return { id, published: !!visible };
+  }
   private async publishOwnerDirectedWeb(id: string) {
     const d = await this.document(id);
     const setting = await this.db
       .prepare(
-        "SELECT e.official_web_auto_publish,s.source_type,s.channel_type,s.enabled,s.verification_status,s.official_status,s.archived_at FROM knowledge_sources s CROSS JOIN console_engine_settings e WHERE s.id=? AND e.id='console-v2-settings'",
+        "SELECT e.official_web_auto_publish,s.source_type,s.channel_type,s.console_managed,s.enabled,s.archived_at FROM knowledge_sources s CROSS JOIN console_engine_settings e WHERE s.id=? AND e.id='console-v2-settings'",
       )
       .bind(d.sourceId)
       .first<Row>();
@@ -955,14 +970,22 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       setting.channel_type !== "official_web" ||
       !Number(setting.official_web_auto_publish) ||
       !Number(setting.enabled) ||
-      setting.verification_status !== "verified" ||
-      setting.official_status !== "verified_official" ||
+      !Number(setting.console_managed) ||
       setting.archived_at
     )
       return false;
     if (!d.inputHash || d.contentRevision <= 0)
       throw new ApiError("INVALID_ARGUMENT", "官网文章缺少可发布的内容修订。");
-    if (d.publicationStatus === "published") return true;
+    if (!d.publishedAt) return false;
+    if (d.publicationStatus === "published") {
+      const receipt = await this.db
+        .prepare(
+          "SELECT 1 AS ok FROM console_owner_publications WHERE document_id=? AND content_revision=? AND input_hash=? LIMIT 1",
+        )
+        .bind(id, d.contentRevision, d.inputHash)
+        .first();
+      if (receipt) return true;
+    }
     const control = await this.db
       .prepare(
         "SELECT hold_reason,review_hold FROM console_document_controls WHERE document_id=?",
@@ -1054,7 +1077,7 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
         .bind(id, revision, inputHash),
       this.db
         .prepare(
-          "INSERT INTO console_owner_publications(command_id,document_id,publication_version,content_revision,input_hash,created_at) VALUES(?,?,?,?,?,?)",
+          "INSERT INTO console_owner_publications(command_id,document_id,publication_version,content_revision,input_hash,created_at) VALUES(?,?,?,?,?,?) ON CONFLICT(document_id,content_revision,input_hash) DO NOTHING",
         )
         .bind(
           commandId,

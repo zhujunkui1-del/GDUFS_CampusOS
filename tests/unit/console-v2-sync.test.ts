@@ -202,6 +202,12 @@ describe("V2 persistent scheduling and dual executors", () => {
       });
       job = await f.store.job(jobId);
       lease = await f.store.claim(jobId, cmd(Number(job.version)));
+      // Already captured articles must not be held back by source review labels.
+      f.sqlite
+        .prepare(
+          "UPDATE knowledge_sources SET verification_status='candidate',official_status='claimed_official' WHERE id=?",
+        )
+        .run(id);
       const article = ContentInputSchema.parse({
         sourceId: id,
         title: "官网自动发布测试",
@@ -272,6 +278,22 @@ describe("V2 persistent scheduling and dual executors", () => {
           )
           .get(),
       ).toMatchObject({ n: 0 });
+      const documentId = String(
+        f.sqlite
+          .prepare("SELECT id FROM knowledge_documents WHERE url=?")
+          .get(absoluteArticleUrl)?.id,
+      );
+      f.sqlite
+        .prepare(
+          "UPDATE knowledge_documents SET publication_status='draft' WHERE id=?",
+        )
+        .run(documentId);
+      expect(
+        await f.store.publishCollectedWebArticle(documentId),
+      ).toMatchObject({ published: true });
+      expect(
+        await f.store.publishCollectedWebArticle(documentId),
+      ).toMatchObject({ published: true });
       f.sqlite
         .prepare(
           "UPDATE knowledge_sources SET verification_status='pending' WHERE id=?",
@@ -283,7 +305,127 @@ describe("V2 persistent scheduling and dual executors", () => {
             "SELECT count(*) AS n FROM console_public_documents WHERE url=?",
           )
           .get(absoluteArticleUrl),
+      ).toMatchObject({ n: 1 });
+      const publishedDocument = await f.store.document(documentId);
+      await f.store.publish(
+        documentId,
+        { ...cmd(publishedDocument.version), note: "管理员主动下架" },
+        true,
+      );
+      expect(
+        await f.store.publishCollectedWebArticle(documentId),
+      ).toMatchObject({ published: false });
+      f.sqlite
+        .prepare("UPDATE knowledge_sources SET enabled=0 WHERE id=?")
+        .run(id);
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT count(*) AS n FROM console_public_documents WHERE url=?",
+          )
+          .get(absoluteArticleUrl),
       ).toMatchObject({ n: 0 });
+    } finally {
+      f.close();
+    }
+  });
+  it("keeps source progress stable between pages and schedules the next run from completion", async () => {
+    const f = await setup();
+    try {
+      const id = await f.source(),
+        oldSuccess = new Date(Date.now() - 86400000).toISOString();
+      f.sqlite
+        .prepare("UPDATE knowledge_sources SET last_success_at=? WHERE id=?")
+        .run(oldSuccess, id);
+      f.sqlite.exec(`CREATE TABLE source_progress_writes (id TEXT);
+        CREATE TRIGGER count_source_progress AFTER UPDATE OF sync_state,last_checked_at,last_success_at,last_executor ON knowledge_sources
+        BEGIN INSERT INTO source_progress_writes VALUES(NEW.id); END;`);
+      await f.store.syncNow({ commandId: crypto.randomUUID(), sourceId: id });
+      const jobId = String(
+        f.sqlite.prepare("SELECT id FROM ingestion_jobs").get()?.id,
+      );
+      const progress = () =>
+        f.sqlite
+          .prepare("SELECT count(*) AS n FROM source_progress_writes")
+          .get()?.n;
+      let job = await f.store.job(jobId);
+      let lease = await f.store.claim(jobId, cmd(Number(job.version)));
+      const claimedWrites = progress();
+      await f.store.commit(jobId, {
+        ...cmd(lease.version),
+        leaseToken: lease.leaseToken,
+        fence: lease.fence,
+        url: lease.url,
+        status: 200,
+        bytes: 50,
+        requests: 1,
+        outcome: "ok",
+        etag: null,
+        lastModified: null,
+        bodyHash: null,
+        publishedRaw: null,
+        discovered: [],
+        nextPage: lease.url.replace(/\.htm$/, "/2.htm"),
+      });
+      // Use a same-origin allowed list page explicitly in the checkpoint.
+      expect(progress()).toBe(claimedWrites);
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT sync_state,last_success_at FROM knowledge_sources WHERE id=?",
+          )
+          .get(id),
+      ).toMatchObject({ sync_state: "running", last_success_at: oldSuccess });
+      job = await f.store.job(jobId);
+      lease = await f.store.claim(jobId, cmd(Number(job.version)));
+      expect(progress()).toBe(claimedWrites);
+      // Simulate a long run whose original registration time is already due.
+      f.sqlite
+        .prepare("UPDATE knowledge_sources SET next_sync_at_ms=1 WHERE id=?")
+        .run(id);
+      const completedAt = new Date().toISOString();
+      const finishingStore = new ConsoleSyncStore(
+        f.db,
+        f.actor,
+        () => completedAt,
+      );
+      const payload = {
+        ...cmd(lease.version),
+        leaseToken: lease.leaseToken,
+        fence: lease.fence,
+        url: lease.url,
+        status: 200,
+        bytes: 50,
+        requests: 1,
+        outcome: "ok",
+        etag: null,
+        lastModified: null,
+        bodyHash: null,
+        publishedRaw: null,
+        discovered: [],
+      };
+      await finishingStore.commit(jobId, payload);
+      const source = f.sqlite
+        .prepare(
+          "SELECT sync_state,last_success_at,next_sync_at_ms FROM knowledge_sources WHERE id=?",
+        )
+        .get(id);
+      const hours = Number(
+        f.sqlite.prepare("SELECT sync_hours FROM console_engine_settings").get()
+          ?.sync_hours,
+      );
+      expect(source).toMatchObject({
+        sync_state: "completed",
+        last_success_at: completedAt,
+        next_sync_at_ms: Date.parse(completedAt) + hours * 3600000,
+      });
+      expect(progress()).toBe(Number(claimedWrites) + 1);
+      await finishingStore.commit(jobId, payload);
+      expect(progress()).toBe(Number(claimedWrites) + 1);
+      expect(
+        (await dispatchDue(f.db, { now: Date.parse(completedAt) + 1000 }))
+          .registered,
+      ).toBe(0);
     } finally {
       f.close();
     }

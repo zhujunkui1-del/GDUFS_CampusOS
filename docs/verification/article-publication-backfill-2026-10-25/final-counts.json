@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-25T09:38:21.158Z",
+  "backend": {
+    "backend": 1726,
+    "since2026": 1726,
+    "pending": 0
+  },
+  "public": {
+    "visible": 1726,
+    "radar": 1689,
+    "knowledge": 37
+  },
+  "unpublishedSince2026": [],
+  "usage": {
+    "rowsRead": 26776,
+    "rowsWritten": 0
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "checkedAt": "2026-10-25T08:59:59.882Z",
+  "environment": "preview",
+  "databaseId": "18299abc-b38b-4494-8d12-8ab4d482c304",
+  "migrations": [
+    {
+      "name": "0041_verified_official_web_publication.sql",
+      "applied_at": "2026-10-25 08:58:24"
+    },
+    {
+      "name": "0042_ingestion_lookup_indexes.sql",
+      "applied_at": "2026-10-25 08:58:25"
+    }
+  ],
+  "indexes": [
+    "auto_publications_document",
+    "chunks_document",
+    "cleanup_guards_document",
+    "documents_duplicate_title",
+    "documents_superseded_by",
+    "event_sources_document",
+    "facts_document",
+    "fetch_document_body_version",
+    "intake_skips_document",
+    "invalidations_document",
+    "job_steps_document",
+    "manual_import_document",
+    "manual_links_document",
+    "origin_duplicate_document",
+    "reviews_document"
+  ],
+  "indexCount": 15,
+  "plans": {
+    "dedupe": [
+      {
+        "id": 8,
+        "parent": 0,
+        "notused": 59,
+        "detail": "SEARCH d USING INDEX documents_duplicate_title (title=? AND published_at=? AND publisher=?)"
+      },
+      {
+        "id": 15,
+        "parent": 0,
+        "notused": 53,
+        "detail": "SEARCH f EXISTS USING COVERING INDEX fetch_document_body_version (document_id=? AND body_hash=?)"
+      },
+      {
+        "id": 21,
+        "parent": 0,
+        "notused": 53,
+        "detail": "SEARCH o EXISTS USING COVERING INDEX document_origin_source_document (source_id=? AND document_id=?)"
+      }
+    ],
+    "provenance": [
+      {
+        "id": 1,
+        "parent": 0,
+        "notused": 0,
+        "detail": "SCAN CONSTANT ROW"
+      },
+      {
+        "id": 4,
+        "parent": 0,
+        "notused": 0,
+        "detail": "SCALAR SUBQUERY 2"
+      },
+      {
+        "id": 14,
+        "parent": 4,
+        "notused": 46,
+        "detail": "SEARCH dc EXISTS USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+      },
+      {
+        "id": 23,
+        "parent": 4,
+        "notused": 54,
+        "detail": "SEARCH f USING COVERING INDEX fetch_document_body_version (document_id=?)"
+      },
+      {
+        "id": 33,
+        "parent": 4,
+        "notused": 46,
+        "detail": "SEARCH v USING INDEX sqlite_autoindex_console_content_versions_1 (document_id=? AND version=?)"
+      },
+      {
+        "id": 55,
+        "parent": 0,
+        "notused": 0,
+        "detail": "SCALAR SUBQUERY 3"
+      },
+      {
+        "id": 59,
+        "parent": 55,
+        "notused": 39,
+        "detail": "SEARCH console_content_attestations USING COVERING INDEX sqlite_autoindex_console_content_attestations_1 (document_id=? AND content_revision=? AND input_hash=?)"
+      }
+    ]
+  },
+  "liveSample": {
+    "documentId": "content-00ae5ff2-7000-4378-af5e-6f51eea49d56",
+    "dedupe": {
+      "rowsRead": 3,
+      "rowsWritten": 0,
+      "matched": 1
+    },
+    "provenance": {
+      "rowsRead": 3,
+      "rowsWritten": 0,
+      "matched": 1
+    }
+  },
+  "verificationReads": 356,
+  "verificationWrites": 0
+}

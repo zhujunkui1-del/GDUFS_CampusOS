@@ -113,6 +113,9 @@ export class ConsoleRetentionStore extends ConsoleAutomationStore {
     if (v.type === "source") await this.sourceV2(v.targetId);
     else await this.document(v.targetId);
     const statements = [
+      this.db.prepare(
+        "UPDATE console_engine_settings SET public_visibility_revision=public_visibility_revision+1 WHERE id='console-v2-settings'",
+      ),
       this.db
         .prepare(
           "INSERT INTO console_protections(target_type,target_id,active,history_exempt,reason,expires_at_ms,admin_id,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?) ON CONFLICT(target_type,target_id) DO UPDATE SET active=excluded.active,history_exempt=excluded.history_exempt,reason=excluded.reason,expires_at_ms=excluded.expires_at_ms,admin_id=excluded.admin_id,updated_at=excluded.updated_at",

@@ -25,11 +25,15 @@ const QuerySchema = z
     category: z.string().max(50).optional(),
   })
   .strict();
-const groupedCountsCache = new Map<
-  string,
-  { expiresAt: number; counts: Record<string, number> }
+const groupedCountsCache = new WeakMap<
+  object,
+  Map<string, { expiresAt: number; counts: Record<string, number> }>
 >();
-export async function readPublicContent(db: SqlDatabase, raw: unknown) {
+export async function readPublicContent(
+  db: SqlDatabase,
+  raw: unknown,
+  cacheScope: object = db,
+) {
   const q = QuerySchema.parse(raw);
   if (q.version && !q.id)
     throw new ApiError("INVALID_ARGUMENT", "请指定内容记录。");
@@ -76,8 +80,18 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
     q.surface === "radar" ? "radar_category" : "knowledge_category";
   let cachedGroupedCounts: Record<string, number> | null = null;
   if (q.grouped && q.surface && !q.q && !q.source) {
-    const cacheKey = q.surface;
-    const cached = groupedCountsCache.get(cacheKey);
+    const revision = await db
+      .prepare(
+        "SELECT public_visibility_revision AS revision FROM console_engine_settings WHERE id='console-v2-settings'",
+      )
+      .first<{ revision: number }>();
+    const cacheKey = q.surface + ":" + (revision?.revision || 0);
+    let cache = groupedCountsCache.get(cacheScope);
+    if (!cache) {
+      cache = new Map();
+      groupedCountsCache.set(cacheScope, cache);
+    }
+    const cached = cache.get(cacheKey);
     if (cached && cached.expiresAt > Date.now()) {
       cachedGroupedCounts = cached.counts;
     } else {
@@ -95,7 +109,8 @@ export async function readPublicContent(db: SqlDatabase, raw: unknown) {
       cachedGroupedCounts = Object.fromEntries(
         result.results.map((row) => [row.category, row.n]),
       );
-      groupedCountsCache.set(cacheKey, {
+      if (cache.size > 4) cache.clear();
+      cache.set(cacheKey, {
         expiresAt: Date.now() + 30_000,
         counts: cachedGroupedCounts,
       });
@@ -275,5 +290,6 @@ export const publicContent = withApi(async (request) => {
   return readPublicContent(
     primaryDatabase(env.DB as SqlDatabase),
     Object.fromEntries(new URL(request.url).searchParams),
+    env.DB as object,
   );
 });

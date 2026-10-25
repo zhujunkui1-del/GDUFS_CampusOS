@@ -678,7 +678,7 @@ export class ConsoleStore {
       ? [
           this.db
             .prepare(
-              "UPDATE knowledge_documents SET source_id=?,title=?,url=?,body=?,body_format=?,content_hash=?,candidate_kind=?,campus_scope=?,valid_until=?,published_at=?,extracted_fields_json=?,data_domain=?,version=version+1,review_status='pending',workflow_status='pending',publication_status='draft',lifecycle_status='active',updated_at=?,source_updated_at=?,content_revision=?,input_hash=?,approved_content_revision=NULL,approved_input_hash=NULL,content_type=?,rights_scope=?,radar_category=?,knowledge_category=?,publisher=?,summary=? WHERE id=?",
+              "UPDATE knowledge_documents SET source_id=?,title=?,url=?,body=?,body_format=?,body_status=?,content_hash=?,candidate_kind=?,campus_scope=?,valid_until=?,published_at=?,extracted_fields_json=?,data_domain=?,version=version+1,review_status='pending',workflow_status='pending',publication_status='draft',lifecycle_status='active',updated_at=?,source_updated_at=?,content_revision=?,input_hash=?,approved_content_revision=NULL,approved_input_hash=NULL,content_type=?,rights_scope=?,radar_category=?,knowledge_category=?,publisher=?,summary=? WHERE id=?",
             )
             .bind(
               data.sourceId,
@@ -686,6 +686,7 @@ export class ConsoleStore {
               data.url,
               data.body,
               data.bodyFormat || previous?.bodyFormat || "plain",
+              data.bodyStatus,
               contentHash,
               data.kind,
               data.campusScope,
@@ -711,7 +712,7 @@ export class ConsoleStore {
       : [
           this.db
             .prepare(
-              "INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,content_hash,fetched_at,campus_scope,data_domain,candidate_kind,valid_until,published_at,extracted_fields_json,updated_at,source_updated_at,content_revision,input_hash,content_type,rights_scope,radar_category,knowledge_category,publisher,summary) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+              "INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,body_status,content_hash,fetched_at,campus_scope,data_domain,candidate_kind,valid_until,published_at,extracted_fields_json,updated_at,source_updated_at,content_revision,input_hash,content_type,rights_scope,radar_category,knowledge_category,publisher,summary) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             )
             .bind(
               key,
@@ -720,6 +721,7 @@ export class ConsoleStore {
               data.url,
               data.body,
               data.bodyFormat || "plain",
+              data.bodyStatus,
               contentHash,
               this.now(),
               data.campusScope,
@@ -756,9 +758,6 @@ export class ConsoleStore {
       inputHash,
       statements: [
         ...statements,
-        this.db
-          .prepare("UPDATE knowledge_documents SET body_status=? WHERE id=?")
-          .bind(data.bodyStatus, key),
         ...data.tags.map((tag) =>
           this.db
             .prepare(

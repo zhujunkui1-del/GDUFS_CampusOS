@@ -5,6 +5,7 @@ import { tokenHash } from "../assistant/crypto";
 import type { Statement } from "../assistant/database";
 import { CommandSchema } from "@/domain/console/contracts";
 import { discoveryStatement, timeEvidenceStatements } from "./intake-evidence";
+import { crossUrlDuplicateSql } from "./ingestion-queries";
 import {
   CheckpointSchema,
   PolicySchema,
@@ -56,6 +57,19 @@ type Row = Record<string, string | number | null>;
 const json = JSON.stringify;
 
 export class IngestionStore extends ConsoleStore {
+  protected sourceProgressStatement(
+    sourceId: string,
+    now: string,
+    errorCode: string | null,
+    completed: boolean,
+    failed: boolean,
+  ) {
+    return this.db
+      .prepare(
+        "UPDATE knowledge_sources SET last_checked_at=?,last_success_at=CASE WHEN ? THEN ? ELSE last_success_at END,last_error=? WHERE id=?",
+      )
+      .bind(now, Number(completed && !failed), now, errorCode, sourceId);
+  }
   private async intakeBlock(
     sourceId: string,
     url: string,
@@ -392,6 +406,7 @@ export class IngestionStore extends ConsoleStore {
       expectedDocumentVersion: number | null = null,
       duplicate = 0,
       bodyCount = 0,
+      originUpserted = false,
       nextPhase = phase,
       status = "queued",
       controlState = "active",
@@ -440,13 +455,13 @@ export class IngestionStore extends ConsoleStore {
             ? String(r.published_at)
             : discoveredDates.get(url) || null;
           const block = await this.intakeBlock(
-              sourceId,
-              url,
-              publishedAt,
-              null,
-              profile.earliestImportDay,
-              profile.latestImportDay,
-            );
+            sourceId,
+            url,
+            publishedAt,
+            null,
+            profile.earliestImportDay,
+            profile.latestImportDay,
+          );
           if (block === "tombstone" || (block === "cutoff" && publishedAt))
             ignored.add(url);
         }
@@ -618,15 +633,13 @@ export class IngestionStore extends ConsoleStore {
             // Cross-URL equal fingerprints are review links, never inherited approval.
             const possibleDuplicate = !origin
               ? await this.db
-                  .prepare(
-                    "SELECT DISTINCT d.id FROM document_origins o JOIN knowledge_documents d ON d.id=o.document_id JOIN document_fetches f ON f.document_id=d.id WHERE o.source_id=? AND f.body_hash=? AND d.title=? AND d.published_at IS ? AND d.publisher IS ? AND d.owner_user_id IS NULL AND d.data_domain<>'user_private' LIMIT 1",
-                  )
+                  .prepare(crossUrlDuplicateSql)
                   .bind(
                     sourceId,
-                    value.bodyHash,
                     value.article.title,
                     value.article.publishedAt,
                     value.article.publisher,
+                    value.bodyHash,
                   )
                   .first<{ id: string }>()
               : null;
@@ -777,17 +790,21 @@ export class IngestionStore extends ConsoleStore {
                   possibleDuplicate?.id || null,
                 ),
             );
+            originUpserted = true;
           }
           bodyCount = value.bodyTextChars > 0 ? 1 : 0;
         }
       }
-      if (documentId)
+      if (documentId) {
+        if (!originUpserted)
+          statements.push(
+            this.db
+              .prepare(
+                "UPDATE document_origins SET last_seen_at=?,etag=COALESCE(?,etag),last_modified=COALESCE(?,last_modified) WHERE source_id=? AND canonical_url=?",
+              )
+              .bind(now, value.etag, value.lastModified, sourceId, value.url),
+          );
         statements.push(
-          this.db
-            .prepare(
-              "UPDATE document_origins SET last_seen_at=?,etag=COALESCE(?,etag),last_modified=COALESCE(?,last_modified) WHERE source_id=? AND canonical_url=?",
-            )
-            .bind(now, value.etag, value.lastModified, sourceId, value.url),
           discoveryStatement(
             this.db,
             sourceId,
@@ -798,6 +815,7 @@ export class IngestionStore extends ConsoleStore {
             now,
           ),
         );
+      }
       checkpoint.index++;
       if (checkpoint.index >= checkpoint.urls.length) {
         if (checkpoint.page) {
@@ -881,13 +899,18 @@ export class IngestionStore extends ConsoleStore {
           id,
         ),
     );
-    statements.push(
-      this.db
-        .prepare(
-          "UPDATE knowledge_sources SET last_checked_at=?,last_success_at=CASE WHEN ?=0 THEN ? ELSE last_success_at END,last_error=? WHERE id=?",
-        )
-        .bind(now, error ? 1 : 0, now, errorCode, sourceId),
-    );
+    // The job checkpoint is durable after every page. Source summaries describe
+    // the whole run, so only write them at completion or on an error.
+    if (nextPhase === "complete" || error)
+      statements.push(
+        this.sourceProgressStatement(
+          sourceId,
+          now,
+          errorCode,
+          status === "completed",
+          status === "failed",
+        ),
+      );
     return this.mutate(
       value,
       "job.commit",
