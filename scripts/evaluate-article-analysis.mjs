@@ -9,7 +9,7 @@ const file = path.resolve(dir + "/classifier.mjs");
 await build({
   stdin: {
     contents:
-      'export {classifyArticleContent} from "./src/lib/ingestion/article-intent";',
+      'export {analyzeArticle as classifyArticleContent} from "./src/lib/ingestion/article-analysis";',
     resolveDir: process.cwd(),
   },
   outfile: file,
