@@ -3,7 +3,6 @@ import {
   CollectorArticleSchema,
   canonicalWechatUrl,
 } from "@/domain/console/collector";
-import { classifyArticle } from "@/domain/console/article-classification";
 import { ConsoleIdSchema, type ConsoleActor } from "@/domain/console/contracts";
 import type { SqlDatabase } from "../assistant/database";
 import { randomToken, tokenHash } from "../assistant/crypto";
@@ -12,6 +11,12 @@ import { withApi } from "../http";
 import { ApiError } from "../errors";
 import { consoleBindings } from "./auth";
 import { sanitizeReadingHtml } from "./reading-html";
+import { analysisStatements } from "./article-analysis";
+import { analyzeArticle } from "@/lib/ingestion/article-analysis";
+import {
+  ARTICLE_CLASSIFIER_VERSION,
+  ArticleAnalysisSchema,
+} from "@/domain/console/article-analysis";
 
 type Credential = { id: string; source_ids_json: string };
 type Row = Record<string, string | number | null>;
@@ -77,7 +82,7 @@ async function source(
 async function existing(db: SqlDatabase, url: string) {
   return db
     .prepare(
-      "SELECT c.*,d.version,d.content_revision,d.publication_status,d.lifecycle_status,d.body_format,d.input_hash,d.source_updated_at,d.body,d.title,d.published_at,d.radar_category,d.knowledge_category,EXISTS(SELECT 1 FROM console_document_controls x WHERE x.document_id=d.id AND (x.hold_reason IS NOT NULL OR x.review_hold IS NOT NULL)) AS held FROM campus_collector_articles c JOIN knowledge_documents d ON d.id=c.document_id WHERE c.canonical_url=?",
+      "SELECT c.*,d.version,d.content_revision,d.publication_status,d.lifecycle_status,d.body_format,d.input_hash,d.source_updated_at,d.body,d.title,d.published_at,d.radar_category,d.knowledge_category,a.classifier_version AS analysis_version,a.analysis_json,EXISTS(SELECT 1 FROM console_document_controls x WHERE x.document_id=d.id AND (x.hold_reason IS NOT NULL OR x.review_hold IS NOT NULL)) AS held FROM campus_collector_articles c JOIN knowledge_documents d ON d.id=c.document_id LEFT JOIN document_article_analysis a ON a.document_id=d.id AND a.content_revision=d.content_revision AND a.input_hash=d.input_hash WHERE c.canonical_url=?",
     )
     .bind(url)
     .first<Row>();
@@ -152,7 +157,18 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
   }
   const safe = sanitizeReadingHtml(v.readingHtml),
     submittedMediaOmitted = safe.mediaOmitted || v.mediaOmitted;
-  const placement = classifyArticle(v.title);
+  const analysisInput = {
+    title: v.title,
+    body: safe.html,
+    bodyFormat: "reading_html" as const,
+    bodyStatus: submittedMediaOmitted
+      ? ("partial" as const)
+      : ("complete" as const),
+    publishedAt: published,
+    sourceId: v.sourceId,
+    sourceName: String(p.display_name),
+    originalUrl: url,
+  };
   const old = await existing(db, url);
   if (old && old.source_id !== v.sourceId)
     throw new ApiError("CONFLICT", "该链接已属于另一个信息源。");
@@ -165,11 +181,20 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
     old.canonical_url === url &&
     old.title === v.title &&
     old.published_at === published &&
-    old.source_updated_at === v.sourceUpdatedAt &&
-    old.radar_category === placement.radarCategory &&
-    old.knowledge_category === placement.knowledgeCategory;
+    old.source_updated_at === v.sourceUpdatedAt;
   const mediaOmitted =
     submittedMediaOmitted || (matchesStoredContent && !!old.media_omitted);
+  analysisInput.bodyStatus = mediaOmitted ? "partial" : "complete";
+  const analysis =
+    matchesStoredContent &&
+    !!old.media_omitted === mediaOmitted &&
+    old.analysis_version === ARTICLE_CLASSIFIER_VERSION
+      ? ArticleAnalysisSchema.parse(JSON.parse(String(old.analysis_json)))
+      : analyzeArticle(analysisInput);
+  const placement = {
+    radarCategory: analysis.radarCategory,
+    knowledgeCategory: analysis.knowledgeCategory,
+  };
   const hashFields = [
     v.sourceId,
     v.title,
@@ -179,14 +204,16 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
     safe.html,
   ];
   const submittedHash = await tokenHash(
-    JSON.stringify([...hashFields, submittedMediaOmitted, placement]),
+    JSON.stringify([...hashFields, submittedMediaOmitted]),
   );
   const hash =
-    mediaOmitted === submittedMediaOmitted
-      ? submittedHash
-      : await tokenHash(
-          JSON.stringify([...hashFields, mediaOmitted, placement]),
-        );
+    matchesStoredContent &&
+    old.current_hash === old.input_hash &&
+    !!old.media_omitted === mediaOmitted
+      ? String(old.current_hash)
+      : mediaOmitted === submittedMediaOmitted
+        ? submittedHash
+        : await tokenHash(JSON.stringify([...hashFields, mediaOmitted]));
   // Receipts describe the submitted payload, so later document updates cannot
   // change the identity of a previously accepted request.
   const requestHash = await tokenHash(
@@ -232,10 +259,6 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
               old.source_updated_at,
               sanitizeReadingHtml(String(old.body)).html,
               !!old.media_omitted,
-              {
-                radarCategory: old.radar_category,
-                knowledgeCategory: old.knowledge_category,
-              },
             ]),
           )
         : null;
@@ -355,6 +378,16 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
           id,
         ),
     );
+  statements.push(
+    ...(await analysisStatements(
+      db,
+      id,
+      old ? Number(old.content_revision) + Number(changed) : 1,
+      hash,
+      analysisInput,
+      analysis,
+    )),
+  );
   if (!old || changed || (!held && old.publication_status !== "published")) {
     statements.push(
       db

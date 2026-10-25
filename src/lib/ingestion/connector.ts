@@ -458,7 +458,19 @@ export class OfficialWebConnector {
       | "licensed_full_text" = "metadata_only",
   ) {
     const title = parsed.title;
-    const { radarCategory, knowledgeCategory } = classifyArticle(title);
+    const { radarCategory, knowledgeCategory } = classifyArticle({
+      title,
+      body: rightsScope === "metadata_only" ? "" : parsed.bodyText,
+      bodyStatus:
+        rightsScope === "metadata_only"
+          ? "not_provided"
+          : rightsScope === "excerpt_and_link"
+            ? "partial"
+            : "complete",
+      publishedAt: parsed.publishedAt,
+      sourceId: this.sourceId,
+      originalUrl: url,
+    });
     return ContentInputSchema.parse({
       sourceId: this.sourceId,
       title,

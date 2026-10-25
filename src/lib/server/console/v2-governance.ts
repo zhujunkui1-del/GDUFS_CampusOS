@@ -741,7 +741,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
           "EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)",
       );
     if (q.category) {
-      where.push("(d.radar_category=? OR d.knowledge_category=?)");
+      where.push("(c.radar_category=? OR c.knowledge_category=?)");
       args.push(q.category, q.category);
     }
     if (q.tag) {
@@ -803,11 +803,11 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       published: "d.published_at",
       title: "d.title",
     }[q.sort];
-    const base = ` FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where.join(" AND ")}`;
+    const base = ` FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications c ON c.document_id=d.id WHERE ${where.join(" AND ")}`;
     const [rows, count] = await Promise.all([
       this.db
         .prepare(
-          `${selectedDocsCte} SELECT EXISTS(SELECT 1 FROM console_public_documents pub WHERE pub.id=d.id) AS public_visible,d.id,d.source_id,s.display_name AS source_name,d.title,d.published_at,d.fetched_at,d.updated_at,d.content_type,d.radar_category,d.knowledge_category,d.workflow_status,d.publication_status,d.lifecycle_status,d.body_status,d.version${base} ORDER BY ${order} ${q.direction},d.id LIMIT ? OFFSET ?`,
+          `${selectedDocsCte} SELECT EXISTS(SELECT 1 FROM console_public_documents pub WHERE pub.id=d.id) AS public_visible,d.id,d.source_id,s.display_name AS source_name,d.title,d.published_at,d.fetched_at,d.updated_at,d.content_type,c.radar_category,c.knowledge_category,c.primary_destination,c.has_registration,c.classification_origin,d.workflow_status,d.publication_status,d.lifecycle_status,d.body_status,d.version${base} ORDER BY ${order} ${q.direction},d.id LIMIT ? OFFSET ?`,
         )
         .bind(...args, q.limit, q.offset)
         .all<Row>(),

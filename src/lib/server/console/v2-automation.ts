@@ -50,23 +50,7 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       );
     if (d.kind === "event" && !value.radarCategory)
       throw new ApiError("INVALID_ARGUMENT", "结构化活动应归入校园雷达。");
-    const data = ContentInputSchema.parse(
-      Object.fromEntries(
-        Object.keys(ContentInputSchema.shape).map((k) => [
-          k,
-          d[k as keyof typeof d],
-        ]),
-      ),
-    );
-    const inputHash = await tokenHash(
-      JSON.stringify({
-        ...data,
-        radarCategory: value.radarCategory,
-        knowledgeCategory: value.knowledgeCategory,
-      }),
-    );
-    const revision = d.contentRevision + (inputHash !== d.inputHash ? 1 : 0);
-    const result = await this.mutate(
+    return this.mutate(
       value,
       "document.classify",
       "document",
@@ -75,62 +59,29 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       [
         this.db
           .prepare(
-            "UPDATE knowledge_documents SET radar_category=?,knowledge_category=?,content_revision=?,input_hash=?,approved_content_revision=CASE WHEN workflow_status='approved' THEN ? ELSE NULL END,approved_input_hash=CASE WHEN workflow_status='approved' THEN ? ELSE NULL END,version=version+1,updated_at=? WHERE id=?",
+            "INSERT INTO document_classification_overrides(document_id,radar_category,knowledge_category,updated_by,updated_at) VALUES(?,?,?,?,?) ON CONFLICT(document_id) DO UPDATE SET radar_category=excluded.radar_category,knowledge_category=excluded.knowledge_category,updated_by=excluded.updated_by,updated_at=excluded.updated_at",
           )
           .bind(
+            id,
             value.radarCategory,
             value.knowledgeCategory,
-            revision,
-            inputHash,
-            revision,
-            inputHash,
-            this.now(),
-            id,
-          ),
-        this.db
-          .prepare(
-            "INSERT OR IGNORE INTO document_tags(document_id,content_revision,tag) SELECT document_id,?,tag FROM document_tags WHERE document_id=? AND content_revision=?",
-          )
-          .bind(revision, id, d.contentRevision),
-        this.db
-          .prepare(
-            "INSERT OR IGNORE INTO console_content_attestations(document_id,content_revision,input_hash,admin_id,evidence_urls_json,created_at) SELECT document_id,?,?,?,evidence_urls_json,? FROM console_content_attestations WHERE document_id=? AND content_revision=? AND input_hash=?",
-          )
-          .bind(
-            revision,
-            inputHash,
             this.actor.id,
             this.now(),
-            id,
-            d.contentRevision,
-            d.inputHash,
           ),
         this.db
           .prepare(
-            "INSERT OR IGNORE INTO console_content_attestations(document_id,content_revision,input_hash,admin_id,evidence_urls_json,created_at) SELECT ?,?,?,?,?,? WHERE EXISTS(SELECT 1 FROM document_fetches f JOIN console_content_versions v ON v.document_id=f.document_id AND v.version=f.snapshot_version WHERE f.document_id=? AND v.content_revision=? AND v.input_hash=? AND f.status IN(200,304) AND f.outcome IN('ok','not_modified') AND EXISTS(SELECT 1 FROM console_document_controls c WHERE c.document_id=f.document_id AND c.last_change_origin='source_author'))",
+            "UPDATE knowledge_documents SET version=version+1 WHERE id=?",
           )
-          .bind(
-            id,
-            revision,
-            inputHash,
-            this.actor.id,
-            JSON.stringify([d.url]),
-            this.now(),
-            id,
-            d.contentRevision,
-            d.inputHash,
-          ),
+          .bind(id),
         this.snapshot(id),
       ],
       "publish",
       d.sourceId,
       [],
       d.publicationState === "published"
-        ? { manualRevision: revision, manualInputHash: inputHash }
+        ? { manualRevision: d.contentRevision, manualInputHash: d.inputHash }
         : {},
     );
-    await this.analyse(id);
-    return result;
   }
 
   async autoPolicy(id: string) {
@@ -251,7 +202,14 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
         Number(p.official_web_auto_publish)
       ) {
         if (!!value.radarCategory === !!value.knowledgeCategory) {
-          const placement = classifyArticle(value.title);
+          const placement = classifyArticle({
+            title: value.title,
+            body: value.body,
+            bodyFormat: value.bodyFormat,
+            bodyStatus: value.bodyStatus,
+            publishedAt: value.publishedAt,
+            originalUrl: value.url,
+          });
           value.radarCategory = placement.radarCategory;
           value.knowledgeCategory = placement.knowledgeCategory;
         }
@@ -341,7 +299,14 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
             radarCategory: d.radarCategory,
             knowledgeCategory: d.knowledgeCategory,
           }
-        : classifyArticle(d.title);
+        : classifyArticle({
+            title: d.title,
+            body: d.body,
+            bodyFormat: d.bodyFormat,
+            bodyStatus: d.bodyStatus,
+            publishedAt: d.publishedAt,
+            originalUrl: d.url,
+          });
     const data = ContentInputSchema.parse(
       Object.fromEntries(
         Object.keys(ContentInputSchema.shape).map((k) => [
@@ -1000,7 +965,14 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
             radarCategory: d.radarCategory,
             knowledgeCategory: d.knowledgeCategory,
           }
-        : classifyArticle(d.title);
+        : classifyArticle({
+            title: d.title,
+            body: d.body,
+            bodyFormat: d.bodyFormat,
+            bodyStatus: d.bodyStatus,
+            publishedAt: d.publishedAt,
+            originalUrl: d.url,
+          });
     if (d.kind === "event" && !placement.radarCategory)
       throw new ApiError("INVALID_ARGUMENT", "官网活动文章缺少雷达分类。");
     const input = ContentInputSchema.parse({

@@ -25,6 +25,7 @@ import {
   type ContentInput,
 } from "@/domain/console/contracts";
 import { TopicTagsSchema } from "@/domain/console/taxonomy";
+import { analysisStatements } from "./article-analysis";
 
 type Row = Record<string, string | number | null>;
 const sourceScope = "console_managed=1 AND source_type<>'user_private'";
@@ -482,7 +483,7 @@ export class ConsoleStore {
     const [rows, count] = await Promise.all([
       this.db
         .prepare(
-          `SELECT d.*,s.display_name AS source_name,EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id) AS public_visible FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE ${where} ORDER BY COALESCE(d.updated_at,d.fetched_at) DESC,d.id LIMIT ? OFFSET ?`,
+          `SELECT d.*,c.radar_category AS effective_radar_category,c.knowledge_category AS effective_knowledge_category,s.display_name AS source_name,EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id) AS public_visible FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications c ON c.document_id=d.id WHERE ${where} ORDER BY COALESCE(d.updated_at,d.fetched_at) DESC,d.id LIMIT ? OFFSET ?`,
         )
         .bind(...args, q.limit, q.offset)
         .all<Row>(),
@@ -519,7 +520,7 @@ export class ConsoleStore {
     consolePermission(this.actor, "read");
     const row = await this.db
       .prepare(
-        `SELECT d.*,s.display_name AS source_name,EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id) AS public_visible FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE d.id=? AND ${documentScope}`,
+        `SELECT d.*,c.radar_category AS effective_radar_category,c.knowledge_category AS effective_knowledge_category,s.display_name AS source_name,EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id) AS public_visible FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications c ON c.document_id=d.id WHERE d.id=? AND ${documentScope}`,
       )
       .bind(id)
       .first<Row>();
@@ -579,9 +580,11 @@ export class ConsoleStore {
             .first<{ duplicate_of: string }>()
         )?.duplicate_of || null,
       rightsScope: String(row.rights_scope),
-      radarCategory: row.radar_category ? String(row.radar_category) : null,
-      knowledgeCategory: row.knowledge_category
-        ? String(row.knowledge_category)
+      radarCategory: row.effective_radar_category
+        ? String(row.effective_radar_category)
+        : null,
+      knowledgeCategory: row.effective_knowledge_category
+        ? String(row.effective_knowledge_category)
         : null,
       publisher: row.publisher ? String(row.publisher) : null,
       summary: String(row.summary),
@@ -765,6 +768,18 @@ export class ConsoleStore {
             )
             .bind(key, contentRevision, tag),
         ),
+        ...(await analysisStatements(this.db, key, contentRevision, inputHash, {
+          documentId: key,
+          title: data.title,
+          body: data.body,
+          bodyFormat: data.bodyFormat || "plain",
+          bodyStatus: data.bodyStatus,
+          sourceId: data.sourceId,
+          sourceName: source.displayName,
+          originalUrl: data.url,
+          publishedAt: data.publishedAt,
+          contentType: data.contentType,
+        })),
         this.snapshot(key),
       ],
     };

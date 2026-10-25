@@ -373,7 +373,14 @@ export class ManualImportStore extends IngestionStore {
                   radarCategory: null,
                   knowledgeCategory: defaults.knowledgeCategory,
                 }
-              : classifyArticle(item.title)),
+              : classifyArticle({
+                  title: item.title,
+                  body: item.body,
+                  bodyFormat: "plain",
+                  bodyStatus: item.bodyStatus,
+                  publishedAt: item.publishedAt,
+                  originalUrl: item.url,
+                })),
           publisher: source.displayName,
           summary:
             item.summary ||

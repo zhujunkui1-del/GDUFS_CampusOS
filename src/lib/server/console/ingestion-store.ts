@@ -6,6 +6,7 @@ import type { Statement } from "../assistant/database";
 import { CommandSchema } from "@/domain/console/contracts";
 import { discoveryStatement, timeEvidenceStatements } from "./intake-evidence";
 import { crossUrlDuplicateSql } from "./ingestion-queries";
+import { ensureArticleAnalysis } from "./article-analysis";
 import {
   CheckpointSchema,
   PolicySchema,
@@ -611,10 +612,39 @@ export class IngestionStore extends ConsoleStore {
             ),
           );
         else {
+          const sourceArticle = {
+            ...value.article,
+            radarCategory: null,
+            knowledgeCategory: null,
+            tags: [],
+            contentType: "unknown",
+          };
           const fingerprint = await tokenHash(
-            json([value.article, value.bodyHash]),
+            json([sourceArticle, value.bodyHash]),
           );
-          if (origin?.input_fingerprint === fingerprint) {
+          const unchanged =
+            origin && origin.input_fingerprint !== fingerprint
+              ? await this.db
+                  .prepare(
+                    "SELECT 1 AS ok FROM knowledge_documents WHERE id=? AND title=? AND body=? AND url=? AND published_at IS ? AND source_updated_at IS ? AND rights_scope=? AND body_format=? AND body_status=?",
+                  )
+                  .bind(
+                    origin.document_id,
+                    value.article.title,
+                    value.article.body,
+                    value.article.url,
+                    value.article.publishedAt,
+                    value.article.sourceUpdatedAt,
+                    value.article.rightsScope,
+                    value.article.bodyFormat || "plain",
+                    value.article.bodyStatus,
+                  )
+                  .first()
+              : null;
+          if (
+            origin &&
+            (origin.input_fingerprint === fingerprint || unchanged)
+          ) {
             duplicate = 1;
             documentId = String(origin.document_id);
           } else {
@@ -911,7 +941,7 @@ export class IngestionStore extends ConsoleStore {
           status === "failed",
         ),
       );
-    return this.mutate(
+    const committed = await this.mutate(
       value,
       "job.commit",
       "job",
@@ -921,5 +951,7 @@ export class IngestionStore extends ConsoleStore {
       "write",
       sourceId,
     );
+    if (documentId) await ensureArticleAnalysis(this.db, documentId);
+    return committed;
   }
 }
