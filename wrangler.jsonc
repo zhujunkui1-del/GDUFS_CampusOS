@@ -32,7 +32,11 @@
       "preview_urls": false,
       "routes": [],
       "triggers": { "crons": ["* * * * *"] },
-      "vars": { "APP_ENV": "preview", "EXTERNAL_SEARCH_TRANSPORT": "d1-relay" },
+      "vars": {
+        "APP_ENV": "preview",
+        "EXTERNAL_SEARCH_TRANSPORT": "cloud",
+        "AGENT_VALIDATION_UNLIMITED": "true",
+      },
       "ratelimits": [
         {
           "name": "MAP_RATE_LIMITER",
@@ -42,6 +46,10 @@
       ],
       "services": [
         { "binding": "WORKER_SELF_REFERENCE", "service": "campusos-preview" },
+        {
+          "binding": "CLOUD_SEARCH",
+          "service": "campusos-preview-cloud-search",
+        },
       ],
       "d1_databases": [
         {
