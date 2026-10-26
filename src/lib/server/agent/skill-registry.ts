@@ -73,6 +73,15 @@ export function canCall(
 export class SkillRegistry {
   #skills = new Map<string, RegisteredSkill>();
   register<I, O>(domain: AgentDomain, definition: SkillDefinition<I, O>) {
+    // Browser-backed external search includes search + note detail navigation.
+    // Keep its measured I/O budget separate from the existing fast tools.
+    const timeoutLimit =
+      definition.name === "search_external_campus_info" &&
+      definition.auth === "public" &&
+      definition.sideEffect === "none" &&
+      !definition.requiresConfirmation
+        ? 30000
+        : 15000;
     if (
       !/^[a-z][a-z0-9_]{0,63}$/.test(definition.name) ||
       this.#skills.has(definition.name) ||
@@ -80,7 +89,7 @@ export class SkillRegistry {
       !definition.version ||
       !definition.description ||
       definition.timeoutMs < 1 ||
-      definition.timeoutMs > 15000
+      definition.timeoutMs > timeoutLimit
     )
       throw new Error("Invalid or duplicate Skill definition");
     const parameters = parametersFor(definition.inputSchema);

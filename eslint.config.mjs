@@ -14,6 +14,7 @@ export default defineConfig([
     "cloudflare-env.d.ts",
     "playwright-report/**",
     "test-results/**",
+    "services/external-search/runtime/**",
     "public/vendor/**",
     "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/**",
     "CampusOS_Codex_完整设计文档_v2/wechat-article-exporter-main/**",

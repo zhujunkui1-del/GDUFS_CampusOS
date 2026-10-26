@@ -5,6 +5,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
+import { xiaohongshuQuery } from "./query.mjs";
+import { PublicNoteCache } from "./cache.mjs";
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const config = JSON.parse(
   await fs.readFile(path.join(dir, "runtime/config.json"), "utf8"),
@@ -18,6 +20,7 @@ const Input = z
 const digest = (s) => createHash("sha256").update(s).digest();
 const allowed = digest("Bearer " + config.gatewayToken);
 let running = 0;
+const cache = new PublicNoteCache();
 async function upstream(route, body, signal) {
   const r = await fetch(config.upstreamUrl + route, {
     method: body ? "POST" : "GET",
@@ -83,13 +86,13 @@ function item(feed, detail) {
   };
 }
 const server = http.createServer(async (req, res) => {
-  const send = (code, status, items = []) => {
+  const send = (code, status, items = [], metadata = {}) => {
     if (res.destroyed) return;
     res.writeHead(code, {
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": "no-store",
     });
-    res.end(JSON.stringify({ status, items }));
+    res.end(JSON.stringify({ status, items, ...metadata }));
   };
   if (req.url === "/health" && req.method === "GET") return send(200, "ok");
   if (req.url !== "/v1/search" || req.method !== "POST")
@@ -98,14 +101,13 @@ const server = http.createServer(async (req, res) => {
     !timingSafeEqual(allowed, digest(String(req.headers.authorization || "")))
   )
     return send(401, "unavailable");
-  if (running >= 2) return send(200, "busy");
   const controller = new AbortController();
   res.on("close", () => {
     if (!res.writableEnded) controller.abort();
   });
   const signal = AbortSignal.any([
     controller.signal,
-    AbortSignal.timeout(12000),
+    AbortSignal.timeout(27000),
   ]);
   let counted = false;
   try {
@@ -117,15 +119,16 @@ const server = http.createServer(async (req, res) => {
       body += chunk;
     }
     const input = Input.parse(JSON.parse(body));
+    const keyword = xiaohongshuQuery(input.query) || input.query;
+    const cached = cache.get(keyword, input.limit);
+    if (cached)
+      return send(200, "ok", cached, { cacheHit: true, queryUsed: keyword });
+    if (running >= 2) return send(200, "busy");
     running++;
     counted = true;
-    const login = await upstream("/api/v1/login/status", null, signal);
-    if (!login.data?.is_logged_in) return send(200, "login_required");
-    const found = await upstream(
-      "/api/v1/feeds/search",
-      { keyword: input.query },
-      signal,
-    );
+    // The upstream search uses its dedicated authenticated browser session.
+    // Reopening /explore for a separate login probe costs another 5 seconds.
+    const found = await upstream("/api/v1/feeds/search", { keyword }, signal);
     if (!found.success || !Array.isArray(found.data?.feeds))
       return send(200, "unavailable");
     const feeds = found.data.feeds
@@ -133,28 +136,33 @@ const server = http.createServer(async (req, res) => {
         (f) => /^[a-zA-Z0-9_-]+$/.test(f.id || "") && f.xsecToken && f.noteCard,
       )
       .slice(0, input.limit);
-    const items = [];
-    for (const feed of feeds) {
-      let detail = null;
-      if (items.length < 2 && !signal.aborted) {
-        try {
-          const r = await upstream(
-            "/api/v1/feeds/detail",
-            {
-              feed_id: feed.id,
-              xsec_token: feed.xsecToken,
-              load_all_comments: false,
-            },
-            signal,
-          );
-          if (r.success) detail = r.data?.data || r.data;
-        } catch {
-          /* Keep metadata honest when detail is unavailable. */
+    const items = await Promise.all(
+      feeds.map(async (feed, index) => {
+        let detail = null;
+        if (index < 2 && !signal.aborted) {
+          try {
+            const r = await upstream(
+              "/api/v1/feeds/detail",
+              {
+                feed_id: feed.id,
+                xsec_token: feed.xsecToken,
+                load_all_comments: false,
+              },
+              signal,
+            );
+            if (r.success) detail = r.data?.data || r.data;
+          } catch {
+            /* Keep metadata honest when detail is unavailable. */
+          }
         }
-      }
-      items.push(item(feed, detail));
-    }
-    return send(200, items.length ? "ok" : "empty", items);
+        return item(feed, detail);
+      }),
+    );
+    cache.put(keyword, items);
+    return send(200, items.length ? "ok" : "empty", items, {
+      cacheHit: false,
+      queryUsed: keyword,
+    });
   } catch {
     return send(200, "unavailable");
   } finally {

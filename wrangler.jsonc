@@ -32,7 +32,7 @@
       "preview_urls": false,
       "routes": [],
       "triggers": { "crons": ["* * * * *"] },
-      "vars": { "APP_ENV": "preview" },
+      "vars": { "APP_ENV": "preview", "EXTERNAL_SEARCH_TRANSPORT": "d1-relay" },
       "ratelimits": [
         {
           "name": "MAP_RATE_LIMITER",

@@ -1,7 +1,14 @@
 import { z } from "zod";
 export const ExternalSearchInputSchema = z
   .object({
-    query: z.string().trim().min(2).max(300),
+    query: z
+      .string()
+      .trim()
+      .min(2)
+      .max(300)
+      .describe(
+        "简短的核心关键词，保留校名、校区和具体主题，例如“广外 大学城 食堂”。不要粘贴完整问句或添加“请帮我、哪个好吃、学生评价”等措辞；政策问题保留事项名称和学年。",
+      ),
     gap: z.enum([
       "no_internal_answer",
       "missing_detail",
@@ -48,8 +55,17 @@ export const ExternalSearchResultSchema = z
           ]),
           durationMs: z.number(),
           count: z.number().int().nonnegative(),
+          cacheHit: z.boolean().optional(),
           httpStatus: z.number().int().min(100).max(599).optional(),
           edgeCode: z.number().int().optional(),
+          relayUsage: z
+            .object({
+              queries: z.number().int().nonnegative(),
+              rowsRead: z.number().nonnegative(),
+              rowsWritten: z.number().nonnegative(),
+              usageAvailable: z.boolean(),
+            })
+            .optional(),
           failureCode: z
             .enum([
               "HTTP_ERROR",

@@ -18,6 +18,7 @@ import { consoleRunnerApi } from "./console/runner-api";
 import { publicContent } from "./console/public-content";
 import { publicArticle } from "./console/public-article";
 import { collectorApi } from "./console/collector-api";
+import { relayClaimPost, relayFinishPost } from "./external-search/relay-api";
 
 type Handler = (request: Request) => Promise<Response>;
 const fixed: Record<string, { method: string; handle: Handler }> = {
@@ -29,6 +30,14 @@ const fixed: Record<string, { method: string; handle: Handler }> = {
   "/api/agent/status": { method: "GET", handle: agentStatus },
   "/api/agent/chat": { method: "POST", handle: chatResponse },
   "/api/agent/cancel": { method: "POST", handle: cancelPost },
+  "/api/agent/external-search/claim": {
+    method: "POST",
+    handle: relayClaimPost,
+  },
+  "/api/agent/external-search/finish": {
+    method: "POST",
+    handle: relayFinishPost,
+  },
   "/api/agent/location/challenge": { method: "POST", handle: challengePost },
 };
 // Delegate unchanged public handlers. They retain their own identity, Origin,

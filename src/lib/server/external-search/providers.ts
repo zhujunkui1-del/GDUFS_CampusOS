@@ -4,6 +4,7 @@ import {
   type ExternalItem,
 } from "@/domain/retrieval/external";
 import { isOfficialCampusUrl, type ExternalPolicy } from "./policy";
+import type { RelayInput, RelayUsage } from "@/domain/retrieval/relay";
 type ProviderStatus =
   | "ok"
   | "empty"
@@ -26,12 +27,15 @@ export type ProviderResult = {
     | "RATE_LIMITED";
   httpStatus?: number;
   edgeCode?: number;
+  relayUsage?: RelayUsage;
+  cacheHit?: boolean;
 };
 export type ExternalConfig = {
   gatewayUrl?: string;
   gatewayToken?: string;
   webEnabled?: boolean;
   exaApiKey?: string;
+  relay?: (input: RelayInput, signal?: AbortSignal) => Promise<ProviderResult>;
 };
 async function boundedText(response: Response, limit = 256000) {
   const reader = response.body?.getReader();
@@ -317,6 +321,7 @@ export async function searchWeb(
   }
 }
 const GatewayResponse = z.object({
+  cacheHit: z.boolean().optional(),
   status: z.enum(["ok", "empty", "unavailable", "login_required", "busy"]),
   items: z.array(ExternalItemSchema).max(4),
 });
@@ -329,6 +334,17 @@ export async function searchXiaohongshu(
 ): Promise<ProviderResult> {
   const started = performance.now(),
     provider = "xiaohongshu_mcp";
+  if (config.relay)
+    return config.relay(
+      {
+        kind: "xiaohongshu",
+        query: query.slice(0, 300),
+        limit,
+        policy: { intent: "experience", officialOnly: false, campus: true },
+        onlyXhs: false,
+      },
+      signal,
+    );
   if (!config.gatewayUrl || !config.gatewayToken)
     return { provider, status: "not_configured", items: [], durationMs: 0 };
   try {
@@ -350,7 +366,7 @@ export async function searchXiaohongshu(
       body: JSON.stringify({ query, limit }),
       signal: AbortSignal.any([
         ...(signal ? [signal] : []),
-        AbortSignal.timeout(12500),
+        AbortSignal.timeout(28000),
       ]),
     });
     if (!response.ok) {

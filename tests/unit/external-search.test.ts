@@ -228,6 +228,7 @@ it("Skill enforces internal-first and bounded one-shot execution, with no databa
     { webEnabled: false },
     () => true,
   ).get("search_external_campus_info")!;
+  expect(skill.timeoutMs).toBe(30000);
   const result = await skill.run(
     { query: "广外奖学金截止", gap: "no_internal_answer" },
     context,

@@ -50,6 +50,10 @@ export function assistantBindings() {
     signingSecret,
     environment: String(env.APP_ENV || "local"),
     externalSearch: {
+      transport:
+        env.EXTERNAL_SEARCH_TRANSPORT === "d1-relay"
+          ? ("d1-relay" as const)
+          : undefined,
       exaApiKey:
         typeof env.EXA_API_KEY === "string" ? env.EXA_API_KEY : undefined,
       gatewayUrl:

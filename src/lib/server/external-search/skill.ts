@@ -25,7 +25,7 @@ export function registerExternalSearch(
     auth: "public",
     sideEffect: "none",
     requiresConfirmation: false,
-    timeoutMs: 15000,
+    timeoutMs: 30000,
     description:
       "在已查询CampusOS内部文章后，按问题性质补充真实互联网或小红书搜索。规则、奖学金条件和截止日期只查广外官方网页；口味/居住感受可查学生经验。内部缺失不等于必须查小红书。传入尚缺的具体信息gap；结果含来源等级和片段，title_only不能冒充正文，unavailable不是无结果。",
     inputSchema: ExternalSearchInputSchema,
@@ -51,53 +51,52 @@ export function registerExternalSearch(
       let results: ProviderResult[] = [];
       const signal = AbortSignal.any([
         ...(context.signal ? [context.signal] : []),
-        AbortSignal.timeout(13500),
+        AbortSignal.timeout(28500),
       ]);
       const query =
         policy.campus && !/广外|广东外语外贸大学/.test(input.query)
           ? "广东外语外贸大学 " + input.query
           : input.query;
+      const web = (p: ExternalPolicy, limit: number, onlyXhs = false) =>
+        config.relay && !config.exaApiKey
+          ? config.relay(
+              {
+                kind: "web",
+                query: query.slice(0, 300),
+                limit,
+                policy: {
+                  intent: p.intent,
+                  officialOnly: p.officialOnly,
+                  campus: p.campus,
+                },
+                onlyXhs,
+              },
+              signal,
+            )
+          : searchWeb(
+              query,
+              p,
+              limit,
+              signal,
+              fetch,
+              onlyXhs,
+              config.exaApiKey,
+            );
       if (policy.useXiaohongshu && policy.intent !== "events") {
         results = await Promise.all([
           searchXiaohongshu(query, input.limit, config, signal),
           ...(config.webEnabled !== false
-            ? [
-                searchWeb(
-                  query,
-                  { ...policy, officialOnly: policy.intent === "mixed" },
-                  2,
-                  signal,
-                  fetch,
-                  false,
-                  config.exaApiKey,
-                ),
-              ]
+            ? [web({ ...policy, officialOnly: policy.intent === "mixed" }, 2)]
             : []),
         ]);
-        if (!results[0].items.length && config.webEnabled !== false)
-          results.push(
-            await searchWeb(
-              query,
-              policy,
-              input.limit,
-              signal,
-              fetch,
-              true,
-              config.exaApiKey,
-            ),
-          );
+        if (
+          !results[0].items.length &&
+          config.webEnabled !== false &&
+          !signal.aborted
+        )
+          results.push(await web(policy, input.limit, true));
       } else if (config.webEnabled !== false) {
-        results = [
-          await searchWeb(
-            query,
-            policy,
-            input.limit,
-            signal,
-            fetch,
-            false,
-            config.exaApiKey,
-          ),
-        ];
+        results = [await web(policy, input.limit)];
       }
       const items = [
         ...new Map(
@@ -139,9 +138,11 @@ export function registerExternalSearch(
           provider: r.provider,
           status: r.status,
           count: r.items.length,
+          ...(r.cacheHit !== undefined ? { cacheHit: r.cacheHit } : {}),
           ...(r.failureCode ? { failureCode: r.failureCode } : {}),
           ...(r.httpStatus ? { httpStatus: r.httpStatus } : {}),
           ...(r.edgeCode ? { edgeCode: r.edgeCode } : {}),
+          ...(r.relayUsage ? { relayUsage: r.relayUsage } : {}),
           durationMs: r.durationMs,
         })),
         warnings,
