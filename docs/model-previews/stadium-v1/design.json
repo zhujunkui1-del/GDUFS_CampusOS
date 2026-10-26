@@ -1,0 +1,104 @@
+{
+  "version": "stadium-v1-2026-10-27",
+  "placeId": "osm-way-1389756837",
+  "footprintSourceId": "osm-way-1389756836",
+  "trackSourceId": "osm-relation-19176025",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "stage": "standalone_visual_review",
+  "mapIntegrated": false,
+  "heightScaleLevels": null,
+  "levelsSource": "本轮未提供米制高度或层数，按照片外观比例估算",
+  "interiorLevelsVerified": false,
+  "heightAccuracy": "photo_proportion_estimate_not_surveyed",
+  "roofTipMeters": 3.2,
+  "roofFrontCrownMeters": 20,
+  "roofRearCrownMeters": 13.8,
+  "mastTopMeters": 35.5,
+  "seatFrontMeters": 2.5,
+  "seatRows": 22,
+  "seatTreadMeters": 0.8,
+  "seatRiserMeters": 0.27,
+  "seatsPerSection": 24,
+  "middleAisleRow": 11,
+  "seatSectionColors": [
+    "orange",
+    "orange",
+    "blue",
+    "red",
+    "blue",
+    "orange",
+    "orange"
+  ],
+  "skylightStations": [
+    0.14,
+    0.28,
+    0.42,
+    0.56,
+    0.7,
+    0.84
+  ],
+  "performance": {
+    "triangleBudget": 35000,
+    "modelDrawCallBudget": 18,
+    "glbByteBudget": 650000
+  },
+  "notes": [
+    "文件名数字无层数、尺寸或时序意义。",
+    "本次制作照片中的带顶看台，使用现有独立建筑轮廓1389756836；体育场地点仍绑定原真草场1389756837，原球场与跑道数据保持。",
+    "座席向球场一侧，局部+z朝场地，局部+x从看台南端指向北端。",
+    "屋顶/桁架/双高杆与拉索、看台排数/席位和背面柱廊/楼梯均按照片近似；合成席位数量不代表真实容量。",
+    "本轮未给定楼层或高度，不沿用体育馆五层；最高杆约35.5米/桁架约22米为视觉估算。",
+    "原建筑平面保持，外伸高杆基座/拉索锚点与外梯只为显示，不修改GIS或导航入口。",
+    "八图仅内部参考，零图片GLB，保留OSM署名。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/体育场.jpg",
+      "bytes": 151192,
+      "sha256": "182b96ec420bd8a9fbdcd32fe4a46943cbbc18f41a12867e11db7c8c678911b6",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/体育场背面.png",
+      "bytes": 1387648,
+      "sha256": "908dd449f8c945893e0f33ed4928983b7786af4f73ac03d3f035dddb8031d625",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/体育场侧面19238.png",
+      "bytes": 382161,
+      "sha256": "09d46c2d8a0faea252af2002192a1a82bc2fcfb6a2fa664111a5393eae922d97",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/体育场203.png",
+      "bytes": 259191,
+      "sha256": "d215e8875c8e09ca74042838ba4f904d777a3d34aa167ecaaddcda28a06e7d53",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/体育场.png",
+      "bytes": 239169,
+      "sha256": "f8033dccdbe633f31a15d2738b0af11899ee367167b4d705ed71b803c1c2967e",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/体育场正面345.png",
+      "bytes": 2134013,
+      "sha256": "94803399fdaf7658e099a89181067b269a1f52eb669da20fd9c0fad08c5fe836",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/体育场5.png",
+      "bytes": 2397326,
+      "sha256": "6d58e5ff2af4844a46451206a7e9cc1cc20771091b66a2665135495fdb88f404",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/model_references/stadium-v1/体育场俯视.png",
+      "bytes": 426188,
+      "sha256": "b140da2b05cfd48cebd8960cf48433103e84a6a1acf08f8b47d8ee18b06795ed",
+      "usage": "internal_visual_reference_only"
+    }
+  ]
+}

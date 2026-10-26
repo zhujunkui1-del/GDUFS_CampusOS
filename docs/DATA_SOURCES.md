@@ -558,3 +558,12 @@ Exa免Key接口由本机执行，出站回传既有Preview。真实官方借阅�
 小红书/Rednote使用本人授权的专用云端浏览器正常登录页，实际出现 www.xiaohongshu.com、edith.xiaohongshu.com、webapi.rednote.com。加密存储仅用于该会话；没有上传Windows日常profile。原生搜索当前login_required，0结果，不新增“云端已可用”来源声明。禁止以社交经验确认学校政策或申请时限。
 
 Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run/features/live-view/ 。短期链接只向管理员返回，不能公开、入引用或入Git。没有抓取/再分发第三方地图；原来源分级与许可边界保留。详 docs/CLOUD_SEARCH_MIGRATION_2026_10_27.md。
+
+
+## 2026-10-27｜体育场看台建模资料
+
+负责人提供细节目录的体育场.jpg、体育场背面.png、体育场侧面19238.png、体育场203.png、体育场.png、体育场正面345.png、体育场5.png，以及Downloads/体育场俯视.png；俯视原像素副本存文档包assets/model_references/stadium-v1。八图路径/字节/SHA见docs/model-previews/stadium-v1/design.json，文件名数字无层数/尺寸/时序意义。原URL/年份/公开复用许可仍待补，仅内部观察，不公开原图、瓦片或用作GLB纹理。
+
+几何取固定s1-2026-10-14.2当前/maps/campus-15060d099418.geojson的OpenStreetMap way1389756836（https://www.openstreetmap.org/way/1389756836）独立看台建筑轮廓，原地点真草场way1389756837与跑道relation19176025只作关联/方向依据并保持几何。看台位于场地西侧，模型座席朝向源场地一侧；GLB原点用原体育场地点坐标，映射/旋转记录manifest，不能重复平移或将看台轮廓写成球场足迹。
+
+本轮未提供层数/米制高，雨棚/桁架/双高杆、拉索锚点、排距/席位及后部楼梯为照片近似，约20/22/35.5米不是实测事实，合成席位数不作容量发布。当前八图支持本次看台杆索外观制作，不据此改动已有体育馆模型。自有零图片几何保留OSM署名，无新增导航入口或室内结构核验。

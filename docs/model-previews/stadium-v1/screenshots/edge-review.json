@@ -1,0 +1,168 @@
+{
+  "recordedAt": "2026-10-26T19:22:16.659Z",
+  "browser": "149.0.4022.80",
+  "headed": true,
+  "records": [
+    {
+      "name": "desktop-3d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "5",
+      "drawCalls": "10",
+      "renderTriangles": "28368",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[82.88289785524188,258.35756191096937,1259.0034456858339,735.0616791543989]",
+      "modelVersion": "stadium-v1-2026-10-27",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-3d-front",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "7",
+      "drawCalls": "10",
+      "renderTriangles": "28368",
+      "mode": "3d",
+      "view": "front",
+      "modelExtent": "[80.54131473068469,300.9474493850368,1359.457709933173,565.2441533947435]",
+      "modelVersion": "stadium-v1-2026-10-27",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-3d-side",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "9",
+      "drawCalls": "10",
+      "renderTriangles": "28368",
+      "mode": "3d",
+      "view": "side",
+      "modelExtent": "[82.94745292369822,307.24966470916326,1357.0535187439573,591.7963690167288]",
+      "modelVersion": "stadium-v1-2026-10-27",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-3d-roof",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "11",
+      "drawCalls": "10",
+      "renderTriangles": "28368",
+      "mode": "3d",
+      "view": "roof",
+      "modelExtent": "[82.85026616719941,309.6047087790396,1357.1507056486907,682.5723020937489]",
+      "modelVersion": "stadium-v1-2026-10-27",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-2.5d-overall",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "13",
+      "drawCalls": "5",
+      "renderTriangles": "3996",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[82.88414826744318,258.36474149994683,1259.0025559554933,735.0616791543989]",
+      "modelVersion": "stadium-v1-2026-10-27",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "desktop-2.5d-roof",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "engine": "three.js r186",
+      "frames": "15",
+      "drawCalls": "5",
+      "renderTriangles": "3996",
+      "mode": "2.5d",
+      "view": "roof",
+      "modelExtent": "[82.85047319378543,309.60477648331363,1357.150498621789,682.5722486206627]",
+      "modelVersion": "stadium-v1-2026-10-27",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "mobile-3d",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "engine": "three.js r186",
+      "frames": "18",
+      "drawCalls": "10",
+      "renderTriangles": "28368",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[22.207395657909874,341.1413939230752,358.85655063197515,479.07700453776715]",
+      "modelVersion": "stadium-v1-2026-10-27",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "mobile-2.5d",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "engine": "three.js r186",
+      "frames": "20",
+      "drawCalls": "5",
+      "renderTriangles": "3996",
+      "mode": "2.5d",
+      "view": "overall",
+      "modelExtent": "[22.20733394327244,341.143656302711,358.85660580489827,479.0770637147192]",
+      "modelVersion": "stadium-v1-2026-10-27",
+      "mapIntegrated": "false",
+      "ready": "true"
+    },
+    {
+      "name": "short-3d",
+      "viewport": {
+        "width": 950,
+        "height": 540
+      },
+      "engine": "three.js r186",
+      "frames": "23",
+      "drawCalls": "10",
+      "renderTriangles": "28368",
+      "mode": "3d",
+      "view": "overall",
+      "modelExtent": "[54.871151007967015,119.92317936552568,818.3623143143733,431.14501111270124]",
+      "modelVersion": "stadium-v1-2026-10-27",
+      "mapIntegrated": "false",
+      "ready": "true"
+    }
+  ],
+  "pageErrors": [],
+  "idleFrames": {
+    "before": "29",
+    "after": "29",
+    "stable": true
+  },
+  "interaction": "modes/views, drag/zoom, viewport resize",
+  "physicalPhoneTested": false
+}
