@@ -3,12 +3,20 @@ import { externalPolicy } from "../external-search/policy";
 export type ContentTool = "search_campus_knowledge" | "search_campus_events";
 /** Routing only; relevance, classification and dates still come from real tools. */
 export function contentIntent(message: string, history: StoredMessage[] = []) {
+  const isSearchFollowup = (text: string) =>
+    /^(?:请|再|帮我)?\s*(?:调用|用|去|通过|到)?\s*(?:小红书|外部搜索|互联网|网上)(?:来|帮我)?(?:搜|搜索|查|查找|找)(?:一下|一遍|看看)?[。！？!？\s]*$/.test(
+      text.trim(),
+    );
   const followup =
-    /^(那|那么|还|具体|需要|要|申请|报名).{0,25}(材料|条件|流程|截止|费用|在哪里|时间|怎么样|口味|体验)/.test(
+    isSearchFollowup(message) ||
+    (/^(那|那么|还|具体|需要|要|申请|报名).{0,25}(材料|条件|流程|截止|费用|在哪里|时间|怎么样|口味|体验)/.test(
       message,
-    ) && message.length < 50;
+    ) &&
+      message.length < 50);
   const previous = followup
-    ? [...history].reverse().find((m) => m.role === "user")?.text
+    ? [...history]
+        .reverse()
+        .find((m) => m.role === "user" && !isSearchFollowup(m.text))?.text
     : undefined;
   const query = (previous ? previous + "；追问：" : "") + message;
   const knowledge =

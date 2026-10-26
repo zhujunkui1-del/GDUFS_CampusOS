@@ -518,3 +518,7 @@ Exa免Key搜索本机Node成功，Preview Worker多次真实请求均HTTP403；w
 ## 2026-10-26｜一饭请求：当前小红书未登录
 
 来源折叠/精简和上标链接已上线并通过桌面/手机验证。用户一饭请求确有外部调用，但当次执行器离线；服务已恢复，源站接口当前明确显示未登录。需要负责人本人扫码恢复会话，之后以真实笔记URL/正文验收，不以HTTP健康或函数调用ok冒充检索成功。源状态回执见docs/verification/assistant-source-disclosure/current-session.json。
+
+## 2026-10-26｜登录阻塞解除，保留源站主动验证边界
+
+已使用专用Edge完整profile恢复有效会话；正常关闭重开、重启本机服务仍登录，不需要继续发静态二维码。实际笔记正文及南校一饭/显式小红书追问两轮公网调用通过。当前模式不依赖Docker，需本机Node与专用Edge可运行；没有设置开机自启。平台主动撤销会话/安全验证仍须本人处理，未承诺永久登录或24小时稳定性。旧“当前未登录需要扫码”记录已非最新状态；见docs/verification/xhs-persistent-session/reopen.json、service-restart.json、browser/live.json。

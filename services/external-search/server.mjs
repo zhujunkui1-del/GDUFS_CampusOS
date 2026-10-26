@@ -7,6 +7,7 @@ import { createHash, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
 import { xiaohongshuQuery } from "./query.mjs";
 import { PublicNoteCache } from "./cache.mjs";
+import { PersistentXhsBrowser } from "./persistent-browser.mjs";
 const dir = path.dirname(fileURLToPath(import.meta.url));
 const config = JSON.parse(
   await fs.readFile(path.join(dir, "runtime/config.json"), "utf8"),
@@ -21,6 +22,10 @@ const digest = (s) => createHash("sha256").update(s).digest();
 const allowed = digest("Bearer " + config.gatewayToken);
 let running = 0;
 const cache = new PublicNoteCache();
+const persistent =
+  config.xhsProvider === "persistent-edge"
+    ? new PersistentXhsBrowser(path.join(dir, "runtime"))
+    : null;
 async function upstream(route, body, signal) {
   const r = await fetch(config.upstreamUrl + route, {
     method: body ? "POST" : "GET",
@@ -94,13 +99,37 @@ const server = http.createServer(async (req, res) => {
     });
     res.end(JSON.stringify({ status, items, ...metadata }));
   };
-  if (req.url === "/health" && req.method === "GET") return send(200, "ok");
-  if (req.url !== "/v1/search" || req.method !== "POST")
+  if (req.url === "/health" && req.method === "GET")
+    return send(200, "ok", [], {
+      provider: persistent ? "persistent-edge" : "xiaohongshu-mcp",
+      profilePersistent: !!persistent,
+    });
+  const sessionAction =
+    persistent && /^\/v1\/session\/(status|open|close)$/.test(req.url || "");
+  if ((req.url !== "/v1/search" && !sessionAction) || req.method !== "POST")
     return send(404, "unavailable");
   if (
     !timingSafeEqual(allowed, digest(String(req.headers.authorization || "")))
   )
     return send(401, "unavailable");
+  if (sessionAction) {
+    try {
+      let state;
+      if (req.url.endsWith("/close")) {
+        await persistent.close();
+        state = { state: "closed", loggedIn: null };
+      } else
+        state = req.url.endsWith("/open")
+          ? await persistent.open()
+          : await persistent.status();
+      return send(200, "ok", [], state);
+    } catch {
+      return send(200, "unavailable", [], {
+        state: "unknown",
+        loggedIn: null,
+      });
+    }
+  }
   const controller = new AbortController();
   res.on("close", () => {
     if (!res.writableEnded) controller.abort();
@@ -122,10 +151,25 @@ const server = http.createServer(async (req, res) => {
     const keyword = xiaohongshuQuery(input.query) || input.query;
     const cached = cache.get(keyword, input.limit);
     if (cached)
-      return send(200, "ok", cached, { cacheHit: true, queryUsed: keyword });
+      return send(200, "ok", cached, {
+        cacheHit: true,
+        queryUsed: keyword,
+        provider: persistent
+          ? "xiaohongshu_browser_local"
+          : "xiaohongshu_mcp_local",
+      });
     if (running >= 2) return send(200, "busy");
     running++;
     counted = true;
+    if (persistent) {
+      const result = await persistent.search(keyword, input.limit, signal);
+      cache.put(keyword, result.items);
+      return send(200, result.status, result.items, {
+        cacheHit: false,
+        queryUsed: keyword,
+        provider: "xiaohongshu_browser_local",
+      });
+    }
     // An expired platform session must report login_required, rather than spend
     // the entire search budget waiting for a search page that cannot load.
     const login = await upstream("/api/v1/login/status", null, signal);
@@ -182,4 +226,7 @@ server.listen(config.port, "127.0.0.1", () =>
   ),
 );
 for (const event of ["SIGINT", "SIGTERM"])
-  process.on(event, () => server.close(() => process.exit(0)));
+  process.on(event, () => {
+    void persistent?.close();
+    server.close(() => process.exit(0));
+  });

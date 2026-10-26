@@ -95,7 +95,9 @@ test("Preview internal-first, official web supplement, experiences and ordinary 
           ?.flatMap((r) => r.providers)
           .some(
             (p) =>
-              p.provider === "xiaohongshu_mcp_local" &&
+              ["xiaohongshu_mcp_local", "xiaohongshu_browser_local"].includes(
+                p.provider,
+              ) &&
               p.status === "ok" &&
               p.count > 0,
           ),
@@ -157,7 +159,9 @@ test("Preview internal-first, official web supplement, experiences and ordinary 
         ?.flatMap((r) => r.providers)
         .some(
           (p) =>
-            p.provider === "xiaohongshu_mcp_local" &&
+            ["xiaohongshu_mcp_local", "xiaohongshu_browser_local"].includes(
+              p.provider,
+            ) &&
             p.status === "ok" &&
             p.count > 0,
         ),

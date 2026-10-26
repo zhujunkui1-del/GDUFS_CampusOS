@@ -1,5 +1,24 @@
 # CampusOS 外部搜索
 
+## 当前会话：专用 Edge 完整持久化（后续更新）
+
+当前本机使用persistent-edge，不再每次启动临时浏览器、重新导入旧Cookie。专用目录为runtime/xiaohongshu-browser-profile，Edge自动维护Cookie、LocalStorage和其他站点状态。只在新目录首次初始化时尝试迁移之前已授权的专用会话；已有目录不被旧快照覆盖，不读取日常Edge/Chrome资料。
+
+已实际验证关闭/重开浏览器、重启本地服务后仍logged_in；“南校一饭”和“调用小红书来查”两轮公网问答均取得真实笔记正文。不需要再次扫静态二维码。平台主动退出或明确要求安全验证时，仍需本人处理，不能保证永远不登出。
+
+当前模式启动无需Docker（旧MCP容器仅作备用，未改其他采集器）：
+
+```powershell
+& .\services\external-search\start.ps1
+node services/external-search/setup.mjs status
+```
+
+需要查看/处理来源会话时执行`node services/external-search/setup.mjs login`，会直接打开专用Edge的真实小红书页面；页面二维码由平台自动刷新，不再依赖聊天中的4分钟图片。loggedIn为null/state=unknown表示页面状态尚未确认，不是已掉线。只有明确登录提示才要求本人登录。
+
+两个Node程序仍需运行；专用浏览器被关闭后会使用同一目录恢复。没有配置Windows开机自启，不向云端上传会话目录，不要删除/分享整个runtime目录。健康检查使用http://127.0.0.1:18071/health；18060属于旧MCP，不再用于判断当前专用会话。
+
+最新验证见[持久会话报告](../../docs/verification/xhs-persistent-session/README.md)。下方是之前MCP阶段的运行说明，仅作历史/兼容参考。
+
 同一 Agent 的 `search_external_campus_info` 只读 Skill。先查内部文章，再按问题类型补充：官方规则/期限只查 `gdufs.edu.cn` 官方网页；食堂口味查学生经验；宿舍体验组合官方设施与学生笔记；活动仍以雷达及官方通知为准。内部无结果不会一律触发小红书。
 
 ## 当前运行方式（2026-10-26更新）

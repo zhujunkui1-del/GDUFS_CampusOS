@@ -543,3 +543,7 @@ Rows read基线来自Cloudflare Wrangler只读命令`wrangler d1 insights campus
 负责人本人扫码，专用本机会话确认登录；通过xpzouying/xiaohongshu-mcp实际搜索20条笔记并取得正文。公网Agent真实引用《广外居然还有四饭！》《广外｜饭堂和周边美食由夯到拉排名！》等，仅作学生经验；具体URL、发布日期和有限证据见docs/verification/external-search/xhs-logged-in/acceptance.json及关联浏览器回执，不下载/发布笔记图片或地图，不自动入公共文章语料。
 
 Exa免Key接口由本机执行，出站回传既有Preview。真实官方借阅权限表、规则和MDN来源已在回答中显示；只搜索摘录时保留search_excerpt，不冒充取得全文/政策现行。原入站Tunnel仍失败、第三方偶发失败与本机在线依赖均保留说明，没有购买额外服务。
+
+## 2026-10-26｜持久Edge小红书来源
+
+当前来源通过用户已授权的专用Edge会话正常访问公开搜索/笔记；真实南校食堂帖子含一饭文采园及具体个人推荐，URL、日期、有限摘录见docs/verification/xhs-persistent-session/south-canteen.json。不是校方菜单，未据此确认当前营业/价格。源码只读页面公开状态，不读取私信/收藏或日常浏览器资料，不批量复制图片，不自动入公共文章语料。参考xpzouying/xiaohongshu-mcp的公开数据形状，Apache-2.0通知与许可证见services/external-search/THIRD_PARTY_NOTICES.md；工具许可不等于帖子再分发授权。

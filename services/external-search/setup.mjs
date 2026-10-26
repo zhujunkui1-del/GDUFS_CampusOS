@@ -21,6 +21,7 @@ try {
     upstreamToken: randomBytes(32).toString("base64url"),
     upstreamUrl: "http://127.0.0.1:18060",
     port: 18071,
+    xhsProvider: "persistent-edge",
   };
   await fs.writeFile(configPath, JSON.stringify(config), {
     flag: "wx",
@@ -39,6 +40,17 @@ try {
 }
 const action = process.argv[2] || "init";
 if (action === "init") {
+  if (config.xhsProvider === "persistent-edge") {
+    console.log(
+      JSON.stringify({
+        provider: "persistent-edge",
+        profilePersistent: true,
+        requiresDocker: false,
+        next: "Start the local gateway and runner, then use login to open the dedicated browser.",
+      }),
+    );
+    process.exit(0);
+  }
   const exists =
     spawnSync("docker", ["container", "inspect", "campusos-xhs-search"], {
       stdio: "ignore",
@@ -78,6 +90,34 @@ if (action === "init") {
     }),
   );
 } else if (action === "status" || action === "login") {
+  if (config.xhsProvider === "persistent-edge") {
+    const r = await fetch(
+      "http://127.0.0.1:" +
+        config.port +
+        "/v1/session/" +
+        (action === "login" ? "open" : "status"),
+      {
+        method: "POST",
+        headers: { Authorization: "Bearer " + config.gatewayToken },
+        signal: AbortSignal.timeout(30000),
+      },
+    );
+    const data = await r.json();
+    console.log(
+      JSON.stringify({
+        loggedIn:
+          data.state === "logged_in"
+            ? true
+            : data.state === "login_required"
+              ? false
+              : null,
+        state: data.state || "unknown",
+        provider: "persistent-edge",
+        profilePersistent: true,
+      }),
+    );
+    process.exit(0);
+  }
   const response = await fetch(
     config.upstreamUrl +
       "/api/v1/login/" +

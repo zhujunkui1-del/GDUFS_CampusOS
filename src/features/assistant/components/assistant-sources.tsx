@@ -2,12 +2,23 @@ import { ChevronDown, Link2 } from "lucide-react";
 import type { AssistantCard } from "@/domain/agent/assistant-contracts";
 import { sourcePublicationDate } from "@/lib/retrieval/source-date";
 
-export function AssistantSources({ cards }: { cards: AssistantCard[] }) {
-  const sources = cards.flatMap((card, index) =>
+export function AssistantSources({
+  cards,
+  text,
+}: {
+  cards: AssistantCard[];
+  text?: string;
+}) {
+  const candidates = cards.flatMap((card, index) =>
     card.kind === "source" || card.kind === "external_source"
       ? [{ card, number: index + 1 }]
       : [],
   );
+  const referenced = new Set(
+    [...(text || "").matchAll(/\[来源\s*(\d+)\s*\]/g)].map((m) => Number(m[1])),
+  );
+  const cited = candidates.filter((source) => referenced.has(source.number));
+  const sources = cited.length ? cited : candidates;
   if (!sources.length) return null;
   return (
     <details className="assistant-sources">

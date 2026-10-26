@@ -54,7 +54,9 @@ export function externalPolicy(query: string): ExternalPolicy {
       !mapOnly &&
       (query.trim().length >= 4 || official || experience || events),
     officialOnly: intent === "official",
-    useXiaohongshu: ["experience", "mixed", "events"].includes(intent),
+    useXiaohongshu:
+      ["experience", "mixed", "events"].includes(intent) ||
+      (/小红书/.test(query) && intent !== "official"),
     campus:
       /广外|广东外语外贸大学|学校|校内|校园|食堂|宿舍|南苑|北苑|图书馆|奖学金/.test(
         query,

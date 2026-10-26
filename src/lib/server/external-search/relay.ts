@@ -71,7 +71,7 @@ export function createDbRelay(db: SqlDatabase, owner: string) {
         ? input.onlyXhs
           ? "exa_xiaohongshu_local"
           : "exa_web_local"
-        : "xiaohongshu_mcp_local";
+        : "xiaohongshu_local";
     let result: ProviderResult = {
       provider,
       items: [],
@@ -126,7 +126,7 @@ export function createDbRelay(db: SqlDatabase, owner: string) {
     }
     return {
       ...result,
-      provider,
+      provider: result.provider,
       durationMs: Math.round(performance.now() - started),
       relayUsage: { ...meter.usage },
     };

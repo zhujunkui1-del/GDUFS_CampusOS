@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-26T10:22:33.091Z",
+  "previewVersion": "20241f13-4b21-46b0-bbeb-673aac7505f3",
+  "profilePersistent": true,
+  "requiresDocker": false,
+  "operatingSystemRebootTested": false,
+  "browserAndServiceRestartTested": true,
+  "newPaidServices": false,
+  "productionChanged": false,
+  "modelRequests": 6,
+  "modelTokens": 30729,
+  "sourceCalls": [
+    {
+      "provider": "xiaohongshu_browser_local",
+      "status": "ok",
+      "durationMs": 7931,
+      "count": 4,
+      "cacheHit": false,
+      "relayUsage": {
+        "queries": 12,
+        "rowsRead": 14,
+        "rowsWritten": 5,
+        "usageAvailable": true
+      }
+    },
+    {
+      "provider": "exa_web",
+      "status": "ok",
+      "durationMs": 4670,
+      "count": 2,
+      "relayUsage": {
+        "queries": 8,
+        "rowsRead": 10,
+        "rowsWritten": 5,
+        "usageAvailable": true
+      }
+    },
+    {
+      "provider": "xiaohongshu_browser_local",
+      "status": "ok",
+      "durationMs": 4282,
+      "count": 4,
+      "cacheHit": false,
+      "relayUsage": {
+        "queries": 8,
+        "rowsRead": 10,
+        "rowsWritten": 5,
+        "usageAvailable": true
+      }
+    },
+    {
+      "provider": "exa_web",
+      "status": "ok",
+      "durationMs": 2653,
+      "count": 2,
+      "relayUsage": {
+        "queries": 6,
+        "rowsRead": 8,
+        "rowsWritten": 5,
+        "usageAvailable": true
+      }
+    }
+  ]
+}

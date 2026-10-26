@@ -91,7 +91,7 @@ async function execute(work, claimUsage) {
       }
       const data = await r.json();
       result = RelayResultSchema.parse({
-        provider: "xiaohongshu_mcp_local",
+        provider: data.provider || "xiaohongshu_mcp_local",
         status: data.status,
         items: data.items,
         ...(typeof data.cacheHit === "boolean"

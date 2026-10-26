@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-26T09:21:53.315Z",
+  "durationMs": 6177,
+  "result": {
+    "status": "ok",
+    "items": [
+      {
+        "title": "就你有嗓子是吧",
+        "originalUrl": "https://www.xiaohongshu.com/explore/6aa77e040000000028000b9d?xsec_token=ABERXgZS_ONoReiNVZtOFgOJ8-8_NA9t4qvnIPqaNEXqM%3D&xsec_source=pc_search",
+        "sourceName": "小红书 · 爱吃皮蛋瘦肉粥的饼",
+        "platform": "xiaohongshu",
+        "authority": "student_experience",
+        "evidenceKind": "page_excerpt",
+        "snippet": "事情是这样的，今天中午去一饭一楼吃饭，买的三角钱的饭，一直客客气气说叔，要三角的，完事就滴卡了，我非常清楚的看到了我卡里的余额和亮灯，就打算端着我的盆走了。那叔在我还没转身的时候就吼：没刷到啊你！怀疑的望过去，我吗？还没开口，那大叔又来，瞪着我，没刷到！因为当时高峰期后面超多人，我也没手查账单就又刷了一次。。。还以为这个机器感应有问题（新生不了解），结果我现在来查账。。就是刷了两次。。。三角钱不是说刷两次损失多大，但这个态度我是真服了。。。况且也是你个si人大叔自己看错还是啥的。。就你有嗓子。。我将不会在对你有好脸色。。。。#招谁惹谁了[话题]# #广外南[话题]##食堂[话题]#",
+        "publishedAt": "2026-09-14T04:54:28.000Z",
+        "retrievedAt": "2026-10-26T09:21:53.209Z",
+        "searchMode": "platform",
+        "canConfirmAdministrativeFacts": false
+      },
+      {
+        "title": "广外南校吃什么？三个饭堂一篇讲清楚🍚",
+        "originalUrl": "https://www.xiaohongshu.com/explore/6a54fb0e000000001702a47b?xsec_token=ABC6k8rtErJOE3ayx6LIcJ5THrgWTSN7VmtFHGpXcK4zU%3D&xsec_source=pc_search",
+        "sourceName": "小红书 · 厂内BINGO",
+        "platform": "xiaohongshu",
+        "authority": "student_experience",
+        "evidenceKind": "page_excerpt",
+        "snippet": "广外南校干饭地图来了！\n一饭二饭三饭到底吃啥？\n看完这篇不迷路❗\n\t\n🍚 一饭｜文采园\n南校最大的食堂！一共两层，品类超全\n🔥必吃推荐：\n✅泰岛蛋\n✅鸭血粉丝汤\n✅五谷渔粉\n\t\n🍚 二饭｜博雅园\n下课直奔！最方便的食堂\n🔥必吃推荐：\n✅轻食\n✅西北风味\n\t\n🍚 三饭｜风采园\n性价比之王！位置稍微偏一点但超值\n🔥必吃推荐：\n✅称重自选\n✅鸡公煲\n\t\n📌地理位置速览：\n一饭：1号门旁，北苑2栋对面\n二饭：北苑3、4栋对面，下沉广场右侧\n三饭：南苑8栋旁\n\t\n💡干饭小贴士：\n中午11点半后人最多，建议错峰\n二饭烘焙区晚上九点半后打八折🍞\n新生记得码住！开学直接冲🏃‍♀️\n\t\n更多广外相关信息可以进群了解哦！师哥师姐在线解答！\n#广外[话题]#  #广外南[话题]# #广外南校[话题]# #广外食堂[话题]#  #广外新生[话题]#  #广东外语外贸大学[话题]#  #大学食堂[话题]#  #广外一饭[话题]#  #广外二饭[话题]#  #广外三饭[话题]#",
+        "publishedAt": "2026-07-13T14:49:50.000Z",
+        "retrievedAt": "2026-10-26T09:21:53.280Z",
+        "searchMode": "platform",
+        "canConfirmAdministrativeFacts": false
+      }
+    ],
+    "cacheHit": false,
+    "queryUsed": "广外南校一饭",
+    "provider": "xiaohongshu_browser_local"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-26T09:18:26.183Z",
+  "before": {
+    "state": "logged_in",
+    "loggedIn": true
+  },
+  "closed": {
+    "state": "closed"
+  },
+  "after": {
+    "state": "logged_in",
+    "loggedIn": true
+  },
+  "profile": "services/external-search/runtime/xiaohongshu-browser-profile",
+  "credentialsPrinted": false
+}

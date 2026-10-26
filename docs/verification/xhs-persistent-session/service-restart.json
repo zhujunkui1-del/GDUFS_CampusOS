@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-26T10:09:36.978Z",
+  "result": {
+    "status": "ok",
+    "items": [],
+    "state": "logged_in",
+    "loggedIn": true,
+    "provider": "persistent-edge",
+    "profilePersistent": true
+  },
+  "profileFixed": true,
+  "sourceServiceRestarted": true
+}

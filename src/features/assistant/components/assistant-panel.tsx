@@ -380,7 +380,10 @@ export function AssistantPanel({
                                   )}
                                 </p>
                               )}
-                            <AssistantSources cards={message.cards} />
+                            <AssistantSources
+                              cards={message.cards}
+                              text={message.text}
+                            />
                             {message.cards.map((card, index) =>
                               card.kind === "source" ||
                               card.kind ===
