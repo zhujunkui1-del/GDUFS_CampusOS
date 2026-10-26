@@ -6,6 +6,13 @@ it("adapts the real model question to source keywords without losing campus", ()
   ).toBe("广外大学城食堂");
 });
 it("preserves the requested dish and residence topic", () => {
+  expect(xiaohongshuQuery("广外一饭有什么好吃的")).toBe("广外一饭");
+  expect(xiaohongshuQuery("广东外语外贸大学 南校一饭 招牌菜 档口 推荐")).toBe(
+    "广外南校一饭",
+  );
+  expect(xiaohongshuQuery("广外南校一饭 麻辣烫有什么好吃的")).toBe(
+    "广外南校一饭麻辣烫",
+  );
   expect(
     xiaohongshuQuery("广东外语外贸大学大学城校区 食堂 美食推荐 学生体验"),
   ).toBe("广外大学城食堂");

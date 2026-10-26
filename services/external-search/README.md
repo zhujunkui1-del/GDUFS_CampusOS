@@ -8,6 +8,8 @@
 
 **两种外部搜索均依赖本机、Docker和以下两个程序持续运行。** 启动Docker Desktop后，在项目根目录先执行`node services/external-search/setup.mjs init`。然后在两个终端分别运行：
 
+Windows也可在Docker和容器已启动后运行`& .\services\external-search\start.ps1`，将两个Node程序作为独立隐藏后台进程启动，避免依赖临时命令会话。日志保存在忽略的runtime目录；重复执行会复用已运行的对应程序。该脚本不会设置开机自启。
+
 ```powershell
 node services/external-search/server.mjs
 ```

@@ -126,8 +126,10 @@ const server = http.createServer(async (req, res) => {
     if (running >= 2) return send(200, "busy");
     running++;
     counted = true;
-    // The upstream search uses its dedicated authenticated browser session.
-    // Reopening /explore for a separate login probe costs another 5 seconds.
+    // An expired platform session must report login_required, rather than spend
+    // the entire search budget waiting for a search page that cannot load.
+    const login = await upstream("/api/v1/login/status", null, signal);
+    if (login.data?.is_logged_in === false) return send(200, "login_required");
     const found = await upstream("/api/v1/feeds/search", { keyword }, signal);
     if (!found.success || !Array.isArray(found.data?.feeds))
       return send(200, "unavailable");

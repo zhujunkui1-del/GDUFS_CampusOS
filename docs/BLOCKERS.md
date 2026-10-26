@@ -514,3 +514,7 @@ Exa免Key搜索本机Node成功，Preview Worker多次真实请求均HTTP403；w
 登录阻塞已解除；入站Tunnel仍不可达，但已通过现有D1+本机出站HTTPS接通，不再阻塞代表性网页/小红书Agent引用。当前无需新增搜索Key；不得把原“尚无公网检索回执”继续当最新结论。
 
 仍有第三方源站超时和免Key网页工具间歇失败，已保留降级/无证据行为；连续重测未全部通过。两个Provider都依赖本机、Docker和server.mjs/runner.mjs持续运行，未设置开机自启。长期稳定性、真实手机、登录过期/重启实机矩阵及多人容量待后续验证。详docs/verification/external-search/xhs-logged-in。
+
+## 2026-10-26｜一饭请求：当前小红书未登录
+
+来源折叠/精简和上标链接已上线并通过桌面/手机验证。用户一饭请求确有外部调用，但当次执行器离线；服务已恢复，源站接口当前明确显示未登录。需要负责人本人扫码恢复会话，之后以真实笔记URL/正文验收，不以HTTP健康或函数调用ok冒充检索成功。源状态回执见docs/verification/assistant-source-disclosure/current-session.json。

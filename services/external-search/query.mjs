@@ -11,8 +11,11 @@ export function xiaohongshuQuery(raw) {
     )
     .replace(/[？?，,。；;]/g, " ");
   return (
-    /(?:食堂|饭堂)/.test(query)
-      ? query.replace(/好吃|推荐|评价|口碑|美食|测评|评测/g, " ")
+    /(?:食堂|饭堂|[一二三四五六七八九1-9]饭)/.test(query)
+      ? query.replace(
+          /有什么|有啥|好吃(?:的)?|推荐(?:一下)?|评价|口碑|美食|测评|评测|招牌菜|档口/g,
+          " ",
+        )
       : query
   )
     .replace(/([\p{Script=Han}])\s+(?=[\p{Script=Han}])/gu, "$1")

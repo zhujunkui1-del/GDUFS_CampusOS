@@ -16,6 +16,7 @@ export async function installAgentEvidence(page: Page) {
           prompt: JSON.parse(String(args[1]?.body || "{}")).message,
           tools: [] as string[],
           actions: [] as unknown[],
+          cards: [] as unknown[],
           result: null as unknown,
           response: "",
           responseHeadersMs: Math.round(performance.now() - started),
@@ -48,6 +49,8 @@ export async function installAgentEvidence(page: Page) {
                     record.tools.push(event.payload.name);
                   if (event.type === "artifact.ready" && event.payload.packet)
                     record.actions.push(...event.payload.packet.actions);
+                  if (event.type === "artifact.ready" && event.payload.cards)
+                    record.cards = event.payload.cards;
                   if (event.type === "message.delta") {
                     record.firstTextMs ??= Math.round(
                       performance.now() - started,

@@ -54,6 +54,9 @@ test("Preview real article Skills, cross-column answer, follow-up and article-to
       await page.getByRole("button", { name: "打开校园助理" }).click();
     const last = page.locator('[data-message-role="assistant"]').last();
     await expect(last).toBeVisible({ timeout: 15000 });
+    const sourceDisclosure = last.locator(".assistant-sources");
+    if (await sourceDisclosure.count())
+      await sourceDisclosure.locator("summary").click();
     const sources = await last
       .locator(".assistant-source-card a")
       .evaluateAll((nodes) =>

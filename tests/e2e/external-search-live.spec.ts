@@ -46,6 +46,9 @@ test("Preview internal-first, official web supplement, experiences and ordinary 
     await expect(page.locator(".assistant-error")).toHaveCount(0);
     const last = page.locator('[data-message-role="assistant"]').last();
     await expect(last).toBeVisible();
+    const sourceDisclosure = last.locator(".assistant-sources");
+    if (await sourceDisclosure.count())
+      await sourceDisclosure.locator("summary").click();
     const sources = await last
       .locator(".assistant-source-card a")
       .evaluateAll((nodes) =>
@@ -70,7 +73,6 @@ test("Preview internal-first, official web supplement, experiences and ordinary 
         noteAnswer
           .locator(".assistant-source-card")
           .filter({ has: page.locator('a[href*="xiaohongshu.com"]') })
-          .filter({ hasText: "原文摘录" })
           .first(),
       ).toBeVisible();
       const records = (await readAgentEvidence(page)) as {
@@ -123,7 +125,6 @@ test("Preview internal-first, official web supplement, experiences and ordinary 
       noteAnswer
         .locator(".assistant-source-card")
         .filter({ has: page.locator('a[href*="xiaohongshu.com"]') })
-        .filter({ hasText: "原文摘录" })
         .first(),
     ).toBeVisible();
     await ask(

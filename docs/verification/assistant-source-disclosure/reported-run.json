@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-26T07:41:21.090Z",
+  "reportedQuestion": "广外一饭有什么好吃的",
+  "runId": "08d8cd44-02e7-4d1d-a2f9-b28d15bad785",
+  "startedAt": "2026-10-26T06:59:36.334Z",
+  "skills": [
+    {
+      "name": "search_campus_knowledge",
+      "durationMs": 546,
+      "ok": true
+    },
+    {
+      "name": "search_external_campus_info",
+      "durationMs": 28625,
+      "ok": true
+    }
+  ],
+  "externalSearch": [
+    {
+      "status": "unavailable",
+      "durationMs": 28625,
+      "providers": [
+        {
+          "provider": "xiaohongshu_mcp_local",
+          "status": "unavailable",
+          "durationMs": 28625,
+          "count": 0,
+          "relayUsage": {
+            "queries": 35,
+            "rowsRead": 37,
+            "rowsWritten": 5,
+            "usageAvailable": true
+          }
+        },
+        {
+          "provider": "exa_web_local",
+          "status": "unavailable",
+          "durationMs": 28622,
+          "count": 0,
+          "relayUsage": {
+            "queries": 35,
+            "rowsRead": 37,
+            "rowsWritten": 5,
+            "usageAvailable": true
+          }
+        }
+      ],
+      "rowsRead": 74,
+      "rowsWritten": 10
+    }
+  ],
+  "cost": {
+    "rowsRead": 1,
+    "rowsWritten": 0
+  },
+  "localObservation": "At investigation Docker named pipe and both local Node processes were absent; restored Docker/container and independent background Node processes"
+}

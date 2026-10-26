@@ -11,7 +11,8 @@ import {
   useSyncExternalStore,
 } from "react";
 import { useAssistant } from "../use-assistant";
-import { sourcePublicationDate } from "@/lib/retrieval/source-date";
+import { AssistantSources } from "./assistant-sources";
+import { AssistantMessageText } from "./assistant-message-text";
 import {
   ArrowUp,
   Maximize2,
@@ -369,85 +370,22 @@ export function AssistantPanel({
                                 message.error && message.error === chat.error
                               ) && (
                                 <p>
-                                  {message.text.replace(/\*\*(.*?)\*\*/g, "$1")}
+                                  {message.role === "assistant" ? (
+                                    <AssistantMessageText
+                                      text={message.text}
+                                      cards={message.cards}
+                                    />
+                                  ) : (
+                                    message.text.replace(/\*\*(.*?)\*\*/g, "$1")
+                                  )}
                                 </p>
                               )}
+                            <AssistantSources cards={message.cards} />
                             {message.cards.map((card, index) =>
-                              card.kind === "source" ? (
-                                <article
-                                  className="assistant-source-card"
-                                  key={"source:" + card.documentId}
-                                >
-                                  <a
-                                    href={card.originalUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                  >
-                                    <strong>{card.title}</strong>
-                                  </a>
-                                  <span>
-                                    来源{index + 1} · {card.sourceName} ·{" "}
-                                    {sourcePublicationDate(card.publishedAt)}
-                                  </span>
-                                  <details>
-                                    <summary>查看证据</summary>
-                                    <p>{card.snippet}</p>
-                                  </details>
-                                  <small>
-                                    {card.evidenceType === "metadata"
-                                      ? "仅元数据"
-                                      : card.evidenceType === "excerpt"
-                                        ? "原文摘录"
-                                        : "正文证据"}
-                                    {card.classificationState === "unknown"
-                                      ? " · 校园资讯"
-                                      : ""}
-                                    {card.validity === "unknown"
-                                      ? " · 有效性待确认"
-                                      : card.validity === "expired"
-                                        ? " · 已失效"
-                                        : card.validity === "historical"
-                                          ? " · 历史资料"
-                                          : ""}
-                                  </small>
-                                </article>
-                              ) : card.kind === "external_source" ? (
-                                <article
-                                  className="assistant-source-card"
-                                  key={card.originalUrl}
-                                >
-                                  <a
-                                    href={card.originalUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                  >
-                                    <strong>{card.title}</strong>
-                                  </a>
-                                  <span>
-                                    来源{index + 1} · {card.sourceName} ·{" "}
-                                    {sourcePublicationDate(card.publishedAt)}
-                                  </span>
-                                  <details>
-                                    <summary>查看证据</summary>
-                                    <p>{card.snippet}</p>
-                                  </details>
-                                  <small>
-                                    {card.authority === "official"
-                                      ? "官方网页"
-                                      : card.authority === "student_experience"
-                                        ? "学生经验"
-                                        : "外部资料"}
-                                    {card.evidenceKind === "title_only"
-                                      ? " · 仅标题"
-                                      : card.evidenceKind === "search_excerpt"
-                                        ? " · 搜索摘录"
-                                        : " · 原文摘录"}
-                                    {card.searchMode === "public_web"
-                                      ? " · 公开网页"
-                                      : ""}
-                                  </small>
-                                </article>
-                              ) : card.kind === "place" ? (
+                              card.kind === "source" ||
+                              card.kind ===
+                                "external_source" ? null : card.kind ===
+                                "place" ? (
                                 <button
                                   key={card.place.placeId + index}
                                   className="assistant-place-card"
