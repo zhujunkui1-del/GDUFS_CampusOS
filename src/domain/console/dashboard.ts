@@ -36,6 +36,23 @@ export const SourceSessionResultSchema = z
       c.addIssue({ code: "custom", message: "Invalid login challenge" });
   });
 export type SourceSession = z.infer<typeof SourceSessionResultSchema>;
+// Short-lived administrator-only browser access; never persisted as session status.
+export const CloudVerificationSchema = z
+  .object({
+    url: z
+      .string()
+      .max(6000)
+      .url()
+      .refine((value) => {
+        const url = new URL(value);
+        return (
+          url.origin === "https://live.browser.run" &&
+          url.pathname.startsWith("/ui/")
+        );
+      }),
+    expiresAt: z.number().int().positive(),
+  })
+  .strict();
 export const SourceControlWorkSchema = z
   .object({
     id: z.string().uuid(),

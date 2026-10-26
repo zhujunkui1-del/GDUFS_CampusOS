@@ -22,10 +22,15 @@ const auth = execFileSync(
   { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
 );
 const { token } = JSON.parse(auth.slice(auth.indexOf("{")));
+const worker = process.env.PREVIEW_TELEMETRY_WORKER || "campusos-preview";
+if (!["campusos-preview", "campusos-preview-cloud-search"].includes(worker))
+  throw Error("Preview telemetry target required");
 const endpoint =
   "https://api.cloudflare.com/client/v4/accounts/" +
   account +
-  "/workers/scripts/campusos-preview/tails";
+  "/workers/scripts/" +
+  worker +
+  "/tails";
 let tail, ws;
 const records = [];
 const shapes = new Set();
@@ -88,6 +93,7 @@ try {
       {
         at: new Date().toISOString(),
         windowSeconds: seconds,
+        worker,
         connected,
         tailRemoved: removed,
         rawLogsStored: false,

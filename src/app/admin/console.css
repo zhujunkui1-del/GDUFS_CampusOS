@@ -152,6 +152,10 @@
   text-align: center;
 }
 .console-session-qr img {
+  padding: 12px;
+  background: white;
+  image-rendering: pixelated;
+  object-fit: contain;
   display: block;
   margin: auto;
   max-width: 100%;

@@ -55,3 +55,16 @@ it("rejects another Worker's service binding and missing account", () => {
   expect(() => assertPreviewTarget(c, account)).toThrow();
   expect(() => assertPreviewTarget(config(), undefined)).toThrow();
 });
+it("only allows the dedicated Preview cloud search service in addition to its self reference", () => {
+  const c = config();
+  c.env.preview.services = [
+    { binding: "WORKER_SELF_REFERENCE", service: "campusos-preview" },
+    { binding: "CLOUD_SEARCH", service: "campusos-preview-cloud-search" },
+  ];
+  expect(assertPreviewTarget(c, account).worker).toBe("campusos-preview");
+  c.env.preview.services = [
+    { binding: "WORKER_SELF_REFERENCE", service: "campusos-preview" },
+    { binding: "CLOUD_SEARCH", service: "campusos-cloud-search" },
+  ];
+  expect(() => assertPreviewTarget(c, account)).toThrow();
+});

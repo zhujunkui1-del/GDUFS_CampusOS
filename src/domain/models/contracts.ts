@@ -47,7 +47,7 @@ export interface ModelClient {
 }
 export type ModelSnapshot = {
   source: "platform";
-  provider: "deepseek";
+  provider: "deepseek" | "stepfun";
   model: string;
   policyVersion: string;
   testedAt: string;

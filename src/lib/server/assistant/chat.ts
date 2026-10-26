@@ -46,6 +46,7 @@ import { ExternalSearchResultSchema } from "@/domain/retrieval/external";
 import { externalPolicy, supplementRequired } from "../external-search/policy";
 import { registerExternalSearch } from "../external-search/skill";
 import { createDbRelay } from "../external-search/relay";
+import { createCloudSearch } from "../external-search/cloud";
 import type { EvidenceHit } from "@/domain/retrieval/contracts";
 import { D1KeywordRetriever } from "../retrieval/retriever";
 
@@ -638,6 +639,15 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                     supplementPolicy,
                     {
                       ...ctx.externalSearch,
+                      ...(ctx.externalSearch.transport === "cloud"
+                        ? {
+                            relay: createCloudSearch(
+                              ctx.externalSearch.cloudBinding,
+                              ctx.externalSearch.cloudToken,
+                            ),
+                            exaApiKey: undefined,
+                          }
+                        : {}),
                       ...(ctx.externalSearch.transport === "d1-relay" &&
                       ctx.externalSearch.gatewayToken
                         ? { relay: createDbRelay(ctx.db, ctx.identity.owner) }

@@ -59,19 +59,26 @@ it("source session control requires the administrator role, including cached sta
       sessionHash: "fixture",
     });
     const prepare = vi.spyOn(f.db, "prepare");
-    for (const method of ["GET", "POST"]) {
+    for (const [method, suffix] of [
+      ["GET", ""],
+      ["POST", ""],
+      ["POST", "/verify"],
+    ]) {
       const r = await consoleAdministration(
-        new Request("https://preview.test/api/admin/v2/source-session", {
-          method,
-          ...(method === "POST"
-            ? {
-                body: JSON.stringify({
-                  kind: "session_control",
-                  action: "login",
-                }),
-              }
-            : {}),
-        }),
+        new Request(
+          "https://preview.test/api/admin/v2/source-session" + suffix,
+          {
+            method,
+            ...(method === "POST"
+              ? {
+                  body: JSON.stringify({
+                    kind: "session_control",
+                    action: "login",
+                  }),
+                }
+              : {}),
+          },
+        ),
       );
       expect(r.status).toBe(403);
     }

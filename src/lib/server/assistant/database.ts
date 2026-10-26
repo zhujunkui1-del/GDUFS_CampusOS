@@ -49,10 +49,20 @@ export function assistantBindings() {
     db: primaryDatabase(env.DB as SqlDatabase),
     signingSecret,
     environment: String(env.APP_ENV || "local"),
+    openValidation:
+      env.APP_ENV === "preview" && env.AGENT_VALIDATION_UNLIMITED === "true",
     externalSearch: {
       transport:
-        env.EXTERNAL_SEARCH_TRANSPORT === "d1-relay"
-          ? ("d1-relay" as const)
+        env.EXTERNAL_SEARCH_TRANSPORT === "cloud"
+          ? ("cloud" as const)
+          : env.EXTERNAL_SEARCH_TRANSPORT === "d1-relay"
+            ? ("d1-relay" as const)
+            : undefined,
+      cloudBinding: env.CLOUD_SEARCH as
+        import("../external-search/cloud").CloudSearchBinding | undefined,
+      cloudToken:
+        typeof env.CLOUD_SEARCH_TOKEN === "string"
+          ? env.CLOUD_SEARCH_TOKEN
           : undefined,
       exaApiKey:
         typeof env.EXA_API_KEY === "string" ? env.EXA_API_KEY : undefined,

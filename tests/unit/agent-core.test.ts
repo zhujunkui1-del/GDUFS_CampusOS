@@ -87,6 +87,26 @@ function toolReply(calls = [call()]): ModelReply {
   };
 }
 afterEach(() => vi.useRealTimers());
+it("corrects one pre-execution schema error without executing the invalid read", async () => {
+  const execute = vi.fn(definition.execute);
+  const provider = new MockModelProvider([
+    toolReply([call("test_echo", '{"value":null}', "bad")]),
+    toolReply([call("test_echo", '{"value":"fixed"}', "fixed")]),
+    final,
+  ]);
+  const result = await new AgentOrchestrator(
+    { resolve: async () => ({ client: provider, snapshot }) },
+    registry({ execute }),
+    undefined,
+    { stopOnToolError: true },
+  ).run({ message: "fixture", context, onEvent: () => {} });
+  expect(result.status).toBe("completed");
+  expect(execute).toHaveBeenCalledTimes(1);
+  expect(provider.requests).toHaveLength(3);
+  expect(JSON.stringify(provider.requests[1].messages)).toContain(
+    "additionalProperties",
+  );
+});
 
 it("shares frozen schema metadata without sharing executors or authorization", async () => {
   const a = registry();

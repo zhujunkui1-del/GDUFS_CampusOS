@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-26T16:44:45.942Z",
+  "httpStatus": 200,
+  "elapsedMs": 1916,
+  "state": "login_required",
+  "checkedAt": 1793033084199,
+  "qr": null,
+  "qrExpiresAt": null
+}

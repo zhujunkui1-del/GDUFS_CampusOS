@@ -1055,3 +1055,12 @@ CPU真实Trace为前一131c4b8b版本的10次200请求：检索GET7—222ms、�
 按负责人要求，原指标上方增加今日/7天/30天/累计PV及趋势，下方增加真实小红书状态、重新登录及二维码区。0051 Preview迁移已应用，Time Travel bookmark已存；不迁移或虚构旧访问量，不动Production或原文章。访问只存匿名批次和每日聚合，使用现有边缘限流；会话控制沿用专用Edge完整profile与出站执行器，Cookie不出本机，QR只向admin短期返回。
 
 目标14项通过，typecheck/本轮lint/Next+OpenNext构建通过；全仓506项492通过，14个旧失败、新失败0。全仓lint另有其他模块遗留警告/require错误。真Preview Edge桌面、Chrome手机尺寸验证计数、幂等、布局、实际logged_in、保留会话通过；真实匿名来源profile可提取QR，扫码状态收起使用隔离夹具，没有让负责人重新扫码。一条真实PV读2/写4，重试写0；Worker CPU/墙时及发布版本见docs/ADMIN_DASHBOARD_ACCEPTANCE.md与verification/admin-dashboard。7天图移动端裁切已修复。
+# 2026-10-27｜续做云端搜索、Step Plan 与扫码状态断点
+
+从未提交的云端迁移工作继续，保留既有文章/地图/采集和工作区历史。普通网页迁 Cloudflare lite Container，旧本机 server/runner 已停止；实际 Agent 使用 Step 首选模型、内部 RAG 和 exa_web_cloud，能打开并引用广外图书馆官网。完整 JSON Schema 的一次性参数纠正后，公网同一问句连续两次通过（12.1s/11.1s 测试总时长，非上游请求耗时）。首选/后备各3请求连接验证通过；真实额度耗尽未人为制造，仅做路由单测。
+
+0052 已应用，Preview 验证日/小时额度开放，保留单轮/并发与权限。二维码原图、等待时检测不清空二维码、轮询、240秒 Browser keepalive、isolate重连、真实 user/me 保存和471识别已实现。桌面/模拟手机交互红→绿，真实管理员 Live View 入口通过；云端页面由本人完成验证，非自动处理验证码。
+
+**未完成：小红书原生云端检索。** 负责人多次登录后仍回登录页；曾观测登录状态HTTP471，最终源站guest。R2加密文件实际存在，重启恢复后仍login_required、原生笔记0条。移除检测时额外导航，停止要求负责人反复扫码；没有拿普通网页结果冒充原生成功。
+
+全仓524测试510通过/14既有失败，新失败0；最后修正后目标回归另存。typecheck、目标lint和实际Preview构建通过；全仓lint仍为旧备份warning及旧公众号CJS3错误。采样整轮D1为380读/15写（rowUsageComplete=false），其中外部0/0、内部RAG107/0；主Worker CPU样本67/41ms含一次失败，不能推算全日。报告、修改文件组、真实失败及部署版本见 docs/CLOUD_SEARCH_MIGRATION_2026_10_27.md 和 verification/cloud-search/release.json。

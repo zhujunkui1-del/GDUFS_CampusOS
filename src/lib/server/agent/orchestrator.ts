@@ -132,6 +132,7 @@ export class AgentOrchestrator {
       { result: SkillResult<unknown>; expiresAt: number }
     >();
     let toolsExecuted = 0;
+    let inputCorrections = 0;
     let tokensRemaining = RUN_LIMITS.completionTokens;
     try {
       const message = messageSchema.parse(input.message);
@@ -207,6 +208,8 @@ export class AgentOrchestrator {
           content: reply.content || null,
           tool_calls: calls,
         });
+        let correctInputsThisRound = false;
+        let correctionSchema = "";
         for (const call of calls) {
           signal.throwIfAborted();
           if (toolsExecuted >= RUN_LIMITS.toolCalls)
@@ -310,13 +313,34 @@ export class AgentOrchestrator {
               toolCalls: toolsExecuted,
             };
           }
-          if (!result.ok && this.options.stopOnToolError)
-            throw new ApiError(
-              result.error.code,
-              result.error.message,
-              result.error.retryable,
-            );
+          if (!result.ok && this.options.stopOnToolError) {
+            if (
+              inputCorrections === 0 &&
+              skill?.sideEffect === "none" &&
+              result.error.code === "INVALID_ARGUMENT" &&
+              result.error.message === "工具参数无效。"
+            ) {
+              inputCorrections++;
+              correctInputsThisRound = true;
+              correctionSchema = JSON.stringify({
+                tool: skill.name,
+                parameters: skill.tool.function.parameters,
+              });
+            } else
+              throw new ApiError(
+                result.error.code,
+                result.error.message,
+                result.error.retryable,
+              );
+          }
         }
+        if (correctInputsThisRound)
+          messages.push({
+            role: "system",
+            content:
+              "上一个工具因为参数没有通过 JSON/Schema 校验，尚未执行。请仅纠正无效调用，使用新的调用编号；参数必须符合下面的实际 Schema，不填未知字段，不给未提供的可选字段填 null，并遵守数值与枚举范围。不要重复已成功的工具。仅有这一次纠正机会。实际契约：" +
+              correctionSchema,
+          });
       }
       throw new ApiError("RUN_LIMIT_EXCEEDED", "本次对话已达到执行轮数限制。");
     } catch (error) {

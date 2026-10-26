@@ -1,0 +1,227 @@
+{
+  "model": {
+    "source": "platform",
+    "provider": "stepfun",
+    "model": "step-3.5-flash-2603",
+    "policyVersion": "stepfun-plan-v1",
+    "testedAt": "2026-10-26T13:09:39.594Z",
+    "capabilities": {
+      "toolCalling": true,
+      "jsonObject": true,
+      "strictJsonSchema": false
+    }
+  },
+  "evidence": [
+    {
+      "prompt": "你好，简短介绍你能帮我做什么。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_campus_knowledge",
+        "search_campus_knowledge",
+        "search_campus_knowledge"
+      ],
+      "actions": [],
+      "cards": [
+        {
+          "kind": "source",
+          "documentId": "content-db43eb51-cd1a-4d2a-ba65-69f04c2ff17c",
+          "title": "关于组织开展2026年博士研究生填报年度考核和培养计划书的通知-研究生院",
+          "sourceName": "研究生院",
+          "originalUrl": "https://gwyjs.gdufs.edu.cn/info/1035/17343.htm",
+          "publishedAt": "2026-10-10",
+          "snippet": "各博士研究生培养单位、博士研究生：\n为进一步加强研究生培养环节质量监控，提升研究生培养质量，结合研究生培养方案，请各博士研究生培养单位组织本单位博士研究生科学有效地完成老生年度考核和新生培养计划填报工作。\n1.全体博士研究生（包括延期生，不包括2026级新生）于10月28日前登录研究生教育系统→进入系统首页→点击左边菜单【培养管理】→【博士年度考核】→【考核申请】完成年度考核，操作指引详见附件1-1：博士年度考核(学生操作指南）。\n2.2026级博士研究生新生需在导师指导下填写2026级博士研究生培养计划，于10月28日前登录研究生教育系统→进入系统首页→点击左边菜单【培养管理】→【我的培养计划】完成，操作指引详见附件1-2：博士培养计划(学生操作指南)。\n3.博士生导师于11月6日前、培养单位分管领导于11月16日前在研究生教育系统完成审核，操作指引详见附件2-1：博士年度考核(管理员操作指南)和附件2-2：博士培养计划(管理员操作指南)。\n4.培养单位于11月20日前从系统导出博士研究生年度考核汇总表和培养计划汇总表，经办人和培养单位分管领导签名并加盖单位公章后提交纸质版到研究生院培养科。\n5.凡年度考核不合格或未按规定完成年度考核的博士研究生，按照研究生学籍管理规定相关条款进行处理。\n联系人：梁老师，020-36317190\n研究生院\n2026年10月10日",
+          "evidenceType": "full_text",
+          "classificationState": "radar",
+          "validity": "unknown",
+          "readable": true
+        },
+        {
+          "kind": "source",
+          "documentId": "wx-bbdb85ed52d8634c4733527ff58eaffec559d703",
+          "title": "2026年11月书画等级考试报名通知（广外白云山校区考点）",
+          "sourceName": "广外高等继续教育+",
+          "originalUrl": "https://mp.weixin.qq.com/s/u-_RFRcQsn1MisVjqeBw8Q",
+          "publishedAt": "2026-09-30T09:10:57.000Z",
+          "snippet": "试起，书画等级考试将不再发放纸质合格证书。考生可在公布成绩后，登录中国教育考试网进行成绩查询（网址：http://cjcx.neea.edu.cn/）和电子证书查询与下载（网址：https://zscx.neea.edu.cn/），电子证书与原纸质证书具有同等效力。\n六、咨询方式\n咨询电话：15820299303（彭老师）\n附：书画等级考试报名操作指南\n1.输入网址：http://ccpt.neea.edu.cn/，进入中国教育考试网书画等级考试栏目首页，点击在线报名。\n2.首次参加考试的考生须先进行注册，并确保注册信息准确。\n3.已完成注册的考生输入证件号码、密码、验证码登录。\n4.阅读《中国书画等级考试网上报名协议》，同意后方可继续进行报名操作。\n5.选择东校区考点的考生依次在地区一栏选择“广东省”“广州市”、在考点栏点选“广东外语外贸大学（白云山校区）”，然后选择类别、科目，最后勾选生成的报考记录，点击“下一步：信息采集”。\n6.输入姓名拼音、选择民族并上传照片，该照片将用于准考证及证书打印，请根据照片要求上传。\n照片要求：130KB~50KB的jpg、jpeg、png文件；上传照片必须为考生本人6个月内正面免冠白色背景彩色标准证件照，头部占照片长度的2/3。五官清晰可辨，眉毛、双耳部位无遮挡。\n完成后点击“下一步：报考信息确认”。\n7.再次核对报考的考点、科目等级、个人信息，勾选“我已确认以上信息无误”，点击“下一步：支付费用”。\n如有误，可返回“我的报考“栏目，删除报考记录后重新报名。\n8.选择支付方式，进入支付界面，将会弹出付款二维码，请使用支付宝/微信/招商银行APP进行扫码支付。\n请确认商户名称为：教育部教育考试院。\n9.支付成功即为报名成功，考生可点击“返回报名系统”，在“我的报考”中查看报考记录状态。\n编辑：彭 陟",
+          "evidenceType": "full_text",
+          "classificationState": "radar",
+          "validity": "unknown",
+          "readable": true
+        },
+        {
+          "kind": "source",
+          "documentId": "wx-9f25c002764195574c87fb8ff11e4c550226d35b",
+          "title": "使用指南 | 故障报修全攻略",
+          "sourceName": "数智广外",
+          "originalUrl": "https://mp.weixin.qq.com/s/xySs70_ObZYIsDO2OFHNmA",
+          "publishedAt": "2026-08-31T08:20:56.000Z",
+          "snippet": "一次搞懂报修流程，遇到问题不再手足无措，动动手指就能轻松解决！\n01\n故障类型\n校园里的故障大致分两类，\n信息化类故障和后勤保障类故障\n信息化类故障\n校园网类故障\n频繁掉线、WiFi 信号问题、认证（密码）问题、端口问题、自助缴费问题等\n应用系统类故障\n统一身份认证、线上办事大厅、广外邮箱、教务系统、研究生系统、VPN 系统、智慧教学资源平台、雨课堂、正版化软件平台、学工系统、资产系统、宿舍人脸识别门禁等各类系统异常\n信息化设备类故障\n道闸门禁、校园卡设备、安防监控设备等\n实验室 / 会议室故障\n语言实验室、电脑实验室设备问题\n后勤保障类故障\n为方便师生在校生活，学校在报修系统里专门上线了十大后勤保障类服务：\n具体报修类别可能随业务要求灵活调整，以系统实际上线情况为准。\n02\n三种报修渠道\n渠道①：手机公众号报修\n关注“数智广外”公众号，点击“智慧校园”-“线上办事大厅”，在服务部门选择“现代教育技术中心”，点击“故障报修”，根据提示填写故障信息。\n渠道②：现代教育技术中心官网报修\n访问现代教育技术中心官网 – 首页“服务目录”中的“学生服务”-“故障报修”。\n渠道③：官网“智慧广外”报修\n登录“智慧广外”，选择或搜索进入“线上办事大厅”-“服务部门”下方选择“现代教育技术中心”-“故障报修”。\n03\n报修后会发生什么\n提交报修后，工作人员会尽快电话联系您确认情况。\n如遇开学等高峰期，处理可能稍有延迟，但工作人员也会尽快处理，请耐心等待哦～\n需要帮助\n报修过程中遇到任何问题，可联系现代教育技术中心用户服务部：\n白云山校区：\n020‑86312111｜第二教学楼 103 室\n大学城校区：\n020‑39328051｜实验楼 C302 室\n办公时间：\n周一至周五上午 8:30‑13:00，\n下午14:00-17:10\n内容：现代教育技术中心",
+          "evidenceType": "full_text",
+          "classificationState": "knowledge",
+          "validity": "unknown",
+          "readable": true
+        },
+        {
+          "kind": "source",
+          "documentId": "wx-87e9d8e6dd3d601f4ed9b8ade7af01f3ff111d5c",
+          "title": "广外学子，一起去趟台湾吧！",
+          "sourceName": "外环东路178号的猫",
+          "originalUrl": "https://mp.weixin.qq.com/s/b-j068_jhyDagOUOiqitOg",
+          "publishedAt": "2026-10-08T10:00:00.000Z",
+          "snippet": "准备好了！寒假台湾见\n【课程时间】2027年1月18日-2027年2月4日\n【课程地点】东吴大学(外双溪校区)\n【课程选择】每位同学可参与一门课程\n【参加对象】全日制在读 · 本科生及研究生\n【研修常规学费】84,500新台币（17,500人民币）\n【早鸟学费政策】16,500人民币（9月30日截止）\n费用已包含学费、住宿费、入台证费、文化探索活动费及来台前咨询和服务(如使用第一银行缴费系统人民币兑新台币支付，汇率信息仅供参考，实际学费支付金额将以付款当日的实时汇率为准)\n东吴大学研修班\n自2013年起，东吴大学每年开展一系列寒暑期研修班课程。2026年暑假，共有400多位大陆学生齐聚东吴大学，在探索感兴趣的专业课程知识同时，深入领略台湾的文化和风土民情。\n东吴大学在2023年远见杂志调查企业最爱大学 法政类 私立大学第1名，全台第4名。\n东吴商学院为全球5%顶尖商学院，二度获美国AACSB证。\n2024CHEERS杂志调查企业最爱大学生 金融类 私立大学第1名。\n学生在近三周的研修中，深入了解台湾本土文化。\n*自然及人文景点推荐\n大稻埕/西门町商圈观光\n九份/十分\n夜市美食\n台北故宫博物院\n【住宿时间】2027年1月18日-2月4日，共17晚\n* 根据实际宿舍楼安排情况进行通知\n外双溪校园地图\n东吴大学将协助同学统一办理研修生入台证，并在资料准备阶段提供详细指导。申请递交后，入台证是否获准以移民署的最终审核结果为准，东吴大学仅协助申请资料递交及证件发放。",
+          "evidenceType": "full_text",
+          "classificationState": "unknown",
+          "validity": "unknown",
+          "readable": true
+        },
+        {
+          "kind": "source",
+          "documentId": "wx-78c011fc498f0e1786d488773d82b1254a43eefd",
+          "title": "广外云山语培丨精选课程预览",
+          "sourceName": "广外云山语培北",
+          "originalUrl": "https://mp.weixin.qq.com/s/mV2evbE2SMDgPawZbrXgIA",
+          "publishedAt": "2026-05-18T09:17:46.000Z",
+          "snippet": "云山语培\n精选课程介绍\n前\n言\n时序渐入初夏，正是孩子静心沉淀、夯实学识的好时节。为方便大家直观了解各类学习安排，我们整合整理了全系课程内容，涵盖少儿英语启蒙与KET备考专项课程，各类课程详情及收费标准均清晰罗列。趁着初夏闲暇时光，助力孩子稳步积累语言能力，找准合适班次，从容规划暑期学习之路。\n课程详情\nKET课程\n少儿启蒙\nKET线上课\nPET课程\n关于我们\n有意报名的请添加语培小助手咨询\n关注云山语培公众号\n关注云山勤工公众号\n文字 | 叶海漪\n排版 | 叶海漪\n初审 | 叶海漪\n复审 | 杨梦瑶\n终审 | 张誉 刘悦",
+          "evidenceType": "full_text",
+          "classificationState": "unknown",
+          "validity": "unknown",
+          "readable": true
+        },
+        {
+          "kind": "source",
+          "documentId": "wx-b4225d3c2edf5f8f3cbe01aabd3f47e32067c4e5",
+          "title": "开学天崩开局？豆包来帮你，现在大学生认证可免费领3个月会员",
+          "sourceName": "外环东路178号的猫",
+          "originalUrl": "https://mp.weixin.qq.com/s/RNSRZlTW9W28BY70CCKuQQ",
+          "publishedAt": "2026-09-15T04:46:49.000Z",
+          "snippet": "现在就打开豆包电脑版，点左下角「我」→「开学免费用3个月」，完成学生认证，把3个月会员领到手。\n新学期想了解校内资源如何用，打开豆包电脑版，搜索「大学生校园助手」，新生开学攻略、校园办事流程、社团活动全都有 ，新学期，让豆包陪你高效开局！",
+          "evidenceType": "full_text",
+          "classificationState": "unknown",
+          "validity": "unknown",
+          "readable": true
+        },
+        {
+          "kind": "source",
+          "documentId": "wx-65ac8da1abc8c7adede9eb6365dcb6de464a546a",
+          "title": "广外速办，诉求建议一站直达",
+          "sourceName": "数智广外",
+          "originalUrl": "https://mp.weixin.qq.com/s/-CJbAUfInD4e9OxhgvTGqQ",
+          "publishedAt": "2026-10-13T00:58:35.000Z",
+          "snippet": "前言\n开学第一个月，是新鲜、是探索；\n到了第二个月，才是真正的“校园实战”。\n宿舍设备坏了去哪里报修？\n对食堂、宿舍、校园管理有建议，\n该跟谁说？\n想咨询办事流程，\n又不知道找哪个部门……\n别急，这些“不知道找谁”的问题，\n现在有一个统一入口了。\n广外师生专属的\n诉求反映、建言献策、问题咨询\n“一站式”平台——“广外速办”！\n2025年11月，“广外速办”开启试运行；\n如今，平台面向全校师生接收各类诉求，\n并流转对应部门处置回应。\n学习、工作、生活中的困难诉求，\n都可以在这里提交。\n一\n四大栏目，一站直达\n01\n接诉即办\n以师生为中心是学校各项工作的基本出发点和落脚点。你对在校学习、工作、生活各方面都有什么感受？是否遇到哪些需要解决的困难和问题？欢迎给学校留言。我们将高度重视并认真研究你的留言，及时转给有关部门阅处。师生对优质教育的向往，就是我们努力的方向。\n02\n建言献策\n学校高质量发展离不开每一位师生的真知灼见。如果你对广外教育事业发展有哪些意见建议，欢迎给学校留言。我们将高度重视并认真研究你的留言，及时转给有关部门阅研。师生对一流大学的期盼，就是我们努力的方向。\n03\n故障报修\n顺畅高效舒适的日常，过硬的基础设施必不可少。你是否还在为某个设施、零部件损坏而烦恼？请随时联系我们。相关部门将及时响应维修，帮你解决困扰。\n04\n智能问答\n教育教学涉及方方面面，点多、面广、线长。或许你在校园日常学习、工作、生活中对某个问题不解，又或许对某项业务流程不熟，不如试试在这里提问，AI精灵将全力开动“脑筋”，回应你的关切。\n二\n新生怎么用？这些场景最常用\n如果你是新生，建议先收藏入口。遇到下面这些情况，都可以来“广外速办”：\n校园网、一卡通、宿舍设施等出问题，先试“智能问答”；\n需要部门处理的具体诉求，提交工单；\n对校园管理、服务有想法，去“建",
+          "evidenceType": "full_text",
+          "classificationState": "knowledge",
+          "validity": "unknown",
+          "readable": true
+        }
+      ],
+      "result": {
+        "conversationId": "ccc1fbd3-8387-4568-b920-31b96c4ff07a",
+        "requestId": "c6192502-6f21-43fe-9de1-e697d4c63ab9",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 2384,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1221,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 3565,
+              "firstTextMs": null
+            }
+          ],
+          "promptTokens": 15008,
+          "completionTokens": 697,
+          "cachedPromptTokens": 0,
+          "totalTokens": 15705,
+          "usageComplete": true,
+          "chargedTokens": 15705,
+          "durationMs": 7522,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 247,
+            "serverElapsedMs": 7769,
+            "firstTextMs": 7762,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 116,
+                "ok": true
+              },
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 106,
+                "ok": true
+              },
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 82,
+                "ok": true
+              },
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 0,
+                "ok": false
+              }
+            ],
+            "database": {
+              "readQueries": 17,
+              "writeQueries": 12,
+              "calls": 21,
+              "failures": 0,
+              "durationMs": 599,
+              "maxCallMs": 81,
+              "rowsRead": 3219,
+              "rowsWritten": 15,
+              "rowUsageStatements": 19,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 994,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 116,
+                "candidateChunks": 86,
+                "usageAvailable": true
+              },
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 1003,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 106,
+                "candidateChunks": 84,
+                "usageAvailable": true
+              },
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 964,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 82,
+                "candidateChunks": 82,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      },
+      "response": " 我是广外通 CampusOS 智能助手，主要帮你做三件事：\n\n**📋 校园行政与办事**\n- 提供广外速办、故障报修等办事指引，覆盖校园网、宿舍、设备等常见问题。[来源3][来源7]\n\n**📚 教务与学业**\n- 查询研究生、本科生相关教务通知，如选课、考核、培养计划等。[来源1]\n\n**🏫 校园资讯**\n- 提供食堂、社团、校园动态、语言培训等生活类信息参考。[来源2][来源4][来源5][来源6]\n\n你有具体问题可以直接问，比如\"怎么报修宿舍空调\"或\"博士年度考核怎么操作\"。",
+      "responseHeadersMs": 421,
+      "firstTextMs": 7900,
+      "completeMs": 8050
+    }
+  ]
+}

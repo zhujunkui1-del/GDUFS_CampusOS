@@ -36,6 +36,7 @@ export function meteredClient(
     outputBudgetUsed = 0,
     correctionRetries = 0;
   let reliable = true;
+  const pricingModel = snapshot.provider === "deepseek" ? snapshot.model : null;
   const upstreamTimings: { durationMs: number; firstTextMs: number | null }[] =
     [];
   const started = performance.now();
@@ -222,11 +223,16 @@ export function meteredClient(
     client: bounded,
     metrics: () => {
       // Price range uses the official 2026-10-15 peak/off-peak table, not an invoice or balance query.
-      const flash = snapshot.model === "deepseek-flash";
-      const peak = flash
-        ? [0.006, 0.3, 1.2]
-        : snapshot.model === "deepseek-v4-pro"
-          ? [0.044, 1.32, 3.96]
+      const flash = pricingModel === "deepseek-flash";
+      const peak =
+        pricingModel &&
+        pricingModel === snapshot.model &&
+        snapshot.provider === "deepseek"
+          ? flash
+            ? [0.006, 0.3, 1.2]
+            : snapshot.model === "deepseek-v4-pro"
+              ? [0.044, 1.32, 3.96]
+              : null
           : null;
       const estimate =
         peak && reliable
@@ -247,8 +253,10 @@ export function meteredClient(
         chargedTokens: reliable ? budgetUsed : requests ? 250000 : 0,
         durationMs: Math.round(performance.now() - started),
         estimatedUsdRange: estimate === null ? null : [estimate / 2, estimate],
-        priceSource: "https://api-docs.deepseek.com/quick_start/pricing/",
-        priceCheckedAt: "2026-10-15",
+        priceSource: peak
+          ? "https://api-docs.deepseek.com/quick_start/pricing/"
+          : null,
+        priceCheckedAt: peak ? "2026-10-15" : null,
         model: snapshot.model,
       };
     },

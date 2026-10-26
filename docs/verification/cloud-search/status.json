@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-26T17:23:42.160Z",
+  "httpStatus": 200,
+  "implementation": "2026-10-27-verify",
+  "elapsedMs": 9748,
+  "state": "login_required",
+  "checkedAt": 1793035420357,
+  "qr": null,
+  "qrExpiresAt": null
+}

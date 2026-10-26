@@ -1,0 +1,105 @@
+{
+  "error": [
+    "工具参数无效。"
+  ],
+  "evidence": [
+    {
+      "prompt": "请实际联网搜索广东外语外贸大学图书馆的借阅规则页面，给出真实官网链接即可。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "cards": [],
+      "result": {
+        "error": {
+          "code": "INVALID_ARGUMENT",
+          "message": "工具参数无效。"
+        },
+        "conversationId": "580e607d-bb50-4422-bc21-06a136d54ad5",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 4353,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1240,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 2138,
+              "firstTextMs": null
+            }
+          ],
+          "promptTokens": 4764,
+          "completionTokens": 701,
+          "cachedPromptTokens": 0,
+          "totalTokens": 5465,
+          "usageComplete": true,
+          "chargedTokens": 5465,
+          "durationMs": 7821,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 252,
+            "serverElapsedMs": 8073,
+            "firstTextMs": null,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 30,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 0,
+                "ok": false
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 0,
+                "ok": false
+              }
+            ],
+            "database": {
+              "readQueries": 13,
+              "writeQueries": 12,
+              "calls": 17,
+              "failures": 0,
+              "durationMs": 342,
+              "maxCallMs": 69,
+              "rowsRead": 370,
+              "rowsWritten": 15,
+              "rowUsageStatements": 15,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 107,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 30,
+                "candidateChunks": 3,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      },
+      "response": "",
+      "responseHeadersMs": 977,
+      "firstTextMs": null,
+      "completeMs": 8907
+    }
+  ]
+}

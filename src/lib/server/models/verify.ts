@@ -3,7 +3,11 @@ import { AgentOrchestrator } from "../agent/orchestrator";
 import { SkillRegistry } from "../agent/skill-registry";
 import { ApiError } from "../errors";
 import type { ModelClient, ModelRequest } from "@/domain/models/contracts";
-import { DeepseekModelClient, MODEL_POLICY_VERSION } from "./deepseek";
+import {
+  DeepseekModelClient,
+  MODEL_POLICY_VERSION,
+  STEP_POLICY_VERSION,
+} from "./deepseek";
 import {
   configurationFingerprint,
   type CapabilityReceipt,
@@ -20,6 +24,7 @@ export async function verifyDefaultModel(config: DefaultModelConfig) {
     config.baseUrl,
     fetch,
     15000,
+    config.provider || "deepseek",
   );
   let requests = 0;
   const nonce = crypto.randomUUID();
@@ -69,9 +74,12 @@ export async function verifyDefaultModel(config: DefaultModelConfig) {
         client: diagnosticClient,
         snapshot: {
           source: "platform",
-          provider: "deepseek",
+          provider: config.provider || "deepseek",
           model: config.model!,
-          policyVersion: MODEL_POLICY_VERSION,
+          policyVersion:
+            config.provider === "stepfun"
+              ? STEP_POLICY_VERSION
+              : MODEL_POLICY_VERSION,
           testedAt,
           capabilities: {
             toolCalling: true,
@@ -134,9 +142,12 @@ export async function verifyDefaultModel(config: DefaultModelConfig) {
     z.object({ status: z.literal("ready") }).strict(),
   );
   const receipt: CapabilityReceipt = {
-    provider: "deepseek",
+    provider: config.provider || "deepseek",
     model: config.model!,
-    policyVersion: MODEL_POLICY_VERSION,
+    policyVersion:
+      config.provider === "stepfun"
+        ? STEP_POLICY_VERSION
+        : MODEL_POLICY_VERSION,
     fingerprint: await configurationFingerprint(config),
     testedAt,
     toolCalling: true,
@@ -146,7 +157,7 @@ export async function verifyDefaultModel(config: DefaultModelConfig) {
   return {
     receipt,
     evidence: {
-      provider: "deepseek",
+      provider: config.provider || "deepseek",
       model: config.model,
       realApi: true,
       generation: "passed",

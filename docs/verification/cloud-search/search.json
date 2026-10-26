@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-26T17:30:46.422Z",
+  "httpStatus": 200,
+  "implementation": "managed-session-v2",
+  "elapsedMs": 763,
+  "provider": "xiaohongshu_cloud_browser",
+  "status": "login_required",
+  "items": [],
+  "durationMs": 19
+}

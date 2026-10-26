@@ -46,6 +46,7 @@ export class AssistantStore {
   constructor(
     readonly db: SqlDatabase,
     readonly now = () => Date.now(),
+    private readonly openValidation = false,
   ) {}
   async identity(request: Request): Promise<AssistantIdentity> {
     const loginToken = cookie(request, "campusos_session");
@@ -340,7 +341,7 @@ export class AssistantStore {
     try {
       await this.db
         .prepare(
-          "INSERT INTO agent_runs(id,conversation_id,status,owner_key,request_id,ip_key,is_user,started_at_ms,lease_until_ms,charged_tokens) VALUES(?,?,'running',?,?,?,?,?,?,250000)",
+          "INSERT INTO agent_runs(id,conversation_id,status,owner_key,request_id,ip_key,is_user,started_at_ms,lease_until_ms,charged_tokens,validation_unlimited) VALUES(?,?,'running',?,?,?,?,?,?,250000,?)",
         )
         .bind(
           runId,
@@ -351,12 +352,25 @@ export class AssistantStore {
           identity.user ? 1 : 0,
           this.now(),
           this.now() + 120000,
+          this.openValidation ? 1 : 0,
         )
         .run();
     } catch (error) {
       const text = String(error);
       if (/AGENT_CONVERSATION_GONE/.test(text))
         throw new ApiError("NOT_FOUND", "对话已删除，请新建对话。");
+      if (/AGENT_BUSY/.test(text))
+        throw new ApiError(
+          "RATE_LIMITED",
+          "上一条回复仍在进行，请等待完成或停止后重试。",
+          true,
+        );
+      if (/AGENT_SITE_BUSY/.test(text))
+        throw new ApiError(
+          "RATE_LIMITED",
+          "当前同时使用人数较多，请稍后重试。",
+          true,
+        );
       if (/AGENT_|UNIQUE constraint/.test(text))
         throw new ApiError(
           "RATE_LIMITED",

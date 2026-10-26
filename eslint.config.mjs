@@ -15,6 +15,8 @@ export default defineConfig([
     "playwright-report/**",
     "test-results/**",
     "services/external-search/runtime/**",
+    "services/cloud-search/build/**",
+    ".map-tools/cloud-search/**",
     "public/vendor/**",
     "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/**",
     "CampusOS_Codex_完整设计文档_v2/wechat-article-exporter-main/**",

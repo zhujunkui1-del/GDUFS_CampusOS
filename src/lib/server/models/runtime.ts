@@ -1,5 +1,6 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ModelRouter } from "./router";
+import { PriorityModelRouter } from "./priority";
 
 export function defaultModelRuntime() {
   let bindings: Record<string, unknown> = {};
@@ -12,10 +13,21 @@ export function defaultModelRuntime() {
     typeof bindings[name] === "string"
       ? (bindings[name] as string)
       : process.env[name];
-  return new ModelRouter({
+  const deepseek = new ModelRouter({
     apiKey: value("MODEL_API_KEY"),
     model: value("MODEL_NAME"),
     baseUrl: value("MODEL_BASE_URL"),
     capabilityReceipt: value("MODEL_CAPABILITIES_JSON"),
   });
+  if (!value("PRIMARY_MODEL_API_KEY")) return deepseek;
+  return new PriorityModelRouter(
+    new ModelRouter({
+      provider: "stepfun",
+      apiKey: value("PRIMARY_MODEL_API_KEY"),
+      model: value("PRIMARY_MODEL_NAME"),
+      baseUrl: value("PRIMARY_MODEL_BASE_URL"),
+      capabilityReceipt: value("PRIMARY_MODEL_CAPABILITIES_JSON"),
+    }),
+    deepseek,
+  );
 }

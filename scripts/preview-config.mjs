@@ -33,9 +33,19 @@ export function assertPreviewTarget(config, accountId) {
       "Preview database cannot be shared with local or production",
     );
   if (
-    env.services?.length !== 1 ||
-    env.services[0].binding !== "WORKER_SELF_REFERENCE" ||
-    env.services[0].service !== env.name
+    !Array.isArray(env.services) ||
+    env.services.filter(
+      (s) => s.binding === "WORKER_SELF_REFERENCE" && s.service === env.name,
+    ).length !== 1 ||
+    env.services.some(
+      (s) =>
+        !(s.binding === "WORKER_SELF_REFERENCE" && s.service === env.name) &&
+        !(
+          s.binding === "CLOUD_SEARCH" &&
+          s.service === "campusos-preview-cloud-search"
+        ),
+    ) ||
+    env.services.filter((s) => s.binding === "CLOUD_SEARCH").length > 1
   )
     throw new Error("Preview self-reference must not target another Worker");
   return {

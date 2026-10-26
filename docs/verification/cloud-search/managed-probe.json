@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-26T17:30:45.562Z",
+  "httpStatus": 200,
+  "implementation": "managed-session-v2",
+  "elapsedMs": 6473,
+  "page": {
+    "title": "rednote - Your lifestyle guide",
+    "path": "/login",
+    "guest": true,
+    "hasIdentity": true,
+    "navVisible": false,
+    "qrVisible": true
+  },
+  "sourceEvents": [
+    {
+      "state": "guest",
+      "httpStatus": 200,
+      "code": 0,
+      "at": 1793035843226
+    }
+  ],
+  "state": "login_required",
+  "persisted": true
+}

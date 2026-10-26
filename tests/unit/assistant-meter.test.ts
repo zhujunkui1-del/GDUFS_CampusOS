@@ -17,6 +17,35 @@ const snapshot = {
   },
 };
 describe("metered orchestration policy and truthful browser receipts", () => {
+  it("never assigns DeepSeek pricing to Step Plan or mixed-provider runs", () => {
+    const fixture = sqliteD1();
+    try {
+      const current = {
+        ...snapshot,
+        provider: "stepfun" as "stepfun" | "deepseek",
+        model: "step-3.5-flash-2603",
+      };
+      const meter = meteredClient(
+        new MockModelProvider([]),
+        current,
+        new AssistantStore(fixture.db),
+        "fixture-owner",
+        "fixture-run",
+      );
+      expect(meter.metrics()).toMatchObject({
+        priceSource: null,
+        priceCheckedAt: null,
+        estimatedUsdRange: null,
+      });
+      Object.assign(current, { provider: "deepseek", model: "deepseek-flash" });
+      expect(meter.metrics()).toMatchObject({
+        priceSource: null,
+        estimatedUsdRange: null,
+      });
+    } finally {
+      fixture.close();
+    }
+  });
   it("corrects one skipped tool within the same metered run", async () => {
     const fixture = sqliteD1();
     try {

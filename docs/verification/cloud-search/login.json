@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-26T15:26:46.542Z",
+  "httpStatus": 200,
+  "elapsedMs": 11030,
+  "state": "login_required",
+  "checkedAt": 1793028404944,
+  "qr": "[private QR saved locally]",
+  "qrExpiresAt": 1793028584944
+}

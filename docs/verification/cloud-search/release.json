@@ -1,0 +1,118 @@
+{
+  "at": "2026-10-26T17:45:11.496Z",
+  "baseCommit": "b0e443d",
+  "scope": "Preview only",
+  "mainVersion": "c3e98a5e-c811-453b-8690-59a2994c8c68",
+  "cloudVersion": "38aaaea9-707d-4da2-92ad-ce1075ba053e",
+  "migration": "0052_preview_agent_validation.sql",
+  "pendingMigrations": 0,
+  "transport": "cloud",
+  "preferredModel": "step-3.5-flash-2603",
+  "fallback": "DeepSeek only on explicit quota exhaustion",
+  "webSearchVerified": true,
+  "nativeXhsSearchVerified": false,
+  "nativeXhsRestartRestoreVerified": false,
+  "unlimitedValidation": true,
+  "webAgentLatest": [
+    {
+      "completeMs": 8553,
+      "metrics": {
+        "requests": 3,
+        "correctionRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 1549,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 1152,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 3445,
+            "firstTextMs": 2179
+          }
+        ],
+        "promptTokens": 5927,
+        "completionTokens": 741,
+        "cachedPromptTokens": 0,
+        "totalTokens": 6668,
+        "usageComplete": true,
+        "chargedTokens": 6668,
+        "durationMs": 8005,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 251,
+          "serverElapsedMs": 8256,
+          "firstTextMs": 6983,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 28,
+              "ok": true
+            },
+            {
+              "name": "search_external_campus_info",
+              "durationMs": 1776,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 13,
+            "writeQueries": 12,
+            "calls": 17,
+            "failures": 0,
+            "durationMs": 334,
+            "maxCallMs": 68,
+            "rowsRead": 380,
+            "rowsWritten": 15,
+            "rowUsageStatements": 15,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 107,
+              "rowsWritten": 0,
+              "queries": 2,
+              "durationMs": 28,
+              "candidateChunks": 3,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": [
+            {
+              "status": "ok",
+              "durationMs": 1776,
+              "providers": [
+                {
+                  "provider": "exa_web_cloud",
+                  "status": "ok",
+                  "durationMs": 950,
+                  "count": 3
+                }
+              ],
+              "rowsRead": 0,
+              "rowsWritten": 0
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "webRepeatedLiveTests": {
+    "passed": 2,
+    "failed": 0
+  },
+  "qrRegression": {
+    "desktop": true,
+    "emulatedMobile": true
+  },
+  "productionChanged": false,
+  "secretsInArtifacts": false
+}

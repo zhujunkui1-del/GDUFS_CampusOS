@@ -8,6 +8,17 @@ import type {
 import { ApiError } from "../errors";
 
 export const MODEL_POLICY_VERSION = "deepseek-default-v1";
+export const STEP_POLICY_VERSION = "stepfun-plan-v1";
+export function approvedStepEndpoint(baseUrl: string) {
+  if (
+    ![
+      "https://api.stepfun.com/step_plan/v1",
+      "https://api.stepfun.com/step_plan/v1/",
+    ].includes(baseUrl)
+  )
+    throw new ApiError("MODEL_ENDPOINT_INVALID", "模型服务地址未获准。");
+  return "https://api.stepfun.com/step_plan/v1/chat/completions";
+}
 const toolCallSchema = z.object({
   id: z.string().min(1).max(128),
   type: z.literal("function"),
@@ -275,8 +286,12 @@ export class DeepseekModelClient implements ModelClient {
     baseUrl = "https://api.deepseek.com",
     private readonly transport: typeof fetch = fetch,
     private readonly timeoutMs = 15000,
+    private readonly provider: "deepseek" | "stepfun" = "deepseek",
   ) {
-    this.#endpoint = approvedDeepseekEndpoint(baseUrl);
+    this.#endpoint =
+      provider === "stepfun"
+        ? approvedStepEndpoint(baseUrl)
+        : approvedDeepseekEndpoint(baseUrl);
     this.#key = apiKey;
     if (!apiKey || !/^[a-zA-Z0-9._-]{1,100}$/.test(model))
       throw new ApiError("MODEL_SELECTION_REQUIRED", "默认模型尚未配置。");
@@ -310,7 +325,9 @@ export class DeepseekModelClient implements ModelClient {
           model: this.model,
           messages: request.messages,
           max_tokens: request.maxTokens,
-          thinking: { type: "disabled" },
+          ...(this.provider === "deepseek"
+            ? { thinking: { type: "disabled" } }
+            : { reasoning_effort: "low" }),
           stream: !!request.onText,
           ...(request.onText
             ? { stream_options: { include_usage: true } }
@@ -332,7 +349,29 @@ export class DeepseekModelClient implements ModelClient {
         );
       }
       if (!response.ok) {
-        await response.body?.cancel();
+        if (
+          this.provider === "stepfun" &&
+          [402, 429].includes(response.status)
+        ) {
+          let quota = response.status === 402;
+          try {
+            const data = JSON.parse(await readLimited(response, 8192));
+            const code = String(data.error?.code ?? data.code ?? ""),
+              message = String(data.error?.message ?? data.message ?? "");
+            quota ||=
+              /^(insufficient_quota|insufficient_balance|quota_exceeded|credit_limit_exceeded|plan_quota_exceeded)$/.test(
+                code,
+              ) ||
+              (/quota|credit|balance|额度|余额|配额/i.test(message) &&
+                /exhaust|exceed|insufficient|耗尽|用尽|不足|超出/i.test(
+                  message,
+                ));
+          } catch {
+            /* No raw provider error leaves this boundary. */
+          }
+          if (quota)
+            throw new ApiError("MODEL_QUOTA_EXHAUSTED", "首选模型额度已用完。");
+        } else await response.body?.cancel();
         throw upstreamError(response.status);
       }
       if (request.onText) return await streamedReply(response, request.onText);

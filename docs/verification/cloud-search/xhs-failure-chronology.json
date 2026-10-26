@@ -1,0 +1,30 @@
+{
+  "capture": "Selected metadata from live private diagnostic responses; no authentication values retained",
+  "observations": [
+    {
+      "gatewayAt": "2026-10-26T16:49:46.721Z",
+      "sourceAt": 1793033376041,
+      "path": "/api/sns/web/v1/login/qrcode/status",
+      "httpStatus": 471,
+      "code": 0,
+      "success": true
+    },
+    {
+      "gatewayAt": "2026-10-26T17:17:20.920Z",
+      "sourcePage": "/login",
+      "guest": true,
+      "encryptedStatePresent": true
+    },
+    {
+      "gatewayAt": "2026-10-26T17:23:42.160Z",
+      "afterExplicitBrowserRestart": true,
+      "state": "login_required"
+    },
+    {
+      "gatewayAt": "2026-10-26T17:23:43.949Z",
+      "provider": "xiaohongshu_cloud_browser",
+      "status": "login_required",
+      "items": 0
+    }
+  ]
+}

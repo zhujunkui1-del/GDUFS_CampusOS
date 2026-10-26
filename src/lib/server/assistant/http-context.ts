@@ -26,7 +26,11 @@ export async function assistantContext(request: Request) {
   sameOrigin(request);
   const bindings = assistantBindings();
   const timing = databaseTimings(bindings.db);
-  const store = new AssistantStore(timing.db);
+  const store = new AssistantStore(
+    timing.db,
+    undefined,
+    bindings.openValidation,
+  );
   const identity = await store.identity(request);
   return {
     ...bindings,

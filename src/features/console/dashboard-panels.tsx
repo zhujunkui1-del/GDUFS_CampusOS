@@ -164,6 +164,7 @@ export function TrafficPanel({
 type SessionView = Omit<SourceSession, "checkedAt"> & {
   checkedAt: number | null;
   reason?: string;
+  location?: "cloud";
 };
 const names: Record<SourceSession["state"], string> = {
   logged_in: "已登录",
@@ -172,6 +173,20 @@ const names: Record<SourceSession["state"], string> = {
   unknown: "状态未确认",
   unavailable: "暂时无法连接",
 };
+function retainPendingQr(
+  previous: SessionView | null,
+  next: SessionView,
+): SessionView {
+  if (
+    !next.qr &&
+    previous?.qr &&
+    (previous.qrExpiresAt ?? 0) > Date.now() &&
+    next.state !== "logged_in" &&
+    next.state !== "verification_required"
+  )
+    return { ...next, qr: previous.qr, qrExpiresAt: previous.qrExpiresAt };
+  return next;
+}
 export function SourceSessionPanel({
   request,
   admin,
@@ -185,6 +200,10 @@ export function SourceSessionPanel({
     [busy, setBusy] = useState(true),
     [error, setError] = useState("");
   const [expired, setExpired] = useState(false);
+  const [verification, setVerification] = useState<{
+    url: string;
+    expiresAt: number;
+  } | null>(null);
   useEffect(() => {
     if (!admin) return;
     let active = true;
@@ -193,7 +212,7 @@ export function SourceSessionPanel({
       action: "status",
     })
       .then((d) => {
-        if (active) setSession(d);
+        if (active) setSession((previous) => retainPendingQr(previous, d));
       })
       .catch((e) => {
         if (active) setError(failure(e));
@@ -206,33 +225,60 @@ export function SourceSessionPanel({
     };
   }, [admin, request, revision]);
   useEffect(() => {
-    if (!session?.qrExpiresAt || session.state !== "login_required") return;
-    const end = session.qrExpiresAt;
+    if (
+      (!session?.qrExpiresAt && !verification?.expiresAt) ||
+      session?.state === "logged_in" ||
+      (session?.state === "verification_required" && !verification)
+    )
+      return;
+    const end = Math.max(
+      session?.qrExpiresAt ?? 0,
+      verification?.expiresAt ?? 0,
+    );
     const tick = setInterval(() => {
       if (Date.now() >= end) {
         setExpired(true);
+        setVerification(null);
         clearInterval(tick);
         return;
       }
       request<SessionView>("v2/source-session")
         .then((d) => {
-          if (d.state === "logged_in" || d.state === "verification_required")
-            setSession(d);
+          setSession((previous) => retainPendingQr(previous, d));
+          if (d.state === "logged_in") setVerification(null);
         })
         .catch(() => {});
     }, 5000);
     return () => clearInterval(tick);
-  }, [session?.qrExpiresAt, session?.state, request]);
+  }, [session?.qrExpiresAt, session?.state, verification, request]);
+  async function connectVerification() {
+    setBusy(true);
+    setError("");
+    try {
+      setVerification(
+        await request<{ url: string; expiresAt: number }>(
+          "v2/source-session/verify",
+          "POST",
+          {},
+        ),
+      );
+    } catch (e) {
+      setError(failure(e));
+    } finally {
+      setBusy(false);
+    }
+  }
   async function check(action: "status" | "login") {
     setBusy(true);
     setError("");
     setExpired(false);
     try {
-      setSession(
-        await request<SessionView>("v2/source-session", "POST", {
-          kind: "session_control",
-          action,
-        }),
+      const response = await request<SessionView>("v2/source-session", "POST", {
+        kind: "session_control",
+        action,
+      });
+      setSession((previous) =>
+        action === "login" ? response : retainPendingQr(previous, response),
       );
     } catch (e) {
       setError(failure(e));
@@ -255,7 +301,11 @@ export function SourceSessionPanel({
           className={`console-session-state ${session?.state === "logged_in" ? "is-connected" : ""}`}
           role="status"
         >
-          {session ? names[session.state] : "正在检测…"}
+          {session
+            ? session.state === "login_required" && session.qr && !expired
+              ? "等待扫码确认"
+              : names[session.state]
+            : "正在检测…"}
         </span>
       </div>
       {session?.checkedAt && (
@@ -273,8 +323,9 @@ export function SourceSessionPanel({
       )}
       {session?.state === "verification_required" && (
         <p role="status">
-          小红书要求安全验证。点击“重新登录”，在来源电脑打开的专用 Edge
-          窗口中完成验证。
+          {session.location === "cloud"
+            ? "小红书要求本人安全验证，请打开云端登录页完成。"
+            : "小红书要求安全验证。点击“重新登录”，在来源电脑打开的专用 Edge 窗口中完成验证。"}
         </p>
       )}
       {session?.qr && (
@@ -310,6 +361,21 @@ export function SourceSessionPanel({
           <ScanLine size={16} />
           重新登录
         </button>
+        {session?.location === "cloud" &&
+          session.state !== "logged_in" &&
+          (verification ? (
+            <a
+              href={verification.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              打开云端登录页
+            </a>
+          ) : (
+            <button disabled={busy} onClick={() => void connectVerification()}>
+              连接云端登录
+            </button>
+          ))}
       </div>
     </section>
   );

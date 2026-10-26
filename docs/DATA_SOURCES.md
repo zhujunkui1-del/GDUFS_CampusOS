@@ -551,3 +551,10 @@ Exa免Key接口由本机执行，出站回传既有Preview。真实官方借阅�
 ## 2026-10-26｜总览统计和小红书登录状态
 
 访问量来自CampusOS自身前台客户端真实导航及D1服务端日期聚合，自2026/10/26 19:27:02起记录；参考截图与https://pkuknow.cn仅供卡片/图表视觉参考，未复制其统计数字或资源。小红书登录状态及二维码来自现有专用Edge中的https://www.xiaohongshu.com/explore真实页面；只向管理员提供短期登录维护，不公开账户Cookie。隔离匿名profile提取PNG成功；真人扫码未在本轮重复执行。证据见docs/verification/admin-dashboard。
+# 2026-10-27｜云端联网搜索与管理员来源会话
+
+负责人授权的普通联网搜索沿用Exa免Key模式，在Cloudflare Node Container执行；代表性真实来源为 https://lib.gdufs.edu.cn/fwzn/fwqykfsj/tsjygz.htm 与 https://lib.gdufs.edu.cn/fwzn/fwqykfsj/dzjyqxb.htm ，Agent公开引用已验证。外部片段仅即时问答，未入公开文章库或批量复制图片；search_excerpt不冒充已独立读取整页。
+
+小红书/Rednote使用本人授权的专用云端浏览器正常登录页，实际出现 www.xiaohongshu.com、edith.xiaohongshu.com、webapi.rednote.com。加密存储仅用于该会话；没有上传Windows日常profile。原生搜索当前login_required，0结果，不新增“云端已可用”来源声明。禁止以社交经验确认学校政策或申请时限。
+
+Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run/features/live-view/ 。短期链接只向管理员返回，不能公开、入引用或入Git。没有抓取/再分发第三方地图；原来源分级与许可边界保留。详 docs/CLOUD_SEARCH_MIGRATION_2026_10_27.md。

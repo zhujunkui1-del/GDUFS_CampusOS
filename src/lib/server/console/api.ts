@@ -16,6 +16,12 @@ import { collectorAdministration } from "./collector-api";
 import { consolePermission } from "./auth";
 import { sourceControl, sourceSessionSnapshot } from "./source-session";
 import { trafficSummary } from "./traffic";
+import { assistantBindings } from "../assistant/database";
+import {
+  cloudSourceSession,
+  cloudVerification,
+} from "../external-search/cloud";
+import { SourceControlInputSchema } from "@/domain/console/dashboard";
 
 export async function consoleAuthentication(request: Request) {
   let setCookie: string | undefined;
@@ -111,8 +117,42 @@ export const consoleAdministration = withApi(async (request) => {
     request.method === "GET"
   )
     return trafficSummary(context.config.db);
+  if (
+    section === "v2" &&
+    id === "source-session" &&
+    path.length === 3 &&
+    path[2] === "verify" &&
+    request.method === "POST"
+  ) {
+    consolePermission(context.actor, "admin");
+    const external = assistantBindings().externalSearch;
+    if (external.transport !== "cloud")
+      throw new ApiError("SERVICE_UNAVAILABLE", "云端登录尚未配置。");
+    return cloudVerification(
+      external.cloudBinding,
+      external.cloudToken,
+      request.signal,
+    );
+  }
   if (section === "v2" && id === "source-session" && path.length === 2) {
     consolePermission(context.actor, "admin");
+    const external = assistantBindings().externalSearch;
+    if (external.transport === "cloud") {
+      const action =
+        request.method === "GET"
+          ? "poll"
+          : request.method === "POST"
+            ? SourceControlInputSchema.parse(await readJson(request, 256))
+                .action
+            : null;
+      if (!action) throw new ApiError("INVALID_ARGUMENT", "不支持此操作。");
+      return cloudSourceSession(
+        external.cloudBinding,
+        external.cloudToken,
+        action,
+        request.signal,
+      );
+    }
     if (request.method === "GET")
       return sourceSessionSnapshot(context.config.db);
     if (request.method === "POST")
