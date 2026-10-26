@@ -171,6 +171,16 @@ export class PersistentXhsBrowser {
   }
   async status() {
     await this.contextForSession();
+    if ((await this.inspect()).state !== "login_required") {
+      try {
+        await this.home.reload({
+          waitUntil: "domcontentloaded",
+          timeout: 12000,
+        });
+      } catch {
+        return { state: "unknown", loggedIn: null };
+      }
+    }
     return this.inspect();
   }
   async open() {
@@ -204,6 +214,54 @@ export class PersistentXhsBrowser {
         });
     }
     return this.inspect();
+  }
+  async login() {
+    const current = await this.status();
+    if (current.state === "logged_in") return current;
+    if (current.state === "login_required") {
+      try {
+        await this.home.reload({
+          waitUntil: "domcontentloaded",
+          timeout: 10000,
+        });
+      } catch {
+        return { state: "unknown", loggedIn: null };
+      }
+    }
+    await this.open();
+    let result = await this.inspect();
+    if (
+      result.state === "logged_in" ||
+      result.state === "verification_required"
+    )
+      return result;
+    const page = this.home;
+    const qr = page
+      .locator(".login-container .qrcode-img,.login-modal .qrcode-img")
+      .filter({ visible: true })
+      .first();
+    if (!(await qr.isVisible())) {
+      // Only open the platform's login UI. Never log out or delete a saved profile.
+      const login = page
+        .getByText("登录", { exact: true })
+        .filter({ visible: true })
+        .first();
+      if (await login.isVisible()) await login.click({ timeout: 3000 });
+    }
+    try {
+      await qr.waitFor({ state: "visible", timeout: 5000 });
+    } catch {
+      return this.inspect();
+    }
+    result = await this.inspect();
+    if (result.state !== "login_required") return result;
+    const png = await qr.screenshot({ type: "png", timeout: 5000 });
+    if (png.length > 130000) return result;
+    return {
+      ...result,
+      qr: "data:image/png;base64," + png.toString("base64"),
+      qrExpiresAt: Date.now() + 180000,
+    };
   }
   async close() {
     const ctx = this.context;

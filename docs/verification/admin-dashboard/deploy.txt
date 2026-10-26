@@ -1,0 +1,200 @@
+
+> campusos@0.1.0 deploy:preview
+> node scripts/deploy.mjs preview
+
+{"environment":"preview","worker":"campusos-preview","database":"campusos-preview","databaseId":"18299abc-b38b-4494-8d12-8ab4d482c304"}
+Fixed public walking metadata matches reviewed source hashes.
+
+┌─────────────────────────────┐
+│ OpenNext — Cloudflare build │
+└─────────────────────────────┘
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+App directory: D:\tlydcg\Codex_work\广外AI应用大赛
+Next.js version : 16.3.8
+@opennextjs/cloudflare version: 1.20.10
+@opennextjs/aws version: 4.1.9
+workerd compatibility_date: 2026-10-12
+
+┌─────────────────────────────────┐
+│ OpenNext — Building Next.js app │
+└─────────────────────────────────┘
+
+
+> campusos@0.1.0 prebuild
+> node scripts/prepare-map-runtime.mjs && node scripts/prepare-route-metadata.mjs --check
+
+Fixed public walking metadata matches reviewed source hashes.
+
+> campusos@0.1.0 build
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 28ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 619ms
+  Running TypeScript ...
+  Finished TypeScript in 4.3s ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/27) ...
+  Generating static pages using 15 workers (6/27) 
+  Generating static pages using 15 workers (13/27) 
+  Generating static pages using 15 workers (20/27) 
+✓ Generating static pages using 15 workers (27/27) in 473ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├   /admin/[[...section]]
+│ ├ ● /admin
+│ ├ ● /admin/sources
+│ ├ ● /admin/jobs
+│ └ ● [+8 more paths]
+├ ƒ /api/admin/[...path]
+├ ƒ /api/admin/collector/[[...path]]
+├ ƒ /api/agent/actions/[id]/claim
+├ ƒ /api/agent/actions/[id]/receipt
+├ ƒ /api/agent/cancel
+├ ƒ /api/agent/chat
+├ ƒ /api/agent/conversations
+├ ƒ /api/agent/conversations/[id]
+├ ƒ /api/agent/external-search/control-finish
+├ ƒ /api/agent/external-search/session-report
+├ ƒ /api/agent/location/challenge
+├ ƒ /api/agent/routes/[id]
+├ ƒ /api/agent/session
+├ ƒ /api/agent/status
+├ ƒ /api/amap/[...path]
+├ ƒ /api/capabilities
+├ ƒ /api/collector/[...path]
+├ ƒ /api/console-auth
+├ ƒ /api/console-runner/[...path]
+├ ƒ /api/content/search
+├ ƒ /api/health
+├ ƒ /api/map/config
+├ ƒ /api/map/coordinates
+├ ƒ /api/map/data
+├ ƒ /api/map/skills/[name]
+├ ƒ /api/me
+├ ƒ /api/places
+├ ƒ /api/public/activities
+├ ƒ /api/public/analysis
+├ ƒ /api/public/article
+├ ƒ /api/public/content
+├ ƒ /api/public/visits
+├ ƒ /articles/[id]
+├ ○ /favorites
+├ ○ /icon.svg
+├ ○ /knowledge
+├ ○ /map
+├ ○ /radar
+└ ○ /schedule
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+┌──────────────────────────────┐
+│ OpenNext — Generating bundle │
+└──────────────────────────────┘
+
+Bundling middleware function...
+Bundling static assets...
+Bundling cache assets...
+Building server function: default...
+Applying code patches: 4.091s
+# copyPackageTemplateFiles
+[35m⚙️ Bundling the OpenNext server...
+[0m
+[35mWorker saved in `.open-next\worker.js` 🚀
+[0m
+OpenNext build complete.
+
+ ⛅️ wrangler 4.149.0 (update available 4.152.0)
+───────────────────────────────────────────────
+✨ Read 72 files from the assets directory D:\tlydcg\Codex_work\广外AI应用大赛\.open-next\assets
+Total Upload: 17300.50 KiB / gzip: 3154.80 KiB
+Your Worker has access to the following bindings:
+Binding                                               Resource                  
+env.DB (campusos-preview)                             D1 Database               
+env.WORKER_SELF_REFERENCE (campusos-preview)          Worker                    
+env.MAP_RATE_LIMITER (120 requests/60s)               Rate Limit                
+env.ASSETS                                            Assets                    
+env.APP_ENV ("preview")                               Environment Variable      
+env.EXTERNAL_SEARCH_TRANSPORT ("d1-relay")            Environment Variable      
+
+--dry-run: exiting now.
+Worker environment sanitized; 1427 generated files checked. Server credentials require runtime bindings.
+
+┌──────────────────────────────┐
+│ OpenNext — Cloudflare deploy │
+└──────────────────────────────┘
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+Using secrets defined in .dev.vars
+
+Populating Workers static assets...
+Successfully populated static assets cache
+Tag cache does not need populating
+
+ ⛅️ wrangler 4.149.0 (update available 4.152.0)
+───────────────────────────────────────────────
+🌀 Building list of assets...
+✨ Read 122 files from the assets directory D:\tlydcg\Codex_work\广外AI应用大赛\.open-next\assets
+🌀 Starting asset upload...
+🌀 Found 22 new or modified static assets to upload. Proceeding with upload...
++ /BUILD_ID
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/1ac71fc16c24600253696ffa2528949094f971f5409b0b353b2b775b5e1ba07d/$/_global-error.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/audit.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/sources.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/retention.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/145008da6824f4b792748c43f431945107a149ddf2ea6e8f5e743a258913057a/$/knowledge.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/cd79e4fc919607ef4f08858c93a41fc9e97915831fb9535efbb33b1dcc57bbcd/$/map.cache
++ /_next/static/chunks/09jo6r_yiiday.js
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/c6377dd9ce6a1c2cd100eb4344e843eb4639b9ed26f84643f77680e9eb454c4b/$/index.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/content.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/articles.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/whitelist.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/c7c3f30468cf441a8fdce4855dca3407dd6abe583db2b4fe83f6828c1a304b32/$/radar.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/5d00a1f1a3a7033d180ee4e3d8dfb3974d855c1a94b59693caf5378b77bc355b/$/schedule.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/41da0ef926a63354a29f601d8e8d0a5951196c45ebcd28b7d4708fb7f56f3bf1/$/_not-found.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/jobs.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/reviews.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/collector.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/web-collection.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/274c0929a40f289585a7302128d3e15686ceefec6f3fe17529dcdceb5d1326e7/$/favorites.cache
++ /cdn-cgi/_next_cache/7gK9vyKzg4w20B6N_RocN/route-cache/APP_PAGE/f24644735c4b0c952c447d30ef5ef185cb2cce123f352767cd214b42189ec36d/$/account.cache
+Uploaded 7 of 22 assets
+Uploaded 14 of 22 assets
+Uploaded 22 of 22 assets
+✨ Success! Uploaded 22 files (58 already uploaded) (2.03 sec)
+
+Total Upload: 17300.50 KiB / gzip: 3154.80 KiB
+Worker Startup Time: 150 ms
+Your Worker has access to the following bindings:
+Binding                                               Resource                  
+env.DB (campusos-preview)                             D1 Database               
+env.WORKER_SELF_REFERENCE (campusos-preview)          Worker                    
+env.MAP_RATE_LIMITER (120 requests/60s)               Rate Limit                
+env.ASSETS                                            Assets                    
+env.APP_ENV ("preview")                               Environment Variable      
+env.EXTERNAL_SEARCH_TRANSPORT ("d1-relay")            Environment Variable      
+
+Uploaded campusos-preview (32.41 sec)
+Deployed campusos-preview triggers (1.17 sec)
+  https://campusos-preview.zhujunkui1.workers.dev
+  schedule: * * * * *
+Current Version ID: 43c00130-6e13-48a7-b935-784105dd93d0
+(node:28848) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)

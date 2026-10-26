@@ -13,6 +13,9 @@ import {
 import { ConsoleSyncStore } from "./v2-sync";
 import { consoleV2Api } from "./v2-api";
 import { collectorAdministration } from "./collector-api";
+import { consolePermission } from "./auth";
+import { sourceControl, sourceSessionSnapshot } from "./source-session";
+import { trafficSummary } from "./traffic";
 
 export async function consoleAuthentication(request: Request) {
   let setCookie: string | undefined;
@@ -101,6 +104,26 @@ export const consoleAdministration = withApi(async (request) => {
     .map(decodeURIComponent);
   const [section, id, action, version] = path;
   if (path.length > 4) throw new ApiError("NOT_FOUND", "未找到该管理接口。");
+  if (
+    section === "v2" &&
+    id === "traffic" &&
+    path.length === 2 &&
+    request.method === "GET"
+  )
+    return trafficSummary(context.config.db);
+  if (section === "v2" && id === "source-session" && path.length === 2) {
+    consolePermission(context.actor, "admin");
+    if (request.method === "GET")
+      return sourceSessionSnapshot(context.config.db);
+    if (request.method === "POST")
+      return sourceControl(
+        context.config.db,
+        context.actor.id,
+        await readJson(request, 256),
+        request.signal,
+      );
+    throw new ApiError("INVALID_ARGUMENT", "不支持此操作。");
+  }
   if (section === "collector")
     return collectorAdministration(
       context.config.db,

@@ -547,3 +547,7 @@ Exa免Key接口由本机执行，出站回传既有Preview。真实官方借阅�
 ## 2026-10-26｜持久Edge小红书来源
 
 当前来源通过用户已授权的专用Edge会话正常访问公开搜索/笔记；真实南校食堂帖子含一饭文采园及具体个人推荐，URL、日期、有限摘录见docs/verification/xhs-persistent-session/south-canteen.json。不是校方菜单，未据此确认当前营业/价格。源码只读页面公开状态，不读取私信/收藏或日常浏览器资料，不批量复制图片，不自动入公共文章语料。参考xpzouying/xiaohongshu-mcp的公开数据形状，Apache-2.0通知与许可证见services/external-search/THIRD_PARTY_NOTICES.md；工具许可不等于帖子再分发授权。
+
+## 2026-10-26｜总览统计和小红书登录状态
+
+访问量来自CampusOS自身前台客户端真实导航及D1服务端日期聚合，自2026/10/26 19:27:02起记录；参考截图与https://pkuknow.cn仅供卡片/图表视觉参考，未复制其统计数字或资源。小红书登录状态及二维码来自现有专用Edge中的https://www.xiaohongshu.com/explore真实页面；只向管理员提供短期登录维护，不公开账户Cookie。隔离匿名profile提取PNG成功；真人扫码未在本轮重复执行。证据见docs/verification/admin-dashboard。

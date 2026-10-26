@@ -1,0 +1,9 @@
+
+ RUN  v5.0.3 D:/tlydcg/Codex_work/广外AI应用大赛
+
+
+ Test Files  4 passed (4)
+      Tests  14 passed (14)
+   Start at  19:41:42
+   Duration  2.21s (tests 71%, import 14%, transform 14%)
+

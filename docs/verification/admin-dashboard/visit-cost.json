@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-26T11:45:53.220Z",
+  "status": 200,
+  "usage": {
+    "rowsRead": 2,
+    "rowsWritten": 4
+  },
+  "timing": {
+    "startTime": 1793015152973.6077,
+    "domainLookupStart": -1,
+    "domainLookupEnd": -1,
+    "connectStart": -1,
+    "secureConnectionStart": -1,
+    "connectEnd": -1,
+    "requestStart": 0.172,
+    "responseStart": 243.303,
+    "responseEnd": 244.447
+  }
+}

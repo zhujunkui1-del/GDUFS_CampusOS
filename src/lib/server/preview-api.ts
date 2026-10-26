@@ -19,12 +19,26 @@ import { publicContent } from "./console/public-content";
 import { publicArticle } from "./console/public-article";
 import { collectorApi } from "./console/collector-api";
 import { relayClaimPost, relayFinishPost } from "./external-search/relay-api";
+import {
+  sourceControlFinishPost,
+  sourceSessionReportPost,
+} from "./external-search/relay-api";
+import { visitPost } from "./console/traffic";
 
 type Handler = (request: Request) => Promise<Response>;
 const fixed: Record<string, { method: string; handle: Handler }> = {
   "/api/health": { method: "GET", handle: health },
   "/api/public/content": { method: "GET", handle: publicContent },
   "/api/public/article": { method: "GET", handle: publicArticle },
+  "/api/public/visits": { method: "POST", handle: visitPost },
+  "/api/agent/external-search/control-finish": {
+    method: "POST",
+    handle: sourceControlFinishPost,
+  },
+  "/api/agent/external-search/session-report": {
+    method: "POST",
+    handle: sourceSessionReportPost,
+  },
   "/api/agent/session": { method: "GET", handle: sessionGet },
   "/api/agent/conversations": { method: "GET", handle: conversationsGet },
   "/api/agent/status": { method: "GET", handle: agentStatus },

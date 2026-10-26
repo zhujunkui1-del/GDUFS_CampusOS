@@ -14,6 +14,7 @@ const seconds = Number(process.argv[2] || 90);
 if (!Number.isInteger(seconds) || seconds < 10 || seconds > 180)
   throw Error("Bounded telemetry window required.");
 const output =
+  process.env.PREVIEW_TELEMETRY_OUTPUT ||
   "docs/verification/external-search/xhs-logged-in/per-api-cpu.json";
 const auth = execFileSync(
   process.execPath,

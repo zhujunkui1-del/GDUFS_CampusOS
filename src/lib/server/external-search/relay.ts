@@ -8,6 +8,7 @@ import {
 import type { ProviderResult } from "./providers";
 import { ApiError } from "../errors";
 import { isOfficialCampusUrl } from "./policy";
+import { SourceControlInputSchema } from "@/domain/console/dashboard";
 export function relayMeter(db: SqlDatabase) {
   const usage: RelayUsage = {
     queries: 0,
@@ -166,10 +167,19 @@ export async function claimRelay(
       );
       if (work.length)
         return {
-          work: {
-            id: work[0].id,
-            input: RelayInputSchema.parse(JSON.parse(work[0].input_json)),
-          },
+          work: SourceControlInputSchema.safeParse(
+            JSON.parse(work[0].input_json),
+          ).success
+            ? {
+                id: work[0].id,
+                control: SourceControlInputSchema.parse(
+                  JSON.parse(work[0].input_json),
+                ),
+              }
+            : {
+                id: work[0].id,
+                input: RelayInputSchema.parse(JSON.parse(work[0].input_json)),
+              },
           usage: meter.usage,
         };
     }

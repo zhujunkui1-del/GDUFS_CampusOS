@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-26T11:51:56.316Z",
+  "environment": "preview",
+  "url": "https://campusos-preview.zhujunkui1.workers.dev/admin",
+  "version": "43c00130-6e13-48a7-b935-784105dd93d0",
+  "migration": "0051_admin_traffic_and_source_session.sql",
+  "beforeMigrationBookmark": "00000103-0000003a-00005110-9fc0b6146919f6a13f378af99bd47439",
+  "productionChanged": false
+}

@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { APP } from "@/lib/app";
 import "./globals.css";
+import { Suspense } from "react";
+import { VisitTracker } from "@/features/analytics/visit-tracker";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -23,7 +25,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="zh-CN">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Suspense>
+          <VisitTracker />
+        </Suspense>
+      </body>
     </html>
   );
 }

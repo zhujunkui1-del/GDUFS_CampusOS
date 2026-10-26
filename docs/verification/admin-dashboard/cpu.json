@@ -1,0 +1,832 @@
+{
+  "at": "2026-10-26T11:45:00.669Z",
+  "windowSeconds": 55,
+  "connected": true,
+  "tailRemoved": true,
+  "rawLogsStored": false,
+  "frameShapes": [
+    "cpuTime,diagnosticsChannelEvents,event,eventTimestamp,exceptions,executionModel,logs,outcome,scriptName,scriptTags,scriptVersion,truncated,wallTime"
+  ],
+  "records": [
+    {
+      "at": 1793015044404,
+      "path": "/api/admin/v2/traffic",
+      "method": "GET",
+      "status": 401,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 2,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015044808,
+      "path": "/admin",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 10,
+      "wallTimeMs": 362,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015045257,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 219,
+      "wallTimeMs": 512,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015045520,
+      "path": "/admin",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 10,
+      "wallTimeMs": 22,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015045679,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 13,
+      "wallTimeMs": 381,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015045680,
+      "path": "/api/console-auth",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 4,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015045679,
+      "path": "/icon.svg",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 14,
+      "wallTimeMs": 25,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015046128,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 15,
+      "wallTimeMs": 30,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015046078,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 104,
+      "wallTimeMs": 352,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015046710,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 147,
+      "wallTimeMs": 419,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015045956,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 14,
+      "wallTimeMs": 33,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015046003,
+      "path": "/icon.svg",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 31,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015045955,
+      "path": "/api/console-auth",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 17,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015046827,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 18,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015046850,
+      "path": "/api/console-auth",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 0,
+      "wallTimeMs": 1,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015047016,
+      "path": "/api/console-auth",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 11,
+      "wallTimeMs": 406,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015047489,
+      "path": "/admin/sources",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 3,
+      "wallTimeMs": 388,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015047024,
+      "path": "/api/console-auth",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 4,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015047494,
+      "path": "/admin/web-collection",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 405,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015047952,
+      "path": "/admin/sources",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 3,
+      "wallTimeMs": 8,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015047993,
+      "path": "/api/console-auth",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 11,
+      "wallTimeMs": 420,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015047486,
+      "path": "/admin",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 16,
+      "wallTimeMs": 26,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015048484,
+      "path": "/admin",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 5,
+      "wallTimeMs": 17,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015048516,
+      "path": "/admin/web-collection",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 12,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015047944,
+      "path": "/admin/web-collection",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 17,
+      "wallTimeMs": 34,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015048545,
+      "path": "/admin",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 14,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015048576,
+      "path": "/admin",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 14,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015047713,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 485,
+      "wallTimeMs": 952,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015048570,
+      "path": "/admin/retention",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 16,
+      "wallTimeMs": 413,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015048512,
+      "path": "/admin/sources",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 14,
+      "wallTimeMs": 27,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015048570,
+      "path": "/admin/web-collection",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 42,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015048485,
+      "path": "/admin/articles",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 16,
+      "wallTimeMs": 40,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015050350,
+      "path": "/api/agent/external-search/claim",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 198,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015053422,
+      "path": "/api/agent/external-search/control-finish",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 206,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015053618,
+      "path": "/api/agent/external-search/control-finish",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 6,
+      "wallTimeMs": 210,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015048865,
+      "path": "/api/admin/v2/source-session",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 19,
+      "wallTimeMs": 4590,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015049014,
+      "path": "/api/admin/v2/source-session",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 11,
+      "wallTimeMs": 5647,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015054049,
+      "path": "/api/collector/heartbeat",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 146,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015054588,
+      "path": "/api/console-auth",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 146,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015055420,
+      "path": "/api/console-auth",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 133,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015055647,
+      "path": "/api/admin/v2/source-session",
+      "method": "POST",
+      "status": 403,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 67,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015053680,
+      "path": "/api/agent/external-search/claim",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 5,
+      "wallTimeMs": 2257,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015056014,
+      "path": "/api/agent/external-search/claim",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 1,
+      "wallTimeMs": 193,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015058696,
+      "path": "/api/agent/external-search/control-finish",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 205,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015058960,
+      "path": "/api/agent/external-search/control-finish",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 3,
+      "wallTimeMs": 206,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015055785,
+      "path": "/api/admin/v2/source-session",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 8,
+      "wallTimeMs": 3524,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015054956,
+      "path": "/api/admin/v2/source-session",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 16,
+      "wallTimeMs": 4601,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015059469,
+      "path": "/api/admin/v2/traffic",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 209,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015059765,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 3,
+      "wallTimeMs": 8,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060037,
+      "path": "/icon.svg",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 11,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015059838,
+      "path": "/api/admin/v2/traffic",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 209,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060052,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 3,
+      "wallTimeMs": 9,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060130,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 15,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060056,
+      "path": "/knowledge",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 368,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060058,
+      "path": "/schedule",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 397,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060453,
+      "path": "/icon.svg",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 9,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060047,
+      "path": "/radar",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 415,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060475,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 5,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060473,
+      "path": "/knowledge",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 13,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060473,
+      "path": "/radar",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 23,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060534,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 7,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060560,
+      "path": "/radar",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 13,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060584,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 5,
+      "wallTimeMs": 15,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060600,
+      "path": "/knowledge",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 3,
+      "wallTimeMs": 11,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060728,
+      "path": "/knowledge",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 8,
+      "wallTimeMs": 29,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060582,
+      "path": "/radar",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 16,
+      "wallTimeMs": 27,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015060897,
+      "path": "/account",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 31,
+      "wallTimeMs": 52,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015065050,
+      "path": "/api/public/visits",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 74,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015065345,
+      "path": "/knowledge",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 10,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015065473,
+      "path": "/api/public/visits",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 7,
+      "wallTimeMs": 80,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015065627,
+      "path": "/radar",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 11,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015065774,
+      "path": "/knowledge",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 15,
+      "wallTimeMs": 24,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015065539,
+      "path": "/favorites",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 15,
+      "wallTimeMs": 34,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015065335,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 17,
+      "wallTimeMs": 28,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015065775,
+      "path": "/schedule",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 13,
+      "wallTimeMs": 23,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015065775,
+      "path": "/radar",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 18,
+      "wallTimeMs": 29,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015065774,
+      "path": "/api/public/content",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 11,
+      "wallTimeMs": 497,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015070343,
+      "path": "/api/public/visits",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 1,
+      "wallTimeMs": 71,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015070784,
+      "path": "/api/public/visits",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 79,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015070963,
+      "path": "/api/public/visits",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 1,
+      "wallTimeMs": 67,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015070946,
+      "path": "/api/admin/v2/traffic",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 6,
+      "wallTimeMs": 208,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793015058969,
+      "path": "/api/agent/external-search/claim",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 7,
+      "wallTimeMs": 20066,
+      "exceptionCount": 0
+    }
+  ]
+}

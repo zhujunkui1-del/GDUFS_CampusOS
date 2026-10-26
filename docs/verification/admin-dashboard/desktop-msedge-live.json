@@ -1,0 +1,289 @@
+{
+  "before": {
+    "startedAt": 1793014022763,
+    "measuredAt": 1793015520874,
+    "today": 12,
+    "last7": 12,
+    "last30": 12,
+    "total": 12,
+    "days": [
+      {
+        "day": "2026-09-27",
+        "views": null
+      },
+      {
+        "day": "2026-09-28",
+        "views": null
+      },
+      {
+        "day": "2026-09-29",
+        "views": null
+      },
+      {
+        "day": "2026-09-30",
+        "views": null
+      },
+      {
+        "day": "2026-10-01",
+        "views": null
+      },
+      {
+        "day": "2026-10-02",
+        "views": null
+      },
+      {
+        "day": "2026-10-03",
+        "views": null
+      },
+      {
+        "day": "2026-10-04",
+        "views": null
+      },
+      {
+        "day": "2026-10-05",
+        "views": null
+      },
+      {
+        "day": "2026-10-06",
+        "views": null
+      },
+      {
+        "day": "2026-10-07",
+        "views": null
+      },
+      {
+        "day": "2026-10-08",
+        "views": null
+      },
+      {
+        "day": "2026-10-09",
+        "views": null
+      },
+      {
+        "day": "2026-10-10",
+        "views": null
+      },
+      {
+        "day": "2026-10-11",
+        "views": null
+      },
+      {
+        "day": "2026-10-12",
+        "views": null
+      },
+      {
+        "day": "2026-10-13",
+        "views": null
+      },
+      {
+        "day": "2026-10-14",
+        "views": null
+      },
+      {
+        "day": "2026-10-15",
+        "views": null
+      },
+      {
+        "day": "2026-10-16",
+        "views": null
+      },
+      {
+        "day": "2026-10-17",
+        "views": null
+      },
+      {
+        "day": "2026-10-18",
+        "views": null
+      },
+      {
+        "day": "2026-10-19",
+        "views": null
+      },
+      {
+        "day": "2026-10-20",
+        "views": null
+      },
+      {
+        "day": "2026-10-21",
+        "views": null
+      },
+      {
+        "day": "2026-10-22",
+        "views": null
+      },
+      {
+        "day": "2026-10-23",
+        "views": null
+      },
+      {
+        "day": "2026-10-24",
+        "views": null
+      },
+      {
+        "day": "2026-10-25",
+        "views": null
+      },
+      {
+        "day": "2026-10-26",
+        "views": 12
+      }
+    ]
+  },
+  "after": {
+    "startedAt": 1793014022763,
+    "measuredAt": 1793015532188,
+    "today": 16,
+    "last7": 16,
+    "last30": 16,
+    "total": 16,
+    "days": [
+      {
+        "day": "2026-09-27",
+        "views": null
+      },
+      {
+        "day": "2026-09-28",
+        "views": null
+      },
+      {
+        "day": "2026-09-29",
+        "views": null
+      },
+      {
+        "day": "2026-09-30",
+        "views": null
+      },
+      {
+        "day": "2026-10-01",
+        "views": null
+      },
+      {
+        "day": "2026-10-02",
+        "views": null
+      },
+      {
+        "day": "2026-10-03",
+        "views": null
+      },
+      {
+        "day": "2026-10-04",
+        "views": null
+      },
+      {
+        "day": "2026-10-05",
+        "views": null
+      },
+      {
+        "day": "2026-10-06",
+        "views": null
+      },
+      {
+        "day": "2026-10-07",
+        "views": null
+      },
+      {
+        "day": "2026-10-08",
+        "views": null
+      },
+      {
+        "day": "2026-10-09",
+        "views": null
+      },
+      {
+        "day": "2026-10-10",
+        "views": null
+      },
+      {
+        "day": "2026-10-11",
+        "views": null
+      },
+      {
+        "day": "2026-10-12",
+        "views": null
+      },
+      {
+        "day": "2026-10-13",
+        "views": null
+      },
+      {
+        "day": "2026-10-14",
+        "views": null
+      },
+      {
+        "day": "2026-10-15",
+        "views": null
+      },
+      {
+        "day": "2026-10-16",
+        "views": null
+      },
+      {
+        "day": "2026-10-17",
+        "views": null
+      },
+      {
+        "day": "2026-10-18",
+        "views": null
+      },
+      {
+        "day": "2026-10-19",
+        "views": null
+      },
+      {
+        "day": "2026-10-20",
+        "views": null
+      },
+      {
+        "day": "2026-10-21",
+        "views": null
+      },
+      {
+        "day": "2026-10-22",
+        "views": null
+      },
+      {
+        "day": "2026-10-23",
+        "views": null
+      },
+      {
+        "day": "2026-10-24",
+        "views": null
+      },
+      {
+        "day": "2026-10-25",
+        "views": null
+      },
+      {
+        "day": "2026-10-26",
+        "views": 16
+      }
+    ]
+  },
+  "source": {
+    "state": "logged_in",
+    "checkedAt": 1793015520990,
+    "usage": {
+      "queries": 6,
+      "rowsRead": 9,
+      "rowsWritten": 5,
+      "usageAvailable": true
+    }
+  },
+  "visitWriteUsage": {
+    "request": {
+      "startTime": 1793015532890.126,
+      "domainLookupStart": -1,
+      "domainLookupEnd": -1,
+      "connectStart": -1,
+      "secureConnectionStart": -1,
+      "connectEnd": -1,
+      "requestStart": 0.197,
+      "responseStart": 180.093,
+      "responseEnd": 181.187
+    },
+    "bodyReadViaCdp": false
+  },
+  "unauthorizedRejected": true,
+  "csrfRejected": true,
+  "qrNotRequestedForValidSession": true
+}

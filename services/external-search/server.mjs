@@ -105,7 +105,8 @@ const server = http.createServer(async (req, res) => {
       profilePersistent: !!persistent,
     });
   const sessionAction =
-    persistent && /^\/v1\/session\/(status|open|close)$/.test(req.url || "");
+    persistent &&
+    /^\/v1\/session\/(status|poll|open|login|close)$/.test(req.url || "");
   if ((req.url !== "/v1/search" && !sessionAction) || req.method !== "POST")
     return send(404, "unavailable");
   if (
@@ -119,9 +120,13 @@ const server = http.createServer(async (req, res) => {
         await persistent.close();
         state = { state: "closed", loggedIn: null };
       } else
-        state = req.url.endsWith("/open")
-          ? await persistent.open()
-          : await persistent.status();
+        state = req.url.endsWith("/poll")
+          ? await persistent.inspect()
+          : req.url.endsWith("/login")
+            ? await persistent.login()
+            : req.url.endsWith("/open")
+              ? await persistent.open()
+              : await persistent.status();
       return send(200, "ok", [], state);
     } catch {
       return send(200, "unavailable", [], {

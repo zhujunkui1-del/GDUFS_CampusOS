@@ -522,3 +522,7 @@ Exa免Key搜索本机Node成功，Preview Worker多次真实请求均HTTP403；w
 ## 2026-10-26｜登录阻塞解除，保留源站主动验证边界
 
 已使用专用Edge完整profile恢复有效会话；正常关闭重开、重启本机服务仍登录，不需要继续发静态二维码。实际笔记正文及南校一饭/显式小红书追问两轮公网调用通过。当前模式不依赖Docker，需本机Node与专用Edge可运行；没有设置开机自启。平台主动撤销会话/安全验证仍须本人处理，未承诺永久登录或24小时稳定性。旧“当前未登录需要扫码”记录已非最新状态；见docs/verification/xhs-persistent-session/reopen.json、service-restart.json、browser/live.json。
+
+## 2026-10-26｜后台会话模块与流量统计边界
+
+后台已有可见的真实检测/重新登录入口，原“无后台提示”限制已解除。小红书依赖本机gateway/runner/专用Edge运行；平台安全验证仍需本人在来源电脑处理，未新增系统/短信提醒。历史PV没有来源不能追补；匿名客户端计数存在脚本禁用/断网漏计边界。全仓14个旧测试失败及其他模块lint错误仍在，本轮无新增失败。真实QR提取已验证，但本轮未退出负责人有效会话进行真人扫码。详docs/ADMIN_DASHBOARD_ACCEPTANCE.md。

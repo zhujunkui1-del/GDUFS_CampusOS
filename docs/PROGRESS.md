@@ -1049,3 +1049,9 @@ CPU真实Trace为前一131c4b8b版本的10次200请求：检索GET7—222ms、�
 旧Cookie文件和固定标识确实存在，不将DOM未确认直接归因源站会话失效。当前改专用Edge完整用户目录，保留Cookie/LocalStorage等；仅新目录首次迁移已有专用会话，不从旧JSON覆盖已建立的profile，不读取日常浏览器资料。正常关闭重开、两个Node服务重启后仍logged_in，未再次要求扫码。实际南校一饭搜索6.2秒返回2篇正文。
 
 另修“调用小红书来查”继承同账号的具体主题，显式平台意图可触发对应来源；政策截止仍官方为准。有合法引用时来源UI只显示实际引用候选、保留编号。真实Preview两回合通过，6次模型请求/30729个usage token，站内约6.9秒/3.5秒，正文与真实URL可见。最新Preview20241f13-4b21-46b0-bbeb-673aac7505f3；公网样本3fd7c4b0，后续仅泛化无数据标识。无迁移、Production或新付费服务；原采集/分类/发布/地图不变。资料、测试与启动说明见docs/verification/xhs-persistent-session。
+
+## 2026-10-26｜后台总览访问量与小红书会话
+
+按负责人要求，原指标上方增加今日/7天/30天/累计PV及趋势，下方增加真实小红书状态、重新登录及二维码区。0051 Preview迁移已应用，Time Travel bookmark已存；不迁移或虚构旧访问量，不动Production或原文章。访问只存匿名批次和每日聚合，使用现有边缘限流；会话控制沿用专用Edge完整profile与出站执行器，Cookie不出本机，QR只向admin短期返回。
+
+目标14项通过，typecheck/本轮lint/Next+OpenNext构建通过；全仓506项492通过，14个旧失败、新失败0。全仓lint另有其他模块遗留警告/require错误。真Preview Edge桌面、Chrome手机尺寸验证计数、幂等、布局、实际logged_in、保留会话通过；真实匿名来源profile可提取QR，扫码状态收起使用隔离夹具，没有让负责人重新扫码。一条真实PV读2/写4，重试写0；Worker CPU/墙时及发布版本见docs/ADMIN_DASHBOARD_ACCEPTANCE.md与verification/admin-dashboard。7天图移动端裁切已修复。

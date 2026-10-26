@@ -5,6 +5,14 @@ import { withApi } from "../http";
 import { ApiError } from "../errors";
 import { RelayFinishSchema } from "@/domain/retrieval/relay";
 import { claimRelay, finishRelay } from "./relay";
+import {
+  SourceControlFinishSchema,
+  SourceSessionResultSchema,
+} from "@/domain/console/dashboard";
+import {
+  finishSourceControl,
+  saveSessionState,
+} from "../console/source-session";
 async function authenticate(request: Request) {
   const ctx = assistantBindings(),
     key = ctx.externalSearch.gatewayToken;
@@ -44,4 +52,21 @@ export const relayFinishPost = withApi(async (request) => {
   const ctx = await authenticate(request);
   const input = RelayFinishSchema.parse(await readJson(request, 24576));
   return finishRelay(ctx.db, input.id, input.runnerId, input.result);
+});
+export const sourceControlFinishPost = withApi(async (request) => {
+  const ctx = await authenticate(request);
+  const input = SourceControlFinishSchema.parse(
+    await readJson(request, 190000),
+  );
+  return finishSourceControl(ctx.db, input.id, input.runnerId, input.result);
+});
+export const sourceSessionReportPost = withApi(async (request) => {
+  const ctx = await authenticate(request);
+  const input = SourceSessionResultSchema.parse(await readJson(request, 1024));
+  const r = await saveSessionState(ctx.db, {
+    ...input,
+    qr: null,
+    qrExpiresAt: null,
+  });
+  return { accepted: true, usage: r.meta };
 });

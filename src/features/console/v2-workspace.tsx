@@ -3,6 +3,7 @@ import { articlePublicationNames } from "@/domain/console/article-publication";
 import { WhitelistWorkspace, RetentionWorkspace } from "./retention-workspace";
 import { CollectorPanel } from "./collector-panel";
 import { OfficialWebCollectionPanel } from "./official-web-collection-panel";
+import { TrafficPanel, SourceSessionPanel } from "./dashboard-panels";
 import Link from "next/link";
 import {
   useEffect,
@@ -578,7 +579,10 @@ function Sources({
                       {s.protected && <span>白名单保护</span>}
                     </div>
                   </Link>
-                  <div className="console-v2-source-counts" aria-label="文章数量">
+                  <div
+                    className="console-v2-source-counts"
+                    aria-label="文章数量"
+                  >
                     <span>
                       <strong>{s.articleCount}</strong>
                       <small>文章</small>
@@ -925,9 +929,7 @@ function SourceWorkspace(props: WorkspaceProps) {
         {[
           ["articles", "全部文章"],
           ["governance", "基本资料"],
-          ...(source.collectorEnabled != null
-            ? [["sync", "公众号采集"]]
-            : []),
+          ...(source.collectorEnabled != null ? [["sync", "公众号采集"]] : []),
           ["history", "操作历史"],
         ].map(([v, l]) => (
           <button
@@ -996,6 +998,7 @@ type Dashboard = {
 };
 function Dashboard(props: WorkspaceProps) {
   const params = useSearchParams(),
+    [revision, setRevision] = useState(0),
     [filters] = useState<Record<string, string>>({}),
     [historyOpen, setHistoryOpen] = useState(params.get("view") === "history");
   const { data, error, reload } = useConsoleV2Data<Dashboard>(
@@ -1016,10 +1019,21 @@ function Dashboard(props: WorkspaceProps) {
     <>
       <div className="console-heading">
         <h1>内容运营总览</h1>
-        <button onClick={reload} aria-label="刷新总览">
+        <button
+          onClick={() => {
+            reload();
+            setRevision((v) => v + 1);
+          }}
+          aria-label="刷新总览"
+        >
           <RefreshCw size={18} />
         </button>
       </div>
+      <TrafficPanel
+        key={"traffic-" + revision}
+        request={props.request}
+        revision={revision}
+      />
       <div className="console-v2-metrics">
         {metrics.map(([l, v]) => (
           <article className="console-card" key={l}>
@@ -1030,6 +1044,12 @@ function Dashboard(props: WorkspaceProps) {
           </article>
         ))}
       </div>
+      <SourceSessionPanel
+        key={"source-" + revision}
+        request={props.request}
+        admin={props.actor.role === "admin"}
+        revision={revision}
+      />
       <section className="console-card">
         <h2>D1存储</h2>
         {data.storage.length ? (

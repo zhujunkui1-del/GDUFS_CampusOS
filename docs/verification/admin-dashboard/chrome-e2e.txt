@@ -1,0 +1,8 @@
+
+Running 1 test using 1 worker
+
+(node:27720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [mobile] › tests\e2e\admin-dashboard-preview.spec.ts:11:1 › real traffic, persistent source session, admin protection and responsive dashboard (28.8s)
+
+  1 passed (29.7s)

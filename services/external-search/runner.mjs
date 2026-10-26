@@ -17,7 +17,7 @@ const bundled = path.join(dir, "runtime/relay-providers.mjs");
 await build({
   stdin: {
     contents:
-      "export {searchWeb} from './src/lib/server/external-search/providers';export {RelayWorkSchema,RelayResultSchema} from './src/domain/retrieval/relay';",
+      "export {searchWeb} from './src/lib/server/external-search/providers';export {RelayWorkSchema,RelayResultSchema} from './src/domain/retrieval/relay';export {SourceControlWorkSchema,SourceSessionResultSchema} from './src/domain/console/dashboard';",
     resolveDir: root,
     loader: "ts",
   },
@@ -27,9 +27,13 @@ await build({
   format: "esm",
   logLevel: "silent",
 });
-const { searchWeb, RelayWorkSchema, RelayResultSchema } = await import(
-  pathToFileURL(bundled).href
-);
+const {
+  searchWeb,
+  RelayWorkSchema,
+  RelayResultSchema,
+  SourceControlWorkSchema,
+  SourceSessionResultSchema,
+} = await import(pathToFileURL(bundled).href);
 const stop = new AbortController(),
   runnerId = crypto.randomUUID();
 const active = new Set();
@@ -152,6 +156,73 @@ async function execute(work, claimUsage) {
     }),
   );
 }
+async function sessionRequest(action) {
+  const response = await fetch(
+    `http://127.0.0.1:${config.port}/v1/session/${action}`,
+    {
+      method: "POST",
+      redirect: "error",
+      headers: { Authorization: "Bearer " + config.gatewayToken },
+      signal: AbortSignal.any([stop.signal, AbortSignal.timeout(22000)]),
+    },
+  );
+  if (!response.ok) throw Error("SESSION_UNAVAILABLE");
+  const data = await response.json();
+  return SourceSessionResultSchema.parse({
+    state: data.state,
+    checkedAt: Date.now(),
+    qr: data.qr ?? null,
+    qrExpiresAt: data.qrExpiresAt ?? null,
+  });
+}
+let watching = false;
+async function watchLogin(initial) {
+  if (watching) return;
+  watching = true;
+  try {
+    const end = Date.now() + 240000;
+    while (!stop.signal.aborted && Date.now() < end) {
+      await pause(5000);
+      const next = await sessionRequest("poll");
+      if (next.state !== initial) {
+        await post("session-report", next, 10000);
+        if (
+          next.state === "logged_in" ||
+          next.state === "verification_required"
+        )
+          return;
+        initial = next.state;
+      }
+    }
+  } catch {
+    /* The next explicit check reports connectivity accurately. */
+  } finally {
+    watching = false;
+  }
+}
+async function executeControl(work) {
+  let result;
+  try {
+    result = await sessionRequest(work.control.action);
+  } catch {
+    result = {
+      state: "unavailable",
+      checkedAt: Date.now(),
+      qr: null,
+      qrExpiresAt: null,
+    };
+  }
+  await post("control-finish", { id: work.id, runnerId, result }, 10000);
+  console.log(
+    JSON.stringify({
+      kind: "session_control",
+      action: work.control.action,
+      state: result.state,
+    }),
+  );
+  if (work.control.action === "login" && result.state !== "logged_in")
+    void watchLogin(result.state);
+}
 console.log(
   JSON.stringify({
     service: "campusos-external-search-runner",
@@ -168,8 +239,15 @@ while (!stop.signal.aborted) {
   try {
     const claimed = await post("claim", { runnerId, waitMs: 20000 }, 25000);
     if (!claimed.work) continue;
-    const work = RelayWorkSchema.parse(claimed.work);
-    const task = execute(work, claimed.usage)
+    const control = SourceControlWorkSchema.safeParse(claimed.work);
+    const work = control.success
+      ? control.data
+      : RelayWorkSchema.parse(claimed.work);
+    const task = (
+      control.success
+        ? executeControl(control.data)
+        : execute(RelayWorkSchema.parse(work), claimed.usage)
+    )
       .catch(() =>
         console.log(JSON.stringify({ jobId: work.id, status: "unavailable" })),
       )

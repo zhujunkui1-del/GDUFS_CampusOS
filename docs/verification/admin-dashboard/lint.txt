@@ -1,0 +1,15 @@
+
+> campusos@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+D:\tlydcg\Codex_work\广外AI应用大赛\backups\wechat-catalog-2026-10-21\inspect.mjs
+  1:10  warning  'readFileSync' is defined but never used  @typescript-eslint/no-unused-vars
+
+D:\tlydcg\Codex_work\广外AI应用大赛\tests\regression\test_mp_tools_browsing_ui.cjs
+  3:16  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  5:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+✖ 4 problems (3 errors, 1 warning)
+

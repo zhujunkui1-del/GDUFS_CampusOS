@@ -72,3 +72,9 @@ node services/external-search/server.mjs
 外部结果带原文链接、来源等级、发布时间（可未知）、摘录类型和检索方式。官方网页不自动等于现行规则；小红书不作为政策、金额、活动真实状态或截止日期的最终依据。外部文章不进入公开文章库/检索索引。有限结果经过短时D1传输表，随现有会话保存引用；传输和会话均有实际D1用量。
 
 参考：[xiaohongshu-mcp](https://github.com/xpzouying/xiaohongshu-mcp)、[Agent-Reach](https://github.com/Panniantong/Agent-Reach)、[Exa MCP](https://exa.ai/docs/get-started/exa-mcp)。未安装整套Agent-Reach，也未改变现有采集器。
+
+### 管理后台维护（2026-10-26）
+
+负责人可在CampusOS Preview的`/admin`总览原运营指标下方点击“检测登录状态”或“重新登录”。这些操作只允许admin，沿用既有出站runner和独立session_control协议；不会成为公开Agent工具。有效会话不退出；需要登录时只返回源站真实二维码，由本人手机扫码。源站要求安全验证时在来源电脑专用Edge窗口处理。状态快照不保存Cookie、账号或QR，二维码不会进入公开文章/检索结果。
+
+本机仍须运行`start.ps1`。后台未收到响应显示来源电脑未连接，而不是误报退出；没有设置开机自启或额外通知服务。完整接口/权限/隔离测试与真实回执见`docs/ADMIN_DASHBOARD_ACCEPTANCE.md`。
