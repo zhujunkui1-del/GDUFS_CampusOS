@@ -1,0 +1,56 @@
+{
+  "at": "2026-10-26T06:30:01.695Z",
+  "scope": "Successful four-question desktop external relay only; excludes chat/session/model/quota queries",
+  "client": {
+    "rowsRead": 67,
+    "rowsWritten": 20,
+    "queries": 59
+  },
+  "runnerClaimAndFinishWindow": {
+    "start": "2026-10-26T05:49:20Z",
+    "end": "2026-10-26T05:50:40Z",
+    "jobs": 4,
+    "rowsRead": 53,
+    "rowsWritten": 8,
+    "queries": 37
+  },
+  "relayCombined": {
+    "rowsRead": 120,
+    "rowsWritten": 28
+  },
+  "idlePoll": {
+    "queries": 2,
+    "rowsRead": 3,
+    "rowsWritten": 0,
+    "usageAvailable": true
+  },
+  "chatMetadataComplete": false,
+  "cpu": {
+    "tailRemoved": true,
+    "rawLogsStored": false,
+    "recordCount": 61,
+    "chat": [
+      {
+        "cpuTimeMs": 85,
+        "wallTimeMs": 6557,
+        "status": 200
+      },
+      {
+        "cpuTimeMs": 95,
+        "wallTimeMs": 15529,
+        "status": 200
+      },
+      {
+        "cpuTimeMs": 110,
+        "wallTimeMs": 37419,
+        "status": 200
+      },
+      {
+        "cpuTimeMs": 86,
+        "wallTimeMs": 15071,
+        "status": 200
+      }
+    ],
+    "note": "Mixed success/degradation samples; not a capacity benchmark"
+  }
+}

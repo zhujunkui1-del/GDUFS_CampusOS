@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-26T05:10:21.736Z",
+  "execution": "local-authenticated-gateway-no-redundant-login",
+  "query": "广外食堂",
+  "http": 200,
+  "durationMs": 17300,
+  "result": {
+    "status": "ok",
+    "items": [
+      {
+        "title": "广外食堂收英镑吗😂",
+        "originalUrl": "https://www.xiaohongshu.com/explore/68b0239b000000001b022d7c?xsec_token=ABXNm9adv4iJnueFtpSvn1ENGT1gy2BDvniW9t22me6jI%3D&xsec_source=pc_search",
+        "sourceName": "小红书 · ruby",
+        "platform": "xiaohongshu",
+        "authority": "student_experience",
+        "evidenceKind": "page_excerpt",
+        "snippet": "广外食堂收英镑吗😂刚英国留学回来的打工人，卡现在罢工了，也不敢跟家里说回来了，兜里只剩几张可怜的胖胖英镑💷 想吃个麻辣香锅，能不能直接现金支付啊？有无前辈试过，在线等，饿得手抖🥲\n\t\nReferences：\n[1] Nathanee. 德基广场可以付美金现金吗[J]. Rednote. 2025(8). 1-1\n[2] 超级美食侦查家. 天环广场可以用美金现金支付吗？[M]. Rednote. 2025(8). 1-1\n#广东外语外贸大学[话题]#",
+        "publishedAt": "2025-08-28T09:38:35.000Z",
+        "retrievedAt": "2026-10-26T05:10:20.966Z",
+        "searchMode": "platform",
+        "canConfirmAdministrativeFacts": false
+      },
+      {
+        "title": "广外北 | 一周食饭",
+        "originalUrl": "https://www.xiaohongshu.com/explore/6aded94e000000000e0353a1?xsec_token=ABj4-oE5Fm8242s1KImcP3dwK2ZLbz4woQgzOJ2L3Q1Us%3D&xsec_source=pc_search",
+        "sourceName": "小红书 · 不过贰叁",
+        "platform": "xiaohongshu",
+        "authority": "student_experience",
+        "evidenceKind": "page_excerpt",
+        "snippet": "图1-2：食堂一饭三清潭的韩式烤肉拌饭\n图3：食堂清雅园吉食乐的招牌鸡排饭+烤肠\n图4-5：营养坊的流心芝士挞\n图6-8：校内肯德基的香辣鸡腿堡+小份薯条+冰淇淋\n图9-10：友家便利店的巧克力味冰面包\n图11：食堂清雅园福建千里香馄饨的鲜肉云吞\n图12：食堂一饭三东北风味小馆的洋葱肥牛饭\n图13-14：张张薄饼群的海石花糖水中份（除海石花外含8小料）\n图15：鸡腿饭群的大份鸡腿饭\n图16-18：营养坊的流心芝士挞和曲奇饼\n图18：茶瀑布的咸法酪泰奶\n\t\n本来这一期应该给姆斯汉堡一个席位，但是我的姆斯汉堡被老鼠叼走了。。。想象一下一个耗子一边说着什么手慢无一边叼走你的汉堡。我还是接到外卖电话就马上下楼拿的，结果还是🈚了，但是老板人特别好给我退款了。。大家小心臭耗子🐀（尤其是12栋的）\n\t\n#外卖测评howto[话题]# #food[话题]# #记录饮食[话题]# #饮食记录[话题]# #食堂[话题]# #事已至此先吃饭吧[话题]# #广外北[话题]# #拌门[话题]# #大学食堂[话题]# #吃什么[话题]#",
+        "publishedAt": "2026-10-26T04:38:38.000Z",
+        "retrievedAt": "2026-10-26T05:10:21.731Z",
+        "searchMode": "platform",
+        "canConfirmAdministrativeFacts": false
+      }
+    ]
+  }
+}

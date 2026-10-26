@@ -537,3 +537,9 @@ Rows read基线来自Cloudflare Wrangler只读命令`wrangler d1 insights campus
 负责人授权参考https://github.com/xpzouying/xiaohongshu-mcp及https://github.com/Panniantong/Agent-Reach。采用专用小红书只读本地会话，不导入社交正文至公开D1语料，不下载图片或作为地图资料。实际镜像v2.5.5、固定digest见services/external-search/setup.mjs；本轮未登录、未取得真实笔记，不声称平台授权或公开检索成功。
 
 通用网页适配Exa MCP（https://exa.ai/docs/get-started/exa-mcp），官方文档说明免Key限流及x-api-key认证。本机真实搜索得到https://lib.gdufs.edu.cn/fwzn/fwqykfsj/dzjyqxb.htm与https://lib.gdufs.edu.cn/fwzn/fwqykfsj/tsjygz.htm，结果仅搜索摘录，不冒充全文/当前有效性。Preview被403拒绝，尚无公网外部证据。来源分级、真实响应与网络边界见docs/verification/external-search。
+
+## 2026-10-26｜小红书实际登录与公网外部引用
+
+负责人本人扫码，专用本机会话确认登录；通过xpzouying/xiaohongshu-mcp实际搜索20条笔记并取得正文。公网Agent真实引用《广外居然还有四饭！》《广外｜饭堂和周边美食由夯到拉排名！》等，仅作学生经验；具体URL、发布日期和有限证据见docs/verification/external-search/xhs-logged-in/acceptance.json及关联浏览器回执，不下载/发布笔记图片或地图，不自动入公共文章语料。
+
+Exa免Key接口由本机执行，出站回传既有Preview。真实官方借阅权限表、规则和MDN来源已在回答中显示；只搜索摘录时保留search_excerpt，不冒充取得全文/政策现行。原入站Tunnel仍失败、第三方偶发失败与本机在线依赖均保留说明，没有购买额外服务。

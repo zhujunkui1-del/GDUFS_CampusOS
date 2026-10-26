@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-26T05:21:09.124Z",
+  "http": 200,
+  "data": {
+    "work": null,
+    "usage": {
+      "queries": 2,
+      "rowsRead": 3,
+      "rowsWritten": 0,
+      "usageAvailable": true
+    }
+  }
+}

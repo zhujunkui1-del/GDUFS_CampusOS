@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-26T04:52:49.127Z",
+  "execution": "local-authenticated-gateway",
+  "query": "广外 大学城 食堂",
+  "http": 200,
+  "durationMs": 12042,
+  "result": {
+    "status": "unavailable",
+    "items": []
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-26T06:33:36.925Z",
+  "codeCommit": "4a9ffa7",
+  "baseCommit": "695ff84",
+  "previewVersion": "9c6f6660-df6d-40e6-97ee-f47100b884ee",
+  "migration": "0050_external_search_relay.sql",
+  "productionChanged": false,
+  "purchasedServices": false,
+  "needsNewSearchKey": false,
+  "realProviderResults": true,
+  "desktopFullPassVersion": "aea83af5-844b-496a-b794-28f2c23583d2",
+  "latestMobilePass": true,
+  "allColdRetestsPassed": false,
+  "localRuntimeRequired": true,
+  "knownIssues": [
+    "Third-party search response and source navigation can still fail or exceed budget",
+    "Owner machine, Docker and two Node processes must stay running",
+    "No real-phone or long-running capacity acceptance"
+  ]
+}

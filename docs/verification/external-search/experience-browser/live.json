@@ -1,0 +1,173 @@
+{
+  "browser": "149.0.4022.80",
+  "realModel": true,
+  "preview": true,
+  "outcomes": [
+    {
+      "prompt": "广外大学城哪个食堂的饭好吃？请查学生体验，资料年代不明要说明。",
+      "answer": "- 校内资料未提供大学城校区食堂的学生口味评价，无法据此给出校内结论[来源1][来源2][来源3]。\n- 学生经验（仅供参考，且非校方结论）：有帖子称学术交流中心一、二楼的“四饭”菜品较少但味道不错，一楼自选，二楼听说有小碗菜；该帖发布于2025-12-03[来源4]。另有“广外饭堂和周边美食排名”帖（2026-05-22），但摘录未列出具体名次[来源5]；另有一篇仅标题，不能作证据[来源6]。帖子是否针对大学城校区、如今是否仍适用，均待确认。\n- 官方内容方面：大学城校区食堂已在2025年暑假改造升级[来源8]；但可取得的菜色介绍为2016年北校四大饭堂[来源7]，年代较早，不代表大学城现状。建议到校后按实际档口试吃判断。\n\n最新！2027《麦考林》加拿大大学排名发布！分类规则迎来重大调整！！\n来源1 · 广外留学服务中心 · 2026/10/19\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n27fall招生！莱斯大学全新人工智能硕士重磅上线，已开放申请！\n来源2 · 广外留学服务中心 · 2026/10/23\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n入驻团队招新｜十佳青年团队招新｜和爱豆一起为老人做酷酷的事！！！\n来源3 · 广外创新创业学院 · 2026/10/08\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n广外居然还有四饭！\n来源4 · 小红书 · 没有盖子r · 2025/12/03\n查看证据\n学生经验 · 原文摘录\n广外｜饭堂和周边美食由夯到拉排名！\n来源5 · 小红书 · WENYU · 2026/05/22\n查看证据\n学生经验 · 原文摘录\n广外篇④｜都来广外了怎么会没干蒸菜🔥\n来源6 · 小红书 · CC7最近吃啥 · 发布日期未知\n查看证据\n学生经验 · 仅标题\n【特别策划】舌尖上的广外-广东外语外贸大学新闻中心\n来源7 · 广外官方网页 · 2016/01/14\n查看证据\n官方网页 · 搜索摘录\n【民生实事进行时】食篇：全面焕新！广外食堂的“硬核”升级-广东外语外贸大学新闻中心\n来源8 · 广外官方网页 · 2025/09/12\n查看证据\n官方网页 · 搜索摘录",
+      "sources": [
+        {
+          "title": "最新！2027《麦考林》加拿大大学排名发布！分类规则迎来重大调整！！",
+          "url": "https://mp.weixin.qq.com/s/IFijxYVhBmFv0a5LUYeRPQ"
+        },
+        {
+          "title": "27fall招生！莱斯大学全新人工智能硕士重磅上线，已开放申请！",
+          "url": "https://mp.weixin.qq.com/s/sW-qhGVSK5pW8htloj9SKA"
+        },
+        {
+          "title": "入驻团队招新｜十佳青年团队招新｜和爱豆一起为老人做酷酷的事！！！",
+          "url": "https://mp.weixin.qq.com/s/pd60peFdHzbfSmKgq0SK6w"
+        },
+        {
+          "title": "广外居然还有四饭！",
+          "url": "https://www.xiaohongshu.com/explore/692fb4e2000000001e02bfa0?xsec_token=ABT97zJF2owwtDThKXUnYEjB1eauG4aM9u8wZb4PTnF48%3D&xsec_source=pc_search"
+        },
+        {
+          "title": "广外｜饭堂和周边美食由夯到拉排名！",
+          "url": "https://www.xiaohongshu.com/explore/6a0fe5f2000000003501cbbd?xsec_token=ABRp4_0s3gVqnJcMIV4cz0k6T3qPRRc2YPOQ5ckB8uTHw%3D&xsec_source=pc_search"
+        },
+        {
+          "title": "广外篇④｜都来广外了怎么会没干蒸菜🔥",
+          "url": "https://www.xiaohongshu.com/explore/6a8133a20000000022013fa9?xsec_token=ABpQPFDNbaDl3OpKYaQPFDfKrfNeFqPcEASJWpIilD-rs%3D&xsec_source=pc_search"
+        },
+        {
+          "title": "【特别策划】舌尖上的广外-广东外语外贸大学新闻中心",
+          "url": "https://news.gdufs.edu.cn/info/1062/23968.htm"
+        },
+        {
+          "title": "【民生实事进行时】食篇：全面焕新！广外食堂的“硬核”升级-广东外语外贸大学新闻中心",
+          "url": "https://news.gdufs.edu.cn/info/1003/99659.htm"
+        }
+      ]
+    }
+  ],
+  "records": [
+    {
+      "prompt": "广外大学城哪个食堂的饭好吃？请查学生体验，资料年代不明要说明。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "31f7f914-c814-4972-aa4f-2c7779d41394",
+        "requestId": "35b830e3-e41d-4465-86d7-5e2ddc69569e",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1363,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1633,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 2884,
+              "firstTextMs": 1451
+            }
+          ],
+          "promptTokens": 10304,
+          "completionTokens": 371,
+          "cachedPromptTokens": 3200,
+          "totalTokens": 10675,
+          "usageComplete": true,
+          "chargedTokens": 10675,
+          "durationMs": 13352,
+          "estimatedUsdRange": [
+            0.0012977999999999998,
+            0.0025955999999999996
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1178,
+            "serverElapsedMs": 14530,
+            "firstTextMs": 12979,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 288,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 6451,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 27,
+              "writeQueries": 16,
+              "calls": 35,
+              "failures": 0,
+              "durationMs": 4361,
+              "maxCallMs": 146,
+              "rowsRead": 446,
+              "rowsWritten": 25,
+              "rowUsageStatements": 33,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 129,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 288,
+                "candidateChunks": 7,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "ok",
+                "durationMs": 6451,
+                "providers": [
+                  {
+                    "provider": "xiaohongshu_mcp_local",
+                    "status": "ok",
+                    "durationMs": 4711,
+                    "count": 3,
+                    "cacheHit": true,
+                    "relayUsage": {
+                      "queries": 8,
+                      "rowsRead": 10,
+                      "rowsWritten": 5,
+                      "usageAvailable": true
+                    }
+                  },
+                  {
+                    "provider": "exa_web_local",
+                    "status": "ok",
+                    "durationMs": 6451,
+                    "count": 2,
+                    "relayUsage": {
+                      "queries": 10,
+                      "rowsRead": 12,
+                      "rowsWritten": 5,
+                      "usageAvailable": true
+                    }
+                  }
+                ],
+                "rowsRead": 22,
+                "rowsWritten": 10
+              }
+            ]
+          }
+        }
+      },
+      "response": "- 校内资料未提供大学城校区食堂的学生口味评价，无法据此给出校内结论[来源1][来源2][来源3]。\n- 学生经验（仅供参考，且非校方结论）：有帖子称学术交流中心一、二楼的“四饭”菜品较少但味道不错，一楼自选，二楼听说有小碗菜；该帖发布于2025-12-03[来源4]。另有“广外饭堂和周边美食排名”帖（2026-05-22），但摘录未列出具体名次[来源5]；另有一篇仅标题，不能作证据[来源6]。帖子是否针对大学城校区、如今是否仍适用，均待确认。\n- 官方内容方面：大学城校区食堂已在2025年暑假改造升级[来源8]；但可取得的菜色介绍为2016年北校四大饭堂[来源7]，年代较早，不代表大学城现状。建议到校后按实际档口试吃判断。",
+      "responseHeadersMs": 1518,
+      "firstTextMs": 14997,
+      "completeMs": 15381
+    }
+  ],
+  "pageErrors": []
+}

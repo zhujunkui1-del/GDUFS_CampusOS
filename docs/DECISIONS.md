@@ -695,3 +695,9 @@ M1—M6真实回执见docs/verification/article-analysis-2026-10-25/README.md；
 按负责人补充需求，在既有Agent/Registry内增加只读search_external_campus_info扩展，原16项规划能力及实际执行器16工具上限保留。内部资料可用时直接回答；规则/奖学金/时限走官方网页，学生经验走小红书等，宿舍组合两类证据。来源分级，外部不自动入公共文章库，不以社交内容确认校方规则或时限。复用原模型，不新建Agent/采集器/地图，不购买服务。
 
 Exa无需Key模式本机成功、Preview持续403；可选EXA_API_KEY仅服务端，未取得Key且不能保证凭据解决所有网络问题。小红书独立本地会话未登录、云端隧道未连通，均未记可用。准确实现、真实失败和续做点见docs/verification/external-search/README.md。
+
+## D-081｜外部搜索本机出站传输与真实引用（2026-10-26）
+
+负责人已扫码且无现成搜索Key。复用既有Preview Worker+D1，以独立Bearer验证本机领取/回传，避免入站Tunnel网络阻塞；不购买服务或部署Production。0050只保存短时请求/有限结果，完成/取消清理；不入公开文章语料、不改分类/发布、门禁/白名单或地图。
+
+外部只读Skill因实测浏览器搜索+正文耗时放宽至30秒，其他工具15秒/整轮90秒保持；两篇正文并行，主题关键词与2分钟有界本机缓存减少重复请求。已有真实网页与小红书公网Agent引用；连续重测仍有源站失败，不宣称长期稳定。当前两个外部Provider都依赖本机Docker与两个Node程序在线，未设置开机自启。详docs/verification/external-search/xhs-logged-in。

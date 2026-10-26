@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-26T05:52:34.718Z",
+  "durationMs": 14152,
+  "status": 200,
+  "data": {
+    "status": "ok",
+    "items": [
+      {
+        "title": "广外居然还有四饭！",
+        "originalUrl": "https://www.xiaohongshu.com/explore/692fb4e2000000001e02bfa0?xsec_token=ABT97zJF2owwtDThKXUnYEjB1eauG4aM9u8wZb4PTnF48%3D&xsec_source=pc_search",
+        "sourceName": "小红书 · 没有盖子r",
+        "platform": "xiaohongshu",
+        "authority": "student_experience",
+        "evidenceKind": "page_excerpt",
+        "snippet": "地点：学术交流中心一楼和二楼（校办公楼八角楼那边）\n支付方式：校园卡或者校园码\n吃过三四次了！感觉还不错！菜品比较少，不过很好吃，可以去试试。汤和饭都是任装的\n图为一楼自选食堂，二楼听说还有小碗菜，下次去试试#广外美食[话题]##广外好吃的[话题]##广外[话题]##广州大学城美食[话题]##贝岗美食[话题]##广州大学城外卖[话题]#",
+        "publishedAt": "2025-12-03T03:56:18.000Z",
+        "retrievedAt": "2026-10-26T05:52:34.085Z",
+        "searchMode": "platform",
+        "canConfirmAdministrativeFacts": false
+      },
+      {
+        "title": "广外｜饭堂和周边美食由夯到拉排名！",
+        "originalUrl": "https://www.xiaohongshu.com/explore/6a0fe5f2000000003501cbbd?xsec_token=ABRp4_0s3gVqnJcMIV4cz0k6T3qPRRc2YPOQ5ckB8uTHw%3D&xsec_source=pc_search",
+        "sourceName": "小红书 · WENYU",
+        "platform": "xiaohongshu",
+        "authority": "student_experience",
+        "evidenceKind": "page_excerpt",
+        "snippet": "以上为个人经验和观点哈[害羞R]\n欢迎争辩！！！\n1️⃣ 你心中的广外美食天花板是哪家？\n2️⃣ 绝对避雷的黑名单是哪家？\n想考广外的高考贝贝们也可以蹲蹲学长学姐的测评哟～\n#广外南[话题]# #广东外语外贸大学[话题]# #广外饭堂[话题]# #广外美食[话题]# #广外周边[话题]# #广州大学城[话题]# #广外新生必看[话题]# #高考加油[话题]#",
+        "publishedAt": "2026-05-22T05:13:22.000Z",
+        "retrievedAt": "2026-10-26T05:52:34.714Z",
+        "searchMode": "platform",
+        "canConfirmAdministrativeFacts": false
+      }
+    ],
+    "cacheHit": false,
+    "queryUsed": "广外大学城食堂"
+  }
+}

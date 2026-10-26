@@ -1,0 +1,33 @@
+{
+  "items": [
+    {
+      "title": "AbortSignal - Web APIs | MDN",
+      "originalUrl": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal",
+      "sourceName": "developer.mozilla.org",
+      "platform": "web",
+      "authority": "unverified",
+      "evidenceKind": "search_excerpt",
+      "snippet": "AbortSignal - Web APIs | MDN\n\n# AbortSignal\n\n Baseline Widely available \n\nThis feature is well established and works across many devices and browser versions. It’s been available across browsers since April 2018.\n\n- See full compatibility \n- Learn more \n\nNote: This feature is available in Web Workers.\n\nThe `AbortSignal` interface represents a signal object that allows you to communicate with an asynchronous operation (such as a fetch request) and abort it if required via an `AbortController` object.\n\n## Instance properties\n\nAlso inherits properties from its parent interface, `EventTarget`.\n\n`AbortSignal.aborted` Read only\n: A Boolean that indicates whether the request(s) the signal is commun",
+      "publishedAt": "2026-09-01T00:00:00.000Z",
+      "retrievedAt": "2026-10-26T05:15:52.748Z",
+      "searchMode": "web",
+      "canConfirmAdministrativeFacts": false
+    },
+    {
+      "title": "AbortController - Web APIs | MDN",
+      "originalUrl": "https://developer.mozilla.org/en-US/docs/Web/API/AbortController",
+      "sourceName": "developer.mozilla.org",
+      "platform": "web",
+      "authority": "unverified",
+      "evidenceKind": "search_excerpt",
+      "snippet": "# AbortController\n\n Baseline Widely available \n\nThis feature is well established and works across many devices and browser versions. It’s been available across browsers since March 2019.\n\n- See full compatibility \n- Learn more \n\nNote: This feature is available in Web Workers.\n\nThe `AbortController` interface represents a controller object that allows you to abort one or more Web requests as and when desired.\n\nYou can create a new `AbortController` object using the `AbortController()` constructor. Communicating with an asynchronous operation is done using an `AbortSignal` object.\n\n## Constructor\n\n`AbortController()`\n: Creates a new `AbortController` object instance.\n\n## Instance properties\n\n`",
+      "publishedAt": null,
+      "retrievedAt": "2026-10-26T05:15:52.751Z",
+      "searchMode": "web",
+      "canConfirmAdministrativeFacts": false
+    }
+  ],
+  "provider": "exa_web",
+  "status": "ok",
+  "durationMs": 1895
+}

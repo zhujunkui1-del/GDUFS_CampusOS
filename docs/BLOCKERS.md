@@ -508,3 +508,9 @@ S3-D最终回执：D4阻塞已解除，真实桌面和模拟手机均收到地�
 Exa免Key搜索本机Node成功，Preview Worker多次真实请求均HTTP403；workerd redirect参数已修复，兼容flags已复核，仍被拒绝。已提供可选服务端EXA_API_KEY入口，等待负责人现成搜索服务凭据/可用后端信息；Key能否解除拒绝仍待实测，不购买服务或绕过验证。
 
 小红书专用Docker及只读网关已在本机运行，登录false；需本人扫码。QUIC超时/HTTP2握手EOF，临时Tunnel未接通，未配置虚假的公网URL。需可达HTTPS网关后再做Preview原生笔记搜索、过期登录/重启/并发验收。当前两个外部Provider不能记公网可用；内部双栏目RAG和既有地图仍以原验收为准。续做从docs/verification/external-search/README.md开始。
+
+## 2026-10-26｜外部搜索阻塞更新
+
+登录阻塞已解除；入站Tunnel仍不可达，但已通过现有D1+本机出站HTTPS接通，不再阻塞代表性网页/小红书Agent引用。当前无需新增搜索Key；不得把原“尚无公网检索回执”继续当最新结论。
+
+仍有第三方源站超时和免Key网页工具间歇失败，已保留降级/无证据行为；连续重测未全部通过。两个Provider都依赖本机、Docker和server.mjs/runner.mjs持续运行，未设置开机自启。长期稳定性、真实手机、登录过期/重启实机矩阵及多人容量待后续验证。详docs/verification/external-search/xhs-logged-in。

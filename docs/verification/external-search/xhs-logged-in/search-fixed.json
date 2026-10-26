@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-26T04:59:44.694Z",
+  "execution": "local-authenticated-gateway-after-budget-fix",
+  "query": "广外大学城食堂推荐",
+  "http": 200,
+  "durationMs": 27049,
+  "result": {
+    "status": "unavailable",
+    "items": []
+  }
+}

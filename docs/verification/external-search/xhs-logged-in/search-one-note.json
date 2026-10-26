@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-26T05:01:05.962Z",
+  "execution": "local-authenticated-gateway-one-note",
+  "query": "广外食堂",
+  "http": 200,
+  "durationMs": 19813,
+  "result": {
+    "status": "ok",
+    "items": [
+      {
+        "title": "不是讲笑",
+        "originalUrl": "https://www.xiaohongshu.com/explore/6ab96ffe000000000a02081a?xsec_token=ABNb5B3oJGgTDQI7KaS18nO-kENgOOPbfQz2Ztbk7UnUs%3D&xsec_source=pc_search",
+        "sourceName": "小红书 · 圣光劳埃德",
+        "platform": "xiaohongshu",
+        "authority": "student_experience",
+        "evidenceKind": "page_excerpt",
+        "snippet": "给未来可能在英国读书的学弟学妹们提个醒。英国宿舍的食堂虽然免费，但是又难吃又吃不饱，还得花大价钱给自己加餐。相比之下，广外食堂简直就是物美价廉的代名词，虽然我还在读高中的时候也很讨厌。包餐的宿舍一般不提供厨房，无法自我改善伙食。但宿舍不能一直住，后面要自己租房，这就有了自己做饭的机会。所以我建议英留要练好厨艺，平时别太挑食，做好心理准备[doge]#留学[话题]##广州外国语学校[话题]# #广外国际部[话题]# #英国留学生[话题]#",
+        "publishedAt": "2026-09-27T19:35:26.000Z",
+        "retrievedAt": "2026-10-26T05:01:05.957Z",
+        "searchMode": "platform",
+        "canConfirmAdministrativeFacts": false
+      }
+    ]
+  }
+}

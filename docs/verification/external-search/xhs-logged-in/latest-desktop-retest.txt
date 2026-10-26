@@ -1,0 +1,43 @@
+
+Running 1 test using 1 worker
+
+(node:27220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [desktop] › tests\e2e\external-search-live.spec.ts:7:1 › Preview internal-first, official web supplement, experiences and ordinary Internet query (1.2m)
+
+
+  1) [desktop] › tests\e2e\external-search-live.spec.ts:7:1 › Preview internal-first, official web supplement, experiences and ordinary Internet query
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-message-role="assistant"]').nth(2).locator('.assistant-source-card').filter({ has: locator('a[href*="xiaohongshu.com"]') }).filter({ hasText: '原文摘录' }).first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('[data-message-role="assistant"]').nth(2).locator('.assistant-source-card').filter({ has: locator('a[href*="xiaohongshu.com"]') }).filter({ hasText: '原文摘录' }).first() with timeout 5000ms
+      - waiting for locator('[data-message-role="assistant"]').nth(2).locator('.assistant-source-card').filter({ has: locator('a[href*="xiaohongshu.com"]') }).filter({ hasText: '原文摘录' }).first()
+
+
+      126 |         .filter({ hasText: "原文摘录" })
+      127 |         .first(),
+    > 128 |     ).toBeVisible();
+          |       ^
+      129 |     await ask(
+      130 |       "JavaScript 的 AbortSignal 是什么？请联网找真实资料简要说明。",
+      131 |       "general",
+        at D:\tlydcg\Codex_work\广外AI应用大赛\tests\e2e\external-search-live.spec.ts:128:7
+
+    Error Context: test-results\external-search-live-Previ-00004-and-ordinary-Internet-query-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\external-search-live-Previ-00004-and-ordinary-Internet-query-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\external-search-live-Previ-00004-and-ordinary-Internet-query-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop] › tests\e2e\external-search-live.spec.ts:7:1 › Preview internal-first, official web supplement, experiences and ordinary Internet query

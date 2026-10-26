@@ -1,0 +1,571 @@
+{
+  "browser": "149.0.4022.80",
+  "realModel": true,
+  "preview": true,
+  "outcomes": [
+    {
+      "prompt": "广外图书馆怎么借书？只用内部文章概述借书操作，不要联网。",
+      "answer": "新生首次借书需先开通借阅权限，然后凭校园卡（兼具借书证功能）到馆借阅[来源1][来源3]。\n\n开通权限步骤\n1. 设置图书馆密码：关注“广外图书馆”微信公众号，进入“服务—服务大厅—密码重置”，用学号登录；密码每半年过期，需及时重置。\n2. 完成“新生闯馆”：在公众号菜单栏点击“资源—新生闯馆”，或进入“服务—服务大厅—新生闯馆”；至少完成前四步学习，答题达到60分以上，才可解锁图书借阅等权限。\n3. 校园卡是借书证，务必随身携带[来源1][来源3]。\n\n说明：本文仅说明开通权限和凭证；具体借书册数、借期、续借及逾期规则，现有资料未给出，建议到馆咨询或查阅图书馆官网。上述指南发布于2026年9月，现行有效性待确认。[来源1][来源3]\n\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源1 · 广外图书馆 · 2026/09/06\n查看证据\n正文证据 · 有效性待确认\n使用指南 | 广外校园卡充值全攻略\n来源2 · 数智广外 · 2026/08/31\n查看证据\n正文证据 · 有效性待确认\n2026新生指南｜广外白云山校区生活指南\n来源3 · 数智广外 · 2026/09/03\n查看证据\n正文证据 · 有效性待确认\n学活场地预约指南丨云山公益服务栈（大学城校区）\n来源4 · 广外云山学生勤工助学 · 2026/09/30\n查看证据\n正文证据 · 有效性待确认",
+      "sources": [
+        {
+          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
+        },
+        {
+          "title": "使用指南 | 广外校园卡充值全攻略",
+          "url": "https://mp.weixin.qq.com/s/jAZLj0S6cgFS8YXhVLYwXQ"
+        },
+        {
+          "title": "2026新生指南｜广外白云山校区生活指南",
+          "url": "https://mp.weixin.qq.com/s/0b30pjozPKNHRO4tsBoEQg"
+        },
+        {
+          "title": "学活场地预约指南丨云山公益服务栈（大学城校区）",
+          "url": "https://mp.weixin.qq.com/s/53lINN2VHWUBMGU0Na0TkQ"
+        }
+      ]
+    },
+    {
+      "prompt": "请联网查询广外图书馆读者借阅权限表中本科生的借阅上限和借期，以官方原文为准。",
+      "answer": "按广外图书馆官方《读者借阅权限表》，本科生的借阅上限和借期如下[来源4]：\n\n1. 可借册数：35 册。\n2. 借期：30 天。\n3. 续借：可以通过续借延长借期；续借仅限一次，续借期为 15 天，从原应还日期算起。如果所借图书已被他人预约，则不能续借。\n\n该表注明自 2023 年 5 月 12 日开始执行[来源4]。另有一份图书馆手册摘录显示，本科生可借 15 册、预约 5 册[来源7]，与现行权限表不一致；建议以现行权限表及其官网更新为准。以上信息来自官方网页的搜索摘录，尚未取得全文。\n\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源1 · 广外图书馆 · 2026/09/06\n查看证据\n正文证据 · 有效性待确认\n金秋阅新｜图书馆2026秋季中文新书展活动\n来源2 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 有效性待确认\n热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？\n来源3 · 广外图书馆 · 2026/10/23\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n读者借阅权限表-广东外语外贸大学图书馆\n来源4 · 广外官方网页 · 2020/11/24\n查看证据\n官方网页 · 搜索摘录\nLIBRARY\n来源5 · 广外官方网页 · 发布日期未知\n查看证据\n官方网页 · 搜索摘录\n图书借阅规则-广东外语外贸大学图书馆\n来源6 · 广外官方网页 · 2023/11/15\n查看证据\n官方网页 · 搜索摘录\n广 东 外 语 外 贸 大 学 图 书 馆\n来源7 · 广外官方网页 · 发布日期未知\n查看证据\n官方网页 · 搜索摘录",
+      "sources": [
+        {
+          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
+        },
+        {
+          "title": "金秋阅新｜图书馆2026秋季中文新书展活动",
+          "url": "https://mp.weixin.qq.com/s/NBtUOT9gSaFqSSM4BImKIQ"
+        },
+        {
+          "title": "热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？",
+          "url": "https://mp.weixin.qq.com/s/B0woO8Ni8zcHw1INndCKeg"
+        },
+        {
+          "title": "读者借阅权限表-广东外语外贸大学图书馆",
+          "url": "https://lib.gdufs.edu.cn/fwzn/fwqykfsj/dzjyqxb.htm"
+        },
+        {
+          "title": "LIBRARY",
+          "url": "https://lib.gdufs.edu.cn/2022.10.pdf"
+        },
+        {
+          "title": "图书借阅规则-广东外语外贸大学图书馆",
+          "url": "https://lib.gdufs.edu.cn/fwzn/fwqykfsj/tsjygz.htm"
+        },
+        {
+          "title": "广 东 外 语 外 贸 大 学 图 书 馆",
+          "url": "https://lib.gdufs.edu.cn/DZSC2020.11.25.pdf"
+        }
+      ]
+    },
+    {
+      "prompt": "广外大学城哪个食堂的饭好吃？请查学生体验，资料年代不明要说明。",
+      "answer": "内部资料中没有大学城校区食堂的学生体验，因此我尝试补充了外部学生评价；这些评价均来自个人，口味不代表校方结论。\n\n1. 二饭（博雅园）被提到的正面评价较多：有学生称这是自己最喜欢的饭堂，一楼自选窗口种类丰富，有烧腊、炒饭、糖水等；二楼有土耳其烤肉饭、芝士焗饭、蛋包饭等，其中蛋包饭被重点推荐[来源8]。\n2. 一饭：有学生提到一饭更靠近教学区、人流量大；二楼有滑蛋饭、麻辣烫、麻辣香锅等，其中滑蛋饭被推荐[来源8]。\n3. 四饭（学术交流中心）：有学生说菜品较少但味道不错，汤和饭可以任装，可用校园卡或校园码支付[来源4]。另外，有帖子标题提到“三饭风采园”菜式相对较少，但该帖只有标题，没有正文可供核实；有一篇关于“饭堂排名”的帖子只显示个人观点，没有具体评价正文[来源5][来源6]。\n\n时间方面：来源4发布于2025年12月，来源5发布于2026年5月，均不代表当前仍适用；来源8是百度经验的攻略，没有发布日期，属于年代不明；来源6和来源7只有标题，不能作为正文依据。因此，如果要比较各食堂当前实际口味，建议以你入学后的亲身试吃为准。\n\n最新！2027《麦考林》加拿大大学排名发布！分类规则迎来重大调整！！\n来源1 · 广外留学服务中心 · 2026/10/19\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n27fall招生！莱斯大学全新人工智能硕士重磅上线，已开放申请！\n来源2 · 广外留学服务中心 · 2026/10/23\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n入驻团队招新｜十佳青年团队招新｜和爱豆一起为老人做酷酷的事！！！\n来源3 · 广外创新创业学院 · 2026/10/08\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n广外居然还有四饭！\n来源4 · 小红书 · 没有盖子r · 2025/12/03\n查看证据\n学生经验 · 原文摘录\n广外｜饭堂和周边美食由夯到拉排名！\n来源5 · 小红书 · WENYU · 2026/05/22\n查看证据\n学生经验 · 原文摘录\n广外篇④｜都来广外了怎么会没干蒸菜🔥\n来源6 · 小红书 · CC7最近吃啥 · 发布日期未知\n查看证据\n学生经验 · 仅标题\n2｜广外甚至广州大学城食堂，已经录入！\n来源7 · 小红书 · FRE.D · 发布日期未知\n查看证据\n学生经验 · 仅标题\n#萌新听我说#广东外语外贸大学-百度经验\n来源8 · jingyan.baidu.com · 发布日期未知\n查看证据\n外部资料 · 搜索摘录\n饮食服务-广东外语外贸大学\n来源9 · 广外官方网页 · 发布日期未知\n查看证据\n官方网页 · 搜索摘录",
+      "sources": [
+        {
+          "title": "最新！2027《麦考林》加拿大大学排名发布！分类规则迎来重大调整！！",
+          "url": "https://mp.weixin.qq.com/s/IFijxYVhBmFv0a5LUYeRPQ"
+        },
+        {
+          "title": "27fall招生！莱斯大学全新人工智能硕士重磅上线，已开放申请！",
+          "url": "https://mp.weixin.qq.com/s/sW-qhGVSK5pW8htloj9SKA"
+        },
+        {
+          "title": "入驻团队招新｜十佳青年团队招新｜和爱豆一起为老人做酷酷的事！！！",
+          "url": "https://mp.weixin.qq.com/s/pd60peFdHzbfSmKgq0SK6w"
+        },
+        {
+          "title": "广外居然还有四饭！",
+          "url": "https://www.xiaohongshu.com/explore/692fb4e2000000001e02bfa0?xsec_token=ABT97zJF2owwtDThKXUnYEjB1eauG4aM9u8wZb4PTnF48%3D&xsec_source=pc_search"
+        },
+        {
+          "title": "广外｜饭堂和周边美食由夯到拉排名！",
+          "url": "https://www.xiaohongshu.com/explore/6a0fe5f2000000003501cbbd?xsec_token=ABRp4_0s3gVqnJcMIV4cz0k6T3qPRRc2YPOQ5ckB8uTHw%3D&xsec_source=pc_search"
+        },
+        {
+          "title": "广外篇④｜都来广外了怎么会没干蒸菜🔥",
+          "url": "https://www.xiaohongshu.com/explore/6a8133a20000000022013fa9?xsec_token=ABpQPFDNbaDl3OpKYaQPFDfKrfNeFqPcEASJWpIilD-rs%3D&xsec_source=pc_search"
+        },
+        {
+          "title": "2｜广外甚至广州大学城食堂，已经录入！",
+          "url": "https://www.xiaohongshu.com/explore/6a27ede20000000021014650?xsec_token=ABJ1uWtlRajjomEP2uPWkU4WZ51Fr3yHh0aDC0H9j0iL0%3D&xsec_source=pc_search"
+        },
+        {
+          "title": "#萌新听我说#广东外语外贸大学-百度经验",
+          "url": "https://jingyan.baidu.com/article/335530da5dff5658ca41c324.html"
+        },
+        {
+          "title": "饮食服务-广东外语外贸大学",
+          "url": "https://www.gdufs.edu.cn/zjgw/xysh/ysfw.htm"
+        }
+      ]
+    },
+    {
+      "prompt": "JavaScript 的 AbortSignal 是什么？请联网找真实资料简要说明。",
+      "answer": "以下是外部资料（MDN）对 AbortSignal 的说明。这些是通用技术知识，不属于广外校内资料。[来源1][来源3]\n\n1. 定义：AbortSignal 是一个 Web API 接口，代表一个“信号对象”。它通过 AbortController 与异步操作（如 fetch 请求）通信，并在需要时中止该操作[来源1][来源3]。\n2. 用法：先创建 AbortController，再通过 controller.signal 取得 AbortSignal，并在 fetch 请求中传入该 signal；调用 controller.abort() 即可取消请求。一个 AbortSignal 只能使用一次，中止后不能复用[来源1][来源2]。\n3. 常用成员：aborted 表示是否已中止，reason 记录中止原因；还可使用 AbortSignal.abort()、AbortSignal.any()、AbortSignal.timeout() 创建或组合信号，并可使用 throwIfAborted()[来源3]。\n\n说明：以上内容来自 MDN 搜索摘录，并非全文；其中中文页标注自 2018 年 4 月起广泛支持[来源3]。\n\nAbortSignal - Web APIs | MDN\n来源1 · developer.mozilla.org · 2026/09/01\n查看证据\n外部资料 · 搜索摘录\nAbortController - Web APIs | MDN\n来源2 · developer.mozilla.org · 2025/09/17\n查看证据\n外部资料 · 搜索摘录\nAbortSignal - Web API | MDN\n来源3 · developer.mozilla.org · 2026/09/08\n查看证据\n外部资料 · 搜索摘录",
+      "sources": [
+        {
+          "title": "AbortSignal - Web APIs | MDN",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortSignal"
+        },
+        {
+          "title": "AbortController - Web APIs | MDN",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/API/AbortController"
+        },
+        {
+          "title": "AbortSignal - Web API | MDN",
+          "url": "https://developer.mozilla.org/zh-CN/docs/Web/API/AbortSignal"
+        }
+      ]
+    }
+  ],
+  "records": [
+    {
+      "prompt": "广外图书馆怎么借书？只用内部文章概述借书操作，不要联网。",
+      "tools": [
+        "search_campus_knowledge"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "fc0ad17e-9bad-4a42-bb1c-eb3048dd378c",
+        "requestId": "e322c4aa-d2a2-42aa-a6c7-04a224e242cd",
+        "metrics": {
+          "requests": 2,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1186,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 2178,
+              "firstTextMs": 936
+            }
+          ],
+          "promptTokens": 5873,
+          "completionTokens": 295,
+          "cachedPromptTokens": 4864,
+          "totalTokens": 6168,
+          "usageComplete": true,
+          "chargedTokens": 6168,
+          "durationMs": 4162,
+          "estimatedUsdRange": [
+            0.000342942,
+            0.000685884
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1119,
+            "serverElapsedMs": 5281,
+            "firstTextMs": 3924,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 299,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 11,
+              "writeQueries": 12,
+              "calls": 15,
+              "failures": 0,
+              "durationMs": 1917,
+              "maxCallMs": 157,
+              "rowsRead": 589,
+              "rowsWritten": 15,
+              "rowUsageStatements": 15,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 346,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 299,
+                "candidateChunks": 22,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      },
+      "response": "新生首次借书需先开通借阅权限，然后凭校园卡（兼具借书证功能）到馆借阅[来源1][来源3]。\n\n**开通权限步骤**\n1. 设置图书馆密码：关注“广外图书馆”微信公众号，进入“服务—服务大厅—密码重置”，用学号登录；密码每半年过期，需及时重置。\n2. 完成“新生闯馆”：在公众号菜单栏点击“资源—新生闯馆”，或进入“服务—服务大厅—新生闯馆”；至少完成前四步学习，答题达到60分以上，才可解锁图书借阅等权限。\n3. 校园卡是借书证，务必随身携带[来源1][来源3]。\n\n说明：本文仅说明开通权限和凭证；具体借书册数、借期、续借及逾期规则，现有资料未给出，建议到馆咨询或查阅图书馆官网。上述指南发布于2026年9月，现行有效性待确认。[来源1][来源3]",
+      "responseHeadersMs": 2067,
+      "firstTextMs": 6324,
+      "completeMs": 6723
+    },
+    {
+      "prompt": "请联网查询广外图书馆读者借阅权限表中本科生的借阅上限和借期，以官方原文为准。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "fc0ad17e-9bad-4a42-bb1c-eb3048dd378c",
+        "requestId": "fdf1aa8a-e1b2-4203-8fbc-b9a50561eb84",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1228,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1391,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 2211,
+              "firstTextMs": 994
+            }
+          ],
+          "promptTokens": 16371,
+          "completionTokens": 365,
+          "cachedPromptTokens": 3200,
+          "totalTokens": 16736,
+          "usageComplete": true,
+          "chargedTokens": 16736,
+          "durationMs": 13418,
+          "estimatedUsdRange": [
+            0.00220425,
+            0.0044085
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 970,
+            "serverElapsedMs": 14388,
+            "firstTextMs": 13058,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 287,
+                "ok": true
+              },
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 291,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 7296,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 24,
+              "writeQueries": 13,
+              "calls": 29,
+              "failures": 0,
+              "durationMs": 3558,
+              "maxCallMs": 147,
+              "rowsRead": 933,
+              "rowsWritten": 16,
+              "rowUsageStatements": 27,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 346,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 287,
+                "candidateChunks": 22,
+                "usageAvailable": true
+              },
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 346,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 291,
+                "candidateChunks": 22,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "ok",
+                "durationMs": 7296,
+                "providers": [
+                  {
+                    "provider": "exa_web_local",
+                    "status": "ok",
+                    "durationMs": 7296,
+                    "count": 4,
+                    "relayUsage": {
+                      "queries": 11,
+                      "rowsRead": 13,
+                      "rowsWritten": 5,
+                      "usageAvailable": true
+                    }
+                  }
+                ],
+                "rowsRead": 13,
+                "rowsWritten": 5
+              }
+            ]
+          }
+        }
+      },
+      "response": "按广外图书馆官方《读者借阅权限表》，本科生的借阅上限和借期如下[来源4]：\n\n1. **可借册数**：35 册。\n2. **借期**：30 天。\n3. **续借**：可以通过续借延长借期；续借仅限一次，续借期为 15 天，从原应还日期算起。如果所借图书已被他人预约，则不能续借。\n\n该表注明自 2023 年 5 月 12 日开始执行[来源4]。另有一份图书馆手册摘录显示，本科生可借 15 册、预约 5 册[来源7]，与现行权限表不一致；建议以现行权限表及其官网更新为准。以上信息来自官方网页的搜索摘录，尚未取得全文。",
+      "responseHeadersMs": 1232,
+      "firstTextMs": 14859,
+      "completeMs": 15221
+    },
+    {
+      "prompt": "广外大学城哪个食堂的饭好吃？请查学生体验，资料年代不明要说明。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "fc0ad17e-9bad-4a42-bb1c-eb3048dd378c",
+        "requestId": "8540a616-81b6-477c-b83f-366a7b4d7563",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1095,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1456,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 3136,
+              "firstTextMs": 987
+            }
+          ],
+          "promptTokens": 11362,
+          "completionTokens": 485,
+          "cachedPromptTokens": 3200,
+          "totalTokens": 11847,
+          "usageComplete": true,
+          "chargedTokens": 11847,
+          "durationMs": 28840,
+          "estimatedUsdRange": [
+            0.0015248999999999998,
+            0.0030497999999999996
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 982,
+            "serverElapsedMs": 29822,
+            "firstTextMs": 27548,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 282,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 22132,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 47,
+              "writeQueries": 15,
+              "calls": 54,
+              "failures": 0,
+              "durationMs": 6581,
+              "maxCallMs": 143,
+              "rowsRead": 420,
+              "rowsWritten": 21,
+              "rowUsageStatements": 52,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 129,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 282,
+                "candidateChunks": 7,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "ok",
+                "durationMs": 22132,
+                "providers": [
+                  {
+                    "provider": "xiaohongshu_mcp_local",
+                    "status": "ok",
+                    "durationMs": 22132,
+                    "count": 4,
+                    "cacheHit": false,
+                    "relayUsage": {
+                      "queries": 28,
+                      "rowsRead": 30,
+                      "rowsWritten": 5,
+                      "usageAvailable": true
+                    }
+                  },
+                  {
+                    "provider": "exa_web_local",
+                    "status": "ok",
+                    "durationMs": 6446,
+                    "count": 2,
+                    "relayUsage": {
+                      "queries": 10,
+                      "rowsRead": 12,
+                      "rowsWritten": 5,
+                      "usageAvailable": true
+                    }
+                  }
+                ],
+                "rowsRead": 42,
+                "rowsWritten": 10
+              }
+            ]
+          }
+        }
+      },
+      "response": "内部资料中没有大学城校区食堂的学生体验，因此我尝试补充了外部学生评价；这些评价均来自个人，口味不代表校方结论。\n\n1. **二饭（博雅园）被提到的正面评价较多**：有学生称这是自己最喜欢的饭堂，一楼自选窗口种类丰富，有烧腊、炒饭、糖水等；二楼有土耳其烤肉饭、芝士焗饭、蛋包饭等，其中蛋包饭被重点推荐[来源8]。\n2. **一饭**：有学生提到一饭更靠近教学区、人流量大；二楼有滑蛋饭、麻辣烫、麻辣香锅等，其中滑蛋饭被推荐[来源8]。\n3. **四饭（学术交流中心）**：有学生说菜品较少但味道不错，汤和饭可以任装，可用校园卡或校园码支付[来源4]。另外，有帖子标题提到“三饭风采园”菜式相对较少，但该帖只有标题，没有正文可供核实；有一篇关于“饭堂排名”的帖子只显示个人观点，没有具体评价正文[来源5][来源6]。\n\n时间方面：来源4发布于2025年12月，来源5发布于2026年5月，均不代表当前仍适用；来源8是百度经验的攻略，没有发布日期，属于年代不明；来源6和来源7只有标题，不能作为正文依据。因此，如果要比较各食堂当前实际口味，建议以你入学后的亲身试吃为准。",
+      "responseHeadersMs": 1357,
+      "firstTextMs": 31000,
+      "completeMs": 31000
+    },
+    {
+      "prompt": "JavaScript 的 AbortSignal 是什么？请联网找真实资料简要说明。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "result": {
+        "conversationId": "fc0ad17e-9bad-4a42-bb1c-eb3048dd378c",
+        "requestId": "6f342918-3712-4069-9e0a-32acd32daa51",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1218,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1181,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 2621,
+              "firstTextMs": 1269
+            }
+          ],
+          "promptTokens": 7549,
+          "completionTokens": 369,
+          "cachedPromptTokens": 1664,
+          "totalTokens": 7918,
+          "usageComplete": true,
+          "chargedTokens": 7918,
+          "durationMs": 12378,
+          "estimatedUsdRange": [
+            0.001109142,
+            0.002218284
+          ],
+          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+          "priceCheckedAt": "2026-10-15",
+          "model": "deepseek-flash",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1570,
+            "serverElapsedMs": 13948,
+            "firstTextMs": 12475,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 142,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 6454,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 20,
+              "writeQueries": 13,
+              "calls": 25,
+              "failures": 0,
+              "durationMs": 3678,
+              "maxCallMs": 524,
+              "rowsRead": 282,
+              "rowsWritten": 16,
+              "rowUsageStatements": 23,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "queries": 1,
+                "durationMs": 142,
+                "candidateChunks": 0,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "ok",
+                "durationMs": 6454,
+                "providers": [
+                  {
+                    "provider": "exa_web_local",
+                    "status": "ok",
+                    "durationMs": 6454,
+                    "count": 3,
+                    "relayUsage": {
+                      "queries": 10,
+                      "rowsRead": 12,
+                      "rowsWritten": 5,
+                      "usageAvailable": true
+                    }
+                  }
+                ],
+                "rowsRead": 12,
+                "rowsWritten": 5
+              }
+            ]
+          }
+        }
+      },
+      "response": "以下是外部资料（MDN）对 AbortSignal 的说明。这些是通用技术知识，不属于广外校内资料。[来源1][来源3]\n\n1. **定义**：AbortSignal 是一个 Web API 接口，代表一个“信号对象”。它通过 AbortController 与异步操作（如 fetch 请求）通信，并在需要时中止该操作[来源1][来源3]。\n2. **用法**：先创建 AbortController，再通过 controller.signal 取得 AbortSignal，并在 fetch 请求中传入该 signal；调用 controller.abort() 即可取消请求。一个 AbortSignal 只能使用一次，中止后不能复用[来源1][来源2]。\n3. **常用成员**：aborted 表示是否已中止，reason 记录中止原因；还可使用 AbortSignal.abort()、AbortSignal.any()、AbortSignal.timeout() 创建或组合信号，并可使用 throwIfAborted()[来源3]。\n\n说明：以上内容来自 MDN 搜索摘录，并非全文；其中中文页标注自 2018 年 4 月起广泛支持[来源3]。",
+      "responseHeadersMs": 1926,
+      "firstTextMs": 14291,
+      "completeMs": 14926
+    }
+  ],
+  "pageErrors": []
+}

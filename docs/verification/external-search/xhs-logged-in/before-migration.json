@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-26T05:13:06.988Z",
+  "database": "campusos-preview",
+  "id": "18299abc-b38b-4494-8d12-8ab4d482c304",
+  "lastMigrations": [
+    {
+      "id": 48,
+      "name": "0049_shared_article_retrieval.sql",
+      "applied_at": "2026-10-25 15:41:49"
+    },
+    {
+      "id": 47,
+      "name": "0048_exact_activity_identity.sql",
+      "applied_at": "2026-10-25 14:41:31"
+    },
+    {
+      "id": 46,
+      "name": "0047_unknown_article_publication.sql",
+      "applied_at": "2026-10-25 14:19:49"
+    }
+  ],
+  "cost": {
+    "served_by": "v3-prod",
+    "served_by_region": "APAC",
+    "served_by_colo": "NRT",
+    "served_by_primary": true,
+    "timings": {
+      "sql_duration_ms": 0.7213
+    },
+    "duration": 0.7213,
+    "changes": 0,
+    "last_row_id": 0,
+    "changed_db": false,
+    "size_after": 163467264,
+    "rows_read": 3,
+    "rows_written": 0,
+    "total_attempts": 1
+  }
+}

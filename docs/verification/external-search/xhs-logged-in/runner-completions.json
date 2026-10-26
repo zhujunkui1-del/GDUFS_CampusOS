@@ -1,0 +1,90 @@
+[
+  {
+    "at": "2026-10-26T05:49:37.811Z",
+    "jobId": "8011041a-6fe3-48b3-8a68-873072687bca",
+    "kind": "web",
+    "provider": "exa_web",
+    "status": "ok",
+    "count": 4,
+    "cacheHit": false,
+    "durationMs": 4931,
+    "claimUsage": {
+      "queries": 10,
+      "rowsRead": 13,
+      "rowsWritten": 1,
+      "usageAvailable": true
+    },
+    "finishUsage": {
+      "queries": 2,
+      "rowsRead": 3,
+      "rowsWritten": 1,
+      "usageAvailable": true
+    }
+  },
+  {
+    "at": "2026-10-26T05:49:52.166Z",
+    "jobId": "6be152b5-bccb-4a23-ba97-79ac4162e6c0",
+    "kind": "web",
+    "provider": "exa_web",
+    "status": "ok",
+    "count": 2,
+    "cacheHit": false,
+    "durationMs": 3089,
+    "claimUsage": {
+      "queries": 3,
+      "rowsRead": 6,
+      "rowsWritten": 1,
+      "usageAvailable": true
+    },
+    "finishUsage": {
+      "queries": 2,
+      "rowsRead": 3,
+      "rowsWritten": 1,
+      "usageAvailable": true
+    }
+  },
+  {
+    "at": "2026-10-26T05:50:08.254Z",
+    "jobId": "12113fc1-eccb-435c-8a4b-d415ddcef4d9",
+    "kind": "xiaohongshu",
+    "provider": "xiaohongshu_mcp_local",
+    "status": "ok",
+    "count": 4,
+    "cacheHit": false,
+    "durationMs": 19867,
+    "claimUsage": {
+      "queries": 10,
+      "rowsRead": 13,
+      "rowsWritten": 1,
+      "usageAvailable": true
+    },
+    "finishUsage": {
+      "queries": 2,
+      "rowsRead": 3,
+      "rowsWritten": 1,
+      "usageAvailable": true
+    }
+  },
+  {
+    "at": "2026-10-26T05:50:24.839Z",
+    "jobId": "ea6a135c-e98f-4889-99bd-edef57976401",
+    "kind": "web",
+    "provider": "exa_web",
+    "status": "ok",
+    "count": 3,
+    "cacheHit": false,
+    "durationMs": 4638,
+    "claimUsage": {
+      "queries": 6,
+      "rowsRead": 9,
+      "rowsWritten": 1,
+      "usageAvailable": true
+    },
+    "finishUsage": {
+      "queries": 2,
+      "rowsRead": 3,
+      "rowsWritten": 1,
+      "usageAvailable": true
+    }
+  }
+]
