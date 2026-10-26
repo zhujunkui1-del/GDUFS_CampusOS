@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-26T19:55:40.739Z",
+  "runtime": "v22.23.4",
+  "os": "linux",
+  "sdk": "@lucasygu/redbook@0.8.2",
+  "platform": "xhs",
+  "query": "广外 南校 一饭",
+  "authenticated": false,
+  "searchVerified": false,
+  "bodyVerified": false,
+  "status": "login_required",
+  "items": [],
+  "trace": [
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v2/user/me",
+      "method": "GET",
+      "httpStatus": 200,
+      "code": -100,
+      "success": false,
+      "durationMs": 237
+    }
+  ],
+  "error": {
+    "type": "XhsApiError",
+    "code": -100
+  },
+  "httpRequests": 1,
+  "durationMs": 967
+}

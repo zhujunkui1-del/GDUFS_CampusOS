@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-26T19:55:42.515Z",
+  "runtime": "v24.19.0",
+  "os": "win32",
+  "sdk": "@lucasygu/redbook@0.8.2",
+  "platform": "rednote",
+  "query": "广外 南校 一饭",
+  "authenticated": false,
+  "searchVerified": false,
+  "bodyVerified": false,
+  "status": "login_required",
+  "items": [],
+  "trace": [
+    {
+      "host": "webapi.rednote.com",
+      "path": "/api/sns/web/v2/user/me",
+      "method": "GET",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "guest": true,
+      "durationMs": 1321
+    }
+  ],
+  "httpRequests": 1,
+  "durationMs": 1356
+}

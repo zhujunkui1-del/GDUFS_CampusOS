@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-26T19:38:32.713Z",
+  "runtime": "v24.19.0",
+  "provider": "redbook@0.8.2",
+  "session": "dedicated-local-profile",
+  "authenticated": false,
+  "searchVerified": false,
+  "items": [],
+  "trace": [
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v2/user/me",
+      "method": "GET",
+      "httpStatus": 200,
+      "ms": 232,
+      "code": -100,
+      "success": false
+    }
+  ],
+  "error": {
+    "type": "XhsApiError",
+    "code": -100
+  }
+}

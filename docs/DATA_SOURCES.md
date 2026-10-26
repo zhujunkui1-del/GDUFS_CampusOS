@@ -567,3 +567,6 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 几何取固定s1-2026-10-14.2当前/maps/campus-15060d099418.geojson的OpenStreetMap way1389756836（https://www.openstreetmap.org/way/1389756836）独立看台建筑轮廓，原地点真草场way1389756837与跑道relation19176025只作关联/方向依据并保持几何。看台位于场地西侧，模型座席朝向源场地一侧；GLB原点用原体育场地点坐标，映射/旋转记录manifest，不能重复平移或将看台轮廓写成球场足迹。
 
 本轮未提供层数/米制高，雨棚/桁架/双高杆、拉索锚点、排距/席位及后部楼梯为照片近似，约20/22/35.5米不是实测事实，合成席位数不作容量发布。当前八图支持本次看台杆索外观制作，不据此改动已有体育馆模型。自有零图片几何保留OSM署名，无新增导航入口或室内结构核验。
+## 2026-10-27｜redbook0.8.2 候选实现核验
+
+只读测试依赖 https://github.com/lucasygu/redbook 的已发布npm包@lucasygu/redbook@0.8.2（MIT），安装脚本禁用，未复制其算法进产品。仅通过本人专用来源会话验证固定的身份/搜索/笔记详情接口，未读取日常浏览器。全球访客实际搜索code=-104，0笔记、0正文；无新增校园文章或地图数据。真实输出与Fixture分开，见 verification/redbook-evaluation-2026-10-27/；不将软件兼容性或HTTP200标为内容获取成功。
