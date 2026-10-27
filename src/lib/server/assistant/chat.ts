@@ -149,6 +149,7 @@ export async function chatResponse(request: Request) {
       );
     const businessMessage = persona.business || input.message;
     const content = contentIntent(businessMessage, history.messages);
+    const personaMessage = content.active ? content.query : businessMessage;
     const directReply =
       persona.changed && !persona.business
         ? personaAcknowledgement(persona.preference)
@@ -164,7 +165,7 @@ export async function chatResponse(request: Request) {
       const daily =
         persona.preference.enabled &&
         !persona.preference.concise &&
-        personaContext(businessMessage, persona.preference, history.messages)
+        personaContext(personaMessage, persona.preference, history.messages)
           .tone === "daily";
       const text =
         directReply === "不客气。" && daily
@@ -178,7 +179,7 @@ export async function chatResponse(request: Request) {
         completionTokens: 0,
         chargedTokens: 0,
         persona: personaContext(
-          businessMessage,
+          personaMessage,
           persona.preference,
           history.messages,
         ),
@@ -393,8 +394,7 @@ export async function chatResponse(request: Request) {
           ? ["search_external_campus_info"]
           : undefined,
       ctx.modelRequestOutputLimit,
-      () =>
-        personaPrompt(businessMessage, persona.preference, history.messages),
+      () => personaPrompt(personaMessage, persona.preference, history.messages),
     );
     const preparationMs = Math.round(performance.now() - receivedAt);
     const stream = new ReadableStream<Uint8Array>({
@@ -553,7 +553,7 @@ export async function chatResponse(request: Request) {
         const runMetrics = () => ({
           evidenceGateUsed,
           persona: personaContext(
-            businessMessage,
+            personaMessage,
             persona.preference,
             history.messages,
           ),
@@ -799,6 +799,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                       createMapSkillRegistry(service),
                       ctx.db,
                       content.timeWindow,
+                      supplementPolicy.campus,
                     ),
                     supplementPolicy,
                     {
@@ -964,7 +965,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
             const conflicts = expressionConflicts(
               text,
               personaContext(
-                businessMessage,
+                personaMessage,
                 persona.preference,
                 history.messages,
               ).tone,

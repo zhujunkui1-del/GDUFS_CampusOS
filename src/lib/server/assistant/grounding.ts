@@ -1,6 +1,17 @@
 import type { ContentSearchResult } from "@/domain/retrieval/skills";
 import type { ExternalSearchResult } from "@/domain/retrieval/external";
 import type { ExternalPolicy } from "../external-search/policy";
+/** Affiliated-school posts are not automatically university-campus facts. */
+export function universityScope(hit: {
+  sourceName: string;
+  title: string;
+  contentSnippet: string;
+}) {
+  if (!/外校|附属|中学|小学|幼儿园/.test(hit.sourceName)) return true;
+  return /广东外语外贸大学(?!附属|实验中学|外校)/.test(
+    hit.title + " " + hit.contentSnippet,
+  );
+}
 /** Evidence readiness precedes prose style. A missing body cannot be rescued by a cute guess. */
 export function evidenceFallback(
   internal: ContentSearchResult[],

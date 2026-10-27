@@ -37,8 +37,11 @@ test("real Preview preserves persona controls and renders a grounded Agent answe
   });
   await page.goto("/map", { waitUntil: "domcontentloaded" });
   const input = page.getByLabel("向校园助理提问");
-  if (!(await input.isVisible()))
-    await page.getByRole("button", { name: "打开校园助理" }).click();
+  await expect(async () => {
+    if (!(await input.isVisible()))
+      await page.getByRole("button", { name: "打开校园助理" }).click();
+    await expect(input).toBeVisible({ timeout: 2000 });
+  }).toPass({ intervals: [1000, 2000], timeout: 20000 });
   async function ask(text: string) {
     const incoming = page.waitForResponse((r) =>
       r.url().endsWith("/api/agent/chat"),

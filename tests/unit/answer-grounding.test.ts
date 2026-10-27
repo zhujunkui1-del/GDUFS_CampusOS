@@ -2,6 +2,7 @@ import { expect, it, vi } from "vitest";
 import {
   evidenceFallback,
   expressionConflicts,
+  universityScope,
 } from "@/lib/server/assistant/grounding";
 import { externalPolicy } from "@/lib/server/external-search/policy";
 import { contentReadPlan, publicQuery } from "@/lib/server/assistant/read-plan";
@@ -12,6 +13,22 @@ import { sqliteD1 } from "../fixtures/sqlite-d1";
 import { MockModelProvider } from "../fixtures/mock-model";
 import type { ModelSnapshot } from "@/domain/models/contracts";
 import { ExternalSearchResultSchema } from "@/domain/retrieval/external";
+it("does not attribute an affiliated school's campus story to the university", () => {
+  expect(
+    universityScope({
+      sourceName: "广外外校",
+      title: "学校整改",
+      contentSnippet: "学生反映食堂问题",
+    }),
+  ).toBe(false);
+  expect(
+    universityScope({
+      sourceName: "广外学工",
+      title: "大学活动",
+      contentSnippet: "校园动态",
+    }),
+  ).toBe(true);
+});
 it("blocks invented factual recommendations before persona expression when there is no body", () => {
   expect(
     evidenceFallback(

@@ -19,6 +19,7 @@ import { D1KeywordRetriever } from "./retriever";
 import { SkillRegistry } from "../agent/skill-registry";
 import { ApiError } from "../errors";
 import type { TimeWindow } from "../assistant/time-window";
+import { universityScope } from "../assistant/grounding";
 
 const time = (t: ArticleTimePoint | null) =>
   t
@@ -276,6 +277,7 @@ export function registerContentSkills(
   registry: SkillRegistry,
   db: SqlDatabase,
   window?: TimeWindow,
+  universityOnly = false,
 ) {
   const define = <T extends z.ZodType>(
     name: string,
@@ -313,6 +315,17 @@ export function registerContentSkills(
         new Date().toISOString(),
         context.signal,
       );
+      if (universityOnly) {
+        const before = data.hits.length;
+        data.hits = data.hits.filter(universityScope);
+        const ids = new Set(data.hits.map((h) => h.documentId));
+        data.activities = data.activities.filter((a) => ids.has(a.documentId));
+        data.knowledge = data.knowledge.filter((a) => ids.has(a.documentId));
+        if (data.hits.length < before)
+          data.warnings.push(
+            "附属学校来源未明确涉及大学本部的结果不作为本次校园事实证据。",
+          );
+      }
       return {
         ok: true as const,
         data,
