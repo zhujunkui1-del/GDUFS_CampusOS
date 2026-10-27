@@ -1,0 +1,22 @@
+import fs from "node:fs/promises";
+import { build } from "esbuild";
+import { pathToFileURL } from "node:url";
+await fs.mkdir(".map-tools/agent-engineering", { recursive: true });
+await build({ stdin: { contents: "export {contentIntent} from './src/lib/server/assistant/content-intent';export {externalPolicy} from './src/lib/server/external-search/policy';export {shouldClarifyBareTopic} from './src/lib/server/assistant/intent';", resolveDir: process.cwd(), loader: "ts" }, outfile: ".map-tools/agent-engineering/baseline.mjs", bundle: true, platform: "node", format: "esm", logLevel: "silent" });
+const lib = await import(pathToFileURL(process.cwd() + "/.map-tools/agent-engineering/baseline.mjs").href);
+const cases = JSON.parse(await fs.readFile("tests/fixtures/agent-reliability-cases.json", "utf8"));
+const rows = cases.map(c => {
+  const content = lib.contentIntent(c.message), policy = lib.externalPolicy(content.query);
+  const checks = [];
+  if (c.tool) checks.push({ rule: "content_tool", pass: content.tools.includes(c.tool) });
+  if (c.intent) checks.push({ rule: "source_intent", pass: policy.intent === c.intent });
+  if (c.native !== undefined) checks.push({ rule: "native_eligible", pass: policy.active && policy.useXiaohongshu === c.native || !policy.active && !c.native });
+  if (c.time) checks.push({ rule: "server_time_constraint", pass: !!content.timeWindow });
+  if (c.social) checks.push({ rule: "social_without_topic_or_lookup", pass: !content.active && !lib.shouldClarifyBareTopic(c.message, false, false, false) && !!content.dialogueReply });
+  if (c.map) checks.push({ rule: "preserve_map", pass: !content.active });
+  return { id: c.id, message: c.message, checks, pass: checks.every(x => x.pass), observed: { tools: content.tools, intent: policy.intent, nativeEligible: policy.useXiaohongshu } };
+});
+const out = { at: new Date().toISOString(), kind: "offline routing contract only; not model or provider acceptance", total: rows.length, passed: rows.filter(x => x.pass).length, failed: rows.filter(x => !x.pass).length, rows };
+await fs.mkdir("docs/verification/agent-persona-2026-10-27", { recursive: true });
+await fs.writeFile("docs/verification/agent-persona-2026-10-27/baseline-routing.json", JSON.stringify(out, null, 2));
+console.log({ total: out.total, passed: out.passed, failed: out.failed });
