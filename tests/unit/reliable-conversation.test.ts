@@ -12,6 +12,16 @@ it("routes the reported weekly campus story request as time-bounded content", ()
 it("does not interpret pure frustrated feedback as an unknown named topic", () => {
   expect(shouldClarifyBareTopic("操你妈", false, false, false)).toBe(false);
 });
+it("keeps verified building detail requests in the existing map skills", () => {
+  expect(
+    contentIntent(
+      "查询南苑7栋的详细资料：它属于哪个区域、有多少层、高约多少米？请先查询地点详情，再按已核实资料回答。",
+    ).active,
+  ).toBe(false);
+  expect(contentIntent("图书馆借阅规则是什么").tools).toContain(
+    "search_campus_knowledge",
+  );
+});
 it("actually invokes native XHS for an explicit request even in events mode", async () => {
   const relay = vi.fn(
     async (input: import("@/domain/retrieval/relay").RelayInput) => {
