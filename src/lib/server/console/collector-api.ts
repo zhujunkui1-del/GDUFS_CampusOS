@@ -463,6 +463,7 @@ export const collectorApi = withApi(async (request) => {
       })),
       format: "reading_html",
       accountDiscoveryEnabled: !!c.auto_discover_sources,
+      connectionId: c.id,
       serverTime: now(),
     };
   }

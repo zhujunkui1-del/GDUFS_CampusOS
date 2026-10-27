@@ -41,9 +41,14 @@ if (existsSync(configPath)) {
       process.argv.includes("--make-permanent") ||
       !registry.accountDiscoveryEnabled
     ) {
-      existingTokenId = JSON.parse(
-        readFileSync(directory + "/credential-receipt.json", "utf8"),
-      ).id;
+      existingTokenId =
+        registry.connectionId ||
+        (existsSync(directory + "/credential-receipt.json")
+          ? JSON.parse(
+              readFileSync(directory + "/credential-receipt.json", "utf8"),
+            ).id
+          : null);
+      if (!existingTokenId) throw Error("EXISTING_CONNECTION_ID_UNAVAILABLE");
     } else {
       console.log(
         JSON.stringify({
