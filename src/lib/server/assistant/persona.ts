@@ -50,7 +50,7 @@ export function personaTone(
     return "serious";
   if (!preference.enabled) return "off";
   if (
-    /政策|规则|规定|制度|借阅|选课|考试|奖学金|奖助|学籍|报名|办理|办事|流程|路线|导航|首席专家|任职|院长|校长|申请|材料|条件/.test(
+    /政策|规则|规定|制度|借阅|借书|选课|考试|奖学金|奖助|学籍|报名|办理|办事|流程|路线|导航|首席专家|任职|院长|校长|申请|材料|条件/.test(
       message,
     )
   )

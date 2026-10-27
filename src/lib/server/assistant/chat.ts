@@ -189,6 +189,10 @@ export async function chatResponse(request: Request) {
       await ctx.store.append(conversation, "assistant", text);
       await ctx.store.finish(ctx.identity, runId, "completed", metrics, 0);
       const types = [
+        [
+          "artifact.ready",
+          { conversationId: conversation.id, requestId, started: true },
+        ],
         ["message.delta", { text }],
         [
           "artifact.ready",
@@ -775,7 +779,7 @@ ${content.timeWindow ? `服务端已绑定时间范围${content.timeWindow.after
 活动时间与报名时间分开；报名状态只有open可说明确开放，未给开始日期且截止尚未来也不能说已经开放；capacity_unknown必须说明名额未知；不把“报”标记当现在可报名，不把文章发布日期当活动日。历史活动注明历史，不推荐为当前可参加活动。
 ${content.map ? "只有工具活动mapPlace非空且唯一时，才调用search_places按该建筑名称查询，并使用返回的真实placeId定位。规划路线后调用control_map只生成SHOW_ROUTE，不再追加FOCUS_PLACE覆盖完整路线视野；以浏览器回执为成功依据。缺起点时先显示已核验活动地点，再询问起点，不能编造路线。白云山/校外/地点不明时只显示原文地点，不生成地图动作。" : "本轮只查询内容，不调用地图工具。"}
 已核验路线起点ID：${JSON.stringify(originIds)}，设备定位授权：${!!location}。文章没有真实地点时不得猜坐标。`
-              : `只用简体中文，简洁回答。当前问题若只有人名或其他简短主题，先简短询问想了解哪方面；不要把所有问题都当作地图地点，不要求人物问题提供教学楼或办公室，也不要只答“已完成查询”。调用工具时不输出执行叙述或推理，最终只讲用户需要的信息；不讲工具名、版本、Schema、来源审核或意图状态。
+              : `只用简体中文，简洁回答。人身危险、急救等紧急情况先给直接的安全帮助，不等待校园检索，不编造校内电话、流程或设施；不要卖萌。当前问题若只有人名或其他简短主题，先简短询问想了解哪方面；不要把所有问题都当作地图地点，不要求人物问题提供教学楼或办公室，也不要只答“已完成查询”。调用工具时不输出执行叙述或推理，最终只讲用户需要的信息；不讲工具名、版本、Schema、来源审核或意图状态。
 查找唯一地点后必须调用control_map，生成FOCUS_PLACE及SHOW_PLACE_DETAILS。规划路线后必须调用control_map生成SHOW_ROUTE。切换模式/清路线必须调用control_map。动作是否成功以浏览器回执为准，不提前声称已切换或显示。不追加无必要的追问，只有缺起点或歧义时询问。
 已验证当前地点：${selectedPlace ? selectedPlace.name + " (" + selectedPlace.id + ")" : "无"}。最近规划路线：${(!needsOriginQuestion && activeRoute) || "无"}。当前模式：${input.mapContext?.mode || "2d"}。
 已验证实体数据：${JSON.stringify(needsOriginQuestion ? [] : verifiedEntities)}。这些ID来自当前固定校园资料及本会话已核对实体，可直接用于路线输入。不要凭空编写ID。${needsOriginQuestion ? "本轮没有有效起点，必须只用一句话询问用户从哪里出发。不复述旧路线，不生成距离或时间，不声称已经显示路线或完成操作。" : ""}

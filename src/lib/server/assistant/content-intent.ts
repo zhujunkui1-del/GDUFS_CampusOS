@@ -10,6 +10,10 @@ export function contentIntent(
   now = Date.now(),
 ) {
   const reply = dialogueReply(message);
+  const urgent =
+    /晕倒|昏迷|急救|火灾|人身(?:危险|威胁)|受到.{0,6}威胁|自伤|轻生|自杀/.test(
+      message,
+    );
   const isSearchFollowup = (text: string) =>
     /^(?:请|再|帮我)?\s*(?:调用|用|去|通过|到)?\s*(?:小红书|外部搜索|互联网|网上)(?:来|帮我)?(?:搜|搜索|查|查找|找)(?:一下|一遍|看看)?[。！？!？\s]*$/.test(
       text.trim(),
@@ -56,8 +60,8 @@ export function contentIntent(
   )
     tools.push("search_campus_knowledge");
   return {
-    active: !reply && tools.length > 0,
-    tools: reply ? [] : tools,
+    active: !reply && !urgent && tools.length > 0,
+    tools: reply || urgent ? [] : tools,
     query: query.slice(-300),
     map,
     timeWindow: requestTimeWindow(query, now),
