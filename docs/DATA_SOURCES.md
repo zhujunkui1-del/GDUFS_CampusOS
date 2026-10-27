@@ -581,3 +581,9 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 负责人本人在全新Edge资料目录完成新账号授权，源站非游客确认后仅导出必要会话，私有API再次复核后AES-GCM存私有R2；不记录身份或Cookie到本文件。主账号停用，旧Browser Run自动恢复路径已关闭。真实Preview使用redbook0.8.2只读搜索及最多2篇正文片段；最终样本引用真实笔记6aae9346000000002a02e1f5，原文链接保留在verification/redbook-switch-2026-10-27/next-account/rendered-citations.json。
 
 学生口味只属作者体验，不确认官方规定、现行营业或地理坐标，不入公共文章库。源码依据https://github.com/lucasygu/redbook；账号授权不等于平台提供官方通用API或永久稳定许可。原文长片段及完整模型输出只留本机忽略目录，公开验收保留哈希/长度；运行时不使用这些回执生成搜索结果。
+
+## 2026-10-27｜官方任职依据与公开站内检索
+
+实际依据包括学校网上校史馆https://history.gdufs.edu.cn/dsb1/dxyr.htm、聘任报道https://www.gdufs.edu.cn/info/1106/59757.htm、学院介绍https://zwxy.gdufs.edu.cn/info/1333/9068.htm及教师目录https://bcdlab.gdufs.edu.cn/ry/js.htm。任职头衔与科研项目负责人不是同一类别；举办讲座的校区不证明任职校区，未建立按校区的权威人员名册。
+
+公开站内搜索协议取自官网首页及/aop_views/search/modules/resultpc/js/soso.js，调用公开tourist模式、全文范围3，保留原公开过滤，最多首页10条/4结果/2正文，不使用学校账号、Cookie或私有接口、不执行脚本或处理验证码。只有HTTPS官方域静态HTML可作直接正文，访问失败/只有摘要如实标示。原文链接及证据保留，临时读取不自动入公开知识库；没有据公开访问宣称获得通用商业API许可。失败和最终真实验收见verification/agent-official-facts-2026-10-27/。

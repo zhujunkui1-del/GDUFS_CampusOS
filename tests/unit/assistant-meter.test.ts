@@ -17,6 +17,104 @@ const snapshot = {
   },
 };
 describe("metered orchestration policy and truthful browser receipts", () => {
+  it("allocates the trusted 2048 request limit within the unchanged 4096 run budget", async () => {
+    const fixture = sqliteD1();
+    try {
+      const store = new AssistantStore(fixture.db),
+        identity = await store.identity(new Request("https://test.invalid"));
+      const conversation = await store.conversation(identity),
+        id = await store.reserve(
+          identity,
+          conversation,
+          crypto.randomUUID(),
+          "isolated",
+        );
+      const provider = new MockModelProvider(
+        [1900, 1900, 100].map((n) => ({
+          content: "fixture",
+          toolCalls: [],
+          finishReason: "stop" as const,
+          usage: { promptTokens: 1, completionTokens: n, totalTokens: n + 1 },
+        })),
+      );
+      const meter = meteredClient(
+        provider,
+        snapshot,
+        store,
+        identity.owner,
+        id,
+        () => true,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        2048,
+      );
+      for (let i = 0; i < 3; i++)
+        await meter.client.generateWithTools({
+          messages: [],
+          tools: [],
+          maxTokens: 1024,
+          signal: new AbortController().signal,
+        });
+      expect(provider.requests.map((r) => r.maxTokens)).toEqual([
+        2048, 2048, 296,
+      ]);
+      expect(meter.metrics().completionTokens).toBe(3900);
+    } finally {
+      fixture.close();
+    }
+  });
+  it("retries one empty final answer against the same evidence without repeating tools", async () => {
+    const fixture = sqliteD1();
+    try {
+      const store = new AssistantStore(fixture.db);
+      const identity = await store.identity(
+        new Request("https://test.invalid"),
+      );
+      const conversation = await store.conversation(identity);
+      const id = await store.reserve(
+        identity,
+        conversation,
+        crypto.randomUUID(),
+        "isolated",
+      );
+      const provider = new MockModelProvider([
+        {
+          content: "",
+          toolCalls: [],
+          finishReason: "stop",
+          usage: { promptTokens: 20, completionTokens: 10, totalTokens: 30 },
+        },
+        {
+          content: "依据已有证据给出回答",
+          toolCalls: [],
+          finishReason: "stop",
+          usage: { promptTokens: 20, completionTokens: 10, totalTokens: 30 },
+        },
+      ]);
+      const meter = meteredClient(
+        provider,
+        snapshot,
+        store,
+        identity.owner,
+        id,
+        () => true,
+      );
+      const reply = await meter.client.generateWithTools({
+        messages: [{ role: "user", content: "fixture" }],
+        tools: [],
+        maxTokens: 1024,
+        signal: new AbortController().signal,
+      });
+      expect(reply.content).toBe("依据已有证据给出回答");
+      expect(provider.requests).toHaveLength(2);
+      expect(provider.requests.every((r) => r.tools.length === 0)).toBe(true);
+    } finally {
+      fixture.close();
+    }
+  });
   it("never assigns DeepSeek pricing to Step Plan or mixed-provider runs", () => {
     const fixture = sqliteD1();
     try {

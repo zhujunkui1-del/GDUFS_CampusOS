@@ -1,0 +1,349 @@
+[
+  {
+    "message": "戴建业",
+    "http": 200,
+    "answerChars": 53,
+    "answerSha256": "5bc9c2511e3dd73370f8c8f664a8ff23a095f06df59be836969d6c9b40026dbc",
+    "tools": [
+      "search_campus_knowledge"
+    ],
+    "result": {
+      "conversationId": "f033b4aa-f257-4a06-8b95-4fa50676c128",
+      "requestId": "9d422b17-dafb-4774-8d1c-7c9201a796a6",
+      "metrics": {
+        "requests": 2,
+        "correctionRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 1615,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 1101,
+            "firstTextMs": 919
+          }
+        ],
+        "promptTokens": 4857,
+        "completionTokens": 107,
+        "cachedPromptTokens": 0,
+        "totalTokens": 4964,
+        "usageComplete": true,
+        "chargedTokens": 4964,
+        "durationMs": 2777,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 162,
+          "serverElapsedMs": 2939,
+          "firstTextMs": 2747,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 16,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 10,
+            "writeQueries": 20,
+            "calls": 16,
+            "failures": 0,
+            "durationMs": 223,
+            "maxCallMs": 21,
+            "rowsRead": 485,
+            "rowsWritten": 18,
+            "rowUsageStatements": 22,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 0,
+              "rowsWritten": 0,
+              "queries": 1,
+              "durationMs": 16,
+              "candidateChunks": 0,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": []
+        }
+      }
+    },
+    "cards": [],
+    "elapsedMs": 3469
+  },
+  {
+    "message": "广外南校的首席专家有哪些人",
+    "http": 200,
+    "answerChars": 389,
+    "answerSha256": "369ca1205b5465447b47dbfd5eb77265af20e57ad25a055177aa4ace3d8db42f",
+    "tools": [
+      "search_campus_knowledge",
+      "search_external_campus_info"
+    ],
+    "result": {
+      "conversationId": "f033b4aa-f257-4a06-8b95-4fa50676c128",
+      "requestId": "9df5bf6c-510b-4bc1-ac9e-547523d0fcc2",
+      "metrics": {
+        "requests": 4,
+        "correctionRetries": 1,
+        "upstreamTimings": [
+          {
+            "durationMs": 1308,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 1496,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 1162,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 4187,
+            "firstTextMs": 2939
+          }
+        ],
+        "promptTokens": 7357,
+        "completionTokens": 905,
+        "cachedPromptTokens": 0,
+        "totalTokens": 8262,
+        "usageComplete": true,
+        "chargedTokens": 8262,
+        "durationMs": 10503,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 119,
+          "serverElapsedMs": 10622,
+          "firstTextMs": 9361,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 16,
+              "ok": true
+            },
+            {
+              "name": "search_external_campus_info",
+              "durationMs": 2243,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 13,
+            "writeQueries": 11,
+            "calls": 16,
+            "failures": 0,
+            "durationMs": 226,
+            "maxCallMs": 29,
+            "rowsRead": 244,
+            "rowsWritten": 11,
+            "rowUsageStatements": 13,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 0,
+              "rowsWritten": 0,
+              "queries": 1,
+              "durationMs": 16,
+              "candidateChunks": 0,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": [
+            {
+              "status": "ok",
+              "durationMs": 2243,
+              "providers": [
+                {
+                  "provider": "exa_web_cloud",
+                  "status": "ok",
+                  "durationMs": 1469,
+                  "count": 3
+                }
+              ],
+              "rowsRead": 0,
+              "rowsWritten": 0
+            }
+          ]
+        }
+      }
+    },
+    "cards": [
+      {
+        "kind": "external_source",
+        "title": "教师-广外双语认知与发展实验室",
+        "sourceName": "广外官方网页",
+        "originalUrl": "https://bcdlab.gdufs.edu.cn/ry/js.htm",
+        "publishedAt": null,
+        "snippetChars": 700,
+        "snippetSha256": "42ee9c1914423aaeccc3510aa4c992b0b97925afc410c9e063ad30d7ddc8c8a8",
+        "authority": "official",
+        "evidenceKind": "search_excerpt",
+        "searchMode": "web"
+      },
+      {
+        "kind": "external_source",
+        "title": "2023年大事记-广东外语外贸大学新闻中心",
+        "sourceName": "广外官方网页",
+        "originalUrl": "https://news.gdufs.edu.cn/info/1002/96512.htm",
+        "publishedAt": null,
+        "snippetChars": 312,
+        "snippetSha256": "abb4861b662e0890bcc3ab15fce8c3b1ab490e32caf3e5222d20379c96f996b6",
+        "authority": "official",
+        "evidenceKind": "search_excerpt",
+        "searchMode": "web"
+      },
+      {
+        "kind": "external_source",
+        "title": "我校新聘一批外语学科云山工作室首席专家和云山学者-广东外语外贸大学",
+        "sourceName": "广外官方网页",
+        "originalUrl": "https://www.gdufs.edu.cn/info/1106/58224.htm",
+        "publishedAt": "2022-05-31T00:00:00.000Z",
+        "snippetChars": 700,
+        "snippetSha256": "ef7f3339d1167fb3407545b6a311ce3267697c8b5a1824f1f009217b92810a6f",
+        "authority": "official",
+        "evidenceKind": "search_excerpt",
+        "searchMode": "web"
+      }
+    ],
+    "elapsedMs": 11033
+  },
+  {
+    "message": "戴建业是广外的首席专家吗",
+    "http": 200,
+    "answerChars": 101,
+    "answerSha256": "b396ce9433b58a6a27aadbae541620b3b820c7adf96b40d5d27903b558e45569",
+    "tools": [
+      "search_campus_knowledge"
+    ],
+    "result": {
+      "conversationId": "f033b4aa-f257-4a06-8b95-4fa50676c128",
+      "requestId": "1ec0a37d-8794-4274-a2f9-e3354ef55664",
+      "metrics": {
+        "requests": 3,
+        "correctionRetries": 1,
+        "upstreamTimings": [
+          {
+            "durationMs": 2376,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 1254,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 2447,
+            "firstTextMs": null
+          }
+        ],
+        "promptTokens": 6889,
+        "completionTokens": 602,
+        "cachedPromptTokens": 0,
+        "totalTokens": 7491,
+        "usageComplete": true,
+        "chargedTokens": 7491,
+        "durationMs": 6198,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 125,
+          "serverElapsedMs": 6323,
+          "firstTextMs": 6307,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 48,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 12,
+            "writeQueries": 11,
+            "calls": 15,
+            "failures": 0,
+            "durationMs": 246,
+            "maxCallMs": 26,
+            "rowsRead": 741,
+            "rowsWritten": 11,
+            "rowUsageStatements": 14,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 482,
+              "rowsWritten": 0,
+              "queries": 2,
+              "durationMs": 48,
+              "candidateChunks": 23,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": []
+        }
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-d3965999-b2ec-461f-8c98-66b1115db3ee",
+        "title": "战略研究院等你来 | GIIS Admission Guide (For International Students)-广东国际战略研究院",
+        "sourceName": "广东国际战略研究院（海上丝绸之路研究院）",
+        "originalUrl": "https://giis.gdufs.edu.cn/info/1643/16885.htm",
+        "publishedAt": "2026-02-09",
+        "snippetChars": 780,
+        "snippetSha256": "968da5af140bf37adc73d58f2b289ff9d323baa4597b46104b862b3c9835d036",
+        "evidenceType": "full_text",
+        "classificationState": "unknown",
+        "validity": "unknown",
+        "readable": true
+      },
+      {
+        "kind": "source",
+        "documentId": "content-b9c24719-1cb9-4abe-ae89-f82ac85db4ec",
+        "title": "讲座预告：国际经济视野看国际问题-广东外语外贸大学密茨凯维奇创新学院",
+        "sourceName": "密茨凯维奇创新学院",
+        "originalUrl": "https://mii.gdufs.edu.cn/info/1087/2706.htm",
+        "publishedAt": "2026-10-17",
+        "snippetChars": 260,
+        "snippetSha256": "334c8630a2cfa971319131310cd60617560f1af3b78d5b14b40de9f050c26e50",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true
+      },
+      {
+        "kind": "source",
+        "documentId": "content-eec8cc5c-2822-4a31-a090-4b9af8a25d36",
+        "title": "讲座预告：“十五五”规划与中国企业出海面临机遇和挑战-广东外语外贸大学密茨凯维奇创新学院",
+        "sourceName": "密茨凯维奇创新学院",
+        "originalUrl": "https://mii.gdufs.edu.cn/info/1087/2716.htm",
+        "publishedAt": "2026-10-17",
+        "snippetChars": 269,
+        "snippetSha256": "d16c66b6e3a584eaaa942e976af7580682cf8fc168a13445d361f59a06223cfb",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true
+      }
+    ],
+    "elapsedMs": 7821
+  }
+]

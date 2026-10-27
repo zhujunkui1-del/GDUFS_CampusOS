@@ -5,6 +5,10 @@ import {
 } from "@/domain/retrieval/external";
 import { isOfficialCampusUrl, type ExternalPolicy } from "./policy";
 import type { RelayInput, RelayUsage } from "@/domain/retrieval/relay";
+import {
+  searchOfficialUniversity,
+  readOfficialArticle,
+} from "./official-search";
 type ProviderStatus =
   | "ok"
   | "empty"
@@ -222,6 +226,24 @@ export async function searchWeb(
         }
       })
       .slice(0, limit);
+    if (!rows.length && policy.officialOnly && !onlyXhs) {
+      try {
+        const items = await searchOfficialUniversity(
+          query,
+          limit,
+          timeout,
+          transport,
+        );
+        return {
+          provider: "gdufs_official_site",
+          status: items.length ? "ok" : "empty",
+          items,
+          durationMs: Math.round(performance.now() - started),
+        };
+      } catch {
+        /* Keep a genuine empty primary result distinct from transport failures. */
+      }
+    }
     const pages = new Map<string, string>();
     if (
       rows.some((r) => isOfficialCampusUrl(r.url)) &&
@@ -245,6 +267,20 @@ export async function searchWeb(
       } catch {
         /* Search excerpts remain explicitly labelled; no invented page proof. */
       }
+      await Promise.all(
+        rows
+          .filter((r) => isOfficialCampusUrl(r.url) && !pages.has(r.url))
+          .slice(0, 2)
+          .map(async (r) => {
+            try {
+              const read = await readOfficialArticle(r.url, timeout, transport);
+              if (read.body) pages.set(r.url, read.body);
+              if (read.publishedAt) r.published = read.publishedAt;
+            } catch {
+              /* Do not promote a search excerpt when the original page is unavailable. */
+            }
+          }),
+      );
     }
     rows = rows.filter((r) => r.text || r.title);
     const items = rows.map((r) => {
@@ -288,6 +324,29 @@ export async function searchWeb(
       durationMs: Math.round(performance.now() - started),
     };
   } catch (error) {
+    if (
+      policy.officialOnly &&
+      !onlyXhs &&
+      !signal?.aborted &&
+      !(error instanceof Error && error.message === "RATE_LIMITED")
+    ) {
+      try {
+        const items = await searchOfficialUniversity(
+          query,
+          limit,
+          signal || AbortSignal.timeout(11000),
+          transport,
+        );
+        return {
+          provider: "gdufs_official_site",
+          status: items.length ? "ok" : "empty",
+          items,
+          durationMs: Math.round(performance.now() - started),
+        };
+      } catch {
+        /* Report the original failure; never invent evidence or bypass access checks. */
+      }
+    }
     const message = error instanceof Error ? error.message : "";
     return {
       items: [],

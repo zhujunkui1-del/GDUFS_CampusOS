@@ -49,6 +49,8 @@ export function assistantBindings() {
     db: primaryDatabase(env.DB as SqlDatabase),
     signingSecret,
     environment: String(env.APP_ENV || "local"),
+    modelRequestOutputLimit:
+      env.MODEL_MAX_OUTPUT_TOKENS === "2048" ? 2048 : 1024,
     openValidation:
       env.APP_ENV === "preview" && env.AGENT_VALIDATION_UNLIMITED === "true",
     externalSearch: {

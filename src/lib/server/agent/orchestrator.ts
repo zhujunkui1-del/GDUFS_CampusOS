@@ -322,9 +322,16 @@ export class AgentOrchestrator {
             ) {
               inputCorrections++;
               correctInputsThisRound = true;
+              let invalidInput: unknown;
+              try {
+                invalidInput = JSON.parse(call.function.arguments);
+              } catch {
+                /* JSON errors receive the object schema. */
+              }
               correctionSchema = JSON.stringify({
                 tool: skill.name,
                 parameters: skill.tool.function.parameters,
+                inputIssues: skill.inputIssues(invalidInput),
               });
             } else
               throw new ApiError(

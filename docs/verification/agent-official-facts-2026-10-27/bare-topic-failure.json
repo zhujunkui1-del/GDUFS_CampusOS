@@ -1,0 +1,81 @@
+{
+  "at": "2026-10-27T11:21:57.498Z",
+  "verdict": {
+    "allCompleted": false,
+    "personIdentityConfirmed": false,
+    "rosterQualified": false,
+    "noWrongCampus": true,
+    "noMapRedirectForName": true,
+    "noXhsRequests": true
+  },
+  "records": [
+    {
+      "question": "戴建业",
+      "answerChars": 0,
+      "answerSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tools": [
+        "search_places"
+      ],
+      "result": {
+        "error": {
+          "code": "NOT_FOUND",
+          "message": "未找到该地点或路线，请换个名称。"
+        },
+        "conversationId": "16bb3dd0-ad9e-46ed-a2bf-903d3e052ee9",
+        "metrics": {
+          "requests": 1,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 2177,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            }
+          ],
+          "promptTokens": 4345,
+          "completionTokens": 189,
+          "cachedPromptTokens": 0,
+          "totalTokens": 4534,
+          "usageComplete": true,
+          "chargedTokens": 4534,
+          "durationMs": 2220,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1857,
+            "serverElapsedMs": 4077,
+            "firstTextMs": null,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_places",
+                "durationMs": 0,
+                "ok": false
+              }
+            ],
+            "database": {
+              "readQueries": 7,
+              "writeQueries": 20,
+              "calls": 13,
+              "failures": 0,
+              "durationMs": 1894,
+              "maxCallMs": 603,
+              "rowsRead": 569,
+              "rowsWritten": 18,
+              "rowUsageStatements": 21,
+              "rowUsageComplete": false
+            },
+            "retrieval": [],
+            "externalSearch": []
+          }
+        }
+      },
+      "cards": []
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "at": "2026-10-27T10:52:08.422Z",
+  "windowSeconds": 90,
+  "worker": "campusos-preview",
+  "connected": true,
+  "tailRemoved": true,
+  "rawLogsStored": false,
+  "frameShapes": [
+    "cpuTime,diagnosticsChannelEvents,event,eventTimestamp,exceptions,executionModel,logs,outcome,scriptName,scriptTags,scriptVersion,truncated,wallTime",
+    "cpuTime,diagnosticsChannelEvents,event,eventTimestamp,exceptions,executionModel,logs,outcome,scriptName,scriptTags,scriptVersion,tailAttributes,truncated,wallTime"
+  ],
+  "records": [
+    {
+      "at": 1793098244391,
+      "path": "/api/agent/chat",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 90,
+      "wallTimeMs": 2522,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793098247526,
+      "path": "/api/agent/chat",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 159,
+      "wallTimeMs": 16539,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793098264628,
+      "path": "/api/agent/chat",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 180,
+      "wallTimeMs": 13192,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793098289318,
+      "path": "/api/collector/sources",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 12,
+      "wallTimeMs": 55,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793098297232,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 1915,
+      "wallTimeMs": 2301,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793098301999,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 224,
+      "wallTimeMs": 344,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793098302996,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 189,
+      "wallTimeMs": 285,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793098303928,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 154,
+      "wallTimeMs": 234,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793098304733,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 111,
+      "wallTimeMs": 198,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793098305651,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 73,
+      "wallTimeMs": 138,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793098306660,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 507,
+      "wallTimeMs": 669,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793098312493,
+      "path": "/api/collector/heartbeat",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 7,
+      "wallTimeMs": 203,
+      "exceptionCount": 0
+    }
+  ]
+}

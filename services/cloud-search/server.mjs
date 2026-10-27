@@ -53,6 +53,7 @@ http
           useXiaohongshu: false,
           needsDeadline: false,
           explicit: false,
+          needsOfficialVerification: false,
         },
         input.limit,
         AbortSignal.timeout(27000),
@@ -61,7 +62,13 @@ http
       );
       return json(
         200,
-        RelayResultSchema.parse({ ...data, provider: "exa_web_cloud" }),
+        RelayResultSchema.parse({
+          ...data,
+          provider:
+            data.provider === "gdufs_official_site"
+              ? "gdufs_official_site_cloud"
+              : "exa_web_cloud",
+        }),
       );
     } catch {
       return json(200, {

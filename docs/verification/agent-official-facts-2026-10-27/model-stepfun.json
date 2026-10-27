@@ -1,0 +1,52 @@
+{
+  "provider": "stepfun",
+  "model": "step-3.5-flash-2603",
+  "realApi": true,
+  "generation": "passed",
+  "toolCalling": "passed",
+  "toolResultFollowup": "passed",
+  "streaming": "passed",
+  "jsonObjectWithServerSchema": "passed",
+  "strictJsonSchema": "not_tested",
+  "requests": 3,
+  "maxOutputTokensPerRequest": 256,
+  "durationMs": 9850,
+  "testedAt": "2026-10-27T12:34:26.813Z",
+  "events": [
+    {
+      "type": "tool.started",
+      "name": "campusos_diagnostic"
+    },
+    {
+      "type": "tool.finished",
+      "name": "campusos_diagnostic",
+      "ok": true
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "run.completed"
+    }
+  ],
+  "diagnosticToolOnly": true,
+  "businessSkillsTested": false
+}

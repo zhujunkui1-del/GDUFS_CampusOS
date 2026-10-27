@@ -1,0 +1,112 @@
+{
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "realApi": true,
+  "generation": "passed",
+  "toolCalling": "passed",
+  "toolResultFollowup": "passed",
+  "streaming": "passed",
+  "jsonObjectWithServerSchema": "passed",
+  "strictJsonSchema": "not_tested",
+  "requests": 3,
+  "maxOutputTokensPerRequest": 256,
+  "durationMs": 2358,
+  "testedAt": "2026-10-27T12:39:30.137Z",
+  "events": [
+    {
+      "type": "tool.started",
+      "name": "campusos_diagnostic"
+    },
+    {
+      "type": "tool.finished",
+      "name": "campusos_diagnostic",
+      "ok": true
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "run.completed"
+    }
+  ],
+  "diagnosticToolOnly": true,
+  "businessSkillsTested": false
+}

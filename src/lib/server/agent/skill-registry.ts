@@ -53,6 +53,9 @@ type RegisteredSkill = {
   timeoutMs: number;
   permissions: readonly string[];
   reuseResultMs: number;
+  inputIssues(
+    input: unknown,
+  ): { path: string; code: string; message: string }[];
   run(input: unknown, context: SkillContext): Promise<SkillResult<unknown>>;
 };
 export function canCall(
@@ -133,6 +136,16 @@ export class SkillRegistry {
       timeoutMs: definition.timeoutMs,
       permissions: definition.permissions || [],
       reuseResultMs: definition.reuseResultMs || 0,
+      inputIssues(input) {
+        const parsed = definition.inputSchema.safeParse(input);
+        return parsed.success
+          ? []
+          : parsed.error.issues.slice(0, 6).map((issue) => ({
+              path: issue.path.map(String).join(".").slice(0, 120),
+              code: issue.code,
+              message: issue.message.slice(0, 180),
+            }));
+      },
       async run(input, context) {
         const parsed = definition.inputSchema.safeParse(input);
         if (!parsed.success)

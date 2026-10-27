@@ -27,6 +27,7 @@ export function meteredClient(
   nextRequiredTool?: () => RequiredTool | undefined,
   requiredAction?: MapAction | null,
   optionalTools?: () => string[] | undefined,
+  requestOutputLimit = 1024,
 ) {
   let requests = 0,
     promptTokens = 0,
@@ -34,11 +35,16 @@ export function meteredClient(
     cachedPromptTokens = 0,
     budgetUsed = 0,
     outputBudgetUsed = 0,
-    correctionRetries = 0;
+    correctionRetries = 0,
+    emptyAnswerRetries = 0;
   let reliable = true;
   const pricingModel = snapshot.provider === "deepseek" ? snapshot.model : null;
-  const upstreamTimings: { durationMs: number; firstTextMs: number | null }[] =
-    [];
+  const upstreamTimings: {
+    durationMs: number;
+    firstTextMs: number | null;
+    finishReason?: string;
+    contentChars?: number;
+  }[] = [];
   const started = performance.now();
   const bounded: ModelClient = {
     generateWithTools: async (request) => {
@@ -53,28 +59,36 @@ export function meteredClient(
           : nextRequiredTool?.();
       for (;;) {
         await store.running(owner, runId);
+        const maxTokens = Math.min(
+          requestOutputLimit === 2048 && request.maxTokens === 1024
+            ? 2048
+            : request.maxTokens,
+          4096 - outputBudgetUsed,
+        );
         const upper =
           new TextEncoder().encode(
             JSON.stringify([request.messages, request.tools]),
           ).byteLength + 4096;
         if (
           requests >= 6 ||
-          outputBudgetUsed + request.maxTokens > 4096 ||
-          budgetUsed + upper + request.maxTokens > 250000
+          maxTokens < 1 ||
+          budgetUsed + upper + maxTokens > 250000
         )
           throw new ApiError("RUN_LIMIT_EXCEEDED", "本次对话已达到用量限制。");
         requests++;
         const upstreamStarted = performance.now();
         let firstTextMs: number | null = null;
+        let streamedChars = 0;
         let reply: ModelReply;
         try {
           reply = await client.generateWithTools({
             ...request,
-            messages: executionConfirmed
+            maxTokens,
+            messages: (executionConfirmed
               ? [
                   ...request.messages,
                   {
-                    role: "system",
+                    role: "system" as const,
                     content:
                       "浏览器已回执上述地图动作执行成功。" +
                       (executionConfirmed.mode
@@ -87,11 +101,22 @@ export function meteredClient(
                 ? [
                     ...request.messages,
                     {
-                      role: "system",
+                      role: "system" as const,
                       content: `本轮必须实际调用 ${required}。只返回该函数调用；自然语言不能代替查询或地图操作。`,
                     },
                   ]
-                : request.messages,
+                : request.messages
+            ).concat(
+              final && emptyAnswerRetries
+                ? [
+                    {
+                      role: "system" as const,
+                      content:
+                        "上次没有输出可展示的最终答案。请直接依据已有工具证据给出简短答案；证据不足就准确说明缺口。不要输出推理，不要重复调用工具。",
+                    },
+                  ]
+                : [],
+            ),
             tools: final
               ? []
               : required
@@ -148,6 +173,7 @@ export function meteredClient(
               : {}),
             onText: final
               ? (text) => {
+                  streamedChars += text.length;
                   firstTextMs ??= Math.round(
                     performance.now() - upstreamStarted,
                   );
@@ -164,6 +190,10 @@ export function meteredClient(
             firstTextMs,
           });
         }
+        Object.assign(upstreamTimings.at(-1)!, {
+          finishReason: reply.finishReason,
+          contentChars: reply.content.length,
+        });
         if (reply.usage) {
           outputBudgetUsed += reply.usage.completionTokens;
           promptTokens += reply.usage.promptTokens;
@@ -171,9 +201,25 @@ export function meteredClient(
           cachedPromptTokens += reply.usage.cachedPromptTokens || 0;
           budgetUsed += reply.usage.totalTokens;
         } else {
-          outputBudgetUsed += request.maxTokens;
+          outputBudgetUsed += maxTokens;
           reliable = false;
-          budgetUsed += upper + request.maxTokens;
+          budgetUsed += upper + maxTokens;
+        }
+        if (
+          final &&
+          !reply.toolCalls.length &&
+          !reply.content.trim() &&
+          !streamedChars
+        ) {
+          if (!emptyAnswerRetries) {
+            emptyAnswerRetries++;
+            continue;
+          }
+          throw new ApiError(
+            "MODEL_SERVICE_UNAVAILABLE",
+            "AI 未能生成有效回复，请重试。",
+            true,
+          );
         }
         const missing =
           required &&
@@ -244,6 +290,7 @@ export function meteredClient(
       return {
         requests,
         correctionRetries,
+        emptyAnswerRetries,
         upstreamTimings,
         promptTokens,
         completionTokens,

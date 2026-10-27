@@ -1,0 +1,98 @@
+{
+  "at": "2026-10-27T12:46:28.695Z",
+  "records": [
+    {
+      "question": "戴建业",
+      "modelRequests": 0,
+      "promptTokens": 0,
+      "completionTokens": 0,
+      "durationMs": 0,
+      "database": {
+        "readQueries": 5,
+        "writeQueries": 20,
+        "calls": 11,
+        "failures": 0,
+        "durationMs": 472,
+        "maxCallMs": 94,
+        "rowsRead": 602,
+        "rowsWritten": 18,
+        "rowUsageStatements": 21,
+        "rowUsageComplete": false
+      },
+      "externalSearch": []
+    },
+    {
+      "question": "广外南校的首席专家有哪些人",
+      "modelRequests": 4,
+      "promptTokens": 12091,
+      "completionTokens": 873,
+      "durationMs": 15311,
+      "database": {
+        "readQueries": 14,
+        "writeQueries": 11,
+        "calls": 17,
+        "failures": 0,
+        "durationMs": 629,
+        "maxCallMs": 202,
+        "rowsRead": 1346,
+        "rowsWritten": 11,
+        "rowUsageStatements": 14,
+        "rowUsageComplete": false
+      },
+      "externalSearch": [
+        {
+          "status": "ok",
+          "durationMs": 5474,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 4587,
+              "count": 3
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    },
+    {
+      "question": "戴建业是广外的首席专家吗",
+      "modelRequests": 3,
+      "promptTokens": 9462,
+      "completionTokens": 571,
+      "durationMs": 12613,
+      "database": {
+        "readQueries": 13,
+        "writeQueries": 11,
+        "calls": 16,
+        "failures": 0,
+        "durationMs": 494,
+        "maxCallMs": 114,
+        "rowsRead": 798,
+        "rowsWritten": 11,
+        "rowUsageStatements": 14,
+        "rowUsageComplete": false
+      },
+      "externalSearch": [
+        {
+          "status": "ok",
+          "durationMs": 5510,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 4679,
+              "count": 4
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    }
+  ],
+  "cpuSamplePhase": "intermediate verification; not final-version capacity measurement",
+  "containerCpuMeasured": false,
+  "feesMeasured": false
+}

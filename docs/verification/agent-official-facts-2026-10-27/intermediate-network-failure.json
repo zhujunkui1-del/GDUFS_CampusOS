@@ -1,0 +1,100 @@
+{
+  "answerChars": 267,
+  "answerSha256": "36a7db300fe67a9d56e6c6d87330ddf72d90550384220f89b5b232a1b1e3bd99",
+  "result": {
+    "conversationId": "c874c399-832e-4602-8833-493d7f9ffd78",
+    "requestId": "1f6d72f9-67f9-46b6-b086-c46a325a60c0",
+    "metrics": {
+      "requests": 4,
+      "correctionRetries": 1,
+      "upstreamTimings": [
+        {
+          "durationMs": 2054,
+          "firstTextMs": null
+        },
+        {
+          "durationMs": 1809,
+          "firstTextMs": null
+        },
+        {
+          "durationMs": 1441,
+          "firstTextMs": null
+        },
+        {
+          "durationMs": 3430,
+          "firstTextMs": 2307
+        }
+      ],
+      "promptTokens": 10007,
+      "completionTokens": 862,
+      "cachedPromptTokens": 0,
+      "totalTokens": 10869,
+      "usageComplete": true,
+      "chargedTokens": 10869,
+      "durationMs": 9949,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 163,
+        "serverElapsedMs": 10112,
+        "firstTextMs": 8974,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 49,
+            "ok": true
+          },
+          {
+            "name": "search_external_campus_info",
+            "durationMs": 1080,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 14,
+          "writeQueries": 20,
+          "calls": 20,
+          "failures": 0,
+          "durationMs": 298,
+          "maxCallMs": 29,
+          "rowsRead": 984,
+          "rowsWritten": 18,
+          "rowUsageStatements": 23,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 482,
+            "rowsWritten": 0,
+            "queries": 2,
+            "durationMs": 49,
+            "candidateChunks": 23,
+            "usageAvailable": true
+          }
+        ],
+        "externalSearch": [
+          {
+            "status": "unavailable",
+            "durationMs": 1080,
+            "providers": [
+              {
+                "provider": "exa_web_cloud",
+                "status": "unavailable",
+                "durationMs": 314,
+                "count": 0,
+                "failureCode": "HTTP_ERROR"
+              }
+            ],
+            "rowsRead": 0,
+            "rowsWritten": 0
+          }
+        ]
+      }
+    }
+  }
+}

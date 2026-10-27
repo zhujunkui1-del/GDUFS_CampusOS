@@ -5,7 +5,7 @@ await build({
   entryPoints: ["services/cloud-search/server.mjs"],
   outfile: "services/cloud-search/build/server.mjs",
   bundle: true,
-  packages: "external",
+  external: ["zod"],
   platform: "node",
   format: "esm",
   logLevel: "silent",

@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-27T12:44:11.029Z",
+  "services": {
+    "campusos-preview": {
+      "at": "2026-10-27T12:39:35.822251Z",
+      "versions": [
+        {
+          "version_id": "c8f9bdd6-813b-44fe-bab1-259be5025483",
+          "percentage": 100
+        }
+      ]
+    },
+    "campusos-preview-cloud-search": {
+      "at": "2026-10-27T12:17:24.90434Z",
+      "versions": [
+        {
+          "version_id": "914ead1f-cd53-40e0-a859-62a59c470246",
+          "percentage": 100
+        }
+      ]
+    }
+  },
+  "model": {
+    "ready": true,
+    "model": {
+      "source": "platform",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "policyVersion": "stepfun-plan-v1",
+      "testedAt": "2026-10-27T12:34:26.813Z",
+      "capabilities": {
+        "toolCalling": true,
+        "jsonObject": true,
+        "strictJsonSchema": false
+      }
+    }
+  },
+  "productionChanged": false,
+  "d1Migrations": 0,
+  "newPaidServices": 0,
+  "modelRunOutputBudget": 4096,
+  "modelRequestsPerRun": 6,
+  "previewRequestOutputCap": 2048
+}

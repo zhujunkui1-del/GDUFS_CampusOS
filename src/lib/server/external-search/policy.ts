@@ -7,6 +7,7 @@ export type ExternalPolicy = {
   campus: boolean;
   needsDeadline: boolean;
   explicit: boolean;
+  needsOfficialVerification: boolean;
 };
 export function externalPolicy(query: string): ExternalPolicy {
   const noExternal =
@@ -17,7 +18,12 @@ export function externalPolicy(query: string): ExternalPolicy {
     /好吃|难吃|口味|味道|踩雷|种草|测评|评测|体验|住.{0,5}怎么样|住起来|居住|隔音|蚊子|宿舍.{0,8}(?:怎么样|如何)|食堂.{0,8}(?:推荐|哪个好|哪家好)/.test(
       query,
     );
+  const needsOfficialVerification =
+    /(?:是|是否|担任|任职|受聘|聘任|现任|介绍|简介|师资|名单|有哪些|谁).{0,24}(?:首席专家|校长|院长|书记|教授|院士|导师)|(?:首席专家|校长|院长|书记|教授|院士|导师).{0,24}(?:有谁|有哪些|是谁|哪几位|名单|任职|现任|吗|是什么)/.test(
+      query,
+    );
   const official =
+    needsOfficialVerification ||
     /规章|制度|政策|管理办法|借阅|借书|续借|办理|流程|指南|手续|申请条件|评定条件|资格|选课|学校规定|截止|奖学金/.test(
       query,
     );
@@ -63,14 +69,23 @@ export function externalPolicy(query: string): ExternalPolicy {
       ),
     needsDeadline: /截止|截至|最后.{0,4}(?:时间|日期)|还能报名/.test(query),
     explicit: /小红书|联网|上网|外部搜索|网上搜|互联网/.test(query),
+    needsOfficialVerification,
   };
 }
 /** A source class selects providers; a retrieval miss never selects Xiaohongshu. */
 export function supplementRequired(
   policy: ExternalPolicy,
-  results: ContentSearchResult[],
+  results: {
+    hits: Pick<
+      ContentSearchResult["hits"][number],
+      "bodyAvailable" | "contentSnippet"
+    >[];
+    activities: ContentSearchResult["activities"];
+  }[],
 ) {
   if (!policy.active) return false;
+  // Archive matches cannot establish a current appointment, complete roster or campus assignment.
+  if (policy.needsOfficialVerification) return true;
   const bodies = results.flatMap((r) => r.hits).filter((h) => h.bodyAvailable);
   if (!bodies.length || policy.explicit) return true;
   if (policy.intent === "experience" || policy.intent === "mixed")

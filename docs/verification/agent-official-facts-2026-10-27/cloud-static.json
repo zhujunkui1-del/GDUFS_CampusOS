@@ -1,0 +1,49 @@
+{
+  "provider": "exa_web_cloud",
+  "status": "ok",
+  "items": [
+    {
+      "title": "教师-广外双语认知与发展实验室",
+      "originalUrl": "https://bcdlab.gdufs.edu.cn/ry/js.htm",
+      "sourceName": "广外官方网页",
+      "platform": "web",
+      "authority": "official",
+      "evidenceKind": "search_excerpt",
+      "snippetChars": 700,
+      "snippetSha256": "42ee9c1914423aaeccc3510aa4c992b0b97925afc410c9e063ad30d7ddc8c8a8",
+      "publishedAt": null,
+      "retrievedAt": "2026-10-27T12:21:40.157Z",
+      "searchMode": "web",
+      "canConfirmAdministrativeFacts": false
+    },
+    {
+      "title": "胡建华教授 - 外国语言学及应用语言学研究中心",
+      "originalUrl": "https://clal.gdufs.edu.cn/info/1689/5908.htm",
+      "sourceName": "广外官方网页",
+      "platform": "web",
+      "authority": "official",
+      "evidenceKind": "page_excerpt",
+      "snippetChars": 700,
+      "snippetSha256": "5ef8689273a61531e069f675517cf9b1db2a66b7d9eb02758e8ca04aea3edaee",
+      "publishedAt": "2018-11-09T00:00:00.000Z",
+      "retrievedAt": "2026-10-27T12:21:40.157Z",
+      "searchMode": "web",
+      "canConfirmAdministrativeFacts": true
+    },
+    {
+      "title": "【师德标兵】严修鸿：以语言为桥，守护文化根脉",
+      "originalUrl": "https://www.gdufs.edu.cn/info/1106/65356.htm",
+      "sourceName": "广外官方网页",
+      "platform": "web",
+      "authority": "official",
+      "evidenceKind": "search_excerpt",
+      "snippetChars": 259,
+      "snippetSha256": "a39bbf5e4b9938fd519a88fa87c996626aac6334b2e88c3b219f935862501bd1",
+      "publishedAt": "2025-09-09T00:00:00.000Z",
+      "retrievedAt": "2026-10-27T12:21:40.157Z",
+      "searchMode": "web",
+      "canConfirmAdministrativeFacts": false
+    }
+  ],
+  "durationMs": 3486
+}

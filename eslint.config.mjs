@@ -19,6 +19,7 @@ export default defineConfig([
     "services/xhs-redbook-eval/build/**",
     ".map-tools/cloud-search/**",
     ".map-tools/xhs-provider-eval/**",
+    ".map-tools/agent-fact-debug/**",
     "public/vendor/**",
     "CampusOS_Codex_完整设计文档_v2/we-mp-rss-main/**",
     "CampusOS_Codex_完整设计文档_v2/wechat-article-exporter-main/**",

@@ -1,0 +1,428 @@
+[
+  {
+    "message": "戴建业",
+    "http": 200,
+    "answerChars": 38,
+    "answerSha256": "9539251a1cc8366da32aaf8711876b7bd19c9eee7ec35e6db936fa6e3e60360c",
+    "tools": [],
+    "result": {
+      "conversationId": "bcab86c5-c5b7-409e-b8fd-ce8ec719d372",
+      "requestId": "ac3e80ad-df3b-49a0-b506-f3afa7cfb618",
+      "metrics": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 2230,
+            "firstTextMs": null
+          }
+        ],
+        "promptTokens": 4345,
+        "completionTokens": 119,
+        "cachedPromptTokens": 0,
+        "totalTokens": 4464,
+        "usageComplete": true,
+        "chargedTokens": 4464,
+        "durationMs": 2252,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 189,
+          "serverElapsedMs": 2441,
+          "firstTextMs": 2430,
+          "mapActionMs": null,
+          "skills": [],
+          "database": {
+            "readQueries": 7,
+            "writeQueries": 20,
+            "calls": 13,
+            "failures": 0,
+            "durationMs": 211,
+            "maxCallMs": 45,
+            "rowsRead": 513,
+            "rowsWritten": 18,
+            "rowUsageStatements": 21,
+            "rowUsageComplete": false
+          },
+          "retrieval": [],
+          "externalSearch": []
+        }
+      }
+    },
+    "cards": [],
+    "elapsedMs": 2925
+  },
+  {
+    "message": "广外南校的首席专家有哪些人",
+    "http": 200,
+    "answerChars": 0,
+    "answerSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tools": [
+      "search_campus_knowledge",
+      "search_external_campus_info"
+    ],
+    "result": {
+      "conversationId": "bcab86c5-c5b7-409e-b8fd-ce8ec719d372",
+      "requestId": "10b780a9-07c3-4985-b8a0-495ce8169fa9",
+      "metrics": {
+        "requests": 3,
+        "correctionRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 2037,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 1448,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 6684,
+            "firstTextMs": null
+          }
+        ],
+        "promptTokens": 8892,
+        "completionTokens": 953,
+        "cachedPromptTokens": 0,
+        "totalTokens": 9845,
+        "usageComplete": true,
+        "chargedTokens": 9845,
+        "durationMs": 16786,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 105,
+          "serverElapsedMs": 16891,
+          "firstTextMs": null,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 193,
+              "ok": true
+            },
+            {
+              "name": "search_external_campus_info",
+              "durationMs": 6342,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 13,
+            "writeQueries": 11,
+            "calls": 16,
+            "failures": 0,
+            "durationMs": 380,
+            "maxCallMs": 160,
+            "rowsRead": 1299,
+            "rowsWritten": 11,
+            "rowUsageStatements": 14,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 1041,
+              "rowsWritten": 0,
+              "queries": 2,
+              "durationMs": 193,
+              "candidateChunks": 96,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": [
+            {
+              "status": "ok",
+              "durationMs": 6342,
+              "providers": [
+                {
+                  "provider": "exa_web_cloud",
+                  "status": "ok",
+                  "durationMs": 5608,
+                  "count": 2
+                }
+              ],
+              "rowsRead": 0,
+              "rowsWritten": 0
+            }
+          ]
+        }
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-d3965999-b2ec-461f-8c98-66b1115db3ee",
+        "title": "战略研究院等你来 | GIIS Admission Guide (For International Students)-广东国际战略研究院",
+        "sourceName": "广东国际战略研究院（海上丝绸之路研究院）",
+        "originalUrl": "https://giis.gdufs.edu.cn/info/1643/16885.htm",
+        "publishedAt": "2026-02-09",
+        "snippetChars": 780,
+        "snippetSha256": "968da5af140bf37adc73d58f2b289ff9d323baa4597b46104b862b3c9835d036",
+        "evidenceType": "full_text",
+        "classificationState": "unknown",
+        "validity": "unknown",
+        "readable": true
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-cb86956fb5545500cb077e75cad096622d79fd94",
+        "title": "中秋节 | 中秋寄相思 月满共清欢",
+        "sourceName": "国际治理创新学院",
+        "originalUrl": "https://mp.weixin.qq.com/s/E7JsfRYkX4X2oCRAWW7hdw",
+        "publishedAt": "2026-09-24T23:55:00.000Z",
+        "snippetChars": 390,
+        "snippetSha256": "dff5427c7e116eb8e0b6e7e879741e20708de73d33ff3172354b66d19fbd2c7b",
+        "evidenceType": "full_text",
+        "classificationState": "unknown",
+        "validity": "unknown",
+        "readable": true
+      },
+      {
+        "kind": "source",
+        "documentId": "content-3dec7150-d810-44d1-be53-29daf0f1f35e",
+        "title": "我院战明华教授团队的合作论文发表于ABS三星期刊《Small Business Economics》-金融开放发展研究院",
+        "sourceName": "金融开放发展研究院",
+        "originalUrl": "https://jrkf.gdufs.edu.cn/info/1006/2212.htm",
+        "publishedAt": "2026-09-14",
+        "snippetChars": 780,
+        "snippetSha256": "5bf33c941070bb4fb537a42d800a4db0b32fb57d7e37e07df0c57142a75edeaf",
+        "evidenceType": "full_text",
+        "classificationState": "unknown",
+        "validity": "unknown",
+        "readable": true
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-0f1ac4790b3e7a11096b2e0ebd077f47a3aec13d",
+        "title": "喜迎国庆 _ 山河昭盛景，时代续华章",
+        "sourceName": "国际治理创新学院",
+        "originalUrl": "https://mp.weixin.qq.com/s/KdlOQbZ58Jf8aWxmwErKAg",
+        "publishedAt": "2026-09-30T23:00:00.000Z",
+        "snippetChars": 410,
+        "snippetSha256": "8f44dd9cfed0713526339fb281ad5306087a60879d44e844268f678a59d8a3cb",
+        "evidenceType": "full_text",
+        "classificationState": "unknown",
+        "validity": "unknown",
+        "readable": true
+      },
+      {
+        "kind": "external_source",
+        "title": "云山工作室首席专家-英语语言文化学院",
+        "sourceName": "广外官方网页",
+        "originalUrl": "https://felc.gdufs.edu.cn/szll/ysgzssxzj.htm",
+        "publishedAt": null,
+        "snippetChars": 196,
+        "snippetSha256": "0432b079c1f8b154f2f0af2ad533e0b26c1233befd2e5eec53fc74aaa406aea7",
+        "authority": "official",
+        "evidenceKind": "search_excerpt",
+        "searchMode": "web"
+      },
+      {
+        "kind": "external_source",
+        "title": "我校新聘一批外语学科云山工作室首席专家和云山学者-广东外语外贸大学新闻中心",
+        "sourceName": "广外官方网页",
+        "originalUrl": "https://news.gdufs.edu.cn/info/1002/93630.htm",
+        "publishedAt": "2022-05-31T00:00:00.000Z",
+        "snippetChars": 700,
+        "snippetSha256": "58cfab7a1ad56f191cfda530c569d605c352e0423b74d0a03474c9ce7587acab",
+        "authority": "official",
+        "evidenceKind": "page_excerpt",
+        "searchMode": "web"
+      }
+    ],
+    "elapsedMs": 17339
+  },
+  {
+    "message": "戴建业是广外的首席专家吗",
+    "http": 200,
+    "answerChars": 162,
+    "answerSha256": "8200c77b73833b8c2ecf41a86a787c66b6d3f130d964eaa7fc96e9037cbd5c55",
+    "tools": [
+      "search_campus_knowledge",
+      "search_external_campus_info"
+    ],
+    "result": {
+      "conversationId": "bcab86c5-c5b7-409e-b8fd-ce8ec719d372",
+      "requestId": "4fa03b1c-e3eb-4b5d-8b5c-ccddb07a0bdb",
+      "metrics": {
+        "requests": 4,
+        "correctionRetries": 1,
+        "upstreamTimings": [
+          {
+            "durationMs": 1107,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 1883,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 1781,
+            "firstTextMs": null
+          },
+          {
+            "durationMs": 2958,
+            "firstTextMs": 2235
+          }
+        ],
+        "promptTokens": 11505,
+        "completionTokens": 746,
+        "cachedPromptTokens": 0,
+        "totalTokens": 12251,
+        "usageComplete": true,
+        "chargedTokens": 12251,
+        "durationMs": 12765,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 142,
+          "serverElapsedMs": 12907,
+          "firstTextMs": 12167,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 60,
+              "ok": true
+            },
+            {
+              "name": "search_external_campus_info",
+              "durationMs": 4860,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 14,
+            "writeQueries": 11,
+            "calls": 17,
+            "failures": 0,
+            "durationMs": 318,
+            "maxCallMs": 32,
+            "rowsRead": 755,
+            "rowsWritten": 11,
+            "rowUsageStatements": 14,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 482,
+              "rowsWritten": 0,
+              "queries": 2,
+              "durationMs": 60,
+              "candidateChunks": 23,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": [
+            {
+              "status": "ok",
+              "durationMs": 4860,
+              "providers": [
+                {
+                  "provider": "exa_web_cloud",
+                  "status": "ok",
+                  "durationMs": 4270,
+                  "count": 3
+                }
+              ],
+              "rowsRead": 0,
+              "rowsWritten": 0
+            }
+          ]
+        }
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-d3965999-b2ec-461f-8c98-66b1115db3ee",
+        "title": "战略研究院等你来 | GIIS Admission Guide (For International Students)-广东国际战略研究院",
+        "sourceName": "广东国际战略研究院（海上丝绸之路研究院）",
+        "originalUrl": "https://giis.gdufs.edu.cn/info/1643/16885.htm",
+        "publishedAt": "2026-02-09",
+        "snippetChars": 780,
+        "snippetSha256": "968da5af140bf37adc73d58f2b289ff9d323baa4597b46104b862b3c9835d036",
+        "evidenceType": "full_text",
+        "classificationState": "unknown",
+        "validity": "unknown",
+        "readable": true
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-cb86956fb5545500cb077e75cad096622d79fd94",
+        "title": "中秋节 | 中秋寄相思 月满共清欢",
+        "sourceName": "国际治理创新学院",
+        "originalUrl": "https://mp.weixin.qq.com/s/E7JsfRYkX4X2oCRAWW7hdw",
+        "publishedAt": "2026-09-24T23:55:00.000Z",
+        "snippetChars": 390,
+        "snippetSha256": "dff5427c7e116eb8e0b6e7e879741e20708de73d33ff3172354b66d19fbd2c7b",
+        "evidenceType": "full_text",
+        "classificationState": "unknown",
+        "validity": "unknown",
+        "readable": true
+      },
+      {
+        "kind": "source",
+        "documentId": "content-3dec7150-d810-44d1-be53-29daf0f1f35e",
+        "title": "我院战明华教授团队的合作论文发表于ABS三星期刊《Small Business Economics》-金融开放发展研究院",
+        "sourceName": "金融开放发展研究院",
+        "originalUrl": "https://jrkf.gdufs.edu.cn/info/1006/2212.htm",
+        "publishedAt": "2026-09-14",
+        "snippetChars": 780,
+        "snippetSha256": "5bf33c941070bb4fb537a42d800a4db0b32fb57d7e37e07df0c57142a75edeaf",
+        "evidenceType": "full_text",
+        "classificationState": "unknown",
+        "validity": "unknown",
+        "readable": true
+      },
+      {
+        "kind": "external_source",
+        "title": "我校新聘中华文化国际传播学科云山工作室首席专家-广东外语外贸大学",
+        "sourceName": "广外官方网页",
+        "originalUrl": "https://www.gdufs.edu.cn/info/1106/59757.htm",
+        "publishedAt": "2023-04-25T00:00:00.000Z",
+        "snippetChars": 606,
+        "snippetSha256": "24d561abbab5b323112276447d6f22fa706944d66e38fd2931ce04433a0ad331",
+        "authority": "official",
+        "evidenceKind": "page_excerpt",
+        "searchMode": "web"
+      },
+      {
+        "kind": "external_source",
+        "title": "戴建业-中国语言文化学院",
+        "sourceName": "广外官方网页",
+        "originalUrl": "https://zwxy.gdufs.edu.cn/info/1333/9068.htm",
+        "publishedAt": "2023-09-06T00:00:00.000Z",
+        "snippetChars": 351,
+        "snippetSha256": "0be34408ddf6d2bc104098fdb6c5419f9ecfa8518dd87a727c74963e979d82fc",
+        "authority": "official",
+        "evidenceKind": "page_excerpt",
+        "searchMode": "web"
+      },
+      {
+        "kind": "external_source",
+        "title": "广东外语外贸大学首席专家戴建业教授：人生境界与文学格调-中国 ...",
+        "sourceName": "广外官方网页",
+        "originalUrl": "https://zwxy.gdufs.edu.cn/info/1168/9673.htm",
+        "publishedAt": "2025-12-12T00:00:00.000Z",
+        "snippetChars": 588,
+        "snippetSha256": "525f92cfd722865fa41a0186d4d2ec0d7e5e2db33c70dc92f1b32cb8c4f0aafd",
+        "authority": "official",
+        "evidenceKind": "search_excerpt",
+        "searchMode": "web"
+      }
+    ],
+    "elapsedMs": 13498
+  }
+]

@@ -1,4 +1,34 @@
 import type { MapAction } from "@/domain/maps/contracts";
+import { ApiError } from "../errors";
+export function unmatchedTopicClarification(
+  message: string,
+  lookup: () => boolean,
+) {
+  let known = false;
+  try {
+    known = lookup();
+  } catch (error) {
+    if (!(error instanceof ApiError && error.code === "NOT_FOUND")) throw error;
+  }
+  return known ? undefined : `你想了解“${message.trim()}”的哪方面信息？`;
+}
+export function shouldClarifyBareTopic(
+  message: string,
+  contentActive: boolean,
+  knownPlace: boolean,
+  spatialIntent: boolean,
+) {
+  const text = message.trim();
+  return (
+    !contentActive &&
+    !knownPlace &&
+    !spatialIntent &&
+    /^[\p{Script=Han}·]{2,3}$/u.test(text) &&
+    !/^(?:你好[呀啊]?|您好|谢谢你?|好的|再见|这里|那里|这儿|那儿|这个|那个|地图|路线|导航|定位|放大|缩小|旋转|切换|清除|取消|怎么走)$/.test(
+      text,
+    )
+  );
+}
 // Only complete, affirmative UI commands get a required registered control tool. Negations/questions do not match.
 export function explicitMapCommand(message: string): MapAction | null {
   const text = message.normalize("NFKC").replace(/\s+/g, "").toLowerCase();

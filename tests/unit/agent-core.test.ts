@@ -106,6 +106,9 @@ it("corrects one pre-execution schema error without executing the invalid read",
   expect(JSON.stringify(provider.requests[1].messages)).toContain(
     "additionalProperties",
   );
+  expect(JSON.stringify(provider.requests[1].messages)).toContain(
+    '\\"path\\":\\"value\\"',
+  );
 });
 
 it("shares frozen schema metadata without sharing executors or authorization", async () => {

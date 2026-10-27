@@ -15,6 +15,7 @@ export type DefaultModelConfig = {
   model?: string;
   baseUrl?: string;
   capabilityReceipt?: string;
+  maxOutputTokens?: number;
 };
 export const CapabilityReceiptSchema = z
   .object({
@@ -66,6 +67,7 @@ export class ProviderRegistry {
       fetch,
       15000,
       provider,
+      config.maxOutputTokens,
     );
   }
 }
