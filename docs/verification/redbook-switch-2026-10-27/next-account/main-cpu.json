@@ -1,0 +1,194 @@
+{
+  "at": "2026-10-27T09:51:14.466Z",
+  "windowSeconds": 45,
+  "worker": "campusos-preview",
+  "connected": true,
+  "tailRemoved": true,
+  "rawLogsStored": false,
+  "frameShapes": [
+    "cpuTime,diagnosticsChannelEvents,event,eventTimestamp,exceptions,executionModel,logs,outcome,scriptName,scriptTags,scriptVersion,truncated,wallTime",
+    "cpuTime,diagnosticsChannelEvents,event,eventTimestamp,exceptions,executionModel,logs,outcome,scriptName,scriptTags,scriptVersion,tailAttributes,truncated,wallTime"
+  ],
+  "records": [
+    {
+      "at": 1793094660848,
+      "path": "/api/collector/sources",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 7,
+      "wallTimeMs": 56,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094668218,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 697,
+      "wallTimeMs": 948,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094668462,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 16,
+      "wallTimeMs": 373,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094669730,
+      "path": "/api/agent/session",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 6,
+      "wallTimeMs": 74,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094669720,
+      "path": "/knowledge",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 5,
+      "wallTimeMs": 197,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094669704,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 9,
+      "wallTimeMs": 220,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094669730,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 162,
+      "wallTimeMs": 262,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094670143,
+      "path": "/icon.svg",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 11,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094670120,
+      "path": "/favorites",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 3,
+      "wallTimeMs": 213,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094669704,
+      "path": "/radar",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 11,
+      "wallTimeMs": 209,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094670531,
+      "path": "/map",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 2,
+      "wallTimeMs": 5,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094669719,
+      "path": "/schedule",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 9,
+      "wallTimeMs": 250,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094670539,
+      "path": "/radar",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 3,
+      "wallTimeMs": 13,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094670657,
+      "path": "/knowledge",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 1,
+      "wallTimeMs": 5,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094670662,
+      "path": "/schedule",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 1,
+      "wallTimeMs": 16,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094670661,
+      "path": "/favorites",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 3,
+      "wallTimeMs": 16,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094670118,
+      "path": "/account",
+      "method": "GET",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 10,
+      "wallTimeMs": 229,
+      "exceptionCount": 0
+    },
+    {
+      "at": 1793094670619,
+      "path": "/api/collector/articles",
+      "method": "POST",
+      "status": 409,
+      "outcome": "ok",
+      "cpuTimeMs": 171,
+      "wallTimeMs": 255,
+      "exceptionCount": 0
+    }
+  ]
+}

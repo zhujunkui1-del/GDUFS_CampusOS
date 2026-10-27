@@ -19,7 +19,7 @@ http
       !timingSafeEqual(expected, hash(String(req.headers.authorization || "")))
     )
       return json(401, { error: "unauthorized" });
-    if (req.method !== "POST" || req.url !== "/probe")
+    if (req.method !== "POST" || !["/probe", "/status"].includes(req.url))
       return json(404, { error: "not_found" });
     if (running) return json(503, { error: "busy" });
     running = true;
@@ -38,6 +38,8 @@ http
           state: data.state,
           platform: data.platform,
           query: data.query,
+          operation: req.url === "/status" ? "status" : "search",
+          limit: data.limit ?? 3,
         }),
       );
     } catch (error) {

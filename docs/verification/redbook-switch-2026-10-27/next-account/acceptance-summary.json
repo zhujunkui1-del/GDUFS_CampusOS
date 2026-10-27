@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-27T09:54:22.840Z",
+  "nativeProvider": "xiaohongshu_redbook_cloud",
+  "nativeStatus": "ok",
+  "nativeNotes": 3,
+  "bodyExcerpts": 2,
+  "citedNativeNotes": 1,
+  "inlineCitationLinks": 1,
+  "model": "step-3.5-flash-2603",
+  "modelRequests": 3,
+  "promptTokens": 6380,
+  "completionTokens": 677,
+  "runDurationMs": 10925,
+  "externalSearch": [
+    {
+      "status": "ok",
+      "durationMs": 3199,
+      "providers": [
+        {
+          "provider": "xiaohongshu_redbook_cloud",
+          "status": "ok",
+          "durationMs": 3009,
+          "count": 3,
+          "cacheHit": false
+        },
+        {
+          "provider": "exa_web_cloud",
+          "status": "ok",
+          "durationMs": 1437,
+          "count": 2
+        }
+      ],
+      "rowsRead": 0,
+      "rowsWritten": 0
+    }
+  ],
+  "database": {
+    "readQueries": 12,
+    "writeQueries": 12,
+    "calls": 16,
+    "failures": 0,
+    "durationMs": 229,
+    "maxCallMs": 24,
+    "rowsRead": 299,
+    "rowsWritten": 15,
+    "rowUsageStatements": 14,
+    "rowUsageComplete": false
+  },
+  "mainCpuSampleCaptured": false,
+  "mainAccountSelected": false,
+  "oldBrowserRecoveryDisabled": true,
+  "retainedQualityIssue": "The model still generalizes one author’s opinion as popular with students; full claim-level grounding is not accepted.",
+  "rollbackRehearsalPerformed": false
+}

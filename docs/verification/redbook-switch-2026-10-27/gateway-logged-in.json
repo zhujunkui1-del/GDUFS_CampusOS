@@ -1,0 +1,104 @@
+{
+  "at": "2026-10-27T09:13:01.913Z",
+  "tests": [
+    {
+      "path": "/v1/session/status",
+      "http": 200,
+      "state": "logged_in",
+      "checkedAt": 1793092381892,
+      "qr": null,
+      "qrExpiresAt": null
+    },
+    {
+      "path": "/v1/search",
+      "kind": "xiaohongshu",
+      "http": 200,
+      "provider": "xiaohongshu_redbook_cloud",
+      "status": "ok",
+      "items": [
+        {
+          "title": "就你有嗓子是吧",
+          "originalUrl": "https://www.xiaohongshu.com/explore/6aa77e040000000028000b9d?xsec_token=ABERXgZS_ONoReiNVZtOFgOODZYCj2FTkOCflv9hweruo%3D&xsec_source=pc_search",
+          "sourceName": "小红书 · 爱吃皮蛋瘦肉粥的饼",
+          "platform": "xiaohongshu",
+          "authority": "student_experience",
+          "evidenceKind": "page_excerpt",
+          "snippetChars": 294,
+          "snippetSha256": "0d073010880e36d529d936bc3275c179fea500780014f30e9fddaef04237d9df",
+          "publishedAt": "2026-09-14T04:54:28.000Z",
+          "retrievedAt": "2026-10-27T09:13:04.396Z",
+          "searchMode": "platform",
+          "canConfirmAdministrativeFacts": false
+        },
+        {
+          "title": "广外南女大一顿吃这么多正常吗😭",
+          "originalUrl": "https://www.xiaohongshu.com/explore/6a1567250000000035038b12?xsec_token=ABNwHYO3mr8M6I_oQjOfH6MG6Os9j9xXbJjfT88sJ93a8%3D&xsec_source=pc_search",
+          "sourceName": "小红书 · fish",
+          "platform": "xiaohongshu",
+          "authority": "student_experience",
+          "evidenceKind": "page_excerpt",
+          "snippetChars": 288,
+          "snippetSha256": "d70d066945190fa02c3f0fa6dfbd93a45682b1824f7e154c51442f619311c112",
+          "publishedAt": "2026-05-26T09:25:57.000Z",
+          "retrievedAt": "2026-10-27T09:13:04.396Z",
+          "searchMode": "platform",
+          "canConfirmAdministrativeFacts": false
+        },
+        {
+          "title": "一饭面包店好吃么",
+          "originalUrl": "https://www.xiaohongshu.com/explore/6aae13130000000026032621?xsec_token=ABt7kOu3RPcXoPje71As2LeB2ielByRL0jL1zn57RGRfA%3D&xsec_source=pc_search",
+          "sourceName": "小红书 · 大帅（已看芙版）",
+          "platform": "xiaohongshu",
+          "authority": "student_experience",
+          "evidenceKind": "title_only",
+          "snippetChars": 8,
+          "snippetSha256": "66bd09a171092e8dbe6ae978f5cdeb415c562445f36f79e86359c37c8ab2e9da",
+          "publishedAt": null,
+          "retrievedAt": "2026-10-27T09:13:04.396Z",
+          "searchMode": "platform",
+          "canConfirmAdministrativeFacts": false
+        }
+      ],
+      "durationMs": 2240,
+      "cacheHit": false
+    },
+    {
+      "path": "/v1/search",
+      "kind": "web",
+      "http": 200,
+      "provider": "exa_web_cloud",
+      "status": "ok",
+      "items": [
+        {
+          "title": "图书借阅规则-广东外语外贸大学图书馆",
+          "originalUrl": "https://lib.gdufs.edu.cn/fwzn/fwqykfsj/tsjygz.htm",
+          "sourceName": "广外官方网页",
+          "platform": "web",
+          "authority": "official",
+          "evidenceKind": "search_excerpt",
+          "snippetChars": 700,
+          "snippetSha256": "4bbdebbfab5756d1b994c099eb5e3b68149b0091be1eea15ba07842a9035c362",
+          "publishedAt": "2023-11-15T00:00:00.000Z",
+          "retrievedAt": "2026-10-27T09:13:06.449Z",
+          "searchMode": "web",
+          "canConfirmAdministrativeFacts": false
+        },
+        {
+          "title": "读者借阅权限表-广东外语外贸大学图书馆",
+          "originalUrl": "https://lib.gdufs.edu.cn/fwzn/fwqykfsj/dzjyqxb.htm",
+          "sourceName": "广外官方网页",
+          "platform": "web",
+          "authority": "official",
+          "evidenceKind": "search_excerpt",
+          "snippetChars": 446,
+          "snippetSha256": "b80fb4db5439668c7fb1e86ef00e5fb19319ae583be54164bfea01e772862b1a",
+          "publishedAt": "2020-11-24T00:00:00.000Z",
+          "retrievedAt": "2026-10-27T09:13:06.450Z",
+          "searchMode": "web",
+          "canConfirmAdministrativeFacts": false
+        }
+      ],
+      "durationMs": 1741
+    }
+  ]
+}

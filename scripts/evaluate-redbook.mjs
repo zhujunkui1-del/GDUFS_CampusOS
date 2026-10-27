@@ -1,4 +1,4 @@
-// Isolated, read-only feasibility probe. Never registered as an Agent tool.
+// Shared read-only provider core; CLI probes and cloud RPC use the same source checks.
 import fs from "node:fs/promises";
 import { pathToFileURL } from "node:url";
 import { createRequire } from "node:module";
@@ -47,7 +47,9 @@ export function publicEvaluationReceipt(value) {
   const out = {};
   for (const [key, item] of Object.entries(value)) {
     if (
-      ["snippet", "answer", "renderedAnswer", "quote"].includes(key) &&
+      ["snippet", "answer", "renderedAnswer", "response", "quote"].includes(
+        key,
+      ) &&
       typeof item === "string"
     ) {
       out[key + "Chars"] = item.length;
@@ -91,6 +93,8 @@ export async function evaluateRedbook({
   platform = "xhs",
   query = "广外 南校 一饭",
   allowGuestSearch = false,
+  operation = "search",
+  limit = 3,
   makeClient = installedClient,
   transport = globalThis.fetch,
 }) {
@@ -99,7 +103,11 @@ export async function evaluateRedbook({
     !target ||
     typeof query !== "string" ||
     query.length < 2 ||
-    query.length > 300
+    query.length > 300 ||
+    !["search", "status"].includes(operation) ||
+    !Number.isInteger(limit) ||
+    limit < 1 ||
+    limit > 4
   )
     throw Error("EVALUATION_INPUT");
   if (!Array.isArray(state?.cookies) || state.cookies.length > 150)
@@ -189,6 +197,10 @@ export async function evaluateRedbook({
         me?.guest === true ? "login_required" : "identity_unconfirmed";
       return result;
     }
+    if (operation === "status") {
+      result.status = result.authenticated ? "ok" : "login_required";
+      return result;
+    }
     result.guestSearchAttempted = !result.authenticated;
     const data = await client.searchNotes(query, 1, 20);
     result.searchPayloadShape = {
@@ -206,7 +218,7 @@ export async function evaluateRedbook({
       .filter(
         (n) => /^[\w-]{1,64}$/.test(n.id || "") && (n.note_card || n.noteCard),
       )
-      .slice(0, 3);
+      .slice(0, limit);
     for (const [index, note] of notes.entries()) {
       const card = note.note_card || note.noteCard,
         token = note.xsec_token || note.xsecToken;

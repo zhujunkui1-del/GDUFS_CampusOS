@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-27T09:08:38.455Z",
+  "authenticated": null,
+  "receipts": [
+    {
+      "host": "edith.xiaohongshu.com",
+      "http": 200,
+      "code": -100,
+      "hasIdentity": false
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "http": 200,
+      "code": -100,
+      "hasIdentity": false
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "http": 200,
+      "code": -101,
+      "hasIdentity": false
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "http": 200,
+      "code": -101,
+      "hasIdentity": false
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "http": 200,
+      "code": -101,
+      "hasIdentity": false
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "http": 200,
+      "code": 0,
+      "guest": true,
+      "hasIdentity": true
+    }
+  ]
+}

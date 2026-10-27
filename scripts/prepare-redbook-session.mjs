@@ -2,9 +2,14 @@
 import { chromium } from "@playwright/test";
 import fs from "node:fs/promises";
 const directory = ".map-tools/xhs-provider-eval";
+const nextAccount = process.argv.includes("--next-account");
+const captureOnly = process.argv.includes("--capture-only");
 await fs.mkdir(directory, { recursive: true });
 const context = await chromium.launchPersistentContext(
-  "services/external-search/runtime/xiaohongshu-browser-profile",
+  "services/external-search/runtime/" +
+    (nextAccount
+      ? "xiaohongshu-browser-profile-next-account"
+      : "xiaohongshu-browser-profile"),
   { channel: "msedge", headless: false, timeout: 20000 },
 );
 let platform = null,
@@ -47,9 +52,13 @@ try {
     timeout: 18000,
   });
   console.log(
-    JSON.stringify({ dedicatedLoginWindowOpened: true, waitingForHuman: true }),
+    JSON.stringify({
+      dedicatedLoginWindowOpened: true,
+      waitingForHuman: !captureOnly,
+      profile: nextAccount ? "next-account" : "original",
+    }),
   );
-  const end = Date.now() + 20 * 60 * 1000;
+  const end = Date.now() + (captureOnly ? 15000 : 20 * 60 * 1000);
   while (!capturedPlatform && !closed && Date.now() < end) {
     if (!platform) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -63,7 +72,8 @@ try {
     );
     if (platform !== candidate) continue;
     await fs.writeFile(
-      directory + "/local-session.json",
+      directory +
+        (nextAccount ? "/next-account-session.json" : "/local-session.json"),
       JSON.stringify({
         cookies,
         origins: [],
@@ -80,12 +90,17 @@ try {
     platform: capturedPlatform,
     closedBeforeCapture: closed,
     source: "native browser user/me",
+    profile: nextAccount ? "next-account" : "original",
   };
   await fs.writeFile(
-    directory + "/login-receipt.json",
+    directory +
+      (nextAccount
+        ? "/next-account-login-receipt.json"
+        : "/login-receipt.json"),
     JSON.stringify(receipt, null, 2),
   );
   console.log(JSON.stringify(receipt));
+  if (!capturedPlatform) process.exitCode = 2;
 } finally {
   await context.close().catch(() => {});
 }

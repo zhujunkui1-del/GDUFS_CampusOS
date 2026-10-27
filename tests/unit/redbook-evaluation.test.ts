@@ -13,10 +13,31 @@ const state = {
     expires: -1,
   })),
 };
+it("checks the same source identity without searching or reading notes for admin status", async () => {
+  const searchNotes = vi.fn(),
+    getNoteById = vi.fn();
+  const result = await evaluateRedbook({
+    state,
+    operation: "status",
+    makeClient: async () => ({
+      getSelfInfo: async () => ({ guest: false, user_id: "fixture-auth" }),
+      searchNotes,
+      getNoteById,
+    }),
+  });
+  expect(result).toMatchObject({
+    authenticated: true,
+    status: "ok",
+    items: [],
+  });
+  expect(searchNotes).not.toHaveBeenCalled();
+  expect(getNoteById).not.toHaveBeenCalled();
+});
 it("keeps audit hashes without publishing full snippets or mutating the live evidence", () => {
   const raw = {
     items: [{ snippet: "Fixture private audit excerpt" }],
     answer: "Fixture model answer",
+    response: "Fixture streamed model answer",
   };
   const receipt = publicEvaluationReceipt(raw);
   expect(receipt).not.toHaveProperty("items.0.snippet");
@@ -25,6 +46,7 @@ it("keeps audit hashes without publishing full snippets or mutating the live evi
     raw.items[0].snippet.length,
   );
   expect(receipt).not.toHaveProperty("answer");
+  expect(receipt).not.toHaveProperty("response");
   expect(raw.items[0].snippet).toBe("Fixture private audit excerpt");
 });
 it("matches real note identities independently of tracking parameters without accepting foreign hosts", () => {

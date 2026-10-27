@@ -1,5 +1,6 @@
 import { Container } from "@cloudflare/containers";
 import { RelayInputSchema } from "../../src/domain/retrieval/relay";
+import { redbookSearch, redbookSession } from "./redbook.mjs";
 export { ManagedXhs } from "./managed-xhs.mjs";
 const json = (status, data) =>
   Response.json(data, { status, headers: { "Cache-Control": "no-store" } });
@@ -85,6 +86,9 @@ const worker = {
       headers: request.headers,
       body: JSON.stringify(input),
     });
+    if (path === "/v1/search" && input.kind === "xiaohongshu")
+      return redbookSearch(env, input);
+    if (path.startsWith("/v1/session/")) return redbookSession(env, forwarded);
     if (
       path.startsWith("/v1/session/") ||
       path === "/maintenance/managed-restart" ||
@@ -92,7 +96,9 @@ const worker = {
       input.kind === "xiaohongshu"
     ) {
       if (!env.PROFILE_KEY) return json(503, { status: "not_configured" });
-      return env.MANAGED_XHS.getByName("campusos-preview-xhs-v2").fetch(forwarded);
+      return env.MANAGED_XHS.getByName("campusos-preview-xhs-v2").fetch(
+        forwarded,
+      );
     }
     return env.SEARCH_CONTAINER.getByName("campusos-preview-source").fetch(
       forwarded,

@@ -1,0 +1,191 @@
+{
+  "evidence": [
+    {
+      "prompt": "广外南校一饭有什么好吃的？简短说两条，根据实际搜到的学生体验回答并注明来源。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "cards": [
+        {
+          "kind": "source",
+          "documentId": "wx-54bf5edeeb7212240c45002b1c63cc403820ebd0",
+          "title": "最新！2027《麦考林》加拿大大学排名发布！分类规则迎来重大调整！！",
+          "sourceName": "广外留学服务中心",
+          "originalUrl": "https://mp.weixin.qq.com/s/IFijxYVhBmFv0a5LUYeRPQ",
+          "publishedAt": "2026-10-19T09:15:00.000Z",
+          "snippetChars": 780,
+          "snippetSha256": "f66c205cc8a66774359d12a27dfffebca32ae67e8bc35d18f2daba53fc1577f1",
+          "evidenceType": "full_text",
+          "classificationState": "unknown",
+          "validity": "unknown",
+          "readable": true
+        },
+        {
+          "kind": "source",
+          "documentId": "wx-6574a49974e1fbff434ba622c3ef185b0651690e",
+          "title": "新书速递｜馆藏上新，9月好书邀您品读",
+          "sourceName": "悦读广外",
+          "originalUrl": "https://mp.weixin.qq.com/s/lJkohiWjK86qyIclmO9Wdw",
+          "publishedAt": "2026-10-19T04:12:00.000Z",
+          "snippetChars": 780,
+          "snippetSha256": "2993ac3371033042743edba567a4605fea1bcfccd25e3e6f8204ad39e9f6e386",
+          "evidenceType": "full_text",
+          "classificationState": "unknown",
+          "validity": "unknown",
+          "readable": true
+        },
+        {
+          "kind": "source",
+          "documentId": "wx-ff5e13f5a975bff07579e08aca6b535a7c658388",
+          "title": "Light义修 _ 2026大学生笔记本电脑推荐指南",
+          "sourceName": "广外light志愿者协会",
+          "originalUrl": "https://mp.weixin.qq.com/s/AxfvjIECKTju9ZAtoYiEAw",
+          "publishedAt": "2026-08-02T06:52:40.000Z",
+          "snippetChars": 780,
+          "snippetSha256": "ce0e07e712f811b8424fbc67229b05b99b05b1466a8274f95c0b1c49eaaf49cc",
+          "evidenceType": "full_text",
+          "classificationState": "unknown",
+          "validity": "unknown",
+          "readable": true
+        },
+        {
+          "kind": "external_source",
+          "title": "#萌新听我说#广东外语外贸大学-百度经验",
+          "sourceName": "jingyan.baidu.com",
+          "originalUrl": "https://jingyan.baidu.com/article/335530da5dff5658ca41c324.html",
+          "publishedAt": null,
+          "snippetChars": 651,
+          "snippetSha256": "d129d557b853866252da2cc3c3621785f31d6f0927388ebf726b8d66687a9cdf",
+          "authority": "unverified",
+          "evidenceKind": "search_excerpt",
+          "searchMode": "web"
+        },
+        {
+          "kind": "external_source",
+          "title": "广外南北校区饭堂哪一个最好吃？最好吃的竟然是……",
+          "sourceName": "mp.weixin.qq.com",
+          "originalUrl": "https://mp.weixin.qq.com/s/gDKCtUV59Z3mB7G8Bu9JzQ",
+          "publishedAt": null,
+          "snippetChars": 700,
+          "snippetSha256": "e191efe03b975fa9da0004121d7493f56d336864981e3bb04f5badb5aa0ba915",
+          "authority": "unverified",
+          "evidenceKind": "search_excerpt",
+          "searchMode": "web"
+        }
+      ],
+      "result": {
+        "conversationId": "3e467d57-dcda-4c16-aa06-f68aa3a68cc4",
+        "requestId": "8b0ae46f-8ab4-4d26-81b8-bea627c10e9b",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 2591,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1618,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 3423,
+              "firstTextMs": 2974
+            }
+          ],
+          "promptTokens": 10028,
+          "completionTokens": 793,
+          "cachedPromptTokens": 0,
+          "totalTokens": 10821,
+          "usageComplete": true,
+          "chargedTokens": 10821,
+          "durationMs": 11355,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 175,
+            "serverElapsedMs": 11530,
+            "firstTextMs": 11069,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 229,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 3407,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 13,
+              "writeQueries": 12,
+              "calls": 17,
+              "failures": 0,
+              "durationMs": 491,
+              "maxCallMs": 177,
+              "rowsRead": 1329,
+              "rowsWritten": 15,
+              "rowUsageStatements": 15,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 1040,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 229,
+                "candidateChunks": 96,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "partial",
+                "durationMs": 3407,
+                "providers": [
+                  {
+                    "provider": "xiaohongshu_redbook_cloud",
+                    "status": "unavailable",
+                    "durationMs": 1070,
+                    "count": 0,
+                    "cacheHit": false
+                  },
+                  {
+                    "provider": "exa_web_cloud",
+                    "status": "ok",
+                    "durationMs": 1151,
+                    "count": 2
+                  },
+                  {
+                    "provider": "exa_web_cloud",
+                    "status": "empty",
+                    "durationMs": 1213,
+                    "count": 0
+                  }
+                ],
+                "rowsRead": 0,
+                "rowsWritten": 0
+              }
+            ]
+          }
+        }
+      },
+      "responseChars": 126,
+      "responseSha256": "d4f2fee532a745b6066c5b34f2d394ed315006f19f3520540d77fca4956f5f56",
+      "responseHeadersMs": 343,
+      "firstTextMs": 11698,
+      "completeMs": 11782
+    }
+  ],
+  "answerChars": 120,
+  "answerSha256": "cd09adb32f8755b52873f9331ac695f5fa58a195795f2e5cbd492228cb051e89"
+}

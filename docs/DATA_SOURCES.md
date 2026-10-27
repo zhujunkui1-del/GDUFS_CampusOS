@@ -575,3 +575,9 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 本人在专用浏览器正常登录授权后，redbook0.8.2在本机与独立Cloudflare容器使用同一份独立加密快照；原站身份/搜索/正文API实际成功，不自行改签名、换代理或处理验证码。关键词包括广外南校一饭、南苑宿舍、南校食堂推荐。真实来源示例为 https://www.xiaohongshu.com/explore/68d40b05000000001300e27a （公开个人饭堂推/雷体验，2025年）与 https://www.xiaohongshu.com/explore/6a9d2b560000000012024de5 （公开食堂体验，2026年）。完整可打开的原文链接随回执保留，接口实际公布时间与取得时间独立。
 
 仅作为学生经验/线索，不验证作者学生身份、不确认政策时限或当前营业。模型真实调用并引用两篇正文，精确引句核对通过；未将笔记、图片或评论入公开文章库/官方RAG，不改地图。公开交付保留文本哈希/长度与最短引句节选，完整临时验收材料留忽略目录，运行时不回读冒充搜索。Cookie及密钥不在回执/Git/模型输入。精确范围、版本和未完成项见 verification/redbook-evaluation-2026-10-27/README.md。
+
+## 2026-10-27｜小红书新账号云端授权与临时经验引用
+
+负责人本人在全新Edge资料目录完成新账号授权，源站非游客确认后仅导出必要会话，私有API再次复核后AES-GCM存私有R2；不记录身份或Cookie到本文件。主账号停用，旧Browser Run自动恢复路径已关闭。真实Preview使用redbook0.8.2只读搜索及最多2篇正文片段；最终样本引用真实笔记6aae9346000000002a02e1f5，原文链接保留在verification/redbook-switch-2026-10-27/next-account/rendered-citations.json。
+
+学生口味只属作者体验，不确认官方规定、现行营业或地理坐标，不入公共文章库。源码依据https://github.com/lucasygu/redbook；账号授权不等于平台提供官方通用API或永久稳定许可。原文长片段及完整模型输出只留本机忽略目录，公开验收保留哈希/长度；运行时不使用这些回执生成搜索结果。

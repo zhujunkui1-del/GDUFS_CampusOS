@@ -23,5 +23,10 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", ".open-next", "CampusOS_Codex_完整设计文档_v2"]
+  "exclude": [
+    "node_modules",
+    ".open-next",
+    "CampusOS_Codex_完整设计文档_v2",
+    "services/external-search/runtime"
+  ]
 }

@@ -6,6 +6,9 @@
   "compatibility_date": "2026-10-26",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
+  "services": [
+    { "binding": "REDBOOK_SEARCH", "service": "campusos-xhs-redbook-eval" },
+  ],
   "browser": { "binding": "BROWSER" },
   "observability": { "enabled": true },
   "containers": [

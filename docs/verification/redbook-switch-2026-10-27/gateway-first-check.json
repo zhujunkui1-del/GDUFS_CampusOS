@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-27T09:12:15.107Z",
+  "tests": [
+    {
+      "path": "/v1/session/status",
+      "http": 200,
+      "state": "login_required",
+      "checkedAt": 1793092335644,
+      "qr": null,
+      "qrExpiresAt": null
+    },
+    {
+      "path": "/v1/search",
+      "kind": "xiaohongshu",
+      "http": 200,
+      "provider": "xiaohongshu_redbook_cloud",
+      "status": "login_required",
+      "items": [],
+      "durationMs": 553,
+      "cacheHit": false
+    },
+    {
+      "path": "/v1/search",
+      "kind": "web",
+      "http": 200,
+      "provider": "exa_web_cloud",
+      "status": "unavailable",
+      "items": [],
+      "durationMs": 800,
+      "failureCode": "HTTP_ERROR"
+    }
+  ]
+}

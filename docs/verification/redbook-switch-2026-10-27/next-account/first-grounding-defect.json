@@ -1,0 +1,156 @@
+{
+  "evidence": [
+    {
+      "prompt": "广外南校一饭有什么好吃的？简短说两条，根据实际搜到的学生体验回答并注明来源。",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "actions": [],
+      "cards": [
+        {
+          "kind": "external_source",
+          "title": "小红书笔记",
+          "sourceName": "小红书 · 饭饭",
+          "originalUrl": "https://www.xiaohongshu.com/explore/6ad446dd000000000c009fe6?xsec_token=ABTjUzKUcQKIb3a0HAJ8GDc8tNoEnv31pTNrtyNHy6u-w%3D&xsec_source=pc_search",
+          "publishedAt": "2026-10-18T04:11:10.000Z",
+          "snippetChars": 93,
+          "snippetSha256": "faaae5bbf58f35834ee2d101d16f43017dea373d896f833af76758462f4d01ef",
+          "authority": "student_experience",
+          "evidenceKind": "page_excerpt",
+          "searchMode": "platform"
+        },
+        {
+          "kind": "external_source",
+          "title": "广外饭堂｜好吃的饭菜推荐❗️❗️",
+          "sourceName": "小红书 · 广外帮帮🐱",
+          "originalUrl": "https://www.xiaohongshu.com/explore/68c8fd790000000007029bf9?xsec_token=AB6SpmxDfAxtUy_j2OWS_Jqp06cqawFI1PulqpEHixBIQ%3D&xsec_source=pc_search",
+          "publishedAt": "2025-09-16T06:02:33.000Z",
+          "snippetChars": 263,
+          "snippetSha256": "32b64514c98d960d9d71df2cf11b52cd543fdc9bc7c7c5699cc4a4ceb38520a4",
+          "authority": "student_experience",
+          "evidenceKind": "page_excerpt",
+          "searchMode": "platform"
+        },
+        {
+          "kind": "external_source",
+          "title": "广外女大｜等你下课一起走好吗",
+          "sourceName": "小红书 · 心碎蓝莓酱",
+          "originalUrl": "https://www.xiaohongshu.com/explore/68ef3eb90000000004001f92?xsec_token=ABSaVotHlS4HrMLp_TaU97ZD-lLUf2B2ZdqPsi6GWgou8%3D&xsec_source=pc_search",
+          "publishedAt": null,
+          "snippetChars": 14,
+          "snippetSha256": "af3c2ec47d4a44ab697b272a2acf682ae86d665b682ac803d622ba7b09e727d1",
+          "authority": "student_experience",
+          "evidenceKind": "title_only",
+          "searchMode": "platform"
+        }
+      ],
+      "result": {
+        "conversationId": "2546d0f4-cf4f-4120-aafd-2193566dfa9e",
+        "requestId": "7467d5dd-bf2f-4400-88d7-d5743b06b3d2",
+        "metrics": {
+          "requests": 3,
+          "correctionRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 2959,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 1197,
+              "firstTextMs": null
+            },
+            {
+              "durationMs": 2613,
+              "firstTextMs": 953
+            }
+          ],
+          "promptTokens": 5090,
+          "completionTokens": 545,
+          "cachedPromptTokens": 0,
+          "totalTokens": 5635,
+          "usageComplete": true,
+          "chargedTokens": 5635,
+          "durationMs": 9650,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 184,
+            "serverElapsedMs": 9834,
+            "firstTextMs": 8159,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 20,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 2776,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 12,
+              "writeQueries": 12,
+              "calls": 16,
+              "failures": 0,
+              "durationMs": 289,
+              "maxCallMs": 33,
+              "rowsRead": 294,
+              "rowsWritten": 15,
+              "rowUsageStatements": 14,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "queries": 1,
+                "durationMs": 20,
+                "candidateChunks": 0,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "partial",
+                "durationMs": 2776,
+                "providers": [
+                  {
+                    "provider": "xiaohongshu_redbook_cloud",
+                    "status": "ok",
+                    "durationMs": 2541,
+                    "count": 3,
+                    "cacheHit": false
+                  },
+                  {
+                    "provider": "exa_web_cloud",
+                    "status": "unavailable",
+                    "durationMs": 319,
+                    "count": 0,
+                    "failureCode": "HTTP_ERROR"
+                  }
+                ],
+                "rowsRead": 0,
+                "rowsWritten": 0
+              }
+            ]
+          }
+        }
+      },
+      "responseChars": 275,
+      "responseSha256": "77e53de55fa8fe0dbd39f03a963a5668828fc5e822e08d8d5174d93e1915a127",
+      "responseHeadersMs": 481,
+      "firstTextMs": 10006,
+      "completeMs": 10105
+    }
+  ],
+  "answerChars": 258,
+  "answerSha256": "1cf0d780a4b85d68f9e74a9f23007464ba2d5adf32d21b60d856d0f51af33f97"
+}
