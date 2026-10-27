@@ -65,14 +65,14 @@ it("keeps the concrete person across multiple followups and persona-only turns",
     "戴建业是广外云山工作室首席专家吗",
     "那他属于南校吗",
     "别演了",
-  ].map((text) => ({ role: "user" as const, text, cards: [] }));
+  ].map((text, i) => ({ id: "fixture-" + i, role: "user" as const, text, cards: [] }));
   const result = contentIntent("他是哪个学院的呢", history);
   expect(result.query).toContain("戴建业");
   expect(result.query).not.toContain("别演了");
   expect(personaTone(result.query, defaultPersona())).toBe("professional");
   const dates = contentIntent(
     "那下周呢",
-    [{ role: "user", text: "本周有什么讲座", cards: [] }],
+    [{ id: "fixture-date", role: "user", text: "本周有什么讲座", cards: [] }],
     Date.parse("2026-10-27T00:00:00Z"),
   );
   expect(dates.timeWindow?.after).toBe("2026-11-02");
