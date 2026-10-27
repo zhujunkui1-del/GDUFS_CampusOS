@@ -81,8 +81,9 @@ const worker = {
             input.limit < 1 ||
             input.limit > 4)) ||
         Object.keys(input).some(
-          (k) => !["query", "platform", "limit"].includes(k),
-        ))
+          (k) => !["query", "platform", "limit", "sort"].includes(k),
+        ) ||
+        (input.sort !== undefined && input.sort !== "time_descending"))
     )
       return json(400, { error: "input" });
     if (path === "/status" && Object.keys(input).length)

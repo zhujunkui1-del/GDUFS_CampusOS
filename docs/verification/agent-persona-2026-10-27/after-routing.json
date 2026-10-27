@@ -1,0 +1,669 @@
+{
+  "at": "2026-10-27T15:42:13.119Z",
+  "kind": "offline routing contract only; not model or provider acceptance",
+  "total": 30,
+  "passed": 28,
+  "failed": 2,
+  "rows": [
+    {
+      "id": "R01",
+      "message": "来点这一周广外发生的有趣的事情，用小红书来查",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        },
+        {
+          "rule": "server_time_constraint",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "events",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R02",
+      "message": "最近一周广外有什么校园趣事",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "server_time_constraint",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "events",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R03",
+      "message": "本周有哪些讲座",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "server_time_constraint",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "events",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R04",
+      "message": "过去7天发布了哪些校园新闻",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "server_time_constraint",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "events",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R05",
+      "message": "下周有什么竞赛",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "server_time_constraint",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "events",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R06",
+      "message": "今天还有什么活动",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "server_time_constraint",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "events",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R07",
+      "message": "广外一饭有什么好吃的",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_knowledge"
+        ],
+        "intent": "experience",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R08",
+      "message": "南苑宿舍住起来怎么样",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_knowledge"
+        ],
+        "intent": "mixed",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R09",
+      "message": "奖学金申请截止日期是什么时候",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": false
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        }
+      ],
+      "pass": false,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "official",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R10",
+      "message": "广外图书馆借阅规则是什么",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_knowledge"
+        ],
+        "intent": "official",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R11",
+      "message": "戴建业是广外的首席专家吗",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_knowledge"
+        ],
+        "intent": "official",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R12",
+      "message": "正经点查奖学金的申请条件",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_knowledge"
+        ],
+        "intent": "official",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R13",
+      "message": "操你妈",
+      "checks": [
+        {
+          "rule": "social_without_topic_or_lookup",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R14",
+      "message": "666",
+      "checks": [
+        {
+          "rule": "social_without_topic_or_lookup",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R15",
+      "message": "你这回答什么东西",
+      "checks": [
+        {
+          "rule": "social_without_topic_or_lookup",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R16",
+      "message": "我真服了",
+      "checks": [
+        {
+          "rule": "social_without_topic_or_lookup",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R17",
+      "message": "谢谢",
+      "checks": [
+        {
+          "rule": "social_without_topic_or_lookup",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R18",
+      "message": "你好",
+      "checks": [
+        {
+          "rule": "social_without_topic_or_lookup",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R19",
+      "message": "哈哈哈",
+      "checks": [
+        {
+          "rule": "social_without_topic_or_lookup",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R20",
+      "message": "好的",
+      "checks": [
+        {
+          "rule": "social_without_topic_or_lookup",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R21",
+      "message": "图书馆",
+      "checks": [
+        {
+          "rule": "preserve_map",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R22",
+      "message": "从南苑7栋去图书馆",
+      "checks": [
+        {
+          "rule": "preserve_map",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R23",
+      "message": "切换3D",
+      "checks": [
+        {
+          "rule": "preserve_map",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R24",
+      "message": "请清除路线",
+      "checks": [
+        {
+          "rule": "preserve_map",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [],
+        "intent": "general",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R25",
+      "message": "本周校园活动，用小红书查",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        },
+        {
+          "rule": "server_time_constraint",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "events",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R26",
+      "message": "过去一周的校园分享，只看小红书",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        },
+        {
+          "rule": "server_time_constraint",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "events",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R27",
+      "message": "最近学校有什么活动",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "events",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R28",
+      "message": "只用内部查本周活动",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        },
+        {
+          "rule": "server_time_constraint",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "events",
+        "nativeEligible": true
+      }
+    },
+    {
+      "id": "R29",
+      "message": "小红书上查奖学金截止日期",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": false
+        },
+        {
+          "rule": "source_intent",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        }
+      ],
+      "pass": false,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "official",
+        "nativeEligible": false
+      }
+    },
+    {
+      "id": "R30",
+      "message": "最近一周广外新闻，不要联网",
+      "checks": [
+        {
+          "rule": "content_tool",
+          "pass": true
+        },
+        {
+          "rule": "native_eligible",
+          "pass": true
+        },
+        {
+          "rule": "server_time_constraint",
+          "pass": true
+        }
+      ],
+      "pass": true,
+      "observed": {
+        "tools": [
+          "search_campus_events"
+        ],
+        "intent": "events",
+        "nativeEligible": true
+      }
+    }
+  ]
+}

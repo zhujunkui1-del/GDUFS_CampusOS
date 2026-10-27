@@ -12,11 +12,13 @@ import {
 } from "./providers";
 import type { ExternalPolicy } from "./policy";
 import { ApiError } from "../errors";
+import { withinWindow, type TimeWindow } from "../assistant/time-window";
 export function registerExternalSearch(
   registry: SkillRegistry,
   policy: ExternalPolicy,
   config: ExternalConfig,
   hasInternalAttempt: () => boolean,
+  timeWindow?: TimeWindow,
 ) {
   let attempted = false;
   return registry.register("knowledge-domain", {
@@ -82,16 +84,24 @@ export function registerExternalSearch(
               onlyXhs,
               config.exaApiKey,
             );
-      if (policy.useXiaohongshu && policy.intent !== "events") {
+      if (policy.useXiaohongshu) {
         results = await Promise.all([
-          searchXiaohongshu(query, input.limit, config, signal),
-          ...(config.webEnabled !== false
+          searchXiaohongshu(
+            query,
+            input.limit,
+            config,
+            signal,
+            fetch,
+            !!timeWindow,
+          ),
+          ...(config.webEnabled !== false && !policy.onlyXhs
             ? [web({ ...policy, officialOnly: policy.intent === "mixed" }, 2)]
             : []),
         ]);
         if (
           !results[0].items.length &&
           config.webEnabled !== false &&
+          !policy.onlyXhs &&
           !signal.aborted
         )
           results.push(await web(policy, input.limit, true));
@@ -102,8 +112,16 @@ export function registerExternalSearch(
         ...new Map(
           results.flatMap((r) => r.items).map((i) => [i.originalUrl, i]),
         ).values(),
-      ].slice(0, 6);
+      ]
+        .filter(
+          (item) => !timeWindow || withinWindow(item.publishedAt, timeWindow),
+        )
+        .slice(0, 6);
       const warnings: string[] = [];
+      if (timeWindow)
+        warnings.push(
+          `仅返回发布日期在${timeWindow.after}至${timeWindow.before}的资料；发布日期不证明活动在此期间发生，日期未知结果不作为该时间段证据。`,
+        );
       if (items.some((i) => i.authority === "student_experience"))
         warnings.push(
           "学生经验仅供参考，不能确认学校政策、正式活动或截止日期。",

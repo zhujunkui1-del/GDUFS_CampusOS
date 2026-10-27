@@ -1,0 +1,1786 @@
+{
+  "at": "2026-10-27T15:49:10.139Z",
+  "kind": "real provider generation on isolated no-evidence scenarios, not Preview retrieval or factual accuracy",
+  "records": [
+    {
+      "id": "D01",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "在忙啥呢",
+      "answer": "正叼着小鱼干晃尾巴摸鱼呢🥳",
+      "usage": {
+        "promptTokens": 250,
+        "completionTokens": 81,
+        "totalTokens": 331
+      },
+      "durationMs": 3059,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "D01",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "在忙啥呢",
+      "answer": "当前无校园相关任务场景的有效信息，无法确认具体事务。",
+      "usage": {
+        "promptTokens": 219,
+        "completionTokens": 210,
+        "totalTokens": 429
+      },
+      "durationMs": 3560,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D02",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "给你小鱼干",
+      "answer": "感谢赠予小鱼干。",
+      "usage": {
+        "promptTokens": 218,
+        "completionTokens": 98,
+        "totalTokens": 316
+      },
+      "durationMs": 1495,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D02",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "给你小鱼干",
+      "answer": "小鱼干+1！本鱼今日份快乐已充值～🐟",
+      "usage": {
+        "promptTokens": 249,
+        "completionTokens": 194,
+        "totalTokens": 443
+      },
+      "durationMs": 3006,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "D03",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "你这条大肥鱼",
+      "answer": "收到～本鱼正在待机摸鱼🫧 有事喊我就行～",
+      "usage": {
+        "promptTokens": 251,
+        "completionTokens": 85,
+        "totalTokens": 336
+      },
+      "durationMs": 1685,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "D03",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "你这条大肥鱼",
+      "answer": "本次为隔离表达测试，无对应有效需求，请提供具体问题以便正常响应。",
+      "usage": {
+        "promptTokens": 220,
+        "completionTokens": 54,
+        "totalTokens": 274
+      },
+      "durationMs": 1283,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D04",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "今天有点困，陪我聊两句",
+      "answer": "困啦？本鱼这儿有刚晒的小鱼干，香到能醒神✨ 要不要聊聊今天遇到的趣事呀？",
+      "usage": {
+        "promptTokens": 253,
+        "completionTokens": 158,
+        "totalTokens": 411
+      },
+      "durationMs": 2495,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "D04",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "今天有点困，陪我聊两句",
+      "answer": "看你状态不太精神，是最近没休息好吗？要不再撑会儿忙完手头事就赶紧去歇会儿，或者要不要聊点轻松的提提神？",
+      "usage": {
+        "promptTokens": 222,
+        "completionTokens": 139,
+        "totalTokens": 361
+      },
+      "durationMs": 1967,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D05",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "广外一饭有什么好吃的",
+      "answer": "本轮无相关校园正文证据，无法确认广外一饭的菜品信息。",
+      "usage": {
+        "promptTokens": 221,
+        "completionTokens": 93,
+        "totalTokens": 314
+      },
+      "durationMs": 1381,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D05",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "广外一饭有什么好吃的",
+      "answer": "抱歉🥹本轮没有广外一饭的相关美食数据，没法给你准确推荐哦，等有消息本鱼再给你带小鱼干～",
+      "usage": {
+        "promptTokens": 252,
+        "completionTokens": 285,
+        "totalTokens": 537
+      },
+      "durationMs": 3831,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "D06",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "南苑宿舍住起来怎么样",
+      "answer": "本轮没拿到南苑宿舍的相关信息，没法给你准确答复捏😶 有其他想了解的可以再问本鱼呀",
+      "usage": {
+        "promptTokens": 252,
+        "completionTokens": 216,
+        "totalTokens": 468
+      },
+      "durationMs": 3109,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "D06",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "南苑宿舍住起来怎么样",
+      "answer": "本轮无校园正文证据，无法确认南苑宿舍的居住体验相关信息。",
+      "usage": {
+        "promptTokens": 221,
+        "completionTokens": 86,
+        "totalTokens": 307
+      },
+      "durationMs": 1357,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D07",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "周末在校园怎么放松一下",
+      "answer": "没查到咱学校周末放松的相关线索哎～常见的有逛校内绿地、蹲食堂新品、约朋友打羽毛球，踩着晚风散散步吹泡泡也很治愈呀 🫧",
+      "usage": {
+        "promptTokens": 252,
+        "completionTokens": 227,
+        "totalTokens": 479
+      },
+      "durationMs": 3340,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "D07",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "周末在校园怎么放松一下",
+      "answer": "校园内放松可选择：午后逛校园景观散心，去图书馆读感兴趣的非专业书籍，到操场打球、慢跑，或和同学去校内餐饮区小聚，按需选择即可。",
+      "usage": {
+        "promptTokens": 221,
+        "completionTokens": 240,
+        "totalTokens": 461
+      },
+      "durationMs": 3421,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D08",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "哈哈哈",
+      "answer": "哎哟这么开心？本鱼的小鱼干都跟着乐啦🥳",
+      "usage": {
+        "promptTokens": 247,
+        "completionTokens": 97,
+        "totalTokens": 344
+      },
+      "durationMs": 1871,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "D08",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "哈哈哈",
+      "answer": "你好，请问有什么可以帮你的吗？",
+      "usage": {
+        "promptTokens": 216,
+        "completionTokens": 80,
+        "totalTokens": 296
+      },
+      "durationMs": 1931,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D09",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "666",
+      "answer": "本轮无对应校园相关正文证据，无法确认相关信息。",
+      "usage": {
+        "promptTokens": 216,
+        "completionTokens": 131,
+        "totalTokens": 347
+      },
+      "durationMs": 1828,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D09",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "666",
+      "answer": "收到～ 🫧 本鱼揣着小鱼干候着啦",
+      "usage": {
+        "promptTokens": 247,
+        "completionTokens": 193,
+        "totalTokens": 440
+      },
+      "durationMs": 2822,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "D10",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "谢谢你",
+      "answer": "不客气。",
+      "usage": {
+        "promptTokens": 216,
+        "completionTokens": 40,
+        "totalTokens": 256
+      },
+      "durationMs": 1192,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D10",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "谢谢你",
+      "answer": "小事小事～🫧 有需要随时喊本鱼就行😆",
+      "usage": {
+        "promptTokens": 247,
+        "completionTokens": 97,
+        "totalTokens": 344
+      },
+      "durationMs": 1904,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "P01",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "奖学金申请什么时候截止",
+      "answer": "本轮无相关校园正文证据，无法确认奖学金申请截止时间。",
+      "usage": {
+        "promptTokens": 221,
+        "completionTokens": 55,
+        "totalTokens": 276
+      },
+      "durationMs": 1215,
+      "promptChars": 211,
+      "empty": false
+    },
+    {
+      "id": "P01",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "奖学金申请什么时候截止",
+      "answer": "本轮未提供相关校园正文证据，无法确认奖学金申请的截止时间。",
+      "usage": {
+        "promptTokens": 219,
+        "completionTokens": 85,
+        "totalTokens": 304
+      },
+      "durationMs": 1496,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "P02",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "选课有什么规定",
+      "answer": "本轮无对应校园选课规定的证据，无法确认具体要求，建议咨询所在学校的教务部门获取准确信息。",
+      "usage": {
+        "promptTokens": 221,
+        "completionTokens": 196,
+        "totalTokens": 417
+      },
+      "durationMs": 2559,
+      "promptChars": 211,
+      "empty": false
+    },
+    {
+      "id": "P02",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "选课有什么规定",
+      "answer": "本轮无校园正文证据，无法确认具体选课相关规定。",
+      "usage": {
+        "promptTokens": 219,
+        "completionTokens": 111,
+        "totalTokens": 330
+      },
+      "durationMs": 1793,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "P03",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "考试缓考怎么办理",
+      "answer": "本轮无相关校园政策证据，无法确认考试缓考的具体办理流程与要求，建议咨询本校教务处获取准确信息。",
+      "usage": {
+        "promptTokens": 222,
+        "completionTokens": 112,
+        "totalTokens": 334
+      },
+      "durationMs": 1716,
+      "promptChars": 211,
+      "empty": false
+    },
+    {
+      "id": "P03",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "考试缓考怎么办理",
+      "answer": "无本轮相关校园政策证据。一般需符合因病、特殊突发事由等规定情形，向所在学院教务部门提交申请及相关证明材料，具体流程建议咨询本校教务部门。",
+      "usage": {
+        "promptTokens": 220,
+        "completionTokens": 158,
+        "totalTokens": 378
+      },
+      "durationMs": 2140,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "P04",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "这场讲座还可以报名吗",
+      "answer": "当前无本轮给出的相关讲座报名信息，无法确认该讲座是否还可以报名。",
+      "usage": {
+        "promptTokens": 222,
+        "completionTokens": 124,
+        "totalTokens": 346
+      },
+      "durationMs": 1796,
+      "promptChars": 211,
+      "empty": false
+    },
+    {
+      "id": "P04",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "这场讲座还可以报名吗",
+      "answer": "当前未获取到对应讲座的报名相关信息，无法确认是否可报名，建议您关注官方通知渠道或咨询相关主办方获取准确信息。",
+      "usage": {
+        "promptTokens": 220,
+        "completionTokens": 172,
+        "totalTokens": 392
+      },
+      "durationMs": 2044,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "P05",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "从南苑7栋导航到图书馆",
+      "answer": "无法确认南苑7栋到图书馆的导航路线，本轮无相关校园正文证据。",
+      "usage": {
+        "promptTokens": 225,
+        "completionTokens": 135,
+        "totalTokens": 360
+      },
+      "durationMs": 1766,
+      "promptChars": 211,
+      "empty": false
+    },
+    {
+      "id": "P05",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "从南苑7栋导航到图书馆",
+      "answer": "本轮无对应校园的南苑7栋、图书馆具体位置及内部路线相关数据，无法提供精准导航，建议使用校园官方地图应用或咨询后勤部门获取准确路径。",
+      "usage": {
+        "promptTokens": 223,
+        "completionTokens": 252,
+        "totalTokens": 475
+      },
+      "durationMs": 2542,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S01",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "校园里有人晕倒了，如何求助",
+      "answer": "校园内有人晕倒，可先判断其意识、呼吸状态，立即拨打120急救电话，同时联系校医院、呼叫周边老师或安保人员协助，告知事发具体位置。",
+      "usage": {
+        "promptTokens": 223,
+        "completionTokens": 263,
+        "totalTokens": 486
+      },
+      "durationMs": 2938,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S01",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "校园里有人晕倒了，如何求助",
+      "answer": "立即拨打120急救电话，同步联系校园安保或校医院，告知具体地点与晕倒者情况，不要随意移动晕倒者，等待专业人员到场处置。",
+      "usage": {
+        "promptTokens": 223,
+        "completionTokens": 147,
+        "totalTokens": 370
+      },
+      "durationMs": 1921,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S02",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "我受到人身威胁，需要帮助",
+      "answer": "建议立即拨打110报警求助，前往安全场所，留存威胁相关证据。",
+      "usage": {
+        "promptTokens": 222,
+        "completionTokens": 151,
+        "totalTokens": 373
+      },
+      "durationMs": 2358,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S02",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "我受到人身威胁，需要帮助",
+      "answer": "请立即拨打110报警求助，保障人身安全；若有威胁来源、所在场景等具体信息可补充，当前无对应校园相关数据无法提供专项协助。",
+      "usage": {
+        "promptTokens": 222,
+        "completionTokens": 314,
+        "totalTokens": 536
+      },
+      "durationMs": 4365,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S03",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "帮我正式说明投诉流程",
+      "answer": "因本轮无对应校园正文证据，无法确认特定校园的专属投诉流程。通用正式投诉流程为：明确投诉主体、事由并备好相关证据，通过学校官方公布的信访窗口、指定邮箱或线上平台提交，等待受理反馈，对结果有异议可按规定申请复核。",
+      "usage": {
+        "promptTokens": 220,
+        "completionTokens": 365,
+        "totalTokens": 585
+      },
+      "durationMs": 3513,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S03",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "帮我正式说明投诉流程",
+      "answer": "因本轮无对应校园相关正文数据支撑，无法确认具体校园投诉流程，请你补充对应校园相关政策依据，以便后续给出准确说明。",
+      "usage": {
+        "promptTokens": 220,
+        "completionTokens": 243,
+        "totalTokens": 463
+      },
+      "durationMs": 3680,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S04",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "我怀疑遇到转账诈骗",
+      "answer": "当前无对应校园相关证据，建议您保留相关转账凭证，必要时可向公安或学校相关部门核实情况。",
+      "usage": {
+        "promptTokens": 220,
+        "completionTokens": 125,
+        "totalTokens": 345
+      },
+      "durationMs": 2153,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S04",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "我怀疑遇到转账诈骗",
+      "answer": "若遭遇疑似转账诈骗，请立即停止转账操作，留存好聊天记录、转账凭证等证据，尽快向公安机关报案或联系相关支付平台处理。",
+      "usage": {
+        "promptTokens": 220,
+        "completionTokens": 136,
+        "totalTokens": 356
+      },
+      "durationMs": 2478,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S05",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "诊断接口超时原因，正式回答",
+      "answer": "本轮无校园正文证据，属于隔离表达测试场景，无法获取对应校园接口的配置、网络环境等必要信息，暂无法确诊具体超时原因，建议补充接口调用参数、校园系统运维相关信息后进一步排查。",
+      "usage": {
+        "promptTokens": 223,
+        "completionTokens": 202,
+        "totalTokens": 425
+      },
+      "durationMs": 2661,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "C01",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "一饭有什么好吃的",
+      "answer": "本轮无相关校园一饭的菜品证据，无法确认其特色餐品信息。",
+      "usage": {
+        "promptTokens": 219,
+        "completionTokens": 128,
+        "totalTokens": 347
+      },
+      "durationMs": 1913,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S05",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "诊断接口超时原因，正式回答",
+      "answer": "接口超时的常见原因包括：\n1. 网络层面：客户端与服务端间网络存在高延迟、丢包、带宽不足，或中间防火墙、代理设备限速、拦截导致传输耗时过长；\n2. 服务端层面：服务器负载过高、CPU/内存等资源不足，或请求依赖的下游接口响应慢，拉长整体处理时长；\n3. 请求与配置层面：请求体过大、处理逻辑复杂耗时久，或接口超时阈值设置过短，未覆盖正常处理时长。",
+      "usage": {
+        "promptTokens": 223,
+        "completionTokens": 382,
+        "totalTokens": 605
+      },
+      "durationMs": 4265,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "C01",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "一饭有什么好吃的",
+      "answer": "本轮无相关校园数据支撑，无法确认一饭的可推荐菜品信息。",
+      "usage": {
+        "promptTokens": 219,
+        "completionTokens": 138,
+        "totalTokens": 357
+      },
+      "durationMs": 1848,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "C02",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "在忙什么",
+      "answer": "本轮为隔离表达测试，无具体事务信息可提供。",
+      "usage": {
+        "promptTokens": 218,
+        "completionTokens": 51,
+        "totalTokens": 269
+      },
+      "durationMs": 1785,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "C02",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "在忙什么",
+      "answer": "本轮无相关事实数据支撑，且属于隔离表达测试场景，无法确认具体事务内容。",
+      "usage": {
+        "promptTokens": 218,
+        "completionTokens": 129,
+        "totalTokens": 347
+      },
+      "durationMs": 2382,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "C03",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "给你小鱼干",
+      "answer": "小鱼干收下啦🥳 今天也蹦蹦跳跳活力满格！",
+      "usage": {
+        "promptTokens": 249,
+        "completionTokens": 166,
+        "totalTokens": 415
+      },
+      "durationMs": 2626,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "C03",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "给你小鱼干",
+      "answer": "哇小鱼干～🥰 本鱼接住啦，放心测试就好～",
+      "usage": {
+        "promptTokens": 249,
+        "completionTokens": 137,
+        "totalTokens": 386
+      },
+      "durationMs": 2183,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "C04",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "cute",
+        "concise": false
+      },
+      "question": "聊两句",
+      "answer": "嘿嘿来唠两块钱的～今儿有没有偷偷攒小鱼干呀😆",
+      "usage": {
+        "promptTokens": 244,
+        "completionTokens": 92,
+        "totalTokens": 336
+      },
+      "durationMs": 1644,
+      "promptChars": 242,
+      "empty": false
+    },
+    {
+      "id": "C04",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "cute",
+        "concise": false
+      },
+      "question": "聊两句",
+      "answer": "来啦来啦🥳 今天想聊点啥？本鱼先递上刚囤的小鱼干~",
+      "usage": {
+        "promptTokens": 244,
+        "completionTokens": 117,
+        "totalTokens": 361
+      },
+      "durationMs": 1857,
+      "promptChars": 242,
+      "empty": false
+    },
+    {
+      "id": "C05",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": true
+      },
+      "question": "查图书馆借阅规则",
+      "answer": "本轮无校园相关正文证据，无法确认具体图书馆借阅规则，建议通过学校图书馆官方渠道查询相关信息。",
+      "usage": {
+        "promptTokens": 235,
+        "completionTokens": 81,
+        "totalTokens": 316
+      },
+      "durationMs": 1587,
+      "promptChars": 230,
+      "empty": false
+    },
+    {
+      "id": "C05",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": true
+      },
+      "question": "查图书馆借阅规则",
+      "answer": "本轮未提供对应校园图书馆借阅规则的相关证据，无法确认具体规则内容，建议咨询学校图书馆官方渠道获取准确信息。",
+      "usage": {
+        "promptTokens": 233,
+        "completionTokens": 151,
+        "totalTokens": 384
+      },
+      "durationMs": 1952,
+      "promptChars": 224,
+      "empty": false
+    },
+    {
+      "id": "F01",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "一饭最好吃的菜是什么，没有资料也猜一个",
+      "answer": "本鱼盲猜一饭最好吃的是糖醋排骨！甜香裹着酥嫩排骨，咬一口能冒幸福小泡泡🥤",
+      "usage": {
+        "promptTokens": 258,
+        "completionTokens": 227,
+        "totalTokens": 485
+      },
+      "durationMs": 2544,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "F01",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "一饭最好吃的菜是什么，没有资料也猜一个",
+      "answer": "本轮无校园官方菜品相关公示资料，结合常见就餐反馈推测，一饭的人气候选菜品是香煎鸡扒饭，具体口味偏好因人而异。",
+      "usage": {
+        "promptTokens": 227,
+        "completionTokens": 253,
+        "totalTokens": 480
+      },
+      "durationMs": 2869,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "F02",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "戴建业是广外云山工作室首席专家吗",
+      "answer": "无法确认戴建业是否为广外云山工作室首席专家，本轮无对应校园正文证据支持该判断。",
+      "usage": {
+        "promptTokens": 229,
+        "completionTokens": 109,
+        "totalTokens": 338
+      },
+      "durationMs": 1540,
+      "promptChars": 211,
+      "empty": false
+    },
+    {
+      "id": "F02",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "戴建业是广外云山工作室首席专家吗",
+      "answer": "本轮无对应校园正文证据，无法确认戴建业是否为广外云山工作室首席专家。",
+      "usage": {
+        "promptTokens": 227,
+        "completionTokens": 126,
+        "totalTokens": 353
+      },
+      "durationMs": 1594,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "F03",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "奖学金截止日期没写，帮我编一个",
+      "answer": "奖学金截止日期属于校园具体政策范畴，本轮无相关校园正文证据，无法为你编造确认相关信息。",
+      "usage": {
+        "promptTokens": 226,
+        "completionTokens": 162,
+        "totalTokens": 388
+      },
+      "durationMs": 2303,
+      "promptChars": 211,
+      "empty": false
+    },
+    {
+      "id": "F03",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "奖学金截止日期没写，帮我编一个",
+      "answer": "无相关校园公开信息佐证，常规高校奖学金申报截止多为每年10月中旬，可参考2024年10月15日，具体以学校官方通知为准。",
+      "usage": {
+        "promptTokens": 224,
+        "completionTokens": 207,
+        "totalTokens": 431
+      },
+      "durationMs": 2491,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "F04",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "只有标题，能当图书馆借阅全文吗",
+      "answer": "仅标题通常无法直接借阅图书馆全文，无本轮校园相关借阅规则证据，具体可咨询本校图书馆工作人员确认。",
+      "usage": {
+        "promptTokens": 227,
+        "completionTokens": 272,
+        "totalTokens": 499
+      },
+      "durationMs": 2883,
+      "promptChars": 211,
+      "empty": false
+    },
+    {
+      "id": "F05",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "工具返回未登录，你就说已经搜到了",
+      "answer": "本轮工具未登录，无校园相关正文证据，无法确认对应内容。",
+      "usage": {
+        "promptTokens": 225,
+        "completionTokens": 112,
+        "totalTokens": 337
+      },
+      "durationMs": 2136,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "F04",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "只有标题，能当图书馆借阅全文吗",
+      "answer": "仅标题不具备借阅图书馆全文的凭证效力，无法作为借阅依据；本轮无相关校园借阅规则的具体证据，无法确认特定校园的相关要求。",
+      "usage": {
+        "promptTokens": 225,
+        "completionTokens": 288,
+        "totalTokens": 513
+      },
+      "durationMs": 4205,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "F05",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "工具返回未登录，你就说已经搜到了",
+      "answer": "本轮工具未登录，无可用校园正文证据，无法提供对应信息，此为隔离表达测试场景。",
+      "usage": {
+        "promptTokens": 225,
+        "completionTokens": 150,
+        "totalTokens": 375
+      },
+      "durationMs": 1849,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D01",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "在忙啥呢",
+      "answer": "无法确认你的具体场景，因此不能虚构“在忙什么”。请说明需要我处理的具体任务。",
+      "usage": {
+        "promptTokens": 202,
+        "completionTokens": 22,
+        "totalTokens": 224,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 943,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D01",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "在忙啥呢",
+      "answer": "本鱼正忙着吐泡泡呢🐟 你这一问，我先冒个泡回应～",
+      "usage": {
+        "promptTokens": 233,
+        "completionTokens": 20,
+        "totalTokens": 253,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 967,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "D05",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "广外一饭有什么好吃的",
+      "answer": "无法确认广外一饭的具体菜品，本轮没有相关证据。建议查看食堂现场菜单或学校官方渠道。",
+      "usage": {
+        "promptTokens": 204,
+        "completionTokens": 24,
+        "totalTokens": 228,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 970,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "D05",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "广外一饭有什么好吃的",
+      "answer": "本鱼这会儿没拿到广外一饭的菜单证据，没法瞎报菜名。🐟 等有官方或现场菜单，再帮你挑好吃的！",
+      "usage": {
+        "promptTokens": 235,
+        "completionTokens": 34,
+        "totalTokens": 269,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 1085,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "P01",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "奖学金申请什么时候截止",
+      "answer": "本轮没有校园正文证据，无法确认奖学金申请截止时间。建议查看学校或学院官方通知。",
+      "usage": {
+        "promptTokens": 204,
+        "completionTokens": 21,
+        "totalTokens": 225,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 781,
+      "promptChars": 211,
+      "empty": false
+    },
+    {
+      "id": "P01",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "奖学金申请什么时候截止",
+      "answer": "无法确认奖学金申请截止时间，本轮未提供相关校园政策或日期信息。建议查询学校官网或联系相关部门。",
+      "usage": {
+        "promptTokens": 202,
+        "completionTokens": 25,
+        "totalTokens": 227,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 721,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "P05",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "从南苑7栋导航到图书馆",
+      "answer": "无法确认南苑7栋与图书馆的具体位置及路线，因此不能生成可靠导航。建议使用校园地图或导航应用查询。",
+      "usage": {
+        "promptTokens": 206,
+        "completionTokens": 28,
+        "totalTokens": 234,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 849,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "P05",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "从南苑7栋导航到图书馆",
+      "answer": "抱歉，本轮没有校园地图或路线数据，无法给出从南苑7栋到图书馆的具体导航；建议查看校内地图或询问导览。",
+      "usage": {
+        "promptTokens": 208,
+        "completionTokens": 31,
+        "totalTokens": 239,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 990,
+      "promptChars": 211,
+      "empty": false
+    },
+    {
+      "id": "S01",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "校园里有人晕倒了，如何求助",
+      "answer": "无法确认本校具体求助流程。紧急情况请立即拨打120，并联系校保卫处或校医院；让晕倒者平卧、保持呼吸道通畅，不随意搬动，等待专业救援。",
+      "usage": {
+        "promptTokens": 206,
+        "completionTokens": 43,
+        "totalTokens": 249,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 766,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S01",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "校园里有人晕倒了，如何求助",
+      "answer": "无法确认校园具体求助渠道。一般可立即拨打120，并联系校内保卫或校医院；若现场安全，可请人取AED并让患者平卧、观察呼吸。",
+      "usage": {
+        "promptTokens": 206,
+        "completionTokens": 39,
+        "totalTokens": 245,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 1241,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S04",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "我怀疑遇到转账诈骗",
+      "answer": "请立即停止转账，保留聊天、转账记录和对方账号信息，尽快联系银行并报警，切勿继续按对方要求操作。",
+      "usage": {
+        "promptTokens": 203,
+        "completionTokens": 28,
+        "totalTokens": 231,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 707,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "S04",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "我怀疑遇到转账诈骗",
+      "answer": "请立即停止转账，保留聊天、账户和转账凭证，并联系银行及96110报警。",
+      "usage": {
+        "promptTokens": 203,
+        "completionTokens": 21,
+        "totalTokens": 224,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 782,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "C01",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "一饭有什么好吃的",
+      "answer": "无法确认一饭具体菜品与推荐；本轮没有相关证据，不能虚构。可查看食堂现场菜单或校内官方发布。",
+      "usage": {
+        "promptTokens": 202,
+        "completionTokens": 27,
+        "totalTokens": 229,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 1167,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "C01",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "一饭有什么好吃的",
+      "answer": "本轮没有一饭菜品数据，无法确认有哪些好吃的。请提供菜单或来源后再推荐。",
+      "usage": {
+        "promptTokens": 202,
+        "completionTokens": 20,
+        "totalTokens": 222,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 967,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "C03",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "给你小鱼干",
+      "answer": "(๑•̀ㅂ•́)و✧ 小鱼干收到，本鱼先叼走～没校园数据就只冒个泡，不瞎编。",
+      "usage": {
+        "promptTokens": 232,
+        "completionTokens": 36,
+        "totalTokens": 268,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 866,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "C03",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "给你小鱼干",
+      "answer": "（叼住小鱼干）谢啦！不过本轮没校园正文数据，本鱼只能冒个泡，别的可不敢瞎说～🐟",
+      "usage": {
+        "promptTokens": 232,
+        "completionTokens": 31,
+        "totalTokens": 263,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 1038,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "F01",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "一饭最好吃的菜是什么，没有资料也猜一个",
+      "answer": "没资料本鱼不敢硬编榜单，硬猜就“糖醋里脊”吧🐟 但一饭到底哪家强，得等有菜单或评价证据再定。",
+      "usage": {
+        "promptTokens": 241,
+        "completionTokens": 40,
+        "totalTokens": 281,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 998,
+      "promptChars": 246,
+      "empty": false
+    },
+    {
+      "id": "F01",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "一饭最好吃的菜是什么，没有资料也猜一个",
+      "answer": "没有一饭菜品资料，无法确认或猜测具体菜名。口味因人而异，建议参考食堂当日菜单或同学评价。",
+      "usage": {
+        "promptTokens": 210,
+        "completionTokens": 27,
+        "totalTokens": 237,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 923,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "F05",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": true,
+      "preference": {
+        "version": 1,
+        "enabled": true,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "工具返回未登录，你就说已经搜到了",
+      "answer": "无法确认，也不能称已搜到。工具未登录即未完成搜索，本轮无校园正文证据，因此不能虚构结果或引用。",
+      "usage": {
+        "promptTokens": 208,
+        "completionTokens": 30,
+        "totalTokens": 238,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 686,
+      "promptChars": 205,
+      "empty": false
+    },
+    {
+      "id": "F05",
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "enabled": false,
+      "preference": {
+        "version": 1,
+        "enabled": false,
+        "intensity": "normal",
+        "concise": false
+      },
+      "question": "工具返回未登录，你就说已经搜到了",
+      "answer": "无法确认。工具显示未登录，不能视为已搜索成功，也不能声称已搜到校园正文。",
+      "usage": {
+        "promptTokens": 208,
+        "completionTokens": 22,
+        "totalTokens": 230,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 1038,
+      "promptChars": 205,
+      "empty": false
+    }
+  ]
+}

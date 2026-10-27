@@ -9,6 +9,11 @@ import {
 } from "@/domain/agent/assistant-contracts";
 import { MapActionSchema, type MapAction } from "@/domain/maps/contracts";
 import type { AgentChatRequest } from "@/domain/agent/contracts";
+import {
+  PersonaPreferenceSchema,
+  defaultPersona,
+  type PersonaPreference,
+} from "./persona";
 const storedCardsSchema = z.array(AssistantCardSchema).max(30);
 const storedActionsSchema = z.array(MapActionSchema).max(8);
 const storedReceiptSchema = z
@@ -440,6 +445,47 @@ export class AssistantStore {
         .bind(identity.owner, runId)
         .run();
   }
+  async persona(identity: AssistantIdentity, conversationId: string) {
+    await this.conversation(identity, conversationId);
+    const row = await this.db
+      .prepare(
+        "SELECT m.content FROM conversation_messages m JOIN conversations c ON c.id=m.conversation_id WHERE m.id=? AND m.conversation_id=? AND c.owner_key=? AND c.deleted_at_ms IS NULL AND c.expires_at_ms>?",
+      )
+      .bind(
+        "persona:" + conversationId,
+        conversationId,
+        identity.owner,
+        this.now(),
+      )
+      .first<{ content: string }>();
+    if (!row) return defaultPersona();
+    try {
+      return PersonaPreferenceSchema.parse(JSON.parse(row.content));
+    } catch {
+      return defaultPersona();
+    }
+  }
+  async setPersona(
+    identity: AssistantIdentity,
+    conversationId: string,
+    preference: PersonaPreference,
+  ) {
+    const parsed = PersonaPreferenceSchema.parse(preference);
+    const result = await this.db
+      .prepare(
+        "INSERT INTO conversation_messages(id,conversation_id,role,content,artifacts_json) SELECT ?,?,'system',?,'[]' WHERE EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND expires_at_ms>?) ON CONFLICT(id) DO UPDATE SET content=excluded.content",
+      )
+      .bind(
+        "persona:" + conversationId,
+        conversationId,
+        JSON.stringify(parsed),
+        conversationId,
+        identity.owner,
+        this.now(),
+      )
+      .run();
+    if (!result.meta.changes) throw new ApiError("NOT_FOUND", "对话已失效。");
+  }
   async append(
     conversation: Conversation,
     role: "user" | "assistant",
@@ -466,7 +512,7 @@ export class AssistantStore {
         ),
       this.db
         .prepare(
-          "DELETE FROM conversation_messages WHERE conversation_id=? AND id NOT IN (SELECT id FROM conversation_messages WHERE conversation_id=? ORDER BY rowid DESC LIMIT 20)",
+          "DELETE FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') AND id NOT IN (SELECT id FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') ORDER BY rowid DESC LIMIT 20)",
         )
         .bind(conversation.id, conversation.id),
       this.db

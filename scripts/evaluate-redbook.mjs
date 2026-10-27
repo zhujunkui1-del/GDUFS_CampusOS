@@ -95,6 +95,7 @@ export async function evaluateRedbook({
   allowGuestSearch = false,
   operation = "search",
   limit = 3,
+  sort = "general",
   makeClient = installedClient,
   transport = globalThis.fetch,
 }) {
@@ -107,7 +108,8 @@ export async function evaluateRedbook({
     !["search", "status"].includes(operation) ||
     !Number.isInteger(limit) ||
     limit < 1 ||
-    limit > 4
+    limit > 4 ||
+    !["general", "time_descending"].includes(sort)
   )
     throw Error("EVALUATION_INPUT");
   if (!Array.isArray(state?.cookies) || state.cookies.length > 150)
@@ -202,7 +204,9 @@ export async function evaluateRedbook({
       return result;
     }
     result.guestSearchAttempted = !result.authenticated;
-    const data = await client.searchNotes(query, 1, 20);
+    const data = sort === "time_descending"
+      ? await client.searchNotes(query, 1, 20, sort)
+      : await client.searchNotes(query, 1, 20);
     result.searchPayloadShape = {
       array: Array.isArray(data),
       keys: Object.keys(data || {}).slice(0, 20),

@@ -1,5 +1,6 @@
 import type { MapAction } from "@/domain/maps/contracts";
 import { ApiError } from "../errors";
+import { dialogueReply } from "./dialogue";
 export function unmatchedTopicClarification(
   message: string,
   lookup: () => boolean,
@@ -23,6 +24,7 @@ export function shouldClarifyBareTopic(
     !contentActive &&
     !knownPlace &&
     !spatialIntent &&
+    !dialogueReply(text) &&
     /^[\p{Script=Han}·]{2,3}$/u.test(text) &&
     !/^(?:你好[呀啊]?|您好|谢谢你?|好的|再见|这里|那里|这儿|那儿|这个|那个|地图|路线|导航|定位|放大|缩小|旋转|切换|清除|取消|怎么走)$/.test(
       text,

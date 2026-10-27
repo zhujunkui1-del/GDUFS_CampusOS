@@ -47,6 +47,7 @@ export async function redbookSearch(env, input) {
       query: xiaohongshuQuery(input.query) || input.query,
       platform: "xhs",
       limit: input.limit,
+      ...(input.policy.recent ? { sort: "time_descending" } : {}),
     });
   } catch {
     data = { status: "unavailable" };

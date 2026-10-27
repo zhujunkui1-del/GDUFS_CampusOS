@@ -40,6 +40,7 @@ http
           query: data.query,
           operation: req.url === "/status" ? "status" : "search",
           limit: data.limit ?? 3,
+          sort: data.sort,
         }),
       );
     } catch (error) {

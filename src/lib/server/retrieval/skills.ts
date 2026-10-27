@@ -18,6 +18,7 @@ import type { SqlDatabase } from "../assistant/database";
 import { D1KeywordRetriever } from "./retriever";
 import { SkillRegistry } from "../agent/skill-registry";
 import { ApiError } from "../errors";
+import type { TimeWindow } from "../assistant/time-window";
 
 const time = (t: ArticleTimePoint | null) =>
   t
@@ -274,6 +275,7 @@ export async function searchContent(
 export function registerContentSkills(
   registry: SkillRegistry,
   db: SqlDatabase,
+  window?: TimeWindow,
 ) {
   const define = <T extends z.ZodType>(
     name: string,
@@ -291,10 +293,23 @@ export function registerContentSkills(
     requiresConfirmation: false,
     timeoutMs: 12000,
     execute: async (input: z.output<T>, context: { signal?: AbortSignal }) => {
+      const constrained = {
+        ...(input as Record<string, unknown>),
+        ...(window?.role === "publication"
+          ? { publishedAfter: window.after, publishedBefore: window.before }
+          : {}),
+        ...(window && window.role !== "publication" && purpose === "events"
+          ? {
+              after: window.after,
+              before: window.before,
+              timeRole: window.role,
+            }
+          : {}),
+      };
       const data = await searchContent(
         db,
         purpose,
-        input as z.input<typeof EventSearchInputSchema>,
+        constrained as z.input<typeof EventSearchInputSchema>,
         new Date().toISOString(),
         context.signal,
       );

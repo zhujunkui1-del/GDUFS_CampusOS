@@ -28,6 +28,7 @@ export function meteredClient(
   requiredAction?: MapAction | null,
   optionalTools?: () => string[] | undefined,
   requestOutputLimit = 1024,
+  finalInstructions?: () => string,
 ) {
   let requests = 0,
     promptTokens = 0,
@@ -107,6 +108,9 @@ export function meteredClient(
                   ]
                 : request.messages
             ).concat(
+              final && finalInstructions
+                ? [{ role: "system" as const, content: finalInstructions() }]
+                : [],
               final && emptyAnswerRetries
                 ? [
                     {

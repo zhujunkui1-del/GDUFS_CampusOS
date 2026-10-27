@@ -1,4 +1,6 @@
 import type { ContentSearchResult } from "@/domain/retrieval/skills";
+import { requestTimeWindow } from "../assistant/time-window";
+import { dialogueReply } from "../assistant/dialogue";
 export type ExternalPolicy = {
   intent: "official" | "experience" | "mixed" | "events" | "general";
   active: boolean;
@@ -8,6 +10,7 @@ export type ExternalPolicy = {
   needsDeadline: boolean;
   explicit: boolean;
   needsOfficialVerification: boolean;
+  onlyXhs?: boolean;
 };
 export function externalPolicy(query: string): ExternalPolicy {
   const noExternal =
@@ -29,8 +32,10 @@ export function externalPolicy(query: string): ExternalPolicy {
     );
   const mixed = experience && /宿舍|住宿|设施|校园卡|选课|办理/.test(query);
   const events =
-    /最近|近期|本周|这周|今天|下周|下个月/.test(query) &&
-    /活动|讲座|竞赛|比赛|招聘|申请|报名/.test(query);
+    (requestTimeWindow(query) !== undefined || /最近|近期/.test(query)) &&
+    /活动|讲座|竞赛|比赛|招聘|申请|报名|趣事|有趣|新闻|动态|分享|发生/.test(
+      query,
+    );
   const mapOnly =
     !experience &&
     !official &&
@@ -57,6 +62,7 @@ export function externalPolicy(query: string): ExternalPolicy {
     active:
       !noExternal &&
       !greeting &&
+      !dialogueReply(query) &&
       !mapOnly &&
       (query.trim().length >= 4 || official || experience || events),
     officialOnly: intent === "official",
@@ -70,6 +76,9 @@ export function externalPolicy(query: string): ExternalPolicy {
     needsDeadline: /截止|截至|最后.{0,4}(?:时间|日期)|还能报名/.test(query),
     explicit: /小红书|联网|上网|外部搜索|网上搜|互联网/.test(query),
     needsOfficialVerification,
+    onlyXhs:
+      /只(?:看|用|查|搜).*小红书|仅(?:看|用|查|搜).*小红书/.test(query) &&
+      intent !== "official",
   };
 }
 /** A source class selects providers; a retrieval miss never selects Xiaohongshu. */

@@ -390,6 +390,7 @@ export async function searchXiaohongshu(
   config: ExternalConfig,
   signal?: AbortSignal,
   transport: typeof fetch = fetch,
+  recent = false,
 ): Promise<ProviderResult> {
   const started = performance.now(),
     provider = "xiaohongshu_mcp";
@@ -399,7 +400,12 @@ export async function searchXiaohongshu(
         kind: "xiaohongshu",
         query: query.slice(0, 300),
         limit,
-        policy: { intent: "experience", officialOnly: false, campus: true },
+        policy: {
+          intent: "experience",
+          officialOnly: false,
+          campus: true,
+          ...(recent ? { recent: true } : {}),
+        },
         onlyXhs: false,
       },
       signal,

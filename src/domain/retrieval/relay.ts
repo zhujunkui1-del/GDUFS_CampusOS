@@ -16,6 +16,7 @@ export const RelayInputSchema = z
         ]),
         officialOnly: z.boolean(),
         campus: z.boolean(),
+        recent: z.boolean().optional(),
       })
       .strict(),
     onlyXhs: z.boolean().default(false),

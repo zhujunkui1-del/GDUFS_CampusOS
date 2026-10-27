@@ -18,5 +18,5 @@ const rows = cases.map(c => {
 });
 const out = { at: new Date().toISOString(), kind: "offline routing contract only; not model or provider acceptance", total: rows.length, passed: rows.filter(x => x.pass).length, failed: rows.filter(x => !x.pass).length, rows };
 await fs.mkdir("docs/verification/agent-persona-2026-10-27", { recursive: true });
-await fs.writeFile("docs/verification/agent-persona-2026-10-27/baseline-routing.json", JSON.stringify(out, null, 2));
+await fs.writeFile("docs/verification/agent-persona-2026-10-27/" + (process.argv.includes("--after") ? "after-routing.json" : "baseline-routing.json"), JSON.stringify(out, null, 2));
 console.log({ total: out.total, passed: out.passed, failed: out.failed });
