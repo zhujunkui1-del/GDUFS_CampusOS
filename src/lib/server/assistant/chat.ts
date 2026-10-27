@@ -56,7 +56,11 @@ import { createCloudSearch } from "../external-search/cloud";
 import type { EvidenceHit } from "@/domain/retrieval/contracts";
 import { D1KeywordRetriever } from "../retrieval/retriever";
 import { contentReadPlan } from "./read-plan";
-import { evidenceFallback, expressionConflicts } from "./grounding";
+import {
+  evidenceFallback,
+  expressionConflicts,
+  publicationDateFallback,
+} from "./grounding";
 import {
   personaControl,
   personaPrompt,
@@ -267,6 +271,7 @@ export async function chatResponse(request: Request) {
     const contentResults: ContentSearchResult[] = [];
     let externalDone = false;
     let evidenceGateUsed = false;
+    let publicationFallbackUsed = false;
     let externalResult: z.infer<typeof ExternalSearchResultSchema> | undefined;
     let officialLookupUnavailable = false;
     const externalMetrics: unknown[] = [];
@@ -552,6 +557,7 @@ export async function chatResponse(request: Request) {
         let error: { code: string; message: string } | undefined;
         const runMetrics = () => ({
           evidenceGateUsed,
+          publicationFallbackUsed,
           persona: personaContext(
             personaMessage,
             persona.preference,
@@ -939,6 +945,41 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                   },
                   onEvent,
                 });
+            if (
+              content.timeWindow?.role === "publication" &&
+              result.status === "completed"
+            ) {
+              const qualified = publicationDateFallback(
+                text,
+                [...cards.values()].flatMap((card, i) =>
+                  card.kind === "source" || card.kind === "external_source"
+                    ? [
+                        {
+                          title: card.title,
+                          publishedAt: card.publishedAt,
+                          citation: i + 1,
+                        },
+                      ]
+                    : [],
+                ),
+                contentResults.flatMap((r) =>
+                  r.activities.flatMap((a) =>
+                    [a.startsAt?.date, a.endsAt?.date].filter(
+                      (d): d is string => !!d,
+                    ),
+                  ),
+                ),
+                personaContext(
+                  personaMessage,
+                  persona.preference,
+                  history.messages,
+                ).tone === "daily",
+              );
+              if (qualified) {
+                text = qualified;
+                publicationFallbackUsed = true;
+              }
+            }
             const metrics = runMetrics();
             if (result.status !== "completed" || streamSignal.aborted) {
               const code = error?.code || "CANCELLED";

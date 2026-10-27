@@ -1,6 +1,50 @@
 import type { ContentSearchResult } from "@/domain/retrieval/skills";
 import type { ExternalSearchResult } from "@/domain/retrieval/external";
 import type { ExternalPolicy } from "../external-search/policy";
+import { chinaDay } from "./time-window";
+/** Do not let a model turn a known publication day into an unverified event day. */
+export function publicationDateFallback(
+  answer: string,
+  sources: { title: string; publishedAt: string | null; citation: number }[],
+  knownEventDates: string[],
+  playful: boolean,
+) {
+  const published = new Set(
+    sources.flatMap((s) => {
+      const day = s.publishedAt && chinaDay(s.publishedAt);
+      return day ? [day] : [];
+    }),
+  );
+  const events = new Set(knownEventDates);
+  const claims = [
+    ...answer.matchAll(/(?:(\d{4})年)?(\d{1,2})月(\d{1,2})日([^。\n]{0,80})/g),
+  ];
+  const conflated = claims.some((m) => {
+    const days = [...published].filter(
+      (day) =>
+        (!m[1] || day.slice(0, 4) === m[1]) &&
+        Number(day.slice(5, 7)) === Number(m[2]) &&
+        Number(day.slice(8, 10)) === Number(m[3]),
+    );
+    return (
+      days.some((day) => !events.has(day)) &&
+      /举办|举行|召开|开展|受邀|担任|随团|赴|开始|截止|报名/.test(m[4])
+    );
+  });
+  if (!conflated) return undefined;
+  return (
+    (playful
+      ? "本鱼按发布日期捞到这些文章，事情实际发生时间还不能仅凭发文日期确认：\n"
+      : "检索到以下期间发布的文章；发布日期不能证明事情当天发生：\n") +
+    sources
+      .slice(0, 3)
+      .map(
+        (s) =>
+          `- 发布于${s.publishedAt ? chinaDay(s.publishedAt) || "日期待确认" : "日期待确认"}：${s.title}[来源${s.citation}]`,
+      )
+      .join("\n")
+  );
+}
 /** Affiliated-school posts are not automatically university-campus facts. */
 export function universityScope(hit: {
   sourceName: string;

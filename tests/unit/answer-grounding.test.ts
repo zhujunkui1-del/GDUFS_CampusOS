@@ -3,6 +3,7 @@ import {
   evidenceFallback,
   expressionConflicts,
   universityScope,
+  publicationDateFallback,
 } from "@/lib/server/assistant/grounding";
 import { externalPolicy } from "@/lib/server/external-search/policy";
 import { contentReadPlan, publicQuery } from "@/lib/server/assistant/read-plan";
@@ -28,6 +29,30 @@ it("does not attribute an affiliated school's campus story to the university", (
       contentSnippet: "校园动态",
     }),
   ).toBe(true);
+});
+it("does not turn a publication date into an event date, including across years", () => {
+  const sources = [
+    { title: "隔离新闻", publishedAt: "2026-10-23", citation: 1 },
+  ];
+  expect(
+    publicationDateFallback("10月23日举办活动[来源1]", sources, [], false),
+  ).toContain("发布于2026-10-23");
+  expect(
+    publicationDateFallback(
+      "10月23日举办活动[来源1]",
+      sources,
+      ["2025-10-23"],
+      false,
+    ),
+  ).toContain("不能证明");
+  expect(
+    publicationDateFallback(
+      "10月23日举办活动[来源1]",
+      sources,
+      ["2026-10-23"],
+      false,
+    ),
+  ).toBeUndefined();
 });
 it("blocks invented factual recommendations before persona expression when there is no body", () => {
   expect(
