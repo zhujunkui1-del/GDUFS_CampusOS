@@ -60,6 +60,23 @@ it("does not interpret quoted or negated persona words as a control", () => {
   expect(personaControl("“别演了”是什么意思").changed).toBe(false);
   expect(personaControl("不要关闭人格").changed).toBe(false);
 });
+it("keeps the concrete person across multiple followups and persona-only turns", () => {
+  const history = [
+    "戴建业是广外云山工作室首席专家吗",
+    "那他属于南校吗",
+    "别演了",
+  ].map((text) => ({ role: "user" as const, text, cards: [] }));
+  const result = contentIntent("他是哪个学院的呢", history);
+  expect(result.query).toContain("戴建业");
+  expect(result.query).not.toContain("别演了");
+  expect(personaTone(result.query, defaultPersona())).toBe("professional");
+  const dates = contentIntent(
+    "那下周呢",
+    [{ role: "user", text: "本周有什么讲座", cards: [] }],
+    Date.parse("2026-10-27T00:00:00Z"),
+  );
+  expect(dates.timeWindow?.after).toBe("2026-11-02");
+});
 it("binds local dates and publication/event roles without pretending publication is event time", () => {
   const now = Date.parse("2026-10-27T03:00:00Z");
   expect(requestTimeWindow("这一周的校园趣事", now)).toEqual({

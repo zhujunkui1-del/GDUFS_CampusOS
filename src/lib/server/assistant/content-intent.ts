@@ -18,26 +18,31 @@ export function contentIntent(
     /^(?:请|再|帮我)?\s*(?:调用|用|去|通过|到)?\s*(?:小红书|外部搜索|互联网|网上)(?:来|帮我)?(?:搜|搜索|查|查找|找)(?:一下|一遍|看看)?[。！？!？\s]*$/.test(
       text.trim(),
     );
-  const followup =
-    isSearchFollowup(message) ||
-    (/^(那|那么|还|具体|需要|要|申请|报名).{0,25}(材料|条件|流程|截止|费用|在哪里|时间|怎么样|口味|体验|属于|南校|北校|吗)/.test(
-      message,
+  const isFollowup = (text: string) =>
+    isSearchFollowup(text) ||
+    (/^(那|那么|还|具体|需要|要|申请|报名|他|她|它|这位|该活动).{0,30}(材料|条件|流程|截止|费用|在哪里|时间|怎么样|口味|体验|属于|南校|北校|学院|吗|呢)/.test(
+      text,
     ) &&
-      message.length < 50);
-  const previous = followup
-    ? [...history]
-        .reverse()
-        .find(
-          (m) =>
-            m.role === "user" &&
-            !isSearchFollowup(m.text) &&
-            !dialogueReply(m.text) &&
-            !/^(?:正经点|别演了|少说废话|可爱一点|恢复刚才的说话方式)[。！!\s]*$/.test(
-              m.text,
-            ),
-        )?.text
-    : undefined;
+      text.length < 60);
+  const topic: string[] = [];
+  if (isFollowup(message))
+    for (const turn of [...history].reverse()) {
+      if (
+        turn.role !== "user" ||
+        dialogueReply(turn.text) ||
+        /^(?:正经点|别演了|少说废话|可爱一点|恢复刚才的说话方式)[。！!\s]*$/.test(
+          turn.text,
+        )
+      )
+        continue;
+      topic.unshift(turn.text);
+      if (!isFollowup(turn.text) || topic.length === 4) break;
+    }
+  const previous = topic.join("；追问：");
   const query = (previous ? previous + "；追问：" : "") + message;
+  // A new explicit time constraint wins over a relative date in previous turns.
+  const timeWindow =
+    requestTimeWindow(message, now) || requestTimeWindow(query, now);
   const knowledge =
     /规则|规定|制度|政策|办法|流程|指南|手续|借书|借阅|续借|选课|申请条件|评定条件|资格|材料|怎么办|怎么[办理借]|如何[办理借]|奖学金.*(?:条件|有哪些)|(?:有哪些|什么).*奖学金|需要满足/.test(
       query,
@@ -64,7 +69,7 @@ export function contentIntent(
     tools: reply || urgent ? [] : tools,
     query: query.slice(-300),
     map,
-    timeWindow: requestTimeWindow(query, now),
+    timeWindow,
     dialogueReply: reply,
   };
 }
