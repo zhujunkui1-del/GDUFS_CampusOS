@@ -1,0 +1,153 @@
+{
+  "at": "2026-10-27T05:39:51.835Z",
+  "scope": "isolated Node harness reusing existing Agent and Skills; current Preview search binding unchanged",
+  "realModel": true,
+  "model": {
+    "provider": "stepfun",
+    "model": "step-3.5-flash-2603"
+  },
+  "message": "广外南校食堂有什么好吃的？请用小红书查真实的学生推荐，简短概述，并给出原文链接。",
+  "result": {
+    "runId": "5cfb69b6-b3ff-49a7-a01d-17dbee011fd9",
+    "status": "failed",
+    "code": "MODEL_SERVICE_UNAVAILABLE",
+    "toolCalls": 2
+  },
+  "modelRequests": 3,
+  "promptTokens": 2052,
+  "completionTokens": 247,
+  "modelTransport": [
+    {
+      "request": 1,
+      "provider": "stepfun",
+      "finishReasons": [
+        "tool_calls"
+      ],
+      "promptTokens": 1159,
+      "completionTokens": 129
+    },
+    {
+      "request": 2,
+      "provider": "stepfun",
+      "finishReasons": [
+        "tool_calls"
+      ],
+      "promptTokens": 893,
+      "completionTokens": 118
+    },
+    {
+      "request": 3,
+      "provider": "stepfun",
+      "finishReasons": [
+        "length"
+      ],
+      "promptTokens": 1798,
+      "completionTokens": 1024
+    }
+  ],
+  "serverGuidedToolChoice": true,
+  "durationMs": 23442,
+  "events": [
+    {
+      "type": "tool.started",
+      "name": "search_campus_knowledge"
+    },
+    {
+      "type": "tool.finished",
+      "name": "search_campus_knowledge",
+      "ok": true,
+      "durationMs": 2011.55,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 1,
+        "durationMs": 176,
+        "candidateChunks": 0,
+        "usageAvailable": true
+      },
+      "hits": 0
+    },
+    {
+      "type": "tool.started",
+      "name": "search_external_campus_info"
+    },
+    {
+      "type": "tool.finished",
+      "name": "search_external_campus_info",
+      "ok": true,
+      "durationMs": 4007.38
+    },
+    {
+      "type": "run.failed",
+      "error": {
+        "code": "MODEL_SERVICE_UNAVAILABLE",
+        "message": "模型回复未完整完成，请重试。",
+        "retryable": true
+      }
+    }
+  ],
+  "probes": [
+    {
+      "query": "广外南校食堂推荐",
+      "environment": "cloudflare-container",
+      "status": "ok",
+      "authenticated": true,
+      "httpRequests": 4,
+      "requestCounts": {
+        "authentication": 1,
+        "search": 1,
+        "noteDetail": 2
+      },
+      "durationMs": 2145,
+      "bodyVerified": true
+    }
+  ],
+  "answerChars": 0,
+  "answerSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "sources": [
+    {
+      "title": "广外饭堂个人推and雷榜‼️",
+      "originalUrl": "https://www.xiaohongshu.com/explore/68d40b05000000001300e27a?xsec_token=AB5K5BEQwF8MAwKYAExmTQsJFZ24YVHJjNFYDLvt7NIAc%3D&xsec_source=pc_search",
+      "sourceName": "小红书 · 七曰雀",
+      "platform": "xiaohongshu",
+      "authority": "student_experience",
+      "evidenceKind": "page_excerpt",
+      "snippetChars": 500,
+      "snippetSha256": "d64d37efc9fda4a6b5842e29d2a5906f1c88de0c7d25162f8bba0ff9bfaf543c",
+      "publishedAt": "2025-09-24T15:15:17.000Z",
+      "retrievedAt": "2026-10-27T05:39:39.418Z",
+      "searchMode": "platform",
+      "canConfirmAdministrativeFacts": false
+    },
+    {
+      "title": "广外篇⑪｜我最想推荐的一集！",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6a9d2b560000000012024de5?xsec_token=ABPBtH_fje2ZPcivnjFPVaxbtey9Kzkpu8nTOOJRZNt0U%3D&xsec_source=pc_search",
+      "sourceName": "小红书 · CC7最近吃啥",
+      "platform": "xiaohongshu",
+      "authority": "student_experience",
+      "evidenceKind": "page_excerpt",
+      "snippetChars": 422,
+      "snippetSha256": "b8a3641edb0d2129c35bbb2832c5c353a3ea6467f931e4a4a8b248f1e38a1af3",
+      "publishedAt": "2026-09-06T08:59:02.000Z",
+      "retrievedAt": "2026-10-27T05:39:39.418Z",
+      "searchMode": "platform",
+      "canConfirmAdministrativeFacts": false
+    },
+    {
+      "title": "广外新生南校食堂全攻略｜干饭人报道必看",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6a8d6bc90000000020032a5a?xsec_token=ABpP-47rG9z5W0cdXbf-arfMKz5NvzjI7knmMTUPPzUr0%3D&xsec_source=pc_search",
+      "sourceName": "小红书 · 早上中午晚上也要吃饭",
+      "platform": "xiaohongshu",
+      "authority": "student_experience",
+      "evidenceKind": "title_only",
+      "snippetChars": 19,
+      "snippetSha256": "2c574ce72bdface1fae8e6a8fa3d5d3ef28e639a098f7d15e81aab9ac01e1fc8",
+      "publishedAt": null,
+      "retrievedAt": "2026-10-27T05:39:39.418Z",
+      "searchMode": "platform",
+      "canConfirmAdministrativeFacts": false
+    }
+  ],
+  "citedSources": 0,
+  "passed": false
+}

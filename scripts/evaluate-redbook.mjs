@@ -1,6 +1,8 @@
 // Isolated, read-only feasibility probe. Never registered as an Agent tool.
 import fs from "node:fs/promises";
 import { pathToFileURL } from "node:url";
+import { createRequire } from "node:module";
+import { createHash } from "node:crypto";
 const targets = {
   xhs: {
     host: "edith.xiaohongshu.com",
@@ -18,6 +20,42 @@ const allowed = new Set([
   "POST /api/sns/web/v1/search/notes",
   "POST /api/sns/web/v1/feed",
 ]);
+export function noteSourceKey(value) {
+  try {
+    const url = new URL(value),
+      host = url.hostname.replace(/^www\./, "");
+    if (
+      url.protocol !== "https:" ||
+      url.username ||
+      url.password ||
+      url.port ||
+      !["xiaohongshu.com", "rednote.com"].includes(host)
+    )
+      return null;
+    const match = url.pathname.match(
+      /^\/(?:explore|discovery\/item)\/([a-zA-Z0-9_-]{1,64})\/?$/,
+    );
+    return match ? host + ":" + match[1] : null;
+  } catch {
+    return null;
+  }
+}
+// Delivery receipts keep proof metadata, not a permanent corpus of social posts.
+export function publicEvaluationReceipt(value) {
+  if (Array.isArray(value)) return value.map(publicEvaluationReceipt);
+  if (!value || typeof value !== "object") return value;
+  const out = {};
+  for (const [key, item] of Object.entries(value)) {
+    if (
+      ["snippet", "answer", "renderedAnswer", "quote"].includes(key) &&
+      typeof item === "string"
+    ) {
+      out[key + "Chars"] = item.length;
+      out[key + "Sha256"] = createHash("sha256").update(item).digest("hex");
+    } else out[key] = publicEvaluationReceipt(item);
+  }
+  return out;
+}
 function errorShape(error) {
   return {
     type: typeof error?.name === "string" ? error.name.slice(0, 64) : "Error",
@@ -26,15 +64,23 @@ function errorShape(error) {
   };
 }
 async function installedClient(cookies, platform) {
-  const root = new URL(
-    "../.map-tools/xhs-provider-eval/node_modules/@lucasygu/redbook/",
-    import.meta.url,
-  );
+  let entry;
+  try {
+    entry = pathToFileURL(
+      createRequire(import.meta.url).resolve("@lucasygu/redbook"),
+    );
+  } catch {
+    entry = new URL(
+      "../.map-tools/xhs-provider-eval/node_modules/@lucasygu/redbook/dist/lib/client.js",
+      import.meta.url,
+    );
+  }
+  const root = new URL("../../", entry);
   const pkg = JSON.parse(
     await fs.readFile(new URL("package.json", root), "utf8"),
   );
   if (pkg.version !== "0.8.2") throw Error("SDK_VERSION_MISMATCH");
-  const { XhsClient } = await import(new URL("dist/lib/client.js", root).href);
+  const { XhsClient } = await import(entry.href);
   const { PLATFORMS } = await import(
     new URL("dist/lib/platform.js", root).href
   );
@@ -89,7 +135,7 @@ export async function evaluateRedbook({
     bodyVerified: false,
     status: "not_tested",
     items:
-      /** @type {Array<{title:string,originalUrl:string,bodyAvailable:boolean,snippet?:string}>} */ ([]),
+      /** @type {Array<{title:string,originalUrl:string,bodyAvailable:boolean,snippet?:string,sourceName?:string,publishedAt?:string|null}>} */ ([]),
     trace,
   };
   // One probe per process. Capture counts and codes, never headers, identity or raw bodies.
@@ -144,7 +190,18 @@ export async function evaluateRedbook({
       return result;
     }
     result.guestSearchAttempted = !result.authenticated;
-    const data = await client.searchNotes(query, 1, 3);
+    const data = await client.searchNotes(query, 1, 20);
+    result.searchPayloadShape = {
+      array: Array.isArray(data),
+      keys: Object.keys(data || {}).slice(0, 20),
+      arrays: Object.entries(data || {})
+        .filter(([, v]) => Array.isArray(v))
+        .map(([key, value]) => ({
+          key,
+          length: value.length,
+          firstKeys: Object.keys(value[0] || {}).slice(0, 20),
+        })),
+    };
     const notes = (data?.items || data?.feeds || [])
       .filter(
         (n) => /^[\w-]{1,64}$/.test(n.id || "") && (n.note_card || n.noteCard),
@@ -163,10 +220,14 @@ export async function evaluateRedbook({
       }
       const item = {
         title: String(
-          card.display_title || card.displayTitle || card.title || "",
+          card.display_title || card.displayTitle || card.title || "小红书笔记",
         ).slice(0, 250),
         originalUrl: url.href,
         bodyAvailable: false,
+        sourceName: (
+          "小红书" + (card.user?.nickname ? " · " + card.user.nickname : "")
+        ).slice(0, 160),
+        publishedAt: null,
       };
       if (index < 2 && token) {
         try {
@@ -176,6 +237,12 @@ export async function evaluateRedbook({
           item.bodyAvailable =
             typeof body?.desc === "string" && body.desc.trim().length > 0;
           if (item.bodyAvailable) item.snippet = body.desc.slice(0, 500);
+          const time = Number(body?.time);
+          if (Number.isFinite(time) && time > 0) {
+            const date = new Date(time > 1e12 ? time : time * 1000);
+            if (Number.isFinite(date.getTime()))
+              item.publishedAt = date.toISOString();
+          }
         } catch (error) {
           item.detailError = errorShape(error);
         }
@@ -222,6 +289,6 @@ if (
     query: process.argv[4] || "广外 南校 一饭",
     allowGuestSearch: process.argv[5] === "--public-guest-search",
   });
-  console.log(JSON.stringify(result, null, 2));
+  console.log(JSON.stringify(publicEvaluationReceipt(result), null, 2));
   process.exitCode = result.searchVerified && result.bodyVerified ? 0 : 2;
 }

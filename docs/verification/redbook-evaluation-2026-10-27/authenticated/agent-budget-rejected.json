@@ -1,0 +1,151 @@
+{
+  "at": "2026-10-27T05:47:40.134Z",
+  "scope": "isolated Node harness reusing existing Agent and Skills; current Preview search binding unchanged",
+  "realModel": true,
+  "model": {
+    "provider": "stepfun",
+    "model": "step-3.5-flash-2603"
+  },
+  "message": "广外南校食堂有什么好吃的？请用小红书查真实的学生推荐，简短概述，并给出原文链接。",
+  "result": {
+    "runId": "78e4a630-f119-495b-b86e-93a49e134cb2",
+    "status": "failed",
+    "code": "RUN_LIMIT_EXCEEDED",
+    "toolCalls": 2
+  },
+  "modelRequests": 3,
+  "promptTokens": 3473,
+  "completionTokens": 447,
+  "modelTransport": [
+    {
+      "request": 1,
+      "provider": "stepfun",
+      "finishReasons": [
+        "tool_calls"
+      ],
+      "promptTokens": 1159,
+      "completionTokens": 367
+    },
+    {
+      "request": 2,
+      "provider": "stepfun",
+      "finishReasons": [
+        "tool_calls"
+      ],
+      "promptTokens": 2314,
+      "completionTokens": 80
+    }
+  ],
+  "serverGuidedToolChoice": true,
+  "evaluationBudget": {
+    "planningMaxTokens": 1024,
+    "finalMaxTokens": 2048,
+    "reservedOutputCeiling": 4096,
+    "reservedOutput": 4096,
+    "productionUnchanged": true
+  },
+  "durationMs": 14203,
+  "events": [
+    {
+      "type": "tool.started",
+      "name": "search_campus_knowledge"
+    },
+    {
+      "type": "tool.finished",
+      "name": "search_campus_knowledge",
+      "ok": true,
+      "durationMs": 2731.55,
+      "metrics": {
+        "rowsRead": 1044,
+        "rowsWritten": 0,
+        "queries": 2,
+        "durationMs": 758,
+        "candidateChunks": 96,
+        "usageAvailable": true
+      },
+      "hits": 3
+    },
+    {
+      "type": "tool.started",
+      "name": "search_external_campus_info"
+    },
+    {
+      "type": "tool.finished",
+      "name": "search_external_campus_info",
+      "ok": true,
+      "durationMs": 4216.23
+    },
+    {
+      "type": "run.failed",
+      "error": {
+        "code": "RUN_LIMIT_EXCEEDED",
+        "message": "本次对话超过限制。",
+        "retryable": false
+      }
+    }
+  ],
+  "probes": [
+    {
+      "query": "广外大学城南校食堂 学生推荐 好吃",
+      "environment": "cloudflare-container",
+      "status": "ok",
+      "authenticated": true,
+      "httpRequests": 4,
+      "requestCounts": {
+        "authentication": 1,
+        "search": 1,
+        "noteDetail": 2
+      },
+      "durationMs": 2150,
+      "bodyVerified": true
+    }
+  ],
+  "answerChars": 0,
+  "answerSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "sources": [
+    {
+      "title": "广外南校三个饭堂｜哪家几点去哪层吃，一篇",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6aaa0f790000000011033723?xsec_token=AB0bu2Pct3OhSQRcn6JVcT2XIkkRVwdbtwyO8ruwVRqj4%3D&xsec_source=pc_search",
+      "sourceName": "小红书 · 广外圈圈『表白墙』",
+      "platform": "xiaohongshu",
+      "authority": "student_experience",
+      "evidenceKind": "page_excerpt",
+      "snippetChars": 500,
+      "snippetSha256": "a35e823e97e1f7e1159569c527ef8b67e7ffb69745ca605658e069c351e814e4",
+      "publishedAt": "2026-09-17T01:11:00.000Z",
+      "retrievedAt": "2026-10-27T05:47:36.831Z",
+      "searchMode": "platform",
+      "canConfirmAdministrativeFacts": false
+    },
+    {
+      "title": "广外|🍕穷鬼爽吃超强攻略",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6a33ce2f0000000015027679?xsec_token=AB30l6djAMkVjTJOyVOACtz0p-m3ttU1FThuXNQMhL1gI%3D&xsec_source=pc_search",
+      "sourceName": "小红书 · 环己烯烯烯",
+      "platform": "xiaohongshu",
+      "authority": "student_experience",
+      "evidenceKind": "page_excerpt",
+      "snippetChars": 143,
+      "snippetSha256": "3acd73f64b427b38f0f75bc55cc87fcfadd796a09bc7c46d7476782be4aac800",
+      "publishedAt": "2026-06-18T10:53:35.000Z",
+      "retrievedAt": "2026-10-27T05:47:36.831Z",
+      "searchMode": "platform",
+      "canConfirmAdministrativeFacts": false
+    },
+    {
+      "title": "广外篇⑪｜我最想推荐的一集！",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6a9d2b560000000012024de5?xsec_token=ABPBtH_fje2ZPcivnjFPVaxbtey9Kzkpu8nTOOJRZNt0U%3D&xsec_source=pc_search",
+      "sourceName": "小红书 · CC7最近吃啥",
+      "platform": "xiaohongshu",
+      "authority": "student_experience",
+      "evidenceKind": "title_only",
+      "snippetChars": 14,
+      "snippetSha256": "181dec64683240ec381657ca2f487e9f737ac11033fd7bac0fe50ac9ba453513",
+      "publishedAt": null,
+      "retrievedAt": "2026-10-27T05:47:36.831Z",
+      "searchMode": "platform",
+      "canConfirmAdministrativeFacts": false
+    }
+  ],
+  "citedSources": 0,
+  "passed": false
+}

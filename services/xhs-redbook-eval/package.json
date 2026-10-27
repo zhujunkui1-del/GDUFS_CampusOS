@@ -1,0 +1,8 @@
+{
+  "name": "campusos-private-redbook-evaluation",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@lucasygu/redbook": "0.8.2"
+  }
+}

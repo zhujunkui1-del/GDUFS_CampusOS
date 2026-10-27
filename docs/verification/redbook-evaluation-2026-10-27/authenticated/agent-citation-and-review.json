@@ -1,0 +1,163 @@
+{
+  "at": "2026-10-27T06:03:55.955Z",
+  "scope": "isolated Node harness reusing existing Agent and Skills; current Preview search binding unchanged",
+  "realModel": true,
+  "model": {
+    "provider": "stepfun",
+    "model": "step-3.5-flash-2603"
+  },
+  "message": "广外南校食堂有什么好吃的？请用小红书查真实的学生推荐，简短概述，并给出原文链接。",
+  "result": {
+    "runId": "2965f431-b6e5-48dc-aa72-a990a4735892",
+    "status": "completed",
+    "model": {
+      "source": "platform",
+      "provider": "stepfun",
+      "model": "step-3.5-flash-2603",
+      "policyVersion": "stepfun-plan-v1",
+      "testedAt": "2026-10-26T13:09:39.594Z",
+      "capabilities": {
+        "toolCalling": true,
+        "jsonObject": true,
+        "strictJsonSchema": false
+      }
+    },
+    "toolCalls": 2
+  },
+  "modelRequests": 3,
+  "promptTokens": 6063,
+  "completionTokens": 663,
+  "modelTransport": [
+    {
+      "request": 1,
+      "provider": "stepfun",
+      "finishReasons": [
+        "tool_calls"
+      ],
+      "promptTokens": 1159,
+      "completionTokens": 139
+    },
+    {
+      "request": 2,
+      "provider": "stepfun",
+      "finishReasons": [
+        "tool_calls"
+      ],
+      "promptTokens": 2064,
+      "completionTokens": 81
+    },
+    {
+      "request": 3,
+      "provider": "stepfun",
+      "finishReasons": [
+        "stop"
+      ],
+      "promptTokens": 2840,
+      "completionTokens": 443
+    }
+  ],
+  "serverGuidedToolChoice": true,
+  "evaluationBudget": {
+    "planningMaxTokens": 1024,
+    "finalMaxTokens": 2048,
+    "reservedOutputCeiling": 4096,
+    "reservedOutput": 4096,
+    "productionUnchanged": true
+  },
+  "durationMs": 16282,
+  "events": [
+    {
+      "type": "tool.started",
+      "name": "search_campus_knowledge"
+    },
+    {
+      "type": "tool.finished",
+      "name": "search_campus_knowledge",
+      "ok": true,
+      "durationMs": 2262.39,
+      "metrics": {
+        "rowsRead": 1032,
+        "rowsWritten": 0,
+        "queries": 2,
+        "durationMs": 476,
+        "candidateChunks": 96,
+        "usageAvailable": true
+      },
+      "hits": 3
+    },
+    {
+      "type": "tool.started",
+      "name": "search_external_campus_info"
+    },
+    {
+      "type": "tool.finished",
+      "name": "search_external_campus_info",
+      "ok": true,
+      "durationMs": 3881.17
+    }
+  ],
+  "probes": [
+    {
+      "query": "广外南校食堂推荐好吃",
+      "environment": "cloudflare-container",
+      "status": "ok",
+      "authenticated": true,
+      "httpRequests": 4,
+      "requestCounts": {
+        "authentication": 1,
+        "search": 1,
+        "noteDetail": 2
+      },
+      "durationMs": 2158,
+      "bodyVerified": true
+    }
+  ],
+  "answerChars": 307,
+  "answerSha256": "51b25828383e917cb18918f699091900686b1ada0679a92bcab77dface483009",
+  "sources": [
+    {
+      "title": "广外饭堂｜好吃的饭菜推荐❗️❗️",
+      "originalUrl": "https://www.xiaohongshu.com/explore/68c8fd790000000007029bf9?xsec_token=ABtO-k1Ky2wSBxdjlnZMfzHx3TjB2FNq8eCRpS4UTjpmE%3D&xsec_source=pc_search",
+      "sourceName": "小红书 · 广外帮帮🐱",
+      "platform": "xiaohongshu",
+      "authority": "student_experience",
+      "evidenceKind": "page_excerpt",
+      "snippetChars": 263,
+      "snippetSha256": "32b64514c98d960d9d71df2cf11b52cd543fdc9bc7c7c5699cc4a4ceb38520a4",
+      "publishedAt": "2025-09-16T06:02:33.000Z",
+      "retrievedAt": "2026-10-27T06:03:47.537Z",
+      "searchMode": "platform",
+      "canConfirmAdministrativeFacts": false
+    },
+    {
+      "title": "广外饭堂个人推and雷榜‼️",
+      "originalUrl": "https://www.xiaohongshu.com/explore/68d40b05000000001300e27a?xsec_token=AB5K5BEQwF8MAwKYAExmTQsJFZ24YVHJjNFYDLvt7NIAc%3D&xsec_source=pc_search",
+      "sourceName": "小红书 · 七曰雀",
+      "platform": "xiaohongshu",
+      "authority": "student_experience",
+      "evidenceKind": "page_excerpt",
+      "snippetChars": 500,
+      "snippetSha256": "d64d37efc9fda4a6b5842e29d2a5906f1c88de0c7d25162f8bba0ff9bfaf543c",
+      "publishedAt": "2025-09-24T15:15:17.000Z",
+      "retrievedAt": "2026-10-27T06:03:47.537Z",
+      "searchMode": "platform",
+      "canConfirmAdministrativeFacts": false
+    },
+    {
+      "title": "广外篇⑪｜我最想推荐的一集！",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6a9d2b560000000012024de5?xsec_token=ABPBtH_fje2ZPcivnjFPVaxbtey9Kzkpu8nTOOJRZNt0U%3D&xsec_source=pc_search",
+      "sourceName": "小红书 · CC7最近吃啥",
+      "platform": "xiaohongshu",
+      "authority": "student_experience",
+      "evidenceKind": "title_only",
+      "snippetChars": 14,
+      "snippetSha256": "181dec64683240ec381657ca2f487e9f737ac11033fd7bac0fe50ac9ba453513",
+      "publishedAt": null,
+      "retrievedAt": "2026-10-27T06:03:47.537Z",
+      "searchMode": "platform",
+      "canConfirmAdministrativeFacts": false
+    }
+  ],
+  "citedSources": 0,
+  "passed": false
+}

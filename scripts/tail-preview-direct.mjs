@@ -23,7 +23,13 @@ const auth = execFileSync(
 );
 const { token } = JSON.parse(auth.slice(auth.indexOf("{")));
 const worker = process.env.PREVIEW_TELEMETRY_WORKER || "campusos-preview";
-if (!["campusos-preview", "campusos-preview-cloud-search"].includes(worker))
+if (
+  ![
+    "campusos-preview",
+    "campusos-preview-cloud-search",
+    "campusos-xhs-redbook-eval",
+  ].includes(worker)
+)
   throw Error("Preview telemetry target required");
 const endpoint =
   "https://api.cloudflare.com/client/v4/accounts/" +

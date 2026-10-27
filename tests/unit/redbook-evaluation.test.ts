@@ -1,5 +1,9 @@
 import { it, expect, vi } from "vitest";
-import { evaluateRedbook } from "../../scripts/evaluate-redbook.mjs";
+import {
+  evaluateRedbook,
+  noteSourceKey,
+  publicEvaluationReceipt,
+} from "../../scripts/evaluate-redbook.mjs";
 const state = {
   cookies: ["a1", "web_session", "webId"].map((name) => ({
     name,
@@ -9,6 +13,34 @@ const state = {
     expires: -1,
   })),
 };
+it("keeps audit hashes without publishing full snippets or mutating the live evidence", () => {
+  const raw = {
+    items: [{ snippet: "Fixture private audit excerpt" }],
+    answer: "Fixture model answer",
+  };
+  const receipt = publicEvaluationReceipt(raw);
+  expect(receipt).not.toHaveProperty("items.0.snippet");
+  expect(receipt).toHaveProperty(
+    "items.0.snippetChars",
+    raw.items[0].snippet.length,
+  );
+  expect(receipt).not.toHaveProperty("answer");
+  expect(raw.items[0].snippet).toBe("Fixture private audit excerpt");
+});
+it("matches real note identities independently of tracking parameters without accepting foreign hosts", () => {
+  expect(
+    noteSourceKey(
+      "https://www.xiaohongshu.com/explore/fixture?xsec_token=public",
+    ),
+  ).toBe(noteSourceKey("https://xiaohongshu.com/discovery/item/fixture"));
+  expect(noteSourceKey("https://evil.test/explore/fixture")).toBeNull();
+  expect(
+    noteSourceKey("https://user:pass@www.xiaohongshu.com/explore/fixture"),
+  ).toBeNull();
+  expect(noteSourceKey("https://www.rednote.com/explore/fixture")).not.toBe(
+    noteSourceKey("https://www.xiaohongshu.com/explore/fixture"),
+  );
+});
 it("does not interpret an ambiguous identity response as an expired login", async () => {
   const searchNotes = vi.fn();
   const r = await evaluateRedbook({
@@ -113,4 +145,27 @@ it("counts real transport invocations and keeps search results separate from bod
   });
   expect(r.items[0].snippet).toBe("Fixture evidence");
   expect(JSON.stringify(r)).not.toContain("fixture-auth");
+});
+it("uses the observed supported upstream page size and bounds returned notes and details", async () => {
+  const searchNotes = vi.fn(async () => ({
+    items: Array.from({ length: 20 }, (_, i) => ({
+      id: "fixture-" + i,
+      xsec_token: "fixture-public",
+      note_card: { display_title: "Fixture " + i },
+    })),
+  }));
+  const getNoteById = vi.fn(async () => ({
+    items: [{ note_card: { desc: "Fixture text" } }],
+  }));
+  const r = await evaluateRedbook({
+    state,
+    makeClient: async () => ({
+      getSelfInfo: async () => ({ guest: false, user_id: "fixture-auth" }),
+      searchNotes,
+      getNoteById,
+    }),
+  });
+  expect(searchNotes).toHaveBeenCalledWith("广外 南校 一饭", 1, 20);
+  expect(r.items).toHaveLength(3);
+  expect(getNoteById).toHaveBeenCalledTimes(2);
 });

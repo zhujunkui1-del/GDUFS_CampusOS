@@ -1,0 +1,100 @@
+{
+  "at": "2026-10-27T04:59:38.688Z",
+  "runtime": "v24.19.0",
+  "os": "win32",
+  "sdk": "@lucasygu/redbook@0.8.2",
+  "platform": "xhs",
+  "query": "广外 南校 一饭",
+  "authenticated": true,
+  "searchVerified": true,
+  "bodyVerified": true,
+  "status": "ok",
+  "items": [
+    {
+      "title": "就你有嗓子是吧",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6aa77e040000000028000b9d?xsec_token=ABERXgZS_ONoReiNVZtOFgOODZYCj2FTkOCflv9hweruo%3D&xsec_source=pc_search",
+      "bodyAvailable": true,
+      "snippetChars": 294,
+      "snippetSha256": "0d073010880e36d529d936bc3275c179fea500780014f30e9fddaef04237d9df"
+    },
+    {
+      "title": "广外南女大一顿吃这么多正常吗😭",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6a1567250000000035038b12?xsec_token=ABNwHYO3mr8M6I_oQjOfH6MG6Os9j9xXbJjfT88sJ93a8%3D&xsec_source=pc_search",
+      "bodyAvailable": true,
+      "snippetChars": 288,
+      "snippetSha256": "d70d066945190fa02c3f0fa6dfbd93a45682b1824f7e154c51442f619311c112"
+    },
+    {
+      "title": "一饭面包店好吃么",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6aae13130000000026032621?xsec_token=ABt7kOu3RPcXoPje71As2LeB2ielByRL0jL1zn57RGRfA%3D&xsec_source=pc_search",
+      "bodyAvailable": false
+    }
+  ],
+  "trace": [
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v2/user/me",
+      "method": "GET",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "guest": false,
+      "durationMs": 272
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/search/notes",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 753
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/feed",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 133
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/feed",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 202
+    }
+  ],
+  "identity": "authenticated",
+  "guestSearchAttempted": false,
+  "searchPayloadShape": {
+    "array": false,
+    "keys": [
+      "has_more",
+      "items"
+    ],
+    "arrays": [
+      {
+        "key": "items",
+        "length": 22,
+        "firstKeys": [
+          "note_card",
+          "xsec_token",
+          "id",
+          "model_type"
+        ]
+      }
+    ]
+  },
+  "httpRequests": 4,
+  "requestCounts": {
+    "authentication": 1,
+    "search": 1,
+    "noteDetail": 2
+  },
+  "durationMs": 1399
+}

@@ -287,7 +287,15 @@ export class DeepseekModelClient implements ModelClient {
     private readonly transport: typeof fetch = fetch,
     private readonly timeoutMs = 15000,
     private readonly provider: "deepseek" | "stepfun" = "deepseek",
+    // Server-only opt-in; production callers retain the existing 1024 default.
+    private readonly maxOutputTokens = 1024,
   ) {
+    if (
+      !Number.isInteger(maxOutputTokens) ||
+      maxOutputTokens < 1 ||
+      maxOutputTokens > 4096
+    )
+      throw new ApiError("MODEL_SELECTION_REQUIRED", "模型输出预算配置无效。");
     this.#endpoint =
       provider === "stepfun"
         ? approvedStepEndpoint(baseUrl)
@@ -304,7 +312,7 @@ export class DeepseekModelClient implements ModelClient {
       request.messages.length > 48 ||
       JSON.stringify(request.messages).length > 65536 ||
       request.maxTokens < 1 ||
-      request.maxTokens > 1024 ||
+      request.maxTokens > this.maxOutputTokens ||
       !Number.isInteger(request.maxTokens) ||
       request.tools.length > 16
     )

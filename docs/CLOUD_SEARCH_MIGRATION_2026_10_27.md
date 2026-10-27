@@ -1,5 +1,7 @@
 # Preview 云端搜索、模型优先级与登录修复
 
+> 后续进展：本人重新授权后，新的redbook纯HTTP候选已通过独立Cloudflare容器、免再次扫码重启与隔离真实Agent引用验证，见[最新实测](verification/redbook-evaluation-2026-10-27/README.md)。当前Preview仍使用本文中的旧后端，尚未正式切换；不能混同两个环境的状态。
+
 ## 当前结论
 
 普通联网搜索已迁到 Cloudflare，停止本机 external-search 的 server/runner 后，真实 Agent 能取回并引用图书馆官网页面。首选模型已切换为 Step Plan，现有 DeepSeek 仅在首选明确额度耗尽时接替。Preview 日/小时验证配额已放开。

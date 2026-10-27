@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-27T06:55:51.269Z",
+  "total": 536,
+  "passed": 522,
+  "failed": 14,
+  "failures": [
+    "exclusive article placement and captured metadata publication publishes captured metadata without an extra source auto-policy and keeps unknown original evidence private",
+    "exclusive article placement and captured metadata publication moves published articles atomically with history, preserves original facts, and never clears withdrawal/rejection holds",
+    "exclusive article placement and captured metadata publication returns real category facets under search independently of the selected category",
+    "Console public content governance withdraws through one authoritative gate and invalidation queue, preserving other sources",
+    "Console V2 source governance (isolated SQLite) requires actual evidence and does not assume candidate activity from the catalog",
+    "V2 canonical intake and multiple discovery origins enforces cutoff on a new origin, permits explicit history exemption and continues existing valid-source maintenance",
+    "V2 whitelist, cutoff and bounded retention (disposable DB only) preserves a prior manual withdrawal across cleanup and explicit whitelist restoration",
+    "V2 whitelist, cutoff and bounded retention (disposable DB only) requires both confirmations, purges bounded large payloads and blocks reintroduction without deleting parents/audit",
+    "V2 whitelist, cutoff and bounded retention (disposable DB only) enforces cutoff on every intake and permits only explicit whitelist history exemption",
+    "Console administrator simplification one switch persists enabled/closed without fabricating evidence or collection permission",
+    "Console administrator simplification imports administrator metadata and reviews without notes or invented publication dates; document versions resolve on the server",
+    "bounded ingestion, real SQLite, isolated fixtures only publishes eight captured metadata cards without creating unverified structured events",
+    "bounded ingestion, real SQLite, isolated fixtures only keeps metadata-only as default and limits explicitly licensed body extraction",
+    "independent site parsing and safety discovers same-column URLs, real next-page links, and leaves ambiguous dates unknown"
+  ],
+  "newFailures": []
+}

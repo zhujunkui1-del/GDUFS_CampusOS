@@ -1,0 +1,111 @@
+{
+  "checkedAt": "2026-10-27T06:16:18.757Z",
+  "httpStatus": 200,
+  "elapsedMs": 4427,
+  "at": "2026-10-27T06:16:15.317Z",
+  "runtime": "v22.23.4",
+  "os": "linux",
+  "sdk": "@lucasygu/redbook@0.8.2",
+  "platform": "xhs",
+  "query": "广外 南苑 宿舍",
+  "authenticated": true,
+  "searchVerified": true,
+  "bodyVerified": true,
+  "status": "ok",
+  "items": [
+    {
+      "title": "广外新生攻略｜南北校区宿舍环境超全介绍！",
+      "originalUrl": "https://www.xiaohongshu.com/explore/687257380000000024009e77?xsec_token=ABForW7r38JQ-yobg_i8L754aggVgHyEaKM3QgWj7sBYI%3D&xsec_source=pc_search",
+      "bodyAvailable": true,
+      "sourceName": "小红书 · 一只蝴蝶🦋半首诗",
+      "publishedAt": "2025-07-12T12:38:16.000Z",
+      "snippetChars": 500,
+      "snippetSha256": "34a3d33fbcb6860c28a3221d6ad4371967f06e35102589bdec809d187a724895"
+    },
+    {
+      "title": "广外南 新生宿舍实拍！",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6a967135000000002902c3d4?xsec_token=ABvB5KPq68W4GHZgzsQ3S8peQ3YlDFMefOQi3cCUenBVo%3D&xsec_source=pc_search",
+      "bodyAvailable": true,
+      "sourceName": "小红书 · Akina^^",
+      "publishedAt": "2026-09-01T06:31:17.000Z",
+      "snippetChars": 171,
+      "snippetSha256": "42d3bacff0aa3df685dde50b0c9d654317e0a598312de9382decd430f9587ed7"
+    },
+    {
+      "title": "广外｜不好了，宿舍闯进来一只鸵鸟😱",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6a6ddbcd0000000033032a80?xsec_token=ABnb433X-IttD4TqgUdFdaJhaEYAxtv54yfmzvGxjntXo%3D&xsec_source=pc_search",
+      "bodyAvailable": false,
+      "sourceName": "小红书 · 呆毛憨豆先生",
+      "publishedAt": null
+    }
+  ],
+  "trace": [
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v2/user/me",
+      "method": "GET",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "guest": false,
+      "durationMs": 420
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/search/notes",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 1028
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/feed",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 372
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/feed",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 402
+    }
+  ],
+  "identity": "authenticated",
+  "guestSearchAttempted": false,
+  "searchPayloadShape": {
+    "array": false,
+    "keys": [
+      "has_more",
+      "items"
+    ],
+    "arrays": [
+      {
+        "key": "items",
+        "length": 22,
+        "firstKeys": [
+          "id",
+          "model_type",
+          "note_card",
+          "xsec_token"
+        ]
+      }
+    ]
+  },
+  "httpRequests": 4,
+  "requestCounts": {
+    "authentication": 1,
+    "search": 1,
+    "noteDetail": 2
+  },
+  "durationMs": 2229,
+  "environment": "cloudflare-container",
+  "sameSessionSnapshot": true
+}

@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-27T04:59:37.317Z",
+  "sameSession": true,
+  "query": "广外",
+  "tests": [
+    {
+      "upstreamPageSize": 3,
+      "keys": [
+        "has_more"
+      ],
+      "returnedItems": 0
+    },
+    {
+      "upstreamPageSize": 20,
+      "keys": [
+        "items",
+        "has_more"
+      ],
+      "returnedItems": 22
+    }
+  ],
+  "authenticated": true
+}

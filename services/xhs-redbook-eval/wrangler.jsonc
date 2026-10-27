@@ -1,0 +1,27 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "campusos-xhs-redbook-eval",
+  "main": "worker.mjs",
+  "account_id": "5328fbf5ef7ef40f7743723c2c192499",
+  "compatibility_date": "2026-10-27",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "containers": [
+    {
+      "class_name": "RedbookEvaluation",
+      "image": "./Dockerfile",
+      "instance_type": "lite",
+      "max_instances": 1,
+    },
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "EVALUATOR", "class_name": "RedbookEvaluation" }],
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RedbookEvaluation"] }],
+  "r2_buckets": [
+    {
+      "binding": "SESSIONS",
+      "bucket_name": "campusos-preview-search-sessions",
+    },
+  ],
+}

@@ -1,0 +1,100 @@
+{
+  "at": "2026-10-27T04:54:35.924Z",
+  "runtime": "v24.19.0",
+  "os": "win32",
+  "sdk": "@lucasygu/redbook@0.8.2",
+  "platform": "xhs",
+  "query": "广外",
+  "authenticated": true,
+  "searchVerified": true,
+  "bodyVerified": true,
+  "status": "ok",
+  "items": [
+    {
+      "title": "",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6adb4217000000003300987c?xsec_token=AB-lIqEg_YxWOT5TJsIVPU-4o1LDtXti0bqD-6QRQjo6A%3D&xsec_source=pc_search",
+      "bodyAvailable": true,
+      "snippetChars": 45,
+      "snippetSha256": "9777b4e9c7138f7fb21c91a8c8544a7cfc6db5161b6b41bab0826abd631f3260"
+    },
+    {
+      "title": "广外北好帅啊 捞一下",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6adf2a00000000001703a08d?xsec_token=ABXklgFR0tHceI2Qe8B5R9NqbeD1tNipyGN8ikCNkmYio%3D&xsec_source=pc_search",
+      "bodyAvailable": true,
+      "snippetChars": 14,
+      "snippetSha256": "5ebf67c4d7e1d7b5a8b88d8f2b14ed23599fae94700d7a665678672e6e5c5fb5"
+    },
+    {
+      "title": "关于开源广外奶龙(奶蛙)的通知",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6ac9bf0a00000000180055dc?xsec_token=ABfsKN_gMbB7n50FJytF-T9e4Lk7QuAkBxyIILkE-rw50%3D&xsec_source=pc_search",
+      "bodyAvailable": false
+    }
+  ],
+  "trace": [
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v2/user/me",
+      "method": "GET",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "guest": false,
+      "durationMs": 276
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/search/notes",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 1034
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/feed",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 133
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/feed",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 140
+    }
+  ],
+  "identity": "authenticated",
+  "guestSearchAttempted": false,
+  "searchPayloadShape": {
+    "array": false,
+    "keys": [
+      "has_more",
+      "items"
+    ],
+    "arrays": [
+      {
+        "key": "items",
+        "length": 22,
+        "firstKeys": [
+          "id",
+          "model_type",
+          "note_card",
+          "xsec_token"
+        ]
+      }
+    ]
+  },
+  "httpRequests": 4,
+  "requestCounts": {
+    "authentication": 1,
+    "search": 1,
+    "noteDetail": 2
+  },
+  "durationMs": 1618
+}

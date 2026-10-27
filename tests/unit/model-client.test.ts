@@ -55,12 +55,56 @@ function delta(value: unknown, finish: string | null = null) {
 }
 
 describe("DeepSeek transport contract (Mock HTTP only)", () => {
+  it("keeps the default output ceiling and accepts a bounded server-owned validation ceiling", async () => {
+    const transport = vi.fn<typeof fetch>(async () => jsonReply("bounded"));
+    await expect(
+      client(transport).generateWithTools({ ...request, maxTokens: 2048 }),
+    ).rejects.toMatchObject({ code: "RUN_LIMIT_EXCEEDED" });
+    expect(transport).not.toHaveBeenCalled();
+    const expanded = new DeepseekModelClient(
+      "test-only",
+      secret,
+      "https://api.deepseek.com",
+      transport,
+      15000,
+      "deepseek",
+      2048,
+    );
+    expect(
+      (await expanded.generateWithTools({ ...request, maxTokens: 2048 }))
+        .content,
+    ).toBe("bounded");
+    await expect(
+      expanded.generateWithTools({ ...request, maxTokens: 2049 }),
+    ).rejects.toMatchObject({ code: "RUN_LIMIT_EXCEEDED" });
+    expect(transport).toHaveBeenCalledOnce();
+  });
+  it("refuses an invalid server output ceiling", () => {
+    expect(
+      () =>
+        new DeepseekModelClient(
+          "test-only",
+          secret,
+          "https://api.deepseek.com",
+          fetch,
+          15000,
+          "deepseek",
+          4097,
+        ),
+    ).toThrow();
+  });
   it("uses the workerd-compatible manual policy and rejects redirects without a second request", async () => {
     const transport = vi.fn<typeof fetch>(async (_url, init) => {
-      if (init?.redirect !== "manual") throw new TypeError("workerd rejects redirect:error");
-      return new Response(null, { status: 302, headers: { Location: "https://untrusted.invalid" } });
+      if (init?.redirect !== "manual")
+        throw new TypeError("workerd rejects redirect:error");
+      return new Response(null, {
+        status: 302,
+        headers: { Location: "https://untrusted.invalid" },
+      });
     });
-    await expect(client(transport).generateWithTools(request)).rejects.toMatchObject({ code: "MODEL_ENDPOINT_INVALID" });
+    await expect(
+      client(transport).generateWithTools(request),
+    ).rejects.toMatchObject({ code: "MODEL_ENDPOINT_INVALID" });
     expect(transport).toHaveBeenCalledTimes(1);
   });
   it.each([

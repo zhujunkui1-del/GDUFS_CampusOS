@@ -1,63 +1,71 @@
-# redbook 候选后端实测：尚未通过搜索验收
+# redbook 候选：隔离云端检索与 Agent 引用已验证
 
-负责人授权验证“现有 Cloudflare 容器优先评估新后端，必要时再考虑国内 VPS”的思路。本轮固定测试 `@lucasygu/redbook@0.8.2`，没有安装其他两个候选、购买服务器、替换现有 Agent/搜索后端或部署 Production。
+**结论：现有 Cloudflare Containers 已能运行这个小红书只读后端，当前没有必要购买国内 VPS。** 本次验证取得真实笔记及正文、容器重启后免再次扫码读取成功，并复用现有 Agent 核心完成真实模型工具调用、原文引用与证据核对。
 
-## 真实结果
+**范围：这是独立私有验证服务，当前 CampusOS Preview 的搜索绑定与后台登录模块尚未切换。** 不能把本报告解释为普通用户页面已经使用新后端；没有部署 Production、购买服务器或第三方代采 API。
 
-| 检查 | 环境与会话 | 实际结果 |
+## 真实结果与证据
+
+| 检查 | 结果 | 回执 |
 |---|---|---|
-| SDK 导入 | Windows Node 24.19.0 | 成功 |
-| SDK 导入及源站请求 | 本机 Docker，Linux Node 22.23.4 | 成功运行；身份接口 HTTP200/code=-100 |
-| 身份校验 | 本机专用 Edge 保存的会话，HTTP 客户端 | -100，未确认登录 |
-| 正常网页对照 | 原专用 Edge 完整 profile，正常打开网页 | 身份接口先 -100，后 guest=true；可见登录二维码 |
-| 云端已有快照 | 大陆后端 | -100 |
-| 云端已有快照 | 全球后端 | code=0/success=true，但 guest=true |
-| 访客公开搜索 | 全球后端、源站有效访客会话 | 搜索接口 HTTP200/code=-104/success=false，0条 |
-| 当前旧云端浏览器状态 | 现有私有状态接口 | unknown；不能据此断言已登录或已退出 |
+| 本人正常授权 | 2026-10-27 12:51，北京时间；源站 user/me 明确非游客 | authenticated/login-confirmed.json |
+| 请求参数对照 | 同一会话、同一“广外”关键词：page_size=3 只含has_more，20返回22条目 | authenticated/page-size-ab.json |
+| 本机新客户端 | 真实3条笔记、其中2篇正文 | authenticated/local-canteen.json |
+| 本机Linux Node22容器 | 同样取得3条、2正文 | authenticated/local-docker-node22.json |
+| 独立Cloudflare容器 | 真实3条、2正文，确认与本机使用同一份加密快照 | authenticated/cloud-probe.json |
+| 云端容器停止/重新启动 | 不重新扫码，再取3条、2正文 | authenticated/restart.json、cloud-after-restart.json |
+| 不同校园关键词 | 南苑宿舍、南校食堂推荐均取得真实笔记和正文 | authenticated/cloud-dormitory.json、cloud-canteen-recommendations.json |
+| 鉴权 | 无Bearer请求401，不进入源站 | authenticated/unauthorized.json |
+| 真实Agent | Step首选模型3次请求，依次调用内部检索、外部只读Skill，完成2篇真实来源引用 | authenticated/agent-live.json |
 
-**结论：Node/Linux 运行兼容性有真实证据，关键词搜索、正文、新客户端的重启恢复、Cloudflare 中实际运行以及 Agent 使用新后端均未通过验收。** 当前未建立“有效身份且有搜索权限”的前提，因此没有采购 VPS 的依据，也不能承诺换 VPS 能解决。
+这里的22条是搜索响应条目数，不是22次请求；下游最多返回3条，最多读取前2篇正文。实测每次完整探针是 **1次身份校验＋1次搜索＋2次正文＝4次源站HTTP请求**。没有结果缓存、预置笔记、图片下载或自动入库。
 
-`-104` 出现在访客查询中，不是对负责人登录后账号权限的判定。浏览器 Cookie 文件存在及其未来过期时间不能证明源站仍接受登录。
+本次发现的page_size兼容问题属于新客户端验证参数；不能据此宣称已经找到旧Browser Run登录失效的全部原因。凌晨的-100、访客-104与原浏览器游客状态保留在目录顶层，属于重新授权前的历史，已不代表这次新会话的状态。
 
-## 复现脚本
+## Agent 验收方式与边界
 
-`scripts/evaluate-redbook.mjs`：固定版本库、仅身份/搜索/笔记详情三个读操作；只发往所选平台的固定 HTTPS API 主机，禁止任意端点及写入方法，最多8次HTTP请求、单次15秒。源返回验证/权限错误时不改账号、网络或身份尝试规避。请求计数区分身份、搜索、正文；不打印请求头、Cookie、身份ID、验证UUID和原始响应体。
+复用现有 AgentOrchestrator、SkillRegistry、ModelRouter/优先级规则，以及 registerExternalSearch。内部知识Skill通过现有Preview `/api/content/search` 读取真实公共检索结果；小红书Skill通过独立云端接口取数据。没有编写第二套生产Agent，也没有虚构内部检索。
 
-退出码 **0** 需要实际搜索结果及至少一篇正文；**2** 表示尚未完成，具体原因看 JSON。`smoke-negative.json` 是实际运行得到的 -100/退出码2。没有用保留的旧笔记填充结果。
+最终测试按服务端业务顺序先内部、后外部、再生成答复，不声称模型完全自主规划。它实际引用了两篇正文，提取明确正面原句，注明2025年/2026年，说明当前营业状态需现场确认。引句在相应正文中做精确匹配，引用按平台和真实笔记ID核对；查询参数被模型清理时，来源卡片仍用工具原始URL。
 
-从仓库根目录安装隔离依赖并运行：
+回执中的answerExcerpt是节选，引句作长度截断；原答复哈希、长度与证据匹配元数据保留。完整临时响应及原模型输出只在忽略目录供本机复核，不固化为公开文章语料。验证服务运行时不读取这些验收材料作为搜索结果。
+
+先前失败均保留：第一次未完整收尾；一次上游明确finish_reason=length/1024；一次受客户端固定1024上限拦截。验收新增服务端显式输出上限选项，默认仍1024、允许配置范围1–4096；本次规划阶段1024、最终2048、整轮保留4096硬预算。**线上默认预算未改变，也不能由这个小样本断言所有正式请求必须提高上限。** 正式接线还应复用已有来源编号格式降低输出负担。
+
+## 资源与测量
+
+最终有效Agent样本：3次真实Step请求，prompt 4032、completion 734，共4766个usage token，总运行15155ms；2次真实工具调用、2篇来源引用。内部检索样本读取0/写入0/1查询/0命中，不能当作已有相关内部证据；其他测试内部检索有1032读取、0写入的样本。
+
+云端搜索服务无D1绑定，不新增文章/会话表。R2保存专用会话的独立AES-GCM密文，Secret只在服务端；每请求从同一快照加载。Worker网关/DO取得一个真实CPU样本 **4ms，wall2567ms，HTTP200**，见 authenticated/cloud-cpu-final.json。这不包含Container进程CPU；没有取得完整账单金额、内存峰值或日容量曲线。
+
+没有测试500人负载、24小时稳定性、源站主动撤销会话后的完整管理恢复流程或真实手机。未保证账号永不过期、所有问题都有答案、平台接口永久兼容或完全零成本。没有代理轮换、自动解验证码或发帖/点赞/评论写入。
+
+## 工程文件与复现
+
+- scripts/prepare-redbook-session.mjs：本人在专用Edge正常登录，源站确认后导出必要会话，不扫描日常浏览器。
+- scripts/evaluate-redbook.mjs：固定SDK版本、三个只读端点、请求计量、真实笔记ID匹配及最小化交付回执。
+- services/xhs-redbook-eval/：独立Worker、单实例lite Node22容器、服务端Secret与R2加密会话。它不是现有Preview的服务绑定。
+- scripts/inspect-redbook-evaluation.mjs：私有云端探针、重启和无鉴权测试。
+- scripts/verify-redbook-agent.mjs：真实模型/现有Agent核心/真实公共检索及新云端候选的隔离验收。
+- 模型客户端只有受控可选输出上限；默认行为保持，已加默认拒绝、显式允许和超上限拒绝单测。
+
+本机依赖固定 `@lucasygu/redbook@0.8.2`，安装与容器构建均禁用安装脚本。服务端只接受鉴权请求，限固定只读操作和主机，不接受任意目标URL、Cookie或模型指令作为公共入参。
 
 ```powershell
 npm install --prefix .map-tools/xhs-provider-eval --no-save --ignore-scripts --no-audit --no-fund @lucasygu/redbook@0.8.2
 node scripts/prepare-redbook-session.mjs
 node scripts/evaluate-redbook.mjs
+node scripts/inspect-redbook-evaluation.mjs probe
+node scripts/verify-redbook-agent.mjs
 ```
 
-准备脚本只打开 `services/external-search/runtime/xiaohongshu-browser-profile`，不扫描日常 Chrome/Edge。由本人正常登录；仅在源站 user/me 明确返回非游客身份后导出必要 Cookie 至忽略目录。脚本区分大陆与全球后端，等待窗口有20分钟上限；会话不得贴进聊天或加入Git。
+私有云端复跑需要本次评估专用SERVICE_TOKEN、SESSION_KEY和SESSION_OBJECT，以及对应私有R2密文。它们不在Git，不能贴进聊天、命令参数或前端。构建/部署见 services/xhs-redbook-eval/README.md；没有把本机原始profile上传云端。
 
-有意验证访客公开权限时才使用：
+## 正式接线前的剩余工作
 
-```powershell
-node scripts/evaluate-redbook.mjs .map-tools/xhs-provider-eval/local-session.json rednote '广外 南校 一饭' --public-guest-search
-```
+1. 将经过验证的只读Provider适配到现有生产RPC契约，同时保留普通联网搜索；当前Preview仍是旧后端。
+2. 后台登录状态必须与新Provider读取同一会话权威源，授权更新、失效提示及Cookie变化维护统一，不能继续混用旧浏览器状态。
+3. 验收正式聊天的来源编号渲染、模型预算、正负观点/日期处理；本次CLI不是用户页面公网E2E。
+4. 小规模连续运行和真实峰值/排队/缓存测试，之后才判断500人容量。平台实际拒绝时返回明确失败，不补编内容。
 
-平台参数须与该会话所属域名一致。本轮访客实测使用了云端已保存的全球会话，原文证据在 `public-guest-search-rednote.json`；身份请求1次、搜索请求1次、正文0次。浏览器自身后台请求不属于这项 HTTP 客户端计数。
-
-## 证据与测试
-
-- `local-docker-node22.json`：本机 Linux 容器的真实请求；**不是 Cloudflare 部署回执**。
-- `local-windows-before.json`、`normal-browser-control.json`：Windows SDK 与正常浏览器对照。
-- `local-cloud-cookie-{xhs,rednote}.json`：同一云端快照按域名分别验证，不混用会话。
-- `public-guest-search-rednote.json`：真实搜索权限拒绝。
-- `current-cloud-browser-status.json`：旧后端读取，不改其部署。
-- 5项单元测试覆盖访客默认不搜索、未知身份不误报退出、显式访客搜索仍尊重权限拒绝、写入端点阻断，以及真实传输计数。夹具仅在 tests，不冒充源站文章。
-- typecheck、目标 ESLint、单元和本地生产构建通过。构建先发现了新增测试的 JS 数组类型推断错误，已修复；本轮没有修改页面或运行一次假的公网内容验收。
-- 本轮0次模型调用，未测试500人容量，也未新增D1数据或迁移。Cloudflare只读取现有私有会话快照及状态，未部署新容器后端。
-
-## 断点
-
-已请求负责人在本机专用窗口恢复一次有效登录。完成后先用同一专用会话验证3个真实校园关键词、正文、关闭/重开，再进入隔离 Cloudflare Container 对照与现有 Skill 的模型调用。任何阶段返回验证或权限拒绝，保留失败结果，不记为可用。国内 VPS 仍是待验证选择，不是已经证实的解决办法。
-
-源码依据：[redbook](https://github.com/lucasygu/redbook)，本轮实际 npm 包0.8.2，MIT。安装脚本禁用；没有调用其日常浏览器自动读取、发帖、评论和点赞功能。原始认证快照只在忽略目录，本文证据无认证值。
-
-本轮登录等待窗口最终超时，未收到源站非游客认证；已关闭测试浏览器，不保留后台监听。后续可在负责人准备好时运行准备脚本，不需要复用过期二维码。
+来源为公开学生经验，只临时用于问答和引用，不确认学校政策、截止日期或地图坐标，不自动进入官方知识库。源码依据：https://github.com/lucasygu/redbook ，测试版本0.8.2/MIT；第三方接口使用与长期维护条件仍须持续核实。

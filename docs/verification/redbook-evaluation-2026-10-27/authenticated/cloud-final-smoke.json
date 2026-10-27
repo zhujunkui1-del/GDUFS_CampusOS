@@ -1,0 +1,111 @@
+{
+  "checkedAt": "2026-10-27T07:12:55.112Z",
+  "httpStatus": 200,
+  "elapsedMs": 5382,
+  "at": "2026-10-27T07:12:51.151Z",
+  "runtime": "v22.23.4",
+  "os": "linux",
+  "sdk": "@lucasygu/redbook@0.8.2",
+  "platform": "xhs",
+  "query": "广外 南校 食堂 推荐",
+  "authenticated": true,
+  "searchVerified": true,
+  "bodyVerified": true,
+  "status": "ok",
+  "items": [
+    {
+      "title": "广外饭堂｜好吃的饭菜推荐❗️❗️",
+      "originalUrl": "https://www.xiaohongshu.com/explore/68c8fd790000000007029bf9?xsec_token=ABtO-k1Ky2wSBxdjlnZMfzHx3TjB2FNq8eCRpS4UTjpmE%3D&xsec_source=pc_search",
+      "bodyAvailable": true,
+      "sourceName": "小红书 · 广外帮帮🐱",
+      "publishedAt": "2025-09-16T06:02:33.000Z",
+      "snippetChars": 263,
+      "snippetSha256": "32b64514c98d960d9d71df2cf11b52cd543fdc9bc7c7c5699cc4a4ceb38520a4"
+    },
+    {
+      "title": "广外饭堂个人推and雷榜‼️",
+      "originalUrl": "https://www.xiaohongshu.com/explore/68d40b05000000001300e27a?xsec_token=AB5K5BEQwF8MAwKYAExmTQsJFZ24YVHJjNFYDLvt7NIAc%3D&xsec_source=pc_search",
+      "bodyAvailable": true,
+      "sourceName": "小红书 · 七曰雀",
+      "publishedAt": "2025-09-24T15:15:17.000Z",
+      "snippetChars": 500,
+      "snippetSha256": "d64d37efc9fda4a6b5842e29d2a5906f1c88de0c7d25162f8bba0ff9bfaf543c"
+    },
+    {
+      "title": "广外篇⑪｜我最想推荐的一集！",
+      "originalUrl": "https://www.xiaohongshu.com/explore/6a9d2b560000000012024de5?xsec_token=ABPBtH_fje2ZPcivnjFPVaxbtey9Kzkpu8nTOOJRZNt0U%3D&xsec_source=pc_search",
+      "bodyAvailable": false,
+      "sourceName": "小红书 · CC7最近吃啥",
+      "publishedAt": null
+    }
+  ],
+  "trace": [
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v2/user/me",
+      "method": "GET",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "guest": false,
+      "durationMs": 696
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/search/notes",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 1155
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/feed",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 395
+    },
+    {
+      "host": "edith.xiaohongshu.com",
+      "path": "/api/sns/web/v1/feed",
+      "method": "POST",
+      "httpStatus": 200,
+      "code": 0,
+      "success": true,
+      "durationMs": 368
+    }
+  ],
+  "identity": "authenticated",
+  "guestSearchAttempted": false,
+  "searchPayloadShape": {
+    "array": false,
+    "keys": [
+      "has_more",
+      "items"
+    ],
+    "arrays": [
+      {
+        "key": "items",
+        "length": 22,
+        "firstKeys": [
+          "id",
+          "model_type",
+          "note_card",
+          "xsec_token"
+        ]
+      }
+    ]
+  },
+  "httpRequests": 4,
+  "requestCounts": {
+    "authentication": 1,
+    "search": 1,
+    "noteDetail": 2
+  },
+  "durationMs": 2705,
+  "environment": "cloudflare-container",
+  "sameSessionSnapshot": true
+}

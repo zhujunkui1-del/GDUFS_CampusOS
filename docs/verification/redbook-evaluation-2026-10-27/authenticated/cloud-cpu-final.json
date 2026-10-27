@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-27T06:16:56.202Z",
+  "windowSeconds": 45,
+  "worker": "campusos-xhs-redbook-eval",
+  "connected": true,
+  "tailRemoved": true,
+  "rawLogsStored": false,
+  "frameShapes": [
+    "cpuTime,diagnosticsChannelEvents,event,eventTimestamp,exceptions,executionModel,logs,outcome,scriptName,scriptVersion,truncated,wallTime"
+  ],
+  "records": [
+    {
+      "at": 1793081775104,
+      "path": "/probe",
+      "method": "POST",
+      "status": 200,
+      "outcome": "ok",
+      "cpuTimeMs": 4,
+      "wallTimeMs": 2567,
+      "exceptionCount": 0
+    }
+  ]
+}
