@@ -18,6 +18,7 @@ from urllib.request import Request, urlopen
 import uuid
 
 from reading_html import reading_fragment
+from account_registry import account_identity, sync_accounts
 
 CST = timezone(timedelta(hours=8))
 
@@ -75,7 +76,7 @@ class Cloud:
         self.token = config["token"]
 
     def call(self, path, value=None):
-        if path not in {"sources", "articles", "heartbeat"}:
+        if path not in {"sources", "accounts", "articles", "heartbeat"}:
             raise ValueError("COLLECTOR_ADD_UPDATE_ONLY")
         headers = {"Authorization": "Bearer " + self.token, "Accept": "application/json", "User-Agent": "CampusOS-WeChatCollector/1.0"}
         data = None
@@ -132,7 +133,10 @@ def export_payload(path, sources):
     if data_file.exists() and data_file.resolve().parent != path.parent.resolve():
         raise ValueError("UNSAFE_EXPORT_PATH")
     data = read_json(data_file) if not single_html and data_file.is_file() else {}
-    account_id = meta.get("account_id") or data.get("account_id")
+    raw_account_id = meta.get("account_id") or data.get("account_id")
+    account_id = account_identity(raw_account_id)
+    if raw_account_id and not account_id:
+        raise ValueError("ACCOUNT_ID_INVALID")
     name = meta.get("source") or data.get("source") or path.parent.parent.name
     matches = [s for s in sources if (s["accountId"] == account_id if account_id else s["name"] == name)]
     if len(matches) != 1:
@@ -173,8 +177,12 @@ def export_payload(path, sources):
 
 
 def sync_once(config, db, cloud):
-    sources = cloud.call("sources")["sources"]
+    registry = cloud.call("sources")
+    discovery = sync_accounts(config, db, cloud) if registry.get("accountDiscoveryEnabled") else None
+    sources = (cloud.call("sources") if discovery else registry)["sources"]
     stats = {"syncMode": "add_update_only", "sources": len(sources), "published": 0, "unchanged": 0, "skipped": 0, "deferred": 0, "failed": 0, "errors": {}}
+    if discovery:
+        stats["accountDiscovery"] = {state: sum(a["state"] == state for a in discovery["accounts"]) for state in {a["state"] for a in discovery["accounts"]}}
     attempted = 0
     budget = max(1, min(100, int(config.get("maxUploadsPerCycle", 20))))
     for root_name in config["exportDirectories"]:

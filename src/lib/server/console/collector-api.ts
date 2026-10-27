@@ -1,5 +1,9 @@
 import { z } from "zod";
 import {
+  registerCollectorAccounts,
+  type CollectorCredential,
+} from "./collector-accounts";
+import {
   CollectorArticleSchema,
   canonicalWechatUrl,
 } from "@/domain/console/collector";
@@ -18,7 +22,7 @@ import {
   ArticleAnalysisSchema,
 } from "@/domain/console/article-analysis";
 
-type Credential = { id: string; source_ids_json: string };
+type Credential = CollectorCredential;
 type Row = Record<string, string | number | null>;
 const now = () => new Date().toISOString();
 const importCutoffSql =
@@ -55,7 +59,7 @@ async function authenticate(request: Request, db: SqlDatabase) {
     throw new ApiError("UNAUTHORIZED", "需要采集器凭据。");
   const row = await db
     .prepare(
-      "SELECT t.id,t.source_ids_json FROM campus_collector_tokens t JOIN console_admins a ON a.id=t.admin_id WHERE t.token_hash=? AND t.revoked_at IS NULL AND (t.expires_at_ms=0 OR t.expires_at_ms>?) AND a.status='active' AND a.role='admin' AND a.principal_type='human'",
+      "SELECT t.id,t.source_ids_json,t.admin_id,t.auto_discover_sources FROM campus_collector_tokens t JOIN console_admins a ON a.id=t.admin_id WHERE t.token_hash=? AND t.revoked_at IS NULL AND (t.expires_at_ms=0 OR t.expires_at_ms>?) AND a.status='active' AND a.role='admin' AND a.principal_type='human'",
     )
     .bind(await tokenHash(header.slice(7)), Date.now())
     .first<Credential>();
@@ -380,8 +384,12 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
     );
   if (changed && old) {
     // Delete the previous derived projections before creating the new index.
-    statements.push(db.prepare("DELETE FROM knowledge_facts WHERE document_id=?").bind(id));
-    statements.push(db.prepare("DELETE FROM knowledge_chunks WHERE document_id=?").bind(id));
+    statements.push(
+      db.prepare("DELETE FROM knowledge_facts WHERE document_id=?").bind(id),
+    );
+    statements.push(
+      db.prepare("DELETE FROM knowledge_chunks WHERE document_id=?").bind(id),
+    );
   }
   statements.push(
     ...(await analysisStatements(
@@ -432,13 +440,14 @@ export const collectorApi = withApi(async (request) => {
     );
   const db = consoleBindings().db,
     c = await authenticate(request, db);
-  const scopes = JSON.parse(c.source_ids_json) as string[];
+  if (request.method === "POST" && path === "accounts")
+    return registerCollectorAccounts(db, c, await readJson(request, 65536));
   if (request.method === "GET" && path === "sources") {
     const r = await db
       .prepare(
-        `SELECT p.source_id,p.account_id,p.enabled,${importCutoffSql} AS since_day,p.interval_minutes,p.requested_at,s.display_name,s.catalog_metadata_json FROM campus_collector_sources p JOIN knowledge_sources s ON s.id=p.source_id WHERE p.source_id IN(${scopes.map(() => "?").join(",")}) AND p.enabled=1 AND s.enabled=1 AND s.archived_at IS NULL AND s.permission_status<>'denied' ORDER BY p.source_id`,
+        `SELECT p.source_id,p.account_id,p.enabled,${importCutoffSql} AS since_day,p.interval_minutes,p.requested_at,s.display_name,s.catalog_metadata_json FROM campus_collector_sources p JOIN knowledge_sources s ON s.id=p.source_id WHERE p.source_id IN(SELECT value FROM json_each(?)) AND p.enabled=1 AND s.enabled=1 AND s.archived_at IS NULL AND s.permission_status<>'denied' ORDER BY p.source_id`,
       )
-      .bind(...scopes)
+      .bind(c.source_ids_json)
       .all<Row>();
     return {
       sources: r.results.map((r) => ({
@@ -453,6 +462,7 @@ export const collectorApi = withApi(async (request) => {
             ?.biz || null,
       })),
       format: "reading_html",
+      accountDiscoveryEnabled: !!c.auto_discover_sources,
       serverTime: now(),
     };
   }
@@ -564,14 +574,23 @@ export async function collectorAdministration(
   }
   if (request.method === "POST" && section === "connection" && !id) {
     const v = z
-      .object({ tokenId: ConsoleIdSchema, permanent: z.literal(true) })
+      .object({
+        tokenId: ConsoleIdSchema,
+        permanent: z.literal(true),
+        autoDiscoverSources: z.boolean().optional(),
+      })
       .strict()
       .parse(await readJson(request, 4096));
     const result = await db
       .prepare(
-        "UPDATE campus_collector_tokens SET expires_at_ms=0 WHERE id=? AND revoked_at IS NULL",
+        "UPDATE campus_collector_tokens SET expires_at_ms=0,auto_discover_sources=COALESCE(?,auto_discover_sources) WHERE id=? AND revoked_at IS NULL",
       )
-      .bind(v.tokenId)
+      .bind(
+        v.autoDiscoverSources === undefined
+          ? null
+          : Number(v.autoDiscoverSources),
+        v.tokenId,
+      )
       .run();
     if (!result.meta.changes)
       throw new ApiError("NOT_FOUND", "未找到可用的本机连接。");
@@ -597,6 +616,7 @@ export async function collectorAdministration(
           .refine((a) => new Set(a).size === a.length),
         validityDays: z.number().int().min(1).max(365).default(90),
         permanent: z.boolean().default(false),
+        autoDiscoverSources: z.boolean().default(true),
       })
       .strict()
       .parse(await readJson(request, 20000));
@@ -612,7 +632,7 @@ export async function collectorAdministration(
       tokenId = "collector-" + crypto.randomUUID();
     await db
       .prepare(
-        "INSERT INTO campus_collector_tokens(id,token_hash,label,source_ids_json,admin_id,created_at,expires_at_ms) VALUES(?,?,?,?,?,?,?)",
+        "INSERT INTO campus_collector_tokens(id,token_hash,label,source_ids_json,admin_id,created_at,expires_at_ms,auto_discover_sources) VALUES(?,?,?,?,?,?,?,?)",
       )
       .bind(
         tokenId,
@@ -622,6 +642,7 @@ export async function collectorAdministration(
         actor.id,
         now(),
         v.permanent ? 0 : Date.now() + v.validityDays * 86400000,
+        Number(v.autoDiscoverSources),
       )
       .run();
     return { id: tokenId, token };

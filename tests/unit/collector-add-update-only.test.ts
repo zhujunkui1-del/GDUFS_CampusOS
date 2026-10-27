@@ -122,6 +122,117 @@ async function staleHashArticle(mediaOmitted: boolean) {
 }
 
 describe("collector only adds or updates cloud articles", () => {
+  it("automatically registers a new public account once, without fabricating verification", async () => {
+    fixture.sqlite
+      .prepare("UPDATE campus_collector_tokens SET auto_discover_sources=1")
+      .run();
+    const value = {
+      accounts: [
+        {
+          accountId: "MP_WXS_9999876543",
+          biz: btoa("9999876543"),
+          name: "新增隔离公众号",
+        },
+      ],
+    };
+    const response = await submit(value, "accounts");
+    expect(response.status).toBe(200);
+    const data = (await response.json()).data;
+    expect(data.accounts[0].state).toBe("created");
+    expect((await submit(value, "accounts")).status).toBe(200);
+    expect(
+      fixture.sqlite
+        .prepare(
+          "SELECT count(*) n FROM campus_collector_sources WHERE account_id='MP_WXS_9999876543'",
+        )
+        .get()?.n,
+    ).toBe(1);
+    expect(
+      fixture.sqlite
+        .prepare(
+          "SELECT enabled,verification_status,official_status FROM knowledge_sources WHERE display_name='新增隔离公众号'",
+        )
+        .get(),
+    ).toMatchObject({
+      enabled: 1,
+      verification_status: "candidate",
+      official_status: "unverified",
+    });
+    const id = data.accounts[0].sourceId;
+    const published = await submit({
+      ...article(),
+      sourceId: id,
+      accountId: "MP_WXS_9999876543",
+    });
+    expect(published.status).toBe(200);
+    const documentId = (await published.json()).data.documentId;
+    expect(
+      fixture.sqlite
+        .prepare("SELECT id FROM console_public_documents WHERE id=?")
+        .get(documentId)?.id,
+    ).toBe(documentId);
+    expect(
+      fixture.sqlite
+        .prepare(
+          "SELECT count(*) n FROM console_commands WHERE action='document.review'",
+        )
+        .get()?.n,
+    ).toBe(0);
+  });
+  it("matches renamed and archived identities without creating or re-enabling a source", async () => {
+    fixture.sqlite
+      .prepare("UPDATE campus_collector_tokens SET auto_discover_sources=1")
+      .run();
+    fixture.sqlite
+      .prepare(
+        "UPDATE knowledge_sources SET enabled=0,archived_at=? WHERE id=?",
+      )
+      .run(new Date().toISOString(), sourceId);
+    const response = await submit(
+      {
+        accounts: [
+          {
+            accountId: "MP_WXS_1234567890",
+            biz: btoa("1234567890"),
+            name: "已改名隔离账号",
+          },
+        ],
+      },
+      "accounts",
+    );
+    expect(response.status).toBe(200);
+    expect((await response.json()).data.accounts[0]).toMatchObject({
+      sourceId,
+      state: "archived",
+    });
+    expect(
+      fixture.sqlite
+        .prepare("SELECT enabled FROM knowledge_sources WHERE id=?")
+        .get(sourceId)?.enabled,
+    ).toBe(0);
+    expect(
+      fixture.sqlite.prepare("SELECT count(*) n FROM knowledge_sources").get()
+        ?.n,
+    ).toBe(1);
+  });
+  it("does not let a fixed-scope credential grant itself account discovery", async () => {
+    expect(
+      (
+        await submit(
+          {
+            accounts: [
+              {
+                accountId: "MP_WXS_9999876543",
+                biz: btoa("9999876543"),
+                name: "隔离账号",
+              },
+            ],
+          },
+          "accounts",
+        )
+      ).status,
+    ).toBe(403);
+  });
   it.each([
     ["POST", "observations"],
     ["POST", "observations/"],

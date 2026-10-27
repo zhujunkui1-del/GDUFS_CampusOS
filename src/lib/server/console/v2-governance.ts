@@ -142,9 +142,10 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     const statements = [
       this.db
         .prepare(
-          "UPDATE knowledge_sources SET enabled=?,operating_status=CASE WHEN ?=1 THEN 'active' ELSE 'closed' END,version=version+1,next_sync_at_ms=CASE WHEN ?=1 THEN ? ELSE NULL END,updated_at=? WHERE id=?",
+          "UPDATE knowledge_sources SET enabled=?,archived_at=CASE WHEN ?=1 THEN NULL ELSE archived_at END,operating_status=CASE WHEN ?=1 THEN 'active' ELSE 'closed' END,version=version+1,next_sync_at_ms=CASE WHEN ?=1 THEN ? ELSE NULL END,updated_at=? WHERE id=?",
         )
         .bind(
+          Number(v.enabled),
           Number(v.enabled),
           Number(v.enabled),
           Number(v.enabled),
@@ -153,6 +154,13 @@ export class ConsoleGovernanceStore extends ManualImportStore {
           id,
         ),
     ];
+    statements.push(
+      this.db
+        .prepare(
+          "UPDATE campus_collector_sources SET enabled=?,updated_at=? WHERE source_id=?",
+        )
+        .bind(Number(v.enabled), this.now(), id),
+    );
     if (!v.enabled)
       statements.push(
         this.db

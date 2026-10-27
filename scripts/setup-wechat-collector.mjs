@@ -36,7 +36,11 @@ if (existsSync(configPath)) {
     headers: { Authorization: "Bearer " + previous.token },
   });
   if (r.ok) {
-    if (process.argv.includes("--make-permanent")) {
+    const registry = (await r.json()).data;
+    if (
+      process.argv.includes("--make-permanent") ||
+      !registry.accountDiscoveryEnabled
+    ) {
       existingTokenId = JSON.parse(
         readFileSync(directory + "/credential-receipt.json", "utf8"),
       ).id;
@@ -46,7 +50,7 @@ if (existsSync(configPath)) {
           configured: true,
           reusedCredential: true,
           configPath,
-          sources: (await r.json()).data.sources.length,
+          sources: registry.sources.length,
         }),
       );
       process.exit(0);
@@ -100,9 +104,13 @@ async function call(path, body) {
 try {
   const overview = await call("");
   const sourceIds = overview.sources.map((s) => s.source_id);
-  if (sourceIds.length !== 78) throw Error("EXPECTED_78_REGISTRY_SOURCES");
+  if (!sourceIds.length) throw Error("NO_REGISTRY_SOURCES");
   if (existingTokenId) {
-    await call("/connection", { tokenId: existingTokenId, permanent: true });
+    await call("/connection", {
+      tokenId: existingTokenId,
+      permanent: true,
+      autoDiscoverSources: true,
+    });
     const receiptPath = directory + "/credential-receipt.json";
     const receipt = JSON.parse(readFileSync(receiptPath, "utf8"));
     writeFileSync(
