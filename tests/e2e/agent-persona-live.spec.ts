@@ -21,7 +21,7 @@ test("real Preview preserves persona controls and renders a grounded Agent answe
       await page.getByRole("button", { name: "打开校园助理" }).click();
     await expect(input).toBeVisible({ timeout: 2000 });
   }).toPass({ intervals: [1000, 2000], timeout: 20000 });
-  async function ask(text: string) {
+  async function ask(text: string, mayCollapse = false) {
     const before = (await readAgentEvidence(page)).length;
     await input.fill(text);
     await input.press("Enter");
@@ -42,7 +42,7 @@ test("real Preview preserves persona controls and renders a grounded Agent answe
       { timeout: 10000 },
     );
     const last = page.locator('[data-message-role="assistant"]').last();
-    await expect(last).not.toBeEmpty();
+    if (!mayCollapse) await expect(last).not.toBeEmpty();
     return last;
   }
   try {
@@ -55,6 +55,22 @@ test("real Preview preserves persona controls and renders a grounded Agent answe
     const fish = await ask("给你小鱼干");
     await expect(fish).toContainText("本鱼");
     await ask("查询广外讲座资料，按原文说明举办时间，只用内部资料回答");
+    await ask("把地图切换到2.5D", true);
+    const evidence = (await readAgentEvidence(page)) as {
+      actions: unknown[];
+      result: { metrics: { timings: { mapActionMs: number | null } } };
+    }[];
+    expect(evidence.at(-1)?.actions).toContainEqual({
+      type: "SET_VIEW_MODE",
+      mode: "2.5d",
+    });
+    expect(evidence.at(-1)?.result.metrics.timings.mapActionMs).not.toBeNull();
+    await expect(page.getByTestId("campus-map")).toHaveAttribute(
+      "data-mode",
+      "2.5d",
+    );
+    if (!(await input.isVisible()))
+      await page.getByRole("button", { name: "打开校园助理" }).click();
     await expect(page.locator(".assistant-error")).toHaveCount(0);
   } finally {
     await mkdir("docs/verification/agent-persona-2026-10-27", {

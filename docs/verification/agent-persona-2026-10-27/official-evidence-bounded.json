@@ -1,0 +1,626 @@
+{
+  "at": "2026-10-27T17:00:50.125Z",
+  "officialFetch": {
+    "http": 200,
+    "url": "https://zwxy.gdufs.edu.cn/info/1333/9068.htm",
+    "evidence": {
+      "citation": "来源1",
+      "title": "戴建业-中国语言文化学院",
+      "source": "广外官方网页",
+      "url": "https://zwxy.gdufs.edu.cn/info/1333/9068.htm",
+      "publishedAt": "2023-09-06",
+      "snippet": "戴建业，男，1956年生于湖北麻城。现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授，曾任华中师范大学文学院教授、博士生导师、古代文学学科带头人、文学研究所所长。先后在大陆、台湾、香港出版《老子的人生哲学》《澄明之境——陶渊明新论》《论中国古代的知识分类与典籍分类》《文本阐释的内与外》等学术著作13部，上海文艺出版社出版“戴建业作品集”9卷，出版《你听懂了没有》《假如有人欺骗了我》《我的个天》等散"
+    }
+  },
+  "kind": "real providers, same freshly fetched official article excerpt, isolated expression comparison; not complete roster validation",
+  "records": [
+    {
+      "provider": "stepfun",
+      "question": "根据这份官方介绍，戴建业担任什么职务？",
+      "enabled": true,
+      "answer": "戴建业现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授，曾任华中师范大学文学院教授、博士生导师、古代文学学科带头人、文学研究所所长[来源1]🐟",
+      "usage": {
+        "promptTokens": 432,
+        "completionTokens": 567,
+        "totalTokens": 999
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 6025,
+            "firstTextMs": 5832,
+            "finishReason": "stop",
+            "contentChars": 82
+          }
+        ],
+        "promptTokens": 432,
+        "completionTokens": 567,
+        "cachedPromptTokens": 0,
+        "totalTokens": 999,
+        "usageComplete": true,
+        "chargedTokens": 999,
+        "durationMs": 6026,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603"
+      },
+      "durationMs": 6026
+    },
+    {
+      "provider": "stepfun",
+      "question": "根据这份官方介绍，戴建业担任什么职务？",
+      "enabled": false,
+      "answer": "根据广东外语外贸大学官方公开介绍，戴建业现任该校中华文化国际传播学科建设云山工作室首席专家、教授，曾任华中师范大学文学院教授、博士生导师、古代文学学科带头人、文学研究所所长。[来源1]",
+      "usage": {
+        "promptTokens": 401,
+        "completionTokens": 287,
+        "totalTokens": 688
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 3693,
+            "firstTextMs": 3416,
+            "finishReason": "stop",
+            "contentChars": 92
+          }
+        ],
+        "promptTokens": 401,
+        "completionTokens": 287,
+        "cachedPromptTokens": 0,
+        "totalTokens": 688,
+        "usageComplete": true,
+        "chargedTokens": 688,
+        "durationMs": 3693,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603"
+      },
+      "durationMs": 3693
+    },
+    {
+      "provider": "stepfun",
+      "question": "他属于南校吗？只依据原文回答",
+      "enabled": true,
+      "answer": "原文没提校区相关信息，没法确认哦～🐟",
+      "usage": {
+        "promptTokens": 431,
+        "completionTokens": 131,
+        "totalTokens": 562
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 3067,
+            "firstTextMs": 3055,
+            "finishReason": "stop",
+            "contentChars": 19
+          }
+        ],
+        "promptTokens": 431,
+        "completionTokens": 131,
+        "cachedPromptTokens": 0,
+        "totalTokens": 562,
+        "usageComplete": true,
+        "chargedTokens": 562,
+        "durationMs": 3068,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603"
+      },
+      "durationMs": 3068
+    },
+    {
+      "provider": "stepfun",
+      "question": "他属于南校吗？只依据原文回答",
+      "enabled": false,
+      "answer": "来源1的官方正文未提及戴建业的校区归属相关信息，无法确认其是否属于南校。",
+      "usage": {
+        "promptTokens": 400,
+        "completionTokens": 162,
+        "totalTokens": 562
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 2795,
+            "firstTextMs": 2713,
+            "finishReason": "stop",
+            "contentChars": 36
+          }
+        ],
+        "promptTokens": 400,
+        "completionTokens": 162,
+        "cachedPromptTokens": 0,
+        "totalTokens": 562,
+        "usageComplete": true,
+        "chargedTokens": 562,
+        "durationMs": 2796,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603"
+      },
+      "durationMs": 2796
+    },
+    {
+      "provider": "stepfun",
+      "question": "这篇2023年的介绍能证明2026年完整任职名单吗？",
+      "enabled": true,
+      "answer": "不能。2023年的旧介绍无法证明2026年的完整任职名单，[来源1]仅能显示2023年时戴建业任广东外语外贸大学中国语言文化学院中华文化国际传播学科建设云山工作室首席专家、教授，曾任华中师范大学文学院相关职务。",
+      "usage": {
+        "promptTokens": 406,
+        "completionTokens": 303,
+        "totalTokens": 709
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 3908,
+            "firstTextMs": 3622,
+            "finishReason": "stop",
+            "contentChars": 105
+          }
+        ],
+        "promptTokens": 406,
+        "completionTokens": 303,
+        "cachedPromptTokens": 0,
+        "totalTokens": 709,
+        "usageComplete": true,
+        "chargedTokens": 709,
+        "durationMs": 3908,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603"
+      },
+      "durationMs": 3908
+    },
+    {
+      "provider": "stepfun",
+      "question": "这篇2023年的介绍能证明2026年完整任职名单吗？",
+      "enabled": false,
+      "answer": "不能。该介绍发布时间为2023年，仅能反映戴建业当时的任职信息，旧介绍无法证明2026年完整任职名单，且原文仅提及2023年时云山工作室首席专家等相关任职，未涉及2026年相关内容。[来源1]",
+      "usage": {
+        "promptTokens": 404,
+        "completionTokens": 245,
+        "totalTokens": 649
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 3449,
+            "firstTextMs": 3123,
+            "finishReason": "stop",
+            "contentChars": 96
+          }
+        ],
+        "promptTokens": 404,
+        "completionTokens": 245,
+        "cachedPromptTokens": 0,
+        "totalTokens": 649,
+        "usageComplete": true,
+        "chargedTokens": 649,
+        "durationMs": 3449,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603"
+      },
+      "durationMs": 3449
+    },
+    {
+      "provider": "stepfun",
+      "question": "请把他的具体首席专家头衔说清楚，不要混成所有首席专家名单",
+      "enabled": true,
+      "answer": "戴建业现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家[来源1]。",
+      "usage": {
+        "promptTokens": 409,
+        "completionTokens": 113,
+        "totalTokens": 522
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 2153,
+            "firstTextMs": 2060,
+            "finishReason": "stop",
+            "contentChars": 40
+          }
+        ],
+        "promptTokens": 409,
+        "completionTokens": 113,
+        "cachedPromptTokens": 0,
+        "totalTokens": 522,
+        "usageComplete": true,
+        "chargedTokens": 522,
+        "durationMs": 2153,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603"
+      },
+      "durationMs": 2153
+    },
+    {
+      "provider": "stepfun",
+      "question": "请把他的具体首席专家头衔说清楚，不要混成所有首席专家名单",
+      "enabled": false,
+      "answer": "戴建业的具体首席专家头衔为广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家，同时任该校教授[来源1]。",
+      "usage": {
+        "promptTokens": 407,
+        "completionTokens": 262,
+        "totalTokens": 669
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 5318,
+            "firstTextMs": 4961,
+            "finishReason": "stop",
+            "contentChars": 56
+          }
+        ],
+        "promptTokens": 407,
+        "completionTokens": 262,
+        "cachedPromptTokens": 0,
+        "totalTokens": 669,
+        "usageComplete": true,
+        "chargedTokens": 669,
+        "durationMs": 5318,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603"
+      },
+      "durationMs": 5318
+    },
+    {
+      "provider": "deepseek",
+      "question": "根据这份官方介绍，戴建业担任什么职务？",
+      "enabled": true,
+      "answer": "按这份官方介绍，戴建业现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授[来源1]。本鱼提醒：这是工作室身份，并非学校行政职务；至于具体校区，原文未提，无法确认哦🐟",
+      "usage": {
+        "promptTokens": 415,
+        "completionTokens": 56,
+        "totalTokens": 471,
+        "cachedPromptTokens": 256
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 861,
+            "firstTextMs": 463,
+            "finishReason": "stop",
+            "contentChars": 92
+          }
+        ],
+        "promptTokens": 415,
+        "completionTokens": 56,
+        "cachedPromptTokens": 256,
+        "totalTokens": 471,
+        "usageComplete": true,
+        "chargedTokens": 471,
+        "durationMs": 861,
+        "estimatedUsdRange": [
+          0.000058218000000000004,
+          0.00011643600000000001
+        ],
+        "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "priceCheckedAt": "2026-10-15",
+        "model": "deepseek-flash"
+      },
+      "durationMs": 861
+    },
+    {
+      "provider": "deepseek",
+      "question": "根据这份官方介绍，戴建业担任什么职务？",
+      "enabled": false,
+      "answer": "戴建业现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授[来源1]。",
+      "usage": {
+        "promptTokens": 384,
+        "completionTokens": 25,
+        "totalTokens": 409,
+        "cachedPromptTokens": 128
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 839,
+            "firstTextMs": 663,
+            "finishReason": "stop",
+            "contentChars": 43
+          }
+        ],
+        "promptTokens": 384,
+        "completionTokens": 25,
+        "cachedPromptTokens": 128,
+        "totalTokens": 409,
+        "usageComplete": true,
+        "chargedTokens": 409,
+        "durationMs": 839,
+        "estimatedUsdRange": [
+          0.000053784,
+          0.000107568
+        ],
+        "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "priceCheckedAt": "2026-10-15",
+        "model": "deepseek-flash"
+      },
+      "durationMs": 839
+    },
+    {
+      "provider": "deepseek",
+      "question": "他属于南校吗？只依据原文回答",
+      "enabled": true,
+      "answer": "原文只说戴建业是广外“云山工作室首席专家、教授”，没提校区，无法确认属不属于南校。[来源1]",
+      "usage": {
+        "promptTokens": 414,
+        "completionTokens": 31,
+        "totalTokens": 445,
+        "cachedPromptTokens": 256
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 643,
+            "firstTextMs": 413,
+            "finishReason": "stop",
+            "contentChars": 46
+          }
+        ],
+        "promptTokens": 414,
+        "completionTokens": 31,
+        "cachedPromptTokens": 256,
+        "totalTokens": 445,
+        "usageComplete": true,
+        "chargedTokens": 445,
+        "durationMs": 643,
+        "estimatedUsdRange": [
+          0.000043067999999999995,
+          0.00008613599999999999
+        ],
+        "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "priceCheckedAt": "2026-10-15",
+        "model": "deepseek-flash"
+      },
+      "durationMs": 643
+    },
+    {
+      "provider": "deepseek",
+      "question": "他属于南校吗？只依据原文回答",
+      "enabled": false,
+      "answer": "原文只写明戴建业现任广东外语外贸大学云山工作室首席专家、教授[来源1]，未提及校区归属，无法确认他是否属于南校。",
+      "usage": {
+        "promptTokens": 383,
+        "completionTokens": 35,
+        "totalTokens": 418,
+        "cachedPromptTokens": 128
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 941,
+            "firstTextMs": 648,
+            "finishReason": "stop",
+            "contentChars": 56
+          }
+        ],
+        "promptTokens": 383,
+        "completionTokens": 35,
+        "cachedPromptTokens": 128,
+        "totalTokens": 418,
+        "usageComplete": true,
+        "chargedTokens": 418,
+        "durationMs": 941,
+        "estimatedUsdRange": [
+          0.000059634,
+          0.000119268
+        ],
+        "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "priceCheckedAt": "2026-10-15",
+        "model": "deepseek-flash"
+      },
+      "durationMs": 941
+    },
+    {
+      "provider": "deepseek",
+      "question": "这篇2023年的介绍能证明2026年完整任职名单吗？",
+      "enabled": true,
+      "answer": "不能。该2023年介绍只能说明当时戴建业任广外云山工作室首席专家、教授[来源1]，不能证明2026年完整任职名单；是否有其他任职或人员变动，无法确认。",
+      "usage": {
+        "promptTokens": 389,
+        "completionTokens": 46,
+        "totalTokens": 435,
+        "cachedPromptTokens": 255
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 2185,
+            "firstTextMs": 1808,
+            "finishReason": "stop",
+            "contentChars": 75
+          }
+        ],
+        "promptTokens": 389,
+        "completionTokens": 46,
+        "cachedPromptTokens": 255,
+        "totalTokens": 435,
+        "usageComplete": true,
+        "chargedTokens": 435,
+        "durationMs": 2185,
+        "estimatedUsdRange": [
+          0.000048465,
+          0.00009693
+        ],
+        "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "priceCheckedAt": "2026-10-15",
+        "model": "deepseek-flash"
+      },
+      "durationMs": 2185
+    },
+    {
+      "provider": "deepseek",
+      "question": "这篇2023年的介绍能证明2026年完整任职名单吗？",
+      "enabled": false,
+      "answer": "不能。这篇2023年介绍仅能证明戴建业当时任广外中华文化国际传播学科建设云山工作室首席专家、教授[来源1]；无法据此确认2026年完整任职名单。",
+      "usage": {
+        "promptTokens": 387,
+        "completionTokens": 45,
+        "totalTokens": 432,
+        "cachedPromptTokens": 253
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 1163,
+            "firstTextMs": 826,
+            "finishReason": "stop",
+            "contentChars": 72
+          }
+        ],
+        "promptTokens": 387,
+        "completionTokens": 45,
+        "cachedPromptTokens": 253,
+        "totalTokens": 432,
+        "usageComplete": true,
+        "chargedTokens": 432,
+        "durationMs": 1163,
+        "estimatedUsdRange": [
+          0.000047859,
+          0.000095718
+        ],
+        "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "priceCheckedAt": "2026-10-15",
+        "model": "deepseek-flash"
+      },
+      "durationMs": 1163
+    },
+    {
+      "provider": "deepseek",
+      "question": "请把他的具体首席专家头衔说清楚，不要混成所有首席专家名单",
+      "enabled": true,
+      "answer": "他在2023年9月6日广外网页上的头衔是“广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授”[来源1]，这是该工作室的首席专家，不是“所有首席专家名单”。",
+      "usage": {
+        "promptTokens": 392,
+        "completionTokens": 51,
+        "totalTokens": 443,
+        "cachedPromptTokens": 256
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 1125,
+            "firstTextMs": 798,
+            "finishReason": "stop",
+            "contentChars": 85
+          }
+        ],
+        "promptTokens": 392,
+        "completionTokens": 51,
+        "cachedPromptTokens": 256,
+        "totalTokens": 443,
+        "usageComplete": true,
+        "chargedTokens": 443,
+        "durationMs": 1125,
+        "estimatedUsdRange": [
+          0.000051768,
+          0.000103536
+        ],
+        "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "priceCheckedAt": "2026-10-15",
+        "model": "deepseek-flash"
+      },
+      "durationMs": 1125
+    },
+    {
+      "provider": "deepseek",
+      "question": "请把他的具体首席专家头衔说清楚，不要混成所有首席专家名单",
+      "enabled": false,
+      "answer": "据来源1，其头衔为“广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授”；这是工作室首席专家，并非所有首席专家名单。原网页未提校区，无法确认校区归属。",
+      "usage": {
+        "promptTokens": 390,
+        "completionTokens": 49,
+        "totalTokens": 439,
+        "cachedPromptTokens": 256
+      },
+      "metering": {
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 705,
+            "firstTextMs": 382,
+            "finishReason": "stop",
+            "contentChars": 82
+          }
+        ],
+        "promptTokens": 390,
+        "completionTokens": 49,
+        "cachedPromptTokens": 256,
+        "totalTokens": 439,
+        "usageComplete": true,
+        "chargedTokens": 439,
+        "durationMs": 705,
+        "estimatedUsdRange": [
+          0.000050268,
+          0.000100536
+        ],
+        "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+        "priceCheckedAt": "2026-10-15",
+        "model": "deepseek-flash"
+      },
+      "durationMs": 705
+    }
+  ]
+}

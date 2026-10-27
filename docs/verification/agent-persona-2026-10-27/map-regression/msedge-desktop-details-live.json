@@ -1,0 +1,125 @@
+{
+  "realModel": true,
+  "realCloud": true,
+  "browser": "149.0.4022.80",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "records": [
+    {
+      "prompt": "查询南苑7栋的详细资料：它属于哪个区域、有多少层、高约多少米？请先查询地点详情，再按已核实资料回答。",
+      "tools": [
+        "search_places",
+        "get_place_details"
+      ],
+      "actions": [],
+      "cards": [
+        {
+          "kind": "place",
+          "place": {
+            "placeId": "osm-way-312536955",
+            "name": "南苑7栋",
+            "category": "dormitory",
+            "zone": "living",
+            "location": [
+              113.390146,
+              23.0615765
+            ],
+            "crs": "WGS84",
+            "aliases": [
+              "7栋"
+            ],
+            "labelPlaceId": "osm-way-312536955",
+            "verificationStatus": "source_mapped"
+          }
+        }
+      ],
+      "result": {
+        "conversationId": "2c07a495-3b85-42ba-b565-a94edaa9b84b",
+        "requestId": "25e63935-f3a0-4c87-96fe-f8742158ed1d",
+        "metrics": {
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 3,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 1465,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 902,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 1872,
+              "firstTextMs": null,
+              "finishReason": "stop",
+              "contentChars": 143
+            }
+          ],
+          "promptTokens": 10340,
+          "completionTokens": 291,
+          "cachedPromptTokens": 0,
+          "totalTokens": 10631,
+          "usageComplete": true,
+          "chargedTokens": 10631,
+          "durationMs": 4304,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 179,
+            "serverElapsedMs": 4483,
+            "firstTextMs": 4472,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_places",
+                "durationMs": 0,
+                "ok": true
+              },
+              {
+                "name": "get_place_details",
+                "durationMs": 0,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 13,
+              "writeQueries": 12,
+              "calls": 17,
+              "failures": 0,
+              "durationMs": 244,
+              "maxCallMs": 47,
+              "rowsRead": 565,
+              "rowsWritten": 15,
+              "rowUsageStatements": 13,
+              "rowUsageComplete": false
+            },
+            "retrieval": [],
+            "externalSearch": []
+          }
+        }
+      },
+      "response": "根据已核实资料，南苑7栋的信息如下：\n\n- **所属区域**：生活区（living zone）\n- **楼层数**：7层\n- **建筑高度**：约21米（数据来源为业主近似值）\n\n以上信息来自CampusOS固定校园OSM数据（OpenStreetMap关系ID: 13900183）。",
+      "responseHeadersMs": 387,
+      "firstTextMs": 4642,
+      "completeMs": 4710
+    }
+  ]
+}

@@ -1,0 +1,355 @@
+[
+  {
+    "prompt": "给你小鱼干",
+    "tools": [],
+    "actions": [],
+    "cards": [],
+    "result": {
+      "conversationId": "355bc6fa-f5b3-42f6-a84e-b2ec463f9aa4",
+      "requestId": "17306ee6-bf8c-4df1-9637-19ca1970cc0d",
+      "metrics": {
+        "requests": 0,
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "chargedTokens": 0,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "execution": "dialogue",
+        "serverElapsedMs": 100
+      }
+    },
+    "response": "本鱼在这儿。小鱼干先收好，陪你聊两句。🐋",
+    "responseHeadersMs": 340,
+    "firstTextMs": 340,
+    "completeMs": 340
+  },
+  {
+    "prompt": "别演了",
+    "tools": [],
+    "actions": [],
+    "cards": [],
+    "result": {
+      "conversationId": "355bc6fa-f5b3-42f6-a84e-b2ec463f9aa4",
+      "requestId": "5a3ab270-659e-42b9-9b2a-015119a93bd7",
+      "metrics": {
+        "requests": 0,
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "chargedTokens": 0,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "off",
+          "aside": false,
+          "concise": false
+        },
+        "execution": "dialogue",
+        "serverElapsedMs": 96
+      }
+    },
+    "response": "已切换为正常语气，本次对话会保持。",
+    "responseHeadersMs": 283,
+    "firstTextMs": 284,
+    "completeMs": 284
+  },
+  {
+    "prompt": "给你小鱼干",
+    "tools": [],
+    "actions": [],
+    "cards": [],
+    "result": {
+      "conversationId": "355bc6fa-f5b3-42f6-a84e-b2ec463f9aa4",
+      "requestId": "0bf485ba-113f-4602-976f-f3943542bef4",
+      "metrics": {
+        "requests": 0,
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "chargedTokens": 0,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "off",
+          "aside": false,
+          "concise": false
+        },
+        "execution": "dialogue",
+        "serverElapsedMs": 81
+      }
+    },
+    "response": "我在这儿，可以陪你聊两句，也可以帮你查校园里的事。",
+    "responseHeadersMs": 270,
+    "firstTextMs": 271,
+    "completeMs": 271
+  },
+  {
+    "prompt": "恢复刚才的说话方式",
+    "tools": [],
+    "actions": [],
+    "cards": [],
+    "result": {
+      "conversationId": "355bc6fa-f5b3-42f6-a84e-b2ec463f9aa4",
+      "requestId": "45620541-f041-41bf-87c5-028f84f74e9a",
+      "metrics": {
+        "requests": 0,
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "chargedTokens": 0,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "execution": "dialogue",
+        "serverElapsedMs": 94
+      }
+    },
+    "response": "本鱼回来了，继续认真帮你。",
+    "responseHeadersMs": 276,
+    "firstTextMs": 276,
+    "completeMs": 276
+  },
+  {
+    "prompt": "给你小鱼干",
+    "tools": [],
+    "actions": [],
+    "cards": [],
+    "result": {
+      "conversationId": "355bc6fa-f5b3-42f6-a84e-b2ec463f9aa4",
+      "requestId": "7f287109-0112-4ce4-94c1-7ab163943811",
+      "metrics": {
+        "requests": 0,
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "chargedTokens": 0,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": true,
+          "concise": false
+        },
+        "execution": "dialogue",
+        "serverElapsedMs": 84
+      }
+    },
+    "response": "本鱼在这儿。小鱼干先收好，陪你聊两句。🐋",
+    "responseHeadersMs": 287,
+    "firstTextMs": 287,
+    "completeMs": 287
+  },
+  {
+    "prompt": "查询广外讲座资料，按原文说明举办时间，只用内部资料回答",
+    "tools": [
+      "search_campus_events"
+    ],
+    "actions": [],
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-6706569a-2265-4810-88bf-ac52fb2fdd3a",
+        "title": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲-数学与统计学院",
+        "sourceName": "数学与统计学院",
+        "originalUrl": "https://stxy.gdufs.edu.cn/info/1748/6135.htm",
+        "publishedAt": "2026-07-08",
+        "snippet": "年7月10日（周五）14:30\n地点\n腾讯会议 ID号：623-225-129\n报告内容简介\n分析AI对大学数学课程建设与教学的影响，特别是大模型给大学数学教学带来的机遇与挑战，介绍当前课程建设的热点，分享教材建设的思考和发展趋势，重点介绍本团队已经开展的高等数学数字教材建设的思路、建设的模式、建设的内容和使用方面的开创性工作。\n报告人简介\n朱士信，合肥工业大学二级教授、国家级教学名师暨首届国家万人计划教学名师、全国模范教师、享受国务院政府特殊津贴专家，安徽省政府参事、《大学数学》常务副主编、中国密码学会监事、中国高等教育学会教育数学专业委员会副理事长、安徽省数学会副监事长、安徽省工业与应用数学会副理事长、国防科技大学兼职教授。曾任两届国家大学数学教学指导委员会委员、数学学院四任院长。\n主要研究方向是代数编码与密码，以主持人身份获得安徽省自然科学奖一等奖一项、主持国家自然科学基金联合基金重点项目一项、国家自然科学基金面上项目五项、发表三百多篇SCI论文。主编的高等数学教材获得国家首届教材奖二等奖，获批4本国家十四五规划教材，以主持人身份获得国家教学成果二等奖一项、安徽省教学成果特等奖三项、一等奖五项，2019年获得安徽省教学重大成就奖。是数学一级学科博士点开点负责人、国家级一流专业负责人、国家级一流课程负责人、国家级精品课程负责人、国家级资源共享课程负责人、国家级教学团队负责人、国家首批虚拟教研室负责人。\n数学与统计学院“前沿学术论坛”由广东外语外贸大学数学与统计学院发起创办，是数学统计学科高层次常态化学术交流平台。论坛不定期邀请国内外知名学者围绕数学统计国际前沿动态及热点研究领域展开交流与探讨，通过学术报告、学术沙龙、研讨会等形式为师生提供向国内外同行学习交流的机会，接触学术前沿，拓宽学术视野，激发学术热情，提升我校师生的创新能力。",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-68fe346319ff9b98a0756121f358bd6a81156789",
+        "title": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲",
+        "sourceName": "广外数学与统计学院",
+        "originalUrl": "https://mp.weixin.qq.com/s/rOMCzSB-LE64Dzi1Omfs5A",
+        "publishedAt": "2026-07-08T06:35:16.000Z",
+        "snippet": "届国家万人计划教学名师、全国模范教师、享受国务院政府特殊津贴专家，安徽省政府参事、《大学数学》常务副主编、中国密码学会监事、中国高等教育学会教育数学专业委员会副理事长、安徽省数学会副监事长、安徽省工业与应用数学会副理事长、国防科技大学兼职教授。曾任两届国家大学数学教学指导委员会委员、数学学院四任院长。\n主要研究方向是代数编码与密码，以主持人身份获得安徽省自然科学奖一等奖一项、主持国家自然科学基金联合基金重点项目一项、国家自然科学基金面上项目五项、发表三百多篇SCI论文。主编的高等数学教材获得国家首届教材奖二等奖，获批4本国家十四五规划教材，以主持人身份获得国家教学成果二等奖一项、安徽省教学成果特等奖三项、一等奖五项，2019年获得安徽省教学重大成就奖。是数学一级学科博士点开点负责人、国家级一流专业负责人、国家级一流课程负责人、国家级精品课程负责人、国家级资源共享课程负责人、国家级教学团队负责人、国家首批虚拟教研室负责人。\n报告内容简介\n分析AI对大学数学课程建设与教学的影响，特别是大模型给大学数学教学带来的机遇与挑战，介绍当前课程建设的热点，分享教材建设的思考和发展趋势，重点介绍本团队己经开展的高等数学数字教材建设的思路、建设的模式、建设的内容和使用方面的开创性工作。\n数学与统计学院“前沿学术论坛”由广东外语外贸大学数学与统计学院发起创办，是数学统计学科高层次常态化学术交流平台。论坛不定期邀请国内外知名学者围绕数学统计国际前沿动态及热点研究领域展开交流与探讨，通过学术报告、学术沙龙、研讨会等形式为师生提供向国内外同行学习交流的机会，接触学术前沿，拓宽学术视野，激发学术热情，提升我校师生的创新能力。\n文图 |数学与统计学院办公室\n编辑 | 陈曦慧\n初审 | 毛 竹\n复审 | 龙会典\n终审 | 王军威\n欢迎关注广外数学与统计学院官方平台：",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true
+      },
+      {
+        "kind": "source",
+        "documentId": "content-fe27a19d-080b-484c-8ebb-a31169f8603e",
+        "title": "云山学术沙龙414期：学术论文写作全过程",
+        "sourceName": "广东外语外贸大学",
+        "originalUrl": "https://www.gdufs.edu.cn/info/1005/266556.htm",
+        "publishedAt": "2026-10-24",
+        "snippet": "云山学术沙龙414期：学术论文写作全过程",
+        "evidenceType": "metadata",
+        "classificationState": "unknown",
+        "validity": "unknown",
+        "readable": true
+      }
+    ],
+    "result": {
+      "conversationId": "355bc6fa-f5b3-42f6-a84e-b2ec463f9aa4",
+      "requestId": "8b71aa0e-1fca-4004-b687-9e4f006d26b1",
+      "metrics": {
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": true,
+          "concise": false
+        },
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 7521,
+            "firstTextMs": 6995,
+            "finishReason": "stop",
+            "contentChars": 199
+          }
+        ],
+        "promptTokens": 3098,
+        "completionTokens": 796,
+        "cachedPromptTokens": 0,
+        "totalTokens": 3894,
+        "usageComplete": true,
+        "chargedTokens": 3894,
+        "durationMs": 7602,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 101,
+          "serverElapsedMs": 7703,
+          "firstTextMs": 7169,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_events",
+              "durationMs": 63,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 11,
+            "writeQueries": 11,
+            "calls": 14,
+            "failures": 0,
+            "durationMs": 182,
+            "maxCallMs": 41,
+            "rowsRead": 1597,
+            "rowsWritten": 11,
+            "rowUsageStatements": 14,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_events",
+              "rowsRead": 1024,
+              "rowsWritten": 0,
+              "queries": 2,
+              "durationMs": 63,
+              "candidateChunks": 96,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": []
+        }
+      }
+    },
+    "response": "从内部资料里目前能查到明确举办时间的讲座是：\n数学与统计学院“前沿学术论坛”第50讲，原文注明举办时间为2026年7月10日（周五）14:30[来源1]。\n\n另外还有云山学术沙龙第414期（主题为学术论文写作全过程），但内部资料仅有元数据，没有正文中的举办时间等信息，暂时没法确认具体时间~\n\n如果需要其他方向的讲座信息，可以告诉我更具体的关键词，比如所属学院、主题领域之类的，我帮你进一步检索🐋",
+    "responseHeadersMs": 343,
+    "firstTextMs": 7945,
+    "completeMs": 7989
+  },
+  {
+    "prompt": "把地图切换到2.5D",
+    "tools": [
+      "control_map"
+    ],
+    "actions": [
+      {
+        "type": "SET_VIEW_MODE",
+        "mode": "2.5d"
+      }
+    ],
+    "cards": [],
+    "result": {
+      "conversationId": "355bc6fa-f5b3-42f6-a84e-b2ec463f9aa4",
+      "requestId": "640a572f-6aec-45b9-b052-7122755c0e9c",
+      "metrics": {
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": true,
+          "concise": false
+        },
+        "requests": 2,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 1169,
+            "firstTextMs": null,
+            "finishReason": "tool_calls",
+            "contentChars": 0
+          },
+          {
+            "durationMs": 1042,
+            "firstTextMs": 765,
+            "finishReason": "stop",
+            "contentChars": 40
+          }
+        ],
+        "promptTokens": 2191,
+        "completionTokens": 136,
+        "cachedPromptTokens": 0,
+        "totalTokens": 2327,
+        "usageComplete": true,
+        "chargedTokens": 2327,
+        "durationMs": 3793,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 99,
+          "serverElapsedMs": 3892,
+          "firstTextMs": 3607,
+          "mapActionMs": 1549,
+          "skills": [
+            {
+              "name": "control_map",
+              "durationMs": 0,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 15,
+            "writeQueries": 12,
+            "calls": 19,
+            "failures": 0,
+            "durationMs": 181,
+            "maxCallMs": 17,
+            "rowsRead": 591,
+            "rowsWritten": 13,
+            "rowUsageStatements": 13,
+            "rowUsageComplete": false
+          },
+          "retrieval": [],
+          "externalSearch": []
+        }
+      }
+    },
+    "response": "地图已切到2.5D模式了~视野和立体感都换了，想找哪栋楼可以直接说，帮你导航🐋",
+    "responseHeadersMs": 222,
+    "firstTextMs": 4001,
+    "completeMs": 4046
+  }
+]

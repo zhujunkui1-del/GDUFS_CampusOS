@@ -1,0 +1,98 @@
+{
+  "at": "2026-10-27T17:29:51.781Z",
+  "runtimeCommit": "591c44b",
+  "services": {
+    "main": "5c0404b6-b350-4ee8-b419-3db66d0aea4f",
+    "gateway": "4800a9b7-de1f-47d0-85de-e9c39a0f5f4f",
+    "nativeSearch": "3afc6737-f403-4b0b-8275-cee3535e780c"
+  },
+  "modelStatus": {
+    "stage": "S2-C",
+    "chatAvailable": true,
+    "status": "ready",
+    "storageReady": true,
+    "model": {
+      "ready": true,
+      "model": {
+        "source": "platform",
+        "provider": "stepfun",
+        "model": "step-3.5-flash-2603",
+        "policyVersion": "stepfun-plan-v1",
+        "testedAt": "2026-10-27T12:34:26.813Z",
+        "capabilities": {
+          "toolCalling": true,
+          "jsonObject": true,
+          "strictJsonSchema": false
+        }
+      }
+    },
+    "domains": [
+      "knowledge-domain",
+      "spatial-domain",
+      "events-domain",
+      "personal-domain"
+    ],
+    "skills": [
+      {
+        "name": "search_places",
+        "version": "1.0.0",
+        "domain": "spatial-domain",
+        "auth": "public",
+        "sideEffect": "none"
+      },
+      {
+        "name": "get_place_details",
+        "version": "1.0.0",
+        "domain": "spatial-domain",
+        "auth": "public",
+        "sideEffect": "none"
+      },
+      {
+        "name": "find_nearby_places",
+        "version": "1.0.0",
+        "domain": "spatial-domain",
+        "auth": "public",
+        "sideEffect": "none"
+      },
+      {
+        "name": "plan_route",
+        "version": "1.0.0",
+        "domain": "spatial-domain",
+        "auth": "public",
+        "sideEffect": "none"
+      },
+      {
+        "name": "control_map",
+        "version": "1.0.0",
+        "domain": "spatial-domain",
+        "auth": "public",
+        "sideEffect": "none"
+      }
+    ]
+  },
+  "productionChanged": false,
+  "d1Migrations": 0,
+  "businessArticleMutations": 0,
+  "externalAccountChanges": 0,
+  "newPaidServices": 0,
+  "acceptance": {
+    "unit": {
+      "total": 606,
+      "passed": 592,
+      "knownPreexistingFailures": 14
+    },
+    "preview": {
+      "personaAndMapDetails": 4,
+      "personaWithMapExecution": 2,
+      "browsers": [
+        "Edge desktop",
+        "Edge mobile emulation"
+      ],
+      "actualMapMode": "2.5d",
+      "publicationDateFallback": true
+    },
+    "modifiedFilesLint": "passed",
+    "typecheck": "passed",
+    "d1Migrations": "none pending, none applied"
+  }
+}

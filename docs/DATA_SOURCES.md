@@ -587,3 +587,11 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 实际依据包括学校网上校史馆https://history.gdufs.edu.cn/dsb1/dxyr.htm、聘任报道https://www.gdufs.edu.cn/info/1106/59757.htm、学院介绍https://zwxy.gdufs.edu.cn/info/1333/9068.htm及教师目录https://bcdlab.gdufs.edu.cn/ry/js.htm。任职头衔与科研项目负责人不是同一类别；举办讲座的校区不证明任职校区，未建立按校区的权威人员名册。
 
 公开站内搜索协议取自官网首页及/aop_views/search/modules/resultpc/js/soso.js，调用公开tourist模式、全文范围3，保留原公开过滤，最多首页10条/4结果/2正文，不使用学校账号、Cookie或私有接口、不执行脚本或处理验证码。只有HTTPS官方域静态HTML可作直接正文，访问失败/只有摘要如实标示。原文链接及证据保留，临时读取不自动入公开知识库；没有据公开访问宣称获得通用商业API许可。失败和最终真实验收见verification/agent-official-facts-2026-10-27/。
+
+
+## 2026-10-28｜Agent工程与大肥鱼风格参考
+
+- https://github.com/ERUIHNIYHBKBNF/dafeiyu-persona ，固定5b08af8353fcfcc1378ea73f33686d669d61703f；完整读六份指定文件，MIT，归属及原文许可证保留。只参考表达方法，不采用厂商/社区身份和攻击台词，不作为校园事实资料。
+- 工程资料来自OpenAI/Anthropic官方Agent、评测和上下文文档，链接见AGENT_RELIABILITY_RESEARCH_2026_10_27.md。
+- 对照证据为实时读取的广外中国语言文化学院戴建业介绍（2023-09-06，https://zwxy.gdufs.edu.cn/info/1333/9068.htm）；不能据旧介绍确认2026完整名单/个人校区。
+- Preview真实检索来源、日期和URL见验收JSON；小红书源站本次返回3笔记但未通过指定日期筛选，不作本周事实。只存验收回执，不新增公共文章或复制CDN图片。

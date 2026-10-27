@@ -1,0 +1,212 @@
+{
+  "at": "2026-10-27T16:35:37.694Z",
+  "officialFetch": {
+    "http": 200,
+    "url": "https://zwxy.gdufs.edu.cn/info/1333/9068.htm",
+    "evidence": {
+      "citation": "来源1",
+      "title": "戴建业-中国语言文化学院",
+      "source": "广外官方网页",
+      "url": "https://zwxy.gdufs.edu.cn/info/1333/9068.htm",
+      "publishedAt": "2023-09-06",
+      "snippet": "戴建业，男，1956年生于湖北麻城。现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授，曾任华中师范大学文学院教授、博士生导师、古代文学学科带头人、文学研究所所长。先后在大陆、台湾、香港出版《老子的人生哲学》《澄明之境——陶渊明新论》《论中国古代的知识分类与典籍分类》《文本阐释的内与外》等学术著作13部，上海文艺出版社出版“戴建业作品集”9卷，出版《你听懂了没有》《假如有人欺骗了我》《我的个天》等散"
+    }
+  },
+  "kind": "real providers, same freshly fetched official article excerpt, isolated expression comparison; not complete roster validation",
+  "records": [
+    {
+      "provider": "stepfun",
+      "question": "根据这份官方介绍，戴建业担任什么职务？",
+      "enabled": true,
+      "answer": "🐟 戴建业现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授，曾任华中师范大学文学院教授、博士生导师、古代文学学科带头人、文学研究所所长~ [来源1]",
+      "usage": {
+        "promptTokens": 432,
+        "completionTokens": 280,
+        "totalTokens": 712
+      },
+      "durationMs": 11089
+    },
+    {
+      "provider": "stepfun",
+      "question": "根据这份官方介绍，戴建业担任什么职务？",
+      "enabled": false,
+      "answer": "戴建业现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授，曾任华中师范大学文学院教授、博士生导师、古代文学学科带头人、文学研究所所长。[来源1]",
+      "usage": {
+        "promptTokens": 401,
+        "completionTokens": 276,
+        "totalTokens": 677
+      },
+      "durationMs": 5966
+    },
+    {
+      "provider": "stepfun",
+      "question": "他属于南校吗？只依据原文回答",
+      "enabled": true,
+      "answer": "原文未提及南校相关信息，没法确认他是不是南校的哦🐟",
+      "usage": {
+        "promptTokens": 431,
+        "completionTokens": 234,
+        "totalTokens": 665
+      },
+      "durationMs": 11750
+    },
+    {
+      "provider": "stepfun",
+      "question": "他属于南校吗？只依据原文回答",
+      "enabled": false,
+      "answer": "给定来源1的官方内容未提及南校相关信息，无法确认。",
+      "usage": {
+        "promptTokens": 400,
+        "completionTokens": 161,
+        "totalTokens": 561
+      },
+      "durationMs": 3032
+    },
+    {
+      "provider": "stepfun",
+      "question": "这篇2023年的介绍能证明2026年完整任职名单吗？",
+      "enabled": true,
+      "error": "MODEL_TIMEOUT"
+    },
+    {
+      "provider": "stepfun",
+      "question": "这篇2023年的介绍能证明2026年完整任职名单吗？",
+      "enabled": false,
+      "answer": "不能。来源1为2023年9月发布的官方介绍，仅能反映该时间点戴建业的相关任职情况，旧介绍不能证明2026年的完整任职名单。",
+      "usage": {
+        "promptTokens": 404,
+        "completionTokens": 235,
+        "totalTokens": 639
+      },
+      "durationMs": 13440
+    },
+    {
+      "provider": "stepfun",
+      "question": "请把他的具体首席专家头衔说清楚，不要混成所有首席专家名单",
+      "enabled": true,
+      "answer": "戴建业的具体首席专家头衔为广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家[来源1]。",
+      "usage": {
+        "promptTokens": 409,
+        "completionTokens": 193,
+        "totalTokens": 602
+      },
+      "durationMs": 7597
+    },
+    {
+      "provider": "stepfun",
+      "question": "请把他的具体首席专家头衔说清楚，不要混成所有首席专家名单",
+      "enabled": false,
+      "answer": "戴建业现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授。[来源1]",
+      "usage": {
+        "promptTokens": 407,
+        "completionTokens": 186,
+        "totalTokens": 593
+      },
+      "durationMs": 4471
+    },
+    {
+      "provider": "deepseek",
+      "question": "根据这份官方介绍，戴建业担任什么职务？",
+      "enabled": true,
+      "answer": "戴建业现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授[来源1]。他此前曾任华中师范大学文学院教授等职[来源1]。",
+      "usage": {
+        "promptTokens": 415,
+        "completionTokens": 39,
+        "totalTokens": 454,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 1062
+    },
+    {
+      "provider": "deepseek",
+      "question": "根据这份官方介绍，戴建业担任什么职务？",
+      "enabled": false,
+      "answer": "据官方介绍，戴建业现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授[来源1]。",
+      "usage": {
+        "promptTokens": 384,
+        "completionTokens": 29,
+        "totalTokens": 413,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 614
+    },
+    {
+      "provider": "deepseek",
+      "question": "他属于南校吗？只依据原文回答",
+      "enabled": true,
+      "answer": "原文只提到他现任广外云山工作室首席专家、教授，没说属于哪个校区，所以无法确认他是不是南校的[来源1]。",
+      "usage": {
+        "promptTokens": 414,
+        "completionTokens": 32,
+        "totalTokens": 446,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 771
+    },
+    {
+      "provider": "deepseek",
+      "question": "他属于南校吗？只依据原文回答",
+      "enabled": false,
+      "answer": "原文只提到他现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授，未提及所属校区，因此无法确认他是否属于南校。[来源1]",
+      "usage": {
+        "promptTokens": 383,
+        "completionTokens": 40,
+        "totalTokens": 423,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 874
+    },
+    {
+      "provider": "deepseek",
+      "question": "这篇2023年的介绍能证明2026年完整任职名单吗？",
+      "enabled": true,
+      "answer": "不能。这篇2023年9月6日的介绍只能证明戴建业当时任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授[来源1]；2026年完整任职名单无法确认。",
+      "usage": {
+        "promptTokens": 389,
+        "completionTokens": 49,
+        "totalTokens": 438,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 933
+    },
+    {
+      "provider": "deepseek",
+      "question": "这篇2023年的介绍能证明2026年完整任职名单吗？",
+      "enabled": false,
+      "answer": "不能。该2023年介绍只能反映当时信息，不能证明2026年完整任职名单。原文提到的“云山工作室首席专家、教授”[来源1]也不能据此确认当前完整名单或校区归属。",
+      "usage": {
+        "promptTokens": 387,
+        "completionTokens": 45,
+        "totalTokens": 432,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 952
+    },
+    {
+      "provider": "deepseek",
+      "question": "请把他的具体首席专家头衔说清楚，不要混成所有首席专家名单",
+      "enabled": true,
+      "answer": "戴建业现任广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授[来源1]。这仅为该工作室头衔，不是全校所有首席专家名单；原资料未提校区，校区归属无法确认。",
+      "usage": {
+        "promptTokens": 392,
+        "completionTokens": 50,
+        "totalTokens": 442,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 835
+    },
+    {
+      "provider": "deepseek",
+      "question": "请把他的具体首席专家头衔说清楚，不要混成所有首席专家名单",
+      "enabled": false,
+      "answer": "戴建业的头衔是“广东外语外贸大学中华文化国际传播学科建设云山工作室首席专家、教授”[来源1]。该头衔属于工作室身份；原文未提及其他首席专家名单。",
+      "usage": {
+        "promptTokens": 390,
+        "completionTokens": 43,
+        "totalTokens": 433,
+        "cachedPromptTokens": 0
+      },
+      "durationMs": 753
+    }
+  ]
+}

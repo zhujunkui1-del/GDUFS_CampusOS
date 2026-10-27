@@ -1,0 +1,362 @@
+{
+  "at": "2026-10-27T17:21:40.458Z",
+  "actualPreview": true,
+  "records": [
+    {
+      "message": "戴建业是广外云山工作室首席专家吗，只用内部资料回答",
+      "http": 200,
+      "type": "run.completed",
+      "answer": "本次没有取得足以回答问题的正文证据，暂时无法确认。只有标题、链接或日期不能补出规则、菜品、身份或报名时间。",
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        }
+      ],
+      "metrics": {
+        "evidenceGateUsed": true,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "professional",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 0,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [],
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "cachedPromptTokens": 0,
+        "totalTokens": 0,
+        "usageComplete": true,
+        "chargedTokens": 0,
+        "durationMs": 43,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 152,
+          "serverElapsedMs": 195,
+          "firstTextMs": 195,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 43,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 9,
+            "writeQueries": 20,
+            "calls": 15,
+            "failures": 0,
+            "durationMs": 195,
+            "maxCallMs": 26,
+            "rowsRead": 949,
+            "rowsWritten": 18,
+            "rowUsageStatements": 23,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 128,
+              "rowsWritten": 0,
+              "queries": 2,
+              "durationMs": 43,
+              "candidateChunks": 6,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": []
+        }
+      },
+      "cards": [],
+      "elapsedMs": 1296
+    },
+    {
+      "message": "那他属于南校吗？只用内部资料回答",
+      "http": 200,
+      "type": "run.completed",
+      "answer": "本次没有取得足以回答问题的正文证据，暂时无法确认。只有标题、链接或日期不能补出规则、菜品、身份或报名时间。",
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        }
+      ],
+      "metrics": {
+        "evidenceGateUsed": true,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "professional",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 0,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [],
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "cachedPromptTokens": 0,
+        "totalTokens": 0,
+        "usageComplete": true,
+        "chargedTokens": 0,
+        "durationMs": 63,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 107,
+          "serverElapsedMs": 170,
+          "firstTextMs": 170,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 63,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 9,
+            "writeQueries": 11,
+            "calls": 12,
+            "failures": 0,
+            "durationMs": 170,
+            "maxCallMs": 36,
+            "rowsRead": 863,
+            "rowsWritten": 11,
+            "rowUsageStatements": 14,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 446,
+              "rowsWritten": 0,
+              "queries": 2,
+              "durationMs": 63,
+              "candidateChunks": 25,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": []
+        }
+      },
+      "cards": [],
+      "elapsedMs": 481
+    },
+    {
+      "message": "别演了",
+      "http": 200,
+      "type": "run.completed",
+      "answer": "已切换为正常语气，本次对话会保持。",
+      "tools": [],
+      "metrics": {
+        "requests": 0,
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "chargedTokens": 0,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "off",
+          "aside": false,
+          "concise": false
+        },
+        "execution": "dialogue",
+        "serverElapsedMs": 111
+      },
+      "cards": [],
+      "elapsedMs": 309
+    },
+    {
+      "message": "他是哪个学院的呢？只用内部资料回答",
+      "http": 200,
+      "type": "run.completed",
+      "answer": "本次没有取得足以回答问题的正文证据，暂时无法确认。只有标题、链接或日期不能补出规则、菜品、身份或报名时间。",
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        }
+      ],
+      "metrics": {
+        "evidenceGateUsed": true,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "off",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 0,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [],
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "cachedPromptTokens": 0,
+        "totalTokens": 0,
+        "usageComplete": true,
+        "chargedTokens": 0,
+        "durationMs": 39,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 105,
+          "serverElapsedMs": 144,
+          "firstTextMs": 144,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 39,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 9,
+            "writeQueries": 11,
+            "calls": 12,
+            "failures": 0,
+            "durationMs": 144,
+            "maxCallMs": 21,
+            "rowsRead": 896,
+            "rowsWritten": 11,
+            "rowUsageStatements": 14,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 446,
+              "rowsWritten": 0,
+              "queries": 2,
+              "durationMs": 39,
+              "candidateChunks": 25,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": []
+        }
+      },
+      "cards": [],
+      "elapsedMs": 361
+    },
+    {
+      "message": "来点这一周广外发布的校园新闻，只用内部资料回答",
+      "http": 200,
+      "type": "run.completed",
+      "answer": "以下是本周广外发布的校园新闻：\n1. 10月23日，第十届“讲好广东故事”新闻调查大赛暨县级融媒体中心新闻实践活动表彰大会举办，活动旨在培养具有家国情怀与国际视野的高素质新闻传播人才[来源1]。\n2. 10月23日，新闻学院副院长李峻岭教授作为广东省高校唯一代表，受邀担任2026“中国有约”年度创作交流会主持人，与全球媒体人共话国际传播[来源2]。\n3. 10月27日，区域国别学院教师随团赴意大利调研交流，围绕中意经贸、合规监管等议题开展座谈，后续将依托教育部欧洲联合研究院平台深化欧洲区域国别研究[来源3]。",
+      "tools": [
+        {
+          "name": "search_campus_events",
+          "origin": "server_plan"
+        }
+      ],
+      "metrics": {
+        "evidenceGateUsed": false,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "off",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 3936,
+            "firstTextMs": 3218,
+            "finishReason": "stop",
+            "contentChars": 257
+          }
+        ],
+        "promptTokens": 3323,
+        "completionTokens": 381,
+        "cachedPromptTokens": 0,
+        "totalTokens": 3704,
+        "usageComplete": true,
+        "chargedTokens": 3704,
+        "durationMs": 4247,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 105,
+          "serverElapsedMs": 4352,
+          "firstTextMs": 3625,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_events",
+              "durationMs": 293,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 11,
+            "writeQueries": 11,
+            "calls": 14,
+            "failures": 0,
+            "durationMs": 416,
+            "maxCallMs": 259,
+            "rowsRead": 2777,
+            "rowsWritten": 11,
+            "rowUsageStatements": 14,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_events",
+              "rowsRead": 2312,
+              "rowsWritten": 0,
+              "queries": 2,
+              "durationMs": 293,
+              "candidateChunks": 58,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": []
+        }
+      },
+      "cards": [
+        {
+          "kind": "source",
+          "title": "拾传星火 躬行新章丨第十届“讲好广东故事”新闻调查大赛暨县级融媒体中心新闻实践活动表彰大会",
+          "sourceName": "广外新传青年",
+          "publishedAt": "2026-10-23T10:00:00.000Z",
+          "originalUrl": "https://mp.weixin.qq.com/s/JWMFT_DZLWgGXn7DnsP-Dw"
+        },
+        {
+          "kind": "source",
+          "title": "我院李峻岭教授受邀担任2026“中国有约”年度创作交流会主持，与全球媒体人共话国际传播",
+          "sourceName": "广外新传",
+          "publishedAt": "2026-10-23T11:02:27.000Z",
+          "originalUrl": "https://mp.weixin.qq.com/s/I1yX4akJbVzuvYVf-7b9Zw"
+        },
+        {
+          "kind": "source",
+          "title": "新闻｜我院教师随团赴意大利调研交流",
+          "sourceName": "广外区域国别学院",
+          "publishedAt": "2026-10-27T01:03:00.000Z",
+          "originalUrl": "https://mp.weixin.qq.com/s/oyduHvr2LnrIXE-T7x7xPQ"
+        }
+      ],
+      "elapsedMs": 4756
+    }
+  ]
+}

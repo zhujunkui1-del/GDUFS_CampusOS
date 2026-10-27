@@ -1,0 +1,121 @@
+{
+  "at": "2026-10-27T17:16:07.019Z",
+  "model": [
+    {
+      "file": "model-comparison.json",
+      "samples": 80,
+      "nonempty": 80,
+      "errors": 0,
+      "promptTokens": 17986,
+      "completionTokens": 10197,
+      "meanMs": 1983,
+      "byProvider": {
+        "stepfun": {
+          "samples": 60,
+          "nonempty": 60
+        },
+        "deepseek": {
+          "samples": 20,
+          "nonempty": 20
+        }
+      },
+      "timedSamples": 80,
+      "usageMissing": 0,
+      "usageNote": "returned usage only; failed calls with unknown usage excluded, not complete billing"
+    },
+    {
+      "file": "official-evidence-comparison.json",
+      "samples": 16,
+      "nonempty": 15,
+      "errors": 1,
+      "promptTokens": 6038,
+      "completionTokens": 1892,
+      "meanMs": 4276,
+      "byProvider": {
+        "stepfun": {
+          "samples": 8,
+          "nonempty": 7
+        },
+        "deepseek": {
+          "samples": 8,
+          "nonempty": 8
+        }
+      },
+      "timedSamples": 15,
+      "usageMissing": 1,
+      "usageNote": "returned usage only; failed calls with unknown usage excluded, not complete billing"
+    },
+    {
+      "file": "official-evidence-bounded.json",
+      "samples": 16,
+      "nonempty": 16,
+      "errors": 0,
+      "promptTokens": 6444,
+      "completionTokens": 2408,
+      "meanMs": 2430,
+      "byProvider": {
+        "stepfun": {
+          "samples": 8,
+          "nonempty": 8
+        },
+        "deepseek": {
+          "samples": 8,
+          "nonempty": 8
+        }
+      },
+      "timedSamples": 16,
+      "usageMissing": 0,
+      "usageNote": "returned usage only; failed calls with unknown usage excluded, not complete billing"
+    }
+  ],
+  "perf": {
+    "window": "original Preview acceptance window, all observed chat calls in that window; not billing",
+    "invocations": 5,
+    "cpuMs": [
+      38,
+      17,
+      67,
+      6,
+      6
+    ],
+    "maxCpuMs": 67,
+    "meanCpuMs": 26.8,
+    "apiCapturedReadLowerBound": 2763,
+    "apiCapturedWriteLowerBound": 40,
+    "rowUsageComplete": false
+  },
+  "personaContractCases": 30,
+  "originalRouting": {
+    "before": 10,
+    "after": 28,
+    "total": 30,
+    "note": "R09/R29 retain original knowledge-tool expectation; deadline belongs events under actual taxonomy. Do not confuse benchmark mismatch with provider success."
+  },
+  "unsupportedLiteralClaimsReviewed": [
+    "raw Step F01 guessed a dish with persona on and off",
+    "raw DeepSeek F01 guessed with persona on",
+    "raw Step F03 invented a scholarship date with persona off"
+  ],
+  "boundedOfficialReview": {
+    "scope": "four narrow predicates only, not overall factual accuracy",
+    "campusUnknown": "all four answers preserve uncertainty",
+    "historicalRoster": "all four answers reject inferring 2026 complete roster from 2023 article",
+    "extraQualifications": "Some answers add a department prefix or nonadministrative interpretation; not proven by the literal supplied sentence, requiring further claim-level evaluation."
+  },
+  "finalCpuWindow": {
+    "invocations": 13,
+    "meanCpuMs": 44,
+    "maxCpuMs": 185,
+    "note": "observed window only, not capacity or billing"
+  },
+  "finalPublicationExample": [
+    {
+      "elapsedMs": 7584,
+      "modelRequests": 1,
+      "publicationFallbackUsed": true,
+      "rowsReadLowerBound": 3154,
+      "rowsWrittenLowerBound": 19,
+      "rowUsageComplete": false
+    }
+  ]
+}
