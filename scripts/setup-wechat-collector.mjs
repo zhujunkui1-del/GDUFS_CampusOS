@@ -117,7 +117,14 @@ try {
       autoDiscoverSources: true,
     });
     const receiptPath = directory + "/credential-receipt.json";
-    const receipt = JSON.parse(readFileSync(receiptPath, "utf8"));
+    const receipt = existsSync(receiptPath)
+      ? JSON.parse(readFileSync(receiptPath, "utf8"))
+      : {
+          id: existingTokenId,
+          issuedAt:
+            overview.tokens.find((t) => t.id === existingTokenId)?.created_at ||
+            null,
+        };
     writeFileSync(
       receiptPath,
       JSON.stringify(
@@ -125,6 +132,8 @@ try {
           ...receipt,
           validityDays: null,
           permanent: true,
+          autoDiscoverSources: true,
+          sourceCount: sourceIds.length,
           updatedAt: new Date().toISOString(),
         },
         null,

@@ -595,3 +595,8 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 - 工程资料来自OpenAI/Anthropic官方Agent、评测和上下文文档，链接见AGENT_RELIABILITY_RESEARCH_2026_10_27.md。
 - 对照证据为实时读取的广外中国语言文化学院戴建业介绍（2023-09-06，https://zwxy.gdufs.edu.cn/info/1333/9068.htm）；不能据旧介绍确认2026完整名单/个人校区。
 - Preview真实检索来源、日期和URL见验收JSON；小红书源站本次返回3笔记但未通过指定日期筛选，不作本周事实。只存验收回执，不新增公共文章或复制CDN图片。
+
+
+## 2026-10-28 MP Tools当前账号清单
+
+来源为负责人提供的D:\WeChat MP Tools_v2.3.1\data\articles_full、同级accounts.json/rss_subscriptions.json及已有HTML公开元数据。81目录排除.campusos-locks后80个，80个公开账号ID唯一；后台78公众号+2服务号匹配，无名称猜测合并。GW情报鹅沿原source-3c191a80-ca79-4fc6-a3bc-be9c3289cdf8恢复启用，广外无限漫协南校为GDUFS-WX-3073977870。正文仍来自已有本地导出并保留原链接/CDN；来源事实状态不伪造已核验，自动公开基于负责人指示而非宣称平台许可。回执见verification/wechat-discovery-2026-10-28/。

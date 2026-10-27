@@ -1,0 +1,452 @@
+{
+  "at": "2026-10-27T18:52:46.633932+00:00",
+  "accountFolders": 80,
+  "allFoldersIncludingLock": 81,
+  "ignoredDirectory": ".campusos-locks",
+  "uniqueLocalIds": 80,
+  "cloudAccounts": 80,
+  "missingAccountIds": [],
+  "accounts": [
+    {
+      "accountId": "MP_WXS_2392005740",
+      "biz": "MjM5MjAwNTc0MA==",
+      "name": "广外图书馆"
+    },
+    {
+      "accountId": "MP_WXS_2394225665",
+      "biz": "MjM5NDIyNTY2NQ==",
+      "name": "广外智慧学工"
+    },
+    {
+      "accountId": "MP_WXS_2394298521",
+      "biz": "MjM5NDI5ODUyMQ==",
+      "name": "悦读广外"
+    },
+    {
+      "accountId": "MP_WXS_2396834261",
+      "biz": "MjM5NjgzNDI2MQ==",
+      "name": "广外青年"
+    },
+    {
+      "accountId": "MP_WXS_2398190761",
+      "biz": "MjM5ODE5MDc2MQ==",
+      "name": "广外外校"
+    },
+    {
+      "accountId": "MP_WXS_2398745389",
+      "biz": "MjM5ODc0NTM4OQ==",
+      "name": "广外学生服务大厅"
+    },
+    {
+      "accountId": "MP_WXS_2399036536",
+      "biz": "MjM5OTAzNjUzNg==",
+      "name": "广外MBA"
+    },
+    {
+      "accountId": "MP_WXS_2399355282",
+      "biz": "MjM5OTM1NTI4Mg==",
+      "name": "广外云山学生勤工助学"
+    },
+    {
+      "accountId": "MP_WXS_3001210710",
+      "biz": "MzAwMTIxMDcxMA==",
+      "name": "广外保卫部"
+    },
+    {
+      "accountId": "MP_WXS_3002101687",
+      "biz": "MzAwMjEwMTY4Nw==",
+      "name": "广外定向越野"
+    },
+    {
+      "accountId": "MP_WXS_3015103185",
+      "biz": "MzAxNTEwMzE4NQ==",
+      "name": "广外light志愿者协会"
+    },
+    {
+      "accountId": "MP_WXS_3017529268",
+      "biz": "MzAxNzUyOTI2OA==",
+      "name": "广外公开学院艺术设计与信息管理系"
+    },
+    {
+      "accountId": "MP_WXS_3070104443",
+      "biz": "MzA3MDEwNDQ0Mw==",
+      "name": "广东外语外贸大学研究生招生"
+    },
+    {
+      "accountId": "MP_WXS_3070989916",
+      "biz": "MzA3MDk4OTkxNg==",
+      "name": "广外商院团学"
+    },
+    {
+      "accountId": "MP_WXS_3073977870",
+      "biz": "MzA3Mzk3Nzg3MA==",
+      "name": "广外无限漫协南校"
+    },
+    {
+      "accountId": "MP_WXS_3075301220",
+      "biz": "MzA3NTMwMTIyMA==",
+      "name": "广外国际学院"
+    },
+    {
+      "accountId": "MP_WXS_3077443715",
+      "biz": "MzA3NzQ0MzcxNQ==",
+      "name": "广外新传青年"
+    },
+    {
+      "accountId": "MP_WXS_3078579584",
+      "biz": "MzA3ODU3OTU4NA==",
+      "name": "广外羽协"
+    },
+    {
+      "accountId": "MP_WXS_3081922076",
+      "biz": "MzA4MTkyMjA3Ng==",
+      "name": "广外招办"
+    },
+    {
+      "accountId": "MP_WXS_3083007618",
+      "biz": "MzA4MzAwNzYxOA==",
+      "name": "广外就业"
+    },
+    {
+      "accountId": "MP_WXS_3086888799",
+      "biz": "MzA4Njg4ODc5OQ==",
+      "name": "广外外校国际部"
+    },
+    {
+      "accountId": "MP_WXS_3086953480",
+      "biz": "MzA4Njk1MzQ4MA==",
+      "name": "广外档案馆"
+    },
+    {
+      "accountId": "MP_WXS_3087312152",
+      "biz": "MzA4NzMxMjE1Mg==",
+      "name": "广外研究生会"
+    },
+    {
+      "accountId": "MP_WXS_3091622458",
+      "biz": "MzA5MTYyMjQ1OA==",
+      "name": "GD需要UFS"
+    },
+    {
+      "accountId": "MP_WXS_3092256583",
+      "biz": "MzA5MjI1NjU4Mw==",
+      "name": "广外会计学院"
+    },
+    {
+      "accountId": "MP_WXS_3092289295",
+      "biz": "MzA5MjI4OTI5NQ==",
+      "name": "广外金融学院"
+    },
+    {
+      "accountId": "MP_WXS_3094123226",
+      "biz": "MzA5NDEyMzIyNg==",
+      "name": "广外云山兼Zhi办"
+    },
+    {
+      "accountId": "MP_WXS_3094175847",
+      "biz": "MzA5NDE3NTg0Nw==",
+      "name": "广外留学服务中心"
+    },
+    {
+      "accountId": "MP_WXS_3095042532",
+      "biz": "MzA5NTA0MjUzMg==",
+      "name": "广外西语团委学生会"
+    },
+    {
+      "accountId": "MP_WXS_3095288453",
+      "biz": "MzA5NTI4ODQ1Mw==",
+      "name": "广外多语课堂"
+    },
+    {
+      "accountId": "MP_WXS_3098000522",
+      "biz": "MzA5ODAwMDUyMg==",
+      "name": "广外校友总会"
+    },
+    {
+      "accountId": "MP_WXS_3098521537",
+      "biz": "MzA5ODUyMTUzNw==",
+      "name": "广外学工"
+    },
+    {
+      "accountId": "MP_WXS_3099474702",
+      "biz": "MzA5OTQ3NDcwMg==",
+      "name": "广外学生资助"
+    },
+    {
+      "accountId": "MP_WXS_3200207390",
+      "biz": "MzIwMDIwNzM5MA==",
+      "name": "广东外语外贸大学"
+    },
+    {
+      "accountId": "MP_WXS_3211292309",
+      "biz": "MzIxMTI5MjMwOQ==",
+      "name": "广东外语外贸大学经济贸易学院"
+    },
+    {
+      "accountId": "MP_WXS_3216568957",
+      "biz": "MzIxNjU2ODk1Nw==",
+      "name": "云山党旗红"
+    },
+    {
+      "accountId": "MP_WXS_3218027363",
+      "biz": "MzIxODAyNzM2Mw==",
+      "name": "校红会学生分会"
+    },
+    {
+      "accountId": "MP_WXS_3218962891",
+      "biz": "MzIxODk2Mjg5MQ==",
+      "name": "广外创新创业学院"
+    },
+    {
+      "accountId": "MP_WXS_3223069048",
+      "biz": "MzIyMzA2OTA0OA==",
+      "name": "广外雅思"
+    },
+    {
+      "accountId": "MP_WXS_3226272842",
+      "biz": "MzIyNjI3Mjg0Mg==",
+      "name": "广外模联"
+    },
+    {
+      "accountId": "MP_WXS_3226856759",
+      "biz": "MzIyNjg1Njc1OQ==",
+      "name": "广外高翻 口译教育与研究中心"
+    },
+    {
+      "accountId": "MP_WXS_3227881150",
+      "biz": "MzIyNzg4MTE1MA==",
+      "name": "广外信息青年"
+    },
+    {
+      "accountId": "MP_WXS_3235638275",
+      "biz": "MzIzNTYzODI3NQ==",
+      "name": "广外法学"
+    },
+    {
+      "accountId": "MP_WXS_3266015101",
+      "biz": "MzI2NjAxNTEwMQ==",
+      "name": "广外高翻SITS"
+    },
+    {
+      "accountId": "MP_WXS_3267604478",
+      "biz": "MzI2NzYwNDQ3OA==",
+      "name": "广外云山语培北"
+    },
+    {
+      "accountId": "MP_WXS_3270901868",
+      "biz": "MzI3MDkwMTg2OA==",
+      "name": "广外文化创意研究中心"
+    },
+    {
+      "accountId": "MP_WXS_3273121094",
+      "biz": "MzI3MzEyMTA5NA==",
+      "name": "纵梦广Y"
+    },
+    {
+      "accountId": "MP_WXS_3293703638",
+      "biz": "MzI5MzcwMzYzOA==",
+      "name": "广外就业中心"
+    },
+    {
+      "accountId": "MP_WXS_3515366372",
+      "biz": "MzUxNTM2NjM3Mg==",
+      "name": "广外新传"
+    },
+    {
+      "accountId": "MP_WXS_3515957861",
+      "biz": "MzUxNTk1Nzg2MQ==",
+      "name": "广外数学与统计学院"
+    },
+    {
+      "accountId": "MP_WXS_3526928173",
+      "biz": "MzUyNjkyODE3Mw==",
+      "name": "广外区域国别学院"
+    },
+    {
+      "accountId": "MP_WXS_3534293833",
+      "biz": "MzUzNDI5MzgzMw==",
+      "name": "数智广外"
+    },
+    {
+      "accountId": "MP_WXS_3575628395",
+      "biz": "MzU3NTYyODM5NQ==",
+      "name": "广外公管学院"
+    },
+    {
+      "accountId": "MP_WXS_3576616276",
+      "biz": "MzU3NjYxNjI3Ng==",
+      "name": "广外英教青年"
+    },
+    {
+      "accountId": "MP_WXS_3581744021",
+      "biz": "MzU4MTc0NDAyMQ==",
+      "name": "广外会院青年"
+    },
+    {
+      "accountId": "MP_WXS_3587724582",
+      "biz": "MzU4NzcyNDU4Mg==",
+      "name": "广外欧家"
+    },
+    {
+      "accountId": "MP_WXS_3588059025",
+      "biz": "MzU4ODA1OTAyNQ==",
+      "name": "广外法学青年"
+    },
+    {
+      "accountId": "MP_WXS_3588497564",
+      "biz": "MzU4ODQ5NzU2NA==",
+      "name": "广外大非洲研究院"
+    },
+    {
+      "accountId": "MP_WXS_3591678205",
+      "biz": "MzU5MTY3ODIwNQ==",
+      "name": "广外数统青年"
+    },
+    {
+      "accountId": "MP_WXS_3693342572",
+      "biz": "MzY5MzM0MjU3Mg==",
+      "name": "广外高等继续教育+"
+    },
+    {
+      "accountId": "MP_WXS_3867032006",
+      "biz": "Mzg2NzAzMjAwNg==",
+      "name": "广外金融青年"
+    },
+    {
+      "accountId": "MP_WXS_3869078732",
+      "biz": "Mzg2OTA3ODczMg==",
+      "name": "广外考试中心"
+    },
+    {
+      "accountId": "MP_WXS_3870830579",
+      "biz": "Mzg3MDgzMDU3OQ==",
+      "name": "广外商院青年"
+    },
+    {
+      "accountId": "MP_WXS_3870831263",
+      "biz": "Mzg3MDgzMTI2Mw==",
+      "name": "国际治理创新学院"
+    },
+    {
+      "accountId": "MP_WXS_3873810123",
+      "biz": "Mzg3MzgxMDEyMw==",
+      "name": "广外中文"
+    },
+    {
+      "accountId": "MP_WXS_3886121960",
+      "biz": "Mzg4NjEyMTk2MA==",
+      "name": "广东外语外贸大学学报"
+    },
+    {
+      "accountId": "MP_WXS_3886568390",
+      "biz": "Mzg4NjU2ODM5MA==",
+      "name": "云谷之声"
+    },
+    {
+      "accountId": "MP_WXS_3889818792",
+      "biz": "Mzg4OTgxODc5Mg==",
+      "name": "外环东路178号的猫"
+    },
+    {
+      "accountId": "MP_WXS_3891152100",
+      "biz": "Mzg5MTE1MjEwMA==",
+      "name": "喂鱼喂猫小助手"
+    },
+    {
+      "accountId": "MP_WXS_3893669936",
+      "biz": "Mzg5MzY2OTkzNg==",
+      "name": "GW情报鹅"
+    },
+    {
+      "accountId": "MP_WXS_3897676133",
+      "biz": "Mzg5NzY3NjEzMw==",
+      "name": "广外影协 GFCA"
+    },
+    {
+      "accountId": "MP_WXS_3899454627",
+      "biz": "Mzg5OTQ1NDYyNw==",
+      "name": "广外留学生院IIEGDUFS"
+    },
+    {
+      "accountId": "MP_WXS_3912284122",
+      "biz": "MzkxMjI4NDEyMg==",
+      "name": "Oasis Music"
+    },
+    {
+      "accountId": "MP_WXS_3915495547",
+      "biz": "MzkxNTQ5NTU0Nw==",
+      "name": "GDUFS广外学生会"
+    },
+    {
+      "accountId": "MP_WXS_3916807106",
+      "biz": "MzkxNjgwNzEwNg==",
+      "name": "广外岛蛋喵"
+    },
+    {
+      "accountId": "MP_WXS_3918109600",
+      "biz": "MzkxODEwOTYwMA==",
+      "name": "广外研究生教育"
+    },
+    {
+      "accountId": "MP_WXS_3924009574",
+      "biz": "MzkyNDAwOTU3NA==",
+      "name": "留在广外"
+    },
+    {
+      "accountId": "MP_WXS_3927346561",
+      "biz": "MzkyNzM0NjU2MQ==",
+      "name": "广外信息科学与技术学院"
+    },
+    {
+      "accountId": "MP_WXS_3934263909",
+      "biz": "MzkzNDI2MzkwOQ==",
+      "name": "广外高等继续教育公开学院"
+    },
+    {
+      "accountId": "MP_WXS_3937285374",
+      "biz": "MzkzNzI4NTM3NA==",
+      "name": "广外环保绿色先锋"
+    }
+  ],
+  "daemon": {
+    "at": "2026-10-27T18:51:48.007022+00:00",
+    "syncMode": "add_update_only",
+    "sources": 80,
+    "published": 0,
+    "unchanged": 1054,
+    "skipped": 128,
+    "deferred": 0,
+    "failed": 7,
+    "errors": {
+      "SOURCE_NOT_IN_SCOPE": 48,
+      "BEFORE_RANGE": 80,
+      "CONFLICT": 7
+    }
+  },
+  "mechanism": "local manifest -> scoped account registration -> ordinary collector auto publication",
+  "deletionMode": "add_update_only",
+  "beforeConnectedAccounts": 78,
+  "previouslyMissing": [
+    "广外无限漫协南校",
+    "GW情报鹅"
+  ],
+  "sourceTypes": {
+    "wechat_subscription": 78,
+    "wechat_service": 2
+  },
+  "workerVersion": "162893b9-d2c5-4f11-8918-7dd9e5220fab",
+  "migration": "0053_wechat_account_discovery.sql",
+  "tests": {
+    "collectorUnit": 20,
+    "python": 10,
+    "ui": 1,
+    "full": {
+      "passed": 597,
+      "failedPreexisting": 12,
+      "total": 609
+    },
+    "typecheck": "passed",
+    "modifiedLint": "passed",
+    "build": "passed"
+  }
+}

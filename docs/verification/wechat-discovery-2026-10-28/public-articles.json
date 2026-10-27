@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-27T18:45:25.868Z",
+  "records": [
+    {
+      "sourceId": "source-3c191a80-ca79-4fc6-a3bc-be9c3289cdf8",
+      "name": "GW情报鹅",
+      "enabled": true,
+      "articleCount": 9,
+      "publishedCount": 9,
+      "articleId": "wx-482cdbdb7236df7bb11cd27b3ef49e30e1c31395",
+      "title": "周六特辑 | 财务人的非标准成长，给专业打开更多出口",
+      "publicHttp": 200,
+      "publicAvailable": true,
+      "detailKeys": [
+        "id",
+        "title",
+        "url",
+        "readingHtml",
+        "partial",
+        "publishedAt",
+        "updatedAt",
+        "sourceName",
+        "hasRegistration",
+        "category"
+      ],
+      "bodyChars": 633
+    },
+    {
+      "sourceId": "GDUFS-WX-3073977870",
+      "name": "广外无限漫协南校",
+      "enabled": true,
+      "articleCount": 5,
+      "publishedCount": 5,
+      "articleId": "wx-770afaffae8ce35d07b8e3762c8d4f86d9c4a08b",
+      "title": "会员大会即将开始，真的假的？我去，真准备开始了。",
+      "publicHttp": 200,
+      "publicAvailable": true,
+      "detailKeys": [
+        "id",
+        "title",
+        "url",
+        "readingHtml",
+        "partial",
+        "publishedAt",
+        "updatedAt",
+        "sourceName",
+        "hasRegistration",
+        "category"
+      ],
+      "bodyChars": 612
+    }
+  ]
+}
