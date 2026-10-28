@@ -17,6 +17,7 @@ import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
 import { participationQuery } from "@/lib/retrieval/query-focus";
 import type { SqlDatabase } from "../assistant/database";
 import { ApiError } from "../errors";
+import { isOfficialCampusUrl } from "../external-search/policy";
 
 type DocumentRow = {
   id: string;
@@ -389,7 +390,12 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         validity: expired
           ? "expired"
           : analysis?.knowledge.validity || "unknown",
-        official: d.official_status === "verified_official",
+        // Evidence authority is not the old manual source-verification gate.
+        // An exact trusted official original URL has the same authority here as
+        // in external search; no source governance flag is rewritten.
+        official:
+          d.official_status === "verified_official" ||
+          isOfficialCampusUrl(d.url),
         readable:
           d.rights_scope === "licensed_full_text" &&
           d.body_status !== "not_provided",

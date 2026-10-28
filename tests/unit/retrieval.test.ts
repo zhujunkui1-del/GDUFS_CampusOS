@@ -9,6 +9,7 @@ async function article(
   body: string,
   id = "retrieval",
   metadata = false,
+  url = "https://example.invalid/" + id,
 ) {
   f.sqlite
     .prepare(
@@ -18,7 +19,7 @@ async function article(
       id,
       f.source.id,
       metadata ? "元数据专用图书馆借阅规则" : "真实片段测试",
-      "https://example.invalid/" + id,
+      url,
       body,
       metadata ? "not_provided" : "complete",
       "c".repeat(64),
@@ -143,6 +144,28 @@ it("title-only articles return metadata, not invented body evidence", async () =
       evidenceBasis: "title",
     });
     expect(r.hits[0].contentSnippet).toBe("元数据专用图书馆借阅规则");
+  } finally {
+    f.close();
+  }
+});
+it("recognizes a trusted official original without inventing a manual verification receipt", async () => {
+  const f = await dateGateFixture();
+  try {
+    await article(f, "比赛时间：2026年10月31日。请新生参加羽毛球比赛。","retrieval",false,"https://tyb.gdufs.edu.cn/info/fixture");
+    await ensureRetrievalIndex(f.db, "retrieval");
+    const before = f.sqlite
+      .prepare("SELECT official_status FROM knowledge_sources WHERE id=?")
+      .get(f.source.id);
+    const r = await new D1KeywordRetriever(f.db).retrieve(
+      { query: "羽毛球比赛" },
+      PUBLIC_RETRIEVAL_SCOPE,
+    );
+    expect(r.hits[0]?.official).toBe(true);
+    expect(
+      f.sqlite
+        .prepare("SELECT official_status FROM knowledge_sources WHERE id=?")
+        .get(f.source.id),
+    ).toEqual(before);
   } finally {
     f.close();
   }
