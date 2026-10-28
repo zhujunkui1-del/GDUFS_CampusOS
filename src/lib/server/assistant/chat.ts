@@ -1010,7 +1010,12 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                             return (
                               "找到了以下相关标题：\n" +
                               metadata
-                                .map(([, c], i) => `- ${c.title}[来源${i + 1}]`)
+                                .map(([, c], i) =>
+                                  c.kind === "source" ||
+                                  c.kind === "external_source"
+                                    ? `- ${c.title}[来源${i + 1}]`
+                                    : "",
+                                )
                                 .join("\n") +
                               "\n目前仅有标题线索，尚未取得足以回答具体内容的正文；时间、条件或规则暂不能据此确认。"
                             );
