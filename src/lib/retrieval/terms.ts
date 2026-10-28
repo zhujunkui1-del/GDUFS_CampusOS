@@ -1,6 +1,9 @@
+import { queryFocus } from "./query-focus";
 // Encoded two-character Chinese terms avoid unicode61's whole-Han-run behavior.
 // This is keyword expansion, not paid embedding or a second classifier.
 const groups = [
+  ["食堂", "饭堂", "餐厅", "好吃", "美食"],
+  ["社团", "漫协", "二次元", "动漫协会", "ACG"],
   ["借书", "借阅", "图书借阅", "续借", "借阅规则"],
   ["图书馆", "入馆", "读者"],
   ["校园卡", "一卡通", "补卡", "挂失", "校园卡补办"],
@@ -72,6 +75,10 @@ export function ftsExpression(query: string) {
   const anchored = topics
     .filter((g) => g.some((t) => query.includes(t)))
     .flat();
+  if (queryFocus(query) === "food")
+    anchored.push("食堂", "饭堂", "餐厅", "一饭", "文采园", "博雅园", "风采园");
+  if (queryFocus(query) === "club")
+    anchored.push("社团", "漫协", "二次元", "动漫", "ACG");
   const phrases = [
     ...new Set(anchored.length ? anchored : keywords(query)),
   ].slice(0, 20);

@@ -2,6 +2,7 @@ import type { StoredMessage } from "@/domain/agent/assistant-contracts";
 import { externalPolicy } from "../external-search/policy";
 import { requestTimeWindow } from "./time-window";
 import { dialogueReply } from "./dialogue";
+import { campusFoodQuery, queryFocus } from "@/lib/retrieval/query-focus";
 export type ContentTool = "search_campus_knowledge" | "search_campus_events";
 /** Routing only; relevance, classification and dates still come from real tools. */
 export function contentIntent(
@@ -39,7 +40,9 @@ export function contentIntent(
       if (!isFollowup(turn.text) || topic.length === 4) break;
     }
   const previous = topic.join("；追问：");
-  const query = (previous ? previous + "；追问：" : "") + message;
+  const query = campusFoodQuery(
+    (previous ? previous + "；追问：" : "") + message,
+  );
   // A new explicit time constraint wins over a relative date in previous turns.
   const timeWindow =
     requestTimeWindow(message, now) || requestTimeWindow(query, now);
@@ -71,5 +74,6 @@ export function contentIntent(
     map,
     timeWindow,
     dialogueReply: reply,
+    focus: queryFocus(query),
   };
 }

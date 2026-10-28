@@ -1,11 +1,23 @@
 import type { AssistantCard } from "@/domain/agent/assistant-contracts";
+import {
+  assistantDisplayText,
+  containsToolProtocol,
+} from "@/lib/assistant-output";
+import {
+  campusFoodQuery,
+  matchesQueryFocus,
+  queryFocus,
+} from "@/lib/retrieval/query-focus";
 export function AssistantMessageText({
   text,
   cards,
+  question = "",
 }: {
   text: string;
   cards: AssistantCard[];
+  question?: string;
 }) {
+  if (containsToolProtocol(text)) return <>{assistantDisplayText(text)}</>;
   const clean = text.replace(/\*\*(.*?)\*\*/g, "$1");
   const parts = clean.split(/(\[来源\s*\d+\s*\])/g);
   return (
@@ -20,6 +32,14 @@ export function AssistantMessageText({
           (source.kind !== "source" && source.kind !== "external_source")
         )
           return part;
+        if (
+          !matchesQueryFocus(
+            queryFocus(question),
+            source,
+            campusFoodQuery(question),
+          )
+        )
+          return null;
         return (
           <sup className="assistant-citation" key={index}>
             <a

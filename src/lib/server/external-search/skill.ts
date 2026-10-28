@@ -12,6 +12,7 @@ import {
 } from "./providers";
 import type { ExternalPolicy } from "./policy";
 import { ApiError } from "../errors";
+import { matchesQueryFocus } from "@/lib/retrieval/query-focus";
 import { withinWindow, type TimeWindow } from "../assistant/time-window";
 export function registerExternalSearch(
   registry: SkillRegistry,
@@ -114,7 +115,13 @@ export function registerExternalSearch(
         ).values(),
       ]
         .filter(
-          (item) => !timeWindow || withinWindow(item.publishedAt, timeWindow),
+          (item) =>
+            matchesQueryFocus(
+              policy.focus || null,
+              item,
+              policy.relevanceQuery,
+            ) &&
+            (!timeWindow || withinWindow(item.publishedAt, timeWindow)),
         )
         .slice(0, 6);
       const warnings: string[] = [];

@@ -2,12 +2,14 @@ import type {
   ModelClient,
   ModelReply,
   ModelSnapshot,
+  ModelMessage,
 } from "@/domain/models/contracts";
 import { ApiError } from "../errors";
 import type { AssistantStore } from "./store";
 import type { MapAction } from "@/domain/maps/contracts";
 import { ControlMapInputSchema } from "@/domain/maps/skill-contracts";
 import type { ContentTool } from "./content-intent";
+import { containsToolProtocol } from "@/lib/assistant-output";
 type RequiredTool =
   | "control_map"
   | "search_places"
@@ -29,6 +31,10 @@ export function meteredClient(
   optionalTools?: () => string[] | undefined,
   requestOutputLimit = 1024,
   finalInstructions?: () => string,
+  options: {
+    finalSystem?: () => string;
+    validateFinal?: (text: string) => string | undefined;
+  } = {},
 ) {
   let requests = 0,
     promptTokens = 0,
@@ -37,7 +43,9 @@ export function meteredClient(
     budgetUsed = 0,
     outputBudgetUsed = 0,
     correctionRetries = 0,
-    emptyAnswerRetries = 0;
+    emptyAnswerRetries = 0,
+    answerRepairRetries = 0;
+  let repairInstruction = "";
   let reliable = true;
   const pricingModel = snapshot.provider === "deepseek" ? snapshot.model : null;
   const upstreamTimings: {
@@ -80,14 +88,24 @@ export function meteredClient(
         const upstreamStarted = performance.now();
         let firstTextMs: number | null = null;
         let streamedChars = 0;
+        let streamedText = "";
         let reply: ModelReply;
+        const baseMessages: readonly ModelMessage[] =
+          final && options.finalSystem
+            ? [
+                { role: "system", content: options.finalSystem() },
+                ...request.messages.filter(
+                  (message) => message.role !== "system",
+                ),
+              ]
+            : request.messages;
         try {
           reply = await client.generateWithTools({
             ...request,
             maxTokens,
             messages: (executionConfirmed
               ? [
-                  ...request.messages,
+                  ...baseMessages,
                   {
                     role: "system" as const,
                     content:
@@ -100,14 +118,17 @@ export function meteredClient(
                 ]
               : correctionRetries && required
                 ? [
-                    ...request.messages,
+                    ...baseMessages,
                     {
                       role: "system" as const,
                       content: `本轮必须实际调用 ${required}。只返回该函数调用；自然语言不能代替查询或地图操作。`,
                     },
                   ]
-                : request.messages
+                : baseMessages
             ).concat(
+              repairInstruction
+                ? [{ role: "system" as const, content: repairInstruction }]
+                : [],
               final && finalInstructions
                 ? [{ role: "system" as const, content: finalInstructions() }]
                 : [],
@@ -178,10 +199,10 @@ export function meteredClient(
             onText: final
               ? (text) => {
                   streamedChars += text.length;
+                  streamedText += text;
                   firstTextMs ??= Math.round(
                     performance.now() - upstreamStarted,
                   );
-                  request.onText?.(text);
                 }
               : undefined,
           });
@@ -209,6 +230,38 @@ export function meteredClient(
           reliable = false;
           budgetUsed += upper + maxTokens;
         }
+        if (final && !reply.content.trim() && streamedText.trim())
+          reply = { ...reply, content: streamedText };
+        const outputIssue =
+          (!reply.toolCalls.length &&
+            (containsToolProtocol(reply.content) ||
+              containsToolProtocol(streamedText))) ||
+          (final && reply.toolCalls.length > 0);
+        const answerIssue =
+          final && !outputIssue
+            ? options.validateFinal?.(reply.content)
+            : undefined;
+        if (outputIssue || answerIssue) {
+          if (!answerRepairRetries) {
+            answerRepairRetries++;
+            repairInstruction = final
+              ? "工具执行阶段已经结束。不要模拟、打印或再次请求工具调用，不写XML/函数名/参数，也不再次询问是否搜索。只依据已返回的真实证据直接回答；缺资料时准确说明本次没有取得什么证据。" +
+                (answerIssue || "")
+              : "上次输出是未执行的文本模拟调用。请使用本轮提供的原生function calling字段及真实Schema，文本标签不是工具调用，不输出工具协议文本。";
+            continue;
+          }
+          throw new ApiError(
+            "MODEL_SERVICE_UNAVAILABLE",
+            "回复生成异常，请重新提问。",
+            true,
+          );
+        }
+        if (
+          !final &&
+          reply.toolCalls.length &&
+          containsToolProtocol(reply.content)
+        )
+          reply = { ...reply, content: "" };
         if (
           final &&
           !reply.toolCalls.length &&
@@ -258,7 +311,7 @@ export function meteredClient(
             "模型未执行必要的查询，请重试。",
           );
         }
-        if (!final && !reply.toolCalls.length && reply.content)
+        if (!reply.toolCalls.length && reply.content)
           request.onText?.(reply.content);
         await store.running(owner, runId);
         return reply;
@@ -295,6 +348,7 @@ export function meteredClient(
         requests,
         correctionRetries,
         emptyAnswerRetries,
+        answerRepairRetries,
         upstreamTimings,
         promptTokens,
         completionTokens,

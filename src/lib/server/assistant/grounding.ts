@@ -2,6 +2,7 @@ import type { ContentSearchResult } from "@/domain/retrieval/skills";
 import type { ExternalSearchResult } from "@/domain/retrieval/external";
 import type { ExternalPolicy } from "../external-search/policy";
 import { chinaDay } from "./time-window";
+import { matchesQueryFocus } from "@/lib/retrieval/query-focus";
 /** Do not let a model turn a known publication day into an unverified event day. */
 export function publicationDateFallback(
   answer: string,
@@ -64,10 +65,16 @@ export function evidenceFallback(
 ) {
   const usable = internal
     .flatMap((r) => r.hits)
-    .filter((h) => h.bodyAvailable && (!policy.officialOnly || h.official));
+    .filter(
+      (h) =>
+        h.bodyAvailable &&
+        matchesQueryFocus(policy.focus || null, h, policy.relevanceQuery) &&
+        (!policy.officialOnly || h.official),
+    );
   const outside = (external?.items || []).filter(
     (i) =>
       i.evidenceKind !== "title_only" &&
+      matchesQueryFocus(policy.focus || null, i, policy.relevanceQuery) &&
       (!policy.officialOnly ||
         (i.authority === "official" && i.canConfirmAdministrativeFacts)),
   );
@@ -77,9 +84,7 @@ export function evidenceFallback(
   ];
   if (
     (policy.intent === "experience" || policy.intent === "mixed") &&
-    !bodies.some((s) =>
-      /食堂|饭堂|[一二三四]饭|餐饮|菜品|口味|住宿|宿舍|入住|居住|隔音/.test(s),
-    )
+    !bodies.length
   )
     return external?.providers.some((p) => p.status === "login_required")
       ? "本次小红书搜索需要重新登录，没有取得可用的学生体验资料，暂时不能据此推荐或猜测。"

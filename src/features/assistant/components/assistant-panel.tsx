@@ -13,6 +13,7 @@ import {
 import { useAssistant } from "../use-assistant";
 import { AssistantSources } from "./assistant-sources";
 import { AssistantMessageText } from "./assistant-message-text";
+import { precedingQuestion } from "@/lib/assistant-output";
 import {
   ArrowUp,
   Maximize2,
@@ -374,6 +375,10 @@ export function AssistantPanel({
                                     <AssistantMessageText
                                       text={message.text}
                                       cards={message.cards}
+                                      question={precedingQuestion(
+                                        chat.messages,
+                                        message.id,
+                                      )}
                                     />
                                   ) : (
                                     message.text.replace(/\*\*(.*?)\*\*/g, "$1")
@@ -383,6 +388,10 @@ export function AssistantPanel({
                             <AssistantSources
                               cards={message.cards}
                               text={message.text}
+                              question={precedingQuestion(
+                                chat.messages,
+                                message.id,
+                              )}
                             />
                             {message.cards.map((card, index) =>
                               card.kind === "source" ||

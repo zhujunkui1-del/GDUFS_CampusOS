@@ -1,6 +1,7 @@
 import type { PlannedRead } from "../agent/orchestrator";
 import type { ContentTool } from "./content-intent";
 import type { ExternalPolicy } from "../external-search/policy";
+import { queryFocus } from "@/lib/retrieval/query-focus";
 /** Forward a bounded public topic, never identifiers or private application material. */
 export function publicQuery(query: string) {
   if (
@@ -9,6 +10,23 @@ export function publicQuery(query: string) {
     )
   )
     return null;
+  if (queryFocus(query) === "food" && /广外|广东外语外贸大学/.test(query)) {
+    const campus = /北校|白云/.test(query)
+      ? "北校"
+      : /大学城|南校/.test(query)
+        ? "南校"
+        : "";
+    const venue = /周边|校外|附近/.test(query)
+      ? "周边 美食"
+      : /第一(?:食堂|饭堂)|一饭|文采园/.test(query)
+        ? "一饭"
+        : /二饭|第二(?:食堂|饭堂)/.test(query)
+          ? "二饭"
+          : /三饭|第三(?:食堂|饭堂)/.test(query)
+            ? "三饭"
+            : "食堂";
+    return `广外 ${campus} ${venue}`;
+  }
   const normalized = query
     .replace(
       /(?:请|帮我|来点|告诉我|看看|查询|搜索|调用|通过|用小红书来查|用小红书查|小红书上查|只看小红书|不要联网)/g,

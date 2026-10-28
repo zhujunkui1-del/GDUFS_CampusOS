@@ -1,16 +1,26 @@
 import { ChevronDown, Link2 } from "lucide-react";
 import type { AssistantCard } from "@/domain/agent/assistant-contracts";
 import { sourcePublicationDate } from "@/lib/retrieval/source-date";
+import { containsToolProtocol } from "@/lib/assistant-output";
+import {
+  campusFoodQuery,
+  matchesQueryFocus,
+  queryFocus,
+} from "@/lib/retrieval/query-focus";
 
 export function AssistantSources({
   cards,
   text,
+  question = "",
 }: {
   cards: AssistantCard[];
   text?: string;
+  question?: string;
 }) {
+  if (containsToolProtocol(text || "")) return null;
   const candidates = cards.flatMap((card, index) =>
-    card.kind === "source" || card.kind === "external_source"
+    (card.kind === "source" || card.kind === "external_source") &&
+    matchesQueryFocus(queryFocus(question), card, campusFoodQuery(question))
       ? [{ card, number: index + 1 }]
       : [],
   );

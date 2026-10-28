@@ -13,6 +13,7 @@ import {
   type RetrievalResult,
 } from "@/domain/retrieval/contracts";
 import { ftsExpression, keywords } from "@/lib/retrieval/terms";
+import { queryFocus, matchesQueryFocus } from "@/lib/retrieval/query-focus";
 import type { SqlDatabase } from "../assistant/database";
 import { ApiError } from "../errors";
 
@@ -228,6 +229,18 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       );
       const c = choices[0];
       if (!c) continue;
+      if (
+        !matchesQueryFocus(
+          queryFocus(q.query),
+          {
+            title: d.title,
+            sourceName: d.display_name,
+            contentSnippet: c.text,
+          },
+          q.query,
+        )
+      )
+        continue;
       const titleMatch = count(d.title),
         bodyMatch = c.text_basis === "title" ? 0 : count(c.text);
       const knowledgeEvidence =

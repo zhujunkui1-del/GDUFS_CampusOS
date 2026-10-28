@@ -1,6 +1,7 @@
 import type { ContentSearchResult } from "@/domain/retrieval/skills";
 import { requestTimeWindow } from "../assistant/time-window";
 import { dialogueReply } from "../assistant/dialogue";
+import { queryFocus, hasExperienceEvidence } from "@/lib/retrieval/query-focus";
 export type ExternalPolicy = {
   intent: "official" | "experience" | "mixed" | "events" | "general";
   active: boolean;
@@ -11,13 +12,18 @@ export type ExternalPolicy = {
   explicit: boolean;
   needsOfficialVerification: boolean;
   onlyXhs?: boolean;
+  focus?: ReturnType<typeof queryFocus>;
+  relevanceQuery?: string;
 };
 export function externalPolicy(query: string): ExternalPolicy {
+  const focus = queryFocus(query);
   const noExternal =
     /不要联网|别联网|无需联网|不用联网|只用内部|只查内部|仅用内部|仅查内部/.test(
       query,
     );
   const experience =
+    (focus === "food" &&
+      /推荐|哪个好|哪家好|吃什么|吃啥|去哪吃|干饭/.test(query)) ||
     /好吃|难吃|口味|味道|踩雷|种草|测评|评测|体验|住.{0,5}怎么样|住起来|居住|隔音|蚊子|宿舍.{0,8}(?:怎么样|如何)|食堂.{0,8}(?:推荐|哪个好|哪家好)/.test(
       query,
     );
@@ -60,6 +66,8 @@ export function externalPolicy(query: string): ExternalPolicy {
             ? "events"
             : "general";
   return {
+    focus,
+    relevanceQuery: query,
     intent,
     active:
       !noExternal &&
@@ -101,9 +109,7 @@ export function supplementRequired(
   if (!bodies.length || policy.explicit) return true;
   if (policy.intent === "experience" || policy.intent === "mixed")
     return !bodies.some((h) =>
-      /好吃|难吃|口味|味道|亲测|入住体验|住后感|隔音|居住体验|踩雷/.test(
-        h.contentSnippet,
-      ),
+      hasExperienceEvidence(policy.focus || null, h, policy.relevanceQuery),
     );
   if (policy.needsDeadline)
     return !results
