@@ -51,9 +51,7 @@ export function assessEvidence(
   const plan = buildQueryPlan(query),
     hits = results.flatMap((r) => r.hits),
     related = hits.filter((h) => queryRelevance(plan, h).relevant),
-    bodies = related.filter(
-      (h) => h.bodyAvailable && (!options.officialOnly || h.official),
-    ),
+    bodies = related.filter((h) => h.bodyAvailable),
     ids = new Set(bodies.map((h) => h.documentId));
   const activities = results
     .flatMap((r) => r.activities)
@@ -64,6 +62,8 @@ export function assessEvidence(
     }));
   const missing: string[] = [];
   if (!bodies.length) missing.push("relevant_readable_evidence");
+  if (options.officialOnly && !bodies.some((h) => h.official))
+    missing.push("official_authority_unconfirmed");
   const text = bodies.map((h) => h.contentSnippet).join("\n");
   if (
     plan.goal === "procedure" &&

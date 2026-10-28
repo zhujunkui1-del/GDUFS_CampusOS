@@ -924,6 +924,29 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                           cards.clear();
                           evidence.clear();
                         }
+                        if (
+                          !fallback &&
+                          supplementPolicy.officialOnly &&
+                          !contentResults.some((r) =>
+                            r.hits.some((h) => h.bodyAvailable && h.official),
+                          ) &&
+                          !externalResult?.items.some(
+                            (i) =>
+                              i.authority === "official" &&
+                              i.evidenceKind !== "title_only",
+                          )
+                        ) {
+                          const attributed = retrievedEvidenceAnswer(
+                            [...cards.values()],
+                            content.query,
+                            false,
+                            new Set(),
+                          );
+                          if (attributed) {
+                            answerMode = "attributed_excerpt";
+                            return attributed;
+                          }
+                        }
                         return fallback;
                       },
                     }

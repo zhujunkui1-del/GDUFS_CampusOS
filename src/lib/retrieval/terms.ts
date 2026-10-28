@@ -123,7 +123,12 @@ function planExpression(plan: QueryPlan, literal: boolean) {
     ...(topics.length
       ? ["(" + topics.join(plan.topicMode === "any" ? " OR " : " AND ") + ")"]
       : []),
-    ...entity,
+    ...(entity.length
+      ? ["(" + entity.join(plan.topicMode === "any" ? " OR " : " AND ") + ")"]
+      : []),
+    ...plan.modifiers.map((m) =>
+      phraseExpression(literal ? [m.original] : m.alternatives),
+    ),
   ];
   return parts.join(" AND ");
 }

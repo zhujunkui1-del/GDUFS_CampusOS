@@ -146,6 +146,36 @@ it("represents follow-up context and goal separately from subjects", () => {
   expect(buildQueryPlan(c.query).goal).toBe("requirements");
   expect(buildQueryPlan("体育比赛，不要足球").excludedTerms).toContain("足球");
 });
+it("preserves previously unknown subject modifiers, independently of the broad event words", () => {
+  expect(
+    queryRelevance(buildQueryPlan("人工智能讲座"), {
+      title: "金融学讲座预告",
+      contentSnippet: "经济分析",
+    }).relevant,
+  ).toBe(false);
+  expect(
+    queryRelevance(buildQueryPlan("人工智能讲座"), {
+      title: "AI讲坛预告",
+      contentSnippet: "大模型介绍",
+    }).relevant,
+  ).toBe(true);
+  expect(
+    queryRelevance(buildQueryPlan("信息安全比赛"), {
+      title: "CFA投资分析大赛",
+      contentSnippet: "金融比赛",
+    }).relevant,
+  ).toBe(false);
+  expect(
+    queryRelevance(buildQueryPlan("英语演讲比赛"), {
+      title: "英语演讲竞赛报名通知",
+    }).relevant,
+  ).toBe(true);
+  expect(
+    queryRelevance(buildQueryPlan("女子双打羽毛球比赛"), {
+      title: "羽毛球男子单打比赛",
+    }).relevant,
+  ).toBe(false);
+});
 it("distinguishes failed recall, irrelevant candidates, metadata, and missing details", () => {
   const empty = { hits: [], activities: [] };
   expect(assessEvidence("体育比赛", [], { failed: true }).state).toBe(

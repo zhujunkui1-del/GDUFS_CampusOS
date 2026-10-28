@@ -66,12 +66,7 @@ export function evidenceFallback(
   const plan = buildQueryPlan(policy.relevanceQuery || "");
   const usable = internal
     .flatMap((r) => r.hits)
-    .filter(
-      (h) =>
-        h.bodyAvailable &&
-        queryRelevance(plan, h).relevant &&
-        (!policy.officialOnly || h.official),
-    );
+    .filter((h) => h.bodyAvailable && queryRelevance(plan, h).relevant);
   const outside = (external?.items || []).filter(
     (i) =>
       i.evidenceKind !== "title_only" &&

@@ -66,6 +66,7 @@ export type QueryPlan = {
   temporalExpression: string | null;
   excludedTerms: string[];
   qualifiers: string[];
+  modifiers: { original: string; alternatives: string[] }[];
   timeRange?: {
     after: string;
     before: string;
@@ -154,6 +155,48 @@ export function buildQueryPlan(
       !entities.some((e) => e.startsWith(region))
     )
       entities.push(region);
+  // Keep unconsumed subject modifiers, rather than discarding everything once
+  // a broad intent like “讲座/比赛” has matched. This also covers new subjects
+  // that are not entries in the curated campus concept vocabulary.
+  let residual = positive;
+  for (const term of [
+    ...new Set([
+      ...concepts.flatMap((c) => [...c.aliases]),
+      ...sportsQueryTerms(positive),
+      ...entities,
+      ...goalTerms[goal],
+    ]),
+  ].sort((a, b) => b.length - a.length))
+    residual = residual.split(term).join(" ");
+  residual = residual
+    .replace(/20\d{2}年?|\d{1,2}月\d{1,2}日?|\d{4}-\d{2}-\d{2}/g, " ")
+    .replace(
+      /广东外语外贸大学|大学城校区|白云山校区|大学城|广外|白云山|南校区?|北校区?|校园|学校|校内|最近一周|下个月|本周|这周|下周|今天|今日|近期|最近|目前|现在|请问|帮我|我想|介绍|具体|相关|是否|有没有|有哪些|有什么|有啥|什么|哪些|如何|怎么办理|怎么办|怎么|能够|能不能|能否|还可以|还能|可以|参加|参与|参赛|申请|申报|通知|管理办法|规定|规则|制度|政策|条件|材料|资格|要求|手续|办理|截止|截至|开始|时间|日期|临时|学科|学术|追问|那么|以及|同时|还有|不要联网|只查内部|只用内部|的|吗|呢|那|和|与|及|有/g,
+      " ",
+    );
+  const modifiers = [
+    ...new Set(residual.match(/[\p{Script=Han}]{2,}|[A-Za-z]{2,}/gu) || []),
+  ]
+    .filter(
+      (t) =>
+        ![
+          "信息",
+          "赛事",
+          "方面",
+          "帮忙",
+          "一下",
+          "看看",
+          "了解",
+          "资讯",
+        ].includes(t),
+    )
+    .slice(0, 4)
+    .map((original) => ({
+      original,
+      alternatives: /^(?:ai|人工智能)$/i.test(original)
+        ? ["AI", "人工智能"]
+        : [original],
+    }));
   return {
     version: "query-v2",
     original: query,
@@ -176,6 +219,7 @@ export function buildQueryPlan(
     qualifiers: ["本科生", "研究生", "新生", "毕业生", "学科竞赛"].filter((t) =>
       positive.includes(t),
     ),
+    modifiers,
     ...(timeRange ? { timeRange } : {}),
   };
 }
@@ -213,6 +257,13 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const matched = plan.topics.map((t) =>
     t.alternatives.some((a) => text.includes(a.toLowerCase())),
   );
+  if (
+    plan.modifiers.length &&
+    !plan.modifiers.every((m) =>
+      m.alternatives.some((t) => text.includes(t.toLowerCase())),
+    )
+  )
+    return { relevant: false, score: 0, reason: "subject_modifier_missing" };
   const coreInTitle = plan.topics.some((t) =>
     t.alternatives.some((a) => title.includes(a.toLowerCase())),
   );
