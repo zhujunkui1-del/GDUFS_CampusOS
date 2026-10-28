@@ -75,7 +75,14 @@ export function retrievedEvidenceAnswer(
 ) {
   const plan = buildQueryPlan(question);
   const excerpts = cards
-    .flatMap((c, index) => {
+    .map((c, index) => ({ c, index }))
+    .sort((a, b) =>
+      ["participation", "registration", "discovery"].includes(plan.goal)
+        ? Number(b.c.kind === "external_source") -
+          Number(a.c.kind === "external_source")
+        : 0,
+    )
+    .flatMap(({ c, index }) => {
       if (c.kind !== "source" && c.kind !== "external_source") return [];
       if (!queryRelevance(plan, c).relevant || containsToolProtocol(c.snippet))
         return [];

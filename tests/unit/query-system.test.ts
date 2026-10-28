@@ -17,6 +17,11 @@ import { analyzeArticle } from "@/lib/ingestion/article-analysis";
 import { contentIntent } from "@/lib/server/assistant/content-intent";
 import { ContentSearchResultSchema } from "@/domain/retrieval/skills";
 import { analysisStatements } from "@/lib/server/console/article-analysis";
+import {
+  isDiscoveryIndex,
+  unsupportedClosureClaim,
+} from "@/lib/retrieval/temporal-claims";
+import type { AssistantCard } from "@/domain/agent/assistant-contracts";
 
 it("evaluates a shared cross-topic corpus and preserves qualification under distractors", async () => {
   const f = await dateGateFixture();
@@ -188,6 +193,38 @@ it("preserves previously unknown subject modifiers, independently of the broad e
     queryRelevance(buildQueryPlan("女子双打羽毛球比赛"), {
       title: "羽毛球男子单打比赛",
     }).relevant,
+  ).toBe(false);
+});
+it("does not bind several months of an index page to one event or turn a start into closure", () => {
+  expect(
+    isDiscoveryIndex("https://tyb.gdufs.edu.cn/tzgg.htm", "通知公告-体育部"),
+  ).toBe(true);
+  expect(
+    isDiscoveryIndex(
+      "https://tyb.gdufs.edu.cn/info/1032/2918.htm",
+      "新生杯羽毛球通知",
+    ),
+  ).toBe(false);
+  const card: AssistantCard = {
+    kind: "external_source",
+    title: "篮球赛通知",
+    sourceName: "体育部",
+    originalUrl: "https://tyb.gdufs.edu.cn/info/fixture",
+    publishedAt: "2026-03-23",
+    snippet: "篮球赛自2026年3月23日起举行。",
+    authority: "official",
+    evidenceKind: "page_excerpt",
+    searchMode: "web",
+  };
+  expect(
+    unsupportedClosureClaim("篮球赛已结束，报名通道已关闭[来源1]", [card], []),
+  ).toBe(true);
+  expect(
+    unsupportedClosureClaim(
+      "篮球赛于3月23日开赛，结束时间及当前报名状态未知[来源1]",
+      [card],
+      [],
+    ),
   ).toBe(false);
 });
 it("distinguishes failed recall, irrelevant candidates, metadata, and missing details", () => {

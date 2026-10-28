@@ -62,6 +62,7 @@ import {
   asksForSearchPermission,
 } from "@/lib/assistant-output";
 import { contentReadPlan } from "./read-plan";
+import { unsupportedClosureClaim } from "@/lib/retrieval/temporal-claims";
 import {
   assessEvidence,
   falseNegativeAnswer,
@@ -389,6 +390,7 @@ export async function chatResponse(request: Request) {
     let finalSystemInstructions = () =>
       "只依据已返回的真实资料直接回答，不输出或模拟工具调用。";
     let answerSourceCount = () => 0;
+    let answerCards = (): AssistantCard[] => [];
     const metered = meteredClient(
       resolved.client,
       resolved.snapshot,
@@ -424,6 +426,12 @@ export async function chatResponse(request: Request) {
       {
         finalSystem: () => finalSystemInstructions(),
         validateFinal: (text) => {
+          if (
+            content.active &&
+            content.tools.includes("search_campus_events") &&
+            unsupportedClosureClaim(text, answerCards(), contentResults)
+          )
+            return "不能把仅有的开赛日说成整项赛事已经结束，也不能把过往举办日期直接改写成报名截止。只写有证据的已举办/已开赛日期；缺少明确结束或截止依据时说明当前状态未知，保留真实引用。";
           if (
             content.active &&
             falseNegativeAnswer(text, content.query, contentResults)
@@ -488,6 +496,7 @@ export async function chatResponse(request: Request) {
         };
         const cards = new Map<string, AssistantCard>();
         answerSourceCount = () => cards.size;
+        answerCards = () => [...cards.values()];
         const routeArtifacts = new Map<
           string,
           z.infer<typeof RouteOutputSchema>

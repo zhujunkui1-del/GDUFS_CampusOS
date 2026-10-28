@@ -14,6 +14,7 @@ import type { ExternalPolicy } from "./policy";
 import { ApiError } from "../errors";
 import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
 import { withinWindow, type TimeWindow } from "../assistant/time-window";
+import { isDiscoveryIndex } from "@/lib/retrieval/temporal-claims";
 export function registerExternalSearch(
   registry: SkillRegistry,
   policy: ExternalPolicy,
@@ -116,6 +117,8 @@ export function registerExternalSearch(
       ]
         .filter(
           (item) =>
+            (!(policy.needsParticipation || policy.intent === "events") ||
+              !isDiscoveryIndex(item.originalUrl, item.title)) &&
             queryRelevance(buildQueryPlan(policy.relevanceQuery || query), item)
               .relevant &&
             (!timeWindow ||
