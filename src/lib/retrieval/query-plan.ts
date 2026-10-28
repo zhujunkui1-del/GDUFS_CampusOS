@@ -345,6 +345,20 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
     experience:
       /推荐|好吃|口味|味道|体验|测评|踩雷|隔音|居住|价格|喜欢|不错|难吃/,
   };
+  const borrowingOperation =
+    plan.topics.some((t) => t.id === "borrowing") &&
+    ["procedure", "policy", "requirements"].includes(plan.goal);
+  const borrowingSupport =
+    /续借|借(?:书|阅).{0,20}(?:规则|管理办法|权限|流程|办理|方式|操作|期限)|(?:凭|持).{0,15}(?:校园卡|借阅证)|自助借还|人工借还|总服务台|借期|借阅期|可借.{0,8}[册本]/.test(
+      text,
+    );
+  if (
+    borrowingOperation &&
+    (!borrowingSupport ||
+      (/排行|荐书|书单|新书展|书展|馆藏上新/.test(title) &&
+        !/排行|荐书|书单|新书展|书展/.test(plan.original)))
+  )
+    return { relevant: false, score: 0, reason: "borrowing_operation_missing" };
   if (
     plan.goal === "experience" &&
     plan.topics.some((t) => t.id === "housing") &&
@@ -372,7 +386,11 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
     !/(?:报名|活动|比赛|讲座)(?:时间|截止|地点)|定于20\d{2}/.test(body)
   )
     return { relevant: false, score: 0, reason: "event_opportunity_missing" };
-  if (goalEvidence[plan.goal] && !goalEvidence[plan.goal]!.test(text))
+  if (
+    !borrowingOperation &&
+    goalEvidence[plan.goal] &&
+    !goalEvidence[plan.goal]!.test(text)
+  )
     return { relevant: false, score: 0, reason: "goal_evidence_missing" };
   const score =
     plan.topics.reduce(

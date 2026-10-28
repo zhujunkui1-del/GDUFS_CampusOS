@@ -420,11 +420,15 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
               ? 2
               : 1
           : 0,
-        directSubject: plan.topics.some((t) =>
-          t.alternatives.some((a) =>
-            d.title.toLowerCase().includes(a.toLowerCase()),
-          ),
-        ),
+        directSubject:
+          plan.topics.some((t) =>
+            t.alternatives.some((a) =>
+              d.title.toLowerCase().includes(a.toLowerCase()),
+            ),
+          ) ||
+          (plan.topics.some((t) => t.id === "borrowing") &&
+            /入馆|图书馆/.test(d.title) &&
+            /指南|手册|规则/.test(d.title)),
         key:
           d.evidence_type !== "metadata" && d.text_length >= 200
             ? d.text_hash

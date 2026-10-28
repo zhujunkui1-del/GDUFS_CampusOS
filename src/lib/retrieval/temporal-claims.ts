@@ -20,10 +20,12 @@ export function unsupportedClosureClaim(
 ) {
   const activities = results.flatMap((r) => r.activities);
   for (const line of answer.split(/[\n。]/)) {
+    if (/无法确认|未确认|不能认定|不代表|未知|未明确|未给出|是否/.test(line))
+      continue;
     const closed =
-        /报名(?:通道)?(?:均|都)?(?:早已|已经|已)(?:截止|关闭|结束)|报名(?:均|都)?已截止/.test(
-          line,
-        ),
+        /报名/.test(line) &&
+        /截止|关闭|结束/.test(line) &&
+        /已|关闭了|结束了/.test(line),
       ended = /(?:均已结束|已经结束|已结束|举办结束|举办完毕)/.test(line);
     if (!closed && !ended) continue;
     const refs = [...line.matchAll(/[\[【]来源\s*(\d+)[\]】]/g)]

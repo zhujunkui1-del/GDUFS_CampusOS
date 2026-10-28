@@ -227,6 +227,9 @@ it("does not bind several months of an index page to one event or turn a start i
     unsupportedClosureClaim("篮球赛已结束，报名通道已关闭[来源1]", [card], []),
   ).toBe(true);
   expect(
+    unsupportedClosureClaim("篮球赛报名通道也已经关闭[来源1]", [card], []),
+  ).toBe(true);
+  expect(
     unsupportedClosureClaim(
       "篮球赛于3月23日开赛，结束时间及当前报名状态未知[来源1]",
       [card],
@@ -247,6 +250,22 @@ it("does not bind several months of an index page to one event or turn a start i
   );
   expect(fallback).toContain("11 月 20—21 日");
   expect(fallback).toContain("[来源2]");
+});
+it("requires borrowing instructions, not a ranked book description with incidental process words", () => {
+  expect(
+    queryRelevance(buildQueryPlan("广外图书馆怎么借书"), {
+      title: "热读排行｜热门借阅",
+      contentSnippet:
+        "借阅排行推荐《操作指南》，读者可提交书单，了解信用贷款。",
+    }).relevant,
+  ).toBe(false);
+  expect(
+    queryRelevance(buildQueryPlan("广外图书馆怎么借书"), {
+      title: "新生入馆指南｜图书馆通关手册",
+      contentSnippet:
+        "新生需先完成闯馆，取得借阅权限。可持本人校园卡在自助借还机借书。",
+    }).relevant,
+  ).toBe(true);
 });
 it("distinguishes failed recall, irrelevant candidates, metadata, and missing details", () => {
   const empty = { hits: [], activities: [] };

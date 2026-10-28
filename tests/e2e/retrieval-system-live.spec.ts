@@ -78,7 +78,13 @@ test("real retrieval, official supplements, contextual follow-ups and citations"
       ).toBe(false);
       expect(follow.response).toMatch(/羽毛球|报名|截止/);
       expect(follow.response).not.toMatch(/仍在报名|可以直接报名|现在就能报名/);
-      await ask("广外图书馆怎么借书？");
+      const borrowing = await ask("广外图书馆怎么借书？");
+      expect(
+        borrowing.cards.some((c) =>
+          /借阅规则|借还书|新生入馆指南/.test(c.title),
+        ),
+      ).toBe(true);
+      expect(borrowing.cards.some((c) => /热读排行/.test(c.title))).toBe(false);
       const agreement = await ask("广外就业协议怎么办理？");
       expect(agreement.cards.some((c) => /协议|三方/.test(c.title))).toBe(true);
     } else {
