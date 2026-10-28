@@ -75,6 +75,20 @@ it("evaluates a shared cross-topic corpus and preserves qualification under dist
       "2026-10-28T06:00:00Z",
     );
     expect(differentDay.hits).toHaveLength(0);
+    const naturalDay = await searchContent(
+      f.db,
+      "events",
+      { query: "今天的广外讲座", limit: 4 },
+      "2026-11-04T06:00:00Z",
+    );
+    expect(naturalDay.hits.map((h) => h.documentId)).toEqual(["lecture"]);
+    const otherNaturalDay = await searchContent(
+      f.db,
+      "events",
+      { query: "今天的广外讲座", limit: 4 },
+      "2026-11-05T06:00:00Z",
+    );
+    expect(otherNaturalDay.hits).toHaveLength(0);
     const recoveredDate = await searchContent(
       f.db,
       "events",

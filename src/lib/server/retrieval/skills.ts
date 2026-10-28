@@ -19,6 +19,7 @@ import { D1KeywordRetriever } from "./retriever";
 import { SkillRegistry } from "../agent/skill-registry";
 import { ApiError } from "../errors";
 import type { TimeWindow } from "../assistant/time-window";
+import { requestTimeWindow } from "../assistant/time-window";
 import { universityScope } from "../assistant/grounding";
 import { completeSnippetTimes } from "@/lib/retrieval/snippet-time";
 
@@ -64,11 +65,35 @@ export async function searchContent(
   now = new Date().toISOString(),
   signal?: AbortSignal,
 ): Promise<ContentSearchResult> {
-  const q =
+  let q =
     purpose === "events"
       ? EventSearchInputSchema.parse(raw)
       : KnowledgeSearchInputSchema.parse(raw);
-  const event = purpose === "events" ? EventSearchInputSchema.parse(raw) : null;
+  let event = purpose === "events" ? EventSearchInputSchema.parse(raw) : null;
+  const inferredWindow =
+    event &&
+    !event.after &&
+    !event.before &&
+    !event.publishedAfter &&
+    !event.publishedBefore
+      ? requestTimeWindow(event.query, Date.parse(now))
+      : undefined;
+  if (event && inferredWindow) {
+    event = EventSearchInputSchema.parse({
+      ...event,
+      ...(inferredWindow.role === "publication"
+        ? {
+            publishedAfter: inferredWindow.after,
+            publishedBefore: inferredWindow.before,
+          }
+        : {
+            after: inferredWindow.after,
+            before: inferredWindow.before,
+            timeRole: inferredWindow.role,
+          }),
+    });
+    q = event;
+  }
   if (event?.after && event.before && event.after > event.before)
     throw new ApiError("INVALID_ARGUMENT", "开始日期不能晚于结束日期。");
   let documentIds: string[] | undefined;
