@@ -9,7 +9,7 @@ export type ConversationAct =
 
 /** A campus entity/topic turns a question into a CampusOS content request. */
 const CAMPUS_SIGNAL =
-  /广外|广东外语外贸大学|学校|校内|校园|大学城|南校|北校|白云山|食堂|饭堂|宿舍|南苑|北苑|图书馆|教学楼|实验楼|体育馆|奖学金|教务|辅导员|学院|社团|讲座|比赛|竞赛|报名|通知|公告|选课|考试|课程|就业|招聘|活动|政策|规定|制度|办理|申请|地图|路线|导航|定位/;
+  /广外|广东外语外贸大学|学校|校内|校园|大学城|南校|北校|白云山|云山学者|云山青年学者|云山领军|食堂|饭堂|宿舍|南苑|北苑|图书馆|教学楼|实验楼|体育馆|奖学金|教务|辅导员|学院|社团|讲座|比赛|竞赛|报名|通知|公告|选课|考试|课程|就业|招聘|活动|政策|规定|制度|办理|申请|地图|路线|导航|定位/;
 
 /** Pure confusion about the previous answer, never a new search topic. */
 const CONFUSION =

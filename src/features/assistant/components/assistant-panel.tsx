@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type UIEvent,
 } from "react";
 import { useAssistant } from "../use-assistant";
 import { AssistantSources } from "./assistant-sources";
@@ -86,9 +87,21 @@ export function AssistantPanel({
     historyButton = useRef<HTMLButtonElement>(null),
     cancelDelete = useRef<HTMLButtonElement>(null);
   const end = useRef<HTMLDivElement>(null);
-  // Only follow new output while the reader is already at the bottom. Clicking or
-  // re-rendering must never yank a reader away from earlier messages.
+  // Only follow new output while the reader is already at the bottom, and never
+  // let a re-render, focus change or history refresh move the reader.
   const stickToBottom = useRef(true);
+  const messageCount = useRef(0);
+  const lastScroll = useRef(0);
+  const pointerScroll = useRef<{ top: number; user: boolean } | null>(null);
+  const trackScroll = (event: UIEvent<HTMLDivElement>) => {
+    const element = event.currentTarget;
+    stickToBottom.current =
+      element.scrollHeight - element.scrollTop - element.clientHeight < 96;
+    lastScroll.current = element.scrollTop;
+  };
+  const markUserScroll = () => {
+    if (pointerScroll.current) pointerScroll.current.user = true;
+  };
   const prepareMap = useCallback(async () => {
     if (!compact) return;
     onOpenChange(false);
@@ -138,21 +151,21 @@ export function AssistantPanel({
       setDeleting(false);
     }
   };
+  const activeConversation = useRef(chat.conversationId);
   useEffect(() => {
-    if (!open) return;
-    const scroller = document.querySelector<HTMLElement>(".assistant-body");
-    if (!scroller) return;
-    const track = () => {
-      stickToBottom.current =
-        scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 96;
-    };
-    track();
-    scroller.addEventListener("scroll", track, { passive: true });
-    return () => scroller.removeEventListener("scroll", track);
-  }, [open]);
+    if (activeConversation.current === chat.conversationId) return;
+    activeConversation.current = chat.conversationId;
+    messageCount.current = 0;
+    lastScroll.current = 0;
+    stickToBottom.current = true;
+  }, [chat.conversationId]);
   useEffect(() => {
-    if (!stickToBottom.current) return;
-    end.current?.scrollIntoView({ block: "end" });
+    const element = document.querySelector<HTMLElement>(".assistant-body");
+    if (!element) return;
+    const grew = chat.messages.length > messageCount.current;
+    messageCount.current = chat.messages.length;
+    if (grew && stickToBottom.current) element.scrollTop = element.scrollHeight;
+    else if (!grew) element.scrollTop = lastScroll.current;
   }, [chat.messages]);
   const submit = () => {
     if (!input.trim() || chat.busy || !chat.ready) return;
@@ -286,6 +299,37 @@ export function AssistantPanel({
                 <Drawer.Content
                   className="assistant-body assistant-chat"
                   data-base-ui-swipe-ignore
+                  onScroll={trackScroll}
+                  onWheel={markUserScroll}
+                  onTouchMove={markUserScroll}
+                  onPointerDown={(event) => {
+                    if (
+                      (event.target as HTMLElement).closest(
+                        ".assistant-composer",
+                      )
+                    ) {
+                      pointerScroll.current = null;
+                      return;
+                    }
+                    pointerScroll.current = {
+                      top: event.currentTarget.scrollTop,
+                      user: false,
+                    };
+                  }}
+                  onPointerUp={(event) => {
+                    const guard = pointerScroll.current;
+                    pointerScroll.current = null;
+                    const element = event.currentTarget;
+                    if (!guard || guard.user) return;
+                    const settle = () => {
+                      if (Math.abs(element.scrollTop - guard.top) > 8) {
+                        element.scrollTop = guard.top;
+                        lastScroll.current = guard.top;
+                      }
+                    };
+                    settle();
+                    window.setTimeout(settle, 0);
+                  }}
                 >
                   <Drawer.Description className="sr-only">
                     校园地点与步行路线助手

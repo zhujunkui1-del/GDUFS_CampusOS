@@ -138,3 +138,9 @@ it("treats a roster question as needing official supplementation", () => {
   ).toBe(true);
   expect(externalPolicy("图书馆借阅规则").needsRoster).toBe(false);
 });
+it("retrieves a roster question even when the school name is omitted", () => {
+  const intent = contentIntent("举几位云山学者");
+  expect(intent.act).toBe("campus");
+  expect(intent.active).toBe(true);
+  expect(intent.tools).toEqual(["search_campus_knowledge"]);
+});

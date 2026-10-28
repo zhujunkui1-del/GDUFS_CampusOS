@@ -79,6 +79,7 @@ export function contentIntent(
     (knowledge ||
       events ||
       policy.needsOfficialVerification ||
+      policy.needsRoster ||
       policy.explicit ||
       /只用内部|只查内部|仅用内部|仅查内部/.test(query) ||
       (act === "campus" && policy.active));
