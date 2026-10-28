@@ -1,0 +1,261 @@
+import {
+  queryFocus,
+  sportsQueryTerms,
+  matchesQueryFocus,
+  participationQuery,
+} from "./query-focus";
+
+// Retrieval concepts are query vocabulary, not a parallel article taxonomy.
+// Aliases expand each original concept; broad action words never replace it.
+const concepts = [
+  { id: "borrowing", aliases: ["借书", "借阅", "续借", "借阅规则"] },
+  { id: "library", aliases: ["图书馆", "入馆", "读者"] },
+  { id: "card", aliases: ["校园卡", "一卡通", "补卡", "挂失"] },
+  { id: "courses", aliases: ["选课", "课程选择", "选课规则"] },
+  { id: "scholarship", aliases: ["奖学金", "奖助", "学生资助"] },
+  { id: "aid", aliases: ["助学金", "助学贷款"] },
+  { id: "agreement", aliases: ["就业协议", "三方协议", "签约手续"] },
+  { id: "recruitment", aliases: ["招聘", "招聘会", "宣讲会", "实习"] },
+  {
+    id: "research",
+    aliases: ["科研项目", "科研管理", "项目申报", "课题", "项目招标"],
+  },
+  {
+    id: "food",
+    aliases: [
+      "食堂",
+      "饭堂",
+      "餐厅",
+      "好吃",
+      "美食",
+      "口味",
+      "一饭",
+      "文采园",
+      "博雅园",
+      "风采园",
+    ],
+  },
+  {
+    id: "housing",
+    aliases: ["宿舍", "寝室", "住宿", "南苑", "北苑", "入住", "居住", "隔音"],
+  },
+  { id: "club", aliases: ["社团", "漫协", "二次元", "动漫协会", "ACG"] },
+  { id: "water", aliases: ["停水", "供水", "用水中断"] },
+  { id: "power", aliases: ["停电", "供电中断", "用电施工"] },
+  { id: "lecture", aliases: ["讲座", "讲坛", "学术沙龙", "论坛"] },
+  { id: "competition", aliases: ["竞赛", "比赛", "大赛"] },
+] as const;
+export type QueryGoal =
+  | "registration"
+  | "participation"
+  | "procedure"
+  | "requirements"
+  | "policy"
+  | "experience"
+  | "discovery"
+  | "facts";
+export type QueryPlan = {
+  version: "query-v2";
+  original: string;
+  topics: { id: string; originalTerms: string[]; alternatives: string[] }[];
+  topicMode: "all" | "any";
+  entities: string[];
+  campus: "south" | "north" | null;
+  goal: QueryGoal;
+  goalTerms: string[];
+  temporalExpression: string | null;
+  excludedTerms: string[];
+  qualifiers: string[];
+  timeRange?: {
+    after: string;
+    before: string;
+    role: "publication" | "event" | "registration";
+  };
+};
+export function buildQueryPlan(
+  query: string,
+  timeRange?: QueryPlan["timeRange"],
+): QueryPlan {
+  const normalized = query.normalize("NFKC");
+  // Exclusions are constraints, never positive expansion seeds.
+  const excludedTerms = [
+    ...normalized.matchAll(
+      /(?:不要|排除|不含|除了)\s*([\p{Script=Han}a-zA-Z]{2,12})(?=[，。；\s]|$)/gu,
+    ),
+  ].map((m) => m[1]);
+  const positive = normalized.replace(
+    /(?:不要|排除|不含|除了)\s*[\p{Script=Han}a-zA-Z]{2,12}(?=[，。；\s]|$)/gu,
+    " ",
+  );
+  let topics: QueryPlan["topics"] = concepts
+    .filter((c) => c.aliases.some((t) => positive.includes(t)))
+    .map((c) => ({
+      id: c.id,
+      originalTerms: c.aliases.filter((t) => positive.includes(t)),
+      alternatives: [...c.aliases],
+    }));
+  if (queryFocus(positive) === "sports")
+    topics.unshift({
+      id: "sports",
+      originalTerms: sportsQueryTerms(positive).filter((t) =>
+        positive.includes(t),
+      ),
+      alternatives: sportsQueryTerms(positive),
+    });
+  // Library is context for borrowing, and a generic competition is an action,
+  // not a substitute for the requested subject (sports/research/etc.).
+  if (topics.some((t) => t.id === "borrowing"))
+    topics = topics.filter((t) => t.id !== "library");
+  if (topics.some((t) => !["lecture", "competition"].includes(t.id)))
+    topics = topics.filter((t) => t.id !== "competition");
+  if (topics.some((t) => t.id === "agreement"))
+    topics = topics.filter((t) => t.id !== "recruitment");
+  const goal: QueryGoal = /报名|可报|能报|申请.*截止/.test(positive)
+    ? "registration"
+    : participationQuery(positive)
+      ? "participation"
+      : /怎么办|如何办理|办理流程|手续|操作|怎么借|怎么选/.test(positive)
+        ? "procedure"
+        : /条件|资格|材料|要求/.test(positive)
+          ? "requirements"
+          : /政策|管理办法|制度|规则|规定/.test(positive)
+            ? "policy"
+            : /好吃|口味|怎么样|体验|推荐|踩雷/.test(positive)
+              ? "experience"
+              : /哪些|有什么|活动|赛事|讲座|比赛/.test(positive)
+                ? "discovery"
+                : "facts";
+  const goalTerms: Record<QueryGoal, string[]> = {
+    registration: ["报名", "申请", "截止"],
+    participation: ["报名", "参赛", "参加", "通知"],
+    procedure: ["流程", "办理", "步骤", "指南", "手续"],
+    requirements: ["条件", "资格", "材料", "要求"],
+    policy: ["办法", "规定", "规则", "制度", "政策"],
+    experience: ["推荐", "口味", "体验", "好吃", "入住"],
+    discovery: [],
+    facts: [],
+  };
+  const entities = [...positive.matchAll(/[“「"]([^”」"\n]{2,40})[”」"]/g)].map(
+    (m) => m[1],
+  );
+  const named = positive.match(
+    /^(?:请问)?([\p{Script=Han}]{2,4})(?:是谁|是什么职务|是不是|担任|是广外)/u,
+  )?.[1];
+  if (named && !topics.length && !/广外|学校|校园/.test(named))
+    entities.push(named);
+  // A concrete venue remains a constraint rather than disappearing in synonyms.
+  for (const m of positive.matchAll(
+    /南苑\d+栋|北苑\d+栋|文采园|博雅园|风采园|[一二三]饭/g,
+  ))
+    entities.push(m[0]);
+  return {
+    version: "query-v2",
+    original: query,
+    topics: topics.slice(0, 4),
+    topicMode: /和|以及|同时|还有|；追问/.test(positive) ? "any" : "all",
+    entities: [...new Set(entities)].slice(0, 4),
+    campus:
+      /南校|大学城/.test(positive) && !/北校|白云山/.test(positive)
+        ? "south"
+        : /北校|白云山/.test(positive) && !/南校|大学城/.test(positive)
+          ? "north"
+          : null,
+    goal,
+    goalTerms: goalTerms[goal],
+    temporalExpression:
+      positive.match(
+        /(?:20\d{2}[-年]\d{1,2}(?:[-月]\d{1,2}日?)?|今天|今日|本周|这周|下周|最近一周|过去7天|下个月|近期|最近)/,
+      )?.[0] || null,
+    excludedTerms,
+    qualifiers: ["本科生", "研究生", "新生", "毕业生", "学科竞赛"].filter((t) =>
+      positive.includes(t),
+    ),
+    ...(timeRange ? { timeRange } : {}),
+  };
+}
+type QueryEvidence = {
+  title?: string;
+  sourceName?: string;
+  contentSnippet?: string;
+  snippet?: string;
+};
+export function entityTerms(entity: string) {
+  const venues = [
+    ["一饭", "第一饭堂", "第一食堂", "文采园"],
+    ["二饭", "第二饭堂", "第二食堂", "博雅园"],
+    ["三饭", "第三饭堂", "第三食堂", "风采园"],
+  ];
+  return venues.find((g) => g.includes(entity)) || [entity];
+}
+export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
+  const title = (hit.title || "").normalize("NFKC").toLowerCase(),
+    body = (hit.contentSnippet ?? hit.snippet ?? "")
+      .normalize("NFKC")
+      .toLowerCase(),
+    text = title + " " + body;
+  if (plan.excludedTerms.some((t) => title.includes(t)))
+    return { relevant: false, score: 0, reason: "excluded_topic" };
+  if (
+    (plan.campus === "south" &&
+      /白云山|北校/.test(title) &&
+      !/大学城|南校/.test(title)) ||
+    (plan.campus === "north" &&
+      /大学城|南校/.test(title) &&
+      !/白云山|北校/.test(title))
+  )
+    return { relevant: false, score: 0, reason: "campus_conflict" };
+  const matched = plan.topics.map((t) =>
+    t.alternatives.some((a) => text.includes(a.toLowerCase())),
+  );
+  if (
+    (plan.qualifiers.includes("本科生") &&
+      /研究生/.test(title) &&
+      !/本科生/.test(title)) ||
+    (plan.qualifiers.includes("研究生") &&
+      /本科生/.test(title) &&
+      !/研究生/.test(title))
+  )
+    return { relevant: false, score: 0, reason: "audience_conflict" };
+  if (
+    plan.qualifiers.includes("学科竞赛") &&
+    matchesQueryFocus("sports", hit, "体育比赛")
+  )
+    return { relevant: false, score: 0, reason: "discipline_conflict" };
+  if (
+    matched.length &&
+    !(plan.topicMode === "any" ? matched.some(Boolean) : matched.every(Boolean))
+  )
+    return { relevant: false, score: 0, reason: "core_topic_missing" };
+  const focus = queryFocus(plan.original);
+  if (plan.topics.length <= 1 && !matchesQueryFocus(focus, hit, plan.original))
+    return { relevant: false, score: 0, reason: "purpose_mismatch" };
+  if (
+    plan.entities.length &&
+    !plan.entities.some((e) =>
+      entityTerms(e).some((a) => text.includes(a.toLowerCase())),
+    )
+  )
+    return { relevant: false, score: 0, reason: "entity_missing" };
+  const goalEvidence: Partial<Record<QueryGoal, RegExp>> = {
+    policy: /办法|规定|规则|制度|政策/,
+    procedure:
+      /流程|办理|步骤|指南|手续|借阅规则|续借|凭.{0,12}(?:卡|证)|登录|提交/,
+    requirements: /条件|资格|材料|要求|须|需满足|面向/,
+    experience: /推荐|好吃|口味|味道|体验|测评|踩雷|隔音|居住|价格/,
+  };
+  if (goalEvidence[plan.goal] && !goalEvidence[plan.goal]!.test(text))
+    return { relevant: false, score: 0, reason: "goal_evidence_missing" };
+  const score =
+    plan.topics.reduce(
+      (n, t) =>
+        n +
+        (t.alternatives.some((a) => title.includes(a.toLowerCase())) ? 6 : 3),
+      0,
+    ) +
+    plan.goalTerms.filter((t) => text.includes(t)).length * 2;
+  return {
+    relevant: true,
+    score,
+    reason: plan.topics.length ? "subject_and_constraints" : "lexical_query",
+  };
+}

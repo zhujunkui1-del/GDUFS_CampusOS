@@ -12,7 +12,7 @@ import {
 } from "./providers";
 import type { ExternalPolicy } from "./policy";
 import { ApiError } from "../errors";
-import { matchesQueryFocus } from "@/lib/retrieval/query-focus";
+import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
 import { withinWindow, type TimeWindow } from "../assistant/time-window";
 export function registerExternalSearch(
   registry: SkillRegistry,
@@ -116,18 +116,21 @@ export function registerExternalSearch(
       ]
         .filter(
           (item) =>
-            matchesQueryFocus(
-              policy.focus || null,
-              item,
-              policy.relevanceQuery,
-            ) &&
-            (!timeWindow || withinWindow(item.publishedAt, timeWindow)),
+            queryRelevance(buildQueryPlan(policy.relevanceQuery || query), item)
+              .relevant &&
+            (!timeWindow ||
+              timeWindow.role !== "publication" ||
+              withinWindow(item.publishedAt, timeWindow)),
         )
         .slice(0, 6);
       const warnings: string[] = [];
-      if (timeWindow)
+      if (timeWindow?.role === "publication")
         warnings.push(
           `仅返回发布日期在${timeWindow.after}至${timeWindow.before}的资料；发布日期不证明活动在此期间发生，日期未知结果不作为该时间段证据。`,
+        );
+      else if (timeWindow)
+        warnings.push(
+          `所问${timeWindow.role === "event" ? "活动" : "报名"}日期范围为${timeWindow.after}至${timeWindow.before}；不按文章发布日期排除，须以原文对应时间证据核对，未知不可当作符合范围。`,
         );
       if (items.some((i) => i.authority === "student_experience"))
         warnings.push(

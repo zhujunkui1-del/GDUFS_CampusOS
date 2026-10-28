@@ -1,0 +1,219 @@
+import { it, expect } from "vitest";
+import { dateGateFixture } from "../fixtures/date-gate";
+import {
+  retrievalCorpus,
+  retrievalQuestions,
+} from "../fixtures/retrieval-evaluation";
+import { ensureRetrievalIndex } from "@/lib/server/retrieval/indexer";
+import { searchContent } from "@/lib/server/retrieval/skills";
+import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
+import {
+  assessEvidence,
+  activityAvailability,
+  falseNegativeAnswer,
+} from "@/lib/retrieval/evidence-assessment";
+import { completeSnippetTimes } from "@/lib/retrieval/snippet-time";
+import { analyzeArticle } from "@/lib/ingestion/article-analysis";
+import { contentIntent } from "@/lib/server/assistant/content-intent";
+import { ContentSearchResultSchema } from "@/domain/retrieval/skills";
+
+it("evaluates a shared cross-topic corpus and preserves qualification under distractors", async () => {
+  const f = await dateGateFixture();
+  try {
+    for (const [id, title, body] of retrievalCorpus) {
+      f.sqlite
+        .prepare(
+          `INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,body_status,content_hash,fetched_at,campus_scope,data_domain,published_at,content_revision,input_hash,rights_scope,content_type,radar_category) VALUES(?,?,?,?,?,'plain','complete',?,'2026-10-10','all','campus_announcements','2026-10-10',1,?,'licensed_full_text','notice','competition')`,
+        )
+        .run(
+          id,
+          f.source.id,
+          title,
+          "https://example.invalid/" + id,
+          body,
+          id,
+          "c".repeat(64),
+        );
+      await f.store.publishCollectedWebArticle(id);
+      f.sqlite
+        .prepare("DELETE FROM knowledge_chunks WHERE document_id=?")
+        .run(id);
+      f.sqlite
+        .prepare("DELETE FROM article_search_documents WHERE document_id=?")
+        .run(id);
+      await ensureRetrievalIndex(f.db, id);
+    }
+    for (const [query, expected, purpose] of retrievalQuestions) {
+      const r = await searchContent(
+        f.db,
+        purpose,
+        { query, limit: 4 },
+        "2026-10-28T06:00:00Z",
+      );
+      expect(
+        r.hits.some((h) =>
+          (expected as readonly string[]).includes(h.documentId),
+        ),
+        query,
+      ).toBe(true);
+      expect(r.metrics.candidateChunks).toBeLessThanOrEqual(96);
+      expect(r.metrics.rowsWritten).toBe(0);
+      if (/足球|停水|三方协议/.test(query))
+        expect(
+          r.hits.every((h) =>
+            (expected as readonly string[]).includes(h.documentId),
+          ),
+          query,
+        ).toBe(true);
+    }
+  } finally {
+    f.close();
+  }
+});
+it.each([
+  ["体育比赛", "信息安全大赛", false],
+  ["比赛", "信息安全大赛", true],
+  ["足球比赛", "羽毛球比赛", false],
+  ["羽毛球比赛", "羽毛球比赛", true],
+  ["停水通知", "专项用电施工", false],
+  ["停电通知", "专项用电施工", true],
+  ["就业协议办理", "秋季招聘宣讲会", false],
+  ["招聘信息", "秋季招聘宣讲会", true],
+  ["大学城校区讲座", "白云山校区讲座", false],
+  ["白云山校区讲座", "白云山校区讲座", true],
+])("metamorphic topic/scope: %s -> %s", (query, title, expected) =>
+  expect(queryRelevance(buildQueryPlan(query), { title }).relevant).toBe(
+    expected,
+  ),
+);
+it("represents follow-up context and goal separately from subjects", () => {
+  const history = [
+    {
+      id: "fixture",
+      role: "user" as const,
+      text: "本科生奖学金申请条件是什么",
+      cards: [],
+    },
+  ];
+  const c = contentIntent("那需要准备什么材料？", history);
+  expect(buildQueryPlan(c.query).topics[0].id).toBe("scholarship");
+  expect(buildQueryPlan(c.query).goal).toBe("requirements");
+  expect(buildQueryPlan("体育比赛，不要足球").excludedTerms).toContain("足球");
+});
+it("distinguishes failed recall, irrelevant candidates, metadata, and missing details", () => {
+  const empty = { hits: [], activities: [] };
+  expect(assessEvidence("体育比赛", [], { failed: true }).state).toBe(
+    "search_failed",
+  );
+  expect(assessEvidence("体育比赛", [empty]).state).toBe("no_candidates");
+  expect(
+    assessEvidence("体育比赛", [
+      {
+        hits: [
+          {
+            documentId: "a",
+            title: "信息安全大赛",
+            bodyAvailable: true,
+            contentSnippet: "学科比赛",
+          },
+        ],
+        activities: [],
+      },
+    ]).state,
+  ).toBe("off_topic");
+  expect(
+    assessEvidence("体育比赛", [
+      {
+        hits: [
+          {
+            documentId: "s",
+            title: "足球比赛",
+            bodyAvailable: false,
+            contentSnippet: "",
+          },
+        ],
+        activities: [],
+      },
+    ]).state,
+  ).toBe("metadata_or_authority_insufficient");
+  const found = {
+    hits: [
+      {
+        documentId: "s",
+        title: "足球比赛",
+        bodyAvailable: true,
+        contentSnippet: "定于10月11日举办足球比赛",
+      },
+    ],
+    activities: [],
+  };
+  expect(assessEvidence("体育比赛可以参加吗", [found]).state).toBe(
+    "related_but_incomplete",
+  );
+  expect(falseNegativeAnswer("没有体育赛事相关信息", "体育比赛", [found])).toBe(
+    true,
+  );
+  expect(
+    falseNegativeAnswer(
+      "已有足球比赛通知，但无法确认当前还能报名[来源1]",
+      "体育比赛",
+      [found],
+    ),
+  ).toBe(false);
+});
+it("does not turn a missing indexed date, cutoff or capacity into availability", () => {
+  const analysis = analyzeArticle({
+    title: "羽毛球比赛通知",
+    body: "比赛定于2026年10月31日在大学城校区体育馆举行，报名请见附件。",
+    publishedAt: "2026-10-10",
+  });
+  const hit = {
+    bodyAvailable: true,
+    contentSnippet:
+      "比赛定于2026年10月31日在大学城校区体育馆举行，报名请见附件。",
+    startOffset: 0,
+  } as Parameters<typeof completeSnippetTimes>[1];
+  const completed = completeSnippetTimes(analysis, hit)!;
+  expect(completed.activities[0].startsAt?.date).toBe("2026-10-31");
+  expect(
+    completed.activities[0].registrationWindows[0]?.end ?? null,
+  ).toBeNull();
+  const parsed = ContentSearchResultSchema.shape.activities.element.parse({
+    eventId: "s",
+    documentId: "s",
+    activityKey: "a",
+    name: "羽毛球比赛",
+    kind: "event",
+    category: "culture_sports",
+    startsAt: completed.activities[0].startsAt
+      ? {
+          ...completed.activities[0].startsAt,
+          evidence: completed.activities[0].startsAt.evidence.text,
+        }
+      : null,
+    endsAt: null,
+    placeRaw: null,
+    organizer: null,
+    eventStatus: "unknown",
+    historical: false,
+    registrationRequirement: "required",
+    registrationState: "unknown",
+    registrationWindows: [],
+    otherDeadlines: [],
+    registrationUrl: null,
+    evidence: [],
+    mapPlace: null,
+  });
+  const availability = activityAvailability(
+    parsed,
+    Date.parse("2026-10-28T06:00:00Z"),
+  );
+  expect(availability.eventState).toBe("upcoming");
+  expect(availability.participation).toBe("unknown");
+  expect(
+    activityAvailability(
+      { ...parsed, registrationState: "capacity_unknown" },
+      Date.parse("2026-10-28T06:00:00Z"),
+    ).participation,
+  ).toBe("unknown");
+});

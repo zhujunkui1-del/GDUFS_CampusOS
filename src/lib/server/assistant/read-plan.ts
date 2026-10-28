@@ -1,7 +1,12 @@
 import type { PlannedRead } from "../agent/orchestrator";
 import type { ContentTool } from "./content-intent";
 import type { ExternalPolicy } from "../external-search/policy";
-import { queryFocus } from "@/lib/retrieval/query-focus";
+import { buildQueryPlan } from "@/lib/retrieval/query-plan";
+import {
+  queryFocus,
+  sportsQueryTerms,
+  participationQuery,
+} from "@/lib/retrieval/query-focus";
 /** Forward a bounded public topic, never identifiers or private application material. */
 export function publicQuery(query: string) {
   if (
@@ -10,6 +15,26 @@ export function publicQuery(query: string) {
     )
   )
     return null;
+  if (queryFocus(query) === "sports") {
+    const specifics = sportsQueryTerms(query);
+    const subject = specifics.includes("体育")
+      ? "体育比赛"
+      : specifics.join(" ");
+    const campus = /大学城|南校/.test(query)
+      ? " 大学城校区"
+      : /白云山|北校/.test(query)
+        ? " 白云山校区"
+        : "";
+    const year =
+      query.match(/20\d{2}年?/)?.[0] ||
+      (participationQuery(query)
+        ? String(new Date(Date.now() + 8 * 3600000).getUTCFullYear())
+        : "");
+    return `${/广外|广东外语外贸大学|学校|校内|校园/.test(query) ? "广外" : ""}${campus} ${subject} ${year} ${buildQueryPlan(query).qualifiers.join(" ")} ${participationQuery(query) ? "报名 通知" : ""}`
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 120);
+  }
   if (queryFocus(query) === "food" && /广外|广东外语外贸大学/.test(query)) {
     const campus = /北校|白云/.test(query)
       ? "北校"

@@ -12,8 +12,9 @@ import {
   type RetrievalQuery,
   type RetrievalResult,
 } from "@/domain/retrieval/contracts";
-import { ftsExpression, keywords } from "@/lib/retrieval/terms";
-import { queryFocus, matchesQueryFocus } from "@/lib/retrieval/query-focus";
+import { ftsRecallLanes, keywords } from "@/lib/retrieval/terms";
+import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
+import { participationQuery } from "@/lib/retrieval/query-focus";
 import type { SqlDatabase } from "../assistant/database";
 import { ApiError } from "../errors";
 
@@ -107,6 +108,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
     scope = PUBLIC_RETRIEVAL_SCOPE,
     limit?: number,
     signal?: AbortSignal,
+    preferredIds?: string[],
   ) {
     if (scope.kind !== "public")
       throw new ApiError("FORBIDDEN", "仅支持公开资料检索。");
@@ -122,6 +124,8 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       durationMs: 0,
       candidateChunks: 0,
       usageAvailable: true,
+      queryPlanVersion: "query-v2" as const,
+      recallLanes: [] as { name: string; limit: number; candidates: number }[],
     };
     const read = async <T>(sql: string, args: unknown[]) => {
       signal?.throwIfAborted();
@@ -135,7 +139,25 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       metrics.usageAvailable &&= typeof r.meta?.rows_read === "number";
       return r;
     };
-    const expression = ftsExpression(q.query),
+    const recall = ftsRecallLanes(q.query),
+      lanes =
+        preferredIds?.length && recall.length
+          ? [
+              {
+                name: "structured_date",
+                expression: recall.at(-1)!.expression,
+                limit: 48,
+                ids: preferredIds,
+              },
+              {
+                name: "lexical_date_completion",
+                expression: recall.at(-1)!.expression,
+                limit: 48,
+                ids: undefined,
+              },
+            ]
+          : recall.map((l) => ({ ...l, ids: undefined })),
+      plan = buildQueryPlan(q.query),
       warnings: string[] = [];
     const empty = () => ({
       result: RetrievalResultSchema.parse({
@@ -150,7 +172,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       }),
       articles: [] as VerifiedArticle[],
     });
-    if (!expression) {
+    if (!lanes.length) {
       warnings.push("问题没有可用检索词，请补充具体事项。");
       return empty();
     }
@@ -160,7 +182,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         "rank MATCH 'bm25(4.0,1.0,0.0)'",
         "k.index_version=?",
       ],
-      params: unknown[] = [expression, RETRIEVAL_INDEX_VERSION];
+      params: unknown[] = [RETRIEVAL_INDEX_VERSION];
     if (q.documentIds) {
       conditions.push(
         `k.document_id IN(${q.documentIds.map(() => "?").join(",")})`,
@@ -190,17 +212,34 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       params.push(q.publishedBefore);
     }
     // Business filters allow unknown/mixed content through: they never determine eligibility.
-    const rows = await read<ChunkRow>(
-      `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,rank AS score
+    const candidateLanes: ChunkRow[][] = [];
+    for (const lane of lanes) {
+      const local = lane.ids?.length
+        ? ` AND k.document_id IN(${lane.ids.map(() => "?").join(",")})`
+        : "";
+      const found = await read<ChunkRow>(
+        `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,rank AS score
    FROM article_chunk_fts JOIN knowledge_chunks k ON k.rowid=article_chunk_fts.rowid JOIN knowledge_documents d ON d.id=k.document_id JOIN knowledge_sources s ON s.id=d.source_id
-   WHERE ${conditions.join(" AND ")} ORDER BY rank LIMIT 96`,
-      params,
-    );
-    metrics.candidateChunks = rows.results.length;
-    const ids = [...new Set(rows.results.map((c) => c.document_id))].slice(
-      0,
-      32,
-    );
+   WHERE ${conditions.join(" AND ")}${local} ORDER BY rank LIMIT ?`,
+        [lane.expression, ...params, ...(lane.ids || []), lane.limit],
+      );
+      metrics.recallLanes.push({
+        name: lane.name,
+        limit: lane.limit,
+        candidates: found.results.length,
+      });
+      candidateLanes.push(found.results);
+    }
+    // Interleave document candidates so one recall lane cannot consume all
+    // public revalidation slots. Total raw chunks <=96; current IDs <=32.
+    const merged: ChunkRow[] = [];
+    for (let i = 0; i < 96; i++)
+      for (const lane of candidateLanes) if (lane[i]) merged.push(lane[i]);
+    const rows = {
+      results: [...new Map(merged.map((c) => [c.id, c])).values()],
+    };
+    metrics.candidateChunks = merged.length;
+    const ids = [...new Set(merged.map((c) => c.document_id))].slice(0, 32);
     const documents = await currentPublicArticles(this.db, ids, read),
       terms = keywords(q.query);
     const ranked: {
@@ -224,23 +263,24 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
           (sum, t) => sum + (s.includes(t) ? Math.min(4, t.length / 2) : 0),
           0,
         );
+      const chunkRelevance = (text: string) =>
+        queryRelevance(plan, { title: d.title, contentSnippet: text });
       choices.sort(
-        (a, b) => count(b.text) - count(a.text) || a.score - b.score,
+        (a, b) =>
+          Number(chunkRelevance(b.text).relevant) -
+            Number(chunkRelevance(a.text).relevant) ||
+          chunkRelevance(b.text).score - chunkRelevance(a.text).score ||
+          count(b.text) - count(a.text) ||
+          a.score - b.score,
       );
       const c = choices[0];
       if (!c) continue;
-      if (
-        !matchesQueryFocus(
-          queryFocus(q.query),
-          {
-            title: d.title,
-            sourceName: d.display_name,
-            contentSnippet: c.text,
-          },
-          q.query,
-        )
-      )
-        continue;
+      const relevance = queryRelevance(plan, {
+        title: d.title,
+        sourceName: d.display_name,
+        contentSnippet: c.text,
+      });
+      if (!relevance.relevant) continue;
       const titleMatch = count(d.title),
         bodyMatch = c.text_basis === "title" ? 0 : count(c.text);
       const knowledgeEvidence =
@@ -270,12 +310,30 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         )
       )
         continue;
+      // Discovering opportunities favours notices over prize reports, but a
+      // recent publication never establishes an event/registration date.
+      const opportunity = q.purpose === "events" && participationQuery(q.query);
+      const ageDays = d.published_at
+        ? (Date.now() - Date.parse(d.published_at)) / 86400000
+        : NaN;
+      const opportunityBoost = opportunity
+        ? (/获奖|斩获|圆满|落下帷幕|成功举办|喜讯/.test(d.title)
+            ? -6
+            : /通知|报名|招募|规程|预告/.test(d.title)
+              ? 2
+              : 0) +
+          (Number.isFinite(ageDays) && ageDays >= 0
+            ? 3 * Math.exp(-ageDays / 90)
+            : 0)
+        : 0;
       const score =
+        relevance.score +
         titleMatch * 3 +
         bodyMatch +
         purposeBoost +
         (categoryMatch ? 2 : 0) -
-        c.score;
+        c.score +
+        opportunityBoost;
       let start = 0;
       if (c.text.length > 780) {
         const occurrences = terms
@@ -312,8 +370,12 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         rankingReasons: [
           `标题词组匹配 ${titleMatch}`,
           `片段词组匹配 ${bodyMatch}`,
+          "查询主题与限定复核：" + relevance.reason,
           ...(purposeBoost ? ["正文用途特征加权"] : []),
           ...(categoryMatch ? ["业务类别匹配"] : []),
+          ...(opportunity
+            ? ["参赛发现：通知与时新性优先，非报名开放证明"]
+            : []),
         ],
         classificationState: d.primary_destination,
         radarCategory: d.radar_category,

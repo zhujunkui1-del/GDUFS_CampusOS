@@ -2,7 +2,7 @@ import type { ContentSearchResult } from "@/domain/retrieval/skills";
 import type { ExternalSearchResult } from "@/domain/retrieval/external";
 import type { ExternalPolicy } from "../external-search/policy";
 import { chinaDay } from "./time-window";
-import { matchesQueryFocus } from "@/lib/retrieval/query-focus";
+import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
 /** Do not let a model turn a known publication day into an unverified event day. */
 export function publicationDateFallback(
   answer: string,
@@ -63,18 +63,19 @@ export function evidenceFallback(
   external: ExternalSearchResult | undefined,
   policy: ExternalPolicy,
 ) {
+  const plan = buildQueryPlan(policy.relevanceQuery || "");
   const usable = internal
     .flatMap((r) => r.hits)
     .filter(
       (h) =>
         h.bodyAvailable &&
-        matchesQueryFocus(policy.focus || null, h, policy.relevanceQuery) &&
+        queryRelevance(plan, h).relevant &&
         (!policy.officialOnly || h.official),
     );
   const outside = (external?.items || []).filter(
     (i) =>
       i.evidenceKind !== "title_only" &&
-      matchesQueryFocus(policy.focus || null, i, policy.relevanceQuery) &&
+      queryRelevance(plan, i).relevant &&
       (!policy.officialOnly ||
         (i.authority === "official" && i.canConfirmAdministrativeFacts)),
   );

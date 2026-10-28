@@ -3,6 +3,7 @@ import { externalPolicy } from "../external-search/policy";
 import { requestTimeWindow } from "./time-window";
 import { dialogueReply } from "./dialogue";
 import { campusFoodQuery, queryFocus } from "@/lib/retrieval/query-focus";
+import { buildQueryPlan } from "@/lib/retrieval/query-plan";
 export type ContentTool = "search_campus_knowledge" | "search_campus_events";
 /** Routing only; relevance, classification and dates still come from real tools. */
 export function contentIntent(
@@ -75,5 +76,6 @@ export function contentIntent(
     timeWindow,
     dialogueReply: reply,
     focus: queryFocus(query),
+    queryPlan: buildQueryPlan(query, timeWindow),
   };
 }

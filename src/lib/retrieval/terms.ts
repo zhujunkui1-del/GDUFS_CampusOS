@@ -1,4 +1,5 @@
-import { queryFocus } from "./query-focus";
+import { queryFocus, sportsQueryTerms } from "./query-focus";
+import { buildQueryPlan, entityTerms, type QueryPlan } from "./query-plan";
 // Encoded two-character Chinese terms avoid unicode61's whole-Han-run behavior.
 // This is keyword expansion, not paid embedding or a second classifier.
 const groups = [
@@ -33,6 +34,8 @@ export function keywords(query: string) {
   const expanded = groups
     .filter((g) => g.some((t) => query.includes(t)))
     .flat();
+  if (queryFocus(query) === "sports")
+    expanded.unshift(...sportsQueryTerms(query));
   return [...new Set([...phrases, ...expanded])]
     .filter((s) => s.length >= 2)
     .slice(0, 24);
@@ -57,6 +60,9 @@ export function lexicalTokens(text: string) {
   return tokens;
 }
 export function ftsExpression(query: string) {
+  const plan = buildQueryPlan(query);
+  if (plan.topics.length || plan.entities.length)
+    return planExpression(plan, false);
   // Require an actual topic rather than OR-ing every bigram of words such as
   // “申请条件”. The latter brings back most of the corpus for common syllables.
   const topics = [
@@ -80,11 +86,59 @@ export function ftsExpression(query: string) {
   if (queryFocus(query) === "club")
     anchored.push("社团", "漫协", "二次元", "动漫", "ACG");
   const phrases = [
-    ...new Set(anchored.length ? anchored : keywords(query)),
-  ].slice(0, 20);
+    ...new Set(
+      queryFocus(query) === "sports"
+        ? sportsQueryTerms(query)
+        : anchored.length
+          ? anchored
+          : keywords(query),
+    ),
+  ].slice(0, 24);
   const expressions = phrases
     .map((p) => [...new Set(lexicalTokens(p))].slice(0, 12))
     .filter((p) => p.length)
     .map((p) => "(" + p.map((t) => '"' + t + '"').join(" AND ") + ")");
   return expressions.length ? "(" + expressions.join(" OR ") + ")" : null;
+}
+function phraseExpression(phrases: string[]) {
+  return (
+    "(" +
+    phrases
+      .slice(0, 24)
+      .map((p) => [...new Set(lexicalTokens(p))].slice(0, 12))
+      .filter((p) => p.length)
+      .map((p) => "(" + p.map((t) => '"' + t + '"').join(" AND ") + ")")
+      .join(" OR ") +
+    ")"
+  );
+}
+function planExpression(plan: QueryPlan, literal: boolean) {
+  const topics = plan.topics.map((t) =>
+    phraseExpression(
+      literal && t.originalTerms.length ? t.originalTerms : t.alternatives,
+    ),
+  );
+  const entity = plan.entities.map((e) => phraseExpression(entityTerms(e)));
+  const parts = [
+    ...(topics.length
+      ? ["(" + topics.join(plan.topicMode === "any" ? " OR " : " AND ") + ")"]
+      : []),
+    ...entity,
+  ];
+  return parts.join(" AND ");
+}
+export function ftsRecallLanes(query: string) {
+  const plan = buildQueryPlan(query),
+    expanded = ftsExpression(query);
+  if (!expanded) return [];
+  if (!plan.topics.length && !plan.entities.length)
+    return [{ name: "lexical", expression: expanded, limit: 96 }];
+  return [
+    {
+      name: "title_subject",
+      expression: "title_terms : (" + planExpression(plan, true) + ")",
+      limit: 32,
+    },
+    { name: "expanded_subject", expression: expanded, limit: 64 },
+  ];
 }

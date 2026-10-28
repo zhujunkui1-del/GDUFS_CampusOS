@@ -63,6 +63,10 @@ import {
 } from "@/lib/assistant-output";
 import { contentReadPlan } from "./read-plan";
 import {
+  assessEvidence,
+  falseNegativeAnswer,
+} from "@/lib/retrieval/evidence-assessment";
+import {
   evidenceFallback,
   expressionConflicts,
   publicationDateFallback,
@@ -420,6 +424,11 @@ export async function chatResponse(request: Request) {
       {
         finalSystem: () => finalSystemInstructions(),
         validateFinal: (text) => {
+          if (
+            content.active &&
+            falseNegativeAnswer(text, content.query, contentResults)
+          )
+            return "本轮已检索到符合主题的公开文章，不能否定相关文章存在。列出实际项目和证据来源；活动日期、报名开放、参加资格分别说明，无法确认当前资格不等于没有相关资料。";
           if (content.active && asksForSearchPermission(text))
             return "用户已要求这次查询，应直接使用返回的证据回答，不再次问是否搜索。";
           const issues = expressionConflicts(
@@ -615,6 +624,11 @@ export async function chatResponse(request: Request) {
           modelFailureCode,
           evidenceGateUsed,
           publicationFallbackUsed,
+          evidenceAssessment: content.active
+            ? assessEvidence(content.query, contentResults, {
+                officialOnly: supplementPolicy.officialOnly,
+              })
+            : undefined,
           persona: personaContext(
             personaMessage,
             persona.preference,
@@ -951,6 +965,11 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                           official: h.official,
                         })),
                         metrics: undefined,
+                        evidenceAssessment: assessEvidence(
+                          content.query,
+                          [data],
+                          { officialOnly: supplementPolicy.officialOnly },
+                        ),
                       },
                     };
                   }

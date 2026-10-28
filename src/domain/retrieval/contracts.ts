@@ -31,6 +31,13 @@ export const RetrievalMetricsSchema = z.object({
   durationMs: z.number().nonnegative(),
   candidateChunks: z.number().int().nonnegative(),
   usageAvailable: z.boolean(),
+  queryPlanVersion: z.literal("query-v2").optional(),
+  recallLanes: z
+    .array(
+      z.object({ name: z.string(), limit: z.number(), candidates: z.number() }),
+    )
+    .max(2)
+    .optional(),
 });
 export const EvidenceHitSchema = z
   .object({

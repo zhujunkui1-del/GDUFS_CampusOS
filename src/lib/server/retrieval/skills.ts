@@ -20,6 +20,7 @@ import { SkillRegistry } from "../agent/skill-registry";
 import { ApiError } from "../errors";
 import type { TimeWindow } from "../assistant/time-window";
 import { universityScope } from "../assistant/grounding";
+import { completeSnippetTimes } from "@/lib/retrieval/snippet-time";
 
 const time = (t: ArticleTimePoint | null) =>
   t
@@ -145,11 +146,11 @@ export async function searchContent(
         event && (event.registrationState || event.after || event.before)
           ? Math.min(6, q.limit * 2)
           : q.limit,
-      ...(documentIds ? { documentIds } : {}),
     },
     PUBLIC_RETRIEVAL_SCOPE,
     undefined,
     signal,
+    documentIds,
   );
   const result: ContentSearchResult = {
     ...search.result,
@@ -165,7 +166,9 @@ export async function searchContent(
   result.metrics.queries += filterMetrics.queries;
   result.metrics.usageAvailable &&= filterMetrics.usageAvailable;
   const groups = new Set<string>();
-  for (const { hit, analysis } of search.articles) {
+  const uncertainDates = new Set<string>();
+  for (const { hit, analysis: storedAnalysis } of search.articles) {
+    const analysis = completeSnippetTimes(storedAnalysis, hit);
     // An absent/metadata body cannot establish policy conditions or activity facts.
     if (!analysis || !hit.bodyAvailable) continue;
     const k = analysis.knowledge;
@@ -185,7 +188,8 @@ export async function searchContent(
           event.timeRole === "event"
             ? [a.startsAt?.date]
             : a.registrationWindows.map((w) => w.end?.date);
-        if (
+        if (!days.some(Boolean)) uncertainDates.add(hit.documentId);
+        else if (
           !days.some(
             (day) =>
               day &&
@@ -246,9 +250,17 @@ export async function searchContent(
   }
   if (event && (event.registrationState || event.after || event.before)) {
     const ids = new Set(result.activities.map((a) => a.documentId));
-    result.hits = result.hits.filter((h) => ids.has(h.documentId));
+    result.hits = result.hits.filter(
+      (h) =>
+        ids.has(h.documentId) ||
+        (!event.registrationState && uncertainDates.has(h.documentId)),
+    );
     result.knowledge = result.knowledge.filter((k) => ids.has(k.documentId));
   }
+  if (uncertainDates.size)
+    result.warnings.push(
+      "部分相关原文尚无可靠的对应日期，作为待核对资料返回；不能声称符合所问日期范围或没有活动，需继续官方补查。",
+    );
   result.hits = result.hits.slice(0, q.limit);
   const returned = new Set(result.hits.map((h) => h.documentId));
   result.activities = result.activities.filter((a) =>

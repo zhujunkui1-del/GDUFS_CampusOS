@@ -1,7 +1,15 @@
-import type { ContentSearchResult } from "@/domain/retrieval/skills";
 import { requestTimeWindow } from "../assistant/time-window";
 import { dialogueReply } from "../assistant/dialogue";
-import { queryFocus, hasExperienceEvidence } from "@/lib/retrieval/query-focus";
+import {
+  assessEvidence,
+  type EvidenceInput,
+} from "@/lib/retrieval/evidence-assessment";
+import {
+  queryFocus,
+  hasExperienceEvidence,
+  participationQuery,
+  matchesQueryFocus,
+} from "@/lib/retrieval/query-focus";
 export type ExternalPolicy = {
   intent: "official" | "experience" | "mixed" | "events" | "general";
   active: boolean;
@@ -14,6 +22,7 @@ export type ExternalPolicy = {
   onlyXhs?: boolean;
   focus?: ReturnType<typeof queryFocus>;
   relevanceQuery?: string;
+  needsParticipation?: boolean;
 };
 export function externalPolicy(query: string): ExternalPolicy {
   const focus = queryFocus(query);
@@ -33,6 +42,7 @@ export function externalPolicy(query: string): ExternalPolicy {
     );
   const official =
     needsOfficialVerification ||
+    (focus === "sports" && /比赛|赛事|运动会|报名|赛程|参赛/.test(query)) ||
     /规章|制度|政策|管理办法|借阅|借书|续借|办理|流程|指南|手续|申请条件|评定条件|资格|选课|学校规定|截止|奖学金/.test(
       query,
     );
@@ -86,6 +96,7 @@ export function externalPolicy(query: string): ExternalPolicy {
     needsDeadline: /截止|截至|最后.{0,4}(?:时间|日期)|还能报名/.test(query),
     explicit: /小红书|联网|上网|外部搜索|网上搜|互联网/.test(query),
     needsOfficialVerification,
+    needsParticipation: participationQuery(query),
     onlyXhs:
       /只(?:看|用|查|搜).*小红书|仅(?:看|用|查|搜).*小红书/.test(query) &&
       intent !== "official",
@@ -94,23 +105,43 @@ export function externalPolicy(query: string): ExternalPolicy {
 /** A source class selects providers; a retrieval miss never selects Xiaohongshu. */
 export function supplementRequired(
   policy: ExternalPolicy,
-  results: {
-    hits: Pick<
-      ContentSearchResult["hits"][number],
-      "bodyAvailable" | "contentSnippet"
-    >[];
-    activities: ContentSearchResult["activities"];
-  }[],
+  results: EvidenceInput[],
 ) {
   if (!policy.active) return false;
   // Archive matches cannot establish a current appointment, complete roster or campus assignment.
   if (policy.needsOfficialVerification) return true;
-  const bodies = results.flatMap((r) => r.hits).filter((h) => h.bodyAvailable);
+  const assessment = assessEvidence(policy.relevanceQuery || "", results, {
+    officialOnly: policy.officialOnly,
+  });
+  if (assessment.needsSupplement) return true;
+  const bodies = results
+    .flatMap((r) => r.hits)
+    .filter(
+      (h) =>
+        h.bodyAvailable &&
+        matchesQueryFocus(policy.focus || null, h, policy.relevanceQuery),
+    );
   if (!bodies.length || policy.explicit) return true;
   if (policy.intent === "experience" || policy.intent === "mixed")
     return !bodies.some((h) =>
       hasExperienceEvidence(policy.focus || null, h, policy.relevanceQuery),
     );
+  if (policy.needsParticipation) {
+    const now = Date.now();
+    const relevant = new Set(bodies.map((h) => h.documentId));
+    return !results
+      .flatMap((r) => r.activities)
+      .some(
+        (a) =>
+          relevant.has(a.documentId) &&
+          !a.historical &&
+          !["cancelled", "postponed", "ended"].includes(a.eventStatus) &&
+          (a.registrationState === "open" ||
+            (a.registrationState === "not_required" &&
+              !!a.startsAt?.date &&
+              Date.parse(a.startsAt.date + "T00:00:00+08:00") > now)),
+      );
+  }
   if (policy.needsDeadline)
     return !results
       .flatMap((r) => r.activities)
@@ -124,7 +155,9 @@ export function supplementRequired(
           !["cancelled", "postponed", "ended"].includes(a.eventStatus),
       ),
     );
-  return false;
+  return assessEvidence(policy.relevanceQuery || "", results, {
+    officialOnly: policy.officialOnly,
+  }).needsSupplement;
 }
 export function isOfficialCampusUrl(raw: string) {
   try {

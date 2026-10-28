@@ -1,4 +1,36 @@
-export type QueryFocus = "food" | "housing" | "club" | null;
+export type QueryFocus = "food" | "housing" | "club" | "sports" | null;
+// Specific subjects constrain generic intents such as “比赛”; they are not
+// interchangeable with academic competitions. Existing FTS bigrams suffice.
+const sportsSubjects = [
+  "篮球",
+  "足球",
+  "羽毛球",
+  "乒乓球",
+  "排球",
+  "网球",
+  "定向越野",
+  "定向运动",
+  "田径",
+  "跑步",
+  "游泳",
+  "武术",
+  "健美操",
+  "啦啦操",
+  "体育舞蹈",
+  "飞镖",
+  "围棋",
+  "象棋",
+];
+export function sportsQueryTerms(query: string) {
+  const explicit = sportsSubjects.filter((t) => query.includes(t));
+  return explicit.length ? explicit : ["体育", "运动会", ...sportsSubjects];
+}
+export function participationQuery(query: string) {
+  return (
+    /参加|参与|参赛|报名|可报|能报|可参加|能参加/.test(query) &&
+    /比赛|竞赛|赛事|活动|运动会|讲座|招聘|奖助|申请/.test(query)
+  );
+}
 type Evidence = {
   title?: string;
   sourceName?: string;
@@ -16,6 +48,11 @@ export function queryFocus(query: string): QueryFocus {
     return "food";
   if (/社团|漫协|动漫协会|二次元|ACG|cosplay/i.test(query)) return "club";
   if (/宿舍|住宿|入住|居住|隔音|寝室/.test(query)) return "housing";
+  if (
+    /体育|运动会/.test(query) ||
+    sportsSubjects.some((t) => query.includes(t))
+  )
+    return "sports";
   return null;
 }
 /** Article purpose matters: an overseas canteen or a book title is not campus food evidence. */
@@ -27,6 +64,11 @@ export function matchesQueryFocus(
   if (!focus) return true;
   const title = evidence.title || "";
   const body = evidence.contentSnippet ?? evidence.snippet ?? "";
+  if (focus === "sports") {
+    // Source names/footers alone (“学院体育部”) do not establish article purpose.
+    const terms = sportsQueryTerms(query);
+    return terms.some((t) => (title + " " + body).includes(t));
+  }
   if (/广外|广东外语外贸大学/.test(query)) {
     if (
       /LSE|伦敦|留学|中山大学|华南理工|广州大学(?!城)/i.test(title) &&
