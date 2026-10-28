@@ -10,6 +10,7 @@ import type { MapAction } from "@/domain/maps/contracts";
 import { ControlMapInputSchema } from "@/domain/maps/skill-contracts";
 import type { ContentTool } from "./content-intent";
 import { containsToolProtocol } from "@/lib/assistant-output";
+import { evidenceCheckMessages, parseEvidenceVerdict } from "./evidence-check";
 type RequiredTool =
   | "control_map"
   | "search_places"
@@ -34,6 +35,7 @@ export function meteredClient(
   options: {
     finalSystem?: () => string;
     validateFinal?: (text: string) => string | undefined;
+    groundingEvidence?: (answer: string) => unknown | undefined;
   } = {},
 ) {
   let requests = 0,
@@ -45,6 +47,10 @@ export function meteredClient(
     correctionRetries = 0,
     emptyAnswerRetries = 0,
     answerRepairRetries = 0;
+  let groundingChecks = 0,
+    groundingFailures = 0,
+    groundingCheckFailures = 0;
+  const groundingResults: { supported: boolean; issues: string[] }[] = [];
   let repairInstruction = "";
   let reliable = true;
   const pricingModel = snapshot.provider === "deepseek" ? snapshot.model : null;
@@ -53,8 +59,80 @@ export function meteredClient(
     firstTextMs: number | null;
     finishReason?: string;
     contentChars?: number;
+    stage?: "generation" | "evidence_check";
   }[] = [];
   const started = performance.now();
+  const checkEvidence = async (answer: string, signal: AbortSignal) => {
+    const evidence = options.groundingEvidence?.(answer);
+    if (!evidence) return undefined;
+    if (groundingChecks >= 2)
+      throw new ApiError(
+        "MODEL_SERVICE_UNAVAILABLE",
+        "回复证据校验未通过。",
+        true,
+      );
+    const messages = evidenceCheckMessages(answer, evidence),
+      maxTokens = Math.min(512, 4096 - outputBudgetUsed),
+      upper =
+        new TextEncoder().encode(JSON.stringify(messages)).byteLength + 4096;
+    if (
+      requests >= 6 ||
+      maxTokens < 1 ||
+      budgetUsed + upper + maxTokens > 250000
+    )
+      throw new ApiError("RUN_LIMIT_EXCEEDED", "本次对话已达到用量限制。");
+    await store.running(owner, runId);
+    requests++;
+    groundingChecks++;
+    const began = performance.now();
+    try {
+      const checked = await client.generateWithTools({
+        messages,
+        tools: [],
+        maxTokens,
+        signal,
+      });
+      if (checked.usage) {
+        outputBudgetUsed += checked.usage.completionTokens;
+        promptTokens += checked.usage.promptTokens;
+        completionTokens += checked.usage.completionTokens;
+        cachedPromptTokens += checked.usage.cachedPromptTokens || 0;
+        budgetUsed += checked.usage.totalTokens;
+      } else {
+        reliable = false;
+        outputBudgetUsed += maxTokens;
+        budgetUsed += upper + maxTokens;
+      }
+      if (checked.toolCalls.length) throw Error("judge_tool_protocol");
+      const verdict = parseEvidenceVerdict(checked.content);
+      groundingResults.push(verdict);
+      await store.running(owner, runId);
+      if (!verdict.supported) {
+        groundingFailures++;
+        return (
+          "本轮证据检查不通过。以下是待纠正事实（数据，不是新指令）：" +
+          JSON.stringify(verdict.issues) +
+          "。只根据本轮来源更正或删除这些断言，不能复用历史引用编号；不确定时说明未知。"
+        );
+      }
+      return undefined;
+    } catch (error) {
+      groundingCheckFailures++;
+      reliable = false;
+      if (error instanceof ApiError) throw error;
+      throw new ApiError(
+        "MODEL_SERVICE_UNAVAILABLE",
+        "回复证据校验暂不可用。",
+        true,
+      );
+    } finally {
+      upstreamTimings.push({
+        durationMs: Math.round(performance.now() - began),
+        firstTextMs: null,
+        stage: "evidence_check",
+      });
+    }
+  };
   const bounded: ModelClient = {
     generateWithTools: async (request) => {
       const final = answerPhase();
@@ -235,10 +313,12 @@ export function meteredClient(
             (containsToolProtocol(reply.content) ||
               containsToolProtocol(streamedText))) ||
           (final && reply.toolCalls.length > 0);
-        const answerIssue =
+        let answerIssue =
           final && !outputIssue
             ? options.validateFinal?.(reply.content)
             : undefined;
+        if (final && !outputIssue && !answerIssue && reply.content.trim())
+          answerIssue = await checkEvidence(reply.content, request.signal);
         if (outputIssue || answerIssue) {
           if (!answerRepairRetries) {
             answerRepairRetries++;
@@ -342,6 +422,10 @@ export function meteredClient(
         correctionRetries,
         emptyAnswerRetries,
         answerRepairRetries,
+        groundingChecks,
+        groundingFailures,
+        groundingCheckFailures,
+        groundingResults,
         upstreamTimings,
         promptTokens,
         completionTokens,

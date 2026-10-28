@@ -425,6 +425,53 @@ export async function chatResponse(request: Request) {
       () => personaPrompt(personaMessage, persona.preference, history.messages),
       {
         finalSystem: () => finalSystemInstructions(),
+        groundingEvidence: (answer) => {
+          if (!content.active || content.map || !answerCards().length)
+            return undefined;
+          const citations = new Set(
+            [...answer.matchAll(/[\[【]来源\s*(\d+)[\]】]/g)].map((m) => +m[1]),
+          );
+          return {
+            question: content.query,
+            now: new Date().toISOString(),
+            timezone: "Asia/Shanghai",
+            sources: answerCards()
+              .flatMap((c, index) => {
+                if (
+                  (c.kind !== "source" && c.kind !== "external_source") ||
+                  (citations.size && !citations.has(index + 1))
+                )
+                  return [];
+                return [
+                  {
+                    citation: index + 1,
+                    title: c.title,
+                    publishedAt: c.publishedAt,
+                    evidenceType:
+                      c.kind === "source" ? c.evidenceType : c.evidenceKind,
+                    authority:
+                      c.kind === "source"
+                        ? evidence.get(c.documentId)?.official
+                          ? "official"
+                          : "unconfirmed"
+                        : c.authority,
+                    excerpt: c.snippet.slice(0, 1200),
+                  },
+                ];
+              })
+              .slice(0, 12),
+            activities: contentResults
+              .flatMap((r) => r.activities)
+              .map((a) => ({
+                documentId: a.documentId,
+                name: a.name,
+                startsAt: a.startsAt,
+                endsAt: a.endsAt,
+                registrationState: a.registrationState,
+                eventStatus: a.eventStatus,
+              })),
+          };
+        },
         validateFinal: (text) => {
           if (
             content.active &&
