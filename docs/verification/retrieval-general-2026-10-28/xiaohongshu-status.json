@@ -1,0 +1,27 @@
+{
+  "status": {
+    "checkedAt": "2026-10-28T14:36:53.731Z",
+    "http": 200,
+    "state": "logged_in",
+    "qrPresent": false,
+    "operation": "status_only_no_login_or_search"
+  },
+  "probe": {
+    "checkedAt": "2026-10-28T14:38:23.676Z",
+    "http": 200,
+    "status": "verification_required",
+    "authenticated": true,
+    "searchVerified": false,
+    "bodyVerified": false,
+    "error": {
+      "type": "NeedVerifyError"
+    },
+    "requestCounts": {
+      "authentication": 1,
+      "search": 1,
+      "noteDetail": 0
+    },
+    "itemsCount": 0
+  },
+  "conclusion": "Authenticated identity is not search availability. Source requested verification; no retries, login changes or verification bypass performed."
+}

@@ -1,0 +1,118 @@
+[
+  {
+    "prompt": "广外有什么体育比赛可以参加吗",
+    "answerExcerpt": "抱歉，本次检索没有找到广外当前可参加的体育比赛相关信息哦～🐟 你可以留意学校体育教学部、校团委官网或者各院系体育部的通知，通常校运会、篮球赛、足球赛、羽毛球赛这些常规赛事会在学期初或开学后陆续发布报名通知。要是想找特定项目的比赛，直接搜对应关键词应该更快～",
+    "answerHash": "5f2b2acbb808f403ab077fca236e1c2f91b2e218d2d63135559eb921f6f00913",
+    "tools": [
+      {
+        "name": "search_campus_events",
+        "origin": "server_plan"
+      }
+    ],
+    "cards": [
+      {
+        "documentId": "wx-a5efbd1c6a392c00a674e8d8f48d32ee6d729820",
+        "title": "喜讯！我校2026年第二届“启创杯”AI+信息素养大赛暨2026年大学生“AI+信息素养”大赛广东赛区比赛校内选拔赛获奖",
+        "sourceName": "悦读广外",
+        "originalUrl": "https://mp.weixin.qq.com/s/6SGy-SZWindWNK5INaYfBQ",
+        "publishedAt": "2026-10-17T04:12:00.000Z",
+        "evidenceType": "full_text",
+        "excerptHash": "cc7f9789c090a046842e8392240f88c571a246481fcb88df3fafafb72b84086b",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-b7f3826a-2a60-42f9-a85f-8ac9a127741a",
+        "title": "我院学子在全国大学生信息安全竞赛（创新实践能力赛）暨“长城杯”网数智安全大赛（防护赛）半决赛斩获佳绩-信息科学与技术学院、网络空间安全学院",
+        "sourceName": "信息科学与技术学院（网络空间安全学院）",
+        "originalUrl": "https://sist.gdufs.edu.cn/info/1191/11392.htm",
+        "publishedAt": "2026-03-24",
+        "evidenceType": "full_text",
+        "excerptHash": "25a43f153b004530de9503a4292c20957985f12ebd510197e7b9c51d9804bcaf",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-0f50d9d3e1fdc27ffc23258d0d468b308a7d143c",
+        "title": "高含金量·全球赛｜2026CFA投资分析大赛现正拉开帷幕！",
+        "sourceName": "GW情报鹅",
+        "originalUrl": "https://mp.weixin.qq.com/s/v55QZGOTGsW4JmFTcfa4Vg",
+        "publishedAt": "2026-09-29T09:29:42.000Z",
+        "evidenceType": "full_text",
+        "excerptHash": "333e53fa9ade24878250d87a41c399cc4b53ecc4837eb1d247de2bc84d51c248",
+        "excerptStoredLocally": true
+      }
+    ],
+    "metrics": {
+      "answerMode": "model",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "upstreamTimings": [
+        {
+          "durationMs": 5353,
+          "firstTextMs": 4903,
+          "finishReason": "stop",
+          "contentChars": 129
+        }
+      ],
+      "promptTokens": 3123,
+      "completionTokens": 574,
+      "cachedPromptTokens": 0,
+      "totalTokens": 3697,
+      "usageComplete": true,
+      "chargedTokens": 3697,
+      "durationMs": 5512,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 248,
+        "serverElapsedMs": 5760,
+        "firstTextMs": 5746,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_events",
+            "durationMs": 123,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 11,
+          "writeQueries": 20,
+          "calls": 17,
+          "failures": 0,
+          "durationMs": 407,
+          "maxCallMs": 63,
+          "rowsRead": 1934,
+          "rowsWritten": 18,
+          "rowUsageStatements": 23,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_events",
+            "rowsRead": 992,
+            "rowsWritten": 0,
+            "queries": 2,
+            "durationMs": 123,
+            "candidateChunks": 96,
+            "usageAvailable": true
+          }
+        ],
+        "externalSearch": []
+      }
+    }
+  }
+]

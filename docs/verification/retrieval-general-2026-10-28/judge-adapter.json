@@ -1,0 +1,25 @@
+{
+  "shape": {
+    "http": 200,
+    "finish": "length",
+    "contentPresent": true,
+    "contentType": "string",
+    "contentLength": 0,
+    "usage": {
+      "cached_tokens": 448,
+      "prompt_tokens": 680,
+      "completion_tokens": 1024,
+      "total_tokens": 1704,
+      "prompt_tokens_details": {
+        "cached_tokens": 448
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    }
+  },
+  "verdict": {
+    "status": "adapter_failed",
+    "code": "MODEL_SERVICE_UNAVAILABLE"
+  }
+}

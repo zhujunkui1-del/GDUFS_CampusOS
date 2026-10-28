@@ -1,0 +1,23 @@
+{
+  "before": {
+    "queries": 20,
+    "rowsRead": 15889,
+    "rowsWritten": 0,
+    "meanRetrievalMs": 106.25,
+    "p50RetrievalMs": 86,
+    "p95RetrievalMs": 215,
+    "maxRowsRead": 1036,
+    "usageAvailable": true
+  },
+  "after": {
+    "queries": 20,
+    "rowsRead": 13445,
+    "rowsWritten": 0,
+    "meanRetrievalMs": 88,
+    "p50RetrievalMs": 88,
+    "p95RetrievalMs": 128,
+    "maxRowsRead": 1034,
+    "usageAvailable": true
+  },
+  "note": "Same 20 natural-language questions, sequential live reads. Live articles/collectors were not frozen. This measures retrieval latency, not entire chat, and is not a controlled load test."
+}

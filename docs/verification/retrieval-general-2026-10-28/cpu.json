@@ -1,0 +1,26 @@
+{
+  "since": "2026-10-28T15:34:23.761Z",
+  "source": "wrangler tail cpuTime/wallTime; no headers retained",
+  "summary": {
+    "/api/content/search": {
+      "count": 10,
+      "meanCpuMs": 25.7,
+      "maxCpuMs": 56,
+      "meanWallMs": 117.6,
+      "outcomes": ["ok"],
+      "versions": ["412a5700-5f31-4129-b0cf-d35c0663f032"]
+    },
+    "/api/agent/chat": {
+      "count": 9,
+      "meanCpuMs": 116.88888888888889,
+      "maxCpuMs": 231,
+      "meanWallMs": 17163.88888888889,
+      "outcomes": ["ok"],
+      "versions": [
+        "412a5700-5f31-4129-b0cf-d35c0663f032",
+        "82934281-fb80-43ec-b4b9-72a904b1109e",
+        "d8e61583-a80f-4a30-a987-f014dba508bb"
+      ]
+    }
+  }
+}

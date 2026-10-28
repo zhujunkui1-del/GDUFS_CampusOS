@@ -1,0 +1,370 @@
+[
+  {
+    "prompt": "广外有什么体育比赛可以参加吗",
+    "answerExcerpt": "[原文事实摘录；完整受控记录保留本机]",
+    "answerHash": "4ade04a323ad8e6bb290d2af84820adbf63468cbc3dcc554f711d08ead73c14d",
+    "tools": ["search_campus_events", "search_external_campus_info"],
+    "cards": [
+      {
+        "documentId": "content-43580ed2-a8e4-4b27-9601-8008d6b4ea36",
+        "title": "关于举办2026年“广外杯”体育舞蹈公开赛的通知-广东外语外贸大学体育部",
+        "sourceName": "体育部",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2788.htm",
+        "publishedAt": "2026-05-28",
+        "evidenceType": "full_text",
+        "excerptHash": "3e8e4fbfe7452f087d49f23b923fc4848ccbbe46133e749aa3b496c17590f34a",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-b7f1f089-c98d-4c10-a941-0c9ebd276bd5",
+        "title": "关于举办2026年广东外语外贸大学“广外杯”乒乓球比赛的通知-广东外语外贸大学体育部",
+        "sourceName": "体育部",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2778.htm",
+        "publishedAt": "2026-05-30",
+        "evidenceType": "full_text",
+        "excerptHash": "01db5bf396f603e8c352f69db0808b97f01b6b43e68634f846f8370714b92ce0",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-81176c67-72cc-4457-a5a7-57332e258b08",
+        "title": "2026年第十九届“广外杯”网球赛竞赛通知-广东外语外贸大学体育部",
+        "sourceName": "体育部",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2668.htm",
+        "publishedAt": "2026-04-11",
+        "evidenceType": "full_text",
+        "excerptHash": "f30946b96a7178e92ec69cdf5ad9ce18572e04e271ee9f6eef8f7b55a281f9a0",
+        "excerptStoredLocally": true
+      },
+      {
+        "title": "关于举办2026年广东外语外贸大学“新生杯”羽毛球比赛的通知",
+        "sourceName": "广外官方网页",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2918.htm",
+        "publishedAt": "2026-10-10T00:00:00.000Z",
+        "evidenceKind": "page_excerpt",
+        "excerptHash": "a326fbaddaaf6581bb1cb85c9f14347c0c322ec1739cddd06417f6433a91fcd2",
+        "excerptStoredLocally": true
+      },
+      {
+        "title": "关于举办广东外语外贸大学 2026年“广外杯”篮球比赛的通知-广东外语外贸大学体育部",
+        "sourceName": "广外官方网页",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2698.htm",
+        "publishedAt": "2026-03-18T00:00:00.000Z",
+        "evidenceKind": "page_excerpt",
+        "excerptHash": "f3be8fcad68fc9fa6a07cefddbdbf4f25940395fd4a4e4d41eb2f34627792a89",
+        "excerptStoredLocally": true
+      },
+      {
+        "title": "关于举办2026年广东外语外贸大学运动会的通知-广东外语外贸大学体育部",
+        "sourceName": "广外官方网页",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2948.htm",
+        "publishedAt": "2026-10-16T00:00:00.000Z",
+        "evidenceKind": "search_excerpt",
+        "excerptHash": "8bd7296f0ad46fabf9077e00f019014623ba5cc8bbdfc3e334f3e9f696a06685",
+        "excerptStoredLocally": true
+      }
+    ],
+    "completeMs": 23806,
+    "metrics": {
+      "answerMode": "evidence_excerpt",
+      "modelFailureCode": "MODEL_TIMEOUT",
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "related_but_incomplete",
+        "relatedDocuments": [
+          "content-43580ed2-a8e4-4b27-9601-8008d6b4ea36",
+          "content-b7f1f089-c98d-4c10-a941-0c9ebd276bd5",
+          "content-81176c67-72cc-4457-a5a7-57332e258b08"
+        ],
+        "missing": [
+          "current_event_evidence",
+          "participation_or_registration_evidence"
+        ],
+        "activities": [
+          {
+            "documentId": "content-43580ed2-a8e4-4b27-9601-8008d6b4ea36",
+            "existence": "documented",
+            "eventState": "started_end_unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-b7f1f089-c98d-4c10-a941-0c9ebd276bd5",
+            "existence": "documented",
+            "eventState": "ended",
+            "registrationState": "closed",
+            "participation": "closed"
+          },
+          {
+            "documentId": "content-81176c67-72cc-4457-a5a7-57332e258b08",
+            "existence": "documented",
+            "eventState": "started_end_unknown",
+            "registrationState": "closed",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": true,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 15000,
+          "firstTextMs": null
+        }
+      ],
+      "promptTokens": 0,
+      "completionTokens": 0,
+      "cachedPromptTokens": 0,
+      "totalTokens": 0,
+      "usageComplete": false,
+      "chargedTokens": 250000,
+      "durationMs": 20619,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 2009,
+        "serverElapsedMs": 22628,
+        "firstTextMs": null,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_events",
+            "durationMs": 928,
+            "ok": true
+          },
+          {
+            "name": "search_external_campus_info",
+            "durationMs": 4499,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 11,
+          "writeQueries": 12,
+          "calls": 15,
+          "failures": 0,
+          "durationMs": 3129,
+          "maxCallMs": 469,
+          "rowsRead": 1736,
+          "rowsWritten": 15,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_events",
+            "rowsRead": 946,
+            "rowsWritten": 0,
+            "queries": 3,
+            "durationMs": 928,
+            "candidateChunks": 73,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 9
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              }
+            ]
+          }
+        ],
+        "externalSearch": [
+          {
+            "status": "ok",
+            "durationMs": 4499,
+            "providers": [
+              {
+                "provider": "exa_web_cloud",
+                "status": "ok",
+                "durationMs": 3045,
+                "count": 3
+              }
+            ],
+            "rowsRead": 0,
+            "rowsWritten": 0
+          }
+        ]
+      }
+    }
+  },
+  {
+    "prompt": "用小红书查广外一饭有什么好吃的",
+    "answerExcerpt": "[原文事实摘录；完整受控记录保留本机]",
+    "answerHash": "fa861bbcc27bd88247e6b9093e00b20af2741c97053a7577a2e00ecf96692391",
+    "tools": ["search_campus_knowledge", "search_external_campus_info"],
+    "cards": [
+      {
+        "documentId": "wx-425b0f0fd06c25b2e683e368d1200092652156cb",
+        "title": "信息i生活 |代码跑通前，先去食堂跑个“图”(文末附有树洞!!)",
+        "sourceName": "广外信息青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/arQdVXeT-FePfytz60vx4w",
+        "publishedAt": "2026-10-27T09:30:00.000Z",
+        "evidenceType": "full_text",
+        "excerptHash": "070cf2cfc6e1fb9be04f8d4db6a75c310137285627681ba1d1e8edf1d047ced4",
+        "excerptStoredLocally": true
+      },
+      {
+        "title": "#萌新听我说#广东外语外贸大学-百度经验",
+        "sourceName": "jingyan.baidu.com",
+        "originalUrl": "https://jingyan.baidu.com/article/335530da5dff5658ca41c324.html",
+        "publishedAt": "2020-08-16T00:00:00.000Z",
+        "evidenceKind": "search_excerpt",
+        "excerptHash": "d129d557b853866252da2cc3c3621785f31d6f0927388ebf726b8d66687a9cdf",
+        "excerptStoredLocally": true
+      }
+    ],
+    "completeMs": 23361,
+    "metrics": {
+      "answerMode": "evidence_excerpt",
+      "modelFailureCode": "MODEL_TIMEOUT",
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": ["wx-425b0f0fd06c25b2e683e368d1200092652156cb"],
+        "missing": [],
+        "activities": [],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 15000,
+          "firstTextMs": null
+        }
+      ],
+      "promptTokens": 0,
+      "completionTokens": 0,
+      "cachedPromptTokens": 0,
+      "totalTokens": 0,
+      "usageComplete": false,
+      "chargedTokens": 250000,
+      "durationMs": 20424,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1804,
+        "serverElapsedMs": 22228,
+        "firstTextMs": null,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 753,
+            "ok": true
+          },
+          {
+            "name": "search_external_campus_info",
+            "durationMs": 4490,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 11,
+          "writeQueries": 11,
+          "calls": 14,
+          "failures": 0,
+          "durationMs": 2738,
+          "maxCallMs": 348,
+          "rowsRead": 1064,
+          "rowsWritten": 11,
+          "rowUsageStatements": 15,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 429,
+            "rowsWritten": 0,
+            "queries": 3,
+            "durationMs": 753,
+            "candidateChunks": 30,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 30
+              }
+            ]
+          }
+        ],
+        "externalSearch": [
+          {
+            "status": "partial",
+            "durationMs": 4490,
+            "providers": [
+              {
+                "provider": "xiaohongshu_redbook_cloud",
+                "status": "unavailable",
+                "durationMs": 2192,
+                "count": 0,
+                "cacheHit": false
+              },
+              {
+                "provider": "exa_web_cloud",
+                "status": "ok",
+                "durationMs": 1545,
+                "count": 2
+              },
+              {
+                "provider": "exa_web_cloud",
+                "status": "empty",
+                "durationMs": 1484,
+                "count": 0
+              }
+            ],
+            "rowsRead": 0,
+            "rowsWritten": 0
+          }
+        ]
+      }
+    }
+  }
+]

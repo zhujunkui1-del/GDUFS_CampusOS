@@ -1,0 +1,249 @@
+{
+  "kind": "real_primary_model_on_isolated_labelled_pairs",
+  "model": "step-3.5-flash-2603",
+  "fixtures": [
+    {
+      "name": "cross-turn-citation",
+      "expected": false,
+      "evidenceHash": "dace950a05a2df27972f7d210272e0140b24c1f6a4e1ce3a8462dfbdda853ae9",
+      "answerHash": "6ab86829a09645ca1f44ab841d0219f8e48fe71dab6cd015034b9d174638faf7"
+    },
+    {
+      "name": "supported-date",
+      "expected": true,
+      "evidenceHash": "dace950a05a2df27972f7d210272e0140b24c1f6a4e1ce3a8462dfbdda853ae9",
+      "answerHash": "e7b48984137e159f1233602af6f9ceb6599cebc046bee1ea0d523aab3e274fa8"
+    },
+    {
+      "name": "cutoff-not-start",
+      "expected": false,
+      "evidenceHash": "7f74138c49b25944dba8130af45f500cc07c85ee451ee8378dd1b505469f2f03",
+      "answerHash": "c20b3abec72b219a038b4a397eff7f6d7fb6e27838128321166fe9b599334324"
+    },
+    {
+      "name": "floor-mismatch",
+      "expected": false,
+      "evidenceHash": "3637a0a388b9bb860505357e8a20c9c1082ca4da6a93ae8f55a23a770c6764d6",
+      "answerHash": "dd0d06b7d7183b79c8bf70b7036db341655d2e276f41154ba7aad7f4a7d5b74c"
+    },
+    {
+      "name": "floor-conflict",
+      "expected": false,
+      "evidenceHash": "aab3ed95741129074917eb0537f84c990a4eeabd824c1de4150f8d0e0d979d08",
+      "answerHash": "0769ba4106a32332f1d987f8728de00e7b8ae0f116aef0535efa3a2628db8560"
+    },
+    {
+      "name": "acknowledge-conflict",
+      "expected": true,
+      "evidenceHash": "aab3ed95741129074917eb0537f84c990a4eeabd824c1de4150f8d0e0d979d08",
+      "answerHash": "37ee7268de5129c47710872a592b0f44246fc920e8af6bb46c0d24a791237dbe"
+    },
+    {
+      "name": "one-author-not-consensus",
+      "expected": false,
+      "evidenceHash": "9eb56dde2feb5a73e47fbc202b9b5a554a379ee90bb2a374b7d086150cd962a1",
+      "answerHash": "7218bc18778edb0fd88a87c35b6703a3cae9e7af3e4ac231c221e6c030288fb7"
+    },
+    {
+      "name": "attributed-guide",
+      "expected": true,
+      "evidenceHash": "ac43e9b677eff7b5a5bcd3d3c6c8d6e23ebfa7ff0f5936e571c3f85321bfe177",
+      "answerHash": "1b956a80f711f6ba4d6b130ee7f2374eed293ec87922ea3a23137da27ac22d15"
+    }
+  ],
+  "results": [
+    {
+      "name": "cross-turn-citation",
+      "expected": false,
+      "verdict": {
+        "supported": false,
+        "issues": [
+          "来源5未提及校运动会11月20日于真草场举办的信息",
+          "来源5仅涉及新生杯羽毛球赛，未涉及校运动会相关内容",
+          "答复未回应羽毛球能否报名的问题，与引用内容不匹配"
+        ]
+      },
+      "pass": true,
+      "usage": {
+        "cached_tokens": 64,
+        "prompt_tokens": 625,
+        "completion_tokens": 607,
+        "total_tokens": 1232,
+        "prompt_tokens_details": {
+          "cached_tokens": 64
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "durationMs": 6756
+    },
+    {
+      "name": "supported-date",
+      "expected": true,
+      "verdict": {
+        "supported": true,
+        "issues": []
+      },
+      "pass": true,
+      "usage": {
+        "cached_tokens": 512,
+        "prompt_tokens": 632,
+        "completion_tokens": 497,
+        "total_tokens": 1129,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "durationMs": 4863
+    },
+    {
+      "name": "cutoff-not-start",
+      "expected": false,
+      "verdict": {
+        "supported": false,
+        "issues": [
+          "来源仅说明报名截止时间，未提及报名开放状态，答复称“已明确开放”无依据。",
+          "来源未载明报名开始时间，无法确认当前是否处于可报名时段，答复结论无支撑。"
+        ]
+      },
+      "pass": true,
+      "usage": {
+        "cached_tokens": 448,
+        "prompt_tokens": 616,
+        "completion_tokens": 531,
+        "total_tokens": 1147,
+        "prompt_tokens_details": {
+          "cached_tokens": 448
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "durationMs": 6098
+    },
+    {
+      "name": "floor-mismatch",
+      "expected": false,
+      "verdict": {
+        "supported": false,
+        "issues": [
+          "候选答复将'一楼、三楼'误述为'四楼'，与原文不符",
+          "未提及三楼位置，楼层信息不完整"
+        ]
+      },
+      "pass": true,
+      "usage": {
+        "cached_tokens": 448,
+        "prompt_tokens": 619,
+        "completion_tokens": 179,
+        "total_tokens": 798,
+        "prompt_tokens_details": {
+          "cached_tokens": 448
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "durationMs": 3382
+    },
+    {
+      "name": "floor-conflict",
+      "expected": false,
+      "verdict": {
+        "supported": false,
+        "issues": [
+          "候选答复称两份资料都支持四楼，但来源1实际记载三楼",
+          "来源1与来源2在三楼/四楼层问题上存在冲突，答复未予区分"
+        ]
+      },
+      "pass": true,
+      "usage": {
+        "cached_tokens": 448,
+        "prompt_tokens": 664,
+        "completion_tokens": 356,
+        "total_tokens": 1020,
+        "prompt_tokens_details": {
+          "cached_tokens": 448
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "durationMs": 3381
+    },
+    {
+      "name": "acknowledge-conflict",
+      "expected": true,
+      "verdict": {
+        "supported": true,
+        "issues": []
+      },
+      "pass": true,
+      "usage": {
+        "cached_tokens": 512,
+        "prompt_tokens": 676,
+        "completion_tokens": 360,
+        "total_tokens": 1036,
+        "prompt_tokens_details": {
+          "cached_tokens": 512
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "durationMs": 3711
+    },
+    {
+      "name": "one-author-not-consensus",
+      "expected": false,
+      "verdict": {
+        "supported": false,
+        "issues": [
+          "将个别学生体验升级为'全体学生公认'，原文仅表示个人最爱",
+          "'一饭的自选咕噜肉'被泛化为'一饭咕噜肉'，表述不精确"
+        ]
+      },
+      "pass": true,
+      "usage": {
+        "cached_tokens": 448,
+        "prompt_tokens": 617,
+        "completion_tokens": 213,
+        "total_tokens": 830,
+        "prompt_tokens_details": {
+          "cached_tokens": 448
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "durationMs": 2565
+    },
+    {
+      "name": "attributed-guide",
+      "expected": true,
+      "verdict": {
+        "supported": true,
+        "issues": []
+      },
+      "pass": true,
+      "usage": {
+        "cached_tokens": 448,
+        "prompt_tokens": 639,
+        "completion_tokens": 648,
+        "total_tokens": 1287,
+        "prompt_tokens_details": {
+          "cached_tokens": 448
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "durationMs": 5017
+    }
+  ],
+  "limitations": "Eight authored evidence/answer pairs through the real primary model, not eight live campus searches or a calibrated accuracy estimate. Earlier plaintext/native-short-output failures remain in the local audit."
+}

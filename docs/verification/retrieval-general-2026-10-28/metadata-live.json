@@ -1,0 +1,108 @@
+{
+  "prompt": "只查内部云山学术沙龙414期",
+  "answerExcerpt": "找到了以下相关标题：\n- 云山学术沙龙414期：学术论文写作全过程[来源1]\n目前仅有标题线索，尚未取得足以回答具体内容的正文；时间、条件或规则暂不能据此确认。",
+  "answerHash": "04126be84b5d49ee551ce770c57763a96d3d7439b74e5775dcaa806534aadea5",
+  "cards": [
+    {
+      "documentId": "content-fe27a19d-080b-484c-8ebb-a31169f8603e",
+      "title": "云山学术沙龙414期：学术论文写作全过程",
+      "sourceName": "广东外语外贸大学",
+      "originalUrl": "https://www.gdufs.edu.cn/info/1005/266556.htm",
+      "publishedAt": "2026-10-24",
+      "evidenceType": "metadata",
+      "excerptHash": "e50dd82b2a6dc413e9fa9c75558250a7a57f34a7c40fe458c5da6c5dd43ee724",
+      "excerptStoredLocally": true
+    }
+  ],
+  "metrics": {
+    "answerMode": "metadata_discovery",
+    "modelFailureCode": null,
+    "evidenceGateUsed": true,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "metadata_or_authority_insufficient",
+      "relatedDocuments": ["content-fe27a19d-080b-484c-8ebb-a31169f8603e"],
+      "missing": ["relevant_readable_evidence"],
+      "activities": [],
+      "needsSupplement": true,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 56,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 223,
+      "serverElapsedMs": 279,
+      "firstTextMs": 279,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 56,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 10,
+        "writeQueries": 20,
+        "calls": 16,
+        "failures": 0,
+        "durationMs": 279,
+        "maxCallMs": 25,
+        "rowsRead": 1277,
+        "rowsWritten": 18,
+        "rowUsageStatements": 24,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 29,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 56,
+          "candidateChunks": 2,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 1
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 1
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  }
+}

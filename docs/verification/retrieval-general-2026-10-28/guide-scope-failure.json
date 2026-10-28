@@ -1,0 +1,163 @@
+{
+  "prompt": "广外就业协议怎么办理？",
+  "answerExcerpt": "广外就业协议（电子就业协议）目前可通过线上小程序办理，具体流程如下：\n\n1. **线上申请入口**：微信进入\"广东大学生就业创业\"小程序，点击\"电子就业协议\"模块，选择\"填写就业协议\"即可开始申请[来源1]。\n\n2. **申请步骤**：依次完成填写调查问卷、核对个人信息（如姓名、身份证号、专业等有误需先联系学院或学校修改）、填报就业信息（需与签约单位确认单位全称、联系人等细节后再填报）[来源1]。\n\n3. **官方表格渠道**：学校学生就业创业中心官网曾发布毕业生就业手续申请表格下载专区，包含就业协议书借出鉴章、违",
+  "answerHash": "f50ec9dead4f576338ab4196d4127a05c3b31d30a614926afa93f89e63d52849",
+  "cards": [
+    {
+      "documentId": "wx-50f7e8e90985ace6005ee12960dc95b9a819b99b",
+      "title": "【就业协议书】2027届毕业生电子就业协议书签订操作指南",
+      "sourceName": "广外就业",
+      "originalUrl": "https://mp.weixin.qq.com/s/2lvGVw97fFI_sg2ZBqrjSQ",
+      "publishedAt": "2026-10-14T10:53:28.000Z",
+      "evidenceType": "full_text",
+      "excerptHash": "cf4f6f89a809b7b223ce5b6f96753c3b6e28b5fd02ae85de59911b85ab34748f",
+      "excerptStoredLocally": true
+    },
+    {
+      "title": "毕业生各就业手续申请表格下载-学生就业创业中心",
+      "sourceName": "广外官方网页",
+      "originalUrl": "https://gwcareer.gdufs.edu.cn/info/1057/1050.htm",
+      "publishedAt": "2019-03-27T00:00:00.000Z",
+      "evidenceKind": "search_excerpt",
+      "excerptHash": "4a5670a557c56331f349dc0bf0b5279017b16bd229f4821a158e2e4fdbf3cc77",
+      "excerptStoredLocally": true
+    }
+  ],
+  "metrics": {
+    "answerMode": "model",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "related_but_incomplete",
+      "relatedDocuments": ["wx-50f7e8e90985ace6005ee12960dc95b9a819b99b"],
+      "missing": ["official_authority_unconfirmed"],
+      "activities": [
+        {
+          "documentId": "wx-50f7e8e90985ace6005ee12960dc95b9a819b99b",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown"
+        }
+      ],
+      "needsSupplement": true,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 2,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [
+      {
+        "supported": true,
+        "issues": []
+      }
+    ],
+    "upstreamTimings": [
+      {
+        "durationMs": 5529,
+        "firstTextMs": 4064,
+        "finishReason": "stop",
+        "contentChars": 367
+      },
+      {
+        "durationMs": 6543,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 4468,
+    "completionTokens": 1283,
+    "cachedPromptTokens": 0,
+    "totalTokens": 5751,
+    "usageComplete": true,
+    "chargedTokens": 5751,
+    "durationMs": 17148,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 198,
+      "serverElapsedMs": 17346,
+      "firstTextMs": 17336,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 71,
+          "ok": true
+        },
+        {
+          "name": "search_external_campus_info",
+          "durationMs": 4968,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 14,
+        "writeQueries": 20,
+        "calls": 20,
+        "failures": 0,
+        "durationMs": 316,
+        "maxCallMs": 34,
+        "rowsRead": 1618,
+        "rowsWritten": 18,
+        "rowUsageStatements": 24,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 335,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 71,
+          "candidateChunks": 23,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 5
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 18
+            }
+          ]
+        }
+      ],
+      "externalSearch": [
+        {
+          "status": "ok",
+          "durationMs": 4968,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 3975,
+              "count": 3
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    }
+  },
+  "manualReview": "The model omitted the 2027 cohort and generalized current availability. The automatic checker accepted it; the receipt is retained as a checker miss, not counted as factual acceptance."
+}

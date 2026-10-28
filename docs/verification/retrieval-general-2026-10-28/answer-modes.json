@@ -1,0 +1,516 @@
+{
+  "note": "Desktop four turns at the recorded retrieval deployment; latest single guide check after the answer-purpose fix. Mobile preceding deployment retained; native Xiaohongshu returned unavailable, so the mobile test failed, not passed. Unknown chargedTokens is a reservation ceiling, not actual vendor spend.",
+  "counts": {
+    "evidence_excerpt": 6,
+    "attributed_excerpt": 1
+  },
+  "rows": [
+    {
+      "viewport": "desktop",
+      "version": "412a5700-5f31-4129-b0cf-d35c0663f032",
+      "question": "广外有什么体育比赛可以参加吗",
+      "mode": "evidence_excerpt",
+      "requests": 2,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 1,
+      "groundingResults": [],
+      "answerRepairRetries": 0,
+      "modelFailureCode": "MODEL_SERVICE_UNAVAILABLE",
+      "promptTokens": 4832,
+      "completionTokens": 898,
+      "usageComplete": false,
+      "chargedTokens": 250000,
+      "durationMs": 23671,
+      "completeMs": 24069,
+      "database": {
+        "readQueries": 12,
+        "writeQueries": 12,
+        "calls": 16,
+        "failures": 0,
+        "durationMs": 303,
+        "maxCallMs": 55,
+        "rowsRead": 1767,
+        "rowsWritten": 15,
+        "rowUsageStatements": 16,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 946,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 101,
+          "candidateChunks": 73,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 9
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            }
+          ]
+        }
+      ],
+      "externalSearch": [
+        {
+          "status": "ok",
+          "durationMs": 6513,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 2706,
+              "count": 3
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "version": "412a5700-5f31-4129-b0cf-d35c0663f032",
+      "question": "那羽毛球呢，现在还能报名吗？",
+      "mode": "evidence_excerpt",
+      "requests": 2,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 1,
+      "groundingResults": [],
+      "answerRepairRetries": 0,
+      "modelFailureCode": "MODEL_SERVICE_UNAVAILABLE",
+      "promptTokens": 4193,
+      "completionTokens": 1550,
+      "usageComplete": false,
+      "chargedTokens": 250000,
+      "durationMs": 22784,
+      "completeMs": 23206,
+      "database": {
+        "readQueries": 12,
+        "writeQueries": 11,
+        "calls": 15,
+        "failures": 0,
+        "durationMs": 256,
+        "maxCallMs": 29,
+        "rowsRead": 793,
+        "rowsWritten": 11,
+        "rowUsageStatements": 15,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 133,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 67,
+          "candidateChunks": 8,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 8
+            }
+          ]
+        }
+      ],
+      "externalSearch": [
+        {
+          "status": "ok",
+          "durationMs": 4415,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 3735,
+              "count": 3
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "version": "412a5700-5f31-4129-b0cf-d35c0663f032",
+      "question": "广外图书馆怎么借书？",
+      "mode": "evidence_excerpt",
+      "requests": 2,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 1,
+      "groundingResults": [],
+      "answerRepairRetries": 0,
+      "modelFailureCode": "MODEL_SERVICE_UNAVAILABLE",
+      "promptTokens": 3462,
+      "completionTokens": 1144,
+      "usageComplete": false,
+      "chargedTokens": 250000,
+      "durationMs": 21972,
+      "completeMs": 22369,
+      "database": {
+        "readQueries": 12,
+        "writeQueries": 11,
+        "calls": 15,
+        "failures": 0,
+        "durationMs": 283,
+        "maxCallMs": 32,
+        "rowsRead": 1021,
+        "rowsWritten": 11,
+        "rowUsageStatements": 15,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 346,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 74,
+          "candidateChunks": 22,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 22
+            }
+          ]
+        }
+      ],
+      "externalSearch": [
+        {
+          "status": "ok",
+          "durationMs": 5977,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 5326,
+              "count": 3
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "version": "412a5700-5f31-4129-b0cf-d35c0663f032",
+      "question": "广外就业协议怎么办理？",
+      "mode": "evidence_excerpt",
+      "requests": 2,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 1,
+      "groundingResults": [],
+      "answerRepairRetries": 0,
+      "modelFailureCode": "MODEL_SERVICE_UNAVAILABLE",
+      "promptTokens": 2686,
+      "completionTokens": 911,
+      "usageComplete": false,
+      "chargedTokens": 250000,
+      "durationMs": 20406,
+      "completeMs": 20752,
+      "database": {
+        "readQueries": 12,
+        "writeQueries": 11,
+        "calls": 15,
+        "failures": 0,
+        "durationMs": 215,
+        "maxCallMs": 23,
+        "rowsRead": 1025,
+        "rowsWritten": 11,
+        "rowUsageStatements": 15,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 335,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 52,
+          "candidateChunks": 23,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 5
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 18
+            }
+          ]
+        }
+      ],
+      "externalSearch": [
+        {
+          "status": "ok",
+          "durationMs": 5171,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 4490,
+              "count": 3
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    },
+    {
+      "viewport": "mobile",
+      "version": "39ae0bdf-2fe1-4fc2-8d08-2e35ce19b434",
+      "question": "广外有什么体育比赛可以参加吗",
+      "mode": "evidence_excerpt",
+      "requests": 1,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "answerRepairRetries": 0,
+      "modelFailureCode": "MODEL_TIMEOUT",
+      "promptTokens": 0,
+      "completionTokens": 0,
+      "usageComplete": false,
+      "chargedTokens": 250000,
+      "durationMs": 20619,
+      "completeMs": 23806,
+      "database": {
+        "readQueries": 11,
+        "writeQueries": 12,
+        "calls": 15,
+        "failures": 0,
+        "durationMs": 3129,
+        "maxCallMs": 469,
+        "rowsRead": 1736,
+        "rowsWritten": 15,
+        "rowUsageStatements": 16,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 946,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 928,
+          "candidateChunks": 73,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 9
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            }
+          ]
+        }
+      ],
+      "externalSearch": [
+        {
+          "status": "ok",
+          "durationMs": 4499,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 3045,
+              "count": 3
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    },
+    {
+      "viewport": "mobile",
+      "version": "39ae0bdf-2fe1-4fc2-8d08-2e35ce19b434",
+      "question": "用小红书查广外一饭有什么好吃的",
+      "mode": "evidence_excerpt",
+      "requests": 1,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "answerRepairRetries": 0,
+      "modelFailureCode": "MODEL_TIMEOUT",
+      "promptTokens": 0,
+      "completionTokens": 0,
+      "usageComplete": false,
+      "chargedTokens": 250000,
+      "durationMs": 20424,
+      "completeMs": 23361,
+      "database": {
+        "readQueries": 11,
+        "writeQueries": 11,
+        "calls": 14,
+        "failures": 0,
+        "durationMs": 2738,
+        "maxCallMs": 348,
+        "rowsRead": 1064,
+        "rowsWritten": 11,
+        "rowUsageStatements": 15,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 429,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 753,
+          "candidateChunks": 30,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 30
+            }
+          ]
+        }
+      ],
+      "externalSearch": [
+        {
+          "status": "partial",
+          "durationMs": 4490,
+          "providers": [
+            {
+              "provider": "xiaohongshu_redbook_cloud",
+              "status": "unavailable",
+              "durationMs": 2192,
+              "count": 0,
+              "cacheHit": false
+            },
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 1545,
+              "count": 2
+            },
+            {
+              "provider": "exa_web_cloud",
+              "status": "empty",
+              "durationMs": 1484,
+              "count": 0
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    },
+    {
+      "viewport": "final_guide_api",
+      "version": "d8e61583-a80f-4a30-a987-f014dba508bb",
+      "question": "广外就业协议怎么办理？",
+      "mode": "attributed_excerpt",
+      "requests": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "promptTokens": 0,
+      "completionTokens": 0,
+      "usageComplete": true,
+      "chargedTokens": 0,
+      "durationMs": 4709,
+      "database": {
+        "readQueries": 10,
+        "writeQueries": 20,
+        "calls": 16,
+        "failures": 0,
+        "durationMs": 288,
+        "maxCallMs": 29,
+        "rowsRead": 1626,
+        "rowsWritten": 18,
+        "rowUsageStatements": 24,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 335,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 59,
+          "candidateChunks": 23,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 5
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 18
+            }
+          ]
+        }
+      ],
+      "externalSearch": [
+        {
+          "status": "ok",
+          "durationMs": 4650,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 3834,
+              "count": 3
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "version": "d8e61583-a80f-4a30-a987-f014dba508bb",
+  "prompt": "广外就业协议怎么办理？",
+  "answerExcerpt": "[原文事实摘录；完整受控记录保留本机]",
+  "answerHash": "4292649f65869af65e5affdeb7078337af2b900f7182c6a2c4f001752b7b0e4b",
+  "cards": [
+    {
+      "documentId": "wx-50f7e8e90985ace6005ee12960dc95b9a819b99b",
+      "title": "【就业协议书】2027届毕业生电子就业协议书签订操作指南",
+      "sourceName": "广外就业",
+      "originalUrl": "https://mp.weixin.qq.com/s/2lvGVw97fFI_sg2ZBqrjSQ",
+      "publishedAt": "2026-10-14T10:53:28.000Z",
+      "evidenceType": "full_text",
+      "excerptHash": "cf4f6f89a809b7b223ce5b6f96753c3b6e28b5fd02ae85de59911b85ab34748f",
+      "excerptStoredLocally": true
+    },
+    {
+      "title": "毕业生各就业手续申请表格下载-学生就业创业中心",
+      "sourceName": "广外官方网页",
+      "originalUrl": "https://gwcareer.gdufs.edu.cn/info/1057/1050.htm",
+      "publishedAt": "2019-03-27T00:00:00.000Z",
+      "evidenceKind": "search_excerpt",
+      "excerptHash": "4a5670a557c56331f349dc0bf0b5279017b16bd229f4821a158e2e4fdbf3cc77",
+      "excerptStoredLocally": true
+    }
+  ],
+  "metrics": {
+    "answerMode": "attributed_excerpt",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "related_but_incomplete",
+      "relatedDocuments": ["wx-50f7e8e90985ace6005ee12960dc95b9a819b99b"],
+      "missing": ["official_authority_unconfirmed"],
+      "activities": [
+        {
+          "documentId": "wx-50f7e8e90985ace6005ee12960dc95b9a819b99b",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown"
+        }
+      ],
+      "needsSupplement": true,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 4709,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 229,
+      "serverElapsedMs": 4938,
+      "firstTextMs": 4938,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 59,
+          "ok": true
+        },
+        {
+          "name": "search_external_campus_info",
+          "durationMs": 4650,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 10,
+        "writeQueries": 20,
+        "calls": 16,
+        "failures": 0,
+        "durationMs": 288,
+        "maxCallMs": 29,
+        "rowsRead": 1626,
+        "rowsWritten": 18,
+        "rowUsageStatements": 24,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 335,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 59,
+          "candidateChunks": 23,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 5
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 18
+            }
+          ]
+        }
+      ],
+      "externalSearch": [
+        {
+          "status": "ok",
+          "durationMs": 4650,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 3834,
+              "count": 3
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    }
+  },
+  "manualChecks": {
+    "actualEntryPresent": true,
+    "cohortPresent": true,
+    "sourceScopeMarked": true,
+    "noModelGeneration": true
+  }
+}

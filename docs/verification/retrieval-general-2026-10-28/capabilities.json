@@ -1,0 +1,25 @@
+{
+  "results": [
+    {
+      "provider": "stepfun",
+      "passed": true,
+      "testedAt": "2026-10-28T10:56:17.013Z",
+      "requests": 3
+    },
+    {
+      "provider": "deepseek",
+      "passed": true,
+      "testedAt": "2026-10-28T10:56:24.990Z",
+      "requests": 3
+    }
+  ],
+  "perProvider": {
+    "requests": 3,
+    "maxOutputPerRequest": 256,
+    "totalTimeoutMs": 20000,
+    "retries": 0
+  },
+  "receiptTtlHours": 24,
+  "automaticRenewal": false,
+  "route": "Step primary; DeepSeek only on explicit exhausted quota; unchanged"
+}

@@ -1,0 +1,1694 @@
+[
+  {
+    "query": "广外有什么体育比赛可以参加吗",
+    "theme": "sports",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "content-43580ed2-a8e4-4b27-9601-8008d6b4ea36",
+        "title": "关于举办2026年“广外杯”体育舞蹈公开赛的通知-广东外语外贸大学体育部",
+        "sourceName": "体育部",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2788.htm",
+        "publishedAt": "2026-05-28",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "3e8e4fbfe7452f087d49f23b923fc4848ccbbe46133e749aa3b496c17590f34a",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-b7f1f089-c98d-4c10-a941-0c9ebd276bd5",
+        "title": "关于举办2026年广东外语外贸大学“广外杯”乒乓球比赛的通知-广东外语外贸大学体育部",
+        "sourceName": "体育部",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2778.htm",
+        "publishedAt": "2026-05-30",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "01db5bf396f603e8c352f69db0808b97f01b6b43e68634f846f8370714b92ce0",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-81176c67-72cc-4457-a5a7-57332e258b08",
+        "title": "2026年第十九届“广外杯”网球赛竞赛通知-广东外语外贸大学体育部",
+        "sourceName": "体育部",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2668.htm",
+        "publishedAt": "2026-04-11",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "f30946b96a7178e92ec69cdf5ad9ce18572e04e271ee9f6eef8f7b55a281f9a0",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-030f429d-7e86-4564-a61b-357672e17f5b",
+        "title": "关于举办2026年“新生杯”定向越野比赛的通知-广东外语外贸大学体育部",
+        "sourceName": "体育部",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2938.htm",
+        "publishedAt": "2026-10-11",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "5d5da0e9e3fefb79962b5ed6447c0d3792fd13465a0dceca43fc46c74eec7702",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "content-43580ed2-a8e4-4b27-9601-8008d6b4ea36",
+        "name": "关于举办2026年“广外杯”体育舞蹈公开赛的通知-广东外语外贸大学体育部",
+        "startsAt": {
+          "raw": "定于2026年5月28日（周四）14:30-17:30在南校区体育馆一楼（体育舞蹈室）举办2026年“广外杯”体育舞蹈公开赛，敬请各学院按照规程的要求，精心筹备，组",
+          "date": "2026-05-28",
+          "at": null,
+          "timezone": "Asia/Shanghai",
+          "precision": "date",
+          "resolution": "day",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": "定于2026年5月28日（周四）14:30-17:30在南校区体育馆一楼（体育舞蹈室）举办2026年“广外杯”体育舞蹈公开赛，敬请各学院按照规程的要求，精心筹备，组"
+        },
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-b7f1f089-c98d-4c10-a941-0c9ebd276bd5",
+        "name": "关于举办2026年广东外语外贸大学“广外杯”乒乓球比赛的通知-广东外语外贸大学体育部",
+        "startsAt": {
+          "raw": "定于2026年5月30日-5月31日举行“广外杯”乒乓球比赛，此次比赛由广东外语外贸大学体育运动委员会主办，由校体育部、校团委承办，由各学院体育部、各学院学生会、广东外语外贸大",
+          "date": "2026-05-30",
+          "at": null,
+          "timezone": "Asia/Shanghai",
+          "precision": "date",
+          "resolution": "day",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": "定于2026年5月30日-5月31日举行“广外杯”乒乓球比赛，此次比赛由广东外语外贸大学体育运动委员会主办，由校体育部、校团委承办，由各学院体育部、各学院学生会、广东外语外贸大"
+        },
+        "endsAt": {
+          "raw": "定于2026年5月30日-5月31日举行“广外杯”乒乓球比赛，此次比赛由广东外语外贸大学体育运动委员会主办，由校体育部、校团委承办，由各学院体育部、各学院学生会、广东外语外贸大",
+          "date": "2026-05-31",
+          "at": null,
+          "timezone": "Asia/Shanghai",
+          "precision": "date",
+          "resolution": "day",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": "定于2026年5月30日-5月31日举行“广外杯”乒乓球比赛，此次比赛由广东外语外贸大学体育运动委员会主办，由校体育部、校团委承办，由各学院体育部、各学院学生会、广东外语外贸大"
+        },
+        "registrationState": "closed"
+      },
+      {
+        "documentId": "content-81176c67-72cc-4457-a5a7-57332e258b08",
+        "name": "2026年第十九届“广外杯”网球赛竞赛通知-广东外语外贸大学体育部",
+        "startsAt": {
+          "raw": "定于2026年4月11日在南北校区同时举行初赛，于4月12日在南校举行决赛",
+          "date": "2026-04-11",
+          "at": null,
+          "timezone": "Asia/Shanghai",
+          "precision": "date",
+          "resolution": "day",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": "定于2026年4月11日在南北校区同时举行初赛，于4月12日在南校举行决赛"
+        },
+        "endsAt": null,
+        "registrationState": "closed"
+      },
+      {
+        "documentId": "content-030f429d-7e86-4564-a61b-357672e17f5b",
+        "name": "关于举办2026年“新生杯”定向越野比赛的通知-广东外语外贸大学体育部",
+        "startsAt": {
+          "raw": "定于2026年10月11日（周日）举办2026年“新生杯”定向越野比赛，请各学院按赛事规程要求，踊跃组织报名参赛",
+          "date": "2026-10-11",
+          "at": null,
+          "timezone": "Asia/Shanghai",
+          "precision": "date",
+          "resolution": "day",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": "定于2026年10月11日（周日）举办2026年“新生杯”定向越野比赛，请各学院按赛事规程要求，踊跃组织报名参赛"
+        },
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 946,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 230,
+      "candidateChunks": 73,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 9
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "广外体育比赛",
+    "theme": "sports",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "wx-2d402f65793e0835295f5c38434e2e8fb7b311c7",
+        "title": "竞逐暖秋，友谊同行 _ 广外留院展风采——第十四届中外友人运动会 _ 上篇",
+        "sourceName": "留在广外",
+        "originalUrl": "https://mp.weixin.qq.com/s/yfxI78jQjDHM99S1M85PPg",
+        "publishedAt": "2026-10-21T08:04:04.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "df51e64b04616b5cfeefc9949f4f59f265ffb24b2e37cafdbf506e1f553ab7e7",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-43580ed2-a8e4-4b27-9601-8008d6b4ea36",
+        "title": "关于举办2026年“广外杯”体育舞蹈公开赛的通知-广东外语外贸大学体育部",
+        "sourceName": "体育部",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2788.htm",
+        "publishedAt": "2026-05-28",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "3e8e4fbfe7452f087d49f23b923fc4848ccbbe46133e749aa3b496c17590f34a",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-7970cdf12d196bb1825ffe74c506d7c1405a97f6",
+        "title": "马上进入2026年“广外杯”定向越野比赛！美好的世界等待着你~",
+        "sourceName": "广外定向越野",
+        "originalUrl": "https://mp.weixin.qq.com/s/L1ib8zrKV2essnzbdtpkqA",
+        "publishedAt": "2026-04-09T15:52:16.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "b018d89dda43b2e6d3781acc1a5078ff3de304a973b20c8e77655d8f754c5482",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-b7f1f089-c98d-4c10-a941-0c9ebd276bd5",
+        "title": "关于举办2026年广东外语外贸大学“广外杯”乒乓球比赛的通知-广东外语外贸大学体育部",
+        "sourceName": "体育部",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2778.htm",
+        "publishedAt": "2026-05-30",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "01db5bf396f603e8c352f69db0808b97f01b6b43e68634f846f8370714b92ce0",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "content-43580ed2-a8e4-4b27-9601-8008d6b4ea36",
+        "name": "关于举办2026年“广外杯”体育舞蹈公开赛的通知-广东外语外贸大学体育部",
+        "startsAt": {
+          "raw": "定于2026年5月28日（周四）14:30-17:30在南校区体育馆一楼（体育舞蹈室）举办2026年“广外杯”体育舞蹈公开赛，敬请各学院按照规程的要求，精心筹备，组",
+          "date": "2026-05-28",
+          "at": null,
+          "timezone": "Asia/Shanghai",
+          "precision": "date",
+          "resolution": "day",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": "定于2026年5月28日（周四）14:30-17:30在南校区体育馆一楼（体育舞蹈室）举办2026年“广外杯”体育舞蹈公开赛，敬请各学院按照规程的要求，精心筹备，组"
+        },
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-b7f1f089-c98d-4c10-a941-0c9ebd276bd5",
+        "name": "关于举办2026年广东外语外贸大学“广外杯”乒乓球比赛的通知-广东外语外贸大学体育部",
+        "startsAt": {
+          "raw": "定于2026年5月30日-5月31日举行“广外杯”乒乓球比赛，此次比赛由广东外语外贸大学体育运动委员会主办，由校体育部、校团委承办，由各学院体育部、各学院学生会、广东外语外贸大",
+          "date": "2026-05-30",
+          "at": null,
+          "timezone": "Asia/Shanghai",
+          "precision": "date",
+          "resolution": "day",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": "定于2026年5月30日-5月31日举行“广外杯”乒乓球比赛，此次比赛由广东外语外贸大学体育运动委员会主办，由校体育部、校团委承办，由各学院体育部、各学院学生会、广东外语外贸大"
+        },
+        "endsAt": {
+          "raw": "定于2026年5月30日-5月31日举行“广外杯”乒乓球比赛，此次比赛由广东外语外贸大学体育运动委员会主办，由校体育部、校团委承办，由各学院体育部、各学院学生会、广东外语外贸大",
+          "date": "2026-05-31",
+          "at": null,
+          "timezone": "Asia/Shanghai",
+          "precision": "date",
+          "resolution": "day",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": "定于2026年5月30日-5月31日举行“广外杯”乒乓球比赛，此次比赛由广东外语外贸大学体育运动委员会主办，由校体育部、校团委承办，由各学院体育部、各学院学生会、广东外语外贸大"
+        },
+        "registrationState": "closed"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 946,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 88,
+      "candidateChunks": 73,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 9
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "广外有什么足球比赛可以参加",
+    "theme": "football",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "content-267c6d0c-88f0-4c4e-b6b8-1f0f1ef48467",
+        "title": "关于举办2026年广东外语外贸大学“新生杯”足球赛八人制足球联赛的通知-广东外语外贸大学体育部",
+        "sourceName": "体育部",
+        "originalUrl": "https://tyb.gdufs.edu.cn/info/1032/2928.htm",
+        "publishedAt": "2026-09-20",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "9eb70524de99abeef282aab4b84aaad9a75659ad3577f691acb379447852a831",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-97c04f41269eb9ade01c702f630e951e3081ca17",
+        "title": "广外留院展风采——第十四届中外友人运动会 | 下篇",
+        "sourceName": "留在广外",
+        "originalUrl": "https://mp.weixin.qq.com/s/nBJYaCOYFg-U37lK-tkDDw",
+        "publishedAt": "2026-10-27T03:11:10.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "a880192d82d591bb035d732f4c085ba9e4e8c540fd676cf215b3631e6d7b47b5",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-8a9b850b-e502-4354-bb2b-c7abcd72f268",
+        "title": "我校男女足在广州市属高校联赛中斩获佳绩-广东外语外贸大学新闻中心",
+        "sourceName": "广外新闻网／党委宣传部",
+        "originalUrl": "https://news.gdufs.edu.cn/info/1003/938923.htm",
+        "publishedAt": "2026-10-23",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "d76bf00c921b29132424b436a40727930c56ab9846d19973cabbd0d0bf707cb6",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-2d402f65793e0835295f5c38434e2e8fb7b311c7",
+        "title": "竞逐暖秋，友谊同行 _ 广外留院展风采——第十四届中外友人运动会 _ 上篇",
+        "sourceName": "留在广外",
+        "originalUrl": "https://mp.weixin.qq.com/s/yfxI78jQjDHM99S1M85PPg",
+        "publishedAt": "2026-10-21T08:04:04.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "0be9cc4d7ae1dc44ac5200a43a0a8521d68e393066dbeb50b9c3759c08dcdd69",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "content-267c6d0c-88f0-4c4e-b6b8-1f0f1ef48467",
+        "name": "关于举办2026年广东外语外贸大学“新生杯”足球赛八人制足球联赛的通知-广东外语外贸大学体育部",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 355,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 47,
+      "candidateChunks": 16,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 1
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 15
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "广外最近有什么讲座",
+    "theme": "lecture",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "content-6706569a-2265-4810-88bf-ac52fb2fdd3a",
+        "title": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲-数学与统计学院",
+        "sourceName": "数学与统计学院",
+        "originalUrl": "https://stxy.gdufs.edu.cn/info/1748/6135.htm",
+        "publishedAt": "2026-07-08",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "9b5e8abba606a8a85eedaa4c5cd997b3e07d6a4b58613576d275012f2fff36cb",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-68fe346319ff9b98a0756121f358bd6a81156789",
+        "title": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲",
+        "sourceName": "广外数学与统计学院",
+        "originalUrl": "https://mp.weixin.qq.com/s/rOMCzSB-LE64Dzi1Omfs5A",
+        "publishedAt": "2026-07-08T06:35:16.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "67daa667b0a15db332cc2e1d733c25959f84e6909d0b209d0508dd2ee8a68c47",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-fe27a19d-080b-484c-8ebb-a31169f8603e",
+        "title": "云山学术沙龙414期：学术论文写作全过程",
+        "sourceName": "广东外语外贸大学",
+        "originalUrl": "https://www.gdufs.edu.cn/info/1005/266556.htm",
+        "publishedAt": "2026-10-24",
+        "evidenceType": "metadata",
+        "bodyAvailable": false,
+        "official": true,
+        "excerptHash": "e50dd82b2a6dc413e9fa9c75558250a7a57f34a7c40fe458c5da6c5dd43ee724",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-aa636976-2010-462c-912a-29a9b23f5aa2",
+        "title": "云山学术沙龙412期：The Belt and Road Initiative in South America",
+        "sourceName": "广东外语外贸大学",
+        "originalUrl": "https://www.gdufs.edu.cn/info/1005/264186.htm",
+        "publishedAt": "2026-09-10",
+        "evidenceType": "metadata",
+        "bodyAvailable": false,
+        "official": true,
+        "excerptHash": "9d12f66d8b7fe05009b376a9cead1bcd5c26b85a7a23989798b195d211195a1f",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "content-6706569a-2265-4810-88bf-ac52fb2fdd3a",
+        "name": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲-数学与统计学院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "wx-68fe346319ff9b98a0756121f358bd6a81156789",
+        "name": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 1024,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 82,
+      "candidateChunks": 96,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 32
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": ["部分结果仅有元数据，不能据此回答正文中的规则或要求。"]
+  },
+  {
+    "query": "广外学术讲坛",
+    "theme": "lecture",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "content-6706569a-2265-4810-88bf-ac52fb2fdd3a",
+        "title": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲-数学与统计学院",
+        "sourceName": "数学与统计学院",
+        "originalUrl": "https://stxy.gdufs.edu.cn/info/1748/6135.htm",
+        "publishedAt": "2026-07-08",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "ea4efe1ece6caded393e9e1a18c9f996ebf6c9299ff2293840b5383d8264fe7a",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-68fe346319ff9b98a0756121f358bd6a81156789",
+        "title": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲",
+        "sourceName": "广外数学与统计学院",
+        "originalUrl": "https://mp.weixin.qq.com/s/rOMCzSB-LE64Dzi1Omfs5A",
+        "publishedAt": "2026-07-08T06:35:16.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "c8712bfbdeb51d2772e25b095a067b45867a293ad164f93a1797b7862878e2c5",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-fe27a19d-080b-484c-8ebb-a31169f8603e",
+        "title": "云山学术沙龙414期：学术论文写作全过程",
+        "sourceName": "广东外语外贸大学",
+        "originalUrl": "https://www.gdufs.edu.cn/info/1005/266556.htm",
+        "publishedAt": "2026-10-24",
+        "evidenceType": "metadata",
+        "bodyAvailable": false,
+        "official": true,
+        "excerptHash": "e50dd82b2a6dc413e9fa9c75558250a7a57f34a7c40fe458c5da6c5dd43ee724",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-aa636976-2010-462c-912a-29a9b23f5aa2",
+        "title": "云山学术沙龙412期：The Belt and Road Initiative in South America",
+        "sourceName": "广东外语外贸大学",
+        "originalUrl": "https://www.gdufs.edu.cn/info/1005/264186.htm",
+        "publishedAt": "2026-09-10",
+        "evidenceType": "metadata",
+        "bodyAvailable": false,
+        "official": true,
+        "excerptHash": "9d12f66d8b7fe05009b376a9cead1bcd5c26b85a7a23989798b195d211195a1f",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "content-6706569a-2265-4810-88bf-ac52fb2fdd3a",
+        "name": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲-数学与统计学院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "wx-68fe346319ff9b98a0756121f358bd6a81156789",
+        "name": "讲座预告 | 数学与统计学院“前沿学术论坛”第50讲",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 919,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 110,
+      "candidateChunks": 70,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 6
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": ["部分结果仅有元数据，不能据此回答正文中的规则或要求。"]
+  },
+  {
+    "query": "广外奖学金申请条件",
+    "theme": "scholarship",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "content-822764b5-6c3a-40d0-a298-46152f7f540c",
+        "title": "【个人申请】研究生院关于2026年研究生出国（境）访学奖学金申请工作的通知-研究生院",
+        "sourceName": "研究生院",
+        "originalUrl": "https://gwyjs.gdufs.edu.cn/info/1035/15693.htm",
+        "publishedAt": "2026-05-27",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "daf372c6c609435e7db034610da27866a7e3a5cda1e6c9d397c7e52aebd4f1ea",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-ad394738-5a73-428a-8a42-cc3b39a2db15",
+        "title": "关于开展2026年国际治理创新学院研究生国家奖学金评选工作的通知-国际治理创新学院",
+        "sourceName": "国际治理创新学院",
+        "originalUrl": "https://sigi.gdufs.edu.cn/info/1003/6755.htm",
+        "publishedAt": "2026-09-05",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "61709ade6116c4e7772d9388c686bb482b60fe406bb3f93407d53c389accf83d",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-48e16439-07a9-48d6-824d-2f9dd013b95c",
+        "title": "【个人申请】研究生院关于国家留基委2026年与部分国外院校合作奖学金申请工作的通知-研究生院",
+        "sourceName": "研究生院",
+        "originalUrl": "https://gwyjs.gdufs.edu.cn/info/1035/14105.htm",
+        "publishedAt": "2026-01-15",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "db3259df04702959854803f106ad26176f0cecdbf59bca3be4d36df81fea6507",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-830894fd-2a5d-4bf3-9720-6e1886ef0ec0",
+        "title": "2026年国际治理创新学院学业奖学金评审通知-国际治理创新学院",
+        "sourceName": "国际治理创新学院",
+        "originalUrl": "https://sigi.gdufs.edu.cn/info/1003/6775.htm",
+        "publishedAt": "2026-09-15",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "8ed0850d6a903fbbc66da4587bce5d93dc529a0077c1c1c6fbd2d10a47fd0986",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "content-822764b5-6c3a-40d0-a298-46152f7f540c",
+        "name": "【个人申请】研究生院关于2026年研究生出国（境）访学奖学金申请工作的通知-研究生院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "closed"
+      },
+      {
+        "documentId": "content-ad394738-5a73-428a-8a42-cc3b39a2db15",
+        "name": "关于开展2026年国际治理创新学院研究生国家奖学金评选工作的通知-国际治理创新学院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-48e16439-07a9-48d6-824d-2f9dd013b95c",
+        "name": "【个人申请】研究生院关于国家留基委2026年与部分国外院校合作奖学金申请工作的通知-研究生院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-830894fd-2a5d-4bf3-9720-6e1886ef0ec0",
+        "name": "2026年国际治理创新学院学业奖学金评审通知-国际治理创新学院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 937,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 128,
+      "candidateChunks": 96,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 32
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "奖学金管理办法",
+    "theme": "scholarship",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "content-54c65e23-a411-4b28-877c-75cd786a4368",
+        "title": "区域国别学院2025-2026学年第二学期学生出国（境）学习奖学金申请学生公示情况-区域国别学院（国际关系研究院）",
+        "sourceName": "区域国别学院（区域国别研究院）",
+        "originalUrl": "https://sgas-iir.gdufs.edu.cn/info/1050/8817.htm",
+        "publishedAt": "2026-06-18",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "635a3bf50a408ac671c8aae78d55c25351d6b6eefa821d99916e5f16215258e1",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-ad394738-5a73-428a-8a42-cc3b39a2db15",
+        "title": "关于开展2026年国际治理创新学院研究生国家奖学金评选工作的通知-国际治理创新学院",
+        "sourceName": "国际治理创新学院",
+        "originalUrl": "https://sigi.gdufs.edu.cn/info/1003/6755.htm",
+        "publishedAt": "2026-09-05",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "a778534dea03b15aae581e762d93527ef2f32b00ad1686857ed0973cf7905232",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-48e16439-07a9-48d6-824d-2f9dd013b95c",
+        "title": "【个人申请】研究生院关于国家留基委2026年与部分国外院校合作奖学金申请工作的通知-研究生院",
+        "sourceName": "研究生院",
+        "originalUrl": "https://gwyjs.gdufs.edu.cn/info/1035/14105.htm",
+        "publishedAt": "2026-01-15",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "c3d3b49887ce2bb9bfbe4e6dd8231f5d7663fa6376a22ebfa35439b77b358076",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-aa29144e-ab74-4421-aa7f-8a5c3f85f01a",
+        "title": "经济贸易学院2025-2026学年度毕业班优秀学生奖学金、毕业班三好学生及优秀大学生奖章候选人建议名单公示-经济贸易学院",
+        "sourceName": "经济贸易学院",
+        "originalUrl": "https://jingmao.gdufs.edu.cn/info/1703/18739.htm",
+        "publishedAt": "2026-05-29",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "1c5a436c09907eb64dccb7f9815dd6cccf9beb9648764078c94092490b5e4025",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "content-54c65e23-a411-4b28-877c-75cd786a4368",
+        "name": "区域国别学院2025-2026学年第二学期学生出国（境）学习奖学金申请学生公示情况-区域国别学院（国际关系研究院）",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-ad394738-5a73-428a-8a42-cc3b39a2db15",
+        "name": "关于开展2026年国际治理创新学院研究生国家奖学金评选工作的通知-国际治理创新学院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-48e16439-07a9-48d6-824d-2f9dd013b95c",
+        "name": "【个人申请】研究生院关于国家留基委2026年与部分国外院校合作奖学金申请工作的通知-研究生院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-aa29144e-ab74-4421-aa7f-8a5c3f85f01a",
+        "name": "经济贸易学院2025-2026学年度毕业班优秀学生奖学金、毕业班三好学生及优秀大学生奖章候选人建议名单公示-经济贸易学院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 843,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 91,
+      "candidateChunks": 64,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 0
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "广外科研项目申报",
+    "theme": "research",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "content-e8b7feca-1b54-46df-ba61-65673844bebb",
+        "title": "广东外语外贸大学阐释与国际传播研究院 2026年度创新研究项目招标公告-阐释学研究院",
+        "sourceName": "阐释与国际传播研究院",
+        "originalUrl": "https://ih.gdufs.edu.cn/info/1067/1704.htm",
+        "publishedAt": "2026-06-29",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "232eed25ad5acad939b73ec855d15a5805641a41d4bde223f173e06cc736c94a",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-f0909ec5-809a-47d1-a7d3-67ec783f3a09",
+        "title": "我院召开国家级科研项目申报经验交流及动员会-国际经济贸易研究院",
+        "sourceName": "国际经济贸易研究院",
+        "originalUrl": "https://rcite.gdufs.edu.cn/info/1100/3097.htm",
+        "publishedAt": "2026-10-14",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "d9ae24cd6251e4ea8118a69db4f7124b6f925be6223e444700570464cef31958",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-178b8349-4591-492a-86fb-5e433b0f596a",
+        "title": "广东外语外贸大学区域国别学院（区域国别研究院）2026年科研课题招标方案-区域国别学院（区域国别研究院）",
+        "sourceName": "区域国别学院（区域国别研究院）",
+        "originalUrl": "https://sgas-iir.gdufs.edu.cn/info/1050/9437.htm",
+        "publishedAt": "2026-09-25",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "2e5a2485105a30a944098d5570375bb94644c5391bda05bc121f8c2692bb064b",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-450644a9-5a75-429e-99ce-90135f9b31a2",
+        "title": "数学与统计学院2026年度高层次项目申报指导会（三）-数学与统计学院",
+        "sourceName": "数学与统计学院",
+        "originalUrl": "https://stxy.gdufs.edu.cn/info/1748/5295.htm",
+        "publishedAt": "2026-01-29",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "b300314090177fcba06ea168d182641a03a1588e86fac98487743771bd7b90c2",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "content-e8b7feca-1b54-46df-ba61-65673844bebb",
+        "name": "广东外语外贸大学阐释与国际传播研究院 2026年度创新研究项目招标公告-阐释学研究院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-f0909ec5-809a-47d1-a7d3-67ec783f3a09",
+        "name": "我院召开国家级科研项目申报经验交流及动员会-国际经济贸易研究院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-178b8349-4591-492a-86fb-5e433b0f596a",
+        "name": "广东外语外贸大学区域国别学院（区域国别研究院）2026年科研课题招标方案-区域国别学院（区域国别研究院）",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-450644a9-5a75-429e-99ce-90135f9b31a2",
+        "name": "数学与统计学院2026年度高层次项目申报指导会（三）-数学与统计学院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 1034,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 99,
+      "candidateChunks": 96,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 32
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "科研项目管理办法",
+    "theme": "research",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "content-e8b7feca-1b54-46df-ba61-65673844bebb",
+        "title": "广东外语外贸大学阐释与国际传播研究院 2026年度创新研究项目招标公告-阐释学研究院",
+        "sourceName": "阐释与国际传播研究院",
+        "originalUrl": "https://ih.gdufs.edu.cn/info/1067/1704.htm",
+        "publishedAt": "2026-06-29",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "fbf0a10a9901d3fb745cedf7784291f188fb27b9578f020dd36bddf6333a2803",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-742ef882-b61d-48e9-83cf-d49abe7f914c",
+        "title": "会计学院抓实寒假攻坚 开展国家级项目申报系列指导-广东外语外贸大学会计学院",
+        "sourceName": "会计学院",
+        "originalUrl": "https://kjxy.gdufs.edu.cn/info/1443/7587.htm",
+        "publishedAt": "2026-02-07",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "6c7ea75c457e6933621ebaf1fae10c2cddd0862d777639381f57d8794e36e7dc",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-c8df3c86-3b4c-486b-bcbd-9dcbc190b731",
+        "title": "会计学院成功举办国家级项目申报指导会-广东外语外贸大学会计学院",
+        "sourceName": "会计学院",
+        "originalUrl": "https://kjxy.gdufs.edu.cn/info/1443/7557.htm",
+        "publishedAt": "2026-01-15",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "523e4e81fe95b35052a1c5f1cdbce11d8db93741a85e345a8300c563b15c17c0",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-178b8349-4591-492a-86fb-5e433b0f596a",
+        "title": "广东外语外贸大学区域国别学院（区域国别研究院）2026年科研课题招标方案-区域国别学院（区域国别研究院）",
+        "sourceName": "区域国别学院（区域国别研究院）",
+        "originalUrl": "https://sgas-iir.gdufs.edu.cn/info/1050/9437.htm",
+        "publishedAt": "2026-09-25",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "65b739873871cccdfbb9664001c61499937cecad4730174c9eb1741df821e9cd",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "content-e8b7feca-1b54-46df-ba61-65673844bebb",
+        "name": "广东外语外贸大学阐释与国际传播研究院 2026年度创新研究项目招标公告-阐释学研究院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-742ef882-b61d-48e9-83cf-d49abe7f914c",
+        "name": "会计学院抓实寒假攻坚 开展国家级项目申报系列指导-广东外语外贸大学会计学院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-c8df3c86-3b4c-486b-bcbd-9dcbc190b731",
+        "name": "会计学院成功举办国家级项目申报指导会-广东外语外贸大学会计学院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-178b8349-4591-492a-86fb-5e433b0f596a",
+        "name": "广东外语外贸大学区域国别学院（区域国别研究院）2026年科研课题招标方案-区域国别学院（区域国别研究院）",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 905,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 97,
+      "candidateChunks": 64,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 0
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "广外校园招聘会",
+    "theme": "career",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "wx-892d95d18fed6a2f8f0bd1238bf0ec8a994de740",
+        "title": "【10月22日宣讲】广州市天河区晓晓星火教育培训中心有限公司",
+        "sourceName": "广外就业",
+        "originalUrl": "https://mp.weixin.qq.com/s/GZ6Oo-zlxtHxS3NV9lQR7g",
+        "publishedAt": "2026-10-21T11:11:27.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "fc51d99d50220dfa3ce5017eb1ec97633aa7d0ec7693f4eb9b8f00415aa658c3",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-55f7a734dc40feb51433fbb45e9c1aec6d7d370e",
+        "title": "【10月27日宣讲】星火教育广州分公司",
+        "sourceName": "广外就业",
+        "originalUrl": "https://mp.weixin.qq.com/s/Yqm-p1b84bTIlJYniM-3VQ",
+        "publishedAt": "2026-10-26T14:34:44.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "d86041e666855ab381a9eaba760d5edf2d7dd3d7092fdb3e16e6fe76fd691553",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-e4285f44ce7a05138dd7e917902dbda662df1ba2",
+        "title": "【招聘会】阳光就业·嘉聘荟—一站式求职护航，助力高校毕业生“职”达未来",
+        "sourceName": "广外就业中心",
+        "originalUrl": "https://mp.weixin.qq.com/s/J7Y6SHk-if2M2DpB4LGnPA",
+        "publishedAt": "2026-06-24T07:00:43.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "9d5b7c3aeebb41a4fe489bf454461e41cac7597f3e2b677cbf62f77324bd8749",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-4985c9550c81b4bc2a651039cdc4f7ddfd163c46",
+        "title": "【学生邀请函】10月15日广东外语外贸大学2027届毕业生秋季校园招聘会之六",
+        "sourceName": "广外就业",
+        "originalUrl": "https://mp.weixin.qq.com/s/IOLds2ilMfNwGIYL0irInw",
+        "publishedAt": "2026-10-13T12:02:32.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "80699d33efc45712bf9796fdbc30eb1c91b5526b4ab5e22562a1d19322f704b5",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "wx-892d95d18fed6a2f8f0bd1238bf0ec8a994de740",
+        "name": "【10月22日宣讲】广州市天河区晓晓星火教育培训中心有限公司",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "wx-55f7a734dc40feb51433fbb45e9c1aec6d7d370e",
+        "name": "【10月27日宣讲】星火教育广州分公司",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "wx-e4285f44ce7a05138dd7e917902dbda662df1ba2",
+        "name": "【招聘会】阳光就业·嘉聘荟—一站式求职护航，助力高校毕业生“职”达未来",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "wx-4985c9550c81b4bc2a651039cdc4f7ddfd163c46",
+        "name": "【学生邀请函】10月15日广东外语外贸大学2027届毕业生秋季校园招聘会之六",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 1022,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 124,
+      "candidateChunks": 96,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 32
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "就业协议怎么办理",
+    "theme": "agreement",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "wx-50f7e8e90985ace6005ee12960dc95b9a819b99b",
+        "title": "【就业协议书】2027届毕业生电子就业协议书签订操作指南",
+        "sourceName": "广外就业",
+        "originalUrl": "https://mp.weixin.qq.com/s/2lvGVw97fFI_sg2ZBqrjSQ",
+        "publishedAt": "2026-10-14T10:53:28.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "cf4f6f89a809b7b223ce5b6f96753c3b6e28b5fd02ae85de59911b85ab34748f",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "wx-50f7e8e90985ace6005ee12960dc95b9a819b99b",
+        "name": "【就业协议书】2027届毕业生电子就业协议书签订操作指南",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 335,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 58,
+      "candidateChunks": 23,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 5
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 18
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "广外图书馆怎么借书",
+    "theme": "library",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "wx-e65f3688d0c219ed305ca5c944f2751660067122",
+        "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+        "sourceName": "广外图书馆",
+        "originalUrl": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw",
+        "publishedAt": "2026-09-06T04:12:00.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "cc38a79a25ae5a1f9f4d46a15a7446a4a8c57922566bff5f75362ffc751de0d3",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [],
+    "metrics": {
+      "rowsRead": 346,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 63,
+      "candidateChunks": 22,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 0
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 22
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "图书馆借阅规则",
+    "theme": "library",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "wx-e65f3688d0c219ed305ca5c944f2751660067122",
+        "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+        "sourceName": "广外图书馆",
+        "originalUrl": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw",
+        "publishedAt": "2026-09-06T04:12:00.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "6f999966fa200ae00767f843afd516a1476db8d61d157f5b1cd13b4bcf703e83",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [],
+    "metrics": {
+      "rowsRead": 370,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 61,
+      "candidateChunks": 28,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 6
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 22
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "校园卡挂失补办",
+    "theme": "card",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "wx-8db535c17927f1a2537d14f0e75538396c5aadd1",
+        "title": "资讯 _ 校园卡补办",
+        "sourceName": "广外学生服务大厅",
+        "originalUrl": "https://mp.weixin.qq.com/s/SPj4AK7hww_SQWkxDTHXAQ",
+        "publishedAt": "2026-10-21T08:02:54.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "76ebc78f126362eae4a40b6e476fb9dc4e17feef98c91ac89e41df415523d29a",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-9a05d99b6def8a532c0436d1eb04e12c87968795",
+        "title": "2026新生指南｜广外白云山校区生活指南",
+        "sourceName": "数智广外",
+        "originalUrl": "https://mp.weixin.qq.com/s/0b30pjozPKNHRO4tsBoEQg",
+        "publishedAt": "2026-09-03T00:30:00.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "9f92ed8265120bf7deac73e218e857fdadde4df5e9d0cd7808b1a62519bb4aea",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-34658af0-f3d9-4930-9187-532ef32113a4",
+        "title": "国际学院（北校区）学生生活指南-国际学院",
+        "sourceName": "国际学院（出国留学培训部）",
+        "originalUrl": "https://ic.gdufs.edu.cn/info/1486/4730.htm",
+        "publishedAt": "2026-05-07",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "83c2ecb30ef7c666667f68cab790853ff1cf69491bfd003d30216d1ce3fdfa9c",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-b5f3baec857e34b2c58b95f810b1d8dae6c90eac",
+        "title": "广外“信息化服务面对面”等你来",
+        "sourceName": "数智广外",
+        "originalUrl": "https://mp.weixin.qq.com/s/Bk2HGu4XXgktwghEuKntZw",
+        "publishedAt": "2026-08-31T08:20:56.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "0abf9cfa490206510d0eb981a1befabb104a0d5164098a39a58c0ae4fdb64b05",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [],
+    "metrics": {
+      "rowsRead": 150,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 52,
+      "candidateChunks": 7,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 1
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 6
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "广外选课规则",
+    "theme": "course",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "content-acfe80d3-b5a2-41e1-a2e6-de8fa8dd8d03",
+        "title": "2026-2027学年度第一学期研究生网上选课的通知-研究生院",
+        "sourceName": "研究生院",
+        "originalUrl": "https://gwyjs.gdufs.edu.cn/info/1035/16113.htm",
+        "publishedAt": "2026-06-17",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "bc58cb266915a643e7f524dd18895469096f1d88602e5e5e7555a57fa388839a",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "content-acfe80d3-b5a2-41e1-a2e6-de8fa8dd8d03",
+        "name": "2026-2027学年度第一学期研究生网上选课的通知-研究生院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 939,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 66,
+      "candidateChunks": 68,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 4
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "广外一饭有什么好吃的",
+    "theme": "food",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "wx-425b0f0fd06c25b2e683e368d1200092652156cb",
+        "title": "信息i生活 |代码跑通前，先去食堂跑个“图”(文末附有树洞!!)",
+        "sourceName": "广外信息青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/arQdVXeT-FePfytz60vx4w",
+        "publishedAt": "2026-10-27T09:30:00.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "9111fd2db8369f0dabf81d0f3e8be43caded5e780cb0ec106b537a518db60671",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [],
+    "metrics": {
+      "rowsRead": 429,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 75,
+      "candidateChunks": 30,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 0
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 30
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "广外南苑宿舍怎么样",
+    "theme": "housing",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "wx-62d4d4e4adaada9fb34610020e420c462c048604",
+        "title": "投票 _ “寓”见美好——2026宿舍卫生评比开启，快来为心仪宿舍助力！",
+        "sourceName": "广外公管学院",
+        "originalUrl": "https://mp.weixin.qq.com/s/j3YTwsVseIouQQMHY_dJxw",
+        "publishedAt": "2026-10-01T05:13:14.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "1eb91dd83e28ec78d6a6f9bb2b1fc62338af98847f4647598b11d1d2e650f374",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [],
+    "metrics": {
+      "rowsRead": 28,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 55,
+      "candidateChunks": 2,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 0
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 2
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "广外二次元社团",
+    "theme": "club",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "wx-811207814ce54d87c27bdf67399f2b4164e2844d",
+        "title": "5.23无限漫协嘉年华预告，但是插入《AIZO》",
+        "sourceName": "广外无限漫协南校",
+        "originalUrl": "https://mp.weixin.qq.com/s/ZKnBrx4NrJCtNco6OGLPnw",
+        "publishedAt": "2026-05-20T05:14:00.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "33d00bded7cfd19faa3a6517e9600bf3e23ad12364aeb7933ee5bbabedb1e051",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-721de820ada2b933026791fe1423a404f7aec878",
+        "title": "周六晚，阶梯教室见｜国际部团委学生会&社团招新，寻找发光的你！",
+        "sourceName": "广外外校国际部",
+        "originalUrl": "https://mp.weixin.qq.com/s/-ym44JDstBtNJpf1nSIxLQ",
+        "publishedAt": "2026-09-17T03:07:32.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "811a9744c0af9d651ff6ab43d1a6889df929a3269697f972646dd14458450e03",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-7f3ebc318681d4213666254b16c6426b6723a78e",
+        "title": "2026年无限漫协原创大赛之60周年庆篇",
+        "sourceName": "广外无限漫协南校",
+        "originalUrl": "https://mp.weixin.qq.com/s/kYvty2YTgnf9caol5nRyLg",
+        "publishedAt": "2026-01-10T06:48:55.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "6ea2336368abcd085730897c1d8de01257b667133caf51f1fb53bfed1421acaa",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-6e8a66bbd11c158b5e8a58d8afd0ae12d3254f96",
+        "title": "漫协开始招新了喵，欢迎来玩喵",
+        "sourceName": "广外无限漫协南校",
+        "originalUrl": "https://mp.weixin.qq.com/s/kHx8NQItHEyYrSs20ueJ6A",
+        "publishedAt": "2026-09-16T06:23:58.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "a261cf54f14ba67a9efb2fc94909130f5e922e5fc0b99f028851a8c8e78a78b5",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "wx-7f3ebc318681d4213666254b16c6426b6723a78e",
+        "name": "2026年无限漫协原创大赛之60周年庆篇",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "wx-6e8a66bbd11c158b5e8a58d8afd0ae12d3254f96",
+        "name": "漫协开始招新了喵，欢迎来玩喵",
+        "startsAt": {
+          "raw": "2026年9月17日下午3:00",
+          "date": "2026-09-17",
+          "at": "2026-09-17T15:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": "2026年9月17日下午3:00"
+        },
+        "endsAt": {
+          "raw": "4:00",
+          "date": "2026-09-17",
+          "at": "2026-09-17T04:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "同一明确时间区间的起始日期",
+          "evidence": "4:00"
+        },
+        "registrationState": "closed"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 927,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 99,
+      "candidateChunks": 70,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 6
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": []
+  },
+  {
+    "query": "校园临时停水通知",
+    "theme": "outage",
+    "http": 200,
+    "hits": [],
+    "activities": [],
+    "metrics": {
+      "rowsRead": 49,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 45,
+      "candidateChunks": 2,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 0
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 2
+        }
+      ]
+    },
+    "warnings": ["未找到当前公开、版本及来源权限均可核验的相关资料。"]
+  },
+  {
+    "query": "广外有什么学科竞赛可以报名",
+    "theme": "competition",
+    "http": 200,
+    "hits": [
+      {
+        "documentId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6",
+        "title": "第二届多语种游戏翻译本地化与国际化大赛报名通知-广东外语外贸大学高级翻译学院",
+        "sourceName": "高级翻译学院",
+        "originalUrl": "https://sits.gdufs.edu.cn/info/1186/7406.htm",
+        "publishedAt": "2026-06-10",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "c5456287143e1e813ff90e3987238f738fcf3a7b28b693aad47a54a6624ef711",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "wx-bd88b09051b71222e99815a13d6a6c95db6e4743",
+        "title": "报名火热启动|“知校·爱校·荣校·强校”校史知识竞赛活动",
+        "sourceName": "广外研究生会",
+        "originalUrl": "https://mp.weixin.qq.com/s/kuYlVNfZ6ZVR1DSuKABfgw",
+        "publishedAt": "2026-05-08T02:18:15.000Z",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": false,
+        "excerptHash": "435cc540e8532ff9e5425a86d09c59991941c2b1577caaad28866af0b4360a8e",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-7370d5ce-60fe-4df2-a2da-5ee3a89638a7",
+        "title": "第二届多语种游戏翻译本地化与国际化大赛系列培训通知-广东外语外贸大学高级翻译学院",
+        "sourceName": "高级翻译学院",
+        "originalUrl": "https://sits.gdufs.edu.cn/info/1186/7546.htm",
+        "publishedAt": "2026-06-22",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "f70386dc02600ff1550427f152bed05492dba77393c3103726c20b720abec797",
+        "excerptStoredLocally": true
+      },
+      {
+        "documentId": "content-c38fc98a-e881-4682-9300-a67548535d85",
+        "title": "关于举办第十七届圣杰罗姆翻译竞赛英译中语种院内选拔赛的通知-广东外语外贸大学高级翻译学院",
+        "sourceName": "高级翻译学院",
+        "originalUrl": "https://sits.gdufs.edu.cn/info/1186/6326.htm",
+        "publishedAt": "2026-03-30",
+        "evidenceType": "full_text",
+        "bodyAvailable": true,
+        "official": true,
+        "excerptHash": "5f8773aaa89b091357a250047277e88872d9ea7069d4788b86ea4a9e39fdafa2",
+        "excerptStoredLocally": true
+      }
+    ],
+    "activities": [
+      {
+        "documentId": "content-26aac41d-07fa-4d6b-8086-fd40f119f4f6",
+        "name": "第二届多语种游戏翻译本地化与国际化大赛报名通知-广东外语外贸大学高级翻译学院",
+        "startsAt": {
+          "raw": "8月3日",
+          "date": "2026-08-03",
+          "at": null,
+          "timezone": "Asia/Shanghai",
+          "precision": "date",
+          "resolution": "day",
+          "inferred": true,
+          "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+          "evidence": "8月3日"
+        },
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "wx-bd88b09051b71222e99815a13d6a6c95db6e4743",
+        "name": "报名火热启动|“知校·爱校·荣校·强校”校史知识竞赛活动",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-7370d5ce-60fe-4df2-a2da-5ee3a89638a7",
+        "name": "第二届多语种游戏翻译本地化与国际化大赛系列培训通知-广东外语外贸大学高级翻译学院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      },
+      {
+        "documentId": "content-c38fc98a-e881-4682-9300-a67548535d85",
+        "name": "关于举办第十七届圣杰罗姆翻译竞赛英译中语种院内选拔赛的通知-广东外语外贸大学高级翻译学院",
+        "startsAt": null,
+        "endsAt": null,
+        "registrationState": "unknown"
+      }
+    ],
+    "metrics": {
+      "rowsRead": 941,
+      "rowsWritten": 0,
+      "queries": 3,
+      "durationMs": 90,
+      "candidateChunks": 84,
+      "usageAvailable": true,
+      "queryPlanVersion": "query-v2",
+      "recallLanes": [
+        {
+          "name": "title_subject",
+          "limit": 32,
+          "candidates": 20
+        },
+        {
+          "name": "expanded_subject",
+          "limit": 64,
+          "candidates": 64
+        }
+      ]
+    },
+    "warnings": []
+  }
+]

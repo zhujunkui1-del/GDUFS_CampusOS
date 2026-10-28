@@ -1,0 +1,764 @@
+{
+  "summary": {
+    "kind": "isolated_labelled_fixture",
+    "queries": 22,
+    "recallAt4": 0.9772727272727273,
+    "precisionAt4": 0.3181818181818182,
+    "precisionReturned": 1,
+    "knownPositiveMissRate": 0,
+    "supportedEvidenceRate": 1,
+    "meanLatencyMs": 10.082231818181878,
+    "maxCandidateChunks": 4,
+    "cloudMeteringAvailable": false
+  },
+  "rows": [
+    {
+      "query": "广外有什么体育比赛可以参加吗",
+      "purpose": "events",
+      "gold": ["sport", "old-sport", "badminton"],
+      "returned": ["old-sport", "badminton", "sport"],
+      "recall": 1,
+      "precisionAt4": 0.75,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 3,
+      "returnedEvidence": 3,
+      "latencyMs": 33.51580000000013,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 21,
+        "candidateChunks": 3,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 0
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 3
+          }
+        ]
+      }
+    },
+    {
+      "query": "广外体育赛事",
+      "purpose": "events",
+      "gold": ["sport", "old-sport", "badminton"],
+      "returned": ["old-sport", "badminton", "sport"],
+      "recall": 1,
+      "precisionAt4": 0.75,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 3,
+      "returnedEvidence": 3,
+      "latencyMs": 10.556099999999788,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 9,
+        "candidateChunks": 3,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 0
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 3
+          }
+        ]
+      }
+    },
+    {
+      "query": "广外有什么足球比赛",
+      "purpose": "events",
+      "gold": ["sport"],
+      "returned": ["sport"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 7.259300000000167,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 6,
+        "candidateChunks": 2,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 1
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "广外羽毛球比赛",
+      "purpose": "events",
+      "gold": ["badminton"],
+      "returned": ["badminton"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 5.8121000000001,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 5,
+        "candidateChunks": 2,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 1
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "图书馆怎么借书",
+      "purpose": "knowledge",
+      "gold": ["borrowing"],
+      "returned": ["borrowing"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 8.884500000000116,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 7,
+        "candidateChunks": 1,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 0
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "图书馆借阅规则",
+      "purpose": "knowledge",
+      "gold": ["borrowing"],
+      "returned": ["borrowing"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 8.139400000000023,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 7,
+        "candidateChunks": 2,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 1
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "校园卡补卡怎么办理",
+      "purpose": "knowledge",
+      "gold": ["card"],
+      "returned": ["card"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 6.647000000000389,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 6,
+        "candidateChunks": 3,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 1
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 2
+          }
+        ]
+      }
+    },
+    {
+      "query": "一卡通挂失",
+      "purpose": "knowledge",
+      "gold": ["card"],
+      "returned": ["card"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 6.475800000000163,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 6,
+        "candidateChunks": 2,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 0
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 2
+          }
+        ]
+      }
+    },
+    {
+      "query": "本科生奖学金申请条件",
+      "purpose": "knowledge",
+      "gold": ["scholar-policy", "scholar-window"],
+      "returned": ["scholar-policy"],
+      "recall": 0.5,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 7.403000000000247,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 6,
+        "candidateChunks": 4,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 2
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 2
+          }
+        ]
+      }
+    },
+    {
+      "query": "奖学金管理办法",
+      "purpose": "knowledge",
+      "gold": ["scholar-policy", "graduate-policy"],
+      "returned": ["graduate-policy", "scholar-policy"],
+      "recall": 1,
+      "precisionAt4": 0.5,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 2,
+      "returnedEvidence": 2,
+      "latencyMs": 8.024499999999989,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 7,
+        "candidateChunks": 4,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 2
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 2
+          }
+        ]
+      }
+    },
+    {
+      "query": "就业协议怎么办理",
+      "purpose": "knowledge",
+      "gold": ["agreement"],
+      "returned": ["agreement"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 8.800799999999981,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 8,
+        "candidateChunks": 2,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 1
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "三方协议流程",
+      "purpose": "knowledge",
+      "gold": ["agreement"],
+      "returned": ["agreement"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 7.575199999999768,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 7,
+        "candidateChunks": 1,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 0
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "科研项目管理办法",
+      "purpose": "knowledge",
+      "gold": ["research-policy"],
+      "returned": ["research-policy"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 7.523200000000088,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 7,
+        "candidateChunks": 2,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 1
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "科研项目申报",
+      "purpose": "events",
+      "gold": ["research-call", "research-policy"],
+      "returned": ["research-call", "research-policy"],
+      "recall": 1,
+      "precisionAt4": 0.5,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 2,
+      "returnedEvidence": 2,
+      "latencyMs": 44.21100000000024,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 6,
+        "candidateChunks": 4,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 2
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 2
+          }
+        ]
+      }
+    },
+    {
+      "query": "广外选课规则",
+      "purpose": "knowledge",
+      "gold": ["courses"],
+      "returned": ["courses"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 4.408599999999751,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 4,
+        "candidateChunks": 3,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 1
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 2
+          }
+        ]
+      }
+    },
+    {
+      "query": "大学城停水",
+      "purpose": "events",
+      "gold": ["water"],
+      "returned": ["water"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 3.5190999999999804,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 3,
+        "candidateChunks": 2,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 1
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "大学城停电",
+      "purpose": "events",
+      "gold": ["power"],
+      "returned": ["power"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 3.8814000000002125,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 3,
+        "candidateChunks": 1,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 0
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "广外一饭有什么好吃的",
+      "purpose": "knowledge",
+      "gold": ["food"],
+      "returned": ["food"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 6.616199999999935,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 6,
+        "candidateChunks": 2,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 1
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "广外南苑宿舍怎么样",
+      "purpose": "knowledge",
+      "gold": ["housing"],
+      "returned": ["housing"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 4.563800000000356,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 4,
+        "candidateChunks": 2,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 1
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "广外二次元社团",
+      "purpose": "knowledge",
+      "gold": ["club"],
+      "returned": ["club"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 5.858099999999922,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 5,
+        "candidateChunks": 1,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 0
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "广外学术讲坛",
+      "purpose": "events",
+      "gold": ["lecture"],
+      "returned": ["lecture"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 14.769399999999678,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 14,
+        "candidateChunks": 1,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 0
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    },
+    {
+      "query": "广外校园招聘会",
+      "purpose": "events",
+      "gold": ["recruitment"],
+      "returned": ["recruitment"],
+      "recall": 1,
+      "precisionAt4": 0.25,
+      "precisionReturned": 1,
+      "knownPositiveMiss": 0,
+      "supportedEvidence": 1,
+      "returnedEvidence": 1,
+      "latencyMs": 7.364800000000287,
+      "metrics": {
+        "rowsRead": 0,
+        "rowsWritten": 0,
+        "queries": 3,
+        "durationMs": 7,
+        "candidateChunks": 2,
+        "usageAvailable": false,
+        "queryPlanVersion": "query-v2",
+        "recallLanes": [
+          {
+            "name": "title_subject",
+            "limit": 32,
+            "candidates": 1
+          },
+          {
+            "name": "expanded_subject",
+            "limit": 64,
+            "candidates": 1
+          }
+        ]
+      }
+    }
+  ]
+}

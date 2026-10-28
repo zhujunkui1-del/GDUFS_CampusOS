@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-28",
+  "runtimeCommit": "45c0ce8",
+  "testCommit": "f77478b",
+  "baselineCommit": "7346bc9",
+  "apiTestVersion": "412a5700-5f31-4129-b0cf-d35c0663f032",
+  "desktopTestVersion": "412a5700-5f31-4129-b0cf-d35c0663f032",
+  "metadataTestVersion": "412a5700-5f31-4129-b0cf-d35c0663f032",
+  "previewVersion": "d8e61583-a80f-4a30-a987-f014dba508bb",
+  "cloudSearchVersion": "99a6d9e2-e18e-4a08-b50f-c59bdb52ad3d",
+  "mobileTestVersion": "39ae0bdf-2fe1-4fc2-8d08-2e35ce19b434",
+  "previewUrl": "https://campusos-preview.zhujunkui1.workers.dev",
+  "acceptance": "partial: retrieval regressions corrected; native Xiaohongshu verification blocks the mobile assertion; generation reliability still degrades to quotations",
+  "articleMutations": 0,
+  "databaseMigrations": 0,
+  "productionChanged": false,
+  "queryBudget": {
+    "lanes": 2,
+    "chunks": 96,
+    "publicDocuments": 32,
+    "resultLimit": 4
+  },
+  "sourceIdentity": "Original document IDs and HTML unchanged",
+  "api": {
+    "before": {
+      "queries": 20,
+      "rowsRead": 15889,
+      "rowsWritten": 0,
+      "meanRetrievalMs": 106.25,
+      "p50RetrievalMs": 86,
+      "p95RetrievalMs": 215,
+      "maxRowsRead": 1036,
+      "usageAvailable": true
+    },
+    "after": {
+      "queries": 20,
+      "rowsRead": 13445,
+      "rowsWritten": 0,
+      "meanRetrievalMs": 88,
+      "p50RetrievalMs": 88,
+      "p95RetrievalMs": 128,
+      "maxRowsRead": 1034,
+      "usageAvailable": true
+    }
+  },
+  "isolated": {
+    "before": {
+      "kind": "isolated_labelled_fixture",
+      "queries": 22,
+      "recallAt4": 0.8939393939393938,
+      "precisionAt4": 0.2727272727272727,
+      "precisionReturned": 0.6742424242424243,
+      "knownPositiveMissRate": 0.09090909090909091,
+      "supportedEvidenceRate": 0.6153846153846154,
+      "meanLatencyMs": 1.6806272727272822,
+      "maxCandidateChunks": 3,
+      "cloudMeteringAvailable": false
+    },
+    "after": {
+      "kind": "isolated_labelled_fixture",
+      "queries": 22,
+      "recallAt4": 0.9772727272727273,
+      "precisionAt4": 0.3181818181818182,
+      "precisionReturned": 1,
+      "knownPositiveMissRate": 0,
+      "supportedEvidenceRate": 1,
+      "meanLatencyMs": 10.082231818181878,
+      "maxCandidateChunks": 4,
+      "cloudMeteringAvailable": false
+    }
+  }
+}

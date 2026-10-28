@@ -1,0 +1,46 @@
+{
+  "unit": {
+    "total": 660,
+    "passed": 648,
+    "failed": 12,
+    "failedTests": [
+      "tests/unit/article-placement.test.ts > exclusive article placement and captured metadata publication > publishes captured metadata without an extra source auto-policy and keeps unknown original evidence private",
+      "tests/unit/article-placement.test.ts > exclusive article placement and captured metadata publication > moves published articles atomically with history, preserves original facts, and never clears withdrawal/rejection holds",
+      "tests/unit/article-placement.test.ts > exclusive article placement and captured metadata publication > returns real category facets under search independently of the selected category",
+      "tests/unit/console-store.test.ts > Console public content governance > withdraws through one authoritative gate and invalidation queue, preserving other sources",
+      "tests/unit/console-v2-intake.test.ts > V2 canonical intake and multiple discovery origins > enforces cutoff on a new origin, permits explicit history exemption and continues existing valid-source maintenance",
+      "tests/unit/console-v2-retention.test.ts > V2 whitelist, cutoff and bounded retention (disposable DB only) > preserves a prior manual withdrawal across cleanup and explicit whitelist restoration",
+      "tests/unit/console-v2-retention.test.ts > V2 whitelist, cutoff and bounded retention (disposable DB only) > requires both confirmations, purges bounded large payloads and blocks reintroduction without deleting parents/audit",
+      "tests/unit/console-v2-retention.test.ts > V2 whitelist, cutoff and bounded retention (disposable DB only) > enforces cutoff on every intake and permits only explicit whitelist history exemption",
+      "tests/unit/console-v2-simple-actions.test.ts > Console administrator simplification > imports administrator metadata and reviews without notes or invented publication dates; document versions resolve on the server",
+      "tests/unit/ingestion-pipeline.test.ts > bounded ingestion, real SQLite, isolated fixtures only > publishes eight captured metadata cards without creating unverified structured events",
+      "tests/unit/ingestion-pipeline.test.ts > bounded ingestion, real SQLite, isolated fixtures only > keeps metadata-only as default and limits explicitly licensed body extraction",
+      "tests/unit/ingestion-pipeline.test.ts > independent site parsing and safety > discovers same-column URLs, real next-page links, and leaves ambiguous dates unknown"
+    ],
+    "note": "Pre-existing failures in Console/intake/retention, not marked passed."
+  },
+  "typecheck": "passed",
+  "changedFilesEslint": "passed",
+  "previewBuild": "passed",
+  "desktopBrowser": {
+    "version": "412a5700-5f31-4129-b0cf-d35c0663f032",
+    "log": ["1 passed (1.7m)"]
+  },
+  "mobileBrowser": {
+    "version": "39ae0bdf-2fe1-4fc2-8d08-2e35ce19b434",
+    "passed": false,
+    "reason": "Native Xiaohongshu unavailable; no actual Xiaohongshu citation."
+  },
+  "assertionCorrection": {
+    "failurePreserved": true,
+    "reason": "The original pattern treated cannot confirm whether registration remains open as a positive claim; sentence-level uncertainty is now distinguished."
+  },
+  "procedureWindow": {
+    "redThenGreen": true,
+    "sqlProbeRowsRead": 8,
+    "sqlProbeRowsWritten": 0,
+    "finalGuideId": "wx-50f7e8e90985ace6005ee12960dc95b9a819b99b",
+    "finalApiContainsEntry": true
+  },
+  "productionChanged": false
+}
