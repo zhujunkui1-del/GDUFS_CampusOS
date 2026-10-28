@@ -40,6 +40,7 @@ export function meteredClient(
     finalSystem?: () => string;
     validateFinal?: (text: string) => string | undefined;
     groundingEvidence?: (answer: string) => unknown | undefined;
+    isolateFinalEvidence?: boolean;
   } = {},
 ) {
   let requests = 0,
@@ -188,7 +189,11 @@ export function meteredClient(
             ? [
                 { role: "system", content: options.finalSystem() },
                 ...request.messages.filter(
-                  (message) => message.role !== "system",
+                  (message) =>
+                    message.role !== "system" &&
+                    (!options.isolateFinalEvidence ||
+                      message.role !== "assistant" ||
+                      !!message.tool_calls?.length),
                 ),
               ]
             : request.messages;

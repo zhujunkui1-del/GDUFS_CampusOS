@@ -425,6 +425,7 @@ export async function chatResponse(request: Request) {
       () => personaPrompt(personaMessage, persona.preference, history.messages),
       {
         finalSystem: () => finalSystemInstructions(),
+        isolateFinalEvidence: content.active && !content.map,
         groundingEvidence: (answer) => {
           if (!content.active || content.map || !answerCards().length)
             return undefined;

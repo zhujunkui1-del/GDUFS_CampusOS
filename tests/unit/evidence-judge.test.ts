@@ -50,6 +50,8 @@ it("checks claim-to-source support before streaming and repairs a real cross-tur
       1024,
       undefined,
       {
+        isolateFinalEvidence: true,
+        finalSystem: () => "Only current tool evidence is factual.",
         groundingEvidence: () => ({
           question: "羽毛球还能报名吗",
           sources: [
@@ -64,7 +66,13 @@ it("checks claim-to-source support before streaming and repairs a real cross-tur
     );
     const emit = vi.fn();
     const answer = await bounded.client.generateWithTools({
-      messages: [{ role: "user", content: "那羽毛球还能报名吗" }],
+      messages: [
+        {
+          role: "assistant",
+          content: "Old answer: school games are source 5.",
+        },
+        { role: "user", content: "那羽毛球还能报名吗" },
+      ],
       tools: [],
       maxTokens: 1024,
       signal: new AbortController().signal,
@@ -73,6 +81,11 @@ it("checks claim-to-source support before streaming and repairs a real cross-tur
     expect(answer.content).toContain("羽毛球");
     expect(emit.mock.calls.flat().join("")).not.toContain("校运会");
     expect(client.requests).toHaveLength(4);
+    expect(
+      client.requests[0].messages.some(
+        (m) => m.role === "assistant" && m.content?.includes("Old answer"),
+      ),
+    ).toBe(false);
     expect(bounded.metrics()).toMatchObject({
       requests: 4,
       groundingChecks: 2,
