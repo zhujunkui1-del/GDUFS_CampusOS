@@ -1189,3 +1189,9 @@ Preview最新162893b9-d2c5-4f11-8918-7dd9e5220fab。后台公众号78+服务号2
 新增 `conversation-act.ts` 封闭行为分类（闲聊/困惑/纠正/一般/校园），`content-intent` 按“知识/动态/官方核实/显式搜索/仅内部/校园实体”决定检索并输出 `answerRequirement`；`content-prompt` 新增 `directInstructions` 与建议类边界；`chat.ts` 仅让 strict 走证据短路，非内容轮改用直接回答指令，指标新增 `conversationAct`/`answerRequirement`。反馈类轮次不再当检索关键词。
 
 新增11项测试（8路由+3真实`chatResponse`）：角色扮演0工具1模型请求、住宿建议仍检索但由模型回答且无固定拒答、严格事实空库仍`no_evidence`。全量671项659通过、12项既有失败不变；typecheck、改动文件ESLint、Prettier通过；Preview构建退出码0（OpenNext+`wrangler deploy --dry-run`+1427文件凭据扫描）。未部署：Wrangler登录过期且非交互、`CLOUDFLARE_ACCOUNT_ID`未配置；本地workerd因`miniflare-email-store`拒绝访问无法启动；本机无Step密钥，未做真实模型质量验收。详见 `AGENT_CONVERSATION_RECOVERY_2026_10_29.md`。
+
+### 2026-10-29 第二轮：线上真实反馈修复
+
+负责人提供的Preview真实对话暴露旧版本问题。地图数据实际存在`又康超市`与`文采园（一饭）`，但地点识别不含超市/一饭与「在哪」，未调用`search_places`；辱骂整句未在对话列表而回落检索；证据门禁与摘录使用生硬固定文案；外部检索未拦截跨地域同名词（北京广外医院）与他校讲座（复旦）；最终提示缺少分点/前置结论约束；聊天滚动effect依赖status导致任何状态变化都回到底部。
+
+本轮扩展地点识别与强制地图工具；辱骂作为反馈不检索；`evidenceFallback`/`retrievedEvidenceAnswer` 增加日常人格分支并去掉说教长句；外部结果新增校园范围过滤（非官方域名须含广外/南校/北校/大学城，标题含外地地名则拒绝，未写校名时检索自动补校名）；回答阶段要求结论前置、`1. 2. 3.`每项一行、禁止「已找到相关原文」开头；滚动改为仅底部96px内跟随，发送时回到底部。新增5项回归；相关105项通过，全量676项664通过/12既有失败，无新增失败；typecheck、改动lint、Prettier、Preview构建退出码0。仍未部署。20条保留窗口未改，需负责人确认后单独实施。
