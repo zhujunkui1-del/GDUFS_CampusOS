@@ -431,6 +431,13 @@ export async function chatResponse(request: Request) {
           const citations = new Set(
             [...answer.matchAll(/[\[【]来源\s*(\d+)[\]】]/g)].map((m) => +m[1]),
           );
+          const citedDocuments = new Set(
+            answerCards().flatMap((c, i) =>
+              c.kind === "source" && (!citations.size || citations.has(i + 1))
+                ? [c.documentId]
+                : [],
+            ),
+          );
           return {
             question: content.query,
             now: new Date().toISOString(),
@@ -448,6 +455,7 @@ export async function chatResponse(request: Request) {
                     documentId: c.kind === "source" ? c.documentId : undefined,
                     title: c.title,
                     publishedAt: c.publishedAt,
+                    validity: c.kind === "source" ? c.validity : "unknown",
                     evidenceType:
                       c.kind === "source" ? c.evidenceType : c.evidenceKind,
                     authority:
@@ -463,6 +471,7 @@ export async function chatResponse(request: Request) {
               .slice(0, 12),
             activities: contentResults
               .flatMap((r) => r.activities)
+              .filter((a) => citedDocuments.has(a.documentId))
               .map((a) => ({
                 documentId: a.documentId,
                 name: a.name,
