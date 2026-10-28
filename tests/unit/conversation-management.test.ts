@@ -118,11 +118,11 @@ describe("owned multi-conversation state and atomic deletion", () => {
     const a = await identity(),
       first = await store.conversation(a);
     await store.append(first, "user", "第一条标题");
-    for (let i = 0; i < 21; i++) await store.append(first, "user", `后续${i}`);
+    for (let i = 0; i < 41; i++) await store.append(first, "user", `后续${i}`);
     await store.conversation(a);
     expect((await store.latest(a))?.id).toBe(first.id);
     expect((await store.history(a, first.id)).title).toBe("第一条标题");
-    expect((await store.history(a, first.id)).messages).toHaveLength(20);
+    expect((await store.history(a, first.id)).messages).toHaveLength(40);
   });
   it("sorts and paginates by update time/id without reading all messages", async () => {
     const a = await identity(),

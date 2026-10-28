@@ -100,7 +100,7 @@ it("binds local dates and publication/event roles without pretending publication
 });
 const open: ReturnType<typeof sqliteD1>[] = [];
 afterEach(() => open.splice(0).forEach((f) => f.close()));
-it("stores separate owner-scoped preferences beyond the 20-message history and removes them with conversation", async () => {
+it("stores separate owner-scoped preferences beyond the history window and removes them with conversation", async () => {
   const f = sqliteD1();
   open.push(f);
   const store = new AssistantStore(f.db);
@@ -108,7 +108,7 @@ it("stores separate owner-scoped preferences beyond the 20-message history and r
   const conversation = await store.conversation(user);
   const off = personaControl("别演了").preference;
   await store.setPersona(user, conversation.id, off);
-  for (let i = 0; i < 24; i++)
+  for (let i = 0; i < 44; i++)
     await store.append(
       conversation,
       i % 2 ? "assistant" : "user",
@@ -118,7 +118,7 @@ it("stores separate owner-scoped preferences beyond the 20-message history and r
     off,
   );
   const history = await store.history(user, conversation.id);
-  expect(history.messages).toHaveLength(20);
+  expect(history.messages).toHaveLength(40);
   expect(history.messages.some((m) => m.text.includes('"enabled"'))).toBe(
     false,
   );
