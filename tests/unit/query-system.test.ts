@@ -194,6 +194,12 @@ it("preserves previously unknown subject modifiers, independently of the broad e
       title: "羽毛球男子单打比赛",
     }).relevant,
   ).toBe(false);
+  expect(
+    queryRelevance(buildQueryPlan("羽毛球比赛还能报名吗"), {
+      title: "新生生活地图",
+      contentSnippet: "学生可以参加羽毛球协会，学校有羽毛球场。",
+    }).relevant,
+  ).toBe(false);
 });
 it("does not bind several months of an index page to one event or turn a start into closure", () => {
   expect(

@@ -361,6 +361,17 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
     )
   )
     return { relevant: false, score: 0, reason: "notice_action_missing" };
+  if (
+    ["registration", "participation"].includes(plan.goal) &&
+    plan.topics.some((t) =>
+      ["sports", "lecture", "competition"].includes(t.id),
+    ) &&
+    !/比赛|赛事|竞赛|联赛|运动会|讲座|论坛|讲坛|大赛|杯|报名|预告|对阵|通知/.test(
+      title,
+    ) &&
+    !/(?:报名|活动|比赛|讲座)(?:时间|截止|地点)|定于20\d{2}/.test(body)
+  )
+    return { relevant: false, score: 0, reason: "event_opportunity_missing" };
   if (goalEvidence[plan.goal] && !goalEvidence[plan.goal]!.test(text))
     return { relevant: false, score: 0, reason: "goal_evidence_missing" };
   const score =

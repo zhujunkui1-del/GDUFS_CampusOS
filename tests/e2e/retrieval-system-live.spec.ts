@@ -73,6 +73,9 @@ test("real retrieval, official supplements, contextual follow-ups and citations"
     ).toBe(false);
     if (info.project.name === "desktop") {
       const follow = await ask("那羽毛球呢，现在还能报名吗？");
+      expect(
+        follow.cards.some((c) => /生活地图|财务管理专业/.test(c.title)),
+      ).toBe(false);
       expect(follow.response).toMatch(/羽毛球|报名|截止/);
       expect(follow.response).not.toMatch(/仍在报名|可以直接报名|现在就能报名/);
       await ask("广外图书馆怎么借书？");
