@@ -80,7 +80,9 @@ it("checks claim-to-source support before streaming and repairs a real cross-tur
       promptTokens: 40,
       completionTokens: 40,
     });
-    expect(client.requests[1].tools).toEqual([]);
+    expect(client.requests[1].tools.map((t) => t.function.name)).toEqual([
+      "report_evidence_verdict",
+    ]);
   } finally {
     f.close();
   }

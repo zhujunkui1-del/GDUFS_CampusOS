@@ -445,6 +445,7 @@ export async function chatResponse(request: Request) {
                 return [
                   {
                     citation: index + 1,
+                    documentId: c.kind === "source" ? c.documentId : undefined,
                     title: c.title,
                     publishedAt: c.publishedAt,
                     evidenceType:
@@ -468,6 +469,7 @@ export async function chatResponse(request: Request) {
                 startsAt: a.startsAt,
                 endsAt: a.endsAt,
                 registrationState: a.registrationState,
+                registrationWindows: a.registrationWindows,
                 eventStatus: a.eventStatus,
               })),
           };

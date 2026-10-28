@@ -10,7 +10,11 @@ import type { MapAction } from "@/domain/maps/contracts";
 import { ControlMapInputSchema } from "@/domain/maps/skill-contracts";
 import type { ContentTool } from "./content-intent";
 import { containsToolProtocol } from "@/lib/assistant-output";
-import { evidenceCheckMessages, parseEvidenceVerdict } from "./evidence-check";
+import {
+  evidenceCheckMessages,
+  parseEvidenceVerdict,
+  EVIDENCE_VERDICT_TOOL,
+} from "./evidence-check";
 type RequiredTool =
   | "control_map"
   | "search_places"
@@ -88,7 +92,11 @@ export function meteredClient(
     try {
       const checked = await client.generateWithTools({
         messages,
-        tools: [],
+        tools: [EVIDENCE_VERDICT_TOOL],
+        toolChoice: {
+          type: "function",
+          function: { name: EVIDENCE_VERDICT_TOOL.function.name },
+        },
         maxTokens,
         signal,
       });
@@ -103,8 +111,16 @@ export function meteredClient(
         outputBudgetUsed += maxTokens;
         budgetUsed += upper + maxTokens;
       }
-      if (checked.toolCalls.length) throw Error("judge_tool_protocol");
-      const verdict = parseEvidenceVerdict(checked.content);
+      if (
+        checked.toolCalls.length > 1 ||
+        checked.toolCalls.some(
+          (c) => c.function.name !== EVIDENCE_VERDICT_TOOL.function.name,
+        )
+      )
+        throw Error("judge_tool_protocol");
+      const verdict = parseEvidenceVerdict(
+        checked.toolCalls[0]?.function.arguments || checked.content,
+      );
       groundingResults.push(verdict);
       await store.running(owner, runId);
       if (!verdict.supported) {
