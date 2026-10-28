@@ -987,6 +987,34 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         );
                         if (fallback) {
                           evidenceGateUsed = true;
+                          const metadata = [...cards.entries()]
+                            .filter(
+                              ([, c]) =>
+                                (c.kind === "source" &&
+                                  c.evidenceType === "metadata") ||
+                                (c.kind === "external_source" &&
+                                  c.evidenceKind === "title_only"),
+                            )
+                            .slice(0, 3);
+                          if (metadata.length) {
+                            cards.clear();
+                            metadata.forEach(([key, c]) => cards.set(key, c));
+                            const ids = new Set(
+                              metadata.flatMap(([, c]) =>
+                                c.kind === "source" ? [c.documentId] : [],
+                              ),
+                            );
+                            for (const id of evidence.keys())
+                              if (!ids.has(id)) evidence.delete(id);
+                            answerMode = "metadata_discovery";
+                            return (
+                              "找到了以下相关标题：\n" +
+                              metadata
+                                .map(([, c], i) => `- ${c.title}[来源${i + 1}]`)
+                                .join("\n") +
+                              "\n目前仅有标题线索，尚未取得足以回答具体内容的正文；时间、条件或规则暂不能据此确认。"
+                            );
+                          }
                           answerMode = "no_evidence";
                           cards.clear();
                           evidence.clear();

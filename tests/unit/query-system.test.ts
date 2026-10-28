@@ -168,6 +168,14 @@ it("represents follow-up context and goal separately from subjects", () => {
 });
 it("preserves previously unknown subject modifiers, independently of the broad event words", () => {
   expect(
+    queryRelevance(buildQueryPlan("云山学术沙龙414期"), {
+      title: "云山学术沙龙412期",
+    }).relevant,
+  ).toBe(false);
+  expect(
+    queryRelevance(buildQueryPlan("F101讲座"), { title: "F102讲座" }).relevant,
+  ).toBe(false);
+  expect(
     queryRelevance(buildQueryPlan("人工智能讲座"), {
       title: "金融学讲座预告",
       contentSnippet: "经济分析",

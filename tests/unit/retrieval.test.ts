@@ -60,6 +60,38 @@ it("starts a directly matched procedural guide at its beginning instead of a key
     f.close();
   }
 });
+it("does not let many matching chunks of one document consume the title candidate lane", async () => {
+  const f = await dateGateFixture();
+  try {
+    await article(
+      f,
+      "借书热门榜单，推荐《操作指南》。".repeat(3000),
+      "long-distractor",
+      false,
+      "https://example.invalid/long",
+      "借书",
+    );
+    await article(
+      f,
+      "第一步持本人校园卡到总服务台借书。" +
+        "办理前请核对个人资料。".repeat(100),
+      "actual-guide",
+      false,
+      "https://example.invalid/actual",
+      "借书办理指南",
+    );
+    await ensureRetrievalIndex(f.db, "long-distractor");
+    await ensureRetrievalIndex(f.db, "actual-guide");
+    const r = await new D1KeywordRetriever(f.db).retrieve(
+      { query: "怎么借书", limit: 4 },
+      PUBLIC_RETRIEVAL_SCOPE,
+    );
+    expect(r.hits.map((h) => h.documentId)).toContain("actual-guide");
+    expect(r.metrics.candidateChunks).toBeLessThanOrEqual(96);
+  } finally {
+    f.close();
+  }
+}, 15000);
 it("searches actual body chunks, uses authoritative gates, preserves HTML, and an unchanged index writes nothing", async () => {
   const f = await dateGateFixture();
   try {

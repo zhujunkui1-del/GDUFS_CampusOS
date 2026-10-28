@@ -175,7 +175,13 @@ export function buildQueryPlan(
       " ",
     );
   const modifiers = [
-    ...new Set(residual.match(/[\p{Script=Han}]{2,}|[A-Za-z]{2,}/gu) || []),
+    ...new Set([
+      ...(residual.match(/[\p{Script=Han}]{2,}|[A-Za-z][A-Za-z0-9]{1,}/gu) ||
+        []),
+      ...[...positive.matchAll(/(?<!\d)\d{2,4}(?:期|届|轮|批|场|讲)/g)].map(
+        (m) => m[0],
+      ),
+    ]),
   ]
     .filter(
       (t) =>
