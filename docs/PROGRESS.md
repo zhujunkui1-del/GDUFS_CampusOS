@@ -1243,3 +1243,11 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 首次回填全部失败，D1记录的原始错误为`VECTOR_UPSERT_ERROR (code = 40008): id too long; max is 64 bytes, got 67 bytes`；改用chunk id的SHA-256前32 hex作向量ID，chunk id放metadata，查询时校验索引版本。真实回填128个chunk ready，Vectorize索引计数随后达到64。云山学者查询出现`semantic:24`候选、`candidateChunks:34`，名单仍为24人、0模型调用。
 
 真实验收另发现：`宿舍上网`两词查询触发`search_campus_knowledge`失败（`宿舍`单独、`校园网怎么连`正常），单列为待排查问题；`学校哪里可以锻炼身体`原先被闸门判无关，已把`学校|校园`纳入校园信号。全量690项678通过/12项既有失败；typecheck 0；Preview部署`896ce33c-e730-419b-9692-1327bdfd6afa`。地图问答浏览器回执与20条会话保留窗口仍未处理。
+
+### 2026-10-29 第九轮：final 阶段误拒与过宽漏召回否定修复
+
+`学校哪里可以锻炼身体` 在混合检索上线后仍稳定降级为原文摘录：`MODEL_SERVICE_UNAVAILABLE`、`groundingChecks=0`。用 `wrangler tail` 抓取 `FINAL_REJECTED` 后确认，根因既不是模型超时，也不是证据校验，而是 `falseNegativeAnswer` 的首条规则：答案没有 `[来源 n]` 且出现任意“没有/未查到”，就被判成“否定相关文章存在”。`学校…没有查到具体开放时间` 因此被连续拒绝两次，抛错后降级为摘录。
+
+修复：`falseNegativeAnswer` 只把“否定相关材料本身”（相关信息/资料/文章、活动/赛事/讲座/通知/名单/安排）视为漏召回；对开放时间、设施配置等具体缺口不再误判。`containsToolProtocol` 不再匹配裸工具名，只匹配调用语法与协议标签；新增 `stripToolProtocol`，final 阶段先做一次结构清洗，清洗后仍有有效正文就保留答案，只有空文本或仍含协议时才进入修复/降级。final 拒绝时输出 `FINAL_REJECTED` 结构化服务端告警，便于下次直接定位。
+
+复测：`学校哪里可以锻炼身体` → `answerMode=model`，`groundingChecks=1`、`supported=true`，答案包含通用锻炼建议、网球赛事证据与 `[1] 标题 - URL` 来源，不再原文摘录。全量 692 项 680 通过 / 12 项既有失败；Preview 部署 `6d2a22a6-0807-4834-99f3-2c092a6d9447`。地图问答浏览器回执与 20 条会话保留窗口仍未处理。

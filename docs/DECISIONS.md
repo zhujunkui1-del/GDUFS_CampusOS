@@ -840,3 +840,16 @@ FTS5仍是唯一权威召回，向量只作补充通道。索引`campusos-chunks
 回填由Preview cron每分钟最多32个chunk，失败写入`vector_chunk_state`并在3次内重试；`VECTOR_BACKFILL`与`HYBRID_RETRIEVAL`两个Preview变量控制，Production无此绑定。首次回填暴露Vectorize向量ID上限64字节（错误`40008`），改为chunk id的SHA-256前16字节（32 hex）作向量ID，原chunk id放metadata并在查询时校验`indexVersion`。真实回填128个chunk全部ready；云山学者查询的`retrieval.recallLanes`出现`semantic:24`、`candidateChunks:34`，抽取式名单仍为24人。
 
 已知未解：`宿舍上网`这类两词组合仍会让`search_campus_knowledge`抛`UPSTREAM_ERROR`（`宿舍`单独、`校园网怎么连`均正常），需单独排查FTS查询计划；`学校哪里可以锻炼身体`此前被闸门判无关，已把`学校|校园`加入校园信号。地图问答浏览器回执与20条会话保留窗口仍未处理。
+
+## D-099｜final 阶段误拒与过宽漏召回否定修复（2026-10-29）
+
+`学校哪里可以锻炼身体` 在检索正确、证据充分的情况下仍输出原文摘录，指标为 `MODEL_SERVICE_UNAVAILABLE`、`groundingChecks=0`。`wrangler tail` 的 `FINAL_REJECTED` 显示实际触发者是 `falseNegativeAnswer`：其首条规则在答案没有 `[来源 n]` 时，把任意“没有/未查到”当作“否定相关文章存在”，于是“没有查到具体开放时间”这样的合理缺口被连续拒绝两次，最终降级。
+
+决定：
+
+- `falseNegativeAnswer` 只匹配“否定相关材料本身”的表述（相关信息/资料/文章、活动/赛事/讲座/通知/名单/安排）；具体开放时间、收费、设备等缺口属于诚实限制，不再判为漏召回否定。
+- `containsToolProtocol` 只认协议标签、`tool_calls` JSON 与“工具名+调用括号”，裸工具名出现在自然语言中不算泄漏。
+- final 阶段先执行 `stripToolProtocol` 结构清洗；清洗后仍有有效正文则直接使用，避免把格式瑕疵升级成整轮失败。仅当清洗为空或仍含协议时才进入 repair 与摘录降级。
+- final 被拒时记录 `FINAL_REJECTED`（只含 issue 与字符数，不含用户正文与服务端密钥），作为后续定位依据。
+
+验证：同一问句 `answerMode=model`、`groundingChecks=1`、`supported=true`；全量 692 项 680 通过、12 项既有失败；Preview `6d2a22a6-0807-4834-99f3-2c092a6d9447`。

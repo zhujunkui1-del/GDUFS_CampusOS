@@ -9,7 +9,10 @@ import type { AssistantStore } from "./store";
 import type { MapAction } from "@/domain/maps/contracts";
 import { ControlMapInputSchema } from "@/domain/maps/skill-contracts";
 import type { ContentTool } from "./content-intent";
-import { containsToolProtocol } from "@/lib/assistant-output";
+import {
+  containsToolProtocol,
+  stripToolProtocol,
+} from "@/lib/assistant-output";
 import {
   evidenceCheckMessages,
   parseEvidenceVerdict,
@@ -330,11 +333,23 @@ export function meteredClient(
         }
         if (final && !reply.content.trim() && streamedText.trim())
           reply = { ...reply, content: streamedText };
-        const outputIssue =
+        let outputIssue =
           (!reply.toolCalls.length &&
             (containsToolProtocol(reply.content) ||
               containsToolProtocol(streamedText))) ||
           (final && reply.toolCalls.length > 0);
+        if (final && outputIssue) {
+          // A leaked tool-call fragment is a formatting defect, not a reason to
+          // discard an otherwise usable answer. Strip it once; only an empty or
+          // still-corrupt result goes through the repair/fallback path.
+          const cleaned = stripToolProtocol(
+            reply.content.trim() || streamedText,
+          );
+          if (cleaned && !containsToolProtocol(cleaned)) {
+            reply = { ...reply, content: cleaned, toolCalls: [] };
+            outputIssue = false;
+          }
+        }
         let answerIssue =
           final && !outputIssue
             ? options.validateFinal?.(reply.content)
@@ -342,6 +357,14 @@ export function meteredClient(
         if (final && !outputIssue && !answerIssue && reply.content.trim())
           answerIssue = await checkEvidence(reply.content, request.signal);
         if (outputIssue || answerIssue) {
+          console.warn(
+            "FINAL_REJECTED",
+            JSON.stringify({
+              outputIssue,
+              answerIssue: answerIssue || null,
+              chars: reply.content.length,
+            }),
+          );
           if (!answerRepairRetries) {
             answerRepairRetries++;
             repairInstruction = final

@@ -154,20 +154,10 @@ export function falseNegativeAnswer(
 ) {
   const assessment = assessEvidence(query, results);
   if (!assessment.relatedDocuments.length) return false;
-  if (
-    !/[\[【]来源\s*\d+/.test(answer) &&
-    /(?:没有|未(?:能)?(?:找到|查到|检索到)|没(?:找到|查到))/.test(answer)
-  )
-    return true;
-  // Missing a verified current window is a valid limit, not a claim that no
-  // related articles exist. Do not reject honest uncertainty about eligibility.
-  if (
-    /没有|未(?:能)?(?:找到|查到|检索到)|没(?:找到|查到)/.test(answer) &&
-    /截止|仍可|还能|当前可|确认|报名状态|报名时间|开放/.test(answer) &&
-    !/均为学科/.test(answer)
-  )
-    return false;
-  return /(?:没有|未(?:能)?(?:找到|查到|检索到)|没(?:找到|查到))[^。\n]{0,30}(?:相关(?:信息|资料|文章)|体育(?:比赛|赛事)|赛事(?:信息|通知)|讲座(?:信息|通知)|借阅(?:规则|指南))|均为学科类竞赛/.test(
+  // Only a denial about the *related material itself* is a recall failure.
+  // "没有具体开放时间" / "没有空调" are honest limitations, not claims that
+  // the retrieved articles do not exist.
+  return /(?:没有|未(?:能)?(?:找到|查到|检索到)|没(?:找到|查到))[^。\n]{0,20}(?:相关(?:信息|资料|文章)|(?:活动|赛事|讲座|通知|名单|安排)(?:信息|通知|文章|资料)?)/.test(
     answer,
   );
 }

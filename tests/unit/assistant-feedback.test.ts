@@ -1,4 +1,8 @@
 import { expect, it, vi } from "vitest";
+import {
+  containsToolProtocol,
+  stripToolProtocol,
+} from "@/lib/assistant-output";
 import { requiresPlaceLookup } from "@/lib/server/assistant/intent";
 import { contentIntent } from "@/lib/server/assistant/content-intent";
 import { dialogueReply } from "@/lib/server/assistant/dialogue";
@@ -167,3 +171,24 @@ it("renders one extractive roster list instead of generated prose", () => {
   expect(answer).toContain("https://jingmao.gdufs.edu.cn/szdw/ysxz.htm");
   expect(rosterEvidenceAnswer([], true)).toBeUndefined();
 });
+
+it("treats bare tool names in prose as normal language", () => {
+  const prose = "本鱼用 search_campus_knowledge 查了体育场馆，信息如下。";
+  expect(containsToolProtocol(prose)).toBe(false);
+});
+
+it("detects and strips text-mode tool-call leakage", () => {
+  const simulated = 'search_campus_knowledge({"query":"体育场馆"})';
+  expect(containsToolProtocol(simulated)).toBe(true);
+  expect(stripToolProtocol(simulated)).toBe("");
+  expect(
+    containsToolProtocol("<tool_call>search_places</tool_call>正常答案"),
+  ).toBe(true);
+  expect(
+    stripToolProtocol("<tool_call>search_places</tool_call>正常答案"),
+  ).toBe("正常答案");
+  expect(
+    containsToolProtocol('{"tool_calls":[{"function":"control_map"}]}'),
+  ).toBe(true);
+});
+

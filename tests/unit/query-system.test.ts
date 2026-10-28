@@ -431,6 +431,16 @@ it("distinguishes failed recall, irrelevant candidates, metadata, and missing de
       [found],
     ),
   ).toBe(false);
+  expect(
+    falseNegativeAnswer(
+      "学校有体育馆和操场，但没有查到具体开放时间。",
+      "学校哪里可以锻炼身体",
+      [found],
+    ),
+  ).toBe(false);
+  expect(
+    falseNegativeAnswer("没有相关文章或通知。", "体育比赛", [found]),
+  ).toBe(true);
 });
 it("does not turn a missing indexed date, cutoff or capacity into availability", () => {
   const analysis = analyzeArticle({
