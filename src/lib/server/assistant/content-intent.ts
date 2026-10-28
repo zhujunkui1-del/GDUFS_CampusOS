@@ -4,7 +4,14 @@ import { requestTimeWindow } from "./time-window";
 import { dialogueReply } from "./dialogue";
 import { campusFoodQuery, queryFocus } from "@/lib/retrieval/query-focus";
 import { buildQueryPlan } from "@/lib/retrieval/query-plan";
+import {
+  conversationAct,
+  isFeedbackAct,
+  type ConversationAct,
+} from "./conversation-act";
 export type ContentTool = "search_campus_knowledge" | "search_campus_events";
+/** Campus facts need evidence; advice may use general knowledge with a clear gap. */
+export type AnswerRequirement = "strict" | "advisory" | "open";
 /** Routing only; relevance, classification and dates still come from real tools. */
 export function contentIntent(
   message: string,
@@ -58,24 +65,51 @@ export function contentIntent(
       query,
     );
   const map = /(?:地图|定位|路线|导航|在哪里|告诉我.*哪里)/.test(message);
-  const tools: ContentTool[] = [];
-  if (knowledge) tools.push("search_campus_knowledge");
-  if (events) tools.push("search_campus_events");
-  if (
+  // Feedback about the previous answer must not become a new search keyword;
+  // otherwise campus context from the resolved follow-up query decides the act.
+  const messageAct = conversationAct(message);
+  const act: ConversationAct = isFeedbackAct(messageAct)
+    ? messageAct
+    : conversationAct(query);
+  const policy = externalPolicy(query);
+  const search =
     !reply &&
-    !tools.length &&
-    (externalPolicy(query).active ||
-      /只用内部|只查内部|仅用内部|仅查内部/.test(query))
-  )
-    tools.push("search_campus_knowledge");
+    !urgent &&
+    !isFeedbackAct(act) &&
+    (knowledge ||
+      events ||
+      policy.needsOfficialVerification ||
+      policy.explicit ||
+      /只用内部|只查内部|仅用内部|仅查内部/.test(query) ||
+      (act === "campus" && policy.active));
+  const tools: ContentTool[] = [];
+  if (search) {
+    if (knowledge) tools.push("search_campus_knowledge");
+    if (events) tools.push("search_campus_events");
+    if (!tools.length) tools.push("search_campus_knowledge");
+  }
+  const strictFact =
+    knowledge ||
+    events ||
+    policy.officialOnly ||
+    policy.needsOfficialVerification;
+  const answerRequirement: AnswerRequirement = strictFact
+    ? "strict"
+    : /注意|建议|经验|攻略|推荐|怎么(?:准备|选|办|避免)|如何(?:准备|选择|避免)|要不要|该不该|怎么办|技巧|注意事项|合适吗|值得吗/.test(
+          query,
+        )
+      ? "advisory"
+      : "open";
   return {
-    active: !reply && !urgent && tools.length > 0,
-    tools: reply || urgent ? [] : tools,
+    active: search && tools.length > 0,
+    tools,
     query: query.slice(-300),
     map,
     timeWindow,
     dialogueReply: reply,
     focus: queryFocus(query),
     queryPlan: buildQueryPlan(query, timeWindow),
+    act,
+    answerRequirement,
   };
 }
