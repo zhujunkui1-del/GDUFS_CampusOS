@@ -20,7 +20,8 @@ export function completeSnippetTimes(
   if (
     !m ||
     !/举办|举行|比赛|讲座|运动会|活动/.test(m[0]) ||
-    /报名|截止|申请|提交/.test(m[0].slice(0, 20))
+    /报名|截止|申请|提交/.test(m[0].slice(0, 20)) ||
+    /日(?:之后|以后|起)|预计|左右/.test(m[0])
   )
     return analysis;
   const make = (month: string, day: string): ArticleTimePoint | null => {

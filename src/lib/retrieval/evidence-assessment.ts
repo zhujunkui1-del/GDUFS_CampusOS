@@ -10,15 +10,15 @@ export function activityAvailability(a: Activity, now = Date.now()) {
     !!t && (t.at ? Date.parse(t.at) > now : !!t.date && t.date > today);
   const eventState = ["cancelled", "postponed"].includes(a.eventStatus)
     ? a.eventStatus
-    : a.eventStatus === "ended" ||
-        before(a.endsAt) ||
-        (!a.endsAt && before(a.startsAt))
+    : a.eventStatus === "ended" || before(a.endsAt)
       ? "ended"
-      : after(a.startsAt)
-        ? "upcoming"
-        : a.startsAt && a.endsAt && !after(a.startsAt) && !before(a.endsAt)
-          ? "ongoing"
-          : "unknown";
+      : !a.endsAt && before(a.startsAt)
+        ? "started_end_unknown"
+        : after(a.startsAt)
+          ? "upcoming"
+          : a.startsAt && a.endsAt && !after(a.startsAt) && !before(a.endsAt)
+            ? "ongoing"
+            : "unknown";
   const participation =
     eventState === "ended" || eventState === "cancelled"
       ? "closed"

@@ -246,6 +246,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       hit: EvidenceHit;
       analysis: ArticleAnalysis | null;
       key: string;
+      intentTier: number;
     }[] = [];
     for (const d of documents) {
       const parsed = d.analysis_json
@@ -397,13 +398,26 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       ranked.push({
         hit,
         analysis,
+        intentTier: opportunity
+          ? /获奖|斩获|圆满|落下帷幕|成功举办|喜讯|展风采|回顾|庆典|候选人|我们换届/.test(
+              d.title,
+            )
+            ? 0
+            : /通知|报名|招募|规程|预告/.test(d.title)
+              ? 2
+              : 1
+          : 0,
         key:
           d.evidence_type !== "metadata" && d.text_length >= 200
             ? d.text_hash
             : d.url.replace(/#.*$/, ""),
       });
     }
-    ranked.sort((a, b) => b.hit.relevanceScore - a.hit.relevanceScore);
+    ranked.sort(
+      (a, b) =>
+        b.intentTier - a.intentTier ||
+        b.hit.relevanceScore - a.hit.relevanceScore,
+    );
     const unique = new Map<string, (typeof ranked)[number]>();
     for (const item of ranked) {
       const old = unique.get(item.key);

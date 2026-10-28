@@ -148,6 +148,12 @@ export function buildQueryPlan(
     /南苑\d+栋|北苑\d+栋|文采园|博雅园|风采园|[一二三]饭/g,
   ))
     entities.push(m[0]);
+  for (const region of ["南苑", "北苑"])
+    if (
+      positive.includes(region) &&
+      !entities.some((e) => e.startsWith(region))
+    )
+      entities.push(region);
   return {
     version: "query-v2",
     original: query,
@@ -207,6 +213,39 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const matched = plan.topics.map((t) =>
     t.alternatives.some((a) => text.includes(a.toLowerCase())),
   );
+  const coreInTitle = plan.topics.some((t) =>
+    t.alternatives.some((a) => title.includes(a.toLowerCase())),
+  );
+  const unrelatedPurpose =
+    /招聘|宣讲|缴费|迎新|游学|留学|志愿者?招募|志愿活动|志协|临时困难补助|校领导检查|申报经验交流|申报指导会|申报动员/.test(
+      title,
+    ) &&
+    !coreInTitle &&
+    !/招聘|宣讲|缴费|迎新|游学|留学|志愿|困难补助|检查|经验交流|指导会|动员/.test(
+      plan.original,
+    );
+  if (unrelatedPurpose)
+    return { relevant: false, score: 0, reason: "incidental_subject" };
+  if (
+    /评审委员会|委员.{0,6}选拔|委员会.{0,12}代表/.test(title) &&
+    !/委员会|委员|代表/.test(plan.original)
+  )
+    return { relevant: false, score: 0, reason: "wrong_target_role" };
+  if (
+    plan.topics.some(
+      (t) =>
+        t.id === "card" &&
+        t.originalTerms.some((a) => a === "校园卡" || a === "一卡通"),
+    ) &&
+    !/校园卡|一卡通/.test(text)
+  )
+    return { relevant: false, score: 0, reason: "card_type_mismatch" };
+  if (
+    plan.topics.some((t) => t.id === "card") &&
+    /挂失|补办|补卡/.test(plan.original) &&
+    !/挂失|补办|补卡/.test(text)
+  )
+    return { relevant: false, score: 0, reason: "requested_operation_missing" };
   if (
     (plan.qualifiers.includes("本科生") &&
       /研究生/.test(title) &&
@@ -241,8 +280,25 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
     procedure:
       /流程|办理|步骤|指南|手续|借阅规则|续借|凭.{0,12}(?:卡|证)|登录|提交/,
     requirements: /条件|资格|材料|要求|须|需满足|面向/,
-    experience: /推荐|好吃|口味|味道|体验|测评|踩雷|隔音|居住|价格/,
+    experience:
+      /推荐|好吃|口味|味道|体验|测评|踩雷|隔音|居住|价格|喜欢|不错|难吃/,
   };
+  if (
+    plan.goal === "experience" &&
+    plan.topics.some((t) => t.id === "housing") &&
+    !/隔音|居住|入住体验|住宿体验|宿舍.{0,15}(?:环境|条件|感受)|寝室.{0,15}(?:环境|条件)|蚊子|空调|浴室|床|卫生间/.test(
+      text,
+    )
+  )
+    return { relevant: false, score: 0, reason: "housing_experience_missing" };
+  if (
+    plan.topics.some((t) => t.id === "water" || t.id === "power") &&
+    !coreInTitle &&
+    !/(?:停水|停电|供水中断|供电中断)(?:时间|通知)|(?:将|临时|需要|进行|安排|计划|届时|全天).{0,16}(?:停水|停电|暂停供水|暂停供电)/.test(
+      body,
+    )
+  )
+    return { relevant: false, score: 0, reason: "notice_action_missing" };
   if (goalEvidence[plan.goal] && !goalEvidence[plan.goal]!.test(text))
     return { relevant: false, score: 0, reason: "goal_evidence_missing" };
   const score =

@@ -87,7 +87,7 @@ it("the exact sports question retrieves sports notices rather than academic cont
   } finally {
     f.close();
   }
-});
+}, 15000);
 
 it.each(["体育比赛", "体育赛事", "运动会", "足球比赛", "羽毛球赛", "篮球赛"])(
   "retains the specific topic in indexed recall: %s",

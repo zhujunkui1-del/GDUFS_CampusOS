@@ -30,7 +30,7 @@ export function publicQuery(query: string) {
       (participationQuery(query)
         ? String(new Date(Date.now() + 8 * 3600000).getUTCFullYear())
         : "");
-    return `${/广外|广东外语外贸大学|学校|校内|校园/.test(query) ? "广外" : ""}${campus} ${subject} ${year} ${buildQueryPlan(query).qualifiers.join(" ")} ${participationQuery(query) ? "报名 通知" : ""}`
+    return `${/广外|广东外语外贸大学|学校|校内|校园/.test(query) ? "广外" : ""}${campus} ${subject} ${year} ${buildQueryPlan(query).qualifiers.join(" ")} ${/截止|截至/.test(query) ? "报名截止" : participationQuery(query) ? "报名 通知" : ""} ${query.match(/(?:\d{1,2}月\d{1,2}日|本周|这周|下周|下个月)/)?.[0] || ""}`
       .replace(/\s+/g, " ")
       .trim()
       .slice(0, 120);

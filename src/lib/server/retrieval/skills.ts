@@ -170,7 +170,11 @@ export async function searchContent(
   for (const { hit, analysis: storedAnalysis } of search.articles) {
     const analysis = completeSnippetTimes(storedAnalysis, hit);
     // An absent/metadata body cannot establish policy conditions or activity facts.
-    if (!analysis || !hit.bodyAvailable) continue;
+    if (!analysis || !hit.bodyAvailable) {
+      if (event && (event.after || event.before))
+        uncertainDates.add(hit.documentId);
+      continue;
+    }
     const k = analysis.knowledge;
     result.knowledge.push({
       documentId: hit.documentId,

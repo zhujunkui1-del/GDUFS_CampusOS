@@ -56,7 +56,7 @@ import { createCloudSearch } from "../external-search/cloud";
 import type { EvidenceHit } from "@/domain/retrieval/contracts";
 import { D1KeywordRetriever } from "../retrieval/retriever";
 import { contentInstructions } from "./content-prompt";
-import { foodEvidenceAnswer } from "./evidence-answer";
+import { foodEvidenceAnswer, retrievedEvidenceAnswer } from "./evidence-answer";
 import {
   assistantDisplayText,
   asksForSearchPermission,
@@ -1025,21 +1025,35 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
             if (
               result.status === "failed" &&
               !streamSignal.aborted &&
-              content.focus === "food" &&
+              content.active &&
               !content.map &&
-              !supplementPolicy.officialOnly &&
               (result.code.startsWith("MODEL_") ||
                 ["TIMEOUT", "RUN_LIMIT_EXCEEDED"].includes(result.code))
             ) {
-              const fallback = foodEvidenceAnswer(
-                [...cards.values()],
-                content.query,
-                personaContext(
-                  personaMessage,
-                  persona.preference,
-                  history.messages,
-                ).tone === "daily",
-              );
+              const fallback =
+                (content.focus === "food" && !supplementPolicy.officialOnly
+                  ? foodEvidenceAnswer(
+                      [...cards.values()],
+                      content.query,
+                      personaContext(
+                        personaMessage,
+                        persona.preference,
+                        history.messages,
+                      ).tone === "daily",
+                    )
+                  : undefined) ||
+                (content.focus !== "food"
+                  ? retrievedEvidenceAnswer(
+                      [...cards.values()],
+                      content.query,
+                      supplementPolicy.officialOnly,
+                      new Set(
+                        [...evidence.values()]
+                          .filter((h) => h.official)
+                          .map((h) => h.documentId),
+                      ),
+                    )
+                  : undefined);
               if (fallback) {
                 text = fallback;
                 answerMode = "evidence_excerpt";
