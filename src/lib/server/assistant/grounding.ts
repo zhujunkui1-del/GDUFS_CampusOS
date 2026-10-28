@@ -103,8 +103,12 @@ export function expressionConflicts(
   text: string,
   tone: string,
   citationCount: number,
+  options: { trustedQuotedExcerpts?: boolean } = {},
 ) {
   const issues: string[] = [];
+  const narrative = options.trustedQuotedExcerpts
+    ? text.replace(/“[^”]*”/g, "")
+    : text;
   if (
     [...text.matchAll(/[\[【]来源\s*(\d+)[\]】]/g)].some(
       (m) => Number(m[1]) < 1 || Number(m[1]) > citationCount,
@@ -113,10 +117,21 @@ export function expressionConflicts(
     issues.push("unsupported_citation");
   if (
     (tone === "off" || tone === "serious") &&
-    /本鱼|小鱼干|[🐋🐟🫧]|[（(][^）)]*(?:心声|OS)[^）)]*[）)]/u.test(text)
+    /本鱼|小鱼干|[🐋🐟🫧]|[（(][^）)]*(?:心声|OS)[^）)]*[）)]/u.test(narrative)
   )
     issues.push("persona_not_converged");
-  if (/(?:本鱼|我)(?:亲自|亲身|亲测)(?:吃过|住过|去过|体验过)/.test(text))
+  if (
+    [
+      ...narrative.matchAll(
+        /(?:本鱼|我)[^，。！？\n]{0,12}?(?:逛遍|逛过|吃过|住过|去过|尝过|打卡过|亲测|实测)/g,
+      ),
+    ].some(
+      (m) =>
+        !/不|没|未|无法|别人|作者|帖子|分享|整理|检索|搜|查|收集|引用/.test(
+          m[0],
+        ),
+    )
+  )
     issues.push("fabricated_personal_experience");
   return issues;
 }

@@ -384,6 +384,7 @@ export async function chatResponse(request: Request) {
       false;
     let finalSystemInstructions = () =>
       "只依据已返回的真实资料直接回答，不输出或模拟工具调用。";
+    let answerSourceCount = () => 0;
     const metered = meteredClient(
       resolved.client,
       resolved.snapshot,
@@ -418,10 +419,40 @@ export async function chatResponse(request: Request) {
       () => personaPrompt(personaMessage, persona.preference, history.messages),
       {
         finalSystem: () => finalSystemInstructions(),
-        validateFinal: (text) =>
-          content.active && asksForSearchPermission(text)
-            ? "用户已要求这次查询，应直接使用返回的证据回答，不再次问是否搜索。"
-            : undefined,
+        validateFinal: (text) => {
+          if (content.active && asksForSearchPermission(text))
+            return "用户已要求这次查询，应直接使用返回的证据回答，不再次问是否搜索。";
+          const issues = expressionConflicts(
+            text,
+            personaContext(personaMessage, persona.preference, history.messages)
+              .tone,
+            answerSourceCount(),
+          );
+          if (issues.length)
+            return (
+              "纠正以下表达/引用问题：" +
+              issues.join(",") +
+              "。角色不能宣称本人去过、逛过或吃过，改为来源作者的真实分享；保持事实和有效引用，遵循用户关闭/严肃语气。"
+            );
+          if (
+            content.focus === "food" &&
+            /性价比之王|基本不踩雷|大家公认|人人推荐|最受欢迎/.test(text)
+          )
+            return "不把个别作者观点写成校园排名或共识。给出原文支持的具体餐品，并归于该来源作者。";
+          if (
+            content.focus === "club" &&
+            /官方社团|官方协会|官方认证|学校认可/.test(text) &&
+            !contentResults.some((r) =>
+              r.hits.some(
+                (h) =>
+                  h.official &&
+                  /注册|备案|登记|批准|社团名录/.test(h.contentSnippet),
+              ),
+            )
+          )
+            return "不能把社团自己发布的文章升格为校方官方认证。只给实际找到的社团名称、信息及来源，不擅自加身份定性。";
+          return undefined;
+        },
       },
     );
     const preparationMs = Math.round(performance.now() - receivedAt);
@@ -447,6 +478,7 @@ export async function chatResponse(request: Request) {
           );
         };
         const cards = new Map<string, AssistantCard>();
+        answerSourceCount = () => cards.size;
         const routeArtifacts = new Map<
           string,
           z.infer<typeof RouteOutputSchema>
@@ -916,6 +948,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                           evidenceType: h.evidenceType,
                           classificationState: h.classificationState,
                           validity: h.validity,
+                          official: h.official,
                         })),
                         metrics: undefined,
                       },
@@ -1061,6 +1094,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                 history.messages,
               ).tone,
               cards.size,
+              { trustedQuotedExcerpts: answerMode === "evidence_excerpt" },
             );
             if (conflicts.length)
               throw new ApiError(

@@ -4,7 +4,10 @@ import {
   supplementRequired,
 } from "@/lib/server/external-search/policy";
 import { contentIntent } from "@/lib/server/assistant/content-intent";
-import { evidenceFallback } from "@/lib/server/assistant/grounding";
+import {
+  evidenceFallback,
+  expressionConflicts,
+} from "@/lib/server/assistant/grounding";
 import { ContentSearchResultSchema } from "@/domain/retrieval/skills";
 import { vi } from "vitest";
 import { meteredClient } from "@/lib/server/assistant/model-run";
@@ -79,6 +82,14 @@ it("does not accept an unrelated dormitory body as evidence for food recommendat
   expect(
     evidenceFallback([dorm], undefined, externalPolicy("广外有什么好吃的")),
   ).toBeDefined();
+});
+it("does not turn a whale persona into a claim of visiting or eating at the canteen", () => {
+  expect(
+    expressionConflicts("本鱼摸鱼逛遍南校食堂，给你捋捋", "daily", 1),
+  ).toContain("fabricated_personal_experience");
+  expect(
+    expressionConflicts("本鱼没有吃过，只整理作者分享", "daily", 1),
+  ).not.toContain("fabricated_personal_experience");
 });
 it("rejects the reported overseas and book evidence, without filtering a real canteen recommendation", () => {
   expect(
