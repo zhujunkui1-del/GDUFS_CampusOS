@@ -23,6 +23,7 @@ export type ExternalPolicy = {
   focus?: ReturnType<typeof queryFocus>;
   relevanceQuery?: string;
   needsParticipation?: boolean;
+  needsRoster?: boolean;
 };
 export function externalPolicy(query: string): ExternalPolicy {
   const focus = queryFocus(query);
@@ -47,6 +48,11 @@ export function externalPolicy(query: string): ExternalPolicy {
       query,
     );
   const mixed = experience && /宿舍|住宿|设施|校园卡|选课|办理/.test(query);
+  // A roster needs several named people; one lecture invitation mentioning a title
+  // is not a list. Official pages are the only place to complete it.
+  const needsRoster =
+    /学者|教授|老师|院长|校长|专家|名单|人物/.test(query) &&
+    /有哪些|举几|名单|谁|哪几位|介绍一下/.test(query);
   const events =
     (requestTimeWindow(query) !== undefined || /最近|近期/.test(query)) &&
     /活动|讲座|竞赛|比赛|招聘|申请|报名|趣事|有趣|新闻|动态|分享|发生/.test(
@@ -97,6 +103,7 @@ export function externalPolicy(query: string): ExternalPolicy {
     explicit: /小红书|联网|上网|外部搜索|网上搜|互联网/.test(query),
     needsOfficialVerification,
     needsParticipation: participationQuery(query),
+    needsRoster,
     onlyXhs:
       /只(?:看|用|查|搜).*小红书|仅(?:看|用|查|搜).*小红书/.test(query) &&
       intent !== "official",
@@ -109,7 +116,7 @@ export function supplementRequired(
 ) {
   if (!policy.active) return false;
   // Archive matches cannot establish a current appointment, complete roster or campus assignment.
-  if (policy.needsOfficialVerification) return true;
+  if (policy.needsOfficialVerification || policy.needsRoster) return true;
   const assessment = assessEvidence(policy.relevanceQuery || "", results, {
     officialOnly: policy.officialOnly,
   });

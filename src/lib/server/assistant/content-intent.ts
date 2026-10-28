@@ -100,10 +100,29 @@ export function contentIntent(
         )
       ? "advisory"
       : "open";
+  const discovery = /有哪些|有什么|举几|举\d|名单|曾经|哪些|谁/.test(query);
+  // Discovery phrasing ("曾经/最近/有什么/大型") dilutes FTS recall; keep the
+  // original for the prompt and citations, retrieve with the core topic.
+  const retrievalQuery = discovery
+    ? query
+        .replace(
+          /举[几\d]+[个位]?|曾经|最近|近期|大型|重要|有哪些|有什么|有没有|哪些|时间段|或|与|吗|呢|呀|请|帮我/g,
+          " ",
+        )
+        .replace(/[？?。！!，,]/g, " ")
+        .replace(/\s+/g, " ")
+        .replace(/^\s*的+/, "")
+        .replace(/体育(?:比赛|赛事)/g, "体育 比赛")
+        .replace(/赛事/g, "比赛")
+        .trim()
+        .slice(-300) || query.slice(-300)
+    : query.slice(-300);
   return {
     active: search && tools.length > 0,
     tools,
     query: query.slice(-300),
+    retrievalQuery,
+    discovery,
     map,
     timeWindow,
     dialogueReply: reply,

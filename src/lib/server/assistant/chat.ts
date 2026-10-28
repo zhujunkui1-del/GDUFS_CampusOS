@@ -63,6 +63,7 @@ import {
 } from "@/lib/assistant-output";
 import { contentReadPlan } from "./read-plan";
 import { closureNeedsEvidenceReview } from "@/lib/retrieval/temporal-claims";
+import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
 import {
   assessEvidence,
   falseNegativeAnswer,
@@ -994,6 +995,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         supplementPolicy,
                         () =>
                           supplementRequired(supplementPolicy, contentResults),
+                        content.retrievalQuery,
                       ),
                       afterInitialReads: () => {
                         finalPhase = true;
@@ -1013,6 +1015,45 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         );
                         if (fallback) {
                           evidenceGateUsed = true;
+                          // Discovery questions ("有什么/有哪些") can be answered
+                          // with real titles and dates even when no body was read;
+                          // a list beats a blanket refusal.
+                          if (content.discovery) {
+                            const plan = buildQueryPlan(content.query);
+                            const listed = [...cards.values()]
+                              .map((card, index) => ({ card, index }))
+                              .flatMap(({ card, index }) =>
+                                (card.kind === "source" ||
+                                  card.kind === "external_source") &&
+                                queryRelevance(plan, card).relevant
+                                  ? [
+                                      {
+                                        title: card.title,
+                                        publishedAt: card.publishedAt,
+                                        index,
+                                      },
+                                    ]
+                                  : [],
+                              )
+                              .slice(0, 5);
+                            if (listed.length) {
+                              answerMode = "metadata_discovery";
+                              return (
+                                "本鱼翻到这些相关条目，正文还没拿全，先把标题和日期给你：\n" +
+                                listed
+                                  .map(
+                                    ({ title, publishedAt, index }) =>
+                                      `- ${title}${
+                                        publishedAt
+                                          ? `（${publishedAt.slice(0, 10)}）`
+                                          : ""
+                                      }[来源${index + 1}]`,
+                                  )
+                                  .join("\n") +
+                                "\n点开来源可以核对原文；具体日期、条件以原文为准。"
+                              );
+                            }
+                          }
                           const metadata = [...cards.entries()]
                             .filter(
                               ([, c]) =>

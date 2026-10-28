@@ -85,10 +85,14 @@ export function contentReadPlan(
   query: string,
   policy: ExternalPolicy,
   needSupplement: () => boolean,
+  retrievalQuery = query,
 ): PlannedRead[] {
   const external = publicQuery(query);
   return [
-    ...tools.map((name) => ({ name, input: { query, limit: 3 } })),
+    ...tools.map((name) => ({
+      name,
+      input: { query: retrievalQuery, limit: 3 },
+    })),
     ...(external && policy.active
       ? [
           {

@@ -136,12 +136,13 @@ export function meteredClient(
     } catch (error) {
       groundingCheckFailures++;
       reliable = false;
-      if (error instanceof ApiError) throw error;
-      throw new ApiError(
-        "MODEL_SERVICE_UNAVAILABLE",
-        "回复证据校验暂不可用。",
-        true,
-      );
+      // The judge is a separate model call. Its protocol error or timeout is not
+      // evidence that the answer is wrong: keep the generated answer, record the
+      // failed verification, and never replace it with an excerpt because the
+      // checker itself was unavailable. Real budget limits still stop the run.
+      if (error instanceof ApiError && error.code === "RUN_LIMIT_EXCEEDED")
+        throw error;
+      return undefined;
     } finally {
       upstreamTimings.push({
         durationMs: Math.round(performance.now() - began),

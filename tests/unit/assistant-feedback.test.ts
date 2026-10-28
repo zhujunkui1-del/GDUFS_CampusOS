@@ -4,7 +4,10 @@ import { contentIntent } from "@/lib/server/assistant/content-intent";
 import { dialogueReply } from "@/lib/server/assistant/dialogue";
 import { evidenceFallback } from "@/lib/server/assistant/grounding";
 import { contentInstructions } from "@/lib/server/assistant/content-prompt";
-import { externalPolicy } from "@/lib/server/external-search/policy";
+import {
+  externalPolicy,
+  supplementRequired,
+} from "@/lib/server/external-search/policy";
 import { registerExternalSearch } from "@/lib/server/external-search/skill";
 import type { ProviderResult } from "@/lib/server/external-search/providers";
 import { SkillRegistry } from "@/lib/server/agent/skill-registry";
@@ -106,4 +109,32 @@ it("asks for a numbered, direct answer instead of an excerpt frame", () => {
   );
   expect(instructions).toContain("1. 2. 3.");
   expect(instructions).toContain("不要用“已找到相关原文”");
+});
+it("retrieves discovery questions with the core topic instead of the whole phrase", () => {
+  expect(
+    contentIntent("广外曾经或最近有什么大型体育赛事吗").retrievalQuery,
+  ).toBe("广外 体育 比赛");
+  expect(contentIntent("举3个最近时间段的讲座").retrievalQuery).toBe("讲座");
+  expect(contentIntent("广外图书馆借阅规则是什么").retrievalQuery).toBe(
+    "广外图书馆借阅规则是什么",
+  );
+});
+it("treats a roster question as needing official supplementation", () => {
+  const roster = externalPolicy("举几位广外的云山学者");
+  expect(roster.needsRoster).toBe(true);
+  expect(
+    supplementRequired(roster, [
+      {
+        hits: [
+          {
+            bodyAvailable: true,
+            contentSnippet:
+              "英语教育学院邀请云山学者Ali Derakhshan教授开展讲座。",
+          },
+        ],
+        activities: [],
+      },
+    ]),
+  ).toBe(true);
+  expect(externalPolicy("图书馆借阅规则").needsRoster).toBe(false);
 });
