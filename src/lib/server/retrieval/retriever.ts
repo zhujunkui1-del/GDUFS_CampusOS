@@ -19,6 +19,7 @@ import type { SqlDatabase } from "../assistant/database";
 import { ApiError } from "../errors";
 import { isOfficialCampusUrl } from "../external-search/policy";
 import { evidenceWindow } from "@/lib/retrieval/evidence-window";
+import type { SemanticRetriever } from "./vector";
 
 type DocumentRow = {
   id: string;
@@ -96,7 +97,10 @@ export async function currentPublicArticles(
   return result.results;
 }
 export class D1KeywordRetriever implements KnowledgeRetriever {
-  constructor(private db: SqlDatabase) {}
+  constructor(
+    private db: SqlDatabase,
+    private semantic?: SemanticRetriever,
+  ) {}
   async retrieve(
     raw: RetrievalQuery,
     scope: typeof PUBLIC_RETRIEVAL_SCOPE,
@@ -232,6 +236,45 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       });
       candidateLanes.push(found.results);
     }
+    // Semantic recall is a supplemental lane only for open natural-language
+    // queries. Structured/filtered searches keep the deterministic FTS path so
+    // a vector candidate cannot bypass date, source or document constraints.
+    let semanticLane: ChunkRow[] = [];
+    if (
+      this.semantic &&
+      !q.documentIds?.length &&
+      !q.sourceId &&
+      !q.sourceTypes?.length &&
+      !q.publishedAfter &&
+      !q.publishedBefore &&
+      !q.category
+    ) {
+      try {
+        const matches = await this.semantic.search(q.query, 24, signal),
+          vectorIds = [...new Set(matches.map((m) => m.id))];
+        if (vectorIds.length) {
+          const found = await read<ChunkRow>(
+              `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,0 AS score
+   FROM knowledge_chunks k WHERE k.id IN(${vectorIds.map(() => "?").join(",")}) AND k.index_version=?`,
+              [...vectorIds, RETRIEVAL_INDEX_VERSION],
+            ),
+            similarity = new Map(matches.map((m) => [m.id, m.score]));
+          semanticLane = found.results.map((c) => ({
+            ...c,
+            // Ascending score sort: more negative means more similar.
+            score: -(similarity.get(c.id) || 0),
+          }));
+          metrics.recallLanes.push({
+            name: "semantic",
+            limit: 24,
+            candidates: semanticLane.length,
+          });
+        }
+      } catch {
+        warnings.push("语义检索本轮不可用，已回退关键词检索。");
+      }
+    }
+    if (semanticLane.length) candidateLanes.push(semanticLane);
     // Interleave document candidates so one recall lane cannot consume all
     // public revalidation slots. Total raw chunks <=96; current IDs <=32.
     const merged: ChunkRow[] = [];
@@ -240,6 +283,12 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
     const rows = {
       results: [...new Map(merged.map((c) => [c.id, c])).values()],
     };
+    const fusion = semanticLane.length ? new Map<string, number>() : null;
+    if (fusion)
+      for (const lane of candidateLanes)
+        lane.forEach((c, rank) =>
+          fusion.set(c.id, (fusion.get(c.id) || 0) + 1 / (60 + rank + 1)),
+        );
     metrics.candidateChunks = merged.length;
     const ids = [...new Set(merged.map((c) => c.document_id))].slice(0, 32);
     const documents = await currentPublicArticles(this.db, ids, read),
@@ -346,6 +395,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         relevance.score +
         titleMatch * 3 +
         bodyMatch +
+        (fusion?.get(c.id) || 0) * 80 +
         purposeBoost +
         (categoryMatch ? 2 : 0) -
         c.score +

@@ -38,7 +38,13 @@
         "AGENT_VALIDATION_UNLIMITED": "true",
         "MODEL_MAX_OUTPUT_TOKENS": "2048",
         "MODEL_PRIORITY": "deepseek",
+        "HYBRID_RETRIEVAL": "true",
+        "VECTOR_BACKFILL": "true"
       },
+      "ai": { "binding": "AI" },
+      "vectorize": [
+        { "binding": "VECTOR_INDEX", "index_name": "campusos-chunks" }
+      ],
       "ratelimits": [
         {
           "name": "MAP_RATE_LIMITER",

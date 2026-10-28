@@ -1235,3 +1235,11 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 真实复测：同一问题连续两次均返回24人（经贸18人、法学6人）与两条`[n] 标题 - URL`来源，0次模型调用，不再出现一次名单一次摘录。全量686项674通过/12项既有失败；typecheck 0；Preview部署`4628e70f-2359-49a6-8976-30a67bfc00c0`。
 
 混合检索尚未实现：已按D-097确定索引、正文/标题嵌入回填、RRF融合与固定评测顺序，索引与回填完成后才切换线上；本轮不以提示词或单测宣称语义检索完成。地图问答的浏览器回执链路仍未用Playwright复验；20条会话保留窗口未改。
+
+### 2026-10-29 第八轮：混合检索（FTS5 + Vectorize）
+
+按D-098在Preview实现混合检索。新增`migrations/0054_vector_chunk_state.sql`、`src/lib/server/retrieval/vector.ts`；`D1KeywordRetriever`增加可选语义通道，结构化过滤时强制只走FTS；语义命中回D1按当前版本重读后才参与排序，RRF融合。`wrangler.jsonc`仅Preview增加`AI`/`VECTOR_INDEX`绑定与`HYBRID_RETRIEVAL`、`VECTOR_BACKFILL`开关；`preview-worker.ts`每分钟回填最多32个chunk。
+
+首次回填全部失败，D1记录的原始错误为`VECTOR_UPSERT_ERROR (code = 40008): id too long; max is 64 bytes, got 67 bytes`；改用chunk id的SHA-256前32 hex作向量ID，chunk id放metadata，查询时校验索引版本。真实回填128个chunk ready，Vectorize索引计数随后达到64。云山学者查询出现`semantic:24`候选、`candidateChunks:34`，名单仍为24人、0模型调用。
+
+真实验收另发现：`宿舍上网`两词查询触发`search_campus_knowledge`失败（`宿舍`单独、`校园网怎么连`正常），单列为待排查问题；`学校哪里可以锻炼身体`原先被闸门判无关，已把`学校|校园`纳入校园信号。全量690项678通过/12项既有失败；typecheck 0；Preview部署`896ce33c-e730-419b-9692-1327bdfd6afa`。地图问答浏览器回执与20条会话保留窗口仍未处理。

@@ -1,6 +1,11 @@
 import { dispatchDue } from "./src/lib/server/console/scheduler";
 import { runCloudWebBatch } from "./src/lib/server/console/cloud-web-runner";
 import type { SqlDatabase } from "./src/lib/server/assistant/database";
+import {
+  backfillFlag,
+  vectorBackfillBatch,
+  vectorBindings,
+} from "./src/lib/server/retrieval/vector";
 import handler from "./.open-next/worker.js";
 import { runWithCloudflareRequestContext } from "./.open-next/cloudflare/init.js";
 import {
@@ -21,6 +26,15 @@ const previewWorker = {
       .run();
     await dispatchDue(env.DB as SqlDatabase);
     await runCloudWebBatch(env.DB as SqlDatabase);
+    // Bounded preview-only semantic backfill; a batch failure is recorded and
+    // retried by the next tick instead of blocking ingestion.
+    if (backfillFlag(env)) {
+      const bindings = vectorBindings(env);
+      if (bindings)
+        await vectorBackfillBatch(env.DB as SqlDatabase, bindings, 32).catch(
+          () => undefined,
+        );
+    }
   },
   async fetch(
     request: Request,

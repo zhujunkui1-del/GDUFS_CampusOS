@@ -831,4 +831,12 @@ DeepSeek开源资料经仓库核对：模型权重、推理框架、OCR、训练
 
 负责人批准混合检索（Cloudflare Vectorize/Workers AI嵌入的调用费用），并要求云山学者名单只给一份稳定结果。名单类问题改为抽取式：`rosterEvidenceAnswer`从本轮来源卡片的标题与正文中抽姓名（支持`、`串与`- 姓名`项目符号两种页面结构），按百家姓首字、停用词（安家费/高学历/编辑/教授/学者等）和末尾字过滤，排除招聘公告（"诚聘/招聘/应聘/待遇"）与单篇讲座，按来源去重后输出"1. 姓名[n]"与来源清单；抽不到≥3人时返回固定无名单话术，不凭模型记忆补名。该路径不调用生成模型，同一问题连续两次返回同一名单。
 
-混合检索按"先索引与回填、再融合与评测"分阶段：创建Vectorize索引，标题/正文分块嵌入并保留documentId/chunkId，FTS与向量结果用RRF融合，固定22题与新增问句评测Recall@4、无依据断言率、延迟与D1行数；索引和回填未完成前不切换线上检索，不以提示词冒充语义检索。本轮只完成名单抽取统一，混合检索尚未实现。
+混合检索按"先索引与回填、再融合与评测"分阶段：创建Vectorize索引，标题/正文分块嵌入并保留documentId/chunkId，FTS与向量结果用RRF融合，固定22题与新增问句评测Recall@4、无依据断言率、延迟与D1行数；索引和回填未完成前不切换线上检索，不以提示词冒充语义检索。本轮只完成名单抽取统一；混合检索随后在Preview实现，见D-098。
+
+## D-098｜混合检索在Preview落地（2026-10-29）
+
+FTS5仍是唯一权威召回，向量只作补充通道。索引`campusos-chunks`（1024维，cosine），嵌入`@cf/baai/bge-m3`；`migrations/0054_vector_chunk_state.sql`只记录已嵌入的chunk，不授予可见性。`src/lib/server/retrieval/vector.ts`提供绑定、嵌入、查询、回填；`retriever.ts`新增semantic lane：仅在无`documentIds/sourceId/sourceTypes/publishedAfter/publishedBefore/category`的结构化过滤时启用，向量命中必须回D1按当前`index_version`、`content_revision`和公共文档视图重读，违规或过期命中直接丢弃。候选融合用RRF（k=60，权重80），语义分不直接作为最终相关度。
+
+回填由Preview cron每分钟最多32个chunk，失败写入`vector_chunk_state`并在3次内重试；`VECTOR_BACKFILL`与`HYBRID_RETRIEVAL`两个Preview变量控制，Production无此绑定。首次回填暴露Vectorize向量ID上限64字节（错误`40008`），改为chunk id的SHA-256前16字节（32 hex）作向量ID，原chunk id放metadata并在查询时校验`indexVersion`。真实回填128个chunk全部ready；云山学者查询的`retrieval.recallLanes`出现`semantic:24`、`candidateChunks:34`，抽取式名单仍为24人。
+
+已知未解：`宿舍上网`这类两词组合仍会让`search_campus_knowledge`抛`UPSTREAM_ERROR`（`宿舍`单独、`校园网怎么连`均正常），需单独排查FTS查询计划；`学校哪里可以锻炼身体`此前被闸门判无关，已把`学校|校园`加入校园信号。地图问答浏览器回执与20条会话保留窗口仍未处理。

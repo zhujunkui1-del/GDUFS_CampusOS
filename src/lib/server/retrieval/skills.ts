@@ -16,6 +16,7 @@ import { activityStatus } from "@/lib/ingestion/article-times";
 import { searchCampusPlaces } from "@/features/campus-map/data/campus";
 import type { SqlDatabase } from "../assistant/database";
 import { D1KeywordRetriever } from "./retriever";
+import { requestSemanticRetriever } from "./vector";
 import { SkillRegistry } from "../agent/skill-registry";
 import { ApiError } from "../errors";
 import type { TimeWindow } from "../assistant/time-window";
@@ -163,7 +164,7 @@ export async function searchContent(
   void _before;
   void _role;
   void _reg;
-  const search = await new D1KeywordRetriever(db).search(
+  const search = await new D1KeywordRetriever(db, requestSemanticRetriever()).search(
     {
       ...base,
       purpose,
