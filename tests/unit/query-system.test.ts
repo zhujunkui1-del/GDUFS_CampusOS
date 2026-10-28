@@ -287,6 +287,65 @@ it("does not bind several months of an index page to one event or turn a start i
   expect(fallback).toContain("11 月 20—21 日");
   expect(fallback).toContain("[来源2]");
 });
+it("does not let an official attachment list erase an available attributed procedural guide", () => {
+  const guide: AssistantCard = {
+    kind: "source",
+    documentId: "public-guide",
+    title: "2027届电子就业协议操作指南",
+    sourceName: "校园媒体",
+    originalUrl: "https://example.invalid/guide",
+    publishedAt: "2026-10-01",
+    snippet: "1.进入申请界面。进入服务小程序，点击电子就业协议并填写申请。",
+    evidenceType: "full_text",
+    classificationState: "knowledge",
+    validity: "unknown",
+    readable: true,
+  };
+  const forms: AssistantCard = {
+    kind: "external_source",
+    title: "毕业生各就业手续申请表格下载",
+    sourceName: "就业中心",
+    originalUrl: "https://example.invalid/forms",
+    publishedAt: "2019-03-27",
+    snippet: "就业协议等手续的表格下载，详情见附件。",
+    authority: "official",
+    evidenceKind: "page_excerpt",
+    searchMode: "web",
+  };
+  const answer = retrievedEvidenceAnswer(
+    [guide, forms],
+    "就业协议怎么办理",
+    true,
+    new Set(),
+  );
+  expect(answer).toContain("1.进入申请界面");
+  expect(answer).toContain("官方身份及现行效力待确认");
+  expect(answer!.indexOf("[来源1]")).toBeLessThan(answer!.indexOf("[来源2]"));
+  expect(
+    retrievedEvidenceAnswer(
+      [guide],
+      "只查官方就业协议怎么办理",
+      true,
+      new Set(),
+    ),
+  ).toBeUndefined();
+  expect(
+    retrievedEvidenceAnswer(
+      [{ ...guide, readable: false }],
+      "就业协议怎么办理",
+      true,
+      new Set(),
+    ),
+  ).toBeUndefined();
+  expect(
+    retrievedEvidenceAnswer(
+      [{ ...guide, evidenceType: "metadata" }],
+      "就业协议怎么办理",
+      true,
+      new Set(),
+    ),
+  ).toBeUndefined();
+});
 it("requires borrowing instructions, not a ranked book description with incidental process words", () => {
   expect(
     queryRelevance(buildQueryPlan("广外图书馆怎么借书"), {

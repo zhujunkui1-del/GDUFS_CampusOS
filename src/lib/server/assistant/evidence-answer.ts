@@ -78,13 +78,25 @@ export function retrievedEvidenceAnswer(
     plan.goal,
   );
   const today = chinaDay(Date.now())!;
+  const directGuide = (c: AssistantCard) =>
+    plan.goal === "procedure" &&
+    (c.kind === "source" || c.kind === "external_source") &&
+    /指南|流程|操作|步骤/.test(c.title);
+  const canAttribute = (c: AssistantCard) =>
+    directGuide(c) &&
+    c.kind === "source" &&
+    c.evidenceType === "full_text" &&
+    c.readable &&
+    !/只(?:查|看|用|要).{0,8}官方|仅(?:查|看|用).{0,8}官方/.test(question);
   const candidates = cards
     .map((c, index) => ({ c, index }))
-    .sort((a, b) =>
-      ["participation", "registration", "discovery"].includes(plan.goal)
-        ? Number(b.c.kind === "external_source") -
-          Number(a.c.kind === "external_source")
-        : 0,
+    .sort(
+      (a, b) =>
+        Number(directGuide(b.c)) - Number(directGuide(a.c)) ||
+        (["participation", "registration", "discovery"].includes(plan.goal)
+          ? Number(b.c.kind === "external_source") -
+            Number(a.c.kind === "external_source")
+          : 0),
     )
     .flatMap(({ c, index }) => {
       if (c.kind !== "source" && c.kind !== "external_source") return [];
@@ -95,7 +107,7 @@ export function retrievedEvidenceAnswer(
         (c.evidenceType === "metadata" ||
           (officialOnly && !officialDocumentIds.has(c.documentId)))
       )
-        return [];
+        if (c.evidenceType === "metadata" || !canAttribute(c)) return [];
       if (
         c.kind === "external_source" &&
         (c.evidenceKind === "title_only" ||
@@ -103,6 +115,12 @@ export function retrievedEvidenceAnswer(
       )
         return [];
       const normalized = c.snippet.replace(/\s+/g, " ").trim();
+      const attribution =
+        c.kind === "source" &&
+        !officialDocumentIds.has(c.documentId) &&
+        canAttribute(c)
+          ? "（公开指南，官方身份及现行效力待确认）"
+          : "";
       const anchor = currentOpportunity
         ? normalized.search(/定于|将于|(?:比赛|活动|讲座)(?:举办)?时间[：:]?/)
         : -1;
@@ -128,7 +146,7 @@ export function retrievedEvidenceAnswer(
         ? [
             {
               future,
-              text: `- ${c.title}： “${quote}${quote.length === 160 ? "…" : ""}”[来源${index + 1}]`,
+              text: `- ${c.title}${attribution}： “${quote}${quote.length === 160 ? "…" : ""}”[来源${index + 1}]`,
             },
           ]
         : [];
