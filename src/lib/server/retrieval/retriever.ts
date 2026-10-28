@@ -18,6 +18,7 @@ import { participationQuery } from "@/lib/retrieval/query-focus";
 import type { SqlDatabase } from "../assistant/database";
 import { ApiError } from "../errors";
 import { isOfficialCampusUrl } from "../external-search/policy";
+import { evidenceWindow } from "@/lib/retrieval/evidence-window";
 
 type DocumentRow = {
   id: string;
@@ -268,17 +269,19 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         );
       const chunkRelevance = (text: string) =>
         queryRelevance(plan, { title: d.title, contentSnippet: text });
+      const windows = new Map(
+        choices.map((c) => [c.id, evidenceWindow(c.text, q.query, 780)]),
+      );
+      const relevanceByChunk = new Map(
+        choices.map((c) => [c.id, chunkRelevance(c.text)]),
+      );
       choices.sort(
         (a, b) =>
-          Number(chunkRelevance(b.text).relevant) -
-            Number(chunkRelevance(a.text).relevant) ||
-          (plan.goal === "procedure" &&
-          plan.topics.some((t) =>
-            t.alternatives.some((v) => d.title.includes(v)),
-          )
-            ? a.start_offset - b.start_offset
-            : 0) ||
-          chunkRelevance(b.text).score - chunkRelevance(a.text).score ||
+          Number(relevanceByChunk.get(b.id)!.relevant) -
+            Number(relevanceByChunk.get(a.id)!.relevant) ||
+          windows.get(b.id)!.score - windows.get(a.id)!.score ||
+          relevanceByChunk.get(b.id)!.score -
+            relevanceByChunk.get(a.id)!.score ||
           count(b.text) - count(a.text) ||
           a.score - b.score,
       );
@@ -343,15 +346,9 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         (categoryMatch ? 2 : 0) -
         c.score +
         opportunityBoost;
-      let start = 0;
-      if (c.text.length > 780 && plan.goal !== "procedure") {
-        const occurrences = terms
-          .map((t) => c.text.indexOf(t))
-          .filter((p) => p >= 0);
-        const at = occurrences.length ? Math.min(...occurrences) : 0;
-        start = Math.max(0, Math.min(c.text.length - 780, at - 120));
-      }
-      const snippet = c.text.slice(start, start + 780);
+      const selectedWindow = windows.get(c.id)!,
+        start = selectedWindow.start,
+        snippet = selectedWindow.text;
       const effectiveUntil = analysis?.knowledge.effectiveUntil;
       const today = new Date(Date.now() + 8 * 3600000)
         .toISOString()

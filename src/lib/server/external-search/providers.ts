@@ -9,6 +9,7 @@ import {
   searchOfficialUniversity,
   readOfficialArticle,
 } from "./official-search";
+import { evidenceWindow } from "@/lib/retrieval/evidence-window";
 type ProviderStatus =
   | "ok"
   | "empty"
@@ -308,7 +309,7 @@ export async function searchWeb(
           : xhs
             ? "student_experience"
             : "unverified",
-        snippet: (page || r.text || r.title).slice(0, 700),
+        snippet: evidenceWindow(page || r.text || r.title, query, 700).text,
         publishedAt: r.published,
         retrievedAt: new Date().toISOString(),
         evidenceKind,

@@ -19,7 +19,7 @@ import { ContentSearchResultSchema } from "@/domain/retrieval/skills";
 import { analysisStatements } from "@/lib/server/console/article-analysis";
 import {
   isDiscoveryIndex,
-  unsupportedClosureClaim,
+  closureNeedsEvidenceReview,
 } from "@/lib/retrieval/temporal-claims";
 import type { AssistantCard } from "@/domain/agent/assistant-contracts";
 import { retrievedEvidenceAnswer } from "@/lib/server/assistant/evidence-answer";
@@ -232,13 +232,17 @@ it("does not bind several months of an index page to one event or turn a start i
     searchMode: "web",
   };
   expect(
-    unsupportedClosureClaim("篮球赛已结束，报名通道已关闭[来源1]", [card], []),
+    closureNeedsEvidenceReview(
+      "篮球赛已结束，报名通道已关闭[来源1]",
+      [card],
+      [],
+    ),
   ).toBe(true);
   expect(
-    unsupportedClosureClaim("篮球赛报名通道也已经关闭[来源1]", [card], []),
+    closureNeedsEvidenceReview("篮球赛报名通道也已经关闭[来源1]", [card], []),
   ).toBe(true);
   expect(
-    unsupportedClosureClaim(
+    closureNeedsEvidenceReview(
       "篮球赛于3月23日开赛，结束时间及当前报名状态未知[来源1]",
       [card],
       [],

@@ -13,7 +13,7 @@ export function isDiscoveryIndex(url: string, title: string) {
   }
 }
 /** An old start date is not an end date or a verified registration cutoff. */
-export function unsupportedClosureClaim(
+export function closureNeedsEvidenceReview(
   answer: string,
   cards: AssistantCard[],
   results: ContentSearchResult[],

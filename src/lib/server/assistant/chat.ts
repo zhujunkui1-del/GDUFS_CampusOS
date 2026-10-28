@@ -62,7 +62,7 @@ import {
   asksForSearchPermission,
 } from "@/lib/assistant-output";
 import { contentReadPlan } from "./read-plan";
-import { unsupportedClosureClaim } from "@/lib/retrieval/temporal-claims";
+import { closureNeedsEvidenceReview } from "@/lib/retrieval/temporal-claims";
 import {
   assessEvidence,
   falseNegativeAnswer,
@@ -443,6 +443,11 @@ export async function chatResponse(request: Request) {
             question: content.query,
             now: new Date().toISOString(),
             timezone: "Asia/Shanghai",
+            reviewFocus:
+              content.tools.includes("search_campus_events") &&
+              closureNeedsEvidenceReview(answer, answerCards(), contentResults)
+                ? "部分结束/截止表述缺少结构化支持，请以原文核对；这是待核对标记，不是错误判决。"
+                : undefined,
             sources: answerCards()
               .flatMap((c, index) => {
                 if (
@@ -495,12 +500,6 @@ export async function chatResponse(request: Request) {
           };
         },
         validateFinal: (text) => {
-          if (
-            content.active &&
-            content.tools.includes("search_campus_events") &&
-            unsupportedClosureClaim(text, answerCards(), contentResults)
-          )
-            return "不能把仅有的开赛日说成整项赛事已经结束，也不能把过往举办日期直接改写成报名截止。只写有证据的已举办/已开赛日期；缺少明确结束或截止依据时说明当前状态未知，保留真实引用。";
           if (
             content.active &&
             falseNegativeAnswer(text, content.query, contentResults)

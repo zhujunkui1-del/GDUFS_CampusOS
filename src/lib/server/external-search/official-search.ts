@@ -1,4 +1,5 @@
 import { parseHTML } from "linkedom";
+import { evidenceWindow } from "@/lib/retrieval/evidence-window";
 import { isOfficialCampusUrl } from "./policy";
 import type { ExternalItem } from "@/domain/retrieval/external";
 const home = "https://www.gdufs.edu.cn";
@@ -193,8 +194,6 @@ export async function searchOfficialUniversity(
             /* Keep the returned search excerpt labelled as such. */
           }
         const evidence = body || row.intro;
-        const anchor =
-          terms.map((t) => evidence.indexOf(t)).find((p) => p >= 0) ?? 0;
         return {
           title: row.title,
           originalUrl: row.url,
@@ -206,10 +205,7 @@ export async function searchOfficialUniversity(
             : evidence
               ? "search_excerpt"
               : "title_only",
-          snippet: (evidence || row.title).slice(
-            Math.max(0, anchor - 100),
-            Math.max(0, anchor - 100) + 700,
-          ),
+          snippet: evidenceWindow(evidence || row.title, query, 700).text,
           publishedAt,
           retrievedAt: new Date().toISOString(),
           searchMode: "web",
