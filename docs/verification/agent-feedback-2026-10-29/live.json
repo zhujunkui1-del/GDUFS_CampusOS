@@ -1,0 +1,214 @@
+{
+  "base": "https://campusos-preview.zhujunkui1.workers.dev",
+  "checkedAt": "2026-10-28T18:37:40.014Z",
+  "conversationId": "1016282d-9747-41d7-8265-cb7e2c9fa453",
+  "results": [
+    {
+      "message": "又康超市在哪",
+      "status": 200,
+      "text": "",
+      "tools": [
+        {
+          "name": "search_places",
+          "origin": "model"
+        },
+        {
+          "name": "control_map",
+          "origin": "model"
+        }
+      ],
+      "error": {
+        "code": "TIMEOUT",
+        "message": "地图操作等待超时，请重试。"
+      },
+      "mode": {
+        "answerMode": "model",
+        "conversationAct": "general",
+        "answerRequirement": "open",
+        "evidenceGateUsed": false,
+        "requests": 2,
+        "modelFailureCode": null
+      },
+      "durationMs": 16535
+    },
+    {
+      "message": "一饭在哪",
+      "status": 200,
+      "text": "",
+      "tools": [
+        {
+          "name": "search_places",
+          "origin": "model"
+        },
+        {
+          "name": "control_map",
+          "origin": "model"
+        }
+      ],
+      "error": {
+        "code": "TIMEOUT",
+        "message": "地图操作等待超时，请重试。"
+      },
+      "mode": {
+        "answerMode": "model",
+        "conversationAct": "campus",
+        "answerRequirement": "open",
+        "evidenceGateUsed": false,
+        "requests": 2,
+        "modelFailureCode": null
+      },
+      "durationMs": 16698
+    },
+    {
+      "message": "举几位广外的云山学者",
+      "status": 200,
+      "text": "1. **Ali Derakhshan** 教授（云山学者，2026年6月受英语教育学院邀请开展学术讲座）[来源1]\n2. 数学与统计学院现有包括**云山学者、云山讲座教授在内的各类高层次人才共7人**，但具体姓名未在公开内容中列出[来源3]\n\n广外\"云山学者\"分不同层级（含云山青年学者、云山讲座教授等），官方未提供现任完整名单，精确名单需查阅学校人事处或各学院官网公告～",
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        }
+      ],
+      "mode": {
+        "answerMode": "model",
+        "conversationAct": "campus",
+        "answerRequirement": "open",
+        "evidenceGateUsed": false,
+        "requests": 2,
+        "modelFailureCode": null
+      },
+      "durationMs": 8605
+    },
+    {
+      "message": "举3个最近时间段的讲座",
+      "status": 200,
+      "text": "1. 云山学术沙龙414期：学术论文写作全过程，2026年10月25日9:30-11:30，白云山校区广东国际战略研究院304会议室 [来源4]\n2. 云山学术沙龙413期：Explaining China to the West：The Cultural,P...，2026年9月23日15:30-17:00，白云山校区广东国际战略研究院304会议室 [来源4]\n3. 云山学术沙龙412期：The Belt and Road Initiative in South America，2026年9月18日14:00-15:00，白云山校区广东国际战略研究院304会议室 [来源4]\n\n以上均为近期已举办的讲座～ 🐟",
+      "tools": [
+        {
+          "name": "search_campus_events",
+          "origin": "server_plan"
+        },
+        {
+          "name": "search_external_campus_info",
+          "origin": "server_plan"
+        }
+      ],
+      "mode": {
+        "answerMode": "model",
+        "conversationAct": "campus",
+        "answerRequirement": "strict",
+        "evidenceGateUsed": false,
+        "requests": 2,
+        "modelFailureCode": null
+      },
+      "durationMs": 19881
+    },
+    {
+      "message": "广外曾经或最近有什么大型体育赛事吗",
+      "status": 200,
+      "text": "本鱼翻了一圈，没找到能撑住这个说法的原文，这次先不乱讲，免得骗到你。🐟 换个更具体的问法，本鱼再帮你翻。",
+      "tools": [
+        {
+          "name": "search_campus_events",
+          "origin": "server_plan"
+        },
+        {
+          "name": "search_external_campus_info",
+          "origin": "server_plan"
+        }
+      ],
+      "mode": {
+        "answerMode": "no_evidence",
+        "conversationAct": "campus",
+        "answerRequirement": "strict",
+        "evidenceGateUsed": true,
+        "requests": 0,
+        "modelFailureCode": null
+      },
+      "durationMs": 6579
+    },
+    {
+      "message": "广外有医院吗",
+      "status": 200,
+      "text": "本鱼翻到这些，给你划个重点：\n- 广外校医院： “广外校医院 在教师节来临之际，为更好地关爱师生健康，军民共庆教师节，9月6日上午，我校... [详细] 常用电话 急诊室：北36206729/ 6729手机13719084804 南39328120/ 8120手机18406607742 师生医保：北86253914/ 2574 南39328991/ 8991 手机13…”[来源1]\n- 医院概况 - 广外校医院- 广东外语外贸大学： “医院概况-广外校医院 ... --- ... 医院 ... | · | 关于在校医院开具第二类... | | --- | --- | | · | 关于2025年度医疗定点选... | | · | 关于假期校医院开展平衡... | | · | 关于广东外语外贸大学校... | | · | 广东省教育厅2023年大学...…”[来源2]\n原文没写的条件不补，政策是否仍有效也要再核。",
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        },
+        {
+          "name": "search_external_campus_info",
+          "origin": "server_plan"
+        }
+      ],
+      "mode": {
+        "answerMode": "evidence_excerpt",
+        "conversationAct": "campus",
+        "answerRequirement": "open",
+        "evidenceGateUsed": false,
+        "requests": 2,
+        "modelFailureCode": "MODEL_SERVICE_UNAVAILABLE"
+      },
+      "durationMs": 13987
+    },
+    {
+      "message": "你妈似了",
+      "status": 200,
+      "text": "这句本鱼接不住。刚才要是有哪句没答到点上，你直说，我按你的问题重新来。",
+      "tools": [],
+      "mode": {
+        "requests": 0
+      },
+      "durationMs": 581
+    },
+    {
+      "message": "你好",
+      "status": 200,
+      "text": "你好，有什么校园问题需要帮忙？",
+      "tools": [],
+      "mode": {
+        "requests": 0
+      },
+      "durationMs": 302
+    },
+    {
+      "message": "住广外宿舍有什么要注意的事情吗",
+      "status": 200,
+      "text": "这次没捞到广外官方的宿舍管理规定公开资料哦🐟 通用的宿舍注意事项可以参考这些：\n1. 用电安全要记牢，别用大功率违规电器，避免跳闸或者消防隐患；\n2. 遵守宿舍门禁和作息要求，晚归提前和宿管报备，别硬闯门禁；\n3. 和室友相处多包容，公共区域保持整洁，贵重物品记得随身收好。\n\n广外的具体门禁时间、违禁电器明细、住宿收费标准这些需要以宿舍楼下贴的官方通知或者宿管告知的为准，目前没找到相关公开信息没法给你列具体校规~",
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        },
+        {
+          "name": "search_external_campus_info",
+          "origin": "server_plan"
+        }
+      ],
+      "mode": {
+        "answerMode": "model",
+        "conversationAct": "campus",
+        "answerRequirement": "advisory",
+        "evidenceGateUsed": false,
+        "requests": 1,
+        "modelFailureCode": null
+      },
+      "durationMs": 8165
+    },
+    {
+      "message": "？？？？",
+      "status": 200,
+      "text": "刚才没说清楚抱歉～目前没捞到广外公开的宿舍细则官方文档，你要是想知道具体的门禁时间、违禁电器范围、查寝规则这些细节，我可以再帮你翻相关消息😆",
+      "tools": [],
+      "mode": {
+        "answerMode": "model",
+        "conversationAct": "confusion",
+        "answerRequirement": "open",
+        "evidenceGateUsed": false,
+        "requests": 1,
+        "modelFailureCode": null
+      },
+      "durationMs": 3934
+    }
+  ]
+}
