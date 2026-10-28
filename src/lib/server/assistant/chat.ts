@@ -60,6 +60,8 @@ import { foodEvidenceAnswer, retrievedEvidenceAnswer } from "./evidence-answer";
 import {
   assistantDisplayText,
   asksForSearchPermission,
+  claimsMapAction,
+  unsupportedUrls,
 } from "@/lib/assistant-output";
 import { contentReadPlan } from "./read-plan";
 import { closureNeedsEvidenceReview } from "@/lib/retrieval/temporal-claims";
@@ -80,6 +82,7 @@ import {
   personaContext,
   personaAcknowledgement,
 } from "./persona";
+import { inputGate, inputGateReply } from "./input-gate";
 
 function modelResult(name: string, result: SkillResult<unknown>) {
   if (!result.ok) return result;
@@ -165,12 +168,15 @@ export async function chatResponse(request: Request) {
         persona.preference,
       );
     const businessMessage = persona.business || input.message;
+    const gate = inputGate(businessMessage, history.messages);
     const content = contentIntent(businessMessage, history.messages);
     const personaMessage = content.active ? content.query : businessMessage;
     const directReply =
       persona.changed && !persona.business
         ? personaAcknowledgement(persona.preference)
-        : content.dialogueReply;
+        : gate !== "campus"
+          ? inputGateReply(gate)
+          : content.dialogueReply;
     if (directReply) {
       const requestId = input.clientRequestId || crypto.randomUUID();
       const runId = await ctx.store.reserve(
@@ -285,6 +291,7 @@ export async function chatResponse(request: Request) {
     let externalDone = false;
     let evidenceGateUsed = false;
     let answerMode = "model";
+    let mapActionRequested = false;
     let modelFailureCode: string | null = null;
     let publicationFallbackUsed = false;
     let externalResult: z.infer<typeof ExternalSearchResultSchema> | undefined;
@@ -502,6 +509,19 @@ export async function chatResponse(request: Request) {
           };
         },
         validateFinal: (text) => {
+          if (!mapActionRequested && claimsMapAction(text))
+            return "本轮没有执行地图动作，不能声称已标出、定位或放大。只说明地点所在区域，或询问是否要在图上查看。";
+          if (
+            unsupportedUrls(
+              text,
+              answerCards().flatMap((card) =>
+                card.kind === "source" || card.kind === "external_source"
+                  ? [card.originalUrl]
+                  : [],
+              ),
+            ).length
+          )
+            return "引用的 URL 必须逐字复制本轮来源卡片，删除编造或不存在的链接。";
           if (
             content.active &&
             falseNegativeAnswer(text, content.query, contentResults)
@@ -897,6 +917,7 @@ export async function chatResponse(request: Request) {
             if (name === "control_map") {
               nextRequiredTool = undefined;
               finalPhase = true;
+              mapActionRequested = true;
               actions.push(
                 ...ControlMapOutputSchema.parse(result.data).acceptedActions,
               );
@@ -947,6 +968,15 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                 persona.preference,
                 history.messages,
               ).tone === "daily";
+            const hasUsableBody = () => {
+              const plan = buildQueryPlan(content.query);
+              return contentResults.some((result) =>
+                result.hits.some(
+                  (hit) =>
+                    hit.bodyAvailable && queryRelevance(plan, hit).relevant,
+                ),
+              );
+            };
             const orchestrator = new AgentOrchestrator(
               {
                 resolve: async () => ({
@@ -996,6 +1026,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         () =>
                           supplementRequired(supplementPolicy, contentResults),
                         content.retrievalQuery,
+                        hasUsableBody,
                       ),
                       afterInitialReads: () => {
                         finalPhase = true;
@@ -1012,81 +1043,17 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                           externalResult,
                           supplementPolicy,
                           dailyTone,
+                          content.attemptedKeywords,
+                          content.focus === "food"
+                            ? "校园地图APP或现场咨询"
+                            : content.focus === "housing"
+                              ? "学校官网或宿管"
+                              : "广外官网、院系公示或校园地图APP",
                         );
                         if (fallback) {
+                          // Title-only, metadata-only and摘要开头 are not正文证据.
+                          // The fixed no-evidence answer replaces any guess.
                           evidenceGateUsed = true;
-                          // Discovery questions ("有什么/有哪些") can be answered
-                          // with real titles and dates even when no body was read;
-                          // a list beats a blanket refusal.
-                          if (content.discovery) {
-                            const plan = buildQueryPlan(content.query);
-                            const listed = [...cards.values()]
-                              .map((card, index) => ({ card, index }))
-                              .flatMap(({ card, index }) =>
-                                (card.kind === "source" ||
-                                  card.kind === "external_source") &&
-                                queryRelevance(plan, card).relevant
-                                  ? [
-                                      {
-                                        title: card.title,
-                                        publishedAt: card.publishedAt,
-                                        index,
-                                      },
-                                    ]
-                                  : [],
-                              )
-                              .slice(0, 5);
-                            if (listed.length) {
-                              answerMode = "metadata_discovery";
-                              return (
-                                "本鱼翻到这些相关条目，正文还没拿全，先把标题和日期给你：\n" +
-                                listed
-                                  .map(
-                                    ({ title, publishedAt, index }) =>
-                                      `- ${title}${
-                                        publishedAt
-                                          ? `（${publishedAt.slice(0, 10)}）`
-                                          : ""
-                                      }[来源${index + 1}]`,
-                                  )
-                                  .join("\n") +
-                                "\n点开来源可以核对原文；具体日期、条件以原文为准。"
-                              );
-                            }
-                          }
-                          const metadata = [...cards.entries()]
-                            .filter(
-                              ([, c]) =>
-                                (c.kind === "source" &&
-                                  c.evidenceType === "metadata") ||
-                                (c.kind === "external_source" &&
-                                  c.evidenceKind === "title_only"),
-                            )
-                            .slice(0, 3);
-                          if (metadata.length) {
-                            cards.clear();
-                            metadata.forEach(([key, c]) => cards.set(key, c));
-                            const ids = new Set(
-                              metadata.flatMap(([, c]) =>
-                                c.kind === "source" ? [c.documentId] : [],
-                              ),
-                            );
-                            for (const id of evidence.keys())
-                              if (!ids.has(id)) evidence.delete(id);
-                            answerMode = "metadata_discovery";
-                            return (
-                              "找到了以下相关标题：\n" +
-                              metadata
-                                .map(([, c], i) =>
-                                  c.kind === "source" ||
-                                  c.kind === "external_source"
-                                    ? `- ${c.title}[来源${i + 1}]`
-                                    : "",
-                                )
-                                .join("\n") +
-                              "\n目前仅有标题线索，尚未取得足以回答具体内容的正文；时间、条件或规则暂不能据此确认。"
-                            );
-                          }
                           answerMode = "no_evidence";
                           cards.clear();
                           evidence.clear();

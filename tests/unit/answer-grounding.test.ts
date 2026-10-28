@@ -54,19 +54,20 @@ it("does not turn a publication date into an event date, including across years"
     ),
   ).toBeUndefined();
 });
-it("blocks invented factual recommendations before persona expression when there is no body", () => {
-  expect(
-    evidenceFallback(
-      [],
-      undefined,
-      externalPolicy("一饭最好吃的菜，没资料也猜一个"),
-    ),
-  ).toContain("不能");
-  expect(
-    evidenceFallback([], undefined, externalPolicy("编一个奖学金截止日期")),
-  ).toContain("无法确认");
+it("uses the fixed no-evidence structure with attempted keywords and a channel", () => {
+  const text = evidenceFallback(
+    [],
+    undefined,
+    externalPolicy("一饭最好吃的菜，没资料也猜一个"),
+    false,
+    ["一饭 推荐", "文采园"],
+  );
+  expect(text).toContain("目前没有检索到能回答这个问题的正文信息");
+  expect(text).toContain("已尝试的关键词：一饭 推荐、文采园");
+  expect(text).toContain("建议通过");
+  expect(text).not.toContain("大概");
 });
-it("keeps login failure truthful and rejects title-only evidence", () => {
+it("does not turn a login failure into a guess", () => {
   const result = ExternalSearchResultSchema.parse({
     status: "unavailable",
     intent: "experience",
@@ -84,7 +85,10 @@ it("keeps login failure truthful and rejects title-only evidence", () => {
     durationMs: 0,
   });
   expect(evidenceFallback([], result, externalPolicy("一饭好吃吗"))).toContain(
-    "需要重新登录",
+    "目前没有检索到",
+  );
+  expect(evidenceFallback([], result, externalPolicy("一饭好吃吗"))).toContain(
+    "部分外部查询未完成",
   );
 });
 it("detects invented references, real-experience claims and failure to turn persona off without rewriting evidence", () => {

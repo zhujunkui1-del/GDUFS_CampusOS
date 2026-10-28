@@ -12,6 +12,29 @@ import {
 export type ContentTool = "search_campus_knowledge" | "search_campus_events";
 /** Campus facts need evidence; advice may use general knowledge with a clear gap. */
 export type AnswerRequirement = "strict" | "advisory" | "open";
+const ENTITY_GROUPS = [
+  ["门诊部", "门诊楼", "门诊室", "校医院"],
+  ["一饭", "文采园", "第一饭堂", "第一食堂"],
+  ["二饭", "博雅园", "第二饭堂", "第二食堂"],
+  ["三饭", "风采园", "第三饭堂", "第三食堂"],
+  ["云山学者", "云山青年学者", "云山领军学者"],
+];
+/** Same entity, different wording: retry with the official alias instead of "no data". */
+export function entityQueryVariants(query: string) {
+  const variants: string[] = [];
+  for (const group of ENTITY_GROUPS) {
+    const hit = group.find((term) => query.includes(term));
+    if (!hit) continue;
+    for (const term of group) {
+      if (term === hit) continue;
+      const next = query.split(hit).join(term).slice(-300);
+      if (next && next !== query && !variants.includes(next))
+        variants.push(next);
+      if (variants.length >= 2) return variants;
+    }
+  }
+  return variants;
+}
 /** Routing only; relevance, classification and dates still come from real tools. */
 export function contentIntent(
   message: string,
@@ -123,6 +146,7 @@ export function contentIntent(
     tools,
     query: query.slice(-300),
     retrievalQuery,
+    attemptedKeywords: [retrievalQuery, ...entityQueryVariants(retrievalQuery)],
     discovery,
     map,
     timeWindow,

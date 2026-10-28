@@ -130,14 +130,18 @@ export function registerExternalSearch(
       } else if (config.webEnabled !== false) {
         results = [await web(policy, input.limit)];
       }
-      const items = [
+      const candidates = [
         ...new Map(
           results.flatMap((r) => r.items).map((i) => [i.originalUrl, i]),
         ).values(),
-      ]
+      ];
+      const excluded = candidates.filter((item) =>
+        outsideCampusScope(item, policy),
+      );
+      const items = candidates
+        .filter((item) => !excluded.includes(item))
         .filter(
           (item) =>
-            !outsideCampusScope(item, policy) &&
             (!(policy.needsParticipation || policy.intent === "events") ||
               !isDiscoveryIndex(item.originalUrl, item.title)) &&
             queryRelevance(buildQueryPlan(policy.relevanceQuery || query), item)
@@ -148,6 +152,13 @@ export function registerExternalSearch(
         )
         .slice(0, 6);
       const warnings: string[] = [];
+      if (excluded.length)
+        warnings.push(
+          `已排除与问题实体不一致的来源：${excluded
+            .slice(0, 2)
+            .map((item) => item.title.slice(0, 24))
+            .join("、")}`,
+        );
       if (timeWindow?.role === "publication")
         warnings.push(
           `仅返回发布日期在${timeWindow.after}至${timeWindow.before}的资料；发布日期不证明活动在此期间发生，日期未知结果不作为该时间段证据。`,

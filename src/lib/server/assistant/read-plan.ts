@@ -1,5 +1,5 @@
 import type { PlannedRead } from "../agent/orchestrator";
-import type { ContentTool } from "./content-intent";
+import { entityQueryVariants, type ContentTool } from "./content-intent";
 import type { ExternalPolicy } from "../external-search/policy";
 import { buildQueryPlan } from "@/lib/retrieval/query-plan";
 import { stripSearchControls } from "@/lib/retrieval/query-controls";
@@ -86,13 +86,26 @@ export function contentReadPlan(
   policy: ExternalPolicy,
   needSupplement: () => boolean,
   retrievalQuery = query,
+  hasUsableEvidence: () => boolean = () => false,
 ): PlannedRead[] {
   const external = publicQuery(query);
+  const primary: PlannedRead[] = tools.map((name) => ({
+    name,
+    input: { query: retrievalQuery, limit: 3 },
+  }));
+  // Same entity, different wording: read the official alias before concluding
+  // that no body exists. Each variant is skipped once a usable body is found.
+  const retries: PlannedRead[] = entityQueryVariants(retrievalQuery).flatMap(
+    (variant) =>
+      tools.map((name) => ({
+        name,
+        input: { query: variant, limit: 3 },
+        when: () => !hasUsableEvidence(),
+      })),
+  );
   return [
-    ...tools.map((name) => ({
-      name,
-      input: { query: retrievalQuery, limit: 3 },
-    })),
+    ...primary,
+    ...retries,
     ...(external && policy.active
       ? [
           {

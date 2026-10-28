@@ -15,6 +15,22 @@ export function assistantDisplayText(text: string) {
     ? "这条回复未能生成有效答案，请重新提问。"
     : text;
 }
+/** Only real source URLs may be cited; the model must copy them verbatim. */
+export function citedUrls(text: string) {
+  return [...text.matchAll(/https?:\/\/[^\s）)】\]]+/g)].map((match) =>
+    match[0].replace(/[.,，。；;]+$/, ""),
+  );
+}
+export function unsupportedUrls(text: string, allowed: Iterable<string>) {
+  const known = new Set(allowed);
+  return citedUrls(text).filter((url) => !known.has(url));
+}
+/** A map action may only be reported after a real browser receipt. */
+export function claimsMapAction(text: string) {
+  return /已(?:经)?(?:帮你)?(?:标出|标记|定位|放大|在地图上显示|显示在地图)/.test(
+    text,
+  );
+}
 export function precedingQuestion(
   messages: readonly { id: string; role: string; text: string }[],
   id: string,

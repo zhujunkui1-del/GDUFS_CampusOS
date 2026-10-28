@@ -89,25 +89,16 @@ function answered(events: Event[]) {
     .join("");
 }
 
-// The reported regression: a roleplay sentence was sent to the internet and the
-// model was never asked to reply. Assert the actual HTTP run, not one function.
-it("answers a roleplay turn directly with no tools and no evidence gate", async () => {
-  const { f, client, events } = await runTurn("你是一只大肥鱼", [
-    "本鱼才不是随便被定义的鱼，不过你说是，那就先当一会儿吧。🐋",
-  ]);
+// The reported regression: a roleplay sentence was sent to the internet. It is
+// now an unrelated turn: declined before any search, with no model request.
+it("declines an unrelated roleplay turn without searching", async () => {
+  const { f, client, events } = await runTurn("你是一只大肥鱼", []);
   try {
     const terminal = events.find((event) => event.type === "run.completed");
-    expect(terminal?.payload.metrics).toMatchObject({
-      answerMode: "model",
-      conversationAct: "chitchat",
-      evidenceGateUsed: false,
-      requests: 1,
-    });
+    expect(terminal?.payload.metrics).toMatchObject({ requests: 0 });
     expect(events.some((event) => event.type === "tool.started")).toBe(false);
-    expect(client.requests).toHaveLength(1);
-    expect(client.requests[0].tools).toHaveLength(0);
-    expect(JSON.stringify(client.requests[0].messages)).toContain("通用知识");
-    expect(answered(events)).toContain("本鱼");
+    expect(client.requests).toHaveLength(0);
+    expect(answered(events)).toContain("只负责广外校园");
   } finally {
     f.close();
   }

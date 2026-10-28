@@ -13,7 +13,7 @@ vi.mock("@/lib/server/models/runtime", () => ({
   defaultModelRuntime: () => ({ resolve: runtime.resolve }),
 }));
 import { chatResponse } from "@/lib/server/assistant/chat";
-it("keeps a public title-only hit as a discovery link without inventing body evidence", async () => {
+it("treats a title-only hit as no body evidence instead of answering with it", async () => {
   const f = await dateGateFixture(),
     client = new MockModelProvider([]);
   runtime.env = {
@@ -65,22 +65,18 @@ it("keeps a public title-only hit as a discovery link without inventing body evi
     expect(
       events.find((e) => e.type === "run.completed")?.payload.metrics
         .answerMode,
-    ).toBe("metadata_discovery");
+    ).toBe("no_evidence");
     const cards = events
       .filter((e) => e.type === "artifact.ready")
       .flatMap((e) => e.payload.cards || []);
-    expect(
-      cards.some(
-        (c) =>
-          c.documentId === "metadata-fixture" && c.evidenceType === "metadata",
-      ),
-    ).toBe(true);
+    expect(cards).toHaveLength(0);
     const text = events
       .filter((e) => e.type === "message.delta")
       .map((e) => e.payload.text)
       .join("");
+    expect(text).toContain("目前没有检索到能回答这个问题的正文信息");
+    expect(text).toContain("已尝试的关键词");
     expect(text).toContain("图书馆借阅规则");
-    expect(text).toMatch(/正文|标题/);
     expect(client.requests).toHaveLength(0);
   } finally {
     f.close();

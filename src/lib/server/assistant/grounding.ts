@@ -63,6 +63,8 @@ export function evidenceFallback(
   external: ExternalSearchResult | undefined,
   policy: ExternalPolicy,
   playful = false,
+  attemptedKeywords: string[] = [],
+  channel = "广外官网、院系公示或校园地图APP",
 ) {
   const plan = buildQueryPlan(policy.relevanceQuery || "");
   const usable = internal
@@ -79,28 +81,21 @@ export function evidenceFallback(
     ...usable.map((h) => h.title + " " + h.contentSnippet),
     ...outside.map((i) => i.title + " " + i.snippet),
   ];
-  if (
-    (policy.intent === "experience" || policy.intent === "mixed") &&
-    !bodies.length
-  )
-    return external?.providers.some((p) => p.status === "login_required")
-      ? playful
-        ? "本鱼去小红书翻了翻，这次得重新登录才看得到，先不瞎推荐啦。"
-        : "本次小红书搜索需要重新登录，没有取得可用的学生体验资料，暂时不能据此推荐或猜测。"
-      : playful
-        ? "本鱼把能翻的都翻了，这次真没找到撑得住的学生体验，先不瞎推荐，免得坑你。🐟"
-        : "本次没有取得能回答这个问题的学生体验资料，暂不能据此推荐或猜测。";
   if (!bodies.length) {
     const unavailable = external?.providers.some(
       (p) => !["ok", "empty"].includes(p.status),
     );
-    if (unavailable)
-      return playful
-        ? "本鱼这轮联网没翻到可用资料，校园文章里也没有能确认的正文，先不瞎说；查询失败不代表没有，换个问法我再去翻。"
-        : "本次外部查询未取得可用资料，现有校园文章也不足以确认答案。查询失败不代表所问信息不存在。";
-    return playful
-      ? "本鱼翻了一圈，没找到能撑住这个说法的原文，这次先不乱讲，免得骗到你。🐟 换个更具体的问法，本鱼再帮你翻。"
-      : "这次没有取得能回答该问题的正文证据，暂无法确认；可以换个更具体的问法再查。";
+    const tried =
+      attemptedKeywords.filter(Boolean).join("、") ||
+      policy.relevanceQuery ||
+      "无";
+    const excludedNote = external?.warnings.find((warning) =>
+      warning.startsWith("已排除"),
+    );
+    // Fixed no-evidence structure: no guess, no "大概/应该", no title-only answer.
+    return `${playful ? "本鱼" : ""}目前没有检索到能回答这个问题的正文信息。已尝试的关键词：${tried}。建议通过${channel}核实。${
+      excludedNote ? `（${excludedNote}）` : ""
+    }${unavailable ? "（部分外部查询未完成，不代表信息不存在。）" : ""}`;
   }
 }
 /** Detect expression conflicts without altering URLs, citations, dates or structured tool data. */
@@ -116,6 +111,9 @@ export function expressionConflicts(
     : text;
   if (
     [...text.matchAll(/[\[【]来源\s*(\d+)[\]】]/g)].some(
+      (m) => Number(m[1]) < 1 || Number(m[1]) > citationCount,
+    ) ||
+    [...text.matchAll(/\[(\d+)\]/g)].some(
       (m) => Number(m[1]) < 1 || Number(m[1]) > citationCount,
     )
   )

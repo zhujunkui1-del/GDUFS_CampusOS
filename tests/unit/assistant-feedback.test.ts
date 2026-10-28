@@ -108,7 +108,7 @@ it("asks for a numbered, direct answer instead of an excerpt frame", () => {
     "answer",
   );
   expect(instructions).toContain("1. 2. 3.");
-  expect(instructions).toContain("不要用“已找到相关原文”");
+  expect(instructions).toContain("不用“已找到相关原文”");
 });
 it("retrieves discovery questions with the core topic instead of the whole phrase", () => {
   expect(
