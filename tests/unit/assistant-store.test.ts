@@ -92,13 +92,13 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
       a = await store.identity(request()),
       b = await store.identity(request());
     const conversation = await store.conversation(a);
-    for (let i = 0; i < 25; i++)
+    for (let i = 0; i < 45; i++)
       await store.append(conversation, "user", "公开测试 " + i);
     const restored = await new AssistantStore(fixture.db, () => now).history(
       a,
       conversation.id,
     );
-    expect(restored.messages).toHaveLength(20);
+    expect(restored.messages).toHaveLength(40);
     expect(restored.messages[0].text).toBe("公开测试 5");
     await expect(store.history(b, conversation.id)).rejects.toMatchObject({
       code: "NOT_FOUND",

@@ -320,7 +320,7 @@ export async function chatResponse(request: Request) {
             ? assistantDisplayText(message.text)
             : message.text,
       }))
-      .slice(-10);
+      .slice(-40);
     while (JSON.stringify(previous).length > 16000) previous.shift();
     await ctx.store.append(conversation, "user", input.message);
     const abort = new AbortController();

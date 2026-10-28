@@ -47,6 +47,9 @@ const cookie = (request: Request, name: string) =>
     .map((v) => v.trim())
     .find((v) => v.startsWith(name + "="))
     ?.slice(name.length + 1);
+const HISTORY_MESSAGES = 40;
+const RETAINED_MESSAGES = 80;
+
 export class AssistantStore {
   constructor(
     readonly db: SqlDatabase,
@@ -223,7 +226,7 @@ export class AssistantStore {
     const conversation = await this.conversation(identity, id);
     const rows = await this.db
       .prepare(
-        "SELECT id,role,content,artifacts_json FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') ORDER BY rowid DESC LIMIT 20",
+        `SELECT id,role,content,artifacts_json FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') ORDER BY rowid DESC LIMIT ${HISTORY_MESSAGES}`,
       )
       .bind(id)
       .all<{
@@ -512,7 +515,7 @@ export class AssistantStore {
         ),
       this.db
         .prepare(
-          "DELETE FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') AND id NOT IN (SELECT id FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') ORDER BY rowid DESC LIMIT 20)",
+          `DELETE FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') AND id NOT IN (SELECT id FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') ORDER BY rowid DESC LIMIT ${RETAINED_MESSAGES})`,
         )
         .bind(conversation.id, conversation.id),
       this.db

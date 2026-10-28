@@ -1251,3 +1251,9 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 修复：`falseNegativeAnswer` 只把“否定相关材料本身”（相关信息/资料/文章、活动/赛事/讲座/通知/名单/安排）视为漏召回；对开放时间、设施配置等具体缺口不再误判。`containsToolProtocol` 不再匹配裸工具名，只匹配调用语法与协议标签；新增 `stripToolProtocol`，final 阶段先做一次结构清洗，清洗后仍有有效正文就保留答案，只有空文本或仍含协议时才进入修复/降级。final 拒绝时输出 `FINAL_REJECTED` 结构化服务端告警，便于下次直接定位。
 
 复测：`学校哪里可以锻炼身体` → `answerMode=model`，`groundingChecks=1`、`supported=true`，答案包含通用锻炼建议、网球赛事证据与 `[1] 标题 - URL` 来源，不再原文摘录。全量 692 项 680 通过 / 12 项既有失败；Preview 部署 `6d2a22a6-0807-4834-99f3-2c092a6d9447`。地图问答浏览器回执与 20 条会话保留窗口仍未处理。
+
+### 2026-10-29 第十轮：会话历史窗口扩容
+
+不再把「20 条是否扩大」留作待确认项。`store.ts` 新增 `HISTORY_MESSAGES = 40`、`RETAINED_MESSAGES = 80`：读取与前端恢复上限从 20 条提高到 40 条（20 轮），数据库保留上限 80 条；`chat.ts` 的模型上下文从最近 10 条提高到最近 40 条，仍受 16000 字符预算裁剪。`assistant-store.test.ts` 的有界历史用例改为写入 45 条并断言恢复 40 条、首条为第 6 条。
+
+验证：`assistant-store.test.ts` 11 项全过；`npm run build` 0；Preview 部署 `5a98d35a-471e-4e62-bc6a-7af83028c803`。更长的真实多轮对话质量评估放到固定回归集，不再以「待确认」阻塞。
