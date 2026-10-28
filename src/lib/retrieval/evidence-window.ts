@@ -36,14 +36,16 @@ export function evidenceWindow(
       Math.min(10, cueCount) * 3;
     // A workflow entry is more useful for “how do I” than a later field with
     // many repeated action verbs. This preference applies only to procedures.
-    const priority = Number(
-      goal === "procedure" &&
-        cueCount > 0 &&
-        !/[？?]$/.test(s) &&
-        /第一步|步骤[一1]|(?:^|\s)[一1][.、．]|(?:打开|登录|进入).{0,24}(?:小程序|系统|办理平台|门户)/.test(
-          s,
-        ),
-    );
+    const priority =
+      goal !== "procedure" || cueCount === 0 || /[？?]$/.test(s)
+        ? 0
+        : /第一步|步骤[一1]|(?:^|\s)[一1][.、．]\s*(?:登录|打开|进入|选择|申请|填写|持|刷)/.test(
+              s,
+            )
+          ? 2
+          : Number(
+              /(?:打开|登录|进入).{0,24}(?:小程序|系统|办理平台|门户)/.test(s),
+            );
     if (/[？?]$/.test(s) && cueCount < 3) score -= 6;
     if (
       /发布时间|发布日期/.test(s) &&

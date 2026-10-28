@@ -280,6 +280,9 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
           Number(relevanceByChunk.get(b.id)!.relevant) -
             Number(relevanceByChunk.get(a.id)!.relevant) ||
           windows.get(b.id)!.priority - windows.get(a.id)!.priority ||
+          (windows.get(a.id)!.priority === 2
+            ? a.start_offset - b.start_offset
+            : 0) ||
           windows.get(b.id)!.score - windows.get(a.id)!.score ||
           relevanceByChunk.get(b.id)!.score -
             relevanceByChunk.get(a.id)!.score ||

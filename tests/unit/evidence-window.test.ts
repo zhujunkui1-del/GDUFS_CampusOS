@@ -26,7 +26,7 @@ it("keeps the entry step of a workflow ahead of a denser later form section", ()
   const text =
     "一、登录办理入口。打开微信小程序，选择电子就业协议。\n" +
     "材料介绍。".repeat(160) +
-    "单位信息：填写单位性质，填写单位名称，点击搜索名称，选择单位后确认，填写地址，选择行业，填写联系人并提交。";
+    "单位信息：填写单位性质，填写单位名称，点击搜索名称，选择单位后确认，填写地址，选择行业，填写联系人并提交，或登录企业信息查询系统核实。";
   const w = evidenceWindow(text, "就业协议怎么办理", 260);
   expect(w.text).toContain("打开微信小程序");
   expect(w.start).toBe(0);
