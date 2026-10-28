@@ -66,6 +66,7 @@ import { closureNeedsEvidenceReview } from "@/lib/retrieval/temporal-claims";
 import {
   assessEvidence,
   falseNegativeAnswer,
+  supportsAnswerPurpose,
 } from "@/lib/retrieval/evidence-assessment";
 import {
   evidenceFallback,
@@ -1038,12 +1039,18 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                           !fallback &&
                           supplementPolicy.officialOnly &&
                           !contentResults.some((r) =>
-                            r.hits.some((h) => h.bodyAvailable && h.official),
+                            r.hits.some(
+                              (h) =>
+                                h.bodyAvailable &&
+                                h.official &&
+                                supportsAnswerPurpose(content.query, h),
+                            ),
                           ) &&
                           !externalResult?.items.some(
                             (i) =>
                               i.authority === "official" &&
-                              i.evidenceKind !== "title_only",
+                              i.evidenceKind !== "title_only" &&
+                              supportsAnswerPurpose(content.query, i),
                           )
                         ) {
                           const attributed = retrievedEvidenceAnswer(

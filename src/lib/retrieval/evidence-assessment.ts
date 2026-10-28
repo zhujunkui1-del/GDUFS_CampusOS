@@ -1,5 +1,19 @@
 import type { ContentSearchResult } from "@/domain/retrieval/skills";
 import { buildQueryPlan, queryRelevance } from "./query-plan";
+import { evidenceWindow } from "./evidence-window";
+
+/** Related links are not necessarily instructions for the requested workflow. */
+export function supportsAnswerPurpose(
+  query: string,
+  hit: { title: string; contentSnippet?: string; snippet?: string },
+) {
+  if (buildQueryPlan(query).goal !== "procedure") return true;
+  return (
+    /指南|流程|操作|步骤|借阅规则|借还书/.test(hit.title) ||
+    evidenceWindow(hit.contentSnippet ?? hit.snippet ?? "", query, 780)
+      .priority > 0
+  );
+}
 
 type Activity = ContentSearchResult["activities"][number];
 export function activityAvailability(a: Activity, now = Date.now()) {

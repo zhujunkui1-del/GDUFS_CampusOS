@@ -11,6 +11,7 @@ import {
   assessEvidence,
   activityAvailability,
   falseNegativeAnswer,
+  supportsAnswerPurpose,
 } from "@/lib/retrieval/evidence-assessment";
 import { completeSnippetTimes } from "@/lib/retrieval/snippet-time";
 import { analyzeArticle } from "@/lib/ingestion/article-analysis";
@@ -318,6 +319,14 @@ it("does not let an official attachment list erase an available attributed proce
     true,
     new Set(),
   );
+  expect(supportsAnswerPurpose("就业协议怎么办理", forms)).toBe(false);
+  expect(supportsAnswerPurpose("就业协议怎么办理", guide)).toBe(true);
+  expect(
+    supportsAnswerPurpose("图书馆怎么借书", {
+      title: "借还书说明",
+      snippet: "读者可用自助借还机。",
+    }),
+  ).toBe(true);
   expect(answer).toContain("1.进入申请界面");
   expect(answer).toContain("官方身份及现行效力待确认");
   expect(answer!.indexOf("[来源1]")).toBeLessThan(answer!.indexOf("[来源2]"));
