@@ -1181,3 +1181,11 @@ Preview最新162893b9-d2c5-4f11-8918-7dd9e5220fab。后台公众号78+服务号2
 本轮最后人工验收补充：流程取证优先入口且不为凑满字数将窗口移回长前言。降级选择器保留已有公开完整流程指南，并对身份/现行效力未确认者明示归属，不由旧官方附件目录抹掉有用指南；用户明确只查官方、元数据、不可读正文仍不适用。最终主Worker的这处修复另有真实单轮回执，20题API/四轮桌面/手机失败记录分别标实际版本。模型截断的运行时同客户端探针已取得HTTP200/length/正文0，未伪造检查结论或扩大预算。
 
 最终回执：主Preview代码45c0ce8，Worker d8e61583-a80f-4a30-a987-f014dba508bb；云端网页服务99a6d9e2-e18e-4a08-b50f-c59bdb52ad3d。最终指南单轮attributed_excerpt、0次模型请求，实际包含入口、2027届和身份/现行效力未知标记；权威附件页不再冒充已取得流程。全仓660项648通过/12旧失败，目标Lint、typecheck、构建通过。桌面4轮浏览器断言通过但均有据摘录；手机小红书断言仍失败。本组7轮6原文/1归属摘录，整体不标全通过；精确计量、不同版本及回退在交付报告/回执目录。
+
+## 2026-10-29｜Agent 通用对话恢复：会话行为判定与证据门禁分层
+
+从干净 `b940762`（运行代码 `45c0ce8`）接管，未重置、未改远端。先核验工作区/分支/远端0/0、无未提交改动，复现基线660项648通过12既有失败。根因不是召回率：`content-intent` 用 `externalPolicy.active` 兜底，而该值对任何≥4字符非问候消息为真，导致闲聊、数字、纯标点也检索；`evidenceFallback` 在无正文时返回固定拒答并被 `groundedReply` 短路（0模型请求）；最终提示只允许已返回资料，没有通用建议许可；原文摘录在模型失败后被当常规回答；`checkEvidence` 二次不通过抛错后再降级为摘录。
+
+新增 `conversation-act.ts` 封闭行为分类（闲聊/困惑/纠正/一般/校园），`content-intent` 按“知识/动态/官方核实/显式搜索/仅内部/校园实体”决定检索并输出 `answerRequirement`；`content-prompt` 新增 `directInstructions` 与建议类边界；`chat.ts` 仅让 strict 走证据短路，非内容轮改用直接回答指令，指标新增 `conversationAct`/`answerRequirement`。反馈类轮次不再当检索关键词。
+
+新增11项测试（8路由+3真实`chatResponse`）：角色扮演0工具1模型请求、住宿建议仍检索但由模型回答且无固定拒答、严格事实空库仍`no_evidence`。全量671项659通过、12项既有失败不变；typecheck、改动文件ESLint、Prettier通过；Preview构建退出码0（OpenNext+`wrangler deploy --dry-run`+1427文件凭据扫描）。未部署：Wrangler登录过期且非交互、`CLOUDFLARE_ACCOUNT_ID`未配置；本地workerd因`miniflare-email-store`拒绝访问无法启动；本机无Step密钥，未做真实模型质量验收。详见 `AGENT_CONVERSATION_RECOVERY_2026_10_29.md`。

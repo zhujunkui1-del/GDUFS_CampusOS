@@ -595,3 +595,9 @@ Preview网关已切至redbook云端服务。接口真实搜索曾取回3条笔�
 当前真实最终生成仍出现Step超时、核对无可用结论和纠正后仍含无据生命周期判断，已阻止该文本外发并以本轮原文摘录保留检索成果；不能把这种降级标为普通生成成功。完整桌面/手机验收未全通过：小红书指定搜索断言失败，身份有效但源站返回verification_required/NeedVerifyError，真实诊断身份1、搜索1、正文0。停止重试，不改账号、不绕过验证；恢复外部源站可用状态后才可重跑该断言，不重复伪造通过。
 
 当前能力回执已通过原验证器于北京时间2026-10-28 18:56刷新两供应商；原24h到期及缺自动续检仍是运维边界。12项原Console/采集/保留测试失败和全量Lint历史备份/CJS问题未改。CPU仅有tail捕获子集，没有修改前对照；聊天D1部分行计量不完整，不把预留Token或下界当实际账单。本文以新记录覆盖旧时间点的可用性结论，不删除历史失败。
+
+## 2026-10-29｜对话恢复已过代码/构建门禁，部署与真实模型验收待恢复环境
+
+会话行为判定与证据门禁分层已实现，新增11项测试通过，全量671项659通过/12项既有失败不变，typecheck、改动文件Lint、Prettier与Preview构建（含dry-run与凭据扫描）通过。这证明路由与管线，不是真实对话质量。
+
+当前无法完成 Preview 部署与真实模型验收：`wrangler whoami` 显示登录令牌过期且环境非交互，`CLOUDFLARE_ACCOUNT_ID` 未配置，`scripts/deploy.mjs preview` 会直接退出；本机 `.dev.vars` 只有 DeepSeek 凭据，Preview 首选 Step 的密钥不在本机；本地 `wrangler d1 ... --local` 与 workerd 在 Windows 报 `miniflare-email-store: CreateDirectory 拒绝访问`，无法启动本地 Next+D1 链路。未尝试 Production，未改云端 D1、文章、地图或外部账号，也未用 DeepSeek 样本替代 Step 质量结论。解除条件：完成 Wrangler 登录或配置最小权限 API Token 与账号 ID，且本机可提供 Step 运行时凭据后，部署 Preview 并复跑交接中的5句原话与既有回归。
