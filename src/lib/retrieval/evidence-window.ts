@@ -25,7 +25,7 @@ export function evidenceWindow(
     experience: /好吃|口味|推荐|人均|价格|隔音|居住|入住|档口/g,
   };
   const spans = [...text.matchAll(/[^\n。！？!?]+[。！？!?]?/g)];
-  let best = { at: 0, score: 0 };
+  let best = { at: 0, score: 0, priority: 0 };
   for (const m of spans) {
     const s = m[0];
     const cueCount = cues[goal]
@@ -34,14 +34,27 @@ export function evidenceWindow(
     let score =
       terms.reduce((n, t) => n + Number(s.includes(t)), 0) +
       Math.min(10, cueCount) * 3;
-    if (goal === "procedure" && /第一步|(?:^|\s)1[.、]/.test(s)) score += 8;
+    // A workflow entry is more useful for “how do I” than a later field with
+    // many repeated action verbs. This preference applies only to procedures.
+    const priority = Number(
+      goal === "procedure" &&
+        cueCount > 0 &&
+        !/[？?]$/.test(s) &&
+        /第一步|步骤[一1]|(?:^|\s)[一1][.、．]|(?:打开|登录|进入).{0,24}(?:小程序|系统|办理平台|门户)/.test(
+          s,
+        ),
+    );
     if (/[？?]$/.test(s) && cueCount < 3) score -= 6;
     if (
       /发布时间|发布日期/.test(s) &&
       ["registration", "participation", "discovery"].includes(goal)
     )
       score -= 4;
-    if (score > best.score) best = { at: m.index!, score };
+    if (
+      priority > best.priority ||
+      (priority === best.priority && score > best.score)
+    )
+      best = { at: m.index!, score, priority };
   }
   const start =
     text.length <= maxChars
@@ -51,5 +64,6 @@ export function evidenceWindow(
     text: text.slice(start, start + maxChars),
     start,
     score: best.score,
+    priority: best.priority,
   };
 }
