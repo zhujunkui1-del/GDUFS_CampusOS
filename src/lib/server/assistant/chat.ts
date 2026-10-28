@@ -84,6 +84,14 @@ import {
 } from "./persona";
 import { inputGate, inputGateReply } from "./input-gate";
 
+/** The same article can arrive from several indexes; cite it once. */
+function titleKey(title: string) {
+  return title
+    .replace(/\s+/g, "")
+    .replace(/[|｜].*$/, "")
+    .slice(0, 60);
+}
+
 function modelResult(name: string, result: SkillResult<unknown>) {
   if (!result.ok) return result;
   if (name === "plan_route") {
@@ -794,6 +802,13 @@ export async function chatResponse(request: Request) {
               contentResults.push(data);
               contentMetrics.push({ skill: name, ...data.metrics });
               for (const h of data.hits) {
+                const duplicate = [...cards.values()].some(
+                  (card) =>
+                    (card.kind === "source" ||
+                      card.kind === "external_source") &&
+                    titleKey(card.title) === titleKey(h.title),
+                );
+                if (duplicate) continue;
                 evidence.set(h.documentId, h);
                 cards.set("source:" + h.documentId, {
                   kind: "source",
@@ -835,6 +850,13 @@ export async function chatResponse(request: Request) {
                 ),
               });
               for (const item of data.items) {
+                const duplicate = [...cards.values()].some(
+                  (card) =>
+                    (card.kind === "source" ||
+                      card.kind === "external_source") &&
+                    titleKey(card.title) === titleKey(item.title),
+                );
+                if (duplicate) continue;
                 cards.set("external:" + item.originalUrl, {
                   kind: "external_source",
                   title: item.title,

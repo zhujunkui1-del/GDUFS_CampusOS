@@ -54,7 +54,7 @@ export function requiresPlaceLookup(message: string) {
   // Canteen order aliases (一饭) and named facilities are real map places; asking
   // "在哪" must resolve them through search_places instead of guessing prose.
   return (
-    /找|查找|搜索|在哪里|在哪儿|南苑\d+栋|北苑\d+栋|图书馆|教学楼|实验楼|八角楼|语心桥|[一二三四]饭|饭堂|食堂|超市|又康|便利店|打印店|快递|校医院|门诊部|体育馆|操场/.test(
+    /找|查找|搜索|在哪里|在哪儿|南苑\d+栋|北苑\d+栋|图书馆|教学楼|实验楼|八角楼|语心桥|[一二三四]饭|饭堂|食堂|超市|又康|便利店|打印店|快递|校医院|门诊部|体育馆|操场|号门|贝岗门|校门|[东南西北]门|[一二三四五六七八九十\d]+栋|[\u4e00-\u9fa5]{1,6}(?:楼|桥|馆|场|园)/.test(
       message,
     ) || /(?:在|去|到)(?:哪|什么位置)/.test(message)
   );

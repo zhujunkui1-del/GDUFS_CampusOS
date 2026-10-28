@@ -57,7 +57,7 @@ export function foodEvidenceAnswer(
     candidates
       .map(
         ({ card, quote, number }) =>
-          `- ${card.publishedAt ? chinaDay(card.publishedAt) || "日期未注明" : "日期未注明"}：“${quote}${quote.length === 130 ? "…" : ""}”[来源${number}]`,
+          `- ${card.publishedAt ? chinaDay(card.publishedAt) || "日期未注明" : "日期未注明"}：“${quote}${quote.length === 130 ? "…" : ""}”[${number}]`,
       )
       .join("\n") +
     "\n以上为原文片段，当前菜品供应以现场为准。"
@@ -145,7 +145,7 @@ export function retrievedEvidenceAnswer(
         ? [
             {
               future,
-              text: `- ${c.title}${attribution}： “${quote}${quote.length === 160 ? "…" : ""}”[来源${index + 1}]`,
+              text: `- ${c.title}${attribution}： “${quote}${quote.length === 160 ? "…" : ""}”[${index + 1}]`,
             },
           ]
         : [];

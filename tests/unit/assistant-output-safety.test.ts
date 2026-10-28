@@ -59,7 +59,7 @@ it("recovers only real food excerpts, retains source numbering and never turns m
     true,
   );
   expect(result).toContain("我喜欢一饭的自选咕噜肉");
-  expect(result).toContain("[来源2]");
+  expect(result).toContain("[2]");
   expect(result).not.toContain("新书");
   expect(result).not.toContain("亲自吃过");
   expect(

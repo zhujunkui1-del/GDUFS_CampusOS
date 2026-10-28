@@ -19,7 +19,13 @@ it("classifies every turn before retrieval", () => {
   expect(inputGate("123456789")).toBe("vague");
   // A short alias after a campus turn keeps the campus context.
   expect(inputGate("文采园", campusHistory)).toBe("campus");
-  expect(inputGate("文采园", [])).toBe("off_topic");
+  expect(inputGate("巴黎铁塔", [])).toBe("off_topic");
+  // A campus history must not let a distant-city weather question through.
+  expect(inputGate("北京今天天气怎么样", campusHistory)).toBe("off_topic");
+  // Map labels with a suffix outside the old keyword list are still campus.
+  expect(inputGate("4号门在哪")).toBe("campus");
+  expect(inputGate("B8学术报告厅在哪")).toBe("campus");
+  expect(inputGate("京东物流在哪")).toBe("campus");
 });
 
 it("uses fixed replies and never sends blocked or unrelated turns to search", () => {

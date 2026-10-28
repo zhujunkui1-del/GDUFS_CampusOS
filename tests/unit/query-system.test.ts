@@ -286,7 +286,7 @@ it("does not bind several months of an index page to one event or turn a start i
     new Set(),
   );
   expect(fallback).toContain("11 月 20—21 日");
-  expect(fallback).toContain("[来源2]");
+  expect(fallback).toContain("[2]");
 });
 it("does not let an official attachment list erase an available attributed procedural guide", () => {
   const guide: AssistantCard = {
@@ -329,7 +329,7 @@ it("does not let an official attachment list erase an available attributed proce
   ).toBe(true);
   expect(answer).toContain("1.进入申请界面");
   expect(answer).toContain("官方身份及现行效力待确认");
-  expect(answer!.indexOf("[来源1]")).toBeLessThan(answer!.indexOf("[来源2]"));
+  expect(answer!.indexOf("[1]")).toBeLessThan(answer!.indexOf("[2]"));
   expect(
     retrievedEvidenceAnswer(
       [guide],

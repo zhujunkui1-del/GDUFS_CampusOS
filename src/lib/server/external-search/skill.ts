@@ -154,10 +154,7 @@ export function registerExternalSearch(
       const warnings: string[] = [];
       if (excluded.length)
         warnings.push(
-          `已排除与问题实体不一致的来源：${excluded
-            .slice(0, 2)
-            .map((item) => item.title.slice(0, 24))
-            .join("、")}`,
+          `已排除 ${excluded.length} 条与问题实体不一致的来源（不展示其内容）`,
         );
       if (timeWindow?.role === "publication")
         warnings.push(

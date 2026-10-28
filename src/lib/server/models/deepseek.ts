@@ -333,6 +333,8 @@ export class DeepseekModelClient implements ModelClient {
           model: this.model,
           messages: request.messages,
           max_tokens: request.maxTokens,
+          // Grounded campus answers should not vary between identical questions.
+          temperature: 0.2,
           ...(this.provider === "deepseek"
             ? { thinking: { type: "disabled" } }
             : { reasoning_effort: "low" }),
