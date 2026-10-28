@@ -88,7 +88,15 @@ test("real retrieval, official supplements, contextual follow-ups and citations"
       const agreement = await ask("广外就业协议怎么办理？");
       expect(agreement.cards.some((c) => /协议|三方/.test(c.title))).toBe(true);
     } else {
-      const food = await ask("广外一饭有什么好吃的");
+      const food = await ask("用小红书查广外一饭有什么好吃的");
+      expect(food.tools).toContain("search_external_campus_info");
+      expect(
+        food.cards.some(
+          (c) =>
+            c.kind === "external_source" &&
+            /xiaohongshu\.com/.test(c.originalUrl || ""),
+        ),
+      ).toBe(true);
       expect(food.response).toMatch(/饭|面|菜|餐/);
       expect(food.cards.map((c) => c.title).join(" ")).not.toMatch(
         /LSE|主题书展|新书速递/,
