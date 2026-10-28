@@ -1,10 +1,16 @@
-import { buildQueryPlan } from "./query-plan";
+import { buildQueryPlan, type QueryGoal } from "./query-plan";
 import { keywords } from "./terms";
 /** Select task-bearing prose, rather than the first page introduction/FAQ.
  * Uses text already retrieved; never fetches, indexes or changes source text. */
-export function evidenceWindow(text: string, query: string, maxChars: number) {
+export function evidenceWindow(
+  text: string,
+  query: string,
+  maxChars: number,
+  goalOverride?: QueryGoal,
+) {
   const plan = buildQueryPlan(query),
-    terms = keywords(query);
+    terms = keywords(query),
+    goal = goalOverride || plan.goal;
   const cues: Record<string, RegExp> = {
     procedure:
       /登录|打开|点击|选择|扫描|刷卡|凭|持本人|填写|提交|确认|下载|打印|人工办理|自助借还/g,
@@ -22,18 +28,17 @@ export function evidenceWindow(text: string, query: string, maxChars: number) {
   let best = { at: 0, score: 0 };
   for (const m of spans) {
     const s = m[0];
-    const cueCount = cues[plan.goal]
-      ? [...s.matchAll(new RegExp(cues[plan.goal].source, "g"))].length
+    const cueCount = cues[goal]
+      ? [...s.matchAll(new RegExp(cues[goal].source, "g"))].length
       : 0;
     let score =
       terms.reduce((n, t) => n + Number(s.includes(t)), 0) +
       Math.min(10, cueCount) * 3;
-    if (plan.goal === "procedure" && /第一步|(?:^|\s)1[.、]/.test(s))
-      score += 8;
+    if (goal === "procedure" && /第一步|(?:^|\s)1[.、]/.test(s)) score += 8;
     if (/[？?]$/.test(s) && cueCount < 3) score -= 6;
     if (
       /发布时间|发布日期/.test(s) &&
-      ["registration", "participation", "discovery"].includes(plan.goal)
+      ["registration", "participation", "discovery"].includes(goal)
     )
       score -= 4;
     if (score > best.score) best = { at: m.index!, score };

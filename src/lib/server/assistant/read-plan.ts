@@ -2,6 +2,7 @@ import type { PlannedRead } from "../agent/orchestrator";
 import type { ContentTool } from "./content-intent";
 import type { ExternalPolicy } from "../external-search/policy";
 import { buildQueryPlan } from "@/lib/retrieval/query-plan";
+import { stripSearchControls } from "@/lib/retrieval/query-controls";
 import {
   queryFocus,
   sportsQueryTerms,
@@ -15,6 +16,7 @@ export function publicQuery(query: string) {
     )
   )
     return null;
+  query = stripSearchControls(query);
   if (queryFocus(query) === "sports") {
     const specifics = sportsQueryTerms(query);
     const subject = specifics.includes("体育")

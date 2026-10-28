@@ -1,5 +1,6 @@
 import { queryFocus, sportsQueryTerms } from "./query-focus";
 import { buildQueryPlan, entityTerms, type QueryPlan } from "./query-plan";
+import { stripSearchControls } from "./query-controls";
 // Encoded two-character Chinese terms avoid unicode61's whole-Han-run behavior.
 // This is keyword expansion, not paid embedding or a second classifier.
 const groups = [
@@ -23,7 +24,7 @@ const groups = [
   ["停水", "停电", "临时通知"],
 ];
 export function keywords(query: string) {
-  const cleaned = query
+  const cleaned = stripSearchControls(query)
     .normalize("NFKC")
     .toLowerCase()
     .replace(

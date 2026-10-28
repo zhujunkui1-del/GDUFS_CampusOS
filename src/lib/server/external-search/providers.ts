@@ -309,7 +309,12 @@ export async function searchWeb(
           : xhs
             ? "student_experience"
             : "unverified",
-        snippet: evidenceWindow(page || r.text || r.title, query, 700).text,
+        snippet: evidenceWindow(
+          page || r.text || r.title,
+          query,
+          700,
+          policy.intent === "experience" ? "experience" : undefined,
+        ).text,
         publishedAt: r.published,
         retrievedAt: new Date().toISOString(),
         evidenceKind,

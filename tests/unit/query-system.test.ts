@@ -23,6 +23,8 @@ import {
 } from "@/lib/retrieval/temporal-claims";
 import type { AssistantCard } from "@/domain/agent/assistant-contracts";
 import { retrievedEvidenceAnswer } from "@/lib/server/assistant/evidence-answer";
+import { publicQuery } from "@/lib/server/assistant/read-plan";
+import { stripSearchControls } from "@/lib/retrieval/query-controls";
 
 it("evaluates a shared cross-topic corpus and preserves qualification under distractors", async () => {
   const f = await dateGateFixture();
@@ -167,6 +169,28 @@ it("represents follow-up context and goal separately from subjects", () => {
   expect(buildQueryPlan("体育比赛，不要足球").excludedTerms).toContain("足球");
 });
 it("preserves previously unknown subject modifiers, independently of the broad event words", () => {
+  expect(
+    queryRelevance(buildQueryPlan("调用小红书来查广外一饭有什么好吃的"), {
+      title: "广外一饭推荐",
+      contentSnippet: "我喜欢一饭的咕噜肉，好吃。",
+    }).relevant,
+  ).toBe(true);
+  expect(publicQuery("用小红书查广外南校一饭有什么好吃的")).toBe(
+    "广外 南校 一饭",
+  );
+  expect(stripSearchControls("介绍小红书搜索功能")).toBe("介绍小红书搜索功能");
+  expect(
+    queryRelevance(buildQueryPlan("王常吉是谁"), {
+      title: "王常吉教授介绍",
+      contentSnippet: "广东外语外贸大学教授",
+    }).relevant,
+  ).toBe(true);
+  expect(
+    queryRelevance(buildQueryPlan("戴建业属于南校吗"), {
+      title: "戴建业在白云山校区工作",
+      contentSnippet: "戴建业",
+    }).relevant,
+  ).toBe(true);
   expect(
     queryRelevance(buildQueryPlan("云山学术沙龙414期"), {
       title: "云山学术沙龙412期",

@@ -4,6 +4,7 @@ import {
   matchesQueryFocus,
   participationQuery,
 } from "./query-focus";
+import { stripSearchControls } from "./query-controls";
 
 // Retrieval concepts are query vocabulary, not a parallel article taxonomy.
 // Aliases expand each original concept; broad action words never replace it.
@@ -77,7 +78,7 @@ export function buildQueryPlan(
   query: string,
   timeRange?: QueryPlan["timeRange"],
 ): QueryPlan {
-  const normalized = query.normalize("NFKC");
+  const normalized = stripSearchControls(query.normalize("NFKC"));
   // Exclusions are constraints, never positive expansion seeds.
   const excludedTerms = [
     ...normalized.matchAll(
@@ -139,9 +140,15 @@ export function buildQueryPlan(
   const entities = [...positive.matchAll(/[“「"]([^”」"\n]{2,40})[”」"]/g)].map(
     (m) => m[1],
   );
-  const named = positive.match(
-    /^(?:请问)?([\p{Script=Han}]{2,4})(?:是谁|是什么职务|是不是|担任|是广外)/u,
-  )?.[1];
+  const named = [...positive.split(/；追问：/)]
+    .reverse()
+    .map(
+      (clause) =>
+        clause.match(
+          /^(?:请问|那|那么)?([\p{Script=Han}]{2,4})(?:是谁|是什么职务|是不是|是否|属于|担任|是广外)/u,
+        )?.[1],
+    )
+    .find(Boolean);
   if (named && !topics.length && !/广外|学校|校园/.test(named))
     entities.push(named);
   // A concrete venue remains a constraint rather than disappearing in synonyms.
@@ -225,7 +232,7 @@ export function buildQueryPlan(
     qualifiers: ["本科生", "研究生", "新生", "毕业生", "学科竞赛"].filter((t) =>
       positive.includes(t),
     ),
-    modifiers,
+    modifiers: topics.length ? modifiers : [],
     ...(timeRange ? { timeRange } : {}),
   };
 }
@@ -252,10 +259,12 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   if (plan.excludedTerms.some((t) => title.includes(t)))
     return { relevant: false, score: 0, reason: "excluded_topic" };
   if (
-    (plan.campus === "south" &&
+    (!/是不是|是否|属于|算不算/.test(plan.original) &&
+      plan.campus === "south" &&
       /白云山|北校/.test(title) &&
       !/大学城|南校/.test(title)) ||
-    (plan.campus === "north" &&
+    (!/是不是|是否|属于|算不算/.test(plan.original) &&
+      plan.campus === "north" &&
       /大学城|南校/.test(title) &&
       !/白云山|北校/.test(title))
   )
