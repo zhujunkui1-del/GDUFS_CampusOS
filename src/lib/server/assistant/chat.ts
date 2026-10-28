@@ -56,7 +56,11 @@ import { createCloudSearch } from "../external-search/cloud";
 import type { EvidenceHit } from "@/domain/retrieval/contracts";
 import { D1KeywordRetriever } from "../retrieval/retriever";
 import { contentInstructions, directInstructions } from "./content-prompt";
-import { foodEvidenceAnswer, retrievedEvidenceAnswer } from "./evidence-answer";
+import {
+  foodEvidenceAnswer,
+  retrievedEvidenceAnswer,
+  rosterEvidenceAnswer,
+} from "./evidence-answer";
 import {
   assistantDisplayText,
   asksForSearchPermission,
@@ -1054,24 +1058,46 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         finalPhase = true;
                       },
                       groundedReply: () => {
+                        const noEvidence = () =>
+                          evidenceFallback(
+                            contentResults,
+                            externalResult,
+                            supplementPolicy,
+                            dailyTone,
+                            content.attemptedKeywords,
+                            content.focus === "food"
+                              ? "校园地图APP或现场咨询"
+                              : content.focus === "housing"
+                                ? "学校官网或宿管"
+                                : "广外官网、院系公示或校园地图APP",
+                          );
+                        // Roster questions always use one extractive list: no
+                        // generated prose, no alternating list/excerpt answers.
+                        if (supplementPolicy.needsRoster) {
+                          const roster = rosterEvidenceAnswer(
+                            [...cards.values()],
+                            dailyTone,
+                          );
+                          if (roster) {
+                            answerMode = "extractive_roster";
+                            evidenceGateUsed = true;
+                            return roster;
+                          }
+                          evidenceGateUsed = true;
+                          answerMode = "no_evidence";
+                          cards.clear();
+                          evidence.clear();
+                          return dailyTone
+                            ? "本鱼本轮没有从正文里提取到可核对的名单，先不列具体人名。建议通过广外官网或院系公示核实。🐟"
+                            : "本轮没有从正文中提取到可核对的名单，不列举具体人名。建议通过广外官网或院系公示核实。";
+                        }
                         // Only questions that require verifiable campus facts may
                         // short-circuit generation. Advice and open questions go to
                         // the model with an explicit general-knowledge boundary, so a
                         // missing article cannot turn a useful answer into a refusal.
                         if (content.answerRequirement !== "strict")
                           return undefined;
-                        const fallback = evidenceFallback(
-                          contentResults,
-                          externalResult,
-                          supplementPolicy,
-                          dailyTone,
-                          content.attemptedKeywords,
-                          content.focus === "food"
-                            ? "校园地图APP或现场咨询"
-                            : content.focus === "housing"
-                              ? "学校官网或宿管"
-                              : "广外官网、院系公示或校园地图APP",
-                        );
+                        const fallback = noEvidence();
                         if (fallback) {
                           // Title-only, metadata-only and摘要开头 are not正文证据.
                           // The fixed no-evidence answer replaces any guess.

@@ -3,6 +3,7 @@ import { requiresPlaceLookup } from "@/lib/server/assistant/intent";
 import { contentIntent } from "@/lib/server/assistant/content-intent";
 import { dialogueReply } from "@/lib/server/assistant/dialogue";
 import { evidenceFallback } from "@/lib/server/assistant/grounding";
+import { rosterEvidenceAnswer } from "@/lib/server/assistant/evidence-answer";
 import { contentInstructions } from "@/lib/server/assistant/content-prompt";
 import {
   externalPolicy,
@@ -143,4 +144,26 @@ it("retrieves a roster question even when the school name is omitted", () => {
   expect(intent.act).toBe("campus");
   expect(intent.active).toBe(true);
   expect(intent.tools).toEqual(["search_campus_knowledge"]);
+});
+it("renders one extractive roster list instead of generated prose", () => {
+  const card = {
+    kind: "source" as const,
+    documentId: "roster-fixture",
+    title: "云山学者-经济贸易学院",
+    sourceName: "经济贸易学院",
+    originalUrl: "https://jingmao.gdufs.edu.cn/szdw/ysxz.htm",
+    publishedAt: null,
+    snippet: "云山学者\n- 唐凯\n- 李建成\n- 徐明\n- 刘诗源\n- 何轩\n- 于斌斌",
+    evidenceType: "full_text" as const,
+    classificationState: "unknown" as const,
+    validity: "unknown" as const,
+    readable: true,
+  };
+  const answer = rosterEvidenceAnswer([card], true);
+  expect(answer).toContain("本鱼按原文名单页整理");
+  expect(answer).toContain("1. 唐凯[1]");
+  expect(answer).toContain("6. 于斌斌[1]");
+  expect(answer).toContain("来源：");
+  expect(answer).toContain("https://jingmao.gdufs.edu.cn/szdw/ysxz.htm");
+  expect(rosterEvidenceAnswer([], true)).toBeUndefined();
 });

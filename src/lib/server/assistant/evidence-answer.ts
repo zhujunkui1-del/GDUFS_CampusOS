@@ -63,8 +63,96 @@ export function foodEvidenceAnswer(
     "\n以上为原文片段，当前菜品供应以现场为准。"
   );
 }
-/** Bounded source excerpts remain usable when prose generation fails. This
- * reports source text, never turns unknown dates/eligibility into a recommendation. */
+/** Roster questions use one deterministic extractive path, so the same question
+ * never alternates between a generated list and a paragraph excerpt. */
+const SURNAMES =
+  "王李张刘陈杨黄赵吴周徐孙马朱胡郭何高林罗郑梁谢宋唐许韩冯邓曹彭曾肖田董袁潘于蒋蔡余杜叶程苏魏吕丁任沈姚卢姜崔钟谭陆汪范金石廖贾夏韦付方白邹孟熊秦邱江尹薛闫段雷侯龙史陶黎贺顾毛郝龚邵万钱严覃武戴莫孔向汤";
+const NOT_A_NAME = new Set([
+  "安家费",
+  "高学历",
+  "编辑",
+  "教授",
+  "学者",
+  "学院",
+  "大学",
+  "名单",
+  "研究",
+  "中心",
+  "方向",
+  "团队",
+  "项目",
+  "岗位",
+  "条件",
+  "待遇",
+  "招聘",
+  "应聘",
+  "材料",
+  "时间",
+  "地点",
+  "电话",
+  "邮箱",
+  "简介",
+  "课程",
+  "专业",
+  "招生",
+  "培养",
+  "人才",
+  "基地",
+  "实验",
+  "办公",
+  "师资",
+  "队伍",
+]);
+const BAD_NAME_END = /[费历辑院学者授师生员部处室馆场楼门局委办]$/;
+const RECRUIT_TITLE = /招聘|诚聘|招贤|招生|简章|启事|公告|通知/;
+export function rosterEvidenceAnswer(cards: AssistantCard[], playful = false) {
+  const names: { name: string; source: number }[] = [];
+  const seen = new Set<string>();
+  const sources = new Map<number, { title: string; url: string }>();
+  cards.forEach((card, index) => {
+    if (card.kind !== "source" && card.kind !== "external_source") return;
+    // Recruitment pages mix benefit terms into name-like runs; they are not rosters.
+    if (RECRUIT_TITLE.test(card.title)) return;
+    const text = card.title + "\n" + card.snippet;
+    // Roster pages list one name per bullet; pages in prose use 、-separated runs.
+    const bullets = [
+      ...text.matchAll(/^[\s>*+\-•]*([\u4e00-\u9fa5]{2,3})\s*$/gm),
+    ].map((match) => match[1]);
+    const runs = [
+      ...text.matchAll(
+        /([\u4e00-\u9fa5]{2,4}(?:[、，,；;\s]+[\u4e00-\u9fa5]{2,4}){2,})/g,
+      ),
+    ].flatMap((run) => run[1].split(/[、，,；;\s]+/));
+    for (const name of [...bullets, ...runs]) {
+      if (!/^[\u4e00-\u9fa5]{2,3}$/.test(name)) continue;
+      if (!SURNAMES.includes(name[0])) continue;
+      if (NOT_A_NAME.has(name) || BAD_NAME_END.test(name)) continue;
+      if (seen.has(name)) continue;
+      seen.add(name);
+      names.push({ name, source: index + 1 });
+    }
+    if (
+      names.some((item) => item.source === index + 1) &&
+      !sources.has(index + 1)
+    )
+      sources.set(index + 1, {
+        title: card.title,
+        url: card.originalUrl,
+      });
+  });
+  if (names.length < 3) return undefined;
+  const list = names.slice(0, 24);
+  return (
+    (playful ? "本鱼按原文名单页整理，去重后是这些：" : "按原文名单页整理：") +
+    "\n" +
+    list.map((item, i) => `${i + 1}. ${item.name}[${item.source}]`).join("\n") +
+    "\n\n来源：\n" +
+    [...sources.entries()]
+      .map(([number, source]) => `[${number}] ${source.title} - ${source.url}`)
+      .join("\n")
+  );
+}
+
 export function retrievedEvidenceAnswer(
   cards: AssistantCard[],
   question: string,
