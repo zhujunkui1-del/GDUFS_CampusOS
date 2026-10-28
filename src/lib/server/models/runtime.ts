@@ -21,16 +21,17 @@ export function defaultModelRuntime() {
     capabilityReceipt: value("MODEL_CAPABILITIES_JSON"),
   });
   if (!value("PRIMARY_MODEL_API_KEY")) return deepseek;
-  return new PriorityModelRouter(
-    new ModelRouter({
-      provider: "stepfun",
-      maxOutputTokens:
-        value("MODEL_MAX_OUTPUT_TOKENS") === "2048" ? 2048 : 1024,
-      apiKey: value("PRIMARY_MODEL_API_KEY"),
-      model: value("PRIMARY_MODEL_NAME"),
-      baseUrl: value("PRIMARY_MODEL_BASE_URL"),
-      capabilityReceipt: value("PRIMARY_MODEL_CAPABILITIES_JSON"),
-    }),
-    deepseek,
-  );
+  const step = new ModelRouter({
+    provider: "stepfun",
+    maxOutputTokens: value("MODEL_MAX_OUTPUT_TOKENS") === "2048" ? 2048 : 1024,
+    apiKey: value("PRIMARY_MODEL_API_KEY"),
+    model: value("PRIMARY_MODEL_NAME"),
+    baseUrl: value("PRIMARY_MODEL_BASE_URL"),
+    capabilityReceipt: value("PRIMARY_MODEL_CAPABILITIES_JSON"),
+  });
+  // The owner can reverse the provider order for one environment without
+  // touching code or Production. Quota-only fallback still applies.
+  return value("MODEL_PRIORITY") === "deepseek"
+    ? new PriorityModelRouter(deepseek, step)
+    : new PriorityModelRouter(step, deepseek);
 }
