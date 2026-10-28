@@ -87,7 +87,6 @@ export function meteredClient(
         requests++;
         const upstreamStarted = performance.now();
         let firstTextMs: number | null = null;
-        let streamedChars = 0;
         let streamedText = "";
         let reply: ModelReply;
         const baseMessages: readonly ModelMessage[] =
@@ -198,7 +197,6 @@ export function meteredClient(
               : {}),
             onText: final
               ? (text) => {
-                  streamedChars += text.length;
                   streamedText += text;
                   firstTextMs ??= Math.round(
                     performance.now() - upstreamStarted,
@@ -262,12 +260,7 @@ export function meteredClient(
           containsToolProtocol(reply.content)
         )
           reply = { ...reply, content: "" };
-        if (
-          final &&
-          !reply.toolCalls.length &&
-          !reply.content.trim() &&
-          !streamedChars
-        ) {
+        if (final && !reply.toolCalls.length && !reply.content.trim()) {
           if (!emptyAnswerRetries) {
             emptyAnswerRetries++;
             continue;

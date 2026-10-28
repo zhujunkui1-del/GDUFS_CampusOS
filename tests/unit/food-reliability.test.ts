@@ -273,3 +273,49 @@ it("stops after one failed protocol repair without leaking either attempt", asyn
     f.close();
   }
 });
+it("treats a whitespace-only stream as an empty answer rather than a completed reply", async () => {
+  const f = sqliteD1();
+  try {
+    const store = new AssistantStore(f.db);
+    vi.spyOn(store, "running").mockResolvedValue();
+    const base = {
+      toolCalls: [],
+      finishReason: "stop" as const,
+      usage: { promptTokens: 1, completionTokens: 1, totalTokens: 2 },
+    };
+    const client = new MockModelProvider([
+      { ...base, content: "   " },
+      { ...base, content: "依据原文提供餐品资料。" },
+    ]);
+    const snapshot: ModelSnapshot = {
+      source: "platform",
+      provider: "stepfun",
+      model: "fixture",
+      policyVersion: "fixture",
+      testedAt: "2026-10-28T00:00:00Z",
+      capabilities: {
+        toolCalling: true,
+        jsonObject: true,
+        strictJsonSchema: false,
+      },
+    };
+    const bounded = meteredClient(
+      client,
+      snapshot,
+      store,
+      "fixture",
+      "fixture",
+      () => true,
+    );
+    const reply = await bounded.client.generateWithTools({
+      messages: [{ role: "user", content: "fixture" }],
+      tools: [],
+      maxTokens: 1024,
+      signal: new AbortController().signal,
+    });
+    expect(reply.content.trim()).not.toBe("");
+    expect(client.requests).toHaveLength(2);
+  } finally {
+    f.close();
+  }
+});
