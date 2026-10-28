@@ -1,0 +1,504 @@
+{
+  "at": "2026-10-28T05:35:09.009Z",
+  "actualPreview": true,
+  "records": [
+    {
+      "question": "有什么好吃的吗",
+      "answerExcerpt": "根据公开的学生分享内容，广外大学城校区（南校）食堂的可参考美食如下：\n1. 一饭（文采园）：二楼小街胡同牛杂面13元，牛杂软烂入味、黑椒香气醇厚，面条吸饱汤汁，可免费续面；一楼重庆小火锅10.5元可得三菜两肉，可选原味、香辣、金汤、番茄汤底，或麻辣、麻酱、清拌",
+      "answerChars": 405,
+      "answerHash": "4872c85154f6fd334e2cc9b84e78029022246b7baf250751e397d71b76859e96",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "result": {
+        "conversationId": "a6e07f6e-ee8b-4c9e-9770-81f0e27f344c",
+        "requestId": "094a023b-6000-483f-952b-be670279b577",
+        "metrics": {
+          "answerMode": "model",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 1,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 13776,
+              "firstTextMs": 12255,
+              "finishReason": "stop",
+              "contentChars": 405
+            }
+          ],
+          "promptTokens": 4864,
+          "completionTokens": 1571,
+          "cachedPromptTokens": 0,
+          "totalTokens": 6435,
+          "usageComplete": true,
+          "chargedTokens": 6435,
+          "durationMs": 17521,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 183,
+            "serverElapsedMs": 17704,
+            "firstTextMs": 17686,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 123,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 3590,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 11,
+              "writeQueries": 12,
+              "calls": 15,
+              "failures": 0,
+              "durationMs": 338,
+              "maxCallMs": 67,
+              "rowsRead": 1625,
+              "rowsWritten": 15,
+              "rowUsageStatements": 15,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 1001,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 123,
+                "candidateChunks": 88,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "ok",
+                "durationMs": 3590,
+                "providers": [
+                  {
+                    "provider": "xiaohongshu_redbook_cloud",
+                    "status": "ok",
+                    "durationMs": 3165,
+                    "count": 3,
+                    "cacheHit": false
+                  },
+                  {
+                    "provider": "exa_web_cloud",
+                    "status": "ok",
+                    "durationMs": 1588,
+                    "count": 2
+                  }
+                ],
+                "rowsRead": 0,
+                "rowsWritten": 0
+              }
+            ]
+          }
+        }
+      },
+      "completeMs": 18739,
+      "firstTextMs": 18564,
+      "sources": [
+        {
+          "number": 1,
+          "title": "信息i生活 |代码跑通前，先去食堂跑个“图”(文末附有树洞!!)",
+          "sourceName": "广外信息青年",
+          "url": "https://mp.weixin.qq.com/s/arQdVXeT-FePfytz60vx4w",
+          "publishedAt": "2026-10-27T09:30:00.000Z",
+          "evidenceKind": "full_text",
+          "used": true,
+          "snippetChars": 780,
+          "snippetHash": "e9222d1bae46e59bdb2701c0a93cb8d28eac06e0364b7a2619991888a21c9ef1"
+        },
+        {
+          "number": 2,
+          "title": "惜粮守安 食践于行 _ 世界粮食日・节约有你，建言有你",
+          "sourceName": "广外新传青年",
+          "url": "https://mp.weixin.qq.com/s/icFN2NsMHvUbGcsbGgOddw",
+          "publishedAt": "2026-10-16T08:41:14.000Z",
+          "evidenceKind": "full_text",
+          "used": false,
+          "snippetChars": 780,
+          "snippetHash": "a56bb50bc2e1508c1eacd88c23c8239938f1507917491b2a685fa6458995757a"
+        },
+        {
+          "number": 3,
+          "title": "广东外语外贸大学学生饭堂特色档口餐饮技术服务合作项目遴选结果公示",
+          "sourceName": "总务后勤部",
+          "url": "https://hqc.gdufs.edu.cn/info/1006/3028.htm",
+          "publishedAt": "2026-07-07",
+          "evidenceKind": "metadata",
+          "used": false,
+          "snippetChars": 32,
+          "snippetHash": "14e516ede0b40e795b9ea505bece058b180753432505330b8fcb259817b88a26"
+        },
+        {
+          "number": 4,
+          "title": "广外饭堂｜好吃的饭菜推荐❗️❗️",
+          "sourceName": "小红书 · 广外帮帮🐱",
+          "url": "https://www.xiaohongshu.com/explore/68c8fd790000000007029bf9",
+          "publishedAt": "2025-09-16T06:02:33.000Z",
+          "evidenceKind": "page_excerpt",
+          "authority": "student_experience",
+          "used": true,
+          "snippetChars": 263,
+          "snippetHash": "32b64514c98d960d9d71df2cf11b52cd543fdc9bc7c7c5699cc4a4ceb38520a4"
+        },
+        {
+          "number": 5,
+          "title": "广外南校三个饭堂｜哪家几点去哪层吃，一篇",
+          "sourceName": "小红书 · 广外圈圈『表白墙』",
+          "url": "https://www.xiaohongshu.com/explore/6aaa0f790000000011033723",
+          "publishedAt": "2026-09-17T01:11:00.000Z",
+          "evidenceKind": "page_excerpt",
+          "authority": "student_experience",
+          "used": true,
+          "snippetChars": 500,
+          "snippetHash": "a35e823e97e1f7e1159569c527ef8b67e7ffb69745ca605658e069c351e814e4"
+        },
+        {
+          "number": 6,
+          "title": "广外新生南校食堂全攻略｜干饭人报道必看",
+          "sourceName": "小红书 · 早上中午晚上也要吃饭",
+          "url": "https://www.xiaohongshu.com/explore/6a8d6bc90000000020032a5a",
+          "publishedAt": null,
+          "evidenceKind": "title_only",
+          "authority": "student_experience",
+          "used": false,
+          "snippetChars": 19,
+          "snippetHash": "2c574ce72bdface1fae8e6a8fa3d5d3ef28e639a098f7d15e81aab9ac01e1fc8"
+        },
+        {
+          "number": 7,
+          "title": "食宿指南-广东外语外贸大学考试中心",
+          "sourceName": "广外官方网页",
+          "url": "https://gwkszx.gdufs.edu.cn/jtzy/sszn.htm",
+          "publishedAt": null,
+          "evidenceKind": "search_excerpt",
+          "authority": "official",
+          "used": false,
+          "snippetChars": 700,
+          "snippetHash": "fd53b807f9375c316101c978ee13f0da1d7d6d786d36fbc93cdea158c15e20fa"
+        }
+      ]
+    },
+    {
+      "question": "广外大学城校区有几个食堂，第一食堂有什么好吃的",
+      "answerExcerpt": "广外大学城校区（南校）的食堂数量，较早的公开分享提到共有3个，分别是一饭（文采园）、二饭（博雅园）、三饭（风采园）[来源6]，当前实际情况建议以学校官方最新信息为准。\n\n一饭的美食是学生的体验分享哦：\n1. 一楼：重庆小火锅10.5元就能拿三菜两肉，可选多种汤",
+      "answerChars": 271,
+      "answerHash": "732b406197c14a937b99af4cdc1cad28bfcbf08e48521ffcb2d802e31546d59e",
+      "tools": [
+        "search_campus_knowledge",
+        "search_external_campus_info"
+      ],
+      "result": {
+        "conversationId": "a6e07f6e-ee8b-4c9e-9770-81f0e27f344c",
+        "requestId": "ec64626e-5154-4b72-b284-00674c5baa50",
+        "metrics": {
+          "answerMode": "model",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 1,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 11471,
+              "firstTextMs": 10613,
+              "finishReason": "stop",
+              "contentChars": 271
+            }
+          ],
+          "promptTokens": 4628,
+          "completionTokens": 1616,
+          "cachedPromptTokens": 0,
+          "totalTokens": 6244,
+          "usageComplete": true,
+          "chargedTokens": 6244,
+          "durationMs": 14286,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 142,
+            "serverElapsedMs": 14428,
+            "firstTextMs": 14412,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 92,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 2686,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 11,
+              "writeQueries": 11,
+              "calls": 14,
+              "failures": 0,
+              "durationMs": 271,
+              "maxCallMs": 54,
+              "rowsRead": 1502,
+              "rowsWritten": 11,
+              "rowUsageStatements": 14,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 1001,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 92,
+                "candidateChunks": 88,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": [
+              {
+                "status": "ok",
+                "durationMs": 2686,
+                "providers": [
+                  {
+                    "provider": "xiaohongshu_redbook_cloud",
+                    "status": "ok",
+                    "durationMs": 2627,
+                    "count": 3,
+                    "cacheHit": false
+                  },
+                  {
+                    "provider": "exa_web_cloud",
+                    "status": "ok",
+                    "durationMs": 1123,
+                    "count": 2
+                  }
+                ],
+                "rowsRead": 0,
+                "rowsWritten": 0
+              }
+            ]
+          }
+        }
+      },
+      "completeMs": 14669,
+      "firstTextMs": 14606,
+      "sources": [
+        {
+          "number": 1,
+          "title": "信息i生活 |代码跑通前，先去食堂跑个“图”(文末附有树洞!!)",
+          "sourceName": "广外信息青年",
+          "url": "https://mp.weixin.qq.com/s/arQdVXeT-FePfytz60vx4w",
+          "publishedAt": "2026-10-27T09:30:00.000Z",
+          "evidenceKind": "full_text",
+          "used": true,
+          "snippetChars": 780,
+          "snippetHash": "e9222d1bae46e59bdb2701c0a93cb8d28eac06e0364b7a2619991888a21c9ef1"
+        },
+        {
+          "number": 2,
+          "title": "惜粮守安 食践于行 _ 世界粮食日・节约有你，建言有你",
+          "sourceName": "广外新传青年",
+          "url": "https://mp.weixin.qq.com/s/icFN2NsMHvUbGcsbGgOddw",
+          "publishedAt": "2026-10-16T08:41:14.000Z",
+          "evidenceKind": "full_text",
+          "used": false,
+          "snippetChars": 780,
+          "snippetHash": "a56bb50bc2e1508c1eacd88c23c8239938f1507917491b2a685fa6458995757a"
+        },
+        {
+          "number": 3,
+          "title": "广东外语外贸大学学生饭堂特色档口餐饮技术服务合作项目遴选结果公示",
+          "sourceName": "总务后勤部",
+          "url": "https://hqc.gdufs.edu.cn/info/1006/3028.htm",
+          "publishedAt": "2026-07-07",
+          "evidenceKind": "metadata",
+          "used": false,
+          "snippetChars": 32,
+          "snippetHash": "14e516ede0b40e795b9ea505bece058b180753432505330b8fcb259817b88a26"
+        },
+        {
+          "number": 4,
+          "title": "小红书笔记",
+          "sourceName": "小红书 · 饭饭",
+          "url": "https://www.xiaohongshu.com/explore/6ad446dd000000000c009fe6",
+          "publishedAt": "2026-10-18T04:11:10.000Z",
+          "evidenceKind": "page_excerpt",
+          "authority": "student_experience",
+          "used": false,
+          "snippetChars": 93,
+          "snippetHash": "faaae5bbf58f35834ee2d101d16f43017dea373d896f833af76758462f4d01ef"
+        },
+        {
+          "number": 5,
+          "title": "广外饭堂｜好吃的饭菜推荐❗️❗️",
+          "sourceName": "小红书 · 广外帮帮🐱",
+          "url": "https://www.xiaohongshu.com/explore/68c8fd790000000007029bf9",
+          "publishedAt": "2025-09-16T06:02:33.000Z",
+          "evidenceKind": "page_excerpt",
+          "authority": "student_experience",
+          "used": true,
+          "snippetChars": 263,
+          "snippetHash": "32b64514c98d960d9d71df2cf11b52cd543fdc9bc7c7c5699cc4a4ceb38520a4"
+        },
+        {
+          "number": 6,
+          "title": "#萌新听我说#广东外语外贸大学-百度经验",
+          "sourceName": "jingyan.baidu.com",
+          "url": "https://jingyan.baidu.com/article/335530da5dff5658ca41c324.html",
+          "publishedAt": "2020-08-16T00:00:00.000Z",
+          "evidenceKind": "search_excerpt",
+          "authority": "unverified",
+          "used": true,
+          "snippetChars": 651,
+          "snippetHash": "d129d557b853866252da2cc3c3621785f31d6f0927388ebf726b8d66687a9cdf"
+        }
+      ]
+    },
+    {
+      "question": "帮我找下广外的二次元社团",
+      "answerExcerpt": "找到啦～广外的二次元相关社团是**广外无限动漫协会（简称无限漫协）**，分南北校两个部哦[来源1][来源2]：\n1. 南校（大学城校区）有独立运营的公众号「广外无限漫协南校」，2026年5月在南校学生活动中心办过嘉年华活动，还面向南北校成员开放过60周年主题原",
+      "answerChars": 193,
+      "answerHash": "e45d343f9bcec37c804ddefd7351397f90587f1b46bacfb45493cb5e97876ac1",
+      "tools": [
+        "search_campus_knowledge"
+      ],
+      "result": {
+        "conversationId": "a6e07f6e-ee8b-4c9e-9770-81f0e27f344c",
+        "requestId": "607dd9db-e565-433b-a349-f5d68041aa83",
+        "metrics": {
+          "answerMode": "model",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 1,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "upstreamTimings": [
+            {
+              "durationMs": 4446,
+              "firstTextMs": 3801,
+              "finishReason": "stop",
+              "contentChars": 193
+            }
+          ],
+          "promptTokens": 3174,
+          "completionTokens": 542,
+          "cachedPromptTokens": 0,
+          "totalTokens": 3716,
+          "usageComplete": true,
+          "chargedTokens": 3716,
+          "durationMs": 4543,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 155,
+            "serverElapsedMs": 4698,
+            "firstTextMs": 4688,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 69,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 11,
+              "writeQueries": 11,
+              "calls": 14,
+              "failures": 0,
+              "durationMs": 252,
+              "maxCallMs": 39,
+              "rowsRead": 1476,
+              "rowsWritten": 11,
+              "rowUsageStatements": 14,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 960,
+                "rowsWritten": 0,
+                "queries": 2,
+                "durationMs": 69,
+                "candidateChunks": 77,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      },
+      "completeMs": 4909,
+      "firstTextMs": 4852,
+      "sources": [
+        {
+          "number": 1,
+          "title": "5.23无限漫协嘉年华预告，但是插入《AIZO》",
+          "sourceName": "广外无限漫协南校",
+          "url": "https://mp.weixin.qq.com/s/ZKnBrx4NrJCtNco6OGLPnw",
+          "publishedAt": "2026-05-20T05:14:00.000Z",
+          "evidenceKind": "full_text",
+          "used": true,
+          "snippetChars": 780,
+          "snippetHash": "736c64fffece0df0045c2493e79ed355203b22af98311f8866553655d88d1836"
+        },
+        {
+          "number": 2,
+          "title": "2026年无限漫协原创大赛之60周年庆篇",
+          "sourceName": "广外无限漫协南校",
+          "url": "https://mp.weixin.qq.com/s/kYvty2YTgnf9caol5nRyLg",
+          "publishedAt": "2026-01-10T06:48:55.000Z",
+          "evidenceKind": "full_text",
+          "used": true,
+          "snippetChars": 655,
+          "snippetHash": "6ea2336368abcd085730897c1d8de01257b667133caf51f1fb53bfed1421acaa"
+        }
+      ]
+    }
+  ]
+}

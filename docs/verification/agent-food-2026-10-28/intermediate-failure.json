@@ -1,0 +1,231 @@
+{
+  "kind": "actual first revision; retained failure, not counted as final success",
+  "records": [
+    {
+      "question": "有什么好吃的吗",
+      "hasAnswer": true,
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        },
+        {
+          "name": "search_external_campus_info",
+          "origin": "server_plan"
+        }
+      ],
+      "metrics": {
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 9702,
+            "firstTextMs": 8940,
+            "finishReason": "stop",
+            "contentChars": 234
+          }
+        ],
+        "promptTokens": 5136,
+        "completionTokens": 1321,
+        "cachedPromptTokens": 0,
+        "totalTokens": 6457,
+        "usageComplete": true,
+        "chargedTokens": 6457,
+        "durationMs": 14714,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 341,
+          "serverElapsedMs": 15055,
+          "firstTextMs": 15028,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 251,
+              "ok": true
+            },
+            {
+              "name": "search_external_campus_info",
+              "durationMs": 4721,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 11,
+            "writeQueries": 20,
+            "calls": 17,
+            "failures": 0,
+            "durationMs": 632,
+            "maxCallMs": 136,
+            "rowsRead": 3930,
+            "rowsWritten": 67,
+            "rowUsageStatements": 23,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 1001,
+              "rowsWritten": 0,
+              "queries": 2,
+              "durationMs": 251,
+              "candidateChunks": 88,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": [
+            {
+              "status": "ok",
+              "durationMs": 4721,
+              "providers": [
+                {
+                  "provider": "xiaohongshu_redbook_cloud",
+                  "status": "ok",
+                  "durationMs": 2811,
+                  "count": 3,
+                  "cacheHit": false
+                },
+                {
+                  "provider": "exa_web_cloud",
+                  "status": "ok",
+                  "durationMs": 1183,
+                  "count": 2
+                }
+              ],
+              "rowsRead": 0,
+              "rowsWritten": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "question": "广外大学城校区有几个食堂，第一食堂有什么好吃的",
+      "error": {
+        "code": "MODEL_TIMEOUT",
+        "message": "模型回复超时，请重试。"
+      },
+      "hasAnswer": false,
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        },
+        {
+          "name": "search_external_campus_info",
+          "origin": "server_plan"
+        }
+      ],
+      "metrics": {
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "upstreamTimings": [
+          {
+            "durationMs": 15000,
+            "firstTextMs": 13980
+          }
+        ],
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "cachedPromptTokens": 0,
+        "totalTokens": 0,
+        "usageComplete": false,
+        "chargedTokens": 250000,
+        "durationMs": 18404,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 194,
+          "serverElapsedMs": 18598,
+          "firstTextMs": null,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 96,
+              "ok": true
+            },
+            {
+              "name": "search_external_campus_info",
+              "durationMs": 3292,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 10,
+            "writeQueries": 11,
+            "calls": 13,
+            "failures": 0,
+            "durationMs": 306,
+            "maxCallMs": 57,
+            "rowsRead": 1467,
+            "rowsWritten": 11,
+            "rowUsageStatements": 14,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 1001,
+              "rowsWritten": 0,
+              "queries": 2,
+              "durationMs": 96,
+              "candidateChunks": 88,
+              "usageAvailable": true
+            }
+          ],
+          "externalSearch": [
+            {
+              "status": "ok",
+              "durationMs": 3292,
+              "providers": [
+                {
+                  "provider": "xiaohongshu_redbook_cloud",
+                  "status": "ok",
+                  "durationMs": 3225,
+                  "count": 3,
+                  "cacheHit": false
+                },
+                {
+                  "provider": "exa_web_cloud",
+                  "status": "ok",
+                  "durationMs": 1577,
+                  "count": 2
+                }
+              ],
+              "rowsRead": 0,
+              "rowsWritten": 0
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

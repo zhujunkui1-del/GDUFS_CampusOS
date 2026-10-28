@@ -600,3 +600,10 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 ## 2026-10-28 MP Tools当前账号清单
 
 来源为负责人提供的D:\WeChat MP Tools_v2.3.1\data\articles_full、同级accounts.json/rss_subscriptions.json及已有HTML公开元数据。81目录排除.campusos-locks后80个，80个公开账号ID唯一；后台78公众号+2服务号匹配，无名称猜测合并。GW情报鹅沿原source-3c191a80-ca79-4fc6-a3bc-be9c3289cdf8恢复启用，广外无限漫协南校为GDUFS-WX-3073977870。正文仍来自已有本地导出并保留原链接/CDN；来源事实状态不伪造已核验，自动公开基于负责人指示而非宣称平台许可。回执见verification/wechat-discovery-2026-10-28/。
+
+
+## 2026-10-28 校园餐饮问答真实来源与误引对照
+
+受控复现仅输入用户公开原话，未读取其他用户会话。原误引为LSE留学经历、生活主题书展与新书标题中的味道词；未删除这些文章，只排除其作为本次广外饭堂推荐证据。正确内部候选含“信息i生活｜代码跑通前，先去食堂跑个图”等真实餐饮文章，原文写有一饭13元牛杂面/10.5元小火锅等；外部通过原有云端小红书/网页服务读到真实饭堂推荐、南校食堂攻略与食宿指南。
+
+来源URL、作者名称、原发布日期、证据类型与片段哈希见verification/agent-food-2026-10-28/desktop.json、mobile.json。小红书公开笔记作为学生分享，不作学校政策最终依据；标题不冒充正文。未更改账号、购买数据服务、复制CDN图片或将第三方笔记自动写入公共文章库。

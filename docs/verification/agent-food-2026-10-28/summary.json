@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-28T05:35:09.013Z",
+  "runtimeCommit": "4cd9668",
+  "workerVersion": "b0c71e8c-2a61-4828-b0c7-2203acc967fd",
+  "productionChanged": false,
+  "newMigrations": 0,
+  "externalAccountChanges": 0,
+  "newPaidServices": 0,
+  "summary": [
+    {
+      "device": "desktop",
+      "questions": 3,
+      "modelGenerations": 3,
+      "excerptAnswers": 0,
+      "externalSearches": 2,
+      "modelRequests": 3,
+      "promptTokens": 12666,
+      "completionTokens": 3729
+    },
+    {
+      "device": "mobile",
+      "questions": 3,
+      "modelGenerations": 3,
+      "excerptAnswers": 0,
+      "externalSearches": 2,
+      "modelRequests": 3,
+      "promptTokens": 12325,
+      "completionTokens": 2897
+    }
+  ],
+  "note": "Response excerpts and hashes; complete controlled traces remain in ignored local audit files. Original source query signatures are omitted from public evidence. Not a global factual-accuracy or capacity score.",
+  "uiAcceptanceVersion": "8dfbef14-538f-4d35-bde3-a0509c0f5f48",
+  "additionalSmokeVersion": "26abbb67-04e0-496c-a2b2-ea6cf8ae3e29",
+  "finalChange": "Whitespace-only output boundary; targeted tests and production build passed. Ordinary query paths are unchanged from the recorded UI acceptance.",
+  "tests": {
+    "full": {
+      "total": 623,
+      "passed": 611,
+      "knownPreexistingFailures": 12
+    },
+    "uiFood": 2,
+    "uiPersonaMap": 1,
+    "timeoutFaultInjection": 1,
+    "typecheck": "passed",
+    "modifiedLint": "passed",
+    "build": "passed"
+  },
+  "checkedAt": "2026-10-28T06:11:22.783Z",
+  "modelStatus": {
+    "ready": true,
+    "provider": "stepfun"
+  }
+}

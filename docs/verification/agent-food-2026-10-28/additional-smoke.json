@@ -1,0 +1,83 @@
+{
+  "version": "26abbb67-04e0-496c-a2b2-ea6cf8ae3e29",
+  "records": [
+    {
+      "question": "有什么好吃的吗",
+      "answerExcerpt": "以下是各方分享的广外大学城校区（南校）食堂相关线索，供参考：\n\n**一饭** [来源1]\n- 二楼「小街胡同」牛杂面13元，可免费续面\n- 一楼重庆小火锅10.5元三菜两肉，可选不同汤底与干拌方式\n- 二楼自选现炒按需挑选，配有糖水，价格略高\n\n**二饭** ",
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        },
+        {
+          "name": "search_external_campus_info",
+          "origin": "server_plan"
+        }
+      ],
+      "answerMode": "model",
+      "external": [
+        {
+          "status": "ok",
+          "durationMs": 2896,
+          "providers": [
+            {
+              "provider": "xiaohongshu_redbook_cloud",
+              "status": "ok",
+              "durationMs": 2619,
+              "count": 3,
+              "cacheHit": false
+            },
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 1333,
+              "count": 2
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ],
+      "elapsedMs": 8949
+    },
+    {
+      "question": "广外大学城校区有几个食堂，第一食堂有什么好吃的",
+      "answerExcerpt": "广外大学城校区（南校）共有3个学生食堂，分别为一饭、二饭、三饭[来源1][来源7]。\n\n第一食堂（一饭）的美食包括：\n- 二楼「小街胡同」牛杂面13元，可免费续面，另有辣子鸡汤面、牛肉面等选择[来源1]\n- 一楼重庆小火锅10.5元，含三菜两肉，提供原味、香辣",
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        },
+        {
+          "name": "search_external_campus_info",
+          "origin": "server_plan"
+        }
+      ],
+      "answerMode": "model",
+      "external": [
+        {
+          "status": "ok",
+          "durationMs": 2341,
+          "providers": [
+            {
+              "provider": "xiaohongshu_redbook_cloud",
+              "status": "ok",
+              "durationMs": 2299,
+              "count": 3,
+              "cacheHit": false
+            },
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 1109,
+              "count": 2
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ],
+      "elapsedMs": 14084
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "kind": "actual Preview reproduction before fixes",
+  "records": [
+    {
+      "question": "有什么好吃的吗",
+      "answerExcerpt": "当前检索结果里没有找到广外校园内的具体美食信息哦 [来源1][来源2][来源3]。\n\n如果想了解食堂菜品或周边小吃，可以试试：\n- 查看广外后勤或食堂的官方公众号\n- 在校园社群或小红书搜\"广外 美食\"获取学长学姐的最新体验\n\n需要我帮你查其他相关信息吗？🐟",
+      "answerHash": "9655b3da9a12c85f2a686ecd2e6151180626728296d9ab7f157eda4662cdf5cb",
+      "toolProtocolLeak": false,
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        }
+      ],
+      "candidateTitles": [
+        "【云享 · 留学 · 第80期】余尚恩：从广外外交到LSE国际关系理论与历史",
+        "主题书展｜生活与日常",
+        "新书速递｜馆藏上新，9月好书邀您品读"
+      ],
+      "externalCalls": 0
+    },
+    {
+      "question": "广外大学城校区有几个食堂，第一食堂有什么好吃的",
+      "answerExcerpt": "内部校园知识库没检索到广外大学城校区食堂的相关信息，现在帮你搜一下学生分享的实际体验~<tool_call>\n<function=search_external_campus_info>\n<parameter=query>\n广外大学城校区 食堂数量 第一食堂 ",
+      "answerHash": "bd3660a485b53c4e5b0c275eaea55d8043415333fc548562d0efd4a38e26da28",
+      "toolProtocolLeak": true,
+      "tools": [
+        {
+          "name": "search_campus_knowledge",
+          "origin": "server_plan"
+        }
+      ],
+      "candidateTitles": [
+        "【云享 · 留学 · 第80期】余尚恩：从广外外交到LSE国际关系理论与历史",
+        "主题书展｜生活与日常",
+        "新书速递｜馆藏上新，9月好书邀您品读"
+      ],
+      "externalCalls": 0
+    }
+  ]
+}
