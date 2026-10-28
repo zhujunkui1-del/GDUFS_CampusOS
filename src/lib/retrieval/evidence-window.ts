@@ -13,7 +13,7 @@ export function evidenceWindow(
     goal = goalOverride || plan.goal;
   const cues: Record<string, RegExp> = {
     procedure:
-      /登录|打开|点击|选择|扫描|刷卡|凭|持本人|填写|提交|确认|下载|打印|人工办理|自助借还/g,
+      /登录|打开|进入|点击|选择|核对|扫描|刷卡|凭|持本人|填写|提交|确认|下载|打印|人工办理|自助借还/g,
     requirements:
       /申请条件|办理条件|资格|所需材料|须提交|需提供|适用对象|面向|限于/g,
     registration:
@@ -59,9 +59,9 @@ export function evidenceWindow(
       best = { at: m.index!, score, priority };
   }
   const start =
-    text.length <= maxChars
+    text.length <= maxChars && best.priority === 0
       ? 0
-      : Math.max(0, Math.min(text.length - maxChars, best.at - 60));
+      : Math.max(0, best.at - 60);
   return {
     text: text.slice(start, start + maxChars),
     start,

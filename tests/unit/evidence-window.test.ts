@@ -31,3 +31,12 @@ it("keeps the entry step of a workflow ahead of a denser later form section", ()
   expect(w.text).toContain("打开微信小程序");
   expect(w.start).toBe(0);
 });
+it("does not pad a late workflow entry with a long preamble just to fill the snippet budget", () => {
+  const text =
+    "注意事项与背景。".repeat(65) +
+    "\n申请步骤\n1.进入申请界面\n微信进入服务小程序，点击电子协议开始申请。\n2.核对个人信息。";
+  const w = evidenceWindow(text, "就业协议怎么办理", 780);
+  expect(w.priority).toBe(2);
+  expect(w.text.slice(0, 160)).toContain("1.进入申请界面");
+  expect(text.slice(w.start, w.start + w.text.length)).toBe(w.text);
+});
