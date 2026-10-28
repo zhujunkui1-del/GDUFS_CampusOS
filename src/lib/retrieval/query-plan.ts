@@ -216,8 +216,19 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const coreInTitle = plan.topics.some((t) =>
     t.alternatives.some((a) => title.includes(a.toLowerCase())),
   );
+  const titleTopics = buildQueryPlan(title).topics.map((t) => t.id);
+  const compatible = (wanted: string, actual: string) =>
+    wanted === actual ||
+    (wanted === "borrowing" && actual === "library") ||
+    (wanted === "competition" && actual === "sports");
+  if (
+    plan.topics.length &&
+    titleTopics.length &&
+    !plan.topics.some((w) => titleTopics.some((a) => compatible(w.id, a)))
+  )
+    return { relevant: false, score: 0, reason: "other_primary_topic" };
   const unrelatedPurpose =
-    /招聘|宣讲|缴费|迎新|游学|留学|志愿者?招募|志愿活动|志协|临时困难补助|校领导检查|申报经验交流|申报指导会|申报动员/.test(
+    /招聘|宣讲|缴费|迎新|游学|留学|志愿者?招募|志愿活动|志协|候选人|团学exploring|临时困难补助|校领导检查|申报经验交流|申报指导会|申报动员/.test(
       title,
     ) &&
     !coreInTitle &&

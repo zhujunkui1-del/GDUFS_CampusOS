@@ -16,6 +16,7 @@ import { completeSnippetTimes } from "@/lib/retrieval/snippet-time";
 import { analyzeArticle } from "@/lib/ingestion/article-analysis";
 import { contentIntent } from "@/lib/server/assistant/content-intent";
 import { ContentSearchResultSchema } from "@/domain/retrieval/skills";
+import { analysisStatements } from "@/lib/server/console/article-analysis";
 
 it("evaluates a shared cross-topic corpus and preserves qualification under distractors", async () => {
   const f = await dateGateFixture();
@@ -42,7 +43,52 @@ it("evaluates a shared cross-topic corpus and preserves qualification under dist
         .prepare("DELETE FROM article_search_documents WHERE document_id=?")
         .run(id);
       await ensureRetrievalIndex(f.db, id);
+      await f.db.batch(
+        await analysisStatements(f.db, id, 1, "c".repeat(64), {
+          title,
+          body,
+          publishedAt: "2026-10-10",
+        }),
+      );
     }
+    const day = await searchContent(
+      f.db,
+      "events",
+      {
+        query: "广外讲座",
+        after: "2026-11-04",
+        before: "2026-11-04",
+        limit: 4,
+      },
+      "2026-10-28T06:00:00Z",
+    );
+    expect(day.hits.map((h) => h.documentId)).toEqual(["lecture"]);
+    const differentDay = await searchContent(
+      f.db,
+      "events",
+      {
+        query: "广外讲座",
+        after: "2026-11-05",
+        before: "2026-11-05",
+        limit: 4,
+      },
+      "2026-10-28T06:00:00Z",
+    );
+    expect(differentDay.hits).toHaveLength(0);
+    const recoveredDate = await searchContent(
+      f.db,
+      "events",
+      {
+        query: "定向越野比赛",
+        after: "2026-10-11",
+        before: "2026-10-11",
+        limit: 4,
+      },
+      "2026-10-28T06:00:00Z",
+    );
+    expect(recoveredDate.hits.some((h) => h.documentId === "old-sport")).toBe(
+      true,
+    );
     for (const [query, expected, purpose] of retrievalQuestions) {
       const r = await searchContent(
         f.db,
