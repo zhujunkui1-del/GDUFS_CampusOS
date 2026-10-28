@@ -86,6 +86,9 @@ export function AssistantPanel({
     historyButton = useRef<HTMLButtonElement>(null),
     cancelDelete = useRef<HTMLButtonElement>(null);
   const end = useRef<HTMLDivElement>(null);
+  // Only follow new output while the reader is already at the bottom. Clicking or
+  // re-rendering must never yank a reader away from earlier messages.
+  const stickToBottom = useRef(true);
   const prepareMap = useCallback(async () => {
     if (!compact) return;
     onOpenChange(false);
@@ -136,12 +139,26 @@ export function AssistantPanel({
     }
   };
   useEffect(() => {
-    end.current?.scrollIntoView({ block: "nearest" });
-  }, [chat.messages, chat.status]);
+    if (!open) return;
+    const scroller = document.querySelector<HTMLElement>(".assistant-body");
+    if (!scroller) return;
+    const track = () => {
+      stickToBottom.current =
+        scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 96;
+    };
+    track();
+    scroller.addEventListener("scroll", track, { passive: true });
+    return () => scroller.removeEventListener("scroll", track);
+  }, [open]);
+  useEffect(() => {
+    if (!stickToBottom.current) return;
+    end.current?.scrollIntoView({ block: "end" });
+  }, [chat.messages]);
   const submit = () => {
     if (!input.trim() || chat.busy || !chat.ready) return;
     const text = input.trim();
     if (compact) document.getElementById("assistant-message")?.blur();
+    stickToBottom.current = true;
     setInput("");
     void chat.send(text);
   };

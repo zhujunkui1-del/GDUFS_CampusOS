@@ -53,9 +53,7 @@ export function foodEvidenceAnswer(
     .slice(0, 2);
   if (!candidates.length) return undefined;
   return (
-    (playful
-      ? "本鱼取到了这些有出处的原文信息：\n"
-      : "已取得这些相关原文信息：\n") +
+    (playful ? "本鱼翻到这些，先给你看：\n" : "可核对的信息：\n") +
     candidates
       .map(
         ({ card, quote, number }) =>
@@ -72,6 +70,7 @@ export function retrievedEvidenceAnswer(
   question: string,
   officialOnly: boolean,
   officialDocumentIds: Set<string>,
+  playful = false,
 ) {
   const plan = buildQueryPlan(question);
   const currentOpportunity = ["participation", "registration"].includes(
@@ -162,12 +161,12 @@ export function retrievedEvidenceAnswer(
   const boundary = ["participation", "registration", "discovery"].includes(
     plan.goal,
   )
-    ? "活动日期、报名开放、名额及参加资格须分别核对；信息未给出时不能认定当前可参加。"
-    : "原文未给出的条件或流程不能补齐，政策现行有效性仍需核对。";
+    ? "具体日期、报名和资格按原文核对，没写到的别当成已经开放。"
+    : "原文没写的条件不补，政策是否仍有效也要再核。";
   return (
-    "已找到相关原文，以下是可核对的信息：\n" +
+    (playful ? "本鱼翻到这些，给你划个重点：\n" : "可核对的信息：\n") +
     excerpts.join("\n") +
-    "\n以上为原文摘录。" +
+    "\n" +
     boundary
   );
 }

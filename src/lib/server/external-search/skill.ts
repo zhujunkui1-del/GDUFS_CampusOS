@@ -11,10 +11,29 @@ import {
   type ProviderResult,
 } from "./providers";
 import type { ExternalPolicy } from "./policy";
+import { isOfficialCampusUrl } from "./policy";
 import { ApiError } from "../errors";
 import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
 import { withinWindow, type TimeWindow } from "../assistant/time-window";
 import { isDiscoveryIndex } from "@/lib/retrieval/temporal-claims";
+/** Another region's same-named entity (e.g. a Beijing “广外医院”) is not campus evidence. */
+const OTHER_REGION =
+  /北京|上海|天津|重庆|南京|武汉|西安|成都|杭州|苏州|哈尔滨|沈阳|大连|青岛|济南|郑州|长沙|合肥|福州|厦门|南昌|昆明|贵阳|南宁|兰州|太原|石家庄|长春|内蒙古|新疆|西藏|宁夏|青海|香港|澳门|台湾/;
+function outsideCampusScope(
+  item: { title: string; snippet?: string; originalUrl: string },
+  policy: ExternalPolicy,
+) {
+  // A campus assistant treats non-experience questions as GDUFS-scoped even when
+  // the user did not repeat the school name in a follow-up.
+  if (policy.intent === "experience" && !policy.campus) return false;
+  if (isOfficialCampusUrl(item.originalUrl)) return false;
+  const text = item.title + " " + (item.snippet || "");
+  if (/广东外语外贸大学/.test(text)) return false;
+  return (
+    !/广外|南校|北校|大学城|白云山校区/.test(text) ||
+    OTHER_REGION.test(item.title)
+  );
+}
 export function registerExternalSearch(
   registry: SkillRegistry,
   policy: ExternalPolicy,
@@ -58,7 +77,8 @@ export function registerExternalSearch(
         AbortSignal.timeout(28500),
       ]);
       const query =
-        policy.campus && !/广外|广东外语外贸大学/.test(input.query)
+        (policy.campus || policy.intent !== "experience") &&
+        !/广外|广东外语外贸大学/.test(input.query)
           ? "广东外语外贸大学 " + input.query
           : input.query;
       const web = (p: ExternalPolicy, limit: number, onlyXhs = false) =>
@@ -117,6 +137,7 @@ export function registerExternalSearch(
       ]
         .filter(
           (item) =>
+            !outsideCampusScope(item, policy) &&
             (!(policy.needsParticipation || policy.intent === "events") ||
               !isDiscoveryIndex(item.originalUrl, item.title)) &&
             queryRelevance(buildQueryPlan(policy.relevanceQuery || query), item)

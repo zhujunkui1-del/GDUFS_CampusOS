@@ -51,8 +51,12 @@ export function explicitMapCommand(message: string): MapAction | null {
 export function requiresPlaceLookup(message: string) {
   if (/不要|不必|不用|别找/.test(message) || /附近/.test(message)) return false;
   if (/从.+(?:去|到)|路线|怎么走/.test(message)) return false;
-  return /找|查找|搜索|在哪里|在哪儿|南苑\d+栋|北苑\d+栋|图书馆|教学楼|实验楼|八角楼|语心桥/.test(
-    message,
+  // Canteen order aliases (一饭) and named facilities are real map places; asking
+  // "在哪" must resolve them through search_places instead of guessing prose.
+  return (
+    /找|查找|搜索|在哪里|在哪儿|南苑\d+栋|北苑\d+栋|图书馆|教学楼|实验楼|八角楼|语心桥|[一二三四]饭|饭堂|食堂|超市|又康|便利店|打印店|快递|校医院|门诊部|体育馆|操场/.test(
+      message,
+    ) || /(?:在|去|到)(?:哪|什么位置)/.test(message)
   );
 }
 export function isOriginQuestion(text: string) {

@@ -62,6 +62,7 @@ export function evidenceFallback(
   internal: ContentSearchResult[],
   external: ExternalSearchResult | undefined,
   policy: ExternalPolicy,
+  playful = false,
 ) {
   const plan = buildQueryPlan(policy.relevanceQuery || "");
   const usable = internal
@@ -83,15 +84,23 @@ export function evidenceFallback(
     !bodies.length
   )
     return external?.providers.some((p) => p.status === "login_required")
-      ? "本次小红书搜索需要重新登录，没有取得可用的学生体验资料，暂时不能据此推荐或猜测。"
-      : "本次没有取得能回答这个问题的学生体验资料，暂时无法可靠推荐；不能用不相关文章或猜测代替。";
+      ? playful
+        ? "本鱼去小红书翻了翻，这次得重新登录才看得到，先不瞎推荐啦。"
+        : "本次小红书搜索需要重新登录，没有取得可用的学生体验资料，暂时不能据此推荐或猜测。"
+      : playful
+        ? "本鱼把能翻的都翻了，这次真没找到撑得住的学生体验，先不瞎推荐，免得坑你。🐟"
+        : "本次没有取得能回答这个问题的学生体验资料，暂不能据此推荐或猜测。";
   if (!bodies.length) {
     const unavailable = external?.providers.some(
       (p) => !["ok", "empty"].includes(p.status),
     );
-    return unavailable
-      ? "本次外部查询未取得可用资料，现有校园文章也不足以确认答案。查询失败不代表所问信息不存在。"
-      : "本次没有取得足以回答问题的正文证据，暂时无法确认。只有标题、链接或日期不能补出规则、菜品、身份或报名时间。";
+    if (unavailable)
+      return playful
+        ? "本鱼这轮联网没翻到可用资料，校园文章里也没有能确认的正文，先不瞎说；查询失败不代表没有，换个问法我再去翻。"
+        : "本次外部查询未取得可用资料，现有校园文章也不足以确认答案。查询失败不代表所问信息不存在。";
+    return playful
+      ? "本鱼翻了一圈，没找到能撑住这个说法的原文，这次先不乱讲，免得骗到你。🐟 换个更具体的问法，本鱼再帮你翻。"
+      : "这次没有取得能回答该问题的正文证据，暂无法确认；可以换个更具体的问法再查。";
   }
 }
 /** Detect expression conflicts without altering URLs, citations, dates or structured tool data. */

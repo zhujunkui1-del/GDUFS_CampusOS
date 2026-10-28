@@ -1,0 +1,109 @@
+import { expect, it, vi } from "vitest";
+import { requiresPlaceLookup } from "@/lib/server/assistant/intent";
+import { contentIntent } from "@/lib/server/assistant/content-intent";
+import { dialogueReply } from "@/lib/server/assistant/dialogue";
+import { evidenceFallback } from "@/lib/server/assistant/grounding";
+import { contentInstructions } from "@/lib/server/assistant/content-prompt";
+import { externalPolicy } from "@/lib/server/external-search/policy";
+import { registerExternalSearch } from "@/lib/server/external-search/skill";
+import type { ProviderResult } from "@/lib/server/external-search/providers";
+import { SkillRegistry } from "@/lib/server/agent/skill-registry";
+it("resolves canteen aliases and named facilities through the map skill", () => {
+  for (const message of [
+    "又康超市在哪",
+    "一饭在哪",
+    "二饭在哪",
+    "校医院在哪里",
+  ])
+    expect(requiresPlaceLookup(message)).toBe(true);
+  expect(contentIntent("又康超市在哪").active).toBe(false);
+  expect(contentIntent("一饭在哪").active).toBe(false);
+});
+it("answers abuse as feedback instead of searching it", () => {
+  const reply = dialogueReply("你妈似了");
+  expect(reply).toBeDefined();
+  expect(reply).toContain("本鱼");
+  expect(contentIntent("你妈似了").active).toBe(false);
+});
+it("uses persona tone instead of a bureaucratic refusal when no body exists", () => {
+  const policy = externalPolicy("广外有什么大型体育赛事");
+  const playful = evidenceFallback([], undefined, policy, true);
+  expect(playful).toContain("本鱼");
+  expect(playful).not.toContain("本次没有取得足以回答问题的正文证据");
+  const neutral = evidenceFallback([], undefined, policy);
+  expect(neutral).not.toContain("只有标题、链接或日期");
+});
+it("keeps another region's same-named entity out of campus evidence", async () => {
+  const relay = vi.fn(async (): Promise<ProviderResult> => ({
+    provider: "isolated",
+    status: "ok" as const,
+    durationMs: 1,
+    items: [
+      {
+        title: "北京市西城区广外医院",
+        originalUrl: "https://www.bjxch.gov.cn/hospital",
+        sourceName: "北京市西城区人民政府",
+        platform: "web",
+        snippet: "北京市西城区广外医院位于广安门外。",
+        authority: "unverified",
+        evidenceKind: "page_excerpt",
+        publishedAt: null,
+        retrievedAt: "2026-10-29T00:00:00Z",
+        searchMode: "web",
+        canConfirmAdministrativeFacts: false,
+      },
+      {
+        title: "讲座预告：人工智能与外语教学",
+        originalUrl: "https://www.gdufs.edu.cn/lecture",
+        sourceName: "广东外语外贸大学",
+        platform: "web",
+        snippet: "广东外语外贸大学将于本周举办讲座。",
+        authority: "official",
+        evidenceKind: "page_excerpt",
+        publishedAt: null,
+        retrievedAt: "2026-10-29T00:00:00Z",
+        searchMode: "web",
+        canConfirmAdministrativeFacts: true,
+      },
+    ],
+  }));
+  const policy = externalPolicy("广外最近有什么讲座");
+  const registry = registerExternalSearch(
+    new SkillRegistry(),
+    policy,
+    {
+      relay,
+    },
+    () => true,
+  );
+  const result = await registry.get("search_external_campus_info")!.run(
+    { query: "最近讲座", gap: "freshness_check", limit: 3 },
+    {
+      requestId: "fixture",
+      sessionId: "fixture",
+      user: null,
+      permissions: [],
+      campusId: "gdufs_university_town",
+    },
+  );
+  const items = result.ok
+    ? (result.data as { items: { originalUrl: string }[] }).items
+    : [];
+  expect(items.map((item) => item.originalUrl)).toEqual([
+    "https://www.gdufs.edu.cn/lecture",
+  ]);
+});
+it("asks for a numbered, direct answer instead of an excerpt frame", () => {
+  const content = contentIntent("广外最近有哪些讲座");
+  const instructions = contentInstructions(
+    {
+      content,
+      supplementPolicy: externalPolicy(content.query),
+      originIds: [],
+      hasLocation: false,
+    },
+    "answer",
+  );
+  expect(instructions).toContain("1. 2. 3.");
+  expect(instructions).toContain("不要用“已找到相关原文”");
+});
