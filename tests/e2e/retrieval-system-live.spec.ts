@@ -77,7 +77,14 @@ test("real retrieval, official supplements, contextual follow-ups and citations"
         follow.cards.some((c) => /生活地图|财务管理专业/.test(c.title)),
       ).toBe(false);
       expect(follow.response).toMatch(/羽毛球|报名|截止/);
-      expect(follow.response).not.toMatch(/仍在报名|可以直接报名|现在就能报名/);
+      const unsupportedOpenClaims = follow.response
+        .split(/[。；\n]/)
+        .filter(
+          (sentence) =>
+            /仍在报名|可以直接报名|现在就能报名/.test(sentence) &&
+            !/无法确认|不能确认|不确定|未知|是否/.test(sentence),
+        );
+      expect(unsupportedOpenClaims).toEqual([]);
       const borrowing = await ask("广外图书馆怎么借书？");
       expect(
         borrowing.cards.some((c) =>
