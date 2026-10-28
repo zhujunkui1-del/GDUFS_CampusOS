@@ -69,4 +69,7 @@ it("recovers only real food excerpts, retains source numbering and never turns m
       false,
     ),
   ).toBeUndefined();
+  expect(
+    foodEvidenceAnswer([food], "花生过敏在南校一饭吃什么", false),
+  ).toBeUndefined();
 });

@@ -9,6 +9,9 @@ export function foodEvidenceAnswer(
   question: string,
   playful: boolean,
 ) {
+  // This fallback is for ordinary dining discovery, not medical/dietary safety advice.
+  if (/过敏|中毒|糖尿病|高血压|疾病|孕|医疗|服药|忌口/.test(question))
+    return undefined;
   const candidates = cards
     .flatMap((card, index) => {
       if (card.kind !== "source" && card.kind !== "external_source") return [];
