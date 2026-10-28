@@ -10,6 +10,7 @@ async function article(
   id = "retrieval",
   metadata = false,
   url = "https://example.invalid/" + id,
+  title = metadata ? "元数据专用图书馆借阅规则" : "真实片段测试",
 ) {
   f.sqlite
     .prepare(
@@ -18,7 +19,7 @@ async function article(
     .run(
       id,
       f.source.id,
-      metadata ? "元数据专用图书馆借阅规则" : "真实片段测试",
+      title,
       url,
       body,
       metadata ? "not_provided" : "complete",
@@ -35,6 +36,29 @@ async function article(
 it("encodes Chinese bigrams and keeps arbitrary query syntax out of MATCH", () => {
   expect(lexicalTokens("图书馆借阅")).toHaveLength(4);
   expect(ftsExpression('" OR * 借书')).not.toContain("*");
+});
+it("starts a directly matched procedural guide at its beginning instead of a keyword-heavy late step", async () => {
+  const f = await dateGateFixture();
+  try {
+    await article(
+      f,
+      "第一步：打开就业系统，登录后申请电子协议。\n" +
+        "操作说明与注意事项。".repeat(100) +
+        "\n第七步：就业协议三方协议签约手续，确认就业协议申请信息。".repeat(12),
+      "procedure",
+      false,
+      "https://example.invalid/procedure",
+      "就业协议办理指南",
+    );
+    await ensureRetrievalIndex(f.db, "procedure");
+    const r = await new D1KeywordRetriever(f.db).retrieve(
+      { query: "就业协议怎么办理" },
+      PUBLIC_RETRIEVAL_SCOPE,
+    );
+    expect(r.hits[0]?.contentSnippet).toContain("第一步");
+  } finally {
+    f.close();
+  }
 });
 it("searches actual body chunks, uses authoritative gates, preserves HTML, and an unchanged index writes nothing", async () => {
   const f = await dateGateFixture();
@@ -151,7 +175,13 @@ it("title-only articles return metadata, not invented body evidence", async () =
 it("recognizes a trusted official original without inventing a manual verification receipt", async () => {
   const f = await dateGateFixture();
   try {
-    await article(f, "比赛时间：2026年10月31日。请新生参加羽毛球比赛。","retrieval",false,"https://tyb.gdufs.edu.cn/info/fixture");
+    await article(
+      f,
+      "比赛时间：2026年10月31日。请新生参加羽毛球比赛。",
+      "retrieval",
+      false,
+      "https://tyb.gdufs.edu.cn/info/fixture",
+    );
     await ensureRetrievalIndex(f.db, "retrieval");
     const before = f.sqlite
       .prepare("SELECT official_status FROM knowledge_sources WHERE id=?")

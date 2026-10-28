@@ -248,6 +248,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       analysis: ArticleAnalysis | null;
       key: string;
       intentTier: number;
+      directSubject: boolean;
     }[] = [];
     for (const d of documents) {
       const parsed = d.analysis_json
@@ -271,6 +272,12 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         (a, b) =>
           Number(chunkRelevance(b.text).relevant) -
             Number(chunkRelevance(a.text).relevant) ||
+          (plan.goal === "procedure" &&
+          plan.topics.some((t) =>
+            t.alternatives.some((v) => d.title.includes(v)),
+          )
+            ? a.start_offset - b.start_offset
+            : 0) ||
           chunkRelevance(b.text).score - chunkRelevance(a.text).score ||
           count(b.text) - count(a.text) ||
           a.score - b.score,
@@ -337,7 +344,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         c.score +
         opportunityBoost;
       let start = 0;
-      if (c.text.length > 780) {
+      if (c.text.length > 780 && plan.goal !== "procedure") {
         const occurrences = terms
           .map((t) => c.text.indexOf(t))
           .filter((p) => p >= 0);
@@ -413,6 +420,11 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
               ? 2
               : 1
           : 0,
+        directSubject: plan.topics.some((t) =>
+          t.alternatives.some((a) =>
+            d.title.toLowerCase().includes(a.toLowerCase()),
+          ),
+        ),
         key:
           d.evidence_type !== "metadata" && d.text_length >= 200
             ? d.text_hash
@@ -425,7 +437,14 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         b.hit.relevanceScore - a.hit.relevanceScore,
     );
     const unique = new Map<string, (typeof ranked)[number]>();
-    for (const item of ranked) {
+    // Once an actual subject-specific guide/policy is available, a neighbouring
+    // workflow or recruitment post that merely mentions it must not fill the
+    // remaining answer slots. Indirect evidence remains discoverable when no
+    // direct guide was retrieved, so an unusual title is not an exclusion gate.
+    const preferDirect =
+      ["procedure", "policy", "requirements"].includes(plan.goal) &&
+      ranked.some((r) => r.directSubject);
+    for (const item of ranked.filter((r) => !preferDirect || r.directSubject)) {
       const old = unique.get(item.key);
       if (old) {
         if (old.hit.linkedSources.length < 4)
