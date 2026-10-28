@@ -35,7 +35,20 @@ it("measures independently labelled cross-topic recall and precision (isolated d
         .run(id);
       await ensureRetrievalIndex(f.db, id);
     }
-    const rows = [];
+    const rows: {
+      query: string;
+      purpose: "knowledge" | "events";
+      gold: readonly string[];
+      returned: string[];
+      recall: number;
+      precisionAt4: number;
+      precisionReturned: number;
+      knownPositiveMiss: number;
+      supportedEvidence: number;
+      returnedEvidence: number;
+      latencyMs: number;
+      metrics: Awaited<ReturnType<typeof searchContent>>["metrics"];
+    }[] = [];
     for (const [query, expected, purpose] of retrievalQuestions) {
       const start = performance.now(),
         r = await searchContent(
