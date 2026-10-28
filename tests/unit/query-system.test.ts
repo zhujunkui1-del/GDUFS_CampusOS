@@ -22,6 +22,7 @@ import {
   unsupportedClosureClaim,
 } from "@/lib/retrieval/temporal-claims";
 import type { AssistantCard } from "@/domain/agent/assistant-contracts";
+import { retrievedEvidenceAnswer } from "@/lib/server/assistant/evidence-answer";
 
 it("evaluates a shared cross-topic corpus and preserves qualification under distractors", async () => {
   const f = await dateGateFixture();
@@ -232,6 +233,20 @@ it("does not bind several months of an index page to one event or turn a start i
       [],
     ),
   ).toBe(false);
+  const future: AssistantCard = {
+    ...card,
+    title: "校运动会通知",
+    snippet:
+      "各单位：为促进校园体育生活。学校定于2026 年 11 月 20—21 日在大学城校区真草体育场举办运动会。报名材料见附件。",
+  };
+  const fallback = retrievedEvidenceAnswer(
+    [card, future],
+    "广外有什么体育比赛可以参加吗",
+    true,
+    new Set(),
+  );
+  expect(fallback).toContain("11 月 20—21 日");
+  expect(fallback).toContain("[来源2]");
 });
 it("distinguishes failed recall, irrelevant candidates, metadata, and missing details", () => {
   const empty = { hits: [], activities: [] };

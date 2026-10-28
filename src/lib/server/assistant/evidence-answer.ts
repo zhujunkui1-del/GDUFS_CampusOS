@@ -74,7 +74,11 @@ export function retrievedEvidenceAnswer(
   officialDocumentIds: Set<string>,
 ) {
   const plan = buildQueryPlan(question);
-  const excerpts = cards
+  const currentOpportunity = ["participation", "registration"].includes(
+    plan.goal,
+  );
+  const today = chinaDay(Date.now())!;
+  const candidates = cards
     .map((c, index) => ({ c, index }))
     .sort((a, b) =>
       ["participation", "registration", "discovery"].includes(plan.goal)
@@ -98,14 +102,44 @@ export function retrievedEvidenceAnswer(
           (officialOnly && c.authority !== "official"))
       )
         return [];
-      const quote = c.snippet.replace(/\s+/g, " ").trim().slice(0, 160);
+      const normalized = c.snippet.replace(/\s+/g, " ").trim();
+      const anchor = currentOpportunity
+        ? normalized.search(/定于|将于|(?:比赛|活动|讲座)(?:举办)?时间[：:]?/)
+        : -1;
+      const start = anchor >= 0 ? Math.max(0, anchor - 5) : 0;
+      const quote = normalized.slice(start, start + 160);
+      const dates = [
+        ...normalized.matchAll(
+          /(20\d{2})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})(?:\s*[—至-]\s*\d{1,2})?\s*日/g,
+        ),
+      ].filter((m) =>
+        /定于|将于|时间/.test(
+          normalized.slice(Math.max(0, m.index! - 20), m.index),
+        ),
+      );
+      const future =
+        currentOpportunity &&
+        dates.some(
+          (m) =>
+            `${m[1]}-${m[2].padStart(2, "0")}-${m[3].padStart(2, "0")}` >=
+            today,
+        );
       return quote
         ? [
-            `- ${c.title}： “${quote}${quote.length === 160 ? "…" : ""}”[来源${index + 1}]`,
+            {
+              future,
+              text: `- ${c.title}： “${quote}${quote.length === 160 ? "…" : ""}”[来源${index + 1}]`,
+            },
           ]
         : [];
-    })
-    .slice(0, 3);
+    });
+  const excerpts = candidates
+    .filter(
+      (c) =>
+        !currentOpportunity || !candidates.some((c) => c.future) || c.future,
+    )
+    .slice(0, 3)
+    .map((c) => c.text);
   if (!excerpts.length) return undefined;
   const boundary = ["participation", "registration", "discovery"].includes(
     plan.goal,
