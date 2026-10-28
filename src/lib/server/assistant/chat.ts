@@ -465,7 +465,15 @@ export async function chatResponse(request: Request) {
                           ? "official"
                           : "unconfirmed"
                         : c.authority,
-                    excerpt: c.snippet.slice(0, 1200),
+                    excerpt: c.snippet,
+                    knowledgeFacts:
+                      c.kind === "source" &&
+                      c.evidenceType === "full_text" &&
+                      c.readable
+                        ? contentResults
+                            .flatMap((r) => r.knowledge)
+                            .find((k) => k.documentId === c.documentId)
+                        : undefined,
                   },
                 ];
               })
@@ -480,6 +488,8 @@ export async function chatResponse(request: Request) {
                 endsAt: a.endsAt,
                 registrationState: a.registrationState,
                 registrationWindows: a.registrationWindows,
+                otherDeadlines: a.otherDeadlines,
+                placeRaw: a.placeRaw,
                 eventStatus: a.eventStatus,
               })),
           };
