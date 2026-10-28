@@ -85,6 +85,26 @@ it("rejects the reported overseas and book evidence, without filtering a real ca
     matchesQueryFocus(
       "food",
       {
+        title: "GESP考试-广外大学城考点指南",
+        contentSnippet: "学校有食堂，周边贝岗商圈距离一公里。",
+      },
+      "广外有什么好吃的",
+    ),
+  ).toBe(false);
+  expect(
+    matchesQueryFocus(
+      "food",
+      {
+        title: "使用指南｜广外校园卡充值全攻略",
+        contentSnippet: "饭堂支持校园卡消费。",
+      },
+      "广外有什么好吃的",
+    ),
+  ).toBe(false);
+  expect(
+    matchesQueryFocus(
+      "food",
+      {
         title: "【云享·留学】从广外到LSE",
         contentSnippet: "LSE食堂不好吃，某派很好吃",
       },
@@ -119,6 +139,12 @@ it("uses compact campus and venue keywords while retaining the explicitly reques
   expect(publicQuery(contentIntent("北校一饭有什么好吃的").query)).toBe(
     "广外 北校 一饭",
   );
+  expect(
+    publicQuery(contentIntent("南校一饭有没有不辣的素食推荐").query),
+  ).toContain("不辣");
+  expect(
+    publicQuery(contentIntent("南校一饭有没有不辣的素食推荐").query),
+  ).toContain("素食");
 });
 it("does not carry planning obligations into the answer phase", () => {
   const content = contentIntent("有什么好吃的吗");

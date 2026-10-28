@@ -25,7 +25,21 @@ export function publicQuery(query: string) {
           : /三饭|第三(?:食堂|饭堂)/.test(query)
             ? "三饭"
             : "食堂";
-    return `广外 ${campus} ${venue}`;
+    const specifics = query
+      .replace(
+        /广东外语外贸大学|广外|大学城(?:校区)?|白云山(?:校区)?|南校(?:区)?|北校(?:区)?|第一(?:食堂|饭堂)|第二(?:食堂|饭堂)|第三(?:食堂|饭堂)|一饭|二饭|三饭|文采园|博雅园|风采园/g,
+        " ",
+      )
+      .replace(
+        /(?:有几个|有什么|有没有|有啥|什么|多少|推荐一下|推荐|请问|帮我|查一下|搜索|食堂|饭堂|好吃|美食|周边|附近|校外|我对|本人|的|吗|呢|呀)/g,
+        " ",
+      )
+      .replace(/[，,；;。？！?\s]+/g, " ")
+      .trim();
+    return `广外 ${campus} ${venue === "食堂" && specifics ? "美食" : venue}${specifics ? " " + specifics : ""}`.slice(
+      0,
+      120,
+    );
   }
   const normalized = query
     .replace(

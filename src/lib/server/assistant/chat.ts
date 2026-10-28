@@ -56,6 +56,7 @@ import { createCloudSearch } from "../external-search/cloud";
 import type { EvidenceHit } from "@/domain/retrieval/contracts";
 import { D1KeywordRetriever } from "../retrieval/retriever";
 import { contentInstructions } from "./content-prompt";
+import { foodEvidenceAnswer } from "./evidence-answer";
 import {
   assistantDisplayText,
   asksForSearchPermission,
@@ -276,6 +277,8 @@ export async function chatResponse(request: Request) {
     const contentResults: ContentSearchResult[] = [];
     let externalDone = false;
     let evidenceGateUsed = false;
+    let answerMode = "model";
+    let modelFailureCode: string | null = null;
     let publicationFallbackUsed = false;
     let externalResult: z.infer<typeof ExternalSearchResultSchema> | undefined;
     let officialLookupUnavailable = false;
@@ -576,6 +579,8 @@ export async function chatResponse(request: Request) {
         let text = "";
         let error: { code: string; message: string } | undefined;
         const runMetrics = () => ({
+          answerMode,
+          modelFailureCode,
           evidenceGateUsed,
           publicationFallbackUsed,
           persona: personaContext(
@@ -869,6 +874,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         );
                         if (fallback) {
                           evidenceGateUsed = true;
+                          answerMode = "no_evidence";
                           cards.clear();
                           evidence.clear();
                         }
@@ -939,10 +945,11 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
               },
             );
             if (clarification) {
+              answerMode = "clarification";
               text = clarification;
               firstTextMs = Math.round(performance.now() - receivedAt);
             }
-            const result = clarification
+            let result = clarification
               ? { status: "completed" as const }
               : await orchestrator.run({
                   runId,
@@ -963,6 +970,31 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                   },
                   onEvent,
                 });
+            if (
+              result.status === "failed" &&
+              !streamSignal.aborted &&
+              content.focus === "food" &&
+              !content.map &&
+              !supplementPolicy.officialOnly &&
+              (result.code.startsWith("MODEL_") ||
+                ["TIMEOUT", "RUN_LIMIT_EXCEEDED"].includes(result.code))
+            ) {
+              const fallback = foodEvidenceAnswer(
+                [...cards.values()],
+                content.query,
+                personaContext(
+                  personaMessage,
+                  persona.preference,
+                  history.messages,
+                ).tone === "daily",
+              );
+              if (fallback) {
+                text = fallback;
+                answerMode = "evidence_excerpt";
+                modelFailureCode = result.code;
+                result = { ...result, status: "completed" };
+              }
+            }
             if (
               content.timeWindow?.role === "publication" &&
               result.status === "completed"

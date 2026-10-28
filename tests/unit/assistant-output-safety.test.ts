@@ -4,6 +4,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { AssistantSources } from "@/features/assistant/components/assistant-sources";
 import { AssistantMessageText } from "@/features/assistant/components/assistant-message-text";
 import type { AssistantCard } from "@/domain/agent/assistant-contracts";
+import { foodEvidenceAnswer } from "@/lib/server/assistant/evidence-answer";
 const card: AssistantCard = {
   kind: "source",
   documentId: "fixture",
@@ -39,4 +40,33 @@ it("does not show raw pseudo tool calls or their stale source list from stored h
   expect(text).not.toContain("search_external_campus_info");
   expect(text).toContain("请重新提问");
   expect(renderToStaticMarkup(createElement(AssistantSources, props))).toBe("");
+});
+it("recovers only real food excerpts, retains source numbering and never turns metadata into a body", () => {
+  const food: AssistantCard = {
+    kind: "external_source",
+    title: "南校一饭餐品分享",
+    sourceName: "隔离作者",
+    originalUrl: "https://example.invalid/food",
+    snippet: "我喜欢一饭的自选咕噜肉。",
+    publishedAt: "2026-09-17",
+    authority: "student_experience",
+    evidenceKind: "page_excerpt",
+    searchMode: "platform",
+  };
+  const result = foodEvidenceAnswer(
+    [card, food],
+    "广外南校一饭有什么好吃的",
+    true,
+  );
+  expect(result).toContain("我喜欢一饭的自选咕噜肉");
+  expect(result).toContain("[来源2]");
+  expect(result).not.toContain("新书");
+  expect(result).not.toContain("亲自吃过");
+  expect(
+    foodEvidenceAnswer(
+      [{ ...food, evidenceKind: "title_only" }],
+      "广外一饭推荐",
+      false,
+    ),
+  ).toBeUndefined();
 });

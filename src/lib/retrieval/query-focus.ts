@@ -53,6 +53,17 @@ export function matchesQueryFocus(
   if (focus === "food") {
     const venue =
       /食堂|饭堂|餐厅|餐馆|档口|[一二三四]饭|文采园|博雅园|风采园|云雅园|干饭|美食(?:攻略|推荐|测评)/;
+    if (
+      /充值|校园卡.{0,12}(?:指南|攻略|办理)|一卡通/.test(title) &&
+      !/充值|支付|校园卡|一卡通/.test(query)
+    )
+      return false;
+    if (
+      /考试|考点/.test(title) &&
+      !/食宿|用餐|食堂|饭堂|餐饮/.test(title) &&
+      !/考试|考点/.test(query)
+    )
+      return false;
     if (/书展|新书|馆藏|索书号|留学|LSE|伦敦/.test(title) && !venue.test(title))
       return false;
     return (
