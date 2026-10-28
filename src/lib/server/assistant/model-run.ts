@@ -76,7 +76,7 @@ export function meteredClient(
         true,
       );
     const messages = evidenceCheckMessages(answer, evidence),
-      maxTokens = Math.min(512, 4096 - outputBudgetUsed),
+      maxTokens = Math.min(1024, 4096 - outputBudgetUsed),
       upper =
         new TextEncoder().encode(JSON.stringify(messages)).byteLength + 4096;
     if (
