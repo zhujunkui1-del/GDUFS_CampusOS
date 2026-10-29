@@ -31,6 +31,18 @@ type Policy = {
   expires_at_ms: number;
 };
 export const METADATA_BODY = "仅登记公开元数据，未保存第三方正文。";
+// 仅元数据的链接卡片没有正文和活动日期，完整分类器会判为 null；按标题给出
+// 一个最小可公开的雷达分类，避免已核对元数据卡在 draft。
+function metadataRadarCategory(
+  title: string,
+): NonNullable<ContentDetail["radarCategory"]> {
+  if (/讲座|讲坛|论坛|沙龙|研讨会/.test(title)) return "lecture";
+  if (/比赛|竞赛|大赛|挑战赛/.test(title)) return "competition";
+  if (/招聘|就业|宣讲会|双选会/.test(title)) return "employment";
+  if (/奖学金|助学金|资助/.test(title)) return "scholarship_opportunity";
+  if (/演出|展览|书展|文体|运动会/.test(title)) return "culture_sports";
+  return "campus_notice";
+}
 export function importUrl(source: SourceDetail, raw: string, detail = true) {
   const u = new URL(SafeUrlSchema.parse(raw));
   if (
@@ -373,14 +385,19 @@ export class ManualImportStore extends IngestionStore {
                   radarCategory: null,
                   knowledgeCategory: defaults.knowledgeCategory,
                 }
-              : classifyArticle({
-                  title: item.title,
-                  body: item.body,
-                  bodyFormat: "plain",
-                  bodyStatus: item.bodyStatus,
-                  publishedAt: item.publishedAt,
-                  originalUrl: item.url,
-                })),
+              : item.bodyStatus === "not_provided"
+                ? {
+                    radarCategory: metadataRadarCategory(item.title),
+                    knowledgeCategory: null,
+                  }
+                : classifyArticle({
+                    title: item.title,
+                    body: item.body,
+                    bodyFormat: "plain",
+                    bodyStatus: item.bodyStatus,
+                    publishedAt: item.publishedAt,
+                    originalUrl: item.url,
+                  })),
           publisher: source.displayName,
           summary:
             item.summary ||
@@ -458,7 +475,12 @@ export class ManualImportStore extends IngestionStore {
               expectedVersion: old?.version || 0,
             },
             undefined,
-            !!(item.radarCategory || item.knowledgeCategory),
+            !!(
+              item.radarCategory ||
+              item.knowledgeCategory ||
+              (item.bodyStatus === "not_provided" &&
+                (input.radarCategory || input.knowledgeCategory))
+            ),
           );
       const documentId = old?.id || prepared!.key,
         version = old ? old.version + (unchanged ? 0 : 1) : 1;

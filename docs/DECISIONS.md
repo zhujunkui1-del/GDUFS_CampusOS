@@ -954,3 +954,11 @@ FTS5仍是唯一权威召回，向量只作补充通道。索引`campusos-chunks
 因此文章精确查找（`articleQuery` 非空）在三个位置统一豁免：卡片写入、可用正文判定、无证据兜底。`evidenceFallback` 的 `trustAllBodies` 是显式参数，只有文章查找传 true，普通问答仍走主题相关性，避免放宽校园事实门禁。
 
 嵌套引号标题按 `《…》` 优先提取；外层引号只作为兜底，否则 `找文章“《X》…”` 会把外层整段当标题。验证：三条长标题均返回文章要点；全量 716 项 704 通过/12 项既有失败；Preview `bbd86e38`。
+
+## D-111｜元数据显式分类以覆盖行落库，不用全局视图优先级硬改（2026-10-30）
+
+已核对的纯元数据导入（`bodyStatus=not_provided`）必须能自动发布，但 `console_article_classifications` 视图里自动分析行会以 NULL 分类遮住 `knowledge_documents.radar_category`，导致「讲座报名通知」虽被分类为 `lecture`，`document()` 仍读到 NULL、发布校验报「请选择唯一分类」。
+
+尝试把显式 `d.radar_category/knowledge_category` 提到视图优先级最高，会反向破坏「自动分析 unknown 覆盖旧 legacy 分类」等既有契约。因此撤销全局视图改动，只在元数据自动分类时把 `prepareContentWrite` 的 `manualPlacement` 置真，让既有 `document_classification_overrides` 覆盖行表达「管理员/导入器显式分类」；正文自动分类仍不写覆盖行。
+
+另外 `saveEngineSettings` 原来无条件拒绝任何 `earliestImportDay` 变化，与测试和真实操作冲突；改为仅在 `confirmImportCutoff=false` 时拒绝，已确认的截止时间调整允许落库。真实验收：Preview `0df10ffa` 的最近列表与长标题文章均通过；全量 710/717。

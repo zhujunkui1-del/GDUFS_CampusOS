@@ -321,7 +321,10 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     const v = EngineSettingsSchema.parse(raw);
     consolePermission(this.actor, "admin");
     const old = await this.engineSettings();
-    if (v.earliestImportDay !== old?.earliest_import_day)
+    if (
+      v.earliestImportDay !== old?.earliest_import_day &&
+      !v.confirmImportCutoff
+    )
       throw new ApiError(
         "INVALID_ARGUMENT",
         "请在过时信息清理中预览并确认门禁时间。",

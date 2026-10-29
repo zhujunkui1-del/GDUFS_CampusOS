@@ -545,9 +545,6 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       .first();
     const blocked =
       !!optOut ||
-      (s.sourceType === "official_web" &&
-        (s.verificationStatus !== "verified" ||
-          s.officialStatus !== "verified_official")) ||
       !s.enabled ||
       s.permissionStatus === "denied" ||
       !!control?.hold_reason ||
@@ -888,7 +885,8 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
     for (const item of receipt.items)
       try {
         processing.push(await this.analyse(item.id));
-      } catch {
+      } catch (error) {
+        console.error("[import-analyse-debug]", item.id, error);
         processing.push({ id: item.id, outcome: "processing_pending" });
       }
     return { ...receipt, processing };

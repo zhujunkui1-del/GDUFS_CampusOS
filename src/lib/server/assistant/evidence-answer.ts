@@ -247,7 +247,43 @@ export function retrievedEvidenceAnswer(
   );
 }
 
-/** Recent radar lists are deterministic: newest publications first, 3-5 items. */
+/**
+ * Merge articles that cover the same activity. Different outlets describe one
+ * event with different headlines ("第29届秋之声…歌手大赛" vs "秋之声歌唱比赛"),
+ * so an exact title comparison is not enough. Strip venue/edition/format words
+ * and quoted sub-titles, then keep the first (newest) card for each signature.
+ */
+export function activitySignature(title: string) {
+  const normalized = title
+    .replace(/[【\[][^】\]]*[】\]]/g, " ")
+    .replace(/[“"][^”"]*[”"]/g, " ")
+    .replace(/第[一二三四五六七八九十百\d]+届/g, " ")
+    .replace(/最佳人气奖评选|人气奖|投票|预告|报名|招募|圆满|收官|开唱/g, " ")
+    .replace(/专属|Livehouse|livehouse/gi, " ")
+    .replace(/广外|广东外语外贸大学|校园|大学城|白云山/g, " ")
+    .replace(/[一-龥]{1,10}学院/g, " ")
+    .replace(/歌唱|歌手|大赛|比赛|决赛|初赛|复赛|活动|晚会|演出|展览|展演/g, " ")
+    .replace(/[^一-龥A-Za-z0-9]+/g, "")
+    .replace(/^的/, "")
+    .trim();
+  return normalized.length >= 3 ? normalized.slice(0, 12) : "";
+}
+
+// Containment core keeps the activity type while dropping branding/campus
+// prefixes, so a broad headline still matches a longer branded one.
+export function activityCore(title: string) {
+  return title
+    .replace(/[【\[（(][^】\]）)]*[】\]）)]/g, " ")
+    .replace(/[“"][^”"]*[”"]/g, " ")
+    .replace(/第[一二三四五六七八九十百\d]+届/g, " ")
+    .replace(/最佳人气奖评选|人气奖|投票|预告|报名|招募|圆满|收官|开唱|举行|举办|落幕/g, " ")
+    .replace(/广外的?|广东外语外贸大学|专属|Livehouse|livehouse|大学城|白云山/g, " ")
+    .replace(/[一-龥]{1,10}学院/g, " ")
+    .replace(/[^一-龥A-Za-z0-9]+/g, "")
+    .replace(/^的|的$/g, "")
+    .trim();
+}
+
 export function recentRadarAnswer(
   cards: AssistantCard[],
   label = "校园资讯",
@@ -262,10 +298,28 @@ export function recentRadarAnswer(
       return [{ title: card.title, publishedAt: card.publishedAt }];
     })
     .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
-    .filter(
-      (row, index, all) =>
-        all.findIndex((other) => other.title === row.title) === index,
-    )
+    .filter((row, index, all) => {
+      if (all.findIndex((other) => other.title === row.title) !== index)
+        return false;
+      const signature = activitySignature(row.title);
+      const core = activityCore(row.title);
+      if (!signature && core.length < 4) return true;
+      return (
+        all.findIndex((other) => {
+          if (
+            signature &&
+            activitySignature(other.title) === signature
+          )
+            return true;
+          const otherCore = activityCore(other.title);
+          return (
+            core.length >= 4 &&
+            otherCore.length >= 4 &&
+            (core.includes(otherCore) || otherCore.includes(core))
+          );
+        }) === index
+      );
+    })
     .slice(0, 5);
   if (rows.length < 3) return undefined;
   return [
