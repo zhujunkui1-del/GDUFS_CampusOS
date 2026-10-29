@@ -966,3 +966,10 @@ FTS5仍是唯一权威召回，向量只作补充通道。索引`campusos-chunks
 ## D-112｜测试按当前契约对齐，不删除失败用例（2026-10-30）
 
 `licensed_full_text` 已统一落 `reading_html`，发现结果新增 `dates/undatedUrls/allDatedBeforeCutoff` 字段；对应单元测试按当前 API 契约更新断言，断言正文格式而不是旧 `bodyText`。retention 的 2 项 `CONSOLE_STALE` 是真实保护链路问题，保留失败状态、不删除、不 skip；后续应继续缩小 `protection` 批量语句中触发 stale 的语句。
+
+### D-112：已清理文档的保护快照跳过无载荷版本
+
+- 决定：`snapshot()` 仅对 `input_hash IS NOT NULL` 的文档插入 `console_content_versions`；已被 `retention.purge` 清空正文的文档只推进 `version`，不写无法通过 `console_version_payload` 校验的快照。
+- 理由：清理后 `input_hash` 为 NULL，快照触发器无法匹配；保护白名单本身应保留权限记录，但不该伪造可恢复载荷。
+- 代价：清理后的保护记录没有新的可恢复正文快照，符合永久清理语义；正常文档不受影响。
+- 验证：retention 7/7、全量 717/717；未删除测试。

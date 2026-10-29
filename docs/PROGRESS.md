@@ -1406,3 +1406,11 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 - ingestion 3 项按当前契约修正：许可正文期望 `parsed.bodyHtml`/`reading_html`；发现结果期望 `dates`/`undatedUrls`/`allDatedBeforeCutoff`；元数据卡片自动发布补写 `console_content_checks`。
 - retention 白名单 2 项仍 `CONSOLE_STALE`（保护命令批量语句中的文档版本推进），未用删除/跳过测试规避；已保留为已知失败并记录。
 - 全量 717 项 715 通过/2 失败；`tsc` 0。12 项既有失败已修 10 项。
+
+### 2026-10-30｜retention 2 项修复，12 项既有失败全部清零
+
+根因：`console_content_versions` 的 `console_version_payload` 触发器要求快照的 `input_hash` 与文档当前值一致；被永久清理的文档 `input_hash` 已置 NULL，保护白名单仍尝试插入快照，`NULL=NULL` 永不成立，触发 `CONSOLE_STALE`。
+
+修复：`ConsoleStore.snapshot()` 与 `ConsoleAutomationStore.snapshot()` 的快照 SELECT 增加 `AND input_hash IS NOT NULL`；已清理文档只推进版本、不写无载荷快照，正常文档行为不变。
+
+验证：`tests/unit/console-v2-retention.test.ts` 7/7 通过；全量 717/717 通过（105 文件）；`tsc` 0、`build` 0。提交见本轮 Git 记录。12 项既有失败清零，未删除或跳过测试。

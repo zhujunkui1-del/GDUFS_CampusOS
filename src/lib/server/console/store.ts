@@ -634,7 +634,7 @@ export class ConsoleStore {
     return this.db
       .prepare(
         `INSERT INTO console_content_versions(document_id,version,snapshot_json,created_by,created_at,content_revision,input_hash)
-    SELECT id,version,json_object('inputRef',content_revision,'contentRevision',content_revision,'inputHash',input_hash,'publicationStatus',publication_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private'`,
+    SELECT id,version,json_object('inputRef',content_revision,'contentRevision',content_revision,'inputHash',input_hash,'publicationStatus',publication_status),?,?,content_revision,input_hash FROM knowledge_documents WHERE id=? AND owner_user_id IS NULL AND data_domain<>'user_private' AND input_hash IS NOT NULL`,
       )
       .bind(this.actor.id, this.now(), id);
   }
