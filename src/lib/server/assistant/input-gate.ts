@@ -37,6 +37,20 @@ export function inputGate(
   if (GREETING.test(text)) return "greeting";
   if (!text) return "vague";
   if (CAMPUS_SIGNAL.test(text)) return "campus";
+  // A question about a topic the user just named (e.g. "秋之声" then
+  // "2026年的秋之声什么时候举行") is still that campus topic. The keyword
+  // list cannot know every event and club name, so carry the user's own noun.
+  const priorTopic = history
+    .slice(-6)
+    .reverse()
+    .find(
+      (turn) =>
+        turn.role === "user" &&
+        turn.text.trim().length >= 2 &&
+        turn.text.trim().length <= 10 &&
+        BARE_CAMPUS_TOPIC.test(turn.text.trim()),
+    );
+  if (priorTopic && text.includes(priorTopic.text.trim())) return "campus";
   // A distant city's weather/news is unrelated even if the previous turn was
   // about campus, so this check precedes the short-follow-up context rule.
   if (OTHER_CITY.test(text) || WEATHER.test(text)) return "off_topic";

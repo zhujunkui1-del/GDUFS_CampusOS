@@ -299,7 +299,9 @@ export async function chatResponse(request: Request) {
     );
     scopedRoutes.requireRun(runId);
     const contentDone = new Set<ContentTool>();
-    const supplementPolicy = externalPolicy(content.retrievalQuery || content.query);
+    const supplementPolicy = externalPolicy(
+      content.retrievalQuery || content.query,
+    );
     const contentResults: ContentSearchResult[] = [];
     let externalDone = false;
     let evidenceGateUsed = false;
@@ -743,9 +745,13 @@ export async function chatResponse(request: Request) {
           evidenceGateUsed,
           publicationFallbackUsed,
           evidenceAssessment: content.active
-            ? assessEvidence(content.retrievalQuery || content.query, contentResults, {
-                officialOnly: supplementPolicy.officialOnly,
-              })
+            ? assessEvidence(
+                content.retrievalQuery || content.query,
+                contentResults,
+                {
+                  officialOnly: supplementPolicy.officialOnly,
+                },
+              )
             : undefined,
           persona: personaContext(
             personaMessage,
@@ -810,7 +816,9 @@ export async function chatResponse(request: Request) {
               contentDone.add(name);
               contentResults.push(data);
               contentMetrics.push({ skill: name, ...data.metrics });
-              const relevancePlan = buildQueryPlan(content.retrievalQuery || content.query);
+              const relevancePlan = buildQueryPlan(
+                content.retrievalQuery || content.query,
+              );
               for (const h of data.hits) {
                 // Retrieved candidates are ranked, not guaranteed on-topic. Passing
                 // an unrelated article as evidence makes the model list it when the
@@ -908,7 +916,8 @@ export async function chatResponse(request: Request) {
                       : "control_map";
                 else if (
                   !routeQuestion &&
-                  /找|搜索|定位|在哪/.test(input.message)
+                  (requiresPlaceLookup(input.message) ||
+                    /找|搜索|定位|在哪/.test(input.message))
                 )
                   nextRequiredTool = "control_map";
               }
@@ -1005,7 +1014,9 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                 history.messages,
               ).tone === "daily";
             const hasUsableBody = () => {
-              const plan = buildQueryPlan(content.retrievalQuery || content.query);
+              const plan = buildQueryPlan(
+                content.retrievalQuery || content.query,
+              );
               return contentResults.some((result) =>
                 result.hits.some(
                   (hit) =>
@@ -1170,23 +1181,25 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                           name === "search_campus_knowledge"
                             ? data.knowledge
                             : [],
-                        hits: data.hits.map((h) => ({
-                          documentId: h.documentId,
-                          citation:
-                            "来源" +
-                            ([...evidence.keys()].indexOf(h.documentId) + 1),
-                          title: h.title,
-                          sourceName: h.sourceName,
-                          originalUrl: h.originalUrl,
-                          publishedAt: h.publishedAt,
-                          contentSnippet: h.contentSnippet,
-                          bodyAvailable: h.bodyAvailable,
-                          bodyPartial: h.bodyPartial,
-                          evidenceType: h.evidenceType,
-                          classificationState: h.classificationState,
-                          validity: h.validity,
-                          official: h.official,
-                        })),
+                        hits: data.hits
+                          .filter((h) => evidence.has(h.documentId))
+                          .map((h) => ({
+                            documentId: h.documentId,
+                            citation:
+                              "来源" +
+                              ([...evidence.keys()].indexOf(h.documentId) + 1),
+                            title: h.title,
+                            sourceName: h.sourceName,
+                            originalUrl: h.originalUrl,
+                            publishedAt: h.publishedAt,
+                            contentSnippet: h.contentSnippet,
+                            bodyAvailable: h.bodyAvailable,
+                            bodyPartial: h.bodyPartial,
+                            evidenceType: h.evidenceType,
+                            classificationState: h.classificationState,
+                            validity: h.validity,
+                            official: h.official,
+                          })),
                         metrics: undefined,
                         evidenceAssessment: assessEvidence(
                           content.retrievalQuery || content.query,

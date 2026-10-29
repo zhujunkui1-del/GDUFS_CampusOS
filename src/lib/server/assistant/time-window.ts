@@ -34,6 +34,13 @@ export function requestTimeWindow(
   ) {
     // "最近的校园通知" means a recent publication window, not an event window.
     range = [at(-29), today];
+  } else if (
+    /最近|近期/.test(query) &&
+    /讲座|讲坛|论坛|沙龙|竞赛|比赛|招聘|宣讲|活动|报名/.test(query)
+  ) {
+    // "最近有什么讲座/比赛" wants events around today, including upcoming ones;
+    // a past publication window would hide tomorrow's lecture.
+    range = [at(-6), at(30)];
   } else if (/今天|今日/.test(query)) range = [today, today];
   else if (/下个月/.test(query)) {
     const d = new Date(day);
@@ -47,6 +54,8 @@ export function requestTimeWindow(
     ];
   }
   if (!range) return;
+  // 讲座/活动/竞赛是「事件」，不是「资讯」：它们的日期应按活动发生日过滤，
+  // 不能因为出现在「最近」句里就把整条查询降级成发布日期窗口。
   const news =
     /趣事|有趣|新闻|动态|分享|通知|公告|资讯|消息|发生.{0,10}(?:事|什么)/.test(
       query,

@@ -46,6 +46,12 @@ export function contentIntent(
     /晕倒|昏迷|急救|火灾|人身(?:危险|威胁)|受到.{0,6}威胁|自伤|轻生|自杀/.test(
       message,
     );
+  // "带我去南苑11栋" is a fresh map task, not a follow-up about whatever was
+  // discussed in the previous turn. Otherwise stale topics leak into the answer.
+  const explicitPlaceRequest =
+    /(?:带我去|带我走|带我过去|导航到|导航去|怎么去|如何去|怎样去|从.{1,24}到)/.test(
+      message,
+    );
   const isSearchFollowup = (text: string) =>
     /^(?:请|再|帮我)?\s*(?:调用|用|去|通过|到)?\s*(?:小红书|外部搜索|互联网|网上)(?:来|帮我)?(?:搜|搜索|查|查找|找)(?:一下|一遍|看看)?[。！？!？\s]*$/.test(
       text.trim(),
@@ -57,7 +63,7 @@ export function contentIntent(
     ) &&
       text.length < 60);
   const topic: string[] = [];
-  if (isFollowup(message))
+  if (isFollowup(message) && !explicitPlaceRequest)
     for (const turn of [...history].reverse()) {
       if (
         turn.role !== "user" ||
@@ -87,7 +93,10 @@ export function contentIntent(
     /讲座|讲坛|竞赛|比赛|招聘|宣讲|停水|停电|闭馆|通知|公告|活动|书展|展览|项目申报|课题申报|奖助申请|名单公示|报名|截止|近期|最近|今天|这周|本周|下周|下个月|现在.*(?:申请|奖学金)|(?:还能|正在|开放).*(?:申请|报名)|申请.*(?:开放|机会)|之声|歌手|歌唱|合唱|晚会|演出|音乐会|艺术节|文化节|校运会|运动会|辩论|演讲|征文|摄影|设计大赛|创新大赛|挑战杯|评选|开幕式|闭幕式|招新/.test(
       query,
     );
-  const map = /(?:地图|定位|路线|导航|在哪里|告诉我.*哪里)/.test(message);
+  const map =
+    /(?:地图|定位|路线|导航|在哪里|告诉我.*哪里|带我去|带我走|带我过去|导航到|导航去|怎么去|如何去|怎样去)/.test(
+      message,
+    );
   // Radar tags are the product's own business categories. Lock the event search
   // to the category the user actually named instead of relying on FTS words.
   const radarCategory = /比赛|竞赛|大赛|挑战杯|数学建模/.test(query)
@@ -111,6 +120,7 @@ export function contentIntent(
     : conversationAct(query);
   const policy = externalPolicy(query);
   const search =
+    !map &&
     !reply &&
     !urgent &&
     !isFeedbackAct(act) &&
@@ -139,11 +149,12 @@ export function contentIntent(
         )
       ? "advisory"
       : "open";
-  const discovery = /有哪些|有什么|举几|举\d|名单|曾经|哪些|谁/.test(query);
+  const discovery =
+    /有哪些|有什么|举几|举\d|名单|曾经|哪些|谁|几个|几场|几篇/.test(query);
   // “了解下秋之声” asks about 秋之声; the polite lead-in must not become part of
   // the FTS keywords or the exact-name match disappears.
   const RETRIEVAL_LEAD =
-    /^(?:请|帮我|我想|想|要|了解一下|了解下|了解|介绍一下|介绍下|介绍|说说|讲讲|查一下|查下|查查|搜一下|搜下|搜搜|看看|看下)\s*/;
+    /^(?:请|帮我|我想|想|要|了解一下|了解下|了解|介绍一下|介绍下|介绍|说说|讲讲|查询|查一下|查下|查查|搜一下|搜下|搜搜|看看|看下|找一下|找找|推荐一下)\s*/;
   const coreQuery =
     query
       .replace(RETRIEVAL_LEAD, "")
@@ -158,7 +169,7 @@ export function contentIntent(
   const retrievalQuery = discovery
     ? query
         .replace(
-          /举[几\d]+[个位]?|曾经|最近|近期|大型|重要|有哪些|有什么|有没有|哪些|时间段|或|与|吗|呢|呀|请|帮我/g,
+          /举[几\d]+[个位]?|曾经|最近|近期|大型|重要|有哪些|有什么|有没有|哪些|几个|几场|几篇|可报名|能报名|报名|查询|的|时间段|或|与|吗|呢|呀|请|帮我/g,
           " ",
         )
         .replace(/[？?。！!，,]/g, " ")

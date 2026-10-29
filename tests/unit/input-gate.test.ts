@@ -29,6 +29,11 @@ it("classifies every turn before retrieval", () => {
   // A bare campus event name the fixed keyword list does not know yet.
   expect(inputGate("秋之声")).toBe("campus");
   expect(inputGate("了解下秋之声")).toBe("campus");
+  // A follow-up about the topic the user just named must stay campus even when
+  // the fixed keyword list does not contain that event name.
+  expect(
+    inputGate("2026年的秋之声什么时候举行", [{ role: "user", text: "秋之声" }]),
+  ).toBe("campus");
 });
 
 it("uses fixed replies and never sends blocked or unrelated turns to search", () => {

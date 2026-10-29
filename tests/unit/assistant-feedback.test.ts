@@ -122,6 +122,17 @@ it("retrieves discovery questions with the core topic instead of the whole phras
     contentIntent("广外曾经或最近有什么大型体育赛事吗").retrievalQuery,
   ).toBe("广外 体育 比赛");
   expect(contentIntent("举3个最近时间段的讲座").retrievalQuery).toBe("讲座");
+  const recent = contentIntent("查询几个最近的可报名的讲座");
+  expect(recent.retrievalQuery).toBe("讲座");
+  expect(recent.radarCategory).toBe("lecture");
+  expect(recent.timeWindow?.role).toBe("registration");
+  const map = contentIntent("带我去南苑11栋", [
+    { id: "u1", role: "user", text: "2026年的秋之声什么时候举行", cards: [] },
+    { id: "a1", role: "assistant", text: "秋之声...", cards: [] },
+  ]);
+  expect(map.active).toBe(false);
+  expect(map.map).toBe(true);
+  expect(map.query).toBe("带我去南苑11栋");
   expect(contentIntent("广外图书馆借阅规则是什么").retrievalQuery).toBe(
     "广外图书馆借阅规则是什么",
   );
@@ -193,7 +204,6 @@ it("detects and strips text-mode tool-call leakage", () => {
     containsToolProtocol('{"tool_calls":[{"function":"control_map"}]}'),
   ).toBe(true);
 });
-
 
 it("treats an Arabic-numbered roster request as a roster question", () => {
   expect(externalPolicy("请举3个广外的云山学者").needsRoster).toBe(true);

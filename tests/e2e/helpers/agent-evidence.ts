@@ -1,7 +1,21 @@
 import type { Page } from "@playwright/test";
+
+export type AgentEvidenceRecord = {
+  prompt: string;
+  tools: string[];
+  actions: unknown[];
+  cards: unknown[];
+  result: unknown;
+  response: string;
+  responseHeadersMs: number;
+  firstTextMs: number | null;
+  completeMs: number | null;
+};
 export async function installAgentEvidence(page: Page) {
   await page.addInitScript(() => {
-    const target = window as Window & { __agentEvidence?: unknown[] };
+    const target = window as Window & {
+      __agentEvidence?: AgentEvidenceRecord[];
+    };
     target.__agentEvidence = [];
     const original = window.fetch.bind(window);
     window.fetch = async (...args) => {
@@ -76,10 +90,12 @@ export async function installAgentEvidence(page: Page) {
     };
   });
 }
-export async function readAgentEvidence(page: Page) {
+export async function readAgentEvidence(
+  page: Page,
+): Promise<AgentEvidenceRecord[]> {
   return page.evaluate(
     () =>
-      (window as Window & { __agentEvidence?: unknown[] }).__agentEvidence ||
-      [],
+      (window as Window & { __agentEvidence?: AgentEvidenceRecord[] })
+        .__agentEvidence || [],
   );
 }
