@@ -6,6 +6,7 @@ import {
   directInstructions,
 } from "@/lib/server/assistant/content-prompt";
 import { externalPolicy } from "@/lib/server/external-search/policy";
+import { contentReadPlan } from "@/lib/server/assistant/read-plan";
 
 // Regression seeds from the handover report. These assert routing decisions only:
 // they never encode a canned answer for the sentence.
@@ -66,4 +67,23 @@ it("routes a bare campus event name to event search, not a refusal", () => {
   expect(intent.active).toBe(true);
   expect(intent.tools).toEqual(["search_campus_events"]);
   expect(intent.retrievalQuery).toBe("秋之声");
+});
+
+it("locks an event search to the radar category the user named", () => {
+  const intent = contentIntent("了解下广外法学院的比赛");
+  expect(intent.retrievalQuery).toBe("法学院 比赛");
+  expect(intent.radarCategory).toBe("competition");
+  const plan = contentReadPlan(
+    ["search_campus_events"],
+    "了解下广外法学院的比赛",
+    externalPolicy("了解下广外法学院的比赛"),
+    () => false,
+    intent.retrievalQuery,
+    () => false,
+    intent.radarCategory,
+  );
+  expect(plan[0]?.input).toMatchObject({
+    query: "法学院 比赛",
+    category: "competition",
+  });
 });

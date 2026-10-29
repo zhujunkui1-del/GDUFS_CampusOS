@@ -88,6 +88,21 @@ export function contentIntent(
       query,
     );
   const map = /(?:地图|定位|路线|导航|在哪里|告诉我.*哪里)/.test(message);
+  // Radar tags are the product's own business categories. Lock the event search
+  // to the category the user actually named instead of relying on FTS words.
+  const radarCategory = /比赛|竞赛|大赛|挑战杯|数学建模/.test(query)
+    ? "competition"
+    : /就业|招聘|宣讲|校招|求职|实习/.test(query)
+      ? "education_career"
+      : /讲座|讲坛|论坛|沙龙|学术报告/.test(query)
+        ? "lecture"
+        : /奖学金|助学金|奖助|资助/.test(query)
+          ? "scholarship_opportunity"
+          : /科研|课题|项目申报|论文/.test(query)
+            ? "academic_research"
+            : /通知|公告|停水|停电|闭馆/.test(query)
+              ? "campus_notice"
+              : undefined;
   // Feedback about the previous answer must not become a new search keyword;
   // otherwise campus context from the resolved follow-up query decides the act.
   const messageAct = conversationAct(message);
@@ -129,7 +144,15 @@ export function contentIntent(
   // the FTS keywords or the exact-name match disappears.
   const RETRIEVAL_LEAD =
     /^(?:请|帮我|我想|想|要|了解一下|了解下|了解|介绍一下|介绍下|介绍|说说|讲讲|查一下|查下|查查|搜一下|搜下|搜搜|看看|看下)\s*/;
-  const coreQuery = query.replace(RETRIEVAL_LEAD, "").trim() || query;
+  const coreQuery =
+    query
+      .replace(RETRIEVAL_LEAD, "")
+      .replace(/^广外(?=法学院|学院|大学|校区)/, " ")
+      .replace(/广东外语外贸大学/g, " ")
+      .replace(/的/g, " ")
+      .replace(/[，,。！!？?；;：:]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim() || query;
   // Discovery phrasing ("曾经/最近/有什么/大型") dilutes FTS recall; keep the
   // original for the prompt and citations, retrieve with the core topic.
   const retrievalQuery = discovery
@@ -160,5 +183,6 @@ export function contentIntent(
     queryPlan: buildQueryPlan(query, timeWindow),
     act,
     answerRequirement,
+    radarCategory,
   };
 }

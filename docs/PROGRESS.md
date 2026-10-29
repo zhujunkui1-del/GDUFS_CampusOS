@@ -1277,3 +1277,11 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 同时修正一个过时契约：`你是一只大肥鱼` 原测试要求「拒绝且不请求模型」，与交接文档要求的自然接梗冲突。现改为普通闲聊：不调用检索、按大肥鱼人格回答；测试同步改名并断言 `requests=1`、无 `tool.started`。
 
 真实复测：`秋之声`、`了解下秋之声` 均 `HTTP 200`、`answerMode=model`，能按英语教育学院/中文学院/西语学院分别总结并附 `[n]`，不再出现「只负责广外校园」。全量 699 项 687 通过/12 项既有失败；typecheck 0；`npm run build` 0；Preview 版本 `3c0dc555-42df-476b-82a5-abd7ba5244db`。
+
+### 2026-10-29 第十三轮：雷达标签路由、口语前缀与「最近通知」时间窗
+
+负责人从校园雷达分别按「秋之声」「法学院」筛选后提问，发现 Agent 对雷达里明明存在的文章仍回「没有检索到正文信息」，并要求让助理按雷达业务标签（比赛→竞赛、就业→升学就业、XX→最近相关资讯/公告）检索。根因是三个通用问题叠加：`RETRIEVAL_LEAD` 只去掉了「了解下」，`的` 仍留在检索词里；`buildQueryPlan` 把「了解」等泛词当必经修饰词；`supplementPolicy`/`assessEvidence` 使用整句 `content.query`，导致 `queryRelevance` 把所有候选判成不相关，证据门禁随即降级为固定话术。
+
+修复：`content-intent.ts` 统一剥离「了解下/帮我看看/我想了解」等口语前缀与结构性「的」，`广外` 只在后接法学院/学院/大学/校区时归一化，保留「广外图书馆」这类专名；新增 `radarCategory`，把比赛/竞赛映射为 `competition`、就业/招聘为 `education_career`、讲座/论坛为 `lecture`、奖学金为 `scholarship_opportunity`、科研为 `academic_research`、通知/公告为 `campus_notice`，并以 `ContentSearchQuery.category` 锁定雷达分类。`chat.ts` 的证据评估与外部补搜策略都改用归一化后的 `retrievalQuery`，不再拿整句口语去算相关度。`time-window.ts` 为「最近/近期 + 通知/公告/资讯/新闻/消息」增加 30 天发布窗口，避免「最近的校园通知」被当成无时间限制的 FTS 查询而返回几个月前的旧通知。
+
+真实复测：`了解下广外法学院的比赛` 与 `广外法学院的比赛` 均 `answerMode=model`、`state=supported`，按党史知识竞赛与调研大赛分点；`广外有什么奖学金` 为 model；`秋之声` 为 model；`最近的校园通知` 返回 2026-10-01 至 10-09 的通知；`广外图书馆借阅规则是什么` 保持专名不被截断。全量 701 项 689 通过/12 项既有失败；typecheck 0；Preview `84c09d49-369e-42fa-8b41-b281b75b933b`。

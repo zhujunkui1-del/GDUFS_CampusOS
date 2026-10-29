@@ -87,11 +87,19 @@ export function contentReadPlan(
   needSupplement: () => boolean,
   retrievalQuery = query,
   hasUsableEvidence: () => boolean = () => false,
+  radarCategory?: string,
 ): PlannedRead[] {
   const external = publicQuery(query);
+  const inputFor = (name: ContentTool, text: string) => ({
+    query: text,
+    limit: 3,
+    ...(name === "search_campus_events" && radarCategory
+      ? { category: radarCategory }
+      : {}),
+  });
   const primary: PlannedRead[] = tools.map((name) => ({
     name,
-    input: { query: retrievalQuery, limit: 3 },
+    input: inputFor(name, retrievalQuery),
   }));
   // Same entity, different wording: read the official alias before concluding
   // that no body exists. Each variant is skipped once a usable body is found.
@@ -99,7 +107,7 @@ export function contentReadPlan(
     (variant) =>
       tools.map((name) => ({
         name,
-        input: { query: variant, limit: 3 },
+        input: inputFor(name, variant),
         when: () => !hasUsableEvidence(),
       })),
   );

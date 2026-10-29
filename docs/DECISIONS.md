@@ -877,3 +877,11 @@ FTS5仍是唯一权威召回，向量只作补充通道。索引`campusos-chunks
 口语前缀「了解下/介绍一下」在进入 FTS 前剥离，避免整句当成一个不存在的关键词；这属于通用查询归一化，不是某个问句的答案模板。角色扮演句（如「你是一只大肥鱼」）归为闲聊并由 Persona 回答，不再以“无关”拒绝，也不再送去外部搜索。
 
 验证：`input-gate.test.ts` 覆盖秋之声/了解下秋之声；`conversation-routing.test.ts` 断言事件路由与 `retrievalQuery=秋之声`；`conversation-flow.test.ts` 断言角色扮演不调工具、模型正常回答。线上两条问句均为 `answerMode=model`；全量 699 项 687 通过、12 项既有失败；Preview `3c0dc555-42df-476b-82a5-abd7ba5244db`。
+
+## D-103｜雷达标签即检索分类，口语前缀与「最近」窗口走通用归一化（2026-10-29）
+
+校园雷达的分类（竞赛、讲座、升学就业、奖学金、学术科研、校园通知）是产品自己的业务标签，用户按标签筛选后再问「了解下法学院的比赛」，助理必须沿用这个分类，而不是把整句丢给 FTS。`content-intent.ts` 因此增加 `radarCategory`，由问句中的类别词映射到 `competition`/`education_career`/`lecture`/`scholarship_opportunity`/`academic_research`/`campus_notice`，再作为 `ContentSearchQuery.category` 下推到检索；这不是给某个学院写分支。
+
+同时修正两个通用归一化问题：礼貌前缀（了解下/帮我看看/我想了解）和结构性「的」在进入检索前剥离，但「广外图书馆」这类专名保留「广外」；「最近/近期 + 通知/公告/资讯/新闻/消息」解析为 30 天发布窗口，而不是无时间限制检索，也不是活动发生窗口。证据评估与外部补搜统一使用归一化后的 `retrievalQuery`，避免「了解」这类泛词把真实候选全部判为不相关后触发固定拒答。
+
+验证：`conversation-routing.test.ts` 断言法学院比赛锁定 `competition` 且检索词为「法学院 比赛」；`retrieval-query-plan.test.ts` 断言最近通知窗口为 30 天且 `role=publication`；`assistant-feedback.test.ts` 保留「广外图书馆借阅规则是什么」原词。线上五条问句均为 `answerMode=model`；全量 701 项 689 通过、12 项既有失败；Preview `84c09d49-369e-42fa-8b41-b281b75b933b`。

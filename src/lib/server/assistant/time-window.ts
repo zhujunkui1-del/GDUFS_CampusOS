@@ -28,6 +28,12 @@ export function requestTimeWindow(
     const monday =
       -((new Date(day).getUTCDay() + 6) % 7) + (/下周/.test(query) ? 7 : 0);
     range = [at(monday), at(monday + 6)];
+  } else if (
+    /最近|近期/.test(query) &&
+    /通知|公告|资讯|新闻|动态|消息/.test(query)
+  ) {
+    // "最近的校园通知" means a recent publication window, not an event window.
+    range = [at(-29), today];
   } else if (/今天|今日/.test(query)) range = [today, today];
   else if (/下个月/.test(query)) {
     const d = new Date(day);
@@ -41,7 +47,10 @@ export function requestTimeWindow(
     ];
   }
   if (!range) return;
-  const news = /趣事|有趣|新闻|动态|分享|发生.{0,10}(?:事|什么)/.test(query);
+  const news =
+    /趣事|有趣|新闻|动态|分享|通知|公告|资讯|消息|发生.{0,10}(?:事|什么)/.test(
+      query,
+    );
   if (news && range[1] > today && !/下周|下个月/.test(query)) range[1] = today;
   return {
     after: range[0],

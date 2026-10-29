@@ -298,7 +298,7 @@ export async function chatResponse(request: Request) {
     );
     scopedRoutes.requireRun(runId);
     const contentDone = new Set<ContentTool>();
-    const supplementPolicy = externalPolicy(content.query);
+    const supplementPolicy = externalPolicy(content.retrievalQuery || content.query);
     const contentResults: ContentSearchResult[] = [];
     let externalDone = false;
     let evidenceGateUsed = false;
@@ -742,7 +742,7 @@ export async function chatResponse(request: Request) {
           evidenceGateUsed,
           publicationFallbackUsed,
           evidenceAssessment: content.active
-            ? assessEvidence(content.query, contentResults, {
+            ? assessEvidence(content.retrievalQuery || content.query, contentResults, {
                 officialOnly: supplementPolicy.officialOnly,
               })
             : undefined,
@@ -809,7 +809,7 @@ export async function chatResponse(request: Request) {
               contentDone.add(name);
               contentResults.push(data);
               contentMetrics.push({ skill: name, ...data.metrics });
-              const relevancePlan = buildQueryPlan(content.query);
+              const relevancePlan = buildQueryPlan(content.retrievalQuery || content.query);
               for (const h of data.hits) {
                 // Retrieved candidates are ranked, not guaranteed on-topic. Passing
                 // an unrelated article as evidence makes the model list it when the
@@ -1004,7 +1004,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                 history.messages,
               ).tone === "daily";
             const hasUsableBody = () => {
-              const plan = buildQueryPlan(content.query);
+              const plan = buildQueryPlan(content.retrievalQuery || content.query);
               return contentResults.some((result) =>
                 result.hits.some(
                   (hit) =>
@@ -1062,6 +1062,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                           supplementRequired(supplementPolicy, contentResults),
                         content.retrievalQuery,
                         hasUsableBody,
+                        content.radarCategory,
                       ),
                       afterInitialReads: () => {
                         finalPhase = true;
@@ -1187,7 +1188,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         })),
                         metrics: undefined,
                         evidenceAssessment: assessEvidence(
-                          content.query,
+                          content.retrievalQuery || content.query,
                           [data],
                           { officialOnly: supplementPolicy.officialOnly },
                         ),
