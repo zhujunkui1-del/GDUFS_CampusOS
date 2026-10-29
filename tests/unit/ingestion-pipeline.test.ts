@@ -318,8 +318,11 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
     });
     expect(c.normalize(parsed, url, "excerpt_and_link").body.length).toBe(500);
     expect(c.normalize(parsed, url, "licensed_full_text").body).toBe(
-      parsed.bodyText,
+      parsed.bodyHtml,
     );
+    expect(
+      c.normalize(parsed, url, "licensed_full_text").bodyFormat,
+    ).toBe("reading_html");
   });
   it("observes an old URL without creating an article and does not refetch its detail on the next run", async () => {
     const f = await setup("metadata_only", true);
@@ -926,6 +929,9 @@ describe("independent site parsing and safety", () => {
     ).toEqual({
       urls: [p.origin + "/info/1056/1.htm"],
       nextPage: p.origin + "/index/tzgg/37.htm",
+      dates: [{ url: p.origin + "/info/1056/1.htm", publishedAt: null }],
+      undatedUrls: [p.origin + "/info/1056/1.htm"],
+      allDatedBeforeCutoff: false,
     });
   });
 });

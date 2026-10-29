@@ -962,3 +962,7 @@ FTS5仍是唯一权威召回，向量只作补充通道。索引`campusos-chunks
 尝试把显式 `d.radar_category/knowledge_category` 提到视图优先级最高，会反向破坏「自动分析 unknown 覆盖旧 legacy 分类」等既有契约。因此撤销全局视图改动，只在元数据自动分类时把 `prepareContentWrite` 的 `manualPlacement` 置真，让既有 `document_classification_overrides` 覆盖行表达「管理员/导入器显式分类」；正文自动分类仍不写覆盖行。
 
 另外 `saveEngineSettings` 原来无条件拒绝任何 `earliestImportDay` 变化，与测试和真实操作冲突；改为仅在 `confirmImportCutoff=false` 时拒绝，已确认的截止时间调整允许落库。真实验收：Preview `0df10ffa` 的最近列表与长标题文章均通过；全量 712/717；文章回答自我否定句由输出后置清洗器兜底。
+
+## D-112｜测试按当前契约对齐，不删除失败用例（2026-10-30）
+
+`licensed_full_text` 已统一落 `reading_html`，发现结果新增 `dates/undatedUrls/allDatedBeforeCutoff` 字段；对应单元测试按当前 API 契约更新断言，断言正文格式而不是旧 `bodyText`。retention 的 2 项 `CONSOLE_STALE` 是真实保护链路问题，保留失败状态、不删除、不 skip；后续应继续缩小 `protection` 批量语句中触发 stale 的语句。

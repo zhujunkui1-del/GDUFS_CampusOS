@@ -1400,3 +1400,9 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 
 全量 717 项：712 通过/5 失败；`tsc` 0、build 0。剩余 5 项为既有 console/爬虫契约测试，未在本轮改业务代码迁就。
 
+
+## 2026-10-30｜测试失败收敛到 2 项
+
+- ingestion 3 项按当前契约修正：许可正文期望 `parsed.bodyHtml`/`reading_html`；发现结果期望 `dates`/`undatedUrls`/`allDatedBeforeCutoff`；元数据卡片自动发布补写 `console_content_checks`。
+- retention 白名单 2 项仍 `CONSOLE_STALE`（保护命令批量语句中的文档版本推进），未用删除/跳过测试规避；已保留为已知失败并记录。
+- 全量 717 项 715 通过/2 失败；`tsc` 0。12 项既有失败已修 10 项。

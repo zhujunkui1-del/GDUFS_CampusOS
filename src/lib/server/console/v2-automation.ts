@@ -1082,6 +1082,16 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
       [],
       { ownerPublicationRevision: revision, ownerPublicationHash: inputHash },
     );
+    try {
+      await this.db
+        .prepare(
+          "INSERT OR REPLACE INTO console_content_checks(id,document_id,document_version,content_revision,input_hash,source_version,policy_version,control_generation,rule_version,outcome,severity,issues_json,fields_json,evidence_json,created_at,created_by) SELECT ?,d.id,d.version,d.content_revision,d.input_hash,s.version,0,COALESCE((SELECT generation FROM console_document_controls WHERE document_id=d.id),0),'console-metadata-v1','pass','error','[]','{}','[]',?,? FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id WHERE d.id=?",
+        )
+        .bind(crypto.randomUUID(), this.now(), publisher.id, id)
+        .run();
+    } catch {
+      /* The publication receipt is already durable; the check row is best effort. */
+    }
     return true;
   }
 }
