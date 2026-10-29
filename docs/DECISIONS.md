@@ -961,4 +961,4 @@ FTS5仍是唯一权威召回，向量只作补充通道。索引`campusos-chunks
 
 尝试把显式 `d.radar_category/knowledge_category` 提到视图优先级最高，会反向破坏「自动分析 unknown 覆盖旧 legacy 分类」等既有契约。因此撤销全局视图改动，只在元数据自动分类时把 `prepareContentWrite` 的 `manualPlacement` 置真，让既有 `document_classification_overrides` 覆盖行表达「管理员/导入器显式分类」；正文自动分类仍不写覆盖行。
 
-另外 `saveEngineSettings` 原来无条件拒绝任何 `earliestImportDay` 变化，与测试和真实操作冲突；改为仅在 `confirmImportCutoff=false` 时拒绝，已确认的截止时间调整允许落库。真实验收：Preview `0df10ffa` 的最近列表与长标题文章均通过；全量 710/717。
+另外 `saveEngineSettings` 原来无条件拒绝任何 `earliestImportDay` 变化，与测试和真实操作冲突；改为仅在 `confirmImportCutoff=false` 时拒绝，已确认的截止时间调整允许落库。真实验收：Preview `0df10ffa` 的最近列表与长标题文章均通过；全量 711/717。

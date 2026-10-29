@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { consoleV2Fixture, sourceInput, actor } from "../fixtures/console-v2";
+import {
+  consoleV2Fixture,
+  sourceInput,
+  confirmed,
+  actor,
+} from "../fixtures/console-v2";
 import { ConsoleRetentionStore } from "@/lib/server/console/v2-retention";
 import { ConsoleSyncStore } from "@/lib/server/console/v2-sync";
 const cmd = (expectedVersion: number) => ({
@@ -110,7 +115,9 @@ describe("Console administrator simplification", () => {
     const f = await consoleV2Fixture();
     try {
       const store = new ConsoleRetentionStore(f.db, actor),
-        s = await store.createGovernedSource(sourceInput());
+        s = await store.createGovernedSource(
+          sourceInput({ governance: confirmed }),
+        );
       await store.enableSource(s.id, { ...cmd(1), enabled: true });
       const item = {
         title: "隔离公告",

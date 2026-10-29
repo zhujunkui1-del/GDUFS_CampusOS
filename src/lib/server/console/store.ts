@@ -617,7 +617,17 @@ export class ConsoleStore {
         rawPlaceName: e.raw_place_name ? String(e.raw_place_name) : null,
         verificationStatus: String(e.verification_status),
       })),
-      versions: [],
+      versions: (
+        await this.db
+          .prepare(
+            "SELECT version,created_at FROM console_content_versions WHERE document_id=? ORDER BY version DESC LIMIT 50",
+          )
+          .bind(id)
+          .all<{ version: number; created_at: string }>()
+      ).results.map((v) => ({
+        version: Number(v.version),
+        createdAt: String(v.created_at),
+      })),
     };
   }
   protected snapshot(id: string) {
