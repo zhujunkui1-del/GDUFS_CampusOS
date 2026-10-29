@@ -265,9 +265,10 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
  WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
  AND (d.radar_category=? OR d.knowledge_category=?)
  AND d.published_at IS NOT NULL
+${q.publishedBefore ? " AND d.published_at < ?" : ""}
  AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
  ORDER BY d.published_at DESC LIMIT 80`,
-        [q.category, q.category],
+        q.publishedBefore ? [q.category, q.category, q.publishedBefore] : [q.category, q.category],
       );
       const recentIds = recentDocs.results.map((r) => r.id);
       recentDocCount = recentIds.length;

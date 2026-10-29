@@ -90,6 +90,47 @@ it("orders a recent radar-tag request by publication time, not lexical score", (
   });
 });
 
+it("pages through a recent category list when the user asks for more", () => {
+  const history = [
+    {
+      id: "u1",
+      role: "user" as const,
+      text: "最近有什么竞赛吗",
+      cards: [],
+      createdAt: 1,
+    },
+    {
+      id: "a1",
+      role: "assistant" as const,
+      text: "最近有秋之声、党史知识竞赛。",
+      cards: [],
+      createdAt: 2,
+    },
+  ];
+  const intent = contentIntent("还有吗", history);
+  expect(intent.discoveryFollowup).toBe(true);
+  expect(intent.recentDiscovery).toBe(true);
+  expect(intent.radarCategory).toBe("competition");
+  expect(intent.retrievalQuery).toBe("竞赛");
+  const plan = contentReadPlan(
+    ["search_campus_events"],
+    intent.query,
+    externalPolicy(intent.query),
+    () => false,
+    intent.retrievalQuery,
+    () => false,
+    intent.radarCategory,
+    intent.recentDiscovery,
+    intent.discoveryFollowup,
+    "2026-10-28",
+  );
+  expect(plan[0]?.input).toMatchObject({
+    sort: "published_desc",
+    limit: 4,
+    publishedBefore: "2026-10-28",
+  });
+});
+
 it("locks an event search to the radar category the user named", () => {
   const intent = contentIntent("了解下广外法学院的比赛");
   expect(intent.retrievalQuery).toBe("法学院 比赛");

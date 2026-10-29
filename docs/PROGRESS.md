@@ -1328,3 +1328,5 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 - `最近有什么讲座吗` → model/supported，按 10-29 志愿论坛、10-28 审计研讨会等发布时间排序。
 
 全量 705 项 693 通过/12 项既有失败；`tsc` 0；`npm run build` 0。遗留：计算机类查询的 `evidenceAssessment.state` 仍可能报 `off_topic`（答案本身为 model 且可用），评估器与检索层主题词尚未完全同源。
+
+翻页追问修正（Preview `145af563-9b12-46a5-a9d7-ef5830e0f96e`）：首次列完后用户问「还有吗」，此前会重复上一轮条目。现在 `chat.ts` 从上一轮 assistant 文本解析最旧发布日期作为游标，`read-plan` 以 `publishedBefore` 传给检索，`retriever.ts` 在最近分类分支按 `published_at < ?` 过滤；`EventSearchInputSchema` 的 `limit` 上限由继承的 4 提到 6；`content-prompt.ts` 要求翻页只列上一轮未出现的文章。真实复测：先问「最近有什么竞赛吗」再问「还有吗」，第二轮返回 10-27 调研大赛、10-24 校园 AI 智能体大赛，不再重复 10-28 三条。全量 706 项 694 通过/12 项既有失败；`tsc` 0；`npm run build` 0。

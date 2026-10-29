@@ -77,8 +77,29 @@ export function contentIntent(
       if (!isFollowup(turn.text) || topic.length === 4) break;
     }
   const previous = topic.join("；追问：");
+  // "还有吗/再找几个" is a page-through of the previous recent-category list,
+  // not a new search. Reuse the previous discovery query so the radar category
+  // and recency intent survive, and ask the retriever for a larger page.
+  const discoveryFollowup =
+    /^(?:还有|还有吗|还有别的|还有其他的?|再找|继续|后面的|其他|别的|换一批|更多|再多)/.test(
+      message.trim(),
+    ) && !explicitPlaceRequest;
+  const previousDiscovery = discoveryFollowup
+    ? [...history].reverse().find(
+        (turn) =>
+          turn.role === "user" &&
+          /最近|近期|最新/.test(turn.text) &&
+          /竞赛|比赛|大赛|讲座|讲坛|论坛|沙龙|招聘|宣讲|通知|公告|就业|奖学金|科研/.test(
+            turn.text,
+          ),
+      )
+    : undefined;
   const query = campusFoodQuery(
-    (previous ? previous + "；追问：" : "") + message,
+    (previousDiscovery
+      ? previousDiscovery.text + "；再找更多；"
+      : previous
+        ? previous + "；追问："
+        : "") + message,
   );
   // A new explicit time constraint wins over a relative date in previous turns.
   const timeWindow =
@@ -173,10 +194,10 @@ export function contentIntent(
   const retrievalQuery = discovery
     ? query
         .replace(
-          /举[几\d]+[个位]?|曾经|最近|近期|大型|重要|有哪些|有什么|有没有|哪些|几个|几场|几篇|可报名|能报名|报名|查询|的|时间段|或|与|吗|呢|呀|请|帮我/g,
+          /举[几\d]+[个位]?|曾经|最近|近期|大型|重要|有哪些|有什么|有没有|哪些|几个|几场|几篇|可报名|能报名|报名|查询|还有|别的|其他|更多|再找|继续|换一批|后面的|的|时间段|或|与|吗|呢|呀|请|帮我/g,
           " ",
         )
-        .replace(/[？?。！!，,]/g, " ")
+        .replace(/[？?。！!，,；;]/g, " ")
         .replace(/\s+/g, " ")
         .replace(/^\s*的+/, "")
         .replace(/体育(?:比赛|赛事)/g, "体育 比赛")
@@ -200,5 +221,6 @@ export function contentIntent(
     answerRequirement,
     radarCategory,
     recentDiscovery,
+    discoveryFollowup: !!previousDiscovery,
   };
 }

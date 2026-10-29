@@ -315,6 +315,16 @@ export async function chatResponse(request: Request) {
     const evidence = new Map<string, EvidenceHit>();
     const contentMetrics: unknown[] = [];
     const articlePlaces = new Map<string, { placeId: string; name: string }>();
+function recentCursor(previous: { role: string; content: string }[]): string | undefined {
+  const last = [...previous].reverse().find((m) => m.role === "assistant");
+  if (!last) return undefined;
+  const dates: string[] = [];
+  for (const m of last.content.matchAll(/(20\d{2})-(\d{2})-(\d{2})/g)) dates.push(`${m[1]}-${m[2]}-${m[3]}`);
+  for (const m of last.content.matchAll(/(\d{1,2})月(\d{1,2})日/g))
+    dates.push(`2026-${m[1].padStart(2, "0")}-${m[2].padStart(2, "0")}`);
+  dates.sort();
+  return dates[0];
+}
     const previous = history.messages
       .map((message) => ({
         role: message.role,
@@ -1084,6 +1094,8 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         hasUsableBody,
                         content.radarCategory,
                         content.recentDiscovery,
+                        content.discoveryFollowup,
+                        content.discoveryFollowup ? recentCursor(previous) : undefined,
                       ),
                       afterInitialReads: () => {
                         finalPhase = true;

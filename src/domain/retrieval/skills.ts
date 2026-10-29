@@ -10,6 +10,7 @@ export const KnowledgeSearchInputSchema = RetrievalQuerySchema.omit({
   .extend({ limit: z.number().int().min(1).max(4).default(3) })
   .strict();
 export const EventSearchInputSchema = KnowledgeSearchInputSchema.extend({
+  limit: z.number().int().min(1).max(6).default(4),
   category: RadarCategorySchema.optional(),
   after: z.iso.date().optional(),
   before: z.iso.date().optional(),
