@@ -31,7 +31,7 @@ it("does not present school-wide appointments as a confirmed south-campus roster
   expect(result).toContain("尚未核实");
   expect(result).not.toContain("主要有以下几位");
   expect(result).toContain("张甲");
-  expect(result).toContain("[来源1]");
+  expect(result).toContain("[1]");
 });
 it("preserves already qualified rosters and self-contained identity answers", () => {
   const qualified = "尚未核实南校名单，只能提供学校层面的资料。";
@@ -56,6 +56,6 @@ it("uses verified source wording instead of a model's unsupported department gro
     ],
   );
   expect(result).toContain("张乙");
-  expect(result).toContain("[来源7]");
+  expect(result).toContain("[7]");
   expect(result).not.toContain("法学院首席专家");
 });

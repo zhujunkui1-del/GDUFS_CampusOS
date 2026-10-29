@@ -114,6 +114,8 @@ it("asks for a numbered, direct answer instead of an excerpt frame", () => {
   );
   expect(instructions).toContain("1. 2. 3.");
   expect(instructions).toContain("不用“已找到相关原文”");
+  expect(instructions).toContain("正文绝对不要写标题、URL");
+  expect(instructions).not.toContain("回答末尾写“来源：”");
 });
 it("retrieves discovery questions with the core topic instead of the whole phrase", () => {
   expect(
@@ -167,8 +169,8 @@ it("renders one extractive roster list instead of generated prose", () => {
   expect(answer).toContain("本鱼按原文名单页整理");
   expect(answer).toContain("1. 唐凯[1]");
   expect(answer).toContain("6. 于斌斌[1]");
-  expect(answer).toContain("来源：");
-  expect(answer).toContain("https://jingmao.gdufs.edu.cn/szdw/ysxz.htm");
+  expect(answer).not.toContain("来源：");
+  expect(answer).not.toContain("https://jingmao.gdufs.edu.cn/szdw/ysxz.htm");
   expect(rosterEvidenceAnswer([], true)).toBeUndefined();
 });
 
@@ -192,3 +194,9 @@ it("detects and strips text-mode tool-call leakage", () => {
   ).toBe(true);
 });
 
+
+it("treats an Arabic-numbered roster request as a roster question", () => {
+  expect(externalPolicy("请举3个广外的云山学者").needsRoster).toBe(true);
+  expect(externalPolicy("列出两位广外的教授").needsRoster).toBe(true);
+  expect(externalPolicy("介绍这个学者").needsRoster).toBe(false);
+});

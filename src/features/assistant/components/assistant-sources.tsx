@@ -25,7 +25,9 @@ export function AssistantSources({
       : [],
   );
   const referenced = new Set(
-    [...(text || "").matchAll(/\[来源\s*(\d+)\s*\]/g)].map((m) => Number(m[1])),
+    [...(text || "").matchAll(/\[(?:来源\s*)?(\d+)\]/g)].map((m) =>
+      Number(m[1]),
+    ),
   );
   const cited = candidates.filter((source) => referenced.has(source.number));
   const sources = cited.length ? cited : candidates;

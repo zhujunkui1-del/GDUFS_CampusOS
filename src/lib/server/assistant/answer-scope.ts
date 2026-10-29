@@ -7,7 +7,8 @@ export function removeUnsupportedPersonnelCampuses(
   excerpts: string[],
 ) {
   const supported = (value: string) => {
-    const normalize = (s: string) => s.replace(/\[来源\d+\]|[*#\s]/g, "");
+    const normalize = (s: string) =>
+      s.replace(/\[(?:来源\s*)?\d+\]|[*#\s]/g, "");
     const claim = normalize(value);
     return (
       claim.length > 5 && excerpts.some((e) => normalize(e).includes(claim))
@@ -86,7 +87,7 @@ export function qualifyCampusRosterAnswer(
             const start =
               source.snippet.length <= 40 ? 0 : Math.max(0, anchor - 30);
             const quote = source.snippet.slice(start, start + 40);
-            return `- ${source.title}[来源${source.citation}]\n  原文节选：“${start ? "…" : ""}${quote}${start + 40 < source.snippet.length ? "…" : ""}”`;
+            return `- ${source.title}[${source.citation}]\n  原文节选：“${start ? "…" : ""}${quote}${start + 40 < source.snippet.length ? "…" : ""}”`;
           })
           .join("\n\n")
       );

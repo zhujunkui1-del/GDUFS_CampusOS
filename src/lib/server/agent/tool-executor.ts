@@ -61,6 +61,11 @@ export class ToolExecutor {
         if (rejectAbort) signal.removeEventListener("abort", rejectAbort);
       }
     } catch (error) {
+      if (!(error instanceof ApiError))
+        console.error(
+          "[tool] " + call.function.name + " failed:",
+          error instanceof Error ? error.message : String(error),
+        );
       const controlled = context.signal?.aborted
         ? new ApiError("CANCELLED", "已停止执行。")
         : error instanceof ApiError && error.code in ERROR_STATUS

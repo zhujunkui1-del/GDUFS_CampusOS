@@ -25,7 +25,7 @@ it("replaces a valid numbered citation with a small linked source label", () => 
   const { document } = parseHTML(html);
   const sup = document.querySelector("sup");
   expect(sup?.className).toBe("assistant-citation");
-  expect(sup?.textContent).toBe("【来源】");
+  expect(sup?.textContent).toBe("[1]");
   expect(sup?.querySelector("a")?.getAttribute("href")).toBe(
     source.originalUrl,
   );

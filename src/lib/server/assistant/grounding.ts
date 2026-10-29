@@ -41,7 +41,7 @@ export function publicationDateFallback(
       .slice(0, 3)
       .map(
         (s) =>
-          `- 发布于${s.publishedAt ? chinaDay(s.publishedAt) || "日期待确认" : "日期待确认"}：${s.title}[来源${s.citation}]`,
+          `- 发布于${s.publishedAt ? chinaDay(s.publishedAt) || "日期待确认" : "日期待确认"}：${s.title}[${s.citation}]`,
       )
       .join("\n")
   );

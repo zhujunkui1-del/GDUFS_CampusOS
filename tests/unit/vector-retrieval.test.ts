@@ -82,3 +82,25 @@ describe("semantic recall lane", () => {
     expect(backfillFlag({ VECTOR_BACKFILL: "true" })).toBe(true);
   });
 });
+
+describe("retrieval metrics contract", () => {
+  it("accepts keyword, vector and structural lanes together", async () => {
+    const { RetrievalMetricsSchema } = await import(
+      "@/domain/retrieval/contracts"
+    );
+    const parsed = RetrievalMetricsSchema.safeParse({
+      rowsRead: 0,
+      rowsWritten: 0,
+      queries: 3,
+      durationMs: 1,
+      candidateChunks: 3,
+      usageAvailable: false,
+      recallLanes: [
+        { name: "fts", limit: 60, candidates: 2 },
+        { name: "vector", limit: 60, candidates: 1 },
+        { name: "semantic", limit: 24, candidates: 1 },
+      ],
+    });
+    expect(parsed.success).toBe(true);
+  });
+});

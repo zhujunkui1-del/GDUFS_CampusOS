@@ -108,7 +108,7 @@ const RECRUIT_TITLE = /招聘|诚聘|招贤|招生|简章|启事|公告|通知/;
 export function rosterEvidenceAnswer(cards: AssistantCard[], playful = false) {
   const names: { name: string; source: number }[] = [];
   const seen = new Set<string>();
-  const sources = new Map<number, { title: string; url: string }>();
+
   cards.forEach((card, index) => {
     if (card.kind !== "source" && card.kind !== "external_source") return;
     // Recruitment pages mix benefit terms into name-like runs; they are not rosters.
@@ -131,25 +131,13 @@ export function rosterEvidenceAnswer(cards: AssistantCard[], playful = false) {
       seen.add(name);
       names.push({ name, source: index + 1 });
     }
-    if (
-      names.some((item) => item.source === index + 1) &&
-      !sources.has(index + 1)
-    )
-      sources.set(index + 1, {
-        title: card.title,
-        url: card.originalUrl,
-      });
   });
   if (names.length < 3) return undefined;
   const list = names.slice(0, 24);
   return (
     (playful ? "本鱼按原文名单页整理，去重后是这些：" : "按原文名单页整理：") +
     "\n" +
-    list.map((item, i) => `${i + 1}. ${item.name}[${item.source}]`).join("\n") +
-    "\n\n来源：\n" +
-    [...sources.entries()]
-      .map(([number, source]) => `[${number}] ${source.title} - ${source.url}`)
-      .join("\n")
+    list.map((item, i) => `${i + 1}. ${item.name}[${item.source}]`).join("\n")
   );
 }
 

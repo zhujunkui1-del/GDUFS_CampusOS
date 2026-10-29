@@ -8,6 +8,10 @@ import {
   matchesQueryFocus,
   queryFocus,
 } from "@/lib/retrieval/query-focus";
+
+/** Inline citation marker: `[3]` (preferred) or legacy `[来源3]`. */
+const CITATION = /(\[(?:来源\s*)?\d+\])/g;
+
 export function AssistantMessageText({
   text,
   cards,
@@ -19,11 +23,11 @@ export function AssistantMessageText({
 }) {
   if (containsToolProtocol(text)) return <>{assistantDisplayText(text)}</>;
   const clean = text.replace(/\*\*(.*?)\*\*/g, "$1");
-  const parts = clean.split(/(\[来源\s*\d+\s*\])/g);
+  const parts = clean.split(CITATION);
   return (
     <>
       {parts.map((part, index) => {
-        const matched = /^\[来源\s*(\d+)\s*\]$/.exec(part);
+        const matched = /^\[(?:来源\s*)?(\d+)\]$/.exec(part);
         if (!matched) return part;
         const number = Number(matched[1]),
           source = cards[number - 1];
@@ -49,7 +53,7 @@ export function AssistantMessageText({
               title={source.title}
               aria-label={"来源" + number + "：" + source.title}
             >
-              【来源】
+              [{number}]
             </a>
           </sup>
         );

@@ -1257,3 +1257,13 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 不再把「20 条是否扩大」留作待确认项。`store.ts` 新增 `HISTORY_MESSAGES = 40`、`RETAINED_MESSAGES = 80`：读取与前端恢复上限从 20 条提高到 40 条（20 轮），数据库保留上限 80 条；`chat.ts` 的模型上下文从最近 10 条提高到最近 40 条，仍受 16000 字符预算裁剪。`assistant-store.test.ts` 的有界历史用例改为写入 45 条并断言恢复 40 条、首条为第 6 条。
 
 验证：`assistant-store.test.ts` 11 项全过；`npm run build` 0；Preview 部署 `5a98d35a-471e-4e62-bc6a-7af83028c803`。更长的真实多轮对话质量评估放到固定回归集，不再以「待确认」阻塞。
+
+### 2026-10-29 第十一轮：来源展示、无关结果与三通道契约
+
+负责人指出三处前台问题：正文重复贴出「来源：」标题和 URL、查不到时仍列出模联/计算机设计大赛等无关文章、`[1][2][3]` 不是可点击引用。根因分别是 `content-prompt.ts` 仍要求生成末尾来源清单、`chat.ts` 把全部召回候选塞进 `cards`/证据、前端只识别 `[来源n]` 而服务器输出 `[n]`。
+
+修复：prompt 与 `evidence-answer.ts` 去掉文本来源清单，正文只保留 `[n]`；前端 `assistant-message-text.tsx` 同时识别 `[n]` 与旧 `[来源n]`，渲染为可点击上标并跳原文；`assistant-sources.tsx` 的引用计数同步兼容两种格式。`chat.ts` 入库前用 `queryRelevance` 过滤无关候选，避免「未找到」时把不相关文章交给模型；`query-plan.ts` 增加志愿者主题并丢弃含「或」的残词，使「全运会相关」必须命中「全运会」而不是任意志愿活动。
+
+另修复一个线上工具失败：`retrieval.recallLanes` 契约上限仍是 2，语义通道加入第三条 lane 后 `ContentSearchResultSchema` 解析失败，`广外有哪些食堂`、`宿舍上网` 直接 `UPSTREAM_ERROR`。上限改为 3，并新增三通道契约测试；`tool-executor` 对非 `ApiError` 记录工具名与错误信息，便于下次直接定位。
+
+真实复测：`2026年最近广州或广东有没有全运会相关的志愿者活动` 不再列无关志愿活动，只说明唯一相关报道与缺口；`请举3个广外的云山学者` 触发外部官方补搜并输出抽取式名单（4 人，`[4]` 可点击）；`广外有哪些食堂` 正常回答。全量 698 项 686 通过/12 项既有失败；typecheck 0；Preview `bec4d1ff-c574-4b05-933a-a0bc8a959f5c`。

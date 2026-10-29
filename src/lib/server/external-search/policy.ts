@@ -52,7 +52,9 @@ export function externalPolicy(query: string): ExternalPolicy {
   // is not a list. Official pages are the only place to complete it.
   const needsRoster =
     /学者|教授|老师|院长|校长|专家|名单|人物/.test(query) &&
-    /有哪些|举几|名单|谁|哪几位|介绍一下/.test(query);
+    /有哪些|举\s*(?:\d+|[几])?\s*[个位]|列举|列出|名单|谁|哪几位|介绍一下/.test(
+      query,
+    );
   const events =
     (requestTimeWindow(query) !== undefined || /最近|近期/.test(query)) &&
     /活动|讲座|竞赛|比赛|招聘|申请|报名|趣事|有趣|新闻|动态|分享|发生/.test(

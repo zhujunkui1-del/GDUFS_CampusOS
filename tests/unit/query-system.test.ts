@@ -498,3 +498,22 @@ it("does not turn a missing indexed date, cutoff or capacity into availability",
     ).participation,
   ).toBe("unknown");
 });
+
+it("does not treat an unrelated volunteer post as a match for a named event", () => {
+  const plan = buildQueryPlan(
+    "2026年最近广州或广东有没有全运会相关的志愿者活动",
+  );
+  expect(plan.topics.map((topic) => topic.id)).toContain("volunteer");
+  expect(
+    queryRelevance(plan, {
+      title: "单车猎人暨火苗猎人志愿者招募",
+      snippet: "校园志愿活动",
+    }).relevant,
+  ).toBe(false);
+  expect(
+    queryRelevance(plan, {
+      title: "十五届全运会志愿者招募",
+      snippet: "全运会志愿者报名",
+    }).relevant,
+  ).toBe(true);
+});

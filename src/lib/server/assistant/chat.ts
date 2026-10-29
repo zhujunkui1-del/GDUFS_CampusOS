@@ -451,7 +451,9 @@ export async function chatResponse(request: Request) {
           if (!content.active || content.map || !answerCards().length)
             return undefined;
           const citations = new Set(
-            [...answer.matchAll(/[\[【]来源\s*(\d+)[\]】]/g)].map((m) => +m[1]),
+            [...answer.matchAll(/[\[【](?:来源\s*)?(\d+)[\]】]/g)].map(
+              (m) => +m[1],
+            ),
           );
           const citedDocuments = new Set(
             answerCards().flatMap((c, i) =>
@@ -521,6 +523,8 @@ export async function chatResponse(request: Request) {
           };
         },
         validateFinal: (text) => {
+          if (content.active && /来源\s*[:：]|https?:\/\//.test(text))
+            return "正文不要输出标题、URL 或“来源：”清单；关键事实只用 [n] 标注，具体来源由界面下方展示。";
           if (!mapActionRequested && claimsMapAction(text))
             return "本轮没有执行地图动作，不能声称已标出、定位或放大。只说明地点所在区域，或询问是否要在图上查看。";
           if (
@@ -805,7 +809,12 @@ export async function chatResponse(request: Request) {
               contentDone.add(name);
               contentResults.push(data);
               contentMetrics.push({ skill: name, ...data.metrics });
+              const relevancePlan = buildQueryPlan(content.query);
               for (const h of data.hits) {
+                // Retrieved candidates are ranked, not guaranteed on-topic. Passing
+                // an unrelated article as evidence makes the model list it when the
+                // real answer is "not found".
+                if (!queryRelevance(relevancePlan, h).relevant) continue;
                 const duplicate = [...cards.values()].some(
                   (card) =>
                     (card.kind === "source" ||

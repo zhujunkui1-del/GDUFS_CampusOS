@@ -16,6 +16,10 @@ const concepts = [
   { id: "scholarship", aliases: ["奖学金", "奖助", "学生资助"] },
   { id: "aid", aliases: ["助学金", "助学贷款"] },
   { id: "agreement", aliases: ["就业协议", "三方协议", "签约手续"] },
+  {
+    id: "volunteer",
+    aliases: ["志愿者", "志愿活动", "志愿服务", "志愿招募"],
+  },
   { id: "recruitment", aliases: ["招聘", "招聘会", "宣讲会", "实习"] },
   {
     id: "research",
@@ -192,9 +196,11 @@ export function buildQueryPlan(
   ]
     .filter(
       (t) =>
+        !/或/.test(t) &&
         ![
           "信息",
           "赛事",
+          "活动",
           "方面",
           "帮忙",
           "一下",
