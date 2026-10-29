@@ -84,7 +84,7 @@ export function contentIntent(
   const events =
     requestTimeWindow(query, now) !== undefined ||
     /趣事|校园新闻|校园动态|校园分享|有趣的事情/.test(query) ||
-    /讲座|讲坛|竞赛|比赛|招聘|宣讲|停水|停电|闭馆|通知|公告|活动|书展|展览|项目申报|课题申报|奖助申请|名单公示|报名|截止|近期|最近|今天|这周|本周|下周|下个月|现在.*(?:申请|奖学金)|(?:还能|正在|开放).*(?:申请|报名)|申请.*(?:开放|机会)/.test(
+    /讲座|讲坛|竞赛|比赛|招聘|宣讲|停水|停电|闭馆|通知|公告|活动|书展|展览|项目申报|课题申报|奖助申请|名单公示|报名|截止|近期|最近|今天|这周|本周|下周|下个月|现在.*(?:申请|奖学金)|(?:还能|正在|开放).*(?:申请|报名)|申请.*(?:开放|机会)|之声|歌手|歌唱|合唱|晚会|演出|音乐会|艺术节|文化节|校运会|运动会|辩论|演讲|征文|摄影|设计大赛|创新大赛|挑战杯|评选|开幕式|闭幕式|招新/.test(
       query,
     );
   const map = /(?:地图|定位|路线|导航|在哪里|告诉我.*哪里)/.test(message);
@@ -125,6 +125,11 @@ export function contentIntent(
       ? "advisory"
       : "open";
   const discovery = /有哪些|有什么|举几|举\d|名单|曾经|哪些|谁/.test(query);
+  // “了解下秋之声” asks about 秋之声; the polite lead-in must not become part of
+  // the FTS keywords or the exact-name match disappears.
+  const RETRIEVAL_LEAD =
+    /^(?:请|帮我|我想|想|要|了解一下|了解下|了解|介绍一下|介绍下|介绍|说说|讲讲|查一下|查下|查查|搜一下|搜下|搜搜|看看|看下)\s*/;
+  const coreQuery = query.replace(RETRIEVAL_LEAD, "").trim() || query;
   // Discovery phrasing ("曾经/最近/有什么/大型") dilutes FTS recall; keep the
   // original for the prompt and citations, retrieve with the core topic.
   const retrievalQuery = discovery
@@ -140,7 +145,7 @@ export function contentIntent(
         .replace(/赛事/g, "比赛")
         .trim()
         .slice(-300) || query.slice(-300)
-    : query.slice(-300);
+    : coreQuery.slice(-300);
   return {
     active: search && tools.length > 0,
     tools,

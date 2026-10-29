@@ -15,7 +15,15 @@ const GREETING =
   /^(?:你好|您好|hi|hello|在吗|早上好|中午好|晚上好|早安|晚安)[!！。.,，\s]*$/i;
 
 const MEANINGLESS = /^[\d\s\p{P}\p{S}]+$/u;
+// In a campus app, a bare short phrase is usually a place, event, article or
+// topic the keyword list has not learned yet (e.g. “秋之声”). Refusing it as
+// off-topic is worse than letting the campus retrieval check. Question-like
+// and non-campus wording is still caught by the explicit rules above.
+const BARE_CAMPUS_TOPIC =
+  /^(?:(?:了解|介绍|说说|讲讲|查|搜|看)(?:一下|下)?)?[\u4e00-\u9fa5]{2,10}$/;
 const FOOD = /好吃|吃什么|吃啥|美食|干饭/;
+// Bare foreign landmarks are still clearly outside this campus product.
+const OFF_TOPIC_GEO = /巴黎|埃菲尔|纽约|东京|伦敦|首尔|悉尼|火星|月球/;
 const WEATHER = /天气|气温|下雨|降雨|空气质量|几度/;
 const OTHER_CITY =
   /北京|上海|天津|重庆|南京|武汉|西安|成都|杭州|苏州|深圳|珠海|佛山|东莞|香港|澳门/;
@@ -42,6 +50,8 @@ export function inputGate(
   // Campus dining is the only dining context in this product; a distant city's
   // food question is still unrelated.
   if (FOOD.test(text)) return "campus";
+  if (OFF_TOPIC_GEO.test(text)) return "off_topic";
+  if (BARE_CAMPUS_TOPIC.test(text)) return "campus";
   // A short follow-up after a campus turn keeps the campus context, so an alias
   // such as “门诊部” or “一饭” is not mistaken for an unrelated question.
   const campusContext = history

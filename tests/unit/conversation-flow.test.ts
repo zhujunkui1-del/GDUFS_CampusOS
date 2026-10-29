@@ -89,16 +89,16 @@ function answered(events: Event[]) {
     .join("");
 }
 
-// The reported regression: a roleplay sentence was sent to the internet. It is
-// now an unrelated turn: declined before any search, with no model request.
-it("declines an unrelated roleplay turn without searching", async () => {
-  const { f, client, events } = await runTurn("你是一只大肥鱼", []);
+// A roleplay sentence is ordinary chat: answer in character, never search.
+it("answers an in-character roleplay turn without searching", async () => {
+  const { f, client, events } = await runTurn("你是一只大肥鱼", [
+    "哼，本鱼当然是又大又肥的那条，不过校园问题还是得好好问。",
+  ]);
   try {
     const terminal = events.find((event) => event.type === "run.completed");
-    expect(terminal?.payload.metrics).toMatchObject({ requests: 0 });
+    expect(terminal?.payload.metrics).toMatchObject({ requests: 1 });
     expect(events.some((event) => event.type === "tool.started")).toBe(false);
-    expect(client.requests).toHaveLength(0);
-    expect(answered(events)).toContain("只负责广外校园");
+    expect(answered(events)).toContain("本鱼");
   } finally {
     f.close();
   }

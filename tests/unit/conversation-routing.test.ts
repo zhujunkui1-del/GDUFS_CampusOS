@@ -60,3 +60,10 @@ it("tells a feedback turn to explain the previous answer instead of searching", 
   expect(directInstructions("correction")).toContain("承认问题并修正");
   expect(directInstructions("chitchat")).toContain("通用知识");
 });
+
+it("routes a bare campus event name to event search, not a refusal", () => {
+  const intent = contentIntent("了解下秋之声");
+  expect(intent.active).toBe(true);
+  expect(intent.tools).toEqual(["search_campus_events"]);
+  expect(intent.retrievalQuery).toBe("秋之声");
+});

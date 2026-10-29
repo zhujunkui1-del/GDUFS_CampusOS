@@ -26,6 +26,9 @@ it("classifies every turn before retrieval", () => {
   expect(inputGate("4号门在哪")).toBe("campus");
   expect(inputGate("B8学术报告厅在哪")).toBe("campus");
   expect(inputGate("京东物流在哪")).toBe("campus");
+  // A bare campus event name the fixed keyword list does not know yet.
+  expect(inputGate("秋之声")).toBe("campus");
+  expect(inputGate("了解下秋之声")).toBe("campus");
 });
 
 it("uses fixed replies and never sends blocked or unrelated turns to search", () => {
