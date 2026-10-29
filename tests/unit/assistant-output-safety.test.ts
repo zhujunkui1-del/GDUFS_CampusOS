@@ -112,4 +112,14 @@ it("does not expose self-deprecating retrieval process talk", () => {
       "现有资料能确认部分安排，但未检索到一份完整的政策文件，建议以官网为准。",
     ),
   ).toBe("现有资料能确认部分安排，建议以官方最新通知为准。");
+  expect(
+    stripSelfDeprecation(
+      "需要说明：本轮来源未显示发布方为“广外青年”，也未明确写出“我校”即广外，这两点暂无法确认。",
+    ),
+  ).toBe("");
+  expect(
+    stripSelfDeprecation(
+      "发布方在正文中没有明确写出，本鱼就不替它认领啦。该信息时效性待核实，报名细节建议以校团委最新通知为准 [1]。",
+    ),
+  ).toBe("报名细节建议以校团委最新通知为准 [1]。");
 });

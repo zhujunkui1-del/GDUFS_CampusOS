@@ -1390,7 +1390,7 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 本轮完成：
 - 活动级去重：`activitySignature` 继续折叠「第N届/最佳人气奖/开唱」等，新增 `activityCore` 做包含匹配，解决「专属Livehouse！广外校园歌手大赛」与「广外的专属Livehouse！第29届秋之声校园歌手大赛」同活动不合并；单元测试覆盖。
 - `tests/e2e/assistant-reported-regressions-live.spec.ts` 固化「最近 + 讲座/竞赛/文体活动」：3–5 条、日期倒序、`YYYY-MM-DD 发布｜` 格式、无「没有检索到」；真实浏览器通过。
-- 12 项既有失败收敛到 6 项：修好 6 项——`article-placement` 全部 4 项、console 文档版本列表、简单管理动作契约。剩余 6 项：retention 白名单 2 项、ingestion 元数据卡片/许可正文/发现字段 3 项、query-system 资格 1 项；已记录，不删除测试。
+- 12 项既有失败收敛到 5 项：修好 7 项——`article-placement` 全部 4 项、console 文档版本列表、简单管理动作契约。剩余 5 项：retention 白名单 2 项、ingestion 元数据卡片/许可正文/发现字段 3 项；已记录，不删除测试。
 - 文章回答去掉「发布方未显示/暂无法确认」自我否定；提示词明确未写发布方时直接回答正文内容。
 
 真实验收（Preview `0df10ffa-1d8e-4c91-842f-f3d99602bc07`）：
@@ -1398,5 +1398,5 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 - `帮我找到“2026年志愿服务冬季论坛…（第一轮）”这篇文章` 返回标题/发布日/会议时间/地点/主办方，无自我否定；
 - 超长组合查询不再 500，但会话仍沿用上一轮文章上下文，相关性未解决。
 
-全量 717 项：711 通过/6 失败；`tsc` 0、build 0。剩余 6 项为既有 console/爬虫/检索契约测试，未在本轮改业务代码迁就。
+全量 717 项：712 通过/5 失败；`tsc` 0、build 0。剩余 5 项为既有 console/爬虫契约测试，未在本轮改业务代码迁就。
 
