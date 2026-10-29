@@ -1148,7 +1148,9 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                           if (list) {
                             answerMode = "radar_list";
                             evidenceGateUsed = true;
-                            return list;
+                            return content.multiTopic
+                              ? `这条消息包含多个主题，本鱼先按发布时间列出最新几条校园资讯；想深入某一类，可以指定“竞赛 / 讲座 / 就业 / 通知”等。\n\n${list}`
+                              : list;
                           }
                         }
                         // Roster questions always use one extractive list: no

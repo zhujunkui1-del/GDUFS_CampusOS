@@ -53,6 +53,12 @@ export function contentIntent(
     /(?:带我去|带我走|带我过去|导航到|导航去|怎么去|如何去|怎样去|从.{1,24}到)/.test(
       message,
     );
+  // A long list of unrelated topics is not one radar category. Treating any
+  // single keyword ("竞赛") as the whole request produced a competition-only
+  // answer to a 687-character campus-wide notice question.
+  const multiTopic =
+    message.length > 400 ||
+    (message.match(/、/g)?.length ?? 0) >= 8;
   const isSearchFollowup = (text: string) =>
     /^(?:请|再|帮我)?\s*(?:调用|用|去|通过|到)?\s*(?:小红书|外部搜索|互联网|网上)(?:来|帮我)?(?:搜|搜索|查|查找|找)(?:一下|一遍|看看)?[。！？!？\s]*$/.test(
       text.trim(),
@@ -110,11 +116,12 @@ export function contentIntent(
       query,
     );
   const events =
-    requestTimeWindow(query, now) !== undefined ||
-    /趣事|校园新闻|校园动态|校园分享|有趣的事情/.test(query) ||
-    /讲座|讲坛|竞赛|比赛|招聘|宣讲|停水|停电|闭馆|通知|公告|资讯|新闻|最新|活动|书展|展览|项目申报|课题申报|奖助申请|名单公示|报名|截止|近期|最近|今天|这周|本周|下周|下个月|现在.*(?:申请|奖学金)|(?:还能|正在|开放).*(?:申请|报名)|申请.*(?:开放|机会)|之声|歌手|歌唱|合唱|晚会|演出|音乐会|艺术节|文化节|校运会|运动会|辩论|演讲|征文|摄影|设计大赛|创新大赛|挑战杯|评选|开幕式|闭幕式|招新/.test(
-      query,
-    );
+    !multiTopic &&
+    (requestTimeWindow(query, now) !== undefined ||
+      /趣事|校园新闻|校园动态|校园分享|有趣的事情/.test(query) ||
+      /讲座|讲坛|竞赛|比赛|招聘|宣讲|停水|停电|闭馆|通知|公告|资讯|新闻|最新|活动|书展|展览|项目申报|课题申报|奖助申请|名单公示|报名|截止|近期|最近|今天|这周|本周|下周|下个月|现在.*(?:申请|奖学金)|(?:还能|正在|开放).*(?:申请|报名)|申请.*(?:开放|机会)|之声|歌手|歌唱|合唱|晚会|演出|音乐会|艺术节|文化节|校运会|运动会|辩论|演讲|征文|摄影|设计大赛|创新大赛|挑战杯|评选|开幕式|闭幕式|招新/.test(
+        query,
+      ));
   // "找到这篇文章" is a content lookup, never a map lookup, even though
   // “找到” also appears in place phrasings. The article title is sent to the
   // retriever as a title filter so the exact document can be recovered.
@@ -127,8 +134,10 @@ export function contentIntent(
     );
   // Radar tags are the product's own business categories. Lock the event search
   // to the category the user actually named instead of relying on FTS words.
-  const radarCategory = /比赛|竞赛|大赛|挑战杯|数学建模/.test(query)
-    ? "competition"
+  const radarCategory = multiTopic
+    ? undefined
+    : /比赛|竞赛|大赛|挑战杯|数学建模/.test(query)
+      ? "competition"
     : /就业|招聘|宣讲|校招|求职|实习/.test(query)
       ? "education_career"
       : /讲座|讲坛|论坛|沙龙|学术报告/.test(query)
@@ -146,8 +155,9 @@ export function contentIntent(
   // in that tag, not the best lexical match. The retriever orders these by
   // published_at DESC; older items only appear when more are requested.
   const recentDiscovery =
-    /最近|近期|最新/.test(query) &&
-    (!!radarCategory || /资讯|新闻|动态|消息/.test(query));
+    multiTopic ||
+    (/最近|近期|最新/.test(query) &&
+      (!!radarCategory || /资讯|新闻|动态|消息/.test(query)));
   // Feedback about the previous answer must not become a new search keyword;
   // otherwise campus context from the resolved follow-up query decides the act.
   const messageAct = conversationAct(message);
@@ -161,6 +171,7 @@ export function contentIntent(
     !urgent &&
     !isFeedbackAct(act) &&
     (articleLookup ||
+      recentDiscovery ||
       knowledge ||
       events ||
       policy.needsOfficialVerification ||
@@ -206,8 +217,10 @@ export function contentIntent(
       .trim() || query;
   // Discovery phrasing ("曾经/最近/有什么/大型") dilutes FTS recall; keep the
   // original for the prompt and citations, retrieve with the core topic.
-  const retrievalQuery = discovery || recentDiscovery
-    ? coreQuery
+  const retrievalQuery = multiTopic
+    ? "最新 校园 通知"
+    : discovery || recentDiscovery
+      ? coreQuery
         .replace(
           /举[几\d]+[个位]?|曾经|最近|近期|大型|重要|有哪些|有什么|有没有|哪些|几个|几场|几篇|可报名|能报名|报名|查询|还有|别的|其他|更多|再找|继续|换一批|后面的|情况|信息|方面|内容|活动|的|时间段|或|与|吗|呢|呀|请|帮我/g,
           " ",
@@ -238,6 +251,7 @@ export function contentIntent(
     recentDiscovery,
     articleLookup,
     articleQuery,
+    multiTopic,
     discoveryFollowup: !!previousDiscovery,
   };
 }

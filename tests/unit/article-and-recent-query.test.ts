@@ -62,4 +62,14 @@ describe("recent radar queries keep the topic and drop filler words", () => {
     expect(intent.radarCategory).toBeUndefined();
     expect(intent.tools).toContain("search_campus_events");
   });
+  it("a long multi-topic message is not reduced to its first radar tag", () => {
+    const intent = contentIntent(
+      "请帮我查找广东外语外贸大学最近关于学生校园生活、食堂、宿舍、图书馆、体育场馆、校园活动、竞赛报名、讲座信息、就业招聘、奖学金评定、志愿服务、社团招新、校历安排、校车时刻、校园卡办理、网络服务、快递点、校医院、心理咨询、交换项目、辅修学位、毕业论文、实习实践、创新创业、科研训练、学科竞赛、文化艺术、体育锻炼、安全教育、反诈宣传和节能环保方面的全部最新通知公告并逐条列出原文链接和发布日期，同时说明哪些可以在校园雷达看到、哪些需要去学校官网确认、哪些已经截止。",
+    );
+    expect(intent.multiTopic).toBe(true);
+    expect(intent.radarCategory).toBeUndefined();
+    expect(intent.recentDiscovery).toBe(true);
+    expect(intent.retrievalQuery).toBe("最新 校园 通知");
+    expect(intent.tools).toEqual(["search_campus_knowledge"]);
+  });
 });

@@ -1414,3 +1414,15 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 修复：`ConsoleStore.snapshot()` 与 `ConsoleAutomationStore.snapshot()` 的快照 SELECT 增加 `AND input_hash IS NOT NULL`；已清理文档只推进版本、不写无载荷快照，正常文档行为不变。
 
 验证：`tests/unit/console-v2-retention.test.ts` 7/7 通过；全量 717/717 通过（105 文件）；`tsc` 0、`build` 0。提交见本轮 Git 记录。12 项既有失败清零，未删除或跳过测试。
+
+### 2026-10-30｜超长多主题查询不再被单个雷达标签劫持
+
+负责人用一段 687 字符、重复三遍的校园全主题查询复现：Agent 只抓住「竞赛」，返回「最近广外竞赛」3 条，完全不回答消息里的其他主题。真实现场指标：`answerMode=radar_list`、`radarCategory=competition`、`tools=search_campus_knowledge+search_external_campus_info`。
+
+修复：
+- `content-intent.ts` 增加 `multiTopic`（长度 >400 或 ≥8 个顿号）；多主题时清空 `radarCategory`、强制 `recentDiscovery`、`retrievalQuery` 固定为「最新 校园 通知」，避免长句 FTS 和单个「竞赛」标签决定全问。
+- `content-prompt.ts` 增加多主题规则：只说明范围宽，列最新跨分类资讯，提示可指定下一类，不声称覆盖全部。
+- `chat.ts` 的确定性列表在多主题时前置一句范围说明。
+
+真实验收（Preview `b1bf77cb-53f6-487b-8b86-bf0953fbb197`）：同一 687 字符查询返回「这条消息包含多个主题…」+ 2026-10-29 志愿论坛、10-28 奶蛙、10-26 宣讲 3 条按日期倒序；`answerMode=radar_list`、`tools=search_campus_knowledge`，无 500、无竞赛-only。
+单测新增 `a long multi-topic message is not reduced to its first radar tag`；全量 718/718，`tsc` 0、build 0。
