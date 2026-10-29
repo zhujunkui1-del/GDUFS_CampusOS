@@ -126,6 +126,10 @@ it("retrieves discovery questions with the core topic instead of the whole phras
   expect(recent.retrievalQuery).toBe("讲座");
   expect(recent.radarCategory).toBe("lecture");
   expect(recent.timeWindow?.role).toBe("registration");
+  const recentCompetition = contentIntent("最近有什么计算机相关的竞赛吗");
+  expect(recentCompetition.recentDiscovery).toBe(true);
+  expect(recentCompetition.radarCategory).toBe("competition");
+  expect(recentCompetition.timeWindow).toBeUndefined();
   const map = contentIntent("带我去南苑11栋", [
     { id: "u1", role: "user", text: "2026年的秋之声什么时候举行", cards: [] },
     { id: "a1", role: "assistant", text: "秋之声...", cards: [] },

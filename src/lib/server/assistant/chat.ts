@@ -823,7 +823,15 @@ export async function chatResponse(request: Request) {
                 // Retrieved candidates are ranked, not guaranteed on-topic. Passing
                 // an unrelated article as evidence makes the model list it when the
                 // real answer is "not found".
-                if (!queryRelevance(relevancePlan, h).relevant) continue;
+                // A category-scoped "最近" query already applied the retriever's
+                // subject filter (with synonyms such as 计算机→AI). Re-applying the
+                // literal query terms here dropped exactly the newest AI articles
+                // and left only old ones that happened to contain 计算机.
+                if (
+                  !(content.recentDiscovery && content.radarCategory) &&
+                  !queryRelevance(relevancePlan, h).relevant
+                )
+                  continue;
                 const duplicate = [...cards.values()].some(
                   (card) =>
                     (card.kind === "source" ||
@@ -1075,6 +1083,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         content.retrievalQuery,
                         hasUsableBody,
                         content.radarCategory,
+                        content.recentDiscovery,
                       ),
                       afterInitialReads: () => {
                         finalPhase = true;

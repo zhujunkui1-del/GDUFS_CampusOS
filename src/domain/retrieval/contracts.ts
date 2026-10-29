@@ -8,6 +8,9 @@ export const RetrievalQuerySchema = z
   .object({
     query: z.string().trim().min(1).max(300),
     purpose: z.enum(["knowledge", "events"]).default("knowledge"),
+    // "最近有什么竞赛/讲座" means the newest items in the radar category, not
+    // the best lexical match (which may be a March event).
+    sort: z.enum(["relevance", "published_desc"]).default("relevance"),
     category: z
       .union([RadarCategorySchema, KnowledgeCategorySchema])
       .optional(),

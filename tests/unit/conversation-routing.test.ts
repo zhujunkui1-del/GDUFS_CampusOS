@@ -69,6 +69,27 @@ it("routes a bare campus event name to event search, not a refusal", () => {
   expect(intent.retrievalQuery).toBe("秋之声");
 });
 
+it("orders a recent radar-tag request by publication time, not lexical score", () => {
+  const intent = contentIntent("最近有什么计算机相关的竞赛吗");
+  expect(intent.recentDiscovery).toBe(true);
+  expect(intent.radarCategory).toBe("competition");
+  const plan = contentReadPlan(
+    ["search_campus_events"],
+    "最近有什么计算机相关的竞赛吗",
+    externalPolicy("最近有什么计算机相关的竞赛吗"),
+    () => false,
+    intent.retrievalQuery,
+    () => false,
+    intent.radarCategory,
+    intent.recentDiscovery,
+  );
+  expect(plan[0]?.input).toMatchObject({
+    sort: "published_desc",
+    category: "competition",
+    limit: 4,
+  });
+});
+
 it("locks an event search to the radar category the user named", () => {
   const intent = contentIntent("了解下广外法学院的比赛");
   expect(intent.retrievalQuery).toBe("法学院 比赛");

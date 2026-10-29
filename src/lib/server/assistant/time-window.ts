@@ -33,14 +33,14 @@ export function requestTimeWindow(
     /通知|公告|资讯|新闻|动态|消息/.test(query)
   ) {
     // "最近的校园通知" means a recent publication window, not an event window.
+    // Event discovery ("最近有什么竞赛/讲座") intentionally has no hard window:
+    // the category is sorted by published_at DESC, then older items follow.
     range = [at(-29), today];
-  } else if (
-    /最近|近期/.test(query) &&
-    /讲座|讲坛|论坛|沙龙|竞赛|比赛|招聘|宣讲|活动|报名/.test(query)
-  ) {
-    // "最近有什么讲座/比赛" wants events around today, including upcoming ones;
-    // a past publication window would hide tomorrow's lecture.
-    range = [at(-6), at(30)];
+  } else if (/最近|近期/.test(query) && /报名|申请/.test(query)) {
+    // "最近可报名的讲座" is a registration window: upcoming/open items, not a
+    // publication window. Plain "最近有什么竞赛/讲座" stays windowless so it can
+    // return the newest published items even when the event itself is over.
+    range = [today, at(30)];
   } else if (/今天|今日/.test(query)) range = [today, today];
   else if (/下个月/.test(query)) {
     const d = new Date(day);

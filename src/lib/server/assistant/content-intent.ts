@@ -112,6 +112,10 @@ export function contentIntent(
             : /通知|公告|停水|停电|闭馆/.test(query)
               ? "campus_notice"
               : undefined;
+  // "最近/近期" on a radar category is a recency request: newest publications
+  // in that tag, not the best lexical match. The retriever orders these by
+  // published_at DESC; older items only appear when more are requested.
+  const recentDiscovery = /最近|近期|最新/.test(query) && !!radarCategory;
   // Feedback about the previous answer must not become a new search keyword;
   // otherwise campus context from the resolved follow-up query decides the act.
   const messageAct = conversationAct(message);
@@ -195,5 +199,6 @@ export function contentIntent(
     act,
     answerRequirement,
     radarCategory,
+    recentDiscovery,
   };
 }

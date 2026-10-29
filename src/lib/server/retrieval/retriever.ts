@@ -217,9 +217,106 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       );
       params.push(q.publishedBefore);
     }
+    // The planner is not the only caller: a literal "最近 + 分类" query must
+    // read the category itself even when a model omitted the sort hint.
+    const sortMode =
+      q.sort === "published_desc" || /最近|近期|最新/.test(q.query)
+        ? "published_desc"
+        : q.sort;
+    const terms = keywords(q.query),
+      subjectTerms =
+        sortMode === "published_desc"
+          ? [
+              ...new Set(
+                terms
+                  .map((t) => t.replace(/(?:相关|类)$/, ""))
+                  .filter(
+                    (t) =>
+                      t.length >= 2 &&
+                      !/^(?:竞赛|比赛|大赛|讲座|讲坛|论坛|沙龙|学术沙龙|活动|招聘|宣讲|通知|公告|资讯|新闻|预告|名单|评选|报名|截止|最新|近期|最近|有|什么|吗)$/.test(
+                        t,
+                      ),
+                  )
+                  .flatMap((t) =>
+                    t === "计算机"
+                      ? [t, "人工智能", "AI", "程序设计", "软件", "算法"]
+                      : [t],
+                  ),
+              ),
+            ]
+          : [];
+    const matchesSubject = (text: string) => {
+      const lower = text.toLowerCase();
+      return (
+        !subjectTerms.length ||
+        subjectTerms.some((t) => lower.includes(t.toLowerCase()))
+      );
+    };
+    // "最近 + 雷达分类" must read the tag itself, newest publication first.
+    // FTS relevance would happily return a March event whose body happens to
+    // match "竞赛" better than yesterday's notice, which is not what the user
+    // asked for.
+    let recentChunks: ChunkRow[] = [];
+    let recentDocCount = 0;
+    if (sortMode === "published_desc" && q.category) {
+      const recentDocs = await read<{ id: string; title: string; published_at: string | null }>(
+        `SELECT d.id,d.title,d.published_at FROM knowledge_documents d
+ JOIN console_public_documents p ON p.id=d.id AND p.version=d.version
+ WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
+ AND (d.radar_category=? OR d.knowledge_category=?)
+ AND d.published_at IS NOT NULL
+ AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
+ ORDER BY d.published_at DESC LIMIT 80`,
+        [q.category, q.category],
+      );
+      const recentIds = recentDocs.results.map((r) => r.id);
+      recentDocCount = recentIds.length;
+      if (recentIds.length) {
+        const chunks = await read<ChunkRow>(
+          `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,0 AS score
+ FROM knowledge_chunks k JOIN knowledge_documents d ON d.id=k.document_id
+ WHERE k.document_id IN(${recentIds.map(() => "?").join(",")}) AND k.index_version=?
+ ORDER BY d.published_at DESC,
+   CASE WHEN k.text_basis='title' THEN 1 ELSE 0 END,
+   k.start_offset ASC LIMIT 400`,
+          [...recentIds, RETRIEVAL_INDEX_VERSION],
+        );
+        const seen = new Set<string>();
+        const titleById = new Map(
+            recentDocs.results.map((r) => [r.id, r.title]),
+          ),
+          dateById = new Map(
+            recentDocs.results.map((r) => [r.id, r.published_at]),
+          );
+        recentChunks = chunks.results.filter((c) => {
+          if (seen.has(c.document_id)) return false;
+          seen.add(c.document_id);
+          return true;
+        });
+        // A subject-specific query ("计算机") must still see the newest
+        // subject-matching articles even when they sit outside the first
+        // page of the category sorted only by publication time.
+        if (subjectTerms.length)
+          recentChunks.sort(
+            (a, b) =>
+              Number(matchesSubject(titleById.get(b.document_id) || "")) -
+                Number(matchesSubject(titleById.get(a.document_id) || "")) ||
+              (Date.parse(dateById.get(b.document_id) || "") || 0) -
+                (Date.parse(dateById.get(a.document_id) || "") || 0),
+          );
+        metrics.recallLanes.push({
+          name: "recent_category",
+          limit: 80,
+          candidates: recentChunks.length,
+        });
+      } else warnings.push("该分类暂无当前公开资料。");
+    }
     // Business filters allow unknown/mixed content through: they never determine eligibility.
-    const candidateLanes: ChunkRow[][] = [];
-    for (const lane of lanes) {
+    const candidateLanes: ChunkRow[][] = recentChunks.length
+      ? [recentChunks]
+      : [];
+    if (!recentChunks.length)
+      for (const lane of lanes) {
       const local = lane.ids?.length
         ? ` AND k.document_id IN(${lane.ids.map(() => "?").join(",")})`
         : "";
@@ -291,8 +388,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         );
     metrics.candidateChunks = merged.length;
     const ids = [...new Set(merged.map((c) => c.document_id))].slice(0, 32);
-    const documents = await currentPublicArticles(this.db, ids, read),
-      terms = keywords(q.query);
+    const documents = await currentPublicArticles(this.db, ids, read);
     const ranked: {
       hit: EvidenceHit;
       analysis: ArticleAnalysis | null;
@@ -345,7 +441,16 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         sourceName: d.display_name,
         contentSnippet: c.text,
       });
-      if (!relevance.relevant) continue;
+      if (sortMode !== "published_desc" && !relevance.relevant) continue;
+      if (
+        subjectTerms.length &&
+        !subjectTerms.some(
+          (t) =>
+            d.title.toLowerCase().includes(t.toLowerCase()) ||
+            c.text.toLowerCase().includes(t.toLowerCase()),
+        )
+      )
+        continue;
       const titleMatch = count(d.title),
         bodyMatch = c.text_basis === "title" ? 0 : count(c.text);
       const knowledgeEvidence =
@@ -491,6 +596,12 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         b.intentTier - a.intentTier ||
         b.hit.relevanceScore - a.hit.relevanceScore,
     );
+    if (sortMode === "published_desc")
+      ranked.sort(
+        (a, b) =>
+          (Date.parse(b.hit.publishedAt || "") || 0) -
+          (Date.parse(a.hit.publishedAt || "") || 0),
+      );
     const unique = new Map<string, (typeof ranked)[number]>();
     // Once an actual subject-specific guide/policy is available, a neighbouring
     // workflow or recruitment post that merely mentions it must not fill the

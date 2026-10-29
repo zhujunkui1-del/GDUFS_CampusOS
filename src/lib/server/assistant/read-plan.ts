@@ -88,11 +88,13 @@ export function contentReadPlan(
   retrievalQuery = query,
   hasUsableEvidence: () => boolean = () => false,
   radarCategory?: string,
+  recentDiscovery = false,
 ): PlannedRead[] {
   const external = publicQuery(query);
   const inputFor = (name: ContentTool, text: string) => ({
     query: text,
-    limit: 3,
+    limit: recentDiscovery ? 4 : 3,
+    ...(recentDiscovery ? { sort: "published_desc" as const } : {}),
     ...(name === "search_campus_events" && radarCategory
       ? { category: radarCategory }
       : {}),
