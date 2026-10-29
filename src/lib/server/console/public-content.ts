@@ -37,6 +37,15 @@ const groupedResultCache = new WeakMap<
   object,
   Map<string, { expiresAt: number; result: PublicResult }>
 >();
+export function likePattern(value: string) {
+  // D1 rejects LIKE patterns above 50 bytes with "LIKE or GLOB pattern too
+  // complex"; cap at a UTF-8 boundary while keeping the search a substring.
+  let prefix = value;
+  while (new TextEncoder().encode(prefix).length > 46)
+    prefix = prefix.slice(0, -1);
+  return "%" + prefix + "%";
+}
+
 export async function readPublicContent(
   db: SqlDatabase,
   raw: unknown,
@@ -90,7 +99,6 @@ export async function readPublicContent(
     where.push("d.version=?");
     params.push(q.version);
   }
-  const pattern = (v: string) => "%" + v.replace(/[\\%_]/g, "\\$&") + "%";
   if (q.surface)
     where.push(
       q.surface === "radar"
@@ -110,12 +118,12 @@ export async function readPublicContent(
       })()
     : null;
   if (q.q) {
-    where.push("d.title LIKE ? ESCAPE '\\'");
-    params.push(pattern(q.q));
+    where.push("d.title LIKE ?");
+    params.push(likePattern(q.q));
   }
   if (q.source) {
-    where.push("s.display_name LIKE ? ESCAPE '\\'");
-    params.push(pattern(q.source));
+    where.push("s.display_name LIKE ?");
+    params.push(likePattern(q.source));
   }
   const base = `FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)`;
   const categoryColumn =
@@ -128,19 +136,19 @@ export async function readPublicContent(
           .prepare(
             q.source
               ? `WITH matched_sources(id) AS MATERIALIZED (
-                   SELECT id FROM knowledge_sources WHERE display_name LIKE ? ESCAPE '\\'
+                   SELECT id FROM knowledge_sources WHERE display_name LIKE ?
                  )
                  SELECT ${categoryColumn} AS category,count(*) AS n
                  FROM knowledge_documents d JOIN console_article_classifications a ON a.document_id=d.id
                  JOIN matched_sources m ON m.id=d.source_id
                  WHERE ${q.surface === "radar" ? "a.primary_destination IN('radar','unknown')" : "a.primary_destination='knowledge'"} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)
-                   ${q.q ? "AND d.title LIKE ? ESCAPE '\\'" : ""}
+                   ${q.q ? "AND d.title LIKE ?" : ""}
                  GROUP BY ${categoryColumn}`
               : `SELECT ${categoryColumn} AS category,count(*) AS n ${base} GROUP BY ${categoryColumn}`,
           )
           .bind(
             ...(q.source
-              ? [pattern(q.source), ...(q.q ? [pattern(q.q)] : [])]
+              ? [likePattern(q.source), ...(q.q ? [likePattern(q.q)] : [])]
               : params),
           )
           .all<{ category: string; n: number }>()

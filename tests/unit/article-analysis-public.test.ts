@@ -147,3 +147,16 @@ it("does not merge same-title activities at the same venue on the same day but d
     f.close();
   }
 });
+import { likePattern } from "@/lib/server/console/public-content";
+it("caps LIKE patterns below the D1 byte limit without splitting UTF-8", () => {
+  const full =
+    "2026年志愿服务冬季论坛暨广州市社会学人类学学会年会会议通知（第一轮）".repeat(
+      3,
+    );
+  const pattern = likePattern(full);
+  expect(pattern.startsWith("%")).toBe(true);
+  expect(pattern.endsWith("%")).toBe(true);
+  const inner = pattern.slice(1, -1);
+  expect(new TextEncoder().encode(inner).length).toBeLessThanOrEqual(48);
+  expect(full.startsWith(inner)).toBe(true);
+});
