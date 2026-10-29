@@ -70,9 +70,12 @@ export function stripSelfDeprecation(text: string) {
     .trim();
 }
 export function assistantDisplayText(text: string) {
-  return containsToolProtocol(text)
-    ? "这条回复未能生成有效答案，请重新提问。"
-    : text;
+  if (containsToolProtocol(text))
+    return "这条回复未能生成有效答案，请重新提问。";
+  return text
+    .replace(/[；;]\s*。/g, "。")
+    .replace(/。{2,}/g, "。")
+    .replace(/[ \t]+\n/g, "\n");
 }
 /** Only real source URLs may be cited; the model must copy them verbatim. */
 export function citedUrls(text: string) {

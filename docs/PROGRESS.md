@@ -1427,6 +1427,25 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 
 根因：`/api/public/content` 的标题检索直接使用 `LIKE '%完整标题%'`。D1 对超过约 50 字节的 LIKE 模式返回 `LIKE or GLOB pattern too complex`，该错误被统一包装为「服务暂时遇到问题」。前缀短、字节数低于阈值时不报错。
 
-修复：`src/lib/server/console/public-content.ts` 增加 `likePattern()`，按 UTF-8 边界把检索词截到 46 字节以内再拼 `%`；标题与来源检索共用，分组 facets 的绑定参数同步使用截断后的模式。没有删除搜索能力，也没有按具体标题写分支。
+修复：`src/lib/server/console/public-content.ts` 的标题/来源检索改用 `instr(d.title, ?) > 0` 子串匹配，参数只做 300 字符上限；不再构造 `%...%`。没有删除搜索能力，也没有按具体标题写分支。
 
-验证：Preview `a9f4182a-8b9a-4532-ad08-b1a4b3b4e02d`；完整标题和前缀均返回同一篇文章，`/api/public/content?surface=radar&q=完整标题` 返回 200/1 条；浏览器 `/radar` 填入完整标题可见结果。新增 `likePattern` 单测（不拆分 UTF-8、≤48 字节）；全量 719/719，`tsc` 0、`build` 0。
+验证：Preview `cbed481d-5b4c-4ee2-9cb9-d1d5aba3f4ba`；完整标题、前缀、`研究生`、`2026年研究生学业奖学金拟获奖名单公示` 均返回正确文章；`tests/unit/article-analysis-public.test.ts` 4 项通过；全量 721/721，`tsc` 0、`build` 0。
+
+### 2026-10-30｜奖学金追问、地点误判与「名单」拒答
+
+负责人贴出真实对话：问「2026年研究生奖学金获奖情况」只得到 2 个来源，问「只能找到这两条吗」被当成地点/路线请求，回「未找到该地点或路线」；问云山学者名单又回「只负责广外校园」。要求按祈使/疑问/陈述三类决定是否带出文章标题检索，答案要全面、准确、不漏。
+
+修复：
+
+- `src/lib/server/assistant/intent.ts`：`requiresPlaceLookup` 去掉泛化的 `找/搜索` 触发，只保留地名/设施/楼栋/门/饭堂等真实地点信号；对「只能/这几条/来源/名单/文章/不够/更多」等上一轮结果反馈直接返回 false。
+- `src/lib/server/assistant/chat.ts`：删除 `needsRoster` 的固定拒答分支；名单类问题照常检索，证据不足时走外部补搜而不是拒答。
+- `src/lib/server/assistant/content-intent.ts`：新增 `declarativeArticleRequest`（「关于…的…通知」「…名单公示」等陈述句按文章标题查）；`isResultFollowup` 保留上一轮话题，不再把「只能找到这两条吗」当新查询；宽泛列举（「有哪些/分别是什么」）不加「最新」，改为分类列表；普通追问仍把新消息拼进检索句。
+- `src/lib/server/assistant/content-prompt.ts`：名单类回答要求写人数、公示期、附件名和缺失原因，禁止整段拒答。
+- `src/lib/assistant-output.ts`：展示层清理 `；。` 这类重复标点。
+
+真实验收（Preview `cbed481d-5b4c-4ee2-9cb9-d1d5aba3f4ba`）：
+
+- `了解下2026年研究生奖学金的获奖情况`：3 个来源，给出博士/硕士各等级人数、公示期、附件名、反映渠道；不再只说 2 条。
+- `只能找到这两条吗`：仍围绕奖学金，补充国家奖学金 134 人、学院公示，4 个来源；不再触发地图。
+- 校园雷达完整标题搜索：浏览器与 API 均返回正确文章，无「服务暂时遇到问题」。
+- 全量 721/721；`tsc` 0；`build` 0。

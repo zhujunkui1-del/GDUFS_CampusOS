@@ -37,13 +37,11 @@ const groupedResultCache = new WeakMap<
   object,
   Map<string, { expiresAt: number; result: PublicResult }>
 >();
-export function likePattern(value: string) {
-  // D1 rejects LIKE patterns above 50 bytes with "LIKE or GLOB pattern too
-  // complex"; cap at a UTF-8 boundary while keeping the search a substring.
-  let prefix = value;
-  while (new TextEncoder().encode(prefix).length > 46)
-    prefix = prefix.slice(0, -1);
-  return "%" + prefix + "%";
+export function searchTerm(value: string) {
+  // D1's LIKE rejects patterns above 50 bytes, and Chinese search terms exceed
+  // that at fewer than 20 characters. Use instr() for a plain substring match
+  // and cap the term only to keep the bound parameter reasonable.
+  return value.slice(0, 300);
 }
 
 export async function readPublicContent(
@@ -118,12 +116,12 @@ export async function readPublicContent(
       })()
     : null;
   if (q.q) {
-    where.push("d.title LIKE ?");
-    params.push(likePattern(q.q));
+    where.push("instr(d.title, ?) > 0");
+    params.push(searchTerm(q.q));
   }
   if (q.source) {
-    where.push("s.display_name LIKE ?");
-    params.push(likePattern(q.source));
+    where.push("instr(s.display_name, ?) > 0");
+    params.push(searchTerm(q.source));
   }
   const base = `FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)`;
   const categoryColumn =
@@ -136,19 +134,19 @@ export async function readPublicContent(
           .prepare(
             q.source
               ? `WITH matched_sources(id) AS MATERIALIZED (
-                   SELECT id FROM knowledge_sources WHERE display_name LIKE ?
+                   SELECT id FROM knowledge_sources WHERE instr(display_name, ?) > 0
                  )
                  SELECT ${categoryColumn} AS category,count(*) AS n
                  FROM knowledge_documents d JOIN console_article_classifications a ON a.document_id=d.id
                  JOIN matched_sources m ON m.id=d.source_id
                  WHERE ${q.surface === "radar" ? "a.primary_destination IN('radar','unknown')" : "a.primary_destination='knowledge'"} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)
-                   ${q.q ? "AND d.title LIKE ?" : ""}
+                   ${q.q ? "AND instr(d.title, ?) > 0" : ""}
                  GROUP BY ${categoryColumn}`
               : `SELECT ${categoryColumn} AS category,count(*) AS n ${base} GROUP BY ${categoryColumn}`,
           )
           .bind(
             ...(q.source
-              ? [likePattern(q.source), ...(q.q ? [likePattern(q.q)] : [])]
+              ? [searchTerm(q.source), ...(q.q ? [searchTerm(q.q)] : [])]
               : params),
           )
           .all<{ category: string; n: number }>()

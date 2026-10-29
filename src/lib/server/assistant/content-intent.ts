@@ -63,8 +63,13 @@ export function contentIntent(
     /^(?:请|再|帮我)?\s*(?:调用|用|去|通过|到)?\s*(?:小红书|外部搜索|互联网|网上)(?:来|帮我)?(?:搜|搜索|查|查找|找)(?:一下|一遍|看看)?[。！？!？\s]*$/.test(
       text.trim(),
     );
+  const isResultFollowup = (text: string) =>
+    /^(?:只能|就这|只找到|只搜到|不够|不全|太少|还有(?:别的|其他)?|更多|来源|名单|这两条|这几条)/.test(
+      text.trim(),
+    );
   const isFollowup = (text: string) =>
     isSearchFollowup(text) ||
+    isResultFollowup(text) ||
     (/^(那|那么|还|具体|需要|要|申请|报名|他|她|它|这位|该活动).{0,30}(材料|条件|流程|截止|费用|在哪里|时间|怎么样|口味|体验|属于|南校|北校|学院|吗|呢)/.test(
       text,
     ) &&
@@ -102,11 +107,13 @@ export function contentIntent(
       )
     : undefined;
   const query = campusFoodQuery(
-    (previousDiscovery
+    previousDiscovery
       ? previousDiscovery.text + "；再找更多；"
       : previous
-        ? previous + "；追问："
-        : "") + message,
+        ? isResultFollowup(message)
+          ? previous + "；再查更多；"
+          : previous + "；追问：" + message
+        : message,
   );
   // A new explicit time constraint wins over a relative date in previous turns.
   const timeWindow =
@@ -215,11 +222,35 @@ export function contentIntent(
       .replace(/[，,。！!？?；;：:]/g, " ")
       .replace(/\s+/g, " ")
       .trim() || query;
+  // Hard routing rule: questions and imperative requests search by keywords;
+  // declarative statements first search the sentence as written, then fall
+  // back to its keywords (the retry lives in contentReadPlan).
+  const declarativeRequest =
+    !/[?？]|(?:吗|呢)\s*$|怎么|如何|哪些|多少|是否|能否|可不可以/.test(
+      message.trim(),
+    ) &&
+    !/^(?:请|帮我|我想|想|要|了解一下|了解下|了解|介绍一下|介绍下|介绍|说说|讲讲|查询|查一下|查下|查查|搜一下|搜下|搜搜|看看|看下|找一下|找找|推荐一下|举|列|给|告诉)/.test(
+      message.trim(),
+    );
   // Discovery phrasing ("曾经/最近/有什么/大型") dilutes FTS recall; keep the
   // original for the prompt and citations, retrieve with the core topic.
+  // A generic "研究生奖学金获奖/名单" question is about the whole list, not a
+  // contiguous phrase. Searching the literal phrase returns only pages whose
+  // title repeats every qualifier; search the list vocabulary instead.
+  const broadListQuery =
+    !declarativeRequest &&
+    /奖学金|助学金|奖助/.test(query) &&
+    /获奖|名单|公示/.test(query) &&
+    !/国家奖学金|学业奖学金|励志奖学金|单项奖学金/.test(query)
+      ? `${query.match(/20\d{2}/)?.[0] ?? ""} 奖学金 名单`.trim()
+      : undefined;
   const retrievalQuery = multiTopic
     ? "最新 校园 通知"
-    : discovery || recentDiscovery
+    : broadListQuery
+      ? broadListQuery
+      : declarativeRequest
+        ? coreQuery.slice(-300)
+        : discovery || recentDiscovery
       ? coreQuery
         .replace(
           /举[几\d]+[个位]?|曾经|最近|近期|大型|重要|有哪些|有什么|有没有|哪些|几个|几场|几篇|可报名|能报名|报名|查询|还有|别的|其他|更多|再找|继续|换一批|后面的|情况|信息|方面|内容|活动|的|时间段|或|与|吗|呢|呀|请|帮我/g,

@@ -84,10 +84,19 @@ export function requiresPlaceLookup(message: string) {
   if (wantsArticle(message)) return false;
   if (/不要|不必|不用|别找/.test(message) || /附近/.test(message)) return false;
   if (/从.+(?:去|到)|路线|怎么走/.test(message)) return false;
-  // Canteen order aliases (一饭) and named facilities are real map places; asking
-  // "在哪" must resolve them through search_places instead of guessing prose.
+  // A question about the last answer ("只能找到这两条吗", "还有别的来源吗")
+  // is content feedback, not a request to locate a place.
+  if (
+    /只能|就这|这几条|这两条|来源|名单|文章|报道|信息|结果|不够|不全|太少|更多|还有/.test(
+      message,
+    ) &&
+    /[吗呢？?]|只能|不够|不全|太少|更多|还有/.test(message)
+  )
+    return false;
+  // Named facilities are real map places; asking "在哪" must resolve them
+  // through search_places. Generic "找/搜" verbs alone are not location intent.
   return (
-    /找|查找|搜索|在哪里|在哪儿|南苑\d+栋|北苑\d+栋|图书馆|教学楼|实验楼|八角楼|语心桥|[一二三四]饭|饭堂|食堂|超市|又康|便利店|打印店|快递|校医院|门诊部|体育馆|操场|号门|贝岗门|校门|[东南西北]门|[一二三四五六七八九十\d]+栋|[\u4e00-\u9fa5]{1,6}(?:楼|桥|馆|场|园)/.test(
+    /在哪里|在哪儿|南苑\d+栋|北苑\d+栋|图书馆|教学楼|实验楼|八角楼|语心桥|[一二三四]饭|饭堂|食堂|超市|又康|便利店|打印店|快递|校医院|门诊部|体育馆|操场|号门|贝岗门|校门|[东南西北]门|[一二三四五六七八九十\d]+栋|[\u4e00-\u9fa5]{1,6}(?:楼|桥|馆|场|园)/.test(
       message,
     ) || /(?:在|去|到)(?:哪|什么位置)/.test(message)
   );

@@ -1165,13 +1165,9 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                             evidenceGateUsed = true;
                             return roster;
                           }
-                          evidenceGateUsed = true;
-                          answerMode = "no_evidence";
-                          cards.clear();
-                          evidence.clear();
-                          return dailyTone
-                            ? "本鱼本轮没有从正文里提取到可核对的名单，先不列具体人名。建议通过广外官网或院系公示核实。🐟"
-                            : "本轮没有从正文中提取到可核对的名单，不列举具体人名。建议通过广外官网或院系公示核实。";
+                          // No name-by-name extraction: keep the real cards and let
+                          // the model summarize what the public body does contain
+                          // (counts, dates, attachment note) instead of refusing.
                         }
                         // Only questions that require verifiable campus facts may
                         // short-circuit generation. Advice and open questions go to

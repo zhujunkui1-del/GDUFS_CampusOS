@@ -32,6 +32,20 @@ describe("article lookup is not a place lookup", () => {
     expect(requiresPlaceLookup(message)).toBe(false);
     expect(requiresPlaceLookup("带我去南苑11栋")).toBe(true);
   });
+  it("keeps result follow-ups on the article thread, not the map", () => {
+    expect(requiresPlaceLookup("只能找到这两条吗")).toBe(false);
+    expect(requiresPlaceLookup("还有别的来源吗")).toBe(false);
+    expect(requiresPlaceLookup("就这几条吗")).toBe(false);
+    expect(requiresPlaceLookup("又康超市在哪")).toBe(true);
+  });
+  it("uses keywords for questions and the full sentence for declarative lookups", () => {
+    expect(contentIntent("了解下2026年研究生奖学金的获奖情况").retrievalQuery).not.toContain(
+      "了解",
+    );
+    expect(
+      contentIntent("2026年研究生学业奖学金拟获奖名单公示").retrievalQuery,
+    ).toBe("2026年研究生学业奖学金拟获奖名单公示");
+  });
   it("keeps quoted titles inside the campus gate", () => {
     expect(inputGate('"学生社区文化传习实践：文化筑梦，强国有我"找到这篇文章')).toBe(
       "campus",
