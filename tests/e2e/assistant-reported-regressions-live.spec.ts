@@ -122,7 +122,41 @@ test("recent radar tags stay dated, ordered and bounded", async ({ page }) => {
       .filter((line) => /^\d+\. \d{4}-\d{2}-\d{2} 发布｜/.test(line));
     expect(rows.length, `${question} rows`).toBeGreaterThanOrEqual(3);
     expect(rows.length, `${question} rows`).toBeLessThanOrEqual(5);
-    const dates = rows.map((line) => line.match(/\d{4}-\d{2}-\d{2}/)?.[0] || "");
+    const dates = rows.map(
+      (line) => line.match(/\d{4}-\d{2}-\d{2}/)?.[0] || "",
+    );
     expect(dates, `${question} sorted`).toEqual([...dates].sort().reverse());
   }
+});
+
+// A 687-character message repeated three times used to collapse into "最近的
+// 竞赛" because the first radar keyword won. It must stay a scoped overview.
+test("a long multi-topic message is not narrowed to one radar tag", async ({
+  page,
+}) => {
+  test.skip(
+    process.env.E2E_LIVE_AGENT !== "1",
+    "Requires explicit model-test budget",
+  );
+  test.setTimeout(180000);
+  const long =
+    "请帮我查找广东外语外贸大学最近关于学生校园生活、食堂、宿舍、图书馆、体育场馆、校园活动、竞赛报名、讲座信息、就业招聘、奖学金评定、志愿服务、社团招新、校历安排、校车时刻、校园卡办理、网络服务、快递点、校医院、心理咨询、交换项目、辅修学位、毕业论文、实习实践、创新创业、科研训练、学科竞赛、文化艺术、体育锻炼、安全教育、反诈宣传和节能环保方面的全部最新通知公告并逐条列出原文链接和发布日期，同时说明哪些可以在校园雷达看到、哪些需要去学校官网确认、哪些已经截止。";
+  await installAgentEvidence(page);
+  await page.goto("/");
+  await open(page);
+  await page.getByLabel("向校园助理提问").fill(long.repeat(3));
+  await page.getByLabel("向校园助理提问").press("Enter");
+  await expect(page.locator("#assistant-launcher")).toHaveAttribute(
+    "data-busy",
+    "false",
+    { timeout: 150000 },
+  );
+  const text = await page
+    .locator('[data-message-role="assistant"]')
+    .last()
+    .innerText();
+  expect(text).toContain("这条消息包含多个主题");
+  expect(text).not.toContain("最近广外竞赛");
+  const records = await readAgentEvidence(page);
+  expect(records.at(-1)?.tools).toContain("search_campus_knowledge");
 });
