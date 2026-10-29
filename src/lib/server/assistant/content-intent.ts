@@ -126,6 +126,8 @@ export function contentIntent(
       ? "education_career"
       : /讲座|讲坛|论坛|沙龙|学术报告/.test(query)
         ? "lecture"
+        : /文体|文化|体育|演出|晚会|音乐会|书展|展览|艺术|运动会|校运会|社团|招新/.test(query)
+          ? "culture_sports"
         : /奖学金|助学金|奖助|资助/.test(query)
           ? "scholarship_opportunity"
           : /科研|课题|项目申报|论文/.test(query)

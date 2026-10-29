@@ -86,7 +86,7 @@ it("orders a recent radar-tag request by publication time, not lexical score", (
   expect(plan[0]?.input).toMatchObject({
     sort: "published_desc",
     category: "competition",
-    limit: 4,
+    limit: 5,
   });
 });
 
@@ -126,7 +126,7 @@ it("pages through a recent category list when the user asks for more", () => {
   );
   expect(plan[0]?.input).toMatchObject({
     sort: "published_desc",
-    limit: 4,
+    limit: 5,
     publishedBefore: "2026-10-28",
   });
 });
@@ -147,5 +147,25 @@ it("locks an event search to the radar category the user named", () => {
   expect(plan[0]?.input).toMatchObject({
     query: "法学院 比赛",
     category: "competition",
+  });
+});
+
+it("routes recent culture and sports to the radar tag with five newest", () => {
+  const intent = contentIntent("最近的文体活动");
+  expect(intent.radarCategory).toBe("culture_sports");
+  expect(intent.recentDiscovery).toBe(true);
+  const plan = contentReadPlan(
+    ["search_campus_events"],
+    intent.query,
+    externalPolicy(intent.query),
+    () => false,
+    intent.retrievalQuery,
+    () => false,
+    intent.radarCategory,
+    intent.recentDiscovery,
+  );
+  expect(plan[0]?.input).toMatchObject({
+    sort: "published_desc",
+    limit: 5,
   });
 });

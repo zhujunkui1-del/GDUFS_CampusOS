@@ -233,7 +233,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
                   .filter(
                     (t) =>
                       t.length >= 2 &&
-                      !/^(?:竞赛|比赛|大赛|讲座|讲坛|论坛|沙龙|学术沙龙|活动|招聘|宣讲|通知|公告|资讯|新闻|预告|名单|评选|报名|截止|最新|近期|最近|有|什么|吗)$/.test(
+                      !/^(?:竞赛|比赛|大赛|讲座|讲坛|论坛|沙龙|学术沙龙|活动|文体活动|文体|文化|体育|招聘|宣讲|通知|公告|资讯|新闻|预告|名单|评选|报名|截止|最新|近期|最近|有|什么|吗)$/.test(
                         t,
                       ),
                   )
@@ -258,7 +258,78 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
     // asked for.
     let recentChunks: ChunkRow[] = [];
     let recentDocCount = 0;
-    if (sortMode === "published_desc" && q.category) {
+    const cultureTopic =
+      sortMode === "published_desc" &&
+      !q.category &&
+      /文体|文化|体育/.test(q.query);
+    if (cultureTopic) {
+      const docs = await read<{ id: string; title: string; published_at: string | null; radar_category: string | null }>(
+        `SELECT d.id,d.title,d.published_at,d.radar_category FROM knowledge_documents d
+ JOIN console_public_documents p ON p.id=d.id AND p.version=d.version
+ WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
+ AND d.published_at IS NOT NULL
+ AND (d.radar_category='culture_sports'
+   OR d.title LIKE '%书展%' OR d.title LIKE '%展览%' OR d.title LIKE '%专题展%'
+   OR d.title LIKE '%文献展%' OR d.title LIKE '%画展%' OR d.title LIKE '%艺术%'
+   OR d.title LIKE '%文艺%' OR d.title LIKE '%歌唱%' OR d.title LIKE '%歌手%'
+   OR d.title LIKE '%秋之声%' OR d.title LIKE '%演出%' OR d.title LIKE '%晚会%'
+   OR d.title LIKE '%音乐会%' OR d.title LIKE '%舞蹈%' OR d.title LIKE '%运动会%'
+   OR d.title LIKE '%校运会%')
+${q.publishedBefore ? " AND d.published_at < ?" : ""}
+ AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
+ ORDER BY d.published_at DESC LIMIT 80`,
+        q.publishedBefore ? [q.publishedBefore] : [],
+      );
+      recentDocCount = docs.results.length;
+      const ids = docs.results.map((r) => r.id);
+      // The culture tag is incomplete in the data: book exhibitions and the
+      // autumn singing contest sit under other tags. Include explicit culture
+      // titles, but exclude generic activities that merely contain “展”.
+      const CULTURE_TITLE =
+        /书展|展览|专题展|文献展|画展|艺术|文艺|歌唱|歌手|秋之声|演出|晚会|音乐会|舞蹈|运动会|校运会/;
+      const NOT_CULTURE =
+        /讲话|座谈|研讨|论坛|讲坛|招聘|志愿者|招募|优惠|明信片|店铺|金融|学术|会议|拓展|培训/;
+      const cultureIds = new Set(
+        docs.results
+          .filter(
+            (r) =>
+              !NOT_CULTURE.test(r.title) &&
+              (r.radar_category === "culture_sports" ||
+                CULTURE_TITLE.test(r.title)),
+          )
+          .map((r) => r.id),
+      );
+      if (ids.length) {
+        const chunks = await read<ChunkRow>(
+          `SELECT document_id,id,text,start_offset,end_offset,text_basis,content_revision,input_hash,score FROM (
+ SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,0 AS score,
+   ROW_NUMBER() OVER (PARTITION BY k.document_id ORDER BY k.start_offset) AS rn
+ FROM knowledge_chunks k WHERE k.document_id IN(${ids.map(() => "?").join(",")}) AND k.index_version=?
+) WHERE rn=1`,
+          [...ids, RETRIEVAL_INDEX_VERSION],
+        );
+        const titleById = new Map(docs.results.map((r) => [r.id, r.title])),
+          dateById = new Map(docs.results.map((r) => [r.id, r.published_at]));
+        const seen = new Set<string>();
+        recentChunks = chunks.results
+          .filter((c) => {
+            if (seen.has(c.document_id)) return false;
+            if (!cultureIds.has(c.document_id)) return false;
+            seen.add(c.document_id);
+            return true;
+          })
+          .sort(
+            (a, b) =>
+              (Date.parse(dateById.get(b.document_id) || "") || 0) -
+              (Date.parse(dateById.get(a.document_id) || "") || 0),
+          );
+        metrics.recallLanes.push({
+          name: "recent_topic",
+          limit: 80,
+          candidates: recentChunks.length,
+        });
+      }
+    } else if (sortMode === "published_desc" && q.category) {
       const recentDocs = await read<{ id: string; title: string; published_at: string | null }>(
         `SELECT d.id,d.title,d.published_at FROM knowledge_documents d
  JOIN console_public_documents p ON p.id=d.id AND p.version=d.version

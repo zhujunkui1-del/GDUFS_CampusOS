@@ -58,6 +58,7 @@ import { D1KeywordRetriever } from "../retrieval/retriever";
 import { contentInstructions, directInstructions } from "./content-prompt";
 import {
   foodEvidenceAnswer,
+  recentRadarAnswer,
   retrievedEvidenceAnswer,
   rosterEvidenceAnswer,
 } from "./evidence-answer";
@@ -1114,6 +1115,31 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                                 ? "学校官网或宿管"
                                 : "广外官网、院系公示或校园地图APP",
                           );
+                        if (content.recentDiscovery) {
+                          const label =
+                            content.radarCategory === "culture_sports"
+                              ? "文体活动"
+                              : content.radarCategory === "lecture"
+                                ? "讲座"
+                                : content.radarCategory === "competition"
+                                  ? "竞赛"
+                                  : content.radarCategory === "education_career"
+                                    ? "升学就业"
+                                    : content.radarCategory === "scholarship_opportunity"
+                                      ? "奖学金"
+                                      : content.radarCategory === "academic_research"
+                                        ? "学术科研"
+                                        : "校园通知";
+                          const list = recentRadarAnswer(
+                            [...cards.values()],
+                            label,
+                          );
+                          if (list) {
+                            answerMode = "radar_list";
+                            evidenceGateUsed = true;
+                            return list;
+                          }
+                        }
                         // Roster questions always use one extractive list: no
                         // generated prose, no alternating list/excerpt answers.
                         if (supplementPolicy.needsRoster) {

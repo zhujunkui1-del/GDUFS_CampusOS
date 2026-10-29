@@ -246,3 +246,36 @@ export function retrievedEvidenceAnswer(
     boundary
   );
 }
+
+/** Recent radar lists are deterministic: newest publications first, 3-5 items. */
+export function recentRadarAnswer(
+  cards: AssistantCard[],
+  label = "校园资讯",
+) {
+  const rows = cards
+    .flatMap((card) => {
+      if (card.kind !== "source" && card.kind !== "external_source") return [];
+      if (!card.publishedAt || !card.title) return [];
+      // Category landing pages are navigation, not a dated activity.
+      if (/^(?:文体活动|竞赛|讲座|升学就业|学术科研|奖学金|校园通知)-/.test(card.title))
+        return [];
+      return [{ title: card.title, publishedAt: card.publishedAt }];
+    })
+    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
+    .filter(
+      (row, index, all) =>
+        all.findIndex((other) => other.title === row.title) === index,
+    )
+    .slice(0, 5);
+  if (rows.length < 3) return undefined;
+  return [
+    `最近广外${label}，按发布时间从新到旧：`,
+    "",
+    ...rows.map(
+      (row, index) =>
+        `${index + 1}. ${row.publishedAt.slice(0, 10)} 发布｜${row.title}`,
+    ),
+    "",
+    "想看更早的，可以继续问「还有吗」。🐟",
+  ].join("\n");
+}

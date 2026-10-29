@@ -95,10 +95,10 @@ export function contentReadPlan(
   const external = publicQuery(query);
   const inputFor = (name: ContentTool, text: string) => ({
     query: text,
-    limit: recentDiscovery ? 4 : 3,
+    limit: recentDiscovery ? 5 : 3,
     ...(recentDiscovery ? { sort: "published_desc" as const } : {}),
             ...(recentDiscovery && recentBefore ? { publishedBefore: recentBefore } : {}),
-    ...(name === "search_campus_events" && radarCategory
+    ...(name === "search_campus_events" && radarCategory && radarCategory !== "culture_sports"
       ? { category: radarCategory }
       : {}),
   });
