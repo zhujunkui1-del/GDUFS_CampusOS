@@ -1033,7 +1033,13 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                 persona.preference,
                 history.messages,
               ).tone === "daily";
-            const hasUsableBody = () => {
+            const hasUsableBody = () =>
+              content.articleQuery
+                ? contentResults.some((result) =>
+                    result.hits.some((hit) => hit.bodyAvailable),
+                  )
+                : hasRelevantBody();
+            const hasRelevantBody = () => {
               const plan = buildQueryPlan(
                 content.retrievalQuery || content.query,
               );
@@ -1116,6 +1122,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                               : content.focus === "housing"
                                 ? "学校官网或宿管"
                                 : "广外官网、院系公示或校园地图APP",
+                            Boolean(content.articleQuery),
                           );
                         if (content.recentDiscovery) {
                           const label =

@@ -20,6 +20,11 @@ describe("article lookup is not a place lookup", () => {
     expect(
       articleTitle("帮我找到「光影无界·师生影像作品展」这篇文章"),
     ).toBe("光影无界·师生影像作品展");
+    expect(
+      articleTitle(
+        "找文章“《MBA大讲堂162》（新闻）陈梦雄：AI时代下人力资源的“守”与“变””",
+      ),
+    ).toBe("MBA大讲堂162");
   });
   it("never routes an article request to the map", () => {
     const message = "帮我找到《关于开展2026年校园文化活动的通知》这篇文章";

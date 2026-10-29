@@ -62,7 +62,8 @@ export function articleTitle(message: string) {
   const text = message.trim();
   if (!wantsArticle(text)) return undefined;
   const quoted =
-    text.match(/[《「『“"]([^》」』”"]{4,300})[》」』”"]/) ||
+    text.match(/《([^》]{4,300})》/) ||
+    text.match(/[「『“"]([^》」』”"]{4,300})[》」』”"]/) ||
     text.match(/[‘']([^’']{4,300})[’']/);
   let title = quoted?.[1];
   if (!title) {

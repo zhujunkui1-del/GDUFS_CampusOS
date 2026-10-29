@@ -65,11 +65,12 @@ export function evidenceFallback(
   playful = false,
   attemptedKeywords: string[] = [],
   channel = "广外官网、院系公示或校园地图APP",
+  trustAllBodies = false,
 ) {
   const plan = buildQueryPlan(policy.relevanceQuery || "");
   const usable = internal
     .flatMap((r) => r.hits)
-    .filter((h) => h.bodyAvailable && queryRelevance(plan, h).relevant);
+    .filter((h) => h.bodyAvailable && (trustAllBodies || queryRelevance(plan, h).relevant));
   const outside = (external?.items || []).filter(
     (i) =>
       i.evidenceKind !== "title_only" &&
