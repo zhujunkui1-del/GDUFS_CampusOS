@@ -412,7 +412,7 @@ export class AgentOrchestrator {
           }
           if (!result.ok && this.options.stopOnToolError) {
             if (
-              inputCorrections === 0 &&
+              inputCorrections < 2 &&
               skill?.sideEffect === "none" &&
               result.error.code === "INVALID_ARGUMENT" &&
               result.error.message === "工具参数无效。"
@@ -442,7 +442,7 @@ export class AgentOrchestrator {
           messages.push({
             role: "system",
             content:
-              "上一个工具因为参数没有通过 JSON/Schema 校验，尚未执行。请仅纠正无效调用，使用新的调用编号；参数必须符合下面的实际 Schema，不填未知字段，不给未提供的可选字段填 null，并遵守数值与枚举范围。不要重复已成功的工具。仅有这一次纠正机会。实际契约：" +
+              "上一个工具因为参数没有通过 JSON/Schema 校验，尚未执行。请仅纠正无效调用，使用新的调用编号；参数必须符合下面的实际 Schema，不填未知字段，不给未提供的可选字段填 null，并遵守数值与枚举范围。不要重复已成功的工具。还有一次纠正机会。实际契约：" +
               correctionSchema,
           });
       }

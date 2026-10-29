@@ -63,6 +63,7 @@ import {
 } from "./evidence-answer";
 import {
   assistantDisplayText,
+  stripSelfDeprecation,
   asksForSearchPermission,
   claimsMapAction,
   unsupportedUrls,
@@ -1250,7 +1251,9 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
               content.active &&
               !content.map &&
               (result.code.startsWith("MODEL_") ||
-                ["TIMEOUT", "RUN_LIMIT_EXCEEDED"].includes(result.code))
+                ["TIMEOUT", "RUN_LIMIT_EXCEEDED", "INVALID_ARGUMENT"].includes(
+                  result.code,
+                ))
             ) {
               const fallback =
                 (content.focus === "food" && !supplementPolicy.officialOnly
@@ -1319,6 +1322,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                 publicationFallbackUsed = true;
               }
             }
+            text = stripSelfDeprecation(text);
             const metrics = runMetrics();
             if (result.status !== "completed" || streamSignal.aborted) {
               const code = error?.code || "CANCELLED";

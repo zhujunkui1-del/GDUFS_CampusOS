@@ -5,6 +5,7 @@ import { AssistantSources } from "@/features/assistant/components/assistant-sour
 import { AssistantMessageText } from "@/features/assistant/components/assistant-message-text";
 import type { AssistantCard } from "@/domain/agent/assistant-contracts";
 import { foodEvidenceAnswer } from "@/lib/server/assistant/evidence-answer";
+import { stripSelfDeprecation } from "@/lib/assistant-output";
 const card: AssistantCard = {
   kind: "source",
   documentId: "fixture",
@@ -72,4 +73,43 @@ it("recovers only real food excerpts, retains source numbering and never turns m
   expect(
     foodEvidenceAnswer([food], "花生过敏在南校一饭吃什么", false),
   ).toBeUndefined();
+});
+
+it("does not expose self-deprecating retrieval process talk", () => {
+  expect(
+    stripSelfDeprecation(
+      "考研报名条件、保研推免办法等完整政策，本轮未取得官方原文，建议以研究生院官网最新通知为准。",
+    ),
+  ).toBe(
+      "考研报名条件、保研推免办法等完整政策，建议以研究生院和研究生招生官网最新通知为准。",
+    );
+  expect(
+    stripSelfDeprecation("保研的专门实施办法本轮未取得完整原文。"),
+  ).toBe("保研的专门实施办法，建议以研究生院和研究生招生官网最新通知为准。");
+  expect(stripSelfDeprecation("本次没有检索到资料。")).toBe(
+    "建议以官方最新通知为准。",
+  );
+  expect(
+    stripSelfDeprecation(
+      "4. 完整推免办法本轮未取得完整原文，建议以研究生院官网为准。",
+    ),
+  ).toBe("4. 完整推免办法，建议以研究生院和研究生招生官网最新通知为准。");
+  expect(stripSelfDeprecation("这是本轮资料中唯一直接涉及推免的规则。")).toBe(
+    "这是公开资料中唯一直接涉及推免的规则。",
+  );
+  expect(
+    stripSelfDeprecation(
+      "推免流程，本轮资料未涉及，建议以研究生院官网为准。",
+    ),
+  ).toBe("推免流程，建议以研究生院和研究生招生官网最新通知为准。");
+  expect(
+    stripSelfDeprecation(
+      "不过现有资料未覆盖完整的推免遴选办法，建议以官网为准。",
+    ),
+  ).toBe("建议以研究生院和研究生招生官网最新通知为准。");
+  expect(
+    stripSelfDeprecation(
+      "现有资料能确认部分安排，但未检索到一份完整的政策文件，建议以官网为准。",
+    ),
+  ).toBe("现有资料能确认部分安排，建议以官方最新通知为准。");
 });

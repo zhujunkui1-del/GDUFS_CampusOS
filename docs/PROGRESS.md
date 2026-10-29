@@ -1285,3 +1285,11 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 修复：`content-intent.ts` 统一剥离「了解下/帮我看看/我想了解」等口语前缀与结构性「的」，`广外` 只在后接法学院/学院/大学/校区时归一化，保留「广外图书馆」这类专名；新增 `radarCategory`，把比赛/竞赛映射为 `competition`、就业/招聘为 `education_career`、讲座/论坛为 `lecture`、奖学金为 `scholarship_opportunity`、科研为 `academic_research`、通知/公告为 `campus_notice`，并以 `ContentSearchQuery.category` 锁定雷达分类。`chat.ts` 的证据评估与外部补搜策略都改用归一化后的 `retrievalQuery`，不再拿整句口语去算相关度。`time-window.ts` 为「最近/近期 + 通知/公告/资讯/新闻/消息」增加 30 天发布窗口，避免「最近的校园通知」被当成无时间限制的 FTS 查询而返回几个月前的旧通知。
 
 真实复测：`了解下广外法学院的比赛` 与 `广外法学院的比赛` 均 `answerMode=model`、`state=supported`，按党史知识竞赛与调研大赛分点；`广外有什么奖学金` 为 model；`秋之声` 为 model；`最近的校园通知` 返回 2026-10-01 至 10-09 的通知；`广外图书馆借阅规则是什么` 保持专名不被截断。全量 701 项 689 通过/12 项既有失败；typecheck 0；Preview `84c09d49-369e-42fa-8b41-b281b75b933b`。
+
+### 2026-10-29 第十四轮：查询失败可恢复与禁用自我贬低话术
+
+负责人反馈同一条「广外的考研或保研政策」在旧会话连续两次返回「这次查询未完成，请重新提问。」，新会话又出现「本轮未取得官方原文」，并要求删除这类消极、贬低 Agent 回答能力的表述，同时保持大肥鱼人格。
+
+根因有两个：工具调用参数未通过 Schema 校验时，`orchestrator` 只允许一次纠正，第二次仍失败就以 `INVALID_ARGUMENT` 终止；证据不足的降级文本直接写「本轮未取得…」，没有经过统一清洗。修复后，`model-run` 对格式错误重试一次，`orchestrator` 允许两次输入纠正，`chat` 在已有卡片时对 `INVALID_ARGUMENT` 走抽取式降级；`stripSelfDeprecation` 覆盖「本轮/本次未取得」「未检索到完整政策文件」「资料未覆盖/未涉及」等句式，统一替换为中性核实建议。Persona 的 professional 档增加至少一处自然的大肥鱼口吻。
+
+真实复测：同一问句连续 10 次均 `answerMode=model`、`state=supported`，无禁用措辞；「你是一只大肥鱼」正常接梗；「宿舍上网怎么办理」正常分点回答。全量 703 项 691 通过/12 项既有失败；typecheck 0；Preview `bff4ba01-fcb6-4038-baf0-f7853b7af150`。

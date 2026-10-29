@@ -132,3 +132,16 @@ it("stores separate owner-scoped preferences beyond the history window and remov
   const other = await store.conversation(user);
   expect((await store.persona(user, other.id)).enabled).toBe(true);
 });
+
+it("keeps one natural dafeiyu touch in professional policy answers", () => {
+  const prompt = personaPrompt(
+    "广外的考研或保研政策",
+    { ...defaultPersona(), intensity: "normal" },
+    [],
+  );
+  expect(personaTone("广外的考研或保研政策", defaultPersona())).toBe(
+    "professional",
+  );
+  expect(prompt).toContain("本鱼");
+  expect(prompt).toContain("专业友好");
+});

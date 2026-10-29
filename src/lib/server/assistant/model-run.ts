@@ -4,6 +4,7 @@ import type {
   ModelSnapshot,
   ModelMessage,
 } from "@/domain/models/contracts";
+import { ZodError } from "zod";
 import { ApiError } from "../errors";
 import type { AssistantStore } from "./store";
 import type { MapAction } from "@/domain/maps/contracts";
@@ -60,6 +61,7 @@ export function meteredClient(
     groundingCheckFailures = 0;
   const groundingResults: { supported: boolean; issues: string[] }[] = [];
   let repairInstruction = "";
+  let formatRetries = 0;
   let reliable = true;
   const pricingModel = snapshot.provider === "deepseek" ? snapshot.model : null;
   const upstreamTimings: {
@@ -309,6 +311,14 @@ export function meteredClient(
           });
         } catch (error) {
           reliable = false;
+          // A malformed tool-call payload is a model formatting failure, not a
+          // reason to surface "query incomplete". Retry once with the contract.
+          if (!final && !formatRetries && error instanceof ZodError) {
+            formatRetries++;
+            repairInstruction =
+              "上一次工具调用无法被解析：function.arguments 必须是合法 JSON，且严格符合该工具的 JSON Schema。请重新生成一次工具调用，使用新的调用编号，不要输出解释性文字。";
+            continue;
+          }
           throw error;
         } finally {
           upstreamTimings.push({
