@@ -3,6 +3,7 @@ import { externalPolicy } from "../external-search/policy";
 import { requestTimeWindow } from "./time-window";
 import { dialogueReply } from "./dialogue";
 import { campusFoodQuery, queryFocus } from "@/lib/retrieval/query-focus";
+import { articleTitle, wantsArticle } from "./intent";
 import { buildQueryPlan } from "@/lib/retrieval/query-plan";
 import {
   conversationAct,
@@ -111,10 +112,16 @@ export function contentIntent(
   const events =
     requestTimeWindow(query, now) !== undefined ||
     /趣事|校园新闻|校园动态|校园分享|有趣的事情/.test(query) ||
-    /讲座|讲坛|竞赛|比赛|招聘|宣讲|停水|停电|闭馆|通知|公告|活动|书展|展览|项目申报|课题申报|奖助申请|名单公示|报名|截止|近期|最近|今天|这周|本周|下周|下个月|现在.*(?:申请|奖学金)|(?:还能|正在|开放).*(?:申请|报名)|申请.*(?:开放|机会)|之声|歌手|歌唱|合唱|晚会|演出|音乐会|艺术节|文化节|校运会|运动会|辩论|演讲|征文|摄影|设计大赛|创新大赛|挑战杯|评选|开幕式|闭幕式|招新/.test(
+    /讲座|讲坛|竞赛|比赛|招聘|宣讲|停水|停电|闭馆|通知|公告|资讯|新闻|最新|活动|书展|展览|项目申报|课题申报|奖助申请|名单公示|报名|截止|近期|最近|今天|这周|本周|下周|下个月|现在.*(?:申请|奖学金)|(?:还能|正在|开放).*(?:申请|报名)|申请.*(?:开放|机会)|之声|歌手|歌唱|合唱|晚会|演出|音乐会|艺术节|文化节|校运会|运动会|辩论|演讲|征文|摄影|设计大赛|创新大赛|挑战杯|评选|开幕式|闭幕式|招新/.test(
       query,
     );
+  // "找到这篇文章" is a content lookup, never a map lookup, even though
+  // “找到” also appears in place phrasings. The article title is sent to the
+  // retriever as a title filter so the exact document can be recovered.
+  const articleQuery = articleTitle(message);
+  const articleLookup = !!articleQuery || wantsArticle(message);
   const map =
+    !articleLookup &&
     /(?:地图|定位|路线|导航|在哪里|告诉我.*哪里|带我去|带我走|带我过去|导航到|导航去|怎么去|如何去|怎样去)/.test(
       message,
     );
@@ -138,7 +145,9 @@ export function contentIntent(
   // "最近/近期" on a radar category is a recency request: newest publications
   // in that tag, not the best lexical match. The retriever orders these by
   // published_at DESC; older items only appear when more are requested.
-  const recentDiscovery = /最近|近期|最新/.test(query) && !!radarCategory;
+  const recentDiscovery =
+    /最近|近期|最新/.test(query) &&
+    (!!radarCategory || /资讯|新闻|动态|消息/.test(query));
   // Feedback about the previous answer must not become a new search keyword;
   // otherwise campus context from the resolved follow-up query decides the act.
   const messageAct = conversationAct(message);
@@ -151,7 +160,8 @@ export function contentIntent(
     !reply &&
     !urgent &&
     !isFeedbackAct(act) &&
-    (knowledge ||
+    (articleLookup ||
+      knowledge ||
       events ||
       policy.needsOfficialVerification ||
       policy.needsRoster ||
@@ -160,9 +170,12 @@ export function contentIntent(
       (act === "campus" && policy.active));
   const tools: ContentTool[] = [];
   if (search) {
-    if (knowledge) tools.push("search_campus_knowledge");
-    if (events) tools.push("search_campus_events");
-    if (!tools.length) tools.push("search_campus_knowledge");
+    if (articleLookup) tools.push("search_campus_knowledge");
+    else {
+      if (knowledge) tools.push("search_campus_knowledge");
+      if (events) tools.push("search_campus_events");
+      if (!tools.length) tools.push("search_campus_knowledge");
+    }
   }
   const strictFact =
     knowledge ||
@@ -177,7 +190,7 @@ export function contentIntent(
       ? "advisory"
       : "open";
   const discovery =
-    /有哪些|有什么|举几|举\d|名单|曾经|哪些|谁|几个|几场|几篇/.test(query);
+    /有哪些|有什么|举几|举\d|名单|曾经|哪些|谁|几个|几场|几篇|情况|信息|方面|内容/.test(query);
   // “了解下秋之声” asks about 秋之声; the polite lead-in must not become part of
   // the FTS keywords or the exact-name match disappears.
   const RETRIEVAL_LEAD =
@@ -193,10 +206,10 @@ export function contentIntent(
       .trim() || query;
   // Discovery phrasing ("曾经/最近/有什么/大型") dilutes FTS recall; keep the
   // original for the prompt and citations, retrieve with the core topic.
-  const retrievalQuery = discovery
-    ? query
+  const retrievalQuery = discovery || recentDiscovery
+    ? coreQuery
         .replace(
-          /举[几\d]+[个位]?|曾经|最近|近期|大型|重要|有哪些|有什么|有没有|哪些|几个|几场|几篇|可报名|能报名|报名|查询|还有|别的|其他|更多|再找|继续|换一批|后面的|的|时间段|或|与|吗|呢|呀|请|帮我/g,
+          /举[几\d]+[个位]?|曾经|最近|近期|大型|重要|有哪些|有什么|有没有|哪些|几个|几场|几篇|可报名|能报名|报名|查询|还有|别的|其他|更多|再找|继续|换一批|后面的|情况|信息|方面|内容|活动|的|时间段|或|与|吗|呢|呀|请|帮我/g,
           " ",
         )
         .replace(/[？?。！!，,；;]/g, " ")
@@ -223,6 +236,8 @@ export function contentIntent(
     answerRequirement,
     radarCategory,
     recentDiscovery,
+    articleLookup,
+    articleQuery,
     discoveryFollowup: !!previousDiscovery,
   };
 }

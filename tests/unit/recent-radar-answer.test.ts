@@ -12,7 +12,7 @@ function source(title: string, publishedAt: string | null): AssistantCard {
     snippet: "正文",
     authority: "official",
     evidenceType: "body",
-  } as AssistantCard;
+  } as unknown as AssistantCard;
 }
 
 describe("recentRadarAnswer", () => {

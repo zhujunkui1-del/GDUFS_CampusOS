@@ -91,11 +91,13 @@ export function contentReadPlan(
   recentDiscovery = false,
   discoveryFollowup = false,
   recentBefore?: string,
+  articleTitle?: string,
 ): PlannedRead[] {
   const external = publicQuery(query);
   const inputFor = (name: ContentTool, text: string) => ({
     query: text,
-    limit: recentDiscovery ? 5 : 3,
+    ...(articleTitle ? { title: articleTitle } : {}),
+    limit: articleTitle ? 3 : recentDiscovery ? 5 : 3,
     ...(recentDiscovery ? { sort: "published_desc" as const } : {}),
             ...(recentDiscovery && recentBefore ? { publishedBefore: recentBefore } : {}),
     ...(name === "search_campus_events" && radarCategory && radarCategory !== "culture_sports"

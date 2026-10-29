@@ -183,6 +183,47 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       return empty();
     }
     if (q.documentIds && !q.documentIds.length) return empty();
+    // Exact-title lookup: "找到《…》这篇文章" should find the document by its
+    // title instead of hoping a long FTS query outranks everything else.
+    let titleChunks: ChunkRow[] = [];
+    if (q.title) {
+      const wanted = q.title
+        .replace(/["“”'‘’《》]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+      const short =
+        wanted.replace(/\s*[-—|｜]\s*[^-—|｜]*(?:大学|学院|工会|团委|委员会).*$/, "").trim() ||
+        wanted;
+      const docs = await read<{ id: string; title: string; published_at: string | null }>(
+        `SELECT d.id,d.title,d.published_at FROM knowledge_documents d
+ JOIN console_public_documents p ON p.id=d.id AND p.version=d.version
+ WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
+ AND (instr(d.title, ?) > 0 OR instr(d.title, ?) > 0)
+ AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
+ ORDER BY length(d.title) ASC LIMIT 8`,
+        [`${short}`, `${wanted}`],
+      );
+      const ids = docs.results.map((r) => r.id);
+      if (ids.length) {
+        const chunks = await read<ChunkRow>(
+          `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,0 AS score
+ FROM knowledge_chunks k WHERE k.document_id IN(${ids.map(() => "?").join(",")}) AND k.index_version=?
+ ORDER BY CASE WHEN k.text_basis='title' THEN 1 ELSE 0 END, k.start_offset ASC LIMIT 48`,
+          [...ids, RETRIEVAL_INDEX_VERSION],
+        );
+        const seen = new Set<string>();
+        titleChunks = chunks.results.filter((c) => {
+          if (seen.has(c.document_id)) return false;
+          seen.add(c.document_id);
+          return true;
+        });
+        metrics.recallLanes.push({
+          name: "title_exact",
+          limit: 8,
+          candidates: titleChunks.length,
+        });
+      }
+    }
     const conditions = [
         "article_chunk_fts MATCH ?",
         "rank MATCH 'bm25(4.0,1.0,0.0)'",
@@ -223,28 +264,48 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       q.sort === "published_desc" || /最近|近期|最新/.test(q.query)
         ? "published_desc"
         : q.sort;
-    const terms = keywords(q.query),
-      subjectTerms =
-        sortMode === "published_desc"
-          ? [
-              ...new Set(
-                terms
-                  .map((t) => t.replace(/(?:相关|类)$/, ""))
-                  .filter(
-                    (t) =>
-                      t.length >= 2 &&
-                      !/^(?:竞赛|比赛|大赛|讲座|讲坛|论坛|沙龙|学术沙龙|活动|文体活动|文体|文化|体育|招聘|宣讲|通知|公告|资讯|新闻|预告|名单|评选|报名|截止|最新|近期|最近|有|什么|吗)$/.test(
-                        t,
-                      ),
-                  )
-                  .flatMap((t) =>
-                    t === "计算机"
-                      ? [t, "人工智能", "AI", "程序设计", "软件", "算法"]
-                      : [t],
-                  ),
-              ),
-            ]
-          : [];
+    // Category phrases are not subjects. Remove them as whole phrases before
+    // tokenizing; otherwise Chinese bigrams like 赛活/动情 become hard filters
+    // that discard every real article.
+    const terms = keywords(q.query);
+    const categoryPhrases =
+      /竞赛活动情况|竞赛|比赛|大赛|讲座|讲坛|论坛|学术沙龙|沙龙|文体活动|文体|文化|体育|通知|公告|资讯|新闻|预告|情况|信息|方面|内容|介绍|了解|告诉|问题|东西|相关|广外|校园|大学|最新|近期|最近|有什么|哪些|吗|的/g;
+    const genericBigrams = new Set(
+      Array.from(
+        { length: "竞赛活动情况讲座比赛大赛文体文化体育通知公告资讯新闻预告信息方面内容介绍了解告诉问题东西相关广外校园大学最新近期最近有什么哪些".length - 1 },
+        (_, i) =>
+          "竞赛活动情况讲座比赛大赛文体文化体育通知公告资讯新闻预告信息方面内容介绍了解告诉问题东西相关广外校园大学最新近期最近有什么哪些".slice(
+            i,
+            i + 2,
+          ),
+      ),
+    );
+    const subjectSource =
+      q.sort === "published_desc" || /最近|近期|最新/.test(q.query)
+        ? q.query.replace(categoryPhrases, " ")
+        : q.query;
+    const subjectTerms =
+      q.sort === "published_desc" || /最近|近期|最新/.test(q.query)
+        ? [
+            ...new Set(
+              keywords(subjectSource)
+                .map((t) => t.replace(/(?:相关|类)$/, ""))
+                .filter(
+                  (t) =>
+                    t.length >= 2 &&
+                    !genericBigrams.has(t) &&
+                    !/^(?:竞赛|比赛|大赛|讲座|讲坛|论坛|沙龙|活动|文体|文化|体育|通知|公告|资讯|新闻|预告|情况|信息|方面|内容|介绍|了解|告诉|问题|东西|相关|广外|校园|大学|最新|近期|最近|什么|哪些|有|吗|的)$/.test(
+                      t,
+                    ),
+                )
+                .flatMap((t) =>
+                  t === "计算机"
+                    ? [t, "人工智能", "AI", "程序设计", "软件", "算法"]
+                    : [t],
+                ),
+            ),
+          ]
+        : [];
     const matchesSubject = (text: string) => {
       const lower = text.toLowerCase();
       return (
@@ -382,12 +443,49 @@ ${q.publishedBefore ? " AND d.published_at < ?" : ""}
           candidates: recentChunks.length,
         });
       } else warnings.push("该分类暂无当前公开资料。");
+    } else if (sortMode === "published_desc" && !q.title) {
+      // "最新的资讯/新闻" has no radar tag: still honor publication order over
+      // lexical relevance, otherwise April notices can beat yesterday's news.
+      const recentDocs = await read<{ id: string; title: string; published_at: string | null }>(
+        `SELECT d.id,d.title,d.published_at FROM knowledge_documents d
+ JOIN console_public_documents p ON p.id=d.id AND p.version=d.version
+ WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
+ AND d.published_at IS NOT NULL
+${q.publishedBefore ? " AND d.published_at < ?" : ""}
+ AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
+ ORDER BY d.published_at DESC LIMIT 80`,
+        q.publishedBefore ? [q.publishedBefore] : [],
+      );
+      const ids = recentDocs.results.map((r) => r.id);
+      recentDocCount = ids.length;
+      if (ids.length) {
+        const chunks = await read<ChunkRow>(
+          `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,0 AS score
+ FROM knowledge_chunks k JOIN knowledge_documents d ON d.id=k.document_id
+ WHERE k.document_id IN(${ids.map(() => "?").join(",")}) AND k.index_version=?
+ ORDER BY d.published_at DESC, CASE WHEN k.text_basis='title' THEN 1 ELSE 0 END, k.start_offset ASC LIMIT 400`,
+          [...ids, RETRIEVAL_INDEX_VERSION],
+        );
+        const seen = new Set<string>();
+        recentChunks = chunks.results.filter((c) => {
+          if (seen.has(c.document_id)) return false;
+          seen.add(c.document_id);
+          return true;
+        });
+        metrics.recallLanes.push({
+          name: "recent_all",
+          limit: 80,
+          candidates: recentChunks.length,
+        });
+      }
     }
     // Business filters allow unknown/mixed content through: they never determine eligibility.
-    const candidateLanes: ChunkRow[][] = recentChunks.length
-      ? [recentChunks]
-      : [];
-    if (!recentChunks.length)
+    const candidateLanes: ChunkRow[][] = titleChunks.length
+      ? [titleChunks]
+      : recentChunks.length
+        ? [recentChunks]
+        : [];
+    if (!titleChunks.length && !recentChunks.length)
       for (const lane of lanes) {
       const local = lane.ids?.length
         ? ` AND k.document_id IN(${lane.ids.map(() => "?").join(",")})`
@@ -513,7 +611,7 @@ ${q.publishedBefore ? " AND d.published_at < ?" : ""}
         sourceName: d.display_name,
         contentSnippet: c.text,
       });
-      if (sortMode !== "published_desc" && !relevance.relevant) continue;
+      if (!q.title && sortMode !== "published_desc" && !relevance.relevant) continue;
       if (
         subjectTerms.length &&
         !subjectTerms.some(

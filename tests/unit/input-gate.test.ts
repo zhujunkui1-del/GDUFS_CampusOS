@@ -29,6 +29,10 @@ it("classifies every turn before retrieval", () => {
   // A bare campus event name the fixed keyword list does not know yet.
   expect(inputGate("秋之声")).toBe("campus");
   expect(inputGate("了解下秋之声")).toBe("campus");
+  // Corner-bracket titles are the citation style used by campus articles.
+  expect(
+    inputGate("帮我找到「光影无界·师生影像作品展」这篇文章"),
+  ).toBe("campus");
   // A follow-up about the topic the user just named must stay campus even when
   // the fixed keyword list does not contain that event name.
   expect(

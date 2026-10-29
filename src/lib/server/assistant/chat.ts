@@ -839,6 +839,7 @@ function recentCursor(previous: { role: string; content: string }[]): string | u
                 // literal query terms here dropped exactly the newest AI articles
                 // and left only old ones that happened to contain 计算机.
                 if (
+                  !content.articleLookup &&
                   !(content.recentDiscovery && content.radarCategory) &&
                   !queryRelevance(relevancePlan, h).relevant
                 )
@@ -1097,6 +1098,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         content.recentDiscovery,
                         content.discoveryFollowup,
                         content.discoveryFollowup ? recentCursor(previous) : undefined,
+                        content.articleQuery,
                       ),
                       afterInitialReads: () => {
                         finalPhase = true;
@@ -1129,7 +1131,9 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                                       ? "奖学金"
                                       : content.radarCategory === "academic_research"
                                         ? "学术科研"
-                                        : "校园通知";
+                                        : content.radarCategory
+                                          ? "校园通知"
+                                          : "校园资讯";
                           const list = recentRadarAnswer(
                             [...cards.values()],
                             label,

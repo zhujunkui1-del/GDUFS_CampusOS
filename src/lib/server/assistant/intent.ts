@@ -48,7 +48,39 @@ export function explicitMapCommand(message: string): MapAction | null {
     return { type: "CLEAR_ROUTE" };
   return null;
 }
+
+/** A request for a specific article, not a place. */
+export function wantsArticle(message: string) {
+  const text = message.normalize("NFKC");
+  return (
+    /(?:文章|这篇|原文|报道|新闻稿|全文|标题)/.test(text) ||
+    /[《「『“"][^》」』”"]{4,200}[》」』”"]/.test(text)
+  );
+}
+/** Best-effort title extraction; the retriever still has to verify it exists. */
+export function articleTitle(message: string) {
+  const text = message.trim();
+  if (!wantsArticle(text)) return undefined;
+  const quoted =
+    text.match(/[《「『“"]([^》」』”"]{4,300})[》」』”"]/) ||
+    text.match(/[‘']([^’']{4,300})[’']/);
+  let title = quoted?.[1];
+  if (!title) {
+    const match = text.match(
+      /(?:帮我找到|找到|查找|搜索|搜一下|查一下|要|给我)\s*[:：]?\s*(.{4,300}?)(?:这篇文章|文章|原文|报道)?[。！？!?]*$/,
+    );
+    title = match?.[1];
+  }
+  if (!title) return undefined;
+  const cleaned = title
+    .replace(/^(?:那篇|这篇|一篇)\s*/, "")
+    .replace(/\s*(?:这篇文章|文章|原文|报道)[。！？!?]*$/, "")
+    .trim();
+  return cleaned.length >= 4 ? cleaned.slice(0, 300) : undefined;
+}
+
 export function requiresPlaceLookup(message: string) {
+  if (wantsArticle(message)) return false;
   if (/不要|不必|不用|别找/.test(message) || /附近/.test(message)) return false;
   if (/从.+(?:去|到)|路线|怎么走/.test(message)) return false;
   // Canteen order aliases (一饭) and named facilities are real map places; asking

@@ -251,3 +251,28 @@ it("identical long article bodies deduplicate and retain the other public origin
     f.close();
   }
 });
+
+it("looks up a long quoted article title without a LIKE pattern", async () => {
+  const f = await dateGateFixture();
+  try {
+    const title =
+      "历练安保精兵 共筑平安校园—— 保卫部工会举办2026年体能大练兵暨趣味体能挑战赛-广东外语外贸大学工会委员会";
+    await article(
+      f,
+      "保卫部工会举办体能大练兵，设置趣味体能挑战赛项目。",
+      "long-title",
+      false,
+      "https://example.invalid/long-title",
+      title,
+    );
+    await ensureRetrievalIndex(f.db, "long-title");
+    const r = await new D1KeywordRetriever(f.db).retrieve(
+      { query: title, title },
+      PUBLIC_RETRIEVAL_SCOPE,
+    );
+    expect(r.hits.map((h) => h.documentId)).toContain("long-title");
+  } finally {
+    f.close();
+  }
+});
+

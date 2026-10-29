@@ -6,7 +6,7 @@ export type InputGate =
   "campus" | "greeting" | "off_topic" | "blocked" | "vague";
 
 const CAMPUS_SIGNAL =
-  /学校|校园|广外|广东外语外贸大学|大学城|南校|北校|白云山|云山学者|云山青年学者|云山领军|食堂|饭堂|一饭|二饭|三饭|宿舍|南苑|北苑|图书馆|教学楼|实验楼|体育馆|操场|门诊部|门诊楼|门诊室|校医院|超市|又康|便利店|打印店|快递|奖学金|教务|辅导员|学院|社团|讲座|比赛|竞赛|报名|通知|公告|选课|考试|课程|就业|招聘|活动|政策|规定|制度|办理|申请|地图|路线|导航|定位|校车|校历|校规|校史|号门|贝岗门|校门|大门|东门|南门|西门|北门|[一二三四五六七八九十\d]+栋|[\u4e00-\u9fa5]{1,6}(?:楼|桥|馆|场|园)|排球|篮球|足球|羽毛球|网球|乒乓球|打球/;
+  /学校|校园|广外|广东外语外贸大学|大学城|南校|北校|白云山|云山学者|云山青年学者|云山领军|食堂|饭堂|一饭|二饭|三饭|宿舍|南苑|北苑|图书馆|教学楼|实验楼|体育馆|操场|门诊部|门诊楼|门诊室|校医院|超市|又康|便利店|打印店|快递|奖学金|资讯|新闻|动态|消息|教务|辅导员|学院|社团|讲座|比赛|竞赛|报名|通知|公告|选课|考试|课程|就业|招聘|活动|政策|规定|制度|办理|申请|地图|路线|导航|定位|校车|校历|校规|校史|号门|贝岗门|校门|大门|东门|南门|西门|北门|[一二三四五六七八九十\d]+栋|[\u4e00-\u9fa5]{1,6}(?:楼|桥|馆|场|园)|排球|篮球|足球|羽毛球|网球|乒乓球|打球/;
 
 const BLOCKED =
   /操你妈|草你妈|你妈死|你妈似|傻逼|煞笔|婊子|卖淫|嫖娼|约炮|裸聊|色情|毒品|冰毒|摇头丸|赌博|代考|代写论文|办假证|买枪|炸药/;
@@ -36,6 +36,13 @@ export function inputGate(
   if (BLOCKED.test(text)) return "blocked";
   if (GREETING.test(text)) return "greeting";
   if (!text) return "vague";
+  // A quoted article title or an explicit article request is a campus-data
+  // lookup even when the title itself contains no campus keyword.
+  if (
+    /(?:找|搜索|查|要|给我|帮我).{0,12}(?:文章|这篇|原文|报道|新闻稿|全文)/.test(text) ||
+    /[《「『“"][^》」』”"]{4,200}[》」』”"]/.test(text)
+  )
+    return "campus";
   if (CAMPUS_SIGNAL.test(text)) return "campus";
   // A question about a topic the user just named (e.g. "秋之声" then
   // "2026年的秋之声什么时候举行") is still that campus topic. The keyword
