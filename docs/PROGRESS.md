@@ -1490,3 +1490,26 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 - 复制毒化会话（34 条消息）到测试身份，`GET /api/agent/conversations/:id` 返回全部 34 条。
 - 向该会话发送「三下乡」，返回 200，`search_campus_knowledge`/`search_campus_events` 均成功，`requests:2`、`groundingChecks:1 supported`，不再 `INVALID_ARGUMENT`。
 - 浏览器打开助理面板，历史渲染 36 条消息（含本轮新增 2 条），不再只显示 10 条或「重试连接」。
+
+### 2026-10-30｜陈述式检索、正文优先与公告匹配
+
+负责人报告三类真实失败：陈述句（公报/通知）被校园闸门拒答；有正文和有效 URL 的文章只说「标题存在」；「关于开展地震受灾学生临时困难补助申请的通知」返回无关比赛。要求全程按「整句→关键词」检索，正文存在就按正文回答。
+
+修复：
+
+- `src/lib/server/assistant/intent.ts`：新增 `titleLike`（长标题/通知公报）与 `isContentStatement`（校园陈述句）；`articleTitle` 支持无引号「关于…的通知」和带内层引号的标题。
+- `src/lib/server/assistant/content-intent.ts`：陈述句不再被 `off_topic` 拒绝，先按正文检索；文章查询同时带 `articleQuery` 与首段 4 字 `articleKeywords`，标题精确未命中时回退关键词；地图句不再误入内容检索；`timeWindow` 的陈述句追加事件检索。
+- `src/lib/server/assistant/read-plan.ts`：文章精确标题无证据时用首段关键词强制二次读取；`retrievalQuery` 去「关于」等引导词。
+- `src/lib/server/assistant/chat.ts`：`articleLookup` 命中且 `bodyAvailable` 时不再按单一来源/相关性过滤掉卡片，正文优先回答。
+- `src/lib/server/retrieval/retriever.ts`：`license_missing` 只按 `rightsScope` 判定，不再因 `editorial` 把可读正文误判为不可读。
+- `src/lib/server/assistant/content-prompt.ts`：陈述句先基于常识直接回答，再列检索到的校园事实与来源；有正文时复述要点，不退货式回「标题存在」。
+- Preview D1 将 `GDUFS-SRC-0008` 的 `manual_policy_version` 改为 3、`manual_rights_scope` 改为 `licensed_full_text`，使图书馆讲座正文可读（仅 Preview）。
+
+真实验收（Preview `ece1a7bf-4522-4a79-a7a4-006b892e24c7`）：
+
+- `党的二十届五中全会公报一图速览`：命中文章，按原文列出会议时间、出席人数、主要议程和来源，不再拒答。
+- `查找有没有关于开展地震受灾学生临时困难补助申请的通知`：命中 `关于开展地震受灾学生临时困难补助申请的通知`，回答发布日期、地震背景、申请对象、办理路径，不再返回比赛/交流项目。
+- `帮我找到“学习强馆”第六讲聚焦“十五五”时期大学图书馆发展路径与服务创新这篇文章`：命中正文，回答 2026-10-23 讲座要点，并指出原文标题是「空间服务创新」；不再只说「标题存在」。
+- `学校有几个校区`：先基于模型常识回答「两校区」，再补充检索结果与 3 个来源。
+- 长会话（第 13 条消息起）不再 `INVALID_ARGUMENT`；历史接口和前端均返回完整记录。
+- 全量 727/727；`tsc` 0；`npm run build` 0。

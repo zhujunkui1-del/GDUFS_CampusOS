@@ -49,35 +49,100 @@ export function explicitMapCommand(message: string): MapAction | null {
   return null;
 }
 
+/**
+ * An official-document / article title used as a message. This is deliberately
+ * narrower than "contains 活动/讲座": a question like “最近有什么讲座” must
+ * stay a discovery query, not become an exact-title lookup.
+ */
+const TITLE_ENDING =
+  /(?:通知|公告|公报|公示|名单|报道|新闻稿|全文|原文|速览|方案|办法|意见|决定|决议|报告|细则|条例)$/;
+export function titleLike(message: string) {
+  const text = message.normalize("NFKC").trim();
+  return (
+    /[《「『“"][^》」』”"]{4,300}[》」』”"]/.test(text) ||
+    (text.length >= 12 &&
+      /[《「『“"][^》」』”"]{1,300}[》」』”"]/.test(text) &&
+      /图书馆|大学|学院|讲座|讲坛|课程|论坛|会议|通知|公报|报告/.test(text)) ||
+    (text.length >= 12 && TITLE_ENDING.test(text))
+  );
+}
+export function isContentStatement(message: string) {
+  const text = message.normalize("NFKC").trim();
+  if (/最近|近期|最新|有哪些|有什么|情况|信息|新闻|资讯|动态/.test(text))
+    return false;
+  if (!text || /[?？]|(?:吗|呢)\s*$/u.test(text)) return false;
+  if (/^(?:你|您|本鱼|大肥鱼)|我是|我喜欢|我爱你|谢谢你?|晚安|早安|你好/.test(text))
+    return false;
+  return (
+    text.length >= 6 &&
+    /广外|学校|校园|学院|大学|图书馆|老师|教授|院长|学生|通知|公告|公报|讲座|论坛|会议|比赛|竞赛|活动|政策|名单|公示|奖学金|宿舍|食堂|社团|报名|考试|课程/.test(
+      text,
+    )
+  ) ||
+    titleLike(text);
+}
 /** A request for a specific article, not a place. */
 export function wantsArticle(message: string) {
   const text = message.normalize("NFKC");
   return (
     /(?:文章|这篇|原文|报道|新闻稿|全文|标题)/.test(text) ||
-    /[《「『“"][^》」』”"]{4,200}[》」』”"]/.test(text)
+    /[《「『“"][^》」』”"]{4,200}[》」』”"]/.test(text) ||
+    titleLike(text)
   );
 }
 /** Best-effort title extraction; the retriever still has to verify it exists. */
 export function articleTitle(message: string) {
   const text = message.trim();
   if (!wantsArticle(text)) return undefined;
-  const quoted =
-    text.match(/《([^》]{4,300})》/) ||
+  const book = text.match(/《([^》]{4,300})》/);
+  const outer =
     text.match(/[「『“"]([^》」』”"]{4,300})[》」』”"]/) ||
     text.match(/[‘']([^’']{4,300})[’']/);
-  let title = quoted?.[1];
-  if (!title) {
-    const match = text.match(
-      /(?:帮我找到|找到|查找|搜索|搜一下|查一下|要|给我)\s*[:：]?\s*(.{4,300}?)(?:这篇文章|文章|原文|报道)?[。！？!?]*$/,
-    );
-    title = match?.[1];
+  let title = book?.[1];
+  if (!title && outer) {
+    // A title often contains inner quotes (“十五五”). Only treat a quoted
+    // fragment as the title when the rest of the message is just a request
+    // wrapper; otherwise the whole message is the title.
+    const remainder = text
+      .replace(outer[0], "")
+      .replace(
+        /^(?:请|帮我|麻烦|我想|想|要|在校园雷达里|在校园知识库里|在雷达里|在知识库里|查找|查|搜索|搜|找|看看|看下|了解一下|了解)\s*/g,
+        "",
+      )
+      .replace(/(?:这篇文章|这篇报道|文章|原文|报道|新闻稿|全文)[。！？!?]*$/g, "")
+      .trim();
+    if (remainder.length > 4) title = undefined;
+    else title = outer[1];
   }
-  if (!title) return undefined;
-  const cleaned = title
+  if (!title) {
+    const cleaned = text
+      .replace(
+        /^(?:请|帮我|麻烦|我想|想|要|在校园雷达里|在校园知识库里|在雷达里|在知识库里|查找|查|搜索|搜|找|看看|看下|了解一下|了解)\s*/g,
+        "",
+      )
+      .replace(/^(?:有没有|是否有)\s*/g, "")
+      .replace(/(?:这篇文章|这篇报道|文章|原文|报道|新闻稿|全文)[。！？!?]*$/g, "")
+      .trim();
+    title = cleaned;
+  }
+  const normalized = title
     .replace(/^(?:那篇|这篇|一篇)\s*/, "")
-    .replace(/\s*(?:这篇文章|文章|原文|报道)[。！？!?]*$/, "")
     .trim();
-  return cleaned.length >= 4 ? cleaned.slice(0, 300) : undefined;
+  return normalized.length >= 4 ? normalized.slice(0, 300) : undefined;
+}
+/** Keywords for the second pass after the exact title misses. */
+export function searchKeywords(message: string) {
+  const text = message
+    .normalize("NFKC")
+    .replace(/[《》「」『』“”‘’"']/g, " ")
+    .replace(
+      /(?:有没有|是否有|请问|帮我|麻烦|我想|想|要|在校园雷达里|在校园知识库里|查找|查一下|查下|查|搜索|搜一下|搜下|搜|找一下|找找|找|看看|看下|了解一下|了解|介绍一下|介绍|关于|这篇文章|这篇报道|文章|原文|报道|新闻稿|全文|一图速览)/g,
+      " ",
+    )
+    .replace(/[，,。！!？?；;：:、]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return text.length >= 2 ? text.slice(0, 120) : "";
 }
 
 export function requiresPlaceLookup(message: string) {

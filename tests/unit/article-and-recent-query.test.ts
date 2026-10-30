@@ -61,6 +61,32 @@ describe("article lookup is not a place lookup", () => {
     expect(intent.articleQuery).toContain("历练安保精兵");
   });
 });
+describe("titles and statements are not off-topic", () => {
+  it("lets a political bulletin and an official notice reach campus search", () => {
+    expect(inputGate("党的二十届五中全会公报一图速览")).toBe("campus");
+    expect(
+      inputGate("查找有没有关于开展地震受灾学生临时困难补助申请的通知"),
+    ).toBe("campus");
+  });
+  it("keeps a full title that contains inner quotes", () => {
+    const intent = contentIntent(
+      "学习强馆第六讲聚焦“十五五”时期大学图书馆发展路径与服务创新",
+    );
+    expect(intent.articleLookup).toBe(true);
+    expect(intent.articleQuery).toContain("学习强馆第六讲");
+    expect(intent.articleQuery).toContain("十五五");
+    expect(intent.map).toBe(false);
+  });
+  it("extracts the earthquake notice title and searches knowledge", () => {
+    const intent = contentIntent(
+      "查找有没有关于开展地震受灾学生临时困难补助申请的通知",
+    );
+    expect(intent.articleLookup).toBe(true);
+    expect(intent.articleQuery).toContain("地震受灾学生临时困难补助");
+    expect(intent.tools).toEqual(["search_campus_knowledge"]);
+    expect(intent.active).toBe(true);
+  });
+});
 
 describe("recent radar queries keep the topic and drop filler words", () => {
   it("'竞赛活动情况' is still a competition recency request without a 情况 filter", () => {
@@ -114,5 +140,21 @@ describe("entity names are always keyword lookups", () => {
     ]) {
       expect(contentIntent(message).active, message).toBe(false);
     }
+  });
+});
+
+describe("title-like notices and map disambiguation", () => {
+  it("treats an unquoted 关于…通知 as an article lookup", () => {
+    const intent = contentIntent(
+      "查找有没有关于开展地震受灾学生临时困难补助申请的通知",
+    );
+    expect(intent.articleLookup).toBe(true);
+    expect(intent.articleQuery).toBe(
+      "关于开展地震受灾学生临时困难补助申请的通知",
+    );
+  });
+  it("does not route a place request through content search", () => {
+    expect(contentIntent("帮我找图书馆").active).toBe(false);
+    expect(contentIntent("从南苑7栋去图书馆").active).toBe(false);
   });
 });

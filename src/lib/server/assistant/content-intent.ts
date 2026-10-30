@@ -3,7 +3,7 @@ import { externalPolicy } from "../external-search/policy";
 import { requestTimeWindow } from "./time-window";
 import { dialogueReply } from "./dialogue";
 import { campusFoodQuery, queryFocus } from "@/lib/retrieval/query-focus";
-import { articleTitle, wantsArticle } from "./intent";
+import { articleTitle, isContentStatement, searchKeywords, wantsArticle } from "./intent";
 import { buildQueryPlan } from "@/lib/retrieval/query-plan";
 import {
   conversationAct,
@@ -171,9 +171,23 @@ export function contentIntent(
   // retriever as a title filter so the exact document can be recovered.
   const articleQuery = articleTitle(message);
   const articleLookup = !!articleQuery || wantsArticle(message);
+  // Declarative campus statements should get a natural answer *and* a search,
+  // not a hard platform refusal. The search uses the sentence as written first
+  // and its keywords second (retry lives in contentReadPlan).
+  const contentStatement = !articleLookup && isContentStatement(message);
+  // Exact titles often differ by typographic quotes or a suffix added by the
+  // site. Keep a short leading fragment as the fallback query so a title with
+  // inner quotes can still be recalled by FTS.
+  const articleKeywords =
+    articleLookup && articleQuery
+      ? articleQuery
+          .replace(/[《》「」『』“”"']/g, "")
+          .replace(/\s+/g, "")
+          .slice(0, 4)
+      : searchKeywords(message);
   const map =
     !articleLookup &&
-    /(?:地图|定位|路线|导航|在哪里|告诉我.*哪里|带我去|带我走|带我过去|导航到|导航去|怎么去|如何去|怎样去)/.test(
+    /(?:地图|定位|路线|导航|在哪里|告诉我.*哪里|带我去|带我走|带我过去|导航到|导航去|怎么去|如何去|怎样去|从.+?(?:去|到)|(?:帮我找|找一下|找)(?:图书馆|教学楼|饭堂|食堂|超市|宿舍|校门|体育馆|操场|打印店|快递|校医院))/.test(
       message,
     );
   // Radar tags are the product's own business categories. Lock the event search
@@ -215,6 +229,7 @@ export function contentIntent(
     !urgent &&
     !isFeedbackAct(act) &&
     (articleLookup ||
+      contentStatement ||
       entityLookup ||
       recentDiscovery ||
       knowledge ||
@@ -229,13 +244,19 @@ export function contentIntent(
     if (entityLookup) {
       tools.push("search_campus_knowledge", "search_campus_events");
     } else if (articleLookup) tools.push("search_campus_knowledge");
-    else {
+    else if (contentStatement) {
+      tools.push("search_campus_knowledge");
+      // A time-bounded "what happened this week" request is events content
+      // even when it does not name a radar tag.
+      if (timeWindow) tools.push("search_campus_events");
+    } else {
       if (knowledge) tools.push("search_campus_knowledge");
       if (events) tools.push("search_campus_events");
       if (!tools.length) tools.push("search_campus_knowledge");
     }
   }
   const strictFact =
+    articleLookup ||
     knowledge ||
     events ||
     entityLookup ||
@@ -291,7 +312,11 @@ export function contentIntent(
       ? entityTerm.slice(-300)
       : broadListQuery
       ? broadListQuery
-      : declarativeRequest
+      : articleLookup
+        ? articleQuery!.slice(-300)
+        : contentStatement
+          ? coreQuery.slice(-300)
+          : declarativeRequest
         ? coreQuery.slice(-300)
         : discovery || recentDiscovery
       ? coreQuery
@@ -326,6 +351,8 @@ export function contentIntent(
     articleLookup,
     entityLookup,
     articleQuery,
+    articleKeywords,
+    contentStatement,
     multiTopic,
     discoveryFollowup: !!previousDiscovery,
   };

@@ -1,3 +1,4 @@
+import { titleLike } from "./intent";
 /**
  * Every turn is classified before any retrieval. Categories 2–4 must never
  * reach a search tool.
@@ -44,6 +45,10 @@ export function inputGate(
   )
     return "campus";
   if (CAMPUS_SIGNAL.test(text)) return "campus";
+  // A pasted official-document / article title is a campus knowledge lookup,
+  // even when the title itself has no "广外". Without this, titles such as
+  // “党的二十届五中全会公报一图速览” are refused before retrieval.
+  if (titleLike(text)) return "campus";
   // A question about a topic the user just named (e.g. "秋之声" then
   // "2026年的秋之声什么时候举行") is still that campus topic. The keyword
   // list cannot know every event and club name, so carry the user's own noun.

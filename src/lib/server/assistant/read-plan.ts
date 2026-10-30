@@ -92,12 +92,13 @@ export function contentReadPlan(
   discoveryFollowup = false,
   recentBefore?: string,
   articleTitle?: string,
+  articleKeywords?: string,
 ): PlannedRead[] {
   const external = publicQuery(query);
-  const inputFor = (name: ContentTool, text: string) => ({
+  const inputFor = (name: ContentTool, text: string, exactTitle = true) => ({
     query: text,
-    ...(articleTitle ? { title: articleTitle } : {}),
-    limit: articleTitle ? 3 : recentDiscovery ? 5 : 3,
+    ...(exactTitle && articleTitle ? { title: articleTitle } : {}),
+    limit: exactTitle && articleTitle ? 3 : recentDiscovery ? 5 : 3,
     ...(recentDiscovery ? { sort: "published_desc" as const } : {}),
             ...(recentDiscovery && recentBefore ? { publishedBefore: recentBefore } : {}),
     ...(name === "search_campus_events" && radarCategory && radarCategory !== "culture_sports"
@@ -118,9 +119,29 @@ export function contentReadPlan(
         when: () => !hasUsableEvidence(),
       })),
   );
+  // Exact-title misses and long statements fall back to their content words.
+  // This is a second read plan, not a second answer template: evidence still
+  // comes from the same tools and the same D1 rows.
+  const keywordRetries: PlannedRead[] =
+    articleKeywords && articleKeywords !== retrievalQuery
+      ? tools.map((name) => ({
+          name,
+          input: {
+            ...inputFor(name, articleKeywords, false),
+            // A short literal prefix is an exact title lookup, not a semantic
+            // paraphrase; instr() finds it even when the stored title wraps a
+            // fragment in typographic quotes.
+            ...(articleTitle ? { title: articleKeywords } : {}),
+          },
+          // A full-title FTS read can return unrelated rows with bodies and
+          // make hasUsableEvidence true; the title-keyword read must still run.
+          when: articleTitle ? () => true : () => !hasUsableEvidence(),
+        }))
+      : [];
   return [
     ...primary,
     ...retries,
+    ...keywordRetries,
     ...(external && policy.active
       ? [
           {

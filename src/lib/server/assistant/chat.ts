@@ -1110,6 +1110,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                           ? recentCursor(previous)
                           : undefined,
                         content.articleQuery,
+                        content.articleKeywords,
                       ),
                       afterInitialReads: () => {
                         finalPhase = true;
