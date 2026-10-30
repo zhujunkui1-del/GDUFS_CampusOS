@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   Radar,
   BookOpen,
-  CalendarDays,
   Bookmark,
   UserRound,
   ArrowUpRight,
@@ -25,15 +24,6 @@ const pages = {
     empty: "知识来源尚未接入",
     detail: "经核验的官方资料接入后，可在此检索并查看原文及适用范围。",
     icon: BookOpen,
-  },
-  schedule: {
-    eyebrow: "我的校园",
-    title: "个人日程",
-    text: "课程、任务与校园路线，在一个时间表里安排。",
-    empty: "登录服务尚未开放",
-    detail:
-      "账号服务接入后，可以由你录入或导入课表，经核对后保存到自己的账号。",
-    icon: CalendarDays,
   },
   favorites: {
     eyebrow: "我的校园",

@@ -16,6 +16,12 @@ export function validateArticleAnalysis(
   if (a.classifierVersion !== ARTICLE_CLASSIFIER_VERSION)
     throw Error("ARTICLE_CLASSIFIER_VERSION_MISMATCH");
   const check = (e: ArticleEvidence) => {
+    if (e.sourceId) {
+      const source = input.calendarSources?.find((s) => s.id === e.sourceId);
+      if (!source || source.text.slice(e.startOffset, e.endOffset) !== e.text)
+        throw Error("CALENDAR_SOURCE_EVIDENCE_MISMATCH");
+      return;
+    }
     if (!evidenceValid(text, e)) throw Error("ARTICLE_EVIDENCE_MISMATCH");
   };
   const point = (p: ArticleTimePoint | null) => {
@@ -30,6 +36,13 @@ export function validateArticleAnalysis(
   };
   for (const e of a.classificationEvidence) check(e);
   for (const event of a.activities) {
+    if (
+      event.calendar?.eligible &&
+      (!event.startsAt?.date ||
+        event.calendar.nature === "uncertain" ||
+        event.calendar.nature === "award")
+    )
+      throw Error("CALENDAR_EVENT_NOT_SUPPORTED");
     for (const e of event.evidence) check(e);
     point(event.startsAt);
     point(event.endsAt);
@@ -53,5 +66,18 @@ export function validateArticleAnalysis(
   point(a.knowledge.effectiveUntil);
   if (a.bodyAvailable !== text.bodyAvailable)
     throw Error("ARTICLE_BODY_AVAILABILITY_MISMATCH");
+  if (
+    a.calendar?.sources.some(
+      (s) =>
+        !input.calendarSources?.some(
+          (i) =>
+            i.id === s.id &&
+            i.digest === s.digest &&
+            i.text === s.text &&
+            i.url === s.url,
+        ),
+    )
+  )
+    throw Error("CALENDAR_SOURCE_ATTESTATION_MISMATCH");
   return a;
 }

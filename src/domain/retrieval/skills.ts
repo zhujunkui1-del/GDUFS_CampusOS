@@ -87,6 +87,7 @@ export const RetrievedActivitySchema = z
         precision: z.literal("building"),
       })
       .nullable(),
+    calendarUrl: z.string().optional(),
   })
   .strict();
 export const ContentSearchResultSchema = RetrievalResultSchema.extend({

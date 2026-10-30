@@ -13,7 +13,6 @@ import {
   timePast,
 } from "@/lib/retrieval/registration-state";
 import { activityStatus } from "@/lib/ingestion/article-times";
-import { searchCampusPlaces } from "@/features/campus-map/data/campus";
 import type { SqlDatabase } from "../assistant/database";
 import { D1KeywordRetriever } from "./retriever";
 import { requestSemanticRetriever } from "./vector";
@@ -23,6 +22,7 @@ import type { TimeWindow } from "../assistant/time-window";
 import { requestTimeWindow } from "../assistant/time-window";
 import { universityScope } from "../assistant/grounding";
 import { completeSnippetTimes } from "@/lib/retrieval/snippet-time";
+import { calendarContentSearch } from "../calendar/search";
 
 const time = (t: ArticleTimePoint | null) =>
   t
@@ -38,27 +38,8 @@ const time = (t: ArticleTimePoint | null) =>
         evidence: t.evidence.text.slice(0, 240),
       }
     : null;
-/** Only a unique, explicit University Town building can feed the existing map. */
-export function articleMapPlace(raw: string | null) {
-  if (!raw || !/大学城|南校区/.test(raw) || /白云|北校区|校外|线上/.test(raw))
-    return null;
-  const normalized = raw
-    .replace(/广东外语外贸大学|广外|大学城校区|大学城|南校区|[（()）]/g, "")
-    .trim();
-  const matches = searchCampusPlaces("").filter((p) =>
-    [p.name, ...(p.aliases || [])].some(
-      (n) => n.length >= 3 && normalized.includes(n),
-    ),
-  );
-  const unique = [...new Map(matches.map((p) => [p.id, p])).values()];
-  return unique.length === 1
-    ? {
-        placeId: unique[0].id,
-        name: unique[0].name,
-        precision: "building" as const,
-      }
-    : null;
-}
+export { articleMapPlace } from "@/lib/retrieval/activity-place";
+import { articleMapPlace } from "@/lib/retrieval/activity-place";
 export async function searchContent(
   db: SqlDatabase,
   purpose: "knowledge" | "events",
@@ -97,6 +78,8 @@ export async function searchContent(
   }
   if (event?.after && event.before && event.after > event.before)
     throw new ApiError("INVALID_ARGUMENT", "开始日期不能晚于结束日期。");
+  if (event?.after && event.before)
+    return calendarContentSearch(db, event, now);
   let documentIds: string[] | undefined;
   let filterMetrics = {
     rowsRead: 0,
@@ -164,7 +147,10 @@ export async function searchContent(
   void _before;
   void _role;
   void _reg;
-  const search = await new D1KeywordRetriever(db, requestSemanticRetriever()).search(
+  const search = await new D1KeywordRetriever(
+    db,
+    requestSemanticRetriever(),
+  ).search(
     {
       ...base,
       purpose,

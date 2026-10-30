@@ -23,7 +23,7 @@ const navigation = [
   { href: "/map", label: "校园地图", short: "地图", icon: Map },
   { href: "/radar", label: "校园雷达", short: "雷达", icon: Radar },
   { href: "/knowledge", label: "校园知识", short: "知识", icon: BookOpen },
-  { href: "/schedule", label: "个人日程", short: "日程", icon: CalendarDays },
+  { href: "/calendar", label: "活动日历", short: "日历", icon: CalendarDays },
   { href: "/favorites", label: "我的收藏", short: "收藏", icon: Bookmark },
   { href: "/account", label: "我的账号", short: "我的", icon: UserRound },
 ];

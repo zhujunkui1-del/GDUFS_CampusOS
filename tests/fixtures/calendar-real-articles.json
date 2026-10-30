@@ -1,0 +1,199 @@
+{
+  "kind": "manually_labelled_real_source_excerpts",
+  "capturedAt": "2026-10-30T14:57:21.936Z",
+  "note": "Original context excerpts, not synthetic notices. Labels were set by reading the event/administrative date roles; not copied from predictions. Exact time is checked only when annotated.",
+  "cases": [
+    {
+      "id": "content-044c36ce-a546-49c8-9bfd-6e0341b8c953",
+      "sourceUrl": "https://zg.gdufs.edu.cn/info/1003/14879.htm",
+      "sourceName": "社会与公共管理学院",
+      "input": {
+        "title": "关于举办第八届华南地区MPA教育发展研讨会的通知-社会与公共管理学院",
+        "body": "2.会议时间：2026年11月15日（周日）（11月14日14:30开始报到）。\n3.会议地点：广东外语外贸大学白云山校区行政楼国际会议厅（广东省广州市白云区白云大道北2号）。\n5.报到地点：11月14日到会人员可在广外文化交流中心大堂报到，亦可于11月15日到会议现场报到。11月15日到会人员直接在会议现场报到。",
+        "publishedAt": "2026-10-12",
+        "originalUrl": "https://zg.gdufs.edu.cn/info/1003/14879.htm"
+      },
+      "expected": {
+        "dates": ["2026-11-15"],
+        "end": null,
+        "time": null
+      }
+    },
+    {
+      "id": "content-2a4845bd-9b8e-4f86-b9d8-7e325b0cfceb",
+      "sourceUrl": "https://sits.gdufs.edu.cn/info/1186/7816.htm",
+      "sourceName": "高级翻译学院",
+      "input": {
+        "title": "【会议通知】中国比较文学学会翻译研究分会2026年年会暨“人工智能时代的文学翻译”学术研讨会（一号通知）-广东外语外贸大学高级翻译学院",
+        "body": "随着大语言模型与神经网络机器翻译技术的迅猛发展，人工智能已深度介入文学翻译的实践场域与理论话语，既带来前所未有的效率提升与资源普惠，也引发关于文学性、创造性、译者主体性及翻译伦理的广泛讨论。在此背景下，中国比较文学学会翻译研究分会、中外语言文化比较学会翻译文化研究专委会、广东外语外贸大学高级翻译学院定于2026年12月4-6日在广州举办“中国比较文学学会翻译研究分会2026年年会暨‘人工智能时代的文学翻译’学术研讨会”。会议将邀请知名专家就相关议题做大会主旨报告，同时欢迎各位翻译学者、研究生参会交流。\n时间：2026年12月4-6日（4日报到，5日会议，6日离会）\n地点：广东外语外贸大学（白云山校区）\n请有意参会的专家、学者和研究生即日起扫描以下二维码提交个人报名信息及摘要，截止时间为2026年10月10日。会议筹备组经审阅研究后，将于2026年10月31日之前发出正式邀请函（电子版），纸质版请在报到时领取。",
+        "publishedAt": "2026-09-05",
+        "originalUrl": "https://sits.gdufs.edu.cn/info/1186/7816.htm"
+      },
+      "expected": {
+        "dates": ["2026-12-05"],
+        "end": null,
+        "time": null
+      }
+    },
+    {
+      "id": "wx-90950e6040ce7488fc5555e403ee536c532f8cbd",
+      "sourceUrl": "https://mp.weixin.qq.com/s/MBcPmO7ocZeNhollx2WrCw",
+      "sourceName": "广东外语外贸大学经济贸易学院",
+      "input": {
+        "title": "征文启事 | 第七届全国高校国际贸易学科协作组国际商务论坛征文通知",
+        "body": "当前，全球经济面临高度的不确定性，世界经济复苏乏力，地缘政治冲突加剧，保护主义、单边主义上升，供应链重构风险加剧，在充满不确定性的世界格局中，国际商务发展也面临着前所未有的挑战。同时，新一轮科技革命和产业变革深入发展，全球经贸合作网络格局演变，为全球商务领域的理论研究和实践创造了越来越多的机会。在此背景下，为了进一步推动国际商务领域的理论研究与企业实践，第七届全国高校国际贸易学科协作组国际商务论坛定于2026年11月20日—22日在广东外语外贸大学（白云山校区）举行。\n请于2026年11月6日24:00前提交论文全文（以电子邮件发送时间为准）。论文可用中文或英文撰写，且未在其他刊物或论文集上公开发表过。在论坛征文截止后，论坛组委会将组织专家对提交的论文进行评审。受邀宣讲的论文的作者参会通知将于2026年11月8日前发出。最终版议程将于2026年11月15日前发出。",
+        "publishedAt": "2026-10-22T05:36:10.000Z",
+        "originalUrl": "https://mp.weixin.qq.com/s/MBcPmO7ocZeNhollx2WrCw"
+      },
+      "expected": {
+        "dates": ["2026-11-20"],
+        "end": "2026-11-22",
+        "time": null
+      }
+    },
+    {
+      "id": "wx-52059214d814e4642518bcc10d9381e443d02d3a",
+      "sourceUrl": "https://mp.weixin.qq.com/s/sWOQnBnD8koCNuKuZ_MMUA",
+      "sourceName": "广外留学服务中心",
+      "input": {
+        "title": "南加大传播学院推出全新STEMS硕士，融合传播+数据+AI，已开放27fall申请！",
+        "body": "近日，南加州大学传播与新闻学院官宣推出全新STEM硕士项目——应用传播研究理学硕士（MS in Applied Communication Research），该项目是学院在原有Communication Management项目体系基础上延伸出来的STEM方向硕士项目，全日制项目时长两年，且目前已开放27Fall入学申请，并将于2026年11月16日截止。\n申请要求\n• 申请费：120美元\n申请时间\n27Fall申请开放：2026年10月1日\n国际申请者截止：2026年11月16日\n美国本土申请者截止：2027年1月22日\n同学们，还在等什么，赶紧行动起来吧！如需了解更多项目的申请信息，或想了解自己的条件能申请到哪些学校的哪些项目，欢迎扫描文中二维码咨询，定制专属于你的留学申请方案！！\n专业研究生留学申请机构",
+        "publishedAt": "2026-10-16T09:15:00.000Z",
+        "originalUrl": "https://mp.weixin.qq.com/s/sWOQnBnD8koCNuKuZ_MMUA"
+      },
+      "expected": {
+        "dates": [],
+        "end": null,
+        "time": null
+      }
+    },
+    {
+      "id": "wx-14cbf4cb0ac3ae3adac3cc2f06b61b25589b4c49",
+      "sourceUrl": "https://mp.weixin.qq.com/s/PaCxlSdnWpXVkY6_kqh2Ug",
+      "sourceName": "广外公管学院",
+      "input": {
+        "title": "2026年志愿服务冬季论坛暨广州市社会学人类学学会年会会议通知（第一轮）",
+        "body": "为加强志愿服务、社会学与人类学领域的学术交流，分享最新研究成果与实践经验，广东外语外贸大学社会与公共管理学院/广东国际志愿服务研究院、中国社会学会志愿服务专业委员会、广州市社会学人类学学会拟于2026年12月19日在广东外语外贸大学联合举办“2026年志愿服务冬季论坛暨广州市社会学人类学学会年会”。会议以“志愿服务与社会发展：理论创新、地方实践与国际视野”为主题，诚邀全国相关领域的专家学者、青年研究者及实务工作者投稿参会。\n会议时间：2026年12月19日（星期六）\n会议地点：广东外语外贸大学大学城校区（广州市番禺区小谷围街外环东路178号）",
+        "publishedAt": "2026-10-29T07:56:19.000Z",
+        "originalUrl": "https://mp.weixin.qq.com/s/PaCxlSdnWpXVkY6_kqh2Ug"
+      },
+      "expected": {
+        "dates": ["2026-12-19"],
+        "end": null,
+        "time": null
+      }
+    },
+    {
+      "id": "wx-8c470c78a1f5ab949a653f277cbac121023e24e7",
+      "sourceUrl": "https://mp.weixin.qq.com/s/6diYQflEuwHrBjUN4gxBsg",
+      "sourceName": "广外MBA",
+      "input": {
+        "title": "【MBA大讲堂162】（新闻）陈梦雄：AI时代下人力资源的“守”与“变”",
+        "body": "2026年10月25日下午，由广东外语外贸大学商学院MBA教育中心主办的MBA大讲堂第162讲在白云山校区尚行·二号楼（MBA教育中心）103室顺利开讲。本次讲座特邀广东东升控股集团人力行政总经理、东升公益基金会秘书长陈梦雄先生，为同学们带来主题为《AI时代下人力资源的“守”与“变”》的专题分享。讲座由广东外语外贸大学商学院MBA教育中心主任张红明主持。",
+        "publishedAt": "2026-10-28T03:11:22.000Z",
+        "originalUrl": "https://mp.weixin.qq.com/s/6diYQflEuwHrBjUN4gxBsg"
+      },
+      "expected": {
+        "dates": ["2026-10-25"],
+        "end": null,
+        "time": null
+      }
+    },
+    {
+      "id": "wx-6e19823b4694f9dc7a398e59907d88c314bb6ced",
+      "sourceUrl": "https://mp.weixin.qq.com/s/cEIZoA9sPyrKztGgESfgJA",
+      "sourceName": "广外信息青年",
+      "input": {
+        "title": "信息科学与技术学院2026院运会报名通知",
+        "body": "✅ 比赛时间：2026年11月7日\n✅ 比赛地点：假草场",
+        "publishedAt": "2026-10-27T09:30:00.000Z",
+        "originalUrl": "https://mp.weixin.qq.com/s/cEIZoA9sPyrKztGgESfgJA"
+      },
+      "expected": {
+        "dates": ["2026-11-07"],
+        "end": null,
+        "time": null
+      }
+    },
+    {
+      "id": "wx-6f31103e0902284a2da1af5d76311774e4b4631d",
+      "sourceUrl": "https://mp.weixin.qq.com/s/mIhSVuRhlMfqjDyQaR5FTg",
+      "sourceName": "广外国际学院",
+      "input": {
+        "title": "11月1日校园体验日，昆士兰大学邀你见面！",
+        "body": "活动时间：2026年11月1日（星期日）14:00\n详情地点：广东外语外贸大学国际学院",
+        "publishedAt": "2026-10-20T04:02:26.000Z",
+        "originalUrl": "https://mp.weixin.qq.com/s/mIhSVuRhlMfqjDyQaR5FTg"
+      },
+      "expected": {
+        "dates": ["2026-11-01"],
+        "end": null,
+        "time": "14:00"
+      }
+    },
+    {
+      "id": "wx-6cf0ad3d10047a1991a92ff9f6d53e93d9af1221",
+      "sourceUrl": "https://mp.weixin.qq.com/s/TgH5_JPQ4mpQswI3UNnT0Q",
+      "sourceName": "广外会院青年",
+      "input": {
+        "title": "挑战杯 _ 2026年会计学院“小挑”选拔赛正式报名通知",
+        "body": "时间：11月7日",
+        "publishedAt": "2026-10-07T12:00:00.000Z",
+        "originalUrl": "https://mp.weixin.qq.com/s/TgH5_JPQ4mpQswI3UNnT0Q"
+      },
+      "expected": {
+        "dates": ["2026-11-07"],
+        "end": null,
+        "time": null
+      }
+    },
+    {
+      "id": "wx-4dd87e0b1f992c3f9304cfdafb85e9f6972a0f34",
+      "sourceUrl": "https://mp.weixin.qq.com/s/7k_NVKGJtIGp62UMb7cwLg",
+      "sourceName": "广外数统青年",
+      "input": {
+        "title": "最佳人气奖评选 _ 数统学院“笙歌赴韵”秋之声歌唱比赛",
+        "body": "时间沉淀的拿手歌是我的固定效应\n投票截止时间\n比赛时间\n2026年10月25日下午19：00\n比赛地点",
+        "publishedAt": "2026-10-19T03:02:45.000Z",
+        "originalUrl": "https://mp.weixin.qq.com/s/7k_NVKGJtIGp62UMb7cwLg"
+      },
+      "expected": {
+        "dates": ["2026-10-25"],
+        "end": null,
+        "time": "19:00"
+      }
+    },
+    {
+      "id": "content-63f679c5-1735-4600-87a8-e4ccecbdbd42",
+      "sourceUrl": "https://zg.gdufs.edu.cn/info/1003/14849.htm",
+      "sourceName": "社会与公共管理学院",
+      "input": {
+        "title": "中国社会工作教育协会2026年年会“国际社会工作与粤港澳大湾区社会服务融合”分论坛征文通知-社会与公共管理学院",
+        "body": "时间：2026年12月5-6日（具体日程以中国社会工作教育协会2026年会安排为准）\n地点：上海应用技术大学徐汇校区（上海市徐汇区漕宝路120号）",
+        "publishedAt": "2026-10-10",
+        "originalUrl": "https://zg.gdufs.edu.cn/info/1003/14849.htm"
+      },
+      "expected": {
+        "dates": ["2026-12-05"],
+        "end": "2026-12-06",
+        "time": null
+      }
+    },
+    {
+      "id": "wx-6ffb7ec6befd06b402e65dd02c20711adad0dd21",
+      "sourceUrl": "https://mp.weixin.qq.com/s/aed0Ft-yMIqfTFB7U04vzw",
+      "sourceName": "广外公管学院",
+      "input": {
+        "title": "中国社会工作教育协会2026年年会 “国际社会工作与粤港澳大湾区社会服务融合”分论坛征文通知",
+        "body": "时间：2026年12月5-6日（具体日程以中国社会工作教育协会2026年会安排为准）\n地点：上海应用技术大学徐汇校区（上海市徐汇区漕宝路120号）",
+        "publishedAt": "2026-10-10T06:33:29.000Z",
+        "originalUrl": "https://mp.weixin.qq.com/s/aed0Ft-yMIqfTFB7U04vzw"
+      },
+      "expected": {
+        "dates": ["2026-12-05"],
+        "end": "2026-12-06",
+        "time": null
+      }
+    }
+  ]
+}

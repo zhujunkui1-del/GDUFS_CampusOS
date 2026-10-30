@@ -31,6 +31,19 @@ export const AssistantCardSchema = z.discriminatedUnion("kind", [
       classificationState: z.enum(["knowledge", "radar", "unknown"]),
       validity: z.enum(["current", "historical", "expired", "unknown"]),
       readable: z.boolean(),
+      calendarLinks: z
+        .array(
+          z.object({
+            title: z.string().max(250),
+            href: z
+              .string()
+              .regex(
+                /^\/calendar\?date=\d{4}-\d{2}-\d{2}&event=event-[a-f0-9]{40}$/,
+              ),
+          }),
+        )
+        .max(6)
+        .optional(),
     })
     .strict(),
   z

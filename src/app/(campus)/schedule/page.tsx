@@ -1,4 +1,4 @@
-import { ModulePage } from "@/components/module-page";
+import { redirect } from "next/navigation";
 export default function SchedulePage() {
-  return <ModulePage page="schedule" />;
+  redirect("/calendar");
 }

@@ -31,12 +31,13 @@ function spans(text: ArticleText, start: number, end: number): Span[] {
 function ev(text: ArticleText, s: Span, role: string): ArticleEvidence {
   return evidence(text, "body", s.start, Math.min(s.end, s.start + 600), role);
 }
-function normalize(
+export function normalizeArticleTime(
   raw: string,
   s: Span,
   text: ArticleText,
   publishedAt: string | null,
   previous?: ArticleTimePoint | null,
+  contextYear?: { year: number; basis: string },
 ): ArticleTimePoint {
   const evidencePoint = ev(text, s, "time_expression");
   const clock = raw.match(/^(\d{1,2})[:：](\d{2})$/);
@@ -79,6 +80,10 @@ function normalize(
     year = +previous.date.slice(0, 4);
     if (month !== null && month < +previous.date.slice(5, 7)) year++;
     bases.push("同一区间起始年份，跨月/跨年顺序");
+  }
+  if (!year && contextYear) {
+    year = contextYear.year;
+    bases.push(contextYear.basis);
   }
   if (!year && publishedAt && /^20\d{2}-\d{2}-\d{2}/.test(publishedAt)) {
     const pub = new Date(
@@ -131,7 +136,7 @@ function points(s: Span, text: ArticleText, publishedAt: string | null) {
     const raw = match[0].trim();
     const pos = s.start + match.index! + match[0].indexOf(raw);
     result.push(
-      normalize(
+      normalizeArticleTime(
         raw,
         { text: raw, start: pos, end: pos + raw.length },
         text,

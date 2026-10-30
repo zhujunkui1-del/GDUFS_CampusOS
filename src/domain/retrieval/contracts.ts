@@ -36,6 +36,7 @@ export const RetrievalMetricsSchema = z.object({
   queries: z.number().int().nonnegative(),
   durationMs: z.number().nonnegative(),
   candidateChunks: z.number().int().nonnegative(),
+  candidateActivities: z.number().int().nonnegative().optional(),
   usageAvailable: z.boolean(),
   queryPlanVersion: z.literal("query-v2").optional(),
   recallLanes: z
@@ -57,7 +58,7 @@ export const EvidenceHitSchema = z
     contentSnippet: z.string().max(800),
     startOffset: z.number().int().nonnegative(),
     endOffset: z.number().int().nonnegative(),
-    evidenceBasis: z.enum(["normalized_text", "title"]),
+    evidenceBasis: z.enum(["normalized_text", "title", "activity_projection"]),
     evidenceType: z.enum(["full_text", "excerpt", "metadata"]),
     bodyAvailable: z.boolean(),
     bodyPartial: z.boolean(),
@@ -83,14 +84,18 @@ export const EvidenceHitSchema = z
         }),
       )
       .max(4),
+    calendarUrl: z
+      .string()
+      .regex(/^\/calendar\?date=\d{4}-\d{2}-\d{2}&event=event-[a-f0-9]{40}$/)
+      .optional(),
   })
   .strict();
 export type EvidenceHit = z.infer<typeof EvidenceHitSchema>;
 export const RetrievalResultSchema = z.object({
   hits: z.array(EvidenceHitSchema).max(6),
   metrics: RetrievalMetricsSchema,
-  indexVersion: z.literal(RETRIEVAL_INDEX_VERSION),
-  method: z.literal("fts5_keywords_and_domain_expansion"),
+  indexVersion: z.enum([RETRIEVAL_INDEX_VERSION, "calendar-v1"]),
+  method: z.enum(["fts5_keywords_and_domain_expansion", "calendar_index"]),
   warnings: z.array(z.string()).max(8),
 });
 export type RetrievalResult = z.infer<typeof RetrievalResultSchema>;

@@ -1,5 +1,10 @@
 import { z } from "zod";
 import {
+  CalendarSourceSchema,
+  CalendarReportSchema,
+  CalendarActivityMetaSchema,
+} from "@/domain/calendar/extraction";
+import {
   ContentTypeSchema,
   KnowledgeCategorySchema,
   RadarCategorySchema,
@@ -23,6 +28,7 @@ export const ArticleAnalysisInputSchema = z
     originalUrl: z.string().default(""),
     publishedAt: z.string().nullable().default(null),
     contentType: ContentTypeSchema.default("unknown"),
+    calendarSources: z.array(CalendarSourceSchema).max(4).default([]),
   })
   .strict();
 export type ArticleAnalysisInput = z.input<typeof ArticleAnalysisInputSchema>;
@@ -33,6 +39,7 @@ export const ArticleEvidenceSchema = z
     endOffset: z.number().int().nonnegative(),
     text: z.string().max(2000),
     role: z.string().max(80),
+    sourceId: z.string().max(100).optional(),
   })
   .strict()
   .refine(
@@ -99,6 +106,7 @@ export const ArticleActivitySchema = z
     status: DerivedEventStatusSchema,
     evidence: z.array(ArticleEvidenceSchema).max(20),
     issues: z.array(z.string()),
+    calendar: CalendarActivityMetaSchema.optional(),
   })
   .strict();
 export const ArticleAnalysisSchema = z
@@ -116,6 +124,7 @@ export const ArticleAnalysisSchema = z
     classifierVersion: z.string(),
     method: z.literal("rules"),
     needsAssistance: z.boolean(),
+    calendar: CalendarReportSchema.optional(),
     bodyAvailable: z.boolean(),
     registrationStatus: RegistrationRequirementSchema,
     hasRegistration: z.boolean(),

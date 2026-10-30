@@ -7,6 +7,8 @@ import {
   vectorBindings,
 } from "./src/lib/server/retrieval/vector";
 import handler from "./.open-next/worker.js";
+import { runCalendarBatch } from "./src/lib/server/calendar/processor";
+import type { CalendarAI } from "./src/lib/server/calendar/enrichment";
 import { runWithCloudflareRequestContext } from "./.open-next/cloudflare/init.js";
 import {
   previewApiHandler,
@@ -26,6 +28,13 @@ const previewWorker = {
       .run();
     await dispatchDue(env.DB as SqlDatabase);
     await runCloudWebBatch(env.DB as SqlDatabase);
+    if (env.CALENDAR_ENABLED === "true")
+      await runCalendarBatch(
+        env.DB as SqlDatabase,
+        env.CALENDAR_AUTO_ENRICH === "true"
+          ? (env.AI as CalendarAI)
+          : undefined,
+      ).catch(() => undefined);
     // Bounded preview-only semantic backfill; a batch failure is recorded and
     // retried by the next tick instead of blocking ingestion.
     if (backfillFlag(env)) {

@@ -1129,3 +1129,4 @@ p {
 @media (hover: hover) and (pointer: fine) {
   .assistant-history-open:hover { background: rgb(0 0 0 / 3%); border-radius: 16px; }
 }
+.assistant-calendar-links{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin:12px 0}.assistant-calendar-links a{color:var(--brand-primary);background:var(--brand-soft);border-radius:14px;padding:10px 14px;text-decoration:none;font-size:.9rem;line-height:1.5;overflow-wrap:anywhere}

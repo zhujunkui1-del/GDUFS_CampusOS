@@ -42,6 +42,7 @@ export function requestTimeWindow(
     // return the newest published items even when the event itself is over.
     range = [today, at(30)];
   } else if (/今天|今日/.test(query)) range = [today, today];
+  else if (/明天|明日/.test(query)) range = [at(1), at(1)];
   else if (/下个月/.test(query)) {
     const d = new Date(day);
     range = [

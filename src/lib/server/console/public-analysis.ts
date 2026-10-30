@@ -2,7 +2,6 @@ import { z } from "zod";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ArticleAnalysisSchema } from "@/domain/console/article-analysis";
 import { ConsoleIdSchema } from "@/domain/console/contracts";
-import { RadarCategorySchema } from "@/domain/console/taxonomy";
 import { primaryDatabase, type SqlDatabase } from "../assistant/database";
 import { withApi } from "../http";
 import { ApiError } from "../errors";
@@ -51,97 +50,8 @@ export async function readPublicAnalysis(
     analysis,
   };
 }
-const ActivitiesQuerySchema = z
-  .object({
-    category: RadarCategorySchema.optional(),
-    after: z.iso.date().optional(),
-    before: z.iso.date().optional(),
-    registration: z.literal("open").optional(),
-    limit: z.coerce.number().int().min(1).max(20).default(10),
-  })
-  .strict();
-export async function readPublicActivities(
-  db: SqlDatabase,
-  raw: unknown,
-  now = new Date().toISOString(),
-) {
-  const q = ActivitiesQuerySchema.parse(raw),
-    conditions = [
-      "a.kind<>'notice'",
-      "x.content_revision=d.content_revision",
-      "x.input_hash=d.input_hash",
-    ],
-    params: unknown[] = [];
-  if (q.category) {
-    conditions.push("a.category=?");
-    params.push(q.category);
-  }
-  if (q.after) {
-    conditions.push("a.starts_day>=?");
-    params.push(q.after);
-  }
-  if (q.before) {
-    conditions.push("a.starts_day<=?");
-    params.push(q.before);
-  }
-  if (q.after && q.before && q.after > q.before)
-    throw new ApiError("INVALID_ARGUMENT", "开始日期不能晚于结束日期。");
-  if (q.registration) {
-    conditions.push(
-      "a.registration_requirement='required' AND EXISTS(SELECT 1 FROM article_registration_windows w WHERE w.document_id=a.document_id AND w.activity_key=a.activity_key AND w.starts_at IS NOT NULL AND w.ends_at IS NOT NULL AND julianday(w.starts_at)<=julianday(?) AND julianday(w.ends_at)>julianday(?))",
-    );
-    params.push(now, now);
-  }
-  const rows = await db
-    .prepare(
-      `SELECT a.document_id,a.activity_key,a.group_key FROM article_activity_index a JOIN knowledge_documents d ON d.id=a.document_id JOIN document_article_analysis x ON x.document_id=d.id WHERE ${conditions.join(" AND ")} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=a.document_id) ORDER BY a.starts_day,a.document_id,a.activity_key LIMIT ?`,
-    )
-    .bind(...params, q.limit)
-    .all<{
-      document_id: string;
-      activity_key: string;
-      group_key: string | null;
-    }>();
-  const docs = new Map<
-      string,
-      Awaited<ReturnType<typeof readPublicAnalysis>>
-    >(),
-    groups = new Map<
-      string,
-      {
-        activity: NonNullable<
-          Awaited<ReturnType<typeof readPublicAnalysis>>["analysis"]
-        >["activities"][number];
-        sources: Awaited<ReturnType<typeof readPublicAnalysis>>[];
-      }
-    >();
-  for (const r of rows.results) {
-    let d = docs.get(r.document_id);
-    if (!d) {
-      try {
-        d = await readPublicAnalysis(db, r.document_id, now);
-      } catch (e) {
-        if (e instanceof ApiError && e.code === "NOT_FOUND") continue;
-        throw e;
-      }
-      docs.set(r.document_id, d);
-    }
-    const a = d.analysis?.activities.find((a) => a.key === r.activity_key);
-    if (!a || (["cancelled", "postponed"].includes(a.status) && q.registration))
-      continue;
-    const key = r.group_key || r.document_id + "/" + r.activity_key;
-    const g = groups.get(key);
-    if (g) g.sources.push(d);
-    else groups.set(key, { activity: a, sources: [d] });
-  }
-  return {
-    items: [...groups.values()],
-    limit: q.limit,
-    now,
-    timeZone: "Asia/Shanghai",
-    modelCalls: 0,
-  };
-}
+export { readCalendar as readPublicActivities } from "../calendar/query";
+import { readCalendar as readPublicActivities } from "../calendar/query";
 function endpoint(kind: "analysis" | "activities") {
   return withApi(async (request) => {
     const env = getCloudflareContext().env as unknown as Record<

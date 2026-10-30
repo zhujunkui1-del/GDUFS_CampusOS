@@ -17,6 +17,7 @@ import { consoleAdministration, consoleAuthentication } from "./console/api";
 import { consoleRunnerApi } from "./console/runner-api";
 import { publicContent } from "./console/public-content";
 import { publicArticle } from "./console/public-article";
+import { publicActivities } from "./console/public-analysis";
 import { collectorApi } from "./console/collector-api";
 import { relayClaimPost, relayFinishPost } from "./external-search/relay-api";
 import {
@@ -30,6 +31,7 @@ const fixed: Record<string, { method: string; handle: Handler }> = {
   "/api/health": { method: "GET", handle: health },
   "/api/public/content": { method: "GET", handle: publicContent },
   "/api/public/article": { method: "GET", handle: publicArticle },
+  "/api/public/activities": { method: "GET", handle: publicActivities },
   "/api/public/visits": { method: "POST", handle: visitPost },
   "/api/agent/external-search/control-finish": {
     method: "POST",
