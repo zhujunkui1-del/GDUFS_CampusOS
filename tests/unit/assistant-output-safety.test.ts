@@ -129,3 +129,69 @@ it("does not expose self-deprecating retrieval process talk", () => {
     ),
   ).toBe("王春业老师是广外纪检监察研究院院长、教授 [1]。🐟");
 });
+
+it("removes missing campus-name self-negation after a general answer", () => {
+  expect(
+    stripSelfDeprecation(
+      "广外目前按“两校区”来表述，但本轮资料没有写明这两个校区的具体名称，也没有说明“北校/南校”分别对应哪个校区，所以这部分暂时无法确认 [3]。",
+    ),
+  ).toBe("广外目前按“两校区”来表述[3]。");
+});
+
+it("removes uncertainty tails about unlisted campuses", () => {
+  expect(
+    stripSelfDeprecation(
+      "广东外语外贸大学常见说法是有两个校区：白云山校区和大学城校区。本轮资料里能核到的是这两个校区的服务点和培训安排 [1][2][3]，但没有明确写“学校仅有这两个校区”，所以更准确的说法是：资料确认了这两个校区，是否还有其他校区，本轮资料没说明。",
+    ),
+  ).toBe(
+    "广东外语外贸大学常见说法是有两个校区：白云山校区和大学城校区。本轮资料里能核到的是这两个校区的服务点和培训安排 [1][2][3]",
+  );
+});
+
+it("removes seen-only-two-campuses uncertainty", () => {
+  expect(
+    stripSelfDeprecation(
+      "广东外语外贸大学目前主要有两个校区：白云山校区和大学城校区 [1][3]。本鱼这轮看到的资料只提到这两个校区，其他校区情况暂不确定。🐟",
+    ),
+  ).toBe("广东外语外贸大学目前主要有两个校区：白云山校区和大学城校区 [1][3]。🐟");
+});
+
+it("removes 未说明是否还有其他校区 tail", () => {
+  expect(
+    stripSelfDeprecation(
+      "广东外语外贸大学常见校区为白云山校区和大学城校区 [1][2][3]。本轮资料只提到这两个校区，未说明是否还有其他校区。",
+    ),
+  ).toBe("广东外语外贸大学常见校区为白云山校区和大学城校区 [1][2][3]。");
+});
+
+it("removes 本轮资料没出现 alias caveats", () => {
+  expect(
+    stripSelfDeprecation(
+      "广东外语外贸大学主要有两个校区：白云山校区和大学城校区 [1][2][3]。日常也常把白云山校区叫“北校”、大学城校区叫“南校”，不过本轮资料里没出现这两个别称，属于通用叫法。🐟",
+    ),
+  ).toBe("广东外语外贸大学主要有两个校区：白云山校区和大学城校区 [1][2][3]。日常也常把白云山校区叫“北校”、大学城校区叫“南校”");
+});
+
+it("removes whether-there-are-other-campuses disclaimers", () => {
+  expect(
+    stripSelfDeprecation(
+      "广东外语外贸大学有白云山校区和大学城校区两个校区 [1][2][3]。本鱼只从本轮资料里看到这两个校区的名称，学校是否还有其他校区，资料没提，本鱼就不乱猜啦 🐟",
+    ),
+  ).toBe("广东外语外贸大学有白云山校区和大学城校区两个校区 [1][2][3]。");
+});
+
+it("removes an incomplete trailing 不过本轮资料 clause", () => {
+  expect(
+    stripSelfDeprecation(
+      "广东外语外贸大学常见说法是有两个校区：白云山校区和大学城校区 [1][2][3]。不过本轮资料只分别列出了这两个校区",
+    ),
+  ).toBe("广东外语外贸大学常见说法是有两个校区：白云山校区和大学城校区 [1][2][3]。");
+});
+
+it("removes any sentence asking whether other campuses exist", () => {
+  expect(
+    stripSelfDeprecation(
+      "广东外语外贸大学有白云山校区和大学城校区 [1][2][3]。本轮资料只明确提到这两个校区，是否还有其他校区，资料里没有说明。",
+    ),
+  ).toBe("广东外语外贸大学有白云山校区和大学城校区 [1][2][3]。");
+});

@@ -179,7 +179,9 @@ export function contentIntent(
   // site. Keep a short leading fragment as the fallback query so a title with
   // inner quotes can still be recalled by FTS.
   const articleKeywords =
-    articleLookup && articleQuery
+    multiTopic
+      ? undefined
+      : articleLookup && articleQuery
       ? articleQuery
           .replace(/[《》「」『』“”"']/g, "")
           .replace(/\s+/g, "")
@@ -306,8 +308,14 @@ export function contentIntent(
     !/国家奖学金|学业奖学金|励志奖学金|单项奖学金/.test(query)
       ? `${query.match(/20\d{2}/)?.[0] ?? ""} 奖学金 名单`.trim()
       : undefined;
+  const campusOverview =
+    /(?:几个|哪些|哪几|多少).{0,4}校区|校区.{0,6}(?:几个|哪些|名称|名字|地址|在哪)/.test(
+      query,
+    );
   const retrievalQuery = multiTopic
     ? "最新 校园 通知"
+    : campusOverview
+      ? "校区"
     : entityLookup
       ? entityTerm.slice(-300)
       : broadListQuery

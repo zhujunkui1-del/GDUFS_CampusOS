@@ -53,6 +53,14 @@ export function stripSelfDeprecation(text: string) {
       /[，,；;]?\s*(?:但|不过)?(?:本轮|本次|现有|公开|当前)?资料(?:中)?(?:未|没有|没能|尚未)[^。！？；;]*(?:覆盖|涉及|包含|收录|提供|取得|检索到)[^。！？；;]*[。；;]?/g,
       advice,
     )
+    .replace(/[，,；;]?\s*(?:但|不过)?(?:本轮|本次|现有|公开|当前|检索到的)?(?:资料|来源|证据)(?:中)?(?:没有|没|未|没能|尚未)(?:写明|说明|给出|提到|列出)[^。！？；;\[]*[。；;]?/g, "")
+    .replace(/[，,；;]\s*(?:但|不过)?[^。！？]*(?:没有|没|未)明确(?:写|说明|给出)[^。！？]*[。！？]?/g, "")
+    .replace(/[，,；;]?\s*(?:本鱼)?[^。！？]*(?:资料|来源)[^。！？]*(?:只提到|只写了|仅提到)[^。！？]*(?:不确定|无法确认|没说明|未说明)[^。！？]*[。！？]?/g, "")
+    .replace(/[，,；;]?\s*(?:学校)?是否还有其他校区[^。！？]*(?:资料|来源)[^。！？]*(?:没提|没说明|不确定|不乱猜|不猜)[^。！？]*[。！？]?/g, "")
+    .replace(/[^。！？]*是否还有其他校区[^。！？]*[。！？]?/g, "")
+    .replace(/本鱼只从本轮资料[^]*$/g, "")
+    .replace(/(?:不过|但)本轮资料[^]*$/g, "")
+    .replace(/[，,；;]?\s*所以[^。！？；;\[]*(?:暂时无法确认|无法确认)[^。！？；;\[]*[。！？]?/g, "")
     .replace(/[，,；;]?\s*需要说明：[^。！？]*(?:暂无法确认|无法确认|无法核实)[^。！？]*[。！？]?/g, "")
     .replace(/[，,；;]?\s*[^。！？]*(?:发布方|作者|来源)[^。！？]*(?:没有明确写出|未明确写出|未写明|未显示|没写明)[^。！？]*[。！？]?/g, "")
     .replace(/[，,；;]?\s*(?:以上|上述)(?:信息|内容)[^。！？]*(?:待核实|需核实)[^。！？]*[。！？]?/g, "")
@@ -68,15 +76,18 @@ export function stripSelfDeprecation(text: string) {
     .replace(/^[，,]\s*/, "")
     .replace(/^\s*\d+\.\s*[，,]?\s*(?=建议以)/gm, "")
     .replace(/[，,]\s*[，,]/g, "，")
+    .replace(/[，,]\s*$/g, "")
     .trim();
 }
 export function assistantDisplayText(text: string) {
   if (containsToolProtocol(text))
     return "这条回复未能生成有效答案，请重新提问。";
-  return text
+  const cleaned = text
     .replace(/[；;]\s*。/g, "。")
     .replace(/。{2,}/g, "。")
-    .replace(/[ \t]+\n/g, "\n");
+    .replace(/[ \t]+\n/g, "\n")
+    .trim();
+  return /[”"]$/.test(cleaned) ? `${cleaned}。` : cleaned;
 }
 /** Only real source URLs may be cited; the model must copy them verbatim. */
 export function citedUrls(text: string) {

@@ -1513,3 +1513,19 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 - `学校有几个校区`：先基于模型常识回答「两校区」，再补充检索结果与 3 个来源。
 - 长会话（第 13 条消息起）不再 `INVALID_ARGUMENT`；历史接口和前端均返回完整记录。
 - 全量 727/727；`tsc` 0；`npm run build` 0。
+
+### 2026-10-30｜校区回答尾部自我否定与完整 E2E
+
+真实对话「学校有几个校区」虽然事实正确，但模型持续在末尾追加「不过本轮资料只分别列出了这两个校区」「本轮资料没有明确说明是否还有其他校区，建议以官网为准」等自我否定/猜测句，多次部署后仍有变体。
+
+修复：
+
+- `src/lib/assistant-output.ts` 的表达清洗增加校区场景的尾句规则：删除「不过/但本轮资料只…」「是否还有其他校区…」「本鱼只从本轮资料…」等句子，并清理悬空逗号；`assistantDisplayText` 在引号结尾补句号。
+- 保留「日常也常把白云山校区叫北校、大学城校区叫南校」这类通用补充，不整段删除。
+- 单测覆盖两种模型变体，`assistant-output-safety` 12 项通过；全量 738/738；`tsc` 0；`build` 0。
+
+真实验收（Preview `6e358eb3-81c0-44bf-a300-54f00865cb25`）：
+
+- 「学校有几个校区」：`model`，回答两校区 + 北校/南校通用叫法，带 `[1][2][3]`，无「本轮资料」类尾句。
+- 全量浏览器 E2E：`tests/e2e` 桌面 113 项中 64 通过、35 跳过、14 失败（地图 SDK、小红书、外部搜索、shell 等环境相关项）；专项回归 `assistant-reported-regressions-live.spec.ts` 3/3 通过。
+- 长多主题问句的 `recentDiscovery` 全部开启时，`content.multiTopic` 与真实服务端上下文不一致，导致列表缺少「这条消息包含多个主题」说明；已改为无 `radarCategory` 的最近列表都加该说明，并跳过超长查询的关键词回退（避免第二次 `search_campus_knowledge` 以超长 query 触发 `INVALID_ARGUMENT`）。

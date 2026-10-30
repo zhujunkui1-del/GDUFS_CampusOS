@@ -158,3 +158,10 @@ describe("title-like notices and map disambiguation", () => {
     expect(contentIntent("从南苑7栋去图书馆").active).toBe(false);
   });
 });
+
+it("uses a focused query for campus overview questions", () => {
+  const intent = contentIntent("学校有几个校区");
+  expect(intent.active).toBe(true);
+  expect(intent.retrievalQuery).toBe("校区");
+  expect(intent.tools).toContain("search_campus_knowledge");
+});
