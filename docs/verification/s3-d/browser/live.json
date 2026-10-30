@@ -1,711 +1,225 @@
 {
-  "browser": "149.0.4022.80",
+  "browser": "148.0.7778.97",
   "viewport": {
     "width": 1440,
     "height": 900
   },
   "realModel": true,
   "preview": true,
-  "outcomes": [
-    {
-      "prompt": "广外图书馆怎么借书？请根据真实文章说明，并提供来源。",
-      "answer": "- 开通借阅权限：新生入馆只有刷卡权限。需先在“广外图书馆”公众号“服务—服务大厅—密码重置”设置密码，再在“资源—新生闯馆”完成至少前四步学习，答题60分以上，方可解锁图书借阅等权限[来源1]。\n- 借书方式：可到馆借阅，也可用“芸台购”线上借购：登录数字广外点击“图书荐购”，提交后由工作人员处理，同意购买的新书将尽快采购[来源1]。\n- 来源：以上均出自广外图书馆《新生入馆指南｜2026级广外人，图书馆通关手册请收好》（2026-09-06）[来源1]。该文借阅规则现行有效性标注为待确认；具体借期、册数等如有更新，建议以图书馆最新通知或服务台为准。\n\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源1 · 广外图书馆 · 2026-09-06\n查看证据\n正文证据 · 有效性待确认\n金秋阅新｜图书馆2026秋季中文新书展活动\n来源2 · 广外图书馆 · 2026-09-16\n查看证据\n正文证据 · 有效性待确认\n热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？\n来源3 · 广外图书馆 · 2026-10-23\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉\n来源4 · 广外图书馆 · 2026-09-16\n查看证据\n正文证据 · 校园资讯 · 有效性待确认",
-      "sources": [
-        {
-          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
-          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
-        },
-        {
-          "title": "金秋阅新｜图书馆2026秋季中文新书展活动",
-          "url": "https://mp.weixin.qq.com/s/NBtUOT9gSaFqSSM4BImKIQ"
-        },
-        {
-          "title": "热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？",
-          "url": "https://mp.weixin.qq.com/s/B0woO8Ni8zcHw1INndCKeg"
-        },
-        {
-          "title": "阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉",
-          "url": "https://mp.weixin.qq.com/s/nInLIXklodjGsd0UwKF5sw"
-        }
-      ]
-    },
-    {
-      "prompt": "请查询真实讲座和竞赛，提供文章来源；无法确认报名时间就明确说明。",
-      "answer": "讲座/学术论坛\n- 广东省研究生学术论坛区域国别分论坛：12月4日报到、5日论坛、6日工作坊，白云山校区。论文提交截止11月13日，入选通知约11月18日；会务报名截止时间未明确[来源1]。\n- 文学翻译研讨会：12月4—6日，白云山校区，报名及摘要截止为10月10日，现已过，报名状态无法确认为开放[来源4]。\n\n竞赛\n- “云山杯”第五届国际远程口译大赛：英语复赛预计11月7日，决赛预计12月；未提供复赛报名时间，报名状态无法确认[来源5]。\n- 第六届金融热点分析大赛：初赛报告截止已过（10月25日20:00），复赛11月9日、决赛11月19日；现无开放报名窗口[来源6]。\n\n以上均据工具返回原文。\n\n2026年广东省研究生学术论坛——区域国别视域下的多边治理创新研究分论坛征稿启事（一号通知）\n来源1 · 广外区域国别学院 · 2026-10-01\n查看证据\n正文证据 · 有效性待确认\n中国社会工作教育协会2026年年会“国际社会工作与粤港澳大湾区社会服务融合”分论坛征文通知-社会与公共管理学院\n来源2 · 社会与公共管理学院 · 2026-10-10\n查看证据\n正文证据 · 有效性待确认\n中国社会工作教育协会2026年年会 “国际社会工作与粤港澳大湾区社会服务融合”分论坛征文通知\n来源3 · 广外公管学院 · 2026-10-10\n查看证据\n正文证据 · 有效性待确认\n【会议通知】中国比较文学学会翻译研究分会2026年年会暨“人工智能时代的文学翻译”学术研讨会（一号通知）-广东外语外贸大学高级翻译学院\n来源4 · 高级翻译学院 · 2026-09-05\n查看证据\n正文证据 · 有效性待确认\n“云山杯”第五届国际远程口译大赛3号公告\n来源5 · 广外高翻 口译教育与研究中心 · 2026-10-16\n查看证据\n正文证据 · 有效性待确认\n金融学院第六届金融热点分析大赛参赛指南\n来源6 · 广外金融青年 · 2026-10-15\n查看证据\n正文证据 · 有效性待确认",
-      "sources": [
-        {
-          "title": "2026年广东省研究生学术论坛——区域国别视域下的多边治理创新研究分论坛征稿启事（一号通知）",
-          "url": "https://mp.weixin.qq.com/s/sjF7avwdJAXbxXJbS-2R0Q"
-        },
-        {
-          "title": "中国社会工作教育协会2026年年会“国际社会工作与粤港澳大湾区社会服务融合”分论坛征文通知-社会与公共管理学院",
-          "url": "https://zg.gdufs.edu.cn/info/1003/14849.htm"
-        },
-        {
-          "title": "中国社会工作教育协会2026年年会 “国际社会工作与粤港澳大湾区社会服务融合”分论坛征文通知",
-          "url": "https://mp.weixin.qq.com/s/aed0Ft-yMIqfTFB7U04vzw"
-        },
-        {
-          "title": "【会议通知】中国比较文学学会翻译研究分会2026年年会暨“人工智能时代的文学翻译”学术研讨会（一号通知）-广东外语外贸大学高级翻译学院",
-          "url": "https://sits.gdufs.edu.cn/info/1186/7816.htm"
-        },
-        {
-          "title": "“云山杯”第五届国际远程口译大赛3号公告",
-          "url": "https://mp.weixin.qq.com/s/-eEP_7AlFsxOhetfwdwN2Q"
-        },
-        {
-          "title": "金融学院第六届金融热点分析大赛参赛指南",
-          "url": "https://mp.weixin.qq.com/s/yyaRAenHDPn8OtRXYLKCCw"
-        }
-      ]
-    },
-    {
-      "prompt": "奖学金申请需要满足哪些条件，现在还有哪些开放的申请？请分别提供条件依据和申请通知的来源。",
-      "answer": "- 申请条件（以研究生出国境访学奖学金为例，具体条件最完整）：须为有学籍的在校研究生；须在2025-05-30至2026-06-03期间成功申请短期国（境）外访学资助并结项；访学单位须符合全球前300高校、前150学科，或非通用语种所在国前3高校；须缴清学宿费；不得同时享受其他出国（境）奖学金[来源5]。\n- 其他奖学金条件依据：国奖按评审程序择优，材料含成绩单、成果库成果等[来源6]；学业奖学金按各等级名额分配，同一学年只能获1个等级[来源7]。这些通知未单列完整基本条件，validity=unknown，现行有效性待确认。\n- 目前开放申请：在查询到的时间范围内未发现。访学奖学金报名已截止[来源5]；国奖、学业奖学金申报期均已过[来源6][来源7]；留基委合作项目报名也过期[来源8][来源9]。建议关注研究生院及所在学院后续新通知。\n\n27Fall港大硕士申请全解析｜QS全球第11，申请时间、学费、新增项目汇总！！\n来源1 · 广外留学服务中心 · 2026-10-13\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n榜样之光：国家奖学金获得者㉑\n来源2 · 广外学工 · 2026-10-17\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n榜样之光：国家奖学金获得者⑳\n来源3 · 广外学工 · 2026-10-16\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n榜样之光：国家奖学金获得者⑲\n来源4 · 广外学工 · 2026-10-12\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n【个人申请】研究生院关于2026年研究生出国（境）访学奖学金申请工作的通知-研究生院\n来源5 · 研究生院 · 2026-05-27\n查看证据\n正文证据 · 有效性待确认\n关于开展2026年国际治理创新学院研究生国家奖学金评选工作的通知-国际治理创新学院\n来源6 · 国际治理创新学院 · 2026-09-05\n查看证据\n正文证据 · 有效性待确认\n2026年国际治理创新学院学业奖学金评审通知-国际治理创新学院\n来源7 · 国际治理创新学院 · 2026-09-15\n查看证据\n正文证据 · 有效性待确认\n【个人申请】研究生院关于国家留基委2026年与部分国外院校合作奖学金申请工作的通知-研究生院\n来源8 · 研究生院 · 2026-01-15\n查看证据\n正文证据 · 有效性待确认\n【个人申请】研究生院关于国家留基委2026年欧亚地区部分中外合作奖学金项目申请工作的通知-研究生院\n来源9 · 研究生院 · 2026-01-14\n查看证据\n正文证据 · 有效性待确认",
-      "sources": [
-        {
-          "title": "27Fall港大硕士申请全解析｜QS全球第11，申请时间、学费、新增项目汇总！！",
-          "url": "https://mp.weixin.qq.com/s/gGsCE84BwurumEY-g2nf5w"
-        },
-        {
-          "title": "榜样之光：国家奖学金获得者㉑",
-          "url": "https://mp.weixin.qq.com/s/5_CZS_V5xx2UhJkxyKBekQ"
-        },
-        {
-          "title": "榜样之光：国家奖学金获得者⑳",
-          "url": "https://mp.weixin.qq.com/s/-AmlPIyIiVX3oHxdxIXLTQ"
-        },
-        {
-          "title": "榜样之光：国家奖学金获得者⑲",
-          "url": "https://mp.weixin.qq.com/s/QAo2HU1R3wj6oCgZhZMB2w"
-        },
-        {
-          "title": "【个人申请】研究生院关于2026年研究生出国（境）访学奖学金申请工作的通知-研究生院",
-          "url": "https://gwyjs.gdufs.edu.cn/info/1035/15693.htm"
-        },
-        {
-          "title": "关于开展2026年国际治理创新学院研究生国家奖学金评选工作的通知-国际治理创新学院",
-          "url": "https://sigi.gdufs.edu.cn/info/1003/6755.htm"
-        },
-        {
-          "title": "2026年国际治理创新学院学业奖学金评审通知-国际治理创新学院",
-          "url": "https://sigi.gdufs.edu.cn/info/1003/6775.htm"
-        },
-        {
-          "title": "【个人申请】研究生院关于国家留基委2026年与部分国外院校合作奖学金申请工作的通知-研究生院",
-          "url": "https://gwyjs.gdufs.edu.cn/info/1035/14105.htm"
-        },
-        {
-          "title": "【个人申请】研究生院关于国家留基委2026年欧亚地区部分中外合作奖学金项目申请工作的通知-研究生院",
-          "url": "https://gwyjs.gdufs.edu.cn/info/1035/14101.htm"
-        }
-      ]
-    },
-    {
-      "prompt": "那需要准备什么材料？",
-      "answer": "- 条件依据：出国（境）访学奖学金要求：申请人须为有本校学籍的在校研究生；须已完成短期国（境）外访学资助项目并结项；访学单位须满足全球前300的高校、前150的学科或非通用语种所在国前3的高校等排名要求；须缴清学宿费；且不得同时享受其他出国（境）奖学金[来源4]。国家留基委合作项目另有年龄、学历、录取通知书、外语水平及国际组织任职承诺等条件[来源1]。\n- 目前开放情况：没有发现开放。访学奖学金报名期已结束（2026年5月27日—6月3日）[来源4]；合作项目网上申报也已截止[来源1]。学业奖学金、国家奖学金评审通知的申报时间也已过[来源2][来源3]。上述通知validity=unknown，现行有效性待确认。\n- 需准备的材料：以国家奖学金为例，包括申报封面、申请审批表（系统导出并双面打印）、加盖公章的成绩单原件、自评及推荐汇总表、科研成果与获奖证书复印件，并按封面顺序装袋[来源3]。学业奖学金需申请表、自评表和证明材料电子版[来源2]；访学奖学金需系统生成申请表一式三份并签名[来源4]。\n\n【个人申请】研究生院关于国家留基委2026年与部分国外院校合作奖学金申请工作的通知-研究生院\n来源1 · 研究生院 · 2026-01-15\n查看证据\n正文证据 · 有效性待确认\n2026年国际治理创新学院学业奖学金评审通知-国际治理创新学院\n来源2 · 国际治理创新学院 · 2026-09-15\n查看证据\n正文证据 · 有效性待确认\n关于开展2026年国际治理创新学院研究生国家奖学金评选工作的通知-国际治理创新学院\n来源3 · 国际治理创新学院 · 2026-09-05\n查看证据\n正文证据 · 有效性待确认\n【个人申请】研究生院关于2026年研究生出国（境）访学奖学金申请工作的通知-研究生院\n来源4 · 研究生院 · 2026-05-27\n查看证据\n正文证据 · 有效性待确认\n【个人申请】研究生院关于国家留基委2026年欧亚地区部分中外合作奖学金项目申请工作的通知-研究生院\n来源5 · 研究生院 · 2026-01-14\n查看证据\n正文证据 · 有效性待确认\n【个人申请】研究生院关于国家留基委2026年美大地区42个中外合作奖学金项目申请工作的通知-研究生院\n来源6 · 研究生院 · 2026-01-13\n查看证据\n正文证据 · 有效性待确认\n【个人申请】研究生院关于国家留基委调整与澳大利亚、新西兰、加拿大部分高校合作奖学金项目申报方式并启动2027年申请工作的通知-研究生院\n来源7 · 研究生院 · 2026-07-09\n查看证据\n正文证据 · 有效性待确认",
-      "sources": [
-        {
-          "title": "【个人申请】研究生院关于国家留基委2026年与部分国外院校合作奖学金申请工作的通知-研究生院",
-          "url": "https://gwyjs.gdufs.edu.cn/info/1035/14105.htm"
-        },
-        {
-          "title": "2026年国际治理创新学院学业奖学金评审通知-国际治理创新学院",
-          "url": "https://sigi.gdufs.edu.cn/info/1003/6775.htm"
-        },
-        {
-          "title": "关于开展2026年国际治理创新学院研究生国家奖学金评选工作的通知-国际治理创新学院",
-          "url": "https://sigi.gdufs.edu.cn/info/1003/6755.htm"
-        },
-        {
-          "title": "【个人申请】研究生院关于2026年研究生出国（境）访学奖学金申请工作的通知-研究生院",
-          "url": "https://gwyjs.gdufs.edu.cn/info/1035/15693.htm"
-        },
-        {
-          "title": "【个人申请】研究生院关于国家留基委2026年欧亚地区部分中外合作奖学金项目申请工作的通知-研究生院",
-          "url": "https://gwyjs.gdufs.edu.cn/info/1035/14101.htm"
-        },
-        {
-          "title": "【个人申请】研究生院关于国家留基委2026年美大地区42个中外合作奖学金项目申请工作的通知-研究生院",
-          "url": "https://gwyjs.gdufs.edu.cn/info/1035/14097.htm"
-        },
-        {
-          "title": "【个人申请】研究生院关于国家留基委调整与澳大利亚、新西兰、加拿大部分高校合作奖学金项目申报方式并启动2027年申请工作的通知-研究生院",
-          "url": "https://gwyjs.gdufs.edu.cn/info/1035/16393.htm"
-        }
-      ]
-    },
-    {
-      "prompt": "用“金秋阅新｜图书馆2026秋季中文新书展活动”做历史活动技术验收。查出原文举办地点，从南苑7栋规划到那里，并在地图显示路线，明确注明这是历史活动。",
-      "answer": "- 历史活动：2026秋季中文新书展，时间为2026年9月22—24日；该活动已结束，因此不推荐为当前可参加活动[来源1]。\n- 原文地点：大学城校区图书馆一楼大厅[来源1]。经地点核验，该地点对应大学城校区图书馆（placeId osm-way-307250998）。\n- 南苑7栋→图书馆路线：步行约848米；经台阶、下沉隧道、教学实验楼通行区域，约12分钟。地图已按浏览器回执显示该路线。\n\n金秋阅新｜图书馆2026秋季中文新书展活动\n来源1 · 广外图书馆 · 2026-09-16\n查看证据\n正文证据 · 有效性待确认\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源2 · 广外图书馆 · 2026-09-06\n查看证据\n正文证据 · 有效性待确认\n2026年国庆节图书馆开放安排通知\n来源3 · 悦读广外 · 2026-09-30\n查看证据\n正文证据 · 有效性待确认\n2026年中秋节图书馆开放安排通知\n来源4 · 广外图书馆 · 2026-09-16\n查看证据\n正文证据 · 有效性待确认\n图书馆\n南苑7栋 → 图书馆\n848 米 · 约 12 分钟\n清除路线\n开始导航",
-      "sources": [
-        {
-          "title": "金秋阅新｜图书馆2026秋季中文新书展活动",
-          "url": "https://mp.weixin.qq.com/s/NBtUOT9gSaFqSSM4BImKIQ"
-        },
-        {
-          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
-          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
-        },
-        {
-          "title": "2026年国庆节图书馆开放安排通知",
-          "url": "https://mp.weixin.qq.com/s/2LWH-iz-nW_FD8RZHnygIA"
-        },
-        {
-          "title": "2026年中秋节图书馆开放安排通知",
-          "url": "https://mp.weixin.qq.com/s/GxE-t-mXddgTOMqhT-Z1Kg"
-        }
-      ]
-    }
-  ],
+  "outcomes": [],
   "records": [
     {
       "prompt": "广外图书馆怎么借书？请根据真实文章说明，并提供来源。",
       "tools": [
-        "search_campus_knowledge"
+        "search_campus_knowledge",
+        "search_campus_knowledge",
+        "search_external_campus_info"
       ],
       "actions": [],
+      "cards": [],
       "result": {
-        "conversationId": "4852c223-a381-440b-904c-b6291d4594d3",
-        "requestId": "3e7ed86f-978f-4a54-bc05-9468f40df7f8",
+        "error": {
+          "code": "MODEL_SERVICE_UNAVAILABLE",
+          "message": "回复生成异常，请重新提问。"
+        },
+        "conversationId": "67b7c120-2d40-497c-945e-88c2eddffdb3",
         "metrics": {
-          "requests": 2,
+          "answerMode": "model",
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "off_topic",
+            "relatedDocuments": [],
+            "missing": [
+              "relevant_readable_evidence",
+              "official_authority_unconfirmed",
+              "procedure_evidence"
+            ],
+            "activities": [],
+            "needsSupplement": true,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 4,
           "correctionRetries": 0,
-          "upstreamTimings": [
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 1,
+          "groundingChecks": 2,
+          "groundingFailures": 2,
+          "groundingCheckFailures": 0,
+          "groundingResults": [
             {
-              "durationMs": 928,
-              "firstTextMs": null
+              "supported": false,
+              "issues": [
+                "原文仅称完成新生闯馆前四步并答题60分以上解锁借阅权限，未称自动获得",
+                "可借35册、借期30天、续借、预约15册等数字原文未提供",
+                "自助借还机位置、总服务台时间8:30—22:00原文未提供"
+              ]
             },
             {
-              "durationMs": 1910,
-              "firstTextMs": 746
+              "supported": false,
+              "issues": [
+                "来源仅支持新生闯馆解锁借阅权限，未提及自助借还机或总服务台人工借书",
+                "来源未提供“查询—书目检索”找书步骤及索书号定位说明",
+                "来源未提供刷校园卡、扫描条码页等自助借书操作细节"
+              ]
             }
           ],
-          "promptTokens": 5068,
-          "completionTokens": 262,
-          "cachedPromptTokens": 1664,
-          "totalTokens": 5330,
+          "upstreamTimings": [
+            {
+              "durationMs": 1889,
+              "firstTextMs": 535,
+              "finishReason": "stop",
+              "contentChars": 381
+            },
+            {
+              "durationMs": 1397,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            },
+            {
+              "durationMs": 2118,
+              "firstTextMs": 770,
+              "finishReason": "stop",
+              "contentChars": 396
+            },
+            {
+              "durationMs": 1295,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 14061,
+          "completionTokens": 766,
+          "cachedPromptTokens": 5888,
+          "totalTokens": 14827,
           "usageComplete": true,
-          "chargedTokens": 5330,
-          "durationMs": 3568,
+          "chargedTokens": 14827,
+          "durationMs": 15263,
           "estimatedUsdRange": [
-            0.000672792,
-            0.001345584
+            0.001703214,
+            0.003406428
           ],
           "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
           "priceCheckedAt": "2026-10-15",
           "model": "deepseek-flash",
           "timings": {
             "version": "camera-settled-v2",
-            "preparationMs": 1080,
-            "serverElapsedMs": 4648,
-            "firstTextMs": 3369,
+            "preparationMs": 1416,
+            "serverElapsedMs": 16679,
+            "firstTextMs": null,
             "mapActionMs": null,
             "skills": [
               {
                 "name": "search_campus_knowledge",
-                "durationMs": 265,
+                "durationMs": 1145,
+                "ok": true
+              },
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 905,
+                "ok": true
+              },
+              {
+                "name": "search_external_campus_info",
+                "durationMs": 6019,
                 "ok": true
               }
             ],
             "database": {
-              "readQueries": 11,
-              "writeQueries": 12,
-              "calls": 15,
+              "readQueries": 22,
+              "writeQueries": 11,
+              "calls": 26,
               "failures": 0,
-              "durationMs": 1810,
-              "maxCallMs": 144,
-              "rowsRead": 425,
+              "durationMs": 3907,
+              "maxCallMs": 398,
+              "rowsRead": 60149,
               "rowsWritten": 15,
-              "rowUsageStatements": 15,
-              "rowUsageComplete": false
-            },
-            "retrieval": [
-              {
-                "skill": "search_campus_knowledge",
-                "rowsRead": 346,
-                "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 265,
-                "candidateChunks": 22,
-                "usageAvailable": true
-              }
-            ]
-          }
-        }
-      },
-      "response": "- **开通借阅权限**：新生入馆只有刷卡权限。需先在“广外图书馆”公众号“服务—服务大厅—密码重置”设置密码，再在“资源—新生闯馆”完成至少前四步学习，答题60分以上，方可解锁图书借阅等权限[来源1]。\n- **借书方式**：可到馆借阅，也可用“芸台购”线上借购：登录数字广外点击“图书荐购”，提交后由工作人员处理，同意购买的新书将尽快采购[来源1]。\n- **来源**：以上均出自广外图书馆《新生入馆指南｜2026级广外人，图书馆通关手册请收好》（2026-09-06）[来源1]。该文借阅规则现行有效性标注为待确认；具体借期、册数等如有更新，建议以图书馆最新通知或服务台为准。",
-      "responseHeadersMs": 1325,
-      "firstTextMs": 5173,
-      "completeMs": 5627
-    },
-    {
-      "prompt": "请查询真实讲座和竞赛，提供文章来源；无法确认报名时间就明确说明。",
-      "tools": [
-        "search_campus_events",
-        "search_campus_events"
-      ],
-      "actions": [],
-      "result": {
-        "conversationId": "4852c223-a381-440b-904c-b6291d4594d3",
-        "requestId": "3f42ccd8-8732-464b-97d8-58cc36ab9ff8",
-        "metrics": {
-          "requests": 2,
-          "correctionRetries": 0,
-          "upstreamTimings": [
-            {
-              "durationMs": 1112,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 2140,
-              "firstTextMs": 1072
-            }
-          ],
-          "promptTokens": 9028,
-          "completionTokens": 380,
-          "cachedPromptTokens": 1920,
-          "totalTokens": 9408,
-          "usageComplete": true,
-          "chargedTokens": 9408,
-          "durationMs": 4491,
-          "estimatedUsdRange": [
-            0.00129996,
-            0.00259992
-          ],
-          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
-          "priceCheckedAt": "2026-10-15",
-          "model": "deepseek-flash",
-          "timings": {
-            "version": "camera-settled-v2",
-            "preparationMs": 936,
-            "serverElapsedMs": 5427,
-            "firstTextMs": 4249,
-            "mapActionMs": null,
-            "skills": [
-              {
-                "name": "search_campus_events",
-                "durationMs": 396,
-                "ok": true
-              },
-              {
-                "name": "search_campus_events",
-                "durationMs": 388,
-                "ok": true
-              }
-            ],
-            "database": {
-              "readQueries": 15,
-              "writeQueries": 11,
-              "calls": 18,
-              "failures": 0,
-              "durationMs": 2175,
-              "maxCallMs": 146,
-              "rowsRead": 3870,
-              "rowsWritten": 11,
-              "rowUsageStatements": 18,
-              "rowUsageComplete": false
-            },
-            "retrieval": [
-              {
-                "skill": "search_campus_events",
-                "rowsRead": 1890,
-                "rowsWritten": 0,
-                "queries": 3,
-                "durationMs": 278,
-                "candidateChunks": 9,
-                "usageAvailable": true
-              },
-              {
-                "skill": "search_campus_events",
-                "rowsRead": 1888,
-                "rowsWritten": 0,
-                "queries": 3,
-                "durationMs": 272,
-                "candidateChunks": 6,
-                "usageAvailable": true
-              }
-            ]
-          }
-        }
-      },
-      "response": "**讲座/学术论坛**\n- 广东省研究生学术论坛区域国别分论坛：12月4日报到、5日论坛、6日工作坊，白云山校区。论文提交截止11月13日，入选通知约11月18日；会务报名截止时间未明确[来源1]。\n- 文学翻译研讨会：12月4—6日，白云山校区，报名及摘要截止为10月10日，现已过，报名状态无法确认为开放[来源4]。\n\n**竞赛**\n- “云山杯”第五届国际远程口译大赛：英语复赛预计11月7日，决赛预计12月；未提供复赛报名时间，报名状态无法确认[来源5]。\n- 第六届金融热点分析大赛：初赛报告截止已过（10月25日20:00），复赛11月9日、决赛11月19日；现无开放报名窗口[来源6]。\n\n以上均据工具返回原文。",
-      "responseHeadersMs": 1165,
-      "firstTextMs": 5781,
-      "completeMs": 6157
-    },
-    {
-      "prompt": "奖学金申请需要满足哪些条件，现在还有哪些开放的申请？请分别提供条件依据和申请通知的来源。",
-      "tools": [
-        "search_campus_knowledge",
-        "search_campus_knowledge",
-        "search_campus_events",
-        "search_campus_events"
-      ],
-      "actions": [],
-      "result": {
-        "conversationId": "4852c223-a381-440b-904c-b6291d4594d3",
-        "requestId": "bba89859-81c4-4bd3-9857-bc08ce882e18",
-        "metrics": {
-          "requests": 3,
-          "correctionRetries": 0,
-          "upstreamTimings": [
-            {
-              "durationMs": 1210,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 1466,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 2712,
-              "firstTextMs": 1200
-            }
-          ],
-          "promptTokens": 21183,
-          "completionTokens": 605,
-          "cachedPromptTokens": 3200,
-          "totalTokens": 21788,
-          "usageComplete": true,
-          "chargedTokens": 21788,
-          "durationMs": 7475,
-          "estimatedUsdRange": [
-            0.0030700499999999995,
-            0.006140099999999999
-          ],
-          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
-          "priceCheckedAt": "2026-10-15",
-          "model": "deepseek-flash",
-          "timings": {
-            "version": "camera-settled-v2",
-            "preparationMs": 945,
-            "serverElapsedMs": 8420,
-            "firstTextMs": 6792,
-            "mapActionMs": null,
-            "skills": [
-              {
-                "name": "search_campus_knowledge",
-                "durationMs": 308,
-                "ok": true
-              },
-              {
-                "name": "search_campus_knowledge",
-                "durationMs": 415,
-                "ok": true
-              },
-              {
-                "name": "search_campus_events",
-                "durationMs": 366,
-                "ok": true
-              },
-              {
-                "name": "search_campus_events",
-                "durationMs": 306,
-                "ok": true
-              }
-            ],
-            "database": {
-              "readQueries": 20,
-              "writeQueries": 11,
-              "calls": 23,
-              "failures": 0,
-              "durationMs": 3032,
-              "maxCallMs": 218,
-              "rowsRead": 3646,
-              "rowsWritten": 11,
               "rowUsageStatements": 21,
               "rowUsageComplete": false
             },
             "retrieval": [
               {
                 "skill": "search_campus_knowledge",
-                "rowsRead": 940,
+                "rowsRead": 28632,
                 "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 308,
-                "candidateChunks": 96,
-                "usageAvailable": true
+                "queries": 5,
+                "durationMs": 1145,
+                "candidateChunks": 24,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 24
+                  }
+                ]
               },
               {
                 "skill": "search_campus_knowledge",
-                "rowsRead": 940,
+                "rowsRead": 28804,
                 "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 415,
-                "candidateChunks": 96,
-                "usageAvailable": true
-              },
-              {
-                "skill": "search_campus_events",
-                "rowsRead": 713,
-                "rowsWritten": 0,
-                "queries": 3,
-                "durationMs": 248,
-                "candidateChunks": 4,
-                "usageAvailable": true
-              },
-              {
-                "skill": "search_campus_events",
-                "rowsRead": 940,
-                "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 306,
-                "candidateChunks": 96,
-                "usageAvailable": true
-              }
-            ]
-          }
-        }
-      },
-      "response": "- **申请条件（以研究生出国境访学奖学金为例，具体条件最完整）**：须为有学籍的在校研究生；须在2025-05-30至2026-06-03期间成功申请短期国（境）外访学资助并结项；访学单位须符合全球前300高校、前150学科，或非通用语种所在国前3高校；须缴清学宿费；不得同时享受其他出国（境）奖学金[来源5]。\n- **其他奖学金条件依据**：国奖按评审程序择优，材料含成绩单、成果库成果等[来源6]；学业奖学金按各等级名额分配，同一学年只能获1个等级[来源7]。这些通知未单列完整基本条件，validity=unknown，现行有效性待确认。\n- **目前开放申请**：在查询到的时间范围内未发现。访学奖学金报名已截止[来源5]；国奖、学业奖学金申报期均已过[来源6][来源7]；留基委合作项目报名也过期[来源8][来源9]。建议关注研究生院及所在学院后续新通知。",
-      "responseHeadersMs": 1164,
-      "firstTextMs": 8775,
-      "completeMs": 9221
-    },
-    {
-      "prompt": "那需要准备什么材料？",
-      "tools": [
-        "search_campus_knowledge",
-        "search_campus_knowledge",
-        "search_campus_events",
-        "search_campus_events"
-      ],
-      "actions": [],
-      "result": {
-        "conversationId": "4852c223-a381-440b-904c-b6291d4594d3",
-        "requestId": "8bceb859-3e65-476f-b00e-e0e8361d2b1f",
-        "metrics": {
-          "requests": 3,
-          "correctionRetries": 0,
-          "upstreamTimings": [
-            {
-              "durationMs": 1812,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 1198,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 2702,
-              "firstTextMs": 949
-            }
-          ],
-          "promptTokens": 26651,
-          "completionTokens": 548,
-          "cachedPromptTokens": 3328,
-          "totalTokens": 27199,
-          "usageComplete": true,
-          "chargedTokens": 27199,
-          "durationMs": 7898,
-          "estimatedUsdRange": [
-            0.003837234,
-            0.007674468
-          ],
-          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
-          "priceCheckedAt": "2026-10-15",
-          "model": "deepseek-flash",
-          "timings": {
-            "version": "camera-settled-v2",
-            "preparationMs": 960,
-            "serverElapsedMs": 8858,
-            "firstTextMs": 6991,
-            "mapActionMs": null,
-            "skills": [
-              {
-                "name": "search_campus_knowledge",
-                "durationMs": 432,
-                "ok": true
-              },
-              {
-                "name": "search_campus_knowledge",
-                "durationMs": 375,
-                "ok": true
-              },
-              {
-                "name": "search_campus_events",
-                "durationMs": 293,
-                "ok": true
-              },
-              {
-                "name": "search_campus_events",
-                "durationMs": 399,
-                "ok": true
+                "queries": 4,
+                "durationMs": 905,
+                "candidateChunks": 28,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_exact",
+                    "limit": 8,
+                    "candidates": 4
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 24
+                  }
+                ]
               }
             ],
-            "database": {
-              "readQueries": 19,
-              "writeQueries": 11,
-              "calls": 22,
-              "failures": 0,
-              "durationMs": 3146,
-              "maxCallMs": 262,
-              "rowsRead": 3894,
-              "rowsWritten": 11,
-              "rowUsageStatements": 20,
-              "rowUsageComplete": false
-            },
-            "retrieval": [
+            "externalSearch": [
               {
-                "skill": "search_campus_knowledge",
-                "rowsRead": 940,
-                "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 432,
-                "candidateChunks": 96,
-                "usageAvailable": true
-              },
-              {
-                "skill": "search_campus_knowledge",
-                "rowsRead": 940,
-                "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 375,
-                "candidateChunks": 96,
-                "usageAvailable": true
-              },
-              {
-                "skill": "search_campus_events",
-                "rowsRead": 940,
-                "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 293,
-                "candidateChunks": 96,
-                "usageAvailable": true
-              },
-              {
-                "skill": "search_campus_events",
-                "rowsRead": 940,
-                "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 399,
-                "candidateChunks": 96,
-                "usageAvailable": true
+                "status": "unavailable",
+                "durationMs": 6019,
+                "providers": [
+                  {
+                    "provider": "exa_web_cloud",
+                    "status": "ok",
+                    "durationMs": 5159,
+                    "count": 3
+                  }
+                ],
+                "rowsRead": 0,
+                "rowsWritten": 0
               }
             ]
           }
         }
       },
-      "response": "- **条件依据**：出国（境）访学奖学金要求：申请人须为有本校学籍的在校研究生；须已完成短期国（境）外访学资助项目并结项；访学单位须满足全球前300的高校、前150的学科或非通用语种所在国前3的高校等排名要求；须缴清学宿费；且不得同时享受其他出国（境）奖学金[来源4]。国家留基委合作项目另有年龄、学历、录取通知书、外语水平及国际组织任职承诺等条件[来源1]。\n- **目前开放情况**：没有发现开放。访学奖学金报名期已结束（2026年5月27日—6月3日）[来源4]；合作项目网上申报也已截止[来源1]。学业奖学金、国家奖学金评审通知的申报时间也已过[来源2][来源3]。上述通知validity=unknown，现行有效性待确认。\n- **需准备的材料**：以国家奖学金为例，包括申报封面、申请审批表（系统导出并双面打印）、加盖公章的成绩单原件、自评及推荐汇总表、科研成果与获奖证书复印件，并按封面顺序装袋[来源3]。学业奖学金需申请表、自评表和证明材料电子版[来源2]；访学奖学金需系统生成申请表一式三份并签名[来源4]。",
-      "responseHeadersMs": 1192,
-      "firstTextMs": 9226,
-      "completeMs": 9618
-    },
-    {
-      "prompt": "用“金秋阅新｜图书馆2026秋季中文新书展活动”做历史活动技术验收。查出原文举办地点，从南苑7栋规划到那里，并在地图显示路线，明确注明这是历史活动。",
-      "tools": [
-        "search_campus_events",
-        "search_places",
-        "plan_route",
-        "control_map"
-      ],
-      "actions": [
-        {
-          "type": "SHOW_ROUTE",
-          "routeId": "5eb3f164-cce1-46a3-a71e-d002bed88f51"
-        }
-      ],
-      "result": {
-        "conversationId": "4852c223-a381-440b-904c-b6291d4594d3",
-        "requestId": "f8d8c483-9812-4efd-bc90-e928eb5e0e33",
-        "metrics": {
-          "requests": 5,
-          "correctionRetries": 0,
-          "upstreamTimings": [
-            {
-              "durationMs": 959,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 772,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 1458,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 1609,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 1411,
-              "firstTextMs": 718
-            }
-          ],
-          "promptTokens": 23659,
-          "completionTokens": 411,
-          "cachedPromptTokens": 5504,
-          "totalTokens": 24070,
-          "usageComplete": true,
-          "chargedTokens": 24070,
-          "durationMs": 11812,
-          "estimatedUsdRange": [
-            0.0029863620000000002,
-            0.0059727240000000004
-          ],
-          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
-          "priceCheckedAt": "2026-10-15",
-          "model": "deepseek-flash",
-          "timings": {
-            "version": "camera-settled-v2",
-            "preparationMs": 939,
-            "serverElapsedMs": 12751,
-            "firstTextMs": 11943,
-            "mapActionMs": 3574,
-            "skills": [
-              {
-                "name": "search_campus_events",
-                "durationMs": 377,
-                "ok": true
-              },
-              {
-                "name": "search_places",
-                "durationMs": 0,
-                "ok": true
-              },
-              {
-                "name": "plan_route",
-                "durationMs": 256,
-                "ok": true
-              },
-              {
-                "name": "control_map",
-                "durationMs": 115,
-                "ok": true
-              }
-            ],
-            "database": {
-              "readQueries": 23,
-              "writeQueries": 15,
-              "calls": 29,
-              "failures": 0,
-              "durationMs": 3542,
-              "maxCallMs": 240,
-              "rowsRead": 1112,
-              "rowsWritten": 19,
-              "rowUsageStatements": 19,
-              "rowUsageComplete": false
-            },
-            "retrieval": [
-              {
-                "skill": "search_campus_events",
-                "rowsRead": 867,
-                "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 377,
-                "candidateChunks": 96,
-                "usageAvailable": true
-              }
-            ]
-          }
-        }
-      },
-      "response": "- **历史活动**：2026秋季中文新书展，时间为2026年9月22—24日；该活动已结束，因此不推荐为当前可参加活动[来源1]。\n- **原文地点**：大学城校区图书馆一楼大厅[来源1]。经地点核验，该地点对应大学城校区图书馆（placeId osm-way-307250998）。\n- **南苑7栋→图书馆路线**：步行约848米；经台阶、下沉隧道、教学实验楼通行区域，约12分钟。地图已按浏览器回执显示该路线。",
-      "responseHeadersMs": 1306,
-      "firstTextMs": 13101,
-      "completeMs": 13489
+      "response": "",
+      "responseHeadersMs": 1670,
+      "firstTextMs": null,
+      "completeMs": 17349
     }
   ],
   "pageErrors": []

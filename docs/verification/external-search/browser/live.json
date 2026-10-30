@@ -1,456 +1,199 @@
 {
-  "browser": "149.0.4022.80",
+  "browser": "148.0.7778.97",
   "realModel": true,
   "preview": true,
-  "outcomes": [
-    {
-      "prompt": "广外图书馆怎么借书？只用内部文章概述借书操作，不要联网。",
-      "answer": "广外图书馆借书流程（仅依据内部文章）：\n\n1. 先开通借阅权限：关注“广外图书馆”微信公众号，在“服务—服务大厅—密码重置”中设置图书馆密码；再选择“资源—新生闯馆”或“服务—服务大厅—新生闯馆”，登录后至少完成前四步学习，答题达到60分以上，即可解锁图书借阅等权限。[来源1]\n2. 到馆借书：先在检索后按索书号到对应馆藏地取书，再办理外借。文章还提到，完成新生闯馆后，即可借还图书；支持刷脸入馆，可在“服务—人脸识别注册”中开通。[来源1]\n3. 线上借购（可选）：通过“芸台购”平台可线上借购新书，入口为微信公众号“资源—图书荐购”，或数字广外“图书荐购”。[来源1][来源4]\n\n补充：普通借阅的册数与期限，本轮所检索到的文章没有完整说明，无法确认；书展“每人5册、借期30天、不可续借”只是书展现场规则，不适用于日常借书。[来源2] 相关规则现行有效性待确认。\n\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源1 · 广外图书馆 · 2026/09/06\n查看证据\n正文证据 · 有效性待确认\n金秋阅新｜图书馆2026秋季中文新书展活动\n来源2 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 有效性待确认\n热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？\n来源3 · 广外图书馆 · 2026/10/23\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉\n来源4 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 校园资讯 · 有效性待确认",
-      "sources": [
-        {
-          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
-          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
-        },
-        {
-          "title": "金秋阅新｜图书馆2026秋季中文新书展活动",
-          "url": "https://mp.weixin.qq.com/s/NBtUOT9gSaFqSSM4BImKIQ"
-        },
-        {
-          "title": "热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？",
-          "url": "https://mp.weixin.qq.com/s/B0woO8Ni8zcHw1INndCKeg"
-        },
-        {
-          "title": "阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉",
-          "url": "https://mp.weixin.qq.com/s/nInLIXklodjGsd0UwKF5sw"
-        }
-      ]
-    },
-    {
-      "prompt": "请联网查询广外图书馆读者借阅权限表中本科生的借阅上限和借期，以官方原文为准。",
-      "answer": "抱歉，本轮没能查到广外图书馆官方“读者借阅权限表”中本科生借阅上限和借期的具体数字。\n\n- 内部资料：只讲到完成“新生闯馆”后即可解锁图书借阅权限，没有给本科生可借册数和借期。[来源5]\n- 外部检索：这次没有取得可用的官方原文，无法确认相关数字；“芸台购”新书闪借中“一次最多15本”是专项闪借活动规则，不等于日常借阅上限。[来源2]\n\n建议你直接查看图书馆官网“借阅规则”或到服务台确认。\n\n热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？\n来源1 · 广外图书馆 · 2026/10/23\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉\n来源2 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n主题书展 | 人文艺术经典纸电融合展\n来源3 · 广外图书馆 · 2026/09/30\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n新芽启序，阅伴新生｜专属大学新生的成长书单，请查收！\n来源4 · 广外图书馆 · 2026/09/16\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n新生入馆指南｜2026级广外人，图书馆通关手册请收好\n来源5 · 广外图书馆 · 2026/09/06\n查看证据\n正文证据 · 有效性待确认\n使用指南 | 广外校园卡充值全攻略\n来源6 · 数智广外 · 2026/08/31\n查看证据\n正文证据 · 有效性待确认\n2026新生指南｜广外白云山校区生活指南\n来源7 · 数智广外 · 2026/09/03\n查看证据\n正文证据 · 有效性待确认\n学活场地预约指南丨云山公益服务栈（大学城校区）\n来源8 · 广外云山学生勤工助学 · 2026/09/30\n查看证据\n正文证据 · 有效性待确认",
-      "sources": [
-        {
-          "title": "热读排行｜九月热门借阅撷选，你寻到心仪好书了吗？",
-          "url": "https://mp.weixin.qq.com/s/B0woO8Ni8zcHw1INndCKeg"
-        },
-        {
-          "title": "阅启新学期 | 新书闪借服务持续营业，暑期中奖名单出炉",
-          "url": "https://mp.weixin.qq.com/s/nInLIXklodjGsd0UwKF5sw"
-        },
-        {
-          "title": "主题书展 | 人文艺术经典纸电融合展",
-          "url": "https://mp.weixin.qq.com/s/p3ixregLA12bVnXQAIt77Q"
-        },
-        {
-          "title": "新芽启序，阅伴新生｜专属大学新生的成长书单，请查收！",
-          "url": "https://mp.weixin.qq.com/s/42p8OKR66mIQ_iltDp73cw"
-        },
-        {
-          "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
-          "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
-        },
-        {
-          "title": "使用指南 | 广外校园卡充值全攻略",
-          "url": "https://mp.weixin.qq.com/s/jAZLj0S6cgFS8YXhVLYwXQ"
-        },
-        {
-          "title": "2026新生指南｜广外白云山校区生活指南",
-          "url": "https://mp.weixin.qq.com/s/0b30pjozPKNHRO4tsBoEQg"
-        },
-        {
-          "title": "学活场地预约指南丨云山公益服务栈（大学城校区）",
-          "url": "https://mp.weixin.qq.com/s/53lINN2VHWUBMGU0Na0TkQ"
-        }
-      ]
-    },
-    {
-      "prompt": "广外大学城哪个食堂的饭好吃？请查学生体验，资料年代不明要说明。",
-      "answer": "暂时无法给出“哪个食堂最好吃”的学生口碑排名。 本轮外部学生体验检索未取得可用资料，内部资料中也没有对比各食堂口味的评价。\n\n- 可确认的食堂名称：大学城校区有文采园、博雅园、风采园三个饭堂。[来源7] 文采园门外设有圈存机。[来源6]\n- 关于口味与体验：目前只有学校饮食中心面向在校生公开征集意见的信息，涉及菜品口味、定价、窗口布局和就餐环境。[来源5] 这说明口味确实存在改进空间，但不构成对某食堂的好评或差评，也没有具体菜品推荐。\n- 注意：上述资料发布日期均为2026年，分别是8月至10月，属于近期信息，不是年代不明；但食堂运营情况是否会变动，仍建议以现场为准。若要了解真实体验，可关注校内学生社群或直接到三个饭堂试吃对比。\n\n最新！2027《麦考林》加拿大大学排名发布！分类规则迎来重大调整！！\n来源1 · 广外留学服务中心 · 2026/10/19\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n入驻团队招新｜十佳青年团队招新｜和爱豆一起为老人做酷酷的事！！！\n来源2 · 广外创新创业学院 · 2026/10/08\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n我院顺利举办“人工智能时代的挑战与机遇：评价、反馈与自主学习”专题讲座-英语教育学院\n来源3 · 英语教育学院 · 2026/04/10\n查看证据\n正文证据 · 有效性待确认\n新闻与传播学院第十届“讲好广东故事”暨县级融媒体新闻实践活动结项答辩顺利举行\n来源4 · 广外新传青年 · 2026/10/15\n查看证据\n正文证据 · 有效性待确认\n惜粮守安 食践于行 _ 世界粮食日・节约有你，建言有你\n来源5 · 广外新传青年 · 2026/10/16\n查看证据\n正文证据 · 校园资讯 · 有效性待确认\n使用指南 | 广外校园卡充值全攻略\n来源6 · 数智广外 · 2026/08/31\n查看证据\n正文证据 · 有效性待确认\nGESP考试-广外大学城考点指南\n来源7 · 广外考试中心 · 2026/06/23\n查看证据\n正文证据 · 有效性待确认\n2026新生指南｜广外白云山校区生活指南\n来源8 · 数智广外 · 2026/09/03\n查看证据\n正文证据 · 有效性待确认",
-      "sources": [
-        {
-          "title": "最新！2027《麦考林》加拿大大学排名发布！分类规则迎来重大调整！！",
-          "url": "https://mp.weixin.qq.com/s/IFijxYVhBmFv0a5LUYeRPQ"
-        },
-        {
-          "title": "入驻团队招新｜十佳青年团队招新｜和爱豆一起为老人做酷酷的事！！！",
-          "url": "https://mp.weixin.qq.com/s/pd60peFdHzbfSmKgq0SK6w"
-        },
-        {
-          "title": "我院顺利举办“人工智能时代的挑战与机遇：评价、反馈与自主学习”专题讲座-英语教育学院",
-          "url": "https://see.gdufs.edu.cn/info/1103/13088.htm"
-        },
-        {
-          "title": "新闻与传播学院第十届“讲好广东故事”暨县级融媒体新闻实践活动结项答辩顺利举行",
-          "url": "https://mp.weixin.qq.com/s/YtzrXyaVdOP8tIgGsAO5Ow"
-        },
-        {
-          "title": "惜粮守安 食践于行 _ 世界粮食日・节约有你，建言有你",
-          "url": "https://mp.weixin.qq.com/s/icFN2NsMHvUbGcsbGgOddw"
-        },
-        {
-          "title": "使用指南 | 广外校园卡充值全攻略",
-          "url": "https://mp.weixin.qq.com/s/jAZLj0S6cgFS8YXhVLYwXQ"
-        },
-        {
-          "title": "GESP考试-广外大学城考点指南",
-          "url": "https://mp.weixin.qq.com/s/Kgm2RVmHgDkCAgLjli1ZzA"
-        },
-        {
-          "title": "2026新生指南｜广外白云山校区生活指南",
-          "url": "https://mp.weixin.qq.com/s/0b30pjozPKNHRO4tsBoEQg"
-        }
-      ]
-    }
-  ],
+  "outcomes": [],
   "records": [
     {
       "prompt": "广外图书馆怎么借书？只用内部文章概述借书操作，不要联网。",
       "tools": [
+        "search_campus_knowledge",
         "search_campus_knowledge"
       ],
       "actions": [],
+      "cards": [],
       "result": {
-        "conversationId": "cf9f4f38-639a-48ff-a3da-237b462b84c7",
-        "requestId": "b78e6dde-8eaf-44b5-b7f8-01bc1902e0b5",
+        "error": {
+          "code": "MODEL_SERVICE_UNAVAILABLE",
+          "message": "回复生成异常，请重新提问。"
+        },
+        "conversationId": "1c39b3db-9cf8-4f7b-9ad6-41db894cf246",
         "metrics": {
-          "requests": 2,
+          "answerMode": "model",
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "off_topic",
+            "relatedDocuments": [],
+            "missing": [
+              "relevant_readable_evidence",
+              "official_authority_unconfirmed",
+              "procedure_evidence"
+            ],
+            "activities": [],
+            "needsSupplement": true,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 4,
           "correctionRetries": 0,
-          "upstreamTimings": [
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 1,
+          "groundingChecks": 2,
+          "groundingFailures": 2,
+          "groundingCheckFailures": 0,
+          "groundingResults": [
             {
-              "durationMs": 1316,
-              "firstTextMs": null
+              "supported": false,
+              "issues": [
+                "原文未提供可借35册、借期30天、续借15天等借阅规则",
+                "原文未提供自助借还机位置、刷校园卡及总服务台8:30—22:00",
+                "原文未提供“查询—书目检索”找书步骤"
+              ]
             },
             {
-              "durationMs": 2759,
-              "firstTextMs": 1026
+              "supported": false,
+              "issues": [
+                "答复称正文未写借书操作，但资料知识事实已给出新生闯馆解锁借阅步骤",
+                "“完成新生闯馆后自动获得借书权限”与原文“方可解锁”表述不符"
+              ]
             }
           ],
-          "promptTokens": 5546,
-          "completionTokens": 338,
-          "cachedPromptTokens": 2176,
-          "totalTokens": 5884,
+          "upstreamTimings": [
+            {
+              "durationMs": 2342,
+              "firstTextMs": 761,
+              "finishReason": "stop",
+              "contentChars": 458
+            },
+            {
+              "durationMs": 1274,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            },
+            {
+              "durationMs": 1919,
+              "firstTextMs": 747,
+              "finishReason": "stop",
+              "contentChars": 294
+            },
+            {
+              "durationMs": 1184,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 13838,
+          "completionTokens": 721,
+          "cachedPromptTokens": 5760,
+          "totalTokens": 14559,
           "usageComplete": true,
-          "chargedTokens": 5884,
-          "durationMs": 4911,
+          "chargedTokens": 14559,
+          "durationMs": 9345,
           "estimatedUsdRange": [
-            0.0007148279999999999,
-            0.0014296559999999999
+            0.00166158,
+            0.00332316
           ],
           "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
           "priceCheckedAt": "2026-10-15",
           "model": "deepseek-flash",
           "timings": {
             "version": "camera-settled-v2",
-            "preparationMs": 1104,
-            "serverElapsedMs": 6015,
-            "firstTextMs": 4160,
+            "preparationMs": 1687,
+            "serverElapsedMs": 11032,
+            "firstTextMs": null,
             "mapActionMs": null,
             "skills": [
               {
                 "name": "search_campus_knowledge",
-                "durationMs": 320,
+                "durationMs": 1166,
+                "ok": true
+              },
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 973,
                 "ok": true
               }
             ],
             "database": {
-              "readQueries": 11,
-              "writeQueries": 12,
-              "calls": 15,
+              "readQueries": 22,
+              "writeQueries": 11,
+              "calls": 26,
               "failures": 0,
-              "durationMs": 1940,
-              "maxCallMs": 164,
-              "rowsRead": 623,
+              "durationMs": 4237,
+              "maxCallMs": 442,
+              "rowsRead": 60161,
               "rowsWritten": 15,
-              "rowUsageStatements": 15,
+              "rowUsageStatements": 21,
               "rowUsageComplete": false
             },
             "retrieval": [
               {
                 "skill": "search_campus_knowledge",
-                "rowsRead": 346,
+                "rowsRead": 28629,
                 "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 320,
-                "candidateChunks": 22,
-                "usageAvailable": true
+                "queries": 5,
+                "durationMs": 1166,
+                "candidateChunks": 24,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 24
+                  }
+                ]
+              },
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 28804,
+                "rowsWritten": 0,
+                "queries": 4,
+                "durationMs": 973,
+                "candidateChunks": 28,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_exact",
+                    "limit": 8,
+                    "candidates": 4
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 24
+                  }
+                ]
               }
             ],
             "externalSearch": []
           }
         }
       },
-      "response": "**广外图书馆借书流程（仅依据内部文章）：**\n\n1. **先开通借阅权限**：关注“广外图书馆”微信公众号，在“服务—服务大厅—密码重置”中设置图书馆密码；再选择“资源—新生闯馆”或“服务—服务大厅—新生闯馆”，登录后至少完成前四步学习，答题达到60分以上，即可解锁图书借阅等权限。[来源1]\n2. **到馆借书**：先在检索后按索书号到对应馆藏地取书，再办理外借。文章还提到，完成新生闯馆后，即可借还图书；支持刷脸入馆，可在“服务—人脸识别注册”中开通。[来源1]\n3. **线上借购（可选）**：通过“芸台购”平台可线上借购新书，入口为微信公众号“资源—图书荐购”，或数字广外“图书荐购”。[来源1][来源4]\n\n补充：普通借阅的册数与期限，本轮所检索到的文章没有完整说明，无法确认；书展“每人5册、借期30天、不可续借”只是书展现场规则，不适用于日常借书。[来源2] 相关规则现行有效性待确认。",
-      "responseHeadersMs": 1458,
-      "firstTextMs": 6474,
-      "completeMs": 6850
-    },
-    {
-      "prompt": "请联网查询广外图书馆读者借阅权限表中本科生的借阅上限和借期，以官方原文为准。",
-      "tools": [
-        "search_campus_knowledge",
-        "search_campus_knowledge",
-        "search_external_campus_info"
-      ],
-      "actions": [],
-      "result": {
-        "conversationId": "cf9f4f38-639a-48ff-a3da-237b462b84c7",
-        "requestId": "8f465b41-97ba-411f-bde9-5adaf4fa3767",
-        "metrics": {
-          "requests": 3,
-          "correctionRetries": 0,
-          "upstreamTimings": [
-            {
-              "durationMs": 1476,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 1907,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 2499,
-              "firstTextMs": 1601
-            }
-          ],
-          "promptTokens": 16873,
-          "completionTokens": 384,
-          "cachedPromptTokens": 3072,
-          "totalTokens": 17257,
-          "usageComplete": true,
-          "chargedTokens": 17257,
-          "durationMs": 13955,
-          "estimatedUsdRange": [
-            0.002309766,
-            0.004619532
-          ],
-          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
-          "priceCheckedAt": "2026-10-15",
-          "model": "deepseek-flash",
-          "timings": {
-            "version": "camera-settled-v2",
-            "preparationMs": 1016,
-            "serverElapsedMs": 14971,
-            "firstTextMs": 13953,
-            "mapActionMs": null,
-            "skills": [
-              {
-                "name": "search_campus_knowledge",
-                "durationMs": 305,
-                "ok": true
-              },
-              {
-                "name": "search_campus_knowledge",
-                "durationMs": 314,
-                "ok": true
-              },
-              {
-                "name": "search_external_campus_info",
-                "durationMs": 6717,
-                "ok": true
-              }
-            ],
-            "database": {
-              "readQueries": 23,
-              "writeQueries": 13,
-              "calls": 28,
-              "failures": 0,
-              "durationMs": 3839,
-              "maxCallMs": 358,
-              "rowsRead": 962,
-              "rowsWritten": 16,
-              "rowUsageStatements": 26,
-              "rowUsageComplete": false
-            },
-            "retrieval": [
-              {
-                "skill": "search_campus_knowledge",
-                "rowsRead": 346,
-                "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 305,
-                "candidateChunks": 22,
-                "usageAvailable": true
-              },
-              {
-                "skill": "search_campus_knowledge",
-                "rowsRead": 346,
-                "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 314,
-                "candidateChunks": 22,
-                "usageAvailable": true
-              }
-            ],
-            "externalSearch": [
-              {
-                "status": "unavailable",
-                "durationMs": 6717,
-                "providers": [
-                  {
-                    "provider": "exa_web_local",
-                    "status": "unavailable",
-                    "durationMs": 6717,
-                    "count": 0,
-                    "relayUsage": {
-                      "queries": 10,
-                      "rowsRead": 12,
-                      "rowsWritten": 5,
-                      "usageAvailable": true
-                    },
-                    "failureCode": "HTTP_ERROR"
-                  }
-                ],
-                "rowsRead": 12,
-                "rowsWritten": 5
-              }
-            ]
-          }
-        }
-      },
-      "response": "抱歉，本轮没能查到广外图书馆官方“读者借阅权限表”中本科生借阅上限和借期的具体数字。\n\n- **内部资料**：只讲到完成“新生闯馆”后即可解锁图书借阅权限，没有给本科生可借册数和借期。[来源5]\n- **外部检索**：这次没有取得可用的官方原文，无法确认相关数字；“芸台购”新书闪借中“一次最多15本”是专项闪借活动规则，不等于日常借阅上限。[来源2]\n\n建议你直接查看图书馆官网“借阅规则”或到服务台确认。",
-      "responseHeadersMs": 1348,
-      "firstTextMs": 15445,
-      "completeMs": 15849
-    },
-    {
-      "prompt": "广外大学城哪个食堂的饭好吃？请查学生体验，资料年代不明要说明。",
-      "tools": [
-        "search_campus_knowledge",
-        "search_campus_knowledge",
-        "search_external_campus_info"
-      ],
-      "actions": [],
-      "result": {
-        "conversationId": "cf9f4f38-639a-48ff-a3da-237b462b84c7",
-        "requestId": "036fed25-df6c-4373-9d60-c69daa589fea",
-        "metrics": {
-          "requests": 3,
-          "correctionRetries": 0,
-          "upstreamTimings": [
-            {
-              "durationMs": 1557,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 1500,
-              "firstTextMs": null
-            },
-            {
-              "durationMs": 2439,
-              "firstTextMs": 972
-            }
-          ],
-          "promptTokens": 16956,
-          "completionTokens": 441,
-          "cachedPromptTokens": 3072,
-          "totalTokens": 17397,
-          "usageComplete": true,
-          "chargedTokens": 17397,
-          "durationMs": 35856,
-          "estimatedUsdRange": [
-            0.0023564159999999996,
-            0.004712831999999999
-          ],
-          "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
-          "priceCheckedAt": "2026-10-15",
-          "model": "deepseek-flash",
-          "timings": {
-            "version": "camera-settled-v2",
-            "preparationMs": 1009,
-            "serverElapsedMs": 36865,
-            "firstTextMs": 35281,
-            "mapActionMs": null,
-            "skills": [
-              {
-                "name": "search_campus_knowledge",
-                "durationMs": 534,
-                "ok": true
-              },
-              {
-                "name": "search_campus_knowledge",
-                "durationMs": 475,
-                "ok": true
-              },
-              {
-                "name": "search_external_campus_info",
-                "durationMs": 28626,
-                "ok": true
-              }
-            ],
-            "database": {
-              "readQueries": 53,
-              "writeQueries": 15,
-              "calls": 60,
-              "failures": 0,
-              "durationMs": 8191,
-              "maxCallMs": 455,
-              "rowsRead": 2397,
-              "rowsWritten": 21,
-              "rowUsageStatements": 58,
-              "rowUsageComplete": false
-            },
-            "retrieval": [
-              {
-                "skill": "search_campus_knowledge",
-                "rowsRead": 1038,
-                "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 534,
-                "candidateChunks": 96,
-                "usageAvailable": true
-              },
-              {
-                "skill": "search_campus_knowledge",
-                "rowsRead": 1034,
-                "rowsWritten": 0,
-                "queries": 2,
-                "durationMs": 475,
-                "candidateChunks": 96,
-                "usageAvailable": true
-              }
-            ],
-            "externalSearch": [
-              {
-                "status": "unavailable",
-                "durationMs": 28626,
-                "providers": [
-                  {
-                    "provider": "xiaohongshu_mcp_local",
-                    "status": "unavailable",
-                    "durationMs": 28626,
-                    "count": 0,
-                    "relayUsage": {
-                      "queries": 35,
-                      "rowsRead": 37,
-                      "rowsWritten": 5,
-                      "usageAvailable": true
-                    }
-                  },
-                  {
-                    "provider": "exa_web_local",
-                    "status": "unavailable",
-                    "durationMs": 3857,
-                    "count": 0,
-                    "relayUsage": {
-                      "queries": 7,
-                      "rowsRead": 9,
-                      "rowsWritten": 5,
-                      "usageAvailable": true
-                    },
-                    "failureCode": "HTTP_ERROR"
-                  }
-                ],
-                "rowsRead": 46,
-                "rowsWritten": 10
-              }
-            ]
-          }
-        }
-      },
-      "response": "**暂时无法给出“哪个食堂最好吃”的学生口碑排名。** 本轮外部学生体验检索未取得可用资料，内部资料中也没有对比各食堂口味的评价。\n\n- **可确认的食堂名称**：大学城校区有文采园、博雅园、风采园三个饭堂。[来源7] 文采园门外设有圈存机。[来源6]\n- **关于口味与体验**：目前只有学校饮食中心面向在校生公开征集意见的信息，涉及菜品口味、定价、窗口布局和就餐环境。[来源5] 这说明口味确实存在改进空间，但**不构成对某食堂的好评或差评**，也没有具体菜品推荐。\n- **注意**：上述资料发布日期均为2026年，分别是8月至10月，属于近期信息，不是年代不明；但食堂运营情况是否会变动，仍建议以现场为准。若要了解真实体验，可关注校内学生社群或直接到三个饭堂试吃对比。",
-      "responseHeadersMs": 1322,
-      "firstTextMs": 37269,
-      "completeMs": 37652
+      "response": "",
+      "responseHeadersMs": 1964,
+      "firstTextMs": null,
+      "completeMs": 11717
     }
   ],
   "pageErrors": []
