@@ -74,6 +74,37 @@ export function contentIntent(
       text,
     ) &&
       text.length < 60);
+  // A bare topic after a lead-in ("了解下王春业老师") is still a keyword lookup.
+  // Without this lane it reaches no tool because it is neither an event nor a
+  // policy question, even when the radar already has the matching articles.
+  const ENTITY_LEAD =
+    /^(?:请|帮我|我想|想|要|了解一下|了解下|了解|介绍一下|介绍下|介绍|说说|讲讲|查询|查一下|查下|查查|搜一下|搜下|搜搜|看看|看下|找一下|找找|推荐一下|请问|问一下)\s*/;
+  const ENTITY_ROLE =
+    /(?:老师|教授|导师|院长|书记|主任|校友|同学|人物|是谁|这个人|的情况|的信息|的资料|相关|介绍|了解)/g;
+  const entityTerm = message
+    .replace(ENTITY_LEAD, "")
+    .replace(ENTITY_ROLE, " ")
+    .replace(/[，,。！？?；;：:]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  const bareTopicLookup =
+    /^[\u4e00-\u9fa5]{2,4}$/.test(message.trim()) &&
+    !/^(?:你好|您好|谢谢|再见|哈哈|呵呵|嗯嗯|好的|可以|不行|是的|不是|什么|怎么|为什么|谁|哪|还有|继续|再找|更多|别的|其他|那|这|哪里|我|你|他|她|它|今天|明天|昨天)/.test(
+      message.trim(),
+    ) &&
+    !/(?:比赛|竞赛|讲座|活动|论坛|大赛|之声|节|展|招聘|宣讲|食堂|图书馆|宿舍|学院|大学|天气|路线|地图|在哪|哪里|怎么走|怎么去|导航|位置)/.test(
+      message,
+    );
+  const entityLookup =
+    !reply &&
+    !urgent &&
+    entityTerm.length >= 2 &&
+    entityTerm.length <= 20 &&
+    !/(?:在哪|哪里|怎么走|怎么去|导航|位置|路线)/.test(message) &&
+    (bareTopicLookup ||
+      /老师|教授|导师|院长|书记|主任|校友|同学|是谁|这个人|人物/.test(message)) &&
+    !/(?:有哪些|有什么|哪些|几个|几位|举[几\d]+[位个]|名单)/.test(message) &&
+    !/你|本鱼|自己|人格/.test(entityTerm);
   const topic: string[] = [];
   if (isFollowup(message) && !explicitPlaceRequest)
     for (const turn of [...history].reverse()) {
@@ -122,8 +153,14 @@ export function contentIntent(
     /规则|规定|制度|政策|办法|流程|指南|手续|借书|借阅|续借|选课|申请条件|评定条件|资格|材料|怎么办|怎么[办理借]|如何[办理借]|奖学金.*(?:条件|有哪些)|(?:有哪些|什么).*奖学金|需要满足/.test(
       query,
     );
+  const timeMarkerOnly =
+    /今天|最近|近期|这周|本周|下周|现在/.test(query) &&
+    !/讲座|讲坛|竞赛|比赛|大赛|招聘|宣讲|通知|公告|资讯|新闻|活动|书展|展览|报名|申请|奖学金|之声|歌手|晚会|演出|运动会|辩论|演讲|征文|摄影|评选|开幕式|闭幕式|招新/.test(
+      query,
+    );
   const events =
     !multiTopic &&
+    (!timeMarkerOnly || conversationAct(message) === "campus") &&
     (requestTimeWindow(query, now) !== undefined ||
       /趣事|校园新闻|校园动态|校园分享|有趣的事情/.test(query) ||
       /讲座|讲坛|竞赛|比赛|招聘|宣讲|停水|停电|闭馆|通知|公告|资讯|新闻|最新|活动|书展|展览|项目申报|课题申报|奖助申请|名单公示|报名|截止|近期|最近|今天|这周|本周|下周|下个月|现在.*(?:申请|奖学金)|(?:还能|正在|开放).*(?:申请|报名)|申请.*(?:开放|机会)|之声|歌手|歌唱|合唱|晚会|演出|音乐会|艺术节|文化节|校运会|运动会|辩论|演讲|征文|摄影|设计大赛|创新大赛|挑战杯|评选|开幕式|闭幕式|招新/.test(
@@ -178,6 +215,7 @@ export function contentIntent(
     !urgent &&
     !isFeedbackAct(act) &&
     (articleLookup ||
+      entityLookup ||
       recentDiscovery ||
       knowledge ||
       events ||
@@ -188,7 +226,9 @@ export function contentIntent(
       (act === "campus" && policy.active));
   const tools: ContentTool[] = [];
   if (search) {
-    if (articleLookup) tools.push("search_campus_knowledge");
+    if (entityLookup) {
+      tools.push("search_campus_knowledge", "search_campus_events");
+    } else if (articleLookup) tools.push("search_campus_knowledge");
     else {
       if (knowledge) tools.push("search_campus_knowledge");
       if (events) tools.push("search_campus_events");
@@ -198,6 +238,7 @@ export function contentIntent(
   const strictFact =
     knowledge ||
     events ||
+    entityLookup ||
     policy.officialOnly ||
     policy.needsOfficialVerification;
   const answerRequirement: AnswerRequirement = strictFact
@@ -246,7 +287,9 @@ export function contentIntent(
       : undefined;
   const retrievalQuery = multiTopic
     ? "最新 校园 通知"
-    : broadListQuery
+    : entityLookup
+      ? entityTerm.slice(-300)
+      : broadListQuery
       ? broadListQuery
       : declarativeRequest
         ? coreQuery.slice(-300)
@@ -281,6 +324,7 @@ export function contentIntent(
     radarCategory,
     recentDiscovery,
     articleLookup,
+    entityLookup,
     articleQuery,
     multiTopic,
     discoveryFollowup: !!previousDiscovery,

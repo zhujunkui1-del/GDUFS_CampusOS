@@ -87,3 +87,32 @@ describe("recent radar queries keep the topic and drop filler words", () => {
     expect(intent.tools).toEqual(["search_campus_knowledge"]);
   });
 });
+
+describe("entity names are always keyword lookups", () => {
+  it("searches a teacher name in both radar and knowledge", () => {
+    const intent = contentIntent("了解下王春业老师");
+    expect(intent.active).toBe(true);
+    expect(intent.entityLookup).toBe(true);
+    expect(intent.retrievalQuery).toBe("王春业");
+    expect(intent.tools).toEqual([
+      "search_campus_knowledge",
+      "search_campus_events",
+    ]);
+  });
+  it("treats a bare topic as a lookup instead of refusing it", () => {
+    const intent = contentIntent("王春业");
+    expect(intent.active).toBe(true);
+    expect(intent.retrievalQuery).toBe("王春业");
+  });
+  it("does not keyword-search greetings, unrelated statements or abuse", () => {
+    for (const message of [
+      "你好",
+      "今天天气不错",
+      "我喜欢蓝色",
+      "一饭在哪",
+      "你妈似了",
+    ]) {
+      expect(contentIntent(message).active, message).toBe(false);
+    }
+  });
+});
