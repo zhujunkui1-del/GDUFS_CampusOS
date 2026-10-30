@@ -87,7 +87,7 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
       store.history(revoked, privateConversation.id),
     ).rejects.toMatchObject({ code: "NOT_FOUND" });
   });
-  it("restores bounded history and cannot read another visitor's conversation", async () => {
+  it("restores full history and cannot read another visitor's conversation", async () => {
     const store = new AssistantStore(fixture.db, () => now),
       a = await store.identity(request()),
       b = await store.identity(request());
@@ -98,8 +98,8 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
       a,
       conversation.id,
     );
-    expect(restored.messages).toHaveLength(40);
-    expect(restored.messages[0].text).toBe("公开测试 5");
+    expect(restored.messages).toHaveLength(45);
+    expect(restored.messages[0].text).toBe("公开测试 0");
     await expect(store.history(b, conversation.id)).rejects.toMatchObject({
       code: "NOT_FOUND",
     });

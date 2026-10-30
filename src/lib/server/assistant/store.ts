@@ -47,8 +47,6 @@ const cookie = (request: Request, name: string) =>
     .map((v) => v.trim())
     .find((v) => v.startsWith(name + "="))
     ?.slice(name.length + 1);
-const HISTORY_MESSAGES = 40;
-const RETAINED_MESSAGES = 80;
 
 export class AssistantStore {
   constructor(
@@ -226,7 +224,7 @@ export class AssistantStore {
     const conversation = await this.conversation(identity, id);
     const rows = await this.db
       .prepare(
-        `SELECT id,role,content,artifacts_json FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') ORDER BY rowid DESC LIMIT ${HISTORY_MESSAGES}`,
+        `SELECT id,role,content,artifacts_json FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') ORDER BY rowid DESC`,
       )
       .bind(id)
       .all<{
@@ -513,11 +511,6 @@ export class AssistantStore {
           conversation.owner_key,
           this.now(),
         ),
-      this.db
-        .prepare(
-          `DELETE FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') AND id NOT IN (SELECT id FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') ORDER BY rowid DESC LIMIT ${RETAINED_MESSAGES})`,
-        )
-        .bind(conversation.id, conversation.id),
       this.db
         .prepare(
           "UPDATE conversations SET updated_at_ms=?,expires_at_ms=?,title=CASE WHEN title='新对话' AND ?='user' AND (SELECT count(*) FROM conversation_messages WHERE conversation_id=? AND role='user')=1 THEN substr(replace(?,char(10),' '),1,48) ELSE title END WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL",

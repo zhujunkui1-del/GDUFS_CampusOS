@@ -549,13 +549,12 @@ export function useAssistant(
       text,
       cards: [],
     };
-    setMessages((previous) =>
-      [
-        ...previous,
-        userMessage,
-        { id: assistantId, role: "assistant" as const, text: "", cards: [] },
-      ].slice(-20),
-    );
+    setMessages((previous) => [
+      ...previous,
+      userMessage,
+      { id: assistantId, role: "assistant" as const, text: "", cards: [] },
+    ]);
+
     const update = (fn: (message: StoredMessage) => StoredMessage) =>
       setMessages((previous) =>
         previous.map((message) =>

@@ -316,16 +316,19 @@ export async function chatResponse(request: Request) {
     const evidence = new Map<string, EvidenceHit>();
     const contentMetrics: unknown[] = [];
     const articlePlaces = new Map<string, { placeId: string; name: string }>();
-function recentCursor(previous: { role: string; content: string }[]): string | undefined {
-  const last = [...previous].reverse().find((m) => m.role === "assistant");
-  if (!last) return undefined;
-  const dates: string[] = [];
-  for (const m of last.content.matchAll(/(20\d{2})-(\d{2})-(\d{2})/g)) dates.push(`${m[1]}-${m[2]}-${m[3]}`);
-  for (const m of last.content.matchAll(/(\d{1,2})月(\d{1,2})日/g))
-    dates.push(`2026-${m[1].padStart(2, "0")}-${m[2].padStart(2, "0")}`);
-  dates.sort();
-  return dates[0];
-}
+    function recentCursor(
+      previous: { role: string; content: string }[],
+    ): string | undefined {
+      const last = [...previous].reverse().find((m) => m.role === "assistant");
+      if (!last) return undefined;
+      const dates: string[] = [];
+      for (const m of last.content.matchAll(/(20\d{2})-(\d{2})-(\d{2})/g))
+        dates.push(`${m[1]}-${m[2]}-${m[3]}`);
+      for (const m of last.content.matchAll(/(\d{1,2})月(\d{1,2})日/g))
+        dates.push(`2026-${m[1].padStart(2, "0")}-${m[2].padStart(2, "0")}`);
+      dates.sort();
+      return dates[0];
+    }
     const previous = history.messages
       .map((message) => ({
         role: message.role,
@@ -1103,7 +1106,9 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         content.radarCategory,
                         content.recentDiscovery,
                         content.discoveryFollowup,
-                        content.discoveryFollowup ? recentCursor(previous) : undefined,
+                        content.discoveryFollowup
+                          ? recentCursor(previous)
+                          : undefined,
                         content.articleQuery,
                       ),
                       afterInitialReads: () => {
@@ -1134,9 +1139,11 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                                   ? "竞赛"
                                   : content.radarCategory === "education_career"
                                     ? "升学就业"
-                                    : content.radarCategory === "scholarship_opportunity"
+                                    : content.radarCategory ===
+                                        "scholarship_opportunity"
                                       ? "奖学金"
-                                      : content.radarCategory === "academic_research"
+                                      : content.radarCategory ===
+                                          "academic_research"
                                         ? "学术科研"
                                         : content.radarCategory
                                           ? "校园通知"
@@ -1552,6 +1559,11 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                     "AI 暂不可用，请重试。",
                     true,
                   );
+            console.error(
+              "[chat-failed]",
+              controlled.code,
+              cause instanceof Error ? cause.message : String(cause),
+            );
             const metrics = runMetrics();
             await ctx.store
               .finish(

@@ -83,7 +83,7 @@ export type StoredMessage = z.infer<typeof StoredMessageSchema>;
 export const AssistantHistorySchema = z
   .object({
     conversationId: z.string().uuid(),
-    messages: z.array(StoredMessageSchema).max(20),
+    messages: z.array(StoredMessageSchema),
     selectedPlaceId: z.string().nullable(),
     activeRouteId: z.string().nullable(),
     title: z.string().max(48).optional(),

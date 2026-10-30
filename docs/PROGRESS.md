@@ -1466,3 +1466,27 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 - `你好`：直接自然问候，不调用检索。
 - `今天天气不错`：只按校园边界回应，不调用关键词检索。
 - 单测新增「裸人名必搜」「问候/无关陈述/地点/脏话不搜」用例；全量 724/724；`tsc` 0；`build` 0。
+
+### 2026-10-30｜长会话第 13 条起失败与历史记录截断
+
+负责人贴出一段真实对话：会话进行到第 13 条消息后，连续出现「这次查询未完成，请重新提问。」「对话暂不可用，请稍后重试。」；历史对话只能上滑约 10 条。要求查清并删除条数限制。
+
+根因：
+
+- `src/lib/server/agent/orchestrator.ts` 的 `historySchema` 硬性 `.max(12)`；`chat.ts` 传入 `previous.slice(-40)`，第 13 条消息起 `historySchema.parse` 直接抛 `ZodError`，在模型和工具执行前就失败，表现为 `INVALID_ARGUMENT`、`requests:0`、`toolsExecuted:0`。
+- `src/features/assistant/use-assistant.ts` 发送后 `.slice(-20)`，界面只保留最近 20 条。
+- `src/domain/agent/assistant-contracts.ts` 的 `AssistantHistorySchema.messages` 仍 `.max(20)`，历史接口返回 30+ 条时前端 Zod 解析失败，面板显示「重试连接」。
+- `src/lib/server/assistant/store.ts` 的 `history()` 只取 40 条，`append()` 只保留 80 条。
+
+修复：
+
+- `historySchema` 上限改为 40，与模型上下文传入的最近 40 条对齐；更早历史仍保留在服务端，不再因超过 12 条直接失败。
+- `store.history()` 去掉 `LIMIT`，`append()` 去掉删除旧消息的语句；会话记录不再按条数裁剪（仍受会话 48 小时 TTL 约束）。
+- `use-assistant.ts` 去掉 `.slice(-20)`；`AssistantHistorySchema` 去掉 `.max(20)`，界面渲染服务端返回的完整记录。
+- 单测同步：45/42/44 条消息均完整恢复；`tsc` 0；全量 724/724；`build` 0。
+
+真实验收（Preview `eb638949-59a0-4690-8430-7c172706f95e`）：
+
+- 复制毒化会话（34 条消息）到测试身份，`GET /api/agent/conversations/:id` 返回全部 34 条。
+- 向该会话发送「三下乡」，返回 200，`search_campus_knowledge`/`search_campus_events` 均成功，`requests:2`、`groundingChecks:1 supported`，不再 `INVALID_ARGUMENT`。
+- 浏览器打开助理面板，历史渲染 36 条消息（含本轮新增 2 条），不再只显示 10 条或「重试连接」。

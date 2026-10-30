@@ -37,7 +37,7 @@ const historySchema = z
       })
       .strict(),
   )
-  .max(12);
+  .max(40);
 export type AgentRunInput = {
   runId?: string;
   message: string;

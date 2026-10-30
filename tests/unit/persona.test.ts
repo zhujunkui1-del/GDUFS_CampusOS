@@ -65,7 +65,12 @@ it("keeps the concrete person across multiple followups and persona-only turns",
     "戴建业是广外云山工作室首席专家吗",
     "那他属于南校吗",
     "别演了",
-  ].map((text, i) => ({ id: "fixture-" + i, role: "user" as const, text, cards: [] }));
+  ].map((text, i) => ({
+    id: "fixture-" + i,
+    role: "user" as const,
+    text,
+    cards: [],
+  }));
   const result = contentIntent("他是哪个学院的呢", history);
   expect(result.query).toContain("戴建业");
   expect(result.query).not.toContain("别演了");
@@ -118,7 +123,7 @@ it("stores separate owner-scoped preferences beyond the history window and remov
     off,
   );
   const history = await store.history(user, conversation.id);
-  expect(history.messages).toHaveLength(40);
+  expect(history.messages).toHaveLength(44);
   expect(history.messages.some((m) => m.text.includes('"enabled"'))).toBe(
     false,
   );
