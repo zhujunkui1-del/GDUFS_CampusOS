@@ -134,6 +134,7 @@ export function useAssistant(
   const initialized = useRef(false),
     scope = useRef("");
   const generation = useRef(0);
+  const sessionKind = useRef("");
   const [connected, setConnected] = useState(false);
   const [loadingConversation, setLoadingConversation] = useState(false);
   const [conversations, setConversations] = useState<ConversationSummary[]>([]);
@@ -246,6 +247,7 @@ export function useAssistant(
         setConversations([]);
       }
       scope.current = session.scopeKey;
+      sessionKind.current = session.kind;
       const readyGeneration = generation.current;
       if (!pending.current && !historyWork.current) {
         if (!chosen.current) {
@@ -303,6 +305,29 @@ export function useAssistant(
     window.addEventListener("focus", focus);
     return () => window.removeEventListener("focus", focus);
   }, [boot]);
+  useEffect(() => {
+    const identityChanged = () => {
+      // Existing guest conversations remain owned by their HttpOnly visitor cookie.
+      if (sessionKind.current !== "user") return;
+      invalidate();
+      if (displayedRouteOwner.current) mapRef.current.stopNavigation();
+      displayedRouteOwner.current = null;
+      resetSemantics();
+      chosen.current = false;
+      listWork.current?.abort();
+      setListBusy(false);
+      conversationRef.current = undefined;
+      setView(blankConversation());
+      setConversations([]);
+      setNextCursor(null);
+      initialized.current = false;
+      setConnected(false);
+      if (open) void boot();
+    };
+    window.addEventListener("campusos:identity-changed", identityChanged);
+    return () =>
+      window.removeEventListener("campusos:identity-changed", identityChanged);
+  }, [boot, invalidate, open, resetSemantics]);
   const cancel = useCallback(() => {
     invalidate();
     setError("已停止回复。");

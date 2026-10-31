@@ -15,6 +15,10 @@ import {
 } from "lucide-react";
 import { AssistantPanel } from "@/features/assistant/components/assistant-panel";
 import {
+  AccountProvider,
+  useAccount,
+} from "@/features/account/account-context";
+import {
   CampusMapProvider,
   useCampusMap,
 } from "@/features/campus-map/components/campus-map-provider";
@@ -31,17 +35,19 @@ const navigation = [
 export function CampusShell({ children }: { children: React.ReactNode }) {
   const [assistantOpen, setAssistantOpen] = useState(false);
   return (
-    <CampusMapProvider
-      onAskAssistant={() => setAssistantOpen(true)}
-      onNavigationStart={() => setAssistantOpen(false)}
-    >
-      <ShellChrome
-        assistantOpen={assistantOpen}
-        setAssistantOpen={setAssistantOpen}
+    <AccountProvider>
+      <CampusMapProvider
+        onAskAssistant={() => setAssistantOpen(true)}
+        onNavigationStart={() => setAssistantOpen(false)}
       >
-        {children}
-      </ShellChrome>
-    </CampusMapProvider>
+        <ShellChrome
+          assistantOpen={assistantOpen}
+          setAssistantOpen={setAssistantOpen}
+        >
+          {children}
+        </ShellChrome>
+      </CampusMapProvider>
+    </AccountProvider>
   );
 }
 function ShellChrome({
@@ -56,6 +62,8 @@ function ShellChrome({
   const pathname = usePathname();
   const [expanded, setExpanded] = useState(false);
   const map = useCampusMap();
+  const account = useAccount();
+  const username = account.session?.user?.username;
 
   return (
     <div
@@ -120,16 +128,16 @@ function ShellChrome({
               aria-label="我的账号"
               aria-describedby="visitor-label"
               aria-current={pathname === "/account" ? "page" : undefined}
-              title="我的账号 · 游客"
+              title={`我的账号 · ${username || "游客"}`}
             >
               <span className="account-avatar">
                 <UserRound size={20} strokeWidth={1.7} />
               </span>
               <span className="account-caption">
-                我的账号<small>游客模式</small>
+                我的账号<small>{username || "游客模式"}</small>
               </span>
               <small id="visitor-label" className="nav-guest">
-                游客
+                {username ? "已登录" : "游客"}
               </small>
             </Link>
           </div>

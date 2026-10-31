@@ -1,8 +1,4 @@
-import { requireUser } from "@/lib/server/auth";
-import { withApi } from "@/lib/server/http";
-
+import { accountApi } from "@/lib/server/account/api";
 export const dynamic = "force-dynamic";
-
-// Authentication is unavailable in S0; every request is anonymous.
-// JSON fields and unverified cookies cannot establish a user identity.
-export const GET = withApi(() => requireUser(null));
+export const GET = accountApi;
+export const PATCH = accountApi;

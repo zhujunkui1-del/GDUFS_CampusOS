@@ -81,6 +81,13 @@ export class AssistantStore {
           .bind(hash, this.now())
           .first<{ owner_key: string; user_id: string | null }>()
       : null;
+    // S4 preserves an existing visitor's proven device scope; it never silently claims it.
+    if (row && row.user_id === null && row.owner_key === "g:" + hash)
+      return {
+        owner: row.owner_key,
+        user: null,
+        cookie: this.sessionCookie(token!, request),
+      };
     if (
       row &&
       row.user_id === (login ? login.id : null) &&

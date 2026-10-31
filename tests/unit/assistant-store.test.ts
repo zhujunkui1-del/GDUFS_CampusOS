@@ -64,7 +64,7 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
       )
       .run(await tokenHash(loginToken), new Date(now + 3600000).toISOString());
     const user = await store.identity(
-      request(`campusos_session=${loginToken}; ${guest.cookie.split(";")[0]}`),
+      request(`campusos_session=${loginToken}`),
     );
     expect(user.user?.id).toBe("test-user");
     expect(user.owner).not.toBe(guest.owner);

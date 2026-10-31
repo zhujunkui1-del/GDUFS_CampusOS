@@ -74,7 +74,7 @@ describe("owned multi-conversation state and atomic deletion", () => {
         await store.identity(
           new Request("https://campus.invalid/api/agent/session", {
             headers: {
-              Cookie: `campusos_session=${token}; ${guest.cookie.split(";")[0]}`,
+              Cookie: `campusos_session=${token}`,
             },
           }),
         ),

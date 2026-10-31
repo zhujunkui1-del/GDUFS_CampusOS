@@ -25,6 +25,7 @@ import {
   sourceSessionReportPost,
 } from "./external-search/relay-api";
 import { visitPost } from "./console/traffic";
+import { accountApi, accountMethods } from "./account/api";
 
 type Handler = (request: Request) => Promise<Response>;
 const fixed: Record<string, { method: string; handle: Handler }> = {
@@ -62,6 +63,13 @@ export function previewApiHandler(
   path: string,
   method = "GET",
 ): { method: string; handle: Handler } | null {
+  if (Object.hasOwn(accountMethods, path))
+    return {
+      method: accountMethods[path].includes(method)
+        ? method
+        : accountMethods[path][0],
+      handle: accountApi,
+    };
   if (/^\/api\/collector\/[a-z-]+$/.test(path))
     return { method, handle: collectorApi };
   if (/^\/api\/admin\/collector(?:\/[a-zA-Z0-9_-]+){0,2}$/.test(path))

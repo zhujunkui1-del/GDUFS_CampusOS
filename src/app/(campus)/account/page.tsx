@@ -1,4 +1,4 @@
-import { ModulePage } from "@/components/module-page";
+import { AccountPageView } from "@/features/account/account-page";
 export default function AccountPage() {
-  return <ModulePage page="account" />;
+  return <AccountPageView />;
 }

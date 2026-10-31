@@ -7,6 +7,7 @@ import {
   vectorBindings,
 } from "./src/lib/server/retrieval/vector";
 import handler from "./.open-next/worker.js";
+import { cleanAccountMetadata } from "./src/lib/server/account/api";
 import { runCalendarBatch } from "./src/lib/server/calendar/processor";
 import type { CalendarAI } from "./src/lib/server/calendar/enrichment";
 import { runWithCloudflareRequestContext } from "./.open-next/cloudflare/init.js";
@@ -20,6 +21,13 @@ import {
 const previewWorker = {
   async scheduled(_event: unknown, env: Record<string, unknown>) {
     if (env.APP_ENV !== "preview" || !env.DB) return;
+    if (
+      env.USER_ACCOUNTS_ENABLED === "true" &&
+      new Date().getUTCMinutes() === 0
+    )
+      await cleanAccountMetadata(env.DB as SqlDatabase).catch(() =>
+        console.info(JSON.stringify({ event: "account.cleanup.failure" })),
+      );
     await (env.DB as SqlDatabase)
       .prepare(
         "UPDATE console_engine_settings SET cloud_runner_last_at=? WHERE id='console-v2-settings'",
