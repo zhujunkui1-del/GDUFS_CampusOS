@@ -1,0 +1,42 @@
+[
+  {
+    "name": "invalid_email_rejected_before_sending",
+    "passed": true,
+    "status": 400
+  },
+  {
+    "name": "email_registration_requires_code",
+    "passed": true,
+    "status": 400
+  },
+  {
+    "name": "fake_email_code_cannot_create_account",
+    "passed": true,
+    "status": 403
+  },
+  {
+    "name": "existing_test_account_still_logs_in",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "name": "rename_no_password_b",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "name": "rename_no_password_x",
+    "passed": true,
+    "status": 200
+  },
+  {
+    "name": "password_only_cannot_unbind_mail",
+    "passed": true,
+    "status": 400
+  },
+  {
+    "name": "duplicate_username_rejected_before_sending",
+    "passed": true,
+    "status": 409
+  }
+]

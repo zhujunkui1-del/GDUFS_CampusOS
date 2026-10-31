@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-01",
+  "code": "457dca9",
+  "previewVersion": "87458dee-897b-4317-bb09-784a24ad6c10",
+  "unit": {
+    "passed": 835,
+    "total": 835,
+    "files": 118
+  },
+  "browser": {
+    "realBusinessPassed": 2,
+    "isolatedMailUiPassed": 2,
+    "total": 4,
+    "seconds": 46.7
+  },
+  "realApiPassed": 8,
+  "migration": {
+    "before": [
+      [
+        {
+          "users": 11
+        }
+      ],
+      [
+        {
+          "challenges": 4
+        }
+      ],
+      [
+        {
+          "sessions": 29
+        }
+      ],
+      [
+        {
+          "name": "0056_user_password_accounts.sql"
+        }
+      ]
+    ],
+    "after": [
+      [
+        {
+          "users": 11
+        }
+      ],
+      [
+        {
+          "challenges": 4
+        }
+      ],
+      [
+        {
+          "sessions": 29
+        }
+      ],
+      []
+    ],
+    "preserved": true
+  },
+  "glass": {
+    "standardBlurPx": 22,
+    "reducedTransparencyBlurPx": 10,
+    "highContrast": "solid"
+  },
+  "ownerAccountModified": false,
+  "ownerMailboxUsedForThisRun": false,
+  "newRealMailEndToEndRepeated": false
+}
