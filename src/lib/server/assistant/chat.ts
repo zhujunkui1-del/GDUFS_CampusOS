@@ -842,6 +842,7 @@ export async function chatResponse(request: Request) {
                 // literal query terms here dropped exactly the newest AI articles
                 // and left only old ones that happened to contain 计算机.
                 if (
+                  data.method !== "calendar_index" &&
                   !content.articleLookup &&
                   !(content.recentDiscovery && content.radarCategory) &&
                   !queryRelevance(relevancePlan, h).relevant

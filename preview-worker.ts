@@ -34,7 +34,18 @@ const previewWorker = {
         env.CALENDAR_AUTO_ENRICH === "true"
           ? (env.AI as CalendarAI)
           : undefined,
-      ).catch(() => undefined);
+      )
+        .then((result) => {
+          if (result.processed || result.failures)
+            console.info(
+              JSON.stringify({ event: "calendar.batch", ...result }),
+            );
+        })
+        .catch(() =>
+          console.info(
+            JSON.stringify({ event: "calendar.batch", failed: true }),
+          ),
+        );
     // Bounded preview-only semantic backfill; a batch failure is recorded and
     // retried by the next tick instead of blocking ingestion.
     if (backfillFlag(env)) {

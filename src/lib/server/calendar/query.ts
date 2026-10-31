@@ -1,3 +1,4 @@
+import { calendarBodyAllowedSql } from "./content-scope";
 import { z } from "zod";
 import { ArticleActivitySchema } from "@/domain/console/article-analysis";
 import { RadarCategorySchema } from "@/domain/console/taxonomy";
@@ -182,10 +183,10 @@ export async function readCalendar(
     args.push(q.campus);
   }
   filters.push(
-    `(json_extract(a.activity_json,'$.calendar.usesBody')=0 OR (d.rights_scope IN('excerpt_and_link','licensed_full_text') AND NOT EXISTS(SELECT 1 FROM knowledge_sources sp LEFT JOIN source_collection_policies p ON p.source_id=sp.id WHERE sp.id=d.source_id AND ((sp.manual_policy_version>0 AND (sp.manual_rights_scope NOT IN('excerpt_and_link','licensed_full_text') OR sp.manual_policy_expires_at_ms<=CAST((julianday('now')-2440587.5)*86400000 AS INTEGER))) OR (sp.manual_policy_version=0 AND p.source_id IS NOT NULL AND (p.rights_scope NOT IN('excerpt_and_link','licensed_full_text') OR p.expires_at_ms<=CAST((julianday('now')-2440587.5)*86400000 AS INTEGER)))))))`,
+    `(json_extract(a.activity_json,'$.calendar.usesBody')=0 OR (${calendarBodyAllowedSql()}))`,
   );
   const rows = await read<Row>(
-    `SELECT a.document_id,a.activity_key,a.group_key,a.activity_json,d.version,d.content_revision,d.input_hash,d.title AS document_title,d.url,d.published_at,d.source_id,s.display_name,d.rights_scope,CASE WHEN m.document_id IS NOT NULL THEN CASE WHEN m.radar_category IS NOT NULL THEN 'radar' ELSE 'knowledge' END ELSE x.primary_destination END AS primary_destination,CASE WHEN m.document_id IS NOT NULL THEN m.radar_category ELSE x.radar_category END AS radar_category,CASE WHEN m.document_id IS NOT NULL THEN m.knowledge_category ELSE x.knowledge_category END AS knowledge_category FROM article_activity_index a JOIN knowledge_documents d ON d.id=a.document_id JOIN document_article_analysis x ON x.document_id=d.id JOIN knowledge_sources s ON s.id=d.source_id LEFT JOIN document_classification_overrides m ON m.document_id=d.id WHERE ${filters.join(" AND ")} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=a.document_id AND p.version=d.version) ORDER BY a.starts_day,a.group_key,a.document_id LIMIT 1001`,
+    `WITH permitted AS MATERIALIZED (SELECT a.document_id,a.activity_key,a.group_key,a.activity_json,d.version,d.content_revision,d.input_hash,d.title AS document_title,d.url,d.published_at,d.source_id,s.display_name,d.rights_scope,CASE WHEN m.document_id IS NOT NULL THEN CASE WHEN m.radar_category IS NOT NULL THEN 'radar' ELSE 'knowledge' END ELSE x.primary_destination END AS primary_destination,CASE WHEN m.document_id IS NOT NULL THEN m.radar_category ELSE x.radar_category END AS radar_category,CASE WHEN m.document_id IS NOT NULL THEN m.knowledge_category ELSE x.knowledge_category END AS knowledge_category FROM article_activity_index a JOIN knowledge_documents d ON d.id=a.document_id JOIN document_article_analysis x ON x.document_id=d.id JOIN knowledge_sources s ON s.id=d.source_id LEFT JOIN document_classification_overrides m ON m.document_id=d.id WHERE ${filters.join(" AND ")}) SELECT v.* FROM permitted v WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=v.document_id AND p.version=v.version) ORDER BY json_extract(v.activity_json,'$.startsAt.date'),v.group_key,v.document_id LIMIT 1001`,
     args,
   );
   if (rows.length > 1000)
@@ -234,7 +235,9 @@ export async function readCalendar(
       knowledgeCategory: r.knowledge_category,
     };
     const state = registrationState({ ...a, status: "unknown" }, now),
-      history = end < today;
+      history = a.endsAt?.at
+        ? Date.parse(a.endsAt.at) < Date.parse(now)
+        : end < today;
     const group = groups.get(r.group_key);
     const states = observations.get(r.group_key) || new Set<RegistrationNow>();
     if (state !== "unknown") states.add(state);
@@ -250,7 +253,7 @@ export async function readCalendar(
         registrationState: state,
         historical: history,
         mapPlace: articleMapPlace(a.placeRaw),
-        calendarUrl: `/calendar?date=${a.startsAt.date}&event=${r.group_key}`,
+        calendarUrl: `/calendar?date=${dates[0]}&event=${r.group_key}`,
         dates,
       });
   }
@@ -289,6 +292,9 @@ export async function readCalendar(
     q.campus,
     q.registration,
     q.timeRole,
+    q.sourceId,
+    q.sourceTypes,
+    q.event,
   ]);
   let cursorKey = "";
   if (q.cursor) {

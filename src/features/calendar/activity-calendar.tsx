@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
   CalendarDays,
   MapPin,
-  ArrowUpRight,
-  X,
+  Clock3,
   RefreshCw,
 } from "lucide-react";
 import { radarCategories } from "@/domain/console/taxonomy";
@@ -56,6 +56,7 @@ const catLabel = (item: CalendarItem) =>
   radarCategories.find((c) => c.code === item.activity.category)?.label ||
   "活动";
 export function ActivityCalendar() {
+  const queryString = useSearchParams().toString();
   const [date, setDate] = useState(""),
     [category, setCategory] = useState(""),
     [campus, setCampus] = useState(""),
@@ -65,8 +66,8 @@ export function ActivityCalendar() {
     [busy, setBusy] = useState(false),
     [refresh, setRefresh] = useState(0),
     [cursor, setCursor] = useState<string | null>(null),
-    [selected, setSelected] = useState<CalendarItem | null>(null),
     [detailId, setDetailId] = useState(""),
+    [detailSourceId, setDetailSourceId] = useState(""),
     [article, setArticle] = useState<PublicArticleSummary | null>(null);
   const week = date ? weekOf(date) : [],
     first = week[0],
@@ -77,19 +78,23 @@ export function ActivityCalendar() {
         d = q.get("date");
       setDate(d && CalendarDateSchema.safeParse(d).success ? d : chinaDate());
       setDetailId(q.get("event") || "");
+      setCursor(null);
+      setDetailSourceId(q.get("article") || "");
+      if (!q.get("event")) setArticle(null);
     };
     load();
     window.addEventListener("popstate", load);
     return () => window.removeEventListener("popstate", load);
-  }, []);
+  }, [queryString]);
   function choose(d: string) {
     setDate(d);
     setCursor(null);
-    setSelected(null);
+    setArticle(null);
     setDetailId("");
     const u = new URL(window.location.href);
     u.searchParams.set("date", d);
     u.searchParams.delete("event");
+    u.searchParams.delete("article");
     history.replaceState(null, "", u);
   }
   useEffect(() => {
@@ -160,57 +165,83 @@ export function ActivityCalendar() {
           throw Error("活动已更新或不再公开。");
         return j.data.items[0] as CalendarItem;
       })
-      .then(setSelected)
+      .then((item) =>
+        setArticle(
+          articleSummary(
+            item,
+            item.sources.find((s) => s.documentId === detailSourceId) ||
+              item.sources[0],
+          ),
+        ),
+      )
       .catch((e) => {
         if (!abort.signal.aborted) setError(e.message);
       });
     return () => abort.abort();
-  }, [detailId]);
-  function open(item: CalendarItem) {
-    setSelected(item);
+  }, [detailId, detailSourceId]);
+  function open(item: CalendarItem, source: CalendarItem["sources"][number]) {
+    setArticle(articleSummary(item, source));
     const u = new URL(window.location.href);
     u.searchParams.set("date", date);
     u.searchParams.set("event", item.eventId);
+    u.searchParams.set("article", source.documentId);
     history.replaceState(null, "", u);
   }
-  const timed = (data?.items || []).filter(
-      (g) => !!occurrenceTime(date, g.activity).startTime,
+  const entries = (data?.items || []).flatMap((item) =>
+      item.sources.map((source) => ({ item, source })),
     ),
-    untimed = (data?.items || []).filter(
-      (g) => !occurrenceTime(date, g.activity).startTime,
+    timed = entries.filter(
+      ({ item }) => !!occurrenceTime(date, item.activity).startTime,
+    ),
+    untimed = entries.filter(
+      ({ item }) => !occurrenceTime(date, item.activity).startTime,
     );
-  function eventCard(item: CalendarItem) {
+  function eventCard({ item, source }: (typeof entries)[number]) {
     return (
-      <button
-        type="button"
-        key={item.eventId}
+      <article
+        key={item.eventId + source.documentId}
         className="calendar-event"
         style={articleThemeStyle(item.activity.category || "calendar")}
-        onClick={() => open(item)}
         data-event-id={item.eventId}
+        data-article-id={source.documentId}
       >
-        <span className="calendar-event-meta">
-          <span className="calendar-category">{catLabel(item)}</span>
-          {item.historical && <span>历史活动</span>}
-          {labels[item.registrationState] && (
-            <span>{labels[item.registrationState]}</span>
-          )}
-        </span>
-        <strong>{item.activity.title}</strong>
-        <span className="calendar-event-facts">
-          <span>
-            {fmt(date)}
-            {timeText(item, date) && ` · ${timeText(item, date)}`}
+        <button
+          type="button"
+          className="calendar-event-open"
+          onClick={() => open(item, source)}
+        >
+          <span className="calendar-event-meta">
+            <span className="calendar-category">{catLabel(item)}</span>
+            {item.historical && <span>历史活动</span>}
+            {labels[item.registrationState] && (
+              <span>{labels[item.registrationState]}</span>
+            )}
           </span>
-          {item.activity.placeRaw && (
-            <span>
-              <MapPin size={15} />
-              {item.activity.placeRaw}
+          <strong>{source.title}</strong>
+          <span className="calendar-event-facts">
+            <span className="calendar-event-time">
+              <Clock3 size={15} />
+              {timeText(item, date) || fmt(date)}
             </span>
-          )}
-          {item.activity.organizer && <span>{item.activity.organizer}</span>}
-        </span>
-      </button>
+            {item.activity.placeRaw && (
+              <span className="calendar-event-place">
+                <MapPin size={15} />
+                {item.activity.placeRaw}
+              </span>
+            )}
+            <span className="calendar-event-source">{source.source.name}</span>
+          </span>
+        </button>
+        {item.mapPlace && (
+          <Link
+            className="calendar-map-link"
+            href={`/map?place=${encodeURIComponent(item.mapPlace.placeId)}`}
+          >
+            <MapPin size={15} />
+            在校园地图查看
+          </Link>
+        )}
+      </article>
     );
   }
   return (
@@ -365,10 +396,13 @@ export function ActivityCalendar() {
         )}
       </div>
       <div className="calendar-agenda">
-        {timed.map((item) => (
-          <div key={item.eventId} className="calendar-timed">
-            <time>{occurrenceTime(date, item.activity).startTime}</time>
-            {eventCard(item)}
+        {timed.map((entry) => (
+          <div
+            key={entry.item.eventId + entry.source.documentId}
+            className="calendar-timed"
+          >
+            <time>{occurrenceTime(date, entry.item.activity).startTime}</time>
+            {eventCard(entry)}
           </div>
         ))}
         {untimed.length > 0 && (
@@ -388,144 +422,38 @@ export function ActivityCalendar() {
           {busy ? "正在加载…" : "加载更多"}
         </button>
       )}
-      {selected && (
-        <ActivityDetails
-          item={selected}
-          onClose={() => {
-            setSelected(null);
-            setDetailId("");
-            const u = new URL(window.location.href);
-            u.searchParams.delete("event");
-            history.replaceState(null, "", u);
-          }}
-          onRead={(source) =>
-            setArticle({
-              id: source.documentId,
-              version: source.version,
-              title: source.title,
-              url: source.originalUrl,
-              publishedAt: source.publishedAt,
-              readable: source.bodyAvailable,
-              contentType: "event",
-              knowledgeCategory: null,
-              radarCategory: selected.activity.category,
-              source: { name: source.source.name, official: false },
-            })
-          }
-        />
-      )}
       {article && (
         <PublicArticleDialog
           article={article}
           categoryLabel="活动原文"
-          onClose={() => setArticle(null)}
+          onClose={() => {
+            setArticle(null);
+            setDetailId("");
+            setDetailSourceId("");
+            const u = new URL(window.location.href);
+            u.searchParams.delete("event");
+            u.searchParams.delete("article");
+            history.replaceState(null, "", u);
+          }}
         />
       )}
     </section>
   );
 }
-function ActivityDetails({
-  item,
-  onClose,
-  onRead,
-}: {
-  item: CalendarItem;
-  onClose: () => void;
-  onRead: (source: CalendarItem["sources"][number]) => void;
-}) {
-  const ref = useRef<HTMLDialogElement>(null);
-  useEffect(() => {
-    const d = ref.current;
-    d?.showModal();
-    return () => d?.close();
-  }, []);
-  const a = item.activity,
-    start = a.startsAt?.date,
-    end = a.endsAt?.date;
-  return (
-    <dialog
-      ref={ref}
-      className="calendar-dialog"
-      onCancel={onClose}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-      aria-labelledby="calendar-event-title"
-    >
-      <div className="calendar-dialog-head">
-        <span>{catLabel(item)}</span>
-        <button type="button" aria-label="关闭活动详情" onClick={onClose}>
-          <X size={22} />
-        </button>
-      </div>
-      <h2 id="calendar-event-title">{a.title}</h2>
-      <div className="calendar-detail-facts">
-        {start && (
-          <p>
-            {fmt(start)}
-            {end && end !== start ? ` — ${fmt(end)}` : ""}
-            {a.startsAt?.at && ` · ${a.startsAt.at.slice(11, 16)}`}
-            {a.endsAt?.at && `–${a.endsAt.at.slice(11, 16)}`}
-          </p>
-        )}
-        {a.placeRaw && (
-          <p>
-            <MapPin size={17} />
-            {a.placeRaw}
-          </p>
-        )}
-        {a.organizer && <p>主办方：{a.organizer}</p>}
-        {labels[item.registrationState] && (
-          <p>{labels[item.registrationState]}</p>
-        )}
-        {item.historical && <p>历史活动</p>}
-      </div>
-      {item.mapPlace && (
-        <Link
-          className="calendar-map-link"
-          href={`/map?place=${encodeURIComponent(item.mapPlace.placeId)}`}
-        >
-          <MapPin size={17} />
-          在校园地图查看
-        </Link>
-      )}
-      <h3>来源</h3>
-      <div className="calendar-sources">
-        {item.sources.map((s) => (
-          <article key={s.documentId}>
-            <a href={s.originalUrl} target="_blank" rel="noopener noreferrer">
-              {s.title}
-              <ArrowUpRight size={15} />
-            </a>
-            <p>
-              {s.source.name}
-              {s.publishedAt &&
-                ` · ${s.publishedAt.slice(0, 10).replaceAll("-", "/")}`}
-            </p>
-            {s.bodyAvailable && (
-              <button type="button" onClick={() => onRead(s)}>
-                站内阅读全文
-              </button>
-            )}
-          </article>
-        ))}
-      </div>
-      {a.calendar?.origins.map((o) => (
-        <a
-          key={o.id}
-          className="calendar-evidence-link"
-          target="_blank"
-          rel="noopener noreferrer"
-          href={o.url}
-        >
-          {o.kind === "image"
-            ? "查看活动海报"
-            : o.kind === "attachment"
-              ? "查看附件"
-              : "查看原文表格"}
-          <ArrowUpRight size={14} />
-        </a>
-      ))}
-    </dialog>
-  );
+function articleSummary(
+  item: CalendarItem,
+  source: CalendarItem["sources"][number],
+): PublicArticleSummary {
+  return {
+    id: source.documentId,
+    version: source.version,
+    title: source.title,
+    url: source.originalUrl,
+    publishedAt: source.publishedAt,
+    readable: source.bodyAvailable,
+    contentType: "event",
+    knowledgeCategory: source.knowledgeCategory,
+    radarCategory: item.activity.category,
+    source: { name: source.source.name, official: false },
+  };
 }

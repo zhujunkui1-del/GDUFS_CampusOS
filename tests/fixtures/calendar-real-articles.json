@@ -1,7 +1,7 @@
 {
   "kind": "manually_labelled_real_source_excerpts",
   "capturedAt": "2026-10-30T14:57:21.936Z",
-  "note": "Original context excerpts, not synthetic notices. Labels were set by reading the event/administrative date roles; not copied from predictions. Exact time is checked only when annotated.",
+  "note": "真实原文片段的人工标注集；日期、时刻缺失及地点短语均按原文标注，不由预测生成；不能代表全库准确率。",
   "cases": [
     {
       "id": "content-044c36ce-a546-49c8-9bfd-6e0341b8c953",
@@ -16,7 +16,8 @@
       "expected": {
         "dates": ["2026-11-15"],
         "end": null,
-        "time": null
+        "time": null,
+        "placeContains": "广东外语外贸大学白云山校区行政楼国际会议厅"
       }
     },
     {
@@ -32,7 +33,8 @@
       "expected": {
         "dates": ["2026-12-05"],
         "end": null,
-        "time": null
+        "time": null,
+        "placeContains": "广东外语外贸大学（白云山校区）"
       }
     },
     {
@@ -48,7 +50,8 @@
       "expected": {
         "dates": ["2026-11-20"],
         "end": "2026-11-22",
-        "time": null
+        "time": null,
+        "placeContains": "广东外语外贸大学（白云山校区）"
       }
     },
     {
@@ -64,7 +67,8 @@
       "expected": {
         "dates": [],
         "end": null,
-        "time": null
+        "time": null,
+        "placeContains": null
       }
     },
     {
@@ -80,7 +84,8 @@
       "expected": {
         "dates": ["2026-12-19"],
         "end": null,
-        "time": null
+        "time": null,
+        "placeContains": "广东外语外贸大学大学城校区"
       }
     },
     {
@@ -96,7 +101,8 @@
       "expected": {
         "dates": ["2026-10-25"],
         "end": null,
-        "time": null
+        "time": null,
+        "placeContains": "白云山校区尚行·二号楼（MBA教育中心）103室"
       }
     },
     {
@@ -112,7 +118,8 @@
       "expected": {
         "dates": ["2026-11-07"],
         "end": null,
-        "time": null
+        "time": null,
+        "placeContains": "假草场"
       }
     },
     {
@@ -128,7 +135,8 @@
       "expected": {
         "dates": ["2026-11-01"],
         "end": null,
-        "time": "14:00"
+        "time": "14:00",
+        "placeContains": "广东外语外贸大学国际学院"
       }
     },
     {
@@ -144,7 +152,8 @@
       "expected": {
         "dates": ["2026-11-07"],
         "end": null,
-        "time": null
+        "time": null,
+        "placeContains": null
       }
     },
     {
@@ -160,7 +169,8 @@
       "expected": {
         "dates": ["2026-10-25"],
         "end": null,
-        "time": "19:00"
+        "time": "19:00",
+        "placeContains": null
       }
     },
     {
@@ -176,7 +186,8 @@
       "expected": {
         "dates": ["2026-12-05"],
         "end": "2026-12-06",
-        "time": null
+        "time": null,
+        "placeContains": "上海应用技术大学徐汇校区"
       }
     },
     {
@@ -192,7 +203,8 @@
       "expected": {
         "dates": ["2026-12-05"],
         "end": "2026-12-06",
-        "time": null
+        "time": null,
+        "placeContains": "上海应用技术大学徐汇校区"
       }
     }
   ]

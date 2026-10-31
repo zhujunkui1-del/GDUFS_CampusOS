@@ -26,6 +26,13 @@ type Source = {
 };
 const eventWords =
   /讲座|讲坛|论坛|研讨会|报告会|招聘会|宣讲会|比赛|竞赛|运动会|读书会|音乐会|演出|展览|开放日|体验日|选拔赛|决赛|复赛|挑战杯|工作坊|分享会|交流会|颁奖典礼|学术沙龙|活动预告|活动报名|讲堂|Workshop|Seminar|Lecture/i;
+const confirmedValue = (v: string | null) =>
+  v &&
+  /^(?:待定|未知|暂无|未定|另行通知|详见后续|待通知|TBD|to be announced)/i.test(
+    v.trim(),
+  )
+    ? null
+    : v;
 const eventRole =
   /(?:讲座|讲坛|讲堂|沙龙|活动|比赛|竞赛|会议|演出|论坛|考试|复赛|决赛|开幕|报告会|报告)(?:举办)?(?:时\s*间|日期)|举办时间|开始时间|结束时间|定于|将于|将在|举行|举办|开讲|开幕|(?:^|\n)时\s*间[：:]/g;
 const otherRole =
@@ -205,17 +212,53 @@ export function calendarInput(
     ...input,
     calendarSources: [
       ...new Map(
-        [...(input.calendarSources || []), ...added].map((s) => [s.id, s]),
+        [...(input.calendarSources || []), ...added]
+          // Early OCR relabelled captions and could mistake a source logo for an organiser.
+          .filter((s) => !/^@cf\/.*-ocr$/.test(s.method))
+          .map((s) => [s.id, s]),
       ).values(),
     ].slice(0, 4),
   };
 }
-function blocks(s: Source, title: string) {
+function blocks(
+  s: Source,
+  title: string,
+): { title: string; start: number; end: number; root?: boolean }[] {
   const h = [
     ...s.text.matchAll(
       /(?:^|\n)(?:活动名称|讲座题目|活动主题|(?:\d+[.、]|[一二三四五六七八九十]、)\s*(?:讲座|活动|比赛))[：:]\s*([^\n]{1,120})/g,
     ),
   ];
+  if (!h.length) {
+    const phases = [
+      ...s.text.matchAll(
+        /(?:^|\n)(开幕式|闭幕式|初赛|复赛|决赛)(?:(?:时间|日期)[：:]?|[：:]|(?=\n|$))/g,
+      ),
+    ];
+    const rounds = [
+      ...s.text.matchAll(/(?:^|\n)(第[一二三四五六七八九十\d]+场)[：:]?/g),
+    ];
+    const split = phases.length ? phases : rounds.length > 1 ? rounds : [];
+    if (split.length)
+      return [
+        { title, start: 0, end: s.text.length, root: true },
+        ...split.slice(0, 11).map((m, i) => {
+          const next = split[i + 1]?.index ?? s.text.length;
+          const rest = s.text.slice(m.index! + m[0].length, next);
+          const boundary = rest.match(
+            /\n(?:\s*\d{1,2}[.、]?\s*)?(?:活动赛制|活动时间|举办时间|报名方式|提交要求|咨询方式|参赛材料)(?:[：:]|\n|$)/,
+          );
+          return {
+            title: `${title} · ${m[1]}`,
+            start: m.index!,
+            end:
+              boundary?.index !== undefined
+                ? m.index! + m[0].length + boundary.index
+                : next,
+          };
+        }),
+      ].filter((b) => b.end > b.start);
+  }
   return h.length
     ? h.slice(0, 12).map((m, i) => ({
         title: m[1].trim(),
@@ -245,7 +288,9 @@ function candidates(s: Source, title: string): Candidate[] {
     if (
       type === "award" ||
       type === "uncertain" ||
-      (!eventWords.test(b.title) && !eventWords.test(body)) ||
+      (!eventWords.test(b.title) &&
+        !eventWords.test(body) &&
+        !/(?:活动|讲座|会议|举办|报告)(?:举办)?时间[：:]/.test(body)) ||
       /每周|每月|每逢/.test(body)
     )
       continue;
@@ -257,11 +302,22 @@ function candidates(s: Source, title: string): Candidate[] {
       const previous = carry;
       carry = p.trim().length < 50 ? p : "";
       if (!hasDate) continue;
+      if (/暂定|待定|预计|另行通知/.test(p)) continue;
       const combined = previous + " " + p;
       if (/原定/.test(p) && !/改为|调整至|延期至/.test(p)) continue;
       let pp: ArticleTimePoint | undefined;
       const valid: { p: ArticleTimePoint; at: number; end: number }[] = [];
       for (const d of calendarDates(p)) {
+        if (
+          b.root &&
+          sections.some(
+            (other) =>
+              !other.root &&
+              absolute + d.index! >= other.start &&
+              absolute + d.index! < other.end,
+          )
+        )
+          continue;
         const prefix = p.slice(0, d.index),
           tail = p.slice(d.index! + d[0].length);
         if (
@@ -334,7 +390,8 @@ function candidates(s: Source, title: string): Candidate[] {
           if (t.date)
             output.push({
               specificity: 2,
-              scope: sections.length > 1 ? String(b.start) : undefined,
+              scope:
+                sections.length > 1 && !b.root ? String(b.start) : undefined,
               title: b.title,
               source: s,
               start: t,
@@ -357,7 +414,7 @@ function candidates(s: Source, title: string): Candidate[] {
         const between = next ? p.slice(first.end, next.at) : "";
         const range = !!next && /^\s*(?:至|到|—|–|~|～|-)\s*$/.test(between);
         output.push({
-          scope: sections.length > 1 ? String(b.start) : undefined,
+          scope: sections.length > 1 && !b.root ? String(b.start) : undefined,
           title: b.title,
           source: s,
           start: first.p,
@@ -369,8 +426,8 @@ function candidates(s: Source, title: string): Candidate[] {
             Math.min(absolute + p.length, absolute + 900),
             "event_time",
           ),
-          place: place?.trim() || null,
-          organizer: organizer?.trim() || null,
+          place: confirmedValue(place?.trim() || null),
+          organizer: confirmedValue(organizer?.trim() || null),
           nature: type,
         });
         if (range) i++;
@@ -385,7 +442,8 @@ function proposalCandidates(
   proposal?: CalendarProposal,
 ) {
   const out: Candidate[] = [];
-  for (const e of proposal?.events || []) {
+  for (const original of proposal?.events || []) {
+    const e = { ...original, dates: [...new Set(original.dates)] };
     const s = sources.find((s) => s.id === e.sourceId);
     if (
       !s ||
@@ -394,7 +452,27 @@ function proposalCandidates(
       (!s.text.includes(e.title) && !input.title.includes(e.title))
     )
       continue;
-    const at = s.text.indexOf(e.occurrenceQuote);
+    let at = s.text.indexOf(e.occurrenceQuote),
+      end = at + e.occurrenceQuote.length;
+    let spansValid = true;
+    for (const raw of e.dates) {
+      const matches = [
+        ...s.text.matchAll(
+          new RegExp(raw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
+        ),
+      ];
+      if (!matches.length) {
+        spansValid = false;
+        break;
+      }
+      const nearest = matches.sort(
+        (a, b) => Math.abs(a.index! - at) - Math.abs(b.index! - at),
+      )[0];
+      at = Math.min(at, nearest.index!);
+      end = Math.max(end, nearest.index! + raw.length);
+    }
+    if (!spansValid || end - at > 1000) continue;
+    e.occurrenceQuote = s.text.slice(at, end);
     if (
       /报名|截止|提交|发布|公示|获奖/.test(e.occurrenceQuote) &&
       !new RegExp(eventRole.source).test(e.occurrenceQuote)
@@ -474,8 +552,8 @@ function proposalCandidates(
           at + e.occurrenceQuote.length,
           "event_time",
         ),
-        place: verifiedPlace,
-        organizer: verifiedOrganizer,
+        place: confirmedValue(verifiedPlace),
+        organizer: confirmedValue(verifiedOrganizer),
         nature: e.nature,
       });
       if (range) break;
@@ -511,36 +589,46 @@ export function calendarizeArticle(
       ...(input.calendarSources || []),
     ];
   const tableEvents: CalendarProposal["events"] = [];
-  for (const s of sources.filter((s) => s.kind === "table")) {
-    const [header, ...rows] = s.text.split("\n"),
-      cols = header.split("|").map((x) => x.trim());
-    const ni = cols.findIndex((x) => /名称|主题|题目/.test(x)),
-      ti = cols.findIndex(
-        (x) => /时间|日期/.test(x) && !/报名|截止|提交|发布|公示/.test(x),
-      ),
-      pi = cols.findIndex((x) => /地点/.test(x)),
-      oi = cols.findIndex((x) => /主办/.test(x));
-    if (ni < 0 || ti < 0) continue;
-    for (const row of rows.slice(0, 12)) {
-      const c = row.split("|").map((x) => x.trim());
-      if (!c[ni] || !c[ti]) continue;
-      const dates = calendarDates(c[ti]).map((m) => m[0].trim());
-      if (dates.length)
-        tableEvents.push({
-          title: c[ni],
-          sourceId: s.id,
-          occurrenceQuote: row,
-          dates,
-          place: pi >= 0 ? c[pi] || null : null,
-          organizer: oi >= 0 ? c[oi] || null : null,
-          nature: "announcement",
-        });
+  for (const s of sources.filter(
+    (s) => s.kind === "table" || s.kind === "attachment",
+  )) {
+    const tables =
+      s.kind === "table"
+        ? [s.text]
+        : [...s.text.matchAll(/(?:^[^\n]*\|[^\n]*(?:\n|$)){2,}/gm)].map(
+            (m) => m[0],
+          );
+    for (const table of tables.slice(0, 2)) {
+      const [header, ...rows] = table.trim().split("\n"),
+        cols = header.split("|").map((x) => x.trim());
+      const ni = cols.findIndex((x) => /名称|主题|题目/.test(x)),
+        ti = cols.findIndex(
+          (x) => /时间|日期/.test(x) && !/报名|截止|提交|发布|公示/.test(x),
+        ),
+        pi = cols.findIndex((x) => /地点/.test(x)),
+        oi = cols.findIndex((x) => /主办/.test(x));
+      if (ni < 0 || ti < 0) continue;
+      for (const row of rows.slice(0, 12)) {
+        const c = row.split("|").map((x) => x.trim());
+        if (!c[ni] || !c[ti]) continue;
+        const dates = calendarDates(c[ti]).map((m) => m[0].trim());
+        if (dates.length)
+          tableEvents.push({
+            title: c[ni],
+            sourceId: s.id,
+            occurrenceQuote: row,
+            dates,
+            place: pi >= 0 ? c[pi] || null : null,
+            organizer: oi >= 0 ? c[oi] || null : null,
+            nature: "announcement",
+          });
+      }
     }
   }
   const tableCandidates = proposalCandidates(sources, input, {
     events: tableEvents,
   });
-  const found = [
+  let found = [
     ...sources.flatMap((s) => candidates(s, input.title)),
     ...tableCandidates,
     ...proposalCandidates(sources, input, proposal),
@@ -552,6 +640,14 @@ export function calendarizeArticle(
         tableCandidates.some((t) => t.start.date === c.start.date)
       ),
   );
+  const unresolvedMultiple =
+    /活动汇总|多场(?:讲座|活动)|[三四五六七八九十\d]+场(?:讲座|活动)|系列讲座/.test(
+      input.title + canonical.text.slice(0, 300),
+    ) &&
+    !proposal?.events.length &&
+    found.length > 1 &&
+    found.every((c) => c.title === input.title && !c.scope);
+  if (unresolvedMultiple) found = [];
   const grouped = new Map<string, Candidate[]>();
   for (const c of found) {
     const key =
@@ -663,6 +759,7 @@ export function calendarizeArticle(
     if (activities.length >= 12) break;
   }
   if (!activities.length) {
+    if (unresolvedMultiple) reason = "multiple_events_unresolved";
     if (
       ["no_activity", "no_body"].includes(reason) &&
       (eventWords.test(input.title) ||
@@ -675,7 +772,12 @@ export function calendarizeArticle(
             ? "year_unconfirmed"
             : "no_reliable_event_date"
           : "no_event_date";
-    for (const a of base.activities)
+    for (const a of base.activities.filter(
+      (a) =>
+        !a.calendar?.origins.some(
+          (o) => !input.calendarSources?.some((s) => s.id === o.id),
+        ),
+    ))
       activities.push({
         ...a,
         calendar: {
@@ -718,7 +820,10 @@ export function calendarizeArticle(
         ? "dated_event"
         : reason,
       sources: input.calendarSources || [],
-      attempts: base.calendar?.attempts || 0,
+      attempts:
+        base.calendar?.version === CALENDAR_VERSION
+          ? base.calendar.attempts
+          : 0,
     },
   };
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Map,
   Search,
@@ -54,6 +54,13 @@ export function MapWorkspace() {
   const generation = useRef(0);
   const local = searchCampusPlaces(query).slice(0, 12);
   const ready = map.status === "ready";
+  const selectPlace = map.select;
+  useEffect(() => {
+    if (!ready) return;
+    const id = new URLSearchParams(window.location.search).get("place");
+    if (id && campusData.places.some((place) => place.id === id))
+      selectPlace(id);
+  }, [ready, selectPlace]);
   const searchAMap = async () => {
     if (!query.trim() || !ready) return;
     const revision = ++generation.current;

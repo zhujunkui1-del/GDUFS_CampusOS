@@ -1,3 +1,4 @@
+import { calendarBodyAllowedSql } from "./content-scope";
 import type { SqlDatabase } from "../assistant/database";
 import type {
   ArticleAnalysis,
@@ -41,7 +42,7 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
       (budget?.calls || 0) < 40);
   const candidates = await db
     .prepare(
-      `SELECT x.document_id,x.content_revision,x.input_hash,x.calendar_status FROM document_article_analysis x WHERE x.calendar_status ${canEnrich ? "IN('pending','needs_enrichment')" : "='pending'"} AND x.calendar_attempts<2 AND x.calendar_lease_until_ms<? AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=x.document_id) ORDER BY x.calendar_status,x.processed_at,x.document_id LIMIT 2`,
+      `SELECT x.document_id,x.content_revision,x.input_hash,x.calendar_status FROM document_article_analysis x WHERE x.calendar_status ${canEnrich ? "IN('pending','needs_enrichment')" : "='pending'"} AND x.calendar_attempts IN(0,1) AND x.calendar_lease_until_ms<? ORDER BY x.calendar_status,x.calendar_attempts,x.calendar_lease_until_ms,x.document_id LIMIT 2`,
     )
     .bind(Date.now())
     .all<{
@@ -56,7 +57,7 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
         "UPDATE document_article_analysis SET calendar_lease_until_ms=? WHERE document_id=? AND input_hash=? AND content_revision=? AND calendar_lease_until_ms<?",
       )
       .bind(
-        Date.now() + 150000,
+        Date.now() + 300000,
         c.document_id,
         c.input_hash,
         c.content_revision,
@@ -67,11 +68,24 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
     try {
       const d = await db
         .prepare(
-          "SELECT d.title,CASE WHEN d.rights_scope IN('licensed_full_text','excerpt_and_link') THEN d.body ELSE '' END AS body,d.body_format,d.body_status,d.published_at,d.url,d.source_id,s.display_name,x.analysis_json FROM knowledge_documents d JOIN document_article_analysis x ON x.document_id=d.id JOIN knowledge_sources s ON s.id=d.source_id WHERE d.id=? AND d.input_hash=? AND d.content_revision=? AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)",
+          `WITH candidate AS MATERIALIZED (SELECT d.id,CASE WHEN ${calendarBodyAllowedSql()} THEN 1 ELSE 0 END AS body_allowed,d.title,CASE WHEN ${calendarBodyAllowedSql()} THEN d.body ELSE '' END AS body,d.body_format,d.body_status,d.published_at,d.url,d.source_id,s.display_name,x.analysis_json FROM knowledge_documents d JOIN document_article_analysis x ON x.document_id=d.id JOIN knowledge_sources s ON s.id=d.source_id WHERE d.id=? AND d.input_hash=? AND d.content_revision=?) SELECT v.* FROM candidate v WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=v.id)`,
         )
         .bind(c.document_id, c.input_hash, c.content_revision)
-        .first<Record<string, string>>();
-      if (!d) continue;
+        .first<Record<string, string> & { body_allowed: number }>();
+      if (!d || !d.body_allowed) {
+        await db
+          .prepare(
+            "UPDATE document_article_analysis SET calendar_lease_until_ms=? WHERE document_id=? AND input_hash=? AND content_revision=?",
+          )
+          .bind(
+            Date.now() + 3600000,
+            c.document_id,
+            c.input_hash,
+            c.content_revision,
+          )
+          .run();
+        continue;
+      }
       const base = JSON.parse(d.analysis_json) as ArticleAnalysis;
       let input: ArticleAnalysisInput = calendarInput({
         documentId: c.document_id,

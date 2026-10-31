@@ -52,7 +52,7 @@ export async function analysisStatements(
   const activityRows = await Promise.all(
     analysis.activities.map(async (a) => ({
       ...a,
-      identity: await calendarIdentity(a, id),
+      identity: await calendarIdentity(a, id, input.sourceName),
     })),
   );
   return [

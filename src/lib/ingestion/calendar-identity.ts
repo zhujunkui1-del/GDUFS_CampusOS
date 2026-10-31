@@ -6,13 +6,32 @@ const norm = (s: string) =>
     .normalize("NFKC")
     .toLowerCase()
     .replace(/[\s“”"'「」·|｜]/g, "");
-export async function calendarIdentity(a: Activity, documentId: string) {
-  const title = norm(a.title)
+export async function calendarIdentity(
+  a: Activity,
+  documentId: string,
+  sourceName = "",
+) {
+  let title = norm(a.title);
+  const suffix = "-" + norm(sourceName);
+  if (sourceName && title.endsWith(suffix))
+    title = title.slice(0, -suffix.length);
+  title = title
     .replace(/[-—]广东外语外贸大学.*$/, "")
     .replace(/^关于举办/, "")
     .replace(/的通知$/, "");
-  // Unknown organiser/venue cannot distinguish two colleges' identically named events.
-  const mergeable = !!a.startsAt?.date && !!a.placeRaw && !!a.organizer;
+  // Generic names require an organiser; a formal title also needs a precise venue and schedule.
+  const mergeable =
+    !!a.startsAt?.date &&
+    !!a.placeRaw &&
+    (!!a.organizer ||
+      (title.length >= 20 &&
+        a.placeRaw.length >= 12 &&
+        /大学|校区/.test(a.placeRaw) &&
+        /路|号|楼|中心|馆|会议室/.test(a.placeRaw) &&
+        !!(
+          a.startsAt.at ||
+          (a.endsAt?.date && a.endsAt.date !== a.startsAt.date)
+        )));
   const material = mergeable
     ? [
         title,
@@ -21,9 +40,18 @@ export async function calendarIdentity(a: Activity, documentId: string) {
         a.endsAt?.date,
         a.endsAt?.at,
         norm(a.placeRaw!),
-        norm(a.organizer!),
+        a.organizer ? norm(a.organizer) : null,
         a.calendar?.campus,
       ]
-    : [documentId, a.key];
+    : [
+        documentId,
+        title,
+        a.startsAt?.date,
+        a.startsAt?.at,
+        a.endsAt?.date,
+        a.endsAt?.at,
+        a.placeRaw ? norm(a.placeRaw) : null,
+        a.organizer ? norm(a.organizer) : null,
+      ];
   return "event-" + (await tokenHash(JSON.stringify(material))).slice(0, 40);
 }

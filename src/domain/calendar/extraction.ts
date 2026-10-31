@@ -1,5 +1,5 @@
 import { z } from "zod";
-export const CALENDAR_VERSION = "calendar-v1";
+export const CALENDAR_VERSION = "calendar-v2";
 export const CalendarSourceSchema = z
   .object({
     id: z.string().max(100),
@@ -32,7 +32,7 @@ export const CalendarActivityMetaSchema = z
   .strict();
 export const CalendarReportSchema = z
   .object({
-    version: z.literal(CALENDAR_VERSION),
+    version: z.enum(["calendar-v1", CALENDAR_VERSION]),
     status: z.enum(["accepted", "excluded", "needs_enrichment", "failed"]),
     reason: z.string().max(100),
     sources: z.array(CalendarSourceSchema).max(4),

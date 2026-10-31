@@ -163,7 +163,7 @@
 .calendar-event:hover {
   box-shadow: inset 0 0 0 1px var(--feed-accent);
 }
-.calendar-event > strong {
+.calendar-event-open > strong {
   font-size: 1.12rem;
   font-weight: 650;
   line-height: 1.55;
@@ -229,86 +229,42 @@
   display: block;
   margin: 24px auto;
 }
-.calendar-dialog {
+.public-calendar .calendar-event-open {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 10px;
+  width: 100%;
+  padding: 0;
+  background: transparent;
   border: 0;
-  border-radius: 26px;
-  width: min(680px, calc(100vw - 32px));
-  max-height: calc(100dvh - 48px);
-  padding: 28px;
-  color: var(--text-primary);
-  background: var(--surface-card);
-  box-shadow: 0 20px 70px #182b4030;
-}
-.calendar-dialog::backdrop {
-  background: #182b4055;
-}
-.calendar-dialog-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: var(--brand-primary);
-}
-.calendar-dialog-head button {
-  border: 1px solid var(--border-subtle);
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  min-height: 44px;
-  border-radius: 14px;
   cursor: pointer;
 }
-.calendar-dialog h2 {
-  font-size: 1.5rem;
+.calendar-event-open > strong {
+  font-size: 1.12rem;
+  font-weight: 650;
   line-height: 1.55;
-  margin: 20px 0;
   overflow-wrap: anywhere;
 }
-.calendar-detail-facts p {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin: 12px 0;
-  line-height: 1.65;
+.calendar-event-time,
+.calendar-event-place {
+  color: var(--feed-accent);
 }
-.calendar-map-link,
-.calendar-evidence-link {
+.calendar-event-time {
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+.calendar-event-source {
+  color: var(--text-secondary);
+}
+.calendar-map-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   color: var(--brand-primary);
-  margin: 12px 12px 12px 0;
-}
-.calendar-sources article {
-  padding: 15px 0;
-  border-top: 1px solid var(--border-subtle);
-}
-.calendar-sources a {
-  color: var(--brand-primary);
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
-.calendar-sources a svg {
-  vertical-align: middle;
-  margin-left: 5px;
-}
-.calendar-sources p {
   font-size: 0.9rem;
-  color: var(--text-secondary);
-  margin: 8px 0;
-}
-.calendar-sources button {
-  color: var(--brand-primary);
-  background: var(--brand-soft);
-  border: 0;
-  border-radius: 12px;
-  padding: 10px 14px;
-  font: inherit;
-  cursor: pointer;
-}
-.calendar-evidence-link {
-  font-size: 0.9rem;
+  align-self: flex-start;
+  min-height: 32px;
 }
 @media (max-width: 700px) {
   .public-calendar {
@@ -383,18 +339,11 @@
     padding: 16px;
     border-radius: 18px;
   }
-  .calendar-event > strong {
+  .calendar-event-open > strong {
     font-size: 1rem;
   }
   .calendar-event-facts {
     font-size: 0.85rem;
     gap: 7px;
-  }
-  .calendar-dialog {
-    padding: 20px;
-    max-height: calc(100dvh - 24px);
-  }
-  .calendar-dialog h2 {
-    font-size: 1.25rem;
   }
 }

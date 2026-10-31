@@ -94,7 +94,7 @@ export type EvidenceHit = z.infer<typeof EvidenceHitSchema>;
 export const RetrievalResultSchema = z.object({
   hits: z.array(EvidenceHitSchema).max(6),
   metrics: RetrievalMetricsSchema,
-  indexVersion: z.enum([RETRIEVAL_INDEX_VERSION, "calendar-v1"]),
+  indexVersion: z.enum([RETRIEVAL_INDEX_VERSION, "calendar-v1", "calendar-v2"]),
   method: z.enum(["fts5_keywords_and_domain_expansion", "calendar_index"]),
   warnings: z.array(z.string()).max(8),
 });

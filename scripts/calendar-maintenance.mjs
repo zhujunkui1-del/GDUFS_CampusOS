@@ -10,20 +10,22 @@ import { previewCloudflareJson } from "./preview-network.mjs";
 const dir = ".map-tools/calendar-20261030";
 fs.mkdirSync(dir, { recursive: true });
 const mode =
-  process.argv.find((a) => /^--(predict|apply|enrich|restore|probe)/.test(a)) ||
-  "--predict";
-await build({
-  stdin: {
-    contents:
-      'export {calendarInput,calendarizeArticle} from "./src/lib/ingestion/calendar-extraction";export {validateArticleAnalysis} from "./src/lib/ingestion/article-validation";export {analyzeArticle} from "./src/lib/ingestion/article-analysis";export {analysisStatements} from "./src/lib/server/console/article-analysis";export {enrichCalendar,calendarMedia,CALENDAR_AI_MODEL} from "./src/lib/server/calendar/enrichment";export {reserveCalendarModel} from "./src/lib/server/calendar/processor";export {extractArticleStructure} from "./src/lib/ingestion/article-times";export {readCalendar} from "./src/lib/server/calendar/query";',
-    resolveDir: process.cwd(),
-  },
-  outfile: dir + "/maintenance.mjs",
-  bundle: true,
-  platform: "node",
-  format: "esm",
-  logLevel: "silent",
-});
+  process.argv.find((a) =>
+    /^--(predict|apply|enrich|restore|probe|verify|audit|refresh)/.test(a),
+  ) || "--predict";
+if (mode !== "--restore" || !fs.existsSync(dir + "/maintenance.mjs"))
+  await build({
+    stdin: {
+      contents:
+        'export {calendarInput,calendarizeArticle} from "./src/lib/ingestion/calendar-extraction";export {validateArticleAnalysis} from "./src/lib/ingestion/article-validation";export {analyzeArticle} from "./src/lib/ingestion/article-analysis";export {analysisStatements} from "./src/lib/server/console/article-analysis";export {enrichCalendar,calendarMedia,CALENDAR_AI_MODEL} from "./src/lib/server/calendar/enrichment";export {reserveCalendarModel} from "./src/lib/server/calendar/processor";export {extractArticleStructure} from "./src/lib/ingestion/article-times";export {readCalendar} from "./src/lib/server/calendar/query";export {calendarBodyAllowedSql} from "./src/lib/server/calendar/content-scope";',
+      resolveDir: process.cwd(),
+    },
+    outfile: dir + "/maintenance.mjs",
+    bundle: true,
+    platform: "node",
+    format: "esm",
+    logLevel: "silent",
+  });
 const api = await import(
   pathToFileURL(path.resolve(dir + "/maintenance.mjs")) + "?t=" + Date.now()
 );
@@ -120,11 +122,37 @@ const rawAuth = execFileSync(
 const { token } = JSON.parse(rawAuth.slice(rawAuth.indexOf("{")));
 const usage = { rowsRead: 0, rowsWritten: 0, queries: 0 };
 async function query(body) {
-  const rows = await previewCloudflareJson(
-    `https://api.cloudflare.com/client/v4/accounts/${account}/d1/database/${dbId}/query`,
-    token,
-    body,
-  );
+  const endpoint = `https://api.cloudflare.com/client/v4/accounts/${account}/d1/database/${dbId}/query`;
+  let rows;
+  if (mode === "--verify") {
+    const r = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(30000),
+    });
+    const j = await r.json();
+    if (!j.success) {
+      const safe = (j.errors || []).map((e) => ({
+        code: e.code,
+        message: String(e.message).slice(0, 600),
+      }));
+      fs.writeFileSync(
+        dir + "/query-diagnostic-error.json",
+        JSON.stringify(safe, null, 2),
+      );
+      throw Error(JSON.stringify(safe));
+    }
+    rows = j.result;
+  } else
+    rows = await previewCloudflareJson(
+      `https://api.cloudflare.com/client/v4/accounts/${account}/d1/database/${dbId}/query`,
+      token,
+      body,
+    );
   for (const r of rows) {
     usage.rowsRead += r.meta.rows_read;
     usage.rowsWritten += r.meta.rows_written;
@@ -161,10 +189,99 @@ const db = {
 const live = async (ids) =>
   (
     await query({
-      sql: `SELECT d.id,d.input_hash,d.content_revision,x.calendar_version,x.projection_hash FROM knowledge_documents d LEFT JOIN document_article_analysis x ON x.document_id=d.id WHERE d.id IN(${ids.map(() => "?").join(",")}) AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)`,
+      sql: `WITH candidates AS MATERIALIZED (SELECT CASE WHEN ${api.calendarBodyAllowedSql()} THEN 1 ELSE 0 END AS body_allowed,d.id,d.input_hash,d.content_revision,x.calendar_version,x.projection_hash FROM knowledge_documents d LEFT JOIN document_article_analysis x ON x.document_id=d.id WHERE d.id IN(${ids.map(() => "?").join(",")})) SELECT v.* FROM candidates v WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=v.id)`,
       params: ids,
     })
   )[0].results;
+if (mode === "--audit") {
+  const reports = {};
+  for (const [name, sql] of Object.entries({
+    publicArticles: "SELECT count(*) AS count FROM console_public_documents",
+    calendarStates:
+      "SELECT calendar_version,calendar_status,count(*) AS count FROM document_article_analysis GROUP BY calendar_version,calendar_status",
+    activities:
+      "WITH eligible AS MATERIALIZED(SELECT i.*,d.content_revision,d.input_hash FROM article_activity_index i JOIN document_article_analysis x ON x.document_id=i.document_id JOIN knowledge_documents d ON d.id=i.document_id WHERE i.calendar_eligible=1 AND i.calendar_version='calendar-v2' AND x.input_hash=d.input_hash AND x.content_revision=d.content_revision) SELECT count(*) AS observations,count(DISTINCT group_key) AS events,count(DISTINCT document_id) AS articles,sum(starts_at IS NOT NULL) AS with_clock,sum(place_raw IS NOT NULL) AS with_place,sum(ends_day>starts_day) AS multiday FROM eligible e WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=e.document_id)",
+    models:
+      "SELECT calendar_ai_day,calendar_ai_calls FROM console_engine_settings WHERE id='console-v2-settings'",
+    invariants:
+      "SELECT d.id,d.input_hash,d.content_revision,d.version,x.primary_destination,x.radar_category,x.knowledge_category FROM knowledge_documents d LEFT JOIN document_article_analysis x ON x.document_id=d.id WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private' ORDER BY d.id",
+  }))
+    reports[name] = (await query({ sql }))[0].results;
+  const changed = [],
+    missing = [],
+    classificationChanges = [];
+  for (const before of documents) {
+    const after = reports.invariants.find((d) => d.id === before.id);
+    if (!after) {
+      missing.push(before.id);
+      continue;
+    }
+    if (
+      after.input_hash !== before.input_hash ||
+      after.content_revision !== before.content_revision ||
+      after.version !== before.version
+    )
+      changed.push(before.id);
+    const old = before.analysis_json && JSON.parse(before.analysis_json);
+    if (
+      old &&
+      (old.primaryDestination !== after.primary_destination ||
+        old.radarCategory !== after.radar_category ||
+        old.knowledgeCategory !== after.knowledge_category)
+    )
+      classificationChanges.push(before.id);
+  }
+  delete reports.invariants;
+  fs.writeFileSync(
+    dir + "/audit-final.json",
+    JSON.stringify(
+      {
+        capturedAt: new Date().toISOString(),
+        reports,
+        invariants: {
+          compared: documents.length,
+          changed,
+          missing,
+          classificationChanges,
+        },
+        usage,
+      },
+      null,
+      2,
+    ),
+  );
+  console.log(
+    JSON.stringify({
+      reports,
+      invariants: {
+        compared: documents.length,
+        changed: changed.length,
+        missing: missing.length,
+        classificationChanges: classificationChanges.length,
+      },
+      usage,
+    }),
+  );
+  process.exit(0);
+}
+if (mode === "--verify") {
+  const result = await api.readCalendar(db, {
+    after: "2026-10-26",
+    before: "2026-11-01",
+  });
+  fs.writeFileSync(
+    dir + "/query-diagnostic.json",
+    JSON.stringify(result, null, 2),
+  );
+  console.log(
+    JSON.stringify({
+      total: result.total,
+      counts: result.dailyCounts,
+      metrics: result.metrics,
+    }),
+  );
+  process.exit(0);
+}
 if (mode.startsWith("--enrich") || mode === "--probe") {
   const limit = Math.min(20, Number(mode.split("=")[1] || 1)),
     rows = JSON.parse(fs.readFileSync(dir + "/predictions.json"));
@@ -221,7 +338,9 @@ if (mode.startsWith("--enrich") || mode === "--probe") {
   for (const r of selected) {
     if (
       !(await live([r.id])).some(
-        (l) => l.input_hash === documents.find((d) => d.id === r.id).input_hash,
+        (l) =>
+          l.body_allowed &&
+          l.input_hash === documents.find((d) => d.id === r.id).input_hash,
       )
     )
       continue;
@@ -258,8 +377,60 @@ if (mode.startsWith("--enrich") || mode === "--probe") {
   }
   process.exit(0);
 }
+if (mode === "--refresh") {
+  const rows = (
+    await query({
+      sql: "SELECT d.id,d.input_hash,d.content_revision,d.title,d.body,d.body_format,d.body_status,d.published_at,d.url,d.source_id,s.display_name,x.analysis_json FROM knowledge_documents d JOIN document_article_analysis x ON x.document_id=d.id JOIN knowledge_sources s ON s.id=d.source_id WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND x.input_hash=d.input_hash AND x.content_revision=d.content_revision AND EXISTS(SELECT 1 FROM json_each(x.analysis_json,'$.calendar.sources') s WHERE json_extract(s.value,'$.method') LIKE '@cf/%-ocr') ORDER BY d.id LIMIT 100",
+    })
+  )[0].results;
+  const report = { refreshed: [], usage };
+  for (const d of rows) {
+    if (!(await live([d.id])).some((r) => r.body_allowed)) continue;
+    const base = JSON.parse(d.analysis_json);
+    const input = api.calendarInput({
+      documentId: d.id,
+      title: d.title,
+      body: d.body,
+      bodyFormat: d.body_format,
+      bodyStatus: d.body_status,
+      publishedAt: d.published_at,
+      originalUrl: d.url,
+      sourceId: d.source_id,
+      sourceName: d.display_name,
+      calendarSources: base.calendar?.sources || [],
+    });
+    const analysis = api.validateArticleAnalysis(
+      input,
+      api.calendarizeArticle(input, base),
+    );
+    await db.batch(
+      await api.analysisStatements(
+        db,
+        d.id,
+        d.content_revision,
+        d.input_hash,
+        input,
+        analysis,
+      ),
+    );
+    report.refreshed.push({
+      id: d.id,
+      status: analysis.calendar.status,
+      reason: analysis.calendar.reason,
+    });
+  }
+  fs.writeFileSync(dir + "/ocr-refresh.json", JSON.stringify(report, null, 2));
+  console.log(JSON.stringify(report));
+  process.exit(0);
+}
 if (mode === "--apply") {
-  const predictions = JSON.parse(fs.readFileSync(dir + "/predictions.json"));
+  const ids = process.argv
+    .find((a) => a.startsWith("--id="))
+    ?.slice(5)
+    .split(",");
+  const predictions = JSON.parse(
+    fs.readFileSync(dir + "/predictions.json"),
+  ).filter((r) => !ids || ids.includes(r.id));
   if (predictions.some((r) => r.error))
     throw Error("Resolve offline errors first");
   const report = {
@@ -312,60 +483,71 @@ if (mode === "--apply") {
   process.exit(0);
 }
 if (mode === "--restore") {
-  // Rebuild legacy activity projection for current public revisions; source data is untouched.
+  // Run after deploying the baseline. Includes unpublished and post-snapshot articles.
+  // The retained bundle lets this run after a Git version checkout without rebuilding new code.
   const report = { restored: [], stale: [], usage };
-  for (const d of documents) {
-    const current = (await live([d.id]))[0];
-    if (
-      !current ||
-      current.input_hash !== d.input_hash ||
-      current.content_revision !== d.content_revision
-    ) {
-      report.stale.push(d.id);
-      continue;
+  let after = "";
+  while (true) {
+    const page = (
+      await query({
+        sql: "SELECT d.id,d.input_hash,d.content_revision,d.title,d.body,d.body_format,d.body_status,d.published_at,d.url,x.analysis_json FROM knowledge_documents d JOIN document_article_analysis x ON x.document_id=d.id WHERE d.id>? AND d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND x.calendar_version<>'' ORDER BY d.id LIMIT 30",
+        params: [after],
+      })
+    )[0].results;
+    if (!page.length) break;
+    for (const d of page) {
+      const original = documents.find(
+        (o) =>
+          o.id === d.id &&
+          o.input_hash === d.input_hash &&
+          o.content_revision === d.content_revision,
+      );
+      const base = JSON.parse(original?.analysis_json || d.analysis_json);
+      delete base.calendar;
+      const restored = original?.analysis_json
+        ? base
+        : api.extractArticleStructure(
+            {
+              title: d.title,
+              body: d.body,
+              bodyFormat: d.body_format,
+              bodyStatus: d.body_status,
+              publishedAt: d.published_at,
+              originalUrl: d.url,
+            },
+            { ...base, activities: [] },
+          );
+      const json = JSON.stringify(restored);
+      await query({
+        batch: [
+          {
+            sql: "UPDATE document_article_analysis SET analysis_json=?,projection_hash=?,calendar_version='',calendar_status='excluded',calendar_attempts=0,calendar_lease_until_ms=0 WHERE document_id=? AND input_hash=? AND content_revision=? AND EXISTS(SELECT 1 FROM knowledge_documents d WHERE d.id=document_article_analysis.document_id AND d.input_hash=document_article_analysis.input_hash AND d.content_revision=document_article_analysis.content_revision)",
+            params: [
+              json,
+              "calendar-rollback",
+              d.id,
+              d.input_hash,
+              d.content_revision,
+            ],
+          },
+          {
+            sql: "DELETE FROM article_activity_index WHERE document_id=? AND EXISTS(SELECT 1 FROM knowledge_documents d WHERE d.id=? AND d.input_hash=? AND d.content_revision=?)",
+            params: [d.id, d.id, d.input_hash, d.content_revision],
+          },
+          {
+            sql: "INSERT INTO article_activity_index(document_id,activity_key,title,kind,category,starts_day,starts_at,ends_day,ends_at,place_raw,registration_requirement,group_key) SELECT ?,json_extract(value,'$.key'),json_extract(value,'$.title'),json_extract(value,'$.kind'),json_extract(value,'$.category'),json_extract(value,'$.startsAt.date'),json_extract(value,'$.startsAt.at'),json_extract(value,'$.endsAt.date'),json_extract(value,'$.endsAt.at'),json_extract(value,'$.placeRaw'),json_extract(value,'$.registrationStatus'),CASE WHEN json_extract(value,'$.startsAt.at') IS NOT NULL AND json_extract(value,'$.placeRaw') IS NOT NULL THEN json_extract(value,'$.title')||'|'||json_extract(value,'$.startsAt.at')||'|'||json_extract(value,'$.placeRaw') ELSE NULL END FROM json_each(?,'$.activities') WHERE EXISTS(SELECT 1 FROM knowledge_documents d WHERE d.id=? AND d.input_hash=? AND d.content_revision=?)",
+            params: [d.id, json, d.id, d.input_hash, d.content_revision],
+          },
+          {
+            sql: "INSERT INTO article_registration_windows(document_id,activity_key,ordinal,starts_day,starts_at,ends_day,ends_at) SELECT ?,json_extract(e.value,'$.key'),w.key,json_extract(w.value,'$.start.date'),json_extract(w.value,'$.start.at'),json_extract(w.value,'$.end.date'),json_extract(w.value,'$.end.at') FROM json_each(?,'$.activities') e,json_each(e.value,'$.registrationWindows') w WHERE EXISTS(SELECT 1 FROM knowledge_documents d WHERE d.id=? AND d.input_hash=? AND d.content_revision=?)",
+            params: [d.id, json, d.id, d.input_hash, d.content_revision],
+          },
+        ],
+      });
+      report.restored.push(d.id);
+      fs.writeFileSync(dir + "/rollback.json", JSON.stringify(report));
     }
-    const base = JSON.parse(d.analysis_json);
-    delete base.calendar;
-    const restored = api.extractArticleStructure(
-      {
-        title: d.title,
-        body: d.body,
-        bodyFormat: d.body_format,
-        bodyStatus: d.body_status,
-        publishedAt: d.published_at,
-        originalUrl: d.url,
-      },
-      { ...base, activities: [] },
-    );
-    const json = JSON.stringify(restored);
-    await query({
-      batch: [
-        {
-          sql: "UPDATE document_article_analysis SET analysis_json=?,projection_hash=?,calendar_version='',calendar_status='excluded',calendar_attempts=0,calendar_lease_until_ms=0 WHERE document_id=? AND input_hash=? AND content_revision=?",
-          params: [
-            json,
-            "calendar-rollback",
-            d.id,
-            d.input_hash,
-            d.content_revision,
-          ],
-        },
-        {
-          sql: "DELETE FROM article_activity_index WHERE document_id=? AND EXISTS(SELECT 1 FROM knowledge_documents d WHERE d.id=? AND d.input_hash=? AND d.content_revision=?)",
-          params: [d.id, d.id, d.input_hash, d.content_revision],
-        },
-        {
-          sql: "INSERT INTO article_activity_index(document_id,activity_key,title,kind,category,starts_day,starts_at,ends_day,ends_at,place_raw,registration_requirement,group_key) SELECT ?,json_extract(value,'$.key'),json_extract(value,'$.title'),json_extract(value,'$.kind'),json_extract(value,'$.category'),json_extract(value,'$.startsAt.date'),json_extract(value,'$.startsAt.at'),json_extract(value,'$.endsAt.date'),json_extract(value,'$.endsAt.at'),json_extract(value,'$.placeRaw'),json_extract(value,'$.registrationStatus'),NULL FROM json_each(?,'$.activities') WHERE EXISTS(SELECT 1 FROM knowledge_documents d WHERE d.id=? AND d.input_hash=? AND d.content_revision=?)",
-          params: [d.id, json, d.id, d.input_hash, d.content_revision],
-        },
-        {
-          sql: "INSERT INTO article_registration_windows(document_id,activity_key,ordinal,starts_day,starts_at,ends_day,ends_at) SELECT ?,json_extract(e.value,'$.key'),w.key,json_extract(w.value,'$.start.date'),json_extract(w.value,'$.start.at'),json_extract(w.value,'$.end.date'),json_extract(w.value,'$.end.at') FROM json_each(?,'$.activities') e,json_each(e.value,'$.registrationWindows') w WHERE EXISTS(SELECT 1 FROM knowledge_documents d WHERE d.id=? AND d.input_hash=? AND d.content_revision=?)",
-          params: [d.id, json, d.id, d.input_hash, d.content_revision],
-        },
-      ],
-    });
-    report.restored.push(d.id);
-    fs.writeFileSync(dir + "/rollback.json", JSON.stringify(report));
+    after = page.at(-1).id;
   }
   console.log(
     JSON.stringify({

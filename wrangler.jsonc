@@ -41,7 +41,7 @@
         "HYBRID_RETRIEVAL": "true",
         "VECTOR_BACKFILL": "true",
         "CALENDAR_ENABLED": "true",
-        "CALENDAR_AUTO_ENRICH": "false",
+        "CALENDAR_AUTO_ENRICH": "true",
       },
       "ai": { "binding": "AI" },
       "vectorize": [

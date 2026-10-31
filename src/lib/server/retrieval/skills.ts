@@ -23,6 +23,7 @@ import { requestTimeWindow } from "../assistant/time-window";
 import { universityScope } from "../assistant/grounding";
 import { completeSnippetTimes } from "@/lib/retrieval/snippet-time";
 import { calendarContentSearch } from "../calendar/search";
+import { calendarIdentity } from "@/lib/ingestion/calendar-identity";
 
 const time = (t: ArticleTimePoint | null) =>
   t
@@ -78,7 +79,7 @@ export async function searchContent(
   }
   if (event?.after && event.before && event.after > event.before)
     throw new ApiError("INVALID_ARGUMENT", "开始日期不能晚于结束日期。");
-  if (event?.after && event.before)
+  if (event?.timeRole === "event" && event.after && event.before)
     return calendarContentSearch(db, event, now);
   let documentIds: string[] | undefined;
   let filterMetrics = {
@@ -180,7 +181,10 @@ export async function searchContent(
   const groups = new Set<string>();
   const uncertainDates = new Set<string>();
   for (const { hit, analysis: storedAnalysis } of search.articles) {
-    const analysis = completeSnippetTimes(storedAnalysis, hit);
+    const analysis =
+      storedAnalysis?.calendar?.status === "accepted"
+        ? storedAnalysis
+        : completeSnippetTimes(storedAnalysis, hit);
     // An absent/metadata body cannot establish policy conditions or activity facts.
     if (!analysis || !hit.bodyAvailable) {
       if (event && (event.after || event.before))
@@ -220,8 +224,9 @@ export async function searchContent(
       if (event?.registrationState && state !== event.registrationState)
         continue;
       // Only exact start + explicit location can deduplicate sessions across articles.
-      const group =
-        a.startsAt?.at && a.placeRaw
+      const group = a.calendar?.eligible
+        ? await calendarIdentity(a, hit.documentId, hit.sourceName)
+        : a.startsAt?.at && a.placeRaw
           ? `${a.title}|${a.startsAt.at}|${a.placeRaw}`
           : hit.documentId + "/" + a.key;
       if (groups.has(group)) continue;
@@ -261,6 +266,10 @@ export async function searchContent(
         registrationUrl: a.registrationUrl,
         evidence: a.evidence.slice(0, 3).map((e) => e.text.slice(0, 240)),
         mapPlace: articleMapPlace(a.placeRaw),
+        calendarUrl:
+          a.calendar?.eligible && a.startsAt?.date
+            ? `/calendar?date=${a.startsAt.date}&event=${group}`
+            : undefined,
       });
     }
   }
