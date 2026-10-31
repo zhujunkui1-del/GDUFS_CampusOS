@@ -71,7 +71,7 @@ test("a verified calendar venue opens the existing University Town map place", a
     }),
   );
 });
-test("public week, actual date counts, details, filters and old-route compatibility", async ({
+test("public week, actual date counts, direct reading, no filters and old-route compatibility", async ({
   page,
 }, info) => {
   const receipts: unknown[] = [];
@@ -160,11 +160,8 @@ test("public week, actual date counts, details, filters and old-route compatibil
   await expect(page.locator(".calendar-dialog")).toHaveCount(0);
   await dialog.getByRole("button", { name: "关闭文章详情" }).click();
   await expect(dialog).not.toBeVisible();
-  await page.getByLabel("校区", { exact: true }).selectOption("baiyun");
-  await expect
-    .poll(async () => await page.locator(".calendar-event").count())
-    .toBeGreaterThan(0);
-  await page.getByLabel("活动类别").selectOption("academic_research");
+  await expect(page.getByRole("combobox")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "刷新活动" })).toBeVisible();
   await page.getByRole("button", { name: "下一周", exact: true }).click();
   await expect(page.getByLabel("选择日期")).toHaveValue("2026-11-14");
   await page.getByRole("button", { name: "上一周", exact: true }).click();
@@ -175,8 +172,6 @@ test("public week, actual date counts, details, filters and old-route compatibil
       new Date(j.data.now),
     ),
   );
-  await page.getByLabel("活动类别").selectOption("");
-  await page.getByLabel("校区", { exact: true }).selectOption("");
   await page.getByLabel("选择日期").fill("2026-11-07");
   await expect(page.locator(".calendar-event").first()).toBeVisible();
   const multi = j.data.items.find(

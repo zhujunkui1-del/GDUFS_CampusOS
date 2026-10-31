@@ -57,10 +57,7 @@ const catLabel = (item: CalendarItem) =>
   "活动";
 export function ActivityCalendar() {
   const queryString = useSearchParams().toString();
-  const [date, setDate] = useState(""),
-    [category, setCategory] = useState(""),
-    [campus, setCampus] = useState(""),
-    [registration, setRegistration] = useState("");
+  const [date, setDate] = useState("");
   const [data, setData] = useState<Result>(),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
@@ -105,9 +102,6 @@ export function ActivityCalendar() {
       before: last,
       day: date,
       limit: "20",
-      ...(category ? { category } : {}),
-      ...(campus ? { campus } : {}),
-      ...(registration ? { registration } : {}),
       ...(cursor ? { cursor } : {}),
     });
     // Each response carries full weekly counts; no per-day model or index rebuild.
@@ -151,7 +145,7 @@ export function ActivityCalendar() {
         if (!abort.signal.aborted) setBusy(false);
       });
     return () => abort.abort();
-  }, [date, first, last, category, campus, registration, cursor, refresh]);
+  }, [date, first, last, cursor, refresh]);
   useEffect(() => {
     if (!detailId) return;
     const abort = new AbortController();
@@ -311,51 +305,9 @@ export function ActivityCalendar() {
           </button>
         ))}
       </div>
-      <div className="calendar-filters">
-        <select
-          aria-label="活动类别"
-          value={category}
-          onChange={(e) => {
-            setCategory(e.target.value);
-            setCursor(null);
-          }}
-        >
-          <option value="">全部类别</option>
-          {radarCategories.map((c) => (
-            <option key={c.code} value={c.code}>
-              {c.label}
-            </option>
-          ))}
-        </select>
-        <select
-          aria-label="校区"
-          value={campus}
-          onChange={(e) => {
-            setCampus(e.target.value);
-            setCursor(null);
-          }}
-        >
-          <option value="">全部校区</option>
-          <option value="university_town">大学城校区</option>
-          <option value="baiyun">白云山校区</option>
-          <option value="online">线上活动</option>
-        </select>
-        <select
-          aria-label="报名状态"
-          value={registration}
-          onChange={(e) => {
-            setRegistration(e.target.value);
-            setCursor(null);
-          }}
-        >
-          <option value="">全部报名状态</option>
-          {Object.entries(labels).map(([code, label]) => (
-            <option value={code} key={code}>
-              {label}
-            </option>
-          ))}
-          <option value="unknown">未注明报名安排</option>
-        </select>
+      <div className="calendar-day-heading">
+        <h2>{date && `${fmt(date)} ${weekday(date)}`}</h2>
+        {data && <span>{data.total} 场活动</span>}
         <button
           type="button"
           aria-label="刷新活动"
@@ -367,10 +319,6 @@ export function ActivityCalendar() {
         >
           <RefreshCw size={18} />
         </button>
-      </div>
-      <div className="calendar-day-heading">
-        <h2>{date && `${fmt(date)} ${weekday(date)}`}</h2>
-        {data && <span>{data.total} 场活动</span>}
       </div>
       <div aria-live="polite">
         {error && (
