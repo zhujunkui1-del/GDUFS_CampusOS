@@ -91,7 +91,9 @@ export class AccountStore {
       email: row.verified_email,
       pendingEmail: row.pending_email,
       emailVerified: row.verified_email !== null,
-      createdAt: row.created_at,
+      createdAt: /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(row.created_at)
+        ? row.created_at.replace(" ", "T") + "Z"
+        : row.created_at,
       usernameChangeAvailableAt: row.username_changed_at_ms
         ? row.username_changed_at_ms + 86400000
         : 0,
@@ -304,13 +306,21 @@ export class AccountStore {
   }
   async logout(request: Request) {
     const token = cookieValue(request);
-    if (token)
-      await this.db
-        .prepare(
-          "UPDATE login_sessions SET revoked_at=? WHERE session_hash=? AND revoked_at IS NULL",
-        )
-        .bind(new Date(this.now()).toISOString(), await tokenHash(token))
-        .run();
+    if (token) {
+      const hash = await tokenHash(token);
+      await this.db.batch([
+        this.db
+          .prepare(
+            "INSERT INTO user_auth_events(id,user_id,kind,created_at_ms) SELECT ?,user_id,'logout',? FROM login_sessions WHERE session_hash=? AND revoked_at IS NULL",
+          )
+          .bind(crypto.randomUUID(), this.now(), hash),
+        this.db
+          .prepare(
+            "UPDATE login_sessions SET revoked_at=? WHERE session_hash=? AND revoked_at IS NULL",
+          )
+          .bind(new Date(this.now()).toISOString(), hash),
+      ]);
+    }
     return { loggedOut: true };
   }
   async verifyCurrent(session: AccountSession, password: string) {

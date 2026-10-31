@@ -69,3 +69,18 @@ it("generates six digit codes and binds the digest to challenge, purpose and ser
   );
   expect(await codeDigest(secret, "verify_email", "two", "012345")).not.toBe(a);
 });
+it("uses Workers-compatible manual redirect handling and refuses redirects", async () => {
+  const transport = vi.fn(
+    async () =>
+      new Response(null, {
+        status: 302,
+        headers: { Location: "https://example.invalid/" },
+      }),
+  );
+  await expect(
+    checkPassword("Synthetic-Long-Strong", "someone", transport),
+  ).rejects.toThrow("暂不可用");
+  expect(
+    (transport.mock.calls[0] as unknown as [string, RequestInit])[1].redirect,
+  ).toBe("manual");
+});

@@ -48,17 +48,15 @@ async function deriveRaw(password: string, salt: Uint8Array) {
   });
 }
 async function derive(password: string, salt: Uint8Array) {
-  const start = Date.now();
   const result = await deriveRaw(password, salt);
-  // Workers advances its clock across I/O; do not log credential material.
-  await new Promise((resolve) => setTimeout(resolve, 0));
+  // Runtime tail supplies actual CPU/wall duration; the application clock can
+  // remain frozen during CPU work. Never report its misleading zero duration.
   console.info(
     JSON.stringify({
       event: "account.kdf",
       algorithm: "pbkdf2-sha256-v1",
       iterations,
       implementation: nativeSupported ? "webcrypto" : "noble",
-      elapsedMs: Date.now() - start,
     }),
   );
   return result;
@@ -126,22 +124,37 @@ export async function checkPassword(
           "User-Agent": "CampusOS-Password-Safety",
         },
         signal: AbortSignal.timeout(7000),
-        redirect: "error",
+        redirect: "manual",
       },
     );
-  } catch {
+  } catch (error) {
+    console.info(
+      JSON.stringify({
+        event: "account.password_screen",
+        stage: "transport",
+        errorType: error instanceof Error ? error.name : "unknown",
+      }),
+    );
     throw new ApiError(
       "SERVICE_UNAVAILABLE",
       "密码安全检查暂不可用，请稍后重试。",
       true,
     );
   }
-  if (!response.ok)
+  if (!response.ok) {
+    console.info(
+      JSON.stringify({
+        event: "account.password_screen",
+        stage: "http",
+        status: response.status,
+      }),
+    );
     throw new ApiError(
       "SERVICE_UNAVAILABLE",
       "密码安全检查暂不可用，请稍后重试。",
       true,
     );
+  }
   const text = await response.text();
   if (text.length > 300000)
     throw new ApiError(
@@ -153,12 +166,22 @@ export async function checkPassword(
   if (
     lines.length < 100 ||
     lines.some((line) => !/^[A-Fa-f0-9]{35}:\d+$/.test(line))
-  )
+  ) {
+    console.info(
+      JSON.stringify({
+        event: "account.password_screen",
+        stage: "format",
+        status: response.status,
+        lines: lines.length,
+        bytes: text.length,
+      }),
+    );
     throw new ApiError(
       "SERVICE_UNAVAILABLE",
       "密码安全检查暂不可用，请稍后重试。",
       true,
     );
+  }
   if (
     lines.some((line) => {
       const [suffix, count] = line.split(":");

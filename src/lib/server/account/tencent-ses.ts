@@ -102,7 +102,7 @@ export class TencentSesMailer implements AccountMailer {
         ),
         body: payload,
         signal: AbortSignal.timeout(10000),
-        redirect: "error",
+        redirect: "manual",
       });
     } catch {
       throw new ApiError(

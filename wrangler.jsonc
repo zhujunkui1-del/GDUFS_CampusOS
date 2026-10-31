@@ -34,7 +34,7 @@
       "triggers": { "crons": ["* * * * *"] },
       "vars": {
         "APP_ENV": "preview",
-        "USER_ACCOUNTS_ENABLED": "false",
+        "USER_ACCOUNTS_ENABLED": "true",
         "ACCOUNT_ORIGIN": "https://campusos-preview.zhujunkui1.workers.dev",
         "EXTERNAL_SEARCH_TRANSPORT": "cloud",
         "AGENT_VALIDATION_UNLIMITED": "true",

@@ -7,6 +7,7 @@ import { primaryDatabase, type SqlDatabase } from "../assistant/database";
 import { accountCookie, assertAccountOrigin } from "./security";
 import { AccountService } from "./email";
 import { TencentSesMailer } from "./tencent-ses";
+import { measuredAccountDatabase } from "./metrics";
 
 export const accountMethods: Record<string, readonly string[]> = {
   "/api/auth/register": ["POST"],
@@ -123,29 +124,38 @@ export async function accountApi(request: Request) {
         throw new ApiError("SERVICE_UNAVAILABLE", "账号服务暂不可用。", true);
       })(request);
     const origin = String(values.ACCOUNT_ORIGIN || "");
-    const store = new AccountService(
+    const measured = measuredAccountDatabase(
       primaryDatabase(values.DB as SqlDatabase),
-      {
-        origin,
-        otpSecret: String(values.ACCOUNT_OTP_SECRET || ""),
-        mailer: new TencentSesMailer({
-          secretId: String(values.ACCOUNT_MAIL_SECRET_ID || ""),
-          secretKey: String(values.ACCOUNT_MAIL_SECRET_KEY || ""),
-          region: String(values.ACCOUNT_MAIL_REGION || ""),
-          from: String(values.ACCOUNT_MAIL_FROM || ""),
-          templateId: Number(values.ACCOUNT_MAIL_TEMPLATE_ID || 0),
-          noticeTemplateId: Number(values.ACCOUNT_MAIL_NOTICE_TEMPLATE_ID || 0),
-          verified:
-            values.ACCOUNT_MAIL_VERIFIED === "true" &&
-            String(values.ACCOUNT_OTP_SECRET || "").length >= 32,
-        }),
-      },
     );
-    return createAccountApi({
+    const store = new AccountService(measured.database, {
+      origin,
+      otpSecret: String(values.ACCOUNT_OTP_SECRET || ""),
+      mailer: new TencentSesMailer({
+        secretId: String(values.ACCOUNT_MAIL_SECRET_ID || ""),
+        secretKey: String(values.ACCOUNT_MAIL_SECRET_KEY || ""),
+        region: String(values.ACCOUNT_MAIL_REGION || ""),
+        from: String(values.ACCOUNT_MAIL_FROM || ""),
+        templateId: Number(values.ACCOUNT_MAIL_TEMPLATE_ID || 0),
+        noticeTemplateId: Number(values.ACCOUNT_MAIL_NOTICE_TEMPLATE_ID || 0),
+        verified:
+          values.ACCOUNT_MAIL_VERIFIED === "true" &&
+          String(values.ACCOUNT_OTP_SECRET || "").length >= 32,
+      }),
+    });
+    const response = await createAccountApi({
       store,
       enabled: values.USER_ACCOUNTS_ENABLED === "true" && !!origin,
       defer: (task) => ctx.waitUntil(task),
     })(request);
+    console.info(
+      JSON.stringify({
+        event: "account.request",
+        path: new URL(request.url).pathname,
+        status: response.status,
+        ...measured.totals,
+      }),
+    );
+    return response;
   } catch {
     return withApi(() => {
       throw new ApiError("SERVICE_UNAVAILABLE", "账号服务暂不可用。", true);

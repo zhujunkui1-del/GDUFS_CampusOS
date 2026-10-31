@@ -275,6 +275,8 @@ function EmailForms({ user }: { user: AccountProfile }) {
   return (
     <section className="account-card">
       <h2>邮箱与找回密码</h2>
+      <FormFeedback error={unbind.error} success={unbind.success} />
+      <FormFeedback error={verify.error} success={verify.success} />
       <dl className="account-email-status">
         <dt>已验证邮箱</dt>
         <dd className="account-private-email">{user.email || "未绑定"}</dd>
@@ -391,7 +393,6 @@ function EmailForms({ user }: { user: AccountProfile }) {
               maxLength={6}
             />
           </label>
-          <FormFeedback error={verify.error} success={verify.success} />
           <button
             className="account-primary"
             type="submit"
@@ -433,7 +434,6 @@ function EmailForms({ user }: { user: AccountProfile }) {
               maxLength={256}
             />
           </label>
-          <FormFeedback error={unbind.error} success={unbind.success} />
           <button
             type="submit"
             disabled={unbind.busy || account.loading || !!account.error}
