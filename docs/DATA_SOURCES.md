@@ -627,3 +627,5 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 ## 2026-10-31｜负责人提供的 AI 悬浮球图案
 
 负责人本轮明确要求将“蓝白长发徽章女仆少女22.png”用于校园助理悬浮入口，作为此处使用授权依据。原文件 C:/Users/zhuju/Downloads/广外奶龙娘/蓝白长发徽章女仆少女22.png；公开资源 /images/assistant/assistant-orb-e106e8f5026d.png，1254×1043透明PNG，1,425,767字节。SHA256 e106e8f5026da9a53887f52b5e210432e1571a521391e1b2f5c42b2d00e0c532，逐字节复制，未重绘或移除元素；圆形显示与蓝色光晕由CSS实现。该授权用于本轮入口图案，不据此宣称是学校官方吉祥物或扩展到其他来源素材。
+
+实际悬浮球加载204×170透明WebP展示副本 `/images/assistant/assistant-orb-e106e8f5026d-204.webp`，47,828字节，SHA256 6e3edc9ce7f91e3d102bdc68789e5a8b60aa19b0627f855e67c16e58713f953f。仅缩小展示尺寸并使用无损WebP编码，保留透明通道，不重绘角色；原始PNG保持不变。此调整解决首屏直接加载1.4MB原图偏慢的问题。

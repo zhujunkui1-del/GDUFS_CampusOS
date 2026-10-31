@@ -1,0 +1,31 @@
+{
+  "implementationCommits": ["9cc0935", "319493f", "cfff580"],
+  "previewVersion": "fa4cdeb0-29df-4ade-a35f-a9b34dcfb787",
+  "unit": {
+    "passed": 794,
+    "files": 110,
+    "maxWorkers": 4
+  },
+  "browser": {
+    "initialChecks": {
+      "passed": 6,
+      "desktop": 3,
+      "mobile": 3,
+      "version": "972223f9-dfbc-4bbd-8701-ad533274df47"
+    },
+    "centredPagination": {
+      "passed": 2,
+      "desktop": 1,
+      "mobile": 1,
+      "version": "fa4cdeb0-29df-4ade-a35f-a9b34dcfb787"
+    },
+    "knowledgeData": "26 isolated records supplied only to test browser; no cloud articles added",
+    "radarData": "real public category; direct page 20, cursor next/back and input bounds verified"
+  },
+  "asset": {
+    "originalSha256": "e106e8f5026da9a53887f52b5e210432e1571a521391e1b2f5c42b2d00e0c532",
+    "displaySha256": "6e3edc9ce7f91e3d102bdc68789e5a8b60aa19b0627f855e67c16e58713f953f",
+    "displayBytes": 47828,
+    "displaySize": [204, 170]
+  }
+}
