@@ -136,8 +136,8 @@ test("five real official sources are anonymously visible on radar and knowledge"
         .first()
         .click();
       await page.getByRole("button", { name: "下一页", exact: true }).click();
-      await expect(page.locator(".public-feed-pagination")).toContainText(
-        "第 2 页",
+      await expect(page.getByLabel("当前页码", { exact: true })).toHaveValue(
+        "2",
       );
       await expect(page.locator(".public-feed-card").first()).toBeVisible();
       await page.getByRole("button", { name: "上一页", exact: true }).click();

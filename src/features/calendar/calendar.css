@@ -1,5 +1,7 @@
-.public-calendar {
-  max-width: 1200px;
+.module-page.public-calendar {
+  width: auto;
+  max-width: none;
+  margin: 16px 16px 16px 0;
   padding: 32px;
   min-height: calc(100dvh - 40px);
 }
@@ -254,8 +256,9 @@
   align-self: flex-start;
   min-height: 32px;
 }
-@media (max-width: 700px) {
-  .public-calendar {
+@media (max-width: 760px) {
+  .module-page.public-calendar {
+    margin: 12px;
     padding: 22px 16px 90px;
     min-height: calc(100dvh - 20px);
   }

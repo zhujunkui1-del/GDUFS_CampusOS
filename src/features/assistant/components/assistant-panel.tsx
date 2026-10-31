@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import { Drawer } from "@base-ui/react/drawer";
 import { AlertDialog } from "@base-ui/react/alert-dialog";
@@ -20,7 +21,6 @@ import {
   Maximize2,
   Minimize2,
   Square,
-  Sparkles,
   X,
   History,
   SquarePen,
@@ -201,13 +201,20 @@ export function AssistantPanel({
       <Drawer.Trigger
         ref={launcher}
         id="assistant-launcher"
-        className="assistant-launcher glass-surface"
+        className="assistant-launcher"
         aria-label="打开校园助理"
         data-busy={chat.busy ? "true" : "false"}
         aria-busy={chat.busy}
       >
-        <Sparkles size={19} strokeWidth={1.65} />
-        <span>问 AI</span>
+        <Image
+          className="assistant-launcher-portrait"
+          src="/images/assistant/assistant-orb-e106e8f5026d.png"
+          width={68}
+          height={68}
+          alt=""
+          draggable={false}
+          loading="eager"
+        />
       </Drawer.Trigger>
       <Drawer.Portal>
         <Drawer.VirtualKeyboardProvider>

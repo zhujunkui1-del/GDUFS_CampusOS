@@ -13,6 +13,7 @@ import {
   radarCategories,
 } from "@/domain/console/taxonomy";
 import { PublicArticleDialog } from "./public-article-dialog";
+import { FeedPageJump } from "./feed-page-jump";
 import "./public-feed.css";
 import { RegistrationBadge } from "./registration-badge";
 import { articleThemeStyle as themeStyle } from "./article-theme";
@@ -39,6 +40,7 @@ type Result = {
   counts: Record<string, number>;
   total: number;
   nextCursor: string | null;
+  offset?: number;
 };
 type FeedGroup = {
   category: { code: string; label: string };
@@ -106,7 +108,7 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
     () => savedColumns(surface),
     () => 1,
   );
-  const [cursors, setCursors] = useState<string[]>([""]);
+  const [cursors, setCursors] = useState<Record<number, string>>({ 0: "" });
   const [searchDraft, setSearchDraft] = useState({ q: "", source: "" });
   const [query, setQuery] = useState({
     q: "",
@@ -137,7 +139,7 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
     )
       return;
     const timeout = window.setTimeout(() => {
-      setCursors([""]);
+      setCursors({ 0: "" });
       setQuery((current) => ({
         ...current,
         q: searchDraft.q.trim(),
@@ -162,6 +164,7 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
       if (query.q) params.set("q", query.q);
       if (query.source) params.set("source", query.source);
       if (cursor) params.set("cursor", cursor);
+      else if (pageIndex) params.set("page", String(pageIndex + 1));
       return fetchResult(params);
     }
     async function fetchGrouped(): Promise<Result> {
@@ -188,6 +191,15 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
       try {
         if (query.category) {
           const data = await fetchCategory(query.category, pageCursor);
+          if (
+            !abort.signal.aborted &&
+            !pageCursor &&
+            typeof data.offset === "number" &&
+            data.offset !== pageIndex * pageSize
+          ) {
+            setQuery((current) => ({ ...current, offset: data.offset! }));
+            return;
+          }
           if (!abort.signal.aborted)
             setState({
               key,
@@ -232,6 +244,7 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
     categories,
     key,
     pageCursor,
+    pageIndex,
     query.category,
     query.q,
     query.source,
@@ -244,7 +257,7 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
     (category) => category.code === query.category,
   );
   function chooseCategory(code: string) {
-    setCursors([""]);
+    setCursors({ 0: "" });
     setQuery((current) => ({ ...current, category: code, offset: 0 }));
   }
   function setColumns(value: number) {
@@ -511,17 +524,24 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
               >
                 上一页
               </button>
-              <span>
-                第 {pageIndex + 1} 页 · 共 {current.total || 0} 篇
-              </span>
+              <FeedPageJump
+                page={current.total ? pageIndex + 1 : 0}
+                pages={Math.ceil((current.total || 0) / pageSize)}
+                onJump={(page) =>
+                  setQuery((current) => ({
+                    ...current,
+                    offset: (page - 1) * pageSize,
+                  }))
+                }
+              />
               <button
                 type="button"
                 disabled={!current.data.hasMore || !current.data.nextCursor}
                 onClick={() => {
-                  setCursors((values) => [
-                    ...values.slice(0, pageIndex + 1),
-                    current.data!.nextCursor!,
-                  ]);
+                  setCursors((values) => ({
+                    ...values,
+                    [pageIndex + 1]: current.data!.nextCursor!,
+                  }));
                   setQuery((current) => ({
                     ...current,
                     offset: current.offset + pageSize,

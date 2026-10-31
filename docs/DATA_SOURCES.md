@@ -623,3 +623,7 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 其他真实依据为图书馆借阅规则 https://lib.gdufs.edu.cn/fwzn/fwqykfsj/tsjygz.htm 、借还说明 https://lib.gdufs.edu.cn/info/1207/5233.htm 、已存公众号《2027届毕业生电子就业协议书签订操作指南》 https://mp.weixin.qq.com/s/2lvGVw97fFI_sg2ZBqrjSQ 。保留原发布信息/届别/来源权威不确定性，不从不同版本拼出单套现行规定。标题线索《云山学术沙龙414期：学术论文写作全过程》无正文时仅提供元数据，不冒充全文。
 
 22题标注集和8组检查器证据对均在隔离测试，不入D1；与真实Preview/API/Agent回执分开。公开交付只保留标题、原URL、时间、计量及文本哈希，完整受控片段留本机忽略目录，不作为运行时语料。小红书本轮真实搜索返回verification_required、0笔记/0正文，旧成功笔记不回读假冒本次结果；没有新增公开文章、批量复制图片、学校私有系统或来源登录操作。
+
+## 2026-10-31｜负责人提供的 AI 悬浮球图案
+
+负责人本轮明确要求将“蓝白长发徽章女仆少女22.png”用于校园助理悬浮入口，作为此处使用授权依据。原文件 C:/Users/zhuju/Downloads/广外奶龙娘/蓝白长发徽章女仆少女22.png；公开资源 /images/assistant/assistant-orb-e106e8f5026d.png，1254×1043透明PNG，1,425,767字节。SHA256 e106e8f5026da9a53887f52b5e210432e1571a521391e1b2f5c42b2d00e0c532，逐字节复制，未重绘或移除元素；圆形显示与蓝色光晕由CSS实现。该授权用于本轮入口图案，不据此宣称是学校官方吉祥物或扩展到其他来源素材。

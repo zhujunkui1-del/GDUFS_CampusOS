@@ -15,6 +15,7 @@ const QuerySchema = z
     version: z.coerce.number().int().positive().optional(),
     limit: z.coerce.number().int().min(1).max(20).default(10),
     offset: z.coerce.number().int().min(0).max(200).default(0),
+    page: z.coerce.number().int().min(1).max(10000).optional(),
     cursor: z.string().max(500).optional(),
     grouped: z.literal("1").optional(),
     surface: z.enum(["radar", "knowledge"]).optional(),
@@ -52,7 +53,15 @@ export async function readPublicContent(
   const q = QuerySchema.parse(raw);
   if (q.version && !q.id)
     throw new ApiError("INVALID_ARGUMENT", "请指定内容记录。");
-  if (q.grouped && (!q.surface || q.id || q.category || q.cursor || q.offset))
+  if (q.page && (!q.surface || !q.category || q.id || q.cursor || q.offset))
+    throw new ApiError(
+      "INVALID_ARGUMENT",
+      "跳页需要指定栏目及分类，且不能混用分页参数。",
+    );
+  if (
+    q.grouped &&
+    (!q.surface || q.id || q.category || q.cursor || q.offset || q.page)
+  )
     throw new ApiError("INVALID_ARGUMENT", "分组列表参数无效。");
   let cacheKey: string | null = null;
   let cache:
@@ -154,6 +163,14 @@ export async function readPublicContent(
   const counts: Record<string, number> = Object.fromEntries(
     facets.results.map((r) => [r.category, r.n]),
   );
+  const selectedTotal = category
+    ? counts[category] || 0
+    : Object.values(counts).reduce((n, count) => n + count, 0);
+  // Direct jumps use the actual visible category size; normal next/previous reads keep cursors.
+  const offset = q.page
+    ? (Math.min(q.page, Math.max(1, Math.ceil(selectedTotal / q.limit))) - 1) *
+      q.limit
+    : q.offset;
   if (category) {
     where.push(categoryColumn + "=?");
     params.push(category);
@@ -194,7 +211,7 @@ export async function readPublicContent(
         .prepare(
           `SELECT ${projection} ${from} ORDER BY d.published_at DESC,d.id LIMIT ? OFFSET ?`,
         )
-        .bind(...params, q.id ? 1 : q.limit + 1, q.id ? 0 : q.offset)
+        .bind(...params, q.id ? 1 : q.limit + 1, q.id ? 0 : offset)
         .all<Record<string, string | number | null>>();
   if (q.grouped)
     for (const row of rows.results)
@@ -243,7 +260,7 @@ export async function readPublicContent(
     items,
     groups,
     limit: q.id ? 1 : q.limit,
-    offset: q.id ? 0 : q.offset,
+    offset: q.id ? 0 : offset,
     hasMore: q.grouped
       ? Object.values(counts).some((count) => count > q.limit)
       : !q.id && rows.results.length > q.limit,
