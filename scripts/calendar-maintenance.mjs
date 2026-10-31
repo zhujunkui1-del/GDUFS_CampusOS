@@ -199,6 +199,8 @@ if (mode === "--audit") {
     publicArticles: "SELECT count(*) AS count FROM console_public_documents",
     calendarStates:
       "SELECT calendar_version,calendar_status,count(*) AS count FROM document_article_analysis GROUP BY calendar_version,calendar_status",
+    reasons:
+      "SELECT calendar_status,json_extract(analysis_json,'$.calendar.reason') AS reason,count(*) AS count FROM document_article_analysis WHERE calendar_version='calendar-v2' GROUP BY calendar_status,reason",
     activities:
       "WITH eligible AS MATERIALIZED(SELECT i.*,d.content_revision,d.input_hash FROM article_activity_index i JOIN document_article_analysis x ON x.document_id=i.document_id JOIN knowledge_documents d ON d.id=i.document_id WHERE i.calendar_eligible=1 AND i.calendar_version='calendar-v2' AND x.input_hash=d.input_hash AND x.content_revision=d.content_revision) SELECT count(*) AS observations,count(DISTINCT group_key) AS events,count(DISTINCT document_id) AS articles,sum(starts_at IS NOT NULL) AS with_clock,sum(place_raw IS NOT NULL) AS with_place,sum(ends_day>starts_day) AS multiday FROM eligible e WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=e.document_id)",
     models:

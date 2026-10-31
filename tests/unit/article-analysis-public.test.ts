@@ -9,6 +9,36 @@ import {
   readPublicActivities,
   readPublicAnalysis,
 } from "@/lib/server/console/public-analysis";
+it("public analysis returns evidence references without distributing the full OCR or attachment transcript", async () => {
+  const f = await dateGateFixture();
+  try {
+    const d = await f.store.document("spring");
+    await f.db.batch(
+      await analysisStatements(f.db, d.id, d.contentRevision, d.inputHash!, {
+        title: "2026年讲座预告",
+        body: "详情见海报",
+        calendarSources: [
+          {
+            id: "poster",
+            kind: "image",
+            url: "https://lib.gdufs.edu.cn/p.png",
+            locator: "img[1]",
+            digest: "isolated",
+            method: "isolated-ocr",
+            text: "讲座时间：2026年11月5日14:30。其余附加文字。",
+          },
+        ],
+      }),
+    );
+    const r = await readPublicAnalysis(f.db, d.id);
+    expect(r.analysis?.calendar?.sources).toEqual([]);
+    expect(r.analysis?.activities[0].calendar?.origins[0].url).toBe(
+      "https://lib.gdufs.edu.cn/p.png",
+    );
+  } finally {
+    f.close();
+  }
+});
 
 it("the registration badge uses category theme and an expired deadline does not remove it", () => {
   const html = renderToStaticMarkup(

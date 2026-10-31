@@ -27,6 +27,9 @@ export async function readPublicAnalysis(
   const analysis = stored
     ? {
         ...stored,
+        calendar: stored.calendar
+          ? { ...stored.calendar, sources: [] }
+          : undefined,
         primaryDestination: r.primary_destination,
         radarCategory: r.radar_category,
         knowledgeCategory: r.knowledge_category,
