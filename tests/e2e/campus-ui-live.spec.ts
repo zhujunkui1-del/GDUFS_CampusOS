@@ -7,12 +7,13 @@ test.skip(
 );
 test.use({ trace: "off" });
 test.setTimeout(90000);
+test.use({ navigationTimeout: 30000 });
 const dir = ".map-tools/campus-ui-20261031";
 
 test("calendar fills the feed width and the portrait orb opens the assistant with a blue hover glow", async ({
   page,
 }, info) => {
-  await page.goto("/calendar");
+  await page.goto("/calendar", { waitUntil: "domcontentloaded" });
   await expect(page.locator(".calendar-week")).toBeVisible();
   const calendar = await page.locator(".public-calendar").boundingBox();
   const launcher = page.getByRole("button", {
@@ -47,7 +48,7 @@ test("calendar fills the feed width and the portrait orb opens the assistant wit
   await expect(page.locator("#campus-assistant")).toBeVisible();
   await page.getByRole("button", { name: "收起校园助理", exact: true }).click();
   await expect(page.locator("#campus-assistant")).not.toBeVisible();
-  await page.goto("/radar");
+  await page.goto("/radar", { waitUntil: "domcontentloaded" });
   const feed = await page.locator(".public-feed").boundingBox();
   expect(
     Math.abs(calendar!.x + calendar!.width - (feed!.x + feed!.width)),
@@ -63,7 +64,7 @@ test("calendar fills the feed width and the portrait orb opens the assistant wit
     `${dir}/layout-${info.project.name}.json`,
     JSON.stringify({ calendar, feed, launcher: size, hoverShadow }, null, 2),
   );
-  await page.goto("/calendar");
+  await page.goto("/calendar", { waitUntil: "domcontentloaded" });
   await expect(page.locator(".calendar-event").first()).toBeVisible();
   await page.screenshot({ path: `${dir}/calendar-${info.project.name}.png` });
 });
@@ -71,7 +72,7 @@ test("calendar fills the feed width and the portrait orb opens the assistant wit
 test("real radar pages jump once to a deep page, then continue with cursor navigation", async ({
   page,
 }, info) => {
-  await page.goto("/radar");
+  await page.goto("/radar", { waitUntil: "domcontentloaded" });
   await page.getByRole("button", { name: /^校园资讯\s*\d+/ }).click();
   const input = page.getByLabel("当前页码", { exact: true });
   await expect(input).toHaveValue("1");
@@ -98,7 +99,7 @@ test("real radar pages jump once to a deep page, then continue with cursor navig
   expect(calls).toHaveLength(1);
   expect(calls[0]).toContain("page=20");
   await page.getByRole("button", { name: "下一页", exact: true }).click();
-  await expect(input).toHaveValue("21");
+  await expect(input).toHaveValue("21", { timeout: 15000 });
   expect(calls.at(-1)).toContain("cursor=");
   await page.getByRole("button", { name: "上一页", exact: true }).click();
   await expect(input).toHaveValue("20");
@@ -165,7 +166,7 @@ test("knowledge categories use the same editable page box with complete page and
       },
     });
   });
-  await page.goto("/knowledge");
+  await page.goto("/knowledge", { waitUntil: "domcontentloaded" });
   await page.getByRole("button", { name: /^校园生活\s*26/ }).click();
   const input = page.getByLabel("当前页码", { exact: true });
   await expect(input).toHaveValue("1");

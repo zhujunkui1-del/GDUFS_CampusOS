@@ -208,7 +208,7 @@ export function AssistantPanel({
       >
         <Image
           className="assistant-launcher-portrait"
-          src="/images/assistant/assistant-orb-e106e8f5026d.png"
+          src="/images/assistant/assistant-orb-e106e8f5026d-204.webp"
           width={68}
           height={68}
           alt=""

@@ -345,7 +345,7 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 11px;
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
@@ -395,6 +395,9 @@
 }
 
 @media (max-width: 760px) {
+  .public-feed-page-jump input {
+    font-size: 16px;
+  }
   .module-page.public-feed {
     margin: 12px;
     padding: 25px 18px calc(150px + env(safe-area-inset-bottom, 0px));
