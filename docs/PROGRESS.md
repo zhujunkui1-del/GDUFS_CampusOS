@@ -1547,3 +1547,11 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 12个真实来源片段的日期召回5/11→11/11、时刻/缺失5/11→11/11、地点/缺失4/11→11/11，不冒充全库准确率。6次周/月查询317～569读/0写/0模型；4个tail样本CPU12～30ms。同两篇原样重复63读/0写。全库Lint仍有58error/1,669warning，包含既有CJS与本机生成文件，未冒称通过。
 
 旧OCR误写署名为主办方的派生证据已失效，改逐字转录。日模型预算40，耗尽延后而非永久排除。151篇未完成补提取、复杂媒体/重复日程和未验500人负载均保留为限制。完整数据、成本、来源、失败、截图和回退步骤见 CALENDAR_ACCEPTANCE_2026_10_30.md。
+
+## 2026-10-31｜日历原文弹窗冷加载样式修复
+
+用户复现：直接刷新/calendar后阅读框无圆角、工具栏无排版，访问雷达/知识再返回才恢复。真实Preview红灯：桌面/手机均为panel display:block、radius:0px、toolbar:block、正文overflow:visible。根因是复用PublicArticleDialog却由PublicFeed导入其样式，日历冷入口未加载public-feed.css。
+
+将完整阅读框CSS（含响应式及焦点规则）移到public-article-dialog.css，由共享阅读组件自身导入；缩小日历通用按钮选择器，避免覆盖弹窗按钮。没有复制一套窗口样式，也没有改文章、数据库或业务流程。代码0ada7b7，Preview d988ba31-f677-4bcf-b5ee-8c2b4e0436cd。
+
+全量793/793、typecheck、改动Lint和Preview构建通过。新增真实Edge回归2/2：桌面、手机分别覆盖冷入口、刷新、雷达返回、知识返回，四种路径样式完全一致；桌面圆角23px、手机19px，panel/toolbar均flex、正文内部auto滚动。截图及脱敏样式值见verification/calendar-dialog-2026-10-31/。此前只测弹窗可见性没有锁定冷入口样式，本次已补回归。

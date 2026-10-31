@@ -1,0 +1,38 @@
+[
+  {
+    "stage": "cold",
+    "display": "flex",
+    "radius": "19px",
+    "toolbarDisplay": "flex",
+    "overflow": "auto",
+    "width": 374,
+    "viewport": 390
+  },
+  {
+    "stage": "reload",
+    "display": "flex",
+    "radius": "19px",
+    "toolbarDisplay": "flex",
+    "overflow": "auto",
+    "width": 374,
+    "viewport": 390
+  },
+  {
+    "stage": "/radar",
+    "display": "flex",
+    "radius": "19px",
+    "toolbarDisplay": "flex",
+    "overflow": "auto",
+    "width": 374,
+    "viewport": 390
+  },
+  {
+    "stage": "/knowledge",
+    "display": "flex",
+    "radius": "19px",
+    "toolbarDisplay": "flex",
+    "overflow": "auto",
+    "width": 374,
+    "viewport": 390
+  }
+]

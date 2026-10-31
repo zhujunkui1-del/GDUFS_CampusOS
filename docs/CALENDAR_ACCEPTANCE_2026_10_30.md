@@ -163,3 +163,11 @@ node scripts/calendar-maintenance-rollback.mjs --restore
 
 - [桌面](verification/calendar-2026-10-30/desktop.png)、[手机](verification/calendar-2026-10-30/mobile.png)、[真实 Agent 阅读跳转](verification/calendar-2026-10-30/agent.png)
 - [桌面业务回执](verification/calendar-2026-10-30/browser-desktop.json)、[手机业务回执](verification/calendar-2026-10-30/browser-mobile.json)、[旧版本兼容验证](verification/calendar-2026-10-30/rollback-compatibility.json)
+
+## 后续修复：冷入口阅读框样式（2026-10-31）
+
+用户报告直接刷新日历阅读框无样式、先访问雷达/知识后恢复。原因是弹窗样式仅由PublicFeed加载。代码 `0ada7b7` 将原样式移入共享组件自身的 `public-article-dialog.css`，同时限定日历按钮规则不覆盖dialog。Preview版本 `d988ba31-f677-4bcf-b5ee-8c2b4e0436cd` 已部署，本节覆盖上方较早版本的样式验收。
+
+真实冷入口先红灯2/2（display:block、圆角0），修复后桌面/手机2/2通过；各自比对冷入口、刷新、雷达返回、知识返回四种路径的计算样式。全量793项、类型检查、改动Lint及构建通过。不改数据库、文章、日历提取或模型路由。
+
+[桌面截图](verification/calendar-dialog-2026-10-31/desktop.png)、[手机截图](verification/calendar-dialog-2026-10-31/mobile.png)、[桌面样式回执](verification/calendar-dialog-2026-10-31/desktop.json)、[手机样式回执](verification/calendar-dialog-2026-10-31/mobile.json)。回退此修复可在版本分支恢复76e0f2c并按Preview方式部署，不需要数据库操作。
