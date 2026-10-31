@@ -1,0 +1,21 @@
+{
+  "codeCommit": "1207ef0",
+  "previewVersion": "4384fa87-f134-4afb-ae69-1116a10eedde",
+  "unitPassed": 794,
+  "browserPassed": 2,
+  "browser": "Edge",
+  "widths": [
+    1328,
+    644,
+    390,
+    320
+  ],
+  "checks": [
+    "today directly left of picker",
+    "refresh directly right of picker",
+    "no day heading/count row",
+    "adjacent same-row controls",
+    "no horizontal overflow",
+    "week/day navigation and article reading retained"
+  ]
+}
