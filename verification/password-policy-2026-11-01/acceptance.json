@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-01",
+  "previewVersion": "85f27ba8-6d87-4160-aca4-a2ba1c91d312",
+  "policy": {
+    "minimumLength": 8,
+    "commonPasswordBlacklist": false,
+    "repetitionBlacklist": false,
+    "usernameEqualityBlacklist": false,
+    "externalBreachLookup": false
+  },
+  "unit": {
+    "passed": 829,
+    "total": 829,
+    "files": 116,
+    "seconds": 53.28
+  },
+  "browser": {
+    "passed": 2,
+    "total": 2,
+    "seconds": 44.4,
+    "views": [
+      "desktop",
+      "mobile"
+    ],
+    "initialRegistrationPassword": "public eight-digit fixture",
+    "subsequentlyChanged": true
+  },
+  "checks": [
+    "register/change/reset use real KDF without fetch",
+    "fewer than eight characters rejected",
+    "real Preview registration of 12345678",
+    "rename/password change/cross-tab logout/login/public pages"
+  ],
+  "limitations": [
+    "initial unrelated Console scheduling test failed; isolated 13/13 and subsequent complete 829/829 passed"
+  ],
+  "ownerAccountModified": false
+}

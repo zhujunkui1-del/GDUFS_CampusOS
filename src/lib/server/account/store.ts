@@ -8,18 +8,12 @@ import {
   PasswordChangeSchema,
   type AccountProfile,
 } from "@/domain/account/contracts";
-import {
-  hashPassword,
-  verifyPassword,
-  checkPassword,
-  DUMMY_PASSWORD_HASH,
-} from "./password";
+import { hashPassword, verifyPassword, DUMMY_PASSWORD_HASH } from "./password";
 import { authLimit, cookieValue, SESSION_MS } from "./security";
 
 export type PasswordDriver = {
   hash(password: string): Promise<string>;
   verify(password: string, hash: string): Promise<boolean>;
-  check(password: string, username: string): Promise<void>;
 };
 export type MailMessage = {
   to: string;
@@ -75,7 +69,6 @@ export class AccountStore {
     this.passwords = options.passwords || {
       hash: hashPassword,
       verify: verifyPassword,
-      check: checkPassword,
     };
     this.mailer = options.mailer || {
       available: false,
@@ -198,7 +191,6 @@ export class AccountStore {
         .first()
     )
       throw new ApiError("CONFLICT", "用户名不可用，请更换用户名。");
-    await this.passwords.check(input.password, input.username);
     const hash = await this.passwords.hash(input.password),
       id = crypto.randomUUID(),
       token = randomToken(),
@@ -385,7 +377,6 @@ export class AccountStore {
     const input = PasswordChangeSchema.parse(raw),
       s = await this.require(request);
     await this.verifyCurrent(s, input.currentPassword);
-    await this.passwords.check(input.newPassword, s.row.username);
     const hash = await this.passwords.hash(input.newPassword),
       nonce = crypto.randomUUID(),
       now = this.now(),

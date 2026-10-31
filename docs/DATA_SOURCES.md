@@ -635,3 +635,7 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 负责人指定腾讯云SES及自有发件域mail.zhiyuapp.site，凭据保存在私有anykey.md及Cloudflare Secrets。实际ap-hongkong API确认域名可发信，验证码模板228818和安全通知模板228817批准；SPF TXT为include:qcloudmail.com。以负责人授权QQ地址本人输入6位码完成真实验证及密码重置，验收后已解绑；不公开邮箱码、真实密码、Cookie、主密钥或发件凭据。没有购买套餐，发送配额不作为免费余额证明。
 
 技术依据：[腾讯云SendEmail](https://cloud.tencent.com/document/product/1288/51034)、[Cloudflare Request及重定向](https://developers.cloudflare.com/workers/runtime-apis/request/)、[Workers crypto](https://developers.cloudflare.com/workers/runtime-apis/nodejs/crypto/)、[HIBP密码k匿名查询](https://haveibeenpwned.com/API/v3#PwnedPasswords)、[OWASP密码存储](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)。HIBP仅发送SHA1前5位并请求padding，匹配与丢弃返回数据在服务端完成；不发送原密码或完整哈希。@noble/hashes锁定2.4.0，作为同成本PBKDF2兼容实现；不是新模型供应商、付费服务或用户密码快速哈希存储。
+
+## 2026-11-01｜D-127停止使用外部密码库
+
+按负责人最新决定，普通用户注册、改密和邮箱验证码重置均已删除HIBP及其他密码内容黑名单拦截。上述S4初版HIBP来源记录仅为历史；当前不向外部服务发送密码哈希前缀，也不因该服务不可用影响密码设置。该变更不涉及腾讯云SES或已有账号密码。

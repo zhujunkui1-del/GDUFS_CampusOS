@@ -14,10 +14,10 @@ test("real Preview registration, persisted login, logout and public pages", asyn
   expect(process.env.E2E_BASE_URL).toBe(
     "https://campusos-preview.zhujunkui1.workers.dev",
   );
-  const output = "verification/account-2026-11-01";
+  const output = "verification/password-policy-2026-11-01";
   mkdirSync(output, { recursive: true });
   let username = "s4ui_" + randomBytes(5).toString("hex"),
-    password = randomBytes(20).toString("base64url") + "!";
+    password = "12345678";
   await page.goto("/account/register");
   await expect(
     page.getByRole("button", { name: "注册并登录", exact: true }),

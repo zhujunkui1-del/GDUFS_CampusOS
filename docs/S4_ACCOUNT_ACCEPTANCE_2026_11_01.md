@@ -1,5 +1,7 @@
 # S4 普通用户账号验收（2026-11-01）
 
+**后续变更D-127：**本报告记录初版验收；负责人随后决定密码只按长度校验，常见/重复/泄露库拦截及HIBP依赖已移除。下文相关初版行为和故障记录仅为历史，现状以D-127及PROGRESS最新回执为准。
+
 Preview：https://campusos-preview.zhujunkui1.workers.dev/account 。部署版本 `2fa793c5-cd37-41a2-b8cb-c11645482979`；代码 `751777a`（账号基础）、`3713e7a`（公网联调及启用）。只改Preview，没有部署Production或购买服务。
 
 ## 产品契约与架构

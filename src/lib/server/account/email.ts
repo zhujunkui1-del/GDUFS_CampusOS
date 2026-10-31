@@ -331,7 +331,6 @@ export class AccountService extends AccountStore {
       "reset_password",
       row,
     );
-    await this.passwords.check(input.newPassword, row.username);
     const password = await this.passwords.hash(input.newPassword),
       hash = await tokenHash(input.challenge),
       nonce = crypto.randomUUID(),

@@ -1,10 +1,6 @@
 import { it, expect, vi } from "vitest";
 import { pbkdf2Sync } from "node:crypto";
-import {
-  hashPassword,
-  verifyPassword,
-  checkPassword,
-} from "@/lib/server/account/password";
+import { hashPassword, verifyPassword } from "@/lib/server/account/password";
 import { UsernameSchema, PasswordSchema } from "@/domain/account/contracts";
 import { emailCode, codeDigest } from "@/lib/server/account/otp";
 it.each(["admin", "ROOT", "ab", "x@y", "has space", "姓名", "bad\u200bname"])(
@@ -48,16 +44,6 @@ it("retains the same 600k PBKDF2 when a Workers native iteration cap is encounte
     spy.mockRestore();
   }
 }, 10000);
-it("rejects obvious passwords and fails closed on an invalid breach service response", async () => {
-  await expect(checkPassword("password123", "someone")).rejects.toThrow("常见");
-  await expect(
-    checkPassword(
-      "Synthetic-Long-Strong",
-      "someone",
-      async () => new Response("<html>blocked</html>"),
-    ),
-  ).rejects.toThrow("暂不可用");
-});
 it("generates six digit codes and binds the digest to challenge, purpose and server secret", async () => {
   for (let i = 0; i < 100; i++) expect(emailCode()).toMatch(/^\d{6}$/);
   const secret = "fixture".repeat(8);
@@ -69,18 +55,19 @@ it("generates six digit codes and binds the digest to challenge, purpose and ser
   );
   expect(await codeDigest(secret, "verify_email", "two", "012345")).not.toBe(a);
 });
-it("uses Workers-compatible manual redirect handling and refuses redirects", async () => {
-  const transport = vi.fn(
-    async () =>
-      new Response(null, {
-        status: 302,
-        headers: { Location: "https://example.invalid/" },
-      }),
-  );
-  await expect(
-    checkPassword("Synthetic-Long-Strong", "someone", transport),
-  ).rejects.toThrow("暂不可用");
-  expect(
-    (transport.mock.calls[0] as unknown as [string, RequestInit])[1].redirect,
-  ).toBe("manual");
+it.each([
+  "12345678",
+  "password",
+  "aaaaaaaa",
+  "plainpass",
+  "含有汉字的密码一",
+  "a b c d!",
+])(
+  "accepts length-valid password %s without content blacklists",
+  (password) => {
+    expect(PasswordSchema.safeParse(password).success).toBe(true);
+  },
+);
+it("still rejects fewer than eight characters", () => {
+  expect(PasswordSchema.safeParse("1234567").success).toBe(false);
 });

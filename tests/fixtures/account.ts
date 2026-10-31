@@ -69,7 +69,6 @@ export function accountFixture(mailAvailable = true) {
     passwords: {
       hash: async (p) => "isolated:" + (await tokenHash(p)),
       verify: async (p, h) => h === "isolated:" + (await tokenHash(p)),
-      check: async () => {},
     },
     mailer: {
       available: mailAvailable,
