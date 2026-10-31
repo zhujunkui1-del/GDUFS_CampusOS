@@ -24,7 +24,7 @@
   margin: 0 8px;
   font-variant-numeric: tabular-nums;
 }
-.public-calendar button,
+.public-calendar > :not(dialog) button,
 .public-calendar select,
 .calendar-picker {
   border: 1px solid var(--border-subtle);

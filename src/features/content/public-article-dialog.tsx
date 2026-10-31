@@ -4,6 +4,7 @@ import { ArrowUpRight, X } from "lucide-react";
 import { ReadingFrame } from "./article-reader";
 import type { PublicArticleSummary } from "./public-feed";
 import { RegistrationBadge } from "./registration-badge";
+import "./public-article-dialog.css";
 
 type ArticleDetail = {
   id: string;
