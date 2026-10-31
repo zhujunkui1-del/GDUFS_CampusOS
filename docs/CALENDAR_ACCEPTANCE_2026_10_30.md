@@ -171,3 +171,7 @@ node scripts/calendar-maintenance-rollback.mjs --restore
 真实冷入口先红灯2/2（display:block、圆角0），修复后桌面/手机2/2通过；各自比对冷入口、刷新、雷达返回、知识返回四种路径的计算样式。全量793项、类型检查、改动Lint及构建通过。不改数据库、文章、日历提取或模型路由。
 
 [桌面截图](verification/calendar-dialog-2026-10-31/desktop.png)、[手机截图](verification/calendar-dialog-2026-10-31/mobile.png)、[桌面样式回执](verification/calendar-dialog-2026-10-31/desktop.json)、[手机样式回执](verification/calendar-dialog-2026-10-31/mobile.json)。回退此修复可在版本分支恢复76e0f2c并按Preview方式部署，不需要数据库操作。
+
+## 后续界面简化（2026-10-31）
+
+依负责人最新注释删除“活动类别”“校区”“报名状态”三个筛选框，刷新按钮移到当天活动数量右侧；本条覆盖上文旧版前端筛选描述。后台字段和活动查询契约保留。代码8ddd040，Preview861c7e40-5d9e-4a8f-b6a5-bbb4fe0a0016；793项测试、类型检查、改动Lint及构建通过，真实Edge桌面/手机2/2通过。截图与脱敏回执见verification/calendar-no-filters-2026-10-31/。

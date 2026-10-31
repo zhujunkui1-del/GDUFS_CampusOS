@@ -1555,3 +1555,7 @@ DeepSeek开源资料调研见`DEEPSEEK_OPENSOURCE_2026_10_29.md`：deepseek-ai�
 将完整阅读框CSS（含响应式及焦点规则）移到public-article-dialog.css，由共享阅读组件自身导入；缩小日历通用按钮选择器，避免覆盖弹窗按钮。没有复制一套窗口样式，也没有改文章、数据库或业务流程。代码0ada7b7，Preview d988ba31-f677-4bcf-b5ee-8c2b4e0436cd。
 
 全量793/793、typecheck、改动Lint和Preview构建通过。新增真实Edge回归2/2：桌面、手机分别覆盖冷入口、刷新、雷达返回、知识返回，四种路径样式完全一致；桌面圆角23px、手机19px，panel/toolbar均flex、正文内部auto滚动。截图及脱敏样式值见verification/calendar-dialog-2026-10-31/。此前只测弹窗可见性没有锁定冷入口样式，本次已补回归。
+
+## 2026-10-31｜活动日历简化筛选区
+
+已移除活动类别、校区、报名状态三个下拉框，删除闲置状态、请求参数和桌面/手机筛选布局。刷新按钮移至当天标题右侧。代码8ddd040；Preview861c7e40-5d9e-4a8f-b6a5-bbb4fe0a0016。793项测试、类型检查、改动Lint及Preview构建通过；真实Edge桌面/手机2/2通过，检查无下拉框、刷新、周/日导航、站内阅读、跨日数量及无横向溢出。截图与回执见verification/calendar-no-filters-2026-10-31/。

@@ -1,0 +1,19 @@
+{
+  "codeCommit": "8ddd040",
+  "previewVersion": "861c7e40-5d9e-4a8f-b6a5-bbb4fe0a0016",
+  "browser": "Edge",
+  "projects": [
+    "desktop",
+    "mobile"
+  ],
+  "passed": 2,
+  "checks": [
+    "no combobox controls",
+    "refresh visible",
+    "week navigation",
+    "today navigation",
+    "direct article reading",
+    "multi-day identity/counts",
+    "no horizontal overflow"
+  ]
+}
