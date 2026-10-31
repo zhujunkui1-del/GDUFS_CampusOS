@@ -1,0 +1,31 @@
+[
+  [
+    {
+      "id": 3,
+      "parent": 0,
+      "notused": 39,
+      "detail": "SEARCH user_password_identities USING INDEX sqlite_autoindex_user_password_identities_2 (username_norm=?)"
+    }
+  ],
+  [
+    {
+      "id": 3,
+      "parent": 0,
+      "notused": 39,
+      "detail": "SEARCH user_password_identities USING INDEX sqlite_autoindex_user_password_identities_3 (verified_email=?)"
+    }
+  ],
+  [
+    {
+      "id": 3,
+      "parent": 0,
+      "notused": 39,
+      "detail": "SEARCH login_sessions USING INDEX sqlite_autoindex_login_sessions_1 (session_hash=?)"
+    }
+  ],
+  [
+    {
+      "name": "0056_user_password_accounts.sql"
+    }
+  ]
+]

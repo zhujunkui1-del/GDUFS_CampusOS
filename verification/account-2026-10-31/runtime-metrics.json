@@ -1,0 +1,322 @@
+[
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 2,
+    "wallMs": 2,
+    "queries": 0,
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 2,
+    "wallMs": 63,
+    "queries": 1,
+    "rowsRead": 3,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 1,
+    "wallMs": 1,
+    "queries": 0,
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/me",
+    "status": 200,
+    "cpuMs": 2515,
+    "wallMs": 2926,
+    "queries": 6,
+    "rowsRead": 13,
+    "rowsWritten": 10,
+    "kdfCalls": 1
+  },
+  {
+    "path": "/api/auth/login",
+    "status": 200,
+    "cpuMs": 1451,
+    "wallMs": 1994,
+    "queries": 7,
+    "rowsRead": 10,
+    "rowsWritten": 16,
+    "kdfCalls": 1
+  },
+  {
+    "path": "/api/me",
+    "status": 200,
+    "cpuMs": 1,
+    "wallMs": 61,
+    "queries": 1,
+    "rowsRead": 3,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/me",
+    "status": 200,
+    "cpuMs": 1,
+    "wallMs": 58,
+    "queries": 1,
+    "rowsRead": 3,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/logout",
+    "status": 403,
+    "cpuMs": 2,
+    "wallMs": 2,
+    "queries": 0,
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 1,
+    "wallMs": 59,
+    "queries": 1,
+    "rowsRead": 3,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/email/verify",
+    "status": 400,
+    "cpuMs": 3,
+    "wallMs": 212,
+    "queries": 2,
+    "rowsRead": 2,
+    "rowsWritten": 4,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/email/verify",
+    "status": 403,
+    "cpuMs": 5,
+    "wallMs": 324,
+    "queries": 4,
+    "rowsRead": 5,
+    "rowsWritten": 4,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/me",
+    "status": 400,
+    "cpuMs": 0,
+    "wallMs": 0,
+    "queries": 0,
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/password/change",
+    "status": 200,
+    "cpuMs": 2856,
+    "wallMs": 3437,
+    "queries": 8,
+    "rowsRead": 19,
+    "rowsWritten": 12,
+    "kdfCalls": 2
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 1,
+    "wallMs": 61,
+    "queries": 1,
+    "rowsRead": 3,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/login",
+    "status": 200,
+    "cpuMs": 1433,
+    "wallMs": 1973,
+    "queries": 7,
+    "rowsRead": 8,
+    "rowsWritten": 18,
+    "kdfCalls": 1
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 3,
+    "wallMs": 62,
+    "queries": 1,
+    "rowsRead": 3,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 4,
+    "wallMs": 60,
+    "queries": 1,
+    "rowsRead": 3,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 1,
+    "wallMs": 2,
+    "queries": 0,
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 2,
+    "wallMs": 2,
+    "queries": 0,
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 1,
+    "wallMs": 1,
+    "queries": 0,
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 1,
+    "wallMs": 1,
+    "queries": 0,
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 3,
+    "wallMs": 103,
+    "queries": 1,
+    "rowsRead": 3,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 0,
+    "wallMs": 0,
+    "queries": 0,
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/password/change",
+    "status": 200,
+    "cpuMs": 4006,
+    "wallMs": 4939,
+    "queries": 8,
+    "rowsRead": 19,
+    "rowsWritten": 12,
+    "kdfCalls": 2
+  },
+  {
+    "path": "/api/auth/login",
+    "status": 200,
+    "cpuMs": 1739,
+    "wallMs": 2302,
+    "queries": 7,
+    "rowsRead": 8,
+    "rowsWritten": 18,
+    "kdfCalls": 1
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 2,
+    "wallMs": 61,
+    "queries": 1,
+    "rowsRead": 3,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 0,
+    "wallMs": 0,
+    "queries": 0,
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 0,
+    "wallMs": 0,
+    "queries": 0,
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/password/change",
+    "status": 200,
+    "cpuMs": 4473,
+    "wallMs": 5086,
+    "queries": 8,
+    "rowsRead": 19,
+    "rowsWritten": 12,
+    "kdfCalls": 2
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "cpuMs": 1,
+    "wallMs": 60,
+    "queries": 1,
+    "rowsRead": 3,
+    "rowsWritten": 0,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/logout",
+    "status": 200,
+    "cpuMs": 2,
+    "wallMs": 96,
+    "queries": 2,
+    "rowsRead": 3,
+    "rowsWritten": 5,
+    "kdfCalls": 0
+  },
+  {
+    "path": "/api/auth/login",
+    "status": 200,
+    "cpuMs": 1945,
+    "wallMs": 2555,
+    "queries": 7,
+    "rowsRead": 8,
+    "rowsWritten": 18,
+    "kdfCalls": 1
+  }
+]

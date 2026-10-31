@@ -629,3 +629,9 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 负责人本轮明确要求将“蓝白长发徽章女仆少女22.png”用于校园助理悬浮入口，作为此处使用授权依据。原文件 C:/Users/zhuju/Downloads/广外奶龙娘/蓝白长发徽章女仆少女22.png；公开资源 /images/assistant/assistant-orb-e106e8f5026d.png，1254×1043透明PNG，1,425,767字节。SHA256 e106e8f5026da9a53887f52b5e210432e1571a521391e1b2f5c42b2d00e0c532，逐字节复制，未重绘或移除元素；圆形显示与蓝色光晕由CSS实现。该授权用于本轮入口图案，不据此宣称是学校官方吉祥物或扩展到其他来源素材。
 
 实际悬浮球加载204×170透明WebP展示副本 `/images/assistant/assistant-orb-e106e8f5026d-204.webp`，47,828字节，SHA256 6e3edc9ce7f91e3d102bdc68789e5a8b60aa19b0627f855e67c16e58713f953f。仅缩小展示尺寸并使用无损WebP编码，保留透明通道，不重绘角色；原始PNG保持不变。此调整解决首屏直接加载1.4MB原图偏慢的问题。
+
+## 2026-11-01｜S4事务邮件与密码安全检查
+
+负责人指定腾讯云SES及自有发件域mail.zhiyuapp.site，凭据保存在私有anykey.md及Cloudflare Secrets。实际ap-hongkong API确认域名可发信，验证码模板228818和安全通知模板228817批准；SPF TXT为include:qcloudmail.com。以负责人授权QQ地址本人输入6位码完成真实验证及密码重置，验收后已解绑；不公开邮箱码、真实密码、Cookie、主密钥或发件凭据。没有购买套餐，发送配额不作为免费余额证明。
+
+技术依据：[腾讯云SendEmail](https://cloud.tencent.com/document/product/1288/51034)、[Cloudflare Request及重定向](https://developers.cloudflare.com/workers/runtime-apis/request/)、[Workers crypto](https://developers.cloudflare.com/workers/runtime-apis/nodejs/crypto/)、[HIBP密码k匿名查询](https://haveibeenpwned.com/API/v3#PwnedPasswords)、[OWASP密码存储](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)。HIBP仅发送SHA1前5位并请求padding，匹配与丢弃返回数据在服务端完成；不发送原密码或完整哈希。@noble/hashes锁定2.4.0，作为同成本PBKDF2兼容实现；不是新模型供应商、付费服务或用户密码快速哈希存储。

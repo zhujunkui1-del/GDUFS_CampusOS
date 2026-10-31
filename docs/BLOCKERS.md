@@ -605,3 +605,9 @@ Preview网关已切至redbook云端服务。接口真实搜索曾取回3条笔�
 会话行为判定与证据门禁分层已实现，新增11项测试通过，全量671项659通过/12项既有失败不变，typecheck、改动文件Lint、Prettier与Preview构建（含dry-run与凭据扫描）通过。这证明路由与管线，不是真实对话质量。
 
 当前无法完成 Preview 部署与真实模型验收：`wrangler whoami` 显示登录令牌过期且环境非交互，`CLOUDFLARE_ACCOUNT_ID` 未配置，`scripts/deploy.mjs preview` 会直接退出；本机 `.dev.vars` 只有 DeepSeek 凭据，Preview 首选 Step 的密钥不在本机；本地 `wrangler d1 ... --local` 与 workerd 在 Windows 报 `miniflare-email-store: CreateDirectory 拒绝访问`，无法启动本地 Next+D1 链路。未尝试 Production，未改云端 D1、文章、地图或外部账号，也未用 DeepSeek 样本替代 Step 质量结论。解除条件：完成 Wrangler 登录或配置最小权限 API Token 与账号 ID，且本机可提供 Step 运行时凭据后，部署 Preview 并复跑交接中的5句原话与既有回归。
+
+## 2026-11-01｜S4账号可用范围与剩余收件验收
+
+Preview用户名密码和QQ邮箱6位码绑定/找回已真实闭环；旧短信、Resend未配置等不再是本轮账号阻塞。163/Outlook/学校邮箱尚无获授权收件人，未做真实收件验收；不能由QQ成功推断全部投递无误。缺少这些收件验收不阻止已验证的用户名密码及QQ流程。
+
+PBKDF2/600000在当前Workers实际使用noble同成本实现，登录CPU约1.4–1.95秒，改密约2.86–4.47秒（样本范围）；未验500人并发和免费Workers运行能力。HIBP服务不可用时新注册/改密失败关闭，已有密码登录与公共功能继续；邮件供应商异常不会开放假验证后门。新业务的收藏、AI长期同步和BYOK未在S4开发。2026-11-01负责人明确不设置注销账号，不列作待开发功能。

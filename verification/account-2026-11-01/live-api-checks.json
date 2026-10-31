@@ -1,0 +1,98 @@
+[
+  {
+    "name": "register_without_email_a",
+    "passed": true,
+    "status": 200,
+    "ms": 4627
+  },
+  {
+    "name": "register_without_email_b",
+    "passed": true,
+    "status": 200,
+    "ms": 3060
+  },
+  {
+    "name": "refresh_retains_session",
+    "passed": true,
+    "status": 200,
+    "ms": 258
+  },
+  {
+    "name": "case_insensitive_login_same_id",
+    "passed": true,
+    "status": 200,
+    "ms": 2567
+  },
+  {
+    "name": "wrong_password_denied",
+    "passed": true,
+    "status": 401,
+    "ms": 2604
+  },
+  {
+    "name": "user_b_only_reads_b",
+    "passed": true,
+    "status": 200,
+    "ms": 1377
+  },
+  {
+    "name": "client_user_id_rejected",
+    "passed": true,
+    "status": 400,
+    "ms": 151
+  },
+  {
+    "name": "guest_cannot_read_private_profile",
+    "passed": true,
+    "status": 401,
+    "ms": 156
+  },
+  {
+    "name": "duplicate_username_denied",
+    "passed": true,
+    "status": 409,
+    "ms": 591
+  },
+  {
+    "name": "change_password_rotates_cookie",
+    "passed": true,
+    "status": 200,
+    "ms": 4497
+  },
+  {
+    "name": "old_current_revoked",
+    "passed": true,
+    "status": 200,
+    "ms": 638
+  },
+  {
+    "name": "other_device_revoked",
+    "passed": true,
+    "status": 200,
+    "ms": 246
+  },
+  {
+    "name": "rename_keeps_stable_id",
+    "passed": true,
+    "status": 200,
+    "ms": 2398
+  },
+  {
+    "name": "logout_succeeds",
+    "passed": true,
+    "status": 200,
+    "ms": 364
+  },
+  {
+    "name": "logged_out_cookie_invalid",
+    "passed": true,
+    "status": 200,
+    "ms": 421
+  },
+  {
+    "name": "new_credentials_login",
+    "passed": true,
+    "status": 200,
+    "ms": 3274
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "guest_session",
+    "passed": true,
+    "status": 200,
+    "ms": 659
+  },
+  {
+    "name": "username_login_after_reset",
+    "passed": true,
+    "status": 200,
+    "ms": 2159
+  },
+  {
+    "name": "profile_A_and_real_mailbox_released",
+    "passed": true,
+    "status": 200,
+    "ms": 211
+  },
+  {
+    "name": "profile_B_isolated",
+    "passed": true,
+    "status": 200,
+    "ms": 200
+  },
+  {
+    "name": "ordinary_user_cannot_enter_console",
+    "passed": true,
+    "status": 401,
+    "ms": 139
+  },
+  {
+    "name": "cross_site_logout_rejected",
+    "passed": true,
+    "status": 403,
+    "ms": 595
+  },
+  {
+    "name": "csrf_rejection_kept_session",
+    "passed": true,
+    "status": 200,
+    "ms": 217
+  },
+  {
+    "name": "eight_digit_code_rejected",
+    "passed": true,
+    "status": 400,
+    "ms": 363
+  },
+  {
+    "name": "nonexistent_six_digit_challenge_rejected",
+    "passed": true,
+    "status": 403,
+    "ms": 505
+  },
+  {
+    "name": "cross_user_query_rejected",
+    "passed": true,
+    "status": 400,
+    "ms": 411
+  }
+]

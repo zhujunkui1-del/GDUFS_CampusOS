@@ -1,0 +1,36 @@
+{
+  "steps": [
+    {
+      "name": "binding_code_sent_waiting_for_owner",
+      "passed": true,
+      "at": "2026-10-31T19:02:34.441Z"
+    },
+    {
+      "name": "owner_verified_real_qq_code",
+      "passed": true,
+      "at": "2026-10-31T19:04:02.607Z"
+    },
+    {
+      "name": "verified_email_login_same_user",
+      "passed": true,
+      "at": "2026-10-31T19:04:06.787Z"
+    },
+    {
+      "name": "reset_code_sent_waiting_for_owner",
+      "passed": true,
+      "at": "2026-10-31T19:04:08.801Z"
+    },
+    {
+      "name": "owner_reset_real_qq_code",
+      "passed": true,
+      "at": "2026-10-31T19:05:27.381Z"
+    },
+    {
+      "name": "new_password_verified_email_login",
+      "passed": true,
+      "at": "2026-10-31T19:05:31.323Z"
+    }
+  ],
+  "mailboxReleased": true,
+  "observation": "Unbind succeeded; its success message disappeared with its form. Persistent feedback corrected in release."
+}
