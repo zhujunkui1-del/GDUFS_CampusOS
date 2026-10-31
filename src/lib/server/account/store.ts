@@ -87,9 +87,6 @@ export class AccountStore {
       createdAt: /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(row.created_at)
         ? row.created_at.replace(" ", "T") + "Z"
         : row.created_at,
-      usernameChangeAvailableAt: row.username_changed_at_ms
-        ? row.username_changed_at_ms + 86400000
-        : 0,
     };
   }
   async resolve(request: Request): Promise<AccountSession | null> {
@@ -178,7 +175,12 @@ export class AccountStore {
       .bind(id)
       .first<AccountRow>();
   }
-  async register(raw: unknown, request: Request, ip: string) {
+  async register(
+    raw: unknown,
+    request: Request,
+    ip: string,
+    proof?: { hash: string; digest: string },
+  ) {
     const input = RegisterSchema.parse(raw),
       norm = input.username.toLowerCase();
     await this.limit("register", ip, norm);
@@ -191,44 +193,79 @@ export class AccountStore {
         .first()
     )
       throw new ApiError("CONFLICT", "用户名不可用，请更换用户名。");
+    if (input.email && !proof)
+      throw new ApiError("FORBIDDEN", "请先验证邮箱。");
     const hash = await this.passwords.hash(input.password),
       id = crypto.randomUUID(),
       token = randomToken(),
       sessionHash = await tokenHash(token),
-      now = this.now();
+      now = this.now(),
+      nonce = crypto.randomUUID();
+    const proofGuard = proof
+      ? " AND EXISTS(SELECT 1 FROM user_auth_tokens WHERE token_hash=? AND consumption_id=?)"
+      : "";
+    const proofValues = proof ? [proof.hash, nonce] : [];
     const statements: Statement[] = [
+      ...(proof
+        ? [
+            this.db
+              .prepare(
+                "UPDATE user_auth_tokens SET used_at_ms=?,consumption_id=?,attempts=attempts+1 WHERE token_hash=? AND code_hash=? AND purpose='register_email' AND username_norm=? AND email=? AND used_at_ms IS NULL AND attempts<5 AND expires_at_ms>? AND NOT EXISTS(SELECT 1 FROM user_password_identities WHERE verified_email=user_auth_tokens.email)",
+              )
+              .bind(
+                now,
+                nonce,
+                proof.hash,
+                proof.digest,
+                norm,
+                input.email,
+                now,
+              ),
+          ]
+        : []),
       this.db
         .prepare(
-          "INSERT INTO users(id,display_name,role,status) VALUES(?,?,'user','active')",
+          "INSERT INTO users(id,display_name,role,status) SELECT ?,?,'user','active' WHERE 1=1" +
+            proofGuard,
         )
-        .bind(id, input.username),
+        .bind(id, input.username, ...proofValues),
       this.db
         .prepare(
-          "INSERT INTO user_password_identities(user_id,username,username_norm,password_hash,pending_email,mutation_id,updated_at_ms) VALUES(?,?,?,?,?,?,?)",
+          "INSERT INTO user_password_identities(user_id,username,username_norm,password_hash,verified_email,email_verified_at_ms,mutation_id,updated_at_ms) SELECT id,?,?,?,?,?,?,? FROM users WHERE id=?",
         )
         .bind(
-          id,
           input.username,
           norm,
           hash,
           input.email || null,
-          crypto.randomUUID(),
+          input.email ? now : null,
+          nonce,
           now,
+          id,
         ),
       this.sessionStatement(sessionHash, id, 1, now),
-      this.event("register", id),
+      this.db
+        .prepare(
+          "INSERT INTO user_auth_events(id,user_id,kind,created_at_ms) SELECT ?,id,'register',? FROM users WHERE id=?",
+        )
+        .bind(crypto.randomUUID(), now, id),
     ];
     const old = cookieValue(request);
     if (old)
       statements.push(
         this.db
           .prepare(
-            "UPDATE login_sessions SET revoked_at=? WHERE session_hash=?",
+            "UPDATE login_sessions SET revoked_at=? WHERE session_hash=? AND EXISTS(SELECT 1 FROM users WHERE id=?)",
           )
-          .bind(new Date(now).toISOString(), await tokenHash(old)),
+          .bind(new Date(now).toISOString(), await tokenHash(old), id),
       );
     try {
-      await this.db.batch(statements);
+      const results = await this.db.batch(statements);
+      if (proof && !changed(results[0]))
+        throw new ApiError(
+          "FORBIDDEN",
+          "验证码无效、已使用或已过期，请重新发送。",
+        );
     } catch (e) {
       if (/UNIQUE constraint/i.test(String(e)))
         throw new ApiError("CONFLICT", "用户名或邮箱不可用，请更换后重试。");
@@ -330,13 +367,7 @@ export class AccountStore {
   async rename(raw: unknown, request: Request) {
     const input = RenameSchema.parse(raw),
       s = await this.require(request);
-    await this.verifyCurrent(s, input.currentPassword);
     const now = this.now();
-    if (
-      s.row.username_changed_at_ms &&
-      now < s.row.username_changed_at_ms + 86400000
-    )
-      throw new ApiError("RATE_LIMITED", "用户名每24小时可修改一次。", true);
     const nonce = crypto.randomUUID();
     let results: unknown[];
     try {

@@ -20,7 +20,7 @@ it("registers without email, normalises usernames, uses stable IDs and never tru
     ).toBe(a.profile.id);
     await expect(f.register("alice")).rejects.toThrow("用户名");
     const renamed = await f.store.rename(
-      { username: "Alice_New", currentPassword: "Fixture-Password-Only" },
+      { username: "Alice_New" },
       f.request(a.token),
     );
     expect(renamed.id).toBe(a.profile.id);
@@ -31,7 +31,6 @@ it("registers without email, normalises usernames, uses stable IDs and never tru
       f.store.rename(
         {
           username: "steal",
-          currentPassword: "Fixture-Password-Only",
           userId: b.profile.id,
         },
         f.request(a.token),
@@ -92,7 +91,7 @@ it("password changes revoke old devices, preserve user identity and reject a sta
 it("verifies email by six digit code, enforces one use and uses one ID for email and username login", async () => {
   const f = accountFixture();
   try {
-    const a = await f.register("Alice", "One@Example.com");
+    const a = await f.legacyPending("Alice", "One@Example.com");
     await expect(
       f.store.login(
         { identifier: "one@example.com", password: "Fixture-Password-Only" },
@@ -100,9 +99,7 @@ it("verifies email by six digit code, enforces one use and uses one ID for email
         "mail",
       ),
     ).rejects.toThrow("不匹配");
-    const challenge = await f.store.registrationCode(a.profile.id, (p) => {
-      void p;
-    });
+    const challenge = await f.bindingCode(a);
     const code = f.lastCode();
     await f.store.verifyEmail({ challenge, code }, f.request(a.token));
     expect(
@@ -128,10 +125,8 @@ it("verifies email by six digit code, enforces one use and uses one ID for email
 it("locks a challenge after five guesses and rejects expiration without leaking the code", async () => {
   const f = accountFixture();
   try {
-    const a = await f.register("Alice", "one@example.com");
-    const challenge = await f.store.registrationCode(a.profile.id, (p) => {
-      void p;
-    });
+    const a = await f.legacyPending("Alice", "one@example.com");
+    const challenge = await f.bindingCode(a);
     const code = f.lastCode(),
       wrong = code === "000000" ? "111111" : "000000";
     const r = await Promise.allSettled(
@@ -147,9 +142,7 @@ it("locks a challenge after five guesses and rejects expiration without leaking 
       f.store.verifyEmail({ challenge, code }, f.request(a.token)),
     ).rejects.toThrow("验证码");
     f.advance(3600001);
-    const next = await f.store.registrationCode(a.profile.id, (p) => {
-      void p;
-    });
+    const next = await f.bindingCode(a);
     const value = f.lastCode();
     f.advance(600001);
     await expect(
@@ -162,10 +155,8 @@ it("locks a challenge after five guesses and rejects expiration without leaking 
 it("password reset requires a verified mailbox code and atomically invalidates old passwords, sessions and codes", async () => {
   const f = accountFixture();
   try {
-    const a = await f.register("Alice", "one@example.com");
-    const challenge = await f.store.registrationCode(a.profile.id, (p) => {
-      void p;
-    });
+    const a = await f.legacyPending("Alice", "one@example.com");
+    const challenge = await f.bindingCode(a);
     await f.store.verifyEmail(
       { challenge, code: f.lastCode() },
       f.request(a.token),

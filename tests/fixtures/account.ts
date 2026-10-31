@@ -81,16 +81,24 @@ export function accountFixture(mailAvailable = true) {
     new Request("https://campus.example/api/me", {
       headers: { ...(token ? { Cookie: "campusos_session=" + token } : {}) },
     });
-  const register = (username: string, email?: string) =>
+  const register = (username: string) =>
     store.register(
       {
         username,
         password: "Fixture-Password-Only",
-        ...(email ? { email } : {}),
       },
       request(),
       username,
     );
+  const legacyPending = async (username: string, email: string) => {
+    const a = await register(username);
+    f.sqlite
+      .prepare(
+        "UPDATE user_password_identities SET pending_email=? WHERE user_id=?",
+      )
+      .run(email.toLowerCase(), a.profile.id);
+    return { ...a, profile: store.profile((await store.row(a.profile.id))!) };
+  };
   return {
     ...f,
     db,
@@ -98,6 +106,16 @@ export function accountFixture(mailAvailable = true) {
     sent,
     request,
     register,
+    legacyPending,
+    bindingCode: async (a: { token: string; profile: { id: string } }) => {
+      const row = await store.row(a.profile.id);
+      return (
+        await store.requestEmail(
+          { email: row!.pending_email },
+          request(a.token),
+        )
+      ).challenge;
+    },
     advance: (ms: number) => {
       now += ms;
     },

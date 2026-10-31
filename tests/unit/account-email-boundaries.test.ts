@@ -29,7 +29,6 @@ it("bind API exposes challenge at the documented level, never the code", async (
         },
         body: JSON.stringify({
           email: "one@example.com",
-          currentPassword: "Fixture-Password-Only",
         }),
       }),
     );
@@ -42,59 +41,60 @@ it("bind API exposes challenge at the documented level, never the code", async (
     f.close();
   }
 });
-it("preserves old email until new verification, then disables old email login; unbind preserves username login", async () => {
+it("requires the old mailbox code before replacing or unlinking it", async () => {
   const f = accountFixture();
   try {
-    const a = await f.register("Alice", "one@example.com");
-    const first = await f.store.registrationCode(a.profile.id, (p) => {
-      void p;
-    });
+    const a = await f.legacyPending("Alice", "one@example.com");
+    const first = await f.bindingCode(a);
     await f.store.verifyEmail(
       { challenge: first, code: f.lastCode() },
       f.request(a.token),
     );
-    const next = await f.store.requestEmail(
-      { email: "two@example.com", currentPassword: "Fixture-Password-Only" },
+    await expect(
+      f.store.requestEmail({ email: "two@example.com" }, f.request(a.token)),
+    ).rejects.toThrow("先解绑");
+    await expect(
+      f.store.unbindEmail(
+        { currentPassword: "Fixture-Password-Only" },
+        f.request(a.token),
+      ),
+    ).rejects.toThrow();
+    expect((await f.store.row(a.profile.id))!.verified_email).toBe(
+      "one@example.com",
+    );
+    const unlink = await f.store.requestUnbind(f.request(a.token));
+    const code = f.lastCode();
+    await f.store.unbindEmail(
+      { challenge: unlink.challenge, code },
       f.request(a.token),
     );
-    expect(next.user.email).toBe("one@example.com");
-    await f.store.verifyEmail(
-      { challenge: next.challenge, code: f.lastCode() },
-      f.request(a.token),
-    );
+    await expect(
+      f.store.unbindEmail(
+        { challenge: unlink.challenge, code },
+        f.request(a.token),
+      ),
+    ).rejects.toThrow("验证码");
     await expect(
       f.store.login(
         { identifier: "one@example.com", password: "Fixture-Password-Only" },
         f.request(),
-        "one",
+        "old",
       ),
     ).rejects.toThrow("不匹配");
+    const next = await f.store.requestEmail(
+      { email: "two@example.com" },
+      f.request(a.token),
+    );
+    await f.store.verifyEmail(
+      { challenge: next.challenge, code: f.lastCode() },
+      f.request(a.token),
+    );
     expect(
       (
         await f.store.login(
           { identifier: "two@example.com", password: "Fixture-Password-Only" },
           f.request(),
-          "two",
-        )
-      ).profile.id,
-    ).toBe(a.profile.id);
-    await f.store.unbindEmail(
-      { currentPassword: "Fixture-Password-Only" },
-      f.request(a.token),
-    );
-    await expect(
-      f.store.login(
-        { identifier: "two@example.com", password: "Fixture-Password-Only" },
-        f.request(),
-        "two",
-      ),
-    ).rejects.toThrow("不匹配");
-    expect(
-      (
-        await f.store.login(
-          { identifier: "Alice", password: "Fixture-Password-Only" },
-          f.request(),
-          "name",
+          "new",
         )
       ).profile.id,
     ).toBe(a.profile.id);
@@ -105,19 +105,15 @@ it("preserves old email until new verification, then disables old email login; u
 it("rejects another user consuming a challenge and concurrent verified-mail ownership races", async () => {
   const f = accountFixture();
   try {
-    const a = await f.register("Alice", "shared@example.com"),
-      b = await f.register("Bobby", "shared@example.com");
-    const ca = await f.store.registrationCode(a.profile.id, (p) => {
-        void p;
-      }),
+    const a = await f.legacyPending("Alice", "shared@example.com"),
+      b = await f.legacyPending("Bobby", "shared@example.com");
+    const ca = await f.bindingCode(a),
       codeA = f.lastCode();
     await expect(
       f.store.verifyEmail({ challenge: ca, code: codeA }, f.request(b.token)),
     ).rejects.toThrow("验证码");
     f.advance(60001);
-    const cb = await f.store.registrationCode(b.profile.id, (p) => {
-        void p;
-      }),
+    const cb = await f.bindingCode(b),
       codeB = f.lastCode();
     const results = await Promise.allSettled([
       f.store.verifyEmail({ challenge: ca, code: codeA }, f.request(a.token)),
@@ -138,10 +134,8 @@ it("rejects another user consuming a challenge and concurrent verified-mail owne
 it("allows exactly one concurrent password reset and no reset for a pending mailbox", async () => {
   const f = accountFixture();
   try {
-    const a = await f.register("Alice", "one@example.com");
-    const first = await f.store.registrationCode(a.profile.id, (p) => {
-      void p;
-    });
+    const a = await f.legacyPending("Alice", "one@example.com");
+    const first = await f.bindingCode(a);
     await f.store.verifyEmail(
       { challenge: first, code: f.lastCode() },
       f.request(a.token),
@@ -164,7 +158,7 @@ it("allows exactly one concurrent password reset and no reset for a pending mail
       ),
     );
     expect(results.filter((r) => r.status === "fulfilled")).toHaveLength(1);
-    await f.register("Bobby", "pending@example.com");
+    await f.legacyPending("Bobby", "pending@example.com");
     const count = f.sent.length;
     const unknown = await f.store.requestReset(
       { email: "pending@example.com" },

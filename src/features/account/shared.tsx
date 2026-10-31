@@ -1,26 +1,31 @@
 "use client";
 import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 import { useRef, useState } from "react";
 import "./account.css";
 export function AccountFrame({
   title,
   children,
+  backHref,
+  home = false,
 }: {
   title: string;
   children: React.ReactNode;
+  backHref?: string;
+  home?: boolean;
 }) {
   return (
-    <section className="module-page account-page">
-      <h1 className="module-heading-title">
-        <Link className="module-brand" href="/map">
-          广外通 <span>CampusOS</span>
-        </Link>
-        <span className="module-heading-separator" aria-hidden="true">
-          {" "}
-          |{" "}
-        </span>
-        <strong>{title}</strong>
-      </h1>
+    <section
+      className={`module-page account-page ${home ? "account-home" : ""}`}
+    >
+      <header className="account-header">
+        {backHref && (
+          <Link className="account-back" href={backHref} aria-label="返回">
+            <ChevronLeft size={23} />
+          </Link>
+        )}
+        <h1>{title}</h1>
+      </header>
       {children}
     </section>
   );
@@ -70,5 +75,3 @@ export function FormFeedback({
     </>
   );
 }
-export const recoveryWarning =
-  "不绑定并验证邮箱，忘记密码后将无法通过邮件找回账号。";

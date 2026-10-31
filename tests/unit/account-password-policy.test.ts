@@ -13,23 +13,22 @@ it("registers, changes and resets length-valid passwords without any external lo
       now: f.store.now,
       mailer: f.store.mailer,
     });
+    const signup = await service.registrationCode(
+      { username: "password", email: "fixture@example.com" },
+      "fixture-ip",
+    );
     const a = await service.register(
       {
         username: "password",
         password: "password",
         email: "fixture@example.com",
+        challenge: signup.challenge,
+        code: f.lastCode(),
       },
       f.request(),
       "fixture-ip",
     );
     expect(a.profile.username).toBe("password");
-    const challenge = await service.registrationCode(a.profile.id, (p) => {
-      void p;
-    });
-    await service.verifyEmail(
-      { challenge, code: f.lastCode() },
-      f.request(a.token),
-    );
     const changed = await service.changePassword(
       { currentPassword: "password", newPassword: "11111111" },
       f.request(a.token),

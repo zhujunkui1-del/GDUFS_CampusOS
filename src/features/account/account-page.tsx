@@ -1,6 +1,19 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  Settings,
+  Bookmark,
+  CodeXml,
+  UserRound,
+  LockKeyhole,
+  KeyRound,
+  Mail,
+  ChevronRight,
+  LogOut,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import {
   UsernameSchema,
   PasswordSchema,
@@ -9,439 +22,455 @@ import {
   type AccountProfile,
 } from "@/domain/account/contracts";
 import { useAccount, accountRequest } from "./account-context";
-import {
-  AccountFrame,
-  FormFeedback,
-  useAccountAction,
-  recoveryWarning,
-} from "./shared";
-export function AccountPageView() {
+import { AccountFrame, FormFeedback, useAccountAction } from "./shared";
+
+type View = "home" | "settings" | "username" | "password" | "email" | "unbind";
+export function AccountPageView({ view = "home" }: { view?: View }) {
   const account = useAccount(),
-    logout = useAccountAction(),
     user = account.session?.user;
+  const titles = {
+    home: "我的",
+    settings: "设置",
+    username: "修改用户名",
+    password: "修改密码",
+    email: "邮箱",
+    unbind: "解绑邮箱",
+  };
+  const back =
+    view === "home"
+      ? undefined
+      : view === "settings"
+        ? "/account"
+        : view === "unbind"
+          ? "/account/settings/email"
+          : "/account/settings";
   return (
-    <AccountFrame title="我的账号">
+    <AccountFrame title={titles[view]} backHref={back} home={view === "home"}>
       {account.error && (
         <p role="alert" className="account-error">
-          {account.error}{" "}
+          {account.error}
           <button type="button" onClick={() => void account.refresh()}>
             重试
           </button>
         </p>
       )}
-      {account.loading && !account.session && (
-        <p role="status">正在读取账号状态…</p>
-      )}
+      {!account.session && account.loading && <p role="status">正在载入…</p>}
       {account.session && !user && (
         <div className="account-card account-entry">
-          <h2>游客模式</h2>
-          <p>校园地图、雷达、知识、活动日历和校园助理均可继续使用。</p>
-          {account.session.available ? (
-            <div className="account-links">
-              <Link className="account-primary-link" href="/account/login">
-                登录账号
-              </Link>
-              <Link href="/account/register">注册账号</Link>
-            </div>
-          ) : (
-            <p role="status">账号服务暂不可用，请稍后重试。</p>
-          )}
+          <h2>游客</h2>
+          <div className="account-links">
+            <Link className="account-primary-link" href="/account/login">
+              登录
+            </Link>
+            <Link href="/account/register">注册</Link>
+          </div>
         </div>
       )}
-      {user && (
-        <>
-          <AccountDetails key={user.id} user={user} />
-          <div className="account-logout">
-            <button
-              disabled={logout.busy}
-              onClick={() =>
-                void logout.run(async () => {
-                  await accountRequest("/api/auth/logout", {});
-                  await account.changed("identity");
-                }, "已退出登录")
-              }
-            >
-              退出登录
-            </button>
-            <FormFeedback error={logout.error} success={logout.success} />
-          </div>
-        </>
-      )}
+      {user && <AccountContent key={user.id + view} user={user} view={view} />}
     </AccountFrame>
   );
 }
-function AccountDetails({ user }: { user: AccountProfile }) {
-  return (
+function Row({
+  icon: Icon,
+  label,
+  href,
+  value,
+  disabled = false,
+}: {
+  icon: LucideIcon;
+  label: string;
+  href?: string;
+  value?: string;
+  disabled?: boolean;
+}) {
+  const children = (
     <>
-      <div className="account-card account-overview">
-        <div className="account-monogram" aria-hidden="true">
-          {user.username.slice(0, 1).toUpperCase()}
-        </div>
-        <div>
-          <h2>{user.username}</h2>
-          <p>
-            注册于{" "}
-            {new Intl.DateTimeFormat("zh-CN", {
-              timeZone: "Asia/Shanghai",
-              dateStyle: "medium",
-            }).format(new Date(user.createdAt))}
-          </p>
-          <p>当前已登录</p>
-        </div>
-      </div>
-      <div className="account-grid">
-        <RenameForm user={user} />
-        <PasswordForm />
-        <EmailForms user={user} />
-        <section className="account-card">
-          <h2>账号设置</h2>
-          <ul className="account-future">
-            <li>
-              <span>个人收藏</span>
-              <small>后续开放</small>
-            </li>
-            <li>
-              <span>AI 会话同步</span>
-              <small>后续开放</small>
-            </li>
-            <li>
-              <span>个性化偏好</span>
-              <small>后续开放</small>
-            </li>
-            <li>
-              <span>模型 API 设置</span>
-              <small>后续开放</small>
-            </li>
-          </ul>
-        </section>
-      </div>
+      <span className="account-row-icon">
+        <Icon size={21} strokeWidth={1.8} />
+      </span>
+      <span className="account-row-label">{label}</span>
+      {value && <span className="account-row-value">{value}</span>}
+      {href && <ChevronRight className="account-row-chevron" size={18} />}
     </>
+  );
+  return href ? (
+    <Link className="account-row" href={href}>
+      {children}
+    </Link>
+  ) : (
+    <button className="account-row" type="button" disabled={disabled}>
+      {children}
+    </button>
+  );
+}
+function AccountContent({ user, view }: { user: AccountProfile; view: View }) {
+  if (view === "home")
+    return (
+      <div className="account-home-layout">
+        <section className="account-card account-overview">
+          <div className="account-monogram" aria-hidden="true">
+            {user.username.slice(0, 1).toUpperCase()}
+          </div>
+          <div>
+            <h2>{user.username}</h2>
+            <p className="account-private-email">
+              email: {user.email || user.pendingEmail || "未绑定"}
+            </p>
+          </div>
+        </section>
+        <div className="account-home-links">
+          <div className="account-card account-group">
+            <Row icon={Settings} label="设置" href="/account/settings" />
+          </div>
+          <div className="account-card account-group">
+            <Row icon={Bookmark} label="收藏" disabled />
+            <Row icon={CodeXml} label="API 设置" disabled />
+          </div>
+        </div>
+      </div>
+    );
+  if (view === "settings") return <SettingsPage user={user} />;
+  return (
+    <div className="account-form-layout">
+      <section className="account-card account-form-card">
+        {view === "username" ? (
+          <RenameForm user={user} />
+        ) : view === "password" ? (
+          <PasswordForm />
+        ) : view === "email" ? (
+          <EmailPage user={user} />
+        ) : (
+          <UnbindPage user={user} />
+        )}
+      </section>
+    </div>
+  );
+}
+function SettingsPage({ user }: { user: AccountProfile }) {
+  const account = useAccount(),
+    action = useAccountAction();
+  return (
+    <div className="account-settings-layout">
+      <section>
+        <h2 className="account-group-label">账号管理</h2>
+        <div className="account-card account-group">
+          <Row
+            icon={UserRound}
+            label="修改用户名"
+            href="/account/settings/username"
+          />
+          <Row
+            icon={LockKeyhole}
+            label="修改密码"
+            href="/account/settings/password"
+          />
+          <Row
+            icon={KeyRound}
+            label="找回密码"
+            href="/account/settings/recovery"
+          />
+        </div>
+      </section>
+      <section>
+        <h2 className="account-group-label">账户信息</h2>
+        <div className="account-card account-group">
+          <Row
+            icon={Mail}
+            label="邮箱"
+            value={user.email || user.pendingEmail || "未绑定"}
+            href="/account/settings/email"
+          />
+        </div>
+        <button
+          className="account-danger account-logout"
+          disabled={action.busy}
+          onClick={() =>
+            void action.run(async () => {
+              await accountRequest("/api/auth/logout", {});
+              await account.changed("identity");
+            }, "已退出")
+          }
+        >
+          <LogOut size={19} />
+          退出登录
+        </button>
+        <FormFeedback error={action.error} success={action.success} />
+      </section>
+    </div>
   );
 }
 function RenameForm({ user }: { user: AccountProfile }) {
   const account = useAccount(),
+    router = useRouter(),
     action = useAccountAction(),
-    [username, setUsername] = useState(""),
-    [password, setPassword] = useState("");
-  const [observedAt] = useState(() => Date.now());
-  const cooldown = user.usernameChangeAvailableAt > observedAt;
+    [username, setUsername] = useState(user.username);
   return (
-    <section className="account-card">
-      <h2>修改用户名</h2>
-      <p className="account-note">
-        当前用户名：{user.username}。用户名每24小时可修改一次。
-      </p>
-      <form
-        aria-label="修改用户名"
-        noValidate
-        onSubmit={(e) => {
-          e.preventDefault();
-          void action.run(async () => {
-            if (!UsernameSchema.safeParse(username).success)
-              throw Error(
-                "用户名需3–24位字母、数字或下划线，且不能使用系统保留名称。",
-              );
-            await accountRequest(
-              "/api/me",
-              { username, currentPassword: password },
-              "PATCH",
-            );
-            setPassword("");
-            setUsername("");
-            await account.changed();
-          }, "用户名已修改");
-        }}
+    <form
+      aria-label="修改用户名"
+      noValidate
+      onSubmit={(e) => {
+        e.preventDefault();
+        void action.run(async () => {
+          if (!UsernameSchema.safeParse(username).success)
+            throw Error("请输入3–24位字母、数字或下划线。");
+          await accountRequest("/api/me", { username }, "PATCH");
+          await account.changed();
+          router.push("/account");
+        }, "已保存");
+      }}
+    >
+      <label>
+        用户名
+        <input
+          aria-label="新用户名"
+          autoComplete="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          maxLength={24}
+        />
+      </label>
+      <FormFeedback error={action.error} success={action.success} />
+      <button
+        className="account-primary"
+        disabled={action.busy || account.loading}
       >
-        <label>
-          新用户名
-          <input
-            aria-label="新用户名"
-            autoComplete="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            maxLength={24}
-          />
-        </label>
-        <label>
-          当前密码
-          <input
-            aria-label="当前密码（修改用户名）"
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            maxLength={256}
-          />
-        </label>
-        <FormFeedback error={action.error} success={action.success} />
-        <button
-          type="submit"
-          disabled={
-            action.busy || account.loading || !!account.error || cooldown
-          }
-        >
-          保存用户名
-        </button>
-      </form>
-    </section>
+        保存
+      </button>
+    </form>
   );
 }
 function PasswordForm() {
   const account = useAccount(),
     action = useAccountAction(),
-    [old, setOld] = useState(""),
+    [current, setCurrent] = useState(""),
     [password, setPassword] = useState(""),
     [confirm, setConfirm] = useState("");
   return (
-    <section className="account-card">
-      <h2>修改密码</h2>
-      <p className="account-note">修改后，其他设备需重新登录。</p>
-      <form
-        aria-label="修改密码"
-        noValidate
-        onSubmit={(e) => {
-          e.preventDefault();
-          void action.run(async () => {
-            if (!PasswordSchema.safeParse(password).success)
-              throw Error("密码需8–256个字符。");
-            if (password !== confirm) throw Error("两次输入的新密码不一致。");
-            await accountRequest("/api/auth/password/change", {
-              currentPassword: old,
-              newPassword: password,
-            });
-            setOld("");
-            setPassword("");
-            setConfirm("");
-            await account.changed();
-          }, "密码已修改，旧登录会话已撤销");
-        }}
+    <form
+      aria-label="修改密码"
+      noValidate
+      onSubmit={(e) => {
+        e.preventDefault();
+        void action.run(async () => {
+          if (!PasswordSchema.safeParse(password).success)
+            throw Error("密码至少8位。");
+          if (password !== confirm) throw Error("两次密码不一致。");
+          await accountRequest("/api/auth/password/change", {
+            currentPassword: current,
+            newPassword: password,
+          });
+          setCurrent("");
+          setPassword("");
+          setConfirm("");
+          await account.changed();
+        }, "密码已修改");
+      }}
+    >
+      <label>
+        当前密码
+        <input
+          aria-label="当前密码"
+          type="password"
+          autoComplete="current-password"
+          value={current}
+          onChange={(e) => setCurrent(e.target.value)}
+          maxLength={256}
+        />
+      </label>
+      <label>
+        新密码
+        <input
+          aria-label="新密码"
+          type="password"
+          autoComplete="new-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          maxLength={256}
+        />
+      </label>
+      <label>
+        确认密码
+        <input
+          aria-label="确认新密码"
+          type="password"
+          autoComplete="new-password"
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+          maxLength={256}
+        />
+      </label>
+      <FormFeedback error={action.error} success={action.success} />
+      <button
+        className="account-primary"
+        disabled={action.busy || account.loading}
       >
-        <label>
-          当前密码
-          <input
-            aria-label="当前密码（修改密码）"
-            type="password"
-            autoComplete="current-password"
-            value={old}
-            onChange={(e) => setOld(e.target.value)}
-            maxLength={256}
-          />
-        </label>
-        <label>
-          新密码
-          <input
-            aria-label="新密码"
-            type="password"
-            autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            maxLength={256}
-          />
-        </label>
-        <label>
-          确认新密码
-          <input
-            aria-label="确认新密码"
-            type="password"
-            autoComplete="new-password"
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-            maxLength={256}
-          />
-        </label>
-        <FormFeedback error={action.error} success={action.success} />
-        <button
-          type="submit"
-          disabled={action.busy || account.loading || !!account.error}
-        >
-          保存新密码
-        </button>
-      </form>
-    </section>
+        保存
+      </button>
+    </form>
   );
 }
-function EmailForms({ user }: { user: AccountProfile }) {
+function EmailPage({ user }: { user: AccountProfile }) {
   const account = useAccount(),
     send = useAccountAction(),
     verify = useAccountAction(),
-    unbind = useAccountAction();
-  const [email, setEmail] = useState(""),
-    [password, setPassword] = useState(""),
-    [code, setCode] = useState(""),
-    [unbindPassword, setUnbindPassword] = useState("");
-  const available = !!account.session?.mailAvailable,
-    challenge =
-      account.challenge?.userId === user.id ? account.challenge : null;
+    [email, setEmail] = useState(user.pendingEmail || ""),
+    [challenge, setChallenge] = useState(""),
+    [code, setCode] = useState("");
+  if (user.email)
+    return (
+      <div className="account-email-bound">
+        <Mail size={24} />
+        <p className="account-private-email">{user.email}</p>
+        <Link className="account-danger" href="/account/settings/email/unbind">
+          解绑邮箱
+        </Link>
+      </div>
+    );
   return (
-    <section className="account-card">
-      <h2>邮箱与找回密码</h2>
-      <FormFeedback error={unbind.error} success={unbind.success} />
-      <FormFeedback error={verify.error} success={verify.success} />
-      <dl className="account-email-status">
-        <dt>已验证邮箱</dt>
-        <dd className="account-private-email">{user.email || "未绑定"}</dd>
-        {user.pendingEmail && (
-          <>
-            <dt>待验证邮箱</dt>
-            <dd className="account-private-email">{user.pendingEmail}</dd>
-          </>
-        )}
-      </dl>
-      {!user.email && (
-        <p className="account-note account-risk">{recoveryWarning}</p>
-      )}
-      {!available && (
-        <p role="status" className="account-note">
-          邮箱验证暂未开通，可继续使用用户名和密码。
-        </p>
-      )}
-      <form
-        aria-label="绑定或更换邮箱"
-        noValidate
-        onSubmit={(e) => {
-          e.preventDefault();
-          void send.run(async () => {
-            const target = email || user.pendingEmail || "";
-            if (!EmailSchema.safeParse(target).success)
-              throw Error("请输入有效邮箱地址。");
-            const r = await accountRequest<{
-              user: AccountProfile;
-              challenge: string;
-            }>(user.email ? "/api/auth/email/change" : "/api/auth/email/bind", {
-              email: target,
-              currentPassword: password,
-            });
-            setPassword("");
+    <form
+      aria-label="绑定邮箱"
+      noValidate
+      onSubmit={(e) => {
+        e.preventDefault();
+        void verify.run(async () => {
+          if (!challenge || !OtpSchema.safeParse(code).success)
+            throw Error("请输入6位验证码。");
+          await accountRequest("/api/auth/email/verify", { challenge, code });
+          await account.changed();
+        }, "已绑定");
+      }}
+    >
+      <label>
+        邮箱
+        <input
+          aria-label="邮箱地址"
+          type="email"
+          autoComplete="email"
+          value={email}
+          maxLength={254}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setChallenge("");
             setCode("");
-            await account.changed();
-            account.setChallenge({
-              userId: user.id,
-              email: target,
-              id: r.challenge,
-            });
-          }, "验证码已发送，请在10分钟内完成验证");
-        }}
+          }}
+        />
+      </label>
+      <label>
+        验证码
+        <span className="account-code-row">
+          <input
+            aria-label="邮箱验证码"
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            maxLength={6}
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
+          <button
+            type="button"
+            disabled={send.busy || !account.session?.mailAvailable}
+            onClick={() =>
+              void send.run(async () => {
+                if (!EmailSchema.safeParse(email).success)
+                  throw Error("请输入有效邮箱。");
+                const r = await accountRequest<{ challenge: string }>(
+                  "/api/auth/email/bind",
+                  { email },
+                );
+                setChallenge(r.challenge);
+              }, "已发送")
+            }
+          >
+            获取验证码
+          </button>
+        </span>
+      </label>
+      <FormFeedback
+        error={send.error || verify.error}
+        success={send.success || verify.success}
+      />
+      <button
+        className="account-primary"
+        disabled={
+          verify.busy || account.loading || !account.session?.mailAvailable
+        }
       >
-        <label>
-          {user.email ? "新邮箱" : "邮箱地址"}
-          <input
-            aria-label="邮箱地址"
-            type="email"
-            autoComplete="email"
-            placeholder={user.pendingEmail || "name@example.com"}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            maxLength={254}
-            disabled={!available}
-          />
-        </label>
-        <label>
-          当前密码
-          <input
-            aria-label="当前密码（邮箱设置）"
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            maxLength={256}
-            disabled={!available}
-          />
-        </label>
-        <FormFeedback error={send.error} success={send.success} />
-        <button
-          type="submit"
-          disabled={
-            !available || send.busy || account.loading || !!account.error
-          }
-        >
-          发送邮箱验证码
-        </button>
-      </form>
-      {challenge && (
-        <form
-          aria-label="验证绑定邮箱"
-          noValidate
-          onSubmit={(e) => {
-            e.preventDefault();
-            void verify.run(async () => {
-              if (!OtpSchema.safeParse(code).success)
-                throw Error("请输入6位邮箱验证码。");
-              await accountRequest("/api/auth/email/verify", {
-                challenge: challenge.id,
-                code,
-              });
-              setCode("");
-              account.setChallenge(null);
-              await account.changed();
-            }, "邮箱已验证，可用于登录和找回密码");
-          }}
-        >
-          <p className="account-note">
-            验证码已申请发送至{" "}
-            <span className="account-private-email">{challenge.email}</span>
-            ，10分钟有效，最多尝试5次。
-          </p>
-          <label>
-            邮箱验证码
-            <input
-              className="account-code"
-              aria-label="邮箱验证码"
-              autoComplete="one-time-code"
-              inputMode="numeric"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              maxLength={6}
-            />
-          </label>
-          <button
-            className="account-primary"
-            type="submit"
-            disabled={!available || verify.busy || account.loading}
-          >
-            验证邮箱
-          </button>
-        </form>
+        绑定邮箱
+      </button>
+      {user.pendingEmail && (
+        <Link className="account-danger" href="/account/settings/email/unbind">
+          解绑邮箱
+        </Link>
       )}
-      {(user.email || user.pendingEmail) && (
-        <form
-          className="account-unbind"
-          aria-label="解除邮箱绑定"
-          noValidate
-          onSubmit={(e) => {
-            e.preventDefault();
-            void unbind.run(async () => {
-              await accountRequest("/api/auth/email/unbind", {
-                currentPassword: unbindPassword,
-              });
-              setUnbindPassword("");
-              account.setChallenge(null);
-              await account.changed();
-            }, "邮箱已解除绑定");
-          }}
-        >
-          <h3>{user.email ? "解除邮箱绑定" : "取消待验证邮箱"}</h3>
-          <p className="account-note">
-            解除邮箱绑定后，你将无法使用邮箱登录或找回密码，请确保记住用户名和密码。
-          </p>
-          <label>
-            当前密码
-            <input
-              aria-label="当前密码（解除邮箱绑定）"
-              type="password"
-              autoComplete="current-password"
-              value={unbindPassword}
-              onChange={(e) => setUnbindPassword(e.target.value)}
-              maxLength={256}
-            />
-          </label>
+    </form>
+  );
+}
+function UnbindPage({ user }: { user: AccountProfile }) {
+  const account = useAccount(),
+    router = useRouter(),
+    send = useAccountAction(),
+    action = useAccountAction(),
+    [challenge, setChallenge] = useState(""),
+    [code, setCode] = useState("");
+  if (!user.email && !user.pendingEmail) return <p>未绑定邮箱</p>;
+  return (
+    <form
+      aria-label="解绑邮箱"
+      noValidate
+      onSubmit={(e) => {
+        e.preventDefault();
+        void action.run(async () => {
+          if (!challenge || !OtpSchema.safeParse(code).success)
+            throw Error("请输入6位验证码。");
+          await accountRequest("/api/auth/email/unbind", { challenge, code });
+          await account.changed();
+          router.replace("/account/settings/email");
+        }, "已解绑");
+      }}
+    >
+      <p className="account-private-email account-email-target">
+        {user.email || user.pendingEmail}
+      </p>
+      <label>
+        验证码
+        <span className="account-code-row">
+          <input
+            aria-label="邮箱验证码"
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            maxLength={6}
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+          />
           <button
-            type="submit"
-            disabled={unbind.busy || account.loading || !!account.error}
+            type="button"
+            disabled={send.busy || !account.session?.mailAvailable}
+            onClick={() =>
+              void send.run(async () => {
+                const r = await accountRequest<{ challenge: string }>(
+                  "/api/auth/email/unbind/request",
+                  {},
+                );
+                setChallenge(r.challenge);
+              }, "已发送")
+            }
           >
-            {user.email ? "解除邮箱绑定" : "取消待验证邮箱"}
+            获取验证码
           </button>
-        </form>
-      )}
-    </section>
+        </span>
+      </label>
+      <FormFeedback
+        error={send.error || action.error}
+        success={send.success || action.success}
+      />
+      <button
+        className="account-danger"
+        disabled={
+          action.busy || account.loading || !account.session?.mailAvailable
+        }
+      >
+        解绑邮箱
+      </button>
+    </form>
   );
 }

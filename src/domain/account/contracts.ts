@@ -31,7 +31,16 @@ export const RegisterSchema = z
     username: UsernameSchema,
     password: PasswordSchema,
     email: EmailSchema.optional(),
+    challenge: TokenSchema.optional(),
+    code: OtpSchema.optional(),
   })
+  .strict()
+  .refine(
+    (v) => (v.email ? !!v.challenge && !!v.code : !v.challenge && !v.code),
+    "请先验证邮箱",
+  );
+export const RegistrationCodeSchema = z
+  .object({ username: UsernameSchema, email: EmailSchema })
   .strict();
 export const LoginSchema = z
   .object({
@@ -42,7 +51,6 @@ export const LoginSchema = z
 export const RenameSchema = z
   .object({
     username: UsernameSchema,
-    currentPassword: z.string().min(1).max(256),
   })
   .strict();
 export const PasswordChangeSchema = z
@@ -51,11 +59,9 @@ export const PasswordChangeSchema = z
     newPassword: PasswordSchema,
   })
   .strict();
-export const EmailBindSchema = z
-  .object({ email: EmailSchema, currentPassword: z.string().min(1).max(256) })
-  .strict();
+export const EmailBindSchema = z.object({ email: EmailSchema }).strict();
 export const EmailUnbindSchema = z
-  .object({ currentPassword: z.string().min(1).max(256) })
+  .object({ challenge: TokenSchema, code: OtpSchema })
   .strict();
 export const ResetRequestSchema = z.object({ email: EmailSchema }).strict();
 export const ResetConfirmSchema = z
@@ -75,5 +81,4 @@ export type AccountProfile = {
   pendingEmail: string | null;
   emailVerified: boolean;
   createdAt: string;
-  usernameChangeAvailableAt: number;
 };

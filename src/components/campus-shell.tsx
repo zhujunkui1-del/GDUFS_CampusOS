@@ -60,6 +60,7 @@ function ShellChrome({
   setAssistantOpen: (open: boolean) => void;
 }) {
   const pathname = usePathname();
+  const accountActive = pathname.startsWith("/account");
   const [expanded, setExpanded] = useState(false);
   const map = useCampusMap();
   const account = useAccount();
@@ -124,10 +125,10 @@ function ShellChrome({
             </button>
             <Link
               href="/account"
-              className={`nav-item nav-account ${pathname === "/account" ? "active" : ""}`}
+              className={`nav-item nav-account ${accountActive ? "active" : ""}`}
               aria-label="我的账号"
               aria-describedby="visitor-label"
-              aria-current={pathname === "/account" ? "page" : undefined}
+              aria-current={accountActive ? "page" : undefined}
               title={`我的账号 · ${username || "游客"}`}
             >
               <span className="account-avatar">
@@ -160,7 +161,8 @@ function ShellChrome({
               aria-label={href === "/account" ? "我的账号" : short}
               aria-current={
                 pathname === href ||
-                (href === "/account" && pathname === "/favorites")
+                (href === "/account" &&
+                  (accountActive || pathname === "/favorites"))
                   ? "page"
                   : undefined
               }

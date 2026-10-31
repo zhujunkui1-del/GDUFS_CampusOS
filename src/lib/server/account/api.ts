@@ -11,6 +11,7 @@ import { measuredAccountDatabase } from "./metrics";
 
 export const accountMethods: Record<string, readonly string[]> = {
   "/api/auth/register": ["POST"],
+  "/api/auth/register/email-code": ["POST"],
   "/api/auth/login": ["POST"],
   "/api/auth/logout": ["POST"],
   "/api/auth/session": ["GET"],
@@ -21,6 +22,7 @@ export const accountMethods: Record<string, readonly string[]> = {
   "/api/auth/email/change": ["POST"],
   "/api/auth/email/verify": ["POST"],
   "/api/auth/email/unbind": ["POST"],
+  "/api/auth/email/unbind/request": ["POST"],
   "/api/me": ["GET", "PATCH"],
 };
 export function createAccountApi(options: {
@@ -59,15 +61,18 @@ export function createAccountApi(options: {
       if (path === "/api/auth/register") {
         const result = await store.register(body, request, ip);
         cookie = accountCookie(result.token);
-        const emailChallenge = await store
-          .registrationCode(result.profile.id, options.defer)
-          .catch(() => null);
         return {
           user: result.profile,
           expiresAt: result.expiresAt,
           mailAvailable: store.mailer.available,
-          emailChallenge,
         };
+      }
+      if (path === "/api/auth/register/email-code")
+        return store.registrationCode(body, ip);
+      if (path === "/api/auth/email/unbind/request") {
+        z.object({}).strict().parse(body);
+        await store.limit("email_unbind_request", ip);
+        return store.requestUnbind(request);
       }
       if (path === "/api/auth/login") {
         const result = await store.login(body, request, ip);
@@ -95,8 +100,10 @@ export function createAccountApi(options: {
       }
       if (path === "/api/auth/email/bind" || path === "/api/auth/email/change")
         return store.requestEmail(body, request);
-      if (path === "/api/auth/email/unbind")
+      if (path === "/api/auth/email/unbind") {
+        await store.limit("email_unbind", ip);
         return { user: await store.unbindEmail(body, request) };
+      }
       if (path === "/api/auth/email/verify") {
         await store.limit("email_verify", ip);
         return store.verifyEmail(body, request);

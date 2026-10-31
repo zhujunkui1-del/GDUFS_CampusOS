@@ -14,13 +14,10 @@ type Session = {
   mailAvailable: boolean;
   expiresAt?: number | null;
 };
-type Challenge = { userId: string; email: string; id: string };
 type Value = {
   session: Session | null;
   loading: boolean;
   error: string;
-  challenge: Challenge | null;
-  setChallenge(value: Challenge | null): void;
   refresh(): Promise<Session | null>;
   changed(kind?: "identity" | "profile"): Promise<Session | null>;
 };
@@ -41,7 +38,7 @@ export async function accountRequest<T>(
       signal: AbortSignal.timeout(20000),
     });
   } catch {
-    throw new Error("网络连接异常，请稍后重试；如刚完成注册，也可尝试登录。");
+    throw new Error("网络异常，请重试。");
   }
   const value = await response.json();
   if (!response.ok || !value.ok)
@@ -51,12 +48,10 @@ export async function accountRequest<T>(
 export function AccountProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null),
     [loading, setLoading] = useState(true),
-    [error, setError] = useState(""),
-    [challenge, setChallenge] = useState<Challenge | null>(null);
+    [error, setError] = useState("");
   const generation = useRef(0),
     lastUser = useRef<string | null | undefined>(undefined);
   const clearIdentity = useCallback(() => {
-    setChallenge(null);
     lastUser.current = null;
     setSession((s) => (s ? { ...s, user: null } : s));
     window.dispatchEvent(new Event("campusos:identity-changed"));
@@ -76,7 +71,6 @@ export function AccountProvider({ children }: { children: React.ReactNode }) {
         lastUser.current !== undefined &&
         lastUser.current !== (data.user?.id || null)
       ) {
-        setChallenge(null);
         window.dispatchEvent(new Event("campusos:identity-changed"));
       }
       lastUser.current = data.user?.id || null;
@@ -129,8 +123,6 @@ export function AccountProvider({ children }: { children: React.ReactNode }) {
         session,
         loading,
         error,
-        challenge,
-        setChallenge,
         refresh,
         changed,
       }}
