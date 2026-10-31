@@ -287,6 +287,17 @@ export function ActivityCalendar() {
               onChange={(e) => e.target.value && choose(e.target.value)}
             />
           </label>
+          <button
+            type="button"
+            aria-label="刷新活动"
+            disabled={busy}
+            onClick={() => {
+              setCursor(null);
+              setRefresh((n) => n + 1);
+            }}
+          >
+            <RefreshCw size={18} />
+          </button>
         </div>
       </div>
       <div className="calendar-week" aria-label="一周日期">
@@ -304,21 +315,6 @@ export function ActivityCalendar() {
             <small>{data ? `${data.dailyCounts[d] || 0} 场` : "—"}</small>
           </button>
         ))}
-      </div>
-      <div className="calendar-day-heading">
-        <h2>{date && `${fmt(date)} ${weekday(date)}`}</h2>
-        {data && <span>{data.total} 场活动</span>}
-        <button
-          type="button"
-          aria-label="刷新活动"
-          disabled={busy}
-          onClick={() => {
-            setCursor(null);
-            setRefresh((n) => n + 1);
-          }}
-        >
-          <RefreshCw size={18} />
-        </button>
       </div>
       <div aria-live="polite">
         {error && (

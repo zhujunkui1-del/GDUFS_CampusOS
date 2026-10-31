@@ -35,8 +35,7 @@
   font: inherit;
   min-height: 44px;
 }
-.calendar-controls button,
-.calendar-day-heading button {
+.calendar-controls button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -52,12 +51,12 @@
   border: 0;
   color: inherit;
   font: inherit;
-  min-width: 120px;
-  max-width: 150px;
+  min-width: 0;
+  width: 150px;
+  max-width: 100%;
   min-height: 32px;
 }
-.calendar-controls button:hover,
-.calendar-day-heading button:hover {
+.calendar-controls button:hover {
   background: var(--brand-soft);
 }
 .calendar-week {
@@ -106,23 +105,8 @@
 .calendar-week button[aria-pressed="true"] small {
   color: white;
 }
-.calendar-day-heading button {
-  margin-left: auto;
-}
-.calendar-day-heading {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 24px 0 22px;
-}
-.calendar-day-heading h2 {
-  font-size: 1.25rem;
-  margin: 0;
-  font-weight: 650;
-}
-.calendar-day-heading > span {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
+.calendar-agenda {
+  margin-top: 24px;
 }
 .calendar-timed {
   display: grid;
@@ -274,8 +258,16 @@
     font-size: 1.15rem;
   }
   .calendar-date-actions {
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 100%;
+    min-width: 0;
+    gap: 8px;
+  }
+  .calendar-date-actions button {
+    flex-shrink: 0;
+  }
+  .calendar-picker {
+    min-width: 0;
   }
   .calendar-week {
     gap: 0;
@@ -311,5 +303,17 @@
   .calendar-event-facts {
     font-size: 0.85rem;
     gap: 7px;
+  }
+}
+
+@media (max-width: 360px) {
+  .calendar-date-actions {
+    gap: 6px;
+  }
+  .calendar-picker > svg {
+    display: none;
+  }
+  .calendar-picker {
+    padding-inline: 10px;
   }
 }

@@ -90,6 +90,37 @@ test("public week, actual date counts, direct reading, no filters and old-route 
   await page.goto("/schedule", { waitUntil: "domcontentloaded" });
   await expect(page).toHaveURL(/\/calendar/);
   await expect(page.getByRole("heading", { name: /活动日历/ })).toBeVisible();
+  await expect(page.locator(".calendar-day-heading")).toHaveCount(0);
+  const viewport = page.viewportSize()!;
+  for (const width of info.project.name === "desktop"
+    ? [1328, 644]
+    : [390, 320]) {
+    await page.setViewportSize({ width, height: viewport.height });
+    const todayBounds = await page
+      .getByRole("button", { name: "今天", exact: true })
+      .boundingBox();
+    const pickerBounds = await page.locator(".calendar-picker").boundingBox();
+    const refreshBounds = await page
+      .getByRole("button", { name: "刷新活动", exact: true })
+      .boundingBox();
+    expect(todayBounds!.x + todayBounds!.width).toBeLessThan(pickerBounds!.x);
+    expect(
+      pickerBounds!.x - todayBounds!.x - todayBounds!.width,
+    ).toBeLessThanOrEqual(11);
+    expect(pickerBounds!.x + pickerBounds!.width).toBeLessThan(
+      refreshBounds!.x,
+    );
+    expect(
+      refreshBounds!.x - pickerBounds!.x - pickerBounds!.width,
+    ).toBeLessThanOrEqual(11);
+    expect(Math.abs(todayBounds!.y - refreshBounds!.y)).toBeLessThan(2);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth > innerWidth + 1,
+      ),
+    ).toBe(false);
+  }
+  await page.setViewportSize(viewport);
   await expect(page.getByText("登录服务尚未开放")).toHaveCount(0);
   await page.getByLabel("选择日期").fill("2026-11-07");
   await expect(page.locator(".calendar-week>button")).toHaveCount(7);
