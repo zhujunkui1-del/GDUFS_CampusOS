@@ -1,0 +1,288 @@
+{
+  "kind": "manually_labelled_real_source_excerpts",
+  "note": "真实原文片段的人工标注集；日期、时刻缺失及地点短语均按原文标注，不由预测生成；不能代表全库准确率。",
+  "before": {
+    "cases": 12,
+    "positiveCases": 11,
+    "expectedDates": 11,
+    "returnedDates": 5,
+    "matchingDates": 5,
+    "dateRecall": 0.45454545454545453,
+    "datePrecision": 1,
+    "exactDateSetCases": 6,
+    "clockOrAbsenceCorrect": 5,
+    "placeOrAbsenceCorrect": 4,
+    "negativeFalseInclusions": 0
+  },
+  "after": {
+    "cases": 12,
+    "positiveCases": 11,
+    "expectedDates": 11,
+    "returnedDates": 11,
+    "matchingDates": 11,
+    "dateRecall": 1,
+    "datePrecision": 1,
+    "exactDateSetCases": 12,
+    "clockOrAbsenceCorrect": 11,
+    "placeOrAbsenceCorrect": 11,
+    "negativeFalseInclusions": 0
+  },
+  "cases": [
+    {
+      "id": "content-044c36ce-a546-49c8-9bfd-6e0341b8c953",
+      "url": "https://zg.gdufs.edu.cn/info/1003/14879.htm",
+      "expected": {
+        "dates": ["2026-11-15"],
+        "end": null,
+        "time": null,
+        "placeContains": "广东外语外贸大学白云山校区行政楼国际会议厅"
+      },
+      "before": [
+        {
+          "date": "2026-11-15",
+          "end": "2026-11-14",
+          "time": null,
+          "place": "11月14日到会人员可在广外文化交流中心大堂报到"
+        }
+      ],
+      "after": [
+        {
+          "date": "2026-11-15",
+          "end": null,
+          "time": null,
+          "place": "广东外语外贸大学白云山校区行政楼国际会议厅（广东省广州市白云区白云大道北2号）"
+        }
+      ]
+    },
+    {
+      "id": "content-2a4845bd-9b8e-4f86-b9d8-7e325b0cfceb",
+      "url": "https://sits.gdufs.edu.cn/info/1186/7816.htm",
+      "expected": {
+        "dates": ["2026-12-05"],
+        "end": null,
+        "time": null,
+        "placeContains": "广东外语外贸大学（白云山校区）"
+      },
+      "before": [],
+      "after": [
+        {
+          "date": "2026-12-05",
+          "end": null,
+          "time": null,
+          "place": "广东外语外贸大学（白云山校区）"
+        }
+      ]
+    },
+    {
+      "id": "wx-90950e6040ce7488fc5555e403ee536c532f8cbd",
+      "url": "https://mp.weixin.qq.com/s/MBcPmO7ocZeNhollx2WrCw",
+      "expected": {
+        "dates": ["2026-11-20"],
+        "end": "2026-11-22",
+        "time": null,
+        "placeContains": "广东外语外贸大学（白云山校区）"
+      },
+      "before": [],
+      "after": [
+        {
+          "date": "2026-11-20",
+          "end": "2026-11-22",
+          "time": null,
+          "place": "广东外语外贸大学（白云山校区）"
+        }
+      ]
+    },
+    {
+      "id": "wx-52059214d814e4642518bcc10d9381e443d02d3a",
+      "url": "https://mp.weixin.qq.com/s/sWOQnBnD8koCNuKuZ_MMUA",
+      "expected": {
+        "dates": [],
+        "end": null,
+        "time": null,
+        "placeContains": null
+      },
+      "before": [],
+      "after": []
+    },
+    {
+      "id": "wx-14cbf4cb0ac3ae3adac3cc2f06b61b25589b4c49",
+      "url": "https://mp.weixin.qq.com/s/PaCxlSdnWpXVkY6_kqh2Ug",
+      "expected": {
+        "dates": ["2026-12-19"],
+        "end": null,
+        "time": null,
+        "placeContains": "广东外语外贸大学大学城校区"
+      },
+      "before": [
+        {
+          "date": "2026-12-19",
+          "end": null,
+          "time": null,
+          "place": "广东外语外贸大学大学城校区（广州市番禺区小谷围街外环东路178号）"
+        }
+      ],
+      "after": [
+        {
+          "date": "2026-12-19",
+          "end": null,
+          "time": null,
+          "place": "广东外语外贸大学大学城校区（广州市番禺区小谷围街外环东路178号）"
+        }
+      ]
+    },
+    {
+      "id": "wx-8c470c78a1f5ab949a653f277cbac121023e24e7",
+      "url": "https://mp.weixin.qq.com/s/6diYQflEuwHrBjUN4gxBsg",
+      "expected": {
+        "dates": ["2026-10-25"],
+        "end": null,
+        "time": null,
+        "placeContains": "白云山校区尚行·二号楼（MBA教育中心）103室"
+      },
+      "before": [],
+      "after": [
+        {
+          "date": "2026-10-25",
+          "end": null,
+          "time": null,
+          "place": "白云山校区尚行·二号楼（MBA教育中心）103室"
+        }
+      ]
+    },
+    {
+      "id": "wx-6e19823b4694f9dc7a398e59907d88c314bb6ced",
+      "url": "https://mp.weixin.qq.com/s/cEIZoA9sPyrKztGgESfgJA",
+      "expected": {
+        "dates": ["2026-11-07"],
+        "end": null,
+        "time": null,
+        "placeContains": "假草场"
+      },
+      "before": [
+        {
+          "date": "2026-11-07",
+          "end": null,
+          "time": null,
+          "place": "假草场"
+        }
+      ],
+      "after": [
+        {
+          "date": "2026-11-07",
+          "end": null,
+          "time": null,
+          "place": "假草场"
+        }
+      ]
+    },
+    {
+      "id": "wx-6f31103e0902284a2da1af5d76311774e4b4631d",
+      "url": "https://mp.weixin.qq.com/s/mIhSVuRhlMfqjDyQaR5FTg",
+      "expected": {
+        "dates": ["2026-11-01"],
+        "end": null,
+        "time": "14:00",
+        "placeContains": "广东外语外贸大学国际学院"
+      },
+      "before": [
+        {
+          "date": "2026-11-01",
+          "end": null,
+          "time": "14:00",
+          "place": "广东外语外贸大学国际学院"
+        }
+      ],
+      "after": [
+        {
+          "date": "2026-11-01",
+          "end": null,
+          "time": "14:00",
+          "place": "广东外语外贸大学国际学院"
+        }
+      ]
+    },
+    {
+      "id": "wx-6cf0ad3d10047a1991a92ff9f6d53e93d9af1221",
+      "url": "https://mp.weixin.qq.com/s/TgH5_JPQ4mpQswI3UNnT0Q",
+      "expected": {
+        "dates": ["2026-11-07"],
+        "end": null,
+        "time": null,
+        "placeContains": null
+      },
+      "before": [],
+      "after": [
+        {
+          "date": "2026-11-07",
+          "end": null,
+          "time": null,
+          "place": null
+        }
+      ]
+    },
+    {
+      "id": "wx-4dd87e0b1f992c3f9304cfdafb85e9f6972a0f34",
+      "url": "https://mp.weixin.qq.com/s/7k_NVKGJtIGp62UMb7cwLg",
+      "expected": {
+        "dates": ["2026-10-25"],
+        "end": null,
+        "time": "19:00",
+        "placeContains": null
+      },
+      "before": [
+        {
+          "date": "2026-10-25",
+          "end": null,
+          "time": "19:00",
+          "place": null
+        }
+      ],
+      "after": [
+        {
+          "date": "2026-10-25",
+          "end": null,
+          "time": "19:00",
+          "place": null
+        }
+      ]
+    },
+    {
+      "id": "content-63f679c5-1735-4600-87a8-e4ccecbdbd42",
+      "url": "https://zg.gdufs.edu.cn/info/1003/14849.htm",
+      "expected": {
+        "dates": ["2026-12-05"],
+        "end": "2026-12-06",
+        "time": null,
+        "placeContains": "上海应用技术大学徐汇校区"
+      },
+      "before": [],
+      "after": [
+        {
+          "date": "2026-12-05",
+          "end": "2026-12-06",
+          "time": null,
+          "place": "上海应用技术大学徐汇校区（上海市徐汇区漕宝路120号）"
+        }
+      ]
+    },
+    {
+      "id": "wx-6ffb7ec6befd06b402e65dd02c20711adad0dd21",
+      "url": "https://mp.weixin.qq.com/s/aed0Ft-yMIqfTFB7U04vzw",
+      "expected": {
+        "dates": ["2026-12-05"],
+        "end": "2026-12-06",
+        "time": null,
+        "placeContains": "上海应用技术大学徐汇校区"
+      },
+      "before": [],
+      "after": [
+        {
+          "date": "2026-12-05",
+          "end": "2026-12-06",
+          "time": null,
+          "place": "上海应用技术大学徐汇校区（上海市徐汇区漕宝路120号）"
+        }
+      ]
+    }
+  ]
+}

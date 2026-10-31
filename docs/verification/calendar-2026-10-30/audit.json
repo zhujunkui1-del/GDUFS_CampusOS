@@ -1,0 +1,126 @@
+{
+  "capturedAt": "2026-10-31T04:01:12.072Z",
+  "reports": {
+    "publicArticles": [
+      {
+        "count": 1940
+      }
+    ],
+    "calendarStates": [
+      {
+        "calendar_version": "calendar-v2",
+        "calendar_status": "accepted",
+        "count": 138
+      },
+      {
+        "calendar_version": "calendar-v2",
+        "calendar_status": "excluded",
+        "count": 1651
+      },
+      {
+        "calendar_version": "calendar-v2",
+        "calendar_status": "needs_enrichment",
+        "count": 151
+      }
+    ],
+    "reasons": [
+      {
+        "calendar_status": "accepted",
+        "reason": "dated_event",
+        "count": 138
+      },
+      {
+        "calendar_status": "excluded",
+        "reason": "MEDIA_UNREADABLE",
+        "count": 1
+      },
+      {
+        "calendar_status": "excluded",
+        "reason": "award_not_event",
+        "count": 21
+      },
+      {
+        "calendar_status": "excluded",
+        "reason": "invalid_interval",
+        "count": 1
+      },
+      {
+        "calendar_status": "excluded",
+        "reason": "multiple_events_unresolved",
+        "count": 1
+      },
+      {
+        "calendar_status": "excluded",
+        "reason": "no_activity",
+        "count": 1151
+      },
+      {
+        "calendar_status": "excluded",
+        "reason": "no_body",
+        "count": 120
+      },
+      {
+        "calendar_status": "excluded",
+        "reason": "no_event_date",
+        "count": 76
+      },
+      {
+        "calendar_status": "excluded",
+        "reason": "no_reliable_event_date",
+        "count": 226
+      },
+      {
+        "calendar_status": "excluded",
+        "reason": "year_unconfirmed",
+        "count": 54
+      },
+      {
+        "calendar_status": "needs_enrichment",
+        "reason": "no_activity",
+        "count": 24
+      },
+      {
+        "calendar_status": "needs_enrichment",
+        "reason": "no_event_date",
+        "count": 35
+      },
+      {
+        "calendar_status": "needs_enrichment",
+        "reason": "no_reliable_event_date",
+        "count": 66
+      },
+      {
+        "calendar_status": "needs_enrichment",
+        "reason": "year_unconfirmed",
+        "count": 26
+      }
+    ],
+    "activities": [
+      {
+        "observations": 190,
+        "events": 187,
+        "articles": 138,
+        "with_clock": 35,
+        "with_place": 88,
+        "multiday": 34
+      }
+    ],
+    "models": [
+      {
+        "calendar_ai_day": "2026-10-31",
+        "calendar_ai_calls": 40
+      }
+    ]
+  },
+  "invariants": {
+    "compared": 1940,
+    "changed": [],
+    "missing": [],
+    "classificationChanges": []
+  },
+  "usage": {
+    "rowsRead": 43136,
+    "rowsWritten": 0,
+    "queries": 6
+  }
+}

@@ -1,0 +1,676 @@
+{
+  "metrics": {
+    "rowsRead": 317,
+    "rowsWritten": 0,
+    "queries": 2,
+    "durationMs": 1723,
+    "usageAvailable": true
+  },
+  "total": 10,
+  "plans": [
+    {
+      "query": "visibility-revision",
+      "rows": [
+        {
+          "id": 3,
+          "parent": 0,
+          "notused": 39,
+          "detail": "SEARCH console_engine_settings USING INDEX sqlite_autoindex_console_engine_settings_1 (id=?)"
+        }
+      ]
+    },
+    {
+      "query": "calendar-candidates",
+      "rows": [
+        {
+          "id": 3,
+          "parent": 0,
+          "notused": 0,
+          "detail": "MATERIALIZE permitted"
+        },
+        {
+          "id": 17,
+          "parent": 3,
+          "notused": 154,
+          "detail": "SEARCH a USING INDEX calendar_interval (starts_day>? AND starts_day<?)"
+        },
+        {
+          "id": 33,
+          "parent": 3,
+          "notused": 46,
+          "detail": "SEARCH d USING INDEX sqlite_autoindex_knowledge_documents_1 (id=?)"
+        },
+        {
+          "id": 49,
+          "parent": 3,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 1"
+        },
+        {
+          "id": 56,
+          "parent": 49,
+          "notused": 46,
+          "detail": "SEARCH sp USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)"
+        },
+        {
+          "id": 61,
+          "parent": 49,
+          "notused": 46,
+          "detail": "SEARCH p USING INDEX sqlite_autoindex_source_collection_policies_1 (source_id=?) LEFT-JOIN"
+        },
+        {
+          "id": 96,
+          "parent": 3,
+          "notused": 46,
+          "detail": "SEARCH x USING INDEX sqlite_autoindex_document_article_analysis_1 (document_id=?)"
+        },
+        {
+          "id": 113,
+          "parent": 3,
+          "notused": 46,
+          "detail": "SEARCH s USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)"
+        },
+        {
+          "id": 118,
+          "parent": 3,
+          "notused": 46,
+          "detail": "SEARCH m USING INDEX sqlite_autoindex_document_classification_overrides_1 (document_id=?) LEFT-JOIN"
+        },
+        {
+          "id": 171,
+          "parent": 0,
+          "notused": 136,
+          "detail": "SCAN v"
+        },
+        {
+          "id": 174,
+          "parent": 0,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 3"
+        },
+        {
+          "id": 176,
+          "parent": 174,
+          "notused": 0,
+          "detail": "COMPOUND QUERY"
+        },
+        {
+          "id": 177,
+          "parent": 176,
+          "notused": 0,
+          "detail": "LEFT-MOST SUBQUERY"
+        },
+        {
+          "id": 186,
+          "parent": 177,
+          "notused": 46,
+          "detail": "SEARCH d USING INDEX sqlite_autoindex_knowledge_documents_1 (id=?)"
+        },
+        {
+          "id": 267,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 29"
+        },
+        {
+          "id": 272,
+          "parent": 267,
+          "notused": 39,
+          "detail": "SEARCH a USING INDEX sqlite_autoindex_document_article_analysis_1 (document_id=?)"
+        },
+        {
+          "id": 303,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 30"
+        },
+        {
+          "id": 310,
+          "parent": 303,
+          "notused": 61,
+          "detail": "SEARCH m USING INDEX console_manual_publication_receipt (target_id=? AND action=?)"
+        },
+        {
+          "id": 343,
+          "parent": 303,
+          "notused": 46,
+          "detail": "SEARCH a USING INDEX sqlite_autoindex_console_admins_1 (id=?)"
+        },
+        {
+          "id": 358,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 31"
+        },
+        {
+          "id": 363,
+          "parent": 358,
+          "notused": 39,
+          "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+        },
+        {
+          "id": 378,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 41"
+        },
+        {
+          "id": 382,
+          "parent": 378,
+          "notused": 39,
+          "detail": "SEARCH c USING COVERING INDEX sqlite_autoindex_campus_collector_articles_1 (document_id=?)"
+        },
+        {
+          "id": 391,
+          "parent": 177,
+          "notused": 46,
+          "detail": "SEARCH s USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)"
+        },
+        {
+          "id": 415,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 32"
+        },
+        {
+          "id": 422,
+          "parent": 415,
+          "notused": 61,
+          "detail": "SEARCH m USING INDEX console_manual_publication_receipt (target_id=? AND action=?)"
+        },
+        {
+          "id": 455,
+          "parent": 415,
+          "notused": 46,
+          "detail": "SEARCH a USING INDEX sqlite_autoindex_console_admins_1 (id=?)"
+        },
+        {
+          "id": 470,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 33"
+        },
+        {
+          "id": 475,
+          "parent": 470,
+          "notused": 39,
+          "detail": "SEARCH c USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+        },
+        {
+          "id": 496,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 34"
+        },
+        {
+          "id": 501,
+          "parent": 496,
+          "notused": 39,
+          "detail": "SEARCH p USING INDEX sqlite_autoindex_console_publication_policies_1 (source_id=?)"
+        },
+        {
+          "id": 514,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 35"
+        },
+        {
+          "id": 519,
+          "parent": 514,
+          "notused": 39,
+          "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+        },
+        {
+          "id": 534,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 36"
+        },
+        {
+          "id": 539,
+          "parent": 534,
+          "notused": 60,
+          "detail": "SEARCH c USING INDEX sqlite_autoindex_console_content_checks_2 (document_id=? AND content_revision=? AND input_hash=?)"
+        },
+        {
+          "id": 593,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 37"
+        },
+        {
+          "id": 598,
+          "parent": 593,
+          "notused": 39,
+          "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+        },
+        {
+          "id": 607,
+          "parent": 593,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 38"
+        },
+        {
+          "id": 615,
+          "parent": 607,
+          "notused": 46,
+          "detail": "SEARCH p USING INDEX sqlite_autoindex_console_publication_policies_1 (source_id=?)"
+        },
+        {
+          "id": 635,
+          "parent": 607,
+          "notused": 60,
+          "detail": "SEARCH c EXISTS USING INDEX sqlite_autoindex_console_content_checks_2 (document_id=? AND content_revision=? AND input_hash=?)"
+        },
+        {
+          "id": 663,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 40"
+        },
+        {
+          "id": 670,
+          "parent": 663,
+          "notused": 39,
+          "detail": "SEARCH p USING INDEX sqlite_autoindex_source_collection_policies_1 (source_id=?)"
+        },
+        {
+          "id": 689,
+          "parent": 177,
+          "notused": 46,
+          "detail": "SEARCH e USING INDEX sqlite_autoindex_console_engine_settings_1 (id=?)"
+        },
+        {
+          "id": 708,
+          "parent": 177,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 42"
+        },
+        {
+          "id": 712,
+          "parent": 708,
+          "notused": 55,
+          "detail": "SEARCH p USING COVERING INDEX console_protection_expiry (active=?)"
+        },
+        {
+          "id": 739,
+          "parent": 708,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 43"
+        },
+        {
+          "id": 743,
+          "parent": 739,
+          "notused": 53,
+          "detail": "SEARCH o USING COVERING INDEX document_origin_source_document (source_id=? AND document_id=?)"
+        },
+        {
+          "id": 762,
+          "parent": 176,
+          "notused": 0,
+          "detail": "UNION ALL"
+        },
+        {
+          "id": 777,
+          "parent": 762,
+          "notused": 46,
+          "detail": "SEARCH d USING INDEX sqlite_autoindex_knowledge_documents_1 (id=?)"
+        },
+        {
+          "id": 837,
+          "parent": 762,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 10"
+        },
+        {
+          "id": 842,
+          "parent": 837,
+          "notused": 39,
+          "detail": "SEARCH a USING INDEX sqlite_autoindex_document_article_analysis_1 (document_id=?)"
+        },
+        {
+          "id": 861,
+          "parent": 762,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 11"
+        },
+        {
+          "id": 866,
+          "parent": 861,
+          "notused": 39,
+          "detail": "SEARCH h USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+        },
+        {
+          "id": 881,
+          "parent": 762,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 12"
+        },
+        {
+          "id": 885,
+          "parent": 881,
+          "notused": 39,
+          "detail": "SEARCH c USING COVERING INDEX sqlite_autoindex_campus_collector_articles_1 (document_id=?)"
+        },
+        {
+          "id": 895,
+          "parent": 762,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 13"
+        },
+        {
+          "id": 902,
+          "parent": 895,
+          "notused": 46,
+          "detail": "SEARCH d USING INDEX sqlite_autoindex_knowledge_documents_1 (id=?)"
+        },
+        {
+          "id": 980,
+          "parent": 895,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 15"
+        },
+        {
+          "id": 985,
+          "parent": 980,
+          "notused": 39,
+          "detail": "SEARCH a USING INDEX sqlite_autoindex_document_article_analysis_1 (document_id=?)"
+        },
+        {
+          "id": 1016,
+          "parent": 895,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 16"
+        },
+        {
+          "id": 1023,
+          "parent": 1016,
+          "notused": 61,
+          "detail": "SEARCH m USING INDEX console_manual_publication_receipt (target_id=? AND action=?)"
+        },
+        {
+          "id": 1056,
+          "parent": 1016,
+          "notused": 46,
+          "detail": "SEARCH a USING INDEX sqlite_autoindex_console_admins_1 (id=?)"
+        },
+        {
+          "id": 1071,
+          "parent": 895,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 17"
+        },
+        {
+          "id": 1076,
+          "parent": 1071,
+          "notused": 39,
+          "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+        },
+        {
+          "id": 1090,
+          "parent": 895,
+          "notused": 46,
+          "detail": "SEARCH s USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)"
+        },
+        {
+          "id": 1114,
+          "parent": 895,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 18"
+        },
+        {
+          "id": 1121,
+          "parent": 1114,
+          "notused": 61,
+          "detail": "SEARCH m USING INDEX console_manual_publication_receipt (target_id=? AND action=?)"
+        },
+        {
+          "id": 1154,
+          "parent": 1114,
+          "notused": 46,
+          "detail": "SEARCH a USING INDEX sqlite_autoindex_console_admins_1 (id=?)"
+        },
+        {
+          "id": 1169,
+          "parent": 895,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 19"
+        },
+        {
+          "id": 1174,
+          "parent": 1169,
+          "notused": 39,
+          "detail": "SEARCH c USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+        },
+        {
+          "id": 1195,
+          "parent": 895,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 20"
+        },
+        {
+          "id": 1200,
+          "parent": 1195,
+          "notused": 39,
+          "detail": "SEARCH p USING INDEX sqlite_autoindex_console_publication_policies_1 (source_id=?)"
+        },
+        {
+          "id": 1213,
+          "parent": 895,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 21"
+        },
+        {
+          "id": 1218,
+          "parent": 1213,
+          "notused": 39,
+          "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+        },
+        {
+          "id": 1233,
+          "parent": 895,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 22"
+        },
+        {
+          "id": 1238,
+          "parent": 1233,
+          "notused": 60,
+          "detail": "SEARCH c USING INDEX sqlite_autoindex_console_content_checks_2 (document_id=? AND content_revision=? AND input_hash=?)"
+        },
+        {
+          "id": 1292,
+          "parent": 895,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 23"
+        },
+        {
+          "id": 1297,
+          "parent": 1292,
+          "notused": 39,
+          "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+        },
+        {
+          "id": 1306,
+          "parent": 1292,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 24"
+        },
+        {
+          "id": 1314,
+          "parent": 1306,
+          "notused": 46,
+          "detail": "SEARCH p USING INDEX sqlite_autoindex_console_publication_policies_1 (source_id=?)"
+        },
+        {
+          "id": 1334,
+          "parent": 1306,
+          "notused": 60,
+          "detail": "SEARCH c EXISTS USING INDEX sqlite_autoindex_console_content_checks_2 (document_id=? AND content_revision=? AND input_hash=?)"
+        },
+        {
+          "id": 1362,
+          "parent": 895,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 26"
+        },
+        {
+          "id": 1369,
+          "parent": 1362,
+          "notused": 39,
+          "detail": "SEARCH p USING INDEX sqlite_autoindex_source_collection_policies_1 (source_id=?)"
+        },
+        {
+          "id": 1392,
+          "parent": 762,
+          "notused": 46,
+          "detail": "SEARCH s USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)"
+        },
+        {
+          "id": 1407,
+          "parent": 762,
+          "notused": 46,
+          "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+        },
+        {
+          "id": 1418,
+          "parent": 762,
+          "notused": 45,
+          "detail": "SEARCH p USING COVERING INDEX sqlite_autoindex_console_owner_publications_2 (document_id=? AND content_revision=? AND input_hash=?)"
+        },
+        {
+          "id": 1436,
+          "parent": 762,
+          "notused": 46,
+          "detail": "SEARCH e USING INDEX sqlite_autoindex_console_engine_settings_1 (id=?)"
+        },
+        {
+          "id": 1443,
+          "parent": 762,
+          "notused": 46,
+          "detail": "SEARCH e USING INDEX sqlite_autoindex_console_engine_settings_1 (id=?)"
+        },
+        {
+          "id": 1462,
+          "parent": 762,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 42"
+        },
+        {
+          "id": 1466,
+          "parent": 1462,
+          "notused": 55,
+          "detail": "SEARCH p USING COVERING INDEX console_protection_expiry (active=?)"
+        },
+        {
+          "id": 1493,
+          "parent": 1462,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 43"
+        },
+        {
+          "id": 1497,
+          "parent": 1493,
+          "notused": 53,
+          "detail": "SEARCH o USING COVERING INDEX document_origin_source_document (source_id=? AND document_id=?)"
+        },
+        {
+          "id": 1516,
+          "parent": 176,
+          "notused": 0,
+          "detail": "UNION ALL"
+        },
+        {
+          "id": 1533,
+          "parent": 1516,
+          "notused": 46,
+          "detail": "SEARCH d USING INDEX sqlite_autoindex_knowledge_documents_1 (id=?)"
+        },
+        {
+          "id": 1585,
+          "parent": 1516,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 7"
+        },
+        {
+          "id": 1590,
+          "parent": 1585,
+          "notused": 39,
+          "detail": "SEARCH a USING INDEX sqlite_autoindex_document_article_analysis_1 (document_id=?)"
+        },
+        {
+          "id": 1609,
+          "parent": 1516,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 8"
+        },
+        {
+          "id": 1614,
+          "parent": 1609,
+          "notused": 39,
+          "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)"
+        },
+        {
+          "id": 1628,
+          "parent": 1516,
+          "notused": 46,
+          "detail": "SEARCH c USING INDEX sqlite_autoindex_campus_collector_articles_1 (document_id=?)"
+        },
+        {
+          "id": 1646,
+          "parent": 1516,
+          "notused": 46,
+          "detail": "SEARCH p USING INDEX sqlite_autoindex_campus_collector_sources_1 (source_id=?)"
+        },
+        {
+          "id": 1656,
+          "parent": 1516,
+          "notused": 46,
+          "detail": "SEARCH s USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)"
+        },
+        {
+          "id": 1675,
+          "parent": 1516,
+          "notused": 46,
+          "detail": "SEARCH a USING INDEX sqlite_autoindex_console_admins_1 (id=?)"
+        },
+        {
+          "id": 1686,
+          "parent": 1516,
+          "notused": 46,
+          "detail": "SEARCH e USING INDEX sqlite_autoindex_console_engine_settings_1 (id=?)"
+        },
+        {
+          "id": 1705,
+          "parent": 1516,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 42"
+        },
+        {
+          "id": 1709,
+          "parent": 1705,
+          "notused": 55,
+          "detail": "SEARCH p USING COVERING INDEX console_protection_expiry (active=?)"
+        },
+        {
+          "id": 1736,
+          "parent": 1705,
+          "notused": 0,
+          "detail": "CORRELATED SCALAR SUBQUERY 43"
+        },
+        {
+          "id": 1740,
+          "parent": 1736,
+          "notused": 53,
+          "detail": "SEARCH o USING COVERING INDEX document_origin_source_document (source_id=? AND document_id=?)"
+        },
+        {
+          "id": 1786,
+          "parent": 0,
+          "notused": 0,
+          "detail": "USE TEMP B-TREE FOR ORDER BY"
+        }
+      ]
+    }
+  ]
+}

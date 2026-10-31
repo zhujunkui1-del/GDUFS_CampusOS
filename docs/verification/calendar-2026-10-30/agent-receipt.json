@@ -1,0 +1,192 @@
+{
+  "prompt": "今天有哪些校园活动",
+  "tools": ["search_campus_events"],
+  "actions": [],
+  "response": "今天（2026年10月31日）可确认的校园活动有：\n\n1. 金融图书“金羊奖”系列学术品牌活动暨中国人民大学青年创新汇客厅暨名刊荟第26期活动议程，活动时间为2026年10月31日（星期六），地点在广东外语外贸大学大学城校区 [2]。\n2. “让图书回家”——归还超期图书免滞纳金活动，活动时间为2026年9月14日—11月1日（法定节假日除外），今天仍在活动期内 [3]。\n3. 2026-2027广东外语外贸大学数学与统计学院第八届红色演艺大赛，活动时间为2026年10月15日—11月29日，今天仍在活动期内 [1]；报名相关截止信息在原文摘录中未明确，具体以主办方通知为准。\n\n本鱼提醒：第2、3项是跨期活动，今天属于活动进行中，不代表今天有单独场次哦 🐟",
+  "sources": [
+    {
+      "title": "2026-2027广东外语外贸大学数学与统计学院第八届红色演艺大赛",
+      "sourceName": "广外数统青年",
+      "originalUrl": "https://mp.weixin.qq.com/s/rzPh1kebAUywcNI8ZE2Jqg",
+      "publishedAt": "2026-10-15T09:38:45.000Z",
+      "calendarLinks": [
+        {
+          "title": "2026-2027广东外语外贸大学数学与统计学院第八届红色演艺大赛",
+          "href": "/calendar?date=2026-10-31&event=event-2fd58f331ee85e48070e40e44d308cd880011dbb"
+        }
+      ]
+    },
+    {
+      "title": "学术活动丨金融图书“金羊奖”系列学术品牌活动暨中国人民大学青年创新汇客厅暨名刊荟第26期活动议程",
+      "sourceName": "广外金融学院",
+      "originalUrl": "https://mp.weixin.qq.com/s/EzEtpyuBbCXgtrMdYCpwbA",
+      "publishedAt": "2026-10-29T04:20:00.000Z",
+      "calendarLinks": [
+        {
+          "title": "学术活动丨金融图书“金羊奖”系列学术品牌活动暨中国人民大学青年创新汇客厅暨名刊荟第26期活动议程",
+          "href": "/calendar?date=2026-10-31&event=event-c013ed082957ae0a373e2fac3fe0ad774695d2c0"
+        }
+      ]
+    },
+    {
+      "title": "“让图书回家”——归还超期图书免滞纳金活动",
+      "sourceName": "图书馆",
+      "originalUrl": "https://lib.gdufs.edu.cn/info/1134/9938.htm",
+      "publishedAt": "2026-09-11",
+      "calendarLinks": [
+        {
+          "title": "“让图书回家”——归还超期图书免滞纳金活动",
+          "href": "/calendar?date=2026-10-31&event=event-ec6cf0abab13a4baf4adeab7bc0fd45745d02984"
+        }
+      ]
+    }
+  ],
+  "metrics": {
+    "answerMode": "model",
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "wx-b3cadf0acc0f1c89904de4ae928fc8dc32554951",
+        "wx-d72d61ad1bc02ddbf1dc64529a0ee71effc5c8a5",
+        "content-d3157439-c8ff-4680-9edb-26db61b0799e"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "wx-b3cadf0acc0f1c89904de4ae928fc8dc32554951",
+          "existence": "documented",
+          "eventState": "ongoing",
+          "registrationState": "unknown",
+          "participation": "unknown"
+        },
+        {
+          "documentId": "wx-d72d61ad1bc02ddbf1dc64529a0ee71effc5c8a5",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown"
+        },
+        {
+          "documentId": "content-d3157439-c8ff-4680-9edb-26db61b0799e",
+          "existence": "documented",
+          "eventState": "ongoing",
+          "registrationState": "unknown",
+          "participation": "unknown"
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 4,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 1,
+    "groundingChecks": 2,
+    "groundingFailures": 1,
+    "groundingCheckFailures": 0,
+    "groundingResults": [
+      {
+        "supported": false,
+        "issues": [
+          "主办方“中国人民大学人文社会科学部”未在所引[2]原文出现，属无据归属",
+          "报名截止10月25日18:00及“已截止”所引[1]原文未提供，仅抽取字段"
+        ]
+      },
+      {
+        "supported": true,
+        "issues": []
+      }
+    ],
+    "upstreamTimings": [
+      {
+        "durationMs": 2114,
+        "firstTextMs": 980,
+        "finishReason": "stop",
+        "contentChars": 345
+      },
+      {
+        "durationMs": 1807,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      },
+      {
+        "durationMs": 2127,
+        "firstTextMs": 958,
+        "finishReason": "stop",
+        "contentChars": 333
+      },
+      {
+        "durationMs": 985,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 12431,
+    "completionTokens": 577,
+    "cachedPromptTokens": 6528,
+    "totalTokens": 13008,
+    "usageComplete": true,
+    "chargedTokens": 13008,
+    "durationMs": 7965,
+    "estimatedUsdRange": [0.001251234, 0.002502468],
+    "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "priceCheckedAt": "2026-10-15",
+    "model": "deepseek-flash",
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1478,
+      "serverElapsedMs": 9443,
+      "firstTextMs": 9322,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_events",
+          "durationMs": 258,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 16,
+        "writeQueries": 11,
+        "calls": 20,
+        "failures": 0,
+        "durationMs": 2658,
+        "maxCallMs": 199,
+        "rowsRead": 2466,
+        "rowsWritten": 15,
+        "rowUsageStatements": 14,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 180,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 258,
+          "candidateChunks": 0,
+          "candidateActivities": 3,
+          "usageAvailable": true
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "requestTiming": {
+    "headersMs": 1714,
+    "firstTextMs": 9861,
+    "completeMs": 10312
+  },
+  "testedVersion": "7b765d88-6be1-4619-8d9a-b000137a7f13"
+}

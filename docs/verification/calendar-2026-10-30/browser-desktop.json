@@ -1,0 +1,359 @@
+{
+  "project": "desktop",
+  "date": "2026-11-07",
+  "weekCounts": {
+    "2026-11-02": 1,
+    "2026-11-03": 2,
+    "2026-11-04": 1,
+    "2026-11-05": 1,
+    "2026-11-06": 3,
+    "2026-11-07": 10,
+    "2026-11-08": 3
+  },
+  "events": [
+    {
+      "eventId": "event-9e7f4ca8f4da2d194db597a1742ef1afa1afd4e7",
+      "title": "信息科学与技术学院2026院运会报名通知 · 开幕式",
+      "date": {
+        "raw": "11.7 7:30",
+        "date": "2026-11-07",
+        "at": "2026-11-07T07:30:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "precision": "exact_time",
+        "resolution": "minute",
+        "inferred": true,
+        "inferenceBasis": "活动标题明确标注年份",
+        "evidence": {
+          "field": "body",
+          "startOffset": 211,
+          "endOffset": 220,
+          "text": "11.7 7:30",
+          "role": "event_time"
+        }
+      },
+      "end": {
+        "raw": "9:20",
+        "date": "2026-11-07",
+        "at": "2026-11-07T09:20:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "precision": "exact_time",
+        "resolution": "minute",
+        "inferred": true,
+        "inferenceBasis": "同一明确时间区间的起始日期",
+        "evidence": {
+          "field": "body",
+          "startOffset": 221,
+          "endOffset": 225,
+          "text": "9:20",
+          "role": "event_time"
+        }
+      },
+      "sourceTitles": [
+        {
+          "title": "信息科学与技术学院2026院运会报名通知",
+          "name": "广外信息青年",
+          "url": "https://mp.weixin.qq.com/s/cEIZoA9sPyrKztGgESfgJA"
+        }
+      ]
+    },
+    {
+      "eventId": "event-bd5a3b883e428db801b0f58e328f19f34801b3b2",
+      "title": "分论坛二：交叉融合视野下的亚非区域研究",
+      "date": {
+        "raw": "2026年11月7日（星期六）9:00",
+        "date": "2026-11-07",
+        "at": "2026-11-07T09:00:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "precision": "exact_time",
+        "resolution": "minute",
+        "inferred": false,
+        "inferenceBasis": null,
+        "evidence": {
+          "field": "body",
+          "startOffset": 93,
+          "endOffset": 112,
+          "text": "2026年11月7日（星期六）9:00",
+          "role": "event_time",
+          "sourceId": "table-2"
+        }
+      },
+      "end": null,
+      "sourceTitles": [
+        {
+          "title": "区域国别学·云山论坛（2026）：区域国别学学科建设与路径探索国际学术研讨会会议预告-区域国别学院（区域国别研究院）",
+          "name": "区域国别学院（区域国别研究院）",
+          "url": "https://sgas-iir.gdufs.edu.cn/info/1050/9617.htm"
+        }
+      ]
+    },
+    {
+      "eventId": "event-f5fb0f2a5b17987762b86da59dde342d8700ef2d",
+      "title": "分论坛六：中国与中东欧文明交流互鉴的历史经验与启示",
+      "date": {
+        "raw": "2026年11月7日（星期六）13:30",
+        "date": "2026-11-07",
+        "at": "2026-11-07T13:30:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "precision": "exact_time",
+        "resolution": "minute",
+        "inferred": false,
+        "inferenceBasis": null,
+        "evidence": {
+          "field": "body",
+          "startOffset": 391,
+          "endOffset": 411,
+          "text": "2026年11月7日（星期六）13:30",
+          "role": "event_time",
+          "sourceId": "table-2"
+        }
+      },
+      "end": null,
+      "sourceTitles": [
+        {
+          "title": "区域国别学·云山论坛（2026）：区域国别学学科建设与路径探索国际学术研讨会会议预告-区域国别学院（区域国别研究院）",
+          "name": "区域国别学院（区域国别研究院）",
+          "url": "https://sgas-iir.gdufs.edu.cn/info/1050/9617.htm"
+        }
+      ]
+    },
+    {
+      "eventId": "event-07f5a044250c234f25e3ed227e3c8b7771122ea3",
+      "title": "分论坛五：区域国别刊物高质量发展暨新刊策划会",
+      "date": {
+        "raw": "2026年11月7日（星期六）14:30",
+        "date": "2026-11-07",
+        "at": "2026-11-07T14:30:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "precision": "exact_time",
+        "resolution": "minute",
+        "inferred": false,
+        "inferenceBasis": null,
+        "evidence": {
+          "field": "body",
+          "startOffset": 314,
+          "endOffset": 334,
+          "text": "2026年11月7日（星期六）14:30",
+          "role": "event_time",
+          "sourceId": "table-2"
+        }
+      },
+      "end": null,
+      "sourceTitles": [
+        {
+          "title": "区域国别学·云山论坛（2026）：区域国别学学科建设与路径探索国际学术研讨会会议预告-区域国别学院（区域国别研究院）",
+          "name": "区域国别学院（区域国别研究院）",
+          "url": "https://sgas-iir.gdufs.edu.cn/info/1050/9617.htm"
+        }
+      ]
+    },
+    {
+      "eventId": "event-b443909375627684d1a2c72a2ab9ea9b2f30cdc6",
+      "title": "分论坛三：国际秩序动荡变革下的大国关系与周边外交",
+      "date": {
+        "raw": "2026年11月7日（星期六）14:30",
+        "date": "2026-11-07",
+        "at": "2026-11-07T14:30:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "precision": "exact_time",
+        "resolution": "minute",
+        "inferred": false,
+        "inferenceBasis": null,
+        "evidence": {
+          "field": "body",
+          "startOffset": 163,
+          "endOffset": 183,
+          "text": "2026年11月7日（星期六）14:30",
+          "role": "event_time",
+          "sourceId": "table-2"
+        }
+      },
+      "end": null,
+      "sourceTitles": [
+        {
+          "title": "区域国别学·云山论坛（2026）：区域国别学学科建设与路径探索国际学术研讨会会议预告-区域国别学院（区域国别研究院）",
+          "name": "区域国别学院（区域国别研究院）",
+          "url": "https://sgas-iir.gdufs.edu.cn/info/1050/9617.htm"
+        }
+      ]
+    },
+    {
+      "eventId": "event-bc53347a1f15f25e376d71234f32e0867fa496ae",
+      "title": "分论坛四：中非携手现代化理论与实践专题",
+      "date": {
+        "raw": "2026年11月7日（星期六）14:30",
+        "date": "2026-11-07",
+        "at": "2026-11-07T14:30:00+08:00",
+        "timezone": "Asia/Shanghai",
+        "precision": "exact_time",
+        "resolution": "minute",
+        "inferred": false,
+        "inferenceBasis": null,
+        "evidence": {
+          "field": "body",
+          "startOffset": 241,
+          "endOffset": 261,
+          "text": "2026年11月7日（星期六）14:30",
+          "role": "event_time",
+          "sourceId": "table-2"
+        }
+      },
+      "end": null,
+      "sourceTitles": [
+        {
+          "title": "区域国别学·云山论坛（2026）：区域国别学学科建设与路径探索国际学术研讨会会议预告-区域国别学院（区域国别研究院）",
+          "name": "区域国别学院（区域国别研究院）",
+          "url": "https://sgas-iir.gdufs.edu.cn/info/1050/9617.htm"
+        }
+      ]
+    },
+    {
+      "eventId": "event-275be2f2e43dd595b960768bc9d75495e9df9566",
+      "title": "信息科学与技术学院2026院运会报名通知",
+      "date": {
+        "raw": "2026年11月7日",
+        "date": "2026-11-07",
+        "at": null,
+        "timezone": "Asia/Shanghai",
+        "precision": "date",
+        "resolution": "day",
+        "inferred": false,
+        "inferenceBasis": null,
+        "evidence": {
+          "field": "body",
+          "startOffset": 177,
+          "endOffset": 187,
+          "text": "2026年11月7日",
+          "role": "event_time"
+        }
+      },
+      "end": null,
+      "sourceTitles": [
+        {
+          "title": "信息科学与技术学院2026院运会报名通知",
+          "name": "广外信息青年",
+          "url": "https://mp.weixin.qq.com/s/cEIZoA9sPyrKztGgESfgJA"
+        }
+      ]
+    },
+    {
+      "eventId": "event-2da9f3b975b18b8d2abd27aa3c80c3fd6b07385b",
+      "title": "会议预通知 _ 区域国别学·云山论坛（2026） 区域国别学学科建设与路径探索国际学术研讨会会议预告",
+      "date": {
+        "raw": "2026年11月6日",
+        "date": "2026-11-06",
+        "at": null,
+        "timezone": "Asia/Shanghai",
+        "precision": "date",
+        "resolution": "day",
+        "inferred": false,
+        "inferenceBasis": null,
+        "evidence": {
+          "field": "body",
+          "startOffset": 399,
+          "endOffset": 409,
+          "text": "2026年11月6日",
+          "role": "event_time"
+        }
+      },
+      "end": {
+        "raw": "8日",
+        "date": "2026-11-08",
+        "at": null,
+        "timezone": "Asia/Shanghai",
+        "precision": "date",
+        "resolution": "day",
+        "inferred": true,
+        "inferenceBasis": "同一明确区间的起始月份；同一区间起始年份，跨月/跨年顺序",
+        "evidence": {
+          "field": "body",
+          "startOffset": 410,
+          "endOffset": 412,
+          "text": "8日",
+          "role": "event_time"
+        }
+      },
+      "sourceTitles": [
+        {
+          "title": "会议预通知 _ 区域国别学·云山论坛（2026） 区域国别学学科建设与路径探索国际学术研讨会会议预告",
+          "name": "广外区域国别学院",
+          "url": "https://mp.weixin.qq.com/s/X9Dx0qmhsxFNoh_PUpk6ww"
+        }
+      ]
+    },
+    {
+      "eventId": "event-2fd58f331ee85e48070e40e44d308cd880011dbb",
+      "title": "2026-2027广东外语外贸大学数学与统计学院第八届红色演艺大赛",
+      "date": {
+        "raw": "2026年10月15日",
+        "date": "2026-10-15",
+        "at": null,
+        "timezone": "Asia/Shanghai",
+        "precision": "date",
+        "resolution": "day",
+        "inferred": false,
+        "inferenceBasis": null,
+        "evidence": {
+          "field": "body",
+          "startOffset": 1019,
+          "endOffset": 1030,
+          "text": "2026年10月15日",
+          "role": "event_time"
+        }
+      },
+      "end": {
+        "raw": "2026年11月29日",
+        "date": "2026-11-29",
+        "at": null,
+        "timezone": "Asia/Shanghai",
+        "precision": "date",
+        "resolution": "day",
+        "inferred": false,
+        "inferenceBasis": null,
+        "evidence": {
+          "field": "body",
+          "startOffset": 1031,
+          "endOffset": 1042,
+          "text": "2026年11月29日",
+          "role": "event_time"
+        }
+      },
+      "sourceTitles": [
+        {
+          "title": "2026-2027广东外语外贸大学数学与统计学院第八届红色演艺大赛",
+          "name": "广外数统青年",
+          "url": "https://mp.weixin.qq.com/s/rzPh1kebAUywcNI8ZE2Jqg"
+        }
+      ]
+    },
+    {
+      "eventId": "event-387f83e1c29b68021e36807d7c4c37d098d1ac7f",
+      "title": "挑战杯 _ 2026年会计学院“小挑”选拔赛正式报名通知",
+      "date": {
+        "raw": "11月7日",
+        "date": "2026-11-07",
+        "at": null,
+        "timezone": "Asia/Shanghai",
+        "precision": "date",
+        "resolution": "day",
+        "inferred": true,
+        "inferenceBasis": "活动标题明确标注年份",
+        "evidence": {
+          "field": "body",
+          "startOffset": 1050,
+          "endOffset": 1055,
+          "text": "11月7日",
+          "role": "event_time"
+        }
+      },
+      "end": null,
+      "sourceTitles": [
+        {
+          "title": "挑战杯 _ 2026年会计学院“小挑”选拔赛正式报名通知",
+          "name": "广外会院青年",
+          "url": "https://mp.weixin.qq.com/s/TgH5_JPQ4mpQswI3UNnT0Q"
+        }
+      ]
+    }
+  ],
+  "testedVersion": "7b765d88-6be1-4619-8d9a-b000137a7f13"
+}

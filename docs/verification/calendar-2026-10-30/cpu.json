@@ -1,0 +1,34 @@
+[
+  {
+    "path": "/api/public/activities",
+    "cpuMs": 30,
+    "wallMs": 300,
+    "status": 200,
+    "outcome": "ok",
+    "version": "6481d5db-4fca-45a6-8ce2-aeca65e23027"
+  },
+  {
+    "path": "/api/public/activities",
+    "cpuMs": 18,
+    "wallMs": 287,
+    "status": 200,
+    "outcome": "ok",
+    "version": "6481d5db-4fca-45a6-8ce2-aeca65e23027"
+  },
+  {
+    "path": "/api/public/activities",
+    "cpuMs": 14,
+    "wallMs": 277,
+    "status": 200,
+    "outcome": "ok",
+    "version": "6481d5db-4fca-45a6-8ce2-aeca65e23027"
+  },
+  {
+    "path": "/api/public/activities",
+    "cpuMs": 12,
+    "wallMs": 274,
+    "status": 200,
+    "outcome": "ok",
+    "version": "6481d5db-4fca-45a6-8ce2-aeca65e23027"
+  }
+]

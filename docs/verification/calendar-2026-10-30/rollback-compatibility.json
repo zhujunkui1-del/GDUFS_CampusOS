@@ -1,0 +1,7 @@
+{
+  "kind": "local rollback compatibility; cloud rollback was not executed",
+  "baseline": "35dbdb2",
+  "originalAnalyses": 1940,
+  "changedDocumentExamples": 30,
+  "failures": 0
+}

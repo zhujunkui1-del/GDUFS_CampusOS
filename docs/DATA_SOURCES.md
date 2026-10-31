@@ -1,5 +1,13 @@
 # 数据来源与许可台账
 
+## 2026-10-31｜活动日历公开文章及媒体证据
+
+只处理既有Preview公开文章及现有内容使用范围允许的原文；不重新搜索官网入口、不新增采集来源、不批量保存图片。1,940篇本机快照、D1恢复书签及完整媒体转录在忽略目录。公开回执仅含项目界面截图、原URL、日期/地点字段证据和资源计量。
+
+真实片段标注来源包括社会与公共管理学院MPA会议 https://zg.gdufs.edu.cn/info/1003/14879.htm 、翻译学院会议 https://sits.gdufs.edu.cn/info/1186/7816.htm 、国际商务论坛 https://mp.weixin.qq.com/s/MBcPmO7ocZeNhollx2WrCw 、信息学院院运会 https://mp.weixin.qq.com/s/cEIZoA9sPyrKztGgESfgJA 。会议报到、离会、提交截止与举办日分别核对；完整12例URL见 tests/fixtures/calendar-real-articles.json 与 verification/calendar-2026-10-30/evaluation.json。
+
+真实招聘会海报下载字节SHA256为29db778a97da76929865208173906347032bd56a215f35b6974d943666584749；OCR曾把署名归为主办方，旧转录未作为最终可靠字段保留，已失效重处理。原海报/CDN链接保持来源记录，未复制为正式public资源。现有公开DOCX/XLSX附件实际转换2个，未从这些表格虚构活动。完整来源用途与验证限制见 CALENDAR_ACCEPTANCE_2026_10_30.md。
+
 更新时间：2026-10-13（Asia/Shanghai）
 
 规则：发现来源不等于获得许可；每条数据在公开使用前需记录来源 URL、用途、许可状态、核验时间、负责人决定和数据版本。没有许可/地理核验的数据不进入正式地图、RAG 或活动地图标记。
