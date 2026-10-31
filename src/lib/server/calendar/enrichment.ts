@@ -376,18 +376,22 @@ export async function enrichCalendar(
     }
   }
   if (analysis.calendar) {
-    analysis.calendar.attempts = Math.min(
-      2,
-      (base.calendar?.attempts || 0) + 1,
-    );
+    const deferred = metrics.failures.includes("CALENDAR_DAILY_BUDGET");
+    analysis.calendar.attempts = deferred
+      ? base.calendar?.attempts || 0
+      : Math.min(2, (base.calendar?.attempts || 0) + 1);
     if (
       analysis.calendar.status !== "accepted" &&
-      (analysis.calendar.attempts >= 2 ||
-        metrics.failures.includes("CALENDAR_DAILY_BUDGET"))
+      !deferred &&
+      analysis.calendar.attempts >= 2
     ) {
       analysis.calendar.status = "excluded";
       if (metrics.failures.length)
         analysis.calendar.reason = metrics.failures[0].slice(0, 100);
+    }
+    if (analysis.calendar.status !== "accepted" && deferred) {
+      analysis.calendar.status = "needs_enrichment";
+      analysis.calendar.reason = "daily_budget_deferred";
     }
   }
   analysis = validateArticleAnalysis(input, analysis);

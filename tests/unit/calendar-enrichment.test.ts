@@ -7,6 +7,22 @@ import {
 import { dateGateFixture } from "../fixtures/date-gate";
 import { analysisStatements } from "@/lib/server/console/article-analysis";
 import { runCalendarBatch } from "@/lib/server/calendar/processor";
+it("defers work when the daily model budget ends without consuming an extraction attempt", async () => {
+  const input = {
+    title: "2026年学术讲座预告",
+    body: "详情见海报，11月5日14:00。",
+  };
+  const a = await enrichCalendar(
+    input,
+    analyzeArticle(input),
+    { run: vi.fn() },
+    async () => false,
+  );
+  expect(a.metrics.modelCalls).toBe(0);
+  expect(a.analysis.calendar?.attempts).toBe(0);
+  expect(a.analysis.calendar?.status).toBe("needs_enrichment");
+  expect(a.analysis.calendar?.reason).toBe("daily_budget_deferred");
+});
 it("supplements real source spans through a schema, without accepting invented years", async () => {
   const input = {
     title: "2026年学术讲座预告",

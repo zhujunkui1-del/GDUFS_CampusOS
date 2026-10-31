@@ -380,13 +380,15 @@ if (mode.startsWith("--enrich") || mode === "--probe") {
 if (mode === "--refresh") {
   const rows = (
     await query({
-      sql: "SELECT d.id,d.input_hash,d.content_revision,d.title,d.body,d.body_format,d.body_status,d.published_at,d.url,d.source_id,s.display_name,x.analysis_json FROM knowledge_documents d JOIN document_article_analysis x ON x.document_id=d.id JOIN knowledge_sources s ON s.id=d.source_id WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND x.input_hash=d.input_hash AND x.content_revision=d.content_revision AND EXISTS(SELECT 1 FROM json_each(x.analysis_json,'$.calendar.sources') s WHERE json_extract(s.value,'$.method') LIKE '@cf/%-ocr') ORDER BY d.id LIMIT 100",
+      sql: "SELECT d.id,d.input_hash,d.content_revision,d.title,d.body,d.body_format,d.body_status,d.published_at,d.url,d.source_id,s.display_name,x.analysis_json FROM knowledge_documents d JOIN document_article_analysis x ON x.document_id=d.id JOIN knowledge_sources s ON s.id=d.source_id WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND x.input_hash=d.input_hash AND x.content_revision=d.content_revision AND (json_extract(x.analysis_json,'$.calendar.reason')='CALENDAR_DAILY_BUDGET' OR EXISTS(SELECT 1 FROM json_each(x.analysis_json,'$.calendar.sources') s WHERE json_extract(s.value,'$.method') LIKE '@cf/%-ocr')) ORDER BY d.id LIMIT 100",
     })
   )[0].results;
   const report = { refreshed: [], usage };
   for (const d of rows) {
     if (!(await live([d.id])).some((r) => r.body_allowed)) continue;
     const base = JSON.parse(d.analysis_json);
+    if (base.calendar?.reason === "CALENDAR_DAILY_BUDGET")
+      base.calendar.attempts = 0;
     const input = api.calendarInput({
       documentId: d.id,
       title: d.title,
