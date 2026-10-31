@@ -333,9 +333,9 @@
 
 .public-feed-pagination {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   margin-top: 18px;
   color: var(--text-secondary, #62666e);
   font-size: 14px;
@@ -431,7 +431,8 @@
   }
 
   .public-feed-pagination {
-    justify-content: space-between;
+    justify-content: center;
+    gap: 8px;
     scroll-margin-block-end: 150px;
   }
 }

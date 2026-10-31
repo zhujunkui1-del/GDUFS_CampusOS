@@ -10,6 +10,46 @@ test.setTimeout(90000);
 test.use({ navigationTimeout: 30000 });
 const dir = ".map-tools/campus-ui-20261031";
 
+test("pagination controls form a compact centred group clear of the portrait orb", async ({
+  page,
+}, info) => {
+  await page.goto("/radar", { waitUntil: "domcontentloaded" });
+  await page.getByRole("button", { name: /^学术科研\s*\d+/ }).click();
+  await expect(page.getByLabel("当前页码", { exact: true })).toHaveValue("1");
+  const bar = page.locator(".public-feed-pagination");
+  await bar.scrollIntoViewIfNeeded();
+  const bounds = await bar.boundingBox();
+  const previous = await bar
+    .getByRole("button", { name: "上一页", exact: true })
+    .boundingBox();
+  const field = await bar.locator(".public-feed-page-jump").boundingBox();
+  const next = await bar
+    .getByRole("button", { name: "下一页", exact: true })
+    .boundingBox();
+  const orb = await page.locator("#assistant-launcher").boundingBox();
+  expect(
+    Math.abs(
+      (previous!.x + next!.x + next!.width) / 2 -
+        (bounds!.x + bounds!.width / 2),
+    ),
+  ).toBeLessThan(2);
+  expect(field!.x - previous!.x - previous!.width).toBeLessThanOrEqual(11);
+  expect(next!.x - field!.x - field!.width).toBeLessThanOrEqual(11);
+  for (const rect of [previous!, field!, next!])
+    expect(
+      rect.x < orb!.x + orb!.width &&
+        rect.x + rect.width > orb!.x &&
+        rect.y < orb!.y + orb!.height &&
+        rect.y + rect.height > orb!.y,
+    ).toBe(false);
+  await fs.mkdir(dir, { recursive: true });
+  await fs.writeFile(
+    `${dir}/centred-${info.project.name}.json`,
+    JSON.stringify({ bounds, previous, field, next, orb }, null, 2),
+  );
+  await page.screenshot({ path: `${dir}/paging-${info.project.name}.png` });
+});
+
 test("calendar fills the feed width and the portrait orb opens the assistant with a blue hover glow", async ({
   page,
 }, info) => {
