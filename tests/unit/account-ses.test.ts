@@ -6,10 +6,9 @@ const config = {
   region: "ap-hongkong",
   from: "CampusOS <no-reply@example.com>",
   templateId: 123,
-  noticeTemplateId: 124,
   verified: true,
 };
-it("sends a six-digit code only through its approved template and uses a separate notice template", async () => {
+it("sends only six-digit code templates and rejects security notifications without calling SES", async () => {
   const transport = vi.fn(async () =>
     Response.json({ Response: { MessageId: "fixture-message" } }),
   );
@@ -33,20 +32,17 @@ it("sends a six-digit code only through its approved template and uses a separat
   expect(
     (transport.mock.calls[0] as unknown as [string, RequestInit])[1].redirect,
   ).toBe("manual");
-  await mailer.send({
-    to: "student@example.com",
-    purpose: "notice",
-    event: "邮箱已更换",
-    key: "notice",
-    subject: "安全通知",
-  });
-  expect(
-    JSON.parse(
-      String(
-        (transport.mock.calls[1] as unknown as [string, RequestInit])[1].body,
-      ),
-    ).Template.TemplateID,
-  ).toBe(124);
+  expect(mailer.available).toBe(true);
+  await expect(
+    mailer.send({
+      to: "student@example.com",
+      purpose: "notice",
+      event: "邮箱已更换",
+      key: "notice",
+      subject: "安全通知",
+    } as never),
+  ).rejects.toThrow();
+  expect(transport).toHaveBeenCalledTimes(1);
 });
 it("fails closed for unapproved configuration, eight-digit codes and upstream errors", async () => {
   const transport = vi.fn(async () =>

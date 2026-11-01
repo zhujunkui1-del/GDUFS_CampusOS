@@ -9,13 +9,14 @@ import {
   OtpSchema,
 } from "@/domain/account/contracts";
 import { useAccount, accountRequest } from "./account-context";
+import { useEmailCodeAction } from "./use-email-code-action";
 import { AccountFrame, FormFeedback, useAccountAction } from "./shared";
 export function AuthForm({ mode }: { mode: "login" | "register" }) {
   const register = mode === "register",
     account = useAccount(),
     router = useRouter(),
     action = useAccountAction(),
-    send = useAccountAction();
+    send = useEmailCodeAction("registration");
   const [identifier, setIdentifier] = useState(""),
     [password, setPassword] = useState(""),
     [confirm, setConfirm] = useState(""),
@@ -149,6 +150,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
                       type="button"
                       disabled={
                         send.busy ||
+                        send.coolingDown ||
                         action.busy ||
                         !account.session?.mailAvailable
                       }
@@ -166,7 +168,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
                         }, "已发送")
                       }
                     >
-                      获取验证码
+                      {send.label}
                     </button>
                   </span>
                 </label>
@@ -207,7 +209,7 @@ export function ForgotPassword({
 }) {
   const account = useAccount(),
     action = useAccountAction(),
-    send = useAccountAction(),
+    send = useEmailCodeAction("reset"),
     [email, setEmail] = useState(account.session?.user?.email || ""),
     [challenge, setChallenge] = useState(""),
     [code, setCode] = useState(""),
@@ -285,7 +287,11 @@ export function ForgotPassword({
                 />
                 <button
                   type="button"
-                  disabled={send.busy || !account.session?.mailAvailable}
+                  disabled={
+                    send.busy ||
+                    send.coolingDown ||
+                    !account.session?.mailAvailable
+                  }
                   onClick={() =>
                     void send.run(async () => {
                       if (!EmailSchema.safeParse(email).success)
@@ -298,7 +304,7 @@ export function ForgotPassword({
                     }, "已申请发送")
                   }
                 >
-                  获取验证码
+                  {send.label}
                 </button>
               </span>
             </label>

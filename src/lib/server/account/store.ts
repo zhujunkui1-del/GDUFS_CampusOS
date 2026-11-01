@@ -19,7 +19,9 @@ export type MailMessage = {
   to: string;
   subject: string;
   key: string;
-} & ({ purpose: "code"; code: string } | { purpose: "notice"; event: string });
+  purpose: "code";
+  code: string;
+};
 export type AccountMailer = {
   available: boolean;
   send(message: MailMessage): Promise<void>;

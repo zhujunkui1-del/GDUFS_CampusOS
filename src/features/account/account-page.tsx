@@ -22,6 +22,7 @@ import {
   type AccountProfile,
 } from "@/domain/account/contracts";
 import { useAccount, accountRequest } from "./account-context";
+import { useEmailCodeAction } from "./use-email-code-action";
 import { AccountFrame, FormFeedback, useAccountAction } from "./shared";
 
 type View = "home" | "settings" | "username" | "password" | "email" | "unbind";
@@ -311,7 +312,7 @@ function PasswordForm() {
 }
 function EmailPage({ user }: { user: AccountProfile }) {
   const account = useAccount(),
-    send = useAccountAction(),
+    send = useEmailCodeAction("bind"),
     verify = useAccountAction(),
     [email, setEmail] = useState(user.pendingEmail || ""),
     [challenge, setChallenge] = useState(""),
@@ -368,7 +369,9 @@ function EmailPage({ user }: { user: AccountProfile }) {
           />
           <button
             type="button"
-            disabled={send.busy || !account.session?.mailAvailable}
+            disabled={
+              send.busy || send.coolingDown || !account.session?.mailAvailable
+            }
             onClick={() =>
               void send.run(async () => {
                 if (!EmailSchema.safeParse(email).success)
@@ -381,7 +384,7 @@ function EmailPage({ user }: { user: AccountProfile }) {
               }, "已发送")
             }
           >
-            获取验证码
+            {send.label}
           </button>
         </span>
       </label>
@@ -408,7 +411,7 @@ function EmailPage({ user }: { user: AccountProfile }) {
 function UnbindPage({ user }: { user: AccountProfile }) {
   const account = useAccount(),
     router = useRouter(),
-    send = useAccountAction(),
+    send = useEmailCodeAction("unbind"),
     action = useAccountAction(),
     [challenge, setChallenge] = useState(""),
     [code, setCode] = useState("");
@@ -444,7 +447,9 @@ function UnbindPage({ user }: { user: AccountProfile }) {
           />
           <button
             type="button"
-            disabled={send.busy || !account.session?.mailAvailable}
+            disabled={
+              send.busy || send.coolingDown || !account.session?.mailAvailable
+            }
             onClick={() =>
               void send.run(async () => {
                 const r = await accountRequest<{ challenge: string }>(
@@ -455,7 +460,7 @@ function UnbindPage({ user }: { user: AccountProfile }) {
               }, "已发送")
             }
           >
-            获取验证码
+            {send.label}
           </button>
         </span>
       </label>

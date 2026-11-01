@@ -56,7 +56,6 @@ export class TencentSesMailer implements AccountMailer {
       region: string;
       from: string;
       templateId: number;
-      noticeTemplateId: number;
       verified: boolean;
     },
     private transport: typeof fetch = fetch,
@@ -67,26 +66,20 @@ export class TencentSesMailer implements AccountMailer {
       ["ap-guangzhou", "ap-hongkong"].includes(config.region) &&
       config.templateId > 0 &&
       config.verified &&
-      config.noticeTemplateId > 0 &&
       config.from.includes("@");
   }
   async send(message: MailMessage) {
     if (!this.available)
       throw new ApiError("SERVICE_UNAVAILABLE", "邮件验证暂不可用。", true);
-    const codeMessage = message.purpose === "code";
-    if (codeMessage && !/^\d{6}$/.test(message.code))
+    if (message.purpose !== "code" || !/^\d{6}$/.test(message.code))
       throw new ApiError("INTERNAL_ERROR", "邮件暂时无法发送。");
     const payload = JSON.stringify({
       FromEmailAddress: this.config.from,
       Destination: [message.to],
       Subject: message.subject,
       Template: {
-        TemplateID: codeMessage
-          ? this.config.templateId
-          : this.config.noticeTemplateId,
-        TemplateData: JSON.stringify(
-          codeMessage ? { code: message.code } : { event: message.event },
-        ),
+        TemplateID: this.config.templateId,
+        TemplateData: JSON.stringify({ code: message.code }),
       },
     });
     let response: Response;

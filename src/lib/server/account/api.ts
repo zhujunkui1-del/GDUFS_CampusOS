@@ -94,8 +94,6 @@ export function createAccountApi(options: {
       if (path === "/api/auth/password/change") {
         const result = await store.changePassword(body, request);
         cookie = accountCookie(result.token);
-        if (result.profile.email)
-          options.defer(store.notice(result.profile.email, "密码已修改"));
         return { user: result.profile, expiresAt: result.expiresAt };
       }
       if (path === "/api/auth/email/bind" || path === "/api/auth/email/change")
@@ -143,7 +141,6 @@ export async function accountApi(request: Request) {
         region: String(values.ACCOUNT_MAIL_REGION || ""),
         from: String(values.ACCOUNT_MAIL_FROM || ""),
         templateId: Number(values.ACCOUNT_MAIL_TEMPLATE_ID || 0),
-        noticeTemplateId: Number(values.ACCOUNT_MAIL_NOTICE_TEMPLATE_ID || 0),
         verified:
           values.ACCOUNT_MAIL_VERIFIED === "true" &&
           String(values.ACCOUNT_OTP_SECRET || "").length >= 32,

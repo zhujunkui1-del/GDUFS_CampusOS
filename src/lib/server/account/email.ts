@@ -281,8 +281,6 @@ export class AccountService extends AccountStore {
       throw e;
     }
     if (!changed(r[0]) || !changed(r[1])) throw invalidCode();
-    if (row.verified_email && row.verified_email !== row.email)
-      await this.notice(row.verified_email, "邮箱已更换");
     return {
       user: this.profile((await this.row(row.user_id))!),
       verified: true,
@@ -342,7 +340,6 @@ export class AccountService extends AccountStore {
       this.auditGuard("email_unbound", s.row.user_id, nonce),
     ]);
     if (!changed(r[0]) || !changed(r[1])) throw invalidCode();
-    await this.notice(row.email, "邮箱已解绑");
     return this.profile((await this.row(s.row.user_id))!);
   }
   async requestReset(
@@ -415,23 +412,6 @@ export class AccountService extends AccountStore {
       this.auditGuard("password_reset", row.user_id, nonce),
     ]);
     if (!changed(r[0]) || !changed(r[1])) throw invalidCode();
-    await this.notice(row.email, "密码已重置");
     return { reset: true };
-  }
-  async notice(email: string, event: string) {
-    if (!this.mailer.available) return;
-    try {
-      await this.mailer.send({
-        to: email,
-        purpose: "notice",
-        subject: "CampusOS 广外通：账号安全通知",
-        event,
-        key: "notice-" + crypto.randomUUID(),
-      });
-    } catch {
-      console.info(
-        JSON.stringify({ event: "account.mail.failure", purpose: "notice" }),
-      );
-    }
   }
 }

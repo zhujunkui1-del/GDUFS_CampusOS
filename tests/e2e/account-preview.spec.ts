@@ -14,7 +14,7 @@ test("real Preview compact account hierarchy and username editing without passwo
   expect(process.env.E2E_BASE_URL).toBe(
     "https://campusos-preview.zhujunkui1.workers.dev",
   );
-  const out = "verification/account-settings-2026-11-01";
+  const out = "verification/account-mail-budget-2026-11-01";
   mkdirSync(out, { recursive: true });
   let username = "s4settings_" + randomBytes(4).toString("hex"),
     password = "12345678";
@@ -188,6 +188,9 @@ test("email code registration and unlink UI contract (isolated browser fixture)"
     expect(r.request().postDataJSON()).toEqual({});
     await r.fulfill({ json: { ok: true, data: { challenge } } });
   });
+  await page.route("**/api/auth/email/bind", (r) =>
+    r.fulfill({ json: { ok: true, data: { challenge } } }),
+  );
   await page.route("**/api/auth/email/unbind", async (r) => {
     expect(r.request().postDataJSON()).toEqual({ challenge, code: "123456" });
     user = { ...user, email: null };
@@ -207,6 +210,7 @@ test("email code registration and unlink UI contract (isolated browser fixture)"
   expect(registered).toBe(0);
   await form.getByRole("button", { name: "获取验证码", exact: true }).click();
   await expect.poll(() => sent).toBe(1);
+  await expect(form.getByRole("button", { name: /秒后重发/ })).toBeDisabled();
   await form.getByLabel("邮箱验证码", { exact: true }).fill("123456");
   await form.getByRole("button", { name: "注册并登录", exact: true }).click();
   await expect(
@@ -224,13 +228,81 @@ test("email code registration and unlink UI contract (isolated browser fixture)"
   await expect(unlink.locator("input[type=password]")).toHaveCount(0);
   await unlink.getByRole("button", { name: "获取验证码", exact: true }).click();
   await expect(page.getByText("已发送", { exact: true })).toBeVisible();
+  await expect(unlink.getByRole("button", { name: /秒后重发/ })).toBeDisabled();
   await unlink.getByLabel("邮箱验证码", { exact: true }).fill("123456");
   await page.screenshot({
-    path: `verification/account-settings-2026-11-01/${info.project.name}-unlink-fixture.png`,
+    path: `verification/account-mail-budget-2026-11-01/${info.project.name}-unlink-fixture.png`,
     fullPage: true,
   });
   await unlink.getByRole("button", { name: "解绑邮箱", exact: true }).click();
   await expect(
     page.getByRole("form", { name: "绑定邮箱", exact: true }),
   ).toBeVisible();
+  const bind = page.getByRole("form", { name: "绑定邮箱", exact: true });
+  await bind
+    .getByLabel("邮箱地址", { exact: true })
+    .fill("fixture@example.com");
+  await bind.getByRole("button", { name: "获取验证码", exact: true }).click();
+  await expect(bind.getByRole("button", { name: /秒后重发/ })).toBeDisabled();
+});
+
+test("recovery code cooldown is 60 seconds, survives refresh and does not start on failure (UI fixture)", async ({
+  page,
+}, info) => {
+  test.skip(process.env.S4_LIVE !== "1", "Preview UI acceptance only");
+  await page.clock.install();
+  let calls = 0;
+  await page.route("**/api/auth/session", (r) =>
+    r.fulfill({
+      json: {
+        ok: true,
+        data: { available: true, mailAvailable: true, user: null },
+      },
+    }),
+  );
+  await page.route("**/api/auth/password/reset/request", (r) => {
+    calls++;
+    return r.fulfill({
+      status: calls === 1 ? 503 : 200,
+      json:
+        calls === 1
+          ? { ok: false, error: { message: "发送失败" } }
+          : { ok: true, data: { challenge: "A".repeat(43) } },
+    });
+  });
+  await page.goto("/account/forgot-password");
+  const form = page.getByRole("form", { name: "重置密码", exact: true });
+  await form.getByLabel("邮箱", { exact: true }).fill("fixture@example.com");
+  await form.getByRole("button", { name: "获取验证码", exact: true }).click();
+  await expect(form.getByRole("alert")).toContainText("发送失败");
+  await expect(
+    form.getByRole("button", { name: "获取验证码", exact: true }),
+  ).toBeEnabled();
+  await form.getByRole("button", { name: "获取验证码", exact: true }).click();
+  await expect(
+    form.getByRole("button", { name: "60秒后重发", exact: true }),
+  ).toBeDisabled();
+  expect(calls).toBe(2);
+  mkdirSync("verification/account-mail-budget-2026-11-01", { recursive: true });
+  await page.screenshot({
+    path: `verification/account-mail-budget-2026-11-01/${info.project.name}-cooldown.png`,
+    fullPage: true,
+  });
+  await page.clock.fastForward(59000);
+  await expect(
+    form.getByRole("button", { name: "1秒后重发", exact: true }),
+  ).toBeDisabled();
+  expect(calls).toBe(2);
+  await page.clock.fastForward(1000);
+  await expect(
+    form.getByRole("button", { name: "获取验证码", exact: true }),
+  ).toBeEnabled();
+  await form.getByRole("button", { name: "获取验证码", exact: true }).click();
+  await expect(
+    form.getByRole("button", { name: "60秒后重发", exact: true }),
+  ).toBeDisabled();
+  expect(calls).toBe(3);
+  await page.reload();
+  await expect(page.getByRole("button", { name: /秒后重发/ })).toBeDisabled();
+  expect(calls).toBe(3);
 });
