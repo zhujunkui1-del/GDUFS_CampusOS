@@ -54,6 +54,7 @@ export class AccountStore {
   readonly passwords: PasswordDriver;
   readonly mailer: AccountMailer;
   readonly origin: string;
+  readonly allowedOrigins: readonly string[];
   readonly otpSecret: string;
   constructor(
     readonly db: SqlDatabase,
@@ -62,11 +63,15 @@ export class AccountStore {
       passwords?: PasswordDriver;
       mailer?: AccountMailer;
       origin: string;
+      allowedOrigins?: readonly string[];
       otpSecret?: string;
     },
   ) {
     this.now = options.now || Date.now;
     this.origin = options.origin;
+    this.allowedOrigins = [
+      ...new Set([options.origin, ...(options.allowedOrigins || [])]),
+    ];
     this.otpSecret = options.otpSecret || "";
     this.passwords = options.passwords || {
       hash: hashPassword,

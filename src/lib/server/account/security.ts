@@ -15,11 +15,15 @@ export function cookieValue(request: Request, name = ACCOUNT_COOKIE) {
 export function accountCookie(token: string, age = SESSION_MS / 1000) {
   return `${ACCOUNT_COOKIE}=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${age}`;
 }
-export function assertAccountOrigin(request: Request, expected: string) {
+export function assertAccountOrigin(
+  request: Request,
+  expected: string | readonly string[],
+) {
   const url = new URL(request.url);
+  const allowed = typeof expected === "string" ? [expected] : expected;
   if (
-    url.origin !== expected ||
-    request.headers.get("Origin") !== expected ||
+    !allowed.includes(url.origin) ||
+    !allowed.includes(request.headers.get("Origin") || "") ||
     request.headers.get("Sec-Fetch-Site") === "cross-site"
   )
     throw new ApiError("FORBIDDEN", "请求来源不受支持。");

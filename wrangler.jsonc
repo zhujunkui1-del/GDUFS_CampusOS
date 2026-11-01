@@ -36,6 +36,7 @@
         "APP_ENV": "preview",
         "USER_ACCOUNTS_ENABLED": "true",
         "ACCOUNT_ORIGIN": "https://campusos-preview.zhujunkui1.workers.dev",
+        "ACCOUNT_ALLOWED_ORIGINS": "https://gdufs.ccwu.cc",
         "EXTERNAL_SEARCH_TRANSPORT": "cloud",
         "AGENT_VALIDATION_UNLIMITED": "true",
         "MODEL_MAX_OUTPUT_TOKENS": "2048",

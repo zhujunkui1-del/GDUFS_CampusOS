@@ -45,7 +45,7 @@ export function createAccountApi(options: {
         throw new ApiError("SERVICE_UNAVAILABLE", "账号服务暂不可用。", true);
       const ip = request.headers.get("CF-Connecting-IP") || "local";
       const write = request.method !== "GET";
-      if (write) assertAccountOrigin(request, store.origin);
+      if (write) assertAccountOrigin(request, store.allowedOrigins);
       const body = write ? await readJson(request, 8192) : undefined;
       if (path === "/api/auth/session") {
         const session = await store.resolve(request);
@@ -134,6 +134,10 @@ export async function accountApi(request: Request) {
     );
     const store = new AccountService(measured.database, {
       origin,
+      allowedOrigins: String(values.ACCOUNT_ALLOWED_ORIGINS || "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean),
       otpSecret: String(values.ACCOUNT_OTP_SECRET || ""),
       mailer: new TencentSesMailer({
         secretId: String(values.ACCOUNT_MAIL_SECRET_ID || ""),
