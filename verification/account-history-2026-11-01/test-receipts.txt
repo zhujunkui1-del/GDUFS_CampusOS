@@ -1,0 +1,75 @@
+=== Unit ===
+
+ RUN  v5.0.3 D:/tlydcg/Codex_work/广外AI应用大赛/.map-tools/history-sync-worktree
+
+
+ Test Files  124 passed (124)
+      Tests  859 passed (859)
+   Start at  23:39:53
+   Duration  127.93s (tests 74%, import 23%, transform 3%, worker 1%)
+
+    Isolate  124 workers spawned · ~151ms startup each (spawn + environment, per file)
+             at least ~18.62s faster with isolate: false — reuses workers across files instead of one per file
+
+
+=== Live cross-device ===
+
+Running 1 test using 1 worker
+
+(node:29008) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop] › tests\e2e\account-history-sync-live.spec.ts:16:1 › S4 history is durable, paginated, isolated, idempotent and shared by Edge, Chrome and mobile sessions (2.0m)
+
+  1 passed (2.0m)
+
+=== Preview map ===
+
+Running 4 tests using 2 workers
+
+(node:21512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:38108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [desktop] › tests\e2e\map-search-navigation-regression.spec.ts:3:1 › empty search closes the panel and removed online controls never appear (3.1s)
+(node:50268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop] › tests\e2e\map-search-navigation-regression.spec.ts:25:1 › navigation exposes the real map canvas to drag and zoom (5.6s)
+(node:46416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [mobile] › tests\e2e\map-search-navigation-regression.spec.ts:3:1 › empty search closes the panel and removed online controls never appear (2.2s)
+  ok 4 [mobile] › tests\e2e\map-search-navigation-regression.spec.ts:25:1 › navigation exposes the real map canvas to drag and zoom (5.3s)
+
+  4 passed (13.4s)
+
+=== Conversation UI ===
+
+Running 18 tests using 2 workers
+
+(node:33976) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [desktop] › tests\e2e\conversation-management.spec.ts:183:1 › Mock transient history failure preserves the current view and can recover (2.4s)
+  ok  1 [desktop] › tests\e2e\conversation-management.spec.ts:196:1 › Mock identity: an old AI map display stays isolated after new chat and clears on identity change (4.8s)
+  ok  3 [desktop] › tests\e2e\conversation-management.spec.ts:248:1 › Mock UI: a new conversation keeps an independently planned map route (4.1s)
+  ok  4 [desktop] › tests\e2e\conversation-management.spec.ts:284:1 › Mock location: starting anew while awaiting GPS ignores the old callback (2.5s)
+  ok  6 [desktop] › tests\e2e\conversation-management.spec.ts:388:1 › Mock UI: delete cancel, failure retry, other/current deletion and empty lazy state (3.8s)
+  ok  5 [desktop] › tests\e2e\conversation-management.spec.ts:330:1 › Mock UI: new conversation, history switching and refresh keep separate histories (4.9s)
+  ok  8 [desktop] › tests\e2e\conversation-management.spec.ts:439:3 › Mock partial SSE: new rejects late text/actions (2.5s)
+  ok  7 [desktop] › tests\e2e\conversation-management.spec.ts:439:3 › Mock partial SSE: switch rejects late text/actions (2.7s)
+(node:46452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [desktop] › tests\e2e\conversation-management.spec.ts:439:3 › Mock partial SSE: delete rejects late text/actions (2.8s)
+(node:32908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [mobile] › tests\e2e\conversation-management.spec.ts:183:1 › Mock transient history failure preserves the current view and can recover (2.3s)
+  ok 12 [mobile] › tests\e2e\conversation-management.spec.ts:248:1 › Mock UI: a new conversation keeps an independently planned map route (4.2s)
+  ok 11 [mobile] › tests\e2e\conversation-management.spec.ts:196:1 › Mock identity: an old AI map display stays isolated after new chat and clears on identity change (4.7s)
+  ok 13 [mobile] › tests\e2e\conversation-management.spec.ts:284:1 › Mock location: starting anew while awaiting GPS ignores the old callback (2.3s)
+  ok 14 [mobile] › tests\e2e\conversation-management.spec.ts:330:1 › Mock UI: new conversation, history switching and refresh keep separate histories (4.4s)
+  ok 15 [mobile] › tests\e2e\conversation-management.spec.ts:388:1 › Mock UI: delete cancel, failure retry, other/current deletion and empty lazy state (3.7s)
+  ok 16 [mobile] › tests\e2e\conversation-management.spec.ts:439:3 › Mock partial SSE: switch rejects late text/actions (2.6s)
+  ok 17 [mobile] › tests\e2e\conversation-management.spec.ts:439:3 › Mock partial SSE: new rejects late text/actions (2.2s)
+  ok 18 [mobile] › tests\e2e\conversation-management.spec.ts:439:3 › Mock partial SSE: delete rejects late text/actions (2.2s)
+
+  18 passed (33.2s)

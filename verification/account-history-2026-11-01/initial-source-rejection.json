@@ -1,0 +1,23 @@
+{
+  "isolatedTestAccount": true,
+  "status": "failed",
+  "errorCode": "MODEL_SERVICE_UNAVAILABLE",
+  "model": "step-3.5-flash-2603",
+  "requests": 4,
+  "groundingResults": [
+    {
+      "supported": false,
+      "issues": [
+        "答复中自助借还机位置、服务时间等内容无引用资料支持",
+        "答复合并两种权限获取表述，与引用资料原文不一致",
+        "引用资料自身权限获取条件表述冲突，答复未说明差异"
+      ]
+    },
+    {
+      "supported": false,
+      "issues": [
+        "候选答复所述自助借还机位置、总服务台服务时间等内容，所引[1]原文未提供对应依据"
+      ]
+    }
+  ]
+}
