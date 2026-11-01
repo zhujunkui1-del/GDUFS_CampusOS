@@ -304,7 +304,7 @@ describe("ModelRouter capability gate (Mock receipts only)", () => {
     expect(JSON.stringify(value)).not.toContain("fingerprint");
     expect(JSON.stringify(value)).toContain('"strictJsonSchema":false');
   });
-  it("invalidates capabilities after key/model changes or expiration", async () => {
+  it("invalidates changed configurations, but keeps verified platform capabilities across days", async () => {
     const capabilityReceipt = JSON.stringify(await receipt());
     for (const altered of [
       { ...config, apiKey: "different-test-only" },
@@ -325,6 +325,15 @@ describe("ModelRouter capability gate (Mock receipts only)", () => {
           { ...config, capabilityReceipt },
           undefined,
           () => now + 86400001,
+        ).status()
+      ).ready,
+    ).toBe(true);
+    expect(
+      (
+        await new ModelRouter(
+          { ...config, capabilityReceipt },
+          undefined,
+          () => now - 1,
         ).status()
       ).ready,
     ).toBe(false);

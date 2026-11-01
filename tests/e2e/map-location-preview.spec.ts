@@ -14,10 +14,11 @@ test("continuous location toggles, updates, resumes and shows only real compass 
       watches = 0,
       clears = 0,
       hidden = false,
-      permissions = 0;
+      permissions = 0,
+      refreshes = 0;
     const fixture = window as unknown as {
       __gps: {
-        push(lon: number, lat: number): void;
+        push(lon: number, lat: number, age?: number): void;
         hide(value: boolean): void;
         heading(alpha: number): void;
         stats(): unknown;
@@ -53,7 +54,10 @@ test("continuous location toggles, updates, resumes and shows only real compass 
           active = false;
           clears++;
         },
-        getCurrentPosition: (s: (p: unknown) => void) => s(position()),
+        getCurrentPosition: (s: (p: unknown) => void) => {
+          refreshes++;
+          s(position());
+        },
       },
     });
     Object.defineProperty(DeviceOrientationEvent, "requestPermission", {
@@ -64,8 +68,10 @@ test("continuous location toggles, updates, resumes and shows only real compass 
       },
     });
     fixture.__gps = {
-      push(lon, lat) {
-        success?.(position(lon, lat));
+      push(lon, lat, age = 0) {
+        const p = position(lon, lat);
+        p.timestamp -= age;
+        success?.(p);
       },
       hide(value) {
         hidden = value;
@@ -76,7 +82,7 @@ test("continuous location toggles, updates, resumes and shows only real compass 
         Object.assign(e, { absolute: true, alpha });
         window.dispatchEvent(e);
       },
-      stats: () => ({ active, watches, clears, permissions }),
+      stats: () => ({ active, watches, clears, permissions, refreshes }),
     };
   });
   await page.goto("/map");
@@ -97,6 +103,28 @@ test("continuous location toggles, updates, resumes and shows only real compass 
   });
   const marker = page.locator(".device-heading-marker");
   await expect(marker).toHaveAttribute("data-heading", "90");
+  expect(
+    await marker
+      .locator("svg")
+      .evaluate((e) => [...e.children].map((c) => c.tagName)),
+  ).toEqual(["path", "circle"]);
+  await page.clock.setFixedTime(Date.now() + 120000);
+  await expect(marker).toBeVisible();
+  // Exercise the former expiry branch with a real timer tick, no new GPS fix.
+  await page.waitForTimeout(5500);
+  await expect(marker).toBeVisible();
+  await expect
+    .poll(
+      () =>
+        page.evaluate(
+          () =>
+            (
+              window as unknown as { __gps: { stats(): { refreshes: number } } }
+            ).__gps.stats().refreshes,
+        ),
+      { timeout: 20000 },
+    )
+    .toBeGreaterThan(0);
   await expect(page.locator(".map-location-notice")).toHaveCount(0);
   const before = await marker.boundingBox();
   await page.evaluate(() => {
@@ -107,6 +135,15 @@ test("continuous location toggles, updates, resumes and shows only real compass 
   await expect
     .poll(async () => Math.abs((await marker.boundingBox())!.x - before!.x))
     .toBeGreaterThan(1);
+  const fresh = await marker.boundingBox();
+  await page.evaluate(() =>
+    (
+      window as unknown as {
+        __gps: { push(lon: number, lat: number, age: number): void };
+      }
+    ).__gps.push(113.39131405, 23.0680465, 60000),
+  );
+  expect(Math.abs((await marker.boundingBox())!.x - fresh!.x)).toBeLessThan(1);
   await page.screenshot({
     path: `${out}/${info.project.name}-location.png`,
     fullPage: true,
@@ -143,7 +180,16 @@ test("continuous location toggles, updates, resumes and shows only real compass 
       true,
     );
   });
-  await expect(marker).toHaveCount(0);
+  await expect(marker).toBeVisible();
+  await expect(button).toHaveAttribute("aria-pressed", "true");
+  expect(
+    await page.evaluate(
+      () =>
+        (
+          window as unknown as { __gps: { stats(): { active: boolean } } }
+        ).__gps.stats().active,
+    ),
+  ).toBe(true);
   await page.evaluate(() => {
     (window as unknown as { __gps: { hide(n: boolean): void } }).__gps.hide(
       false,
@@ -276,6 +322,8 @@ test("mode cycling changes rendering without zooming back to the selected buildi
     .first()
     .click();
   await page.getByRole("button", { name: "关闭地点详情", exact: true }).click();
+  if (info.project.name === "mobile")
+    await expect(page.getByLabel("搜索校园地点")).not.toBeFocused();
   await expect(map).toHaveAttribute("data-camera-moving", "false");
   for (let i = 0; i < 2; i++) {
     await page.getByRole("button", { name: "缩小地图", exact: true }).click();

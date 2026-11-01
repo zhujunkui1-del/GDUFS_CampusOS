@@ -40,7 +40,7 @@
         "EXTERNAL_SEARCH_TRANSPORT": "cloud",
         "AGENT_VALIDATION_UNLIMITED": "true",
         "MODEL_MAX_OUTPUT_TOKENS": "2048",
-        "MODEL_PRIORITY": "deepseek",
+        "MODEL_PRIORITY": "stepfun",
         "HYBRID_RETRIEVAL": "true",
         "VECTOR_BACKFILL": "true",
         "CALENDAR_ENABLED": "true",

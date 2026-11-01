@@ -1359,18 +1359,6 @@ export class LocalMapAdapter implements MapAdapter {
           "fill-outline-color": "#1261bb",
         },
       });
-      this.native.addLayer({
-        id: "position-dot",
-        type: "circle",
-        source: "device-position",
-        filter: ["==", ["get", "kind"], "position"],
-        paint: {
-          "circle-radius": 7,
-          "circle-color": "#1261bb",
-          "circle-stroke-color": "#fff",
-          "circle-stroke-width": 3,
-        },
-      });
     }
     if (focus) this.setView(coordinate, Math.max(17, this.native.getZoom()));
     this.setLocationHeading(this.deviceHeading);
@@ -1378,7 +1366,7 @@ export class LocalMapAdapter implements MapAdapter {
   setLocationHeading(heading: number | null) {
     if (this.destroyed) return;
     this.deviceHeading = heading;
-    if (heading === null || !this.devicePosition) {
+    if (!this.devicePosition) {
       this.headingMarker?.remove();
       this.headingMarker = undefined;
       return;
@@ -1388,7 +1376,7 @@ export class LocalMapAdapter implements MapAdapter {
       element.className = "device-heading-marker";
       element.setAttribute("aria-hidden", "true");
       element.innerHTML =
-        '<svg viewBox="0 0 28 28" width="28" height="28"><path d="M14 0 L20 13 L14 10 L8 13 Z" fill="#1261bb" stroke="white" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+        '<svg viewBox="0 0 32 32" width="32" height="32"><path class="device-heading-arrow" d="M16 0 L24 17 L8 17 Z" fill="#1261bb"/><circle class="device-position-dot" cx="16" cy="16" r="8" fill="#1261bb" stroke="white" stroke-width="3"/></svg>';
       this.headingMarker = new Marker({
         element,
         anchor: "center",
@@ -1398,8 +1386,11 @@ export class LocalMapAdapter implements MapAdapter {
         .setLngLat(this.devicePosition)
         .addTo(this.native);
     }
-    this.headingMarker.setLngLat(this.devicePosition).setRotation(heading);
-    this.headingMarker.getElement().dataset.heading = String(heading);
+    this.headingMarker.setLngLat(this.devicePosition).setRotation(heading ?? 0);
+    const element = this.headingMarker.getElement();
+    element.dataset.heading = heading === null ? "" : String(heading);
+    element.querySelector<SVGElement>(".device-heading-arrow")!.style.display =
+      heading === null ? "none" : "";
   }
   clearLocation() {
     this.devicePosition = null;

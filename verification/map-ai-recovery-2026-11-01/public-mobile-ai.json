@@ -1,0 +1,198 @@
+{
+  "baseURL": "https://gdufs.ccwu.cc",
+  "configuredProvider": "stepfun",
+  "metrics": {
+    "answerMode": "model",
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "off_topic",
+      "relatedDocuments": [],
+      "missing": [
+        "relevant_readable_evidence",
+        "official_authority_unconfirmed",
+        "policy_evidence"
+      ],
+      "activities": [],
+      "needsSupplement": true,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 4,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 1,
+    "groundingChecks": 2,
+    "groundingFailures": 1,
+    "groundingCheckFailures": 1,
+    "groundingResults": [
+      {
+        "supported": false,
+        "issues": [
+          "所引[1]号资料未提供自助借还机位置、人工服务台时间相关信息"
+        ]
+      }
+    ],
+    "upstreamTimings": [
+      {
+        "durationMs": 9592,
+        "firstTextMs": 8835,
+        "finishReason": "stop",
+        "contentChars": 266
+      },
+      {
+        "durationMs": 7679,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      },
+      {
+        "durationMs": 7141,
+        "firstTextMs": 6035,
+        "finishReason": "stop",
+        "contentChars": 356
+      },
+      {
+        "durationMs": 7477,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 13324,
+    "completionTokens": 2993,
+    "cachedPromptTokens": 0,
+    "totalTokens": 16317,
+    "usageComplete": false,
+    "chargedTokens": 250000,
+    "durationMs": 38964,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 800,
+      "serverElapsedMs": 39764,
+      "firstTextMs": 39706,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1044,
+          "ok": true
+        },
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1126,
+          "ok": true
+        },
+        {
+          "name": "search_external_campus_info",
+          "durationMs": 4310,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 22,
+        "writeQueries": 11,
+        "calls": 26,
+        "failures": 0,
+        "durationMs": 2885,
+        "maxCallMs": 361,
+        "rowsRead": 58862,
+        "rowsWritten": 15,
+        "rowUsageStatements": 21,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 29068,
+          "rowsWritten": 0,
+          "queries": 5,
+          "durationMs": 1044,
+          "candidateChunks": 24,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 0
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 24
+            }
+          ]
+        },
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 29223,
+          "rowsWritten": 0,
+          "queries": 4,
+          "durationMs": 1126,
+          "candidateChunks": 28,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_exact",
+              "limit": 8,
+              "candidates": 4
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 24
+            }
+          ]
+        }
+      ],
+      "externalSearch": [
+        {
+          "status": "unavailable",
+          "durationMs": 4310,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 3131,
+              "count": 3
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    }
+  },
+  "prompt": "广外图书馆借阅规则是什么？请查校园知识并提供原文来源。",
+  "tools": [
+    "search_campus_knowledge",
+    "search_campus_knowledge",
+    "search_external_campus_info"
+  ],
+  "response": "目前仅检索到广外图书馆2026年9月发布的《新生入馆指南｜2026级广外人，图书馆通关手册请收好》载有部分借阅规则信息，完整借阅规则建议以图书馆官方最新发布的《读者手册》为准 [1]。\n\n具体已知规则要点如下：\n1. 借阅权限获取：完成“新生闯馆”学习并答题成绩达60分以上，可自动获得借书权限 [1]。\n2. 基础借阅规则：可借册数35册，借期30天，可续借1次，续借期15天（自原应还日期算起）；可预约册数15册，支持架上预约 [1]。\n3. 借阅操作方式：自助借还机位于白云山校区一楼、大学城校区一楼和四楼，刷校园卡扫描图书条码页即可完成借阅；也可前往一楼总服务台人工办理，服务时间为8:30—22:00 [1]。\n4. 完整读者守则及借阅规则全文，可在图书馆主页「服务指南」栏目查阅《读者手册》 [1]。",
+  "sources": [
+    {
+      "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+      "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
+    }
+  ],
+  "latencyMs": 40169,
+  "firstTextMs": 39923
+}

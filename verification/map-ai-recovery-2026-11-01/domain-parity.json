@@ -1,0 +1,369 @@
+{
+  "date": "2026-11-01",
+  "domainBinding": [
+    {
+      "hostname": "gdufs.ccwu.cc",
+      "service": "campusos-preview",
+      "environment": "production"
+    }
+  ],
+  "pages": [
+    {
+      "path": "/map",
+      "sameAssets": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "path": "/map",
+          "status": 200,
+          "assetCount": 19,
+          "assetManifestHash": "6c787e0c7affd406accfa32ccab9569b9dd4e3fb008e68e28ef4d21b8d09c031",
+          "age": null,
+          "cache": null
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "path": "/map",
+          "status": 200,
+          "assetCount": 19,
+          "assetManifestHash": "6c787e0c7affd406accfa32ccab9569b9dd4e3fb008e68e28ef4d21b8d09c031",
+          "age": null,
+          "cache": null
+        }
+      ]
+    },
+    {
+      "path": "/radar",
+      "sameAssets": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "path": "/radar",
+          "status": 200,
+          "assetCount": 22,
+          "assetManifestHash": "7c2d71f4a8ad063eb214e7c2908e2cfc26f75fea822ce0414c9aae85a3b2ccbb",
+          "age": null,
+          "cache": null
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "path": "/radar",
+          "status": 200,
+          "assetCount": 22,
+          "assetManifestHash": "7c2d71f4a8ad063eb214e7c2908e2cfc26f75fea822ce0414c9aae85a3b2ccbb",
+          "age": null,
+          "cache": null
+        }
+      ]
+    },
+    {
+      "path": "/knowledge",
+      "sameAssets": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "path": "/knowledge",
+          "status": 200,
+          "assetCount": 22,
+          "assetManifestHash": "7c2d71f4a8ad063eb214e7c2908e2cfc26f75fea822ce0414c9aae85a3b2ccbb",
+          "age": null,
+          "cache": null
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "path": "/knowledge",
+          "status": 200,
+          "assetCount": 22,
+          "assetManifestHash": "7c2d71f4a8ad063eb214e7c2908e2cfc26f75fea822ce0414c9aae85a3b2ccbb",
+          "age": null,
+          "cache": null
+        }
+      ]
+    },
+    {
+      "path": "/calendar",
+      "sameAssets": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "path": "/calendar",
+          "status": 200,
+          "assetCount": 22,
+          "assetManifestHash": "9f040feb564724573460f10f86b2e55f80dfaf98120c1485edcb1fd8c06f5403",
+          "age": null,
+          "cache": null
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "path": "/calendar",
+          "status": 200,
+          "assetCount": 22,
+          "assetManifestHash": "9f040feb564724573460f10f86b2e55f80dfaf98120c1485edcb1fd8c06f5403",
+          "age": null,
+          "cache": null
+        }
+      ]
+    },
+    {
+      "path": "/account",
+      "sameAssets": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "path": "/account",
+          "status": 200,
+          "assetCount": 20,
+          "assetManifestHash": "96bcab9be2dbf7ffe5e6101e0b90b9610ed3ef3f9422852970e03f6ef5a12d41",
+          "age": null,
+          "cache": null
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "path": "/account",
+          "status": 200,
+          "assetCount": 20,
+          "assetManifestHash": "96bcab9be2dbf7ffe5e6101e0b90b9610ed3ef3f9422852970e03f6ef5a12d41",
+          "age": null,
+          "cache": null
+        }
+      ]
+    },
+    {
+      "path": "/account/settings",
+      "sameAssets": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "path": "/account/settings",
+          "status": 200,
+          "assetCount": 20,
+          "assetManifestHash": "96bcab9be2dbf7ffe5e6101e0b90b9610ed3ef3f9422852970e03f6ef5a12d41",
+          "age": null,
+          "cache": null
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "path": "/account/settings",
+          "status": 200,
+          "assetCount": 20,
+          "assetManifestHash": "96bcab9be2dbf7ffe5e6101e0b90b9610ed3ef3f9422852970e03f6ef5a12d41",
+          "age": null,
+          "cache": null
+        }
+      ]
+    },
+    {
+      "path": "/admin",
+      "sameAssets": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "path": "/admin",
+          "status": 200,
+          "assetCount": 14,
+          "assetManifestHash": "c6421aaf27327c9b6663bfc000537b7f6ae357ad05d1541bf6bdfc4139200bd8",
+          "age": null,
+          "cache": null
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "path": "/admin",
+          "status": 200,
+          "assetCount": 14,
+          "assetManifestHash": "c6421aaf27327c9b6663bfc000537b7f6ae357ad05d1541bf6bdfc4139200bd8",
+          "age": null,
+          "cache": null
+        }
+      ]
+    }
+  ],
+  "apis": [
+    {
+      "path": "/api/auth/session",
+      "sameResult": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "status": 200,
+          "result": {
+            "available": true,
+            "mailAvailable": true
+          }
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "status": 200,
+          "result": {
+            "available": true,
+            "mailAvailable": true
+          }
+        }
+      ]
+    },
+    {
+      "path": "/api/public/content?surface=radar&limit=1&q=%E4%BD%93%E8%82%B2",
+      "sameResult": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "status": 200,
+          "result": {
+            "total": 8,
+            "ids": [
+              "content-030f429d-7e86-4564-a61b-357672e17f5b"
+            ]
+          }
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "status": 200,
+          "result": {
+            "total": 8,
+            "ids": [
+              "content-030f429d-7e86-4564-a61b-357672e17f5b"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "/api/public/content?surface=knowledge&limit=1",
+      "sameResult": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "status": 200,
+          "result": {
+            "total": 29,
+            "ids": [
+              "wx-8db535c17927f1a2537d14f0e75538396c5aadd1"
+            ]
+          }
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "status": 200,
+          "result": {
+            "total": 29,
+            "ids": [
+              "wx-8db535c17927f1a2537d14f0e75538396c5aadd1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "/api/public/activities?after=2026-11-01&before=2026-11-07&day=2026-11-01&limit=1",
+      "sameResult": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "status": 200,
+          "result": {
+            "total": 3,
+            "days": {
+              "2026-11-01": 3,
+              "2026-11-02": 1,
+              "2026-11-03": 2,
+              "2026-11-04": 1,
+              "2026-11-05": 1,
+              "2026-11-06": 3,
+              "2026-11-07": 11
+            },
+            "ids": [
+              "event-33b901212e9628a9299ae7751c8df9f7cd69fb72"
+            ]
+          }
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "status": 200,
+          "result": {
+            "total": 3,
+            "days": {
+              "2026-11-01": 3,
+              "2026-11-02": 1,
+              "2026-11-03": 2,
+              "2026-11-04": 1,
+              "2026-11-05": 1,
+              "2026-11-06": 3,
+              "2026-11-07": 11
+            },
+            "ids": [
+              "event-33b901212e9628a9299ae7751c8df9f7cd69fb72"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "path": "/api/agent/status",
+      "sameResult": true,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "status": 200,
+          "result": {
+            "chatAvailable": true,
+            "model": {
+              "ready": true,
+              "model": {
+                "source": "platform",
+                "provider": "stepfun",
+                "model": "step-3.5-flash-2603",
+                "policyVersion": "stepfun-plan-v1",
+                "testedAt": "2026-11-01T08:30:00.517Z",
+                "capabilities": {
+                  "toolCalling": true,
+                  "jsonObject": true,
+                  "strictJsonSchema": false
+                }
+              }
+            }
+          }
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "status": 200,
+          "result": {
+            "chatAvailable": true,
+            "model": {
+              "ready": true,
+              "model": {
+                "source": "platform",
+                "provider": "stepfun",
+                "model": "step-3.5-flash-2603",
+                "policyVersion": "stepfun-plan-v1",
+                "testedAt": "2026-11-01T08:30:00.517Z",
+                "capabilities": {
+                  "toolCalling": true,
+                  "jsonObject": true,
+                  "strictJsonSchema": false
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "path": "/api/console-auth",
+      "sameResult": false,
+      "sites": [
+        {
+          "origin": "https://gdufs.ccwu.cc",
+          "status": 503,
+          "result": {
+            "code": "SERVICE_UNAVAILABLE",
+            "message": "管理员登录尚未配置。"
+          }
+        },
+        {
+          "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+          "status": 200,
+          "result": {}
+        }
+      ]
+    }
+  ]
+}

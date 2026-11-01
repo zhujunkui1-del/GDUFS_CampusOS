@@ -1,0 +1,180 @@
+{
+  "baseURL": "https://campusos-preview.zhujunkui1.workers.dev",
+  "configuredProvider": "stepfun",
+  "metrics": {
+    "answerMode": "model",
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "off_topic",
+      "relatedDocuments": [],
+      "missing": [
+        "relevant_readable_evidence",
+        "official_authority_unconfirmed",
+        "policy_evidence"
+      ],
+      "activities": [],
+      "needsSupplement": true,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 2,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 1,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 7201,
+        "firstTextMs": 6364,
+        "finishReason": "stop",
+        "contentChars": 277
+      },
+      {
+        "durationMs": 8592,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 5745,
+    "completionTokens": 922,
+    "cachedPromptTokens": 0,
+    "totalTokens": 6667,
+    "usageComplete": false,
+    "chargedTokens": 250000,
+    "durationMs": 21972,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 799,
+      "serverElapsedMs": 22771,
+      "firstTextMs": 22714,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1237,
+          "ok": true
+        },
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 966,
+          "ok": true
+        },
+        {
+          "name": "search_external_campus_info",
+          "durationMs": 3797,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 19,
+        "writeQueries": 11,
+        "calls": 23,
+        "failures": 0,
+        "durationMs": 2246,
+        "maxCallMs": 406,
+        "rowsRead": 58852,
+        "rowsWritten": 15,
+        "rowUsageStatements": 21,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 29068,
+          "rowsWritten": 0,
+          "queries": 5,
+          "durationMs": 1237,
+          "candidateChunks": 24,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 0
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 24
+            }
+          ]
+        },
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 29223,
+          "rowsWritten": 0,
+          "queries": 4,
+          "durationMs": 966,
+          "candidateChunks": 28,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_exact",
+              "limit": 8,
+              "candidates": 4
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 24
+            }
+          ]
+        }
+      ],
+      "externalSearch": [
+        {
+          "status": "unavailable",
+          "durationMs": 3797,
+          "providers": [
+            {
+              "provider": "exa_web_cloud",
+              "status": "ok",
+              "durationMs": 3082,
+              "count": 3
+            }
+          ],
+          "rowsRead": 0,
+          "rowsWritten": 0
+        }
+      ]
+    }
+  },
+  "prompt": "广外图书馆借阅规则是什么？请查校园知识并提供原文来源。",
+  "tools": [
+    "search_campus_knowledge",
+    "search_campus_knowledge",
+    "search_external_campus_info"
+  ],
+  "response": "根据广外图书馆2026年9月6日发布的新生入馆指南，当前可查的借阅规则核心要点如下 [1]：\n1. 权限获取：完成“新生闯馆”学习且答题成绩达60分以上，自动获得借书权限 [1]\n2. 借阅参数：可借35册，借期30天，可续借1次，续借期15天（自原应还日期起算）[1]\n3. 预约规则：可预约15册，支持架上预约 [1]\n4. 借书渠道：可通过自助借还机（白云山校区一楼、大学城校区一楼及四楼）或一楼总服务台（服务时间8:30—22:00）办理借阅 [1]\n\n完整读者守则请查阅图书馆主页「服务指南」栏目的《读者手册》全文 [1]，。",
+  "sources": [
+    {
+      "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+      "url": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw"
+    }
+  ],
+  "latencyMs": 24085,
+  "firstTextMs": 23199
+}

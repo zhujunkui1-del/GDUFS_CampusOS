@@ -255,4 +255,10 @@ API Key 输入始终遮蔽，不提供完整明文显示/复制入口。编辑�
 
 负责人决定先管理员默认模型，完整BYOK管理界面/游客临时配置后续实施，不阻塞核心架构。本文件凭据、供应商、权限、能力实测和无自动回退约束仍适用。
 
-当前官方模型列表及受控真实API验证使用deepseek-flash，配置MODEL_API_KEY/MODEL_NAME/MODEL_BASE_URL/MODEL_CAPABILITIES_JSON。能力记录绑定供应商/规范端点/模型/凭据指纹/策略，24小时过期，变更后重新验证。诊断最多3请求、每请求256输出Token、20秒总时限、无重试；记录见docs/verification/s2-a/model-live.json。仅服务端CLI读取管理员凭据并通过HTTPS连接供应商，不经HTTP页面提交Key；公开HTTP接口没有凭据输入。上线使用Cloudflare Secrets，凭据不进入Git/前端/日志。BYOK测试、加密和账号子任务不计为已实现。
+当前官方模型列表及受控真实API验证使用deepseek-flash，配置MODEL_API_KEY/MODEL_NAME/MODEL_BASE_URL/MODEL_CAPABILITIES_JSON。能力记录绑定供应商/规范端点/模型/凭据指纹/策略；原24小时停用规则由下方D-131修订覆盖。诊断最多3请求、每请求256输出Token、20秒总时限、无重试；记录见docs/verification/s2-a/model-live.json。仅服务端CLI读取管理员凭据并通过HTTPS连接供应商，不经HTTP页面提交Key；公开HTTP接口没有凭据输入。上线使用Cloudflare Secrets，凭据不进入Git/前端/日志。BYOK测试、加密和账号子任务不计为已实现。
+
+## 2026-11-01｜D-131 平台模型优先级和能力记录
+
+负责人确定平台模型先阶跃星辰Step Plan（step-3.5-flash-2603），明确额度耗尽后才转DeepSeek（deepseek-flash）；仅Preview配置MODEL_PRIORITY=stepfun。网络、认证、普通限流或已经输出部分文本不触发额度备用切换。两供应商已各用原有诊断器完成3次真实请求，验证生成、Tool Calling、工具回传、流及JSON对象业务Schema。
+
+平台默认配置的已验证能力不再满24小时自动阻止聊天。供应商、规范端点、模型、凭据或测试策略变更仍使指纹失配并要求重测；未测、失败、未来时间或能力不全仍拒绝启用。供应商实际错误继续由每次真实调用返回，公开status不发送收费探测。此修订只适用于受控Secret平台配置，不取消未来BYOK短期授权期限和所有权检查。验收见docs/MAP_AI_RECOVERY_ACCEPTANCE_2026_11_01.md。

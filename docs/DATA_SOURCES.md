@@ -645,3 +645,7 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 Cloudflare账号只读接口核验：gdufs.ccwu.cc的服务为campusos-preview，default environment标记production不代表本仓库Production部署。7页资源清单与公开数据对照保留脱敏回执；没有读取实际用户密码或私有对话。普通账号新增明确自有入口允许范围，不放开任意来源。
 
 定位依据W3C/MDN watchPosition及Device Orientation规范，采用浏览器高精度请求与显式方向权限，仅绝对方向/有效罗盘用于箭头；传感器无数据不以位移方向冒充手机朝向。位置只保留页面内存，不新增外部地图供应商、位置持久化或GPS收费API。用户x/q/ww图片仅为故障/外观参考，没有复制参考地图作为GIS或正式资源。资料：https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition 、https://www.w3.org/TR/orientation-event/ 。
+
+## 2026-11-01｜D-131定位和真实AI验收材料
+
+用户111/222/333.jpg仅作为定位故障和“箭头在圆点下方”的外观参考，未复制参考地图/图像为正式资产。方向标记为自有SVG几何，仍只用真实传感器方向。位置不持久化，不新增供应商。真实模型沿用原批准Step Plan与DeepSeek服务，各3诊断请求；实际对话引用既有公开文章《新生入馆指南｜2026级广外人，图书馆通关手册请收好》（https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw）。验证不变更文章许可/分类、外部搜索账号、地图数据或用户账号；新截图与脱敏记录为本项目浏览器运行回执，见verification/map-ai-recovery-2026-11-01/。

@@ -274,6 +274,17 @@
   border: 0;
   background: transparent;
 }
+.account-auth-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 66.666667%;
+  margin-inline: auto;
+  gap: 0;
+  text-align: center;
+}
+.account-auth-links-single {
+  grid-template-columns: 1fr;
+}
 .account-links a.account-primary-link {
   padding: 10px 20px;
   background: #1262c2;

@@ -155,10 +155,7 @@ export function CampusMapProvider({
     [],
   );
   const location = useMapLocation(updateHeading);
-  const requestLocation = location.request,
-    locationTracking = location.tracking;
-  const liveLocate = useRef(false),
-    resumeTracking = useRef(false);
+  const liveLocate = useRef(false);
   const stopLocation = location.stop;
   const [navigationActive, setNavigationActive] = useState(false);
   const [navigationPath, setNavigationPath] = useState(pathname);
@@ -228,25 +225,9 @@ export function CampusMapProvider({
   useEffect(() => {
     if (pathname !== "/map") {
       liveLocate.current = false;
-      resumeTracking.current = false;
       stopLocation();
     }
   }, [pathname, stopLocation]);
-  useEffect(() => {
-    const onHidden = () => {
-      if (document.hidden) {
-        resumeTracking.current = locationTracking;
-        stopLocation();
-        setNavigationProgress(null);
-        setLocationMessage("定位已暂停。");
-      } else if (resumeTracking.current && pathname === "/map") {
-        resumeTracking.current = false;
-        requestLocation(true);
-      }
-    };
-    document.addEventListener("visibilitychange", onHidden);
-    return () => document.removeEventListener("visibilitychange", onHidden);
-  }, [stopLocation, locationTracking, requestLocation, pathname]);
   useEffect(() => {
     const position = location.position;
     if (!position) {
@@ -255,12 +236,6 @@ export function CampusMapProvider({
     }
     const update = () => {
       const { coordinate, accuracy, timestamp } = position;
-      if (Date.now() - timestamp > 30000) {
-        adapter.current?.clearLocation();
-        setLocationMessage("定位已过期，请重新定位。");
-        setNavigationProgress(null);
-        return;
-      }
       if (
         !campusData.zones.some((z) => pointInPolygon(coordinate, z.polygon)) &&
         nearestTunnelDistance(coordinate) > 25
@@ -299,6 +274,12 @@ export function CampusMapProvider({
       setLocationMessage("");
       if (!navigationActive || !location.tracking || !currentRoute.current)
         return;
+      // Keep the last device fix visible while acquiring the next one. An old
+      // fix still cannot advance navigation or authorize a fresh AI location.
+      if (Date.now() - timestamp > 30000) {
+        setNavigationProgress(null);
+        return;
+      }
       if (accuracy > 50) {
         setLocationMessage("定位精度不足，请重新定位。");
         setNavigationProgress(null);
@@ -590,7 +571,6 @@ export function CampusMapProvider({
       ++interactionVersion.current;
       if (!navigationActive && location.tracking) {
         liveLocate.current = false;
-        resumeTracking.current = false;
         location.stop(true);
         setLocationMessage("");
         setNavigationProgress(null);

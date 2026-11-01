@@ -606,12 +606,26 @@
   font-size: 0.8125rem;
 }
 .device-heading-marker {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   pointer-events: none;
 }
 .device-heading-marker svg {
   display: block;
+}
+.map-account-avatar {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #4d92e9, #2570c8);
+  box-shadow:
+    inset 0 1px 0 #ffffff7a,
+    0 5px 16px #467db42b;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
 }
 .place-drag-handle {
   display: none;

@@ -91,10 +91,11 @@ export class ModelRouter {
     } catch {
       throw new ApiError("MODEL_TEST_REQUIRED", "默认模型需要完成能力验证。");
     }
+    // Platform credentials are operator-managed, not short-lived BYOK grants.
+    // Revalidate on configuration/policy changes, not by taking chat offline daily.
     const age = this.now() - Date.parse(receipt.testedAt);
     if (
       age < 0 ||
-      age > 24 * 60 * 60 * 1000 ||
       receipt.model !== this.#config.model ||
       receipt.provider !== (this.#config.provider || "deepseek") ||
       receipt.policyVersion !==
@@ -105,7 +106,7 @@ export class ModelRouter {
     )
       throw new ApiError(
         "MODEL_TEST_REQUIRED",
-        "默认模型配置已变化或验证已过期。",
+        "默认模型配置已变化，需要重新验证。",
       );
     return {
       client: this.providers.create(receipt.provider, { ...this.#config }),

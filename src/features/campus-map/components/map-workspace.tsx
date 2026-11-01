@@ -34,6 +34,7 @@ import { routeSheetMediaQuery } from "./use-route-sheet";
 import { LocationNotice } from "./location-notice";
 import { FocusedNavigation } from "./focused-navigation";
 import { MapViewButtons } from "./map-view-buttons";
+import { useAccount } from "@/features/account/account-context";
 
 const layerNames: Record<MapLayer, string> = {
   buildings: "校园建筑",
@@ -43,6 +44,7 @@ const layerNames: Record<MapLayer, string> = {
 };
 export function MapWorkspace() {
   const map = useCampusMap();
+  const user = useAccount().session?.user;
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
   const [online, setOnline] = useState<SDKPoi[]>([]),
@@ -148,10 +150,18 @@ export function MapWorkspace() {
           <Link
             className="mobile-account glass-surface"
             href="/account"
-            aria-label="我的账号，当前为游客"
-            title="游客模式"
+            aria-label={
+              user ? `我的账号，${user.username}` : "我的账号，当前为游客"
+            }
+            title={user ? user.username : "游客模式"}
           >
-            <UserRound size={20} strokeWidth={1.6} />
+            {user ? (
+              <span className="map-account-avatar" aria-hidden="true">
+                {user.username.slice(0, 1).toUpperCase()}
+              </span>
+            ) : (
+              <UserRound size={20} strokeWidth={1.6} />
+            )}
           </Link>
         </div>
         {searchOpen && (

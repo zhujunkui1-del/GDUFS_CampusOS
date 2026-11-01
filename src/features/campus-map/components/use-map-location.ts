@@ -54,6 +54,7 @@ export function useMapLocation(onHeading?: (heading: number | null) => void) {
   const watch = useRef<number | null>(null),
     generation = useRef(0);
   const headingStop = useRef<(() => void) | null>(null);
+  const recoveryStop = useRef<(() => void) | null>(null);
   const stop = useCallback((clearError = false) => {
     ++generation.current;
     if (watch.current !== null)
@@ -61,6 +62,8 @@ export function useMapLocation(onHeading?: (heading: number | null) => void) {
     watch.current = null;
     headingStop.current?.();
     headingStop.current = null;
+    recoveryStop.current?.();
+    recoveryStop.current = null;
     setPosition(null);
     if (clearError) setError("");
     setTracking(false);
@@ -72,6 +75,7 @@ export function useMapLocation(onHeading?: (heading: number | null) => void) {
       if (watch.current !== null)
         navigator.geolocation?.clearWatch(watch.current);
       headingStop.current?.();
+      recoveryStop.current?.();
     },
     [],
   );
@@ -88,6 +92,8 @@ export function useMapLocation(onHeading?: (heading: number | null) => void) {
         return;
       }
       const revision = generation.current;
+      let lastFix = 0,
+        refreshing = false;
       setBusy(true);
       setTracking(continuous);
       if (continuous && onHeading)
@@ -103,10 +109,14 @@ export function useMapLocation(onHeading?: (heading: number | null) => void) {
           !Number.isFinite(p.timestamp) ||
           p.coords.accuracy < 0
         ) {
-          setError("设备返回了无效定位，请重新定位。");
-          stop();
+          if (!continuous) {
+            setError("设备返回了无效定位，请重新定位。");
+            stop();
+          }
           return;
         }
+        if (p.timestamp < lastFix) return;
+        lastFix = p.timestamp;
         setPosition({
           coordinate: [p.coords.longitude, p.coords.latitude],
           accuracy: p.coords.accuracy,
@@ -117,7 +127,8 @@ export function useMapLocation(onHeading?: (heading: number | null) => void) {
       };
       const failure = (e: GeolocationPositionError) => {
         if (revision !== generation.current) return;
-        setError(locationError(e.code));
+        if (!continuous || !lastFix || e.code === 1)
+          setError(locationError(e.code));
         setBusy(false);
         if (e.code === 1) stop();
         else if (!continuous) setTracking(false);
@@ -128,13 +139,56 @@ export function useMapLocation(onHeading?: (heading: number | null) => void) {
         maximumAge: 0,
       };
       try {
-        if (continuous)
-          watch.current = navigator.geolocation.watchPosition(
-            success,
-            failure,
-            options,
-          );
-        else
+        if (continuous) {
+          const startWatch = () => {
+            if (watch.current !== null)
+              navigator.geolocation.clearWatch(watch.current);
+            watch.current = navigator.geolocation.watchPosition(
+              success,
+              failure,
+              options,
+            );
+          };
+          // Native watches can stay silent while stationary or after a mobile
+          // browser suspension. Refresh an old fix without clearing the marker.
+          const refresh = () => {
+            if (
+              revision !== generation.current ||
+              refreshing ||
+              document.hidden
+            )
+              return;
+            refreshing = true;
+            navigator.geolocation.getCurrentPosition(
+              (p) => {
+                refreshing = false;
+                success(p);
+              },
+              (e) => {
+                refreshing = false;
+                failure(e);
+              },
+              options,
+            );
+          };
+          const resume = () => {
+            if (revision !== generation.current || document.hidden) return;
+            refreshing = false;
+            startWatch();
+            refresh();
+          };
+          startWatch();
+          const timer = setInterval(() => {
+            if (Date.now() - lastFix >= 10000) refresh();
+          }, 15000);
+          document.addEventListener("visibilitychange", resume);
+          window.addEventListener("pageshow", resume);
+          recoveryStop.current = () => {
+            clearInterval(timer);
+            document.removeEventListener("visibilitychange", resume);
+            window.removeEventListener("pageshow", resume);
+          };
+        } else
           navigator.geolocation.getCurrentPosition(success, failure, options);
       } catch {
         stop();

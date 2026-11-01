@@ -191,12 +191,13 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
             {action.busy ? "正在提交…" : register ? "注册并登录" : "登录"}
           </button>
         </form>
-        <div className="account-links">
+        <div
+          className={`account-links account-auth-links${register ? " account-auth-links-single" : ""}`}
+        >
           <Link href={register ? "/account/login" : "/account/register"}>
             {register ? "去登录" : "注册账号"}
           </Link>
           {!register && <Link href="/account/forgot-password">找回密码</Link>}
-          <Link href="/map">游客浏览</Link>
         </div>
       </div>
     </AccountFrame>

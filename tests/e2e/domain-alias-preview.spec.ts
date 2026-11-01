@@ -40,6 +40,10 @@ test("same test account logs in at both configured public origins", async ({
     await expect(
       page.getByRole("heading", { name: a.username, exact: true }),
     ).toBeVisible();
+    await page.goto(origin + "/map");
+    await expect(page.locator(".map-account-avatar")).toHaveText(
+      a.username.slice(0, 1).toUpperCase(),
+    );
     await page.goto(origin + "/account/settings");
     await page.getByRole("button", { name: "退出登录", exact: true }).click();
   }

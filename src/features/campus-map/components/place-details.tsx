@@ -40,6 +40,9 @@ export function PlaceDetails({
             className="place-details-panel"
             initialFocus={close}
             finalFocus={() => {
+              // A touch selection must never restore focus to the search input:
+              // mobile browsers open the keyboard even after the drawer closes.
+              if (compact) return false;
               const active = document.activeElement;
               // Closing motion may finish after the user opens another control.
               // Keep their new focus instead of dismissing the mode menu.

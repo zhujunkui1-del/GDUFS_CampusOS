@@ -10,8 +10,8 @@
   "strictJsonSchema": "not_tested",
   "requests": 3,
   "maxOutputTokensPerRequest": 256,
-  "durationMs": 10014,
-  "testedAt": "2026-10-30T11:02:45.972Z",
+  "durationMs": 8923,
+  "testedAt": "2026-11-01T08:30:00.517Z",
   "events": [
     {
       "type": "tool.started",
