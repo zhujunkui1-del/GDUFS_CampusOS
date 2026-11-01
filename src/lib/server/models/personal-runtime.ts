@@ -2,12 +2,13 @@ import type { SqlDatabase } from "../assistant/database";
 import type { ModelClient, ModelSnapshot } from "@/domain/models/contracts";
 import { ApiError } from "../errors";
 import { ModelConfigStore } from "./model-config-store";
-import { PersonalModelClient } from "./personal-client";
+import { PersonalProviderRegistry } from "./personal-client";
 
 export async function personalModelRuntime(
   db: SqlDatabase,
   owner: string,
   secret: string,
+  registry = new PersonalProviderRegistry(),
 ): Promise<{ client: ModelClient; snapshot: ModelSnapshot } | null> {
   if (!owner.startsWith("u:")) return null;
   const userId = owner.slice(2);
@@ -23,6 +24,6 @@ export async function personalModelRuntime(
   }
   const active = await store.active(userId);
   if (active.mode === "platform") return null;
-  const client = new PersonalModelClient(active.config);
+  const client = registry.create(active.config);
   return { client, snapshot: client.snapshot };
 }

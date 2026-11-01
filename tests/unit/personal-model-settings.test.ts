@@ -10,15 +10,52 @@ import {
 } from "@/lib/server/models/credentials";
 import {
   PersonalModelClient,
+  PersonalProviderRegistry,
   testPersonalConnection,
 } from "@/lib/server/models/personal-client";
 import { personalModelRuntime } from "@/lib/server/models/personal-runtime";
 import { ModelConfigStore } from "@/lib/server/models/model-config-store";
+import { MODEL_PROVIDERS, providerById } from "@/domain/models/providers";
 
 const secret = "fixture-model-credential-secret-123456";
 
 afterEach(() => {
   vi.unstubAllGlobals();
+});
+
+describe("provider metadata", () => {
+  it("exposes thirteen unique, protocol-mapped providers", () => {
+    expect(MODEL_PROVIDERS).toHaveLength(13);
+    expect(new Set(MODEL_PROVIDERS.map((p) => p.id)).size).toBe(13);
+    for (const provider of MODEL_PROVIDERS) {
+      expect(providerById(provider.id)).toBe(provider);
+      expect(["openai", "anthropic", "gemini"]).toContain(provider.protocol);
+      expect(provider.label.length).toBeGreaterThan(0);
+      if (provider.id !== "custom") expect(provider.baseUrl).toMatch(/^https:\/\//);
+    }
+  });
+});
+
+describe("personal provider registry", () => {
+  it("constructs only registered provider ids", () => {
+    const registry = new PersonalProviderRegistry();
+    expect(() =>
+      registry.create({
+        provider: "unregistered",
+        baseUrl: "https://example.com/v1",
+        model: "m",
+        apiKey: "sk-x",
+      }),
+    ).toThrowError(expect.objectContaining({ code: "MODEL_SELECTION_REQUIRED" }));
+    expect(
+      registry.create({
+        provider: "openrouter",
+        baseUrl: "https://openrouter.ai/api/v1",
+        model: "openai/gpt-4o-mini",
+        apiKey: "sk-x",
+      }),
+    ).toBeInstanceOf(PersonalModelClient);
+  });
 });
 
 describe("personal model endpoint safety", () => {
@@ -220,6 +257,31 @@ describe("personal runtime resolution", () => {
         provider: "openai",
         model: "deepseek-chat",
       });
+      const calls: string[] = [];
+      const fakeFetch = vi.fn(async (url: string) => {
+        calls.push(String(url));
+        return new Response(
+          JSON.stringify({
+            choices: [{ message: { content: "pong" }, finish_reason: "stop" }],
+            usage: { prompt_tokens: 1, completion_tokens: 1, total_tokens: 2 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      });
+      const simulated = await personalModelRuntime(
+        f.db,
+        "u:" + a.profile.id,
+        secret,
+        new PersonalProviderRegistry(fakeFetch as unknown as typeof fetch),
+      );
+      const reply = await simulated!.client.generateWithTools({
+        messages: [{ role: "user", content: "ping" }],
+        tools: [],
+        maxTokens: 16,
+        signal: new AbortController().signal,
+      });
+      expect(reply.content).toBe("pong");
+      expect(calls[0]).toBe("https://api.deepseek.com/v1/chat/completions");
       expect(
         await personalModelRuntime(f.db, "g:guest", secret),
       ).toBeNull();

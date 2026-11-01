@@ -79,6 +79,19 @@ function parseArgs(value: unknown) {
   }
 }
 
+/** User-scoped provider factory. Only registered provider ids can be constructed. */
+export class PersonalProviderRegistry {
+  constructor(
+    private readonly fetchImpl: Fetch = fetch,
+    private readonly timeoutMs = 45000,
+  ) {}
+  create(config: StoredModelConfig): PersonalModelClient {
+    if (!providerById(config.provider))
+      throw new ApiError("MODEL_SELECTION_REQUIRED", "不支持的模型供应商。");
+    return new PersonalModelClient(config, this.fetchImpl, this.timeoutMs);
+  }
+}
+
 /** Non-streaming adapter. Streaming is intentionally not trusted for arbitrary providers. */
 export class PersonalModelClient implements ModelClient {
   readonly snapshot: ModelSnapshot;
