@@ -1,0 +1,39 @@
+{
+  "recordedAt": "2026-11-01T09:56:58.362Z",
+  "changedFilesESLint": "passed",
+  "typecheck": "passed",
+  "productionBuild": "passed",
+  "existingModelUnitTests": {
+    "files": 3,
+    "passed": 9
+  },
+  "browser": {
+    "automation": "Playwright CLI",
+    "browser": {
+      "version": "149.0.4022.80",
+      "dpr": 1.0000000298023224
+    },
+    "assetsLoaded": 32,
+    "individualModeStates": 26,
+    "screenshots": 40,
+    "pageErrors": 0,
+    "failedRequests": 0,
+    "idleStable": true,
+    "physicalPhoneTested": false
+  },
+  "assetChecks": "13 source footprints and source names unchanged; 7 floor slabs per 3D building; 78 courtyard rays clear; south8 open recess clear; geographic group bounds match components; frozen south7 exact SHA; 45 previous model files unchanged",
+  "fullRepositoryLint": {
+    "status": "failed_existing_generated_and_unrelated_files",
+    "errors": 69,
+    "warnings": 2292,
+    "total": 2361,
+    "details": [
+      ".map-tools and .tmp generated bundles contain numerous lint errors/warnings",
+      "existing backups/wechat-catalog-2026-10-21/inspect.mjs unused import",
+      "existing assistant/read-plan.ts and retrieval/retriever.ts unused values",
+      "existing tests/regression/test_mp_tools_browsing_ui.cjs require imports and conversation-flow.test.ts unused value"
+    ],
+    "log": "output/playwright/dormitories-2026-11-01/full-lint.log"
+  },
+  "formalMapIntegrated": false
+}

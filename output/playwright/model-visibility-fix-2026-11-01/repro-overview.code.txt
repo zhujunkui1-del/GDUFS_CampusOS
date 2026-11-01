@@ -1,0 +1,13 @@
+async (page) => {
+ await page.setViewportSize({width:1280,height:1024});
+ await page.emulateMedia({reducedMotion:'reduce'});
+ const map=page.getByTestId('campus-map');
+ await page.waitForFunction(()=>document.querySelector('[data-testid=campus-map]').dataset.status==='ready');
+ for(let i=0;i<3&&(await page.getByTestId('map-mode-trigger').innerText())!=='3D';i++)await page.getByTestId('map-mode-trigger').click();
+ await page.waitForFunction(()=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return d.campusModelMode==='3d'&&d.modelState==='ready'&&d.mode==='3d'&&d.cameraMoving==='false'&&Number(d.campusModelCount)>=5&&d.campusModelPending==='0';},null,{timeout:20000});
+ await page.waitForTimeout(150);
+ const d=await map.evaluate(el=>({...el.dataset})),keys=JSON.parse(d.campusModelKeys||'[]');
+ await page.screenshot({path:'overview-repro.png'});
+ const whiteModels=keys.filter(k=>k.endsWith(':2.5d'));
+ return {ok:whiteModels.length===0&&keys.length>=5,mode:d.mode,zoom:d.zoom,count:d.campusModelCount,detailCount:d.campusModelDetails,whiteModels,keys,drawCalls:d.campusModelDrawCalls,triangles:d.campusModelTriangles};
+}

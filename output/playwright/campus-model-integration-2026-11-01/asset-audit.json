@@ -1,0 +1,470 @@
+{
+  "date": "2026-11-01",
+  "catalogVersion": "campus-building-models-2026-11-01",
+  "buildingUnits": 28,
+  "newBuildingUnits": 27,
+  "visualConnectors": 1,
+  "files": 56,
+  "bytes": 5156888,
+  "map": {
+    "version": "s1-2026-10-14.2",
+    "sha256": "15060d099418bcb052e7963a1ee8ff8d3c9dd08a0f47569ecb460861d6f3d23e",
+    "features": 4521,
+    "places": 113
+  },
+  "south7": {
+    "preserved": true,
+    "sha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+    "bytes": 80384
+  },
+  "assets": [
+    {
+      "key": "library",
+      "mode": "2.5d",
+      "bytes": 15932,
+      "sha256": "9ce5a5da90dba8b137308f4769aadc02e6c6d55d52ece8952080ec4e1c3f4803",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "library",
+      "mode": "3d",
+      "bytes": 91572,
+      "sha256": "0b93289ff027e3918966b729b563142e8f4cf56c5b1f56207b639bffd6de27d3",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "art",
+      "mode": "2.5d",
+      "bytes": 20492,
+      "sha256": "2fba3f18d533d1f1e47e4f8bd6058e12f260bad207d899218fc9c42d55f8546c",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "art",
+      "mode": "3d",
+      "bytes": 139608,
+      "sha256": "c03288b92bd3aa2cd75675f00bb51fbea7a8333634ed2feb074982a57d0a8a3e",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "auditorium",
+      "mode": "2.5d",
+      "bytes": 40224,
+      "sha256": "416e632521dd32a2fd91c1c87f8223953c8a6c1dde759e03824c6b77a2de4fea",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "auditorium",
+      "mode": "3d",
+      "bytes": 170236,
+      "sha256": "6f76dfb37c8fb2f0d75de2bbbe0ef703f10325860cad39b274230049b170cd43",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "b8",
+      "mode": "2.5d",
+      "bytes": 27624,
+      "sha256": "f39ed5be06c056864f6ee65398a1f209ca789e38f3291626789176a9026f690a",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "b8",
+      "mode": "3d",
+      "bytes": 61116,
+      "sha256": "2cd95473155704192b0127127435a35a5589c3af79054c8e7d4a82289d5b1692",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "faculty",
+      "mode": "2.5d",
+      "bytes": 53980,
+      "sha256": "ce0dd3ff6f35ea7118f74ccb49525b792916e8d93e0a7f468ca3915372d050ba",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "faculty",
+      "mode": "3d",
+      "bytes": 198672,
+      "sha256": "aa908ef5a2af35dbb5fcc037a0e91c30b6c60f36d51187ed57c471508f35cb4d",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "gymnasium",
+      "mode": "2.5d",
+      "bytes": 76332,
+      "sha256": "3f4e354eeffacaf8eadff5d7f617e81248b805eb978af64ea9d8a03eb526f1d2",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "gymnasium",
+      "mode": "3d",
+      "bytes": 313932,
+      "sha256": "e9fce68a179c7d19c1e1dc0a798a48a130dec8be42574dd470640a80cae34dde",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "stadium",
+      "mode": "2.5d",
+      "bytes": 146500,
+      "sha256": "a03d90598bbc16b3e133681e867d337d1db7a7fca763148b642ab46180698963",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "stadium",
+      "mode": "3d",
+      "bytes": 403208,
+      "sha256": "8667c50456bed49b4e0b10820c8ec78c8c522eb2c468cc0e57b3ce873419f8e5",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "laboratory",
+      "mode": "2.5d",
+      "bytes": 98176,
+      "sha256": "cc238d1956b9ed603c8c3a1cf537fed308869e8301790f76742594a2f7a06a48",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "laboratory",
+      "mode": "3d",
+      "bytes": 273224,
+      "sha256": "b4c51ce5622d67cb6e84bf70362a9c001419024039cee58448393d5ceac51b87",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-efg",
+      "mode": "2.5d",
+      "bytes": 175672,
+      "sha256": "6c3a6bd423751d930b7805469a84c2808ce873b3b9048525aed03c0e8df8550e",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-efg",
+      "mode": "3d",
+      "bytes": 610988,
+      "sha256": "35a3e06d82d9d3f40ca907e7e192a0558564b1666b1ef8a7a59fcffd45ecfcae",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "administration",
+      "mode": "2.5d",
+      "bytes": 38532,
+      "sha256": "e00f035ae0c8ab7f1659b0e1fae6731b640be6dd742840cd82467ff67a65ea65",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "administration",
+      "mode": "3d",
+      "bytes": 137248,
+      "sha256": "e3c89bc87a4cd7f65ab6773da8a2a32cc6ae10f522b6dceb0881234d6fbfa6d4",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "pavilion",
+      "mode": "2.5d",
+      "bytes": 9112,
+      "sha256": "5c3b917e2d03d76772c1eb02163c3723c92cb277bc921f10a5c68b0aec6a423e",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "pavilion",
+      "mode": "3d",
+      "bytes": 17664,
+      "sha256": "8d94f7df161484a5a934d950998ee1fab5e3640cfbf375d371ba947766d7dd0b",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-A",
+      "mode": "2.5d",
+      "bytes": 30788,
+      "sha256": "ded5d83a1f31c6a20c71003ae5ea716f927c7e66196fa0d81dc644982b961322",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-A",
+      "mode": "3d",
+      "bytes": 87828,
+      "sha256": "eb4eefa278b0cc40f05b8c0402ff9f1b8211dcd3dd58874914435b37b4300a8f",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-B",
+      "mode": "2.5d",
+      "bytes": 62876,
+      "sha256": "f68c4d14578cb13be146c8f96e917f9409c0f0d61c0ef92daa4d9808a00a496e",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-B",
+      "mode": "3d",
+      "bytes": 189464,
+      "sha256": "f670281a2217b7575049189cb0cf99a99715b1d5b8eaa561c8cc3a8e58739eb0",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-C",
+      "mode": "2.5d",
+      "bytes": 44832,
+      "sha256": "10b884aae53ff173dc4a5ddd422d15470f3a28a00f49e6e86a347eafa157c5b4",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-C",
+      "mode": "3d",
+      "bytes": 134272,
+      "sha256": "34e723762b8905836c935358f47fe66af5ae3054eddf6b746f3e6fe2d0b6de21",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-D",
+      "mode": "2.5d",
+      "bytes": 64388,
+      "sha256": "d89a612ca42287743b3c04e9b6de49e2e4127f23a62a114f78ba3a7ca7669145",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-D",
+      "mode": "3d",
+      "bytes": 202776,
+      "sha256": "5008c2a4775ec247301f07c04e01d3554b05efe24c820558c48ec64b1ea6a215",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n1",
+      "mode": "2.5d",
+      "bytes": 14920,
+      "sha256": "e8a3a4f17fcb3d391c3e7f6df71e8b3392b45bd57c2a8c03adda85e545ac975e",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n1",
+      "mode": "3d",
+      "bytes": 81392,
+      "sha256": "e12d648d8c70caf7b1ac376b7f69b4e13f73a23844ddf7765c61f16dbe19d00f",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n2",
+      "mode": "2.5d",
+      "bytes": 14920,
+      "sha256": "6b84c48c69d48a3a27b1a91dcaed075e1abeb1f36e5823161a5b7fc246895f97",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n2",
+      "mode": "3d",
+      "bytes": 81400,
+      "sha256": "189e9a27f3e8db3ffdc856751c75ca3cf69118bff5821df528a92b1d4dbcdf5e",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n3",
+      "mode": "2.5d",
+      "bytes": 14924,
+      "sha256": "a8f7ed7343d3ba90fd8f575d1a89aba425b371e993daa770fadb77ae6dee766a",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n3",
+      "mode": "3d",
+      "bytes": 81408,
+      "sha256": "a13475240dc25a097c29f7bab1a6986c57dbcd7433b313fd1babac4a83b0df5a",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n4",
+      "mode": "2.5d",
+      "bytes": 14928,
+      "sha256": "f1fb7f3a81773950bf8c64f5d15e40c973ff37529eefb2972d591c5398bfe095",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n4",
+      "mode": "3d",
+      "bytes": 81408,
+      "sha256": "8fb663acfca426c37ca8c1a042d2577f9b185233efab7b00c70767d9ec2182fa",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n5",
+      "mode": "2.5d",
+      "bytes": 14936,
+      "sha256": "b5d876c8ffc991f7ac5a038e4b251a335f4dd4989a418e3e2c0d8a72babcac2a",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n5",
+      "mode": "3d",
+      "bytes": 82252,
+      "sha256": "8d45297d27658d72035501b7643a8fee01310d54542942922049883a331e8532",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n6",
+      "mode": "2.5d",
+      "bytes": 14936,
+      "sha256": "df915c4f6ecc3169f73371d143519d487425dba251a6b60029205728504f5c65",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-n6",
+      "mode": "3d",
+      "bytes": 82248,
+      "sha256": "7f35975c06650b08593e39f99bd7d9ecb5e65791876c0de66263d05cbc4839fe",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s8",
+      "mode": "2.5d",
+      "bytes": 20308,
+      "sha256": "d98c341ef9fd7e4f3923fff7e484be9d9b5e30c02f0a2859f3a5346b284b45bd",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s8",
+      "mode": "3d",
+      "bytes": 110584,
+      "sha256": "aec7a0b8970e7a8bb623e9ee870a71df3c6cfcdae4dc605ff712a888fb1cde16",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s9",
+      "mode": "2.5d",
+      "bytes": 15704,
+      "sha256": "72c51aba70bba4af5ae3b034029850bb32b6156b58370cf845938c00fe66d90d",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s9",
+      "mode": "3d",
+      "bytes": 81400,
+      "sha256": "39ce7f06ecd87c5071a0ec843c9bf7256b88015767105a16de58c6cdd5836832",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s10",
+      "mode": "2.5d",
+      "bytes": 14936,
+      "sha256": "db8c77ce8e66c19472427db5638c452bac3ef741369ee48f377e6ced1d519097",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s10",
+      "mode": "3d",
+      "bytes": 81400,
+      "sha256": "1a18c41d63ab973f351717d614b17747958e0e4d253442fc9f44d579e0434077",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s11",
+      "mode": "2.5d",
+      "bytes": 15708,
+      "sha256": "4334395f7f775aa08950d3a84f8fd857b836fd7aafb8c416e34099bcb77b3ecb",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s11",
+      "mode": "3d",
+      "bytes": 81396,
+      "sha256": "2fda6f1df75e7676dc647d4e435628804941f3b007976c09d95ac9ac2332ca25",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s12",
+      "mode": "2.5d",
+      "bytes": 14936,
+      "sha256": "6c477cada0ee12c031b75036eca7ad79b570255653ca03ac8a5af3c18e9de739",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s12",
+      "mode": "3d",
+      "bytes": 84508,
+      "sha256": "f6c253855656baf4b1935a8373fd20a1eb44ac29c1d761c829b6de3b05421703",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s13",
+      "mode": "2.5d",
+      "bytes": 14932,
+      "sha256": "2a376c78f62116f6648697c4b79e4b8f38e144eb1da423f3fb7f4c88032a96ac",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "dormitory-s13",
+      "mode": "3d",
+      "bytes": 89952,
+      "sha256": "40511576fc5d0bf33bc71b15ea78a25a438d6736d9e96f2560e9c1cde9f6ca1f",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-links",
+      "mode": "2.5d",
+      "bytes": 5672,
+      "sha256": "199cc90091fca0e9e6194269ecbf138f5ee8c5b3d0f0a3cf4390431fd2a6f82d",
+      "images": 0,
+      "textures": 0
+    },
+    {
+      "key": "teaching-links",
+      "mode": "3d",
+      "bytes": 8512,
+      "sha256": "ca2bd3b709ed13c901f0d8e5d461b9024ce2cabcfd1e472681c6f9162bc6d042",
+      "images": 0,
+      "textures": 0
+    }
+  ]
+}

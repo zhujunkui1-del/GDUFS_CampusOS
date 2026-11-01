@@ -46,6 +46,13 @@ import {
   type PilotModelState,
 } from "../data/model-pilot";
 import type { Nanyuan7ModelLayer } from "../layers/nanyuan7-model-layer";
+import type { CampusBuildingModelLayer } from "../layers/campus-building-model-layer";
+import {
+  buildingModelCatalog,
+  buildingModelCorners,
+  buildingModelForPlace,
+  buildingModelsAvailable,
+} from "../data/building-models";
 import { locationHalo } from "../data/device-location";
 
 type CameraEvent = "zoomend" | "rotateend" | "moveend" | "pitchend";
@@ -99,12 +106,14 @@ export class LocalMapAdapter implements MapAdapter {
   private cameraTargetKey?: string;
   private displayMode: MapMode = "2d";
   private modelLayer?: Nanyuan7ModelLayer;
+  private campusModelLayer?: CampusBuildingModelLayer;
+  private campusModelsLoading = false;
   private modelLoading = false;
   private modelPreloading = false;
   private modelState: PilotModelState = "idle";
   private modelListeners = new Set<(state: PilotModelState) => void>();
   get modelAvailable() {
-    return modelPilotAvailable && this.supports3D;
+    return (modelPilotAvailable || buildingModelsAvailable) && this.supports3D;
   }
   private constructor(private element: HTMLElement) {
     setWorkerUrl("/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs");
@@ -530,7 +539,7 @@ export class LocalMapAdapter implements MapAdapter {
     this.animateCamera({ pitch: next });
   }
   private initializePilot() {
-    if (!this.modelAvailable) return;
+    if (!modelPilotAvailable || !this.supports3D) return;
     this.native.addSource("nanyuan7-volume", {
       type: "geojson",
       data: pilotVolume(),
@@ -549,7 +558,6 @@ export class LocalMapAdapter implements MapAdapter {
       id: "nanyuan7-volume",
       type: "fill-extrusion",
       source: "nanyuan7-volume",
-      minzoom: 16.7,
       paint: {
         "fill-extrusion-color": "#e4d9c6",
         "fill-extrusion-height": modelPilot.heightMeters,
@@ -586,12 +594,64 @@ export class LocalMapAdapter implements MapAdapter {
     if (mode === "2d" && this.modelState === "error")
       this.setModelState("idle");
     this.updateModelVisibility();
+    if (mode !== "2d") void this.loadCampusModels();
     if (mode === "2.5d") void this.preloadDetailedModel();
     if (mode === "3d") void this.loadDetailedModel();
     if (animate) this.setPitch(mode === "2d" ? 0 : CAMPUS_PITCH);
   }
+  private async loadCampusModels() {
+    if (
+      !buildingModelsAvailable ||
+      this.campusModelsLoading ||
+      this.campusModelLayer
+    )
+      return;
+    this.campusModelsLoading = true;
+    try {
+      const { CampusBuildingModelLayer } =
+        await import("../layers/campus-building-model-layer");
+      if (this.destroyed || this.displayMode === "2d") return;
+      if (!this.native.getSource("campus-model-courtyards")) {
+        this.native.addSource("campus-model-courtyards", {
+          type: "geojson",
+          data: buildingModelCatalog.courtyardsUrl,
+        });
+        this.native.addLayer(
+          {
+            id: "campus-model-courtyards",
+            type: "fill",
+            source: "campus-model-courtyards",
+            paint: { "fill-color": "#c7d3b9" },
+          },
+          this.native.getLayer("route") ? "route" : undefined,
+        );
+      }
+      this.campusModelLayer = new CampusBuildingModelLayer(
+        () => this.setModelState("error"),
+        () => this.updateModelVisibility(),
+      );
+      this.native.addLayer(
+        this.campusModelLayer,
+        this.native.getLayer("route") ? "route" : undefined,
+      );
+      this.campusModelLayer.setAppearance(this.selected, !!this.activeRouteId);
+      this.updateModelVisibility();
+    } catch {
+      if (!this.destroyed) {
+        if (this.native.getLayer("campus-building-models"))
+          this.native.removeLayer("campus-building-models");
+        this.campusModelLayer = undefined;
+        this.element.dataset.campusModelState = "error";
+        if (this.displayMode === "3d") this.setModelState("error");
+      }
+    } finally {
+      this.campusModelsLoading = false;
+    }
+  }
   private async loadDetailedModel() {
     if (
+      !modelPilotAvailable ||
+      !this.supports3D ||
       this.modelLoading ||
       this.modelState === "loading" ||
       this.modelLayer?.ready
@@ -628,7 +688,12 @@ export class LocalMapAdapter implements MapAdapter {
     }
   }
   private async preloadDetailedModel() {
-    if (!this.modelAvailable || this.modelPreloading || this.modelLayer?.ready)
+    if (
+      !modelPilotAvailable ||
+      !this.supports3D ||
+      this.modelPreloading ||
+      this.modelLayer?.ready
+    )
       return;
     this.modelPreloading = true;
     try {
@@ -642,13 +707,23 @@ export class LocalMapAdapter implements MapAdapter {
     }
   }
   private updateModelVisibility() {
+    this.campusModelLayer?.setMode(this.displayMode);
+    if (this.native.getLayer("campus-model-courtyards"))
+      this.native.setLayoutProperty(
+        "campus-model-courtyards",
+        "visibility",
+        this.displayMode === "2d" ? "none" : "visible",
+      );
     if (!this.native.getLayer("nanyuan7-volume")) return;
     const detailed = this.displayMode === "3d" && !!this.modelLayer?.ready;
     const volumeVisible = this.displayMode !== "2d" && !detailed;
+    const sharedVolume =
+      volumeVisible && !!this.campusModelLayer?.pilotVolumeReady;
+    const nativeVolumeVisible = volumeVisible && !sharedVolume;
     this.native.setLayoutProperty(
       "nanyuan7-volume",
       "visibility",
-      volumeVisible ? "visible" : "none",
+      nativeVolumeVisible ? "visible" : "none",
     );
     this.native.setLayoutProperty(
       "nanyuan7-courtyard",
@@ -662,11 +737,27 @@ export class LocalMapAdapter implements MapAdapter {
     );
     if (this.modelLayer) this.modelLayer.visible = detailed;
     this.element.dataset.modelVolume = volumeVisible ? "visible" : "none";
+    this.element.dataset.modelVolumeRenderer = volumeVisible
+      ? sharedVolume
+        ? "shared"
+        : "native"
+      : "none";
+    this.element.dataset.modelNativeVolume = nativeVolumeVisible
+      ? "visible"
+      : "none";
     this.element.dataset.modelDetailed = detailed ? "visible" : "none";
     this.native.triggerRepaint();
   }
   private pickedPilot(point: { x: number; y: number }) {
     if (this.displayMode === "2d" || !this.modelAvailable) return undefined;
+    const campusHit = this.campusModelLayer?.pick(point);
+    if (campusHit) {
+      this.element.dataset.campusModelPickCount = String(
+        Number(this.element.dataset.campusModelPickCount || 0) + 1,
+      );
+      this.element.dataset.campusModelPickedPlace = campusHit;
+      return campusData.places.find((p) => p.id === campusHit);
+    }
     const hit =
       this.modelLayer?.pick(point) ||
       this.native.queryRenderedFeatures([point.x, point.y], {
@@ -886,6 +977,29 @@ export class LocalMapAdapter implements MapAdapter {
     trial.setBearing(bearing);
     trial.setZoom(points.length === 1 ? maxZoom : camera.zoom!);
     trial.setCenter(LngLat.convert(camera.center!));
+    const extraModel =
+      this.displayMode !== "2d"
+        ? buildingModelForPlace(this.selected)
+        : undefined;
+    const selectedPlace = campusData.places.find((p) => p.id === this.selected);
+    const fittingExtra =
+      extraModel &&
+      selectedPlace &&
+      ((points.length === 1 &&
+        points[0][0] === selectedPlace.coordinate[0] &&
+        points[0][1] === selectedPlace.coordinate[1]) ||
+        (points.length === selectedPlace.geometry?.length &&
+          points.every(
+            (p, i) =>
+              p[0] === selectedPlace.geometry?.[i][0] &&
+              p[1] === selectedPlace.geometry?.[i][1],
+          )));
+    const extraCorners = fittingExtra
+      ? buildingModelCorners(
+          extraModel,
+          this.displayMode === "3d" ? "3d" : "2.5d",
+        )
+      : undefined;
     const fittingModel =
       this.displayMode !== "2d" &&
       this.selected === modelPilot.placeId &&
@@ -896,23 +1010,28 @@ export class LocalMapAdapter implements MapAdapter {
           p[1] === modelPilot.geometry.coordinates[0][i][1],
       );
     for (let i = 0; i < 6; i++) {
-      const matrix = fittingModel
-        ? trial.getProjectionDataForCustomLayer(false).mainMatrix
-        : undefined;
+      const matrix =
+        fittingModel || extraCorners
+          ? trial.getProjectionDataForCustomLayer(false).mainMatrix
+          : undefined;
       const pixels =
-        fittingModel && matrix && this.displayMode === "3d"
-          ? pilotModelCorners.map(({ coordinate, height }) =>
+        extraCorners && matrix
+          ? extraCorners.map(({ coordinate, height }) =>
               this.elevatedPixel(coordinate, height, matrix),
             )
-          : points.flatMap((p) => {
-              const ground = trial.locationToScreenPoint(LngLat.convert(p));
-              return matrix
-                ? [
-                    ground,
-                    this.elevatedPixel(p, modelPilot.heightMeters, matrix),
-                  ]
-                : [ground];
-            });
+          : fittingModel && matrix && this.displayMode === "3d"
+            ? pilotModelCorners.map(({ coordinate, height }) =>
+                this.elevatedPixel(coordinate, height, matrix),
+              )
+            : points.flatMap((p) => {
+                const ground = trial.locationToScreenPoint(LngLat.convert(p));
+                return matrix
+                  ? [
+                      ground,
+                      this.elevatedPixel(p, modelPilot.heightMeters, matrix),
+                    ]
+                  : [ground];
+              });
       const xs = pixels.map((p) => p.x),
         ys = pixels.map((p) => p.y),
         shiftX =
@@ -1076,7 +1195,9 @@ export class LocalMapAdapter implements MapAdapter {
         this.native.getPitch(),
         this.native.getBearing(),
         Math.max(
-          place.id === modelPilot.placeId ? 19.2 : 17.2,
+          place.id === modelPilot.placeId || buildingModelForPlace(place.id)
+            ? 19.2
+            : 17.2,
           this.native.getZoom(),
         ),
       );
@@ -1096,12 +1217,14 @@ export class LocalMapAdapter implements MapAdapter {
       id === modelPilot.placeId,
       !!this.activeRouteId,
     );
+    this.campusModelLayer?.setAppearance(id, !!this.activeRouteId);
     this.updateLabels();
   }
   clearSelection() {
     this.selected = undefined;
     this.native.setFilter("selected", ["==", ["get", "sourceId"], ""]);
     this.modelLayer?.setAppearance(false, !!this.activeRouteId);
+    this.campusModelLayer?.setAppearance(undefined, !!this.activeRouteId);
     this.updateLabels();
   }
   focusOnline(poi: SDKPoi) {
@@ -1159,6 +1282,21 @@ export class LocalMapAdapter implements MapAdapter {
         Math.max(...pixels.map((p) => p.x)),
         Math.max(...pixels.map((p) => p.y)),
       ]);
+      const selectedModel = buildingModelForPlace(this.selected);
+      if (selectedModel && this.displayMode !== "2d") {
+        const projected = buildingModelCorners(
+          selectedModel,
+          this.displayMode === "3d" ? "3d" : "2.5d",
+        ).map(({ coordinate, height }) =>
+          this.elevatedPixel(coordinate, height, matrix),
+        );
+        this.element.dataset.campusSelectedModelExtent = JSON.stringify([
+          Math.min(...projected.map((p) => p.x)),
+          Math.min(...projected.map((p) => p.y)),
+          Math.max(...projected.map((p) => p.x)),
+          Math.max(...projected.map((p) => p.y)),
+        ]);
+      } else delete this.element.dataset.campusSelectedModelExtent;
     }
     const pixels = campusData.zones
       .flatMap((z) => z.polygon)
@@ -1407,6 +1545,7 @@ export class LocalMapAdapter implements MapAdapter {
     this.activeRouteId = id;
     this.setDisplayMode("2d", false);
     this.modelLayer?.setAppearance(this.selected === modelPilot.placeId, true);
+    this.campusModelLayer?.setAppearance(this.selected, true);
     const path = route.pathGcj02
       .slice(route.approachPathGcj02 ? 1 : 0)
       .map(toWgs84);
@@ -1534,6 +1673,7 @@ export class LocalMapAdapter implements MapAdapter {
     this.element.dataset.cameraMoving = "false";
     this.activeRouteId = undefined;
     this.modelLayer?.setAppearance(this.selected === modelPilot.placeId, false);
+    this.campusModelLayer?.setAppearance(this.selected, false);
     this.updateModelVisibility();
     this.routePanelObserver?.disconnect();
     this.observedRoutePanel = undefined;

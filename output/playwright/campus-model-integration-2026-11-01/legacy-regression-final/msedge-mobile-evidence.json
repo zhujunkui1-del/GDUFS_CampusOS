@@ -1,0 +1,20 @@
+{
+  "viewport": [
+    390,
+    844
+  ],
+  "devicePixelRatio": 3,
+  "mode": "3d",
+  "mapVersion": "s1-2026-10-14.2",
+  "modelVersion": "nanyuan7-v2-2026-10-14",
+  "volumeVersion": "nanyuan7-2026-10-14.1",
+  "assetSha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+  "height": "21",
+  "lod": "low",
+  "bytes": "80384",
+  "triangles": "4748",
+  "drawCalls": "8",
+  "extent": "[5.229700470808227,258.0872952758251,322.2429667067109,451.8108401820648]",
+  "cameraDuration": "600",
+  "actualPhone": false
+}

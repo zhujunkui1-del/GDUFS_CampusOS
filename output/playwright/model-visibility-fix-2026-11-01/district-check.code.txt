@@ -1,0 +1,40 @@
+async (page) => {
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const requests=[];page.on('request',r=>{if(r.url().endsWith('.glb'))requests.push(r.url());});
+ const map=page.getByTestId('campus-map'),state=()=>map.evaluate(el=>({...el.dataset}));
+ const mode=async(text)=>{
+   for(let i=0;i<3&&(await page.getByTestId('map-mode-trigger').innerText())!==text;i++)await page.getByTestId('map-mode-trigger').click();
+   await page.waitForFunction(mode=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return d.mode===mode&&d.campusModelMode===mode&&d.campusModelPending==='0'&&d.cameraMoving==='false'&&(mode==='3d'?d.campusModelDetails==='28':d.campusModelCount==='29');},text==='3D'?'3d':'2.5d',{timeout:25000});
+ };
+ const focus=async(name)=>{
+  const c=page.getByRole('button',{name:'关闭地点详情'});if(await c.count()){await c.click();await page.locator('.place-details-frame').waitFor({state:'detached'});}
+  const before=Number((await state()).cameraAnimationCount);
+  await page.getByLabel('搜索校园地点').fill('');await page.getByLabel('搜索校园地点').fill(name);
+  await page.locator('.place-result').filter({hasText:name}).first().click();
+  await page.waitForFunction(before=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return Number(d.cameraAnimationCount)>before&&d.cameraMoving==='false';},before,{timeout:10000});
+  await page.getByRole('button',{name:'关闭地点详情'}).click();await page.locator('.place-details-frame').waitFor({state:'detached'});
+ };
+ const detail=async()=>{const d=await state(),keys=JSON.parse(d.campusModelKeys);if(keys.length!==28||keys.some(k=>!k.endsWith(':3d')))throw Error('A completed model returned to white volume '+d.campusModelKeys);return {zoom:d.zoom,keys,resident:d.campusModelResidentCount,calls:d.campusModelDrawCalls,triangles:d.campusModelTriangles,frames:d.campusModelFrames};};
+ const nav=page.getByRole('button',{name:'关闭导航面板',exact:true});if(await nav.count())await nav.click();
+ await mode('3D');await focus('南苑9栋');
+ for(let i=0;i<2;i++){await page.getByRole('button',{name:'缩小地图',exact:true}).click();await page.waitForFunction(()=>document.querySelector('[data-testid=campus-map]').dataset.cameraMoving==='false');}
+ await page.waitForTimeout(300);const far=await detail();await page.screenshot({path:'south-district-3d-far.png'});
+ const beforeRequests=requests.length, before=await state();
+ const start=await page.evaluate(()=>{for(const y of [.65,.75,.55])for(const x of [.55,.65,.45])if(document.elementFromPoint(innerWidth*x,innerHeight*y)?.tagName==='CANVAS')return {x:innerWidth*x,y:innerHeight*y};throw Error('No map canvas point');});
+ await page.mouse.move(start.x,start.y);await page.mouse.down();await page.mouse.move(start.x-180,start.y-100,{steps:20});await page.mouse.up();await page.waitForTimeout(700);
+ const panned=await detail();await page.screenshot({path:'south-district-3d-panned.png'});
+ await page.mouse.move(start.x-180,start.y-100);await page.mouse.down();await page.mouse.move(start.x,start.y,{steps:20});await page.mouse.up();await page.waitForTimeout(700);
+ const returned=await detail();await page.screenshot({path:'south-district-3d-returned.png'});
+ const noModelRequestsOnPan=requests.length===beforeRequests;if(!noModelRequestsOnPan)throw Error('Panning fetched models again');
+ await mode('2.5D');await page.waitForFunction(()=>document.querySelector('[data-testid=campus-map]').dataset.modelVolumeRenderer==='shared');await page.waitForTimeout(200);
+ const volume=await state();if(JSON.parse(volume.campusModelKeys).filter(k=>k.startsWith('dormitory-')).length!==13||volume.modelNativeVolume!=='none')throw Error('Dormitory volume renderers differ');
+ await page.screenshot({path:'south-district-uniform-2.5d.png'});
+ await page.setViewportSize({width:390,height:844});await mode('3D');await focus('南苑9栋');
+ for(let i=0;i<2;i++){await page.getByRole('button',{name:'缩小地图',exact:true}).click();await page.waitForFunction(()=>document.querySelector('[data-testid=campus-map]').dataset.cameraMoving==='false');}
+ const mobile=await detail();await page.screenshot({path:'mobile-all-detailed-3d.png'});
+ const idleBefore=await state();await page.waitForTimeout(800);const idleAfter=await state();
+ await page.setViewportSize({width:1280,height:1024});await mode('3D');await focus('南苑9栋');
+ await page.getByRole('button',{name:'缩小地图',exact:true}).click();await page.waitForTimeout(300);
+ await page.screenshot({path:'south-district-final.png'});
+ return {far,panned,returned,noModelRequestsOnPan,mobile,volume:{renderer:volume.modelVolumeRenderer,native:volume.modelNativeVolume,count:volume.campusModelCount,keys:JSON.parse(volume.campusModelKeys)},idleFrames:[idleBefore.campusModelFrames,idleAfter.campusModelFrames],errors,actualPhone:false};
+}

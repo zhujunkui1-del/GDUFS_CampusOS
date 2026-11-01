@@ -1,0 +1,35 @@
+async (page) => {
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const map=page.getByTestId('campus-map');
+ const state=()=>map.evaluate(el=>({...el.dataset}));
+ const ready=()=>page.waitForFunction(()=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return d.status==='ready'&&d.cameraMoving==='false'&&(!d.campusModelPending||d.campusModelPending==='0');},null,{timeout:25000});
+ const mode=async(text)=>{for(let i=0;i<3&&(await page.getByTestId('map-mode-trigger').innerText())!==text;i++)await page.getByTestId('map-mode-trigger').click();await page.waitForTimeout(600);await ready();};
+ const focus=async(row)=>{const close=page.getByRole('button',{name:'关闭地点详情'});if(await close.count()){await close.click();await page.locator('.place-details-frame').waitFor({state:'detached'});}const prior=Number((await state()).cameraAnimationCount);await page.getByLabel('搜索校园地点').fill('');await page.getByLabel('搜索校园地点').fill(row.name);await page.locator('.place-result').filter({hasText:row.name}).first().click();await page.waitForFunction(({prior,id})=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return Number(d.cameraAnimationCount)>prior&&d.cameraMoving==='false'&&d.campusModelSelected===id;},{prior,id:row.id},{timeout:25000});await ready();};
+ const b={name:'教学楼B栋',id:'osm-relation-19299171',key:'teaching-B'};
+ await page.route('**/models/campus/teaching-B-3d-*.glb',r=>r.fulfill({status:503,body:'Controlled model failure'}));
+ await page.reload();await ready();await mode('2.5D');await focus(b);await mode('3D');
+ await page.waitForFunction(()=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return JSON.parse(d.campusModelFailed||'[]').includes('teaching-B:3d')&&JSON.parse(d.campusModelKeys||'[]').includes('teaching-B:2.5d')&&d.campusModelPending==='0';},null,{timeout:25000});
+ const fallback=await state();if(fallback.mode!=='3d')throw Error('Single model failure changed global mode');
+ await page.screenshot({path:'b-model-fallback.png'});
+ await page.unroute('**/models/campus/teaching-B-3d-*.glb');
+ await mode('2D');await mode('2.5D');await mode('3D');
+ await page.waitForFunction(()=>JSON.parse(document.querySelector('[data-testid=campus-map]').dataset.campusModelKeys||'[]').includes('teaching-B:3d'),null,{timeout:25000});
+ const retry=await state();
+ await page.setViewportSize({width:390,height:844});await ready();
+ const mobile=[];
+ for(const row of [b,{name:'教学楼（E/F/G栋）',id:'osm-relation-4105730',key:'teaching-efg'},{name:'南苑8栋',id:'osm-way-312536956',key:'dormitory-s8'},{name:'南苑13栋',id:'osm-way-312536953',key:'dormitory-s13'}]){
+  for(const display of ['2.5D','3D']){
+   await mode(display);await focus(row);
+   await page.waitForFunction(({key,mode})=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return JSON.parse(d.campusModelKeys||'[]').includes(key+':'+mode)&&d.campusModelPending==='0';},{key:row.key,mode:display==='3D'?'3d':'2.5d'},{timeout:25000});
+   await page.waitForFunction(()=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return Number(d.campusModelTriangles)<=30000&&Number(d.campusModelDrawCalls)<=20;},null,{timeout:25000});
+   const s=await state(),extent=JSON.parse(s.campusSelectedModelExtent);
+   if(extent[0]<-1||extent[1]<-1||extent[2]>391||extent[3]>845)throw Error('Mobile model clipped '+row.key+' '+extent);
+   if(Number(s.campusModelDetails)>2)throw Error('Mobile detail count exceeds budget');
+   await page.screenshot({path:'mobile-'+row.key+'-'+display+'.png'});
+   mobile.push({key:row.key,display,extent,details:s.campusModelDetails,triangles:s.campusModelTriangles,drawCalls:s.campusModelDrawCalls,keys:JSON.parse(s.campusModelKeys)});
+  }
+ }
+ const before=await state();await page.waitForTimeout(800);const after=await state();
+ await page.setViewportSize({width:1440,height:1000});
+ return {fallback:{globalMode:fallback.mode,failed:JSON.parse(fallback.campusModelFailed),lowKept:JSON.parse(fallback.campusModelKeys).includes('teaching-B:2.5d')},retry:{highRestored:JSON.parse(retry.campusModelKeys).includes('teaching-B:3d'),failed:JSON.parse(retry.campusModelFailed)},mobile,idleFrames:[before.campusModelFrames,after.campusModelFrames],errors,actualPhone:false};
+}

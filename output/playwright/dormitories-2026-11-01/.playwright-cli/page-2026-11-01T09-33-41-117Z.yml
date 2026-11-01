@@ -1,0 +1,34 @@
+- generic [active] [ref=e1]:
+  - generic "南北苑宿舍建筑模型，可拖动旋转" [ref=e2]
+  - banner [ref=e3]:
+    - heading "南北苑13栋" [level=1] [ref=e4]
+    - generic [ref=e5]: 每栋7层 · 13栋
+  - generic [ref=e6]:
+    - generic [ref=e7]: 查看楼栋
+    - combobox "查看楼栋" [ref=e8] [cursor=pointer]:
+      - option "南北苑 · 13栋整体" [selected]
+      - option "北苑 · 6栋整体"
+      - option "南苑 · 7栋整体"
+      - option "北苑1栋"
+      - option "北苑2栋"
+      - option "北苑3栋"
+      - option "北苑4栋"
+      - option "北苑5栋"
+      - option "北苑6栋"
+      - option "南苑7栋"
+      - option "南苑8栋"
+      - option "南苑9栋"
+      - option "南苑10栋"
+      - option "南苑11栋"
+      - option "南苑12栋"
+      - option "南苑13栋"
+  - group "模型模式" [ref=e9]:
+    - button "2.5D" [pressed] [ref=e10] [cursor=pointer]
+    - button "3D" [ref=e11] [cursor=pointer]
+  - navigation "模型视角" [ref=e12]:
+    - button "整体" [pressed] [ref=e13] [cursor=pointer]
+    - button "正面" [ref=e14] [cursor=pointer]
+    - button "院落" [ref=e15] [cursor=pointer]
+    - button "俯视" [ref=e16] [cursor=pointer]
+  - link "© OpenStreetMap contributors · ODbL" [ref=e17] [cursor=pointer]:
+    - /url: https://www.openstreetmap.org/way/312536955

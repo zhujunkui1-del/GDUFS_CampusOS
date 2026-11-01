@@ -1,0 +1,1074 @@
+{
+  "version": "campus-building-models-2026-11-01.2",
+  "mapVersion": "s1-2026-10-14.2",
+  "approvedForMap": true,
+  "ownerApproval": "2026-11-01：现在，把已经做好的这些2.5d/3d模型，放入网页中",
+  "referenceOrigin": [113.392, 23.066],
+  "legacySouth7Preserved": true,
+  "renderingPolicy": "mode-faithful-resident-models",
+  "south7VolumeRenderer": "shared",
+  "displayBuildingCount": 28,
+  "newBuildingCount": 27,
+  "visualConnectorCount": 1,
+  "courtyardsUrl": "/models/campus/courtyards-bd7ad71eacbf.geojson",
+  "entries": [
+    {
+      "key": "library",
+      "name": "图书馆",
+      "placeId": "osm-way-307250998",
+      "memberPlaceIds": ["osm-way-307250998"],
+      "footprintSourceIds": ["osm-way-307250998"],
+      "origin": [113.39131405, 23.0680465],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "sha256": "9ce5a5da90dba8b137308f4769aadc02e6c6d55d52ece8952080ec4e1c3f4803",
+          "bytes": 15932,
+          "triangles": 136,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -49.878286474869284, -5.336574383080477e-15, -56.253696856670985
+            ],
+            "max": [49.878287773086996, 27.25, 56.25348072916444]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/library-3d-0b93289ff027.glb",
+          "sha256": "0b93289ff027e3918966b729b563142e8f4cf56c5b1f56207b639bffd6de27d3",
+          "bytes": 91572,
+          "triangles": 5490,
+          "drawCalls": 13,
+          "bounds": {
+            "min": [
+              -50.99728736685665, 0.054999999701976776, -57.19187343567742
+            ],
+            "max": [52.870883228344596, 30.649999618530273, 58.54587695458033]
+          }
+        }
+      }
+    },
+    {
+      "key": "art",
+      "name": "艺术楼",
+      "placeId": "osm-way-1389970391",
+      "memberPlaceIds": ["osm-way-1389970391"],
+      "footprintSourceIds": ["osm-way-1389970391"],
+      "origin": [113.39281705, 23.0693811],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "sha256": "2fba3f18d533d1f1e47e4f8bd6058e12f260bad207d899218fc9c42d55f8546c",
+          "bytes": 20492,
+          "triangles": 184,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -41.06950759887695, -2.8630685587502326e-15, -46.75760269165039
+            ],
+            "max": [41.06950759887695, 21.549999237060547, 46.7574577331543]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/art-3d-c03288b92bd3.glb",
+          "sha256": "c03288b92bd3aa2cd75675f00bb51fbea7a8333634ed2feb074982a57d0a8a3e",
+          "bytes": 139608,
+          "triangles": 6072,
+          "drawCalls": 12,
+          "bounds": {
+            "min": [-41.27069726586342, 0, -47.12708503176691],
+            "max": [41.13344022631645, 23.65000033378601, 46.79287028312683]
+          }
+        }
+      }
+    },
+    {
+      "key": "auditorium",
+      "name": "大会堂（教工活动中心）",
+      "placeId": "osm-way-307250997",
+      "memberPlaceIds": ["osm-way-307250997"],
+      "footprintSourceIds": ["osm-way-307250997"],
+      "origin": [113.39157995, 23.06922125],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "sha256": "416e632521dd32a2fd91c1c87f8223953c8a6c1dde759e03824c6b77a2de4fea",
+          "bytes": 40224,
+          "triangles": 390,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -55.15668768058325, -3.834775967873538e-16, -55.44753030090198
+            ],
+            "max": [55.15668411955364, 22.418720245361328, 55.44732399397454]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/auditorium-3d-6f76dfb37c8f.glb",
+          "sha256": "6f76dfb37c8fb2f0d75de2bbbe0ef703f10325860cad39b274230049b170cd43",
+          "bytes": 170236,
+          "triangles": 4160,
+          "drawCalls": 13,
+          "bounds": {
+            "min": [-55.53028607339489, 0, -55.44753030090198],
+            "max": [55.51434605802956, 22.4437198638916, 55.820885269044595]
+          }
+        }
+      }
+    },
+    {
+      "key": "b8",
+      "name": "B8学术报告厅",
+      "placeId": "osm-way-651642991",
+      "memberPlaceIds": ["osm-way-651642991"],
+      "footprintSourceIds": ["osm-way-651642991"],
+      "origin": [113.3932707, 23.06863825],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "sha256": "f39ed5be06c056864f6ee65398a1f209ca789e38f3291626789176a9026f690a",
+          "bytes": 27624,
+          "triangles": 258,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [-32.59049514828426, 0, -28.349212076737633],
+            "max": [32.24606095244186, 10.779999732971191, 28.349159057408716]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/b8-3d-2cd954731557.glb",
+          "sha256": "2cd95473155704192b0127127435a35a5589c3af79054c8e7d4a82289d5b1692",
+          "bytes": 61116,
+          "triangles": 1348,
+          "drawCalls": 13,
+          "bounds": {
+            "min": [-34.89827777820641, 0, -28.349212076737633],
+            "max": [32.24606095244186, 10.949999615550041, 29.140616951340213]
+          }
+        }
+      }
+    },
+    {
+      "key": "faculty",
+      "name": "院系办公楼",
+      "placeId": "osm-way-307437431",
+      "memberPlaceIds": ["osm-way-307437431"],
+      "footprintSourceIds": ["osm-way-307437431"],
+      "origin": [113.39555615, 23.065696799999998],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "sha256": "ce0dd3ff6f35ea7118f74ccb49525b792916e8d93e0a7f468ca3915372d050ba",
+          "bytes": 53980,
+          "triangles": 533,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [-57.5, 0.019999999552965164, -39.76472091674805],
+            "max": [48.971412658691406, 18.100000381469727, 39.76466751098633]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/faculty-3d-aa908ef5a2af.glb",
+          "sha256": "aa908ef5a2af35dbb5fcc037a0e91c30b6c60f36d51187ed57c471508f35cb4d",
+          "bytes": 198672,
+          "triangles": 8308,
+          "drawCalls": 10,
+          "bounds": {
+            "min": [
+              -60.099998474121094, -5.143516516159909e-16, -39.76472091674805
+            ],
+            "max": [48.971412658691406, 18.100000381469727, 39.76466751098633]
+          }
+        }
+      }
+    },
+    {
+      "key": "gymnasium",
+      "name": "体育馆（羽毛球场）",
+      "placeId": "osm-way-1389756844",
+      "memberPlaceIds": ["osm-way-1389756844"],
+      "footprintSourceIds": ["osm-way-1389756844"],
+      "origin": [113.39123445, 23.072108749999998],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "sha256": "3f4e354eeffacaf8eadff5d7f617e81248b805eb978af64ea9d8a03eb526f1d2",
+          "bytes": 76332,
+          "triangles": 1464,
+          "drawCalls": 3,
+          "bounds": {
+            "min": [-61, 0, -44.5],
+            "max": [61, 25.549999237060547, 46.3799981623888]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/gymnasium-3d-e9fce68a179c.glb",
+          "sha256": "e9fce68a179c7d19c1e1dc0a798a48a130dec8be42574dd470640a80cae34dde",
+          "bytes": 313932,
+          "triangles": 14838,
+          "drawCalls": 11,
+          "bounds": {
+            "min": [-61.14722442626953, 0, -44.66276550292969],
+            "max": [61.14850997924805, 25.549999237060547, 46.3799981623888]
+          }
+        }
+      }
+    },
+    {
+      "key": "stadium",
+      "name": "体育场（真草场）",
+      "placeId": "osm-way-1389756837",
+      "memberPlaceIds": ["osm-way-1389756837"],
+      "footprintSourceIds": ["osm-way-1389756836"],
+      "origin": [113.3926224, 23.071347799999998],
+      "pickable": true,
+      "heightAccuracy": "photo_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "sha256": "a03d90598bbc16b3e133681e867d337d1db7a7fca763148b642ab46180698963",
+          "bytes": 146500,
+          "triangles": 3994,
+          "drawCalls": 4,
+          "bounds": {
+            "min": [-89.89834923639917, 0, -57.87346806015],
+            "max": [-36.40438904059003, 35.51920221868151, 90.01958397159869]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/stadium-3d-8667c50456be.glb",
+          "sha256": "8667c50456bed49b4e0b10820c8ec78c8c522eb2c468cc0e57b3ce873419f8e5",
+          "bytes": 403208,
+          "triangles": 28366,
+          "drawCalls": 9,
+          "bounds": {
+            "min": [-89.89834923639917, 0, -67.14703848211599],
+            "max": [-23.193539295905413, 35.522963162255564, 97.60423164619483]
+          }
+        }
+      }
+    },
+    {
+      "key": "laboratory",
+      "name": "实验楼（A/B/C/D/E栋）",
+      "placeId": "osm-relation-4105911",
+      "memberPlaceIds": [
+        "osm-relation-4105911",
+        "osm-node-3125808975",
+        "osm-node-3125808984",
+        "osm-node-3125808994",
+        "osm-node-3125809005",
+        "osm-node-3125809014"
+      ],
+      "footprintSourceIds": ["osm-relation-4105911"],
+      "origin": [113.39405769999999, 23.067542600000003],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "sha256": "cc238d1956b9ed603c8c3a1cf537fed308869e8301790f76742594a2f7a06a48",
+          "bytes": 98176,
+          "triangles": 2320,
+          "drawCalls": 5,
+          "bounds": {
+            "min": [-104.32632349140691, 0, -95.1054542758835],
+            "max": [104.16627084971086, 20, 95.22662424378025]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/laboratory-3d-b4c51ce5622d.glb",
+          "sha256": "b4c51ce5622d67cb6e84bf70362a9c001419024039cee58448393d5ceac51b87",
+          "bytes": 273224,
+          "triangles": 15900,
+          "drawCalls": 15,
+          "bounds": {
+            "min": [-104.35395614424354, 0, -95.21607762972123],
+            "max": [104.34624833241368, 20, 95.28199192732978]
+          }
+        }
+      }
+    },
+    {
+      "key": "teaching-efg",
+      "name": "教学楼（E/F/G栋）",
+      "placeId": "osm-relation-4105730",
+      "memberPlaceIds": [
+        "osm-relation-4105730",
+        "osm-node-3125704419",
+        "osm-node-3125704391",
+        "osm-node-3125704356"
+      ],
+      "footprintSourceIds": ["osm-relation-4105730"],
+      "origin": [113.3929848, 23.066674550000002],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "sha256": "6c3a6bd423751d930b7805469a84c2808ce873b3b9048525aed03c0e8df8550e",
+          "bytes": 175672,
+          "triangles": 3184,
+          "drawCalls": 3,
+          "bounds": {
+            "min": [
+              -95.78815460205078, 0.014999999664723873, -104.2624282836914
+            ],
+            "max": [95.78815460205078, 19.6299991607666, 104.26170349121094]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/teaching-efg-3d-35a3e06d82d9.glb",
+          "sha256": "35a3e06d82d9d3f40ca907e7e192a0558564b1666b1ef8a7a59fcffd45ecfcae",
+          "bytes": 610988,
+          "triangles": 25002,
+          "drawCalls": 14,
+          "bounds": {
+            "min": [
+              -95.9219333268702, 0.014999999664723873, -104.31727679818869
+            ],
+            "max": [95.84415794909, 19.6299991607666, 104.31769163906574]
+          }
+        }
+      }
+    },
+    {
+      "key": "administration",
+      "name": "校行政办公楼",
+      "placeId": "osm-way-307437432",
+      "memberPlaceIds": ["osm-way-307437432"],
+      "footprintSourceIds": ["osm-way-307437432"],
+      "origin": [113.3944163, 23.065009699999997],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "sha256": "e00f035ae0c8ab7f1659b0e1fae6731b640be6dd742840cd82467ff67a65ea65",
+          "bytes": 38532,
+          "triangles": 370,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -49.20000076293945, 0.019999999552965164, -36.49427032470703
+            ],
+            "max": [50.099998474121094, 18.5, 55.35280990600586]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/administration-3d-e3c89bc87a4c.glb",
+          "sha256": "e3c89bc87a4cd7f65ab6773da8a2a32cc6ae10f522b6dceb0881234d6fbfa6d4",
+          "bytes": 137248,
+          "triangles": 6400,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-49.20000076293945, 0, -36.49427032470703],
+            "max": [50.099998474121094, 18.5, 55.56240040063858]
+          }
+        }
+      }
+    },
+    {
+      "key": "pavilion",
+      "name": "八角楼",
+      "placeId": "owner-bajiaolou",
+      "memberPlaceIds": ["owner-bajiaolou"],
+      "footprintSourceIds": ["owner-bajiaolou"],
+      "origin": [113.3944163, 23.065009699999997],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "sha256": "5c3b917e2d03d76772c1eb02163c3723c92cb277bc921f10a5c68b0aec6a423e",
+          "bytes": 9112,
+          "triangles": 64,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -13.675503730773926, 0.019999999552965164, -56.00499725341797
+            ],
+            "max": [10.186774253845215, 7.099999904632568, -30.916446685791016]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/pavilion-3d-8d94f7df1614.glb",
+          "sha256": "8d94f7df161484a5a934d950998ee1fab5e3640cfbf375d371ba947766d7dd0b",
+          "bytes": 17664,
+          "triangles": 420,
+          "drawCalls": 5,
+          "bounds": {
+            "min": [
+              -13.675503730773926, 0.019999999552965164, -56.00499725341797
+            ],
+            "max": [10.186774253845215, 7.099999904632568, -30.916446685791016]
+          }
+        }
+      }
+    },
+    {
+      "key": "teaching-A",
+      "name": "教学楼A栋",
+      "placeId": "osm-way-1410412694",
+      "memberPlaceIds": ["osm-way-1410412694"],
+      "footprintSourceIds": ["osm-way-1410412694"],
+      "origin": [113.3917075, 23.0663962],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "sha256": "ded5d83a1f31c6a20c71003ae5ea716f927c7e66196fa0d81dc644982b961322",
+          "bytes": 30788,
+          "triangles": 600,
+          "drawCalls": 3,
+          "bounds": {
+            "min": [61.00458908081055, 0.014999999664723873, 96.10559844970703],
+            "max": [144.81068273657002, 19.850000381469727, 106.04637145996094]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/teaching-A-3d-eb4eefa278b0.glb",
+          "sha256": "eb4eefa278b0cc40f05b8c0402ff9f1b8211dcd3dd58874914435b37b4300a8f",
+          "bytes": 87828,
+          "triangles": 3620,
+          "drawCalls": 10,
+          "bounds": {
+            "min": [60.8951588626951, 0.014999999664723873, 95.99631408788264],
+            "max": [144.81652136542834, 19.850000381469727, 106.15588943473995]
+          }
+        }
+      }
+    },
+    {
+      "key": "teaching-B",
+      "name": "教学楼B栋",
+      "placeId": "osm-relation-19299171",
+      "memberPlaceIds": ["osm-relation-19299171"],
+      "footprintSourceIds": ["osm-relation-19299171"],
+      "origin": [113.3917075, 23.0663962],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "sha256": "f68c4d14578cb13be146c8f96e917f9409c0f0d61c0ef92daa4d9808a00a496e",
+          "bytes": 62876,
+          "triangles": 1452,
+          "drawCalls": 4,
+          "bounds": {
+            "min": [
+              15.990302085876465, 0.014999999664723873, 22.806093215942383
+            ],
+            "max": [78.62154388427734, 32.04999923706055, 74.13357543945312]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/teaching-B-3d-f670281a2217.glb",
+          "sha256": "f670281a2217b7575049189cb0cf99a99715b1d5b8eaa561c8cc3a8e58739eb0",
+          "bytes": 189464,
+          "triangles": 8426,
+          "drawCalls": 12,
+          "bounds": {
+            "min": [
+              15.88081293925643, 0.014999999664723873, 22.681997670773853
+            ],
+            "max": [78.73099906928837, 32.04999923706055, 74.2456180431036]
+          }
+        }
+      }
+    },
+    {
+      "key": "teaching-C",
+      "name": "教学楼C栋",
+      "placeId": "osm-way-1410412691",
+      "memberPlaceIds": ["osm-way-1410412691"],
+      "footprintSourceIds": ["osm-way-1410412691"],
+      "origin": [113.3917075, 23.0663962],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "sha256": "10b884aae53ff173dc4a5ddd422d15470f3a28a00f49e6e86a347eafa157c5b4",
+          "bytes": 44832,
+          "triangles": 756,
+          "drawCalls": 4,
+          "bounds": {
+            "min": [
+              -51.11167526245117, 0.014999999664723873, -22.839487075805664
+            ],
+            "max": [51.11167526245117, 21.400000005960464, 22.839452743530273]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/teaching-C-3d-34e723762b89.glb",
+          "sha256": "34e723762b8905836c935358f47fe66af5ae3054eddf6b746f3e6fe2d0b6de21",
+          "bytes": 134272,
+          "triangles": 5478,
+          "drawCalls": 9,
+          "bounds": {
+            "min": [
+              -51.22115261666477, 0.014999999664723873, -22.947950383648276
+            ],
+            "max": [51.221689471785794, 21.400000005960464, 22.963548288698803]
+          }
+        }
+      }
+    },
+    {
+      "key": "teaching-D",
+      "name": "教学楼D栋",
+      "placeId": "osm-relation-19299170",
+      "memberPlaceIds": ["osm-relation-19299170"],
+      "footprintSourceIds": ["osm-relation-19299170"],
+      "origin": [113.3917075, 23.0663962],
+      "pickable": true,
+      "heightAccuracy": "visual_proportion_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "sha256": "d89a612ca42287743b3c04e9b6de49e2e4127f23a62a114f78ba3a7ca7669145",
+          "bytes": 64388,
+          "triangles": 1620,
+          "drawCalls": 4,
+          "bounds": {
+            "min": [
+              -88.0131607055664, 0.014999999664723873, -94.71627044677734
+            ],
+            "max": [
+              -10.476052284240723, 21.400000005960464, -36.694419860839844
+            ]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/teaching-D-3d-5008c2a4775e.glb",
+          "sha256": "5008c2a4775ec247301f07c04e01d3554b05efe24c820558c48ec64b1ea6a215",
+          "bytes": 202776,
+          "triangles": 9798,
+          "drawCalls": 11,
+          "bounds": {
+            "min": [
+              -88.1224480830133, 0.014999999664723873, -94.82574773579836
+            ],
+            "max": [-10.366503797471523, 21.400000005960464, -36.58485547080636]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-n1",
+      "name": "北苑1栋",
+      "placeId": "osm-way-313039013",
+      "memberPlaceIds": ["osm-way-313039013"],
+      "footprintSourceIds": ["osm-way-313039013"],
+      "origin": [113.39037765, 23.0646146],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "sha256": "e8a3a4f17fcb3d391c3e7f6df71e8b3392b45bd57c2a8c03adda85e545ac975e",
+          "bytes": 14920,
+          "triangles": 128,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -38.93275833129883, -1.1847190429405802e-15, -19.34795570373535
+            ],
+            "max": [38.93275833129883, 21, 19.347930908203125]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-n1-3d-e12d648d8c70.glb",
+          "sha256": "e12d648d8c70caf7b1ac376b7f69b4e13f73a23844ddf7765c61f16dbe19d00f",
+          "bytes": 81392,
+          "triangles": 4824,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-39.18275833129883, 0, -19.65795707702637],
+            "max": [39.18275833129883, 20.999999850988388, 21.19793051481247]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-n2",
+      "name": "北苑2栋",
+      "placeId": "osm-way-313039024",
+      "memberPlaceIds": ["osm-way-313039024"],
+      "footprintSourceIds": ["osm-way-313039024"],
+      "origin": [113.3904981, 23.064047799999997],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "sha256": "6b84c48c69d48a3a27b1a91dcaed075e1abeb1f36e5823161a5b7fc246895f97",
+          "bytes": 14920,
+          "triangles": 128,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -38.92780685424805, -1.1847190429405802e-15, -19.34795570373535
+            ],
+            "max": [38.92780685424805, 21, 19.347930908203125]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-n2-3d-189e9a27f3e8.glb",
+          "sha256": "189e9a27f3e8db3ffdc856751c75ca3cf69118bff5821df528a92b1d4dbcdf5e",
+          "bytes": 81400,
+          "triangles": 4824,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-39.17780685424805, 0, -19.65795707702637],
+            "max": [39.17780685424805, 20.999999850988388, 21.19793051481247]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-n3",
+      "name": "北苑3栋",
+      "placeId": "osm-way-313039020",
+      "memberPlaceIds": ["osm-way-313039020"],
+      "footprintSourceIds": ["osm-way-313039020"],
+      "origin": [113.39067855, 23.06346085],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "sha256": "a8f7ed7343d3ba90fd8f575d1a89aba425b371e993daa770fadb77ae6dee766a",
+          "bytes": 14924,
+          "triangles": 128,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -38.93309020996094, -1.1843786415749024e-15, -19.342395782470703
+            ],
+            "max": [38.93309020996094, 21, 19.342370986938477]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-n3-3d-a13475240dc2.glb",
+          "sha256": "a13475240dc25a097c29f7bab1a6986c57dbcd7433b313fd1babac4a83b0df5a",
+          "bytes": 81408,
+          "triangles": 4824,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-39.18309020996094, 0, -19.652397155761722],
+            "max": [39.18309020996094, 20.999999850988388, 21.192372500896454]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-n4",
+      "name": "北苑4栋",
+      "placeId": "osm-way-313039014",
+      "memberPlaceIds": ["osm-way-313039014"],
+      "footprintSourceIds": ["osm-way-313039014"],
+      "origin": [113.39072254999999, 23.062881400000002],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "sha256": "f1fb7f3a81773950bf8c64f5d15e40c973ff37529eefb2972d591c5398bfe095",
+          "bytes": 14928,
+          "triangles": 128,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -38.933258056640625, -1.1847190429405802e-15, -19.34795570373535
+            ],
+            "max": [38.933258056640625, 21, 19.347930908203125]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-n4-3d-8fb663acfca4.glb",
+          "sha256": "8fb663acfca426c37ca8c1a042d2577f9b185233efab7b00c70767d9ec2182fa",
+          "bytes": 81408,
+          "triangles": 4824,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-39.183258056640625, 0, -19.65795707702637],
+            "max": [39.183258056640625, 20.999999850988388, 21.19793051481247]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-n5",
+      "name": "北苑5栋",
+      "placeId": "osm-way-313039019",
+      "memberPlaceIds": ["osm-way-313039019"],
+      "footprintSourceIds": ["osm-way-313039019"],
+      "origin": [113.3917651, 23.062308549999997],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "sha256": "b5d876c8ffc991f7ac5a038e4b251a335f4dd4989a418e3e2c0d8a72babcac2a",
+          "bytes": 14936,
+          "triangles": 128,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -35.36798095703125, -1.2490615714381482e-15, -20.398752212524414
+            ],
+            "max": [35.36798095703125, 21, 20.398723602294922]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-n5-3d-8d45297d2765.glb",
+          "sha256": "8d45297d27658d72035501b7643a8fee01310d54542942922049883a331e8532",
+          "bytes": 82252,
+          "triangles": 4796,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-35.61798095703125, 0, -20.7087516784668],
+            "max": [35.61798095703125, 20.999999850988388, 22.248723208904266]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-n6",
+      "name": "北苑6栋",
+      "placeId": "osm-way-313039023",
+      "memberPlaceIds": ["osm-way-313039023"],
+      "footprintSourceIds": ["osm-way-313039023"],
+      "origin": [113.39156055, 23.061719250000003],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "sha256": "df915c4f6ecc3169f73371d143519d487425dba251a6b60029205728504f5c65",
+          "bytes": 14936,
+          "triangles": 128,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -35.36301803588867, -1.2490615714381482e-15, -20.398752212524414
+            ],
+            "max": [35.36301803588867, 21, 20.398723602294922]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-n6-3d-7f35975c0665.glb",
+          "sha256": "7f35975c06650b08593e39f99bd7d9ecb5e65791876c0de66263d05cbc4839fe",
+          "bytes": 82248,
+          "triangles": 4796,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-35.61301803588867, 0, -20.7087516784668],
+            "max": [35.61301803588867, 20.999999850988388, 22.248723208904266]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-s7",
+      "name": "南苑7栋",
+      "placeId": "osm-way-312536955",
+      "memberPlaceIds": ["osm-way-312536955"],
+      "footprintSourceIds": ["osm-way-312536955"],
+      "origin": [113.390146, 23.0615765],
+      "pickable": true,
+      "heightAccuracy": "owner_approximation",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "sha256": "f6d764b87c3885b195fe072c896dbdf36b9d9a616b50e7e12d858c8932a2f7ba",
+          "bytes": 15692,
+          "triangles": 136,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -35.28632354736328, -1.2759560321837747e-15, -20.83797264099121
+            ],
+            "max": [35.28632354736328, 21, 20.83794403076172]
+          }
+        },
+        "3d": {
+          "url": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+          "sha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+          "bytes": 80384,
+          "triangles": 4748,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-35.54703903198242, 0, -21.14795708656311],
+            "max": [35.543148040771484, 20.999999850988388, 22.48223227262497]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-s8",
+      "name": "南苑8栋",
+      "placeId": "osm-way-312536956",
+      "memberPlaceIds": ["osm-way-312536956"],
+      "footprintSourceIds": ["osm-way-312536956"],
+      "origin": [113.3898776, 23.0608672],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "sha256": "d98c341ef9fd7e4f3923fff7e484be9d9b5e30c02f0a2859f3a5346b284b45bd",
+          "bytes": 20308,
+          "triangles": 184,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -41.74223327636719, -2.2482416471726998e-15, -36.71665954589844
+            ],
+            "max": [41.74223327636719, 21, 36.71657180786133]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-s8-3d-aec7a0b8970e.glb",
+          "sha256": "aec7a0b8970e7a8bb623e9ee870a71df3c6cfcdae4dc605ff712a888fb1cde16",
+          "bytes": 110584,
+          "triangles": 6902,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-42.00716018676758, 0, -37.02665488421917],
+            "max": [42.005218505859375, 20.999999850988388, 38.23854750394821]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-s9",
+      "name": "南苑9栋",
+      "placeId": "osm-way-312536950",
+      "memberPlaceIds": ["osm-way-312536950"],
+      "footprintSourceIds": ["osm-way-312536950"],
+      "origin": [113.39107005, 23.0609837],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "sha256": "72c51aba70bba4af5ae3b034029850bb32b6156b58370cf845938c00fe66d90d",
+          "bytes": 15704,
+          "triangles": 136,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -38.08464050292969, -1.2888925546289528e-15, -21.049243927001953
+            ],
+            "max": [38.08464050292969, 21, 21.049213409423828]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-s9-3d-39ce7f06ecd8.glb",
+          "sha256": "39ce7f06ecd87c5071a0ec843c9bf7256b88015767105a16de58c6cdd5836832",
+          "bytes": 81400,
+          "triangles": 4812,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-38.345149993896484, 0, -21.35923908650875],
+            "max": [38.339195251464844, 20.999999850988388, 22.04857176542282]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-s10",
+      "name": "南苑10栋",
+      "placeId": "osm-way-312536951",
+      "memberPlaceIds": ["osm-way-312536951"],
+      "footprintSourceIds": ["osm-way-312536951"],
+      "origin": [113.39185, 23.0609845],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "sha256": "db8c77ce8e66c19472427db5638c452bac3ef741369ee48f377e6ced1d519097",
+          "bytes": 14936,
+          "triangles": 128,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -38.32506561279297, -1.2888925546289528e-15, -21.049243927001953
+            ],
+            "max": [38.32506561279297, 21, 21.049213409423828]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-s10-3d-1a18c41d63ab.glb",
+          "sha256": "1a18c41d63ab973f351717d614b17747958e0e4d253442fc9f44d579e0434077",
+          "bytes": 81400,
+          "triangles": 4812,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-38.585575103759766, 0, -21.35923908650875],
+            "max": [38.588050842285156, 20.999999850988388, 22.04857176542282]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-s11",
+      "name": "南苑11栋",
+      "placeId": "osm-way-312536952",
+      "memberPlaceIds": ["osm-way-312536952"],
+      "footprintSourceIds": ["osm-way-312536952"],
+      "origin": [113.3905809, 23.0603908],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "sha256": "4334395f7f775aa08950d3a84f8fd857b836fd7aafb8c416e34099bcb77b3ecb",
+          "bytes": 15708,
+          "triangles": 136,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -38.32523727416992, -1.2888925546289528e-15, -21.049243927001953
+            ],
+            "max": [38.32523727416992, 21, 21.049213409423828]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-s11-3d-2fda6f1df75e.glb",
+          "sha256": "2fda6f1df75e7676dc647d4e435628804941f3b007976c09d95ac9ac2332ca25",
+          "bytes": 81396,
+          "triangles": 4812,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-38.58574295043945, 0, -21.35923908650875],
+            "max": [38.588218688964844, 20.999999850988388, 22.04857176542282]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-s12",
+      "name": "南苑12栋",
+      "placeId": "osm-way-312536954",
+      "memberPlaceIds": ["osm-way-312536954"],
+      "footprintSourceIds": ["osm-way-312536954"],
+      "origin": [113.39145210000001, 23.0603905],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "sha256": "6c477cada0ee12c031b75036eca7ad79b570255653ca03ac8a5af3c18e9de739",
+          "bytes": 14936,
+          "triangles": 128,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -45.29253005981445, -1.2888925546289528e-15, -21.049243927001953
+            ],
+            "max": [45.29253005981445, 21, 21.049213409423828]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-s12-3d-f6c253855656.glb",
+          "sha256": "f6c253855656baf4b1935a8373fd20a1eb44ac29c1d761c829b6de3b05421703",
+          "bytes": 84508,
+          "triangles": 5048,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-45.55303955078125, 0, -21.359163627028465],
+            "max": [45.56570053100586, 20.999999850988388, 22.04857176542282]
+          }
+        }
+      }
+    },
+    {
+      "key": "dormitory-s13",
+      "name": "南苑13栋",
+      "placeId": "osm-way-312536953",
+      "memberPlaceIds": ["osm-way-312536953"],
+      "footprintSourceIds": ["osm-way-312536953"],
+      "origin": [113.39073454999999, 23.059776],
+      "pickable": true,
+      "heightAccuracy": "template_visual_estimate",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "sha256": "2a376c78f62116f6648697c4b79e4b8f38e144eb1da423f3fb7f4c88032a96ac",
+          "bytes": 14932,
+          "triangles": 128,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -55.62095642089844, -1.2970630344381678e-15, -21.18267822265625
+            ],
+            "max": [55.62095642089844, 21, 21.182647705078125]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/dormitory-s13-3d-40511576fc5d.glb",
+          "sha256": "40511576fc5d0bf33bc71b15ea78a25a438d6736d9e96f2560e9c1cde9f6ca1f",
+          "bytes": 89952,
+          "triangles": 5420,
+          "drawCalls": 7,
+          "bounds": {
+            "min": [-55.88146209716797, 0, -21.492671877145767],
+            "max": [55.87997055053711, 20.999999850988388, 22.182006061077118]
+          }
+        }
+      }
+    },
+    {
+      "key": "teaching-links",
+      "name": "教学楼连接段",
+      "placeId": null,
+      "memberPlaceIds": [],
+      "footprintSourceIds": [],
+      "origin": [113.3917075, 23.0663962],
+      "pickable": false,
+      "heightAccuracy": "existing_visual_connector_parameters",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "sha256": "199cc90091fca0e9e6194269ecbf138f5ee8c5b3d0f0a3cf4390431fd2a6f82d",
+          "bytes": 5672,
+          "triangles": 72,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [-25.674999237060547, 7.200000189244747, -39.85000038146973],
+            "max": [73.9749984741211, 18.280000761151314, 96.20000171661377]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/teaching-links-3d-ca2bd3b709ed.glb",
+          "sha256": "ca2bd3b709ed13c901f0d8e5d461b9024ce2cabcfd1e472681c6f9162bc6d042",
+          "bytes": 8512,
+          "triangles": 168,
+          "drawCalls": 3,
+          "bounds": {
+            "min": [-25.674999237060547, 7.200000189244747, -39.85000038146973],
+            "max": [73.9749984741211, 18.280000761151314, 96.20000171661377]
+          }
+        }
+      }
+    }
+  ]
+}

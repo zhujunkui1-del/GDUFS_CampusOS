@@ -192,14 +192,7 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
     }
   }
   render(gl: WebGL2RenderingContext, input: CustomRenderMethodInput) {
-    if (
-      !this.visible ||
-      !this.ready ||
-      !this.map ||
-      !this.renderer ||
-      this.map.getZoom() < 16.7
-    )
-      return;
+    if (!this.visible || !this.ready || !this.map || !this.renderer) return;
     this.camera.projectionMatrix
       .fromArray(input.defaultProjectionData.mainMatrix)
       .multiply(this.localMatrix);
@@ -224,14 +217,7 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
     // Static model: no extra loop or per-frame React state update.
   }
   pick(point: { x: number; y: number }) {
-    if (
-      !this.visible ||
-      !this.ready ||
-      !this.map ||
-      !this.root ||
-      this.map.getZoom() < 16.7
-    )
-      return false;
+    if (!this.visible || !this.ready || !this.map || !this.root) return false;
     const { clientWidth: width, clientHeight: height } =
       this.map.getContainer();
     const x = (point.x / width) * 2 - 1,

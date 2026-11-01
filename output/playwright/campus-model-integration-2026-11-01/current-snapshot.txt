@@ -1,0 +1,139 @@
+### Page
+- Page URL: http://127.0.0.1:3026/map
+- Page Title: 广外通 CampusOS
+- Console: 27 errors, 163 warnings
+### Snapshot
+```yaml
+- generic [ref=f4e1]:
+  - generic "大学城校区本地地图" [ref=f4e2]:
+    - generic:
+      - region "Map" [ref=f4e3]
+      - button "查看大会堂（教工活动中心）" [ref=f4e4] [cursor=pointer]: 大会堂（教工活动中心）
+      - button "查看图书馆" [ref=f4e5] [cursor=pointer]: 图书馆
+      - button "查看院系办公楼" [ref=f4e6] [cursor=pointer]: 院系办公楼
+      - button "查看校行政办公楼" [ref=f4e7] [cursor=pointer]: 校行政办公楼
+      - button "查看南苑9栋" [ref=f4e8] [cursor=pointer]: 南苑9栋
+      - button "查看南苑10栋" [ref=f4e9] [cursor=pointer]: 南苑10栋
+      - button "查看南苑11栋" [ref=f4e10] [cursor=pointer]: 南苑11栋
+      - button "查看南苑12栋" [ref=f4e11] [cursor=pointer]: 南苑12栋
+      - button "查看南苑7栋" [ref=f4e12] [cursor=pointer]: 南苑7栋
+      - button "查看南苑8栋" [ref=f4e13] [cursor=pointer]: 南苑8栋
+      - button "查看北苑1栋" [ref=f4e14] [cursor=pointer]: 北苑1栋
+      - button "查看北苑4栋" [ref=f4e15] [cursor=pointer]: 北苑4栋
+      - button "查看北苑5栋" [ref=f4e16] [cursor=pointer]: 北苑5栋
+      - button "查看北苑3栋" [ref=f4e17] [cursor=pointer]: 北苑3栋
+      - button "查看北苑6栋" [ref=f4e18] [cursor=pointer]: 北苑6栋
+      - button "查看北苑2栋" [ref=f4e19] [cursor=pointer]: 北苑2栋
+      - button "查看后勤楼" [ref=f4e20] [cursor=pointer]: 后勤楼
+      - button "查看师苑3栋" [ref=f4e21] [cursor=pointer]: 师苑3栋
+      - button "查看师苑1栋" [ref=f4e22] [cursor=pointer]: 师苑1栋
+      - button "查看门诊部" [ref=f4e23] [cursor=pointer]: 门诊部
+      - button "查看师苑4栋" [ref=f4e24] [cursor=pointer]: 师苑4栋
+      - button "查看B8学术报告厅" [ref=f4e25] [cursor=pointer]: B8学术报告厅
+      - button "查看体育场（真草场）" [ref=f4e26] [cursor=pointer]: 体育场（真草场）
+      - button "查看体育馆（羽毛球场）" [ref=f4e27] [cursor=pointer]: 体育馆（羽毛球场）
+      - button "查看排球场" [ref=f4e28] [cursor=pointer]: 排球场
+      - button "查看篮球场" [ref=f4e29] [cursor=pointer]: 篮球场
+      - button "查看假草场" [ref=f4e30] [cursor=pointer]: 假草场
+      - button "查看游泳馆" [ref=f4e31] [cursor=pointer]: 游泳馆
+      - button "查看羽毛球场" [ref=f4e32] [cursor=pointer]: 羽毛球场
+      - button "查看艺术楼" [ref=f4e33] [cursor=pointer]: 艺术楼
+      - button "查看教学楼C栋" [ref=f4e34] [cursor=pointer]: 教学楼C栋
+      - button "查看教学楼A栋" [ref=f4e35] [cursor=pointer]: 教学楼A栋
+      - button "查看西南门" [ref=f4e36] [cursor=pointer]: 西南门
+      - button "查看京东物流" [ref=f4e37] [cursor=pointer]: 京东物流
+      - button "查看中通快递" [ref=f4e38] [cursor=pointer]: 中通快递
+      - button "查看又康超市" [ref=f4e39] [cursor=pointer]: 又康超市
+      - button "查看南苑13栋" [ref=f4e40] [cursor=pointer]: 南苑13栋
+      - button "查看友苑" [ref=f4e41] [cursor=pointer]: 友苑
+      - button "查看文采园（一饭）" [ref=f4e42] [cursor=pointer]: 文采园（一饭）
+      - button "查看风采园（三饭）" [ref=f4e43] [cursor=pointer]: 风采园（三饭）
+      - button "查看博雅园（二饭）" [ref=f4e44] [cursor=pointer]: 博雅园（二饭）
+      - button "查看师苑2栋" [ref=f4e45] [cursor=pointer]: 师苑2栋
+      - button "查看学术交流中心" [ref=f4e46] [cursor=pointer]: 学术交流中心
+      - button "查看教学楼D栋" [ref=f4e47] [cursor=pointer]: 教学楼D栋
+      - button "查看教学楼B栋" [ref=f4e48] [cursor=pointer]: 教学楼B栋
+      - button "查看教学楼E栋" [ref=f4e49] [cursor=pointer]: 教学楼E栋
+      - button "查看教学楼F栋" [ref=f4e50] [cursor=pointer]: 教学楼F栋
+      - button "查看教学楼G栋" [ref=f4e51] [cursor=pointer]: 教学楼G栋
+      - button "查看实验楼A栋" [ref=f4e52] [cursor=pointer]: 实验楼A栋
+      - button "查看实验楼C栋" [ref=f4e53] [cursor=pointer]: 实验楼C栋
+      - button "查看实验楼D栋" [ref=f4e54] [cursor=pointer]: 实验楼D栋
+      - button "查看下沉广场" [ref=f4e55] [cursor=pointer]: 下沉广场
+      - button "查看下沉隧道" [ref=f4e56] [cursor=pointer]: 下沉隧道
+      - button "查看语心桥" [ref=f4e57] [cursor=pointer]: 语心桥
+      - button "查看八角楼" [ref=f4e58] [cursor=pointer]: 八角楼
+      - button "查看2号门" [ref=f4e59] [cursor=pointer]: 2号门
+      - button "查看3号门" [ref=f4e60] [cursor=pointer]: 3号门
+      - button "查看西北门" [ref=f4e61] [cursor=pointer]: 西北门
+      - button "查看东门" [ref=f4e62] [cursor=pointer]: 东门
+      - button "查看东南门" [ref=f4e63] [cursor=pointer]: 东南门
+  - generic:
+    - link "跳到主要内容" [ref=f4e64] [cursor=pointer]:
+      - /url: "#main-content"
+    - complementary "侧边栏" [ref=f4e65]:
+      - link "广外通 CampusOS 首页" [ref=f4e66] [cursor=pointer]:
+        - /url: /map
+        - generic [aria-hidden] [ref=f4e67]: C.
+      - navigation "桌面主导航" [ref=f4e68]:
+        - generic [ref=f4e69]:
+          - link "校园地图" [ref=f4e70] [cursor=pointer]:
+            - /url: /map
+            - generic [aria-hidden]: 地图
+          - link "校园雷达" [ref=f4e73] [cursor=pointer]:
+            - /url: /radar
+            - generic [aria-hidden]: 雷达
+          - link "校园知识" [ref=f4e81] [cursor=pointer]:
+            - /url: /knowledge
+            - generic [aria-hidden]: 知识
+          - link "活动日历" [ref=f4e84] [cursor=pointer]:
+            - /url: /calendar
+            - generic [aria-hidden]: 日历
+          - link "我的收藏" [ref=f4e87] [cursor=pointer]:
+            - /url: /favorites
+            - generic [aria-hidden]: 收藏
+        - generic [ref=f4e90]:
+          - button "展开导航" [ref=f4e91] [cursor=pointer]
+          - link "我的账号" [ref=f4e95] [cursor=pointer]:
+            - /url: /account
+            - generic [ref=f4e100]: 游客
+    - main:
+      - region "广外大学城校园地图":
+        - heading "广外大学城校园地图" [level=1] [ref=f4e101]
+        - generic [ref=f4e102]:
+          - generic [ref=f4e103]:
+            - link "广外通 CampusOS" [ref=f4e104] [cursor=pointer]:
+              - /url: /map
+              - text: 广外通
+              - generic [ref=f4e105]: CampusOS
+            - generic [ref=f4e106]: 大学城校区
+          - generic [ref=f4e108]:
+            - generic [ref=f4e112]: 搜索校园地点
+            - textbox "搜索校园地点" [ref=f4e113]:
+              - /placeholder: 搜索地点、宿舍、体育设施
+              - text: 南苑13栋
+            - button "清空地点搜索" [ref=f4e114] [cursor=pointer]
+        - generic "地图工具" [ref=f4e118]:
+          - button "定位我的位置" [ref=f4e119] [cursor=pointer]
+          - button "地图模式，当前3D，切换为2D" [ref=f4e123] [cursor=pointer]: 3D
+          - button "地图朝北" [ref=f4e124] [cursor=pointer]
+          - button "顺时针旋转地图" [ref=f4e128] [cursor=pointer]
+          - button "地图图层" [ref=f4e132] [cursor=pointer]
+          - button "校园步行导航" [ref=f4e137] [cursor=pointer]
+          - button "放大地图" [ref=f4e141] [cursor=pointer]
+          - button "缩小地图" [ref=f4e143] [cursor=pointer]
+        - dialog [ref=f4e146]:
+          - generic [ref=f4e147]:
+            - generic [ref=f4e148]:
+              - paragraph [ref=f4e149]: 生活区 · 宿舍楼栋
+              - button "关闭地点详情" [active] [ref=f4e150] [cursor=pointer]
+            - generic [ref=f4e155]:
+              - heading "南苑13栋" [level=2] [ref=f4e156]
+              - button "选择导航终点" [ref=f4e157] [cursor=pointer]
+        - link "© OpenStreetMap contributors · ODbL" [ref=f4e162] [cursor=pointer]:
+          - /url: https://www.openstreetmap.org/relation/13900183
+    - button "打开校园助理" [ref=f4e163] [cursor=pointer]
+  - alert [ref=f4e164]
+```
+### Events
+- New console entries: .playwright-cli\console-2026-11-01T10-45-46-887Z.log#L18092-L18510

@@ -1,0 +1,88 @@
+- generic [ref=e1]:
+  - generic "大学城校区本地地图" [ref=e2]:
+    - generic:
+      - region "Map" [ref=e88]
+      - button "查看大会堂（教工活动中心）" [ref=e89] [cursor=pointer]: 大会堂（教工活动中心）
+      - button "查看图书馆" [ref=e90] [cursor=pointer]: 图书馆
+      - button "查看院系办公楼" [ref=e91] [cursor=pointer]: 院系办公楼
+      - button "查看校行政办公楼" [ref=e92] [cursor=pointer]: 校行政办公楼
+      - button "查看后勤楼" [ref=e93] [cursor=pointer]: 后勤楼
+      - button "查看师苑1栋" [ref=e110] [cursor=pointer]: 师苑1栋
+      - button "查看门诊部" [ref=e94] [cursor=pointer]: 门诊部
+      - button "查看体育场（真草场）" [ref=e97] [cursor=pointer]: 体育场（真草场）
+      - button "查看体育馆（羽毛球场）" [ref=e98] [cursor=pointer]: 体育馆（羽毛球场）
+      - button "查看排球场" [ref=e99] [cursor=pointer]: 排球场
+      - button "查看篮球场" [ref=e111] [cursor=pointer]: 篮球场
+      - button "查看教学楼C栋" [ref=e102] [cursor=pointer]: 教学楼C栋
+      - button "查看教学楼A栋" [ref=e112] [cursor=pointer]: 教学楼A栋
+      - button "查看文采园（一饭）" [ref=e103] [cursor=pointer]: 文采园（一饭）
+      - button "查看风采园（三饭）" [ref=e104] [cursor=pointer]: 风采园（三饭）
+      - button "查看博雅园（二饭）" [ref=e105] [cursor=pointer]: 博雅园（二饭）
+      - button "查看实验楼（A/B/C/D/E栋）" [ref=e106] [cursor=pointer]: 实验楼（A/B/C/D/E栋）
+      - button "查看学术交流中心" [ref=e107] [cursor=pointer]: 学术交流中心
+  - generic:
+    - link "跳到主要内容" [ref=e3] [cursor=pointer]:
+      - /url: "#main-content"
+    - complementary "侧边栏" [ref=e4]:
+      - link "广外通 CampusOS 首页" [ref=e5] [cursor=pointer]:
+        - /url: /map
+        - generic [aria-hidden] [ref=e6]: C.
+      - navigation "桌面主导航" [ref=e7]:
+        - generic [ref=e8]:
+          - link "校园地图" [ref=e9] [cursor=pointer]:
+            - /url: /map
+            - generic [aria-hidden]: 地图
+          - link "校园雷达" [ref=e12] [cursor=pointer]:
+            - /url: /radar
+            - generic [aria-hidden]: 雷达
+          - link "校园知识" [ref=e20] [cursor=pointer]:
+            - /url: /knowledge
+            - generic [aria-hidden]: 知识
+          - link "活动日历" [ref=e23] [cursor=pointer]:
+            - /url: /calendar
+            - generic [aria-hidden]: 日历
+          - link "我的收藏" [ref=e26] [cursor=pointer]:
+            - /url: /favorites
+            - generic [aria-hidden]: 收藏
+        - generic [ref=e29]:
+          - button "展开导航" [ref=e30] [cursor=pointer]
+          - link "我的账号" [ref=e34] [cursor=pointer]:
+            - /url: /account
+            - generic [ref=e39]: 游客
+    - main:
+      - region "广外大学城校园地图":
+        - heading "广外大学城校园地图" [level=1] [ref=e40]
+        - generic [ref=e41]:
+          - generic [ref=e42]:
+            - link "广外通 CampusOS" [ref=e43] [cursor=pointer]:
+              - /url: /map
+              - text: 广外通
+              - generic [ref=e44]: CampusOS
+            - generic [ref=e45]: 大学城校区
+          - generic [ref=e47]:
+            - generic [ref=e51]: 搜索校园地点
+            - textbox "搜索校园地点" [ref=e52]:
+              - /placeholder: 搜索地点、宿舍、体育设施
+              - text: 图书馆
+            - button "清空地点搜索" [ref=e114] [cursor=pointer]
+        - generic "地图工具" [ref=e58]:
+          - button "定位我的位置" [ref=e59] [cursor=pointer]
+          - button "地图模式，当前2.5D，切换为3D" [ref=e113] [cursor=pointer]: 2.5D
+          - button "地图朝北" [ref=e64] [cursor=pointer]
+          - button "顺时针旋转地图" [ref=e68] [cursor=pointer]
+          - button "地图图层" [ref=e72] [cursor=pointer]
+          - button "校园步行导航" [ref=e77] [cursor=pointer]
+          - button "放大地图" [ref=e81] [cursor=pointer]
+          - button "缩小地图" [ref=e83] [cursor=pointer]
+        - dialog [ref=e136]:
+          - generic [ref=e137]:
+            - generic [ref=e138]:
+              - paragraph [ref=e139]: 教学区 · 图书馆
+              - button "关闭地点详情" [active] [ref=e140] [cursor=pointer]
+            - generic [ref=e145]:
+              - heading "图书馆" [level=2] [ref=e146]
+              - button "选择导航终点" [ref=e147] [cursor=pointer]
+        - link "© OpenStreetMap contributors · ODbL" [ref=e86] [cursor=pointer]:
+          - /url: https://www.openstreetmap.org/relation/13900183
+    - button "打开校园助理" [ref=e87] [cursor=pointer]
+  - alert [ref=e109]

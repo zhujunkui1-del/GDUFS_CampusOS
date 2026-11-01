@@ -1,0 +1,40 @@
+async (page) => {
+  const records = [], errors = [], failedRequests = [];
+  page.on('pageerror', e => errors.push(e.message));
+  page.on('response', r => { if (r.status() >= 400) failedRequests.push({url:r.url(),status:r.status()}); });
+  await page.goto('http://127.0.0.1:3025/?building=all&mode=2.5d');
+  await page.waitForFunction(() => document.querySelector('canvas').dataset.ready === 'true');
+  await page.setViewportSize({width:1440,height:1000});
+  const manifest = await page.evaluate(async () => (await fetch('./manifest.json')).json());
+  async function shot(name, key, mode, view = 'overall') {
+    await page.getByLabel('查看楼栋').selectOption(key);
+    await page.getByRole('button',{name:mode === '3d' ? '3D' : '2.5D',exact:true}).click();
+    await page.waitForFunction(({key,mode}) => {const d=document.querySelector('canvas').dataset;return d.ready==='true'&&d.building===key&&d.mode===mode;},{key,mode});
+    await page.getByRole('button',{name:{overall:'整体',front:'正面',side:'院落',roof:'俯视'}[view],exact:true}).click();
+    const rec={name,viewport:page.viewportSize(),...await page.locator('canvas').evaluate(c=>({...c.dataset}))};
+    if(rec.assetSha256!==manifest.entries[key].assets[mode].sha256)throw new Error('Wrong asset '+name);
+    const [x0,y0,x1,y1]=JSON.parse(rec.modelExtent),minY=rec.viewport.width<1050?150:90;
+    if(x0<0||x1>rec.viewport.width||y0<minY||y1>rec.viewport.height-85)throw new Error('Framing/UI overlap '+name+' '+rec.modelExtent);
+    await page.screenshot({path:name+'.png'});
+    records.push(rec);
+  }
+  for(const key of manifest.individualBuildingKeys){
+    await shot('desktop-'+key+'-3d',key,'3d');
+    await shot('desktop-'+key+'-2.5d',key,'2.5d');
+  }
+  for(const key of ['all','north','south'])for(const mode of ['3d','2.5d'])await shot('desktop-'+key+'-'+mode,key,mode);
+  for(const key of ['n5','s8','s13'])await shot('desktop-'+key+'-roof',key,'3d','roof');
+  await page.setViewportSize({width:390,height:844});
+  await shot('mobile-all-2.5d','all','2.5d');
+  await shot('mobile-n4-3d','n4','3d');
+  await shot('mobile-s8-3d','s8','3d');
+  const select=await page.getByLabel('查看楼栋').boundingBox(),mode=await page.getByRole('group',{name:'模型模式'}).boundingBox();
+  if(select.x+select.width>mode.x)throw new Error('Mobile controls overlap');
+  await page.setViewportSize({width:950,height:540});
+  await shot('short-s13-3d','s13','3d');
+  await page.mouse.move(480,280);await page.mouse.down();await page.mouse.move(530,300,{steps:6});await page.mouse.up();await page.mouse.wheel(0,-100);
+  await page.waitForTimeout(150);await page.screenshot({path:'short-interaction.png'});
+  const before=await page.locator('canvas').getAttribute('data-frames');await page.waitForTimeout(350);const after=await page.locator('canvas').getAttribute('data-frames');
+  if(before!==after||errors.length||failedRequests.length)throw new Error(JSON.stringify({before,after,errors,failedRequests}));
+  return {recordedAt:new Date().toISOString(),automation:'Playwright CLI with headed Edge',records,screenshots:records.length+1,assetsLoaded:32,pageErrors:errors,failedRequests,idleFrames:{before,after,stable:true},physicalPhoneTested:false};
+}

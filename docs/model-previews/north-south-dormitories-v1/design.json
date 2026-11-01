@@ -1,0 +1,125 @@
+{
+  "version": "north-south-dormitories-v1-2026-11-01",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "scope": "北苑1-6栋、南苑7-13栋，共13栋；不含师苑和友苑",
+  "buildingKeys": [
+    "n1",
+    "n2",
+    "n3",
+    "n4",
+    "n5",
+    "n6",
+    "s7",
+    "s8",
+    "s9",
+    "s10",
+    "s11",
+    "s12",
+    "s13"
+  ],
+  "levels": 7,
+  "levelsSource": "负责人2026-11-01明确13栋每栋都是7层，南北苑样式一致、占地不同",
+  "heightMeters": 21,
+  "heightAccuracy": "template_visual_estimate; only_south7_has_prior_owner_approximation",
+  "templateSource": "docs/model-previews/nanyuan7-v2",
+  "templateGeneratorSha256": "ba8262e18f5bf6e8f5c67a66eabec34736270311a7ec1ef73ac183e43f1cda68",
+  "approvedSouth7Sha256": "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
+  "formalMapIntegrated": false,
+  "performance": {
+    "single": {
+      "triangles": 9000,
+      "drawCalls": 10,
+      "bytes": 180000
+    },
+    "group": {
+      "triangles": 100000,
+      "drawCalls": 25,
+      "bytes": 2000000
+    }
+  },
+  "notes": [
+    "本轮明确授权此13栋建模，范围不包含师苑/友苑或其他宿舍。",
+    "复用南苑7栋V2的同一材质/开间/柱梁/凹入廊道构件规则，每栋读取自身源轮廓，不对整个模板单纯等比例拉伸。",
+    "南苑7栋3D直接复制已验收资产，正式模型和原生2.5D不改。",
+    "所有13栋7层为负责人确认；21米为模板显示高度，其他12栋不回填为实测总高。",
+    "原OSM外环保留；院落是照片/模板推定的显示内环，南苑7栋沿用已有内环，其他栋按自身连接段独立匹配。",
+    "南苑8栋保留开放凹院，南苑12/13栋保留延伸翼楼，院落不按全栋包围盒简单拉伸。",
+    "组合模型按真实位置离线合并静态面、复用相同柱梁/窗面实例；单栋模型有各自原点，组合模型共用南苑7栋原点。",
+    "十三栋3D总三角面不等同普通手机达标；单栋/2.5D按需加载供评审。",
+    "十二张参考图保留原文档路径，无图片纹理或图片端点，未复制至public。"
+  ],
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/南苑7栋.png",
+      "bytes": 1386221,
+      "sha256": "c1abfed6272248443bde0974579d05c0431b3c1791ea1186315576ff29fffa86",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/南苑9栋.png",
+      "bytes": 725614,
+      "sha256": "6dde485410f98a9dc6a2dc6b58f1da0b92e00970c9149f3b71f5afb1976aea71",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/南苑7栋细节.png",
+      "bytes": 220206,
+      "sha256": "e7040c164a6763904ec8e4adb6e733fbc8c73bd4d09c525e0ee25b1ea2085dad",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/南苑7栋细节23.png",
+      "bytes": 140910,
+      "sha256": "c21416c13a4151b86694a1ed5f41f7df6d7e1d0dc4774c58395d6939c390515e",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/南苑7栋98.png",
+      "bytes": 1396690,
+      "sha256": "5076e06541aa5d0e734b1a915ceaeae8a50ccb08d938d309d81605e90f1b8dd4",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/南苑7栋内测232.png",
+      "bytes": 356794,
+      "sha256": "24fc0d7ecb801c0af46d24ad2945931508c5f9af1a5700e2e0b887a92b54076e",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/北苑4栋.png",
+      "bytes": 1834608,
+      "sha256": "d3b8152b01e363d523c7bae08c1885d43d1638a9e73e074d1fc88e9fa937b680",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/北苑5栋89.png",
+      "bytes": 1396005,
+      "sha256": "7824058210c3d7f8170e147eb0bcf77a1f6ea330c6711f9c7d19dd1978bc910f",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/北苑6栋.png",
+      "bytes": 902180,
+      "sha256": "bb864340f013107b783928d8f496e381347c9ba5f78c68c2568f57a7d755e69c",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/卫星图/宿舍区_北苑_一二食堂_超市.png",
+      "bytes": 3463861,
+      "sha256": "5d3af883147d3ac51798de7b2019d476c71740a41c874c37a4893428375c7f99",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/卫星图/宿舍区_南苑_三食堂.png",
+      "bytes": 4393760,
+      "sha256": "5c0a9b9b2b1665465c9fdaaf984414aad89cd18599903960f5d718cb234530db",
+      "usage": "internal_visual_reference_only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/粗略/n.jpg",
+      "bytes": 2910269,
+      "sha256": "1ff555045acb02894c350fc16e801310b656407c19012fc975488a7c8b1363be",
+      "usage": "schematic_reference_not_GIS"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { selectMapMode } from "./helpers/map-mode";
 
 async function focusDorm(page: Page) {
@@ -25,10 +25,12 @@ test("South 7 native 2.5D and prewarmed 3D keep their geography and label semant
   let modelAssetFinished = false;
   page.on("pageerror", (e) => errors.push(e.message));
   page.on("request", (r) => {
-    if (r.url().endsWith(".glb")) assets.push(r.url());
+    if (r.url().includes("/models/nanyuan7/") && r.url().endsWith(".glb"))
+      assets.push(r.url());
   });
   page.on("requestfinished", (r) => {
-    if (r.url().endsWith(".glb")) modelAssetFinished = true;
+    if (r.url().includes("/models/nanyuan7/") && r.url().endsWith(".glb"))
+      modelAssetFinished = true;
   });
   const map = await focusDorm(page);
   await expect.poll(() => assets.length, { timeout: 30000 }).toBe(1);
@@ -120,7 +122,12 @@ test("South 7 native 2.5D and prewarmed 3D keep their geography and label semant
     ),
   );
   const pickedBefore = Number(await map.getAttribute("data-model-pick-count"));
-  await page.mouse.click((extent[0] + extent[2]) / 2, extent[3] - 12);
+  // The projected bounding box includes space below the open front balconies.
+  // Aim at the solid rear roof band so the assertion exercises an actual mesh.
+  await page.mouse.click(
+    (extent[0] + extent[2]) / 2,
+    extent[1] + (extent[3] - extent[1]) * 0.08,
+  );
   await expect(
     page.getByRole("button", { name: "关闭地点详情" }),
   ).toBeVisible();
@@ -150,7 +157,102 @@ test("South 7 native 2.5D and prewarmed 3D keep their geography and label semant
   expect(errors).toEqual([]);
 });
 
-test("failed 3D assets fall back to native volume and can be retried", async ({
+test("all completed models keep 3D detail across zoom and pan, and dorm volumes share rendering", async ({
+  page,
+}) => {
+  const catalog: { entries: { key: string; placeId: string | null }[] } =
+    JSON.parse(
+      await readFile(
+        "src/features/campus-map/data/building-model-catalog.json",
+        "utf8",
+      ),
+    );
+  const expected3D = catalog.entries
+    .filter((e) => e.placeId !== "osm-way-312536955")
+    .map((e) => `${e.key}:3d`)
+    .sort();
+  const requests: string[] = [];
+  page.on("request", (r) => {
+    if (r.url().endsWith(".glb")) requests.push(r.url());
+  });
+  await page.goto("/map");
+  const map = page.getByTestId("campus-map");
+  await expect(map).toHaveAttribute("data-status", "ready");
+  await selectMapMode(page, "3D");
+  await expect(map).toHaveAttribute(
+    "data-campus-model-details",
+    String(expected3D.length),
+    { timeout: 30000 },
+  );
+  await expect(map).toHaveAttribute("data-campus-model-pending", "0");
+  const keys = async () =>
+    JSON.parse(
+      (await map.getAttribute("data-campus-model-keys")) || "[]",
+    ).sort();
+  expect(await keys()).toEqual(expected3D);
+  const beforeFocus = Number(
+    await map.getAttribute("data-camera-animation-count"),
+  );
+  await page.getByLabel("搜索校园地点").fill("南苑9栋");
+  await page.locator(".place-result").filter({ hasText: "南苑9栋" }).click();
+  await expect
+    .poll(async () =>
+      Number(await map.getAttribute("data-camera-animation-count")),
+    )
+    .toBeGreaterThan(beforeFocus);
+  await expect(map).toHaveAttribute("data-camera-moving", "false");
+  await page.getByRole("button", { name: "关闭地点详情" }).click();
+  await expect(page.locator(".place-details-frame")).toHaveCount(0);
+  for (let i = 0; i < 2; i++) {
+    await page.getByRole("button", { name: "缩小地图", exact: true }).click();
+    await expect(map).toHaveAttribute("data-camera-moving", "false");
+  }
+  expect(Number(await map.getAttribute("data-zoom"))).toBeLessThan(18);
+  expect(await keys()).toEqual(expected3D);
+  const loadedRequests = requests.length;
+  const start = await page.evaluate(() => {
+    for (const y of [0.65, 0.75, 0.5])
+      for (const x of [0.55, 0.65, 0.4]) {
+        const point = { x: innerWidth * x, y: innerHeight * y };
+        if (document.elementFromPoint(point.x, point.y)?.tagName === "CANVAS")
+          return point;
+      }
+    throw new Error("No unobstructed map surface");
+  });
+  const frames = Number(await map.getAttribute("data-camera-frame-count"));
+  await page.mouse.move(start.x, start.y);
+  await page.mouse.down();
+  await page.mouse.move(start.x - 100, start.y - 70, { steps: 10 });
+  await page.mouse.up();
+  await page.waitForTimeout(700);
+  expect(
+    Number(await map.getAttribute("data-camera-frame-count")),
+  ).toBeGreaterThan(frames);
+  expect(await keys()).toEqual(expected3D);
+  await page.mouse.move(start.x - 100, start.y - 70);
+  await page.mouse.down();
+  await page.mouse.move(start.x, start.y, { steps: 10 });
+  await page.mouse.up();
+  await page.waitForTimeout(700);
+  expect(await keys()).toEqual(expected3D);
+  expect(requests).toHaveLength(loadedRequests);
+  await selectMapMode(page, "2.5D");
+  await expect(map).toHaveAttribute("data-model-volume-renderer", "shared", {
+    timeout: 30000,
+  });
+  await expect(map).toHaveAttribute("data-model-native-volume", "none");
+  await expect(map).toHaveAttribute(
+    "data-campus-model-count",
+    String(catalog.entries.length),
+  );
+  const volumes = await keys();
+  expect(volumes.filter((k: string) => k.startsWith("dormitory-")).length).toBe(
+    13,
+  );
+  expect(volumes.every((k: string) => k.endsWith(":2.5d"))).toBe(true);
+});
+
+test("failed 3D assets fall back to a volume and can be retried", async ({
   page,
 }) => {
   await page.route("**/models/nanyuan7/*.glb", (r) =>

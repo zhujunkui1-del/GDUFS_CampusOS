@@ -1,0 +1,27 @@
+async (page) => {
+ const errors=[]; page.on('pageerror',e=>errors.push(e.message));
+ const map=page.getByTestId('campus-map');
+ const state=()=>map.evaluate(el=>({...el.dataset}));
+ const ready=()=>page.waitForFunction(()=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return d.status==='ready'&&d.cameraMoving==='false'&&(!d.campusModelPending||d.campusModelPending==='0');},null,{timeout:25000});
+ const mode=async(text)=>{for(let j=0;j<3&&(await page.getByTestId('map-mode-trigger').innerText())!==text;j++)await page.getByTestId('map-mode-trigger').click();await page.waitForTimeout(700);await ready();};
+ const focus=async(row)=>{const close=page.getByRole('button',{name:'关闭地点详情'});if(await close.count()){await close.click();await page.locator('.place-details-frame').waitFor({state:'detached'});}const prior=Number(await map.getAttribute('data-camera-animation-count'));const s=page.getByLabel('搜索校园地点');await s.fill('');await s.fill(row.name);await page.locator('.place-result').filter({hasText:row.name}).first().click();await page.waitForFunction(prior=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return Number(d.cameraAnimationCount)>prior&&d.cameraMoving==='false';},prior,{timeout:25000});await ready();};
+ const results=[];
+ for(const row of [{"key":"dormitory-s8","id":"osm-way-312536956","name":"南苑8栋"},{"key":"dormitory-s9","id":"osm-way-312536950","name":"南苑9栋"},{"key":"dormitory-s10","id":"osm-way-312536951","name":"南苑10栋"},{"key":"dormitory-s11","id":"osm-way-312536952","name":"南苑11栋"},{"key":"dormitory-s12","id":"osm-way-312536954","name":"南苑12栋"},{"key":"dormitory-s13","id":"osm-way-312536953","name":"南苑13栋"},{"key":"legacy-s7","id":"osm-way-312536955","name":"南苑7栋"}]){
+   const result={...row,modes:[]};
+   for(const display of ['2.5D','3D']){
+     await mode(display); await focus(row);
+     await page.waitForFunction(({key,display,id})=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return (d.campusModelSelected===id||key==='legacy-s7')&&(key==='legacy-s7'?(display==='3D'?d.modelState==='ready':d.modelVolume==='visible'):(JSON.parse(d.campusModelKeys||'[]').includes(key+':'+(display==='3D'?'3d':'2.5d'))&&d.campusModelPending==='0'));},{key:row.key,display,id:row.id},{timeout:25000});
+     await page.waitForFunction(key=>{const d=document.querySelector('[data-testid=campus-map]').dataset;const b=JSON.parse((key==='legacy-s7'?d.modelExtent:d.campusSelectedModelExtent)||'null');return b&&d.cameraMoving==='false'&&b[0]>=-1&&b[1]>=-1&&b[2]<=innerWidth+1&&b[3]<=innerHeight+1;},row.key,{timeout:25000});
+     const d=await state();
+     const extent=JSON.parse(row.key==='legacy-s7'?d.modelExtent:d.campusSelectedModelExtent);
+     const viewport=page.viewportSize();
+     if(extent[0]<-1||extent[1]<-1||extent[2]>viewport.width+1||extent[3]>viewport.height+1)throw Error('Model outside viewport: '+row.key+' '+display+' '+extent);
+     if(JSON.parse(d.campusModelFailed||'[]').length)throw Error('Asset failed '+d.campusModelFailed);
+     result.modes.push({display,zoom:d.zoom,extent,keys:JSON.parse(d.campusModelKeys),details:d.campusModelDetails,drawCalls:d.campusModelDrawCalls,triangles:d.campusModelTriangles,selected:d.campusModelSelected,legacyAssetSha:d.modelAssetSha});
+     if(display==='3D')await page.screenshot({path:row.key+'-3d.png'});
+   }
+   results.push(result);
+ }
+ await ready();const before=await state();await page.waitForTimeout(700);const after=await state();
+ return {results,errors,idleFrames:[before.campusModelFrames,after.campusModelFrames],actualPhone:false};
+}

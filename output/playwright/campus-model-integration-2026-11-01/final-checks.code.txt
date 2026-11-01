@@ -1,0 +1,28 @@
+async (page) => {
+ const map=page.getByTestId('campus-map');const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const state=()=>map.evaluate(el=>({...el.dataset}));
+ const ready=()=>page.waitForFunction(()=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return d.status==='ready'&&d.cameraMoving==='false'&&(!d.campusModelPending||d.campusModelPending==='0');},null,{timeout:25000});
+ const mode=async(text)=>{for(let i=0;i<3&&(await page.getByTestId('map-mode-trigger').innerText())!==text;i++)await page.getByTestId('map-mode-trigger').click();await page.waitForTimeout(700);await ready();};
+ const close=async()=>{const c=page.getByRole('button',{name:'关闭地点详情'});if(await c.count()){await c.click();await page.locator('.place-details-frame').waitFor({state:'detached'});}};
+ const focus=async(name,id)=>{await close();const prior=Number((await state()).cameraAnimationCount);await page.getByLabel('搜索校园地点').fill('');await page.getByLabel('搜索校园地点').fill(name);await page.locator('.place-result').filter({hasText:name}).first().click();await page.waitForFunction(({prior,id})=>{const d=document.querySelector('[data-testid=campus-map]').dataset;return Number(d.cameraAnimationCount)>prior&&d.cameraMoving==='false'&&d.campusModelSelected===id;},{prior,id},{timeout:25000});await ready();};
+ await page.setViewportSize({width:1440,height:1000});await ready();
+ const pavilion=[];
+ for(const display of ['2.5D','3D']){await mode(display);await focus('八角楼','owner-bajiaolou');await page.waitForFunction(mode=>JSON.parse(document.querySelector('[data-testid=campus-map]').dataset.campusModelKeys||'[]').includes('pavilion:'+mode),display==='3D'?'3d':'2.5d',{timeout:25000});pavilion.push({display,...await state()});}
+ await close();await page.getByRole('button',{name:'校园步行导航',exact:true}).click();
+ await page.getByLabel('导航起点',{exact:true}).fill('图书馆');
+ await page.getByRole('region',{name:'起点地点建议'}).getByRole('button').filter({hasText:'图书馆'}).first().click();
+ await page.getByLabel('导航终点',{exact:true}).fill('B8学术报告厅');
+ await page.getByRole('region',{name:'终点地点建议'}).getByRole('button').filter({hasText:'B8学术报告厅'}).first().click();
+ await page.getByRole('button',{name:'规划步行路线',exact:true}).click();
+ await page.waitForFunction(()=>document.querySelector('[data-testid=campus-map]').dataset.campusModelRouteVisible==='true',null,{timeout:25000});
+ await mode('3D');await ready();const route=await state();
+ if(route.mode!=='3d'||route.campusModelCount==='0')throw Error('Route models missing');
+ await page.screenshot({path:'walking-route-3d.png'});
+ await page.getByRole('button',{name:'关闭导航面板',exact:true}).click();
+ await page.waitForFunction(()=>document.querySelector('[data-testid=campus-map]').dataset.campusModelRouteVisible==='false');
+ const cleared=await state();await page.screenshot({path:'walking-route-cleared-3d.png'});
+ await page.goto('http://127.0.0.1:3026/map');await ready();await mode('3D');await ready();
+ await page.screenshot({path:'campus-integrated-3d.png'});
+ const overview=await state();await page.waitForTimeout(800);const idle=await state();
+ return {pavilion,route:{mode:route.mode,models:route.campusModelCount,transparent:route.campusModelRouteVisible,extent:route.routeExtent},restored:cleared.campusModelRouteVisible==='false',overview,idleFrames:[overview.campusModelFrames,idle.campusModelFrames],errors};
+}

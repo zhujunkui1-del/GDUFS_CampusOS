@@ -650,6 +650,23 @@ Cloudflare账号只读接口核验：gdufs.ccwu.cc的服务为campusos-preview�
 
 用户111/222/333.jpg仅作为定位故障和“箭头在圆点下方”的外观参考，未复制参考地图/图像为正式资产。方向标记为自有SVG几何，仍只用真实传感器方向。位置不持久化，不新增供应商。真实模型沿用原批准Step Plan与DeepSeek服务，各3诊断请求；实际对话引用既有公开文章《新生入馆指南｜2026级广外人，图书馆通关手册请收好》（https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw）。验证不变更文章许可/分类、外部搜索账号、地图数据或用户账号；新截图与脱敏记录为本项目浏览器运行回执，见verification/map-ai-recovery-2026-11-01/。
 
+
+## 2026-11-01｜南北苑13栋统一样式与七层确认
+
+负责人提供南苑7栋.png、南苑9栋.png、南苑7栋细节.png、南苑7栋细节23.png、南苑7栋98.png、南苑7栋内测232.png、北苑4栋.png、北苑5栋89.png、北苑6栋.png，以及卫星图目录的宿舍区_北苑_一二食堂_超市.png、宿舍区_南苑_三食堂.png和粗略/n.jpg。全部按附件实际路径留在文档包，12图路径/字节/SHA见model-previews/north-south-dormitories-v1/design.json。文件名尾数无参数意义；粗略图不作为GIS。原URL/年份/公开复用许可仍待补，仅内部观察，不放public、图片端点或GLB纹理。
+
+负责人文字明确北1—6/南7—13共13栋均7层、样式一致且占地不同，排除师苑/友苑。地理轮廓使用固定campus.json中的13个既有独立OSM way，逐ID/外环/坐标/SHA见manifest；未按图片重绘足迹或改变编号。复用南7 V2原几何规则与五色材质，已验收南7 GLB直接复制。其他12栋21米是模板估算，不能增加OSM实测height覆盖率。
+
+OSM无这些中庭的原内环；南7沿用已批准显示院落，其他按自身连接段/卫星图和模板房间深度推定，属于显示近似。南8原外环已有开放凹口，保持开放；南12/13按自身延伸翼楼建模。均不新增导航/室内布局事实，原GIS不改，自有零图片模型保留OSM署名。
+
+## 2026-11-01｜完成模型接图资源来源审核
+
+负责人本轮授权已有模型进入网页。`public/models/campus/`新增56个GLB共5,156,888字节和30个显示院落的独立GeoJSON，来自docs/model-previews中既有library-v1、art-building-v1、auditorium-v1、b8-lecture-hall-v1、faculty-office-v1、gymnasium-v1、stadium-v1、laboratory-a-e-v1、teaching-e-f-g-v1、administration-complex-v1、teaching-a-d-v2与north-south-dormitories-v1的自有程序几何。54个建筑文件逐字节复制，两个教学连接段文件按原V2 design.json参数重现，不作为道路。SHA/字节/米制包络/WGS84原点/绑定ID记录于src/features/campus-map/data/building-model-catalog.json，可由scripts/publish-campus-building-models.mjs复核生成。
+
+56个文件均复核零images、零textures、零外置buffer；未复制任何参考照片。既有照片年份/原URL/公开图片复用许可仍待补，不能因几何接图视为图片许可通过。OSM足迹保留ODbL及网页署名，原4521要素底图SHA仍15060d099418bcb052e7963a1ee8ff8d3c9dd08a0f47569ecb460861d6f3d23e，113地点与原路网不改。南苑7 public原文件仍80384字节，SHA仍54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a，原生2.5D保持。
+
+新增院落GeoJSON仅覆盖显示底色，没有写入GIS内环、入口或室内数据。原负责人楼层确认及各稿高度精度标记继续保留；不得将视觉包络当成实测高度。审核实测回执见output/playwright/campus-model-integration-2026-11-01/asset-audit.json。
+
 ## 2026-11-02｜S4登录用户AI会话持久化与同步
 
 基于本地a249376与真实Preview的账号/会话表、原公开校园文章及地图Skills实施；迁移前只读聚合86会话/290消息、账号归属0，未读取负责人私人聊天正文。只使用两个无邮箱独立测试账号，凭据留ignored本地文件，未发SES。真实文章引用原有图书馆新生指南，真实路线使用原大学城地点和路网；未新增GIS、供应商图片、外搜账号或付费服务。
