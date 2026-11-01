@@ -85,8 +85,8 @@ async function fixture(page: Page) {
       },
     }),
   );
-  await page.route(/\/api\/agent\/conversations\/[^/?]+$/, (r) => {
-    const id = r.request().url().split("/").at(-1)!,
+  await page.route(/\/api\/agent\/conversations\/[^/?]+(?:\?.*)?$/, (r) => {
+    const id = new URL(r.request().url()).pathname.split("/").at(-1)!,
       h = histories.get(id);
     if (!h)
       return r.fulfill({
@@ -335,10 +335,8 @@ test("Mock UI: new conversation, history switching and refresh keep separate his
   await page.getByRole("button", { name: "收起校园助理" }).click();
   await page.getByLabel("搜索校园地点").fill("南苑7栋");
   await page.locator(".map-search-results .place-result").first().click();
-  await page
-    .locator(".place-details-frame")
-    .getByRole("button", { name: "问 AI", exact: true })
-    .click();
+  await page.getByRole("button", { name: "关闭地点详情", exact: true }).click();
+  await page.getByRole("button", { name: "打开校园助理", exact: true }).click();
   await page.getByRole("button", { name: "新对话", exact: true }).click();
   await expect(page.getByRole("log")).toBeEmpty();
   await page.evaluate(() => window.dispatchEvent(new Event("focus")));
@@ -385,7 +383,7 @@ test("Mock UI: new conversation, history switching and refresh keep separate his
   });
   await page.reload();
   await page.getByRole("button", { name: "打开校园助理" }).click();
-  await expect(page.getByRole("log")).toContainText("新的独立问题");
+  await expect(page.getByRole("log")).toContainText("模拟历史：南苑7栋");
 });
 test("Mock UI: delete cancel, failure retry, other/current deletion and empty lazy state", async ({
   page,

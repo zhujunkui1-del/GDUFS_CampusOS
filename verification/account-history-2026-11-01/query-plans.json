@@ -1,0 +1,50 @@
+[
+  {
+    "plan": [
+      {
+        "id": 3,
+        "parent": 0,
+        "notused": 50,
+        "detail": "SEARCH agent_runs USING INDEX assistant_run_live_site (status=? AND lease_until_ms<?)"
+      }
+    ],
+    "rowsRead": 0,
+    "rowsWritten": 0
+  },
+  {
+    "plan": [
+      {
+        "id": 3,
+        "parent": 0,
+        "notused": 50,
+        "detail": "SEARCH conversations USING INDEX assistant_conversation_retention (retention=? AND expires_at_ms<?)"
+      }
+    ],
+    "rowsRead": 0,
+    "rowsWritten": 0
+  },
+  {
+    "plan": [
+      {
+        "id": 3,
+        "parent": 0,
+        "notused": 192,
+        "detail": "SEARCH conversations USING INDEX assistant_deleted_expiry (expires_at_ms<?)"
+      }
+    ],
+    "rowsRead": 0,
+    "rowsWritten": 0
+  },
+  {
+    "plan": [
+      {
+        "id": 5,
+        "parent": 0,
+        "notused": 50,
+        "detail": "SEARCH conversation_messages USING INDEX assistant_message_sequence (conversation_id=? AND sequence<?)"
+      }
+    ],
+    "rowsRead": 0,
+    "rowsWritten": 0
+  }
+]

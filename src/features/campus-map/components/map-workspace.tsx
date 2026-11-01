@@ -13,7 +13,6 @@ import {
   Compass,
   Navigation,
   X,
-  ExternalLink,
   ArrowRight,
   RefreshCw,
   LocateFixed,
@@ -27,7 +26,6 @@ import {
   type MapLayer,
   zoneName,
 } from "../data/campus";
-import type { SDKPoi } from "../adapters/amap-types";
 import { PlaceDetails } from "./place-details";
 import { WalkingNavigation } from "./walking-navigation";
 import { routeSheetMediaQuery } from "./use-route-sheet";
@@ -47,13 +45,9 @@ export function MapWorkspace() {
   const user = useAccount().session?.user;
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
-  const [online, setOnline] = useState<SDKPoi[]>([]),
-    [searchBusy, setSearchBusy] = useState(false),
-    [searchError, setSearchError] = useState("");
   const [layersOpen, setLayersOpen] = useState(false),
     [routeOpen, setRouteOpen] = useState(false);
   const searchInput = useRef<HTMLInputElement>(null);
-  const generation = useRef(0);
   const local = searchCampusPlaces(query).slice(0, 12);
   const ready = map.status === "ready";
   const selectPlace = map.select;
@@ -63,21 +57,6 @@ export function MapWorkspace() {
     if (id && campusData.places.some((place) => place.id === id))
       selectPlace(id);
   }, [ready, selectPlace]);
-  const searchAMap = async () => {
-    if (!query.trim() || !ready) return;
-    const revision = ++generation.current;
-    setSearchBusy(true);
-    setSearchError("");
-    try {
-      const result = await map.searchOnline(query.trim());
-      if (revision === generation.current) setOnline(result);
-    } catch {
-      if (revision === generation.current)
-        setSearchError("高德查询暂时失败，校园已收录地点仍可搜索。");
-    } finally {
-      if (revision === generation.current) setSearchBusy(false);
-    }
-  };
   if (map.navigating && map.route) return <FocusedNavigation />;
   return (
     <section className="map-workspace" aria-labelledby="map-title">
@@ -96,7 +75,7 @@ export function MapWorkspace() {
             className="map-search glass-surface"
             onSubmit={(event) => {
               event.preventDefault();
-              setSearchOpen(true);
+              setSearchOpen(!!query.trim());
             }}
           >
             <Search size={19} strokeWidth={1.65} />
@@ -114,12 +93,8 @@ export function MapWorkspace() {
                 if (query && !routeOpen) setSearchOpen(true);
               }}
               onChange={(event) => {
-                ++generation.current;
                 setQuery(event.target.value);
-                setSearchOpen(true);
-                setOnline([]);
-                setSearchBusy(false);
-                setSearchError("");
+                setSearchOpen(!!event.target.value.trim());
               }}
               onKeyDown={(event) => {
                 if (event.key === "Escape") setSearchOpen(false);
@@ -134,13 +109,9 @@ export function MapWorkspace() {
                 className="search-clear"
                 aria-label="清空地点搜索"
                 onClick={() => {
-                  ++generation.current;
                   searchInput.current?.focus();
                   setQuery("");
                   setSearchOpen(false);
-                  setOnline([]);
-                  setSearchBusy(false);
-                  setSearchError("");
                 }}
               >
                 <X size={16} />
@@ -164,7 +135,7 @@ export function MapWorkspace() {
             )}
           </Link>
         </div>
-        {searchOpen && (
+        {searchOpen && !!query.trim() && (
           <div
             className="map-search-results"
             id="campus-search-results"
@@ -203,35 +174,6 @@ export function MapWorkspace() {
             ) : (
               <p className="empty-search">尚未收录匹配地点。</p>
             )}
-            <button
-              className="text-link online-search"
-              disabled={!ready || !query.trim() || searchBusy}
-              onClick={() => void searchAMap()}
-            >
-              {searchBusy ? "正在查询高德…" : "查询高德在线地点"}
-              <ExternalLink size={14} />
-            </button>
-            {searchError && (
-              <p className="inline-error" role="alert">
-                {searchError}
-              </p>
-            )}
-            {online.map((poi) => (
-              <button
-                key={poi.id}
-                className="place-result"
-                onClick={() => {
-                  map.focusOnline(poi);
-                  setSearchOpen(false);
-                }}
-              >
-                <span>
-                  {poi.name}
-                  <small>{poi.address || poi.type || "高德在线 POI"}</small>
-                </span>
-                <ArrowRight size={16} />
-              </button>
-            ))}
           </div>
         )}
       </div>

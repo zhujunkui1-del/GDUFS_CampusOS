@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AccountStore } from "../account/store";
 import type { SqlDatabase } from "./database";
 import { randomToken, tokenHash } from "./crypto";
 import { ApiError } from "../errors";
@@ -37,7 +38,7 @@ export type Conversation = {
   owner_key: string;
   selected_place_id: string | null;
   active_route_id: string | null;
-  expires_at_ms: number;
+  expires_at_ms: number | null;
   title?: string;
 };
 const cookie = (request: Request, name: string) =>
@@ -55,19 +56,13 @@ export class AssistantStore {
     private readonly openValidation = false,
   ) {}
   async identity(request: Request): Promise<AssistantIdentity> {
-    const loginToken = cookie(request, "campusos_session");
-    const login =
-      loginToken && /^[A-Za-z0-9_-]{20,200}$/.test(loginToken)
-        ? await this.db
-            .prepare(
-              "SELECT u.id,u.role FROM login_sessions s JOIN users u ON u.id=s.user_id WHERE s.session_hash=? AND s.expires_at>? AND s.revoked_at IS NULL AND u.status='active'",
-            )
-            .bind(
-              await tokenHash(loginToken),
-              new Date(this.now()).toISOString(),
-            )
-            .first<{ id: string; role: "user" | "admin" }>()
-        : null;
+    const account = await new AccountStore(this.db, {
+      origin: new URL(request.url).origin,
+      now: this.now,
+    }).resolve(request);
+    const login = account
+      ? { id: account.row.user_id, role: "user" as const }
+      : null;
     let token = cookie(request, "campusos_assistant");
     const hash =
       token && /^[A-Za-z0-9_-]{40,100}$/.test(token)
@@ -81,21 +76,12 @@ export class AssistantStore {
           .bind(hash, this.now())
           .first<{ owner_key: string; user_id: string | null }>()
       : null;
-    // S4 preserves an existing visitor's proven device scope; it never silently claims it.
+    // The visitor cookie remains a visitor capability, never a claim to an account.
+    // A verified S4 session always selects its stable account scope first.
     if (row && row.user_id === null && row.owner_key === "g:" + hash)
       return {
-        owner: row.owner_key,
-        user: null,
-        cookie: this.sessionCookie(token!, request),
-      };
-    if (
-      row &&
-      row.user_id === (login ? login.id : null) &&
-      row.owner_key === (login ? "u:" + login.id : "g:" + hash)
-    )
-      return {
-        owner: row.owner_key,
-        user: login || null,
+        owner: login ? "u:" + login.id : row.owner_key,
+        user: login,
         cookie: this.sessionCookie(token!, request),
       };
     await this.cleanup();
@@ -106,22 +92,16 @@ export class AssistantStore {
       throw new ApiError("RATE_LIMITED", "当前请求较多，请稍后重试。", true);
     token = randomToken();
     const nextHash = await tokenHash(token);
-    const owner = login ? "u:" + login.id : "g:" + nextHash;
+    const owner = "g:" + nextHash;
     await this.db
       .prepare(
         "INSERT INTO assistant_sessions(token_hash,owner_key,user_id,expires_at_ms,created_at_ms) VALUES(?,?,?,?,?)",
       )
-      .bind(
-        nextHash,
-        owner,
-        login ? login.id : null,
-        this.now() + 172800000,
-        this.now(),
-      )
+      .bind(nextHash, owner, null, this.now() + 172800000, this.now())
       .run();
     return {
-      owner,
-      user: login || null,
+      owner: login ? "u:" + login.id : owner,
+      user: login,
       cookie: this.sessionCookie(token, request),
     };
   }
@@ -138,7 +118,7 @@ export class AssistantStore {
         .bind(now, now),
       this.db
         .prepare(
-          "DELETE FROM agent_runs WHERE owner_key IS NOT NULL AND started_at_ms<?",
+          "DELETE FROM agent_runs WHERE owner_key IS NOT NULL AND is_user=0 AND started_at_ms<?",
         )
         .bind(now - 172800000),
       this.db
@@ -157,7 +137,12 @@ export class AssistantStore {
         .bind(now),
       this.db
         .prepare(
-          "DELETE FROM conversations WHERE owner_key IS NOT NULL AND expires_at_ms<=?",
+          "DELETE FROM conversations WHERE owner_key IS NOT NULL AND retention='guest' AND expires_at_ms<=?",
+        )
+        .bind(now),
+      this.db
+        .prepare(
+          "DELETE FROM conversations WHERE owner_key IS NOT NULL AND deleted_at_ms IS NOT NULL AND expires_at_ms<=?",
         )
         .bind(now),
     ]);
@@ -165,11 +150,12 @@ export class AssistantStore {
   async conversation(
     identity: AssistantIdentity,
     id?: string,
+    createId?: string,
   ): Promise<Conversation> {
     if (id) {
       const row = await this.db
         .prepare(
-          "SELECT id,owner_key,selected_place_id,active_route_id,expires_at_ms,title FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND expires_at_ms>?",
+          "SELECT id,owner_key,selected_place_id,active_route_id,expires_at_ms,title FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?)",
         )
         .bind(id, identity.owner, this.now())
         .first<Conversation>();
@@ -177,29 +163,37 @@ export class AssistantStore {
         throw new ApiError("NOT_FOUND", "对话不存在或已过期，请新建对话。");
       return row;
     }
-    const counts = await this.db
-      .prepare(
-        "SELECT count(*) AS total,sum(CASE WHEN owner_key=? THEN 1 ELSE 0 END) AS mine FROM conversations WHERE deleted_at_ms IS NULL AND expires_at_ms>?",
-      )
-      .bind(identity.owner, this.now())
-      .first<{ total: number; mine: number }>();
-    if ((counts?.total || 0) >= 5000 || (counts?.mine || 0) >= 50)
+    const counts = identity.user
+      ? null
+      : await this.db
+          .prepare(
+            "SELECT count(*) AS total,sum(CASE WHEN owner_key=? THEN 1 ELSE 0 END) AS mine FROM conversations WHERE retention='guest' AND deleted_at_ms IS NULL AND expires_at_ms>?",
+          )
+          .bind(identity.owner, this.now())
+          .first<{ total: number; mine: number }>();
+    if (
+      !identity.user &&
+      ((counts?.total || 0) >= 5000 || (counts?.mine || 0) >= 50)
+    )
       throw new ApiError(
         "RATE_LIMITED",
         "对话数量已达上限，请删除旧对话后重试。",
       );
-    const next = crypto.randomUUID();
+    const next = createId
+      ? z.string().uuid().parse(createId)
+      : crypto.randomUUID();
     await this.db
       .prepare(
-        "INSERT INTO conversations(id,user_id,guest_session_hash,owner_key,expires_at_ms,updated_at_ms) VALUES(?,?,?,?,?,?)",
+        "INSERT OR IGNORE INTO conversations(id,user_id,guest_session_hash,owner_key,expires_at_ms,updated_at_ms,retention) VALUES(?,?,?,?,?,?,?)",
       )
       .bind(
         next,
         identity.user?.id || null,
         identity.user ? null : identity.owner.slice(2),
         identity.owner,
-        this.now() + 172800000,
+        identity.user ? null : this.now() + 172800000,
         this.now(),
+        identity.user ? "account" : "guest",
       )
       .run()
       .catch((error) => {
@@ -216,37 +210,67 @@ export class AssistantStore {
       owner_key: identity.owner,
       selected_place_id: null,
       active_route_id: null,
-      expires_at_ms: this.now() + 172800000,
+      expires_at_ms: identity.user ? null : this.now() + 172800000,
     };
   }
   async latest(identity: AssistantIdentity) {
     return this.db
       .prepare(
-        "SELECT id FROM conversations WHERE owner_key=? AND deleted_at_ms IS NULL AND expires_at_ms>? AND EXISTS(SELECT 1 FROM conversation_messages WHERE conversation_id=conversations.id) ORDER BY updated_at_ms DESC,id DESC LIMIT 1",
+        "SELECT id FROM conversations WHERE owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?) AND EXISTS(SELECT 1 FROM conversation_messages WHERE conversation_id=conversations.id) ORDER BY updated_at_ms DESC,id DESC LIMIT 1",
       )
       .bind(identity.owner, this.now())
       .first<{ id: string }>();
   }
-  async history(identity: AssistantIdentity, id: string) {
+  async history(
+    identity: AssistantIdentity,
+    id: string,
+    page: { before?: number; after?: number; context?: boolean } = {},
+  ) {
     const conversation = await this.conversation(identity, id);
+    const before =
+      page.before === undefined
+        ? undefined
+        : z.number().int().positive().safe().parse(page.before);
+    const after =
+      page.after === undefined
+        ? undefined
+        : z.number().int().nonnegative().safe().parse(page.after);
+    if (before !== undefined && after !== undefined)
+      throw new ApiError("INVALID_ARGUMENT", "历史游标无效。");
     const rows = await this.db
       .prepare(
-        `SELECT id,role,content,artifacts_json FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant') ORDER BY rowid DESC`,
+        `SELECT id,role,${page.context ? "substr(content,1,8000) AS content" : "content"},artifacts_json,sequence FROM conversation_messages WHERE conversation_id=? AND role IN ('user','assistant')` +
+          (before !== undefined
+            ? " AND sequence<?"
+            : after !== undefined
+              ? " AND sequence>?"
+              : "") +
+          ` ORDER BY sequence ${after !== undefined ? "ASC" : "DESC"} LIMIT 41`,
       )
-      .bind(id)
+      .bind(
+        id,
+        ...(before !== undefined
+          ? [before]
+          : after !== undefined
+            ? [after]
+            : []),
+      )
       .all<{
         id: string;
         role: "user" | "assistant";
         content: string;
         artifacts_json: string;
+        sequence: number;
       }>();
-    const messages: StoredMessage[] = rows.results.reverse().map((row) => ({
+    const slice = rows.results.slice(0, 40);
+    if (after === undefined) slice.reverse();
+    const messages: StoredMessage[] = slice.map((row) => ({
       id: row.id,
       role: row.role,
       text: row.content,
       cards: storedCardsSchema.parse(JSON.parse(row.artifacts_json)),
+      sequence: row.sequence,
     }));
-    // A deletion may interleave between the initial ownership read and rows.
     await this.conversation(identity, id);
     return {
       conversationId: id,
@@ -254,6 +278,12 @@ export class AssistantStore {
       selectedPlaceId: conversation.selected_place_id,
       activeRouteId: conversation.active_route_id,
       title: conversation.title,
+      olderCursor:
+        after === undefined && rows.results.length > 40
+          ? slice[0].sequence
+          : null,
+      latestSequence: slice.at(-1)?.sequence ?? after ?? 0,
+      hasMoreUpdates: after !== undefined && rows.results.length > 40,
     };
   }
   async list(identity: AssistantIdentity, cursor?: string, limit = 20) {
@@ -271,7 +301,7 @@ export class AssistantStore {
     if (parsed) z.string().uuid().parse(parsed[1]);
     const rows = await this.db
       .prepare(
-        "SELECT id,title,updated_at_ms FROM conversations WHERE owner_key=? AND deleted_at_ms IS NULL AND expires_at_ms>? AND EXISTS(SELECT 1 FROM conversation_messages WHERE conversation_id=conversations.id)" +
+        "SELECT id,title,updated_at_ms FROM conversations WHERE owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?) AND EXISTS(SELECT 1 FROM conversation_messages WHERE conversation_id=conversations.id)" +
           (parsed
             ? " AND (updated_at_ms<? OR (updated_at_ms=? AND id<?))"
             : "") +
@@ -302,7 +332,7 @@ export class AssistantStore {
     z.string().uuid().parse(id);
     const owned = await this.db
       .prepare(
-        "SELECT id,deleted_at_ms FROM conversations WHERE id=? AND owner_key=? AND expires_at_ms>?",
+        "SELECT id,deleted_at_ms FROM conversations WHERE id=? AND owner_key=? AND (retention='account' OR expires_at_ms>?)",
       )
       .bind(id, identity.owner, this.now())
       .first<{ id: string; deleted_at_ms: number | null }>();
@@ -313,7 +343,7 @@ export class AssistantStore {
     await this.db.batch([
       this.db
         .prepare(
-          "UPDATE conversations SET deleted_at_ms=COALESCE(deleted_at_ms,?),status='archived',title='已删除',selected_place_id=NULL,active_route_id=NULL,expires_at_ms=max(expires_at_ms,?) WHERE id=? AND owner_key=?",
+          "UPDATE conversations SET deleted_at_ms=COALESCE(deleted_at_ms,?),status='archived',title='已删除',selected_place_id=NULL,active_route_id=NULL,expires_at_ms=max(COALESCE(expires_at_ms,0),?) WHERE id=? AND owner_key=?",
         )
         .bind(this.now(), this.now() + 172800000, id, identity.owner),
       this.db
@@ -384,10 +414,28 @@ export class AssistantStore {
           "当前同时使用人数较多，请稍后重试。",
           true,
         );
-      if (/AGENT_|UNIQUE constraint/.test(text))
+      if (/AGENT_(TOKEN_)?QUOTA/.test(text))
         throw new ApiError(
           "RATE_LIMITED",
-          "对话正在进行或额度已用完，请稍后重试。",
+          "本时段 AI 使用额度已用完，请稍后重试。",
+          true,
+        );
+      if (/AGENT_SITE_(TOKEN_)?QUOTA/.test(text))
+        throw new ApiError(
+          "RATE_LIMITED",
+          "当前全站 AI 额度已用完，请稍后再来。",
+          true,
+        );
+      if (/AGENT_IP_QUOTA/.test(text))
+        throw new ApiError(
+          "RATE_LIMITED",
+          "当前网络请求过于频繁，请稍后重试。",
+          true,
+        );
+      if (/UNIQUE constraint/.test(text))
+        throw new ApiError(
+          "RATE_LIMITED",
+          "该次请求已受理，请刷新对话查看结果。",
           true,
         );
       throw new ApiError(
@@ -397,6 +445,35 @@ export class AssistantStore {
       );
     }
     return runId;
+  }
+  async request(identity: AssistantIdentity, requestId: string) {
+    const run = await this.db
+      .prepare(
+        "SELECT id,conversation_id,status FROM agent_runs WHERE owner_key=? AND request_id=?",
+      )
+      .bind(identity.owner, requestId)
+      .first<{ id: string; conversation_id: string; status: string }>();
+    if (!run) return null;
+    await this.conversation(identity, run.conversation_id);
+    const message = await this.db
+      .prepare(
+        "SELECT content,artifacts_json FROM conversation_messages WHERE conversation_id=? AND id IN (?,?) AND role='assistant'",
+      )
+      .bind(
+        run.conversation_id,
+        `${run.conversation_id}:${requestId}:assistant`,
+        `${requestId}:assistant`,
+      )
+      .first<{ content: string; artifacts_json: string }>();
+    return {
+      ...run,
+      message: message
+        ? {
+            text: message.content,
+            cards: storedCardsSchema.parse(JSON.parse(message.artifacts_json)),
+          }
+        : null,
+    };
   }
   async running(owner: string, runId: string) {
     const row = await this.db
@@ -457,7 +534,7 @@ export class AssistantStore {
     await this.conversation(identity, conversationId);
     const row = await this.db
       .prepare(
-        "SELECT m.content FROM conversation_messages m JOIN conversations c ON c.id=m.conversation_id WHERE m.id=? AND m.conversation_id=? AND c.owner_key=? AND c.deleted_at_ms IS NULL AND c.expires_at_ms>?",
+        "SELECT m.content FROM conversation_messages m JOIN conversations c ON c.id=m.conversation_id WHERE m.id=? AND m.conversation_id=? AND c.owner_key=? AND c.deleted_at_ms IS NULL AND (c.retention='account' OR c.expires_at_ms>?)",
       )
       .bind(
         "persona:" + conversationId,
@@ -481,7 +558,7 @@ export class AssistantStore {
     const parsed = PersonaPreferenceSchema.parse(preference);
     const result = await this.db
       .prepare(
-        "INSERT INTO conversation_messages(id,conversation_id,role,content,artifacts_json) SELECT ?,?,'system',?,'[]' WHERE EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND expires_at_ms>?) ON CONFLICT(id) DO UPDATE SET content=excluded.content",
+        "INSERT INTO conversation_messages(id,conversation_id,role,content,artifacts_json) SELECT ?,?,'system',?,'[]' WHERE EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?)) ON CONFLICT(id) DO UPDATE SET content=excluded.content",
       )
       .bind(
         "persona:" + conversationId,
@@ -499,17 +576,20 @@ export class AssistantStore {
     role: "user" | "assistant",
     text: string,
     cards: AssistantCard[] = [],
+    requestId?: string,
   ) {
     const safeText = text
-      .slice(0, 4000)
+      .slice(0, 200000)
       .replace(/(?:1[01]\d|120)\.\d{4,}\s*[,，]\s*2\d\.\d{4,}/g, "[位置]");
     const results = await this.db.batch([
       this.db
         .prepare(
-          "INSERT INTO conversation_messages(id,conversation_id,role,content,artifacts_json) SELECT ?,?,?,?,? WHERE EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND expires_at_ms>?)",
+          "INSERT OR IGNORE INTO conversation_messages(id,conversation_id,role,content,artifacts_json) SELECT ?,?,?,?,? WHERE EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?))",
         )
         .bind(
-          crypto.randomUUID(),
+          requestId
+            ? `${conversation.id}:${requestId}:${role}`
+            : crypto.randomUUID(),
           conversation.id,
           role,
           safeText,
@@ -520,7 +600,7 @@ export class AssistantStore {
         ),
       this.db
         .prepare(
-          "UPDATE conversations SET updated_at_ms=?,expires_at_ms=?,title=CASE WHEN title='新对话' AND ?='user' AND (SELECT count(*) FROM conversation_messages WHERE conversation_id=? AND role='user')=1 THEN substr(replace(?,char(10),' '),1,48) ELSE title END WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL",
+          "UPDATE conversations SET updated_at_ms=?,expires_at_ms=CASE WHEN retention='account' THEN NULL ELSE ? END,title=CASE WHEN title='新对话' AND ?='user' AND (SELECT count(*) FROM conversation_messages WHERE conversation_id=? AND role='user')=1 THEN substr(replace(?,char(10),' '),1,48) ELSE title END WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL",
         )
         .bind(
           this.now(),
@@ -532,8 +612,24 @@ export class AssistantStore {
           conversation.owner_key,
         ),
     ]);
-    if (!writeResultSchema.parse(results[0]).meta.changes)
+    if (!writeResultSchema.parse(results[0]).meta.changes) {
+      if (
+        requestId &&
+        (await this.db
+          .prepare(
+            "SELECT id FROM conversation_messages WHERE id=? AND conversation_id=? AND EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL)",
+          )
+          .bind(
+            `${conversation.id}:${requestId}:${role}`,
+            conversation.id,
+            conversation.id,
+            conversation.owner_key,
+          )
+          .first())
+      )
+        return;
       throw new ApiError("CANCELLED", "对话已删除。");
+    }
   }
   async context(
     conversation: Conversation,
@@ -629,7 +725,7 @@ export class AssistantStore {
       .prepare(
         runningRunId
           ? "SELECT a.status,a.receipt_json FROM assistant_actions a JOIN agent_runs r ON r.id=a.run_id WHERE a.id=? AND a.owner_key=? AND a.expires_at_ms>? AND r.id=? AND r.owner_key=? AND r.status='running' AND r.lease_until_ms>?"
-          : "SELECT status,receipt_json FROM assistant_actions WHERE id=? AND owner_key=? AND expires_at_ms>?",
+          : "SELECT status,receipt_json FROM assistant_actions WHERE id=? AND owner_key=? AND (retention='account' OR expires_at_ms>?)",
       )
       .bind(
         id,

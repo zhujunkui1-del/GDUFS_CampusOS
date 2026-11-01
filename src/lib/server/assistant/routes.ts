@@ -43,7 +43,7 @@ export class SharedRouteStore implements RouteSnapshotStore {
       .prepare(
         "INSERT INTO assistant_route_refs(id,owner_key,expires_at_ms,map_version,network_version,payload_json) SELECT ?,?,?,?,?,?" +
           (this.conversationId
-            ? " WHERE EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND expires_at_ms>?)"
+            ? " WHERE EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?))"
             : "") +
           (this.#runId
             ? " AND EXISTS(SELECT 1 FROM agent_runs WHERE id=? AND owner_key=? AND status='running' AND lease_until_ms>?)"
@@ -103,7 +103,7 @@ export class SharedRouteStore implements RouteSnapshotStore {
         .prepare(
           "SELECT owner_key,expires_at_ms,map_version,network_version,payload_json FROM assistant_route_refs WHERE id=? AND owner_key=? AND expires_at_ms>?" +
             (this.conversationId
-              ? " AND EXISTS(SELECT 1 FROM assistant_conversation_routes cr JOIN conversations c ON c.id=cr.conversation_id WHERE cr.route_id=assistant_route_refs.id AND cr.conversation_id=? AND cr.owner_key=? AND c.owner_key=? AND c.deleted_at_ms IS NULL AND c.expires_at_ms>?)"
+              ? " AND EXISTS(SELECT 1 FROM assistant_conversation_routes cr JOIN conversations c ON c.id=cr.conversation_id WHERE cr.route_id=assistant_route_refs.id AND cr.conversation_id=? AND cr.owner_key=? AND c.owner_key=? AND c.deleted_at_ms IS NULL AND (c.retention='account' OR c.expires_at_ms>?))"
               : ""),
         )
         .bind(
@@ -127,7 +127,7 @@ export class SharedRouteStore implements RouteSnapshotStore {
       // migration/deploy interval: derive association only from owned DB cards.
       await this.db
         .prepare(
-          "INSERT OR IGNORE INTO assistant_conversation_routes(conversation_id,route_id,owner_key) SELECT c.id,r.id,c.owner_key FROM conversations c JOIN assistant_route_refs r ON r.owner_key=c.owner_key WHERE c.id=? AND c.owner_key=? AND c.deleted_at_ms IS NULL AND c.expires_at_ms>? AND r.id=? AND (c.active_route_id=r.id OR EXISTS(SELECT 1 FROM conversation_messages m,json_each(m.artifacts_json) a WHERE m.conversation_id=c.id AND json_extract(a.value,'$.kind')='route' AND json_extract(a.value,'$.routeId')=r.id))",
+          "INSERT OR IGNORE INTO assistant_conversation_routes(conversation_id,route_id,owner_key) SELECT c.id,r.id,c.owner_key FROM conversations c JOIN assistant_route_refs r ON r.owner_key=c.owner_key WHERE c.id=? AND c.owner_key=? AND c.deleted_at_ms IS NULL AND (c.retention='account' OR c.expires_at_ms>?) AND r.id=? AND (c.active_route_id=r.id OR EXISTS(SELECT 1 FROM conversation_messages m,json_each(m.artifacts_json) a WHERE m.conversation_id=c.id AND json_extract(a.value,'$.kind')='route' AND json_extract(a.value,'$.routeId')=r.id))",
         )
         .bind(this.conversationId, owner, this.now(), routeId)
         .run();

@@ -41,6 +41,12 @@ export function meteredClient(
   requestOutputLimit = 1024,
   finalInstructions?: () => string,
   options: {
+    unrestricted?: boolean;
+    requiredRoute?: {
+      start: { type: "place"; placeId: string };
+      endPlaceId: string;
+      mode: "walking";
+    };
     finalSystem?: () => string;
     validateFinal?: (text: string) => string | undefined;
     groundingEvidence?: (answer: string) => unknown | undefined;
@@ -82,13 +88,16 @@ export function meteredClient(
         true,
       );
     const messages = evidenceCheckMessages(answer, evidence),
-      maxTokens = Math.min(1024, 4096 - outputBudgetUsed),
+      maxTokens = options.unrestricted
+        ? 1024
+        : Math.min(1024, 4096 - outputBudgetUsed),
       upper =
         new TextEncoder().encode(JSON.stringify(messages)).byteLength + 4096;
     if (
-      requests >= 6 ||
-      maxTokens < 1 ||
-      budgetUsed + upper + maxTokens > 250000
+      !options.unrestricted &&
+      (requests >= 6 ||
+        maxTokens < 1 ||
+        budgetUsed + upper + maxTokens > 250000)
     )
       throw new ApiError("RUN_LIMIT_EXCEEDED", "本次对话已达到用量限制。");
     await store.running(owner, runId);
@@ -173,16 +182,17 @@ export function meteredClient(
           requestOutputLimit === 2048 && request.maxTokens === 1024
             ? 2048
             : request.maxTokens,
-          4096 - outputBudgetUsed,
+          options.unrestricted ? Infinity : 4096 - outputBudgetUsed,
         );
         const upper =
           new TextEncoder().encode(
             JSON.stringify([request.messages, request.tools]),
           ).byteLength + 4096;
         if (
-          requests >= 6 ||
-          maxTokens < 1 ||
-          budgetUsed + upper + maxTokens > 250000
+          !options.unrestricted &&
+          (requests >= 6 ||
+            maxTokens < 1 ||
+            budgetUsed + upper + maxTokens > 250000)
         )
           throw new ApiError("RUN_LIMIT_EXCEEDED", "本次对话已达到用量限制。");
         requests++;
@@ -252,40 +262,73 @@ export function meteredClient(
                 ? request.tools
                     .filter((tool) => tool.function.name === required)
                     .map((tool) =>
-                      required === "control_map" && requiredAction
+                      required === "plan_route" && options.requiredRoute
                         ? {
                             ...tool,
                             function: {
                               ...tool.function,
-                              description: `执行用户本轮已明确要求的地图操作，参数必须为 ${JSON.stringify({ actions: [requiredAction] })}`,
+                              description: `起点和终点已由本轮请求唯一解析，按实际校园地点ID规划步行路线。参数必须为 ${JSON.stringify(options.requiredRoute)}`,
                               parameters: {
                                 type: "object",
                                 additionalProperties: false,
-                                required: ["actions"],
+                                required: ["start", "endPlaceId", "mode"],
                                 properties: {
-                                  actions: {
-                                    type: "array",
-                                    minItems: 1,
-                                    maxItems: 1,
-                                    items: {
-                                      type: "object",
-                                      additionalProperties: false,
-                                      required: Object.keys(requiredAction),
-                                      properties: Object.fromEntries(
-                                        Object.entries(requiredAction).map(
-                                          ([key, value]) => [
-                                            key,
-                                            { type: "string", const: value },
-                                          ],
-                                        ),
-                                      ),
+                                  start: {
+                                    type: "object",
+                                    additionalProperties: false,
+                                    required: ["type", "placeId"],
+                                    properties: {
+                                      type: { type: "string", const: "place" },
+                                      placeId: {
+                                        type: "string",
+                                        const:
+                                          options.requiredRoute.start.placeId,
+                                      },
                                     },
                                   },
+                                  endPlaceId: {
+                                    type: "string",
+                                    const: options.requiredRoute.endPlaceId,
+                                  },
+                                  mode: { type: "string", const: "walking" },
                                 },
                               },
                             },
                           }
-                        : tool,
+                        : required === "control_map" && requiredAction
+                          ? {
+                              ...tool,
+                              function: {
+                                ...tool.function,
+                                description: `执行用户本轮已明确要求的地图操作，参数必须为 ${JSON.stringify({ actions: [requiredAction] })}`,
+                                parameters: {
+                                  type: "object",
+                                  additionalProperties: false,
+                                  required: ["actions"],
+                                  properties: {
+                                    actions: {
+                                      type: "array",
+                                      minItems: 1,
+                                      maxItems: 1,
+                                      items: {
+                                        type: "object",
+                                        additionalProperties: false,
+                                        required: Object.keys(requiredAction),
+                                        properties: Object.fromEntries(
+                                          Object.entries(requiredAction).map(
+                                            ([key, value]) => [
+                                              key,
+                                              { type: "string", const: value },
+                                            ],
+                                          ),
+                                        ),
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            }
+                          : tool,
                     )
                 : request.tools.filter(
                     (tool) =>

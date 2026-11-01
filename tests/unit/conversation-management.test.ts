@@ -64,12 +64,23 @@ describe("owned multi-conversation state and atomic deletion", () => {
       fixture.sqlite
         .prepare("INSERT INTO users(id,display_name) VALUES(?,?)")
         .run(id, id);
-      const token = `isolated-auth-token-for-${id}`;
+      const token = id[0].repeat(43);
       fixture.sqlite
         .prepare(
           "INSERT INTO login_sessions(session_hash,user_id,expires_at) VALUES(?,?,?)",
         )
         .run(await tokenHash(token), id, new Date(now + 3600000).toISOString());
+      fixture.sqlite
+        .prepare(
+          "INSERT INTO user_password_identities(user_id,username,username_norm,password_hash,mutation_id,updated_at_ms) VALUES(?,?,?,?,?,0)",
+        )
+        .run(
+          id,
+          id.replaceAll("-", "_"),
+          id.replaceAll("-", "_"),
+          "fixture",
+          "fixture",
+        );
       users.push(
         await store.identity(
           new Request("https://campus.invalid/api/agent/session", {
@@ -122,7 +133,12 @@ describe("owned multi-conversation state and atomic deletion", () => {
     await store.conversation(a);
     expect((await store.latest(a))?.id).toBe(first.id);
     expect((await store.history(a, first.id)).title).toBe("第一条标题");
-    expect((await store.history(a, first.id)).messages).toHaveLength(42);
+    const page = await store.history(a, first.id);
+    expect(page.messages).toHaveLength(40);
+    expect(
+      (await store.history(a, first.id, { before: page.olderCursor! }))
+        .messages,
+    ).toHaveLength(2);
   });
   it("sorts and paginates by update time/id without reading all messages", async () => {
     const a = await identity(),

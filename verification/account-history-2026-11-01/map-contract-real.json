@@ -1,0 +1,119 @@
+{
+  "prompt": "从南苑7栋到图书馆怎么走？帮我在地图上显示路线。",
+  "tools": [
+    "plan_route",
+    "control_map"
+  ],
+  "actions": [
+    {
+      "type": "SHOW_ROUTE",
+      "routeId": "5efc244c-3483-4ba3-ac22-262b790ab9fc"
+    }
+  ],
+  "cards": [
+    {
+      "kind": "route",
+      "routeId": "5efc244c-3483-4ba3-ac22-262b790ab9fc",
+      "startName": "南苑7栋",
+      "endName": "图书馆",
+      "distanceMeters": 848.0326392899915,
+      "estimatedMinutes": 12,
+      "expiresAt": "2026-11-01T15:14:51.400Z",
+      "device": false
+    }
+  ],
+  "result": {
+    "conversationId": "294a2f09-0c27-4842-a1c9-07a27c0880c7",
+    "requestId": "c28d7f80-6203-4ae5-83af-5b860d35ca9c",
+    "metrics": {
+      "answerMode": "model",
+      "conversationAct": "campus",
+      "answerRequirement": "open",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "professional",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2917,
+          "firstTextMs": null,
+          "finishReason": "tool_calls",
+          "contentChars": 0
+        },
+        {
+          "durationMs": 3130,
+          "firstTextMs": null,
+          "finishReason": "tool_calls",
+          "contentChars": 0
+        },
+        {
+          "durationMs": 2949,
+          "firstTextMs": 2360,
+          "finishReason": "stop",
+          "contentChars": 197
+        }
+      ],
+      "promptTokens": 4670,
+      "completionTokens": 704,
+      "cachedPromptTokens": 0,
+      "totalTokens": 5374,
+      "usageComplete": true,
+      "chargedTokens": 5374,
+      "durationMs": 11635,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 990,
+        "serverElapsedMs": 12625,
+        "firstTextMs": 12567,
+        "mapActionMs": 1913,
+        "skills": [
+          {
+            "name": "plan_route",
+            "durationMs": 206,
+            "ok": true
+          },
+          {
+            "name": "control_map",
+            "durationMs": 72,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 20,
+          "writeQueries": 15,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 2129,
+          "maxCallMs": 126,
+          "rowsRead": 59,
+          "rowsWritten": 27,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    }
+  },
+  "response": "本鱼已经帮你把路线在地图上标出来啦🥳\n\n从南苑7栋到图书馆全程约848米，步行预计12分钟，路线会经过下沉隧道，具体走法如下：\n1. 从南苑7栋出发沿校内步道步行约261米\n2. 沿台阶步行约112米\n3. 进入并穿过长约70米的下沉隧道\n4. 离开隧道后沿台阶步行约53米\n5. 继续沿校内步道走约92米\n6. 穿过教学实验楼的通行区域约228米\n7. 最后沿步道走约34米就能到达图书馆啦",
+  "responseHeadersMs": 1209,
+  "firstTextMs": 12755,
+  "completeMs": 13117
+}

@@ -33,7 +33,7 @@ const historySchema = z
     z
       .object({
         role: z.enum(["user", "assistant"]),
-        content: z.string().max(4000),
+        content: z.string().max(8000),
       })
       .strict(),
   )
@@ -107,6 +107,7 @@ export class AgentOrchestrator {
     private readonly limiter = new RunLimiter(),
     private readonly options: {
       stopOnToolError?: boolean;
+      unrestricted?: boolean;
       instructions?: string;
       modelResult?: (name: string, result: SkillResult<unknown>) => unknown;
       initialReads?: PlannedRead[];
@@ -187,7 +188,7 @@ export class AgentOrchestrator {
           ].includes(read.name)
         )
           throw new ApiError("FORBIDDEN", "此计划只允许已授权的公开只读检索。");
-        if (toolsExecuted >= RUN_LIMITS.toolCalls)
+        if (!this.options.unrestricted && toolsExecuted >= RUN_LIMITS.toolCalls)
           throw new ApiError("RUN_LIMIT_EXCEEDED", "本次工具调用已达到限制。");
         const id = `${runId}:plan:${index}`;
         emit("tool.started", {
@@ -252,12 +253,16 @@ export class AgentOrchestrator {
           toolCalls: toolsExecuted,
         };
       }
-      for (let round = 0; round < RUN_LIMITS.rounds; round++) {
+      for (
+        let round = 0;
+        round < (this.options.unrestricted ? Infinity : RUN_LIMITS.rounds);
+        round++
+      ) {
         signal.throwIfAborted();
-        if (tokensRemaining <= 0)
+        if (!this.options.unrestricted && tokensRemaining <= 0)
           throw new ApiError("RUN_LIMIT_EXCEEDED", "本次对话已达到用量限制。");
         const maxTokens = Math.min(
-          tokensRemaining,
+          this.options.unrestricted ? Infinity : tokensRemaining,
           RUN_LIMITS.tokensPerRequest,
         );
         const reply = await Promise.race([
@@ -277,7 +282,9 @@ export class AgentOrchestrator {
         ]);
         signal.throwIfAborted();
         tokensRemaining -= reply.usage?.completionTokens ?? maxTokens;
-        const calls: ModelToolCall[] = toolCallsSchema.parse(reply.toolCalls);
+        const calls: ModelToolCall[] = (
+          this.options.unrestricted ? z.array(toolCallSchema) : toolCallsSchema
+        ).parse(reply.toolCalls);
         if (
           new Set(calls.map((call) => call.id)).size !== calls.length ||
           (reply.finishReason === "tool_calls") !== calls.length > 0
@@ -307,7 +314,10 @@ export class AgentOrchestrator {
         let correctionSchema = "";
         for (const call of calls) {
           signal.throwIfAborted();
-          if (toolsExecuted >= RUN_LIMITS.toolCalls)
+          if (
+            !this.options.unrestricted &&
+            toolsExecuted >= RUN_LIMITS.toolCalls
+          )
             throw new ApiError(
               "RUN_LIMIT_EXCEEDED",
               "本次工具调用已达到限制。",

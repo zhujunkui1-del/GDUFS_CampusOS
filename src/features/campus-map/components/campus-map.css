@@ -19,10 +19,12 @@
 .campus-shell {
   pointer-events: none;
 }
-.campus-shell:has(.map-workspace) {
+.campus-shell:has(.map-workspace),
+.campus-shell:has(.focused-navigation) {
   min-height: 0;
 }
-.main-content:has(.map-workspace) {
+.main-content:has(.map-workspace),
+.main-content:has(.focused-navigation) {
   overflow: clip;
   pointer-events: none;
 }
@@ -1144,4 +1146,8 @@ body:has(.navigation-active) .place-details-viewport {
   body:has(.route-planner) .assistant-launcher {
     display: none;
   }
+}
+
+.main-content > .focused-navigation {
+  pointer-events: none;
 }

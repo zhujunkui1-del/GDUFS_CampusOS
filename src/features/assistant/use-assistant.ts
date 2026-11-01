@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { z } from "zod";
+import { requestConversationId } from "@/domain/agent/conversation-key";
 import { useCampusMap } from "@/features/campus-map/components/campus-map-provider";
 import { requestOneTimeLocation } from "@/features/campus-map/components/use-map-location";
 import {
@@ -45,7 +46,7 @@ async function jsonApi(
   const response = await fetch(path, {
     method: method || (body === undefined ? "GET" : "POST"),
     headers: {
-      "X-CampusOS-Conversation-Protocol": "1",
+      "X-CampusOS-Conversation-Protocol": "2",
       ...(body === undefined ? {} : { "Content-Type": "application/json" }),
     },
     body: body === undefined ? undefined : JSON.stringify(body),
@@ -141,6 +142,10 @@ export function useAssistant(
   const [listBusy, setListBusy] = useState(false),
     [historyError, setHistoryError] = useState("");
   const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [olderCursor, setOlderCursor] = useState<number | null>(null),
+    [olderBusy, setOlderBusy] = useState(false);
+  const latestSequence = useRef(0),
+    olderWork = useRef<AbortController | null>(null);
   const chosen = useRef(false),
     selectionBoundary = useRef(0),
     semanticPlace = useRef<string | null>(null);
@@ -173,6 +178,9 @@ export function useAssistant(
   const invalidate = useCallback(() => {
     ++generation.current;
     historyWork.current?.abort();
+    olderWork.current?.abort();
+    olderWork.current = null;
+    setOlderBusy(false);
     cardWork.current?.abort();
     const active = pending.current;
     pending.current = null;
@@ -199,26 +207,54 @@ export function useAssistant(
     selectionBoundary.current = mapRef.current.getAssistantSelection().revision;
   }, []);
   const acceptHistory = useCallback(
-    (history: z.infer<typeof AssistantHistorySchema>) => {
+    (
+      history: z.infer<typeof AssistantHistorySchema>,
+      mode: "replace" | "merge" | "prepend" = "replace",
+    ) => {
+      if (mode !== "merge") setOlderCursor(history.olderCursor ?? null);
+      latestSequence.current =
+        mode === "replace"
+          ? (history.latestSequence ?? 0)
+          : Math.max(latestSequence.current, history.latestSequence ?? 0);
       if (conversationRef.current !== history.conversationId)
         tickets.current.clear();
-      knownRoutes.current.clear();
+      if (mode === "replace") knownRoutes.current.clear();
       semanticPlace.current = history.selectedPlaceId;
       for (const message of history.messages)
         for (const card of message.cards)
           if (card.kind === "route")
             knownRoutes.current.set(card.routeId, Date.parse(card.expiresAt));
+      try {
+        sessionStorage.setItem(
+          "campusos:conversation:" + scope.current,
+          history.conversationId,
+        );
+      } catch {}
       conversationRef.current = history.conversationId;
-      setView({
+      setView((prior) => ({
         id: history.conversationId,
-        messages: history.messages,
+        messages:
+          mode === "replace" || prior.id !== history.conversationId
+            ? history.messages
+            : [
+                ...new Map(
+                  [...prior.messages, ...history.messages].map((m) => [
+                    m.id,
+                    m,
+                  ]),
+                ).values(),
+              ].sort(
+                (a, b) =>
+                  (a.sequence ?? Number.MAX_SAFE_INTEGER) -
+                  (b.sequence ?? Number.MAX_SAFE_INTEGER),
+              ),
         title:
           history.title ||
           conversationTitle(
             history.messages.find((m) => m.role === "user")?.text || "",
           ) ||
           "新对话",
-      });
+      }));
     },
     [],
   );
@@ -251,6 +287,31 @@ export function useAssistant(
       const readyGeneration = generation.current;
       if (!pending.current && !historyWork.current) {
         if (!chosen.current) {
+          let saved: string | null = null;
+          try {
+            saved = sessionStorage.getItem(
+              "campusos:conversation:" + session.scopeKey,
+            );
+          } catch {}
+          if (
+            saved &&
+            saved !==
+              (session.history as { conversationId?: string } | null)
+                ?.conversationId
+          ) {
+            try {
+              session.history = await jsonApi(
+                `/api/agent/conversations/${saved}`,
+              );
+            } catch {
+              try {
+                sessionStorage.removeItem(
+                  "campusos:conversation:" + session.scopeKey,
+                );
+              } catch {}
+            }
+            if (readyGeneration !== generation.current) return;
+          }
           if (session.history)
             acceptHistory(AssistantHistorySchema.parse(session.history));
           else {
@@ -263,10 +324,12 @@ export function useAssistant(
             rev = generation.current;
           try {
             const history = AssistantHistorySchema.parse(
-              await jsonApi(`/api/agent/conversations/${cid}`),
+              await jsonApi(
+                `/api/agent/conversations/${cid}?after=${latestSequence.current}`,
+              ),
             );
             if (rev === generation.current && cid === conversationRef.current)
-              acceptHistory(history);
+              acceptHistory(history, "merge");
           } catch (cause) {
             if (rev === generation.current) {
               if (
@@ -296,19 +359,20 @@ export function useAssistant(
     }
   }, [invalidate, resetSemantics, acceptHistory]);
   useEffect(() => {
-    if (open && !initialized.current) void boot();
+    if (!open) return;
+    const timer = setTimeout(() => void boot(), 0);
+    return () => clearTimeout(timer);
   }, [open, boot]);
   useEffect(() => {
     const focus = () => {
-      if (initialized.current && !pending.current) void boot();
+      if (open && initialized.current && !pending.current) void boot();
     };
     window.addEventListener("focus", focus);
     return () => window.removeEventListener("focus", focus);
-  }, [boot]);
+  }, [boot, open]);
   useEffect(() => {
     const identityChanged = () => {
-      // Existing guest conversations remain owned by their HttpOnly visitor cookie.
-      if (sessionKind.current !== "user") return;
+      // Switch the visible scope in both directions without claiming guest history.
       invalidate();
       if (displayedRouteOwner.current) mapRef.current.stopNavigation();
       displayedRouteOwner.current = null;
@@ -333,11 +397,16 @@ export function useAssistant(
     setError("已停止回复。");
   }, [invalidate]);
   const newConversation = () => {
+    try {
+      sessionStorage.removeItem("campusos:conversation:" + scope.current);
+    } catch {}
     invalidate();
     resetSemantics();
     chosen.current = true;
     conversationRef.current = undefined;
     setView(blankConversation());
+    setOlderCursor(null);
+    latestSequence.current = 0;
     setError("");
   };
   const loadConversations = async (more = false) => {
@@ -424,6 +493,78 @@ export function useAssistant(
       }
     }
   };
+  const loadEarlier = async () => {
+    const cid = conversationRef.current,
+      cursor = olderCursor,
+      revision = generation.current;
+    if (!cid || !cursor || olderWork.current) return;
+    const controller = new AbortController();
+    setHistoryError("");
+    olderWork.current = controller;
+    setOlderBusy(true);
+    try {
+      const history = AssistantHistorySchema.parse(
+        await jsonApi(
+          `/api/agent/conversations/${cid}?before=${cursor}`,
+          undefined,
+          controller.signal,
+        ),
+      );
+      if (
+        cid === conversationRef.current &&
+        revision === generation.current &&
+        !controller.signal.aborted
+      )
+        acceptHistory(history, "prepend");
+    } catch {
+      if (!controller.signal.aborted)
+        setHistoryError("无法加载更早消息，请重试。");
+    } finally {
+      if (olderWork.current === controller) {
+        olderWork.current = null;
+        setOlderBusy(false);
+      }
+    }
+  };
+  useEffect(() => {
+    if (!open) return;
+    let syncing = false;
+    const sync = async () => {
+      const cid = conversationRef.current,
+        revision = generation.current;
+      if (
+        syncing ||
+        document.hidden ||
+        pending.current ||
+        historyWork.current ||
+        olderWork.current ||
+        !cid ||
+        sessionKind.current !== "user"
+      )
+        return;
+      syncing = true;
+      try {
+        const history = AssistantHistorySchema.parse(
+          await jsonApi(
+            `/api/agent/conversations/${cid}?after=${latestSequence.current}`,
+          ),
+        );
+        if (
+          cid === conversationRef.current &&
+          revision === generation.current &&
+          !pending.current
+        )
+          acceptHistory(history, "merge");
+      } catch (cause) {
+        if (cause instanceof AssistantRequestError && cause.status === 404)
+          void boot();
+      } finally {
+        syncing = false;
+      }
+    };
+    const timer = setInterval(() => void sync(), 15000);
+    return () => clearInterval(timer);
+  }, [open, acceptHistory, boot]);
   const deleteConversation = async (id: string) => {
     const current = conversationRef.current === id;
     if (current) invalidate();
@@ -563,13 +704,16 @@ export function useAssistant(
     setBusy(true);
     setError("");
     setStatus("正在查询");
-    const assistantId = crypto.randomUUID();
     let cid = conversationRef.current;
+    const messageScope =
+      cid || (await requestConversationId(scope.current, requestId));
+    if (revision !== generation.current || controller.signal.aborted) return;
+    const assistantId = `${messageScope}:${requestId}:assistant`;
     let artifact: z.infer<typeof AssistantArtifactSchema> | undefined;
     let terminalError = "";
     let expectedMapVersion = mapRef.current.getInteractionVersion();
     const userMessage: StoredMessage = {
-      id: crypto.randomUUID(),
+      id: `${messageScope}:${requestId}:user`,
       role: "user",
       text,
       cards: [],
@@ -807,7 +951,7 @@ export function useAssistant(
               ...message,
               text: (
                 message.text + z.string().max(32768).parse(event.payload.text)
-              ).slice(0, 4000),
+              ).slice(0, 200000),
             }));
           }
           if (event.type === "tool.started")
@@ -817,6 +961,12 @@ export function useAssistant(
               cid = z.string().uuid().parse(event.payload.conversationId);
               chosen.current = true;
               setConversationId(cid);
+              try {
+                sessionStorage.setItem(
+                  "campusos:conversation:" + scope.current,
+                  cid,
+                );
+              } catch {}
             } else {
               const payload = { ...event.payload };
               delete payload.conversationId;
@@ -875,6 +1025,16 @@ export function useAssistant(
           text: message,
           error: message,
         }));
+        // A response can be lost after the server committed. Read it back without
+        // re-running the model, tools or historical map actions.
+        try {
+          const saved = AssistantHistorySchema.parse(
+            await jsonApi(`/api/agent/conversations/${cid || messageScope}`),
+          );
+          if (revision === generation.current) acceptHistory(saved, "merge");
+        } catch {
+          /* Preserve the original network/model error when nothing was saved. */
+        }
       }
     } finally {
       if (revision === generation.current) {
@@ -889,6 +1049,9 @@ export function useAssistant(
     title: view.title,
     connected,
     loadingConversation,
+    olderCursor,
+    olderBusy,
+    loadEarlier,
     conversations,
     nextCursor,
     listBusy,

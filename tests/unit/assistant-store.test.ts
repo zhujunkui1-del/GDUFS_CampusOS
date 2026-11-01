@@ -52,7 +52,7 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
     const store = new AssistantStore(fixture.db, () => now);
     const guest = await store.identity(request());
     const conversation = await store.conversation(guest);
-    const loginToken = "test-only-login-token-with-enough-length";
+    const loginToken = "T".repeat(43);
     fixture.sqlite
       .prepare(
         "INSERT INTO users(id,display_name) VALUES('test-user','Isolated user')",
@@ -63,6 +63,11 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
         "INSERT INTO login_sessions(session_hash,user_id,expires_at) VALUES(?, 'test-user', ?)",
       )
       .run(await tokenHash(loginToken), new Date(now + 3600000).toISOString());
+    fixture.sqlite
+      .prepare(
+        "INSERT INTO user_password_identities(user_id,username,username_norm,password_hash,mutation_id,updated_at_ms) VALUES('test-user','test_user','test_user','fixture','fixture',0)",
+      )
+      .run();
     const user = await store.identity(
       request(`campusos_session=${loginToken}`),
     );
@@ -98,8 +103,12 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
       a,
       conversation.id,
     );
-    expect(restored.messages).toHaveLength(45);
-    expect(restored.messages[0].text).toBe("公开测试 0");
+    expect(restored.messages).toHaveLength(40);
+    const older = await store.history(a, conversation.id, {
+      before: restored.olderCursor!,
+    });
+    expect(older.messages).toHaveLength(5);
+    expect(older.messages[0].text).toBe("公开测试 0");
     await expect(store.history(b, conversation.id)).rejects.toMatchObject({
       code: "NOT_FOUND",
     });

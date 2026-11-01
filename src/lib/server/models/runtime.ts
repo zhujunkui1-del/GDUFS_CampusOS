@@ -2,7 +2,9 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ModelRouter } from "./router";
 import { PriorityModelRouter } from "./priority";
 
-export function defaultModelRuntime() {
+export function defaultModelRuntime(
+  options: { providerManagedOutput?: boolean } = {},
+) {
   let bindings: Record<string, unknown> = {};
   try {
     bindings = getCloudflareContext().env as unknown as Record<string, unknown>;
@@ -14,6 +16,7 @@ export function defaultModelRuntime() {
       ? (bindings[name] as string)
       : process.env[name];
   const deepseek = new ModelRouter({
+    providerManagedOutput: options.providerManagedOutput === true,
     maxOutputTokens: value("MODEL_MAX_OUTPUT_TOKENS") === "2048" ? 2048 : 1024,
     apiKey: value("MODEL_API_KEY"),
     model: value("MODEL_NAME"),
@@ -23,6 +26,7 @@ export function defaultModelRuntime() {
   if (!value("PRIMARY_MODEL_API_KEY")) return deepseek;
   const step = new ModelRouter({
     provider: "stepfun",
+    providerManagedOutput: options.providerManagedOutput === true,
     maxOutputTokens: value("MODEL_MAX_OUTPUT_TOKENS") === "2048" ? 2048 : 1024,
     apiKey: value("PRIMARY_MODEL_API_KEY"),
     model: value("PRIMARY_MODEL_NAME"),

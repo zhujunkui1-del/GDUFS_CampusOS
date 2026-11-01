@@ -214,11 +214,11 @@ it("preserves an authenticated visitor conversation across registration, login a
       headers: { Cookie: cookie + "; campusos_session=" + a.token },
     });
     const identity = await assistant.identity(logged);
-    expect(identity.owner).toBe(guest.owner);
-    expect(identity.user).toBeNull();
-    expect((await assistant.conversation(identity, conversation.id)).id).toBe(
-      conversation.id,
-    );
+    expect(identity.owner).toBe("u:" + a.profile.id);
+    expect(identity.user?.id).toBe(a.profile.id);
+    await expect(
+      assistant.conversation(identity, conversation.id),
+    ).rejects.toMatchObject({ code: "NOT_FOUND" });
     await f.store.logout(f.request(a.token));
     expect((await assistant.identity(logged)).owner).toBe(guest.owner);
   } finally {

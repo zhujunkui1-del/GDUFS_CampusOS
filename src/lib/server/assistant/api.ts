@@ -83,7 +83,10 @@ export const sessionGet = api(async (request, context) => {
     history: latest
       ? historyForClient(
           await context.store.history(context.identity, latest.id),
-          request.headers.get("X-CampusOS-Conversation-Protocol") === "1",
+          ["1", "2"].includes(
+            request.headers.get("X-CampusOS-Conversation-Protocol") || "",
+          ),
+          request.headers.get("X-CampusOS-Conversation-Protocol") === "2",
         )
       : null,
     model: await defaultModelRuntime().status(),
@@ -92,8 +95,21 @@ export const sessionGet = api(async (request, context) => {
 export const historyGet = api(async (request, context) => {
   const id = idSchema.parse(new URL(request.url).pathname.split("/").at(-1));
   return historyForClient(
-    await context.store.history(context.identity, id),
-    request.headers.get("X-CampusOS-Conversation-Protocol") === "1",
+    await context.store.history(
+      context.identity,
+      id,
+      z
+        .object({
+          before: z.coerce.number().int().positive().optional(),
+          after: z.coerce.number().int().nonnegative().optional(),
+        })
+        .strict()
+        .parse(Object.fromEntries(new URL(request.url).searchParams)),
+    ),
+    ["1", "2"].includes(
+      request.headers.get("X-CampusOS-Conversation-Protocol") || "",
+    ),
+    request.headers.get("X-CampusOS-Conversation-Protocol") === "2",
   );
 }, true);
 export const conversationsGet = api(async (request, context) => {

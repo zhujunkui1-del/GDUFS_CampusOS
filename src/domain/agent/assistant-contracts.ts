@@ -87,9 +87,10 @@ export const StoredMessageSchema = z
   .object({
     id: z.string(),
     role: z.enum(["user", "assistant"]),
-    text: z.string().max(4000),
+    text: z.string().max(200000),
     cards: z.array(AssistantCardSchema).max(30),
     error: z.string().optional(),
+    sequence: z.number().int().positive().optional(),
   })
   .strict();
 export type StoredMessage = z.infer<typeof StoredMessageSchema>;
@@ -100,6 +101,9 @@ export const AssistantHistorySchema = z
     selectedPlaceId: z.string().nullable(),
     activeRouteId: z.string().nullable(),
     title: z.string().max(48).optional(),
+    olderCursor: z.number().int().positive().nullable().optional(),
+    latestSequence: z.number().int().nonnegative().optional(),
+    hasMoreUpdates: z.boolean().optional(),
   })
   .strict();
 export const ConversationSummarySchema = z
@@ -121,12 +125,26 @@ export const ConversationListSchema = z
 export function historyForClient(
   history: z.infer<typeof AssistantHistorySchema>,
   expanded: boolean,
+  paginated = false,
 ) {
   return {
     conversationId: history.conversationId,
-    messages: history.messages,
+    messages: paginated
+      ? history.messages
+      : history.messages.map((message) => {
+          const legacy = { ...message, text: message.text.slice(0, 4000) };
+          delete legacy.sequence;
+          return legacy;
+        }),
     selectedPlaceId: history.selectedPlaceId,
     activeRouteId: history.activeRouteId,
     ...(expanded ? { title: history.title } : {}),
+    ...(paginated
+      ? {
+          olderCursor: history.olderCursor,
+          latestSequence: history.latestSequence,
+          hasMoreUpdates: history.hasMoreUpdates,
+        }
+      : {}),
   };
 }

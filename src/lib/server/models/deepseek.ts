@@ -121,7 +121,7 @@ function safeReply(
   if (
     (finish !== "stop" && finish !== "tool_calls") ||
     (finish === "tool_calls") !== calls.length > 0 ||
-    content.length > 32768 ||
+    content.length > 200000 ||
     new Set(calls.map((c) => c.id)).size !== calls.length
   )
     throw new ApiError(
@@ -212,7 +212,7 @@ async function streamedReply(
     // reasoning_content and other upstream fields are deliberately discarded by the schema.
     if (choice.delta.content) {
       content += choice.delta.content;
-      if (content.length > 32768)
+      if (content.length > 200000)
         throw new ApiError("MODEL_SERVICE_UNAVAILABLE", "模型回复超过限制。");
       onText(choice.delta.content);
     }
@@ -289,6 +289,7 @@ export class DeepseekModelClient implements ModelClient {
     private readonly provider: "deepseek" | "stepfun" = "deepseek",
     // Server-only opt-in; production callers retain the existing 1024 default.
     private readonly maxOutputTokens = 1024,
+    private readonly providerManagedOutput = false,
   ) {
     if (
       !Number.isInteger(maxOutputTokens) ||
@@ -332,7 +333,9 @@ export class DeepseekModelClient implements ModelClient {
         body: JSON.stringify({
           model: this.model,
           messages: request.messages,
-          max_tokens: request.maxTokens,
+          ...(this.providerManagedOutput
+            ? {}
+            : { max_tokens: request.maxTokens }),
           // Grounded campus answers should not vary between identical questions.
           temperature: 0.2,
           ...(this.provider === "deepseek"

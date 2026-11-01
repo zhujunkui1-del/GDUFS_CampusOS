@@ -123,7 +123,14 @@ it("stores separate owner-scoped preferences beyond the history window and remov
     off,
   );
   const history = await store.history(user, conversation.id);
-  expect(history.messages).toHaveLength(44);
+  expect(history.messages).toHaveLength(40);
+  expect(
+    (
+      await store.history(user, conversation.id, {
+        before: history.olderCursor!,
+      })
+    ).messages,
+  ).toHaveLength(4);
   expect(history.messages.some((m) => m.text.includes('"enabled"'))).toBe(
     false,
   );

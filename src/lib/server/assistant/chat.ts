@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { requestConversationId } from "@/domain/agent/conversation-key";
+import { tokenHash } from "./crypto";
 import {
   AgentChatRequestSchema,
   encodeAgentEvent,
@@ -154,7 +156,7 @@ const explain: Record<string, string> = {
   NOT_FOUND: "未找到该地点或路线，请换个名称。",
   LOCATION_REQUIRED: "请授权定位或输入起点。",
   CANCELLED: "已停止回复。",
-  RATE_LIMITED: "请求较多或额度已用完，请稍后重试。",
+
   MODEL_TEST_REQUIRED: "AI 暂不可用，请稍后重试。",
   MODEL_SELECTION_REQUIRED: "AI 暂不可用，请稍后重试。",
 };
@@ -166,11 +168,80 @@ export async function chatResponse(request: Request) {
     const input = AgentChatRequestSchema.parse(await readJson(req));
     const ctx = await assistantContext(req);
     await ctx.store.cleanup();
+    const requestId = input.clientRequestId || crypto.randomUUID();
+    const existing = await ctx.store.request(ctx.identity, requestId);
+    if (existing) {
+      if (
+        input.conversationId &&
+        input.conversationId !== existing.conversation_id
+      )
+        throw new ApiError("INVALID_ARGUMENT", "请求与对话不匹配。");
+      if (existing.status !== "completed" || !existing.message)
+        throw new ApiError(
+          "RATE_LIMITED",
+          "该次请求已受理，请刷新对话查看结果。",
+          true,
+        );
+      const events = [
+        [
+          "artifact.ready",
+          {
+            conversationId: existing.conversation_id,
+            requestId,
+            started: true,
+          },
+        ],
+        ["message.delta", { text: existing.message.text }],
+        [
+          "artifact.ready",
+          {
+            conversationId: existing.conversation_id,
+            cards: existing.message.cards,
+            routes: [],
+          },
+        ],
+        [
+          "run.completed",
+          {
+            conversationId: existing.conversation_id,
+            requestId,
+            replayed: true,
+          },
+        ],
+      ] as const;
+      response = new Response(
+        events
+          .map(([type, payload], index) =>
+            encodeAgentEvent({
+              runId: existing.id,
+              eventId: `${existing.id}:${index + 1}`,
+              timestamp: new Date().toISOString(),
+              type,
+              payload,
+            }),
+          )
+          .join(""),
+        {
+          headers: {
+            "Content-Type": "text/event-stream; charset=utf-8",
+            "Cache-Control": "no-store, no-transform",
+            "Set-Cookie": ctx.identity.cookie,
+          },
+        },
+      );
+      return { started: true };
+    }
     const conversation = await ctx.store.conversation(
       ctx.identity,
       input.conversationId,
+      await requestConversationId(
+        (await tokenHash(ctx.identity.owner + ctx.signingSecret)).slice(0, 24),
+        requestId,
+      ),
     );
-    const history = await ctx.store.history(ctx.identity, conversation.id);
+    const history = await ctx.store.history(ctx.identity, conversation.id, {
+      context: true,
+    });
     const persona = personaControl(
       input.message,
       await ctx.store.persona(ctx.identity, conversation.id),
@@ -192,7 +263,6 @@ export async function chatResponse(request: Request) {
           ? inputGateReply(gate)
           : content.dialogueReply;
     if (directReply) {
-      const requestId = input.clientRequestId || crypto.randomUUID();
       const runId = await ctx.store.reserve(
         ctx.identity,
         conversation,
@@ -223,8 +293,14 @@ export async function chatResponse(request: Request) {
         execution: "dialogue",
         serverElapsedMs: Math.round(performance.now() - receivedAt),
       };
-      await ctx.store.append(conversation, "user", input.message);
-      await ctx.store.append(conversation, "assistant", text);
+      await ctx.store.append(
+        conversation,
+        "user",
+        input.message,
+        [],
+        requestId,
+      );
+      await ctx.store.append(conversation, "assistant", text, [], requestId);
       await ctx.store.finish(ctx.identity, runId, "completed", metrics, 0);
       const types = [
         [
@@ -290,8 +366,9 @@ export async function chatResponse(request: Request) {
     const location = input.locationGrant
       ? await ctx.store.consumeLocation(ctx.identity, input.locationGrant)
       : undefined;
-    const resolved = await defaultModelRuntime().resolve();
-    const requestId = input.clientRequestId || crypto.randomUUID();
+    const resolved = await defaultModelRuntime({
+      providerManagedOutput: true,
+    }).resolve();
     const runId = await ctx.store.reserve(
       ctx.identity,
       conversation,
@@ -339,7 +416,7 @@ export async function chatResponse(request: Request) {
       }))
       .slice(-40);
     while (JSON.stringify(previous).length > 16000) previous.shift();
-    await ctx.store.append(conversation, "user", input.message);
+    await ctx.store.append(conversation, "user", input.message, [], requestId);
     const abort = new AbortController();
     const streamSignal = AbortSignal.any([request.signal, abort.signal]);
     const {
@@ -462,6 +539,16 @@ export async function chatResponse(request: Request) {
       ctx.modelRequestOutputLimit,
       () => personaPrompt(personaMessage, persona.preference, history.messages),
       {
+        unrestricted: true,
+        ...(routeQuestion && originIds.length === 1 && destinations.length === 1
+          ? {
+              requiredRoute: {
+                start: { type: "place" as const, placeId: originIds[0] },
+                endPlaceId: destinations[0].id,
+                mode: "walking" as const,
+              },
+            }
+          : {}),
         finalSystem: () => finalSystemInstructions(),
         isolateFinalEvidence: content.active && !content.map,
         groundingEvidence: (answer) => {
@@ -1098,6 +1185,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                   ),
               undefined,
               {
+                unrestricted: true,
                 stopOnToolError: true,
                 instructions,
                 ...(content.active && !content.map
@@ -1422,7 +1510,13 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                   code,
                 )
                 .catch(() => {});
-              await ctx.store.append(conversation, "assistant", message);
+              await ctx.store.append(
+                conversation,
+                "assistant",
+                message,
+                [],
+                requestId,
+              );
               emit("run.failed", {
                 error: { code, message },
                 conversationId: conversation.id,
@@ -1502,7 +1596,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                       ]
                     : [],
                 ),
-              ).slice(0, 3600);
+              ).slice(0, 200000);
               emit("message.delta", { text });
             }
             if (actions.length > 8)
@@ -1541,6 +1635,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
               "assistant",
               text || "已完成查询。",
               readyCards,
+              requestId,
             );
             const routes = await Promise.all(
               [...routeArtifacts.values()].map(async (route) => ({

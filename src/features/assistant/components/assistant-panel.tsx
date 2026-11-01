@@ -7,6 +7,7 @@ import type { ConversationSummary } from "@/domain/agent/assistant-contracts";
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   useSyncExternalStore,
@@ -93,11 +94,23 @@ export function AssistantPanel({
   const messageCount = useRef(0);
   const lastScroll = useRef(0);
   const pointerScroll = useRef<{ top: number; user: boolean } | null>(null);
+  const olderAnchor = useRef<{
+    height: number;
+    top: number;
+    first?: string;
+  } | null>(null);
   const trackScroll = (event: UIEvent<HTMLDivElement>) => {
     const element = event.currentTarget;
     stickToBottom.current =
       element.scrollHeight - element.scrollTop - element.clientHeight < 96;
     lastScroll.current = element.scrollTop;
+    if (
+      element.scrollTop < 80 &&
+      chat.olderCursor &&
+      !chat.olderBusy &&
+      !chat.busy
+    )
+      void earlier(element);
   };
   const markUserScroll = () => {
     if (pointerScroll.current) pointerScroll.current.user = true;
@@ -121,6 +134,25 @@ export function AssistantPanel({
   }, [compact, onOpenChange]);
   const showFailure = useCallback(() => onOpenChange(true), [onOpenChange]);
   const chat = useAssistant(open, prepareMap, showFailure);
+  const earlier = async (element: HTMLElement) => {
+    if (chat.olderBusy || !chat.olderCursor) return;
+    olderAnchor.current = {
+      height: element.scrollHeight,
+      top: element.scrollTop,
+      first: chat.messages[0]?.id,
+    };
+    stickToBottom.current = false;
+    await chat.loadEarlier();
+  };
+  useLayoutEffect(() => {
+    const a = olderAnchor.current,
+      element = document.querySelector<HTMLElement>(".assistant-body");
+    if (!a || !element || a.first === chat.messages[0]?.id) return;
+    element.scrollTop = a.top + element.scrollHeight - a.height;
+    lastScroll.current = element.scrollTop;
+    messageCount.current = chat.messages.length;
+    olderAnchor.current = null;
+  }, [chat.messages]);
   const focusComposer = () => {
     if (!window.matchMedia("(pointer: coarse)").matches)
       requestAnimationFrame(() =>
@@ -350,6 +382,7 @@ export function AssistantPanel({
                         <div
                           key={item.id}
                           className="assistant-history-row"
+                          data-conversation-id={item.id}
                           data-current={
                             item.id === chat.conversationId ? "true" : undefined
                           }
@@ -428,6 +461,22 @@ export function AssistantPanel({
                         aria-live="polite"
                         aria-relevant="additions text"
                       >
+                        {chat.olderCursor && (
+                          <button
+                            type="button"
+                            className="text-link"
+                            disabled={chat.olderBusy}
+                            onClick={(e) =>
+                              void earlier(
+                                e.currentTarget.closest<HTMLElement>(
+                                  ".assistant-body",
+                                )!,
+                              )
+                            }
+                          >
+                            {chat.olderBusy ? "正在加载…" : "加载更早消息"}
+                          </button>
+                        )}
                         {chat.messages.map((message) => (
                           <div
                             key={message.id}
