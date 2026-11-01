@@ -23,6 +23,7 @@ import { SkillRegistry } from "../agent/skill-registry";
 import { CampusMapService, MAP_VERSIONS } from "../maps/campus-map-service";
 import { createMapSkillRegistry } from "../maps/skills";
 import { defaultModelRuntime } from "../models/runtime";
+import { personalModelRuntime } from "../models/personal-runtime";
 import { withApi } from "../http";
 import { ApiError } from "../errors";
 import { assistantContext, readJson } from "./http-context";
@@ -366,9 +367,15 @@ export async function chatResponse(request: Request) {
     const location = input.locationGrant
       ? await ctx.store.consumeLocation(ctx.identity, input.locationGrant)
       : undefined;
-    const resolved = await defaultModelRuntime({
-      providerManagedOutput: true,
-    }).resolve();
+    const resolved =
+      (await personalModelRuntime(
+        ctx.db,
+        ctx.identity.owner,
+        ctx.credentialSecret,
+      )) ||
+      (await defaultModelRuntime({
+        providerManagedOutput: true,
+      }).resolve());
     const runId = await ctx.store.reserve(
       ctx.identity,
       conversation,

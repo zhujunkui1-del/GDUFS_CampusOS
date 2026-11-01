@@ -133,7 +133,14 @@ export class AccountStore {
       now,
     );
     if (subject)
-      await authLimit(this.db, action + ":subject", subject, 10, 900000, now);
+      await authLimit(
+        this.db,
+        action + ":subject",
+        subject,
+        action === "model_settings" ? 40 : 10,
+        900000,
+        now,
+      );
     await authLimit(
       this.db,
       action + ":site",

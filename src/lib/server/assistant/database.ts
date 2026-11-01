@@ -48,6 +48,14 @@ export function assistantBindings() {
   return {
     db: primaryDatabase(env.DB as SqlDatabase),
     signingSecret,
+    credentialSecret:
+      typeof env.MODEL_CREDENTIALS_KEY === "string"
+        ? env.MODEL_CREDENTIALS_KEY
+        : typeof env.ACCOUNT_OTP_SECRET === "string"
+          ? env.ACCOUNT_OTP_SECRET
+          : process.env.MODEL_CREDENTIALS_KEY ||
+            process.env.ACCOUNT_OTP_SECRET ||
+            "",
     environment: String(env.APP_ENV || "local"),
     modelRequestOutputLimit:
       env.MODEL_MAX_OUTPUT_TOKENS === "2048" ? 2048 : 1024,

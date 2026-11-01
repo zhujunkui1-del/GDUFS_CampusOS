@@ -24,8 +24,16 @@ import {
 import { useAccount, accountRequest } from "./account-context";
 import { useEmailCodeAction } from "./use-email-code-action";
 import { AccountFrame, FormFeedback, useAccountAction } from "./shared";
+import { ApiSettingsView } from "./api-settings-view";
 
-type View = "home" | "settings" | "username" | "password" | "email" | "unbind";
+type View =
+  | "home"
+  | "settings"
+  | "username"
+  | "password"
+  | "email"
+  | "unbind"
+  | "api";
 export function AccountPageView({ view = "home" }: { view?: View }) {
   const account = useAccount(),
     user = account.session?.user;
@@ -36,6 +44,7 @@ export function AccountPageView({ view = "home" }: { view?: View }) {
     password: "修改密码",
     email: "邮箱",
     unbind: "解绑邮箱",
+    api: "API 设置",
   };
   const back =
     view === "home"
@@ -56,17 +65,20 @@ export function AccountPageView({ view = "home" }: { view?: View }) {
         </p>
       )}
       {!account.session && account.loading && <p role="status">正在载入…</p>}
-      {account.session && !user && (
-        <div className="account-card account-entry">
-          <h2>游客</h2>
-          <div className="account-links">
-            <Link className="account-primary-link" href="/account/login">
-              登录
-            </Link>
-            <Link href="/account/register">注册</Link>
+      {account.session && !user &&
+        (view === "api" ? (
+          <ApiSettingsView />
+        ) : (
+          <div className="account-card account-entry">
+            <h2>游客</h2>
+            <div className="account-links">
+              <Link className="account-primary-link" href="/account/login">
+                登录
+              </Link>
+              <Link href="/account/register">注册</Link>
+            </div>
           </div>
-        </div>
-      )}
+        ))}
       {user && <AccountContent key={user.id + view} user={user} view={view} />}
     </AccountFrame>
   );
@@ -125,11 +137,16 @@ function AccountContent({ user, view }: { user: AccountProfile; view: View }) {
           </div>
           <div className="account-card account-group">
             <Row icon={Bookmark} label="收藏" disabled />
-            <Row icon={CodeXml} label="API 设置" disabled />
+            <Row
+              icon={CodeXml}
+              label="API 设置"
+              href="/account/settings/api"
+            />
           </div>
         </div>
       </div>
     );
+  if (view === "api") return <ApiSettingsView />;
   if (view === "settings") return <SettingsPage user={user} />;
   return (
     <div className="account-form-layout">
@@ -175,6 +192,11 @@ function SettingsPage({ user }: { user: AccountProfile }) {
       <section>
         <h2 className="account-group-label">账户信息</h2>
         <div className="account-card account-group">
+          <Row
+            icon={CodeXml}
+            label="API 设置"
+            href="/account/settings/api"
+          />
           <Row
             icon={Mail}
             label="邮箱"

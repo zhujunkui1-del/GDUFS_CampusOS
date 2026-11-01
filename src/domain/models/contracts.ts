@@ -46,8 +46,8 @@ export interface ModelClient {
   ): Promise<T>;
 }
 export type ModelSnapshot = {
-  source: "platform";
-  provider: "deepseek" | "stepfun";
+  source: "platform" | "personal";
+  provider: "deepseek" | "stepfun" | "openai" | "anthropic" | "gemini";
   model: string;
   policyVersion: string;
   testedAt: string;

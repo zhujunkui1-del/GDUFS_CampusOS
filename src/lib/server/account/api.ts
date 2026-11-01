@@ -8,6 +8,10 @@ import { accountCookie, assertAccountOrigin } from "./security";
 import { AccountService } from "./email";
 import { TencentSesMailer } from "./tencent-ses";
 import { measuredAccountDatabase } from "./metrics";
+import { ModelSettingsStore } from "../models/credentials";
+import { ModelConfigStore } from "../models/model-config-store";
+import { testPersonalConnection } from "../models/personal-client";
+import { MODEL_PROVIDER_IDS } from "@/domain/models/providers";
 
 export const accountMethods: Record<string, readonly string[]> = {
   "/api/auth/register": ["POST"],
@@ -24,10 +28,52 @@ export const accountMethods: Record<string, readonly string[]> = {
   "/api/auth/email/unbind": ["POST"],
   "/api/auth/email/unbind/request": ["POST"],
   "/api/me": ["GET", "PATCH"],
+  "/api/me/model-settings": ["GET", "PATCH", "DELETE"],
+  "/api/me/model-configs": ["GET", "POST", "PATCH", "DELETE"],
 };
+const ModelConfigFields = {
+  displayName: z.string().trim().min(1).max(60),
+  provider: z
+    .string()
+    .refine((value) => MODEL_PROVIDER_IDS.includes(value as never)),
+  protocol: z.enum(["openai", "anthropic", "gemini"]).optional(),
+  baseUrl: z.string().trim().min(1).max(500),
+  model: z.string().trim().min(1).max(120),
+  apiKey: z.string().trim().max(4096).optional().default(""),
+};
+const ModelConfigActionSchema = z
+  .object({
+    action: z.enum([
+      "update",
+      "test",
+      "activate",
+      "disable",
+      "platform",
+    ]),
+    id: z.string().uuid().optional(),
+    displayName: ModelConfigFields.displayName.optional(),
+    provider: ModelConfigFields.provider.optional(),
+    protocol: ModelConfigFields.protocol,
+    baseUrl: ModelConfigFields.baseUrl.optional(),
+    model: ModelConfigFields.model.optional(),
+    apiKey: z.string().trim().max(4096).optional(),
+  })
+  .strict();
+const ModelSettingsSchema = z
+  .object({
+    action: z.enum(["save", "test"]),
+    provider: z
+      .string()
+      .refine((value) => MODEL_PROVIDER_IDS.includes(value as never)),
+    baseUrl: z.string().trim().min(1).max(500),
+    model: z.string().trim().min(1).max(120),
+    apiKey: z.string().trim().min(1).max(4096),
+  })
+  .strict();
 export function createAccountApi(options: {
   store: AccountService;
   enabled: boolean;
+  credentialSecret?: string;
   defer(task: Promise<unknown>): void;
 }) {
   return async (request: Request) => {
@@ -58,6 +104,107 @@ export function createAccountApi(options: {
       }
       if (path === "/api/me" && request.method === "GET")
         return { user: store.profile((await store.require(request)).row) };
+      if (path === "/api/me/model-configs") {
+        const session = await store.require(request);
+        const configs = new ModelConfigStore(
+          store.db,
+          options.credentialSecret || "",
+        );
+        const payload = async () => {
+          const preference = await configs.preference(session.row.user_id);
+          return {
+            configs: await configs.list(session.row.user_id),
+            mode: preference.mode,
+            activeConfigId: preference.activeConfigId,
+          };
+        };
+        if (request.method === "GET") return payload();
+        await store.limit("model_settings", ip, session.row.user_id);
+        if (request.method === "POST") {
+          const input = z.object(ModelConfigFields).strict().parse(body);
+          const created = await configs.create(session.row.user_id, input);
+          return {
+            config: created,
+            ...(await payload()),
+          };
+        }
+        if (request.method === "DELETE") {
+          const input = z.object({ id: z.string().uuid() }).strict().parse(body);
+          await configs.remove(session.row.user_id, input.id);
+          return payload();
+        }
+        const input = ModelConfigActionSchema.parse(body);
+        if (input.action === "platform") {
+          await configs.setPreference(session.row.user_id, "platform", null);
+          return payload();
+        }
+        if (!input.id)
+          throw new ApiError("INVALID_ARGUMENT", "缺少模型配置 ID。");
+        if (input.action === "activate") {
+          await configs.setPreference(session.row.user_id, "personal", input.id);
+          return payload();
+        }
+        if (input.action === "disable") {
+          await configs.disable(session.row.user_id, input.id);
+          return payload();
+        }
+        if (input.action === "test") {
+          const result = await configs.test(session.row.user_id, input.id);
+          return { ...result, ...(await payload()) };
+        }
+        if (!input.displayName || !input.provider || !input.baseUrl || !input.model)
+          throw new ApiError("INVALID_ARGUMENT", "请填写完整的配置信息。");
+        await configs.update(session.row.user_id, input.id, {
+          displayName: input.displayName,
+          provider: input.provider,
+          baseUrl: input.baseUrl,
+          model: input.model,
+          apiKey: input.apiKey || "",
+        });
+        return payload();
+      }
+      if (path === "/api/me/model-settings") {
+        const session = await store.require(request);
+        const settings = new ModelSettingsStore(
+          store.db,
+          options.credentialSecret || "",
+        );
+        if (request.method === "GET")
+          return { settings: await settings.list(session.row.user_id) };
+        await store.limit("model_settings", ip, session.row.user_id);
+        if (request.method === "DELETE") {
+          z.object({}).strict().parse(body);
+          await settings.remove(session.row.user_id);
+          return { settings: [] };
+        }
+        const input = ModelSettingsSchema.parse(body);
+        const test = await testPersonalConnection({
+          provider: input.provider,
+          baseUrl: input.baseUrl,
+          model: input.model,
+          apiKey: input.apiKey,
+        }).catch((error) => {
+          if (error instanceof ApiError)
+            return { ok: false as const, error };
+          throw error;
+        });
+        if (!test.ok) throw test.error;
+        if (input.action === "test") return test;
+        return {
+          settings: [
+            await settings.save(
+              session.row.user_id,
+              {
+                provider: input.provider,
+                baseUrl: input.baseUrl,
+                model: input.model,
+                apiKey: input.apiKey,
+              },
+              { status: "connected", error: null },
+            ),
+          ],
+        };
+      }
       if (path === "/api/auth/register") {
         const result = await store.register(body, request, ip);
         cookie = accountCookie(result.token);
@@ -153,6 +300,9 @@ export async function accountApi(request: Request) {
     const response = await createAccountApi({
       store,
       enabled: values.USER_ACCOUNTS_ENABLED === "true" && !!origin,
+      credentialSecret: String(
+        values.MODEL_CREDENTIALS_KEY || values.ACCOUNT_OTP_SECRET || "",
+      ),
       defer: (task) => ctx.waitUntil(task),
     })(request);
     console.info(
