@@ -639,3 +639,9 @@ Cloudflare Live View接管依据：https://developers.cloudflare.com/browser-run
 ## 2026-11-01｜D-127停止使用外部密码库
 
 按负责人最新决定，普通用户注册、改密和邮箱验证码重置均已删除HIBP及其他密码内容黑名单拦截。上述S4初版HIBP来源记录仅为历史；当前不向外部服务发送密码哈希前缀，也不因该服务不可用影响密码设置。该变更不涉及腾讯云SES或已有账号密码。
+
+## 2026-11-01｜域名映射与浏览器定位/方向
+
+Cloudflare账号只读接口核验：gdufs.ccwu.cc的服务为campusos-preview，default environment标记production不代表本仓库Production部署。7页资源清单与公开数据对照保留脱敏回执；没有读取实际用户密码或私有对话。普通账号新增明确自有入口允许范围，不放开任意来源。
+
+定位依据W3C/MDN watchPosition及Device Orientation规范，采用浏览器高精度请求与显式方向权限，仅绝对方向/有效罗盘用于箭头；传感器无数据不以位移方向冒充手机朝向。位置只保留页面内存，不新增外部地图供应商、位置持久化或GPS收费API。用户x/q/ww图片仅为故障/外观参考，没有复制参考地图作为GIS或正式资源。资料：https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/watchPosition 、https://www.w3.org/TR/orientation-event/ 。
