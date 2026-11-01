@@ -34,6 +34,25 @@ export function useRouteSheet() {
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const maximum = () => {
     let limit = Math.min(window.innerHeight * 0.56, window.innerHeight - 150);
+    const heading =
+        panel.current?.querySelector<HTMLElement>(".results-heading"),
+      body = panel.current?.querySelector<HTMLElement>(".route-planner-scroll"),
+      content = panel.current?.querySelector<HTMLElement>(
+        ".route-planner-content",
+      );
+    if (heading && body && content) {
+      const h = getComputedStyle(heading),
+        b = getComputedStyle(body);
+      const natural =
+        heading.offsetHeight +
+        (parseFloat(h.marginTop) || 0) +
+        (parseFloat(h.marginBottom) || 0) +
+        content.scrollHeight +
+        (parseFloat(b.paddingTop) || 0) +
+        (parseFloat(b.paddingBottom) || 0) +
+        2;
+      limit = Math.min(limit, natural);
+    }
     const map = document.querySelector<HTMLElement>(
       '[data-testid="campus-map"]',
     );
@@ -81,6 +100,9 @@ export function useRouteSheet() {
       else panel.current?.style.removeProperty("--route-panel-height");
     };
     resize();
+    const contentObserver = new ResizeObserver(resize);
+    const content = panel.current?.querySelector(".route-planner-content");
+    if (content) contentObserver.observe(content);
     window.addEventListener("resize", resize);
     const map = document.querySelector<HTMLElement>(
       '[data-testid="campus-map"]',
@@ -122,6 +144,7 @@ export function useRouteSheet() {
       window.removeEventListener("resize", resize);
       clearTimeout(timer.current);
       layout.disconnect();
+      contentObserver.disconnect();
       cancelAnimationFrame(layoutFrame);
     };
   }, [compact]);

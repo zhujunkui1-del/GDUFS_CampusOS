@@ -244,9 +244,10 @@ export function MapWorkspace() {
       )}
       <div className="map-controls glass-surface" aria-label="地图工具">
         <button
-          disabled={!ready || map.locationBusy}
+          disabled={!ready}
           aria-label="定位我的位置"
-          title="定位"
+          title={map.locationTracking ? "关闭定位" : "开启定位"}
+          aria-pressed={map.locationTracking}
           onClick={map.locate}
         >
           <LocateFixed size={20} strokeWidth={1.5} />

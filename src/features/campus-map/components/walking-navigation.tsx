@@ -137,105 +137,109 @@ export function WalkingNavigation({ onClose }: { onClose(): void }) {
         className="route-planner-scroll"
         inert={compact && collapsed}
       >
-        <div className="endpoint-list">
-          <EndpointInput which="start" point={map.start} />
-          <EndpointInput which="end" point={map.end} />
-        </div>
-        {map.picking && (
-          <div className="route-picking-tip" role="status">
-            在地图上选择{map.picking === "start" ? "起点" : "终点"}
-            <button className="text-link" onClick={map.cancelPicking}>
-              取消
-            </button>
+        <div className="route-planner-content">
+          <div className="endpoint-list">
+            <EndpointInput which="start" point={map.start} />
+            <EndpointInput which="end" point={map.end} />
           </div>
-        )}
-        <div className="endpoint-shortcuts">
-          <button
-            className="text-link"
-            disabled={!ready || map.locationBusy}
-            onClick={map.useMyLocation}
-          >
-            <LocateFixed size={15} />
-            {map.locationBusy ? "正在定位…" : "我的位置作起点"}
-          </button>
-          <button
-            className="text-link"
-            disabled={!map.start || !map.end}
-            onClick={() => {
-              const a = map.start!,
-                b = map.end!;
-              // The same selection path also supports coordinate and device endpoints.
-              map.swapPoints(a, b);
-            }}
-          >
-            <ArrowUpDown size={15} />
-            交换
-          </button>
-        </div>
-        {!route && (
-          <div className="route-actions">
+          {map.picking && (
+            <div className="route-picking-tip" role="status">
+              在地图上选择{map.picking === "start" ? "起点" : "终点"}
+              <button className="text-link" onClick={map.cancelPicking}>
+                取消
+              </button>
+            </div>
+          )}
+          <div className="endpoint-shortcuts">
             <button
-              className="primary-button"
-              disabled={!ready || !map.start || !map.end || map.routeBusy}
-              onClick={() => void map.plan()}
+              className="text-link"
+              disabled={!ready || map.locationBusy}
+              onClick={map.useMyLocation}
             >
-              {map.routeBusy ? "正在规划…" : "规划步行路线"}
+              <LocateFixed size={15} />
+              {map.locationBusy ? "正在定位…" : "我的位置作起点"}
             </button>
-            <button className="text-link" onClick={map.clearRoute}>
-              重置路线
+            <button
+              className="text-link"
+              disabled={!map.start || !map.end}
+              onClick={() => {
+                const a = map.start!,
+                  b = map.end!;
+                // The same selection path also supports coordinate and device endpoints.
+                map.swapPoints(a, b);
+              }}
+            >
+              <ArrowUpDown size={15} />
+              交换
             </button>
           </div>
-        )}
-        {map.error && (
-          <p className="inline-error" role="alert">
-            {map.error}
-          </p>
-        )}
-        {map.locationMessage && (
-          <p className="location-feedback" role="status">
-            {map.locationMessage}
-          </p>
-        )}
-        {route ? (
-          <div className="route-result" data-route-source={route.source}>
-            <h3>
-              {Math.round(route.distanceMeters)} 米{" "}
-              <span>约 {Math.max(1, Math.round(route.seconds / 60))} 分钟</span>
-            </h3>
+          {!route && (
             <div className="route-actions">
               <button
-                className="primary-button navigation-start"
-                onClick={
-                  map.navigating ? map.stopNavigation : map.beginNavigation
-                }
+                className="primary-button"
+                disabled={!ready || !map.start || !map.end || map.routeBusy}
+                onClick={() => void map.plan()}
               >
-                <Navigation size={16} />
-                {map.navigating ? "结束步行导航" : "开始步行导航"}
+                {map.routeBusy ? "正在规划…" : "规划步行路线"}
               </button>
               <button className="text-link" onClick={map.clearRoute}>
                 重置路线
               </button>
             </div>
-            <details className="route-steps">
-              <summary>路线详情</summary>
-              <ol>
-                {route.steps.map((step, i) => (
-                  <li
-                    key={i}
-                    aria-current={
-                      map.navigating && map.navigationProgress?.step === i
-                        ? "step"
-                        : undefined
-                    }
-                  >
-                    {step.instruction}
-                    <small>{step.distance} 米</small>
-                  </li>
-                ))}
-              </ol>
-            </details>
-          </div>
-        ) : null}
+          )}
+          {map.error && (
+            <p className="inline-error" role="alert">
+              {map.error}
+            </p>
+          )}
+          {map.locationMessage && (
+            <p className="location-feedback" role="status">
+              {map.locationMessage}
+            </p>
+          )}
+          {route ? (
+            <div className="route-result" data-route-source={route.source}>
+              <h3>
+                {Math.round(route.distanceMeters)} 米{" "}
+                <span>
+                  约 {Math.max(1, Math.round(route.seconds / 60))} 分钟
+                </span>
+              </h3>
+              <div className="route-actions">
+                <button
+                  className="primary-button navigation-start"
+                  onClick={
+                    map.navigating ? map.stopNavigation : map.beginNavigation
+                  }
+                >
+                  <Navigation size={16} />
+                  {map.navigating ? "结束步行导航" : "开始步行导航"}
+                </button>
+                <button className="text-link" onClick={map.clearRoute}>
+                  重置路线
+                </button>
+              </div>
+              <details className="route-steps">
+                <summary>路线详情</summary>
+                <ol>
+                  {route.steps.map((step, i) => (
+                    <li
+                      key={i}
+                      aria-current={
+                        map.navigating && map.navigationProgress?.step === i
+                          ? "step"
+                          : undefined
+                      }
+                    >
+                      {step.instruction}
+                      <small>{step.distance} 米</small>
+                    </li>
+                  ))}
+                </ol>
+              </details>
+            </div>
+          ) : null}
+        </div>
       </div>
     </aside>
   );

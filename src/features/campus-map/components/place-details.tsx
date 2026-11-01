@@ -1,8 +1,7 @@
 "use client";
-import Link from "next/link";
 import { Drawer } from "@base-ui/react/drawer";
 import { useRef, useSyncExternalStore, type RefObject } from "react";
-import { X, Navigation, Bookmark, Sparkles, ExternalLink } from "lucide-react";
+import { X, Navigation } from "lucide-react";
 import { useCampusMap } from "./campus-map-provider";
 import { categoryNames, zoneName } from "../data/campus";
 
@@ -57,15 +56,12 @@ export function PlaceDetails({
               <div className="place-drag-handle" aria-hidden="true">
                 <span />
               </div>
-              <div className="place-details-heading">
-                <div>
-                  <p>
-                    {place
-                      ? `${zoneName(place.zone)} · ${categoryNames[place.category]}`
-                      : ""}
-                  </p>
-                  <Drawer.Title>{place?.name || "地点详情"}</Drawer.Title>
-                </div>
+              <div className="place-details-topline">
+                <p>
+                  {place
+                    ? `${zoneName(place.zone)} · ${categoryNames[place.category]}`
+                    : ""}
+                </p>
                 <Drawer.Close
                   ref={close}
                   className="icon-button"
@@ -74,34 +70,17 @@ export function PlaceDetails({
                   <X size={19} />
                 </Drawer.Close>
               </div>
-              {place && (
-                <Drawer.Content className="place-details-content">
-                  <div className="place-detail-actions">
+              <Drawer.Content className="place-details-content">
+                <div className="place-details-heading">
+                  <Drawer.Title>{place?.name || "地点详情"}</Drawer.Title>
+                  {place && (
                     <button className="primary-button" onClick={onNavigate}>
                       <Navigation size={16} />
                       选择导航终点
                     </button>
-                    <button
-                      className="secondary-button"
-                      onClick={() => map.askAssistant(place)}
-                    >
-                      <Sparkles size={16} />问 AI
-                    </button>
-                  </div>
-                  <Link className="detail-favorite" href="/account">
-                    <Bookmark size={16} />
-                    收藏需登录账号服务
-                  </Link>
-                  <a
-                    className="place-source-link"
-                    href={place.sourceUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    查看来源 <ExternalLink size={16} />
-                  </a>
-                </Drawer.Content>
-              )}
+                  )}
+                </div>
+              </Drawer.Content>
             </div>
           </Drawer.Popup>
         </Drawer.Viewport>

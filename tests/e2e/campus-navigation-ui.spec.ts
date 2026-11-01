@@ -71,6 +71,13 @@ test("location notice is dismissible and expires instead of sticking", async ({
           _success: unknown,
           fail: (e: { code: number }) => void,
         ) => fail({ code: 3 }),
+        watchPosition: (
+          _success: unknown,
+          fail: (e: { code: number }) => void,
+        ) => {
+          setTimeout(() => fail({ code: 3 }), 0);
+          return 1;
+        },
         clearWatch: () => {},
       },
     }),
@@ -80,6 +87,10 @@ test("location notice is dismissible and expires instead of sticking", async ({
   await expect(page.locator(".map-location-notice")).toContainText("超时");
   await page.getByRole("button", { name: "关闭定位提示" }).click();
   await expect(page.locator(".map-location-notice")).toHaveCount(0);
+  await page.getByRole("button", { name: "定位我的位置", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "定位我的位置", exact: true }),
+  ).toHaveAttribute("aria-pressed", "false");
   await page.getByRole("button", { name: "定位我的位置", exact: true }).click();
   await expect(page.locator(".map-location-notice")).toBeVisible();
   await expect(page.locator(".map-location-notice")).toHaveCount(0, {

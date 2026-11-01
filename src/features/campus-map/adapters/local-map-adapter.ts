@@ -46,6 +46,7 @@ import {
   type PilotModelState,
 } from "../data/model-pilot";
 import type { Nanyuan7ModelLayer } from "../layers/nanyuan7-model-layer";
+import { locationHalo } from "../data/device-location";
 
 type CameraEvent = "zoomend" | "rotateend" | "moveend" | "pitchend";
 // Dataset geometry is immutable for this release; do not rescan it per gesture frame.
@@ -70,6 +71,9 @@ export class LocalMapAdapter implements MapAdapter {
   >();
   private zoneMarkers: Marker[] = [];
   private endpointMarkers: Marker[] = [];
+  private devicePosition: Coordinate | null = null;
+  private deviceHeading: number | null = null;
+  private headingMarker?: Marker;
   private listeners = new Set<(id: string) => void>();
   private routes = new Map<string, CampusRoute>();
   private activeRouteId?: string;
@@ -523,35 +527,7 @@ export class LocalMapAdapter implements MapAdapter {
     const next = this.supports3D
       ? Math.max(0, Math.min(CAMPUS_PITCH, pitch))
       : 0;
-    const route = this.routes.get(this.activeRouteId || ""),
-      place = campusData.places.find((p) => p.id === this.selected);
-    if (this.navigationHasPosition && this.lastFollow)
-      this.animatePoints(
-        [this.lastFollow],
-        next,
-        this.native.getBearing(),
-        this.native.getZoom(),
-      );
-    else if (route)
-      this.animatePoints(
-        route.pathGcj02.map(toWgs84),
-        next,
-        this.native.getBearing(),
-        18,
-      );
-    else if (place)
-      this.animatePoints(
-        place.geometry && place.geometry.length > 3
-          ? place.geometry
-          : [place.coordinate],
-        next,
-        this.native.getBearing(),
-        Math.max(
-          place.id === modelPilot.placeId ? 19.2 : 17.2,
-          this.native.getZoom(),
-        ),
-      );
-    else this.animateCamera({ pitch: next });
+    this.animateCamera({ pitch: next });
   }
   private initializePilot() {
     if (!this.modelAvailable) return;
@@ -1350,16 +1326,8 @@ export class LocalMapAdapter implements MapAdapter {
     }
   }
   showLocation(coordinate: Coordinate, accuracy: number, focus = false) {
-    const ring: Coordinate[] = [];
-    for (let i = 0; i <= 48; i++) {
-      const angle = (i * Math.PI * 2) / 48;
-      ring.push([
-        coordinate[0] +
-          (Math.sin(angle) * accuracy) /
-            (111320 * Math.cos((coordinate[1] * Math.PI) / 180)),
-        coordinate[1] + (Math.cos(angle) * accuracy) / 111320,
-      ]);
-    }
+    const ring = locationHalo(coordinate, accuracy);
+    this.devicePosition = coordinate;
     const data: GeoJSON.FeatureCollection = {
       type: "FeatureCollection",
       features: [
@@ -1405,8 +1373,38 @@ export class LocalMapAdapter implements MapAdapter {
       });
     }
     if (focus) this.setView(coordinate, Math.max(17, this.native.getZoom()));
+    this.setLocationHeading(this.deviceHeading);
+  }
+  setLocationHeading(heading: number | null) {
+    if (this.destroyed) return;
+    this.deviceHeading = heading;
+    if (heading === null || !this.devicePosition) {
+      this.headingMarker?.remove();
+      this.headingMarker = undefined;
+      return;
+    }
+    if (!this.headingMarker) {
+      const element = document.createElement("div");
+      element.className = "device-heading-marker";
+      element.setAttribute("aria-hidden", "true");
+      element.innerHTML =
+        '<svg viewBox="0 0 28 28" width="28" height="28"><path d="M14 0 L20 13 L14 10 L8 13 Z" fill="#1261bb" stroke="white" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+      this.headingMarker = new Marker({
+        element,
+        anchor: "center",
+        rotationAlignment: "map",
+        pitchAlignment: "map",
+      })
+        .setLngLat(this.devicePosition)
+        .addTo(this.native);
+    }
+    this.headingMarker.setLngLat(this.devicePosition).setRotation(heading);
+    this.headingMarker.getElement().dataset.heading = String(heading);
   }
   clearLocation() {
+    this.devicePosition = null;
+    this.headingMarker?.remove();
+    this.headingMarker = undefined;
     for (const id of ["position-dot", "position-accuracy"])
       if (this.native.getLayer(id)) this.native.removeLayer(id);
     if (this.native.getSource("device-position"))
@@ -1574,6 +1572,7 @@ export class LocalMapAdapter implements MapAdapter {
     this.markers.forEach((m) => m.marker.remove());
     this.zoneMarkers.forEach((marker) => marker.remove());
     this.endpointMarkers.forEach((m) => m.remove());
+    this.headingMarker?.remove();
     this.native.remove();
   }
 }

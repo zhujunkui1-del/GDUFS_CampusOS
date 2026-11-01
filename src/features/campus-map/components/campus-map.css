@@ -380,6 +380,9 @@
   scrollbar-gutter: stable;
   padding: 0 18px 18px;
 }
+.route-planner-content {
+  display: flow-root;
+}
 .route-planner > .route-point {
   display: flex;
   align-items: center;
@@ -562,50 +565,53 @@
   display: flex;
   flex-direction: column;
 }
+.place-details-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px 0 20px;
+}
+.place-details-topline p {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
 .place-details-heading {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
-  padding: 22px 17px 12px 24px;
-}
-.place-details-heading p {
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
-  margin-bottom: 7px;
 }
 .place-details-heading h2 {
-  font-size: 1.375rem;
-  letter-spacing: -0.025em;
-  font-weight: 500;
-  line-height: 1.4;
+  font-size: 1.25rem;
+  letter-spacing: -0.015em;
+  font-weight: 550;
+  line-height: 1.3;
   overflow-wrap: anywhere;
+  min-width: 0;
+  margin: 0;
+}
+.place-details-heading .primary-button {
+  flex-shrink: 0;
+  white-space: nowrap;
+  min-height: 44px;
+  padding: 10px 13px;
+  font-size: 0.8125rem;
 }
 .place-details-content {
   overflow: auto;
   overscroll-behavior: contain;
-  padding: 5px 24px 24px;
+  padding: 0 20px 16px;
   font-size: 0.8125rem;
-  color: var(--text-secondary);
-  line-height: 1.8;
 }
-.place-details-content > p:first-child {
-  margin-bottom: 12px;
+.device-heading-marker {
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
 }
-.place-detail-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 22px;
-}
-.detail-favorite {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 44px;
-  margin-top: 10px;
-  font-size: 0.75rem;
-  color: var(--brand-primary);
+.device-heading-marker svg {
+  display: block;
 }
 .place-drag-handle {
   display: none;
@@ -735,7 +741,7 @@
     border-radius: 4px;
     background: #c0c4cc;
   }
-  .place-details-heading {
+  .place-details-topline {
     padding-top: 0;
   }
   .module-page {

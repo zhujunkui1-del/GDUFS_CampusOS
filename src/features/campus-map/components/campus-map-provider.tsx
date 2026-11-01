@@ -51,6 +51,7 @@ type MapContextValue = {
   modelAvailable: boolean;
   modelState: PilotModelState;
   locationBusy: boolean;
+  locationTracking: boolean;
   locationMessage: string;
   navigating: boolean;
   navigationProgress: {
@@ -149,7 +150,15 @@ export function CampusMapProvider({
   const [modelState, setModelState] = useState<PilotModelState>("idle");
   const routeGeneration = useRef(0);
   const interactionVersion = useRef(0);
-  const location = useMapLocation();
+  const updateHeading = useCallback(
+    (heading: number | null) => adapter.current?.setLocationHeading(heading),
+    [],
+  );
+  const location = useMapLocation(updateHeading);
+  const requestLocation = location.request,
+    locationTracking = location.tracking;
+  const liveLocate = useRef(false),
+    resumeTracking = useRef(false);
   const stopLocation = location.stop;
   const [navigationActive, setNavigationActive] = useState(false);
   const [navigationPath, setNavigationPath] = useState(pathname);
@@ -184,7 +193,7 @@ export function CampusMapProvider({
       setRoute(null);
       setRouteBusy(false);
       setError("");
-      stopLocation();
+      if (!liveLocate.current) stopLocation();
       setNavigationActive(false);
       adapter.current?.setInteractionMode("browse");
       setNavigationProgress(null);
@@ -218,23 +227,32 @@ export function CampusMapProvider({
   }, [start, end, status, route]);
   useEffect(() => {
     if (pathname !== "/map") {
+      liveLocate.current = false;
+      resumeTracking.current = false;
       stopLocation();
     }
   }, [pathname, stopLocation]);
   useEffect(() => {
     const onHidden = () => {
       if (document.hidden) {
+        resumeTracking.current = locationTracking;
         stopLocation();
         setNavigationProgress(null);
         setLocationMessage("定位已暂停。");
+      } else if (resumeTracking.current && pathname === "/map") {
+        resumeTracking.current = false;
+        requestLocation(true);
       }
     };
     document.addEventListener("visibilitychange", onHidden);
     return () => document.removeEventListener("visibilitychange", onHidden);
-  }, [stopLocation]);
+  }, [stopLocation, locationTracking, requestLocation, pathname]);
   useEffect(() => {
     const position = location.position;
-    if (!position) return;
+    if (!position) {
+      adapter.current?.clearLocation();
+      return;
+    }
     const update = () => {
       const { coordinate, accuracy, timestamp } = position;
       if (Date.now() - timestamp > 30000) {
@@ -278,8 +296,9 @@ export function CampusMapProvider({
           source: "device_location",
         });
       }
-      setLocationMessage(`定位精度约${Math.round(accuracy)}米。`);
-      if (!location.tracking || !currentRoute.current) return;
+      setLocationMessage("");
+      if (!navigationActive || !location.tracking || !currentRoute.current)
+        return;
       if (accuracy > 50) {
         setLocationMessage("定位精度不足，请重新定位。");
         setNavigationProgress(null);
@@ -473,7 +492,7 @@ export function CampusMapProvider({
     setRoute(null);
     setRouteBusy(false);
     setError("");
-    stopLocation();
+    if (!liveLocate.current) stopLocation();
     setNavigationActive(false);
     setNavigationProgress(null);
   }, [stopLocation]);
@@ -557,6 +576,7 @@ export function CampusMapProvider({
     modelAvailable,
     modelState,
     locationBusy: location.busy,
+    locationTracking: location.tracking,
     locationMessage: locationFeedback,
     locationNoticeId,
     locationNoticeVisible:
@@ -568,17 +588,26 @@ export function CampusMapProvider({
     navigationProgress,
     locate: () => {
       ++interactionVersion.current;
+      if (!navigationActive && location.tracking) {
+        liveLocate.current = false;
+        resumeTracking.current = false;
+        location.stop(true);
+        setLocationMessage("");
+        setNavigationProgress(null);
+        return;
+      }
+      if (!navigationActive) liveLocate.current = true;
       adapter.current?.resumeFollow();
       setLocationRequest((n) => n + 1);
       focusLocation.current = true;
       locationAsStart.current = false;
-      location.request(navigationActive);
+      location.request(true);
     },
     useMyLocation: () => {
       setLocationRequest((n) => n + 1);
       focusLocation.current = true;
       locationAsStart.current = true;
-      location.request(false);
+      location.request(liveLocate.current);
     },
     beginNavigation: () => {
       if (route) {
@@ -719,7 +748,7 @@ export function CampusMapProvider({
       if (!adapter.current) throw new Error("地图尚未就绪。");
       const result = campusRouteFromSnapshot(input);
       ++routeGeneration.current;
-      stopLocation();
+      if (!liveLocate.current) stopLocation();
       setNavigationActive(false);
       setNavigationProgress(null);
       adapter.current.installRoute(result);

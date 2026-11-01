@@ -88,15 +88,15 @@ test("controlled browser geolocation is opt-in and rejects an outside-campus pos
   );
   await expect(page.locator(".map-location-notice")).toHaveCount(0);
   await page.getByRole("button", { name: "定位我的位置", exact: true }).click();
-  await expect(page.locator(".map-location-notice")).toContainText(
-    "定位精度约15米",
-  );
+  await expect(
+    page.getByRole("button", { name: "定位我的位置", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator(".map-location-notice")).toHaveCount(0);
   await context.setGeolocation({
     longitude: 113.29,
     latitude: 23.2,
     accuracy: 10,
   });
-  await page.getByRole("button", { name: "定位我的位置", exact: true }).click();
   await expect(page.locator(".map-location-notice")).toContainText("校外");
   expect(
     await page.evaluate(() => Object.values(localStorage).join(" ")),

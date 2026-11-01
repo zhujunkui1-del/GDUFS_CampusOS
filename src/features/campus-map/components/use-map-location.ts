@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Coordinate } from "../data/campus";
+import { watchDeviceHeading } from "./device-heading";
 export type MapLocation = {
   coordinate: Coordinate;
   accuracy: number;
@@ -45,18 +46,23 @@ export function requestOneTimeLocation(
   });
 }
 // Device position stays in page memory. Only a user's explicit click starts acquisition.
-export function useMapLocation() {
+export function useMapLocation(onHeading?: (heading: number | null) => void) {
   const [position, setPosition] = useState<MapLocation | null>(null);
   const [busy, setBusy] = useState(false),
     [error, setError] = useState("");
   const [tracking, setTracking] = useState(false);
   const watch = useRef<number | null>(null),
     generation = useRef(0);
-  const stop = useCallback(() => {
+  const headingStop = useRef<(() => void) | null>(null);
+  const stop = useCallback((clearError = false) => {
     ++generation.current;
     if (watch.current !== null)
       navigator.geolocation?.clearWatch(watch.current);
     watch.current = null;
+    headingStop.current?.();
+    headingStop.current = null;
+    setPosition(null);
+    if (clearError) setError("");
     setTracking(false);
     setBusy(false);
   }, []);
@@ -65,6 +71,7 @@ export function useMapLocation() {
       ++generation.current;
       if (watch.current !== null)
         navigator.geolocation?.clearWatch(watch.current);
+      headingStop.current?.();
     },
     [],
   );
@@ -83,6 +90,8 @@ export function useMapLocation() {
       const revision = generation.current;
       setBusy(true);
       setTracking(continuous);
+      if (continuous && onHeading)
+        headingStop.current = watchDeviceHeading(onHeading);
       const success = (p: GeolocationPosition) => {
         if (revision !== generation.current) return;
         if (
@@ -132,7 +141,7 @@ export function useMapLocation() {
         setError("浏览器未能启动定位，请检查站点定位权限后重试。");
       }
     },
-    [stop],
+    [stop, onHeading],
   );
   return { position, busy, error, tracking, request, stop };
 }
