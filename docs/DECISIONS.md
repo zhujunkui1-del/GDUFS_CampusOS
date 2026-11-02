@@ -1120,3 +1120,9 @@ Preview恢复阶跃星辰优先、明确额度耗尽后DeepSeek备用。已真�
 负责人指定 `CampusOS_Codex_完整设计文档_v2/assets/HarmonyOS-Sans` 为全站字体。采用其中的 `HarmonyOS_Sans_SC` 字族，转换 Regular/Medium/Bold 三份为 WOFF2 放入 `public/fonts/harmonyos-sans/`，分别映射 400、500–550、600–800；`font-display: swap`，保留系统中文回退。原 TTF、许可证与 `__MACOSX` 不进入运行时，许可证复制到同目录 `LICENSE.txt`。
 
 根 `--font-sans` 统一为 HarmonyOS Sans SC；移除全局旧 `Campus Noto Sans SC` 声明，账号、校园雷达、管理后台和地图控件改为继承同一变量。字体文件合计约 13 MB，属于完整 SC 字库取舍；不在本轮做子集化或压缩服务，避免动态校园文章缺字。未修改 Production。
+
+## D-134｜个人 API 设置拆分测试与保存（2026-11-02）
+
+负责人要求个人 API 表单底部改为「测试 / 保存 / 取消」三个等大按钮：测试白底蓝字，保存蓝底白字，取消白底黑字；必须先测试成功才能保存，修改任一字段后保存重新禁用。
+
+实现为草稿测试接口：`PATCH /api/me/model-configs` 的 `test-draft` 只做一次上游连通性检查，不写 `user_model_configs`、不更新已保存配置状态；编辑已有配置时 API Key 留空则解密已存密文测试。前端 `draftTested` 在字段变更时清零，保存按钮据此禁用。桌面和 390×844 下三按钮等宽，保存 enabled 后为 `#1463c0`，disabled 为浅蓝。验收见 `docs/PROGRESS.md` 2026-11-02 按钮记录。

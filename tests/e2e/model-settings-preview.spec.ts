@@ -14,7 +14,7 @@ test("guest can open personal api settings", async ({ page }, info) => {
   await page.getByLabel("配置名称").fill("游客检查");
   await page.getByLabel("接入地址 Base URL").fill("https://127.0.0.1/v1");
   await page.getByLabel("API Key").fill("sk-guest-check");
-  await page.getByRole("button", { name: "测试连接" }).click();
+  await page.getByRole("button", { name: "测试", exact: true }).click();
   await expect(page.locator(".account-api-error")).toContainText(/本机|内网|HTTPS/);
 });
 test("personal api settings mobile layout", async ({ page }, info) => {
@@ -67,16 +67,11 @@ test("personal api settings live", async ({ page }, info) => {
   await page.getByRole("button", { name: /DeepSeek DeepSeek/ }).click();
   await page.getByLabel("配置名称").fill("E2E 配置");
   await page.getByLabel("API Key").fill("sk-e2e-ui-secret");
-  await page.getByRole("button", { name: "保存并测试" }).click();
-  const card = page.locator(".account-api-item", { hasText: "E2E 配置" });
-  await expect(card).toBeVisible({ timeout: 30000 });
-  await expect(card).not.toContainText("sk-e2e-ui-secret");
-  await expect(card.locator(".account-api-status")).toHaveText("连接失败", {
-    timeout: 30000,
-  });
-  await expect(card.getByRole("button", { name: "启用" })).toHaveCount(0);
-  await card.getByRole("button", { name: "删除" }).click();
-  await expect(card).toHaveCount(0);
+  const save = page.getByRole("button", { name: "保存", exact: true });
+  await expect(save).toBeDisabled();
+  await page.getByRole("button", { name: "测试", exact: true }).click();
+  await expect(page.locator(".account-api-error")).toBeVisible({ timeout: 30000 });
+  await expect(save).toBeDisabled();
   const result = await page.evaluate(async (o) => {
     const post = await fetch(o + "/api/me/model-configs", {
       method: "POST",

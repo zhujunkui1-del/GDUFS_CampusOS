@@ -505,4 +505,55 @@ describe("multiple personal model configs", () => {
       f.close();
     }
   });
+
+  it("tests draft credentials without persisting them", async () => {
+    const f = accountFixture();
+    try {
+      const a = await f.register("DraftTestUser");
+      vi.stubGlobal(
+        "fetch",
+        vi.fn(async (url: string) => {
+          if (url.includes("cloudflare-dns.com"))
+            return jsonResponse({ Answer: [{ type: 1, data: "93.184.216.34" }] });
+          return jsonResponse({ choices: [{ message: { content: "OK" } }] });
+        }),
+      );
+      const api = createAccountApi({
+        store: f.store,
+        enabled: true,
+        credentialSecret: secret,
+        defer: () => {},
+      });
+      const call = async (method: string, body?: unknown) =>
+        (
+          (await (
+            await api(
+              new Request("https://campus.example/api/me/model-configs", {
+                method,
+                headers: {
+                  Cookie: "campusos_session=" + a.token,
+                  "Content-Type": "application/json",
+                  Origin: "https://campus.example",
+                },
+                body: body === undefined ? undefined : JSON.stringify(body),
+              }),
+            )
+          ).json()) as { data: Record<string, unknown> }
+        ).data;
+      const tested = (await call("PATCH", {
+        action: "test-draft",
+        displayName: "draft-only",
+        provider: "deepseek",
+        baseUrl: "https://api.deepseek.com/v1",
+        model: "deepseek-chat",
+        apiKey: "sk-draft-only-secret",
+      })) as { ok: boolean; latencyMs: number };
+      expect(tested.ok).toBe(true);
+      expect(tested.latencyMs).toBeGreaterThanOrEqual(0);
+      const listed = (await call("GET")) as { configs: unknown[] };
+      expect(listed.configs).toHaveLength(0);
+    } finally {
+      f.close();
+    }
+  });
 });

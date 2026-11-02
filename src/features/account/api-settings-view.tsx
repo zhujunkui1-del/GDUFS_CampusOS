@@ -83,8 +83,15 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
   const [busy, setBusy] = useState("");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [draftTested, setDraftTested] = useState(false);
+  const [testLatencyMs, setTestLatencyMs] = useState<number | null>(null);
 
   const preset = providerById(provider);
+
+  function invalidateTest() {
+    setDraftTested(false);
+    setTestLatencyMs(null);
+  }
 
   async function refresh() {
     if (!loggedIn) return;
@@ -125,6 +132,7 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
     setShowKey(false);
     setError("");
     setMessage("");
+    invalidateTest();
   }
 
   function startNew() {
@@ -146,6 +154,7 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
     setShowKey(false);
     setError("");
     setMessage("");
+    invalidateTest();
   }
 
   function chooseProvider(id: string) {
@@ -156,16 +165,24 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
     setModel(next?.model || "");
     setApiKey("");
     if (!editingId) setDisplayName(next?.label || "");
+    invalidateTest();
   }
 
-  async function saveAndTest() {
+  function validateDraft() {
+    if (!displayName.trim()) return "请给这份配置起个名字。";
+    if (!baseUrl.trim() || !model.trim()) return "请填写接入地址和模型名。";
+    if (!editingId && !apiKey.trim()) return "请填写 API Key。";
+    return "";
+  }
+
+  async function testDraft() {
     if (busy) return;
-    if (!displayName.trim()) return setError("请给这份配置起个名字。");
-    if (!baseUrl.trim() || !model.trim()) return setError("请填写接入地址和模型名。");
-    if (!editingId && !apiKey.trim()) return setError("请填写 API Key。");
-    setBusy("save");
+    const invalid = validateDraft();
+    if (invalid) return setError(invalid);
+    setBusy("test-draft");
     setError("");
     setMessage("");
+    invalidateTest();
     try {
       if (!loggedIn) {
         const result = await accountRequest<{ ok: true; latencyMs: number }>(
@@ -173,23 +190,63 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
           { provider, baseUrl, model, apiKey },
           "POST",
         );
+        setTestLatencyMs(result.latencyMs);
+        setDraftTested(true);
         setMessage(
           `连接成功（${result.latencyMs} ms）。游客测试不会保存密钥，登录后可以保存并启用。`,
         );
         return;
       }
-      let id = editingId;
-      if (id) {
-        await accountRequest("/api/me/model-configs", {
-          action: "update",
-          id,
+      const result = await accountRequest<{ ok: true; latencyMs: number }>(
+        "/api/me/model-configs",
+        {
+          action: "test-draft",
+          id: editingId || undefined,
           displayName,
           provider,
           protocol,
           baseUrl,
           model,
           apiKey,
-        }, "PATCH");
+        },
+        "PATCH",
+      );
+      setTestLatencyMs(result.latencyMs);
+      setDraftTested(true);
+      setMessage(`连接成功（${result.latencyMs} ms）。现在可以保存了。`);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "连接测试失败，请检查配置。");
+    } finally {
+      setBusy("");
+    }
+  }
+
+  async function saveConfig() {
+    if (busy) return;
+    const invalid = validateDraft();
+    if (invalid) return setError(invalid);
+    if (!draftTested)
+      return setError("请先测试连接，测试通过后才能保存。");
+    setBusy("save");
+    setError("");
+    setMessage("");
+    try {
+      let id = editingId;
+      if (id) {
+        await accountRequest(
+          "/api/me/model-configs",
+          {
+            action: "update",
+            id,
+            displayName,
+            provider,
+            protocol,
+            baseUrl,
+            model,
+            apiKey,
+          },
+          "PATCH",
+        );
       } else {
         const created = await accountRequest<{ config: SavedConfig }>(
           "/api/me/model-configs",
@@ -197,14 +254,14 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
           "POST",
         );
         id = created.config.id;
+        setEditingId(id);
       }
-      const tested = await accountRequest<{ ok: true; latencyMs: number }>(
-        "/api/me/model-configs",
-        { action: "test", id },
-        "PATCH",
+      setMessage(
+        testLatencyMs
+          ? `已保存并测试通过（${testLatencyMs} ms）。`
+          : "已保存。",
       );
-      setEditingId(id);
-      setMessage(`连接成功（${tested.latencyMs} ms）。测试通过后可以启用。`);
+      invalidateTest();
       await refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : "保存失败，请重试。");
@@ -363,7 +420,7 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
           noValidate
           onSubmit={(event) => {
             event.preventDefault();
-            void saveAndTest();
+            void saveConfig();
           }}
         >
           <h3>{editingId ? "编辑配置" : "新增配置"}</h3>
@@ -385,7 +442,10 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
             配置名称
             <input
               value={displayName}
-              onChange={(event) => setDisplayName(event.target.value)}
+              onChange={(event) => {
+                setDisplayName(event.target.value);
+                invalidateTest();
+              }}
               maxLength={60}
               placeholder="例如 我的 DeepSeek"
             />
@@ -394,7 +454,10 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
             接入地址 Base URL
             <input
               value={baseUrl}
-              onChange={(event) => setBaseUrl(event.target.value)}
+              onChange={(event) => {
+                setBaseUrl(event.target.value);
+                invalidateTest();
+              }}
               placeholder="https://api.example.com/v1"
               inputMode="url"
             />
@@ -403,7 +466,10 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
             模型名
             <input
               value={model}
-              onChange={(event) => setModel(event.target.value)}
+              onChange={(event) => {
+                setModel(event.target.value);
+                invalidateTest();
+              }}
               placeholder={preset?.modelHint || "模型名"}
             />
           </label>
@@ -412,9 +478,10 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
               接口协议
               <select
                 value={protocol}
-                onChange={(event) =>
-                  setProtocol(event.target.value as typeof protocol)
-                }
+                onChange={(event) => {
+                  setProtocol(event.target.value as typeof protocol);
+                  invalidateTest();
+                }}
               >
                 <option value="openai">OpenAI Chat Completions 兼容</option>
                 <option value="anthropic">Anthropic Messages</option>
@@ -427,7 +494,10 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
             <div className="account-api-key">
               <input
                 value={apiKey}
-                onChange={(event) => setApiKey(event.target.value)}
+                onChange={(event) => {
+                  setApiKey(event.target.value);
+                  invalidateTest();
+                }}
                 type={showKey ? "text" : "password"}
                 placeholder={editingId ? "留空则不修改已保存的密钥" : "sk-..."}
                 autoComplete="off"
@@ -453,17 +523,33 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
             </p>
           )}
           <div className="account-api-actions">
-            <button type="submit" className="primary" disabled={busy !== ""}>
-              {busy === "save" ? <Loader2 size={16} /> : null}
-              {loggedIn
-                ? editingId
-                  ? "保存并重新测试"
-                  : "保存并测试"
-                : "测试连接"}
-            </button>
             <button
               type="button"
-              onClick={() => setFormOpen(false)}
+              className="account-api-test"
+              onClick={() => void testDraft()}
+              disabled={busy !== ""}
+            >
+              {busy === "test-draft" ? <Loader2 size={16} /> : null}
+              测试
+            </button>
+            {loggedIn ? (
+              <button
+                type="submit"
+                className="account-api-save"
+                disabled={busy !== "" || !draftTested}
+                title={draftTested ? undefined : "请先测试连接"}
+              >
+                {busy === "save" ? <Loader2 size={16} /> : null}
+                保存
+              </button>
+            ) : null}
+            <button
+              type="button"
+              className="account-api-cancel"
+              onClick={() => {
+                setFormOpen(false);
+                invalidateTest();
+              }}
               disabled={busy !== ""}
             >
               取消

@@ -208,6 +208,32 @@ export class ModelConfigStore {
       .run();
   }
 
+  async testDraft(
+    userId: string,
+    input: ModelConfigInput,
+    id?: string,
+  ) {
+    const value = validate(input);
+    let apiKey = value.apiKey;
+    if (!apiKey && id) {
+      const row = await this.ownedRow(userId, id);
+      apiKey = await decryptModelSecret(
+        this.secret,
+        row.secret_cipher,
+        this.aad(userId, id),
+      );
+    }
+    if (!apiKey)
+      throw new ApiError("INVALID_ARGUMENT", "请先填写 API Key 再测试。");
+    const result = await testPersonalConnection({
+      provider: input.provider,
+      baseUrl: value.baseUrl,
+      model: value.model,
+      apiKey,
+    });
+    return { ok: true as const, latencyMs: result.latencyMs };
+  }
+
   async test(userId: string, id: string) {
     const row = await this.ownedRow(userId, id);
     const apiKey = await decryptModelSecret(

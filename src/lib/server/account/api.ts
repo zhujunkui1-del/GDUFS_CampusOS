@@ -46,6 +46,7 @@ const ModelConfigActionSchema = z
     action: z.enum([
       "update",
       "test",
+      "test-draft",
       "activate",
       "disable",
       "platform",
@@ -137,6 +138,22 @@ export function createAccountApi(options: {
         if (input.action === "platform") {
           await configs.setPreference(session.row.user_id, "platform", null);
           return payload();
+        }
+        if (input.action === "test-draft") {
+          if (!input.displayName || !input.provider || !input.baseUrl || !input.model)
+            throw new ApiError("INVALID_ARGUMENT", "请填写完整的配置信息。");
+          return configs.testDraft(
+            session.row.user_id,
+            {
+              displayName: input.displayName,
+              provider: input.provider,
+              baseUrl: input.baseUrl,
+              model: input.model,
+              apiKey: input.apiKey || "",
+              protocol: input.protocol,
+            },
+            input.id,
+          );
         }
         if (!input.id)
           throw new ApiError("INVALID_ARGUMENT", "缺少模型配置 ID。");

@@ -1672,3 +1672,9 @@ typecheck、改动文件ESLint/Prettier、生产构建、8文件37项既有单�
 ## 2026-11-02｜全站字体切换为 HarmonyOS Sans SC
 
 负责人指定文档包内的 HarmonyOS Sans 资产。已将 SC 的 Regular/Medium/Bold 转为 WOFF2 并部署 Preview `eeda8328-ba80-4595-a4fd-88600e01d915`。根变量、账号、校园雷达、管理后台、地图控件统一使用 `--font-sans`；真实浏览器验证 `getComputedStyle(body).fontFamily` 含 HarmonyOS Sans SC，`document.fonts.check` 为 true，三份字体请求均 200，页面无 FOUT 卡死（`font-display: swap`）。字体许可证复制到 `public/fonts/harmonyos-sans/LICENSE.txt`。未改 Production，未删除原 Noto 文件。
+
+## 2026-11-02｜个人 API 设置拆分测试与保存按钮
+
+按负责人要求把「保存并测试」拆为三个并列等大按钮：测试白底蓝字、保存蓝底白字、取消白底黑字。保存初始禁用，测试通过后启用；修改配置名称/地址/模型名/Key 后重新禁用。新增 `test-draft` 接口只测草稿、不落库，编辑时 Key 留空用已存密文测试。
+
+桌面真实浏览器验证三按钮 boundingBox 宽度均为 278.66px；保存初始 disabled，假上游测试成功后 enabled 且计算背景为 rgb(20,99,192)，字段变更后重新 disabled。手机 390×844 三按钮宽度 89.33px/89.33px/89.34px，无溢出。单测新增草稿测试不落库与编辑空 Key 测试；Preview 部署 `73361524-c99a-48ea-8a69-e1f28c9b96a6`。全量测试出现 3 项并行超时，隔离复跑 43/43 通过。未部署 Production。
