@@ -46,8 +46,11 @@ test("real Preview compact account hierarchy and username editing without passwo
     page.getByRole("button", { name: "收藏", exact: true }),
   ).toBeDisabled();
   await expect(
-    page.getByRole("button", { name: "API 设置", exact: true }),
-  ).toBeDisabled();
+    page.getByRole("link", { name: "API 设置", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /广外通 CampusOS.*我的/ }),
+  ).toBeVisible();
   const glass = await page.locator(".account-overview").evaluate((e) => ({
     blur: getComputedStyle(e).backdropFilter,
     bg: getComputedStyle(e).backgroundColor,

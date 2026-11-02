@@ -24,7 +24,18 @@ export function AccountFrame({
             <ChevronLeft size={23} />
           </Link>
         )}
-        <h1>{title}</h1>
+        <h1
+          className="module-heading-title account-heading-title"
+          aria-label={`广外通 CampusOS | ${title}`}
+        >
+          <Link className="module-brand" href="/map">
+            广外通 <span>CampusOS</span>
+          </Link>
+          <span className="module-heading-separator" aria-hidden="true">
+            {" | "}
+          </span>
+          <strong>{title}</strong>
+        </h1>
       </header>
       {children}
     </section>

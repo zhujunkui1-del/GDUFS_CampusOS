@@ -1678,3 +1678,9 @@ typecheck、改动文件ESLint/Prettier、生产构建、8文件37项既有单�
 按负责人要求把「保存并测试」拆为三个并列等大按钮：测试白底蓝字、保存蓝底白字、取消白底黑字。保存初始禁用，测试通过后启用；修改配置名称/地址/模型名/Key 后重新禁用。新增 `test-draft` 接口只测草稿、不落库，编辑时 Key 留空用已存密文测试。
 
 桌面真实浏览器验证三按钮 boundingBox 宽度均为 278.66px；保存初始 disabled，假上游测试成功后 enabled 且计算背景为 rgb(20,99,192)，字段变更后重新 disabled。手机 390×844 三按钮宽度 89.33px/89.33px/89.34px，无溢出。单测新增草稿测试不落库与编辑空 Key 测试；Preview 部署 `73361524-c99a-48ea-8a69-e1f28c9b96a6`。全量测试出现 3 项并行超时，隔离复跑 43/43 通过。未部署 Production。
+
+## 2026-11-02｜我的页面桌面竖向排版与统一标题
+
+负责人反馈 `/account`、`/account/settings` 桌面端排版错误。`AccountFrame` 标题统一为「广外通 CampusOS | 我的/设置/API 设置」；`.account-home-layout`、`.account-settings-layout` 桌面端改为单列，资料卡、设置、收藏/API、账号管理/账户信息、退出按钮按顺序竖向排列。
+
+Preview 部署 `01cb7fd6-632c-4889-aec2-e655207a3322`。1080×720 与 1440×900 实测均为单列（878px/1238px 内容列），无横向溢出；标题与校园知识一致。账号 E2E 中过期的「API 设置按钮 disabled」断言更新为链接可见，2 项通过；recovery 冷却用例的 `page.reload` 在 Preview 30 秒超时，未获得该项结果。未部署 Production。

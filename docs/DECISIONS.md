@@ -1126,3 +1126,9 @@ Preview恢复阶跃星辰优先、明确额度耗尽后DeepSeek备用。已真�
 负责人要求个人 API 表单底部改为「测试 / 保存 / 取消」三个等大按钮：测试白底蓝字，保存蓝底白字，取消白底黑字；必须先测试成功才能保存，修改任一字段后保存重新禁用。
 
 实现为草稿测试接口：`PATCH /api/me/model-configs` 的 `test-draft` 只做一次上游连通性检查，不写 `user_model_configs`、不更新已保存配置状态；编辑已有配置时 API Key 留空则解密已存密文测试。前端 `draftTested` 在字段变更时清零，保存按钮据此禁用。桌面和 390×844 下三按钮等宽，保存 enabled 后为 `#1463c0`，disabled 为浅蓝。验收见 `docs/PROGRESS.md` 2026-11-02 按钮记录。
+
+## D-135｜我的页面桌面端改为单列竖向布局（2026-11-02）
+
+负责人指出 `/account` 与 `/account/settings` 桌面端排版错误，要求像手机截图一样竖向排列，并让左上角标题与校园雷达/校园知识统一为「广外通 CampusOS | 页面名」。
+
+实现：`AccountFrame` 标题改为 `module-heading-title` 结构，复用 `module-brand`、分隔符和页面标题样式；`.account-home-layout` 与 `.account-settings-layout` 桌面端改为单列，资料卡、设置入口、账号管理/账户信息依次竖向排列。移动端保持原有单列。真实浏览器在 1080/1440 桌面宽度确认无横向溢出，账号页与设置页均为单列，标题与校园知识一致。未改 Production。

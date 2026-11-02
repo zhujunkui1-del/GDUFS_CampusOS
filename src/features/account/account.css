@@ -29,11 +29,24 @@
   margin-bottom: 20px;
 }
 .account-header h1 {
-  font-size: 1.3rem;
-  line-height: 1.25;
-  letter-spacing: -0.015em;
-  font-weight: 650;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+  font-weight: 400;
   margin: 0;
+}
+.account-heading-title .module-brand {
+  color: #5d738a;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.account-heading-title > strong {
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 .account-back {
   width: 44px;
@@ -57,7 +70,7 @@
 }
 .account-home-layout {
   display: grid;
-  grid-template-columns: minmax(260px, 0.9fr) minmax(300px, 1.1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 22px;
   align-items: start;
 }
@@ -159,7 +172,7 @@
 }
 .account-settings-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 22px;
   align-items: start;
 }
