@@ -1,10 +1,28 @@
 @font-face {
-  font-family: "Campus Noto Sans SC";
-  src: url("/fonts/campus-ui-sc.woff2") format("woff2");
+  font-family: "HarmonyOS Sans SC";
+  src: url("/fonts/harmonyos-sans/HarmonyOS_Sans_SC_Regular.woff2")
+    format("woff2");
   font-style: normal;
-  font-weight: 400 600;
+  font-weight: 400;
   font-display: swap;
-  unicode-range: U+3000-30FF, U+4E00-9FFF, U+FF00-FFEF;
+}
+
+@font-face {
+  font-family: "HarmonyOS Sans SC";
+  src: url("/fonts/harmonyos-sans/HarmonyOS_Sans_SC_Medium.woff2")
+    format("woff2");
+  font-style: normal;
+  font-weight: 500 550;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "HarmonyOS Sans SC";
+  src: url("/fonts/harmonyos-sans/HarmonyOS_Sans_SC_Bold.woff2")
+    format("woff2");
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
 }
 
 :root {
@@ -30,9 +48,10 @@
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   color-scheme: light;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI",
-    "Campus Noto Sans SC", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+  --font-sans:
+    "HarmonyOS Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI Variable",
+    "Segoe UI", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+  font-family: var(--font-sans);
   font-optical-sizing: auto;
   font-synthesis: none;
 }
@@ -195,9 +214,7 @@ p {
 .brand-word small {
   display: block;
   color: var(--text-secondary);
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI",
-    sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.6875rem;
   font-weight: 400;
   letter-spacing: 0.015em;

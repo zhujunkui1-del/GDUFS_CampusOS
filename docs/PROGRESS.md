@@ -1668,3 +1668,7 @@ typecheck、改动文件ESLint/Prettier、生产构建、8文件37项既有单�
 密钥以 AES-GCM 加密存储，AAD 绑定账号与配置 ID，列表和接口只返回末四位掩码；服务端不记录密钥。接入地址强制 HTTPS、仅 443 端口，拒绝账号密码、查询串、本机/内网/IP 字面量和解析到内网的域名。平台模型优先级未改，仍按 D-131 仅 Step 额度耗尽后才使用 DeepSeek；个人配置只影响当前账号的 Agent 调用。
 
 迁移 `0060_user_model_settings.sql`、`0061_user_model_configs.sql` 已应用 Preview D1；本机 882/882、类型检查、构建通过；个人 provider 由 `PersonalProviderRegistry` 统一构造，只接受已注册的 13 个 provider id。桌面真实浏览器验证 13 个胶囊、Claude 预设切换、保存后掩码、测试失败不可启用、删除、API 创建/列表/删除且不回传明文；手机 390×844 无横向溢出；游客页面可测试不保存，`127.0.0.1` 被 SSRF 校验拒绝。本轮未部署 Production、未改负责人账号、未发送测试邮件、未购买资源。
+
+## 2026-11-02｜全站字体切换为 HarmonyOS Sans SC
+
+负责人指定文档包内的 HarmonyOS Sans 资产。已将 SC 的 Regular/Medium/Bold 转为 WOFF2 并部署 Preview `eeda8328-ba80-4595-a4fd-88600e01d915`。根变量、账号、校园雷达、管理后台、地图控件统一使用 `--font-sans`；真实浏览器验证 `getComputedStyle(body).fontFamily` 含 HarmonyOS Sans SC，`document.fonts.check` 为 true，三份字体请求均 200，页面无 FOUT 卡死（`font-display: swap`）。字体许可证复制到 `public/fonts/harmonyos-sans/LICENSE.txt`。未改 Production，未删除原 Noto 文件。

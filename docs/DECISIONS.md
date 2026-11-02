@@ -1114,3 +1114,9 @@ Preview恢复阶跃星辰优先、明确额度耗尽后DeepSeek备用。已真�
 个人 API 设置采用每条供应商配置一行、可命名多份，账号偏好单独记录当前模式与 activeConfigId。密钥 AES-GCM 加密，AAD 绑定 userId/configId，API/UI 只返回末四位。连接测试失败仍可保存但不可启用；个人 provider 统一经 `PersonalProviderRegistry` 构造，未注册 id 直接拒绝；删除当前配置后模式保持 personal、不自动切回平台，Agent 返回需要重新选择，避免静默用平台模型替代用户选择。
 
 个人模式仅在 owner 维度生效，游客与其它账号不可见、不可调用。平台模型优先级不因本功能改变，仍按 D-131：Step 优先，仅明确额度耗尽后 DeepSeek 备用。接入地址强制 HTTPS/443，拒绝内网、本机、IP 字面量、用户信息、查询串及解析到内网的域名；游客测试为一次性请求，不持久化密钥。
+
+## D-133｜全站统一 HarmonyOS Sans SC（2026-11-02）
+
+负责人指定 `CampusOS_Codex_完整设计文档_v2/assets/HarmonyOS-Sans` 为全站字体。采用其中的 `HarmonyOS_Sans_SC` 字族，转换 Regular/Medium/Bold 三份为 WOFF2 放入 `public/fonts/harmonyos-sans/`，分别映射 400、500–550、600–800；`font-display: swap`，保留系统中文回退。原 TTF、许可证与 `__MACOSX` 不进入运行时，许可证复制到同目录 `LICENSE.txt`。
+
+根 `--font-sans` 统一为 HarmonyOS Sans SC；移除全局旧 `Campus Noto Sans SC` 声明，账号、校园雷达、管理后台和地图控件改为继承同一变量。字体文件合计约 13 MB，属于完整 SC 字库取舍；不在本轮做子集化或压缩服务，避免动态校园文章缺字。未修改 Production。

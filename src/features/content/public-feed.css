@@ -4,13 +4,7 @@
   margin: 16px 16px 16px 0;
   padding: 36px 24px 48px;
   container-type: inline-size;
-  font-family:
-    "PingFang SC",
-    "Microsoft YaHei",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family: var(--font-sans);
 }
 
 .public-feed .page-heading {

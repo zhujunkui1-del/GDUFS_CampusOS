@@ -672,3 +672,7 @@ OSM无这些中庭的原内环；南7沿用已批准显示院落，其他按自�
 基于本地a249376与真实Preview的账号/会话表、原公开校园文章及地图Skills实施；迁移前只读聚合86会话/290消息、账号归属0，未读取负责人私人聊天正文。只使用两个无邮箱独立测试账号，凭据留ignored本地文件，未发SES。真实文章引用原有图书馆新生指南，真实路线使用原大学城地点和路网；未新增GIS、供应商图片、外搜账号或付费服务。
 
 OSM删除要求被负责人撤回，署名/许可跳转原样保留；用户截图只作故障证据。截图、sync.json、query-plans.json和原始测试摘要为实际程序回执；106条压力轮次中的确定性问候不冒充大模型调用。见verification/account-history-2026-11-01/及ACCOUNT_HISTORY_SYNC_ACCEPTANCE_2026_11_01.md。
+
+## 2026-11-02｜全站字体 HarmonyOS Sans SC
+
+负责人提供 `CampusOS_Codex_完整设计文档_v2/assets/HarmonyOS-Sans/HarmonyOS Sans/HarmonyOS_Sans_SC/` 下的 TTF 与 `LICENSE.txt`。运行时仅复制并转换同目录 `HarmonyOS_Sans_SC_Regular.ttf`、`Medium.ttf`、`Bold.ttf` 为 WOFF2，输出到 `public/fonts/harmonyos-sans/`，合计约 13 MB；许可证原文随输出复制。版权归 Huawei Device Co., Ltd.，许可为 HarmonyOS Sans Fonts License Agreement。原 TTF 保留在文档包，不进入 public。
