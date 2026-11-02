@@ -1,0 +1,30 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+const root='D:/tlydcg/Codex_work/广外AI应用大赛';
+const read=async f=>JSON.parse(await readFile(root+'/'+f,'utf8'));
+const sha=b=>createHash('sha256').update(b).digest('hex');
+const catalog=await read('src/features/campus-map/data/building-model-catalog.json');
+const decoded=new Map(),assets=[];
+for(const e of catalog.entries)for(const [mode,a] of Object.entries(e.assets)){
+ const b=await readFile(root+'/public'+a.url),g=JSON.parse(b.subarray(20,20+b.readUInt32LE(12)).toString());
+ assert.equal(sha(b),a.sha256);assert.equal(b.length,a.bytes);
+ assert.equal(g.images?.length||0,0);assert.equal(g.textures?.length||0,0);assert(g.buffers.every(x=>!x.uri));
+ decoded.set(e.key+':'+mode,g);
+ assets.push({key:e.key,mode,url:a.url,sha256:a.sha256,bytes:b.length});
+}
+const s7=catalog.entries.find(e=>e.key==='dormitory-s7');
+assert.equal(s7.assets['3d'].url,'/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb');
+assert.equal(s7.assets['3d'].sha256,'54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a');
+assert.equal(s7.assets['2.5d'].bounds.max[1],21);
+const material=g=>g.materials.map(m=>({pbr:m.pbrMetallicRoughness,doubleSided:m.doubleSided,alphaMode:m.alphaMode}));
+for(const key of ['dormitory-n1','dormitory-s8','dormitory-s9','dormitory-s13'])assert.deepEqual(material(decoded.get('dormitory-s7:2.5d')),material(decoded.get(key+':2.5d')));
+const pilot=await read('src/features/campus-map/data/nanyuan7-model.json');
+const dorms=await read('docs/model-previews/north-south-dormitories-v1/manifest.json');
+assert.deepEqual(dorms.entries.s7.sourceGeometryWgs84,pilot.geometry.coordinates[0]);
+assert.deepEqual(dorms.entries.s7.courtyardWgs84,pilot.courtyardGeometry.coordinates[0]);
+const map=await read('src/features/campus-map/data/local-map-manifest.json');
+assert.equal(sha(await readFile(root+'/public'+map.url)),map.sha256);
+const report={date:'2026-11-02',references:assets.length,newPublicFiles:57,assetBytes:assets.reduce((n,a)=>n+a.bytes,0),zeroImages:true,zeroExternalBuffers:true,south7:{original3dPreserved:true,height:21,footprintPreserved:true,courtyardPreserved:true,volumeMaterialMatchesOtherDormitories:true},mapSha256:map.sha256,assets};
+await writeFile(new URL('./asset-audit.json',import.meta.url),JSON.stringify(report,null,2));
+console.log(JSON.stringify({...report,assets:undefined}));

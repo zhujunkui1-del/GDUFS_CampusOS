@@ -17,7 +17,7 @@ async function focusDorm(page: Page) {
   return map;
 }
 
-test("South 7 native 2.5D and prewarmed 3D keep their geography and label semantics", async ({
+test("South 7 volume and prewarmed 3D keep their geography and label semantics", async ({
   page,
 }, info) => {
   const errors: string[] = [],

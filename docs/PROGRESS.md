@@ -1669,6 +1669,16 @@ typecheck、改动文件ESLint/Prettier、生产构建、8文件37项既有单�
 
 迁移 `0060_user_model_settings.sql`、`0061_user_model_configs.sql` 已应用 Preview D1；本机 882/882、类型检查、构建通过；个人 provider 由 `PersonalProviderRegistry` 统一构造，只接受已注册的 13 个 provider id。桌面真实浏览器验证 13 个胶囊、Claude 预设切换、保存后掩码、测试失败不可启用、删除、API 创建/列表/删除且不回传明文；手机 390×844 无横向溢出；游客页面可测试不保存，`127.0.0.1` 被 SSRF 校验拒绝。本轮未部署 Production、未改负责人账号、未发送测试邮件、未购买资源。
 
+## 2026-11-02｜修复整片3D退白模与南7的2.5D明暗差异
+
+负责人四项浏览器意见已复现：zoom18.74加载9条目却仅4个细节，其他5个白模；整片回归在原版本期望28细节而实际0。原因是缩放/数量/中心距离预算与6个非活动缓存淘汰，南7另用原生挤出着色。此前逐栋选中通过不能证明整片正常，本轮用真实失败用例补齐。
+
+现3D按模式加载并保留全部完成模型，不按距离、中心、数量或平移切白模；128米空间格按材质/顶点格式合批并做视锥剔除，平移不重建几何。南7使用原宿舍包15692字节2.5D体块与其他12栋共用灯光/材质，原高度、足迹、院落及V2 3D SHA保持，原生层仅作失败回退。原地图/地点/路网与B钟楼归属不变。
+
+37项单元、类型、改动文件Lint/格式、生产构建通过；桌面/手机14项模型E2E全部通过，含新增整片缩放/平移/返回和13栋统一渲染。独立CLI复验zoom16.94远景、移动及返回都为28个3D条目，移动0新增GLB请求，800ms空闲1567→1567帧，0页面JS错误；已在应用内打开修复页确认同屏立面。全仓Lint本轮扫描中约4GB Node堆耗尽退出134，未获得本轮全仓结果，未改无关代码/忽略项。
+
+全校共享层204488面/189调用，宿舍片区60k—86k面/53—67调用，手机视口远景141208面/128调用；此为实际视口量，不代表真机FPS或旧预算达标。负责人显示纠正覆盖上一轮强制白模降级策略，保留真实手机/热机/弱网待验。仅本机3026验收，本轮未部署远端；资源/原复现/截图和边界见[S1_MODEL_VISIBILITY_FIX_ACCEPTANCE.md](S1_MODEL_VISIBILITY_FIX_ACCEPTANCE.md)。
+
 ## 2026-11-02｜全站字体切换为 HarmonyOS Sans SC
 
 负责人指定文档包内的 HarmonyOS Sans 资产。已将 SC 的 Regular/Medium/Bold 转为 WOFF2 并部署 Preview `eeda8328-ba80-4595-a4fd-88600e01d915`。根变量、账号、校园雷达、管理后台、地图控件统一使用 `--font-sans`；真实浏览器验证 `getComputedStyle(body).fontFamily` 含 HarmonyOS Sans SC，`document.fonts.check` 为 true，三份字体请求均 200，页面无 FOUT 卡死（`font-display: swap`）。字体许可证复制到 `public/fonts/harmonyos-sans/LICENSE.txt`。未改 Production，未删除原 Noto 文件。

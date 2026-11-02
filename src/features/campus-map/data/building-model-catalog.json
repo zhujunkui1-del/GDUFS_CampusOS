@@ -3,6 +3,7 @@
   "mapVersion": "s1-2026-10-14.2",
   "approvedForMap": true,
   "ownerApproval": "2026-11-01：现在，把已经做好的这些2.5d/3d模型，放入网页中",
+  "ownerRenderingCorrection": "2026-11-02：3D不随距离/中心位置退回白模，平移保留模型；统一南苑7栋与其他宿舍的2.5D光照",
   "referenceOrigin": [113.392, 23.066],
   "legacySouth7Preserved": true,
   "renderingPolicy": "mode-faithful-resident-models",

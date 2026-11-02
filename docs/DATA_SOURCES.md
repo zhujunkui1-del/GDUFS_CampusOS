@@ -673,6 +673,12 @@ OSM无这些中庭的原内环；南7沿用已批准显示院落，其他按自�
 
 OSM删除要求被负责人撤回，署名/许可跳转原样保留；用户截图只作故障证据。截图、sync.json、query-plans.json和原始测试摘要为实际程序回执；106条压力轮次中的确定性问候不冒充大模型调用。见verification/account-history-2026-11-01/及ACCOUNT_HISTORY_SYNC_ACCEPTANCE_2026_11_01.md。
 
+## 2026-11-02｜模型显示纠正与南7统一体块
+
+负责人四张浏览器批注图仅作故障证据，未作为贴图、模型纹理或GIS。新增公共南7轻量体块来自既有north-south-dormitories-v1/models/s7-2.5d.glb，15692字节/136面，SHA f6d764b87c3885b195fe072c896dbdf36b9d9a616b50e7e12d858c8932a2f7ba。源外环、院落与原生南7逐坐标相同，21米不变，PBR参数与其他宿舍一致；原3D仍指向canonical 80384字节V2文件，无复制第二份。
+
+catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与shared体块路径。58引用（57个本批GLB＋原南7 3D）共5252964字节，全部零图片纹理/外置buffer，见output/playwright/model-visibility-fix-2026-11-01/asset-audit.json。地图SHA、113地点、547/2202路网及OSM署名保持；照片许可、实测尺寸边界未改变，没有新增供应商资源或收费接口。
+
 ## 2026-11-02｜全站字体 HarmonyOS Sans SC
 
 负责人提供 `CampusOS_Codex_完整设计文档_v2/assets/HarmonyOS-Sans/HarmonyOS Sans/HarmonyOS_Sans_SC/` 下的 TTF 与 `LICENSE.txt`。运行时仅复制并转换同目录 `HarmonyOS_Sans_SC_Regular.ttf`、`Medium.ttf`、`Bold.ttf` 为 WOFF2，输出到 `public/fonts/harmonyos-sans/`，合计约 13 MB；许可证原文随输出复制。版权归 Huawei Device Co., Ltd.，许可为 HarmonyOS Sans Fonts License Agreement。原 TTF 保留在文档包，不进入 public。
