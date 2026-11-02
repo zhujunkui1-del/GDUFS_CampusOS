@@ -1138,3 +1138,9 @@ Preview恢复阶跃星辰优先、明确额度耗尽后DeepSeek备用。已真�
 负责人指出 `/account` 与 `/account/settings` 桌面端排版错误，要求像手机截图一样竖向排列，并让左上角标题与校园雷达/校园知识统一为「广外通 CampusOS | 页面名」。
 
 实现：`AccountFrame` 标题改为 `module-heading-title` 结构，复用 `module-brand`、分隔符和页面标题样式；`.account-home-layout` 与 `.account-settings-layout` 桌面端改为单列，资料卡、设置入口、账号管理/账户信息依次竖向排列。移动端保持原有单列。真实浏览器在 1080/1440 桌面宽度确认无横向溢出，账号页与设置页均为单列，标题与校园知识一致。未改 Production。
+
+## D-136｜我的收藏统一文章身份与可见性（2026-11-03）
+
+负责人要求「我的收藏」只收藏校园雷达、校园知识、活动日历中的文章，三处必须使用同一文章 ID，并复用现有文章弹窗；未登录点击收藏引导登录；收藏列表支持全部/来源筛选、收藏时间倒序、分页、失效文章保留但不可打开、可取消收藏；只部署 Preview，并说明 Preview 与正式域名共用 Worker/D1。
+
+实现统一使用 `knowledge_documents.id` 作为唯一文章身份：雷达/知识卡片由 `/api/public/content` 返回文档 ID，日历使用 activity 的 `source.documentId`，文章弹窗也以同一 ID 请求 `/api/public/article`。收藏关系存 `user_article_favorites`，唯一键 `(user_id, article_id)`，入口仅记录 radar/knowledge/calendar，不复制文章标题或正文。读取时 LEFT JOIN `console_public_documents` 与知识文档，返回 `available`（公开可见）和 `readable`（正文可读）；下架只改变可用状态，不删除收藏关系。所有写操作要求 S4 会话、Origin 校验、用户归属和限流，书签状态与列表均不允许跨账号访问。账号 API 的 DELETE 不再读取 JSON body，避免标准空 DELETE 被 400。收藏页 `/account/favorites` 按收藏时间倒序、20 条分页；失败/下架条目保留但不可打开。旧 `/favorites` 重定向，侧栏与账号入口统一指向新页。未改平台模型与 Production。

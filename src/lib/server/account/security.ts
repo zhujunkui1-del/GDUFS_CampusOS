@@ -28,6 +28,7 @@ export function assertAccountOrigin(
   )
     throw new ApiError("FORBIDDEN", "请求来源不受支持。");
   if (
+    request.method !== "DELETE" &&
     !request.headers
       .get("Content-Type")
       ?.toLowerCase()

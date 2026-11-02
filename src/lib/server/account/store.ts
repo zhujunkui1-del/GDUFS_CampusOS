@@ -128,7 +128,11 @@ export class AccountStore {
       this.db,
       action + ":ip",
       ip,
-      action === "register" ? 10 : 60,
+      action === "register"
+        ? 10
+        : action === "article_favorites"
+          ? 240
+          : 60,
       600000,
       now,
     );
@@ -137,7 +141,11 @@ export class AccountStore {
         this.db,
         action + ":subject",
         subject,
-        action === "model_settings" ? 40 : 10,
+        action === "model_settings"
+          ? 40
+          : action === "article_favorites"
+            ? 120
+            : 10,
         900000,
         now,
       );

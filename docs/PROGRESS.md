@@ -1694,3 +1694,9 @@ typecheck、改动文件ESLint/Prettier、生产构建、8文件37项既有单�
 负责人反馈 `/account`、`/account/settings` 桌面端排版错误。`AccountFrame` 标题统一为「广外通 CampusOS | 我的/设置/API 设置」；`.account-home-layout`、`.account-settings-layout` 桌面端改为单列，资料卡、设置、收藏/API、账号管理/账户信息、退出按钮按顺序竖向排列。
 
 Preview 部署 `01cb7fd6-632c-4889-aec2-e655207a3322`。1080×720 与 1440×900 实测均为单列（878px/1238px 内容列），无横向溢出；标题与校园知识一致。账号 E2E 中过期的「API 设置按钮 disabled」断言更新为链接可见，2 项通过；recovery 冷却用例的 `page.reload` 在 Preview 30 秒超时，未获得该项结果。未部署 Production。
+
+## 2026-11-03｜我的收藏（雷达/知识/日历）
+
+完成文章收藏全链路：迁移 `0062_user_article_favorites.sql`；`ArticleFavoriteStore` 提供列表、批量状态、收藏、取消；`/api/me/favorites`、`/favorites/status`、`/favorites/:articleId` 支持 S4 身份、Origin、限流和 A/B 隔离。前端新增 `FavoritesProvider`，按 userKey 重新挂载，批量状态分 100 条、乐观更新与失败回滚、游客登录引导、跨标签页 revision 同步；`FavoriteButton` 接入雷达/知识卡片、文章弹窗和日历活动卡片。新增 `/account/favorites`：全部/校园雷达/校园知识/活动日历筛选，按收藏时间倒序，20 条分页，失效条目保留但不可打开，可打开原文章、可取消收藏；`/account` 收藏入口启用，`/favorites` 重定向到新页，桌面侧栏同步。迁移已应用到 Preview D1；Preview 最终部署 `a4ae2f71-2e75-4157-85db-7acb11c8790c`。
+
+验证：`tests/unit/article-favorites.test.ts` 6 项通过（跨入口去重、A/B 隔离、幂等、分页/筛选、下架保留不可读、API 401/400/404/200）；排除本轮之前已存在且未提交的 `assistant-quality-regressions.test.ts` 后，全量 891/891 通过；`tsc`、eslint、`npm run build` 通过。真实 Preview：桌面登录后收藏雷达文章，收藏页出现一条，来源筛选正确，打开文章弹窗、取消后列表清空；手机 390×844 与 320 宽度无横向溢出；游客访问收藏页显示登录引导。刷新后收藏保留。Preview 与 `gdufs.ccwu.cc` 共用 Worker/D1，本轮未单独部署正式域名。

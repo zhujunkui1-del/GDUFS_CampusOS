@@ -1,4 +1,4 @@
-import { ModulePage } from "@/components/module-page";
+import { redirect } from "next/navigation";
 export default function FavoritesPage() {
-  return <ModulePage page="favorites" />;
+  redirect("/account/favorites");
 }

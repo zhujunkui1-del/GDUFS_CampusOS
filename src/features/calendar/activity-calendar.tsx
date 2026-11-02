@@ -21,6 +21,8 @@ import {
 } from "@/lib/retrieval/calendar-dates";
 import { articleThemeStyle } from "@/features/content/article-theme";
 import { PublicArticleDialog } from "@/features/content/public-article-dialog";
+import { FavoriteButton } from "@/features/content/favorite-button";
+import { useFavoriteTracking } from "@/features/content/favorites-context";
 import type { PublicArticleSummary } from "@/features/content/public-feed";
 import "./calendar.css";
 type Result = {
@@ -66,6 +68,11 @@ export function ActivityCalendar() {
     [detailId, setDetailId] = useState(""),
     [detailSourceId, setDetailSourceId] = useState(""),
     [article, setArticle] = useState<PublicArticleSummary | null>(null);
+  useFavoriteTracking(
+    (data?.items || []).flatMap((item) =>
+      item.sources.map((source) => source.documentId),
+    ),
+  );
   const week = date ? weekOf(date) : [],
     first = week[0],
     last = week[6];
@@ -235,6 +242,11 @@ export function ActivityCalendar() {
             在校园地图查看
           </Link>
         )}
+        <FavoriteButton
+          articleId={source.documentId}
+          surface="calendar"
+          className="calendar-event-favorite"
+        />
       </article>
     );
   }
@@ -370,6 +382,7 @@ export function ActivityCalendar() {
         <PublicArticleDialog
           article={article}
           categoryLabel="活动原文"
+          surface="calendar"
           onClose={() => {
             setArticle(null);
             setDetailId("");

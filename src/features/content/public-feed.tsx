@@ -13,6 +13,8 @@ import {
   radarCategories,
 } from "@/domain/console/taxonomy";
 import { PublicArticleDialog } from "./public-article-dialog";
+import { FavoriteButton } from "./favorite-button";
+import { useFavoriteTracking } from "./favorites-context";
 import { FeedPageJump } from "./feed-page-jump";
 import "./public-feed.css";
 import { RegistrationBadge } from "./registration-badge";
@@ -252,6 +254,15 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
   ]);
 
   const current = state.key === key ? state : undefined;
+  const favoriteIds = [
+    ...new Set([
+      ...(current?.data?.items || []).map((item) => item.id),
+      ...(current?.groups || []).flatMap((group) =>
+        group.items.map((item) => item.id),
+      ),
+    ]),
+  ];
+  useFavoriteTracking(favoriteIds);
   const title = surface === "radar" ? "校园雷达" : "校园知识";
   const selectedCategory = categories.find(
     (category) => category.code === query.category,
@@ -307,6 +318,7 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
             {item.source.name}
           </span>
         </footer>
+        <FavoriteButton articleId={item.id} surface={surface} />
       </article>
     );
   }
@@ -560,6 +572,7 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
           key={selectedArticle.id}
           article={selectedArticle}
           categoryLabel={articleCategory}
+          surface={surface}
           onClose={() => setSelectedArticle(null)}
         />
       )}

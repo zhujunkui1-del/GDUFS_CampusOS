@@ -18,6 +18,7 @@ import {
   AccountProvider,
   useAccount,
 } from "@/features/account/account-context";
+import { FavoritesProvider } from "@/features/content/favorites-context";
 import {
   CampusMapProvider,
   useCampusMap,
@@ -28,7 +29,7 @@ const navigation = [
   { href: "/radar", label: "校园雷达", short: "雷达", icon: Radar },
   { href: "/knowledge", label: "校园知识", short: "知识", icon: BookOpen },
   { href: "/calendar", label: "活动日历", short: "日历", icon: CalendarDays },
-  { href: "/favorites", label: "我的收藏", short: "收藏", icon: Bookmark },
+  { href: "/account/favorites", label: "我的收藏", short: "收藏", icon: Bookmark },
   { href: "/account", label: "我的账号", short: "我的", icon: UserRound },
 ];
 
@@ -36,17 +37,19 @@ export function CampusShell({ children }: { children: React.ReactNode }) {
   const [assistantOpen, setAssistantOpen] = useState(false);
   return (
     <AccountProvider>
-      <CampusMapProvider
-        onAskAssistant={() => setAssistantOpen(true)}
-        onNavigationStart={() => setAssistantOpen(false)}
-      >
-        <ShellChrome
-          assistantOpen={assistantOpen}
-          setAssistantOpen={setAssistantOpen}
+      <FavoritesProvider>
+        <CampusMapProvider
+          onAskAssistant={() => setAssistantOpen(true)}
+          onNavigationStart={() => setAssistantOpen(false)}
         >
-          {children}
-        </ShellChrome>
-      </CampusMapProvider>
+          <ShellChrome
+            assistantOpen={assistantOpen}
+            setAssistantOpen={setAssistantOpen}
+          >
+            {children}
+          </ShellChrome>
+        </CampusMapProvider>
+      </FavoritesProvider>
     </AccountProvider>
   );
 }
@@ -153,7 +156,7 @@ function ShellChrome({
       />
       <nav className="mobile-navigation glass-surface" aria-label="手机主导航">
         {navigation
-          .filter((item) => item.href !== "/favorites")
+          .filter((item) => item.href !== "/account/favorites")
           .map(({ href, short, icon: Icon }) => (
             <Link
               key={href}
@@ -162,7 +165,9 @@ function ShellChrome({
               aria-current={
                 pathname === href ||
                 (href === "/account" &&
-                  (accountActive || pathname === "/favorites"))
+                  (accountActive ||
+                    pathname === "/favorites" ||
+                    pathname.startsWith("/account/favorites")))
                   ? "page"
                   : undefined
               }

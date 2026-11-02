@@ -12,6 +12,7 @@ import { ModelSettingsStore } from "../models/credentials";
 import { ModelConfigStore } from "../models/model-config-store";
 import { testPersonalConnection } from "../models/personal-client";
 import { MODEL_PROVIDER_IDS } from "@/domain/models/providers";
+import { ArticleFavoriteStore } from "./favorites";
 
 export const accountMethods: Record<string, readonly string[]> = {
   "/api/auth/register": ["POST"],
@@ -80,12 +81,28 @@ export function createAccountApi(options: {
   return async (request: Request) => {
     let cookie: string | undefined;
     const response = await withApi(async () => {
-      const { store } = options,
-        path = new URL(request.url).pathname;
-      if (!accountMethods[path]?.includes(request.method))
-        throw new ApiError("INVALID_ARGUMENT", "请求方法不受支持。");
-      if (new URL(request.url).search)
-        throw new ApiError("INVALID_ARGUMENT", "此接口不接受查询参数。");
+      const url = new URL(request.url),
+        { store } = options,
+        path = url.pathname;
+      const favoriteArticle =
+        /^\/api\/me\/favorites\/([^/]+)$/.exec(path)?.[1] || null;
+      const favoriteStatus = path === "/api/me/favorites/status";
+      const favoriteList = path === "/api/me/favorites";
+      const favoritePath = favoriteList || favoriteStatus || favoriteArticle;
+      const favoriteMethod =
+        (favoriteList && request.method === "GET") ||
+        (favoriteStatus && request.method === "POST") ||
+        (favoriteArticle &&
+          (request.method === "PUT" || request.method === "DELETE"));
+      if (favoritePath) {
+        if (!favoriteMethod)
+          throw new ApiError("INVALID_ARGUMENT", "请求方法不受支持。");
+      } else {
+        if (!accountMethods[path]?.includes(request.method))
+          throw new ApiError("INVALID_ARGUMENT", "请求方法不受支持。");
+        if (url.search)
+          throw new ApiError("INVALID_ARGUMENT", "此接口不接受查询参数。");
+      }
       if (path === "/api/auth/session" && !options.enabled)
         return { available: false, user: null, mailAvailable: false };
       if (!options.enabled)
@@ -93,7 +110,12 @@ export function createAccountApi(options: {
       const ip = request.headers.get("CF-Connecting-IP") || "local";
       const write = request.method !== "GET";
       if (write) assertAccountOrigin(request, store.allowedOrigins);
-      const body = write ? await readJson(request, 8192) : undefined;
+      // DELETE endpoints never carry a JSON body; reading one would reject a
+      // standards-compliant empty DELETE before the route can run.
+      const body =
+        write && request.method !== "DELETE"
+          ? await readJson(request, 32768)
+          : undefined;
       if (path === "/api/auth/session") {
         const session = await store.resolve(request);
         return {
@@ -102,6 +124,24 @@ export function createAccountApi(options: {
           expiresAt: session?.expiresAt || null,
           mailAvailable: store.mailer.available,
         };
+      }
+      if (favoritePath) {
+        const session = await store.require(request),
+          favorites = new ArticleFavoriteStore(store.db);
+        if (favoriteList && request.method === "GET")
+          return favorites.list(
+            session.row.user_id,
+            Object.fromEntries(url.searchParams),
+          );
+        if (favoriteStatus && request.method === "POST")
+          return favorites.status(session.row.user_id, body);
+        if (!favoriteArticle)
+          throw new ApiError("INVALID_ARGUMENT", "请求方法不受支持。");
+        await store.limit("article_favorites", ip, session.row.user_id);
+        const articleId = decodeURIComponent(favoriteArticle);
+        if (request.method === "PUT")
+          return favorites.add(session.row.user_id, articleId, body);
+        return favorites.remove(session.row.user_id, articleId);
       }
       if (path === "/api/me" && request.method === "GET")
         return { user: store.profile((await store.require(request)).row) };
@@ -190,7 +230,6 @@ export function createAccountApi(options: {
           return { settings: await settings.list(session.row.user_id) };
         await store.limit("model_settings", ip, session.row.user_id);
         if (request.method === "DELETE") {
-          z.object({}).strict().parse(body);
           await settings.remove(session.row.user_id);
           return { settings: [] };
         }

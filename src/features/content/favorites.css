@@ -1,0 +1,43 @@
+.favorite-button {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border: 1px solid rgba(30, 36, 48, 0.1);
+  border-radius: 10px;
+  padding: 0;
+  background: #fff;
+  color: #64748b;
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    background 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+
+.favorite-button:hover {
+  border-color: rgba(18, 97, 187, 0.28);
+  color: #1261bb;
+}
+
+.favorite-button:active {
+  transform: scale(0.94);
+}
+
+.favorite-button.is-favorite {
+  border-color: rgba(18, 97, 187, 0.18);
+  background: #eaf3ff;
+  color: #1261bb;
+}
+
+.favorite-button:focus-visible {
+  outline: 2px solid #1261bb;
+  outline-offset: 2px;
+}
+
+.favorite-button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}

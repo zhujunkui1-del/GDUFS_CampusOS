@@ -3,7 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, X } from "lucide-react";
 import { ReadingFrame } from "./article-reader";
 import type { PublicArticleSummary } from "./public-feed";
+import type { FavoriteSurface } from "@/lib/server/account/favorites";
 import { RegistrationBadge } from "./registration-badge";
+import { FavoriteButton } from "./favorite-button";
 import "./public-article-dialog.css";
 
 type ArticleDetail = {
@@ -20,10 +22,12 @@ type ArticleDetail = {
 export function PublicArticleDialog({
   article,
   categoryLabel,
+  surface,
   onClose,
 }: {
   article: PublicArticleSummary;
   categoryLabel: string;
+  surface: FavoriteSurface;
   onClose: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
@@ -89,6 +93,7 @@ export function PublicArticleDialog({
         <div className="public-article-dialog-toolbar">
           <span className="public-article-category">{categoryLabel}</span>
           <div className="public-article-dialog-actions">
+            <FavoriteButton articleId={article.id} surface={surface} />
             <a
               className="public-article-original"
               href={article.url}

@@ -58,7 +58,7 @@
   color: #838a96;
 }
 
-.public-feed button {
+.public-feed button:not(.favorite-button) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -79,7 +79,7 @@
   outline-offset: 3px;
 }
 
-.public-feed button:disabled {
+.public-feed button:disabled:not(.favorite-button) {
   opacity: 0.45;
   cursor: default;
 }
@@ -262,6 +262,7 @@
 }
 
 .public-feed-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -269,7 +270,7 @@
   min-height: 114px;
   border: 1px solid rgba(30, 36, 48, 0.045);
   border-radius: 15px;
-  padding: 14px 15px 11px;
+  padding: 14px 54px 11px 15px;
   background: #fff;
   color: var(--text-primary, #1d1d1f);
   text-align: left;
@@ -298,6 +299,12 @@
   gap: 8px;
   min-width: 0;
   margin-top: 12px;
+}
+
+.public-feed-card > .favorite-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .public-feed-card time {

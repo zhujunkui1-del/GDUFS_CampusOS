@@ -136,7 +136,11 @@ function AccountContent({ user, view }: { user: AccountProfile; view: View }) {
             <Row icon={Settings} label="设置" href="/account/settings" />
           </div>
           <div className="account-card account-group">
-            <Row icon={Bookmark} label="收藏" disabled />
+            <Row
+              icon={Bookmark}
+              label="收藏"
+              href="/account/favorites"
+            />
             <Row
               icon={CodeXml}
               label="API 设置"
