@@ -72,7 +72,7 @@
 }
 
 .public-article-dialog-actions a,
-.public-article-dialog-actions button {
+.public-article-dialog-actions button:not(.favorite-button) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -84,6 +84,16 @@
   font: inherit;
   text-decoration: none;
   cursor: pointer;
+}
+
+.public-article-dialog-actions .favorite-button {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  min-height: 42px;
+  padding: 0;
+  border: 1px solid rgba(30, 36, 48, 0.1);
+  border-radius: 12px;
 }
 
 .public-article-dialog-actions .public-article-original {
