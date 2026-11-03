@@ -37,6 +37,81 @@ it("encodes Chinese bigrams and keeps arbitrary query syntax out of MATCH", () =
   expect(lexicalTokens("图书馆借阅")).toHaveLength(4);
   expect(ftsExpression('" OR * 借书')).not.toContain("*");
 });
+it("prefers a literal stored headline over neighbouring body matches without requiring a title hint", async () => {
+  const f = await dateGateFixture();
+  try {
+    await article(
+      f,
+      "校园卡补办：登录系统提交申请。",
+      "literal-headline",
+      false,
+      undefined,
+      "资讯 _ 校园卡补办",
+    );
+    await article(
+      f,
+      "校园卡补办和信息化系统的其他介绍。",
+      "incidental-card",
+      false,
+      undefined,
+      "校园信息化服务",
+    );
+    await ensureRetrievalIndex(f.db, "literal-headline");
+    await ensureRetrievalIndex(f.db, "incidental-card");
+    const result = await new D1KeywordRetriever(f.db).retrieve(
+      { query: "资讯 _ 校园卡补办" },
+      PUBLIC_RETRIEVAL_SCOPE,
+    );
+    expect(result.hits.map((h) => h.documentId)).toEqual(["literal-headline"]);
+  } finally {
+    f.close();
+  }
+});
+it("does not return unrelated FTS hits when an explicit article title is absent", async () => {
+  const f = await dateGateFixture();
+  try {
+    await article(
+      f,
+      "关于开展党建好案例优秀成果征集活动的通知。",
+      "unrelated-title",
+      false,
+      undefined,
+      "党建优秀成果征集通知",
+    );
+    await ensureRetrievalIndex(f.db, "unrelated-title");
+    const result = await new D1KeywordRetriever(f.db).retrieve(
+      { query: "党建优秀成果征集通知", title: "党建公报一图速览" },
+      PUBLIC_RETRIEVAL_SCOPE,
+    );
+    expect(result.hits).toEqual([]);
+  } finally {
+    f.close();
+  }
+});
+
+it("preserves quoted titles and selects matching body evidence beyond the first chunk", async () => {
+  const f = await dateGateFixture();
+  try {
+    const title = "“星河计划”研究生学业奖学金申请通知";
+    await article(
+      f,
+      "项目背景。".repeat(200) + "\n申请材料：提交研究成果清单及申请表。",
+      "quoted-title",
+      false,
+      undefined,
+      title,
+    );
+    await ensureRetrievalIndex(f.db, "quoted-title");
+    const result = await new D1KeywordRetriever(f.db).retrieve(
+      { query: "星河计划申请材料", title },
+      PUBLIC_RETRIEVAL_SCOPE,
+    );
+    expect(result.hits[0]?.documentId).toBe("quoted-title");
+    expect(result.hits[0]?.contentSnippet).toContain("申请材料");
+  } finally {
+    f.close();
+  }
+});
 it("starts a directly matched procedural guide at its beginning instead of a keyword-heavy late step", async () => {
   const f = await dateGateFixture();
   try {
@@ -275,4 +350,3 @@ it("looks up a long quoted article title without a LIKE pattern", async () => {
     f.close();
   }
 });
-

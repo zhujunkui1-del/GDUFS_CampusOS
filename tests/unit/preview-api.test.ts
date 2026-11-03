@@ -10,6 +10,7 @@ import {
   historyGet,
   conversationsGet,
   conversationDelete,
+  conversationPatch,
 } from "@/lib/server/assistant/api";
 import { executeMapSkillHttp } from "@/lib/server/maps/http";
 import { consoleAdministration } from "@/lib/server/console/api";
@@ -36,6 +37,10 @@ it("delegates to the exact existing authenticated handlers", () => {
   );
 });
 it("dispatches conversation listing, read and delete to authenticated shared handlers", () => {
+  expect(previewApiHandler("/api/agent/conversations/test", "PATCH")).toEqual({
+    method: "PATCH",
+    handle: conversationPatch,
+  });
   expect(previewApiHandler("/api/agent/conversations")?.handle).toBe(
     conversationsGet,
   );

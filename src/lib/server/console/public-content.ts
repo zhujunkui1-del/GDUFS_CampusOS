@@ -3,6 +3,10 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { primaryDatabase, type SqlDatabase } from "../assistant/database";
 import { withApi } from "../http";
 import { ApiError } from "../errors";
+import {
+  articleTitleKey,
+  articleTitleSql,
+} from "@/lib/retrieval/article-title";
 import { ConsoleIdSchema } from "@/domain/console/contracts";
 import {
   KnowledgeCategorySchema,
@@ -98,6 +102,18 @@ export async function readPublicContent(
   }
   const where = ["1=1"];
   const params: unknown[] = [];
+  // Normalize titles before entering the deep publication/classification views.
+  // Keep their eligibility expressions independent of the normalization stack.
+  let titleIds: string | undefined;
+  if (q.q) {
+    const matches = await db
+      .prepare(
+        `SELECT d.id FROM knowledge_documents d WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND instr(${articleTitleSql("d.title")},?)>0`,
+      )
+      .bind(articleTitleKey(searchTerm(q.q)))
+      .all<{ id: string }>();
+    titleIds = JSON.stringify(matches.results.map((row) => row.id));
+  }
   if (q.id) {
     where.push("d.id=?");
     params.push(q.id);
@@ -125,8 +141,8 @@ export async function readPublicContent(
       })()
     : null;
   if (q.q) {
-    where.push("instr(d.title, ?) > 0");
-    params.push(searchTerm(q.q));
+    where.push("d.id IN(SELECT value FROM json_each(?))");
+    params.push(titleIds);
   }
   if (q.source) {
     where.push("instr(s.display_name, ?) > 0");
@@ -149,13 +165,13 @@ export async function readPublicContent(
                  FROM knowledge_documents d JOIN console_article_classifications a ON a.document_id=d.id
                  JOIN matched_sources m ON m.id=d.source_id
                  WHERE ${q.surface === "radar" ? "a.primary_destination IN('radar','unknown')" : "a.primary_destination='knowledge'"} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)
-                   ${q.q ? "AND instr(d.title, ?) > 0" : ""}
+                   ${q.q ? "AND d.id IN(SELECT value FROM json_each(?))" : ""}
                  GROUP BY ${categoryColumn}`
               : `SELECT ${categoryColumn} AS category,count(*) AS n ${base} GROUP BY ${categoryColumn}`,
           )
           .bind(
             ...(q.source
-              ? [searchTerm(q.source), ...(q.q ? [searchTerm(q.q)] : [])]
+              ? [searchTerm(q.source), ...(q.q ? [titleIds] : [])]
               : params),
           )
           .all<{ category: string; n: number }>()

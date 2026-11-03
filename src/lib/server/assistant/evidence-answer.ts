@@ -3,6 +3,54 @@ import { containsToolProtocol } from "@/lib/assistant-output";
 import { matchesQueryFocus } from "@/lib/retrieval/query-focus";
 import { chinaDay } from "./time-window";
 import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
+import type { ContentSearchResult } from "@/domain/retrieval/skills";
+
+/** Listing asks for known items, not an invented narrative or inferred availability. */
+export function eventEvidenceAnswer(
+  cards: AssistantCard[],
+  results: ContentSearchResult[],
+) {
+  const sources = cards.flatMap((card, index) =>
+    card.kind === "source" ? [{ card, citation: index + 1 }] : [],
+  );
+  if (!sources.length) return undefined;
+  return sources
+    .slice(0, 5)
+    .map(({ card, citation }, index) => {
+      const activity = results
+        .flatMap((r) => r.activities)
+        .find((a) => a.documentId === card.documentId);
+      const details: string[] = [];
+      if (activity?.startsAt?.date) {
+        const start = activity.startsAt;
+        const end = activity.endsAt;
+        const clock = (at: string) =>
+          new Intl.DateTimeFormat("en-GB", {
+            timeZone: "Asia/Shanghai",
+            hour: "2-digit",
+            minute: "2-digit",
+            hourCycle: "h23",
+          }).format(new Date(at));
+        details.push(
+          `举办：${start.date}${start.at ? " " + clock(start.at) : ""}${end?.date && end.date !== start.date ? " 至 " + end.date : ""}${end?.at ? "—" + clock(end.at) : ""}`,
+        );
+      }
+      if (activity?.placeRaw) details.push(`地点：${activity.placeRaw}`);
+      const registration = {
+        open: "报名中",
+        not_started: "报名未开始",
+        closed: "报名已截止",
+        not_required: "无需报名",
+        capacity_unknown: "额满即止，余量未确认",
+        unknown: "",
+      }[activity?.registrationState || "unknown"];
+      if (registration) details.push(registration);
+      if (!details.length && card.publishedAt)
+        details.push(`发布：${chinaDay(card.publishedAt)}`);
+      return `${index + 1}. **${card.title}** [${citation}]${details.length ? "\n   " + details.join(" · ") : ""}`;
+    })
+    .join("\n\n");
+}
 
 /** A provider failure does not erase already-retrieved public evidence. No invented summary. */
 export function foodEvidenceAnswer(
@@ -262,7 +310,10 @@ export function activitySignature(title: string) {
     .replace(/专属|Livehouse|livehouse/gi, " ")
     .replace(/广外|广东外语外贸大学|校园|大学城|白云山/g, " ")
     .replace(/[一-龥]{1,10}学院/g, " ")
-    .replace(/歌唱|歌手|大赛|比赛|决赛|初赛|复赛|活动|晚会|演出|展览|展演/g, " ")
+    .replace(
+      /歌唱|歌手|大赛|比赛|决赛|初赛|复赛|活动|晚会|演出|展览|展演/g,
+      " ",
+    )
     .replace(/[^一-龥A-Za-z0-9]+/g, "")
     .replace(/^的/, "")
     .trim();
@@ -276,26 +327,39 @@ export function activityCore(title: string) {
     .replace(/[【\[（(][^】\]）)]*[】\]）)]/g, " ")
     .replace(/[“"][^”"]*[”"]/g, " ")
     .replace(/第[一二三四五六七八九十百\d]+届/g, " ")
-    .replace(/最佳人气奖评选|人气奖|投票|预告|报名|招募|圆满|收官|开唱|举行|举办|落幕/g, " ")
-    .replace(/广外的?|广东外语外贸大学|专属|Livehouse|livehouse|大学城|白云山/g, " ")
+    .replace(
+      /最佳人气奖评选|人气奖|投票|预告|报名|招募|圆满|收官|开唱|举行|举办|落幕/g,
+      " ",
+    )
+    .replace(
+      /广外的?|广东外语外贸大学|专属|Livehouse|livehouse|大学城|白云山/g,
+      " ",
+    )
     .replace(/[一-龥]{1,10}学院/g, " ")
     .replace(/[^一-龥A-Za-z0-9]+/g, "")
     .replace(/^的|的$/g, "")
     .trim();
 }
 
-export function recentRadarAnswer(
-  cards: AssistantCard[],
-  label = "校园资讯",
-) {
+export function recentRadarAnswer(cards: AssistantCard[], label = "校园资讯") {
   const rows = cards
-    .flatMap((card) => {
+    .flatMap((card, citationIndex) => {
       if (card.kind !== "source" && card.kind !== "external_source") return [];
       if (!card.publishedAt || !card.title) return [];
       // Category landing pages are navigation, not a dated activity.
-      if (/^(?:文体活动|竞赛|讲座|升学就业|学术科研|奖学金|校园通知)-/.test(card.title))
+      if (
+        /^(?:文体活动|竞赛|讲座|升学就业|学术科研|奖学金|校园通知)-/.test(
+          card.title,
+        )
+      )
         return [];
-      return [{ title: card.title, publishedAt: card.publishedAt }];
+      return [
+        {
+          title: card.title,
+          publishedAt: card.publishedAt,
+          citation: citationIndex + 1,
+        },
+      ];
     })
     .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt))
     .filter((row, index, all) => {
@@ -306,10 +370,7 @@ export function recentRadarAnswer(
       if (!signature && core.length < 4) return true;
       return (
         all.findIndex((other) => {
-          if (
-            signature &&
-            activitySignature(other.title) === signature
-          )
+          if (signature && activitySignature(other.title) === signature)
             return true;
           const otherCore = activityCore(other.title);
           return (
@@ -327,9 +388,8 @@ export function recentRadarAnswer(
     "",
     ...rows.map(
       (row, index) =>
-        `${index + 1}. ${row.publishedAt.slice(0, 10)} 发布｜${row.title}`,
+        `${index + 1}. ${row.publishedAt.slice(0, 10)} 发布｜${row.title} [${row.citation}]`,
     ),
     "",
-    "想看更早的，可以继续问「还有吗」。🐟",
   ].join("\n");
 }

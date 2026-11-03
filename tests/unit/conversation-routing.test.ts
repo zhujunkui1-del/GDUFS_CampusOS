@@ -57,9 +57,11 @@ it("allows general advice in the answer phase without relaxing campus facts", ()
 });
 
 it("tells a feedback turn to explain the previous answer instead of searching", () => {
-  expect(directInstructions("confusion")).toContain("不是新的检索关键词");
-  expect(directInstructions("correction")).toContain("承认问题并修正");
-  expect(directInstructions("chitchat")).toContain("通用知识");
+  expect(directInstructions("confusion")).toContain("不把反馈词当作查询主题");
+  expect(directInstructions("correction")).toContain("承认并纠正");
+  expect(directInstructions("chitchat")).toContain(
+    "普通聊天、情绪交流不需要校园证据",
+  );
 });
 
 it("routes a bare campus event name to event search, not a refusal", () => {

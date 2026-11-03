@@ -67,7 +67,6 @@ import {
 } from "./evidence-answer";
 import {
   assistantDisplayText,
-  stripSelfDeprecation,
   asksForSearchPermission,
   claimsMapAction,
   unsupportedUrls,
@@ -92,6 +91,11 @@ import {
   personaAcknowledgement,
 } from "./persona";
 import { inputGate, inputGateReply } from "./input-gate";
+import { understandQuery } from "./query-understanding";
+import { citedAnswer } from "./citations";
+import { searchControlBusiness } from "@/lib/retrieval/query-controls";
+import { revalidateCalendarEvidence } from "../calendar/search";
+import { eventEvidenceAnswer } from "./evidence-answer";
 
 /** The same article can arrive from several indexes; cite it once. */
 function titleKey(title: string) {
@@ -253,16 +257,33 @@ export async function chatResponse(request: Request) {
         conversation.id,
         persona.preference,
       );
-    const businessMessage = persona.business || input.message;
+    const businessMessage = searchControlBusiness(
+      persona.business || input.message,
+    );
+    if (
+      (await ctx.store.smartSearch(ctx.identity, conversation.id)) !==
+      input.smartSearch
+    )
+      await ctx.store.setSmartSearch(
+        ctx.identity,
+        conversation.id,
+        input.smartSearch,
+      );
     const gate = inputGate(businessMessage, history.messages);
     const content = contentIntent(businessMessage, history.messages);
     const personaMessage = content.active ? content.query : businessMessage;
     const directReply =
-      persona.changed && !persona.business
-        ? personaAcknowledgement(persona.preference)
-        : gate !== "campus"
-          ? inputGateReply(gate)
-          : content.dialogueReply;
+      !input.smartSearch &&
+      /(?:联网|上网|全网|互联网|网上搜|外部搜索)/.test(businessMessage) &&
+      !/不要联网|关闭智能搜索/.test(businessMessage)
+        ? "请先开启输入框下方的「智能搜索」。"
+        : persona.changed && !persona.business
+          ? personaAcknowledgement(persona.preference)
+          : gate !== "campus" && gate !== "conversation" && gate !== "greeting"
+            ? inputGateReply(gate)
+            : gate === "conversation" || gate === "greeting"
+              ? undefined
+              : content.dialogueReply;
     if (directReply) {
       const runId = await ctx.store.reserve(
         ctx.identity,
@@ -383,11 +404,72 @@ export async function chatResponse(request: Request) {
       ctx.ip,
     );
     scopedRoutes.requireRun(runId);
+    let queryUnderstanding:
+      Awaited<ReturnType<typeof understandQuery>> | undefined;
+    let queryUnderstandingFailed = false;
+    let queryUnderstandingError: string | undefined;
+    if (
+      content.active &&
+      !content.queryPlan.topics.length &&
+      !content.map &&
+      !content.articleLookup &&
+      !content.entityLookup &&
+      !content.recentDiscovery &&
+      !content.timeWindow
+    ) {
+      try {
+        queryUnderstanding = await understandQuery(
+          resolved.client,
+          content.query,
+          AbortSignal.any([request.signal, AbortSignal.timeout(12000)]),
+        );
+        content.retrievalQuery = queryUnderstanding.plan.query;
+        content.attemptedKeywords = [content.retrievalQuery];
+        content.articleKeywords = undefined;
+        content.queryPlan = buildQueryPlan(content.retrievalQuery);
+        const topicOnly = [
+          queryUnderstanding.plan.subject,
+          ...queryUnderstanding.plan.entities,
+          ...queryUnderstanding.plan.constraints,
+        ]
+          .join(" ")
+          .replace(
+            /广东外语外贸大学|广外|校园|官网|官方(?:网站|网页)?|最新|最近|近期|资料|文章|信息|资讯|通知|新闻|\s/g,
+            "",
+          );
+        if (
+          queryUnderstanding.plan.goal === "discovery" &&
+          !topicOnly &&
+          /最新|最近|近期/.test(content.query)
+        ) {
+          content.recentDiscovery = true;
+          content.retrievalQuery = "最新 校园 资讯";
+          content.queryPlan = buildQueryPlan(content.retrievalQuery);
+        }
+      } catch (error) {
+        queryUnderstandingFailed = true;
+        queryUnderstandingError =
+          error instanceof ApiError
+            ? error.code
+            : error instanceof Error &&
+                error.message ===
+                  "Planner introduced a term absent from the question"
+              ? "NON_LITERAL_PLAN"
+              : "INVALID_PLAN";
+      }
+    }
     const contentDone = new Set<ContentTool>();
     const supplementPolicy = externalPolicy(
       content.retrievalQuery || content.query,
     );
+    supplementPolicy.active = input.smartSearch && supplementPolicy.active;
+    supplementPolicy.useXiaohongshu = false;
+    supplementPolicy.onlyXhs = false;
+    supplementPolicy.explicit ||= /联网|上网|全网|互联网|网上搜|外部搜索/.test(
+      businessMessage,
+    );
     const contentResults: ContentSearchResult[] = [];
+    supplementPolicy.officialOnly ||= /官网|官方/.test(businessMessage);
     let externalDone = false;
     let evidenceGateUsed = false;
     let answerMode = "model";
@@ -400,18 +482,22 @@ export async function chatResponse(request: Request) {
     const evidence = new Map<string, EvidenceHit>();
     const contentMetrics: unknown[] = [];
     const articlePlaces = new Map<string, { placeId: string; name: string }>();
-    function recentCursor(
-      previous: { role: string; content: string }[],
-    ): string | undefined {
-      const last = [...previous].reverse().find((m) => m.role === "assistant");
-      if (!last) return undefined;
-      const dates: string[] = [];
-      for (const m of last.content.matchAll(/(20\d{2})-(\d{2})-(\d{2})/g))
-        dates.push(`${m[1]}-${m[2]}-${m[3]}`);
-      for (const m of last.content.matchAll(/(\d{1,2})月(\d{1,2})日/g))
-        dates.push(`2026-${m[1].padStart(2, "0")}-${m[2].padStart(2, "0")}`);
-      dates.sort();
-      return dates[0];
+    function recentCursor() {
+      const last = [...history.messages]
+        .reverse()
+        .find((m) => m.role === "assistant");
+      const sources = (last?.cards || [])
+        .filter(
+          (c): c is Extract<AssistantCard, { kind: "source" }> =>
+            c.kind === "source" && !!c.publishedAt,
+        )
+        .sort(
+          (a, b) =>
+            String(b.publishedAt).localeCompare(String(a.publishedAt)) ||
+            a.documentId.localeCompare(b.documentId),
+        );
+      const tail = sources.at(-1);
+      return tail ? { at: tail.publishedAt!, id: tail.documentId } : undefined;
     }
     const previous = history.messages
       .map((message) => ({
@@ -634,6 +720,12 @@ export async function chatResponse(request: Request) {
           };
         },
         validateFinal: (text) => {
+          if (
+            content.active &&
+            answerSourceCount() > 0 &&
+            !/\[(?:来源\s*)?\d+\]/.test(text)
+          )
+            return "每项来自本轮资料的具体事实都必须标对应[n]引用；不支持的细节删除，不输出无引用的资料概述。";
           if (content.active && /来源\s*[:：]|https?:\/\//.test(text))
             return "正文不要输出标题、URL 或“来源：”清单；关键事实只用 [n] 标注，具体来源由界面下方展示。";
           if (!mapActionRequested && claimsMapAction(text))
@@ -846,6 +938,17 @@ export async function chatResponse(request: Request) {
         let text = "";
         let error: { code: string; message: string } | undefined;
         const runMetrics = () => ({
+          smartSearch: input.smartSearch,
+          queryUnderstanding: queryUnderstanding
+            ? {
+                plan: queryUnderstanding.plan,
+                durationMs: queryUnderstanding.durationMs,
+                usage: queryUnderstanding.usage,
+              }
+            : {
+                failed: queryUnderstandingFailed,
+                code: queryUnderstandingError,
+              },
           answerMode,
           conversationAct: content.act,
           answerRequirement: content.answerRequirement,
@@ -867,6 +970,26 @@ export async function chatResponse(request: Request) {
             history.messages,
           ),
           ...metered.metrics(),
+          requests:
+            metered.metrics().requests +
+            Number(!!queryUnderstanding || queryUnderstandingFailed),
+          promptTokens:
+            metered.metrics().promptTokens +
+            (queryUnderstanding?.usage?.promptTokens ?? 0),
+          completionTokens:
+            metered.metrics().completionTokens +
+            (queryUnderstanding?.usage?.completionTokens ?? 0),
+          totalTokens:
+            metered.metrics().totalTokens +
+            (queryUnderstanding?.usage?.totalTokens ?? 0),
+          chargedTokens:
+            metered.metrics().chargedTokens +
+            (queryUnderstanding?.usage?.totalTokens ??
+              (queryUnderstandingFailed ? 250000 : 0)),
+          usageComplete:
+            metered.metrics().usageComplete &&
+            !queryUnderstandingFailed &&
+            (!queryUnderstanding || !!queryUnderstanding.usage),
           timings: {
             version: "camera-settled-v2",
             preparationMs,
@@ -938,7 +1061,7 @@ export async function chatResponse(request: Request) {
                 if (
                   data.method !== "calendar_index" &&
                   !content.articleLookup &&
-                  !(content.recentDiscovery && content.radarCategory) &&
+                  !content.recentDiscovery &&
                   !queryRelevance(relevancePlan, h).relevant
                 )
                   continue;
@@ -1208,16 +1331,61 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         content.radarCategory,
                         content.recentDiscovery,
                         content.discoveryFollowup,
-                        content.discoveryFollowup
-                          ? recentCursor(previous)
-                          : undefined,
+                        undefined,
                         content.articleQuery,
                         content.articleKeywords,
+                        content.discoveryFollowup ? recentCursor() : undefined,
                       ),
                       afterInitialReads: () => {
                         finalPhase = true;
                       },
                       groundedReply: () => {
+                        if (
+                          content.articleLookup &&
+                          contentResults.length &&
+                          contentResults.every((r) => !r.hits.length)
+                        ) {
+                          answerMode = "article_not_found";
+                          return "当前公开资料中未找到这篇文章。可以检查标题，或提供原文链接。";
+                        }
+                        if (
+                          !content.map &&
+                          !content.recentDiscovery &&
+                          !content.tools.includes("search_campus_knowledge") &&
+                          (content.queryPlan.goal === "discovery" ||
+                            content.timeWindow?.role === "event")
+                        ) {
+                          const list = eventEvidenceAnswer(
+                            [...cards.values()],
+                            contentResults,
+                          );
+                          if (list) {
+                            answerMode = "event_list";
+                            return list;
+                          }
+                        }
+                        if (
+                          content.articleLookup &&
+                          cards.size &&
+                          [...cards.values()].every(
+                            (c) =>
+                              c.kind === "source" &&
+                              (c.evidenceType === "metadata" ||
+                                (c.snippet.length < 300 &&
+                                  /^(?:转载来源|编辑|初审|来源)/.test(
+                                    c.snippet.trim(),
+                                  ))),
+                          )
+                        ) {
+                          answerMode = "article_metadata";
+                          return [...cards.values()]
+                            .map((c, i) =>
+                              c.kind === "source"
+                                ? `找到文章《${c.title}》${c.publishedAt ? `，发布于${c.publishedAt.slice(0, 10)}` : ""}。[${i + 1}]\n\n当前可读取的文字不足以概述正文，可以打开原文查看。`
+                                : "",
+                            )
+                            .join("\n\n");
+                        }
                         const noEvidence = () =>
                           evidenceFallback(
                             contentResults,
@@ -1258,7 +1426,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                           if (list) {
                             answerMode = "radar_list";
                             evidenceGateUsed = true;
-                            return !content.radarCategory || content.multiTopic
+                            return content.multiTopic
                               ? `这条消息包含多个主题，本鱼先按发布时间列出最新几条校园资讯；想深入某一类，可以指定“竞赛 / 讲座 / 就业 / 通知”等。\n\n${list}`
                               : list;
                           }
@@ -1314,7 +1482,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                         ) {
                           const attributed = retrievedEvidenceAnswer(
                             [...cards.values()],
-                            content.query,
+                            content.retrievalQuery || content.query,
                             false,
                             new Set(),
                             dailyTone,
@@ -1335,17 +1503,26 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                     result.ok
                   ) {
                     const data = ContentSearchResultSchema.parse(result.data);
+                    const admitted = new Set(
+                      data.hits
+                        .filter((h) => evidence.has(h.documentId))
+                        .map((h) => h.documentId),
+                    );
                     return {
                       ok: true,
                       data: {
                         ...data,
                         activities:
                           name === "search_campus_events"
-                            ? data.activities
+                            ? data.activities.filter((a) =>
+                                admitted.has(a.documentId),
+                              )
                             : [],
                         knowledge:
                           name === "search_campus_knowledge"
-                            ? data.knowledge
+                            ? data.knowledge.filter((k) =>
+                                admitted.has(k.documentId),
+                              )
                             : [],
                         hits: data.hits
                           .filter((h) => evidence.has(h.documentId))
@@ -1449,7 +1626,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                 (content.focus !== "food"
                   ? retrievedEvidenceAnswer(
                       [...cards.values()],
-                      content.query,
+                      content.retrievalQuery || content.query,
                       supplementPolicy.officialOnly,
                       new Set(
                         [...evidence.values()]
@@ -1501,7 +1678,6 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                 publicationFallbackUsed = true;
               }
             }
-            text = stripSelfDeprecation(text);
             const metrics = runMetrics();
             if (result.status !== "completed" || streamSignal.aborted) {
               const code = error?.code || "CANCELLED";
@@ -1563,15 +1739,29 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                   "未完成必要的校园资料检索，请重试。",
                 );
               if (
-                !(await new D1KeywordRetriever(ctx.db).revalidate([
-                  ...evidence.values(),
-                ]))
+                !(await new D1KeywordRetriever(ctx.db).revalidate(
+                  [...evidence.values()].filter(
+                    (h) => h.evidenceBasis !== "activity_projection",
+                  ),
+                )) ||
+                !(await revalidateCalendarEvidence(
+                  ctx.db,
+                  [...evidence.values()].filter(
+                    (h) => h.evidenceBasis === "activity_projection",
+                  ),
+                ))
               )
                 throw new ApiError(
                   "CONFLICT",
                   "文章来源或公开状态已更新，请重新查询。",
                 );
-              if (officialLookupUnavailable && !actions.length) {
+              if (
+                officialLookupUnavailable &&
+                !actions.length &&
+                ![...evidence.values()].some(
+                  (h) => h.official && h.bodyAvailable,
+                )
+              ) {
                 text =
                   "本次官方资料联网核实暂未完成，无法可靠确认所问的任职或名单。请稍后重试；不能据此认定某人没有该身份。";
                 cards.clear();
@@ -1604,6 +1794,10 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                     : [],
                 ),
               ).slice(0, 200000);
+              const cited = citedAnswer(text, [...cards.values()]);
+              text = cited.text;
+              for (const [key, card] of cards)
+                if (!cited.cards.includes(card)) cards.delete(key);
               emit("message.delta", { text });
             }
             if (actions.length > 8)

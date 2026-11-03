@@ -5,6 +5,11 @@ import { readCalendar } from "@/lib/server/calendar/query";
 import { intervalDays, weekOf } from "@/lib/retrieval/calendar-dates";
 import { calendarIdentity } from "@/lib/ingestion/calendar-identity";
 import { analyzeArticle } from "@/lib/ingestion/article-analysis";
+import {
+  calendarContentSearch,
+  revalidateCalendarEvidence,
+} from "@/lib/server/calendar/search";
+import { EventSearchInputSchema } from "@/domain/retrieval/skills";
 it.each([
   ["2026-11-05", "2026-11-07", ["2026-11-05", "2026-11-06", "2026-11-07"]],
   ["2026-11-30", "2026-12-02", ["2026-11-30", "2026-12-01", "2026-12-02"]],
@@ -41,6 +46,18 @@ it("returns one interval on every day, exact counts, no manufactured clock, and 
       day: "2026-11-06",
     });
     expect(r.items).toHaveLength(1);
+    const evidence = await calendarContentSearch(
+      f.db,
+      EventSearchInputSchema.parse({
+        query: "论坛",
+        after: "2026-11-06",
+        before: "2026-11-08",
+        timeRole: "event",
+      }),
+      "2026-11-06T00:00:00Z",
+    );
+    expect(evidence.hits.length).toBeGreaterThan(0);
+    expect(await revalidateCalendarEvidence(f.db, evidence.hits)).toBe(true);
     expect(r.dailyCounts).toEqual({
       "2026-11-06": 1,
       "2026-11-07": 1,
@@ -69,6 +86,7 @@ it("returns one interval on every day, exact counts, no manufactured clock, and 
       (await readCalendar(f.db, { after: "2026-11-06", before: "2026-11-08" }))
         .items,
     ).toEqual([]);
+    expect(await revalidateCalendarEvidence(f.db, evidence.hits)).toBe(false);
   } finally {
     f.close();
   }

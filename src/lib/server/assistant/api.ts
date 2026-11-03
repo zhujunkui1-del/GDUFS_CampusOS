@@ -83,10 +83,13 @@ export const sessionGet = api(async (request, context) => {
     history: latest
       ? historyForClient(
           await context.store.history(context.identity, latest.id),
-          ["1", "2"].includes(
+          ["1", "2", "3"].includes(
             request.headers.get("X-CampusOS-Conversation-Protocol") || "",
           ),
-          request.headers.get("X-CampusOS-Conversation-Protocol") === "2",
+          ["2", "3"].includes(
+            request.headers.get("X-CampusOS-Conversation-Protocol") || "",
+          ),
+          request.headers.get("X-CampusOS-Conversation-Protocol") === "3",
         )
       : null,
     model: await defaultModelRuntime().status(),
@@ -106,10 +109,13 @@ export const historyGet = api(async (request, context) => {
         .strict()
         .parse(Object.fromEntries(new URL(request.url).searchParams)),
     ),
-    ["1", "2"].includes(
+    ["1", "2", "3"].includes(
       request.headers.get("X-CampusOS-Conversation-Protocol") || "",
     ),
-    request.headers.get("X-CampusOS-Conversation-Protocol") === "2",
+    ["2", "3"].includes(
+      request.headers.get("X-CampusOS-Conversation-Protocol") || "",
+    ),
+    request.headers.get("X-CampusOS-Conversation-Protocol") === "3",
   );
 }, true);
 export const conversationsGet = api(async (request, context) => {
@@ -117,6 +123,15 @@ export const conversationsGet = api(async (request, context) => {
     Object.fromEntries(new URL(request.url).searchParams),
   );
   return context.store.list(context.identity, query.cursor, query.limit);
+}, true);
+export const conversationPatch = api(async (request, context) => {
+  const id = idSchema.parse(new URL(request.url).pathname.split("/").at(-1));
+  const body = z
+    .object({ smartSearch: z.boolean() })
+    .strict()
+    .parse(await readJson(request));
+  await context.store.setSmartSearch(context.identity, id, body.smartSearch);
+  return context.store.searchPreference(context.identity, id);
 }, true);
 export const conversationDelete = api(async (request, context) => {
   const body = await readJson(request, 1024, true);

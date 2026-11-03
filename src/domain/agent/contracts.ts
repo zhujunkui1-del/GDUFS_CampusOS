@@ -9,6 +9,7 @@ export const AgentChatRequestSchema = z
     conversationId: z.string().uuid().optional(),
     clientRequestId: z.string().uuid().optional(),
     message: z.string().trim().min(1).max(2000),
+    smartSearch: z.boolean().default(false),
     mapContext: z
       .object({
         selectedPlaceId: z.string().min(1).max(128).optional(),

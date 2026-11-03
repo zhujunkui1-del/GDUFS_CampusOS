@@ -11,6 +11,34 @@ import { isOfficialCampusUrl } from "../external-search/policy";
 import { registrationWindowState } from "@/lib/retrieval/registration-state";
 import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
 import type { ArticleTimePoint } from "@/domain/console/article-analysis";
+import type { EvidenceHit } from "@/domain/retrieval/contracts";
+
+/** Calendar projections use their own index/version and current publication gate. */
+export async function revalidateCalendarEvidence(
+  db: SqlDatabase,
+  hits: EvidenceHit[],
+) {
+  const groups = new Map<string, Awaited<ReturnType<typeof readCalendar>>>();
+  for (const hit of hits) {
+    if (!groups.has(hit.chunkId))
+      groups.set(
+        hit.chunkId,
+        await readCalendar(db, { event: hit.chunkId, limit: 1 }),
+      );
+    const item = groups.get(hit.chunkId)!.items[0];
+    if (
+      !item?.sources.some(
+        (s) =>
+          s.documentId === hit.documentId &&
+          s.version === hit.documentVersion &&
+          s.contentRevision === hit.contentRevision &&
+          s.inputHash === hit.inputHash,
+      )
+    )
+      return false;
+  }
+  return true;
+}
 const time = (p: ArticleTimePoint | null) =>
   p
     ? {

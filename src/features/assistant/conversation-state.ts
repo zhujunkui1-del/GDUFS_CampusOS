@@ -3,6 +3,8 @@ export type ConversationView = {
   id?: string;
   title: string;
   messages: StoredMessage[];
+  smartSearch?: boolean;
+  smartSearchVersion?: number;
 };
 export const blankConversation = (): ConversationView => ({
   title: "新对话",
@@ -18,3 +20,25 @@ export const acceptsConversationResult = (
   current: number,
   aborted = false,
 ) => started === current && !aborted;
+
+export function restoredSearchPreference(
+  prior: ConversationView,
+  incoming: {
+    conversationId: string;
+    smartSearch?: boolean;
+    smartSearchVersion?: number;
+  },
+  writing: boolean,
+) {
+  return prior.id === incoming.conversationId &&
+    (writing ||
+      (prior.smartSearchVersion ?? 0) > (incoming.smartSearchVersion ?? 0))
+    ? {
+        smartSearch: prior.smartSearch ?? false,
+        smartSearchVersion: prior.smartSearchVersion ?? 0,
+      }
+    : {
+        smartSearch: incoming.smartSearch ?? false,
+        smartSearchVersion: incoming.smartSearchVersion ?? 0,
+      };
+}

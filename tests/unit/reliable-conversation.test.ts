@@ -22,7 +22,7 @@ it("keeps verified building detail requests in the existing map skills", () => {
     "search_campus_knowledge",
   );
 });
-it("actually invokes native XHS for an explicit request even in events mode", async () => {
+it("never invokes native XHS even when an old policy explicitly requests it", async () => {
   const relay = vi.fn(
     async (input: import("@/domain/retrieval/relay").RelayInput) => {
       expect(input.query.length).toBeGreaterThan(0);
@@ -51,6 +51,7 @@ it("actually invokes native XHS for an explicit request even in events mode", as
     },
   );
   expect(relay.mock.calls.some(([input]) => input.kind === "xiaohongshu")).toBe(
-    true,
+    false,
   );
+  expect(relay.mock.calls.some(([input]) => input.kind === "web")).toBe(true);
 });

@@ -31,7 +31,9 @@ const cards: AssistantCard[] = [
   },
 ];
 it("uses one collapsed disclosure for all real sources", () => {
-  const html = renderToStaticMarkup(createElement(AssistantSources, { cards }));
+  const html = renderToStaticMarkup(
+    createElement(AssistantSources, { cards, text: "借阅[1]，食堂[2]" }),
+  );
   const { document } = parseHTML(html);
   const details = document.querySelectorAll("details");
   expect(details).toHaveLength(1);

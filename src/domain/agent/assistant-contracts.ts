@@ -96,6 +96,8 @@ export const StoredMessageSchema = z
 export type StoredMessage = z.infer<typeof StoredMessageSchema>;
 export const AssistantHistorySchema = z
   .object({
+    smartSearch: z.boolean().optional(),
+    smartSearchVersion: z.number().int().nonnegative().optional(),
     conversationId: z.string().uuid(),
     messages: z.array(StoredMessageSchema),
     selectedPlaceId: z.string().nullable(),
@@ -126,9 +128,16 @@ export function historyForClient(
   history: z.infer<typeof AssistantHistorySchema>,
   expanded: boolean,
   paginated = false,
+  preferences = false,
 ) {
   return {
     conversationId: history.conversationId,
+    ...(preferences
+      ? {
+          smartSearch: history.smartSearch ?? false,
+          smartSearchVersion: history.smartSearchVersion ?? 0,
+        }
+      : {}),
     messages: paginated
       ? history.messages
       : history.messages.map((message) => {

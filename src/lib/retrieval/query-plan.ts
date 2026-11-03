@@ -207,6 +207,11 @@ export function buildQueryPlan(
           "看看",
           "了解",
           "资讯",
+          "是谁",
+          "属于",
+          "担任",
+          "是不是",
+          "是否",
         ].includes(t),
     )
     .slice(0, 4)
@@ -235,10 +240,13 @@ export function buildQueryPlan(
         /(?:20\d{2}[-年]\d{1,2}(?:[-月]\d{1,2}日?)?|今天|今日|明天|明日|本周|这周|下周|最近一周|过去7天|下个月|近期|最近)/,
       )?.[0] || null,
     excludedTerms,
-    qualifiers: ["本科生", "研究生", "新生", "毕业生", "学科竞赛"].filter((t) =>
-      positive.includes(t),
-    ),
-    modifiers: topics.length ? modifiers : [],
+    qualifiers: [
+      ...["本科生", "研究生", "新生", "毕业生", "学科竞赛"].filter((t) =>
+        positive.includes(t),
+      ),
+      ...new Set(positive.match(/20\d{2}/g) || []),
+    ],
+    modifiers,
     ...(timeRange ? { timeRange } : {}),
   };
 }
@@ -262,6 +270,13 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
       .normalize("NFKC")
       .toLowerCase(),
     text = title + " " + body;
+  const years = plan.qualifiers.filter((t) => /^20\d{2}$/.test(t));
+  if (
+    years.length &&
+    /20\d{2}/.test(text) &&
+    !years.some((year) => text.includes(year))
+  )
+    return { relevant: false, score: 0, reason: "requested_year_missing" };
   if (plan.excludedTerms.some((t) => title.includes(t)))
     return { relevant: false, score: 0, reason: "excluded_topic" };
   if (

@@ -20,6 +20,10 @@ import { ApiError } from "../errors";
 import { isOfficialCampusUrl } from "../external-search/policy";
 import { evidenceWindow } from "@/lib/retrieval/evidence-window";
 import type { SemanticRetriever } from "./vector";
+import {
+  articleTitleKey,
+  articleTitleSql,
+} from "@/lib/retrieval/article-title";
 
 type DocumentRow = {
   id: string;
@@ -43,6 +47,7 @@ type DocumentRow = {
   text_hash: string;
   text_length: number;
   evidence_type: EvidenceHit["evidenceType"];
+  can_read_body: number;
 };
 type ChunkRow = {
   document_id: string;
@@ -78,23 +83,33 @@ export async function currentPublicArticles(
  CASE WHEN m.document_id IS NOT NULL THEN CASE WHEN m.radar_category IS NOT NULL THEN 'radar' ELSE 'knowledge' END WHEN a.document_id IS NOT NULL THEN a.primary_destination WHEN d.radar_category IS NOT NULL THEN 'radar' WHEN d.knowledge_category IS NOT NULL THEN 'knowledge' ELSE 'unknown' END AS primary_destination,
  CASE WHEN m.document_id IS NOT NULL THEN m.radar_category WHEN a.document_id IS NOT NULL THEN a.radar_category ELSE d.radar_category END AS radar_category,
  CASE WHEN m.document_id IS NOT NULL THEN m.knowledge_category WHEN a.document_id IS NOT NULL THEN a.knowledge_category ELSE d.knowledge_category END AS knowledge_category,
- CASE WHEN m.document_id IS NOT NULL THEN 'manual' WHEN a.document_id IS NOT NULL THEN 'automatic' ELSE 'legacy' END AS classification_origin,a.analysis_json,r.text_hash,r.text_length,r.evidence_type
+ CASE WHEN m.document_id IS NOT NULL THEN 'manual' WHEN a.document_id IS NOT NULL THEN 'automatic' ELSE 'legacy' END AS classification_origin,a.analysis_json,r.text_hash,r.text_length,r.evidence_type,
+ (r.evidence_type<>'metadata' AND d.rights_scope IN(${allowed}) AND NOT EXISTS(
+ SELECT 1 FROM knowledge_sources sp LEFT JOIN source_collection_policies p ON p.source_id=sp.id WHERE sp.id=d.source_id
+ AND ((sp.manual_policy_version>0 AND (sp.manual_rights_scope NOT IN(${allowed}) OR sp.manual_policy_expires_at_ms<=CAST((julianday('now')-2440587.5)*86400000 AS INTEGER)))
+ OR (sp.manual_policy_version=0 AND p.source_id IS NOT NULL AND (p.rights_scope NOT IN(${allowed}) OR p.expires_at_ms<=CAST((julianday('now')-2440587.5)*86400000 AS INTEGER)))))) AS can_read_body
  FROM selected CROSS JOIN knowledge_documents d ON d.id=selected.id JOIN knowledge_sources s ON s.id=d.source_id
  JOIN article_search_documents r ON r.document_id=d.id AND r.content_revision=d.content_revision AND r.input_hash=d.input_hash AND r.index_version=? AND r.status='ready'
  LEFT JOIN document_article_analysis a ON a.document_id=d.id AND a.content_revision=d.content_revision AND a.input_hash=d.input_hash
  LEFT JOIN document_classification_overrides m ON m.document_id=d.id
  WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
  AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
- AND (r.evidence_type='metadata' OR (d.rights_scope IN(${allowed}) AND NOT EXISTS(
- SELECT 1 FROM knowledge_sources sp LEFT JOIN source_collection_policies p ON p.source_id=sp.id WHERE sp.id=d.source_id
- AND ((sp.manual_policy_version>0 AND (sp.manual_rights_scope NOT IN(${allowed}) OR sp.manual_policy_expires_at_ms<=CAST((julianday('now')-2440587.5)*86400000 AS INTEGER)))
- OR (sp.manual_policy_version=0 AND p.source_id IS NOT NULL AND (p.rights_scope NOT IN(${allowed}) OR p.expires_at_ms<=CAST((julianday('now')-2440587.5)*86400000 AS INTEGER)))))))
  ) SELECT v.* FROM permitted v WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=v.id AND p.version=v.version)`,
     [...ids, RETRIEVAL_INDEX_VERSION],
   );
   // The bounded MATERIALIZED boundary keeps the UNION view out of the source
   // permission expression (D1 depth=100), with one atomic authority snapshot.
-  return result.results;
+  return result.results.map((row) =>
+    row.can_read_body
+      ? row
+      : {
+          ...row,
+          evidence_type: "metadata" as const,
+          analysis_json: null,
+          body_status: "not_provided",
+          rights_scope: "metadata_only",
+        },
+  );
 }
 export class D1KeywordRetriever implements KnowledgeRetriever {
   constructor(
@@ -186,40 +201,54 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
     // Exact-title lookup: "找到《…》这篇文章" should find the document by its
     // title instead of hoping a long FTS query outranks everything else.
     let titleChunks: ChunkRow[] = [];
-    if (q.title) {
-      const wanted = q.title
-        .replace(/["“”'‘’《》]/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-      const short =
-        wanted.replace(/\s*[-—|｜]\s*[^-—|｜]*(?:大学|学院|工会|团委|委员会).*$/, "").trim() ||
-        wanted;
-      const docs = await read<{ id: string; title: string; published_at: string | null }>(
+    let titleIds: Set<string> | undefined;
+    const sourceFilterSql =
+      (q.sourceId ? " AND d.source_id=?" : "") +
+      (q.sourceTypes?.length
+        ? ` AND EXISTS(SELECT 1 FROM knowledge_sources sf WHERE sf.id=d.source_id AND sf.channel_type IN(${q.sourceTypes.map(() => "?").join(",")}))`
+        : "");
+    const sourceFilterArgs = [
+      ...(q.sourceId ? [q.sourceId] : []),
+      ...(q.sourceTypes || []),
+    ];
+    const titleProbe =
+      q.title ||
+      (q.sort === "relevance" &&
+      q.query.length >= 8 &&
+      !/最近|近期|最新|怎么|如何|什么|哪些|吗|呢/.test(q.query)
+        ? q.query
+        : undefined);
+    if (titleProbe) {
+      const docs = await read<{
+        id: string;
+        title: string;
+        published_at: string | null;
+      }>(
         `SELECT d.id,d.title,d.published_at FROM knowledge_documents d
- JOIN console_public_documents p ON p.id=d.id AND p.version=d.version
  WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
- AND (instr(d.title, ?) > 0 OR instr(d.title, ?) > 0)
+ AND (instr(d.title, ?) > 0 OR instr(${articleTitleSql("d.title")}, ?) > 0)
+ ${sourceFilterSql}
  AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
- ORDER BY length(d.title) ASC LIMIT 8`,
-        [`${short}`, `${wanted}`],
+ ORDER BY (d.publication_status='published') DESC,length(d.title) ASC,d.id LIMIT 16`,
+        [titleProbe, articleTitleKey(titleProbe), ...sourceFilterArgs],
       );
       const ids = docs.results.map((r) => r.id);
+      if (ids.length) titleIds = new Set(ids);
+      // An explicit title is a constraint, not permission to accept arbitrary
+      // FTS results when that title was not found. Broader reads are separate.
+      if (!ids.length && q.title) return empty();
       if (ids.length) {
         const chunks = await read<ChunkRow>(
-          `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,0 AS score
+          `SELECT document_id,id,text,start_offset,end_offset,text_basis,content_revision,input_hash,0 AS score FROM (
+ SELECT k.*,ROW_NUMBER() OVER(PARTITION BY document_id ORDER BY CASE WHEN text_basis='title' THEN 1 ELSE 0 END,start_offset) AS rn
  FROM knowledge_chunks k WHERE k.document_id IN(${ids.map(() => "?").join(",")}) AND k.index_version=?
- ORDER BY CASE WHEN k.text_basis='title' THEN 1 ELSE 0 END, k.start_offset ASC LIMIT 48`,
+ ) WHERE rn<=6 ORDER BY document_id,start_offset LIMIT 96`,
           [...ids, RETRIEVAL_INDEX_VERSION],
         );
-        const seen = new Set<string>();
-        titleChunks = chunks.results.filter((c) => {
-          if (seen.has(c.document_id)) return false;
-          seen.add(c.document_id);
-          return true;
-        });
+        titleChunks = chunks.results;
         metrics.recallLanes.push({
           name: "title_exact",
-          limit: 8,
+          limit: 16,
           candidates: titleChunks.length,
         });
       }
@@ -258,6 +287,14 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       );
       params.push(q.publishedBefore);
     }
+    if (q.publishedCursor) {
+      conditions.push("(d.published_at<? OR (d.published_at=? AND d.id>?))");
+      params.push(
+        q.publishedCursor.at,
+        q.publishedCursor.at,
+        q.publishedCursor.id,
+      );
+    }
     // The planner is not the only caller: a literal "最近 + 分类" query must
     // read the category itself even when a model omitted the sort hint.
     const sortMode =
@@ -272,7 +309,11 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       /竞赛活动情况|竞赛|比赛|大赛|讲座|讲坛|论坛|学术沙龙|沙龙|文体活动|文体|文化|体育|通知|公告|资讯|新闻|预告|情况|信息|方面|内容|介绍|了解|告诉|问题|东西|相关|广外|校园|大学|最新|近期|最近|有什么|哪些|吗|的/g;
     const genericBigrams = new Set(
       Array.from(
-        { length: "竞赛活动情况讲座比赛大赛文体文化体育通知公告资讯新闻预告信息方面内容介绍了解告诉问题东西相关广外校园大学最新近期最近有什么哪些".length - 1 },
+        {
+          length:
+            "竞赛活动情况讲座比赛大赛文体文化体育通知公告资讯新闻预告信息方面内容介绍了解告诉问题东西相关广外校园大学最新近期最近有什么哪些"
+              .length - 1,
+        },
         (_, i) =>
           "竞赛活动情况讲座比赛大赛文体文化体育通知公告资讯新闻预告信息方面内容介绍了解告诉问题东西相关广外校园大学最新近期最近有什么哪些".slice(
             i,
@@ -318,13 +359,23 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
     // match "竞赛" better than yesterday's notice, which is not what the user
     // asked for.
     let recentChunks: ChunkRow[] = [];
-    let recentDocCount = 0;
+    const cursorSql = q.publishedCursor
+      ? " AND (d.published_at<? OR (d.published_at=? AND d.id>?))"
+      : "";
+    const cursorArgs = q.publishedCursor
+      ? [q.publishedCursor.at, q.publishedCursor.at, q.publishedCursor.id]
+      : [];
     const cultureTopic =
       sortMode === "published_desc" &&
       !q.category &&
       /文体|文化|体育/.test(q.query);
     if (cultureTopic) {
-      const docs = await read<{ id: string; title: string; published_at: string | null; radar_category: string | null }>(
+      const docs = await read<{
+        id: string;
+        title: string;
+        published_at: string | null;
+        radar_category: string | null;
+      }>(
         `SELECT d.id,d.title,d.published_at,d.radar_category FROM knowledge_documents d
  JOIN console_public_documents p ON p.id=d.id AND p.version=d.version
  WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
@@ -337,11 +388,16 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
    OR d.title LIKE '%音乐会%' OR d.title LIKE '%舞蹈%' OR d.title LIKE '%运动会%'
    OR d.title LIKE '%校运会%')
 ${q.publishedBefore ? " AND d.published_at < ?" : ""}
+${cursorSql}
+${sourceFilterSql}
  AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
- ORDER BY d.published_at DESC LIMIT 80`,
-        q.publishedBefore ? [q.publishedBefore] : [],
+ ORDER BY d.published_at DESC,d.id ASC LIMIT 80`,
+        [
+          ...(q.publishedBefore ? [q.publishedBefore] : []),
+          ...cursorArgs,
+          ...sourceFilterArgs,
+        ],
       );
-      recentDocCount = docs.results.length;
       const ids = docs.results.map((r) => r.id);
       // The culture tag is incomplete in the data: book exhibitions and the
       // autumn singing contest sit under other tags. Include explicit culture
@@ -369,8 +425,9 @@ ${q.publishedBefore ? " AND d.published_at < ?" : ""}
 ) WHERE rn=1`,
           [...ids, RETRIEVAL_INDEX_VERSION],
         );
-        const titleById = new Map(docs.results.map((r) => [r.id, r.title])),
-          dateById = new Map(docs.results.map((r) => [r.id, r.published_at]));
+        const dateById = new Map(
+          docs.results.map((r) => [r.id, r.published_at]),
+        );
         const seen = new Set<string>();
         recentChunks = chunks.results
           .filter((c) => {
@@ -391,19 +448,31 @@ ${q.publishedBefore ? " AND d.published_at < ?" : ""}
         });
       }
     } else if (sortMode === "published_desc" && q.category) {
-      const recentDocs = await read<{ id: string; title: string; published_at: string | null }>(
+      const recentDocs = await read<{
+        id: string;
+        title: string;
+        published_at: string | null;
+      }>(
         `SELECT d.id,d.title,d.published_at FROM knowledge_documents d
  JOIN console_public_documents p ON p.id=d.id AND p.version=d.version
+ JOIN console_article_classifications c ON c.document_id=d.id
  WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
- AND (d.radar_category=? OR d.knowledge_category=?)
+ AND (c.radar_category=? OR c.knowledge_category=?)
  AND d.published_at IS NOT NULL
 ${q.publishedBefore ? " AND d.published_at < ?" : ""}
+${cursorSql}
+${sourceFilterSql}
  AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
- ORDER BY d.published_at DESC LIMIT 80`,
-        q.publishedBefore ? [q.category, q.category, q.publishedBefore] : [q.category, q.category],
+ ORDER BY d.published_at DESC,d.id ASC LIMIT 80`,
+        [
+          q.category,
+          q.category,
+          ...(q.publishedBefore ? [q.publishedBefore] : []),
+          ...cursorArgs,
+          ...sourceFilterArgs,
+        ],
       );
       const recentIds = recentDocs.results.map((r) => r.id);
-      recentDocCount = recentIds.length;
       if (recentIds.length) {
         const chunks = await read<ChunkRow>(
           `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,0 AS score
@@ -446,18 +515,27 @@ ${q.publishedBefore ? " AND d.published_at < ?" : ""}
     } else if (sortMode === "published_desc" && !q.title) {
       // "最新的资讯/新闻" has no radar tag: still honor publication order over
       // lexical relevance, otherwise April notices can beat yesterday's news.
-      const recentDocs = await read<{ id: string; title: string; published_at: string | null }>(
+      const recentDocs = await read<{
+        id: string;
+        title: string;
+        published_at: string | null;
+      }>(
         `SELECT d.id,d.title,d.published_at FROM knowledge_documents d
  JOIN console_public_documents p ON p.id=d.id AND p.version=d.version
  WHERE d.owner_user_id IS NULL AND d.data_domain<>'user_private'
  AND d.published_at IS NOT NULL
 ${q.publishedBefore ? " AND d.published_at < ?" : ""}
+${cursorSql}
+${sourceFilterSql}
  AND NOT EXISTS(SELECT 1 FROM console_cleanup_tombstones t WHERE t.document_id=d.id AND t.released_at IS NULL)
- ORDER BY d.published_at DESC LIMIT 80`,
-        q.publishedBefore ? [q.publishedBefore] : [],
+ ORDER BY d.published_at DESC,d.id ASC LIMIT 80`,
+        [
+          ...(q.publishedBefore ? [q.publishedBefore] : []),
+          ...cursorArgs,
+          ...sourceFilterArgs,
+        ],
       );
       const ids = recentDocs.results.map((r) => r.id);
-      recentDocCount = ids.length;
       if (ids.length) {
         const chunks = await read<ChunkRow>(
           `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,0 AS score
@@ -487,33 +565,36 @@ ${q.publishedBefore ? " AND d.published_at < ?" : ""}
         : [];
     if (!titleChunks.length && !recentChunks.length)
       for (const lane of lanes) {
-      const local = lane.ids?.length
-        ? ` AND k.document_id IN(${lane.ids.map(() => "?").join(",")})`
-        : "";
-      const found = await read<ChunkRow>(
-        `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,rank AS score
+        const local = lane.ids?.length
+          ? ` AND k.document_id IN(${lane.ids.map(() => "?").join(",")})`
+          : "";
+        const found = await read<ChunkRow>(
+          `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,rank AS score
    FROM article_chunk_fts JOIN knowledge_chunks k ON k.rowid=article_chunk_fts.rowid JOIN knowledge_documents d ON d.id=k.document_id JOIN knowledge_sources s ON s.id=d.source_id
    WHERE ${conditions.join(" AND ")}${local} ORDER BY rank LIMIT ?`,
-        [lane.expression, ...params, ...(lane.ids || []), lane.limit],
-      );
-      metrics.recallLanes.push({
-        name: lane.name,
-        limit: lane.limit,
-        candidates: found.results.length,
-      });
-      candidateLanes.push(found.results);
-    }
+          [lane.expression, ...params, ...(lane.ids || []), lane.limit],
+        );
+        metrics.recallLanes.push({
+          name: lane.name,
+          limit: lane.limit,
+          candidates: found.results.length,
+        });
+        candidateLanes.push(found.results);
+      }
     // Semantic recall is a supplemental lane only for open natural-language
     // queries. Structured/filtered searches keep the deterministic FTS path so
     // a vector candidate cannot bypass date, source or document constraints.
     let semanticLane: ChunkRow[] = [];
     if (
       this.semantic &&
+      !q.title &&
+      !titleChunks.length &&
       !q.documentIds?.length &&
       !q.sourceId &&
       !q.sourceTypes?.length &&
       !q.publishedAfter &&
       !q.publishedBefore &&
+      !q.publishedCursor &&
       !q.category
     ) {
       try {
@@ -567,16 +648,29 @@ ${q.publishedBefore ? " AND d.published_at < ?" : ""}
       directSubject: boolean;
     }[] = [];
     for (const d of documents) {
+      if (titleIds && !titleIds.has(d.id)) continue;
       const parsed = d.analysis_json
           ? ArticleAnalysisSchema.safeParse(JSON.parse(d.analysis_json))
           : null,
         analysis = parsed?.success ? parsed.data : null;
-      const choices = rows.results.filter(
-        (c) =>
-          c.document_id === d.id &&
-          c.input_hash === d.input_hash &&
-          c.content_revision === d.content_revision,
-      );
+      const choices = rows.results
+        .filter(
+          (c) =>
+            c.document_id === d.id &&
+            c.input_hash === d.input_hash &&
+            c.content_revision === d.content_revision,
+        )
+        .map((c) =>
+          d.can_read_body
+            ? c
+            : {
+                ...c,
+                text: d.title,
+                text_basis: "title" as const,
+                start_offset: 0,
+                end_offset: d.title.length,
+              },
+        );
       const count = (s: string) =>
         terms.reduce(
           (sum, t) => sum + (s.includes(t) ? Math.min(4, t.length / 2) : 0),
@@ -611,7 +705,8 @@ ${q.publishedBefore ? " AND d.published_at < ?" : ""}
         sourceName: d.display_name,
         contentSnippet: c.text,
       });
-      if (!q.title && sortMode !== "published_desc" && !relevance.relevant) continue;
+      if (!titleIds && sortMode !== "published_desc" && !relevance.relevant)
+        continue;
       if (
         subjectTerms.length &&
         !subjectTerms.some(
@@ -770,7 +865,8 @@ ${q.publishedBefore ? " AND d.published_at < ?" : ""}
       ranked.sort(
         (a, b) =>
           (Date.parse(b.hit.publishedAt || "") || 0) -
-          (Date.parse(a.hit.publishedAt || "") || 0),
+            (Date.parse(a.hit.publishedAt || "") || 0) ||
+          a.hit.documentId.localeCompare(b.hit.documentId),
       );
     const unique = new Map<string, (typeof ranked)[number]>();
     // Once an actual subject-specific guide/policy is available, a neighbouring
@@ -817,6 +913,7 @@ ${q.publishedBefore ? " AND d.published_at < ?" : ""}
       current.some(
         (d) =>
           d.id === h.documentId &&
+          d.evidence_type === h.evidenceType &&
           d.version === h.documentVersion &&
           d.content_revision === h.contentRevision &&
           d.input_hash === h.inputHash,

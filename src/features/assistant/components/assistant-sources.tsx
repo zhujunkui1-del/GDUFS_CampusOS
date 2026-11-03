@@ -31,7 +31,7 @@ export function AssistantSources({
     ),
   );
   const cited = candidates.filter((source) => referenced.has(source.number));
-  const sources = cited.length ? cited : candidates;
+  const sources = cited;
   if (!sources.length) return null;
   const calendarLinks = [
     ...new Map(

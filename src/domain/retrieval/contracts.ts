@@ -22,6 +22,13 @@ export const RetrievalQuerySchema = z
     sourceId: z.string().min(1).max(128).optional(),
     publishedAfter: z.iso.date().optional(),
     publishedBefore: z.iso.date().optional(),
+    publishedCursor: z
+      .object({
+        at: z.string().min(10).max(40),
+        id: z.string().min(1).max(128),
+      })
+      .strict()
+      .optional(),
     // Exact-title lookup for "找到这篇文章"; still verified by the same
     // publication/permission checks as keyword retrieval.
     title: z.string().trim().min(4).max(300).optional(),

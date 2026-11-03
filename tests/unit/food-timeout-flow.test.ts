@@ -47,7 +47,7 @@ it("keeps actual retrieved food evidence usable after the generation provider ti
     EXTERNAL_SEARCH_TRANSPORT: "cloud",
     CLOUD_SEARCH: { fetch: relay },
     CLOUD_SEARCH_TOKEN: "isolated-only",
-    EXTERNAL_WEB_SEARCH_ENABLED: "false",
+    EXTERNAL_WEB_SEARCH_ENABLED: "true",
   };
   const client = new MockModelProvider([
     new ApiError("MODEL_TIMEOUT", "模型回复超时，请重试。", true),
@@ -77,6 +77,7 @@ it("keeps actual retrieved food evidence usable after the generation provider ti
         },
         body: JSON.stringify({
           message: "有什么好吃的吗",
+          smartSearch: true,
           clientRequestId: crypto.randomUUID(),
         }),
       }),

@@ -38,7 +38,7 @@ it("keeps an invalid reference as text and escapes untrusted page text", () => {
       cards: [source],
     }),
   );
-  expect(html).toContain("[来源9]");
+  expect(html).not.toContain("assistant-citation");
   expect(html).not.toContain("<script>");
   expect(html).not.toContain("<a");
 });

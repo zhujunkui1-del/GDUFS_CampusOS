@@ -112,9 +112,9 @@ it("asks for a numbered, direct answer instead of an excerpt frame", () => {
     },
     "answer",
   );
-  expect(instructions).toContain("1. 2. 3.");
-  expect(instructions).toContain("不用“已找到相关原文”");
-  expect(instructions).toContain("正文绝对不要写标题、URL");
+  expect(instructions).toContain("Markdown标题、段落、列表或对比表");
+  expect(instructions).toContain("直接回答，再给关键依据");
+  expect(instructions).toContain("不用“来源：”或长URL清单");
   expect(instructions).not.toContain("回答末尾写“来源：”");
 });
 it("retrieves discovery questions with the core topic instead of the whole phrase", () => {

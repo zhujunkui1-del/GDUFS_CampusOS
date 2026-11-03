@@ -274,6 +274,7 @@ export class AssistantStore {
     await this.conversation(identity, id);
     return {
       conversationId: id,
+      ...(await this.searchPreference(identity, id)),
       messages,
       selectedPlaceId: conversation.selected_place_id,
       activeRouteId: conversation.active_route_id,
@@ -529,6 +530,51 @@ export class AssistantStore {
         )
         .bind(identity.owner, runId)
         .run();
+  }
+  async smartSearch(identity: AssistantIdentity, conversationId: string) {
+    return (await this.searchPreference(identity, conversationId)).smartSearch;
+  }
+  async searchPreference(identity: AssistantIdentity, conversationId: string) {
+    await this.conversation(identity, conversationId);
+    const row = await this.db
+      .prepare(
+        "SELECT content FROM conversation_messages WHERE id=? AND conversation_id=? AND role='system'",
+      )
+      .bind("smart-search:" + conversationId, conversationId)
+      .first<{ content: string }>();
+    if (row?.content === "true")
+      return { smartSearch: true, smartSearchVersion: 0 };
+    try {
+      const value = JSON.parse(row?.content || "{}");
+      return {
+        smartSearch: value.enabled === true || value.enabled === 1,
+        smartSearchVersion: Number.isSafeInteger(value.version)
+          ? value.version
+          : 0,
+      };
+    } catch {
+      return { smartSearch: false, smartSearchVersion: 0 };
+    }
+  }
+  async setSmartSearch(
+    identity: AssistantIdentity,
+    conversationId: string,
+    enabled: boolean,
+  ) {
+    const result = await this.db
+      .prepare(
+        "INSERT INTO conversation_messages(id,conversation_id,role,content,artifacts_json) SELECT ?,?,'system',?,'[]' WHERE EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?)) ON CONFLICT(id) DO UPDATE SET content=json_object('enabled',json_extract(excluded.content,'$.enabled'),'version',COALESCE(json_extract(conversation_messages.content,'$.version'),0)+1)",
+      )
+      .bind(
+        "smart-search:" + conversationId,
+        conversationId,
+        JSON.stringify({ enabled, version: 1 }),
+        conversationId,
+        identity.owner,
+        this.now(),
+      )
+      .run();
+    if (!result.meta.changes) throw new ApiError("NOT_FOUND", "对话已失效。");
   }
   async persona(identity: AssistantIdentity, conversationId: string) {
     await this.conversation(identity, conversationId);

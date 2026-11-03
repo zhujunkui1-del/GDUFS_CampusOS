@@ -8,6 +8,7 @@ import {
   receiptPost,
   conversationsGet,
   conversationDelete,
+  conversationPatch,
 } from "./assistant/api";
 import { chatResponse } from "./assistant/chat";
 import { executeMapSkillHttp } from "./maps/http";
@@ -90,7 +91,9 @@ export function previewApiHandler(
   if (/^\/api\/agent\/conversations\/[^/]+$/.test(path))
     return method === "DELETE"
       ? { method: "DELETE", handle: conversationDelete }
-      : { method: "GET", handle: historyGet };
+      : method === "PATCH"
+        ? { method: "PATCH", handle: conversationPatch }
+        : { method: "GET", handle: historyGet };
   if (/^\/api\/agent\/routes\/[^/]+$/.test(path))
     return { method: "POST", handle: routePost };
   if (/^\/api\/agent\/actions\/[^/]+\/claim$/.test(path))

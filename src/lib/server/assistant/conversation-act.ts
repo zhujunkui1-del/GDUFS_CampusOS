@@ -30,6 +30,8 @@ export function conversationAct(message: string): ConversationAct {
   if (!bare || CONFUSION.test(text)) return "confusion";
   if (CORRECTION.test(text)) return "correction";
   if (CAMPUS_SIGNAL.test(text)) return "campus";
+  if (/^(?:我|本鱼)(?:喜欢|讨厌|觉得|今天.{0,4}(?:开心|难过|累|困))/.test(text))
+    return "chitchat";
   if (CHITCHAT.test(text)) return "chitchat";
   return "general";
 }

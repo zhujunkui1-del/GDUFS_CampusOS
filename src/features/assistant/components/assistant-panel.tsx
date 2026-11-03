@@ -27,6 +27,7 @@ import {
   SquarePen,
   ArrowLeft,
   Trash2,
+  Globe,
 } from "lucide-react";
 
 const SNAP_POINTS = [0.62, 1];
@@ -487,7 +488,7 @@ export function AssistantPanel({
                               !(
                                 message.error && message.error === chat.error
                               ) && (
-                                <p>
+                                <div>
                                   {message.role === "assistant" ? (
                                     <AssistantMessageText
                                       text={message.text}
@@ -500,7 +501,7 @@ export function AssistantPanel({
                                   ) : (
                                     message.text.replace(/\*\*(.*?)\*\*/g, "$1")
                                   )}
-                                </p>
+                                </div>
                               )}
                             <AssistantSources
                               cards={message.cards}
@@ -621,6 +622,24 @@ export function AssistantPanel({
                         ) : (
                           <ArrowUp size={19} />
                         )}
+                      </button>
+                    </div>
+                    <div className="assistant-tools">
+                      <button
+                        type="button"
+                        className="assistant-search-toggle"
+                        aria-pressed={chat.smartSearch}
+                        disabled={
+                          chat.savingSearch ||
+                          chat.loadingConversation ||
+                          (chat.busy && !chat.conversationId)
+                        }
+                        onClick={() =>
+                          void chat.setSmartSearch(!chat.smartSearch)
+                        }
+                      >
+                        <Globe size={16} />
+                        智能搜索
                       </button>
                     </div>
                   </div>

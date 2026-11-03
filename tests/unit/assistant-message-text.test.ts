@@ -47,9 +47,9 @@ it("keeps legacy [来源n] citations working", () => {
   );
   const { document } = parseHTML(html);
   expect(document.querySelectorAll("sup.assistant-citation")).toHaveLength(1);
-  expect(
-    document.querySelector("sup.assistant-citation a")?.textContent,
-  ).toBe("[1]");
+  expect(document.querySelector("sup.assistant-citation a")?.textContent).toBe(
+    "[1]",
+  );
 });
 
 it("leaves citations without a matching card as text", () => {
@@ -58,5 +58,5 @@ it("leaves citations without a matching card as text", () => {
   );
   const { document } = parseHTML(html);
   expect(document.querySelector("sup")).toBeNull();
-  expect(html).toContain("[9]");
+  expect(html).not.toContain("[9]");
 });

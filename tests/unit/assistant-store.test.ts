@@ -35,6 +35,31 @@ const routeInput = {
 };
 
 describe("D1-backed identity, history and shared budgets (isolated SQLite)", () => {
+  it("persists smart search by owned conversation without exposing system state as messages", async () => {
+    const store = new AssistantStore(fixture.db, () => now);
+    const a = await store.identity(request()),
+      b = await store.identity(request());
+    const conversation = await store.conversation(a);
+    expect(await store.smartSearch(a, conversation.id)).toBe(false);
+    await store.setSmartSearch(a, conversation.id, true);
+    const restored = await new AssistantStore(fixture.db, () => now).history(
+      a,
+      conversation.id,
+    );
+    expect(restored.smartSearch).toBe(true);
+    expect(restored.smartSearchVersion).toBe(1);
+    await store.setSmartSearch(a,conversation.id,false);
+    await store.setSmartSearch(a,conversation.id,true);
+    expect(await store.searchPreference(a,conversation.id)).toEqual({smartSearch:true,smartSearchVersion:3});
+    expect(restored.messages).toEqual([]);
+    await expect(
+      store.setSmartSearch(b, conversation.id, false),
+    ).rejects.toThrow();
+    await expect(store.smartSearch(b, conversation.id)).rejects.toThrow();
+    expect(await store.smartSearch(a, (await store.conversation(a)).id)).toBe(
+      false,
+    );
+  });
   it("restores a guest through a new store instance, without trusting forged identity", async () => {
     const a = await new AssistantStore(fixture.db, () => now).identity(
       request("userId=admin; campusos_assistant=admin"),

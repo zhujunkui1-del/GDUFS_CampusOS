@@ -6,7 +6,6 @@ import {
 import type { SkillRegistry } from "../agent/skill-registry";
 import {
   searchWeb,
-  searchXiaohongshu,
   type ExternalConfig,
   type ProviderResult,
 } from "./providers";
@@ -41,6 +40,7 @@ export function registerExternalSearch(
   hasInternalAttempt: () => boolean,
   timeWindow?: TimeWindow,
 ) {
+  if (!policy.active) return registry;
   let attempted = false;
   return registry.register("knowledge-domain", {
     name: "search_external_campus_info",
@@ -50,7 +50,7 @@ export function registerExternalSearch(
     requiresConfirmation: false,
     timeoutMs: 30000,
     description:
-      "在已查询CampusOS内部文章后，按问题性质补充真实互联网或小红书搜索。规则、奖学金条件和截止日期只查广外官方网页；口味/居住感受可查学生经验。内部缺失不等于必须查小红书。传入尚缺的具体信息gap；结果含来源等级和片段，title_only不能冒充正文，unavailable不是无结果。",
+      "智能搜索已开启。在查询CampusOS内部文章后，按证据缺口补充普通互联网搜索。规则、奖学金条件和截止日期优先广外官方网页；生活体验可参考公开网页。传入尚缺的具体信息gap。title_only不能冒充正文，unavailable不是无结果。",
     inputSchema: ExternalSearchInputSchema,
     outputSchema: ExternalSearchResultSchema,
     execute: async (input, context) => {
@@ -65,7 +65,7 @@ export function registerExternalSearch(
           "本轮外部搜索已完成，请依据现有来源回答。",
         );
       attempted = true;
-      if (input.gap === "student_experience" && !policy.useXiaohongshu)
+      if (input.gap === "student_experience" && policy.officialOnly)
         throw new ApiError(
           "INVALID_ARGUMENT",
           "这类规则或时限问题需要官方来源。",
@@ -106,28 +106,7 @@ export function registerExternalSearch(
               onlyXhs,
               config.exaApiKey,
             );
-      if (policy.useXiaohongshu) {
-        results = await Promise.all([
-          searchXiaohongshu(
-            query,
-            input.limit,
-            config,
-            signal,
-            fetch,
-            !!timeWindow,
-          ),
-          ...(config.webEnabled !== false && !policy.onlyXhs
-            ? [web({ ...policy, officialOnly: policy.intent === "mixed" }, 2)]
-            : []),
-        ]);
-        if (
-          !results[0].items.length &&
-          config.webEnabled !== false &&
-          !policy.onlyXhs &&
-          !signal.aborted
-        )
-          results.push(await web(policy, input.limit, true));
-      } else if (config.webEnabled !== false) {
+      if (config.webEnabled !== false) {
         results = [await web(policy, input.limit)];
       }
       const candidates = [

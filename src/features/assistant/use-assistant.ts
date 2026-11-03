@@ -26,6 +26,7 @@ import {
   conversationTitle,
   afterConversationDelete,
   acceptsConversationResult,
+  restoredSearchPreference,
   type ConversationView,
 } from "./conversation-state";
 class AssistantRequestError extends Error {
@@ -46,7 +47,7 @@ async function jsonApi(
   const response = await fetch(path, {
     method: method || (body === undefined ? "GET" : "POST"),
     headers: {
-      "X-CampusOS-Conversation-Protocol": "2",
+      "X-CampusOS-Conversation-Protocol": "3",
       ...(body === undefined ? {} : { "Content-Type": "application/json" }),
     },
     body: body === undefined ? undefined : JSON.stringify(body),
@@ -132,6 +133,8 @@ export function useAssistant(
     [ready, setReady] = useState(false),
     [status, setStatus] = useState("");
   const [error, setError] = useState("");
+  const [savingSearch, setSavingSearch] = useState(false);
+  const searchWrite = useRef(false);
   const initialized = useRef(false),
     scope = useRef("");
   const generation = useRef(0);
@@ -233,6 +236,7 @@ export function useAssistant(
       conversationRef.current = history.conversationId;
       setView((prior) => ({
         id: history.conversationId,
+        ...restoredSearchPreference(prior, history, searchWrite.current),
         messages:
           mode === "replace" || prior.id !== history.conversationId
             ? history.messages
@@ -695,6 +699,7 @@ export function useAssistant(
     }
   };
   const send = async (text: string) => {
+    const searchSnapshot = viewRef.current.smartSearch ?? false;
     if (pending.current || loadingConversation || !text.trim() || !ready)
       return;
     const controller = new AbortController(),
@@ -926,6 +931,7 @@ export function useAssistant(
           conversationId: cid,
           clientRequestId: requestId,
           message: text,
+          smartSearch: searchSnapshot,
           mapContext: {
             selectedPlaceId: selectedContext() || undefined,
             activeRouteId: activeRoute?.id || null,
@@ -1045,6 +1051,43 @@ export function useAssistant(
     }
   };
   return {
+    smartSearch: view.smartSearch ?? false,
+    savingSearch,
+    setSmartSearch: async (enabled: boolean) => {
+      if (searchWrite.current) return;
+      const id = conversationRef.current,
+        revision = generation.current;
+      const previous = viewRef.current.smartSearch ?? false;
+      setView((prior) => ({ ...prior, smartSearch: enabled }));
+      if (!id) return;
+      searchWrite.current = true;
+      setSavingSearch(true);
+      try {
+        const saved = z
+          .object({
+            smartSearch: z.boolean(),
+            smartSearchVersion: z.number().int().nonnegative().optional(),
+          })
+          .parse(
+            await jsonApi(
+              `/api/agent/conversations/${id}`,
+              { smartSearch: enabled },
+              undefined,
+              "PATCH",
+            ),
+          );
+        if (revision === generation.current && id === conversationRef.current)
+          setView((prior) => ({ ...prior, ...saved }));
+      } catch {
+        if (revision === generation.current && id === conversationRef.current) {
+          setView((prior) => ({ ...prior, smartSearch: previous }));
+          setError("搜索设置未保存，请重试。");
+        }
+      } finally {
+        searchWrite.current = false;
+        setSavingSearch(false);
+      }
+    },
     conversationId,
     title: view.title,
     connected,
