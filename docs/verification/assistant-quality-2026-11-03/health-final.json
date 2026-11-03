@@ -1,0 +1,20 @@
+[
+  {
+    "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+    "status": 200,
+    "chatAvailable": true,
+    "searchStatus": 200,
+    "titles": [
+      "党的二十届五中全会公报一图速览"
+    ]
+  },
+  {
+    "origin": "https://gdufs.ccwu.cc",
+    "status": 200,
+    "chatAvailable": true,
+    "searchStatus": 200,
+    "titles": [
+      "党的二十届五中全会公报一图速览"
+    ]
+  }
+]

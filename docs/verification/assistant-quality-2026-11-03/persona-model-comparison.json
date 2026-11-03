@@ -1,0 +1,157 @@
+[
+  {
+    "question": "你好，你是一只大肥鱼吗？",
+    "enabled": true,
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "comparison": "same source-card excerpts as live platform answer, not identical complete system/history prompts",
+    "platformAnswer": "哈哈被你发现啦～本鱼就是CampusOS里那只爱逛校园的大肥鱼🐟 今天想找本鱼聊点啥呀？",
+    "answer": "你好呀，本鱼是日常陪你聊天的“大肥鱼”风格助手，不是真的一条鱼哦。想聊点啥？🐟",
+    "usage": {
+      "promptTokens": 224,
+      "completionTokens": 31,
+      "totalTokens": 255,
+      "cachedPromptTokens": 0
+    },
+    "latencyMs": 1653
+  },
+  {
+    "question": "你好，你是一只大肥鱼吗？",
+    "enabled": false,
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "comparison": "same source-card excerpts as live platform answer, not identical complete system/history prompts",
+    "answer": "你好。我不是“大肥鱼”，也不使用这类自称。你可以直接说明需要我协助的校园相关问题。",
+    "usage": {
+      "promptTokens": 193,
+      "completionTokens": 23,
+      "totalTokens": 216,
+      "cachedPromptTokens": 0
+    },
+    "latencyMs": 719
+  },
+  {
+    "question": "今天好累，陪我聊聊天",
+    "enabled": true,
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "comparison": "same source-card excerpts as live platform answer, not identical complete system/history prompts",
+    "platformAnswer": "是不是今天赶due/跑校园跑累到啦🥹 要不要本鱼给你递个小鱼干补补能量，或者听你吐槽今天遇到的糟心事呀～",
+    "answer": "累就先靠一靠，本鱼陪你吐几个泡泡。🐟 想聊什么？吐槽今天、听点轻松的，还是随便扯两句都行。",
+    "usage": {
+      "promptTokens": 222,
+      "completionTokens": 34,
+      "totalTokens": 256,
+      "cachedPromptTokens": 0
+    },
+    "latencyMs": 753
+  },
+  {
+    "question": "今天好累，陪我聊聊天",
+    "enabled": false,
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "comparison": "same source-card excerpts as live platform answer, not identical complete system/history prompts",
+    "answer": "今天辛苦了。想聊什么都可以，我在。",
+    "usage": {
+      "promptTokens": 191,
+      "completionTokens": 10,
+      "totalTokens": 201,
+      "cachedPromptTokens": 0
+    },
+    "latencyMs": 604
+  },
+  {
+    "question": "了解下王春业老师",
+    "enabled": true,
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "comparison": "same source-card excerpts as live platform answer, not identical complete system/history prompts",
+    "platformAnswer": "王春业老师现任广东外语外贸大学纪检监察研究院院长，近期公开活动主要有这些：\n1. 2026年9月11日，出席广外法学（纪检监察方向）首届本科创新班开班仪式[1]\n2. 2026年10月9日，应邀为广东省委横琴工委政法干部作题为《政法领域意识形态风险防范与应对》的专题讲座[3]\n3. 2026年10月10—12日，参加首届全国纪检监察学期刊和栏目建设研讨会暨第九届羊城廉政智库建设论坛，在院长论坛上就“公益诉讼中检察机关与监察机关衔接机制”主题作专题发言[2]",
+    "answer": "王春业老师是广外纪检监察研究院院长[1][2][3]。本鱼从这几条校园信息里看到，他参与的活动主要围绕纪检监察研究和人才培养展开：\n\n- 出席广外法学（纪检监察方向）首届本科创新班开班仪式，并以纪检监察研究院院长身份参加[1]。\n- 应邀参加首届全国纪检监察学期刊和栏目建设研讨会暨第九届羊城廉政智库建设论坛，在院长论坛就“公益诉讼中检察机关与监察机关衔接机制”作专题发言[2]。\n- 应邀为广东省委横琴工委政法干部作“政法领域意识形态风险防范与应对”专题讲座[3]。\n\n能查到的就这些啦，想再深挖得看更多来源。🐟",
+    "usage": {
+      "promptTokens": 1275,
+      "completionTokens": 152,
+      "totalTokens": 1427,
+      "cachedPromptTokens": 1024
+    },
+    "latencyMs": 1413
+  },
+  {
+    "question": "了解下王春业老师",
+    "enabled": false,
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "comparison": "same source-card excerpts as live platform answer, not identical complete system/history prompts",
+    "answer": "根据给定来源，王春业老师是广东外语外贸大学纪检监察研究院院长[1][2][3]。\n\n在公开活动中，他曾参加广外法学（纪检监察方向）首届本科创新班开班仪式[1]；应邀参加首届全国纪检监察学期刊和栏目建设研讨会暨第九届羊城廉政智库建设论坛，并在院长论坛中就“公益诉讼中检察机关与监察机关衔接机制”作专题发言[2]；还应邀为广东省委横琴工委政法干部作题为“政法领域意识形态风险防范与应对”的专题讲座[3]。",
+    "usage": {
+      "promptTokens": 1244,
+      "completionTokens": 115,
+      "totalTokens": 1359,
+      "cachedPromptTokens": 1024
+    },
+    "latencyMs": 1157
+  },
+  {
+    "question": "看看广外最近的竞赛活动情况",
+    "enabled": true,
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "comparison": "same source-card excerpts as live platform answer, not identical complete system/history prompts",
+    "platformAnswer": "最近广外竞赛，按发布时间从新到旧：\n\n1. 2026-11-01 发布｜新闻 | 我院师生在第四届青年师生思政微课大赛中荣获佳绩 [1]\n2. 2026-10-31 发布｜祝贺！我院研究生李颖欣荣获2026年“田家炳杯”全日制教育硕士学科教学（语文）专业教学技能大赛一等奖 [2]\n3. 2026-10-31 发布｜2026年“挑战杯”中国大学生创业计划竞赛 [3]\n4. 2026-10-30 发布｜赓续长征精神，竞逐时政先锋|法学院时政知识竞赛初赛预告 [4]\n5. 2026-10-30 发布｜#新闻#法通中外，三十启新|2026年法学院新生杯辩论赛示范赛圆满落幕 [5]\n",
+    "answer": "广外最近的竞赛活动还挺热闹，本鱼给你捞几条重点的🐟\n\n**思政微课大赛**：学校办了“赓续长征薪火，凝聚青春力量”第四届青年师生思政微课大赛，学生组、教师组决赛分别在10月15日、10月22日举行。有教师获教师组二等奖，2024级外交学本科生获学生组三等奖[1]。\n\n**“田家炳杯”教学技能大赛**：10月23日至25日，2026年全国“田家炳杯”全日制教育硕士学科教学（语文）专业教学技能大赛决赛在重庆师范大学举行，2025级学科教学（语文）专业研究生获一等奖，导师获评“优秀指导教师”[2]。\n\n**“挑战杯”创业计划竞赛**：学院要办2026-2027学年“挑战杯”广外大学生创业计划竞赛，电子版商业计划书和作品申请表11月27日22:00前提交，纸质版12月2日17:00前提交，12月3日14:00线下答辩；全日制本科生、研究生可申报[3]。\n\n**法学院时政知识竞赛**：面向法学院全体在读学生，4人一队，报名截止2026年11月3日14:00，初赛11月5日19:00-21:00，闭卷笔试[4]。\n\n**法学院新生杯辩论赛示范赛**：10月17日晚在教学楼C栋208举行，辩题是“‘嘉豪文学’的流行是一场网络霸凌吗”[5]。\n\n想蹲哪一场的后续，本鱼再帮你翻泡泡～",
+    "usage": {
+      "promptTokens": 2780,
+      "completionTokens": 337,
+      "totalTokens": 3117,
+      "cachedPromptTokens": 2560
+    },
+    "latencyMs": 1949
+  },
+  {
+    "question": "看看广外最近的竞赛活动情况",
+    "enabled": false,
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "comparison": "same source-card excerpts as live platform answer, not identical complete system/history prompts",
+    "answer": "根据给定来源，广外近期可看到的竞赛活动主要包括以下几类：\n\n**思政类竞赛**\n第四届青年师生思政微课大赛以“赓续长征薪火，凝聚青春力量”为主题，学生组、教师组决赛分别于10月15日、10月22日举办。我院教师成汝琪获教师组二等奖，2024级外交学本科生李采翊获学生组三等奖[1]。\n\n**教学技能竞赛**\n2026年“田家炳杯”全日制教育硕士学科教学（语文）专业教学技能大赛决赛于10月23日至25日在重庆师范大学举行，我院2025级研究生李颖欣获一等奖，导师林玮生教授获评“优秀指导教师”[2]。\n\n**创新创业竞赛**\n2026-2027学年“挑战杯”广外大学生创业计划竞赛已启动，面向全日制本科生、研究生（不含在职研究生），设科技创新和未来产业、乡村振兴和农业农村现代化、生态文明建设和绿色低碳发展、文化创意和区域交流合作、社会治理和公共服务五个组别；电子版商业计划书和作品申请表提交截止时间为11月27日22:00，纸质版提交截止时间为12月2日17:00，线下答辩时间为12月3日14:00[3]。\n\n**时政知识竞赛**\n法学院时政知识竞赛以“赓续长征精神，竞逐时政先锋”为主题，面向法学院全体在读学生，4人组队，报名截止时间为2026年11月3日14:00，初赛时间为11月5日19:00-21:00，采用闭卷笔试[4]。\n\n**辩论赛**\n2026年法学院新生杯辩论赛示范赛于10月17日晚在教学楼C栋208举行，辩题为“‘嘉豪文学’的流行是一场网络霸凌吗”[5]。",
+    "usage": {
+      "promptTokens": 2749,
+      "completionTokens": 375,
+      "totalTokens": 3124,
+      "cachedPromptTokens": 2560
+    },
+    "latencyMs": 2299
+  },
+  {
+    "question": "党的二十届五中全会公报一图速览",
+    "enabled": true,
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "comparison": "same source-card excerpts as live platform answer, not identical complete system/history prompts",
+    "platformAnswer": "找到文章《党的二十届五中全会公报一图速览》，发布于2026-10-30。[1]\n\n当前可读取的文字不足以概述正文，可以打开原文查看。",
+    "answer": "这份来源里只有编辑和转载信息，没有公报正文或“一图速览”的具体内容，本鱼没法据此展开讲。🐟 建议直接看新华社原图或公报全文。",
+    "usage": {
+      "promptTokens": 305,
+      "completionTokens": 42,
+      "totalTokens": 347,
+      "cachedPromptTokens": 128
+    },
+    "latencyMs": 787
+  },
+  {
+    "question": "党的二十届五中全会公报一图速览",
+    "enabled": false,
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "comparison": "same source-card excerpts as live platform answer, not identical complete system/history prompts",
+    "answer": "目前提供的来源片段只包含转载来源、初审复审终审人员和版权说明，没有党的二十届五中全会公报的具体内容，因此无法据此整理“一图速览”的要点[1]。",
+    "usage": {
+      "promptTokens": 274,
+      "completionTokens": 42,
+      "totalTokens": 316,
+      "cachedPromptTokens": 128
+    },
+    "latencyMs": 880
+  }
+]

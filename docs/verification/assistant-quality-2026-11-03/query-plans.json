@@ -1,0 +1,1146 @@
+{
+  "mode": "explain",
+  "at": "2026-11-03T18:29:06.704Z",
+  "plan": [
+    {
+      "id": 5,
+      "parent": 0,
+      "notused": 156,
+      "detail": "SCAN article_chunk_fts VIRTUAL TABLE INDEX 32:rM3"
+    },
+    {
+      "id": 11,
+      "parent": 0,
+      "notused": 45,
+      "detail": "SEARCH k USING INTEGER PRIMARY KEY (rowid=?)"
+    }
+  ],
+  "gatePlan": [
+    {
+      "id": 3,
+      "parent": 0,
+      "notused": 0,
+      "detail": "MATERIALIZE permitted",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 5,
+      "parent": 3,
+      "notused": 0,
+      "detail": "CO-ROUTINE selected",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 6,
+      "parent": 5,
+      "notused": 0,
+      "detail": "SCAN CONSTANT ROW",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 23,
+      "parent": 3,
+      "notused": 16,
+      "detail": "SCAN selected",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 26,
+      "parent": 3,
+      "notused": 46,
+      "detail": "SEARCH d USING INDEX sqlite_autoindex_knowledge_documents_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 38,
+      "parent": 3,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 3",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 43,
+      "parent": 38,
+      "notused": 39,
+      "detail": "SEARCH t USING INDEX sqlite_autoindex_console_cleanup_tombstones_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 55,
+      "parent": 3,
+      "notused": 46,
+      "detail": "SEARCH s USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 60,
+      "parent": 3,
+      "notused": 60,
+      "detail": "SEARCH r USING INDEX retrieval_document_state (status=? AND index_version=? AND document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 76,
+      "parent": 3,
+      "notused": 46,
+      "detail": "SEARCH a USING INDEX sqlite_autoindex_document_article_analysis_1 (document_id=?) LEFT-JOIN",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 90,
+      "parent": 3,
+      "notused": 46,
+      "detail": "SEARCH m USING INDEX sqlite_autoindex_document_classification_overrides_1 (document_id=?) LEFT-JOIN",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 179,
+      "parent": 3,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 2",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 186,
+      "parent": 179,
+      "notused": 46,
+      "detail": "SEARCH sp USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 191,
+      "parent": 179,
+      "notused": 46,
+      "detail": "SEARCH p USING INDEX sqlite_autoindex_source_collection_policies_1 (source_id=?) LEFT-JOIN",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 264,
+      "parent": 0,
+      "notused": 39,
+      "detail": "SCAN v",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 267,
+      "parent": 0,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 5",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 269,
+      "parent": 267,
+      "notused": 0,
+      "detail": "COMPOUND QUERY",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 270,
+      "parent": 269,
+      "notused": 0,
+      "detail": "LEFT-MOST SUBQUERY",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 279,
+      "parent": 270,
+      "notused": 46,
+      "detail": "SEARCH d USING INDEX sqlite_autoindex_knowledge_documents_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 360,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 31",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 365,
+      "parent": 360,
+      "notused": 39,
+      "detail": "SEARCH a USING INDEX sqlite_autoindex_document_article_analysis_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 396,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 32",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 403,
+      "parent": 396,
+      "notused": 61,
+      "detail": "SEARCH m USING INDEX console_manual_publication_receipt (target_id=? AND action=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 436,
+      "parent": 396,
+      "notused": 46,
+      "detail": "SEARCH a USING INDEX sqlite_autoindex_console_admins_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 451,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 33",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 456,
+      "parent": 451,
+      "notused": 39,
+      "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 471,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 43",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 475,
+      "parent": 471,
+      "notused": 39,
+      "detail": "SEARCH c USING COVERING INDEX sqlite_autoindex_campus_collector_articles_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 484,
+      "parent": 270,
+      "notused": 46,
+      "detail": "SEARCH s USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 508,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 34",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 515,
+      "parent": 508,
+      "notused": 61,
+      "detail": "SEARCH m USING INDEX console_manual_publication_receipt (target_id=? AND action=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 548,
+      "parent": 508,
+      "notused": 46,
+      "detail": "SEARCH a USING INDEX sqlite_autoindex_console_admins_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 563,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 35",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 568,
+      "parent": 563,
+      "notused": 39,
+      "detail": "SEARCH c USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 589,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 36",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 594,
+      "parent": 589,
+      "notused": 39,
+      "detail": "SEARCH p USING INDEX sqlite_autoindex_console_publication_policies_1 (source_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 607,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 37",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 612,
+      "parent": 607,
+      "notused": 39,
+      "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 627,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 38",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 632,
+      "parent": 627,
+      "notused": 60,
+      "detail": "SEARCH c USING INDEX sqlite_autoindex_console_content_checks_2 (document_id=? AND content_revision=? AND input_hash=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 686,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 39",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 691,
+      "parent": 686,
+      "notused": 39,
+      "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 700,
+      "parent": 686,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 40",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 708,
+      "parent": 700,
+      "notused": 46,
+      "detail": "SEARCH p USING INDEX sqlite_autoindex_console_publication_policies_1 (source_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 728,
+      "parent": 700,
+      "notused": 60,
+      "detail": "SEARCH c EXISTS USING INDEX sqlite_autoindex_console_content_checks_2 (document_id=? AND content_revision=? AND input_hash=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 756,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 42",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 763,
+      "parent": 756,
+      "notused": 39,
+      "detail": "SEARCH p USING INDEX sqlite_autoindex_source_collection_policies_1 (source_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 782,
+      "parent": 270,
+      "notused": 46,
+      "detail": "SEARCH e USING INDEX sqlite_autoindex_console_engine_settings_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 801,
+      "parent": 270,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 44",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 805,
+      "parent": 801,
+      "notused": 55,
+      "detail": "SEARCH p USING COVERING INDEX console_protection_expiry (active=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 832,
+      "parent": 801,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 45",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 836,
+      "parent": 832,
+      "notused": 53,
+      "detail": "SEARCH o USING COVERING INDEX document_origin_source_document (source_id=? AND document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 855,
+      "parent": 269,
+      "notused": 0,
+      "detail": "UNION ALL",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 870,
+      "parent": 855,
+      "notused": 46,
+      "detail": "SEARCH d USING INDEX sqlite_autoindex_knowledge_documents_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 930,
+      "parent": 855,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 12",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 935,
+      "parent": 930,
+      "notused": 39,
+      "detail": "SEARCH a USING INDEX sqlite_autoindex_document_article_analysis_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 954,
+      "parent": 855,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 13",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 959,
+      "parent": 954,
+      "notused": 39,
+      "detail": "SEARCH h USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 974,
+      "parent": 855,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 14",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 978,
+      "parent": 974,
+      "notused": 39,
+      "detail": "SEARCH c USING COVERING INDEX sqlite_autoindex_campus_collector_articles_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 988,
+      "parent": 855,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 15",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 995,
+      "parent": 988,
+      "notused": 46,
+      "detail": "SEARCH d USING INDEX sqlite_autoindex_knowledge_documents_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1073,
+      "parent": 988,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 17",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1078,
+      "parent": 1073,
+      "notused": 39,
+      "detail": "SEARCH a USING INDEX sqlite_autoindex_document_article_analysis_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1109,
+      "parent": 988,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 18",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1116,
+      "parent": 1109,
+      "notused": 61,
+      "detail": "SEARCH m USING INDEX console_manual_publication_receipt (target_id=? AND action=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1149,
+      "parent": 1109,
+      "notused": 46,
+      "detail": "SEARCH a USING INDEX sqlite_autoindex_console_admins_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1164,
+      "parent": 988,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 19",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1169,
+      "parent": 1164,
+      "notused": 39,
+      "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1183,
+      "parent": 988,
+      "notused": 46,
+      "detail": "SEARCH s USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1207,
+      "parent": 988,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 20",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1214,
+      "parent": 1207,
+      "notused": 61,
+      "detail": "SEARCH m USING INDEX console_manual_publication_receipt (target_id=? AND action=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1247,
+      "parent": 1207,
+      "notused": 46,
+      "detail": "SEARCH a USING INDEX sqlite_autoindex_console_admins_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1262,
+      "parent": 988,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 21",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1267,
+      "parent": 1262,
+      "notused": 39,
+      "detail": "SEARCH c USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1288,
+      "parent": 988,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 22",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1293,
+      "parent": 1288,
+      "notused": 39,
+      "detail": "SEARCH p USING INDEX sqlite_autoindex_console_publication_policies_1 (source_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1306,
+      "parent": 988,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 23",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1311,
+      "parent": 1306,
+      "notused": 39,
+      "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1326,
+      "parent": 988,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 24",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1331,
+      "parent": 1326,
+      "notused": 60,
+      "detail": "SEARCH c USING INDEX sqlite_autoindex_console_content_checks_2 (document_id=? AND content_revision=? AND input_hash=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1385,
+      "parent": 988,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 25",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1390,
+      "parent": 1385,
+      "notused": 39,
+      "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1399,
+      "parent": 1385,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 26",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1407,
+      "parent": 1399,
+      "notused": 46,
+      "detail": "SEARCH p USING INDEX sqlite_autoindex_console_publication_policies_1 (source_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1427,
+      "parent": 1399,
+      "notused": 60,
+      "detail": "SEARCH c EXISTS USING INDEX sqlite_autoindex_console_content_checks_2 (document_id=? AND content_revision=? AND input_hash=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1455,
+      "parent": 988,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 28",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1462,
+      "parent": 1455,
+      "notused": 39,
+      "detail": "SEARCH p USING INDEX sqlite_autoindex_source_collection_policies_1 (source_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1485,
+      "parent": 855,
+      "notused": 46,
+      "detail": "SEARCH s USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1500,
+      "parent": 855,
+      "notused": 46,
+      "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1511,
+      "parent": 855,
+      "notused": 45,
+      "detail": "SEARCH p USING COVERING INDEX sqlite_autoindex_console_owner_publications_2 (document_id=? AND content_revision=? AND input_hash=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1529,
+      "parent": 855,
+      "notused": 46,
+      "detail": "SEARCH e USING INDEX sqlite_autoindex_console_engine_settings_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1536,
+      "parent": 855,
+      "notused": 46,
+      "detail": "SEARCH e USING INDEX sqlite_autoindex_console_engine_settings_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1555,
+      "parent": 855,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 44",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1559,
+      "parent": 1555,
+      "notused": 55,
+      "detail": "SEARCH p USING COVERING INDEX console_protection_expiry (active=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1586,
+      "parent": 1555,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 45",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1590,
+      "parent": 1586,
+      "notused": 53,
+      "detail": "SEARCH o USING COVERING INDEX document_origin_source_document (source_id=? AND document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1609,
+      "parent": 269,
+      "notused": 0,
+      "detail": "UNION ALL",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1626,
+      "parent": 1609,
+      "notused": 46,
+      "detail": "SEARCH d USING INDEX sqlite_autoindex_knowledge_documents_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1678,
+      "parent": 1609,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 9",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1683,
+      "parent": 1678,
+      "notused": 39,
+      "detail": "SEARCH a USING INDEX sqlite_autoindex_document_article_analysis_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1702,
+      "parent": 1609,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 10",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1707,
+      "parent": 1702,
+      "notused": 39,
+      "detail": "SEARCH x USING INDEX sqlite_autoindex_console_document_controls_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1721,
+      "parent": 1609,
+      "notused": 46,
+      "detail": "SEARCH c USING INDEX sqlite_autoindex_campus_collector_articles_1 (document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1739,
+      "parent": 1609,
+      "notused": 46,
+      "detail": "SEARCH p USING INDEX sqlite_autoindex_campus_collector_sources_1 (source_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1749,
+      "parent": 1609,
+      "notused": 46,
+      "detail": "SEARCH s USING INDEX sqlite_autoindex_knowledge_sources_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1768,
+      "parent": 1609,
+      "notused": 46,
+      "detail": "SEARCH a USING INDEX sqlite_autoindex_console_admins_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1779,
+      "parent": 1609,
+      "notused": 46,
+      "detail": "SEARCH e USING INDEX sqlite_autoindex_console_engine_settings_1 (id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1798,
+      "parent": 1609,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 44",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1802,
+      "parent": 1798,
+      "notused": 55,
+      "detail": "SEARCH p USING COVERING INDEX console_protection_expiry (active=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1829,
+      "parent": 1798,
+      "notused": 0,
+      "detail": "CORRELATED SCALAR SUBQUERY 45",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    },
+    {
+      "id": 1833,
+      "parent": 1829,
+      "notused": 53,
+      "detail": "SEARCH o USING COVERING INDEX document_origin_source_document (source_id=? AND document_id=?)",
+      "evidence_type": "metadata",
+      "analysis_json": null,
+      "body_status": "not_provided",
+      "rights_scope": "metadata_only"
+    }
+  ],
+  "cost": {
+    "rowsRead": 0,
+    "rowsWritten": 0,
+    "queries": 2,
+    "sqlDurationMs": 11.5467
+  }
+}

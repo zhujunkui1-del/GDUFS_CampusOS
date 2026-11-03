@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-04",
+  "timezone": "Asia/Shanghai",
+  "implementationCommit": "5fb61619e257126ad9edca69cea3a3548f40ecc1",
+  "worker": "campusos-preview",
+  "version": "089e6478-8157-4cd1-9673-61525083927e",
+  "origins": [
+    "https://campusos-preview.zhujunkui1.workers.dev",
+    "https://gdufs.ccwu.cc"
+  ],
+  "sharedWorkerAndD1": true,
+  "productionWorkerModified": false,
+  "databaseMigrations": [],
+  "rollback": "git revert 5fb61619e257126ad9edca69cea3a3548f40ecc1; rebuild and deploy preview. Keep D1 histories and preference metadata."
+}

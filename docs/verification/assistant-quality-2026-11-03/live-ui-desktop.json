@@ -1,0 +1,670 @@
+[
+  {
+    "prompt": "最近有什么竞赛？",
+    "tools": [
+      "search_campus_events"
+    ],
+    "actions": [],
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "wx-0ee56a8720c744cb41a76bc0b022da216b2e645e",
+        "title": "新闻 | 我院师生在第四届青年师生思政微课大赛中荣获佳绩",
+        "sourceName": "广外区域国别学院",
+        "originalUrl": "https://mp.weixin.qq.com/s/j3Ove9qLBCCVu8sBkyGWbQ",
+        "publishedAt": "2026-11-01T08:19:49.000Z",
+        "snippet": "本网讯 为纪念中国工农红军长征胜利90周年，弘扬伟大长征精神，走好新时代长征路，我校举行\"赓续长征薪火，凝聚青春力量\"第四届青年师生思政微课大赛。比赛分学生组、教师组决赛，分别于10月15日、10月22日举办。我院教师成汝琪、2024级外交学本科生李采翊登台参赛，双双获奖。\n10月15日，李采翊以家乡汕尾海丰红宫红场为切入点，娓娓讲述1927年彭湃领导海陆丰第三次武装起义的革命往事。她提出思考：红宫红场何以谓之 “红”？当年革命者并未拆除孔庙，而是将庙宇外墙涂成红色、悬挂 “红宫” 牌匾，让原本在此跪拜的农民，成为共商革命大事的主人。与此同时，她把视野延伸到海陆丰儿女持续三年的游击斗争，点明这是长征背后一条鲜为人知的 “暗线”。结合外交学专业学习感悟，她提出，外语与外交学子的使命，就是用世界听得懂的话语，传递中国声音、讲好中国故事。整堂微课史料扎实、叙事流畅，巧妙融合乡土红色记忆与国际传播使命，获得评委充分肯定，被评为学生组三等奖。\n学生组获奖合影\n（左起第1排第4个为李采翊）\n10月22日，我院教师成汝琪以“半截皮带 ”为意象切口，从松潘草地上一截煮过的皮带，讲到饶彰风开荒建校、黄建华历时十六年编成《汉法大词典》的校史，解读其中坚定信念、舍己为公、永不放弃的精神内核，“一代人有一代人的草地，一代人有一代人的半截皮带。”成汝琪引导青年学子思考：我们这代人，该把什么留给未来？成汝琪老师授课情感真挚饱满，微课立意深远，得到现场评委的高度评价，斩获教师组二等奖佳绩。\n成汝琪深情讲述《半截皮带:藏在党史史料里的青春信仰》微课\n教师组获奖合影\n两堂微课分别以一件革命文物、一处红色旧址为切入点，叙事路径虽有不同，价值内核却高度统一，都向当代青年抛出 “该留下什么、要传递什么”的时代命题。我院将以本次大赛为契机，持续推动思政教育与专业教育同向同行，",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-f29df384f57712125a177e2a3512271251875ae9",
+        "title": "祝贺！我院研究生李颖欣荣获2026年“田家炳杯”全日制教育硕士学科教学（语文）专业教学技能大赛一等奖",
+        "sourceName": "广外中文",
+        "originalUrl": "https://mp.weixin.qq.com/s/7GpY5TKWPY44qNs7DTEgVg",
+        "publishedAt": "2026-10-31T08:52:35.000Z",
+        "snippet": "10月23日至25日，2026年全国“田家炳杯”全日制教育硕士专业学位研究生学科教学（语文）专业教学技能大赛决赛暨研讨活动在重庆师范大学举行。本届赛事汇聚全国144所高校的198名研究生同场竞技。经过教学设计、模拟授课与现场答辩等多环节的激烈角逐，我院2025级学科教学（语文）专业研究生李颖欣在决赛中获得一等奖，导师林玮生教授获评“优秀指导教师”。\n“田家炳杯”全日制教育硕士教学技能大赛由田家炳基金会冠名，全国教育专业学位研究生教育指导委员会指导，系当前国内教育硕士培养领域规格最高、覆盖面最广、影响力最大的专项赛事之一。本届大赛以决赛选手总数为基数，一等奖、二等奖、三等奖及优秀教学设计奖的评选比例分别约为10%、20%、40%和30%。决赛环节设置贴近真实课堂，涵盖现场抽题、限时独立备课、模拟授课与现场答辩等全流程考核，全面检验选手的学科功底、教学设计能力、课堂教学能力与临场应变能力。李颖欣同学在比赛中沉着稳健、思路清晰、以扎实的专业根基与鲜明的教学风格，获得了评委的认可。\n“一等奖”荣誉证书\n“优秀指导教师”荣誉证书\n李颖欣同学与领队贝先明老师\n文字、图片 | 肖梦菲、李颖欣\n编辑 | 詹海恒\n初审 | 贝先明\n复审 | 于屏方\n终审 | 谢秀兰",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-126ecf815b7625f4a84c7018ec517060019f3c1c",
+        "title": "2026年“挑战杯”中国大学生创业计划竞赛",
+        "sourceName": "广外数统青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/dpPTFnmPOFIGZCAR01ZGTA",
+        "publishedAt": "2026-10-31T07:24:27.000Z",
+        "snippet": "人们看过来，\n我们新一届的“小挑”赛事即将重磅登场！\n你们可以在赛场上\n蓄势突破，尽显锋芒，\n准备好启程吧！\n赛事目的\n为进一步促进“大众创业、万众创新”，培养和提升大学生的创造精神、创新意识和创业能力，省市校协同推动大学生创新创业成果的有效转化，激励全校大学生积极投身创新创业，助力广东创新驱动发展，学院决定举办2026-2027学年“挑战杯”广外大学生创业计划竞赛。\n竞赛时间\n（一）电子版商业计划书和作品申请表提交时间：\n11月27日晚上22:00\n（二）纸质版商业计划书提交时间：\n12月2日下午17:00\n（三）线下答辩时间：\n12月3日下午14:00\n参赛对象\n我校全日制本科生、研究生均可申报作品参赛\n（不含在职研究生）\n参赛作品类别\n“挑战杯”广外大学生创业计划竞赛面向高等学校在校学生，以商业计划书评审、现场答辩等作为参赛项目的主要评价内容。参加竞赛项目分为已创业与未创业两类；分为以下五个组别。\n01\n科技创新和未来产业组\n围绕创新驱动，在量子技术、元宇宙、智能制造、信息技术、大数据、人工智能、生命科学、新材料、军民融合等领域结合实践观察设计项目。\n02\n乡村振兴和农业农村现代化组\n围绕乡村振兴，在农林牧渔、电子商务、乡村旅游等领域结合实践设计项目。\n03\n生态文明建设和绿色低碳发展组\n围绕绿色低碳和碳达峰碳中和目标，在绿色低碳产业、绿色消费、环境治理、可持续资源开发、生态环保、清洁能源等领域结合实践观察设计项目。\n04\n文化创意和区域交流合作组\n突出共融、共享，围绕区域合作（如“一带一路”、粤港澳大湾区等）、工业设计、动漫广告、体育竞技、国际文化传播、对外经贸等结合实践观察设计项目。\n05\n社会治理和公共服务组\n围绕国家治理体系和治理能力现代化建设，在政务服务、消费生活、公共卫生、金融法务、教育培训、交通物流、人力资源、城乡",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-1d2d316d7ae0fcaa1769a7cdb3fecf7eb07caaa1",
+        "title": "赓续长征精神，竞逐时政先锋|法学院时政知识竞赛初赛预告",
+        "sourceName": "广外法学青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/3NvSDCeFVDHcjVplF0Xpyg",
+        "publishedAt": "2026-10-30T13:43:48.000Z",
+        "snippet": "— 法学院 时政知识竞赛 初赛预告 —\n赓续长征精神\n竞逐时政先锋\n活动目的\n纪念长征胜利90周年，广外法学院时政知识竞赛邀你参与：传承长征精神，赓续红色血脉，融时政学习与法学特色于一体，在领悟习近平法治思想中知史爱党、识势担责。\n活动介绍\n1.活动对象:\n广外法学院全体在读学生\n2.组队方式:\n(1)\n以队伍形式报名，\n4人组成一支队伍，\n鼓励同班组队，\n可跨年级，跨班组队\n(2)\n队伍名字自定\n需符合社会主义核心价值观，积极向上\n3.报名方式:\n报名方式：\n问卷星（不接受现场报名）\n报名截止时间：\n2026年11月3日下午14:00\n初赛时间：\n2026年11月5日晚上19:00-21:00\n（晚上18:40各队伍签到入场）\n初赛地点：\n教学楼教室，具体地点咨询群内通知\n规则介绍\n01\n题目类型\n初赛采用闭卷笔试，限时一个小时，可提前交卷。\n题目顺序依次为：\n单选题（共20道题，每题1分）；\n多选题（共25道，每题2分，少选得1分，多选或错选得0分）；\n判断题（共10道，每题1分）；\n填空题（共5道，每题2分）；\n连线题（共5个道，每题2分）；\n附加题（共1道，每题10分）。\n02\n答题纪律\n初赛答题前，队伍必须将相关信息填写在试卷指定位置，字体工整，笔迹清楚；\n初赛答题时，不得使用手机，不得查阅任何与比赛相关的资料，违规的队伍取消参赛资格；\n3.不得与其他队伍讨论，但队伍内部可以小声讨论；\n4.不得喧闹，过于喧嚣的队伍予以警告一次，第二次扣考场秩序分5分。\n03\n晋级规则\n除附加题外的分数为基础分，\n基础分相同的队伍则依据附加题分数判断能否晋级；\n基础分不同的队伍则无需考虑附加题分数。\n初赛中排名前七的法学院本科生队伍及成绩排名第一的一支法学院研究生队伍进入决赛。\n04\n参与\n凡是参加者均有综测加分。\n往年风采\n主持人强调答题规",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-705fccd0703ac1eb2d18b728fc392bfed605e3f8",
+        "title": "#新闻#法通中外，三十启新|2026年法学院新生杯辩论赛示范赛圆满落幕",
+        "sourceName": "广外法学青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/VO8CUjZ2fWSQcLPvWAA5tA",
+        "publishedAt": "2026-10-30T13:43:48.000Z",
+        "snippet": "本网讯（文字：汪千惠 摄影：刘奥嘉 网编：沈艺铭）2026年法学院新生杯辩论赛示范赛于10月17日晚在教学楼C栋208顺利举行。出席本次示范赛的嘉宾有法学院26级辅导员梁怡珊老师、学生会执行主席李佳良、主席团成员曾繁华。25届广外校中文辩论队副队长姜宇辉、25届广外校中文辩论队队长娄钰涵、24届广外校中文辩论队副队长聂亚涵、22届广外法学院辩论队队长何彦霖担任比赛评委。\n出席本次比赛的嘉宾\n活动伊始，26级新生辅导员梁怡珊致辞。值此法学院三十周年院庆之际，她指出辩论既是法学生锤炼实践能力的重要途径，也与新传学子关注的网络舆论议题相契合，并寄语两院同学勤学善思、独立思辨\n2026级新生辅导员梁怡珊致辞\n本次示范赛辩题为“‘嘉豪文学’的流行是一场网络霸凌吗”。该辩题紧扣当下网络文化现象，看似是对一则热梗的界定之争，实则牵涉网络霸凌的判定标准、标签的存续逻辑与个体权利的边界等深层议题，赛前便引发热议，引导辩手与观众一同叩问：当笑声铺天盖地，被围观的那个人，是否正在遭受伤害？\n观众沉浸观看比赛\n开篇立论环节，正方以网络霸凌的三大要件——蓄意性、持续性与权力不对等性作为破题框架，援引相关霸凌判定理论，结合抖音“嘉豪同学”相关视频内容总播放量高达86.5亿次、当事人被贴上标签后沦为“赛博人质”等现实案例，层层递进地论证了“嘉豪文学构成网络霸凌”。反方则立足定义权流动与青年文化表达视角，指出相关评价指向行为而非特定个体、标签可随场景流转，强调自嘲是年轻人主动夺回话语权的松弛表达，其本质是“自我和解”而非“恶意伤害”。\n正方一辩进行立论\n随后的质询环节，双方就“嘉豪”一词的内涵外延、霸凌判定的核心标准、标签与个体的绑定关系等前提展开深度交锋。一问一答之间，双方引例举证、见招拆招，现场热度节节攀升。\n正方二辩进行质询\n反方二辩进行质询",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": [
+          {
+            "title": "#新闻#法通中外，三十启新|2026年法学院新生杯辩论赛示范赛圆满落幕",
+            "href": "/calendar?date=2026-10-17&event=event-ea01be24090166b53cdbdd85033c10df512ccc35"
+          }
+        ]
+      }
+    ],
+    "result": {
+      "conversationId": "d745d10e-8c0b-5526-8055-519b76ea7c4c",
+      "requestId": "455bfb79-f0a4-4085-b484-016babc5a88a",
+      "metrics": {
+        "smartSearch": false,
+        "queryUnderstanding": {
+          "failed": false
+        },
+        "answerMode": "radar_list",
+        "conversationAct": "campus",
+        "answerRequirement": "strict",
+        "modelFailureCode": null,
+        "evidenceGateUsed": true,
+        "publicationFallbackUsed": false,
+        "evidenceAssessment": {
+          "state": "supported",
+          "relatedDocuments": [
+            "wx-0ee56a8720c744cb41a76bc0b022da216b2e645e",
+            "wx-f29df384f57712125a177e2a3512271251875ae9",
+            "wx-126ecf815b7625f4a84c7018ec517060019f3c1c",
+            "wx-1d2d316d7ae0fcaa1769a7cdb3fecf7eb07caaa1",
+            "wx-705fccd0703ac1eb2d18b728fc392bfed605e3f8"
+          ],
+          "missing": [],
+          "activities": [
+            {
+              "documentId": "wx-0ee56a8720c744cb41a76bc0b022da216b2e645e",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-f29df384f57712125a177e2a3512271251875ae9",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-126ecf815b7625f4a84c7018ec517060019f3c1c",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-1d2d316d7ae0fcaa1769a7cdb3fecf7eb07caaa1",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "closed",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-705fccd0703ac1eb2d18b728fc392bfed605e3f8",
+              "existence": "documented",
+              "eventState": "started_end_unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            }
+          ],
+          "needsSupplement": false,
+          "negativeExistenceProven": false
+        },
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 0,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "groundingChecks": 0,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [],
+        "upstreamTimings": [],
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "cachedPromptTokens": 0,
+        "totalTokens": 0,
+        "usageComplete": true,
+        "chargedTokens": 0,
+        "durationMs": 976,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 1874,
+          "serverElapsedMs": 2850,
+          "firstTextMs": 2850,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_events",
+              "durationMs": 976,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 15,
+            "writeQueries": 12,
+            "calls": 19,
+            "failures": 0,
+            "durationMs": 2850,
+            "maxCallMs": 420,
+            "rowsRead": 38647,
+            "rowsWritten": 25,
+            "rowUsageStatements": 16,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_events",
+              "rowsRead": 38518,
+              "rowsWritten": 0,
+              "queries": 3,
+              "durationMs": 976,
+              "candidateChunks": 80,
+              "usageAvailable": true,
+              "queryPlanVersion": "query-v2",
+              "recallLanes": [
+                {
+                  "name": "recent_category",
+                  "limit": 80,
+                  "candidates": 80
+                }
+              ]
+            }
+          ],
+          "externalSearch": []
+        }
+      }
+    },
+    "response": "最近广外竞赛，按发布时间从新到旧：\n\n1. 2026-11-01 发布｜新闻 | 我院师生在第四届青年师生思政微课大赛中荣获佳绩 [1]\n2. 2026-10-31 发布｜祝贺！我院研究生李颖欣荣获2026年“田家炳杯”全日制教育硕士学科教学（语文）专业教学技能大赛一等奖 [2]\n3. 2026-10-31 发布｜2026年“挑战杯”中国大学生创业计划竞赛 [3]\n4. 2026-10-30 发布｜赓续长征精神，竞逐时政先锋|法学院时政知识竞赛初赛预告 [4]\n5. 2026-10-30 发布｜#新闻#法通中外，三十启新|2026年法学院新生杯辩论赛示范赛圆满落幕 [5]\n",
+    "responseHeadersMs": 2127,
+    "firstTextMs": 3270,
+    "completeMs": 3650
+  },
+  {
+    "prompt": "还有吗？",
+    "tools": [
+      "search_campus_events"
+    ],
+    "actions": [],
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "wx-b3e783715f59098f17aad6f5311713e47581d7d4",
+        "title": "乒乓球赛预热 | 以球会友 快乐乒乓",
+        "sourceName": "广外会院青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/f2eBGvYQcQCiByXUEs3iQw",
+        "publishedAt": "2026-10-30T12:00:00.000Z",
+        "snippet": "以球会友\n快乐乒乓\n小球穿梭，碰撞热爱\n第二届会计杯乒乓球赛即将开赛\n挥拍寻趣，以球会友\n共赴乒乓欢乐之约\n赛事信息\n比赛时间\n2026年11月7日\n上午9:00开赛，下午14:30开赛\n比赛地点\n大学城校区图书馆负一楼乒乓球场\n比赛项目\n上午:男子单打、女子单打\n下午:男女混合双打\n比赛奖励\n综测奖励\n各项目前3名:3.5分\n各项目4-8名:2.5分\n参与者:0.5分\n注:综测最终分数取最高，不做叠加\n奖品奖励\n各项目前3名:奖牌、奖状\n各项目4-8名:奖状\n各项目第1名:红双喜狂飙3胶皮\n各项目第2名:运动毛巾\n各项目第3名:胶皮清洁套装\n报名方式\n报名方式\n全体会计学院学生皆在报名截止时间11月2日20:00前填写问卷进行自主报名（问卷星将由各班体委发送至班群）\n名额有限，先到先得\n成功报名的参赛者通过二维码扫码进选手群\n往届精彩瞬间\n左右滑动查看更多\n文字 | 罗雅晴\n编辑 | 罗雅晴\n初审 | 谢怡静\n复审 | 应涵宇\n终审 | 李海琳",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": [
+          {
+            "title": "乒乓球赛预热 | 以球会友 快乐乒乓",
+            "href": "/calendar?date=2026-11-07&event=event-994ef148f2db78c7077f0bfddb728148eae6702e"
+          }
+        ]
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-0240134fc7dfbb37883d93ed21729a1fb64b0752",
+        "title": "“秋声嘹亮·爱我广外”第29届秋之声歌手大赛圆满收官",
+        "sourceName": "广外青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/VzzhkCO0rDzKcPiyERJUIQ",
+        "publishedAt": "2026-10-30T11:32:41.000Z",
+        "snippet": "10月29日，由校团委、关工委主办，大学生艺术教育中心、校团委学生艺术团办公室承办的第29届“秋之声”校园歌手大赛在大学城校区知行广场开展，现场师生共同见证广外青年用歌声唱响青春的热爱。\n本届大赛共有22组选手同台竞技，节目风格多元，为现场观众带来一场视听盛宴。\n英文歌曲《Hello》以轻快的问候唱响开场，瞬间点燃现场气氛；《麻雀》唱出平凡人的默默坚守，传递向上力量；《Defying Gravity》以高亢唱腔不断挑战音域极限，诠释挣脱束缚、勇敢追梦的勇气；《天空没有极限》与《多远都要在一起》道出对梦想与远方的不懈追寻。\n组合节目《Head Above Water》由两名选手默契配合，用合作演唱诠释了迎难而上、坚守信念的坚韧力量；《野子》以高亢洒脱的唱腔，唱出青年不惧风浪、勇敢追逐理想的倔强姿态。\n更多选手以深情的演绎叩击心扉。《月半小夜曲》《一千年以后》《小半》在舒缓旋律中诉说时光流转与深深怀念；《会呼吸的痛》《默》《空心》《日落》以细腻的嗓音勾勒出复杂的心绪；《我要的幸福》《Everything I Need》《好想谈恋爱》用温暖的歌声表达对美好情感的向往，台下观众在旋律中收获共鸣与感动。\n《簪花雨》融入国风意蕴，唱腔婉转、韵味悠长；《Skyfall》展现广外留学生的才华与风采；《拆穿》《虚拟》《日出时让街灯安睡》则以不同曲风演绎青春的多样百态。\n来自各学院的选手轮番登台，选手们真挚的演唱赢得掌声与喝彩，将现场氛围一次次推向高潮。\n本次“秋之声”校园歌手大赛不仅是一场音乐竞技，更是广外学子青春风采的集中展示。一届又一届的“秋之声”，见证着无数广外人对音乐的热爱、对校园的眷恋。以歌传情、以声会友，广外学子用歌声唱响青春理想，也让“爱我广外”的真挚情感在旋律中久久回响。\n文 字：学生艺术团办公室\n图 片：朱妙音 段盈盈\n编 辑：郑思莹",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-b995215ade2ee2ed6abea3ddc9afb3cada5fbc2d",
+        "title": "关于开展2026学年“挑战杯”广外大学生课外学术科技作品竞赛学院初赛的通知",
+        "sourceName": "广外新传青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/L5iKzAtJv3Fb29sUZwGvQQ",
+        "publishedAt": "2026-10-30T01:00:00.000Z",
+        "snippet": "关于开展2026学年“挑战杯”\n广外大学生课外学术科技作品竞赛\n学院初赛的通知\n根据学校《关于举办2026-2027学年“挑战杯”广外大学生创业计划竞赛和“挑战杯”广外大学生课外学术科技作品竞赛的通知》文件精神，新闻学院决定开展本院项目报送工作。具体通知如下\n活动概况\n01\n为进一步培养和提升大学生的钻研精神、学术意识与科研实践能力，激励全校大学生积极投身学术科研，学校决定举办2026-2027学年“挑战杯”广外大学生课外学术科技作品竞赛\n参赛对象\n我校在读全日制本科生、研究生均可申报作品参赛\n（不含在职研究生）\n参赛类别\n自然科学类学术论文：分为机械与控制、信息技术、数理、生命科学、能源化工5个组别；\n哲学社会科学类社会调查报告：分为发展成就、文明文化、美丽中国、民生福祉、中国之治5个组别；\n科技发明制作：分为机械与控制、信息技术、数理、生命科学、能源化工5个组别。其中，科技发明制作（A类）指科技含量较高、制作投入较大的作品；科技发明制作（B类）指投入较少，且为生产技术或社会生活带来便利的小发明、小制作等\n详情请查看原通知及附件\n参赛要求\n02\n・申报参赛队伍的第一作者、指导老师必须为新闻与传播学院人员，队伍成员超半数为新闻与传播学院学生\n・申报参赛的作品必须是学生课外学术科技和社会实践活动成果，可以以个人或集体的形式申报\n・凡申报个人作品的，申报者必须承担申报作品60%以上的研究工作，作品鉴定证书、专利证书及发表的有关作品的署名均应为第一作者，合作者必须是学生且不得超过2人\n・凡作者超过3人的项目或作者不超过3人，但无法区分第一作者的项目，均须申报集体作品。集体作品作者人数不能超过10名，且必须均为学生。推荐省赛的项目，每个团队（个人）只能申报1件作品\n・自然科学类学术论文作者仅限本科学生\n・毕业设计和课程设计（论文）、学年论文和",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-27f6d3d6f2076752dfd7c4db768487e5e6b3cd61",
+        "title": "“第二届多语种游戏翻译本地化与国际化大赛颁奖典礼暨分享会” 直播议程发布",
+        "sourceName": "广外高翻SITS",
+        "originalUrl": "https://mp.weixin.qq.com/s/KAF77KBsYLIQjizG6ncGyg",
+        "publishedAt": "2026-10-29T14:51:21.000Z",
+        "snippet": "“第二届多语种游戏翻译\n本地化与国际化大赛\n颁奖典礼暨分享会”\n直播议程发布\n历时数月，“第二届多语种游戏翻译本地化与国际化大赛”迎来收官时刻。\n本届大赛由中国翻译协会、全国翻译专业学位研究生教育指导委员会、教育部高等学校翻译专业教学协作组指导，广东外语外贸大学高级翻译学院、中国翻译协会国际化服务专业委员会、广东对外传播翻译基地、“全国高校黄大年式教师团队”广东外语外贸大学翻译教师团队联合主办。\n大赛承办单位为广东外语外贸大学高级翻译学院翻译技术系/翻译技术教育与研究中心、北京译禾信息技术有限公司、上海一者信息科技有限公司，支持单位为热脉游戏（北京云龄科技有限公司）。\n自启动以来，大赛共吸引了来自境内250所高校、境外44所高校及境内外17家企事业单位的近760位选手参赛，参赛规模与国际化程度均创历史新高。\n为表彰优秀选手，共探游戏出海新趋势、人才培养新路径，大赛组委会将于10月31日在线隆重举行“第二届多语种游戏翻译本地化与国际化大赛颁奖典礼暨游戏出海行业现状、人才需求及技术发展分享会”。\n活动特邀来自高校、行业协会、语言服务企业、翻译技术企业及游戏公司的多位专家，将围绕游戏本地化系统构建、AI Agent与TMS协同、游戏出海实践与职业发展等前沿议题展开深度分享。活动议程如下图所示。\n本次颁奖典礼暨分享会采用在线直播形式，观看方式如下：\n直播时间：2026年10月31日（周六）09:00-12:00。\n直播平台：微信搜索“一者科技Tmxmall”视频号，或扫描下方二维码，预约观看。\n直播抽奖：颁奖典礼大赛解析环节将在观众中进行随机抽奖，奖品包括：YiCAT团队加强版一个月会员3个、热脉发行游戏《另一个肉鸽农场》CDKey 5个。\n⬆️直播二维码\n游戏出海，语言先行；产教融合，共育英才。10月31日，让我们相聚云端，共同洞见游戏出海",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-1858a60865494dd4163acbae912017d221420be9",
+        "title": "“蓝调漫游”秋之声歌唱比赛决赛顺利举行",
+        "sourceName": "广外会院青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/c7UqaZ6MoovUv-zZ-tKc7w",
+        "publishedAt": "2026-10-29T12:00:00.000Z",
+        "snippet": "“蓝调漫游”\n秋之声歌唱比赛决赛顺利举行\n10月25日晚，会计学院“蓝调漫游”秋之声歌唱比赛决赛于南校区学术报告厅如期举行。\n会计学院学生会指导老师谢怡静老师和2025级辅导员李新璐老师出席本次活动，艺术学院文体部部长张若涵同学、艺术学院学生会主席窦文苗同学、会计学院艺术团团长黄锦依同学出席活动并担任此次比赛的评委。\n评委准备就绪\n主持人照片\n赛制介绍：本次决赛分为三轮角逐。第一轮8组选手依次演唱，根据评委打分排名，前5名直通冠军争夺战，剩余3组进入复活赛，观众人气投票仅作参考，不计入总分；第二轮为复活赛，3组选手单独比拼，由评委打分，最高分1组选手突围，晋级冠军争夺战，最终汇聚6组选手进入终局；第三轮6组演唱自选曲目，综合评委打分（70%）与观众投票（30%）决出奖项。\n比赛开始前，会计学院模特队的走秀《星夜舞筵》惊艳亮相，瞬间抓住了全场目光。\n模特队走秀\n比赛情况\n选手演绎歌曲照片\n第一轮比赛中，八组歌手依次登台。他们的声线，有的澄澈如清泉，有的厚重如深海，配合着每一处悉心编排的肢体表达，引得台下观众忍不住拍手叫好。演唱结束后，最高人气奖投票正式开启。暖场短视频播放完毕，投票通道随即关闭，轻松有趣的第一轮游戏接踵而至。此轮晋级选手有文成聿，王珺文，王诗雯，莫闻，陈莹。而剩下三组同学进入复活赛环节。\n游戏现场\n第二轮复活赛，三个待定选手组：张李哲琳，吴钟菥，黄成建和郑应嘉再度站上舞台，向着晋级名额全力一搏。选手们声线时而澄澈灵动，时而厚重绵长，引得掌声阵阵。复活赛比拼告一段落，中场互动游戏“歌曲封面大匹配”随之登场，舒缓了赛场紧张感。同时，经评委综合评定，选手吴钟菥凭借优异发挥拿下最高分，斩获冠军争夺战的入场券。至此，六位决赛选手全部集结，分别是：文成聿，吴钟菥，王珺文，王诗雯，莫闻，陈莹。他们蓄势待发，迎接终局对决。\n选手演唱",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ],
+    "result": {
+      "conversationId": "d745d10e-8c0b-5526-8055-519b76ea7c4c",
+      "requestId": "ec1121e9-f93d-4a3c-abb7-4320d8e510e6",
+      "metrics": {
+        "smartSearch": false,
+        "queryUnderstanding": {
+          "failed": false
+        },
+        "answerMode": "radar_list",
+        "conversationAct": "campus",
+        "answerRequirement": "strict",
+        "modelFailureCode": null,
+        "evidenceGateUsed": true,
+        "publicationFallbackUsed": false,
+        "evidenceAssessment": {
+          "state": "supported",
+          "relatedDocuments": [
+            "wx-b3e783715f59098f17aad6f5311713e47581d7d4",
+            "wx-0240134fc7dfbb37883d93ed21729a1fb64b0752",
+            "wx-b995215ade2ee2ed6abea3ddc9afb3cada5fbc2d",
+            "wx-27f6d3d6f2076752dfd7c4db768487e5e6b3cd61",
+            "wx-1858a60865494dd4163acbae912017d221420be9"
+          ],
+          "missing": [],
+          "activities": [
+            {
+              "documentId": "wx-b3e783715f59098f17aad6f5311713e47581d7d4",
+              "existence": "documented",
+              "eventState": "upcoming",
+              "registrationState": "closed",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-0240134fc7dfbb37883d93ed21729a1fb64b0752",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-b995215ade2ee2ed6abea3ddc9afb3cada5fbc2d",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-27f6d3d6f2076752dfd7c4db768487e5e6b3cd61",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-1858a60865494dd4163acbae912017d221420be9",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            }
+          ],
+          "needsSupplement": false,
+          "negativeExistenceProven": false
+        },
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 0,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "groundingChecks": 0,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [],
+        "upstreamTimings": [],
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "cachedPromptTokens": 0,
+        "totalTokens": 0,
+        "usageComplete": true,
+        "chargedTokens": 0,
+        "durationMs": 694,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 1747,
+          "serverElapsedMs": 2441,
+          "firstTextMs": 2441,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_events",
+              "durationMs": 694,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 15,
+            "writeQueries": 11,
+            "calls": 18,
+            "failures": 0,
+            "durationMs": 2441,
+            "maxCallMs": 391,
+            "rowsRead": 37950,
+            "rowsWritten": 19,
+            "rowUsageStatements": 15,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_events",
+              "rowsRead": 37928,
+              "rowsWritten": 0,
+              "queries": 3,
+              "durationMs": 694,
+              "candidateChunks": 80,
+              "usageAvailable": true,
+              "queryPlanVersion": "query-v2",
+              "recallLanes": [
+                {
+                  "name": "recent_category",
+                  "limit": 80,
+                  "candidates": 80
+                }
+              ]
+            }
+          ],
+          "externalSearch": []
+        }
+      }
+    },
+    "response": "最近广外竞赛，按发布时间从新到旧：\n\n1. 2026-10-30 发布｜乒乓球赛预热 | 以球会友 快乐乒乓 [1]\n2. 2026-10-30 发布｜“秋声嘹亮·爱我广外”第29届秋之声歌手大赛圆满收官 [2]\n3. 2026-10-30 发布｜关于开展2026学年“挑战杯”广外大学生课外学术科技作品竞赛学院初赛的通知 [3]\n4. 2026-10-29 发布｜“第二届多语种游戏翻译本地化与国际化大赛颁奖典礼暨分享会” 直播议程发布 [4]\n5. 2026-10-29 发布｜“蓝调漫游”秋之声歌唱比赛决赛顺利举行 [5]\n",
+    "responseHeadersMs": 2038,
+    "firstTextMs": 2979,
+    "completeMs": 3499
+  },
+  {
+    "prompt": "一饭在哪？",
+    "tools": [
+      "search_places",
+      "control_map"
+    ],
+    "actions": [
+      {
+        "type": "FOCUS_PLACE",
+        "placeId": "osm-way-313039048",
+        "zoom": 17
+      },
+      {
+        "type": "SHOW_PLACE_DETAILS",
+        "placeId": "osm-way-313039048"
+      }
+    ],
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-313039048",
+          "name": "文采园（一饭）",
+          "category": "canteen",
+          "zone": "living",
+          "location": [
+            113.39131745,
+            23.064490550000002
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-way-313039048",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "result": {
+      "conversationId": "d745d10e-8c0b-5526-8055-519b76ea7c4c",
+      "requestId": "f75dd5b9-f9cb-4e37-934d-477c3087d9f3",
+      "metrics": {
+        "smartSearch": false,
+        "queryUnderstanding": {
+          "failed": false
+        },
+        "answerMode": "model",
+        "conversationAct": "campus",
+        "answerRequirement": "open",
+        "modelFailureCode": null,
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 3,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "groundingChecks": 0,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [],
+        "upstreamTimings": [
+          {
+            "durationMs": 2185,
+            "firstTextMs": null,
+            "finishReason": "tool_calls",
+            "contentChars": 0
+          },
+          {
+            "durationMs": 2128,
+            "firstTextMs": null,
+            "finishReason": "tool_calls",
+            "contentChars": 0
+          },
+          {
+            "durationMs": 3067,
+            "firstTextMs": 3002,
+            "finishReason": "stop",
+            "contentChars": 31
+          }
+        ],
+        "promptTokens": 4389,
+        "completionTokens": 663,
+        "cachedPromptTokens": 0,
+        "totalTokens": 5052,
+        "usageComplete": true,
+        "chargedTokens": 5052,
+        "durationMs": 10152,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 1752,
+          "serverElapsedMs": 11904,
+          "firstTextMs": 11786,
+          "mapActionMs": 2081,
+          "skills": [
+            {
+              "name": "search_places",
+              "durationMs": 0,
+              "ok": true
+            },
+            {
+              "name": "control_map",
+              "durationMs": 0,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 22,
+            "writeQueries": 12,
+            "calls": 26,
+            "failures": 0,
+            "durationMs": 3024,
+            "maxCallMs": 132,
+            "rowsRead": 27,
+            "rowsWritten": 21,
+            "rowUsageStatements": 13,
+            "rowUsageComplete": false
+          },
+          "retrieval": [],
+          "externalSearch": []
+        }
+      }
+    },
+    "response": "一饭就是文采园食堂啦～在生活区那边，地图已经帮你定位好啦 🐟",
+    "responseHeadersMs": 1995,
+    "firstTextMs": 12131,
+    "completeMs": 12500
+  },
+  {
+    "prompt": "带我去南苑11栋",
+    "tools": [],
+    "actions": [],
+    "cards": [],
+    "result": {
+      "conversationId": "d745d10e-8c0b-5526-8055-519b76ea7c4c",
+      "requestId": "d69aef42-2594-40f9-b805-2e68f1acbf69",
+      "metrics": {
+        "smartSearch": false,
+        "queryUnderstanding": {
+          "failed": false
+        },
+        "answerMode": "model",
+        "conversationAct": "campus",
+        "answerRequirement": "open",
+        "modelFailureCode": null,
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "groundingChecks": 0,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [],
+        "upstreamTimings": [
+          {
+            "durationMs": 1729,
+            "firstTextMs": 1616,
+            "finishReason": "stop",
+            "contentChars": 30
+          }
+        ],
+        "promptTokens": 384,
+        "completionTokens": 154,
+        "cachedPromptTokens": 0,
+        "totalTokens": 538,
+        "usageComplete": true,
+        "chargedTokens": 538,
+        "durationMs": 1968,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 1819,
+          "serverElapsedMs": 3787,
+          "firstTextMs": 3668,
+          "mapActionMs": null,
+          "skills": [],
+          "database": {
+            "readQueries": 14,
+            "writeQueries": 11,
+            "calls": 17,
+            "failures": 0,
+            "durationMs": 2058,
+            "maxCallMs": 156,
+            "rowsRead": 26,
+            "rowsWritten": 19,
+            "rowUsageStatements": 12,
+            "rowUsageComplete": false
+          },
+          "retrieval": [],
+          "externalSearch": []
+        }
+      }
+    },
+    "response": "你打算从哪出发呀？告诉本鱼起点，马上给你指路去南苑11栋🐟",
+    "responseHeadersMs": 2090,
+    "firstTextMs": 4044,
+    "completeMs": 4427
+  }
+]

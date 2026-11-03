@@ -1,0 +1,1139 @@
+[
+  {
+    "message": "了解下王春业老师",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_knowledge",
+        "search_campus_events"
+      ],
+      "query": "了解下王春业老师",
+      "retrievalQuery": "王春业",
+      "attemptedKeywords": [
+        "王春业"
+      ],
+      "discovery": false,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "了解下王春业老师",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "了解下王春业老师",
+            "alternatives": [
+              "了解下王春业老师"
+            ]
+          }
+        ]
+      },
+      "act": "general",
+      "answerRequirement": "strict",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": true,
+      "articleKeywords": "下王春业老师",
+      "contentStatement": true,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "秋之声",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_events"
+      ],
+      "query": "秋之声",
+      "retrievalQuery": "秋之声",
+      "attemptedKeywords": [
+        "秋之声"
+      ],
+      "discovery": false,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "秋之声",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "秋之声",
+            "alternatives": [
+              "秋之声"
+            ]
+          }
+        ]
+      },
+      "act": "general",
+      "answerRequirement": "strict",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "秋之声",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "2026年的秋之声什么时候举行？",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_events"
+      ],
+      "query": "2026年的秋之声什么时候举行？",
+      "retrievalQuery": "2026年 秋之声什么时候举行",
+      "attemptedKeywords": [
+        "2026年 秋之声什么时候举行"
+      ],
+      "discovery": false,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "2026年的秋之声什么时候举行？",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [
+          "2026"
+        ],
+        "modifiers": [
+          {
+            "original": "秋之声",
+            "alternatives": [
+              "秋之声"
+            ]
+          },
+          {
+            "original": "时候举行",
+            "alternatives": [
+              "时候举行"
+            ]
+          }
+        ]
+      },
+      "act": "general",
+      "answerRequirement": "strict",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "2026年的秋之声什么时候举行",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "最近有什么竞赛？",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_events"
+      ],
+      "query": "最近有什么竞赛？",
+      "retrievalQuery": "竞赛",
+      "attemptedKeywords": [
+        "竞赛"
+      ],
+      "discovery": true,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "最近有什么竞赛？",
+        "topics": [
+          {
+            "id": "competition",
+            "originalTerms": [
+              "竞赛"
+            ],
+            "alternatives": [
+              "竞赛",
+              "比赛",
+              "大赛"
+            ]
+          }
+        ],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "discovery",
+        "goalTerms": [],
+        "temporalExpression": "最近",
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": []
+      },
+      "act": "campus",
+      "answerRequirement": "strict",
+      "radarCategory": "competition",
+      "recentDiscovery": true,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "最近有什么竞赛",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "看看广外最近的竞赛活动情况",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_events"
+      ],
+      "query": "看看广外最近的竞赛活动情况",
+      "retrievalQuery": "广外 竞赛",
+      "attemptedKeywords": [
+        "广外 竞赛"
+      ],
+      "discovery": true,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "看看广外最近的竞赛活动情况",
+        "topics": [
+          {
+            "id": "competition",
+            "originalTerms": [
+              "竞赛"
+            ],
+            "alternatives": [
+              "竞赛",
+              "比赛",
+              "大赛"
+            ]
+          }
+        ],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "discovery",
+        "goalTerms": [],
+        "temporalExpression": "最近",
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "活动情况",
+            "alternatives": [
+              "活动情况"
+            ]
+          }
+        ]
+      },
+      "act": "campus",
+      "answerRequirement": "strict",
+      "radarCategory": "competition",
+      "recentDiscovery": true,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "广外最近的竞赛活动情况",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "最近有什么讲座？",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_events"
+      ],
+      "query": "最近有什么讲座？",
+      "retrievalQuery": "讲座",
+      "attemptedKeywords": [
+        "讲座"
+      ],
+      "discovery": true,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "最近有什么讲座？",
+        "topics": [
+          {
+            "id": "lecture",
+            "originalTerms": [
+              "讲座"
+            ],
+            "alternatives": [
+              "讲座",
+              "讲坛",
+              "学术沙龙",
+              "论坛"
+            ]
+          }
+        ],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "discovery",
+        "goalTerms": [],
+        "temporalExpression": "最近",
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": []
+      },
+      "act": "campus",
+      "answerRequirement": "strict",
+      "radarCategory": "lecture",
+      "recentDiscovery": true,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "最近有什么讲座",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "了解下广外法学院的比赛",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_events"
+      ],
+      "query": "了解下广外法学院的比赛",
+      "retrievalQuery": "法学院 比赛",
+      "attemptedKeywords": [
+        "法学院 比赛"
+      ],
+      "discovery": false,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "了解下广外法学院的比赛",
+        "topics": [
+          {
+            "id": "competition",
+            "originalTerms": [
+              "比赛"
+            ],
+            "alternatives": [
+              "竞赛",
+              "比赛",
+              "大赛"
+            ]
+          }
+        ],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "discovery",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "了解下",
+            "alternatives": [
+              "了解下"
+            ]
+          },
+          {
+            "original": "法学院",
+            "alternatives": [
+              "法学院"
+            ]
+          }
+        ]
+      },
+      "act": "campus",
+      "answerRequirement": "strict",
+      "radarCategory": "competition",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "下广外法学院的比赛",
+      "contentStatement": true,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "2026年研究生学业奖学金拟获奖名单公示",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_knowledge"
+      ],
+      "query": "2026年研究生学业奖学金拟获奖名单公示",
+      "retrievalQuery": "2026年研究生学业奖学金拟获奖名单公示",
+      "attemptedKeywords": [
+        "2026年研究生学业奖学金拟获奖名单公示"
+      ],
+      "discovery": true,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "2026年研究生学业奖学金拟获奖名单公示",
+        "topics": [
+          {
+            "id": "scholarship",
+            "originalTerms": [
+              "奖学金"
+            ],
+            "alternatives": [
+              "奖学金",
+              "奖助",
+              "学生资助"
+            ]
+          }
+        ],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [
+          "研究生",
+          "2026"
+        ],
+        "modifiers": [
+          {
+            "original": "研究生学业",
+            "alternatives": [
+              "研究生学业"
+            ]
+          },
+          {
+            "original": "拟获奖名单公示",
+            "alternatives": [
+              "拟获奖名单公示"
+            ]
+          }
+        ]
+      },
+      "act": "campus",
+      "answerRequirement": "strict",
+      "radarCategory": "scholarship_opportunity",
+      "recentDiscovery": false,
+      "articleLookup": true,
+      "entityLookup": false,
+      "articleQuery": "2026年研究生学业奖学金拟获奖名单公示",
+      "articleKeywords": "2026年研究生学业奖学金拟获奖名单公示",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "只能找到这两条吗？",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_knowledge"
+      ],
+      "query": "只能找到这两条吗？",
+      "retrievalQuery": "只能找到这两条吗",
+      "attemptedKeywords": [
+        "只能找到这两条吗"
+      ],
+      "discovery": false,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "只能找到这两条吗？",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "只能找到这两条",
+            "alternatives": [
+              "只能找到这两条"
+            ]
+          }
+        ]
+      },
+      "act": "general",
+      "answerRequirement": "strict",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "只能 到这两条吗",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "学院组织三下乡需要填申请表吗？",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_knowledge"
+      ],
+      "query": "学院组织三下乡需要填申请表吗？",
+      "retrievalQuery": "学院组织三下乡需要填申请表吗",
+      "attemptedKeywords": [
+        "学院组织三下乡需要填申请表吗"
+      ],
+      "discovery": false,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "学院组织三下乡需要填申请表吗？",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "学院组织三下乡需要填",
+            "alternatives": [
+              "学院组织三下乡需要填"
+            ]
+          }
+        ]
+      },
+      "act": "campus",
+      "answerRequirement": "strict",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "学院组织三下乡需 填申请表吗",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "党的二十届五中全会公报一图速览",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_knowledge"
+      ],
+      "query": "党的二十届五中全会公报一图速览",
+      "retrievalQuery": "党的二十届五中全会公报一图速览",
+      "attemptedKeywords": [
+        "党的二十届五中全会公报一图速览"
+      ],
+      "discovery": false,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "党的二十届五中全会公报一图速览",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "二十届五中全会公报一图速览",
+            "alternatives": [
+              "二十届五中全会公报一图速览"
+            ]
+          }
+        ]
+      },
+      "act": "general",
+      "answerRequirement": "strict",
+      "recentDiscovery": false,
+      "articleLookup": true,
+      "entityLookup": false,
+      "articleQuery": "党的二十届五中全会公报一图速览",
+      "articleKeywords": "党的二十届五中全会公报一图速览",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "找文章「法通中外，三十启新＃一周一会＃第七周工作速览」",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_knowledge"
+      ],
+      "query": "找文章「法通中外，三十启新＃一周一会＃第七周工作速览」",
+      "retrievalQuery": "法通中外，三十启新＃一周一会＃第七周工作速览",
+      "attemptedKeywords": [
+        "法通中外，三十启新＃一周一会＃第七周工作速览"
+      ],
+      "discovery": false,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "找文章「法通中外，三十启新＃一周一会＃第七周工作速览」",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [
+          "法通中外,三十启新#一周一会#第七周工作速览"
+        ],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "找文章",
+            "alternatives": [
+              "找文章"
+            ]
+          }
+        ]
+      },
+      "act": "general",
+      "answerRequirement": "strict",
+      "recentDiscovery": false,
+      "articleLookup": true,
+      "entityLookup": false,
+      "articleQuery": "法通中外，三十启新＃一周一会＃第七周工作速览",
+      "articleKeywords": "法通中外，三十启新＃一周一会＃第七周工作速览",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "广外学子在2025年全运会有什么贡献？",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_knowledge"
+      ],
+      "query": "广外学子在2025年全运会有什么贡献？",
+      "retrievalQuery": "广外学子在2025年全运会 贡献",
+      "attemptedKeywords": [
+        "广外学子在2025年全运会 贡献"
+      ],
+      "discovery": true,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "广外学子在2025年全运会有什么贡献？",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "discovery",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [
+          "2025"
+        ],
+        "modifiers": [
+          {
+            "original": "学子在",
+            "alternatives": [
+              "学子在"
+            ]
+          },
+          {
+            "original": "全运会",
+            "alternatives": [
+              "全运会"
+            ]
+          },
+          {
+            "original": "贡献",
+            "alternatives": [
+              "贡献"
+            ]
+          }
+        ]
+      },
+      "act": "campus",
+      "answerRequirement": "strict",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "广外学子在2025年全运会有什么贡献",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "今天广外有哪些活动？",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_events"
+      ],
+      "query": "今天广外有哪些活动？",
+      "retrievalQuery": "今天广外",
+      "attemptedKeywords": [
+        "今天广外"
+      ],
+      "discovery": true,
+      "map": false,
+      "timeWindow": {
+        "after": "2026-11-03",
+        "before": "2026-11-03",
+        "role": "event",
+        "timezone": "Asia/Shanghai"
+      },
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "今天广外有哪些活动？",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "discovery",
+        "goalTerms": [],
+        "temporalExpression": "今天",
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [],
+        "timeRange": {
+          "after": "2026-11-03",
+          "before": "2026-11-03",
+          "role": "event",
+          "timezone": "Asia/Shanghai"
+        }
+      },
+      "act": "campus",
+      "answerRequirement": "strict",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "今天广外有哪些活动",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "下周有什么可以参加的讲座？",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_events"
+      ],
+      "query": "下周有什么可以参加的讲座？",
+      "retrievalQuery": "下周 可以参加 讲座",
+      "attemptedKeywords": [
+        "下周 可以参加 讲座"
+      ],
+      "discovery": true,
+      "map": false,
+      "timeWindow": {
+        "after": "2026-11-09",
+        "before": "2026-11-15",
+        "role": "event",
+        "timezone": "Asia/Shanghai"
+      },
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "下周有什么可以参加的讲座？",
+        "topics": [
+          {
+            "id": "lecture",
+            "originalTerms": [
+              "讲座"
+            ],
+            "alternatives": [
+              "讲座",
+              "讲坛",
+              "学术沙龙",
+              "论坛"
+            ]
+          }
+        ],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "participation",
+        "goalTerms": [
+          "报名",
+          "参赛",
+          "参加",
+          "通知"
+        ],
+        "temporalExpression": "下周",
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [],
+        "timeRange": {
+          "after": "2026-11-09",
+          "before": "2026-11-15",
+          "role": "event",
+          "timezone": "Asia/Shanghai"
+        }
+      },
+      "act": "campus",
+      "answerRequirement": "strict",
+      "radarCategory": "lecture",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "下周有什么可以参加的讲座",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "一饭在哪？",
+    "gate": "campus",
+    "plan": {
+      "active": false,
+      "tools": [],
+      "query": "广外大学城校区；一饭在哪？",
+      "retrievalQuery": "校区",
+      "attemptedKeywords": [
+        "校区"
+      ],
+      "discovery": false,
+      "map": true,
+      "focus": "food",
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "广外大学城校区；一饭在哪？",
+        "topics": [
+          {
+            "id": "food",
+            "originalTerms": [
+              "一饭"
+            ],
+            "alternatives": [
+              "食堂",
+              "饭堂",
+              "餐厅",
+              "好吃",
+              "美食",
+              "口味",
+              "一饭",
+              "文采园",
+              "博雅园",
+              "风采园"
+            ]
+          }
+        ],
+        "topicMode": "all",
+        "entities": [
+          "一饭"
+        ],
+        "campus": "south",
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "在哪",
+            "alternatives": [
+              "在哪"
+            ]
+          }
+        ]
+      },
+      "act": "campus",
+      "answerRequirement": "open",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "一饭在哪",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "带我去南苑11栋",
+    "gate": "campus",
+    "plan": {
+      "active": false,
+      "tools": [],
+      "query": "带我去南苑11栋",
+      "retrievalQuery": "带我去南苑11栋",
+      "attemptedKeywords": [
+        "带我去南苑11栋"
+      ],
+      "discovery": false,
+      "map": true,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "带我去南苑11栋",
+        "topics": [
+          {
+            "id": "housing",
+            "originalTerms": [
+              "南苑"
+            ],
+            "alternatives": [
+              "宿舍",
+              "寝室",
+              "住宿",
+              "南苑",
+              "北苑",
+              "入住",
+              "居住",
+              "隔音"
+            ]
+          }
+        ],
+        "topicMode": "all",
+        "entities": [
+          "南苑11栋"
+        ],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "带我去",
+            "alternatives": [
+              "带我去"
+            ]
+          }
+        ]
+      },
+      "act": "campus",
+      "answerRequirement": "open",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "带我去南苑11栋",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "你好，你是一只大肥鱼吗？",
+    "gate": "conversation",
+    "plan": {
+      "active": false,
+      "tools": [],
+      "query": "你好，你是一只大肥鱼吗？",
+      "retrievalQuery": "你好 你是一只大肥鱼吗",
+      "attemptedKeywords": [
+        "你好 你是一只大肥鱼吗"
+      ],
+      "discovery": false,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "你好，你是一只大肥鱼吗？",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "你好",
+            "alternatives": [
+              "你好"
+            ]
+          },
+          {
+            "original": "你是一只大肥鱼",
+            "alternatives": [
+              "你是一只大肥鱼"
+            ]
+          }
+        ]
+      },
+      "act": "chitchat",
+      "answerRequirement": "open",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "你好 你是一只大肥鱼吗",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "开启智能搜索后查找广外官网最新资料",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_events"
+      ],
+      "query": "开启智能搜索后查找广外官网最新资料",
+      "retrievalQuery": "开启智能搜索后查找广外官网最新资料",
+      "attemptedKeywords": [
+        "开启智能搜索后查找广外官网最新资料"
+      ],
+      "discovery": false,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "开启智能搜索后查找广外官网最新资料",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "开启智能搜索后查找",
+            "alternatives": [
+              "开启智能搜索后查找"
+            ]
+          },
+          {
+            "original": "官网最新资料",
+            "alternatives": [
+              "官网最新资料"
+            ]
+          }
+        ]
+      },
+      "act": "campus",
+      "answerRequirement": "strict",
+      "recentDiscovery": false,
+      "articleLookup": false,
+      "entityLookup": false,
+      "articleKeywords": "开启智能 后 广外官网最新资料",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  },
+  {
+    "message": "关闭智能搜索后再次查询校园文章",
+    "gate": "campus",
+    "plan": {
+      "active": true,
+      "tools": [
+        "search_campus_knowledge"
+      ],
+      "query": "关闭智能搜索后再次查询校园文章",
+      "retrievalQuery": "关闭智能搜索后再次查询校园",
+      "attemptedKeywords": [
+        "关闭智能搜索后再次查询校园"
+      ],
+      "discovery": false,
+      "map": false,
+      "focus": null,
+      "queryPlan": {
+        "version": "query-v2",
+        "original": "关闭智能搜索后再次查询校园文章",
+        "topics": [],
+        "topicMode": "all",
+        "entities": [],
+        "campus": null,
+        "goal": "facts",
+        "goalTerms": [],
+        "temporalExpression": null,
+        "excludedTerms": [],
+        "qualifiers": [],
+        "modifiers": [
+          {
+            "original": "关闭智能搜索后再次查询",
+            "alternatives": [
+              "关闭智能搜索后再次查询"
+            ]
+          },
+          {
+            "original": "文章",
+            "alternatives": [
+              "文章"
+            ]
+          }
+        ]
+      },
+      "act": "campus",
+      "answerRequirement": "strict",
+      "recentDiscovery": false,
+      "articleLookup": true,
+      "entityLookup": false,
+      "articleQuery": "关闭智能搜索后再次查询校园",
+      "articleKeywords": "关闭智能搜索后再次查询校园",
+      "contentStatement": false,
+      "multiTopic": false,
+      "discoveryFollowup": false
+    }
+  }
+]

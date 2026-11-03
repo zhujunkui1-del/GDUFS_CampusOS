@@ -1,0 +1,37 @@
+{
+  "typecheck": {
+    "command": "npx tsc --noEmit",
+    "exitCode": 0
+  },
+  "lint": {
+    "command": "eslint changed TS/TSX paths from implementation commit --max-warnings=0",
+    "exitCode": 0
+  },
+  "unit": {
+    "command": "npx vitest run --maxWorkers=1",
+    "passed": 907,
+    "total": 907,
+    "files": 129
+  },
+  "ui": {
+    "chromeFixture": {
+      "desktop": "passed",
+      "mobileViewport": "passed"
+    },
+    "edgeReal": {
+      "desktop": "passed",
+      "mobileViewport": "passed"
+    },
+    "edgeFixtureDesktopScreenshot": "timed out; retained failure log; same test passed in Chrome"
+  },
+  "stateLive": {
+    "checks": 6,
+    "preferenceWrites": 3,
+    "failures": 0
+  },
+  "build": {
+    "worker": "passed",
+    "generatedFilesSanitized": 1673
+  },
+  "dataRetention": "No article/index rebuild, account edits or private conversation migration"
+}

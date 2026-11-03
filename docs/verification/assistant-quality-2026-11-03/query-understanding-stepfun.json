@@ -1,0 +1,12 @@
+[
+  {
+    "question": "学院组织三下乡需要填申请表吗？",
+    "provider": "stepfun",
+    "error": "MODEL_KEY_INVALID"
+  },
+  {
+    "question": "广外学子在2025年全运会有什么贡献？",
+    "provider": "stepfun",
+    "error": "MODEL_KEY_INVALID"
+  }
+]

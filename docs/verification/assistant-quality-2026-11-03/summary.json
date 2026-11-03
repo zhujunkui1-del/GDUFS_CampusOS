@@ -1,0 +1,159 @@
+{
+  "definitions": {
+    "retrieval": "Frozen public corpus: 33 documents, 100 title, prefix and conversational-title queries. No model or Vectorize in this maintenance comparison.",
+    "precision": "Share of returned titles that contain the requested literal title/prefix after formatting normalization; not a semantic relevance grade or fact accuracy metric.",
+    "live": "Only this evaluator's isolated guest prompts. HTTP success alone is not a correctness grade. Grounding verdicts are model judgements, not independent human grades.",
+    "limitations": [
+      "No 100-question end-to-end model baseline was captured; 100 is the retrieval comparison size.",
+      "Persona naturalness and factual support require review of transcripts; no fabricated aggregate percentage.",
+      "D1 maintenance latency includes Cloudflare API round trips; not Worker request latency.",
+      "Worker CPU unavailable."
+    ]
+  },
+  "before": {
+    "n": 100,
+    "targetIdRecallAt5": 0.91,
+    "equivalentTitleRecallAt5": 0.97,
+    "precisionOfReturnedTop3": 0.8041237113402063,
+    "precisionOfReturnedTop5": 0.7740549828178698,
+    "noEquivalentTitleRate": 0.03,
+    "bodyEvidenceCoverage": 0.9540816326530612,
+    "meanMaintenanceLatencyMs": 1973.17,
+    "meanD1RowsRead": 22376.81,
+    "D1RowsWritten": 0
+  },
+  "after": {
+    "n": 100,
+    "targetIdRecallAt5": 1,
+    "equivalentTitleRecallAt5": 1,
+    "precisionOfReturnedTop3": 1,
+    "precisionOfReturnedTop5": 1,
+    "noEquivalentTitleRate": 0,
+    "bodyEvidenceCoverage": 0.8623853211009175,
+    "meanMaintenanceLatencyMs": 1671.55,
+    "meanD1RowsRead": 2101.81,
+    "D1RowsWritten": 0
+  },
+  "baselineLive": {
+    "n": 8,
+    "terminalFailures": [],
+    "meanAnswerMs": 12835.375,
+    "modelRequests": 12,
+    "externalTools": 0,
+    "externalWhenOff": 0,
+    "observedNativeProviders": [],
+    "missingCitationsWithSourceCards": [
+      "看看广外最近的竞赛活动情况",
+      "学院组织三下乡需要填申请表吗？",
+      "广外学子在2025年全运会有什么贡献？"
+    ],
+    "groundingVerdicts": [
+      {
+        "supported": true,
+        "issues": []
+      },
+      {
+        "supported": true,
+        "issues": []
+      },
+      {
+        "supported": true,
+        "issues": []
+      },
+      {
+        "supported": false,
+        "issues": [
+          "答复将发布主体误作广外学工，原文仅提及广外学生资讯中心采写编辑，无广外学工发布的相关表述"
+        ]
+      },
+      {
+        "supported": false,
+        "issues": [
+          "候选答复称文章正文为图解速览类，但引用资料未提及正文内容，仅提供文章标题。"
+        ]
+      },
+      {
+        "supported": true,
+        "issues": []
+      }
+    ],
+    "meanObservedD1Read": 14253.333333333334,
+    "workerCPU": null
+  },
+  "afterLive": {
+    "n": 8,
+    "terminalFailures": [],
+    "meanAnswerMs": 16216.5,
+    "modelRequests": 13,
+    "externalTools": 0,
+    "externalWhenOff": 0,
+    "observedNativeProviders": [],
+    "missingCitationsWithSourceCards": [],
+    "groundingVerdicts": [
+      {
+        "supported": true,
+        "issues": []
+      },
+      {
+        "supported": true,
+        "issues": []
+      }
+    ],
+    "meanObservedD1Read": 5559.125,
+    "workerCPU": null
+  },
+  "scenarios": {
+    "n": 20,
+    "terminalFailures": [],
+    "meanAnswerMs": 15565.8,
+    "modelRequests": 26,
+    "externalTools": 2,
+    "externalWhenOff": 0,
+    "observedNativeProviders": [],
+    "missingCitationsWithSourceCards": [],
+    "groundingVerdicts": [
+      {
+        "supported": false,
+        "issues": [
+          "引用[1]不支持王春业“广外纪检监察研究院院长”的职务 claim，来源[1]未提及该职务",
+          "答复称王春业2026年9月出席开班仪式，来源[1]未明确该活动具体举办时间"
+        ]
+      },
+      {
+        "supported": true,
+        "issues": []
+      },
+      {
+        "supported": true,
+        "issues": []
+      },
+      {
+        "supported": true,
+        "issues": []
+      },
+      {
+        "supported": false,
+        "issues": [
+          "发布主体错误，原文发布主体为微信公众号「GDUFS法学团学」，非「广外法学青年」"
+        ]
+      },
+      {
+        "supported": false,
+        "issues": [
+          "答复将反馈渠道归为“学校膳食委员会”，但[1]仅提“食堂管理职能部门”，未提及该主体，归因无依据",
+          "答复称“广外大学城校区就是南校”，但所引资料未明确二者等同关系，结论无依据"
+        ]
+      },
+      {
+        "supported": true,
+        "issues": []
+      },
+      {
+        "supported": true,
+        "issues": []
+      }
+    ],
+    "meanObservedD1Read": 14459.941176470587,
+    "workerCPU": null
+  }
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "hostname": "gdufs.ccwu.cc",
+    "service": "campusos-preview",
+    "environment": "production"
+  }
+]

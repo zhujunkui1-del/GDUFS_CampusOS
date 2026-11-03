@@ -1,0 +1,66 @@
+[
+  {
+    "results": [
+      {
+        "id": "content-5bfca3e1-3a2c-4f4c-a49e-e662c4c3a74a",
+        "title": "新兴经济体研究会2026年会在广外举行",
+        "content_revision": 1,
+        "input_hash": "bfb7e646e05ffc3f14a2b3273c93865551f1748921d2efbfa0d0bdb9436a9210",
+        "body_status": "complete",
+        "rights_scope": "licensed_full_text",
+        "indexed_revision": 1,
+        "indexed_hash": "bfb7e646e05ffc3f14a2b3273c93865551f1748921d2efbfa0d0bdb9436a9210",
+        "chunk_count": 6,
+        "evidence_type": "full_text",
+        "status": "ready",
+        "text_hash": "a1f157f28ace000e965a8048a1cf0b9b635b0d45a09ee61fe9fe3642a2d904ae"
+      },
+      {
+        "id": "content-2a555135-7512-49a6-850b-9c94e5ea71ff",
+        "title": "关于我校2025-2026学年本科生港澳及华侨学生、台湾学生奖学金建议名单的公示",
+        "content_revision": 1,
+        "input_hash": "fb0e116958be7b7cb84b5d88095bcc8a4bdb5a7b2c968bec3748880abb58041b",
+        "body_status": "complete",
+        "rights_scope": "licensed_full_text",
+        "indexed_revision": 1,
+        "indexed_hash": "fb0e116958be7b7cb84b5d88095bcc8a4bdb5a7b2c968bec3748880abb58041b",
+        "chunk_count": 1,
+        "evidence_type": "full_text",
+        "status": "ready",
+        "text_hash": "e7e84a68108bb59e1882047d18b025d9b994c4cc1cb95b6080d2c45fa2ff755b"
+      },
+      {
+        "id": "content-328c8759-fd4c-4207-8e2a-f523d4d62eb9",
+        "title": "关于开展地震受灾学生临时困难补助申请的通知",
+        "content_revision": 1,
+        "input_hash": "3fa07c5887cf4f4c4a030088897529fd0cd1e73f61622ee3160a8e29c7e427ef",
+        "body_status": "complete",
+        "rights_scope": "licensed_full_text",
+        "indexed_revision": 1,
+        "indexed_hash": "3fa07c5887cf4f4c4a030088897529fd0cd1e73f61622ee3160a8e29c7e427ef",
+        "chunk_count": 1,
+        "evidence_type": "full_text",
+        "status": "ready",
+        "text_hash": "22b08a883031bbfc8cab524e22113b4a89a19f47f563fa6d819ad4d9ec4df90c"
+      }
+    ],
+    "success": true,
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "NRT",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 219.9751
+      },
+      "duration": 219.9751,
+      "changes": 0,
+      "last_row_id": 2007,
+      "changed_db": false,
+      "size_after": 185491456,
+      "rows_read": 31235,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  }
+]

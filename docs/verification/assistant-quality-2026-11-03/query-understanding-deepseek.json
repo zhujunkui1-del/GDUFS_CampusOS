@@ -1,0 +1,89 @@
+[
+  {
+    "question": "学院组织三下乡需要填申请表吗？",
+    "provider": "deepseek",
+    "result": {
+      "plan": {
+        "subject": "三下乡",
+        "entities": [
+          "学院"
+        ],
+        "constraints": [
+          "申请表"
+        ],
+        "goal": "requirements",
+        "query": "“三下乡” “学院” “申请表” 申请表"
+      },
+      "usage": {
+        "promptTokens": 519,
+        "completionTokens": 88,
+        "totalTokens": 607,
+        "cachedPromptTokens": 384
+      },
+      "durationMs": 1152
+    },
+    "raw": {
+      "toolCalls": [
+        {
+          "id": "call_00_3UVpcMB1cAB1j2FlFSxr5471",
+          "type": "function",
+          "function": {
+            "name": "plan_campus_query",
+            "arguments": "{\"subject\": \"三下乡\", \"entities\": [\"学院\"], \"constraints\": [\"申请表\"], \"goal\": \"requirements\"}"
+          }
+        }
+      ],
+      "finishReason": "tool_calls",
+      "usage": {
+        "promptTokens": 519,
+        "completionTokens": 88,
+        "totalTokens": 607,
+        "cachedPromptTokens": 384
+      }
+    }
+  },
+  {
+    "question": "广外学子在2025年全运会有什么贡献？",
+    "provider": "deepseek",
+    "result": {
+      "plan": {
+        "subject": "广外学子的贡献",
+        "entities": [
+          "广外学子"
+        ],
+        "constraints": [
+          "2025年",
+          "全运会"
+        ],
+        "goal": "facts",
+        "query": "“广外学子” “贡献” “2025年” “全运会” 2025年 全运会 2025"
+      },
+      "usage": {
+        "promptTokens": 522,
+        "completionTokens": 99,
+        "totalTokens": 621,
+        "cachedPromptTokens": 384
+      },
+      "durationMs": 953
+    },
+    "raw": {
+      "toolCalls": [
+        {
+          "id": "call_00_Zop1RSgd17B8sNEjL8h47235",
+          "type": "function",
+          "function": {
+            "name": "plan_campus_query",
+            "arguments": "{\"subject\": \"广外学子的贡献\", \"entities\": [\"广外学子\"], \"constraints\": [\"2025年\", \"全运会\"], \"goal\": \"facts\"}"
+          }
+        }
+      ],
+      "finishReason": "tool_calls",
+      "usage": {
+        "promptTokens": 522,
+        "completionTokens": 99,
+        "totalTokens": 621,
+        "cachedPromptTokens": 384
+      }
+    }
+  }
+]

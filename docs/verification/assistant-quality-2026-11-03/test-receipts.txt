@@ -1,0 +1,358 @@
+Actual command output; all chat records are isolated evaluator prompts. No credentials included.
+
+### unit-final-checked.log
+
+ RUN  v5.0.3 D:/tlydcg/Codex_work/广外AI应用大赛
+
+
+ Test Files  129 passed (129)
+      Tests  907 passed (907)
+   Start at  02:38:23
+   Duration  127.53s (tests 74%, import 23%, transform 3%)
+
+    Isolate  129 workers spawned · ~143ms startup each (spawn + environment, per file)
+             at least ~18.35s faster with isolate: false — reuses workers across files instead of one per file
+
+
+### ui-delivery.log
+
+Running 4 tests using 1 worker
+
+(node:31588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop] › tests\e2e\assistant-quality-live.spec.ts:13:1 › real internal answers, citations, search state and map actions (37.4s)
+(node:4788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  2 [desktop] › tests\e2e\assistant-quality.spec.ts:6:1 › smart search is persisted per conversation and Markdown is readable (1.0m)
+(node:30060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [mobile] › tests\e2e\assistant-quality-live.spec.ts:13:1 › real internal answers, citations, search state and map actions (40.4s)
+(node:29772) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 4 [mobile] › tests\e2e\assistant-quality.spec.ts:6:1 › smart search is persisted per conversation and Markdown is readable (6.5s)
+
+
+  1) [desktop] › tests\e2e\assistant-quality.spec.ts:6:1 › smart search is persisted per conversation and Markdown is readable
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.screenshot: Test timeout of 60000ms exceeded.
+    Call log:
+      - taking page screenshot
+      - waiting for fonts to load...
+      - fonts loaded
+
+
+      105 |     recursive: true,
+      106 |   });
+    > 107 |   await page.screenshot({
+          |              ^
+      108 |     path: `docs/verification/assistant-quality-2026-11-03/markdown-${info.project.name}.png`,
+      109 |   });
+      110 |   await page.getByRole("button", { name: "新对话", exact: true }).click();
+        at D:\tlydcg\Codex_work\广外AI应用大赛\tests\e2e\assistant-quality.spec.ts:107:14
+
+    Error Context: test-results\assistant-quality-smart-se-86709-on-and-Markdown-is-readable-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\assistant-quality-smart-se-86709-on-and-Markdown-is-readable-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\assistant-quality-smart-se-86709-on-and-Markdown-is-readable-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop] › tests\e2e\assistant-quality.spec.ts:6:1 › smart search is persisted per conversation and Markdown is readable
+  3 passed (2.5m)
+
+### ui-chrome.log
+
+Running 2 tests using 1 worker
+
+(node:2888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop] › tests\e2e\assistant-quality.spec.ts:6:1 › smart search is persisted per conversation and Markdown is readable (7.1s)
+(node:17644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [mobile] › tests\e2e\assistant-quality.spec.ts:6:1 › smart search is persisted per conversation and Markdown is readable (7.1s)
+
+  2 passed (16.2s)
+
+### state-final-checked.log
+{ checks: 6, preferenceWrites: 3, rowsWithFailure: 0 }
+
+### build-final-checked.log
+Fixed public walking metadata matches reviewed source hashes.
+
+┌─────────────────────────────┐
+│ OpenNext — Cloudflare build │
+└─────────────────────────────┘
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+App directory: D:\tlydcg\Codex_work\广外AI应用大赛
+Next.js version : 16.3.8
+@opennextjs/cloudflare version: 1.20.10
+@opennextjs/aws version: 4.1.9
+workerd compatibility_date: 2026-10-12
+
+┌─────────────────────────────────┐
+│ OpenNext — Building Next.js app │
+└─────────────────────────────────┘
+
+
+> campusos@0.1.0 prebuild
+> node scripts/prepare-map-runtime.mjs && node scripts/prepare-route-metadata.mjs --check
+
+Fixed public walking metadata matches reviewed source hashes.
+
+> campusos@0.1.0 build
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 30ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1289ms
+  Running TypeScript ...
+  Finished TypeScript in 6.1s ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/42) ...
+  Generating static pages using 15 workers (10/42)
+  Generating static pages using 15 workers (20/42)
+  Generating static pages using 15 workers (31/42)
+✓ Generating static pages using 15 workers (42/42) in 564ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├ ○ /account/favorites
+├ ○ /account/forgot-password
+├ ○ /account/login
+├ ○ /account/register
+├ ○ /account/settings
+├ ○ /account/settings/api
+├ ○ /account/settings/email
+├ ○ /account/settings/email/unbind
+├ ○ /account/settings/password
+├ ○ /account/settings/recovery
+├ ○ /account/settings/username
+├   /admin/[[...section]]
+│ ├ ● /admin
+│ ├ ● /admin/sources
+│ ├ ● /admin/jobs
+│ └ ● [+8 more paths]
+├ ƒ /api/admin/[...path]
+├ ƒ /api/admin/collector/[[...path]]
+├ ƒ /api/agent/actions/[id]/claim
+├ ƒ /api/agent/actions/[id]/receipt
+├ ƒ /api/agent/cancel
+├ ƒ /api/agent/chat
+├ ƒ /api/agent/conversations
+├ ƒ /api/agent/conversations/[id]
+├ ƒ /api/agent/external-search/control-finish
+├ ƒ /api/agent/external-search/session-report
+├ ƒ /api/agent/location/challenge
+├ ƒ /api/agent/routes/[id]
+├ ƒ /api/agent/session
+├ ƒ /api/agent/status
+├ ƒ /api/amap/[...path]
+├ ƒ /api/auth/email/bind
+├ ƒ /api/auth/email/change
+├ ƒ /api/auth/email/unbind
+├ ƒ /api/auth/email/unbind/request
+├ ƒ /api/auth/email/verify
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/auth/password/change
+├ ƒ /api/auth/password/reset/confirm
+├ ƒ /api/auth/password/reset/request
+├ ƒ /api/auth/register
+├ ƒ /api/auth/register/email-code
+├ ƒ /api/auth/session
+├ ƒ /api/capabilities
+├ ƒ /api/collector/[...path]
+├ ƒ /api/console-auth
+├ ƒ /api/console-runner/[...path]
+├ ƒ /api/content/search
+├ ƒ /api/health
+├ ƒ /api/map/config
+├ ƒ /api/map/coordinates
+├ ƒ /api/map/data
+├ ƒ /api/map/skills/[name]
+├ ƒ /api/me
+├ ƒ /api/me/favorites
+├ ƒ /api/me/favorites/[articleId]
+├ ƒ /api/me/favorites/status
+├ ƒ /api/me/model-configs
+├ ƒ /api/me/model-settings
+├ ƒ /api/model-settings/test
+├ ƒ /api/places
+├ ƒ /api/public/activities
+├ ƒ /api/public/analysis
+├ ƒ /api/public/article
+├ ƒ /api/public/content
+├ ƒ /api/public/visits
+├ ○ /apple-icon.png
+├ ƒ /articles/[id]
+├ ○ /calendar
+├ ○ /favorites
+├ ○ /icon.png
+├ ○ /knowledge
+├ ○ /map
+├ ○ /radar
+└ ○ /schedule
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+
+┌──────────────────────────────┐
+│ OpenNext — Generating bundle │
+└──────────────────────────────┘
+
+Bundling middleware function...
+Bundling static assets...
+Bundling cache assets...
+Building server function: default...
+Applying code patches: 4.000s
+# copyPackageTemplateFiles
+[35m⚙️ Bundling the OpenNext server...
+[0m
+[35mWorker saved in `.open-next\worker.js` 🚀
+[0m
+OpenNext build complete.
+
+ ⛅️ wrangler 4.149.0 (update available 4.157.0)
+───────────────────────────────────────────────
+✨ Read 154 files from the assets directory D:\tlydcg\Codex_work\广外AI应用大赛\.open-next\assets
+Total Upload: 20202.96 KiB / gzip: 3860.27 KiB
+Your Worker has access to the following bindings:
+Binding                                                                          Resource
+env.DB (campusos-preview)                                                        D1 Database
+env.VECTOR_INDEX (campusos-chunks)                                               Vectorize Index
+env.WORKER_SELF_REFERENCE (campusos-preview)                                     Worker
+env.CLOUD_SEARCH (campusos-preview-cloud-search)                                 Worker
+env.AI                                                                           AI
+env.MAP_RATE_LIMITER (120 requests/60s)                                          Rate Limit
+env.ASSETS                                                                       Assets
+env.APP_ENV ("preview")                                                          Environment Variable
+env.USER_ACCOUNTS_ENABLED ("true")                                               Environment Variable
+env.ACCOUNT_ORIGIN ("https://campusos-preview.zhujunkui1.w...")                  Environment Variable
+env.ACCOUNT_ALLOWED_ORIGINS ("https://gdufs.ccwu.cc")                            Environment Variable
+env.EXTERNAL_SEARCH_TRANSPORT ("cloud")                                          Environment Variable
+env.AGENT_VALIDATION_UNLIMITED ("true")                                          Environment Variable
+env.MODEL_MAX_OUTPUT_TOKENS ("2048")                                             Environment Variable
+env.MODEL_PRIORITY ("stepfun")                                                   Environment Variable
+env.HYBRID_RETRIEVAL ("true")                                                    Environment Variable
+env.VECTOR_BACKFILL ("true")                                                     Environment Variable
+env.CALENDAR_ENABLED ("true")                                                    Environment Variable
+env.CALENDAR_AUTO_ENRICH ("true")                                                Environment Variable
+
+--dry-run: exiting now.
+Worker environment sanitized; 1673 generated files checked. Server credentials require runtime bindings.
+
+### deploy-final-checked.log
+
+┌──────────────────────────────┐
+│ OpenNext — Cloudflare deploy │
+└──────────────────────────────┘
+
+WARN OpenNext is not fully compatible with Windows.
+WARN For optimal performance, it is recommended to use Windows Subsystem for Linux (WSL).
+WARN While OpenNext may function on Windows, it could encounter unpredictable failures during runtime.
+⎔ Establishing remote connection...
+Using secrets defined in .dev.vars
+▲ [WARNING] AI bindings always access remote resources, and so may incur usage charges even in local dev. To suppress this warning, set `remote: true` for the binding definition in your configuration file.
+
+
+▲ [WARNING] Vectorize Index bindings do not support local development, and so parts of your Worker may not work correctly. You can set `remote: true` for the binding definition in your configuration file to access a remote version of the resource.
+
+
+
+Populating Workers static assets...
+Successfully populated static assets cache
+Tag cache does not need populating
+
+ ⛅️ wrangler 4.149.0 (update available 4.157.0)
+───────────────────────────────────────────────
+🌀 Building list of assets...
+✨ Read 261 files from the assets directory D:\tlydcg\Codex_work\广外AI应用大赛\.open-next\assets
+🌀 Starting asset upload...
+🌀 Found 33 new or modified static assets to upload. Proceeding with upload...
++ /BUILD_ID
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/1ac71fc16c24600253696ffa2528949094f971f5409b0b353b2b775b5e1ba07d/$/_global-error.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/audit.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/sources.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/retention.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/5d00a1f1a3a7033d180ee4e3d8dfb3974d855c1a94b59693caf5378b77bc355b/$/schedule.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/8980fc8e412b65540cfef6c17fc86b5a4fa4af0b23d568d0f7a2581f0a8735a0/$/account/settings.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/46ecdfdd2c6639b52beeb97fe40b09151393d721f10f2621244a0f6a3f6352f0/$/account/forgot-password.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/c3bd6db9abaffa1e8669abca3ae9064c820951438569cbd0a4e995284cff153b/$/account/settings/email.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/64fbaba9609aceacae7c2c2b1a57394a728b0c28c3aa5e59dbb4c9ad6eeae9d2/$/account/settings/recovery.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/46a2e43b91260dd1c18e9386b759b620bf0b36690ceac455cb0c09903199db52/$/account/favorites.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/c6377dd9ce6a1c2cd100eb4344e843eb4639b9ed26f84643f77680e9eb454c4b/$/index.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/content.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/articles.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/whitelist.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/274c0929a40f289585a7302128d3e15686ceefec6f3fe17529dcdceb5d1326e7/$/favorites.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/f78201716528e6b2c7bb86503e8576cc3bc0eed8786c74d9f43d3e9985bb9eee/$/calendar.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/20ce7bbb190d4142cf5c3b942e1dba86220a191b9672d29ac9b4b2da02fd8c76/$/account/register.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/d5671f9683814b34679796def82def06290688802e85c197ccc9e81090f95fae/$/account/settings/password.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/145008da6824f4b792748c43f431945107a149ddf2ea6e8f5e743a258913057a/$/knowledge.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/d5d0244edda4212d12fa5ed018e9b4c65ccedd4e9e114019cbaba9a7780fcdfc/$/account/settings/email/unbind.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/41da0ef926a63354a29f601d8e8d0a5951196c45ebcd28b7d4708fb7f56f3bf1/$/_not-found.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/jobs.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/reviews.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/collector.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/672b677bd3c56bb416c1c53ff8eb1dfbcb129e6e76d0a791daed93313d6810aa/$/admin/web-collection.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/f24644735c4b0c952c447d30ef5ef185cb2cce123f352767cd214b42189ec36d/$/account.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/b5070d851089f127225ab3c07e330080f4e5d0916ea23e1d209046570e70ff1f/$/account/login.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/5d3ddc70d1218d3520cf4a2d0c8a41102892da6a00bfba40ab73526c8ab85baf/$/account/settings/api.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/80962915ddd2f65b26b394213ebdb0d6bd400067a7f676ff56e079ec04cc1f98/$/account/settings/username.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/c7c3f30468cf441a8fdce4855dca3407dd6abe583db2b4fe83f6828c1a304b32/$/radar.cache
++ /cdn-cgi/_next_cache/z0kM0qVsswqt5sxdSM7c9/route-cache/APP_PAGE/cd79e4fc919607ef4f08858c93a41fc9e97915831fb9535efbb33b1dcc57bbcd/$/map.cache
+Uploaded 11 of 33 assets
+Uploaded 22 of 33 assets
+Uploaded 33 of 33 assets
+✨ Success! Uploaded 33 files (138 already uploaded) (2.89 sec)
+
+Total Upload: 20202.96 KiB / gzip: 3860.27 KiB
+Worker Startup Time: 333 ms
+Your Worker has access to the following bindings:
+Binding                                                                          Resource
+env.DB (campusos-preview)                                                        D1 Database
+env.VECTOR_INDEX (campusos-chunks)                                               Vectorize Index
+env.WORKER_SELF_REFERENCE (campusos-preview)                                     Worker
+env.CLOUD_SEARCH (campusos-preview-cloud-search)                                 Worker
+env.AI                                                                           AI
+env.MAP_RATE_LIMITER (120 requests/60s)                                          Rate Limit
+env.ASSETS                                                                       Assets
+env.APP_ENV ("preview")                                                          Environment Variable
+env.USER_ACCOUNTS_ENABLED ("true")                                               Environment Variable
+env.ACCOUNT_ORIGIN ("https://campusos-preview.zhujunkui1.w...")                  Environment Variable
+env.ACCOUNT_ALLOWED_ORIGINS ("https://gdufs.ccwu.cc")                            Environment Variable
+env.EXTERNAL_SEARCH_TRANSPORT ("cloud")                                          Environment Variable
+env.AGENT_VALIDATION_UNLIMITED ("true")                                          Environment Variable
+env.MODEL_MAX_OUTPUT_TOKENS ("2048")                                             Environment Variable
+env.MODEL_PRIORITY ("stepfun")                                                   Environment Variable
+env.HYBRID_RETRIEVAL ("true")                                                    Environment Variable
+env.VECTOR_BACKFILL ("true")                                                     Environment Variable
+env.CALENDAR_ENABLED ("true")                                                    Environment Variable
+env.CALENDAR_AUTO_ENRICH ("true")                                                Environment Variable
+
+Uploaded campusos-preview (18.84 sec)
+Deployed campusos-preview triggers (1.57 sec)
+  https://campusos-preview.zhujunkui1.workers.dev
+  schedule: * * * * *
+Current Version ID: 089e6478-8157-4cd1-9673-61525083927e
+(node:7060) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)

@@ -682,3 +682,7 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 ## 2026-11-02｜全站字体 HarmonyOS Sans SC
 
 负责人提供 `CampusOS_Codex_完整设计文档_v2/assets/HarmonyOS-Sans/HarmonyOS Sans/HarmonyOS_Sans_SC/` 下的 TTF 与 `LICENSE.txt`。运行时仅复制并转换同目录 `HarmonyOS_Sans_SC_Regular.ttf`、`Medium.ttf`、`Bold.ttf` 为 WOFF2，输出到 `public/fonts/harmonyos-sans/`，合计约 13 MB；许可证原文随输出复制。版权归 Huawei Device Co., Ltd.，许可为 HarmonyOS Sans Fonts License Agreement。原 TTF 保留在文档包，不进入 public。
+
+## 2026-11-04｜助理质量评测资料
+
+本轮无新增爬虫来源或第三方内容入库。冻结语料从Preview console_public_documents与现有片段索引抽取33篇公开文章构建100条标题/缩写/口语查询，原文URL及版本信息见verification/assistant-quality-2026-11-03/public-corpus.json和检索回执。人物、秋之声、奖学金等真实对话仅使用准入正文及结构化活动字段。普通外部补查由既有Cloudflare云搜索服务返回公开网页，专用小红书接口未调用；没有读取或同步账号Cookie。人格沿用既有契约及docs/third-party/dafeiyu-persona-LICENSE.txt，原仓库本次在线404，未宣称重新取得材料。

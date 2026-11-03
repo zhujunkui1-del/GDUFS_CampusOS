@@ -1,0 +1,602 @@
+[
+  {
+    "message": "关闭智能搜索后再次查询校园文章：最近有什么竞赛？",
+    "smartSearch": false,
+    "text": "最近广外竞赛，按发布时间从新到旧：\n\n1. 2026-11-01 发布｜新闻 | 我院师生在第四届青年师生思政微课大赛中荣获佳绩 [1]\n2. 2026-10-31 发布｜祝贺！我院研究生李颖欣荣获2026年“田家炳杯”全日制教育硕士学科教学（语文）专业教学技能大赛一等奖 [2]\n3. 2026-10-31 发布｜2026年“挑战杯”中国大学生创业计划竞赛 [3]\n4. 2026-10-30 发布｜赓续长征精神，竞逐时政先锋|法学院时政知识竞赛初赛预告 [4]\n5. 2026-10-30 发布｜#新闻#法通中外，三十启新|2026年法学院新生杯辩论赛示范赛圆满落幕 [5]\n",
+    "tools": [
+      {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 337,
+        "origin": "server_plan"
+      }
+    ],
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "wx-0ee56a8720c744cb41a76bc0b022da216b2e645e",
+        "title": "新闻 | 我院师生在第四届青年师生思政微课大赛中荣获佳绩",
+        "sourceName": "广外区域国别学院",
+        "originalUrl": "https://mp.weixin.qq.com/s/j3Ove9qLBCCVu8sBkyGWbQ",
+        "publishedAt": "2026-11-01T08:19:49.000Z",
+        "snippet": "本网讯 为纪念中国工农红军长征胜利90周年，弘扬伟大长征精神，走好新时代长征路，我校举行\"赓续长征薪火，凝聚青春力量\"第四届青年师生思政微课大赛。比赛分学生组、教师组决赛，分别于10月15日、10月22日举办。我院教师成汝琪、2024级外交学本科生李采翊登台参赛，双双获奖。\n10月15日，李采翊以家乡汕尾海丰红宫红场为切入点，娓娓讲述1927年彭湃领导海陆丰第三次武装起义的革命往事。她提出思考：红宫红场何以谓之 “红”？当年革命者并未拆除孔庙，而是将庙宇外墙涂成红色、悬挂 “红宫” 牌匾，让原本在此跪拜的农民，成为共商革命大事的主人。与此同时，她把视野延伸到海陆丰儿女持续三年的游击斗争，点明这是长征背后一条鲜为人知的 “暗线”。结合外交学专业学习感悟，她提出，外语与外交学子的使命，就是用世界听得懂的话语，传递中国声音、讲好中国故事。整堂微课史料扎实、叙事流畅，巧妙融合乡土红色记忆与国际传播使命，获得评委充分肯定，被评为学生组三等奖。\n学生组获奖合影\n（左起第1排第4个为李采翊）\n10月22日，我院教师成汝琪以“半截皮带 ”为意象切口，从松潘草地上一截煮过的皮带，讲到饶彰风开荒建校、黄建华历时十六年编成《汉法大词典》的校史，解读其中坚定信念、舍己为公、永不放弃的精神内核，“一代人有一代人的草地，一代人有一代人的半截皮带。”成汝琪引导青年学子思考：我们这代人，该把什么留给未来？成汝琪老师授课情感真挚饱满，微课立意深远，得到现场评委的高度评价，斩获教师组二等奖佳绩。\n成汝琪深情讲述《半截皮带:藏在党史史料里的青春信仰》微课\n教师组获奖合影\n两堂微课分别以一件革命文物、一处红色旧址为切入点，叙事路径虽有不同，价值内核却高度统一，都向当代青年抛出 “该留下什么、要传递什么”的时代命题。我院将以本次大赛为契机，持续推动思政教育与专业教育同向同行，",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-f29df384f57712125a177e2a3512271251875ae9",
+        "title": "祝贺！我院研究生李颖欣荣获2026年“田家炳杯”全日制教育硕士学科教学（语文）专业教学技能大赛一等奖",
+        "sourceName": "广外中文",
+        "originalUrl": "https://mp.weixin.qq.com/s/7GpY5TKWPY44qNs7DTEgVg",
+        "publishedAt": "2026-10-31T08:52:35.000Z",
+        "snippet": "10月23日至25日，2026年全国“田家炳杯”全日制教育硕士专业学位研究生学科教学（语文）专业教学技能大赛决赛暨研讨活动在重庆师范大学举行。本届赛事汇聚全国144所高校的198名研究生同场竞技。经过教学设计、模拟授课与现场答辩等多环节的激烈角逐，我院2025级学科教学（语文）专业研究生李颖欣在决赛中获得一等奖，导师林玮生教授获评“优秀指导教师”。\n“田家炳杯”全日制教育硕士教学技能大赛由田家炳基金会冠名，全国教育专业学位研究生教育指导委员会指导，系当前国内教育硕士培养领域规格最高、覆盖面最广、影响力最大的专项赛事之一。本届大赛以决赛选手总数为基数，一等奖、二等奖、三等奖及优秀教学设计奖的评选比例分别约为10%、20%、40%和30%。决赛环节设置贴近真实课堂，涵盖现场抽题、限时独立备课、模拟授课与现场答辩等全流程考核，全面检验选手的学科功底、教学设计能力、课堂教学能力与临场应变能力。李颖欣同学在比赛中沉着稳健、思路清晰、以扎实的专业根基与鲜明的教学风格，获得了评委的认可。\n“一等奖”荣誉证书\n“优秀指导教师”荣誉证书\n李颖欣同学与领队贝先明老师\n文字、图片 | 肖梦菲、李颖欣\n编辑 | 詹海恒\n初审 | 贝先明\n复审 | 于屏方\n终审 | 谢秀兰",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-126ecf815b7625f4a84c7018ec517060019f3c1c",
+        "title": "2026年“挑战杯”中国大学生创业计划竞赛",
+        "sourceName": "广外数统青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/dpPTFnmPOFIGZCAR01ZGTA",
+        "publishedAt": "2026-10-31T07:24:27.000Z",
+        "snippet": "人们看过来，\n我们新一届的“小挑”赛事即将重磅登场！\n你们可以在赛场上\n蓄势突破，尽显锋芒，\n准备好启程吧！\n赛事目的\n为进一步促进“大众创业、万众创新”，培养和提升大学生的创造精神、创新意识和创业能力，省市校协同推动大学生创新创业成果的有效转化，激励全校大学生积极投身创新创业，助力广东创新驱动发展，学院决定举办2026-2027学年“挑战杯”广外大学生创业计划竞赛。\n竞赛时间\n（一）电子版商业计划书和作品申请表提交时间：\n11月27日晚上22:00\n（二）纸质版商业计划书提交时间：\n12月2日下午17:00\n（三）线下答辩时间：\n12月3日下午14:00\n参赛对象\n我校全日制本科生、研究生均可申报作品参赛\n（不含在职研究生）\n参赛作品类别\n“挑战杯”广外大学生创业计划竞赛面向高等学校在校学生，以商业计划书评审、现场答辩等作为参赛项目的主要评价内容。参加竞赛项目分为已创业与未创业两类；分为以下五个组别。\n01\n科技创新和未来产业组\n围绕创新驱动，在量子技术、元宇宙、智能制造、信息技术、大数据、人工智能、生命科学、新材料、军民融合等领域结合实践观察设计项目。\n02\n乡村振兴和农业农村现代化组\n围绕乡村振兴，在农林牧渔、电子商务、乡村旅游等领域结合实践设计项目。\n03\n生态文明建设和绿色低碳发展组\n围绕绿色低碳和碳达峰碳中和目标，在绿色低碳产业、绿色消费、环境治理、可持续资源开发、生态环保、清洁能源等领域结合实践观察设计项目。\n04\n文化创意和区域交流合作组\n突出共融、共享，围绕区域合作（如“一带一路”、粤港澳大湾区等）、工业设计、动漫广告、体育竞技、国际文化传播、对外经贸等结合实践观察设计项目。\n05\n社会治理和公共服务组\n围绕国家治理体系和治理能力现代化建设，在政务服务、消费生活、公共卫生、金融法务、教育培训、交通物流、人力资源、城乡",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-1d2d316d7ae0fcaa1769a7cdb3fecf7eb07caaa1",
+        "title": "赓续长征精神，竞逐时政先锋|法学院时政知识竞赛初赛预告",
+        "sourceName": "广外法学青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/3NvSDCeFVDHcjVplF0Xpyg",
+        "publishedAt": "2026-10-30T13:43:48.000Z",
+        "snippet": "— 法学院 时政知识竞赛 初赛预告 —\n赓续长征精神\n竞逐时政先锋\n活动目的\n纪念长征胜利90周年，广外法学院时政知识竞赛邀你参与：传承长征精神，赓续红色血脉，融时政学习与法学特色于一体，在领悟习近平法治思想中知史爱党、识势担责。\n活动介绍\n1.活动对象:\n广外法学院全体在读学生\n2.组队方式:\n(1)\n以队伍形式报名，\n4人组成一支队伍，\n鼓励同班组队，\n可跨年级，跨班组队\n(2)\n队伍名字自定\n需符合社会主义核心价值观，积极向上\n3.报名方式:\n报名方式：\n问卷星（不接受现场报名）\n报名截止时间：\n2026年11月3日下午14:00\n初赛时间：\n2026年11月5日晚上19:00-21:00\n（晚上18:40各队伍签到入场）\n初赛地点：\n教学楼教室，具体地点咨询群内通知\n规则介绍\n01\n题目类型\n初赛采用闭卷笔试，限时一个小时，可提前交卷。\n题目顺序依次为：\n单选题（共20道题，每题1分）；\n多选题（共25道，每题2分，少选得1分，多选或错选得0分）；\n判断题（共10道，每题1分）；\n填空题（共5道，每题2分）；\n连线题（共5个道，每题2分）；\n附加题（共1道，每题10分）。\n02\n答题纪律\n初赛答题前，队伍必须将相关信息填写在试卷指定位置，字体工整，笔迹清楚；\n初赛答题时，不得使用手机，不得查阅任何与比赛相关的资料，违规的队伍取消参赛资格；\n3.不得与其他队伍讨论，但队伍内部可以小声讨论；\n4.不得喧闹，过于喧嚣的队伍予以警告一次，第二次扣考场秩序分5分。\n03\n晋级规则\n除附加题外的分数为基础分，\n基础分相同的队伍则依据附加题分数判断能否晋级；\n基础分不同的队伍则无需考虑附加题分数。\n初赛中排名前七的法学院本科生队伍及成绩排名第一的一支法学院研究生队伍进入决赛。\n04\n参与\n凡是参加者均有综测加分。\n往年风采\n主持人强调答题规",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "wx-705fccd0703ac1eb2d18b728fc392bfed605e3f8",
+        "title": "#新闻#法通中外，三十启新|2026年法学院新生杯辩论赛示范赛圆满落幕",
+        "sourceName": "广外法学青年",
+        "originalUrl": "https://mp.weixin.qq.com/s/VO8CUjZ2fWSQcLPvWAA5tA",
+        "publishedAt": "2026-10-30T13:43:48.000Z",
+        "snippet": "本网讯（文字：汪千惠 摄影：刘奥嘉 网编：沈艺铭）2026年法学院新生杯辩论赛示范赛于10月17日晚在教学楼C栋208顺利举行。出席本次示范赛的嘉宾有法学院26级辅导员梁怡珊老师、学生会执行主席李佳良、主席团成员曾繁华。25届广外校中文辩论队副队长姜宇辉、25届广外校中文辩论队队长娄钰涵、24届广外校中文辩论队副队长聂亚涵、22届广外法学院辩论队队长何彦霖担任比赛评委。\n出席本次比赛的嘉宾\n活动伊始，26级新生辅导员梁怡珊致辞。值此法学院三十周年院庆之际，她指出辩论既是法学生锤炼实践能力的重要途径，也与新传学子关注的网络舆论议题相契合，并寄语两院同学勤学善思、独立思辨\n2026级新生辅导员梁怡珊致辞\n本次示范赛辩题为“‘嘉豪文学’的流行是一场网络霸凌吗”。该辩题紧扣当下网络文化现象，看似是对一则热梗的界定之争，实则牵涉网络霸凌的判定标准、标签的存续逻辑与个体权利的边界等深层议题，赛前便引发热议，引导辩手与观众一同叩问：当笑声铺天盖地，被围观的那个人，是否正在遭受伤害？\n观众沉浸观看比赛\n开篇立论环节，正方以网络霸凌的三大要件——蓄意性、持续性与权力不对等性作为破题框架，援引相关霸凌判定理论，结合抖音“嘉豪同学”相关视频内容总播放量高达86.5亿次、当事人被贴上标签后沦为“赛博人质”等现实案例，层层递进地论证了“嘉豪文学构成网络霸凌”。反方则立足定义权流动与青年文化表达视角，指出相关评价指向行为而非特定个体、标签可随场景流转，强调自嘲是年轻人主动夺回话语权的松弛表达，其本质是“自我和解”而非“恶意伤害”。\n正方一辩进行立论\n随后的质询环节，双方就“嘉豪”一词的内涵外延、霸凌判定的核心标准、标签与个体的绑定关系等前提展开深度交锋。一问一答之间，双方引例举证、见招拆招，现场热度节节攀升。\n正方二辩进行质询\n反方二辩进行质询",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": [
+          {
+            "title": "#新闻#法通中外，三十启新|2026年法学院新生杯辩论赛示范赛圆满落幕",
+            "href": "/calendar?date=2026-10-17&event=event-ea01be24090166b53cdbdd85033c10df512ccc35"
+          }
+        ]
+      }
+    ],
+    "result": {
+      "conversationId": "829fa948-1b9a-5aa3-91ca-27999d9f44cb",
+      "requestId": "46042526-f1f8-4be3-a030-eb6c6909a336",
+      "metrics": {
+        "smartSearch": false,
+        "queryUnderstanding": {
+          "failed": false
+        },
+        "answerMode": "radar_list",
+        "conversationAct": "campus",
+        "answerRequirement": "strict",
+        "modelFailureCode": null,
+        "evidenceGateUsed": true,
+        "publicationFallbackUsed": false,
+        "evidenceAssessment": {
+          "state": "supported",
+          "relatedDocuments": [
+            "wx-0ee56a8720c744cb41a76bc0b022da216b2e645e",
+            "wx-f29df384f57712125a177e2a3512271251875ae9",
+            "wx-126ecf815b7625f4a84c7018ec517060019f3c1c",
+            "wx-1d2d316d7ae0fcaa1769a7cdb3fecf7eb07caaa1",
+            "wx-705fccd0703ac1eb2d18b728fc392bfed605e3f8"
+          ],
+          "missing": [],
+          "activities": [
+            {
+              "documentId": "wx-0ee56a8720c744cb41a76bc0b022da216b2e645e",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-f29df384f57712125a177e2a3512271251875ae9",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-126ecf815b7625f4a84c7018ec517060019f3c1c",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-1d2d316d7ae0fcaa1769a7cdb3fecf7eb07caaa1",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "closed",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "wx-705fccd0703ac1eb2d18b728fc392bfed605e3f8",
+              "existence": "documented",
+              "eventState": "started_end_unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            }
+          ],
+          "needsSupplement": false,
+          "negativeExistenceProven": false
+        },
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 0,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "groundingChecks": 0,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [],
+        "upstreamTimings": [],
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "cachedPromptTokens": 0,
+        "totalTokens": 0,
+        "usageComplete": true,
+        "chargedTokens": 0,
+        "durationMs": 337,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 185,
+          "serverElapsedMs": 522,
+          "firstTextMs": 522,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_events",
+              "durationMs": 337,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 15,
+            "writeQueries": 12,
+            "calls": 19,
+            "failures": 0,
+            "durationMs": 522,
+            "maxCallMs": 287,
+            "rowsRead": 38659,
+            "rowsWritten": 25,
+            "rowUsageStatements": 16,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_events",
+              "rowsRead": 38518,
+              "rowsWritten": 0,
+              "queries": 3,
+              "durationMs": 337,
+              "candidateChunks": 80,
+              "usageAvailable": true,
+              "queryPlanVersion": "query-v2",
+              "recallLanes": [
+                {
+                  "name": "recent_category",
+                  "limit": 80,
+                  "candidates": 80
+                }
+              ]
+            }
+          ],
+          "externalSearch": []
+        }
+      }
+    },
+    "durationMs": 1900
+  },
+  {
+    "operation": "preference",
+    "status": 200,
+    "saved": {
+      "smartSearch": true,
+      "smartSearchVersion": 1
+    },
+    "restored": {
+      "smartSearch": true,
+      "smartSearchVersion": 1
+    }
+  },
+  {
+    "operation": "preference",
+    "status": 200,
+    "saved": {
+      "smartSearch": false,
+      "smartSearchVersion": 2
+    },
+    "restored": {
+      "smartSearch": false,
+      "smartSearchVersion": 2
+    }
+  },
+  {
+    "operation": "preference",
+    "status": 200,
+    "saved": {
+      "smartSearch": true,
+      "smartSearchVersion": 3
+    },
+    "restored": {
+      "smartSearch": true,
+      "smartSearchVersion": 3
+    }
+  },
+  {
+    "message": "请上网查广外官网最新资料",
+    "smartSearch": true,
+    "text": "最近广外校园资讯，按发布时间从新到旧：\n\n1. 2026-10-24 发布｜粤澳社会服务协同治理与新移民社会适应访学项目拟资助名单公示-社会与公共管理学院 [1]\n2. 2026-10-24 发布｜云山学术沙龙414期：学术论文写作全过程 [2]\n3. 2026-10-23 发布｜关于开展地震受灾学生临时困难补助申请的通知 [3]\n4. 2026-10-23 发布｜革命理想高于天 赓续红色长征魂 ——图书馆推出馆藏长征文献专题展 [4]\n5. 2026-10-23 发布｜云山搜索服务（Primo-SFX）数据更新服务采购项目单一来源采购公示 [5]\n",
+    "tools": [
+      {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 348,
+        "origin": "server_plan"
+      },
+      {
+        "name": "search_external_campus_info",
+        "ok": true,
+        "durationMs": 5627,
+        "origin": "server_plan"
+      }
+    ],
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-a5f9beb8-aef2-4e79-a59b-d242817388f4",
+        "title": "粤澳社会服务协同治理与新移民社会适应访学项目拟资助名单公示-社会与公共管理学院",
+        "sourceName": "社会与公共管理学院",
+        "originalUrl": "https://zg.gdufs.edu.cn/info/1003/14969.htm",
+        "publishedAt": "2026-10-24",
+        "snippet": "根据《粤澳社会服务协同治理与新移民社会适应访学项目的选拔通知》有关要求，现将粤澳社会服务协同治理与新移民社会适应访学项目拟资助名单进行公示。\n公示期间，如有异议，请邮件或书面向社会与公共管理学院反映。反映情况务必自报或签署真实姓名，要有具体事实；不报或不签署真实姓名的，以及不提供具体事实材料的，一律不予受理。反映公示对象的情况和问题，要坚持实事求是的原则，不得借机诽谤和诬告。\n特别提示：资格审查贯穿项目始终，在任一环节发现申请人资格条件不符合《通知》要求的，即取消其相关资格。\n公示时间：2026年10月24日至10月26日\n受理单位：社会与公共管理学院\n地址：广东外语外贸大学大学城校区校办公楼205室\n联系人：陈老师\n联系电话：（020）39328364\n电子邮箱：gdshzzglxy@163.com\n序号\n姓名\n专业及年级\n学号\n1\n谢婧\n社会工作25级\n20251150070\n2\n郑晓明\n应用心理26级\n20261150118\n3\n李虹儒\n应用心理25级\n20251150148\n4\n陈欣怡\n应用心理26级\n20261150120\n5\n黄芷惠\n应用心理26级\n20261150119",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "content-fe27a19d-080b-484c-8ebb-a31169f8603e",
+        "title": "云山学术沙龙414期：学术论文写作全过程",
+        "sourceName": "广东外语外贸大学",
+        "originalUrl": "https://www.gdufs.edu.cn/info/1005/266556.htm",
+        "publishedAt": "2026-10-24",
+        "snippet": "云山学术沙龙414期：学术论文写作全过程",
+        "evidenceType": "metadata",
+        "classificationState": "unknown",
+        "validity": "unknown",
+        "readable": false,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "content-328c8759-fd4c-4207-8e2a-f523d4d62eb9",
+        "title": "关于开展地震受灾学生临时困难补助申请的通知",
+        "sourceName": "学生工作部",
+        "originalUrl": "https://nstu.gdufs.edu.cn/info/1056/68871.htm",
+        "publishedAt": "2026-10-23T09:07:32.000Z",
+        "snippet": "关于开展地震受灾学生临时困难补助申请的通知",
+        "evidenceType": "metadata",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": false,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "content-052f7a3e-d03b-408f-b406-7402253eea2d",
+        "title": "革命理想高于天 赓续红色长征魂 ——图书馆推出馆藏长征文献专题展",
+        "sourceName": "图书馆",
+        "originalUrl": "https://lib.gdufs.edu.cn/info/1133/10288.htm",
+        "publishedAt": "2026-10-23",
+        "snippet": "为纪念中国工农红军长征胜利90周年，充分发挥馆藏红色图书育人价值，图书馆（档案馆）举办“革命理想高于天——图书馆馆藏长征文献专题展”。展览于10月23日至12月31日，在白云山校区、大学城校区图书馆一楼大堂同步开展。\n10月22日，纪念中国工农红军长征胜利90周年大会在北京隆重召开，习近平总书记出席大会并发表重要讲话。习近平总书记强调，铭记历史方能开创未来，全党全军全国各族人民要更加紧密地团结在党中央周围，大力弘扬伟大长征精神，接续奋斗、砥砺前行，把革命前辈开创的伟大事业不断推向前进，在新的长征路上奋力创造新的辉煌。图书馆立足馆藏资源，落实习近平总书记重要讲话精神，以图书展览为载体，引导师生回望长征征程、感悟信仰力量。\n“革命理想高于天——图书馆馆藏长征文献专题展”展览现场\n本次专题展精心遴选馆藏长征主题图书，涵盖长征历史纪实、革命人物传记、红色文学作品、长征研究著作等类别，以红色读物讲述二万五千里长征艰苦卓绝的奋斗历程，生动展现红军将士坚定执着的革命理想、不畏艰险、不怕牺牲的英雄气概，让师生在品读书籍的过程中读懂长征这一气壮山河的英雄史诗，体悟伟大长征精神的时代内涵。\n展览坚持线上线下一体化建设，同步配套上线长征主题电子图书、红色专题数据库资源。师生既可以走进线下展厅浏览红色主题图书，沉浸式感悟革命岁月；也可以依托线上数字资源随时开展自主学习，打破时空限制，拓宽红色阅读渠道，实现红色阅读资源普惠共享。\n与此同时，图书馆联动国家图书馆，同步引进“革命理想高于天——国家图书馆馆藏长征文献专题展”。该专题展依托国家图书馆馆藏珍贵长征文献，以权威党史典籍为史实遵循，分设“长征序幕”“长征历程”“胜利会师”三大板块，系统回望红军跨越千山万水、历经生死考验的革命征程，生动彰显中国共产党人“革命理想高于天”的坚定理想信念。展览立足馆藏红色文献，以",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "content-057dc2f1-c48a-40ce-8089-2cfdc1f27ecc",
+        "title": "云山搜索服务（Primo-SFX）数据更新服务采购项目单一来源采购公示",
+        "sourceName": "图书馆",
+        "originalUrl": "https://lib.gdufs.edu.cn/info/1359/10248.htm",
+        "publishedAt": "2026-10-23",
+        "snippet": "规规定的其他情形。\n五、拟定的供应商名称及地址\n供应商名称\n供应商地址\n服务内容\n艾利贝斯软件科技发展（北京）有限公司\n北京市海淀区科学院南路2号融科资讯中心C座北楼610\n云山搜索服务（Primo-SFX）数据更新服务\n六、专家论证意见\n（一）各专家对相关供应商因专利、专有技术等原因具有唯一性的具体论证意见，专家的姓名、工作单位和职称：\n专家姓名\n工作单位",
+        "evidenceType": "full_text",
+        "classificationState": "unknown",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ],
+    "result": {
+      "conversationId": "829fa948-1b9a-5aa3-91ca-27999d9f44cb",
+      "requestId": "465bb283-75a8-4f0b-8356-be8a85914239",
+      "metrics": {
+        "smartSearch": true,
+        "queryUnderstanding": {
+          "failed": false
+        },
+        "answerMode": "radar_list",
+        "conversationAct": "campus",
+        "answerRequirement": "strict",
+        "modelFailureCode": null,
+        "evidenceGateUsed": true,
+        "publicationFallbackUsed": false,
+        "evidenceAssessment": {
+          "state": "supported",
+          "relatedDocuments": [
+            "content-a5f9beb8-aef2-4e79-a59b-d242817388f4",
+            "content-fe27a19d-080b-484c-8ebb-a31169f8603e",
+            "content-052f7a3e-d03b-408f-b406-7402253eea2d",
+            "content-057dc2f1-c48a-40ce-8089-2cfdc1f27ecc"
+          ],
+          "missing": [],
+          "activities": [
+            {
+              "documentId": "content-a5f9beb8-aef2-4e79-a59b-d242817388f4",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "content-052f7a3e-d03b-408f-b406-7402253eea2d",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            }
+          ],
+          "needsSupplement": false,
+          "negativeExistenceProven": false
+        },
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 0,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "groundingChecks": 0,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [],
+        "upstreamTimings": [],
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "cachedPromptTokens": 0,
+        "totalTokens": 0,
+        "usageComplete": true,
+        "chargedTokens": 0,
+        "durationMs": 5975,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 255,
+          "serverElapsedMs": 6230,
+          "firstTextMs": 6230,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_events",
+              "durationMs": 348,
+              "ok": true
+            },
+            {
+              "name": "search_external_campus_info",
+              "durationMs": 5627,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 15,
+            "writeQueries": 11,
+            "calls": 18,
+            "failures": 0,
+            "durationMs": 603,
+            "maxCallMs": 305,
+            "rowsRead": 37118,
+            "rowsWritten": 19,
+            "rowUsageStatements": 15,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_events",
+              "rowsRead": 37095,
+              "rowsWritten": 0,
+              "queries": 3,
+              "durationMs": 348,
+              "candidateChunks": 80,
+              "usageAvailable": true,
+              "queryPlanVersion": "query-v2",
+              "recallLanes": [
+                {
+                  "name": "recent_all",
+                  "limit": 80,
+                  "candidates": 80
+                }
+              ]
+            }
+          ],
+          "externalSearch": [
+            {
+              "status": "ok",
+              "durationMs": 5627,
+              "providers": [
+                {
+                  "provider": "exa_web_cloud",
+                  "status": "ok",
+                  "durationMs": 4331,
+                  "count": 3
+                }
+              ],
+              "rowsRead": 0,
+              "rowsWritten": 0
+            }
+          ]
+        }
+      }
+    },
+    "durationMs": 6644
+  },
+  {
+    "message": "找文章《海底小鱼干不存在文档987654321》",
+    "smartSearch": false,
+    "text": "当前公开资料中未找到这篇文章。可以检查标题，或提供原文链接。",
+    "tools": [
+      {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 37,
+        "origin": "server_plan"
+      }
+    ],
+    "cards": [],
+    "result": {
+      "conversationId": "829fa948-1b9a-5aa3-91ca-27999d9f44cb",
+      "requestId": "566d776e-31ce-46b2-aef0-267e938b4593",
+      "metrics": {
+        "smartSearch": false,
+        "queryUnderstanding": {
+          "failed": false
+        },
+        "answerMode": "article_not_found",
+        "conversationAct": "chitchat",
+        "answerRequirement": "strict",
+        "modelFailureCode": null,
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "evidenceAssessment": {
+          "state": "no_candidates",
+          "relatedDocuments": [],
+          "missing": [
+            "relevant_readable_evidence"
+          ],
+          "activities": [],
+          "needsSupplement": true,
+          "negativeExistenceProven": false
+        },
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 0,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "groundingChecks": 0,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [],
+        "upstreamTimings": [],
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "cachedPromptTokens": 0,
+        "totalTokens": 0,
+        "usageComplete": true,
+        "chargedTokens": 0,
+        "durationMs": 37,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 193,
+          "serverElapsedMs": 230,
+          "firstTextMs": 230,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 37,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 13,
+            "writeQueries": 12,
+            "calls": 17,
+            "failures": 0,
+            "durationMs": 230,
+            "maxCallMs": 37,
+            "rowsRead": 2063,
+            "rowsWritten": 20,
+            "rowUsageStatements": 14,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 2034,
+              "rowsWritten": 0,
+              "queries": 1,
+              "durationMs": 37,
+              "candidateChunks": 0,
+              "usageAvailable": true,
+              "queryPlanVersion": "query-v2",
+              "recallLanes": []
+            }
+          ],
+          "externalSearch": []
+        }
+      }
+    },
+    "durationMs": 659
+  }
+]

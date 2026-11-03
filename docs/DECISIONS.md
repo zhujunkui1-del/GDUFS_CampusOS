@@ -1144,3 +1144,13 @@ Preview恢复阶跃星辰优先、明确额度耗尽后DeepSeek备用。已真�
 负责人要求「我的收藏」只收藏校园雷达、校园知识、活动日历中的文章，三处必须使用同一文章 ID，并复用现有文章弹窗；未登录点击收藏引导登录；收藏列表支持全部/来源筛选、收藏时间倒序、分页、失效文章保留但不可打开、可取消收藏；只部署 Preview，并说明 Preview 与正式域名共用 Worker/D1。
 
 实现统一使用 `knowledge_documents.id` 作为唯一文章身份：雷达/知识卡片由 `/api/public/content` 返回文档 ID，日历使用 activity 的 `source.documentId`，文章弹窗也以同一 ID 请求 `/api/public/article`。收藏关系存 `user_article_favorites`，唯一键 `(user_id, article_id)`，入口仅记录 radar/knowledge/calendar，不复制文章标题或正文。读取时 LEFT JOIN `console_public_documents` 与知识文档，返回 `available`（公开可见）和 `readable`（正文可读）；下架只改变可用状态，不删除收藏关系。所有写操作要求 S4 会话、Origin 校验、用户归属和限流，书签状态与列表均不允许跨账号访问。账号 API 的 DELETE 不再读取 JSON body，避免标准空 DELETE 被 400。收藏页 `/account/favorites` 按收藏时间倒序、20 条分页；失败/下架条目保留但不可打开。旧 `/favorites` 重定向，侧栏与账号入口统一指向新页。未改平台模型与 Production。
+
+## D-137｜校园助理检索、表达及智能搜索权限（2026-11-04）
+
+按负责人专项指令：内部公开文章、活动日历及地图始终可用；新会话智能搜索默认关闭，由每次发送的布尔快照在服务端控制外部工具是否注册。开启时内部优先，显式联网或证据缺口可补一次普通网页搜索；官网请求限制官方网页。Agent 不再调用小红书专用接口、登录态或 native relay，保留普通网页引擎自然发现的公开小红书页面；不删除既有服务、凭据或数据。
+
+检索先区分实体、标题、分类、发布时间和活动日期；未知主体不因缺关键词而拒绝，标题命中不允许混入其他FTS结果。先有限标题候选，再点查当前公开门禁；来源仅允许元数据时返回元数据，不能提升正文权限。日历投影回到共享readCalendar服务复核，不与全文证据类型硬比较。
+
+Persona只负责最终表达，日常对话实际进入模型，专业场景不强制固定口头禅；事实、工具、引用优先。前端用安全Markdown及[n]引用，折叠来源只展示实际引用。搜索偏好存受所有权检查的现有会话system元数据，带递增版本防止旧历史响应覆盖，协议3兼容既有客户端；不新增会话数据库。
+
+Preview与gdufs.ccwu.cc实际共用campusos-preview及D1，发布影响两地址，独立Production不变。验收口径、100题检索/真实回放区别、未覆盖跨模型及实机指标见docs/ASSISTANT_QUALITY_REFACTOR_2026_11_04.md。

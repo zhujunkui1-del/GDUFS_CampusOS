@@ -1,0 +1,51 @@
+[
+  {
+    "results": [
+      {
+        "id": "content-2a555135-7512-49a6-850b-9c94e5ea71ff",
+        "source_id": "GDUFS-SRC-0010",
+        "manual_policy_version": 1,
+        "manual_rights_scope": "metadata_only",
+        "manual_policy_expires_at_ms": 1794997839491,
+        "rights_scope": "licensed_full_text",
+        "expires_at_ms": 4946427493284
+      },
+      {
+        "id": "content-328c8759-fd4c-4207-8e2a-f523d4d62eb9",
+        "source_id": "GDUFS-SRC-0010",
+        "manual_policy_version": 1,
+        "manual_rights_scope": "metadata_only",
+        "manual_policy_expires_at_ms": 1794997839491,
+        "rights_scope": "licensed_full_text",
+        "expires_at_ms": 4946427493284
+      },
+      {
+        "id": "content-5bfca3e1-3a2c-4f4c-a49e-e662c4c3a74a",
+        "source_id": "GDUFS-SRC-0012",
+        "manual_policy_version": 2,
+        "manual_rights_scope": "metadata_only",
+        "manual_policy_expires_at_ms": 1794997692760,
+        "rights_scope": "licensed_full_text",
+        "expires_at_ms": 4946427486467
+      }
+    ],
+    "success": true,
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "NRT",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.7885
+      },
+      "duration": 0.7885,
+      "changes": 0,
+      "last_row_id": 2007,
+      "changed_db": false,
+      "size_after": 185491456,
+      "rows_read": 12,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  }
+]
