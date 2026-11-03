@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -83,9 +84,15 @@ function ShellChrome({
           aria-label="广外通 CampusOS 首页"
           title="广外通 CampusOS"
         >
-          <span className="brand-symbol" aria-hidden="true">
-            C<span>.</span>
-          </span>
+          <Image
+            className="brand-logo"
+            src="/brand-logo.png"
+            alt=""
+            aria-hidden="true"
+            width={38}
+            height={38}
+            priority
+          />
           <span className="brand-word">
             广外通<small>CampusOS</small>
           </span>
