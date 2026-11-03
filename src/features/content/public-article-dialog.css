@@ -96,6 +96,11 @@
   border-radius: 12px;
 }
 
+.public-article-dialog-actions .favorite-button svg {
+  width: 26px;
+  height: 26px;
+}
+
 .public-article-dialog-actions .public-article-original {
   background: var(--brand-primary, #1261bb);
   color: #fff;
