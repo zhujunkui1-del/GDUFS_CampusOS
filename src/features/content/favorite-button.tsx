@@ -35,7 +35,7 @@ export function FavoriteButton({
       onKeyDown={(event) => event.stopPropagation()}
     >
       <Bookmark
-        size={22}
+        size={26}
         strokeWidth={2}
         fill={favorite ? "currentColor" : "none"}
         aria-hidden="true"
