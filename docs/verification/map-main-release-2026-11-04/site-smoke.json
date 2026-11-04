@@ -1,0 +1,76 @@
+{
+  "at": "2026-11-04T11:05:15.030Z",
+  "browser": "Windows Edge; desktop and phone viewport, not physical phone",
+  "results": [
+    {
+      "name": "desktop main map new renderer and 2D deferred assets",
+      "ok": true,
+      "ms": 5204,
+      "renderer": "webgl2",
+      "initialModelRequests": 0,
+      "cacheControl": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "name": "desktop 校园雷达 list and article",
+      "ok": true,
+      "ms": 3522,
+      "cards": 96
+    },
+    {
+      "name": "desktop 校园知识 list and article",
+      "ok": true,
+      "ms": 5358,
+      "cards": 29
+    },
+    {
+      "name": "desktop activity calendar and source article",
+      "ok": true,
+      "ms": 3933,
+      "events": 11
+    },
+    {
+      "name": "desktop account login page",
+      "ok": true,
+      "ms": 2165,
+      "submissions": 0
+    },
+    {
+      "name": "mobile-viewport main map new renderer and 2D deferred assets",
+      "ok": true,
+      "ms": 4972,
+      "renderer": "webgl2",
+      "initialModelRequests": 0,
+      "cacheControl": "no-cache, max-age=0, must-revalidate"
+    },
+    {
+      "name": "mobile-viewport 校园雷达 list and article",
+      "ok": true,
+      "ms": 3882,
+      "cards": 96
+    },
+    {
+      "name": "mobile-viewport 校园知识 list and article",
+      "ok": true,
+      "ms": 3784,
+      "cards": 29
+    },
+    {
+      "name": "mobile-viewport activity calendar and source article",
+      "ok": true,
+      "ms": 1693,
+      "events": 11
+    },
+    {
+      "name": "mobile-viewport account login page",
+      "ok": true,
+      "ms": 1091,
+      "submissions": 0
+    },
+    {
+      "name": "Preview alias loads same renderer",
+      "ok": true,
+      "ms": 4215,
+      "renderer": "webgl2"
+    }
+  ]
+}

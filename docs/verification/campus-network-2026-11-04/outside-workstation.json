@@ -1,0 +1,238 @@
+{
+  "schema": 1,
+  "label": "outside",
+  "at": "2026-11-04T10:49:03.8802367Z",
+  "note": "Read-only public-site probes. curl bypasses environment HTTP proxies; transparent VPN/TUN may still affect results. No local/client IP, SSID, username, cookies or credentials collected.",
+  "proxyHints": {
+    "browserProxyEnabled": false,
+    "browserPacPresent": false,
+    "environmentProxyPresent": false
+  },
+  "dns": [
+    {
+      "host": "gdufs.ccwu.cc",
+      "type": "A",
+      "resolver": "system",
+      "addresses": [
+        "198.18.2.136"
+      ],
+      "synthetic": true,
+      "ms": 483
+    },
+    {
+      "host": "gdufs.ccwu.cc",
+      "type": "AAAA",
+      "resolver": "system",
+      "addresses": [],
+      "synthetic": false,
+      "ms": 1
+    },
+    {
+      "host": "gdufs.ccwu.cc",
+      "type": "A",
+      "resolver": "223.5.5.5",
+      "addresses": [
+        "198.18.2.136"
+      ],
+      "synthetic": true,
+      "ms": 16
+    },
+    {
+      "host": "gdufs.ccwu.cc",
+      "type": "A",
+      "resolver": "119.29.29.29",
+      "addresses": [
+        "198.18.2.136"
+      ],
+      "synthetic": true,
+      "ms": 1
+    },
+    {
+      "host": "map-test.gdufs.ccwu.cc",
+      "type": "A",
+      "resolver": "system",
+      "addresses": [
+        "198.18.3.185"
+      ],
+      "synthetic": true,
+      "ms": 1
+    },
+    {
+      "host": "map-test.gdufs.ccwu.cc",
+      "type": "AAAA",
+      "resolver": "system",
+      "addresses": [],
+      "synthetic": false,
+      "ms": 1
+    },
+    {
+      "host": "map-test.gdufs.ccwu.cc",
+      "type": "A",
+      "resolver": "223.5.5.5",
+      "addresses": [
+        "198.18.3.185"
+      ],
+      "synthetic": true,
+      "ms": 1
+    },
+    {
+      "host": "map-test.gdufs.ccwu.cc",
+      "type": "A",
+      "resolver": "119.29.29.29",
+      "addresses": [
+        "198.18.3.185"
+      ],
+      "synthetic": true,
+      "ms": 1
+    }
+  ],
+  "https": [
+    {
+      "host": "gdufs.ccwu.cc",
+      "family": "auto",
+      "curlExitCode": 0,
+      "stage": "http-response",
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "server": "cloudflare",
+        "cache-control": "s-maxage=31536000, stale-while-revalidate=2592000",
+        "cf-ray": "a5530ccf4f989450-SJC"
+      },
+      "status": 200,
+      "dnsMs": 9.3,
+      "connectMs": 10.1,
+      "tlsCompleteMs": 961.9,
+      "ttfbMs": 1259.0,
+      "totalMs": 1378.2,
+      "remoteAddress": "198.18.2.136",
+      "syntheticRemote": true
+    },
+    {
+      "host": "gdufs.ccwu.cc",
+      "family": "ipv4",
+      "curlExitCode": 0,
+      "stage": "http-response",
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "server": "cloudflare",
+        "cache-control": "s-maxage=31536000, stale-while-revalidate=2592000",
+        "cf-ray": "a5530cd79e32586f-SJC"
+      },
+      "status": 200,
+      "dnsMs": 9.9,
+      "connectMs": 10.7,
+      "tlsCompleteMs": 783.3,
+      "ttfbMs": 1702.8,
+      "totalMs": 2101.3,
+      "remoteAddress": "198.18.2.136",
+      "syntheticRemote": true
+    },
+    {
+      "host": "gdufs.ccwu.cc",
+      "family": "ipv6",
+      "curlExitCode": 6,
+      "stage": "dns-failure",
+      "headers": {},
+      "status": 0,
+      "dnsMs": 0.0,
+      "connectMs": 0.0,
+      "tlsCompleteMs": 0.0,
+      "ttfbMs": 0.0,
+      "totalMs": 8.4,
+      "remoteAddress": "",
+      "syntheticRemote": false,
+      "error": "curl: (6) Could not resolve host: gdufs.ccwu.cc"
+    },
+    {
+      "host": "map-test.gdufs.ccwu.cc",
+      "family": "auto",
+      "curlExitCode": 0,
+      "stage": "http-response",
+      "headers": {
+        "content-type": "text/html",
+        "server": "cloudflare",
+        "cache-control": "no-store",
+        "cf-ray": "a5530ce8dad2232b-SJC"
+      },
+      "status": 200,
+      "dnsMs": 20.1,
+      "connectMs": 21.0,
+      "tlsCompleteMs": 1263.3,
+      "ttfbMs": 1557.1,
+      "totalMs": 1699.2,
+      "remoteAddress": "198.18.3.185",
+      "syntheticRemote": true
+    },
+    {
+      "host": "map-test.gdufs.ccwu.cc",
+      "family": "ipv4",
+      "curlExitCode": 0,
+      "stage": "http-response",
+      "headers": {
+        "content-type": "text/html",
+        "server": "cloudflare",
+        "cache-control": "no-store",
+        "cf-ray": "a5530cf13b14eb1e-SJC"
+      },
+      "status": 200,
+      "dnsMs": 9.7,
+      "connectMs": 10.5,
+      "tlsCompleteMs": 849.5,
+      "ttfbMs": 1153.7,
+      "totalMs": 1461.3,
+      "remoteAddress": "198.18.3.185",
+      "syntheticRemote": true
+    },
+    {
+      "host": "map-test.gdufs.ccwu.cc",
+      "family": "ipv6",
+      "curlExitCode": 6,
+      "stage": "dns-failure",
+      "headers": {},
+      "status": 0,
+      "dnsMs": 0.0,
+      "connectMs": 0.0,
+      "tlsCompleteMs": 0.0,
+      "ttfbMs": 0.0,
+      "totalMs": 7.9,
+      "remoteAddress": "",
+      "syntheticRemote": false,
+      "error": "curl: (6) Could not resolve host: map-test.gdufs.ccwu.cc"
+    },
+    {
+      "host": "www.gdufs.edu.cn",
+      "family": "auto",
+      "curlExitCode": 0,
+      "stage": "http-response",
+      "headers": {
+        "content-type": "text/html",
+        "cache-control": "private, max-age=600"
+      },
+      "status": 200,
+      "dnsMs": 10.4,
+      "connectMs": 11.2,
+      "tlsCompleteMs": 167.5,
+      "ttfbMs": 258.5,
+      "totalMs": 386.5,
+      "remoteAddress": "202.116.196.186",
+      "syntheticRemote": false
+    },
+    {
+      "host": "www.qq.com",
+      "family": "auto",
+      "curlExitCode": 0,
+      "stage": "http-response",
+      "headers": {
+        "server": "stgw"
+      },
+      "status": 501,
+      "dnsMs": 153.7,
+      "connectMs": 154.4,
+      "tlsCompleteMs": 573.4,
+      "ttfbMs": 677.9,
+      "totalMs": 678.3,
+      "remoteAddress": "183.60.118.213",
+      "syntheticRemote": false
+    }
+  ]
+}

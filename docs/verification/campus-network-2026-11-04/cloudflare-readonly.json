@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-04T10:34:13.313Z",
+  "scope": "read-only zone configuration, no rule or DNS modifications",
+  "settings": {
+    "status": 403,
+    "codes": [
+      9109
+    ]
+  },
+  "customRules": {
+    "status": 403,
+    "codes": [
+      10000
+    ]
+  }
+}

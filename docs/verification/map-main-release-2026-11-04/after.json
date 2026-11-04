@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-04T11:00:50.678Z",
+  "domain": {
+    "hostname": "gdufs.ccwu.cc",
+    "service": "campusos-preview"
+  },
+  "deployment": {
+    "id": "327cb33a-8af4-4728-bb9b-37f608f7daef",
+    "created_on": "2026-11-04T10:59:50.479039Z",
+    "versions": [
+      {
+        "version_id": "c772f357-fdb6-4654-b5b9-a87f9d50ff66",
+        "percentage": 100
+      }
+    ]
+  },
+  "DB": [
+    {
+      "name": "DB",
+      "id": "18299abc-b38b-4494-8d12-8ab4d482c304"
+    }
+  ],
+  "migrationsApplied": 0
+}

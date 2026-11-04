@@ -1,6 +1,6 @@
 # 地图稳定性与兼容性专项（2026-11-04）
 
-**状态：渲染修复已实施并在独立测试站验证；跨网络访问可靠性尚未验收。原共享站未部署本次代码。**
+**状态：渲染修复已按负责人后续明确授权同步到主站，线上回归通过；校园网访问链路仍待独立验收。**
 
 ## 范围与版本
 
@@ -8,7 +8,7 @@
 
 从本地8895e9a继续，保留同期4eb9d16图标提交及既有功能。未改GIS、113个地点、547节点/2202边路网、南苑7栋及其他GLB、账号、私人会话或业务D1。无数据库迁移。
 
-实际核实gdufs.ccwu.cc仍指向campusos-preview，D1为18299abc-b38b-4494-8d12-8ab4d482c304。本次没有发布到该共享Worker，也未改变其DNS、路由和WAF。独立测试Worker为campusos-map-compat-20261104，仅有ASSETS绑定，无D1、账号、模型凭据及定时任务；按负责人要求增加独立子域名[map-test.gdufs.ccwu.cc/map](https://map-test.gdufs.ccwu.cc/map)。当前版本a9e1b15e-f476-4a05-baa0-90d44f0c8bd5。域名与绑定回执见[deployment-isolation.json](verification/map-stability-2026-11-04/deployment-isolation.json)。
+实际核实gdufs.ccwu.cc仍指向campusos-preview，D1为18299abc-b38b-4494-8d12-8ab4d482c304。隔离验收阶段没有发布到该共享Worker；后续负责人明确要求“同步到主站”后已完成同步，详见文末。DNS、路由和WAF未改变。独立测试Worker为campusos-map-compat-20261104，仅有ASSETS绑定，无D1、账号、模型凭据及定时任务；按负责人要求增加独立子域名[map-test.gdufs.ccwu.cc/map](https://map-test.gdufs.ccwu.cc/map)。当前版本a9e1b15e-f476-4a05-baa0-90d44f0c8bd5。域名与绑定回执见[deployment-isolation.json](verification/map-stability-2026-11-04/deployment-isolation.json)。
 
 **此测试站只有地图，导航中的雷达、知识、日历、账号等页面没有部署，访问这些入口会404；不代表原站相应模块被删除。**完整校园功能仍在原站。
 
@@ -77,6 +77,12 @@ Windows无节流、Chrome headless、相同1440×900、独立生产Next服务器
 
 ## 下一步与回退
 
-先复核负责人后续提供的失败设备与两域名原始提示，继续网络与首屏定位。当前不能宣布专项完成，也不能授权自己部署到仍共享正式域名的campusos-preview。
+负责人最新实测已将剩余问题收口为校园网直接无法访问；普通Wi-Fi/流量及推荐浏览器可正常加载。后续继续核实校园网错误码，不能宣称校园网已修复。负责人已明确授权本次共享主站同步，授权不扩展为修改DNS/WAF等其他配置。
 
-代码版本回退使用`git revert 9545d63`，保留4eb9d16及此前账号/Agent等成果；无D1迁移需要回滚。共享原站尚未部署本次代码，因此无需回退原站。独立Worker可按已保存版本回滚；不得通过修改正式域名DNS或重置工作区替代版本回退。
+代码版本回退使用`git revert 9545d63`，保留4eb9d16及此前账号/Agent等成果；无D1迁移需要回滚。主站已发布后的Cloudflare回退点为089e6478-8157-4cd1-9673-61525083927e，Git与线上版本回退分开操作。独立Worker可按已保存版本回滚；不得通过修改正式域名DNS或重置工作区替代版本回退。
+
+## 主站同步验收（2026-11-04，后续授权）
+
+负责人明确要求“同步到主站”。发布前重新核实主域名指向campusos-preview、D1绑定一致，全部公开变量无差异，也无额外变量将被覆盖。通过既有构建/净化/发布流程同步完整网站，没有把ASSETS地图测试站覆盖到主站。新版本c772f357-fdb6-4654-b5b9-a87f9d50ff66；保留上一版本089e6478-8157-4cd1-9673-61525083927e。没有数据库迁移、DNS/WAF改动、密钥轮换或独立Production Worker部署。
+
+主域名Chrome桌面及手机视口4项通过：完整3D平移保持、导航地图拖拽/缩放。Edge两个视口及Preview别名共11项通过：新renderer、2D零GLB预取、HTML缓存重验证，雷达/知识列表与文章弹窗，11月7日日历活动与原文，账号登录表单。测试账号提交0次、没有调用邮件。这里的手机仍为视口；此前实机反馈保留为独立证据。8条AI反馈仅暂存，校园网错误码仍待负责人提供。发布前后绑定、版本与逐项回执见[发布记录](verification/map-main-release-2026-11-04/release.json)。

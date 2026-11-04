@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-04T11:08:39.842Z",
+  "authorization": "同步到主站",
+  "implementationCommit": "9545d63",
+  "releaseSourceCommit": "87032a30dd912b61e321b30fbd3ec2077de12cbc",
+  "worker": "campusos-preview",
+  "domain": "https://gdufs.ccwu.cc",
+  "version": "c772f357-fdb6-4654-b5b9-a87f9d50ff66",
+  "rollbackVersion": "089e6478-8157-4cd1-9673-61525083927e",
+  "build": {
+    "command": "npm run deploy:preview",
+    "sanitizedBundleScan": true
+  },
+  "verification": {
+    "chromeDesktopAndMobileViewportMap": 4,
+    "edgePublicSiteChecks": 11,
+    "physicalPhoneRepeatedAfterDeployment": false
+  },
+  "migrationsApplied": 0,
+  "changesToDNSorWAF": false,
+  "notes": [
+    "Campus network access issue remains separate and unresolved.",
+    "Deferred eight AI feedback items were not fixed in this release.",
+    "Independent production Worker named campusos was not deployed."
+  ]
+}

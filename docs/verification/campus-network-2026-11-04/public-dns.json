@@ -1,0 +1,78 @@
+{
+  "at": "2026-11-04T10:53:30.777Z",
+  "scope": "Public HTTPS resolver sampled from current non-campus workstation, not proof of campus DNS behavior",
+  "results": [
+    {
+      "name": "gdufs.ccwu.cc",
+      "type": "A",
+      "resolver": "https://dns.alidns.com/resolve",
+      "status": 0,
+      "answers": [
+        {
+          "type": 1,
+          "data": "104.21.65.141",
+          "ttl": 300
+        },
+        {
+          "type": 1,
+          "data": "172.67.163.230",
+          "ttl": 300
+        }
+      ]
+    },
+    {
+      "name": "gdufs.ccwu.cc",
+      "type": "AAAA",
+      "resolver": "https://dns.alidns.com/resolve",
+      "status": 0,
+      "answers": [
+        {
+          "type": 28,
+          "data": "2606:4700:3037::ac43:a3e6",
+          "ttl": 300
+        },
+        {
+          "type": 28,
+          "data": "2606:4700:3037::6815:418d",
+          "ttl": 300
+        }
+      ]
+    },
+    {
+      "name": "map-test.gdufs.ccwu.cc",
+      "type": "A",
+      "resolver": "https://dns.alidns.com/resolve",
+      "status": 0,
+      "answers": [
+        {
+          "type": 1,
+          "data": "172.67.163.230",
+          "ttl": 300
+        },
+        {
+          "type": 1,
+          "data": "104.21.65.141",
+          "ttl": 300
+        }
+      ]
+    },
+    {
+      "name": "map-test.gdufs.ccwu.cc",
+      "type": "AAAA",
+      "resolver": "https://dns.alidns.com/resolve",
+      "status": 0,
+      "answers": [
+        {
+          "type": 28,
+          "data": "2606:4700:3037::ac43:a3e6",
+          "ttl": 300
+        },
+        {
+          "type": 28,
+          "data": "2606:4700:3037::6815:418d",
+          "ttl": 300
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-04T10:57:45.863Z",
+  "authorization": "User: 同步到主站",
+  "git": "87032a30dd912b61e321b30fbd3ec2077de12cbc",
+  "implementation": "9545d63",
+  "target": {
+    "environment": "preview",
+    "worker": "campusos-preview",
+    "database": "campusos-preview",
+    "databaseId": "18299abc-b38b-4494-8d12-8ab4d482c304"
+  },
+  "domains": [
+    {
+      "hostname": "gdufs.ccwu.cc",
+      "service": "campusos-preview"
+    },
+    {
+      "hostname": "map-test.gdufs.ccwu.cc",
+      "service": "campusos-map-compat-20261104"
+    }
+  ],
+  "before": [
+    {
+      "id": "059e18ec-9340-49d7-b7d8-122853a7ecfa",
+      "created_on": "2026-11-03T18:40:41.481597Z",
+      "versions": [
+        {
+          "version_id": "089e6478-8157-4cd1-9673-61525083927e",
+          "percentage": 100
+        }
+      ]
+    }
+  ],
+  "plannedPublicVarDifferences": [],
+  "extraPublicVarNames": []
+}
