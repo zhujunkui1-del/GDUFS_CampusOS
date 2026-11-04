@@ -686,3 +686,8 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 ## 2026-11-04｜助理质量评测资料
 
 本轮无新增爬虫来源或第三方内容入库。冻结语料从Preview console_public_documents与现有片段索引抽取33篇公开文章构建100条标题/缩写/口语查询，原文URL及版本信息见verification/assistant-quality-2026-11-03/public-corpus.json和检索回执。人物、秋之声、奖学金等真实对话仅使用准入正文及结构化活动字段。普通外部补查由既有Cloudflare云搜索服务返回公开网页，专用小红书接口未调用；没有读取或同步账号Cookie。人格沿用既有契约及docs/third-party/dafeiyu-persona-LICENSE.txt，原仓库本次在线404，未宣称重新取得材料。
+
+
+## 2026-11-04｜地图兼容性与模型资源回归
+
+无新增GIS、地点、道路或建筑模型来源。继续使用已批准的campus-15060d099418.geojson、29组清单及已验收南苑7栋原件，文件内容和坐标未改。verify-map-model-assets实际读取GLB JSON/实例扩展计算三角数并校验SHA与尺寸，60资产/59不同URL通过；新增食堂/门诊模型须通过同一资源预算。Android官方platform-tools仅作为本地工具下载，未进入public，USB未授权后停止该测试方案。实际手机回执仅保存浏览器版本、渲染能力、加载阶段和公开资源路径，公开报告排除Cloudflare请求IP等元数据，不采集GPS/账号/密钥。独立测试域名在本人控制的gdufs.ccwu.cc区域新增子域名，仅绑定ASSETS Worker，无业务D1绑定。

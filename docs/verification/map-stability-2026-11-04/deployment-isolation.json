@@ -1,0 +1,228 @@
+{
+  "at": "2026-11-04T08:13:46.979Z",
+  "domains": [
+    {
+      "hostname": "gdufs.ccwu.cc",
+      "service": "campusos-preview"
+    },
+    {
+      "hostname": "map-test.gdufs.ccwu.cc",
+      "service": "campusos-map-compat-20261104"
+    }
+  ],
+  "workers": [
+    {
+      "name": "campusos-preview",
+      "bindings": [
+        {
+          "type": "plain_text",
+          "name": "ACCOUNT_ALLOWED_ORIGINS"
+        },
+        {
+          "type": "secret_text",
+          "name": "ACCOUNT_MAIL_FROM"
+        },
+        {
+          "type": "secret_text",
+          "name": "ACCOUNT_MAIL_NOTICE_TEMPLATE_ID"
+        },
+        {
+          "type": "secret_text",
+          "name": "ACCOUNT_MAIL_REGION"
+        },
+        {
+          "type": "secret_text",
+          "name": "ACCOUNT_MAIL_SECRET_ID"
+        },
+        {
+          "type": "secret_text",
+          "name": "ACCOUNT_MAIL_SECRET_KEY"
+        },
+        {
+          "type": "secret_text",
+          "name": "ACCOUNT_MAIL_TEMPLATE_ID"
+        },
+        {
+          "type": "secret_text",
+          "name": "ACCOUNT_MAIL_VERIFIED"
+        },
+        {
+          "type": "plain_text",
+          "name": "ACCOUNT_ORIGIN"
+        },
+        {
+          "type": "secret_text",
+          "name": "ACCOUNT_OTP_SECRET"
+        },
+        {
+          "type": "secret_text",
+          "name": "AGENT_SIGNING_SECRET"
+        },
+        {
+          "type": "plain_text",
+          "name": "AGENT_VALIDATION_UNLIMITED"
+        },
+        {
+          "type": "ai",
+          "name": "AI"
+        },
+        {
+          "type": "plain_text",
+          "name": "APP_ENV"
+        },
+        {
+          "type": "assets",
+          "name": "ASSETS"
+        },
+        {
+          "type": "plain_text",
+          "name": "CALENDAR_AUTO_ENRICH"
+        },
+        {
+          "type": "plain_text",
+          "name": "CALENDAR_ENABLED"
+        },
+        {
+          "type": "service",
+          "name": "CLOUD_SEARCH"
+        },
+        {
+          "type": "secret_text",
+          "name": "CLOUD_SEARCH_TOKEN"
+        },
+        {
+          "type": "secret_text",
+          "name": "CONSOLE_ADMIN_ACCESS_KEY"
+        },
+        {
+          "type": "secret_text",
+          "name": "CONSOLE_ADMIN_EMAILS"
+        },
+        {
+          "type": "secret_text",
+          "name": "CONSOLE_AUTH_MODE"
+        },
+        {
+          "type": "secret_text",
+          "name": "CONSOLE_CREDENTIAL_SALT"
+        },
+        {
+          "type": "secret_text",
+          "name": "CONSOLE_ORIGIN"
+        },
+        {
+          "type": "secret_text",
+          "name": "CONSOLE_SESSION_SECRET"
+        },
+        {
+          "type": "d1",
+          "name": "DB",
+          "id": "18299abc-b38b-4494-8d12-8ab4d482c304"
+        },
+        {
+          "type": "secret_text",
+          "name": "EXTERNAL_SEARCH_GATEWAY_TOKEN"
+        },
+        {
+          "type": "plain_text",
+          "name": "EXTERNAL_SEARCH_TRANSPORT"
+        },
+        {
+          "type": "plain_text",
+          "name": "HYBRID_RETRIEVAL"
+        },
+        {
+          "type": "ratelimit",
+          "name": "MAP_RATE_LIMITER"
+        },
+        {
+          "type": "secret_text",
+          "name": "MODEL_API_KEY"
+        },
+        {
+          "type": "secret_text",
+          "name": "MODEL_BASE_URL"
+        },
+        {
+          "type": "secret_text",
+          "name": "MODEL_CAPABILITIES_JSON"
+        },
+        {
+          "type": "plain_text",
+          "name": "MODEL_MAX_OUTPUT_TOKENS"
+        },
+        {
+          "type": "secret_text",
+          "name": "MODEL_NAME"
+        },
+        {
+          "type": "plain_text",
+          "name": "MODEL_PRIORITY"
+        },
+        {
+          "type": "secret_text",
+          "name": "PRIMARY_MODEL_API_KEY"
+        },
+        {
+          "type": "secret_text",
+          "name": "PRIMARY_MODEL_BASE_URL"
+        },
+        {
+          "type": "secret_text",
+          "name": "PRIMARY_MODEL_CAPABILITIES_JSON"
+        },
+        {
+          "type": "secret_text",
+          "name": "PRIMARY_MODEL_NAME"
+        },
+        {
+          "type": "plain_text",
+          "name": "USER_ACCOUNTS_ENABLED"
+        },
+        {
+          "type": "plain_text",
+          "name": "VECTOR_BACKFILL"
+        },
+        {
+          "type": "vectorize",
+          "name": "VECTOR_INDEX"
+        },
+        {
+          "type": "service",
+          "name": "WORKER_SELF_REFERENCE"
+        }
+      ],
+      "latest": [
+        {
+          "created_on": "2026-11-03T18:40:41.481597Z",
+          "versions": [
+            {
+              "version_id": "089e6478-8157-4cd1-9673-61525083927e",
+              "percentage": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "campusos-map-compat-20261104",
+      "bindings": [
+        {
+          "type": "assets",
+          "name": "ASSETS"
+        }
+      ],
+      "latest": [
+        {
+          "created_on": "2026-11-04T07:24:37.338172Z",
+          "versions": [
+            {
+              "version_id": "a9e1b15e-f476-4a05-baa0-90d44f0c8bd5",
+              "percentage": 100
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

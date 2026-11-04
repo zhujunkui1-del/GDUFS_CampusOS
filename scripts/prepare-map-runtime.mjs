@@ -1,3 +1,4 @@
+import "./verify-map-model-assets.mjs";
 // Vendor the installed, pinned open-source worker. This copies library code only;
 // it never downloads or refreshes map data. Explicit URL avoids bundler-relative workers.
 import { mkdir, copyFile, readFile } from "node:fs/promises";

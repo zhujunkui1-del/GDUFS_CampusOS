@@ -3,7 +3,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { selectMapMode } from "./helpers/map-mode";
 
 async function focusDorm(page: Page) {
-  await page.goto("/map");
+  await page.goto("/map", { waitUntil: "domcontentloaded" });
   const map = page.getByTestId("campus-map");
   await expect(map).toHaveAttribute("data-status", "ready", { timeout: 60000 });
   await page.getByLabel("搜索校园地点").fill("南苑7栋");
@@ -17,7 +17,7 @@ async function focusDorm(page: Page) {
   return map;
 }
 
-test("South 7 volume and prewarmed 3D keep their geography and label semantics", async ({
+test("South 7 volume and on-demand 3D keep their geography and label semantics", async ({
   page,
 }, info) => {
   const errors: string[] = [],
@@ -33,7 +33,7 @@ test("South 7 volume and prewarmed 3D keep their geography and label semantics",
       modelAssetFinished = true;
   });
   const map = await focusDorm(page);
-  await expect.poll(() => assets.length, { timeout: 30000 }).toBe(1);
+  expect(assets).toHaveLength(0);
   await page.getByLabel("搜索校园地点").focus();
   await expect(page.locator(".map-search-results")).toHaveCount(0);
   await page.getByLabel("搜索校园地点").press("ArrowDown");
@@ -63,8 +63,8 @@ test("South 7 volume and prewarmed 3D keep their geography and label semantics",
   await selectMapMode(page, "2.5D");
   await expect(map).toHaveAttribute("data-model-volume", "visible");
   await expect(map).toHaveAttribute("data-camera-moving", "false");
-  expect(assets).toHaveLength(1);
-  await expect.poll(() => modelAssetFinished, { timeout: 30000 }).toBe(true);
+  expect(assets).toHaveLength(0);
+  expect(modelAssetFinished).toBe(false);
   await expect(map).toHaveAttribute("data-model-state", "idle");
   await page.screenshot({ path: `${dir}/${name}-2.5d.png` });
   const threeDClickAt = Date.now();
@@ -157,7 +157,7 @@ test("South 7 volume and prewarmed 3D keep their geography and label semantics",
   expect(errors).toEqual([]);
 });
 
-test("all completed models keep 3D detail across zoom and pan, and dorm volumes share rendering", async ({
+test("all completed buildings retain full 3D across pan with shared dorm volumes", async ({
   page,
 }) => {
   const catalog: { entries: { key: string; placeId: string | null }[] } =
@@ -169,18 +169,18 @@ test("all completed models keep 3D detail across zoom and pan, and dorm volumes 
     );
   const expected3D = catalog.entries
     .filter((e) => e.placeId !== "osm-way-312536955")
-    .map((e) => `${e.key}:3d`)
+    .map((e) => e.key)
     .sort();
   const requests: string[] = [];
   page.on("request", (r) => {
     if (r.url().endsWith(".glb")) requests.push(r.url());
   });
-  await page.goto("/map");
+  await page.goto("/map", { waitUntil: "domcontentloaded" });
   const map = page.getByTestId("campus-map");
   await expect(map).toHaveAttribute("data-status", "ready");
   await selectMapMode(page, "3D");
   await expect(map).toHaveAttribute(
-    "data-campus-model-details",
+    "data-campus-model-count",
     String(expected3D.length),
     { timeout: 30000 },
   );
@@ -189,7 +189,12 @@ test("all completed models keep 3D detail across zoom and pan, and dorm volumes 
     JSON.parse(
       (await map.getAttribute("data-campus-model-keys")) || "[]",
     ).sort();
-  expect(await keys()).toEqual(expected3D);
+  const owners = async () =>
+    (await keys())
+      .map((key: string) => key.replace(/:(?:3d|2\.5d)$/, ""))
+      .sort();
+  expect(await owners()).toEqual(expected3D);
+  expect((await keys()).every((key: string) => key.endsWith(":3d"))).toBe(true);
   const beforeFocus = Number(
     await map.getAttribute("data-camera-animation-count"),
   );
@@ -208,8 +213,16 @@ test("all completed models keep 3D detail across zoom and pan, and dorm volumes 
     await expect(map).toHaveAttribute("data-camera-moving", "false");
   }
   expect(Number(await map.getAttribute("data-zoom"))).toBeLessThan(18);
-  expect(await keys()).toEqual(expected3D);
-  const loadedRequests = requests.length;
+  expect(await owners()).toEqual(expected3D);
+  await expect(map).toHaveAttribute("data-campus-model-pending", "0", {
+    timeout: 30000,
+  });
+  expect(await keys()).toContain("dormitory-s9:3d");
+  expect(
+    Number(await map.getAttribute("data-campus-model-details")),
+  ).toBeLessThanOrEqual(
+    Number(await map.getAttribute("data-campus-model-budget")),
+  );
   const start = await page.evaluate(() => {
     for (const y of [0.65, 0.75, 0.5])
       for (const x of [0.55, 0.65, 0.4]) {
@@ -228,14 +241,14 @@ test("all completed models keep 3D detail across zoom and pan, and dorm volumes 
   expect(
     Number(await map.getAttribute("data-camera-frame-count")),
   ).toBeGreaterThan(frames);
-  expect(await keys()).toEqual(expected3D);
+  expect(await owners()).toEqual(expected3D);
   await page.mouse.move(start.x - 100, start.y - 70);
   await page.mouse.down();
   await page.mouse.move(start.x, start.y, { steps: 10 });
   await page.mouse.up();
   await page.waitForTimeout(700);
-  expect(await keys()).toEqual(expected3D);
-  expect(requests).toHaveLength(loadedRequests);
+  expect(await owners()).toEqual(expected3D);
+  expect(new Set(requests).size).toBe(requests.length);
   await selectMapMode(page, "2.5D");
   await expect(map).toHaveAttribute("data-model-volume-renderer", "shared", {
     timeout: 30000,
@@ -333,7 +346,7 @@ test("2D remains selectable during 3D loading and late completion does not resto
 });
 
 test("closing details keeps the cycle button usable", async ({ page }) => {
-  await page.goto("/map");
+  await page.goto("/map", { waitUntil: "domcontentloaded" });
   await expect(page.getByTestId("campus-map")).toHaveAttribute(
     "data-status",
     "ready",
@@ -356,6 +369,13 @@ test("cached building shadows recover with the map WebGL context", async ({
   const map = await focusDorm(page);
   await selectMapMode(page, "3D");
   await expect(map).toHaveAttribute("data-model-state", "ready");
+  await expect(map).toHaveAttribute("data-campus-model-pending", "0", {
+    timeout: 30000,
+  });
+  const campusFrames = Number(
+    await map.getAttribute("data-campus-model-frames"),
+  );
+  const campusModels = await map.getAttribute("data-campus-model-count");
   const before = Number(await map.getAttribute("data-model-frame-count"));
   const supported = await page.evaluate(() => {
     const canvas =
@@ -375,4 +395,10 @@ test("cached building shadows recover with the map WebGL context", async ({
     .poll(async () => Number(await map.getAttribute("data-model-frame-count")))
     .toBeGreaterThan(before);
   await expect(map).toHaveAttribute("data-model-detailed", "visible");
+  await expect
+    .poll(async () =>
+      Number(await map.getAttribute("data-campus-model-frames")),
+    )
+    .toBeGreaterThan(campusFrames);
+  await expect(map).toHaveAttribute("data-campus-model-count", campusModels!);
 });

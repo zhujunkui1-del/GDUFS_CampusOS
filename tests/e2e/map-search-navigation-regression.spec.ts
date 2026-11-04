@@ -3,7 +3,7 @@ test.use({ trace: "off", video: "off" });
 test("empty search closes the panel and removed online controls never appear", async ({
   page,
 }) => {
-  await page.goto("/map");
+  await page.goto("/map", { waitUntil: "domcontentloaded" });
   await expect(page.getByTestId("campus-map")).toHaveAttribute(
     "data-status",
     "ready",
@@ -36,7 +36,7 @@ test("navigation exposes the real map canvas to drag and zoom", async ({
       },
     }),
   );
-  await page.goto("/map");
+  await page.goto("/map", { waitUntil: "domcontentloaded" });
   const map = page.getByTestId("campus-map");
   await expect(map).toHaveAttribute("data-status", "ready", { timeout: 30000 });
   await page.getByRole("button", { name: "校园步行导航", exact: true }).click();

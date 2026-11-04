@@ -7,6 +7,7 @@ import {
   vectorBindings,
 } from "./src/lib/server/retrieval/vector";
 import handler from "./.open-next/worker.js";
+import { revalidateDocument } from "./src/lib/server/document-cache";
 import { cleanAccountMetadata } from "./src/lib/server/account/api";
 import { runCalendarBatch } from "./src/lib/server/calendar/processor";
 import type { CalendarAI } from "./src/lib/server/calendar/enrichment";
@@ -73,7 +74,12 @@ const previewWorker = {
       env.APP_ENV === "preview"
         ? previewApiHandler(new URL(request.url).pathname, request.method)
         : null;
-    if (!route) return handler.fetch(request, env, ctx);
+    if (!route) {
+      const response = await handler.fetch(request, env, ctx);
+      return env.APP_ENV === "preview"
+        ? revalidateDocument(response)
+        : response;
+    }
     return runWithCloudflareRequestContext(request, env, ctx, async () => {
       const response =
         request.method === route.method

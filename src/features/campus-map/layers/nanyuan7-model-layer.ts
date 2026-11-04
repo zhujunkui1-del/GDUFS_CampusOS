@@ -24,30 +24,11 @@ import {
 } from "maplibre-gl";
 import { modelPilot, type PilotModelState } from "../data/model-pilot";
 
-type ModelAsset = (typeof modelPilot.assets)[keyof typeof modelPilot.assets];
-const modelBuffers = new Map<string, Promise<ArrayBuffer>>();
-
-function readModelBuffer(asset: ModelAsset) {
-  const cached = modelBuffers.get(asset.url);
-  if (cached) return cached;
-  const pending = fetch(asset.url, { cache: "force-cache" })
-    .then((response) => {
-      if (!response.ok) throw new Error("Model asset unavailable");
-      return response.arrayBuffer();
-    })
-    .catch((error) => {
-      if (modelBuffers.get(asset.url) === pending)
-        modelBuffers.delete(asset.url);
-      throw error;
-    });
-  modelBuffers.set(asset.url, pending);
-  return pending;
-}
-
+import { readModelAsset } from "./model-asset-cache";
 export function preloadNanyuan7Model() {
   const low = window.matchMedia("(max-width: 760px)").matches;
   const asset = low ? modelPilot.assets.low : modelPilot.assets.full;
-  return readModelBuffer(asset);
+  return readModelAsset(asset);
 }
 
 // MapLibre owns the canvas, camera and WebGL context. This layer owns only its assets.
@@ -127,7 +108,7 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
     try {
       const low = window.matchMedia("(max-width: 760px)").matches;
       const asset = low ? modelPilot.assets.low : modelPilot.assets.full;
-      const buffer = await readModelBuffer(asset);
+      const buffer = await readModelAsset(asset);
       const hash = Array.from(
         new Uint8Array(await crypto.subtle.digest("SHA-256", buffer)),
       )
@@ -192,7 +173,14 @@ export class Nanyuan7ModelLayer implements CustomLayerInterface {
     }
   }
   render(gl: WebGL2RenderingContext, input: CustomRenderMethodInput) {
-    if (!this.visible || !this.ready || !this.map || !this.renderer) return;
+    if (
+      !this.visible ||
+      !this.ready ||
+      !this.map ||
+      !this.renderer ||
+      gl.isContextLost()
+    )
+      return;
     this.camera.projectionMatrix
       .fromArray(input.defaultProjectionData.mainMatrix)
       .multiply(this.localMatrix);

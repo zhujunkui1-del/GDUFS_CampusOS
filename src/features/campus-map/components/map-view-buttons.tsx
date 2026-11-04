@@ -15,7 +15,7 @@ export function MapViewButtons({ onChange }: { onChange?: () => void }) {
     <button
       className="map-mode-button"
       data-testid="map-mode-trigger"
-      disabled={map.status !== "ready" || (next === "2.5d" && !map.supports3D)}
+      disabled={map.status !== "ready" || (next === "2.5d" && !map.supports2_5D)}
       aria-label={`地图模式，当前${labels[map.mode]}，切换为${labels[next]}`}
       aria-busy={map.mode === "3d" && map.modelState === "loading"}
       title={`切换为${labels[next]}`}

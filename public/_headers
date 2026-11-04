@@ -6,3 +6,241 @@
 
 /vendor/maplibre-6.14.0/*
   Cache-Control: public,max-age=31536000,immutable
+
+# BEGIN verified map model assets
+/models/campus/administration-2.5d-e00f035ae0c8.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/administration-3d-e3c89bc87a4c.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/art-2.5d-2fba3f18d533.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/art-3d-c03288b92bd3.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/auditorium-2.5d-416e632521dd.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/auditorium-3d-6f76dfb37c8f.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/b8-2.5d-f39ed5be06c0.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/b8-3d-2cd954731557.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n1-3d-e12d648d8c70.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n2-3d-189e9a27f3e8.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n3-3d-a13475240dc2.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n4-3d-8fb663acfca4.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n5-3d-8d45297d2765.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-n6-3d-7f35975c0665.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s10-3d-1a18c41d63ab.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s11-2.5d-4334395f7f77.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s11-3d-2fda6f1df75e.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s12-3d-f6c253855656.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s13-2.5d-2a376c78f621.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s13-3d-40511576fc5d.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s8-3d-aec7a0b8970e.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/dormitory-s9-3d-39ce7f06ecd8.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/faculty-2.5d-ce0dd3ff6f35.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/faculty-3d-aa908ef5a2af.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/gymnasium-2.5d-3f4e354eeffa.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/gymnasium-3d-e9fce68a179c.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/laboratory-2.5d-cc238d1956b9.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/laboratory-3d-b4c51ce5622d.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/library-2.5d-9ce5a5da90db.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/library-3d-0b93289ff027.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/pavilion-2.5d-5c3b917e2d03.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/pavilion-3d-8d94f7df1614.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/stadium-2.5d-a03d90598bbc.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/stadium-3d-8667c50456be.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-A-2.5d-ded5d83a1f31.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-A-3d-eb4eefa278b0.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-B-2.5d-f68c4d14578c.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-B-3d-f670281a2217.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-C-2.5d-10b884aae53f.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-C-3d-34e723762b89.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-D-2.5d-d89a612ca422.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-D-3d-5008c2a4775e.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-efg-3d-35a3e06d82d9.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-links-2.5d-199cc90091fc.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/teaching-links-3d-ca2bd3b709ed.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/courtyards-bd7ad71eacbf.geojson
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: application/geo+json
+# END verified map model assets

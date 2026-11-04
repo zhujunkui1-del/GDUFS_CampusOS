@@ -1,0 +1,360 @@
+{
+  "environment": "Windows headless desktop browser; production Next servers over loopback; no network/CPU throttling; V8 heap excludes GPU/native memory",
+  "channel": "chrome",
+  "results": [
+    {
+      "version": "baseline-8895e9a",
+      "round": 0,
+      "cache": "cold",
+      "mapReadyMs": 939.5999999940395,
+      "fcpMs": 496,
+      "requests": 57,
+      "transferredBytes": 14783879,
+      "decodedJsBytes": 4028253,
+      "modelRequests": 1,
+      "fullBasemapMs": 978.0999999940395,
+      "modelTimes": {
+        "2.5D": 353,
+        "3D": 581
+      },
+      "beforeCycles": {
+        "heap": 72089595,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "189",
+        "contextLosses": 0,
+        "heap": 63185809
+      }
+    },
+    {
+      "version": "baseline-8895e9a",
+      "round": 0,
+      "cache": "warm",
+      "mapReadyMs": 451.8999999985099,
+      "fcpMs": 76,
+      "requests": 57,
+      "transferredBytes": 87822,
+      "decodedJsBytes": 4028253,
+      "modelRequests": 1,
+      "fullBasemapMs": 462.8999999985099,
+      "modelTimes": {
+        "2.5D": 322,
+        "3D": 473
+      },
+      "beforeCycles": {
+        "heap": 184798801,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "189",
+        "contextLosses": 0,
+        "heap": 88675528
+      }
+    },
+    {
+      "version": "baseline-8895e9a",
+      "round": 1,
+      "cache": "cold",
+      "mapReadyMs": 578.3999999985099,
+      "fcpMs": 88,
+      "requests": 57,
+      "transferredBytes": 14783879,
+      "decodedJsBytes": 4028253,
+      "modelRequests": 1,
+      "fullBasemapMs": 603.6000000014901,
+      "modelTimes": {
+        "2.5D": 368,
+        "3D": 637
+      },
+      "beforeCycles": {
+        "heap": 113384003,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "189",
+        "contextLosses": 0,
+        "heap": 65001499
+      }
+    },
+    {
+      "version": "baseline-8895e9a",
+      "round": 1,
+      "cache": "warm",
+      "mapReadyMs": 444,
+      "fcpMs": 72,
+      "requests": 57,
+      "transferredBytes": 87822,
+      "decodedJsBytes": 4028253,
+      "modelRequests": 1,
+      "fullBasemapMs": 450.80000000447035,
+      "modelTimes": {
+        "2.5D": 337,
+        "3D": 692
+      },
+      "beforeCycles": {
+        "heap": 217450260,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "189",
+        "contextLosses": 0,
+        "heap": 58345140
+      }
+    },
+    {
+      "version": "baseline-8895e9a",
+      "round": 2,
+      "cache": "cold",
+      "mapReadyMs": 616.2999999970198,
+      "fcpMs": 108,
+      "requests": 57,
+      "transferredBytes": 14783879,
+      "decodedJsBytes": 4028253,
+      "modelRequests": 1,
+      "fullBasemapMs": 643.7000000029802,
+      "modelTimes": {
+        "2.5D": 296,
+        "3D": 639
+      },
+      "beforeCycles": {
+        "heap": 150708945,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "189",
+        "contextLosses": 0,
+        "heap": 57581370
+      }
+    },
+    {
+      "version": "baseline-8895e9a",
+      "round": 2,
+      "cache": "warm",
+      "mapReadyMs": 428.59999999403954,
+      "fcpMs": 76,
+      "requests": 57,
+      "transferredBytes": 87822,
+      "decodedJsBytes": 4028253,
+      "modelRequests": 1,
+      "fullBasemapMs": 437.3999999985099,
+      "modelTimes": {
+        "2.5D": 319,
+        "3D": 498
+      },
+      "beforeCycles": {
+        "heap": 177133734,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "189",
+        "contextLosses": 0,
+        "heap": 90850181
+      }
+    },
+    {
+      "version": "repaired",
+      "round": 0,
+      "cache": "cold",
+      "mapReadyMs": 571.7000000029802,
+      "fcpMs": 120,
+      "requests": 53,
+      "transferredBytes": 14613827,
+      "decodedJsBytes": 3397766,
+      "modelRequests": 0,
+      "fullBasemapMs": 1004.8999999985099,
+      "modelTimes": {
+        "2.5D": 360,
+        "3D": 479
+      },
+      "beforeCycles": {
+        "heap": 63297994,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "profile": "standard",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "251",
+        "contextLosses": 0,
+        "heap": 90265348
+      }
+    },
+    {
+      "version": "repaired",
+      "round": 0,
+      "cache": "warm",
+      "mapReadyMs": 193.5,
+      "fcpMs": 96,
+      "requests": 53,
+      "transferredBytes": 87068,
+      "decodedJsBytes": 3397766,
+      "modelRequests": 0,
+      "fullBasemapMs": 638.7999999970198,
+      "modelTimes": {
+        "2.5D": 449,
+        "3D": 444
+      },
+      "beforeCycles": {
+        "heap": 107656067,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "profile": "standard",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "251",
+        "contextLosses": 0,
+        "heap": 74964852
+      }
+    },
+    {
+      "version": "repaired",
+      "round": 1,
+      "cache": "cold",
+      "mapReadyMs": 529.9000000059605,
+      "fcpMs": 108,
+      "requests": 53,
+      "transferredBytes": 14613827,
+      "decodedJsBytes": 3397766,
+      "modelRequests": 0,
+      "fullBasemapMs": 827.7000000029802,
+      "modelTimes": {
+        "2.5D": 286,
+        "3D": 436
+      },
+      "beforeCycles": {
+        "heap": 65620298,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "profile": "standard",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "251",
+        "contextLosses": 0,
+        "heap": 64708385
+      }
+    },
+    {
+      "version": "repaired",
+      "round": 1,
+      "cache": "warm",
+      "mapReadyMs": 169.39999999850988,
+      "fcpMs": 68,
+      "requests": 53,
+      "transferredBytes": 87068,
+      "decodedJsBytes": 3397766,
+      "modelRequests": 0,
+      "fullBasemapMs": 490,
+      "modelTimes": {
+        "2.5D": 257,
+        "3D": 402
+      },
+      "beforeCycles": {
+        "heap": 114077493,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "profile": "standard",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "251",
+        "contextLosses": 0,
+        "heap": 75742649
+      }
+    },
+    {
+      "version": "repaired",
+      "round": 2,
+      "cache": "cold",
+      "mapReadyMs": 356.8999999985099,
+      "fcpMs": 88,
+      "requests": 53,
+      "transferredBytes": 14613827,
+      "decodedJsBytes": 3397766,
+      "modelRequests": 0,
+      "fullBasemapMs": 630.8999999985099,
+      "modelTimes": {
+        "2.5D": 255,
+        "3D": 416
+      },
+      "beforeCycles": {
+        "heap": 66862029,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "profile": "standard",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "251",
+        "contextLosses": 0,
+        "heap": 61189322
+      }
+    },
+    {
+      "version": "repaired",
+      "round": 2,
+      "cache": "warm",
+      "mapReadyMs": 154,
+      "fcpMs": 64,
+      "requests": 53,
+      "transferredBytes": 87068,
+      "decodedJsBytes": 3397766,
+      "modelRequests": 0,
+      "fullBasemapMs": 535.5,
+      "modelTimes": {
+        "2.5D": 254,
+        "3D": 372
+      },
+      "beforeCycles": {
+        "heap": 109241243,
+        "models": "57"
+      },
+      "afterCycles": {
+        "mode": "3d",
+        "profile": "standard",
+        "residents": "57",
+        "details": "28",
+        "triangles": "204488",
+        "drawCalls": "251",
+        "contextLosses": 0,
+        "heap": 89880104
+      }
+    }
+  ]
+}

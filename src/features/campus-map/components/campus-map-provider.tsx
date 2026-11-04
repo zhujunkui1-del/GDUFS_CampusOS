@@ -12,7 +12,7 @@ import "./campus-map.css";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { usePathname } from "next/navigation";
 import { type CampusRoute, type RoutePoint } from "../adapters/amap-adapter";
-import type { LocalMapAdapter } from "../adapters/local-map-adapter";
+import type { CampusRenderer } from "../adapters/renderer-contract";
 import manifest from "../data/local-map-manifest.json";
 import {
   campusData,
@@ -48,6 +48,7 @@ type MapContextValue = {
   assistantPlace: CampusPlace | null;
   zoom: number;
   supports3D: boolean;
+  supports2_5D: boolean;
   modelAvailable: boolean;
   modelState: PilotModelState;
   locationBusy: boolean;
@@ -116,7 +117,8 @@ export function CampusMapProvider({
   const [mapRequested, setMapRequested] = useState(pathname === "/map");
   if (pathname === "/map" && !mapRequested) setMapRequested(true);
   const element = useRef<HTMLDivElement>(null);
-  const adapter = useRef<LocalMapAdapter | null>(null);
+  const adapter = useRef<CampusRenderer | null>(null);
+  const basicOnly = useRef(false);
   const pickRef = useRef<"start" | "end" | null>(null);
   const [revision, setRevision] = useState(0);
   const [status, setStatus] = useState<MapContextValue["status"]>("loading");
@@ -146,6 +148,7 @@ export function CampusMapProvider({
   const [bearing, setBearing] = useState(0);
   const [minimumZoom, setMinimumZoom] = useState(CAMPUS_MIN_ZOOM);
   const [supports3D, setSupports3D] = useState(true);
+  const [supports2_5D, setSupports2_5D] = useState(true);
   const [modelAvailable, setModelAvailable] = useState(false);
   const [modelState, setModelState] = useState<PilotModelState>("idle");
   const routeGeneration = useRef(0);
@@ -327,6 +330,10 @@ export function CampusMapProvider({
     mode: "2d",
     zone: "all",
   });
+  const renderSnapshot = useRef({ selected, layers, navigationActive });
+  useEffect(() => {
+    renderSnapshot.current = { selected, layers, navigationActive };
+  }, [selected, layers, navigationActive]);
 
   useEffect(() => {
     if (!mapRequested) return;
@@ -335,21 +342,44 @@ export function CampusMapProvider({
       disposeCoordinate: (() => void) | undefined,
       disposeModel: (() => void) | undefined;
     const abort = new AbortController();
+    let recoveryTimer: ReturnType<typeof setTimeout> | undefined;
+    let losses = 0;
     void (async () => {
       try {
-        const { LocalMapAdapter } =
-          await import("../adapters/local-map-adapter");
+        const { createCampusRenderer } =
+          await import("../adapters/create-renderer");
         if (cancelled || !element.current) return;
-        const next = await LocalMapAdapter.create(
+        const next = await createCampusRenderer(
           element.current,
           abort.signal,
+          basicOnly.current,
         );
         if (cancelled) {
           next.destroy();
           return;
         }
         adapter.current = next;
+        const switchToBasicMap = () => {
+          if (cancelled || basicOnly.current) return;
+          clearTimeout(recoveryTimer);
+          basicOnly.current = true;
+          view.current.mode = "2d";
+          setModeState("2d");
+          setStatus("loading");
+          setError("已切换到基础地图。");
+          setRevision((value) => value + 1);
+        };
+        next.native.on("webglcontextlost", () => {
+          if (cancelled) return;
+          clearTimeout(recoveryTimer);
+          if (++losses > 2) switchToBasicMap();
+          else recoveryTimer = setTimeout(switchToBasicMap, 8000);
+        });
+        next.native.on("webglcontextrestored", () => {
+          clearTimeout(recoveryTimer);
+        });
         setSupports3D(next.supports3D);
+        setSupports2_5D(next.supports2_5D);
         setModelAvailable(next.modelAvailable);
         disposeModel = next.onModelState((state) => {
           if (cancelled) return;
@@ -360,14 +390,7 @@ export function CampusMapProvider({
             next.setDisplayMode("2.5d");
           }
         });
-        if (!next.supports3D) {
-          view.current.mode = "2d";
-          setModeState("2d");
-        }
-        const lowMemory = (navigator as Navigator & { deviceMemory?: number })
-          .deviceMemory;
-        if (lowMemory && lowMemory < 4) {
-          next.setDisplayMode("2d");
+        if (!next.supports2_5D) {
           view.current.mode = "2d";
           setModeState("2d");
         }
@@ -422,6 +445,19 @@ export function CampusMapProvider({
           next.setPitch(view.current.mode === "2d" ? 0 : CAMPUS_PITCH);
           await next.initializeViewport();
           if (view.current.zone !== "all") next.setZone(view.current.zone);
+          for (const [layer, visible] of Object.entries(
+            renderSnapshot.current.layers,
+          ))
+            next.setLayerVisibility(layer, visible);
+          if (currentRoute.current) {
+            next.installRoute(currentRoute.current);
+            next.renderRoute(currentRoute.current.id);
+          }
+          if (renderSnapshot.current.selected)
+            next.highlightPlace(renderSnapshot.current.selected.id);
+          next.setInteractionMode(
+            renderSnapshot.current.navigationActive ? "navigation" : "browse",
+          );
           if (cancelled) return;
           setStatus("ready");
           setZoom(next.map.getZoom());
@@ -441,6 +477,7 @@ export function CampusMapProvider({
     })();
     return () => {
       cancelled = true;
+      clearTimeout(recoveryTimer);
       abort.abort();
       disposePick?.();
       disposeCoordinate?.();
@@ -554,6 +591,7 @@ export function CampusMapProvider({
     assistantPlace,
     zoom,
     supports3D,
+    supports2_5D,
     modelAvailable,
     modelState,
     locationBusy: location.busy,
@@ -643,7 +681,7 @@ export function CampusMapProvider({
     },
     setMode: (next) => {
       ++interactionVersion.current;
-      if (next !== "2d" && !adapter.current?.supports3D) return;
+      if (next === "2.5d" && !adapter.current?.supports2_5D) return;
       if (next === "3d" && !adapter.current?.modelAvailable) return;
       view.current.mode = next;
       setModeState(next);
@@ -715,7 +753,7 @@ export function CampusMapProvider({
         clearRoute: context.stopNavigation,
         setViewMode: (next) => {
           if (
-            (next !== "2d" && !adapter.current?.supports3D) ||
+            (next === "2.5d" && !adapter.current?.supports2_5D) ||
             (next === "3d" && !adapter.current?.modelAvailable)
           )
             throw new Error("当前设备不支持此地图模式。");
@@ -760,7 +798,7 @@ export function CampusMapProvider({
         data-mode={mode}
         data-zoom={zoom.toFixed(2)}
         data-bearing={bearing.toFixed(2)}
-        data-engine="maplibre-local"
+        data-engine={supports2_5D ? "maplibre-local" : "canvas-local"}
         data-map-version={manifest.version}
         data-scope="campus-and-visible-context"
         data-min-zoom={minimumZoom.toFixed(2)}

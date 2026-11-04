@@ -12,6 +12,7 @@ import {
   Scene,
   Vector3,
   WebGLRenderer,
+  Texture,
   type Object3D,
 } from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
@@ -25,41 +26,18 @@ import {
 import {
   buildingModelCatalog,
   buildingModelForPlace,
-  type BuildingModelAsset,
   type BuildingModelEntry,
 } from "../data/building-models";
 import type { MapMode } from "@/domain/maps/contracts";
 import { modelPilot, modelPilotAvailable } from "../data/model-pilot";
-const buffers = new Map<string, Promise<ArrayBuffer>>();
-async function readAsset(asset: BuildingModelAsset) {
-  let pending = buffers.get(asset.url);
-  if (!pending) {
-    pending = fetch(asset.url, { cache: "force-cache" })
-      .then(async (r) => {
-        if (!r.ok) throw new Error("Building model unavailable");
-        const b = await r.arrayBuffer(),
-          hash = Array.from(
-            new Uint8Array(await crypto.subtle.digest("SHA-256", b)),
-          )
-            .map((v) => v.toString(16).padStart(2, "0"))
-            .join("");
-        if (hash !== asset.sha256)
-          throw new Error("Building model hash mismatch");
-        return b;
-      })
-      .catch((error) => {
-        buffers.delete(asset.url);
-        throw error;
-      });
-    buffers.set(asset.url, pending);
-  }
-  return pending;
-}
+import { readModelAsset } from "./model-asset-cache";
+import { modelBudget } from "../data/model-budget";
 type OwnerRange = { start: number; count: number; key: string };
 type Loaded = {
   entry: BuildingModelEntry;
   mode: "2.5d" | "3d";
   wrapper: Group;
+  batches?: Group;
   materials: Map<
     MeshStandardMaterial,
     { opacity: number; transparent: boolean; depthWrite: boolean }
@@ -80,6 +58,13 @@ function materialKey(m: Material) {
     m.flatShading,
     m.vertexColors,
     m.alphaTest,
+    m.map?.uuid,
+    m.normalMap?.uuid,
+    m.roughnessMap?.uuid,
+    m.metalnessMap?.uuid,
+    m.emissiveMap?.uuid,
+    m.aoMap?.uuid,
+    m.alphaMap?.uuid,
   ]);
 }
 function primitiveKey(mesh: Mesh) {
@@ -92,7 +77,8 @@ function primitiveKey(mesh: Mesh) {
   ]);
 }
 
-// Keep mode assets resident; spatial batches cull off-screen geometry without changing LOD.
+// Modes are user choices. Camera movement never replaces a loaded 3D model.
+// The build validates the finite catalog budget; parsed batches are reused.
 export class CampusBuildingModelLayer implements CustomLayerInterface {
   readonly id = "campus-building-models";
   readonly type = "custom" as const;
@@ -114,8 +100,19 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
   private queue: Array<{ entry: BuildingModelEntry; mode: "2.5d" | "3d" }> = [];
   private workers = 0;
   private wanted = new Map<string, "2.5d" | "3d">();
+  private frameSamples: number[] = [];
+  private lastFrame = 0;
   private buildFrame = 0;
   private notifiedPilotVolume = false;
+  private lost = false;
+  private readonly contextLost = () => {
+    this.lost = true;
+    this.projectionReady = false;
+  };
+  private readonly contextRestored = () => {
+    this.lost = false;
+    this.map?.triggerRepaint();
+  };
   private origin = MercatorCoordinate.fromLngLat([
     buildingModelCatalog.referenceOrigin[0],
     buildingModelCatalog.referenceOrigin[1],
@@ -140,12 +137,14 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
     const sun = new DirectionalLight(0xfff5e5, 3);
     sun.position.set(-45, 90, 65);
     this.scene.add(sun, this.drawRoot);
+    map.getCanvas().addEventListener("webglcontextlost", this.contextLost);
+    map
+      .getCanvas()
+      .addEventListener("webglcontextrestored", this.contextRestored);
     this.reconcile();
   }
   setMode(mode: MapMode) {
     if (this.mode === mode) return;
-    this.failed.clear();
-    this.criticalReported.clear();
     this.mode = mode;
     this.reconcile();
     this.map?.triggerRepaint();
@@ -169,39 +168,51 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
                 (this.mode === "2.5d" && modelPilotAvailable),
             );
     this.wanted.clear();
-    for (const e of entries) {
-      let mode: "2.5d" | "3d" = this.mode === "3d" ? "3d" : "2.5d";
-      if (this.failed.has(`${e.key}:${mode}`)) mode = "2.5d";
-      this.wanted.set(e.key, mode);
-      const id = `${e.key}:${mode}`;
+    for (const entry of entries) {
+      const desired = this.mode === "3d" ? "3d" : "2.5d";
+      const mode = this.failed.has(entry.key + ":" + desired)
+        ? "2.5d"
+        : desired;
+      const id = entry.key + ":" + mode;
+      this.wanted.set(entry.key, mode);
       if (
         !this.loaded.has(id) &&
         !this.failed.has(id) &&
         !this.pending.has(id)
       ) {
         this.pending.add(id);
-        this.queue.push({ entry: e, mode });
+        this.queue.push({ entry, mode });
       }
       if (
-        this.failed.has(`${e.key}:2.5d`) &&
-        e.key === selected?.key &&
-        !this.loaded.has(`${e.key}:3d`) &&
-        !this.criticalReported.has(e.key)
+        this.failed.has(entry.key + ":2.5d") &&
+        entry.key === selected?.key &&
+        !this.loaded.has(entry.key + ":3d") &&
+        !this.criticalReported.has(entry.key)
       ) {
-        this.criticalReported.add(e.key);
+        this.criticalReported.add(entry.key);
         queueMicrotask(() => {
           if (!this.disposed) this.onCriticalError();
         });
       }
     }
+    this.map.getContainer().dataset.campusModelBudget = String(entries.length);
     this.pump();
     this.requestBuild();
   }
   private pump() {
-    while (this.workers < 3 && this.queue.length) {
+    const concurrency = modelBudget(
+      this.map?.getContainer().dataset.renderProfile === "conservative"
+        ? "conservative"
+        : "standard",
+    ).concurrentLoads;
+    while (this.workers < concurrency && this.queue.length) {
       const task = this.queue.shift()!,
         id = `${task.entry.key}:${task.mode}`;
-      if (this.wanted.get(task.entry.key) !== task.mode) {
+      if (
+        !this.wanted.has(task.entry.key) ||
+        this.mode === "2d" ||
+        this.wanted.get(task.entry.key) !== task.mode
+      ) {
         this.pending.delete(id);
         continue;
       }
@@ -219,8 +230,16 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
   private async load(entry: BuildingModelEntry, mode: "2.5d" | "3d") {
     const id = `${entry.key}:${mode}`;
     try {
-      const b = await readAsset(entry.assets[mode]),
-        gltf = await new GLTFLoader().parseAsync(b, "");
+      const started = performance.now();
+      const b = await readModelAsset(entry.assets[mode]);
+      const fetched = performance.now();
+      const gltf = await new GLTFLoader().parseAsync(b, "");
+      if (this.map) {
+        const data = this.map.getContainer().dataset;
+        data.lastModelAsset = id;
+        data.lastModelFetchMs = String(Math.round(fetched - started));
+        data.lastModelParseMs = String(Math.round(performance.now() - fetched));
+      }
       if (this.disposed) {
         this.disposeObjects(gltf.scene);
         return;
@@ -256,8 +275,16 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
         wrapper,
         materials,
       });
-    } catch {
+    } catch (error) {
       this.failed.add(id);
+      if (this.map)
+        this.map.getContainer().dataset.modelFailure = JSON.stringify({
+          asset: id,
+          stage:
+            error instanceof Error && error.message.startsWith("model-")
+              ? error.message
+              : "gltf-decode",
+        });
     }
   }
   private requestBuild() {
@@ -267,16 +294,9 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
         this.rebuild();
       });
   }
-  private clearDraws() {
-    this.drawRoot.traverse((n) => {
-      if (n instanceof InstancedMesh) n.dispose();
-      else if (n instanceof Mesh) n.geometry.dispose();
-    });
-    this.drawRoot.clear();
-  }
-  private rebuild() {
-    if (this.disposed) return;
-    this.clearDraws();
+  private prepareBatches(item: Loaded, key: string) {
+    if (item.batches) return item.batches;
+    const group = new Group();
     const statics = new Map<
         string,
         {
@@ -294,18 +314,100 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
           matrices: Matrix4[];
           owners: OwnerRange[];
         }
-      >(),
-      active = new Set<string>(),
+      >();
+    const bounds = item.entry.assets[item.mode].bounds,
+      position = new Vector3(
+        (bounds.min[0] + bounds.max[0]) / 2,
+        0,
+        (bounds.min[2] + bounds.max[2]) / 2,
+      ).applyMatrix4(item.wrapper.matrixWorld),
+      cell = `${Math.floor(position.x / 128)},${Math.floor(position.z / 128)}`;
+    item.wrapper.traverse((node) => {
+      if (!(node instanceof Mesh) || Array.isArray(node.material)) return;
+      const mat = node.material,
+        layout = Object.keys(node.geometry.attributes).map((name) => {
+          const attribute = node.geometry.getAttribute(name);
+          return [name, attribute.itemSize, attribute.normalized];
+        }),
+        mk = cell + ":" + materialKey(mat) + ":" + JSON.stringify(layout);
+      if (node instanceof InstancedMesh) {
+        const k = mk + ":" + primitiveKey(node);
+        if (!instances.has(k))
+          instances.set(k, {
+            material: mat,
+            geometry: node.geometry,
+            matrices: [],
+            owners: [],
+          });
+        const bucket = instances.get(k)!,
+          start = bucket.matrices.length,
+          local = new Matrix4();
+        for (let i = 0; i < node.count; i++) {
+          node.getMatrixAt(i, local);
+          bucket.matrices.push(
+            new Matrix4().multiplyMatrices(node.matrixWorld, local),
+          );
+        }
+        bucket.owners.push({ start, count: node.count, key });
+      } else {
+        if (!statics.has(mk))
+          statics.set(mk, {
+            material: mat,
+            geometries: [],
+            owners: [],
+            faces: 0,
+          });
+        const bucket = statics.get(mk)!,
+          g = node.geometry.index
+            ? node.geometry.toNonIndexed()
+            : node.geometry.clone();
+        g.applyMatrix4(node.matrixWorld);
+        const count = g.attributes.position.count / 3;
+        bucket.geometries.push(g);
+        bucket.owners.push({ start: bucket.faces, count, key });
+        bucket.faces += count;
+      }
+    });
+    for (const b of statics.values()) {
+      const geometry = mergeGeometries(b.geometries);
+      b.geometries.forEach((g) => g.dispose());
+      if (!geometry) continue;
+      const mesh = new Mesh(geometry, b.material);
+      mesh.userData.ownerRanges = b.owners;
+      group.add(mesh);
+    }
+    for (const b of instances.values()) {
+      const mesh = new InstancedMesh(b.geometry, b.material, b.matrices.length);
+      b.matrices.forEach((m, i) => mesh.setMatrixAt(i, m));
+      mesh.userData.ownerRanges = b.owners;
+      mesh.computeBoundingBox();
+      mesh.computeBoundingSphere();
+      group.add(mesh);
+    }
+
+    item.batches = group;
+    return group;
+  }
+  private disposeBatches(item: Loaded) {
+    item.batches?.removeFromParent();
+    item.batches?.traverse((n) => {
+      if (n instanceof InstancedMesh) n.dispose();
+      else if (n instanceof Mesh) n.geometry.dispose();
+    });
+    item.batches = undefined;
+  }
+  private rebuild() {
+    if (this.disposed) return;
+    this.drawRoot.clear();
+    const active = new Set<string>(),
       selected = buildingModelForPlace(this.selected);
     let ready = 0,
       highCount = 0;
     for (const [key, mode] of this.wanted) {
-      const id = this.loaded.has(`${key}:${mode}`)
-          ? `${key}:${mode}`
-          : `${key}:2.5d`,
-        item = this.loaded.get(id);
+      const item =
+        this.loaded.get(key + ":" + mode) || this.loaded.get(key + ":2.5d");
       if (!item) continue;
-      active.add(id);
+      active.add(key + ":" + item.mode);
       ready++;
       if (item.mode === "3d") highCount++;
       for (const [m, o] of item.materials) {
@@ -320,75 +422,8 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
         m.opacity = this.routeVisible ? 0.42 : o.opacity;
         m.depthWrite = this.routeVisible ? false : o.depthWrite;
       }
-      const bounds = item.entry.assets[item.mode].bounds,
-        position = new Vector3(
-          (bounds.min[0] + bounds.max[0]) / 2,
-          0,
-          (bounds.min[2] + bounds.max[2]) / 2,
-        ).applyMatrix4(item.wrapper.matrixWorld),
-        cell = `${Math.floor(position.x / 128)},${Math.floor(position.z / 128)}`;
-      item.wrapper.traverse((node) => {
-        if (!(node instanceof Mesh) || Array.isArray(node.material)) return;
-        const mat = node.material,
-          layout = Object.keys(node.geometry.attributes).map((name) => {
-            const attribute = node.geometry.getAttribute(name);
-            return [name, attribute.itemSize, attribute.normalized];
-          }),
-          mk = cell + ":" + materialKey(mat) + ":" + JSON.stringify(layout);
-        if (node instanceof InstancedMesh) {
-          const k = mk + ":" + primitiveKey(node);
-          if (!instances.has(k))
-            instances.set(k, {
-              material: mat,
-              geometry: node.geometry,
-              matrices: [],
-              owners: [],
-            });
-          const bucket = instances.get(k)!,
-            start = bucket.matrices.length,
-            local = new Matrix4();
-          for (let i = 0; i < node.count; i++) {
-            node.getMatrixAt(i, local);
-            bucket.matrices.push(
-              new Matrix4().multiplyMatrices(node.matrixWorld, local),
-            );
-          }
-          bucket.owners.push({ start, count: node.count, key });
-        } else {
-          if (!statics.has(mk))
-            statics.set(mk, {
-              material: mat,
-              geometries: [],
-              owners: [],
-              faces: 0,
-            });
-          const bucket = statics.get(mk)!,
-            g = node.geometry.index
-              ? node.geometry.toNonIndexed()
-              : node.geometry.clone();
-          g.applyMatrix4(node.matrixWorld);
-          const count = g.attributes.position.count / 3;
-          bucket.geometries.push(g);
-          bucket.owners.push({ start: bucket.faces, count, key });
-          bucket.faces += count;
-        }
-      });
-    }
-    for (const b of statics.values()) {
-      const geometry = mergeGeometries(b.geometries);
-      b.geometries.forEach((g) => g.dispose());
-      if (!geometry) continue;
-      const mesh = new Mesh(geometry, b.material);
-      mesh.userData.ownerRanges = b.owners;
-      this.drawRoot.add(mesh);
-    }
-    for (const b of instances.values()) {
-      const mesh = new InstancedMesh(b.geometry, b.material, b.matrices.length);
-      b.matrices.forEach((m, i) => mesh.setMatrixAt(i, m));
-      mesh.userData.ownerRanges = b.owners;
-      mesh.computeBoundingBox();
-      mesh.computeBoundingSphere();
-      this.drawRoot.add(mesh);
+
+      this.drawRoot.add(this.prepareBatches(item, key));
     }
     this.scene.updateMatrixWorld(true);
     if (this.map) {
@@ -410,7 +445,32 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
     }
   }
   render(gl: WebGL2RenderingContext, input: CustomRenderMethodInput) {
-    if (this.mode === "2d" || !this.renderer || !this.map) return;
+    if (
+      this.mode === "2d" ||
+      this.lost ||
+      gl.isContextLost() ||
+      !this.renderer ||
+      !this.map
+    )
+      return;
+    const now = performance.now(),
+      delta = now - this.lastFrame;
+    this.lastFrame = now;
+    if (this.map.isMoving() && delta > 0 && delta < 200)
+      this.frameSamples.push(delta);
+    if (this.frameSamples.length >= 60) {
+      const average =
+        this.frameSamples.reduce((a, b) => a + b, 0) / this.frameSamples.length;
+      const data = this.map.getContainer().dataset;
+      data.modelMovingFrameMs = average.toFixed(1);
+      this.frameSamples = [];
+      if (average > 45 && this.map.getPixelRatio() > 1) {
+        data.renderProfile = "conservative";
+        this.map.setPixelRatio(Math.max(1, this.map.getPixelRatio() * 0.8));
+        data.rasterPixelRatio = String(this.map.getPixelRatio());
+        queueMicrotask(() => this.reconcile());
+      }
+    }
     this.camera.projectionMatrix
       .fromArray(input.defaultProjectionData.mainMatrix)
       .multiply(this.localMatrix);
@@ -458,7 +518,8 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
   }
   private disposeObjects(root: Object3D) {
     const geometries = new Set<Mesh["geometry"]>(),
-      materials = new Set<Material>();
+      materials = new Set<Material>(),
+      textures = new Set<Texture>();
     root.traverse((n) => {
       if (!(n instanceof Mesh)) return;
       if (n instanceof InstancedMesh) n.dispose();
@@ -467,13 +528,26 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
         materials.add(m);
     });
     geometries.forEach((g) => g.dispose());
-    materials.forEach((m) => m.dispose());
+    materials.forEach((m) => {
+      for (const value of Object.values(m))
+        if (value instanceof Texture) textures.add(value);
+      m.dispose();
+    });
+    textures.forEach((t) => t.dispose());
   }
   onRemove() {
     this.disposed = true;
     cancelAnimationFrame(this.buildFrame);
-    this.clearDraws();
-    for (const item of this.loaded.values()) this.disposeObjects(item.wrapper);
+    this.map
+      ?.getCanvas()
+      .removeEventListener("webglcontextlost", this.contextLost);
+    this.map
+      ?.getCanvas()
+      .removeEventListener("webglcontextrestored", this.contextRestored);
+    for (const item of this.loaded.values()) {
+      this.disposeBatches(item);
+      this.disposeObjects(item.wrapper);
+    }
     this.loaded.clear();
     this.queue = [];
     this.scene.clear();

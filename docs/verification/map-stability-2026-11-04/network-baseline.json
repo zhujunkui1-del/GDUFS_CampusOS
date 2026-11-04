@@ -1,0 +1,265 @@
+{
+  "at": "2026-11-03T19:15:48.470Z",
+  "network": "This workstation only; proxy route if configured. No China Mobile/Unicom/Telecom/campus/mobile-network claim.",
+  "domains": [
+    {
+      "hostname": "gdufs.ccwu.cc",
+      "service": "campusos-preview",
+      "environment": "production"
+    }
+  ],
+  "databaseBindings": [
+    {
+      "name": "DB",
+      "id": "18299abc-b38b-4494-8d12-8ab4d482c304"
+    }
+  ],
+  "deployments": [
+    {
+      "id": "059e18ec-9340-49d7-b7d8-122853a7ecfa",
+      "created_on": "2026-11-03T18:40:41.481597Z",
+      "versions": [
+        {
+          "version_id": "089e6478-8157-4cd1-9673-61525083927e",
+          "percentage": 100
+        }
+      ]
+    },
+    {
+      "id": "282a9b32-562a-4171-b2ca-e8ee80b31335",
+      "created_on": "2026-11-03T18:25:18.028609Z",
+      "versions": [
+        {
+          "version_id": "2edb741e-6d8b-482a-9dd7-dd6040a4e353",
+          "percentage": 100
+        }
+      ]
+    }
+  ],
+  "dns": [
+    {
+      "hostname": "gdufs.ccwu.cc",
+      "addresses": [
+        {
+          "address": "198.18.2.136",
+          "family": 4
+        }
+      ]
+    },
+    {
+      "hostname": "campusos-preview.zhujunkui1.workers.dev",
+      "addresses": [
+        {
+          "address": "198.18.0.13",
+          "family": 4
+        }
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "origin": "https://gdufs.ccwu.cc",
+      "path": "/map",
+      "status": 200,
+      "dnsMs": 5.551,
+      "tlsMs": 646.272,
+      "ttfbMs": 934.431,
+      "totalMs": 935.577,
+      "transferredBytes": 5258,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "s-maxage=31536000, stale-while-revalidate=2592000",
+        "content-encoding": "gzip",
+        "cf-ray": "a54db5b25af95b4c-LAX"
+      }
+    },
+    {
+      "origin": "https://gdufs.ccwu.cc",
+      "path": "/map",
+      "status": 200,
+      "dnsMs": 9.350000000000001,
+      "tlsMs": 648.6229999999999,
+      "ttfbMs": 910.6030000000001,
+      "totalMs": 912.498,
+      "transferredBytes": 5258,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "s-maxage=31536000, stale-while-revalidate=2592000",
+        "content-encoding": "gzip",
+        "cf-ray": "a54db5b9c9ccb8d4-LAX"
+      }
+    },
+    {
+      "origin": "https://gdufs.ccwu.cc",
+      "path": "/radar",
+      "status": 200,
+      "dnsMs": 6.358,
+      "tlsMs": 619.4269999999999,
+      "ttfbMs": 2127.8419999999996,
+      "totalMs": 2129.5480000000002,
+      "transferredBytes": 4889,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "s-maxage=31536000, stale-while-revalidate=2592000",
+        "content-encoding": "gzip",
+        "cf-ray": "a54db5bf7d7108d5-LAX"
+      }
+    },
+    {
+      "origin": "https://gdufs.ccwu.cc",
+      "path": "/maps/campus-15060d099418.geojson",
+      "status": 200,
+      "dnsMs": 21.803,
+      "tlsMs": 802.8270000000001,
+      "ttfbMs": 1306.003,
+      "totalMs": 2036.9350000000002,
+      "transferredBytes": 470148,
+      "headers": {
+        "content-type": "application/geo+json",
+        "cf-cache-status": "HIT",
+        "cache-control": "public,max-age=31536000,immutable",
+        "etag": "W/\"1a4d14bf1606e159dc4a22b930f06890\"",
+        "content-encoding": "gzip",
+        "cf-ray": "a54db5ce2804a99e-LAX"
+      }
+    },
+    {
+      "origin": "https://gdufs.ccwu.cc",
+      "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+      "status": 200,
+      "dnsMs": 14.016,
+      "tlsMs": 595.207,
+      "ttfbMs": 945.275,
+      "totalMs": 1400.748,
+      "transferredBytes": 143467,
+      "headers": {
+        "content-type": "text/javascript",
+        "cf-cache-status": "HIT",
+        "cache-control": "public,max-age=31536000,immutable",
+        "etag": "W/\"e86c1c6a02bff8b8fdc9f9380d3294ab\"",
+        "content-encoding": "gzip",
+        "cf-ray": "a54db5d9cd43cdfb-LAX"
+      }
+    },
+    {
+      "origin": "https://gdufs.ccwu.cc",
+      "path": "/models/campus/library-3d-0b93289ff027.glb",
+      "status": 200,
+      "dnsMs": 6.418,
+      "tlsMs": 660.4799999999999,
+      "ttfbMs": 1024.067,
+      "totalMs": 1337.853,
+      "transferredBytes": 91572,
+      "headers": {
+        "content-type": "model/gltf-binary",
+        "content-length": "91572",
+        "cf-cache-status": "HIT",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "etag": "\"0f6f308c862c80652c0e30a2a8e2b223\"",
+        "cf-ray": "a54db5e3dd764022-LAX"
+      }
+    },
+    {
+      "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+      "path": "/map",
+      "status": 200,
+      "dnsMs": 17.329,
+      "tlsMs": 7749.460999999999,
+      "ttfbMs": 8955.605,
+      "totalMs": 8956.002,
+      "transferredBytes": 5298,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "s-maxage=31536000, stale-while-revalidate=2592000",
+        "content-encoding": "gzip",
+        "cf-ray": "a54db61848dff7c9-LAX"
+      }
+    },
+    {
+      "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+      "path": "/map",
+      "status": 200,
+      "dnsMs": 5.585,
+      "tlsMs": 705.952,
+      "ttfbMs": 2247.248,
+      "totalMs": 2247.649,
+      "transferredBytes": 5258,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "s-maxage=31536000, stale-while-revalidate=2592000",
+        "content-encoding": "gzip",
+        "cf-ray": "a54db6245cfe7c4f-LAX"
+      }
+    },
+    {
+      "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+      "path": "/radar",
+      "status": 200,
+      "dnsMs": 6.002999999999999,
+      "tlsMs": 727.479,
+      "ttfbMs": 2382.457,
+      "totalMs": 2382.8239999999996,
+      "transferredBytes": 4889,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "s-maxage=31536000, stale-while-revalidate=2592000",
+        "content-encoding": "gzip",
+        "cf-ray": "a54db632fe782f73-LAX"
+      }
+    },
+    {
+      "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+      "path": "/maps/campus-15060d099418.geojson",
+      "status": 200,
+      "dnsMs": 5.161,
+      "tlsMs": 721.7030000000001,
+      "ttfbMs": 1262.536,
+      "totalMs": 1997.63,
+      "transferredBytes": 470038,
+      "headers": {
+        "content-type": "application/geo+json",
+        "cf-cache-status": "HIT",
+        "cache-control": "public,max-age=31536000,immutable",
+        "etag": "W/\"1a4d14bf1606e159dc4a22b930f06890\"",
+        "content-encoding": "gzip",
+        "cf-ray": "a54db6414dd7170b-LAX"
+      }
+    },
+    {
+      "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+      "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+      "status": 200,
+      "dnsMs": 5.341,
+      "tlsMs": 609.399,
+      "ttfbMs": 914.539,
+      "totalMs": 1358.5179999999998,
+      "transferredBytes": 143467,
+      "headers": {
+        "content-type": "text/javascript",
+        "cf-cache-status": "HIT",
+        "cache-control": "public,max-age=31536000,immutable",
+        "etag": "W/\"e86c1c6a02bff8b8fdc9f9380d3294ab\"",
+        "content-encoding": "gzip",
+        "cf-ray": "a54db64d2a575f7f-LAX"
+      }
+    },
+    {
+      "origin": "https://campusos-preview.zhujunkui1.workers.dev",
+      "path": "/models/campus/library-3d-0b93289ff027.glb",
+      "status": 200,
+      "dnsMs": 5.549,
+      "tlsMs": 620.215,
+      "ttfbMs": 901.953,
+      "totalMs": 1238.894,
+      "transferredBytes": 91572,
+      "headers": {
+        "content-type": "model/gltf-binary",
+        "content-length": "91572",
+        "cf-cache-status": "HIT",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "etag": "\"0f6f308c862c80652c0e30a2a8e2b223\"",
+        "cf-ray": "a54db655ef1711f1-LAX"
+      }
+    }
+  ]
+}

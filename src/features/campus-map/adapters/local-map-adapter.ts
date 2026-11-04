@@ -24,16 +24,11 @@ import {
   CAMPUS_PITCH,
   campusViewport,
 } from "../data/viewport";
-import {
-  onlineSearch,
-  planOnlineRoute,
-  toGcj02,
-  toWgs84,
-} from "./online-services";
+import { onlineSearch, toGcj02, toWgs84 } from "./online-services";
 import { sdkCoordinate, type SDKPoi } from "./amap-types";
 import type { CampusRoute, RoutePoint } from "./amap-adapter";
-import { nearestTunnelDistance, planLocalRoute } from "../data/local-routing";
-import walkwayReview from "../data/walkway-review.json";
+import { nearestTunnelDistance } from "../data/local-routing";
+import { planCampusRoute } from "../data/plan-campus-route";
 import { cameraDuration, mapEase } from "../data/map-motion";
 import { projectOnPath } from "../data/route-progress";
 import { headingBetween } from "../data/navigation-geometry";
@@ -54,6 +49,7 @@ import {
   buildingModelsAvailable,
 } from "../data/building-models";
 import { locationHalo } from "../data/device-location";
+import { modelBudget } from "../data/model-budget";
 
 type CameraEvent = "zoomend" | "rotateend" | "moveend" | "pitchend";
 // Dataset geometry is immutable for this release; do not rescan it per gesture frame.
@@ -68,9 +64,29 @@ const scopeEastSouth = MercatorCoordinate.fromLngLat([
   cameraScope.northeast[0],
   cameraScope.southwest[1],
 ]);
+// Small, already-reviewed geometry makes search/navigation usable before the
+// detailed GeoJSON source finishes downloading and building its worker index.
+const initialGeometry: GeoJSON.FeatureCollection = {
+  type: "FeatureCollection",
+  features: [
+    ...campusData.zones.map((zone) => ({
+      type: "Feature" as const,
+      properties: { kind: "land" },
+      geometry: { type: "Polygon" as const, coordinates: [zone.polygon] },
+    })),
+    ...campusData.places
+      .filter((place) => !!place.geometry)
+      .map((place) => ({
+        type: "Feature" as const,
+        properties: { kind: "building" },
+        geometry: { type: "Polygon" as const, coordinates: [place.geometry!] },
+      })),
+  ],
+};
 export class LocalMapAdapter implements MapAdapter {
   readonly native: LibreMap;
-  readonly supports3D: boolean;
+  readonly supports3D: boolean = true;
+  readonly supports2_5D: boolean = true;
   readonly map;
   private markers = new Map<
     string,
@@ -109,7 +125,6 @@ export class LocalMapAdapter implements MapAdapter {
   private campusModelLayer?: CampusBuildingModelLayer;
   private campusModelsLoading = false;
   private modelLoading = false;
-  private modelPreloading = false;
   private modelState: PilotModelState = "idle";
   private modelListeners = new Set<(state: PilotModelState) => void>();
   get modelAvailable() {
@@ -117,9 +132,6 @@ export class LocalMapAdapter implements MapAdapter {
   }
   private constructor(private element: HTMLElement) {
     setWorkerUrl("/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs");
-    const memory = (navigator as Navigator & { deviceMemory?: number })
-      .deviceMemory;
-    this.supports3D = !(memory && memory < 4);
     this.native = new LibreMap({
       container: element,
       bearing: 0,
@@ -133,18 +145,43 @@ export class LocalMapAdapter implements MapAdapter {
       attributionControl: false,
       renderWorldCopies: false,
       refreshExpiredTiles: false,
+      pixelRatio: Math.min(
+        devicePixelRatio || 1,
+        modelBudget(
+          element.dataset.renderProfile === "conservative"
+            ? "conservative"
+            : "standard",
+        ).pixelRatio,
+      ),
       canvasContextAttributes: {
         antialias: false,
         powerPreference: "low-power",
       },
       style: {
         version: 8,
-        sources: { campus: { type: "geojson", data: manifest.url } },
+        sources: {
+          campus: { type: "geojson", data: manifest.url },
+          initial: { type: "geojson", data: initialGeometry },
+        },
         layers: [
           {
             id: "background",
             type: "background",
             paint: { "background-color": "#f2f1ec" },
+          },
+          {
+            id: "initial-geometry",
+            type: "fill",
+            source: "initial",
+            paint: {
+              "fill-color": [
+                "match",
+                ["get", "kind"],
+                "land",
+                "#e5e9db",
+                "#e0d8ce",
+              ],
+            },
           },
           {
             id: "land",
@@ -362,9 +399,32 @@ export class LocalMapAdapter implements MapAdapter {
     });
     this.native.on("webglcontextlost", () => {
       element.dataset.renderState = "context-lost";
+      element.dataset.contextLosses = String(
+        Number(element.dataset.contextLosses || 0) + 1,
+      );
     });
     this.native.on("webglcontextrestored", () => {
       element.dataset.renderState = "ready";
+    });
+    element.dataset.baseDataState = "loading";
+    this.native.on("sourcedata", (event) => {
+      if (
+        event.sourceId === "campus" &&
+        event.isSourceLoaded &&
+        element.dataset.baseDataState !== "ready"
+      ) {
+        element.dataset.baseDataState = "ready";
+        if (this.native.getLayer("initial-geometry"))
+          this.native.setLayoutProperty(
+            "initial-geometry",
+            "visibility",
+            "none",
+          );
+      }
+    });
+    this.native.on("error", () => {
+      if (element.dataset.baseDataState !== "ready")
+        element.dataset.baseDataState = "campus-geometry-only";
     });
   }
   static async create(element: HTMLElement, signal: AbortSignal) {
@@ -380,7 +440,7 @@ export class LocalMapAdapter implements MapAdapter {
           reject(new DOMException("Cancelled", "AbortError"));
         };
         signal.addEventListener("abort", cancel, { once: true });
-        adapter.native.once("load", () => {
+        adapter.native.once("style.load", () => {
           clearTimeout(timeout);
           signal.removeEventListener("abort", cancel);
           resolve();
@@ -426,7 +486,6 @@ export class LocalMapAdapter implements MapAdapter {
       }
       adapter.updateLabels();
       element.dataset.renderState = "ready";
-      void adapter.preloadDetailedModel();
       return adapter;
     } catch (error) {
       adapter.destroy();
@@ -588,14 +647,13 @@ export class LocalMapAdapter implements MapAdapter {
     this.modelListeners.forEach((fn) => fn(state));
   }
   setDisplayMode(mode: MapMode, animate = true) {
-    if (mode !== "2d" && !this.supports3D) mode = "2d";
+    if (mode === "2.5d" && !this.supports2_5D) mode = "2d";
     if (mode === "3d" && !this.modelAvailable) mode = "2.5d";
     this.displayMode = mode;
     if (mode === "2d" && this.modelState === "error")
       this.setModelState("idle");
     this.updateModelVisibility();
     if (mode !== "2d") void this.loadCampusModels();
-    if (mode === "2.5d") void this.preloadDetailedModel();
     if (mode === "3d") void this.loadDetailedModel();
     if (animate) this.setPitch(mode === "2d" ? 0 : CAMPUS_PITCH);
   }
@@ -685,25 +743,6 @@ export class LocalMapAdapter implements MapAdapter {
       if (!this.destroyed) this.setModelState("error");
     } finally {
       this.modelLoading = false;
-    }
-  }
-  private async preloadDetailedModel() {
-    if (
-      !modelPilotAvailable ||
-      !this.supports3D ||
-      this.modelPreloading ||
-      this.modelLayer?.ready
-    )
-      return;
-    this.modelPreloading = true;
-    try {
-      const { preloadNanyuan7Model } =
-        await import("../layers/nanyuan7-model-layer");
-      await preloadNanyuan7Model();
-    } catch {
-      // Keep 2.5D usable; an explicit 3D request will report/retry the failure.
-    } finally {
-      this.modelPreloading = false;
     }
   }
   private updateModelVisibility() {
@@ -1426,19 +1465,7 @@ export class LocalMapAdapter implements MapAdapter {
   }
   onlineSearch = onlineSearch;
   async planRoute(start: RoutePoint, end: RoutePoint) {
-    const local = planLocalRoute(start, end);
-    if (
-      !local &&
-      (start.zone !== end.zone ||
-        start.zone === "connection" ||
-        end.zone === "connection")
-    )
-      throw new Error(
-        walkwayReview.approved
-          ? "当前选点未连接步道，请重新选点。"
-          : "跨区通道暂不可用。",
-      );
-    const route = local || (await planOnlineRoute(start, end));
+    const route = await planCampusRoute(start, end);
     if (!this.destroyed) this.routes.set(route.id, route);
     return route;
   }

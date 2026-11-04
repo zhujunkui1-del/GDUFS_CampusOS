@@ -1,0 +1,5837 @@
+{
+  "source": "User-operated Android phone. No device emulation. CF request/IP metadata excluded.",
+  "results": [
+    {
+      "at": "2026-11-04T07:33:11.161Z",
+      "browser": "MicroMessenger/8.0.76.3140",
+      "os": "Android 15",
+      "viewport": [
+        400,
+        790,
+        3.049999952316284
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "2.5d",
+        "zoom": "15.33",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":8192,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "864",
+        "baseDataState": "ready",
+        "modelState": "idle",
+        "campusModelFrames": "55",
+        "campusModelCount": "29",
+        "campusModelDetails": "0",
+        "campusModelPending": "0",
+        "campusModelResidentCount": "29",
+        "campusModelBudget": "29",
+        "campusModelTriangles": "19141",
+        "campusModelDrawCalls": "72",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 449,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 463,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 469,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 471,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 467,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 468,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 473,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 852,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 873,
+          "bytes": 9060,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 889,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 891,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 896,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 898,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 882,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 887,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 42,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 883,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 770,
+          "bytes": 7408,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 370,
+          "bytes": 530,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 690,
+          "bytes": 19140,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": -230,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/293hyzw20yz8x.js",
+          "ms": 908,
+          "bytes": 4489,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "ms": 5,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "ms": 5,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:33:14.162Z",
+      "browser": "MicroMessenger/8.0.76.3140",
+      "os": "Android 15",
+      "viewport": [
+        400,
+        790,
+        3.049999952316284
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "3d",
+        "zoom": "15.33",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":8192,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "864",
+        "baseDataState": "ready",
+        "modelState": "ready",
+        "modelLod": "low",
+        "modelFrameCount": "40",
+        "campusModelFrames": "132",
+        "campusModelCount": "28",
+        "campusModelDetails": "4",
+        "campusModelPending": "24",
+        "campusModelResidentCount": "33",
+        "campusModelBudget": "28",
+        "campusModelTriangles": "35107",
+        "campusModelDrawCalls": "113",
+        "modelMovingFrameMs": "18.8",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 449,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 463,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 469,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 471,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 467,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 468,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 473,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 852,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 873,
+          "bytes": 9060,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 889,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 891,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 896,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 898,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 882,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 887,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 42,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 883,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 770,
+          "bytes": 7408,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 370,
+          "bytes": 530,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 690,
+          "bytes": 19140,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": -230,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/293hyzw20yz8x.js",
+          "ms": 908,
+          "bytes": 4489,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "ms": 5,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "ms": 5,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-3d-0b93289ff027.glb",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-3d-c03288b92bd3.glb",
+          "ms": 903,
+          "bytes": 139908,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/443k7dl_k3r5z.js",
+          "ms": 8,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-3d-6f76dfb37c8f.glb",
+          "ms": 1172,
+          "bytes": 170536,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-3d-2cd954731557.glb",
+          "ms": 804,
+          "bytes": 61416,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:33:17.167Z",
+      "browser": "MicroMessenger/8.0.76.3140",
+      "os": "Android 15",
+      "viewport": [
+        400,
+        790,
+        3.049999952316284
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "3d",
+        "zoom": "15.33",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":8192,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "864",
+        "baseDataState": "ready",
+        "modelState": "ready",
+        "modelLod": "low",
+        "modelFrameCount": "141",
+        "campusModelFrames": "233",
+        "campusModelCount": "28",
+        "campusModelDetails": "28",
+        "campusModelPending": "0",
+        "campusModelResidentCount": "57",
+        "campusModelBudget": "28",
+        "campusModelTriangles": "204488",
+        "campusModelDrawCalls": "251",
+        "modelMovingFrameMs": "12.8",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 449,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 463,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 469,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 471,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 467,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 468,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 473,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 852,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 873,
+          "bytes": 9060,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 889,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 891,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 896,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 898,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 882,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 887,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 42,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 883,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 770,
+          "bytes": 7408,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 370,
+          "bytes": 530,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 690,
+          "bytes": 19140,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": -230,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/293hyzw20yz8x.js",
+          "ms": 908,
+          "bytes": 4489,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "ms": 5,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "ms": 5,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-3d-0b93289ff027.glb",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-3d-c03288b92bd3.glb",
+          "ms": 903,
+          "bytes": 139908,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/443k7dl_k3r5z.js",
+          "ms": 8,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-3d-6f76dfb37c8f.glb",
+          "ms": 1172,
+          "bytes": 170536,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-3d-2cd954731557.glb",
+          "ms": 804,
+          "bytes": 61416,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-3d-aa908ef5a2af.glb",
+          "ms": 1051,
+          "bytes": 198972,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-3d-e9fce68a179c.glb",
+          "ms": 1207,
+          "bytes": 314232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-3d-8667c50456be.glb",
+          "ms": 1183,
+          "bytes": 403508,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-3d-b4c51ce5622d.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-3d-35a3e06d82d9.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-3d-e3c89bc87a4c.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-3d-8d94f7df1614.glb",
+          "ms": 27,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-3d-eb4eefa278b0.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-3d-f670281a2217.glb",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-3d-34e723762b89.glb",
+          "ms": 21,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-3d-5008c2a4775e.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-3d-e12d648d8c70.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-3d-189e9a27f3e8.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-3d-a13475240dc2.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-3d-8fb663acfca4.glb",
+          "ms": 26,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-3d-8d45297d2765.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-3d-7f35975c0665.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-3d-aec7a0b8970e.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-3d-39ce7f06ecd8.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-3d-1a18c41d63ab.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-3d-2fda6f1df75e.glb",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-3d-f6c253855656.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-3d-40511576fc5d.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-3d-ca2bd3b709ed.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:33:20.163Z",
+      "browser": "MicroMessenger/8.0.76.3140",
+      "os": "Android 15",
+      "viewport": [
+        400,
+        790,
+        3.049999952316284
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "3d",
+        "zoom": "15.68",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":8192,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "864",
+        "baseDataState": "ready",
+        "modelState": "ready",
+        "modelLod": "low",
+        "modelFrameCount": "276",
+        "campusModelFrames": "368",
+        "campusModelCount": "28",
+        "campusModelDetails": "28",
+        "campusModelPending": "0",
+        "campusModelResidentCount": "57",
+        "campusModelBudget": "28",
+        "campusModelTriangles": "180512",
+        "campusModelDrawCalls": "214",
+        "modelMovingFrameMs": "12.8",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 449,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 463,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 469,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 471,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 467,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 468,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 473,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 852,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 873,
+          "bytes": 9060,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 889,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 891,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 896,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 898,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 882,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 887,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 42,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 883,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 770,
+          "bytes": 7408,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 370,
+          "bytes": 530,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 690,
+          "bytes": 19140,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": -230,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/293hyzw20yz8x.js",
+          "ms": 908,
+          "bytes": 4489,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "ms": 19,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "ms": 5,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "ms": 5,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-3d-0b93289ff027.glb",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-3d-c03288b92bd3.glb",
+          "ms": 903,
+          "bytes": 139908,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/443k7dl_k3r5z.js",
+          "ms": 8,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-3d-6f76dfb37c8f.glb",
+          "ms": 1172,
+          "bytes": 170536,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-3d-2cd954731557.glb",
+          "ms": 804,
+          "bytes": 61416,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-3d-aa908ef5a2af.glb",
+          "ms": 1051,
+          "bytes": 198972,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-3d-e9fce68a179c.glb",
+          "ms": 1207,
+          "bytes": 314232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-3d-8667c50456be.glb",
+          "ms": 1183,
+          "bytes": 403508,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-3d-b4c51ce5622d.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-3d-35a3e06d82d9.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-3d-e3c89bc87a4c.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-3d-8d94f7df1614.glb",
+          "ms": 27,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-3d-eb4eefa278b0.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-3d-f670281a2217.glb",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-3d-34e723762b89.glb",
+          "ms": 21,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-3d-5008c2a4775e.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-3d-e12d648d8c70.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-3d-189e9a27f3e8.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-3d-a13475240dc2.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-3d-8fb663acfca4.glb",
+          "ms": 26,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-3d-8d45297d2765.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-3d-7f35975c0665.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-3d-aec7a0b8970e.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-3d-39ce7f06ecd8.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-3d-1a18c41d63ab.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-3d-2fda6f1df75e.glb",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-3d-f6c253855656.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-3d-40511576fc5d.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-3d-ca2bd3b709ed.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:33:35.035Z",
+      "browser": "Chrome/145.0.0.0",
+      "os": "Android 10",
+      "viewport": [
+        406,
+        796,
+        3
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "2.5d",
+        "zoom": "14.53",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":8192,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "1168",
+        "baseDataState": "ready",
+        "modelState": "idle",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 910,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 914,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 920,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 925,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 928,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 931,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 934,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 937,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 941,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 943,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 949,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 960,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 967,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 973,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 977,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 980,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 25,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 1069,
+          "bytes": 19149,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": -98,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 24,
+          "bytes": 0,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:33:38.071Z",
+      "browser": "Chrome/145.0.0.0",
+      "os": "Android 10",
+      "viewport": [
+        406,
+        796,
+        3
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "3d",
+        "zoom": "14.59",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":8192,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "1168",
+        "baseDataState": "ready",
+        "modelState": "ready",
+        "modelLod": "low",
+        "modelFrameCount": "77",
+        "campusModelFrames": "101",
+        "campusModelCount": "28",
+        "campusModelDetails": "3",
+        "campusModelPending": "25",
+        "campusModelResidentCount": "32",
+        "campusModelBudget": "28",
+        "campusModelTriangles": "31337",
+        "campusModelDrawCalls": "102",
+        "modelMovingFrameMs": "15.6",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 910,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 914,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 920,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 925,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 928,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 931,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 934,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 937,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 941,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 943,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 949,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 960,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 967,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 973,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 977,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 980,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 25,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 1069,
+          "bytes": 19149,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": -98,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/293hyzw20yz8x.js",
+          "ms": 638,
+          "bytes": 4543,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 24,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "ms": 25,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "ms": 8,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-3d-0b93289ff027.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-3d-c03288b92bd3.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/443k7dl_k3r5z.js",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+          "ms": 8,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-3d-2cd954731557.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-3d-aa908ef5a2af.glb",
+          "ms": 1464,
+          "bytes": 198972,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:33:41.034Z",
+      "browser": "Chrome/145.0.0.0",
+      "os": "Android 10",
+      "viewport": [
+        406,
+        796,
+        3
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "3d",
+        "zoom": "15.12",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":8192,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "1168",
+        "baseDataState": "ready",
+        "modelState": "ready",
+        "modelLod": "low",
+        "modelFrameCount": "259",
+        "campusModelFrames": "283",
+        "campusModelCount": "28",
+        "campusModelDetails": "5",
+        "campusModelPending": "23",
+        "campusModelResidentCount": "34",
+        "campusModelBudget": "28",
+        "campusModelTriangles": "41786",
+        "campusModelDrawCalls": "105",
+        "modelMovingFrameMs": "12.2",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 910,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 914,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 920,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 925,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 928,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 931,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 934,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 937,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 941,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 943,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 949,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 960,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 967,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 973,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 977,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 980,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 25,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 1069,
+          "bytes": 19149,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": -98,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/293hyzw20yz8x.js",
+          "ms": 638,
+          "bytes": 4543,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 24,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "ms": 25,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "ms": 8,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-3d-0b93289ff027.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-3d-c03288b92bd3.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/443k7dl_k3r5z.js",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+          "ms": 8,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-3d-6f76dfb37c8f.glb",
+          "ms": 1847,
+          "bytes": 170536,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-3d-2cd954731557.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-3d-aa908ef5a2af.glb",
+          "ms": 1464,
+          "bytes": 198972,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:33:44.036Z",
+      "browser": "Chrome/145.0.0.0",
+      "os": "Android 10",
+      "viewport": [
+        406,
+        796,
+        3
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "3d",
+        "zoom": "15.41",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":8192,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "1168",
+        "baseDataState": "ready",
+        "modelState": "ready",
+        "modelLod": "low",
+        "modelFrameCount": "461",
+        "campusModelFrames": "485",
+        "campusModelCount": "28",
+        "campusModelDetails": "27",
+        "campusModelPending": "1",
+        "campusModelResidentCount": "56",
+        "campusModelBudget": "28",
+        "campusModelTriangles": "199196",
+        "campusModelDrawCalls": "246",
+        "modelMovingFrameMs": "11.4",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 910,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 914,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 920,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 925,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 928,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 931,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 934,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 937,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 941,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 943,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 949,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 960,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 967,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 973,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 977,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 980,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 25,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 1069,
+          "bytes": 19149,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": -98,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/293hyzw20yz8x.js",
+          "ms": 638,
+          "bytes": 4543,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 24,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "ms": 25,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "ms": 8,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-3d-0b93289ff027.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-3d-c03288b92bd3.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/443k7dl_k3r5z.js",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+          "ms": 8,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-3d-6f76dfb37c8f.glb",
+          "ms": 1847,
+          "bytes": 170536,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-3d-2cd954731557.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-3d-aa908ef5a2af.glb",
+          "ms": 1464,
+          "bytes": 198972,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-3d-e9fce68a179c.glb",
+          "ms": 3116,
+          "bytes": 314232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-3d-8667c50456be.glb",
+          "ms": 3899,
+          "bytes": 403508,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-3d-b4c51ce5622d.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-3d-35a3e06d82d9.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-3d-e3c89bc87a4c.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-3d-8d94f7df1614.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-3d-eb4eefa278b0.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-3d-f670281a2217.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-3d-34e723762b89.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-3d-5008c2a4775e.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-3d-e12d648d8c70.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-3d-189e9a27f3e8.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-3d-a13475240dc2.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-3d-8fb663acfca4.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-3d-8d45297d2765.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-3d-7f35975c0665.glb",
+          "ms": 10,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-3d-aec7a0b8970e.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-3d-39ce7f06ecd8.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-3d-1a18c41d63ab.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-3d-2fda6f1df75e.glb",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-3d-f6c253855656.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-3d-ca2bd3b709ed.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:33:47.034Z",
+      "browser": "Chrome/145.0.0.0",
+      "os": "Android 10",
+      "viewport": [
+        406,
+        796,
+        3
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "3d",
+        "zoom": "16.09",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":8192,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "1168",
+        "baseDataState": "ready",
+        "modelState": "ready",
+        "modelLod": "low",
+        "modelFrameCount": "560",
+        "campusModelFrames": "619",
+        "campusModelCount": "28",
+        "campusModelDetails": "28",
+        "campusModelPending": "0",
+        "campusModelResidentCount": "57",
+        "campusModelBudget": "28",
+        "campusModelTriangles": "204488",
+        "campusModelDrawCalls": "251",
+        "modelMovingFrameMs": "12.1",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 910,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 914,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 920,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 925,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 928,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 931,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 934,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 937,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 941,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 943,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 949,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 960,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 967,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 973,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 977,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 980,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 25,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 0,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 1069,
+          "bytes": 19149,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": -98,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/293hyzw20yz8x.js",
+          "ms": 638,
+          "bytes": 4543,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 24,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "ms": 22,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "ms": 25,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "ms": 23,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "ms": 7,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "ms": 8,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "ms": 3,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-3d-0b93289ff027.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-3d-c03288b92bd3.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/443k7dl_k3r5z.js",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+          "ms": 8,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-3d-6f76dfb37c8f.glb",
+          "ms": 1847,
+          "bytes": 170536,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-3d-2cd954731557.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-3d-aa908ef5a2af.glb",
+          "ms": 1464,
+          "bytes": 198972,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-3d-e9fce68a179c.glb",
+          "ms": 3116,
+          "bytes": 314232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-3d-8667c50456be.glb",
+          "ms": 3899,
+          "bytes": 403508,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-3d-b4c51ce5622d.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-3d-35a3e06d82d9.glb",
+          "ms": 20,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-3d-e3c89bc87a4c.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-3d-8d94f7df1614.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-3d-eb4eefa278b0.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-3d-f670281a2217.glb",
+          "ms": 4,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-3d-34e723762b89.glb",
+          "ms": 18,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-3d-5008c2a4775e.glb",
+          "ms": 16,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-3d-e12d648d8c70.glb",
+          "ms": 6,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-3d-189e9a27f3e8.glb",
+          "ms": 17,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-3d-a13475240dc2.glb",
+          "ms": 14,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-3d-8fb663acfca4.glb",
+          "ms": 12,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-3d-8d45297d2765.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-3d-7f35975c0665.glb",
+          "ms": 10,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-3d-aec7a0b8970e.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-3d-39ce7f06ecd8.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-3d-1a18c41d63ab.glb",
+          "ms": 15,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-3d-2fda6f1df75e.glb",
+          "ms": 13,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-3d-f6c253855656.glb",
+          "ms": 9,
+          "bytes": 0,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-3d-40511576fc5d.glb",
+          "ms": 2423,
+          "bytes": 90252,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-3d-ca2bd3b709ed.glb",
+          "ms": 11,
+          "bytes": 0,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:34:33.068Z",
+      "browser": "Chrome/116.0.5845.114",
+      "os": "Android 16",
+      "viewport": [
+        364,
+        612,
+        3.5
+      ],
+      "state": {
+        "status": "loading",
+        "mode": "2d",
+        "zoom": "15.50",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 4062,
+          "bytes": 5925,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 6980,
+          "bytes": 14712,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:37:03.503Z",
+      "browser": "Chrome/123.0.6312.80",
+      "os": "Android 16",
+      "viewport": [
+        364,
+        622,
+        3.5
+      ],
+      "state": {
+        "status": "loading",
+        "mode": "2d",
+        "zoom": "15.50",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 4202,
+          "bytes": 24044,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 4203,
+          "bytes": 101811,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 4202,
+          "bytes": 5898,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 4202,
+          "bytes": 35018,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 4230,
+          "bytes": 229222,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 4229,
+          "bytes": 160468,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 4226,
+          "bytes": 10021,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 4224,
+          "bytes": 15660,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 4884,
+          "bytes": 9168,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 4884,
+          "bytes": 21962,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 4885,
+          "bytes": 78746,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 4885,
+          "bytes": 88795,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 6514,
+          "bytes": 843320,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:38:29.903Z",
+      "browser": "Chrome/130.0.6723.86",
+      "os": "Android 15",
+      "viewport": [
+        407,
+        802,
+        3
+      ],
+      "state": {
+        "status": "loading",
+        "mode": "2d",
+        "zoom": "15.50",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":4096,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 469,
+          "bytes": 6649,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 737,
+          "bytes": 15167,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 1728,
+          "bytes": 2432,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 1729,
+          "bytes": 9598,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 2267,
+          "bytes": 73504,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 2288,
+          "bytes": 45147,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 2279,
+          "bytes": 4386,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 2280,
+          "bytes": 4663,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 2281,
+          "bytes": 4094,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 2282,
+          "bytes": 9034,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 2288,
+          "bytes": 26894,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 2289,
+          "bytes": 15399,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 2306,
+          "bytes": 51961,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 2299,
+          "bytes": 24885,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 2303,
+          "bytes": 70943,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 2304,
+          "bytes": 94282,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 2296,
+          "bytes": 718,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 2297,
+          "bytes": 8726,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 2271,
+          "bytes": 507650,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 595,
+          "bytes": 7338,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:38:56.906Z",
+      "browser": "Chrome/130.0.6723.86",
+      "os": "Android 15",
+      "viewport": [
+        407,
+        802,
+        3
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "3d",
+        "zoom": "15.50",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":4096,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "2545",
+        "baseDataState": "ready",
+        "modelState": "ready",
+        "modelLod": "low",
+        "modelFrameCount": "325",
+        "campusModelFrames": "765",
+        "campusModelCount": "28",
+        "campusModelDetails": "20",
+        "campusModelPending": "8",
+        "campusModelResidentCount": "49",
+        "campusModelBudget": "28",
+        "campusModelTriangles": "168758",
+        "campusModelDrawCalls": "215",
+        "modelMovingFrameMs": "16.6",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 469,
+          "bytes": 6649,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 737,
+          "bytes": 15167,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 1728,
+          "bytes": 2432,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 1729,
+          "bytes": 9598,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 2267,
+          "bytes": 73504,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 2288,
+          "bytes": 45147,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 2279,
+          "bytes": 4386,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 2280,
+          "bytes": 4663,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 2281,
+          "bytes": 4094,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 2282,
+          "bytes": 9034,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 2288,
+          "bytes": 26894,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 2289,
+          "bytes": 15399,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 2306,
+          "bytes": 51961,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 2299,
+          "bytes": 24885,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 2303,
+          "bytes": 70943,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 2304,
+          "bytes": 94282,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 2296,
+          "bytes": 718,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 2297,
+          "bytes": 8726,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 2271,
+          "bytes": 507650,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 595,
+          "bytes": 7338,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 1690,
+          "bytes": 530,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 2328,
+          "bytes": 290588,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 2019,
+          "bytes": 19140,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": 350,
+          "bytes": 147818,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/293hyzw20yz8x.js",
+          "ms": 623,
+          "bytes": 4489,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 991,
+          "bytes": 168028,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "ms": 585,
+          "bytes": 16232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "ms": 593,
+          "bytes": 20792,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "ms": 594,
+          "bytes": 40524,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "ms": 942,
+          "bytes": 27924,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "ms": 565,
+          "bytes": 54280,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "ms": 578,
+          "bytes": 76632,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "ms": 899,
+          "bytes": 146800,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "ms": 1344,
+          "bytes": 98476,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "ms": 848,
+          "bytes": 175972,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "ms": 568,
+          "bytes": 38832,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "ms": 560,
+          "bytes": 9412,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "ms": 843,
+          "bytes": 31088,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "ms": 585,
+          "bytes": 63176,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "ms": 823,
+          "bytes": 45132,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "ms": 295,
+          "bytes": 64688,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "ms": 552,
+          "bytes": 15220,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "ms": 625,
+          "bytes": 15220,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "ms": 894,
+          "bytes": 15224,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "ms": 553,
+          "bytes": 15228,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "ms": 557,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "ms": 886,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "ms": 618,
+          "bytes": 15992,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "ms": 572,
+          "bytes": 20608,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "ms": 578,
+          "bytes": 16004,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "ms": 831,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "ms": 297,
+          "bytes": 16008,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "ms": 578,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "ms": 556,
+          "bytes": 15232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "ms": 560,
+          "bytes": 5972,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/443k7dl_k3r5z.js",
+          "ms": 304,
+          "bytes": 2470,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-3d-0b93289ff027.glb",
+          "ms": 649,
+          "bytes": 91872,
+          "status": 200
+        },
+        {
+          "path": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+          "ms": 641,
+          "bytes": 80684,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-3d-c03288b92bd3.glb",
+          "ms": 862,
+          "bytes": 139908,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-3d-6f76dfb37c8f.glb",
+          "ms": 1411,
+          "bytes": 170536,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-3d-2cd954731557.glb",
+          "ms": 832,
+          "bytes": 61416,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-3d-aa908ef5a2af.glb",
+          "ms": 1023,
+          "bytes": 198972,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-3d-e9fce68a179c.glb",
+          "ms": 890,
+          "bytes": 314232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-3d-8667c50456be.glb",
+          "ms": 1176,
+          "bytes": 403508,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-3d-b4c51ce5622d.glb",
+          "ms": 574,
+          "bytes": 273524,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-3d-35a3e06d82d9.glb",
+          "ms": 928,
+          "bytes": 611288,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-3d-e3c89bc87a4c.glb",
+          "ms": 923,
+          "bytes": 137548,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-3d-8d94f7df1614.glb",
+          "ms": 300,
+          "bytes": 17964,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-3d-eb4eefa278b0.glb",
+          "ms": 700,
+          "bytes": 88128,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-3d-f670281a2217.glb",
+          "ms": 943,
+          "bytes": 189764,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-3d-34e723762b89.glb",
+          "ms": 727,
+          "bytes": 134572,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-3d-5008c2a4775e.glb",
+          "ms": 929,
+          "bytes": 203076,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-3d-e12d648d8c70.glb",
+          "ms": 982,
+          "bytes": 81692,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-3d-189e9a27f3e8.glb",
+          "ms": 1059,
+          "bytes": 81700,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-3d-a13475240dc2.glb",
+          "ms": 1137,
+          "bytes": 81708,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-3d-8fb663acfca4.glb",
+          "ms": 568,
+          "bytes": 81708,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-3d-8d45297d2765.glb",
+          "ms": 580,
+          "bytes": 82552,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:39:02.909Z",
+      "browser": "Chrome/130.0.6723.86",
+      "os": "Android 15",
+      "viewport": [
+        407,
+        802,
+        3
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "3d",
+        "zoom": "18.06",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":4096,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "2545",
+        "baseDataState": "ready",
+        "modelState": "ready",
+        "modelLod": "low",
+        "modelFrameCount": "632",
+        "campusModelFrames": "1072",
+        "campusModelCount": "28",
+        "campusModelDetails": "28",
+        "campusModelPending": "0",
+        "campusModelResidentCount": "57",
+        "campusModelBudget": "28",
+        "campusModelTriangles": "48804",
+        "campusModelDrawCalls": "66",
+        "modelMovingFrameMs": "15.8",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 469,
+          "bytes": 6649,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 737,
+          "bytes": 15167,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 1728,
+          "bytes": 2432,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 1729,
+          "bytes": 9598,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 2267,
+          "bytes": 73504,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 2288,
+          "bytes": 45147,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 2279,
+          "bytes": 4386,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 2280,
+          "bytes": 4663,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 2281,
+          "bytes": 4094,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 2282,
+          "bytes": 9034,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 2288,
+          "bytes": 26894,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 2289,
+          "bytes": 15399,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 2306,
+          "bytes": 51961,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 2299,
+          "bytes": 24885,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 2303,
+          "bytes": 70943,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 2304,
+          "bytes": 94282,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 2296,
+          "bytes": 718,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 2297,
+          "bytes": 8726,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 2271,
+          "bytes": 507650,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 595,
+          "bytes": 7338,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 1690,
+          "bytes": 530,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 2328,
+          "bytes": 290588,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 2019,
+          "bytes": 19140,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": 350,
+          "bytes": 147818,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/293hyzw20yz8x.js",
+          "ms": 623,
+          "bytes": 4489,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 991,
+          "bytes": 168028,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "ms": 585,
+          "bytes": 16232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "ms": 593,
+          "bytes": 20792,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "ms": 594,
+          "bytes": 40524,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "ms": 942,
+          "bytes": 27924,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "ms": 565,
+          "bytes": 54280,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "ms": 578,
+          "bytes": 76632,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "ms": 899,
+          "bytes": 146800,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "ms": 1344,
+          "bytes": 98476,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "ms": 848,
+          "bytes": 175972,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "ms": 568,
+          "bytes": 38832,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "ms": 560,
+          "bytes": 9412,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "ms": 843,
+          "bytes": 31088,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "ms": 585,
+          "bytes": 63176,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "ms": 823,
+          "bytes": 45132,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "ms": 295,
+          "bytes": 64688,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "ms": 552,
+          "bytes": 15220,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "ms": 625,
+          "bytes": 15220,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "ms": 894,
+          "bytes": 15224,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "ms": 553,
+          "bytes": 15228,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "ms": 557,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "ms": 886,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "ms": 618,
+          "bytes": 15992,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "ms": 572,
+          "bytes": 20608,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "ms": 578,
+          "bytes": 16004,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "ms": 831,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "ms": 297,
+          "bytes": 16008,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "ms": 578,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "ms": 556,
+          "bytes": 15232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "ms": 560,
+          "bytes": 5972,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/443k7dl_k3r5z.js",
+          "ms": 304,
+          "bytes": 2470,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-3d-0b93289ff027.glb",
+          "ms": 649,
+          "bytes": 91872,
+          "status": 200
+        },
+        {
+          "path": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+          "ms": 641,
+          "bytes": 80684,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-3d-c03288b92bd3.glb",
+          "ms": 862,
+          "bytes": 139908,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-3d-6f76dfb37c8f.glb",
+          "ms": 1411,
+          "bytes": 170536,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-3d-2cd954731557.glb",
+          "ms": 832,
+          "bytes": 61416,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-3d-aa908ef5a2af.glb",
+          "ms": 1023,
+          "bytes": 198972,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-3d-e9fce68a179c.glb",
+          "ms": 890,
+          "bytes": 314232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-3d-8667c50456be.glb",
+          "ms": 1176,
+          "bytes": 403508,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-3d-b4c51ce5622d.glb",
+          "ms": 574,
+          "bytes": 273524,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-3d-35a3e06d82d9.glb",
+          "ms": 928,
+          "bytes": 611288,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-3d-e3c89bc87a4c.glb",
+          "ms": 923,
+          "bytes": 137548,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-3d-8d94f7df1614.glb",
+          "ms": 300,
+          "bytes": 17964,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-3d-eb4eefa278b0.glb",
+          "ms": 700,
+          "bytes": 88128,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-3d-f670281a2217.glb",
+          "ms": 943,
+          "bytes": 189764,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-3d-34e723762b89.glb",
+          "ms": 727,
+          "bytes": 134572,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-3d-5008c2a4775e.glb",
+          "ms": 929,
+          "bytes": 203076,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-3d-e12d648d8c70.glb",
+          "ms": 982,
+          "bytes": 81692,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-3d-189e9a27f3e8.glb",
+          "ms": 1059,
+          "bytes": 81700,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-3d-a13475240dc2.glb",
+          "ms": 1137,
+          "bytes": 81708,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-3d-8fb663acfca4.glb",
+          "ms": 568,
+          "bytes": 81708,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-3d-8d45297d2765.glb",
+          "ms": 580,
+          "bytes": 82552,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-3d-7f35975c0665.glb",
+          "ms": 1724,
+          "bytes": 82548,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-3d-aec7a0b8970e.glb",
+          "ms": 909,
+          "bytes": 110884,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-3d-39ce7f06ecd8.glb",
+          "ms": 564,
+          "bytes": 81700,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-3d-1a18c41d63ab.glb",
+          "ms": 1103,
+          "bytes": 81700,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-3d-2fda6f1df75e.glb",
+          "ms": 900,
+          "bytes": 81696,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-3d-f6c253855656.glb",
+          "ms": 575,
+          "bytes": 84808,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-3d-40511576fc5d.glb",
+          "ms": 983,
+          "bytes": 90252,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-3d-ca2bd3b709ed.glb",
+          "ms": 297,
+          "bytes": 8812,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:39:06.318Z",
+      "browser": "Chrome/130.0.6723.86",
+      "os": "Android 15",
+      "viewport": [
+        407,
+        802,
+        3
+      ],
+      "state": {
+        "status": "ready",
+        "mode": "3d",
+        "zoom": "15.84",
+        "renderer": "webgl2",
+        "renderState": "ready",
+        "renderProfile": "conservative",
+        "renderCapability": "{\"webgl2\":true,\"drawVerified\":true,\"maxTextureSize\":4096,\"maxAttributes\":32,\"maxRenderbufferSize\":16384,\"profile\":\"conservative\",\"reason\":\"verified\"}",
+        "interactiveMs": "2545",
+        "baseDataState": "ready",
+        "modelState": "ready",
+        "modelLod": "low",
+        "modelFrameCount": "796",
+        "campusModelFrames": "1236",
+        "campusModelCount": "28",
+        "campusModelDetails": "28",
+        "campusModelPending": "0",
+        "campusModelResidentCount": "57",
+        "campusModelBudget": "28",
+        "campusModelTriangles": "161078",
+        "campusModelDrawCalls": "189",
+        "modelMovingFrameMs": "12.8",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 469,
+          "bytes": 6649,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/39w_-g4v-tboh.css",
+          "ms": 737,
+          "bytes": 15167,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/28gn02g-uwi5m.js",
+          "ms": 1728,
+          "bytes": 2432,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0h2boyvse-55_.js",
+          "ms": 1729,
+          "bytes": 9598,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0dzfsm6h13fyr.js",
+          "ms": 2267,
+          "bytes": 73504,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3un1mb5bx4x8k.js",
+          "ms": 2288,
+          "bytes": 45147,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/turbopack-2_qq2pwj98rue.js",
+          "ms": 2279,
+          "bytes": 4386,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2w2og401nrxfc.js",
+          "ms": 2280,
+          "bytes": 4663,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0f_4ncal1hoog.js",
+          "ms": 2281,
+          "bytes": 4094,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1seasa22x19eh.js",
+          "ms": 2282,
+          "bytes": 9034,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1kr9pv92g8h2g.js",
+          "ms": 2288,
+          "bytes": 26894,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/1j59-pmk5br-x.js",
+          "ms": 2289,
+          "bytes": 15399,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0fwb_uadmggdt.js",
+          "ms": 2306,
+          "bytes": 51961,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3rublstk16-el.js",
+          "ms": 2299,
+          "bytes": 24885,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3uxdn7amzwkls.js",
+          "ms": 2303,
+          "bytes": 70943,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3-si3ubw46yax.js",
+          "ms": 2304,
+          "bytes": 94282,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/14c12u4gk473l.js",
+          "ms": 2296,
+          "bytes": 718,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2x3454mj06k9y.js",
+          "ms": 2297,
+          "bytes": 8726,
+          "status": 200
+        },
+        {
+          "path": "/maps/campus-15060d099418.geojson",
+          "ms": 2271,
+          "bytes": 507650,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3pisz0jyzi3v7.js",
+          "ms": 595,
+          "bytes": 7338,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3yt8qs0uuj-tz.js",
+          "ms": 1690,
+          "bytes": 530,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/2pvddg-egw_3u.js",
+          "ms": 2328,
+          "bytes": 290588,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/3wlubhelubug2.js",
+          "ms": 2019,
+          "bytes": 19140,
+          "status": 200
+        },
+        {
+          "path": "/vendor/maplibre-6.14.0/maplibre-gl-worker.mjs",
+          "ms": 350,
+          "bytes": 147818,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/293hyzw20yz8x.js",
+          "ms": 623,
+          "bytes": 4489,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/0xojvuy5i53l7.js",
+          "ms": 991,
+          "bytes": 168028,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-2.5d-9ce5a5da90db.glb",
+          "ms": 585,
+          "bytes": 16232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-2.5d-2fba3f18d533.glb",
+          "ms": 593,
+          "bytes": 20792,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-2.5d-416e632521dd.glb",
+          "ms": 594,
+          "bytes": 40524,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-2.5d-f39ed5be06c0.glb",
+          "ms": 942,
+          "bytes": 27924,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-2.5d-ce0dd3ff6f35.glb",
+          "ms": 565,
+          "bytes": 54280,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-2.5d-3f4e354eeffa.glb",
+          "ms": 578,
+          "bytes": 76632,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-2.5d-a03d90598bbc.glb",
+          "ms": 899,
+          "bytes": 146800,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-2.5d-cc238d1956b9.glb",
+          "ms": 1344,
+          "bytes": 98476,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-2.5d-6c3a6bd42375.glb",
+          "ms": 848,
+          "bytes": 175972,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-2.5d-e00f035ae0c8.glb",
+          "ms": 568,
+          "bytes": 38832,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-2.5d-5c3b917e2d03.glb",
+          "ms": 560,
+          "bytes": 9412,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-2.5d-ded5d83a1f31.glb",
+          "ms": 843,
+          "bytes": 31088,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-2.5d-f68c4d14578c.glb",
+          "ms": 585,
+          "bytes": 63176,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-2.5d-10b884aae53f.glb",
+          "ms": 823,
+          "bytes": 45132,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-2.5d-d89a612ca422.glb",
+          "ms": 295,
+          "bytes": 64688,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-2.5d-e8a3a4f17fcb.glb",
+          "ms": 552,
+          "bytes": 15220,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-2.5d-6b84c48c69d4.glb",
+          "ms": 625,
+          "bytes": 15220,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-2.5d-a8f7ed7343d3.glb",
+          "ms": 894,
+          "bytes": 15224,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-2.5d-f1fb7f3a8177.glb",
+          "ms": 553,
+          "bytes": 15228,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-2.5d-b5d876c8ffc9.glb",
+          "ms": 557,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-2.5d-df915c4f6ecc.glb",
+          "ms": 886,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s7-2.5d-f6d764b87c38.glb",
+          "ms": 618,
+          "bytes": 15992,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-2.5d-d98c341ef9fd.glb",
+          "ms": 572,
+          "bytes": 20608,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-2.5d-72c51aba70bb.glb",
+          "ms": 578,
+          "bytes": 16004,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-2.5d-db8c77ce8e66.glb",
+          "ms": 831,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-2.5d-4334395f7f77.glb",
+          "ms": 297,
+          "bytes": 16008,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-2.5d-6c477cada0ee.glb",
+          "ms": 578,
+          "bytes": 15236,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-2.5d-2a376c78f621.glb",
+          "ms": 556,
+          "bytes": 15232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-2.5d-199cc90091fc.glb",
+          "ms": 560,
+          "bytes": 5972,
+          "status": 200
+        },
+        {
+          "path": "/_next/static/chunks/443k7dl_k3r5z.js",
+          "ms": 304,
+          "bytes": 2470,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/library-3d-0b93289ff027.glb",
+          "ms": 649,
+          "bytes": 91872,
+          "status": 200
+        },
+        {
+          "path": "/models/nanyuan7/nanyuan7-v2-54cc55342ae5.glb",
+          "ms": 641,
+          "bytes": 80684,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/art-3d-c03288b92bd3.glb",
+          "ms": 862,
+          "bytes": 139908,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/auditorium-3d-6f76dfb37c8f.glb",
+          "ms": 1411,
+          "bytes": 170536,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/b8-3d-2cd954731557.glb",
+          "ms": 832,
+          "bytes": 61416,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/faculty-3d-aa908ef5a2af.glb",
+          "ms": 1023,
+          "bytes": 198972,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/gymnasium-3d-e9fce68a179c.glb",
+          "ms": 890,
+          "bytes": 314232,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/stadium-3d-8667c50456be.glb",
+          "ms": 1176,
+          "bytes": 403508,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/laboratory-3d-b4c51ce5622d.glb",
+          "ms": 574,
+          "bytes": 273524,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-efg-3d-35a3e06d82d9.glb",
+          "ms": 928,
+          "bytes": 611288,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/administration-3d-e3c89bc87a4c.glb",
+          "ms": 923,
+          "bytes": 137548,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/pavilion-3d-8d94f7df1614.glb",
+          "ms": 300,
+          "bytes": 17964,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-A-3d-eb4eefa278b0.glb",
+          "ms": 700,
+          "bytes": 88128,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-B-3d-f670281a2217.glb",
+          "ms": 943,
+          "bytes": 189764,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-C-3d-34e723762b89.glb",
+          "ms": 727,
+          "bytes": 134572,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-D-3d-5008c2a4775e.glb",
+          "ms": 929,
+          "bytes": 203076,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n1-3d-e12d648d8c70.glb",
+          "ms": 982,
+          "bytes": 81692,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n2-3d-189e9a27f3e8.glb",
+          "ms": 1059,
+          "bytes": 81700,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n3-3d-a13475240dc2.glb",
+          "ms": 1137,
+          "bytes": 81708,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n4-3d-8fb663acfca4.glb",
+          "ms": 568,
+          "bytes": 81708,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n5-3d-8d45297d2765.glb",
+          "ms": 580,
+          "bytes": 82552,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-n6-3d-7f35975c0665.glb",
+          "ms": 1724,
+          "bytes": 82548,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s8-3d-aec7a0b8970e.glb",
+          "ms": 909,
+          "bytes": 110884,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s9-3d-39ce7f06ecd8.glb",
+          "ms": 564,
+          "bytes": 81700,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s10-3d-1a18c41d63ab.glb",
+          "ms": 1103,
+          "bytes": 81700,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s11-3d-2fda6f1df75e.glb",
+          "ms": 900,
+          "bytes": 81696,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s12-3d-f6c253855656.glb",
+          "ms": 575,
+          "bytes": 84808,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/dormitory-s13-3d-40511576fc5d.glb",
+          "ms": 983,
+          "bytes": 90252,
+          "status": 200
+        },
+        {
+          "path": "/models/campus/teaching-links-3d-ca2bd3b709ed.glb",
+          "ms": 297,
+          "bytes": 8812,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:40:02.574Z",
+      "browser": "MicroMessenger/8.0.79.3200",
+      "os": "Android 16",
+      "viewport": [
+        400,
+        748,
+        3.180000066757202
+      ],
+      "state": {
+        "status": "loading",
+        "mode": "2d",
+        "zoom": "15.50",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 34129,
+          "bytes": 6649,
+          "status": 200
+        }
+      ]
+    },
+    {
+      "at": "2026-11-04T07:40:02.574Z",
+      "browser": "MicroMessenger/8.0.79.3200",
+      "os": "Android 16",
+      "viewport": [
+        400,
+        748,
+        3.180000066757202
+      ],
+      "state": {
+        "status": "loading",
+        "mode": "2d",
+        "zoom": "15.50",
+        "failures": []
+      },
+      "resources": [
+        {
+          "path": "/_next/static/chunks/0775dnx2rr8kq.css",
+          "ms": 34129,
+          "bytes": 6649,
+          "status": 200
+        }
+      ]
+    }
+  ]
+}
