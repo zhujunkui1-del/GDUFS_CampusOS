@@ -4,6 +4,8 @@
 
 ## 范围与版本
 
+渲染修复实现提交：9545d63。
+
 从本地8895e9a继续，保留同期4eb9d16图标提交及既有功能。未改GIS、113个地点、547节点/2202边路网、南苑7栋及其他GLB、账号、私人会话或业务D1。无数据库迁移。
 
 实际核实gdufs.ccwu.cc仍指向campusos-preview，D1为18299abc-b38b-4494-8d12-8ab4d482c304。本次没有发布到该共享Worker，也未改变其DNS、路由和WAF。独立测试Worker为campusos-map-compat-20261104，仅有ASSETS绑定，无D1、账号、模型凭据及定时任务；按负责人要求增加独立子域名[map-test.gdufs.ccwu.cc/map](https://map-test.gdufs.ccwu.cc/map)。当前版本a9e1b15e-f476-4a05-baa0-90d44f0c8bd5。域名与绑定回执见[deployment-isolation.json](verification/map-stability-2026-11-04/deployment-isolation.json)。
@@ -77,4 +79,4 @@ Windows无节流、Chrome headless、相同1440×900、独立生产Next服务器
 
 先复核负责人后续提供的失败设备与两域名原始提示，继续网络与首屏定位。当前不能宣布专项完成，也不能授权自己部署到仍共享正式域名的campusos-preview。
 
-代码版本回退使用`git revert`本专项实现提交，保留4eb9d16及此前账号/Agent等成果；无D1迁移需要回滚。共享原站尚未部署本次代码，因此无需回退原站。独立Worker可按已保存版本回滚；不得通过修改正式域名DNS或重置工作区替代版本回退。
+代码版本回退使用`git revert 9545d63`，保留4eb9d16及此前账号/Agent等成果；无D1迁移需要回滚。共享原站尚未部署本次代码，因此无需回退原站。独立Worker可按已保存版本回滚；不得通过修改正式域名DNS或重置工作区替代版本回退。
