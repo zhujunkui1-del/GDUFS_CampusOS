@@ -1,6 +1,6 @@
 # 04｜校园信息 RAG 与多源知识引擎
 
-> 当前生效（2026-11-05，D-140）：自研Agent + 自研RAG + Cloudflare D1仍是网站权威运行链；新增校内Dify只读外部知识库试点，只调用现有D1检索，不复制文章或新增向量索引。D-045保留为历史决定。KnowledgeRetriever为自研接口，D1KeywordRetriever为自研检索实现；检索契约见[自研检索计划](../docs/S3_D_RETRIEVAL_PLAN.md)。
+> 当前生效（2026-11-05，D-140/D-143）：自研Agent + 自研RAG + Cloudflare D1仍是网站权威运行链；D-140 为校内Dify只读外部知识试点。D-143另允许一个校内 Dify 原生知识库演示快照，仅导入D1公共接口标记可读的公开全文，采用经济倒排索引，不用 Embedding，不自动同步；此副本不是全站事实源，不覆盖雷达、活动或地图。D1唯一事实源原则继续生效。D-045保留为历史决定。KnowledgeRetriever为自研接口，D1KeywordRetriever为自研检索实现；检索契约见[自研检索计划](../docs/S3_D_RETRIEVAL_PLAN.md)。
 
 > 2026-10-17 S3-B实际进展（D-044）：复用S3-A并完成兼容修复；53业务表、手动小批次采集/断点/审核链路，3篇真实元数据待审，0批准/0发布。Dify学校入口UI已确认但未接API；不把规划或全文夹具当运行通过，见[本轮验收](../docs/S3_B_INGESTION_ACCEPTANCE.md)。旧段落保持历史日期。
 

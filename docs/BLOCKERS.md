@@ -685,3 +685,9 @@ Worker/D1/域名当前读数已完成，wrangler.jsonc 生产目标已准备，�
 ## D-142 状态更新
 
 正式 Worker 拆分已由负责人取消；移域名、复制 Preview secrets 和创建 campusos-product 不再是当前阻塞。Dify 外部知识接入仍待适配器构建/部署及专用 Bearer Key 操作确认。
+
+## 2026-11-05｜Dify 校园助理模型调用不可用
+
+校内 Dify 的 Chatflow 草稿已经选择现有模型 `DeepSeek-V4-Flash-0731`。真实预览请求返回 API 404 `Model not found`，因此没有回答，尚不能发布或验收 Agent。需要 Dify 模型供应商管理员检查该配置实际使用的 API endpoint 与 model ID，或配置一个经授权的可用模型入口；目前 Workspace 的已配置模型列表未显示 StepFun，不能满足项目 StepFun 优先、仅额度耗尽才 DeepSeek 备用的路由契约。
+
+Dify 内置知识试点库已创建并索引 29 篇公开全文，使用不消耗 Embedding tokens 的经济倒排索引。召回已验证可命中校园网指南，但校园卡问题首条混入热水卡补办文章，仍需优化/验收。启用 High Quality Embedding 是不可轻易回退且配额/成本未确认的变更，暂不切换。该库是手动快照，不是 D1 实时镜像。

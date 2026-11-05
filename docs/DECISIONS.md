@@ -1191,3 +1191,13 @@ wrangler.jsonc 的 production 环境已本地准备为 campusos-product，绑定
 负责人明确取消将正式域名迁移到 campusos-product，继续在校内 Dify 复刻校园 AI 助理。D-141 的 Worker 拆分准备在云端变更前取消；gdufs.ccwu.cc 保持绑定 campusos-preview，D1 与当前路由不变。wrangler.jsonc 已恢复到拆分前配置。D-141 保留为历史决策，后续以本决定为准。
 
 D-140 的校内 Dify 外部知识库试点继续，使用现有 Preview Worker 和 D1；Dify API 路由与 Bearer Secret 仍未部署/配置。此阶段先完成本地适配器编译与配置准备，再在操作时确认后配置专用只读 Key。共享 Worker 部署会同时更新 gdufs.ccwu.cc 与 Preview；外部知识端点仍仅响应 Preview 主机，并只返回当前公开检索证据。
+
+## D-143｜Dify 原生知识库及校园助理试点（2026-11-05）
+
+负责人明确要求先建立校内 Dify 自建知识库并继续搭建 Dify 校园助理。此决定对 D-140 的“不复制文章库”约束作出一次性、限定范围的试点例外；D1 仍是 CampusOS 唯一事实源，Dify 副本仅用于校内演示，不自动同步、不替代网站运行链，不扩展为第二个权威知识源。
+
+本次只从 D1 公共内容接口导入 29 篇标记为可读且正文完整的校园知识全文；1 篇仅有元数据的文章排除。知识库使用 Dify「经济」倒排索引，未选 High Quality、未调用 Embedding。每段重复文章标题、来源、发布日期、原文 URL 和 D1 文档版本。Dify 目前保留 3 份旧合并文档为禁用状态，3 份来源片段文档启用，未删除资料。副本截至 2026-11-05，手动更新。
+
+建立知识库「CampusOS 校园知识试点」（ID `6083f0fe-ea98-4048-b74d-88b6e7dce50e`）及 Chatflow「广外通·校园助理（Dify试点）」（ID `39945f9b-9ee0-4c2c-a3a0-fc5298b3f861`）。Chatflow 结构为用户输入→知识检索→LLM→直接回复，检索结果接入 LLM 上下文；引用和归属功能开启。应用保持草稿，未发布到网站。
+
+限制：当前 Dify Workspace 只有 OpenAI-API-compatible 已配置模型，没有可用的 StepFun 优先/DeepSeek 额度回退链。预览测试所选 `DeepSeek-V4-Flash-0731` 返回 404 `Model not found`，未生成回答，Chatflow 不得标记为可用。知识库经济索引试测中，查询「校园网怎么开通？」首条命中校园网使用指南并带原文 URL；查询「校园卡补办」把热水卡补办排首条、校园卡补办排第二，说明自然问法排序仍不达验收。后续须先解决 Dify 模型供应商的真实模型 ID/端点问题，再改善或经负责人批准升级检索索引；启用 Embedding 为不可轻易回退且可能消耗配额的变更，须先核实实际成本与权限。

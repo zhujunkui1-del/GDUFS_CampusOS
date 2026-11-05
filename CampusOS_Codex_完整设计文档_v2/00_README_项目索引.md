@@ -1,6 +1,6 @@
 # 广外通 CampusOS｜Codex 开发文档总索引
 
-**当前架构裁决（2026-11-05，D-140）：**自研 Agent + 自研 RAG + Cloudflare D1 继续作为权威运行链；新增校内 Dify 只读外部知识库试点，复用 D1 检索，不复制文章库或建立第二套向量索引。D-045 保留为历史决定。知识检索按[自研检索计划](../docs/S3_D_RETRIEVAL_PLAN.md)验收，Dify 试点及发布门槛见 [DIFY_CAMPUS_AGENT_PLAN_2026_11_04.md](../docs/DIFY_CAMPUS_AGENT_PLAN_2026_11_04.md)。
+**当前架构裁决（2026-11-05，D-140/D-143）：**自研 Agent + 自研 RAG + Cloudflare D1 继续作为网站权威运行链；D-140 保留校内 Dify 外部知识只读接入路线；D-143 另批准一份只用于校内演示的有限 Dify 原生知识快照（29篇公开可读全文、经济倒排索引、手动不自动同步）。D1仍为唯一事实源；该 Dify 副本不涵盖雷达全量资讯、活动实时状态或地图，也不代表网站生产运行链已切换。D-045 保留为历史决定。知识检索按[自研检索计划](../docs/S3_D_RETRIEVAL_PLAN.md)验收，Dify 试点及发布门槛见 [DIFY_CAMPUS_AGENT_PLAN_2026_11_04.md](../docs/DIFY_CAMPUS_AGENT_PLAN_2026_11_04.md)。
 
 > 版本：v2.1（补充 AI 模型设置）｜更新：2026-10-16｜状态：S2-E隔离HTTPS预览与AI多会话已验证；实机/稳定容量门槛保留，BYOK后续接入
 >

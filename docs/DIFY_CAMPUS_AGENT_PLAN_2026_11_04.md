@@ -1,6 +1,6 @@
 # CampusOS Dify 校园助理实施方案
 
-**状态：2026-11-05 外部知识只读适配器已部署到共享 Preview Worker 并配置 Bearer Secret；Dify API 保存失败。已定位并本地修复空 POST 探测兼容问题，修复版待 Wrangler 重新授权后发布；尚未创建外部知识库、上传文章或调用模型/Embedding。**
+**状态：2026-11-05 Dify 原生知识试点库已创建（29 篇 D1 公共全文、经济索引）并建立 Chatflow 草稿。Chatflow 模型预览返回 404 `Model not found`，未发布。外部知识 API 仍未保存；本地空 POST 修复待 Wrangler 重新授权后发布。**
 
 ## 结论与当前工作区
 
@@ -214,3 +214,13 @@ Dify Chatflow 应使用 `streaming`。适配器解析 `ping`、`workflow_started
 Dify 官方说明注册外部知识 API 时会将 `/retrieval` 附加到基础端点并发送连接测试；本地处理器原先要求该 POST 必须包含完整检索 JSON。Dify 保存探测的空请求因此会被处理器作为无效 JSON 拒绝。现在本地分支在 Host/Bearer 鉴权后对空请求返回 `200 {"records":[]}`，正常带检索参数的请求仍走原有 D1 检索和校验。
 
 修复版 `npm run build:worker` 和部署脚本内 Preview 构建、dry-run、类型检查通过；正式 Preview 部署因 Wrangler 授权令牌过期且 Cloudflare 授权服务不可达而中止，线上仍是版本 `dd4470d0-137e-4168-99fc-4d80e4e22fda`。管理员给出的 Squid `200 Connection established` 只证明 CONNECT 隧道建立，不能代表 TLS/HTTP 完成；且此前 Worker Tail 无请求，不能把现存失败唯一归因于空 POST。待重新授权和部署后再保存 Dify API，按 Worker Tail 与 Dify/Squid 同时刻日志定位剩余网络问题。
+
+## 2026-11-05 Dify 原生知识试点与 Chatflow
+
+负责人明确要求建立 Dify 原生知识库并继续搭建 Agent。按 D-143 限定例外，从 CampusOS D1 的公共内容 API 导入 29 篇 `readable=true` 且完整的知识全文，1 篇仅有元数据的文章未导入。Dify 知识库名为「CampusOS 校园知识试点」，ID `6083f0fe-ea98-4048-b74d-88b6e7dce50e`。采用 Economical/倒排索引，不调用 Embedding；知识为截至2026-11-05的手动快照，D1仍是权威源。
+
+通过召回测试观察到，合并文件格式会让来源标题与正文分块分离，导致错召回。已导入3份改进版来源分块文档（每个片段重复标题、来源、日期、原文 URL、D1 ID/版本），并将旧版3份合并文档禁用而未删除。改进后「校园网怎么开通？」首条命中《使用指南 | 校园网上网》并带原文链接；「校园卡补办」结果仍把热水卡补办排第一、校园卡补办指南排第二，经济索引自然问法召回尚不稳定。
+
+已创建 Chatflow「广外通·校园助理（Dify试点）」，ID `39945f9b-9ee0-4c2c-a3a0-fc5298b3f861`，结构为用户输入→知识检索→LLM→直接回复；知识检索结果接入上下文，系统提示包含有限数据范围、事实约束、来源链接和轻量大肥鱼语气，引用归属已开启。应用未发布。一次预览「校园卡如何补办？」由已配置的 `DeepSeek-V4-Flash-0731` 调用，Dify 返回 404 `Model not found`，未生成答案。
+
+未更改 Dify 模型供应商或密钥，未安装 StepFun 插件。当前模型列表与网站原有 StepFun 优先/额度耗尽后 DeepSeek 路由不一致；需管理员核对 OpenAI-compatible provider 的 model ID/endpoint，且后续要提供可用的 StepFun/DeepSeek 路由后才能完成真实 Agent 答案验收。全站 Agent、雷达、活动日历、地图、智能搜索和现有 Dify 外部 API 尚未接入该 Chatflow。
