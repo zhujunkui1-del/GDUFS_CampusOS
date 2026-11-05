@@ -2,7 +2,7 @@
 
 修改代码前，阅读 `CampusOS_Codex_完整设计文档_v2/AGENTS.md` 与 `CampusOS_Codex_完整设计文档_v2/00_README_项目索引.md`；修改某一业务模块时完整阅读该模块设计。该目录中的 v2 文档是需求基线，长期约束以其中的 `AGENTS.md` 为准。
 
-知识检索、提取和索引开发遵守 `docs/DECISIONS.md` 的 D-045：自研 Agent + 自研 RAG + D1，Dify 技术路线已废弃；S3-D 实施及验收见 `docs/S3_D_RETRIEVAL_PLAN.md`。
+知识检索、提取和索引以 D1 为唯一事实源。D-140 已授权校内 Dify 外部知识库只读试点，仅调用现有 D1 检索，不复制文章库或新增向量索引；D-045 保留为历史决定。适配器与共享 Worker 发布状态见 docs/DECISIONS.md、docs/PROGRESS.md；S3-D 实施及验收见 docs/S3_D_RETRIEVAL_PLAN.md。
 
 实施阶段、验收和优先级参照 `CampusOS_Codex_完整设计文档_v2/09_DEVELOPMENT_PLAN.md`。重大范围、地图供应商、收费或学校系统接入变化须按基线交由负责人确认。
 

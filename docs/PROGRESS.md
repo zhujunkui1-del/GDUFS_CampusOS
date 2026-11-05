@@ -1720,3 +1720,39 @@ Preview 部署 `01cb7fd6-632c-4889-aec2-e655207a3322`。1080×720 与 1440×900 
 ## 2026-11-04｜按后续授权同步地图修复至主站
 
 负责人明确指令“同步到主站”。核实gdufs.ccwu.cc对应campusos-preview，公开变量及D1绑定与计划一致，先保存旧版089e6478-8157-4cd1-9673-61525083927e，再执行完整净化构建和共享Worker发布。新版本c772f357-fdb6-4654-b5b9-a87f9d50ff66，同时服务主域名与Preview别名；未部署独立Production Worker、未应用迁移、未改DNS/WAF/密钥。Chrome主域名桌面/手机视口地图平移及导航4/4；Edge两视口公开模块和Preview别名11/11，雷达、知识、日历、文章原文、登录表单保留。逐项回执见verification/map-main-release-2026-11-04。8条AI反馈继续暂存；最新网络反馈为校园网直接无法访问，普通Wi-Fi/流量及推荐浏览器可用，等待校园网错误码，不将发布成功等同于校园网问题已解决。
+
+## 2026-11-05｜校内 Dify 外部知识库试点启动
+
+负责人明确启动在校内 Dify Datasets 复刻校园 AI 助理能力；本阶段选择 Dify External Knowledge API 接入现有 Preview D1 检索，而不是上传静态文章/向量副本。只读检查确认 Datasets 尚无知识库，创建页支持上传/网站导入和连接外部知识库；Workspace 的 OpenAI-compatible 提供商列出 DeepSeek-V4-Flash-0731、GLM-5.2、Qwen3.8-27B、bge-m3 与 bge-reranker-v2-m3；当前列表未见 StepFun。Embedding 与 reranker 本阶段不调用。Dify外部API表单要求端点和API Key，保存时会测试连接。
+
+新增 POST /api/dify/external-knowledge/retrieval 本地适配器：固定两种外部知识ID，复用现有公开 searchContent，沿用公开版本/来源权限，限制 Top K≤4；返回真实证据类型、原文链接及可选活动结构，并使用独立 Bearer Secret 鉴权。请求域仅允许 ACCOUNT_ORIGIN 与 ACCOUNT_ALLOWED_ORIGINS 中的精确 HTTPS 主机，不接受其它 Host。适配器、API Secret、Dify外部API与知识库均尚未部署/创建；校内 Dify 出站访问 Preview 仍未验证。
+
+Preview 和 gdufs.ccwu.cc 共用同一 Worker；本轮未部署、未设置 Cloudflare Secret、未保存 Dify API Key、未调用模型/Embedding、未上传文章全文或访问私人数据。未运行自动化测试；Windows 默认 TEMP 写入被拒后，改用项目忽略的 .tmp 临时目录执行 npm run build:worker 成功，构建路由列表包含 /api/dify/external-knowledge/retrieval。尚未部署或配置 Dify API Key，不能记为功能可用。计划与实测 UI 回执见 docs/DIFY_CAMPUS_AGENT_PLAN_2026_11_04.md。
+## 2026-11-05｜正式 Worker 分离预备
+
+Cloudflare 只读核查确认：gdufs.ccwu.cc 与 gdufs.zhiyuapp.site 当前均绑定 campusos-preview；账户中没有 campusos-product，也没有 campusos-production D1。CampusOS 当前 D1 为 campusos-preview，UUID 18299abc-b38b-4494-8d12-8ab4d482c304，约193.79 MB；该库承载现有账号与 AI 历史。本轮按负责人选择先拆 Worker、共用该 D1，未复制数据库。
+
+wrangler.jsonc 的 production 环境已本地准备为 campusos-product，包含 gdufs.ccwu.cc 目标域名、ACCOUNT_ORIGIN、现有 D1、Cloud Search、Workers AI 与 Vectorize 绑定。Preview Cron 保持唯一调度来源，产品 Worker不加 Cron，避免同库双重调度。没有创建 Worker、部署、移除/添加路由或修改 Cloudflare 数据。
+
+Preview Worker Settings 显示多项账号、Console、SES、Agent、模型和外部搜索 Secret，具体值不可读取。已检查本地 .env.local 与 anykey.md，未确认存在完整的 Worker Secret 副本；切换前须取得完整安全配置源并保留账号/Console会话能力。本轮未运行构建/测试，未修改 D1、Secrets 或正式域名。域名仍在 campusos-preview。
+## 2026-11-05｜取消正式 Worker 拆分，恢复 Dify 工作路径
+
+负责人取消 campusos-product 迁移并要求继续校内 Dify 复刻。wrangler.jsonc 已恢复为拆分前状态；Cloudflare 未创建新 Worker、未改域名路由、未迁移 D1/Secrets。gdufs.ccwu.cc 仍由 campusos-preview 提供服务。D-141 中的拆分决策被本日 D-142 覆盖。
+
+Dify 工作回到 D-140：外部知识适配器仍为本地代码，目标是在共享 Preview Worker 上复用 D1 只读检索。尚未保存 DIFY_EXTERNAL_KB_TOKEN、部署、连接 Dify API 或创建外部知识库。
+
+## 2026-11-05｜Dify 外部知识 API 已部署，连接被校内出站策略阻断
+
+经负责人授权，Preview Worker 部署版本 dd4470d0-137e-4168-99fc-4d80e4e22fda，新增 /api/dify/external-knowledge/retrieval；DIFY_EXTERNAL_KB_TOKEN 已作为 campusos-preview Secret 保存。该 Worker 继续同时服务 gdufs.ccwu.cc，Worker 版本发布成功；主站功能未切换，域名仍绑定 campusos-preview。
+
+Dify 外部 API 保存尝试先后使用 campusos-preview.zhujunkui1.workers.dev 与 gdufs.ccwu.cc，界面均报告 failed to connect to the endpoint。对应期间 Preview Worker Tail 未看到适配器请求日志。推断阻断发生在 Dify 出站网络/SSRF代理路径，但没有 Dify 服务端日志，不能断言具体拦截规则。Dify 官方文档说明自托管 SSRF 代理可能拒绝不在 allowed_domains 白名单中的知识 API 域名；需要 Dify 管理员检查并按需放行 gdufs.ccwu.cc。未继续重复点击保存。
+
+Dify 外部 API 配置未保存，知识库连接数仍为0，未创建Chatflow；没有模型或Embedding调用。Dify页面中的Bearer值保持掩码未保存。后续需先解决校内Dify到端点的出站可达性，再用连接测试完成外部知识库创建。
+
+## 2026-11-05｜Dify 空请求连接探测兼容修复待发布
+
+复核 Dify 官方外部知识 API 流程及本地已部署适配器后，发现 API 注册探测是向 `<endpoint>/retrieval` 发送认证空 POST；当前线上处理器把它按正常检索请求解析，因缺少 JSON 而返回 400。管理员反馈 Squid `200 Connection established` 仅能说明 CONNECT 隧道建立，不能证明后续 TLS/HTTP/Worker 请求成功；此前 Worker Tail 无请求，因此不能确认这是否是唯一故障。
+
+本地改为在 Host 与 Bearer 验证后，将空请求返回 `200 {"records":[]}`，不查询 D1；正常检索路径不变。`npm run build:worker` 与部署脚本的 Preview 构建/dry-run、TypeScript 阶段通过，最终线上发布因 Wrangler 本地授权令牌过期且认证服务器连接失败而中止，没有产生新 Worker 版本。当前代码变更留在工作区，线上仍运行版本 `dd4470d0-137e-4168-99fc-4d80e4e22fda`。
+
+下一步：刷新本机 Wrangler 授权后仅执行 `preview` 部署，然后在校内 Dify 保存 API 并核对 Worker Tail。如果仍无请求，再请管理员按同一时间戳提供 `dify-api` 与 Squid/SSRF access log 中 CONNECT 后的 TLS/HTTP结果；不先盲目改白名单。API、外部知识库和 Chatflow 均仍未成功创建；本轮未调用模型/Embedding、未导入文章、未修改 D1。

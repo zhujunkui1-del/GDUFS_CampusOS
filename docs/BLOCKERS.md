@@ -672,3 +672,16 @@ Cloudflare实测gdufs.ccwu.cc绑定campusos-preview，页面/公开数据/普通
 ## 2026-11-04｜校园网问题收口与主站发布后状态
 
 负责人补充：主站和独立测试站均能在普通Wi-Fi、手机流量、Google/Edge/微信打开且完整3D正常；夸克/部分系统浏览器不再阻断。校园网直接提示无法访问，尚缺ERR_/DNS_PROBE_原始错误码。当前工作站不在校园网，系统解析为198.18合成地址，不能充当校园网证据；区域设置/WAF读取403，不能因此声称已排除拦截。只读检测脚本和非校园网对照已准备。按后续明确授权，主站地图修复已发布c772f357-fdb6-4654-b5b9-a87f9d50ff66，线上4+11项回归通过；校园网问题未宣布解决。AI8条反馈见ASSISTANT_DEFERRED_2026_11_04.md，本轮未修。
+
+## 2026-11-05｜Dify 外部知识 API 出站连接失败
+
+Preview Worker 已部署只读检索路由并保存独立 DIFY_EXTERNAL_KB_TOKEN。Dify 的 API 保存测试对 workers.dev 和 gdufs.ccwu.cc 均提示 failed to connect。复核适配器后确认一个确定的协议兼容缺陷：Dify 注册 API 时会向 `<endpoint>/retrieval` 发认证空 POST 探测；已部署版本将空请求体交给必填 JSON Schema，返回 400。修复已在本地完成并通过 Worker 构建，但发布因本机 Wrangler 登录令牌过期且无法连接 Cloudflare 授权服务而失败，线上仍是旧版本。
+
+管理员提供的 `200 Connection established` 只代表 Squid 接受并建立了 CONNECT 隧道；它不能证明隧道内 TLS、HTTP 请求或 Worker 路由成功。旧 Tail 未看到请求，因此当前无法断言之前的保存错误完全由代码缺陷造成，也不能据此要求盲目添加域名。待 Wrangler 重新授权后发布空探测兼容修复，再保存 Dify API：若 Worker Tail 有 200 但 UI 仍报错，检查 Dify 响应校验/保存日志；若 Tail 仍无请求，管理员需提供同一时刻 `dify-api` 与 `ssrf_proxy/Squid access.log` 的请求状态、TLS/上游错误（隐藏 Token），再判断校园网出口或代理链路。Dify 外部 API、外部知识库和 Chatflow 尚未成功创建。
+## 2026-11-05｜campusos-product 切换待补 Secret
+
+Worker/D1/域名当前读数已完成，wrangler.jsonc 生产目标已准备，但还不能部署或切换 gdufs.ccwu.cc：Cloudflare 不显示现有 Preview Secret 明文，已检查的本地 .env.local 与 anykey.md 不含完整配置集合。缺失值涉及账号验证/会话、Console 管理员登录、腾讯云 SES、Step/DeepSeek 模型及 Cloud Search。若缺这些值就切换，S4登录/找回密码、后台、AI或联网搜索会失效。请先提供可安全读取的完整现有 Worker 配置来源，或由负责人在新 Worker 中手动填入；本轮不生成新管理员/会话密钥，也不覆盖现有值。
+
+## D-142 状态更新
+
+正式 Worker 拆分已由负责人取消；移域名、复制 Preview secrets 和创建 campusos-product 不再是当前阻塞。Dify 外部知识接入仍待适配器构建/部署及专用 Bearer Key 操作确认。

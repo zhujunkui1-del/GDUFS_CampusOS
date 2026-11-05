@@ -1166,3 +1166,28 @@ Preview与gdufs.ccwu.cc实际共用campusos-preview及D1，发布影响两地址
 ## D-139｜共享主站地图修复发布授权（2026-11-04）
 
 负责人在获知修复版仅在独立地图测试站后，明确要求“同步到主站”。此次授权涵盖将已验收9545d63地图修复部署到实际承载gdufs.ccwu.cc的campusos-preview共享Worker，并验证既有完整页面；不发布地图ASSETS测试站替代整个主站。不新增迁移、密钥变更、DNS/WAF配置或独立Production Worker操作。发布版本c772f357-fdb6-4654-b5b9-a87f9d50ff66，旧版089e6478-8157-4cd1-9673-61525083927e作为回退点。校园网访问问题继续独立排查，8条AI反馈仍按负责人要求暂存不修。
+
+## D-140｜校内 Dify 外部知识检索试点（2026-11-05）
+
+负责人明确启动将现有校园 AI 助理能力接入校内 Dify Datasets。此决定覆盖 D-045 的“Dify 全部技术路线废弃”条款，但本阶段仅启用只读外部知识库连接；自研 Agent、D1 检索、S4 会话、权限与引用仍为 CampusOS 权威，尚未批准切换网站运行时。
+
+外部知识 API 复用现有 searchContent/D1KeywordRetriever，只返回通过当前公开版本与正文使用范围检查的证据片段、原文 URL 和必要元数据。外部知识 ID 为 campusos-public-knowledge-v1 与 campusos-public-events-v1，单次最多4条；D1仍为唯一来源，不批量导出正文、不复制文章库、不调用 Dify Embedding、不创建第二套向量索引。Dify记录分数是对既有词法排序分的单调归一化，不是语义相似度或事实置信度。
+
+新增适配端点仅限 ACCOUNT_ORIGIN 与 ACCOUNT_ALLOWED_ORIGINS 中配置的 HTTPS Host（当前为 Preview workers.dev 与 gdufs.ccwu.cc），并需要独立的 DIFY_EXTERNAL_KB_TOKEN Bearer Secret。当前实现仅在本地工作区，尚未部署；Dify 外部 API、外部知识库和 API Key 均未创建或保存，Embedding 与大模型均未调用。Dify保存外部 API 时会向端点发起连接测试。校内 Dify 出站访问 Preview 的可达性仍须真实验证。
+
+Preview 与 gdufs.ccwu.cc 共用 campusos-preview Worker；部署新增路由会更新共享 Worker 版本。尽管端点限制为 Preview Host，本决定不授权此次部署或创建/保存 Bearer Secret。发布前须再次取得负责人对共享 Worker 部署和 Dify/Cloudflare 两端保存同一 API Secret 的明确授权。实施计划与实际 UI 状态见 docs/DIFY_CAMPUS_AGENT_PLAN_2026_11_04.md。
+## D-141｜正式域名移至独立 campusos-product Worker（2026-11-05）
+
+负责人明确要求将 gdufs.ccwu.cc 从 campusos-preview Worker 移至新 Worker campusos-product，并保留 Preview 名称 campusos-preview。负责人选择先拆 Worker、暂时共享现有 D1，复用数据库 UUID 18299abc-b38b-4494-8d12-8ab4d482c304，以保留现有账号、AI历史、Console数据；当前账号下没有 campusos-production D1。此阶段不复制或迁移数据库。gdufs.zhiyuapp.site 未在本次指令中指定，暂留 campusos-preview。
+
+共享 D1 期间，Preview 的每分钟 Cron 继续作为唯一后台调度器；campusos-product 不增加 Cron，避免重复执行。该方案隔离 Worker 代码发布，但数据库与后台任务仍耦合，未来完全隔离需要另行迁移/审批。
+
+wrangler.jsonc 的 production 环境已本地准备为 campusos-product，绑定当前 D1、既有 Cloud Search/Workers AI/Vectorize 资源并将 gdufs.ccwu.cc 设为目标自定义域。Cloudflare 只读核查仍显示该域名位于 campusos-preview；尚未创建 campusos-product、部署、改域名绑定或改变任何 Secret。
+
+完成切换还需要重建现有 Preview Worker 所需的 S4/Console/SES/模型/搜索 Secret。Dashboard 将其值隐藏且不可读取；已检查的本地 .env.local 与 anykey.md 未提供一套完整的当前 Worker Secret 值。必须取得安全的完整配置来源并逐项确认后，才能部署并迁移域名。当前 Dify External Knowledge API 仍仅为本地代码，不随本决定启用。
+
+## D-142｜取消 campusos-product 拆分，继续校内 Dify 试点（2026-11-05）
+
+负责人明确取消将正式域名迁移到 campusos-product，继续在校内 Dify 复刻校园 AI 助理。D-141 的 Worker 拆分准备在云端变更前取消；gdufs.ccwu.cc 保持绑定 campusos-preview，D1 与当前路由不变。wrangler.jsonc 已恢复到拆分前配置。D-141 保留为历史决策，后续以本决定为准。
+
+D-140 的校内 Dify 外部知识库试点继续，使用现有 Preview Worker 和 D1；Dify API 路由与 Bearer Secret 仍未部署/配置。此阶段先完成本地适配器编译与配置准备，再在操作时确认后配置专用只读 Key。共享 Worker 部署会同时更新 gdufs.ccwu.cc 与 Preview；外部知识端点仍仅响应 Preview 主机，并只返回当前公开检索证据。
