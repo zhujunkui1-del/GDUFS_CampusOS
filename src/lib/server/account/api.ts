@@ -13,6 +13,7 @@ import { ModelConfigStore } from "../models/model-config-store";
 import { testPersonalConnection } from "../models/personal-client";
 import { MODEL_PROVIDER_IDS } from "@/domain/models/providers";
 import { ArticleFavoriteStore } from "./favorites";
+import { trustedClientIp } from "../request-ip";
 
 export const accountMethods: Record<string, readonly string[]> = {
   "/api/auth/register": ["POST"],
@@ -77,6 +78,7 @@ export function createAccountApi(options: {
   enabled: boolean;
   credentialSecret?: string;
   defer(task: Promise<unknown>): void;
+  proxySecret?: string;
 }) {
   return async (request: Request) => {
     let cookie: string | undefined;
@@ -107,7 +109,7 @@ export function createAccountApi(options: {
         return { available: false, user: null, mailAvailable: false };
       if (!options.enabled)
         throw new ApiError("SERVICE_UNAVAILABLE", "账号服务暂不可用。", true);
-      const ip = request.headers.get("CF-Connecting-IP") || "local";
+      const ip = trustedClientIp(request, options.proxySecret) || "local";
       const write = request.method !== "GET";
       if (write) assertAccountOrigin(request, store.allowedOrigins);
       // DELETE endpoints never carry a JSON body; reading one would reject a
@@ -360,6 +362,7 @@ export async function accountApi(request: Request) {
         values.MODEL_CREDENTIALS_KEY || values.ACCOUNT_OTP_SECRET || "",
       ),
       defer: (task) => ctx.waitUntil(task),
+      proxySecret: String(values.GATEWAY_PROXY_SECRET || ""),
     })(request);
     console.info(
       JSON.stringify({

@@ -3,6 +3,7 @@ import { AssistantStore } from "./store";
 import { SharedRouteStore } from "./routes";
 import { ApiError } from "../errors";
 import { databaseTimings } from "./timings";
+import { trustedClientIp } from "../request-ip";
 export function sameOrigin(request: Request) {
   const origin = request.headers.get("Origin");
   const target = new URL(request.url);
@@ -42,7 +43,8 @@ export async function assistantContext(request: Request) {
     ip:
       bindings.environment === "local"
         ? "local-preview"
-        : request.headers.get("CF-Connecting-IP") || "unknown-edge",
+        : trustedClientIp(request, bindings.gatewayProxySecret) ||
+          "unknown-edge",
   };
 }
 export async function readJson(

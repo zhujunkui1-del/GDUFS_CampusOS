@@ -1,3 +1,5 @@
+import { clientIpFromRequest } from "./client-ip";
+
 const UPSTREAM =
   process.env.CAMPUSOS_UPSTREAM || "https://gdufs.ccwu.cc";
 
@@ -70,9 +72,19 @@ export async function proxyTo(
   headers.set("x-forwarded-host", incoming.host);
   headers.set("x-forwarded-proto", "https");
 
-  const forwardedFor =
-    request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip");
-  if (forwardedFor) headers.set("x-forwarded-for", forwardedFor);
+  // Never let a browser smuggle these headers through: only the gateway may
+  // assert the client IP, and only with the shared secret.
+  headers.delete("x-campusos-proxy-secret");
+  headers.delete("x-campusos-client-ip");
+  headers.delete("cf-connecting-ip");
+
+  const clientIp = clientIpFromRequest(request);
+  const proxySecret = process.env.CAMPUSOS_PROXY_SECRET;
+  if (clientIp) headers.set("x-forwarded-for", clientIp);
+  if (clientIp && proxySecret && proxySecret.length >= 32) {
+    headers.set("x-campusos-client-ip", clientIp);
+    headers.set("x-campusos-proxy-secret", proxySecret);
+  }
 
   const origin = request.headers.get("origin");
   const site = request.headers.get("sec-fetch-site");

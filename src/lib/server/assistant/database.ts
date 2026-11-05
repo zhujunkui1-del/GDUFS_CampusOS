@@ -48,6 +48,10 @@ export function assistantBindings() {
   return {
     db: primaryDatabase(env.DB as SqlDatabase),
     signingSecret,
+    gatewayProxySecret:
+      typeof env.GATEWAY_PROXY_SECRET === "string"
+        ? env.GATEWAY_PROXY_SECRET
+        : process.env.GATEWAY_PROXY_SECRET || "",
     credentialSecret:
       typeof env.MODEL_CREDENTIALS_KEY === "string"
         ? env.MODEL_CREDENTIALS_KEY
