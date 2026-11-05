@@ -26,6 +26,7 @@
   "exclude": [
     "node_modules",
     ".open-next",
+    "vercel-gateway",
     "CampusOS_Codex_完整设计文档_v2",
     "services/external-search/runtime"
   ]

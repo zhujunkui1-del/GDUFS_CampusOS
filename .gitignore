@@ -2,6 +2,8 @@ node_modules/
 .next/
 .open-next/
 .wrangler/
+.vercel/
+vercel-gateway/.vercel/
 out/
 coverage/
 backups/

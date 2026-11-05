@@ -8,6 +8,7 @@ export default defineConfig([
   globalIgnores([
     ".next/**",
     ".open-next/**",
+    "vercel-gateway/**",
     ".wrangler/**",
     "**/.wrangler/**",
     "next-env.d.ts",
