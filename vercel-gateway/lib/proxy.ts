@@ -79,7 +79,7 @@ export async function proxyTo(
   headers.delete("cf-connecting-ip");
 
   const clientIp = clientIpFromRequest(request);
-  const proxySecret = process.env.CAMPUSOS_PROXY_SECRET;
+  const proxySecret = process.env.GATEWAY_PROXY_SECRET;
   if (clientIp) headers.set("x-forwarded-for", clientIp);
   if (clientIp && proxySecret && proxySecret.length >= 32) {
     headers.set("x-campusos-client-ip", clientIp);
