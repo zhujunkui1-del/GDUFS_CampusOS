@@ -1201,3 +1201,50 @@ D-140 的校内 Dify 外部知识库试点继续，使用现有 Preview Worker �
 建立知识库「CampusOS 校园知识试点」（ID `6083f0fe-ea98-4048-b74d-88b6e7dce50e`）及 Chatflow「广外通·校园助理（Dify试点）」（ID `39945f9b-9ee0-4c2c-a3a0-fc5298b3f861`）。Chatflow 结构为用户输入→知识检索→LLM→直接回复，检索结果接入 LLM 上下文；引用和归属功能开启。应用保持草稿，未发布到网站。
 
 限制：当前 Dify Workspace 只有 OpenAI-API-compatible 已配置模型，没有可用的 StepFun 优先/DeepSeek 额度回退链。预览测试所选 `DeepSeek-V4-Flash-0731` 返回 404 `Model not found`，未生成回答，Chatflow 不得标记为可用。知识库经济索引试测中，查询「校园网怎么开通？」首条命中校园网使用指南并带原文 URL；查询「校园卡补办」把热水卡补办排首条、校园卡补办排第二，说明自然问法排序仍不达验收。后续须先解决 Dify 模型供应商的真实模型 ID/端点问题，再改善或经负责人批准升级检索索引；启用 Embedding 为不可轻易回退且可能消耗配额的变更，须先核实实际成本与权限。
+
+## D-144｜扩展 Dify 原生知识演示快照至最近100篇完整公开文章（2026-11-06）
+
+负责人明确要求“先上传最近100篇到知识库”。此指令作为对 D-143 范围扩展的单次授权：从 D1 公共内容接口按发布时间倒序选取 `readable=true` 的公开正文，再逐篇复核正文完整性后导入校内 Dify 演示知识库。D1 仍是 CampusOS 唯一事实源；该手动快照不自动同步、不替代网站运行链，不涵盖雷达全量、活动实时状态或地图，也不授权启用 Embedding、切换网站运行时或发布 Chatflow。
+
+最初最近100条中2篇由正文接口标为 `partial=true`，排除后从稳定 D1 游标向后补入2篇完整正文，最终包含100个唯一 D1 document ID/版本。沿用 Dify「经济」倒排索引和通用分块，不调用模型/Embedding。导入文本为单个 Markdown 快照，逐块重复文章原题、来源、发布日期、原文 URL、D1 ID 与版本；正文中的图片保留可读替代文本/资源 URL，不执行 OCR 或视觉模型识别。
+
+Dify 知识库新增修正版 `CampusOS_最近100篇公开文章_20261106_来源链接修正.md`，UI 显示可用、预览1403块。初版快照的 URL 与后续元数据缺少空格，自动链接化时被连入链接，已将初版停用并保留（未删除）；修正版在分段预览和真实召回中验证了原文链接边界正确。精确查询「观影活动 2026.11.6」召回目标文章及正确原文链接，但目标排在 Top 3 第三位，且另两条候选无关，故只证明数据可召回和来源正确，不能声称排序质量达标。Chatflow 的模型 404 故障和未发布状态不在本决定覆盖范围内。
+
+
+## D-145｜Console 登录支持已批准的多个精确域名（2026-11-06）
+
+负责人要求后台可在 gdufs.zhiyuapp.site、gdufs.ccwu.cc、campusos.zhiyuapp.site 使用，并以 Preview 为参考。只在现有 `CONSOLE_ORIGIN` 之外增加 `CONSOLE_ALLOWED_ORIGINS` 精确 HTTPS Origin 列表；仍校验 HTTPS、Origin 完全匹配、单管理员名单、现有 PBKDF2 密码/Secret、CSRF、同源与 D1 会话门禁。Preview 密码、验证器、salt、签名Secret和 D1 均未轮换或修改。
+
+Cloudflare 实测 gdufs.ccwu.cc 和 gdufs.zhiyuapp.site 均由共享 `campusos-preview` Worker/D1 服务，版本 `64c98b09-1119-46b2-9fc7-ef3ff8ebcbe6` 已更新；两个后台已显示管理员访问密钥登录框。`campusos.zhiyuapp.site` 目前 CNAME 指向 Vercel，无法从现有 Worker Secret 配置启用 Cloudflare D1 管理 API。为保留 Vercel 页面并把其后台 API 接到既有 Worker，配置已限定为 `/api/console-*` 与 `/api/admin*` 两条路径，但 Cloudflare 路由要求该 Vercel CNAME 开启代理。开启后全站流量先经过Cloudflare，非匹配路径继续到Vercel。该 DNS/代理变更待负责人确认后再做。
+
+
+## D-146｜CampusOS 可选「深度思考」Dify Chatflow（2026-11-06）
+
+负责人明确要求将校内 Dify 校园助理作为现有全局校园助理的可选增强模式，命名「深度思考」，并验证 Dify 使用 D1 文章；同时明确不导入 `articles_full` 本地目录，不随 wechat-mp-rss 上传/同步文章。D1 继续作为唯一事实源；运行时由 CampusOS 服务端按当前用户问题调用现有公开 D1 检索，再将本轮少量带编号、标题、来源、原文 URL 和片段的证据随该轮请求发送给 Dify，Dify 的最终回答再回到现有 SSE、对话历史和来源卡片。该方式是“CampusOS 从 D1 检索并交给 Dify”，不表示 Dify 出站直连 D1，也不建立 D1 全量副本。
+
+「深度思考」是独立的会话级模式，状态和 Dify conversation ID 保存在当前 owner 的现有 D1 对话消息系统记录中；S4 用户的 Dify `user` 标识由服务端生成的匿名哈希，不接受客户端 userId。打开时不会使用智能搜索的外网能力，两种模式互斥；地图/导航意图继续使用现有 CampusOS 地图 Agent 与真实 MapAction。Dify 应用 API Key 仅从服务端 Secret 读取，不进入客户端、对话、日志或源码。改动不触碰本地文章目录/RSS、D1文章数据、Dify内部知识快照和个人模型API设置。
+
+按负责人 2026-11-06 授权，Chatflow 已发布并创建1个应用 API Key；密钥尚未配置到 Cloudflare Secret。项目本地代码与专项测试通过，但 Worker 构建在 Windows OpenNext/esbuild 临时文件写入时报 `Access is denied`，因此代码尚未部署。Dify 外部知识库注册页未保存，真实 CampusOS→Dify API 调用及 Dify 容器→D1 外部知识端点均未验收。共享 `campusos-preview` 同时服务 `gdufs.ccwu.cc`，后续部署会更新正式域名。
+
+**状态更新：**Chatflow 已发布；负责人授权后，`DIFY_APP_API_KEY` 已保存为 `campusos-preview` 加密 Secret。Worker代码已部署，当前版本 `1fb00a34-be32-4f46-9e08-3a14c4ff90c8`，Secret变更版 `68ec12eb-f731-46c5-b250-b530712c1e4e`。独立游客端到端测试未通过：Dify API返回HTTP200但非SSE且没有消息事件，Dify日志页也未显示请求。后续需校内Dify管理员核实服务端到服务端的API地址/网关路径。负责人随后明确“保留现有密钥，停止轮换”；当前不撤销两把Dify App API Key。
+
+
+
+### D-146 最终状态（2026-11-06）
+
+Dify Chatflow已发布；DIFY_APP_API_KEY 已作为 Cloudflare Secret 配置；共享 Worker 当前代码版 b5f6f81d-a4ca-4c0b-88eb-a58ac25740e8，Dify Secret版 68ec12eb-f731-46c5-b250-b530712c1e4e。独立游客真实请求证明 D1→CampusOS 检索执行，但 Dify API 返回 HTTP200 text/html，Dify Logs 没有运行记录。DIFY_CHAT_ENABLED=false 已部署并验证，使未验收开关隐藏。负责人要求保留现有 Dify App Keys，不再轮换；待校内管理员提供可用的 Worker→Dify API 路径后再启用。
+
+
+D-146 最终验收更新（2026-11-06）：Dify App API Key Secret 与已发布 Chatflow保留。Worker 实际请求仍返回 HTTP 200 text/html；DIFY_CHAT_ENABLED=false，未验收前隐藏深度思考开关。D1仍是唯一事实源，当前路径由CampusOS检索少量公开证据后再发给Dify；不导入本地文章目录，不做 RSS 上传同步。
+
+## D-147｜校内模型网关仅限内网访问，线上维持 StepFun→DeepSeek（2026-11-06）
+
+负责人要求把 `anykey.md` 中的 gdufs API（`https://modelsq.gdufs.edu.cn/v1-openai`）接入校园助理并置于调用链首位。适配器、能力凭据、三级路由与测试均已实现并通过真实调用验证；但上线后发现真实原因：该网关只对校内网络或广外 VPN 开放。
+
+事实：本机 Node fetch 访问 `https://modelsq.gdufs.edu.cn/v1-openai/models` 返回 200 `application/json`；同一 URL 从 Cloudflare Worker 边缘访问返回 200 `text/html`，内容为「本系统只允许校内访问，如果需使用，请通过广外VPN访问」。以临时 Worker `campusos-gdufs-probe` 对 `/v1-openai/models`、`/v1/models`、`/v1/chat/completions`、`/api/health` 与根路径探测，全部得到同一 HTML 拦截页；`dify.gdufs.edu.cn` 在边缘同样返回该页。该 Worker 已完成取证并删除。
+
+因此 `MODEL_PRIORITY=gdufs` 时线上每次模型调用都拿到 HTML 页，JSON 解析失败后是 `MODEL_NETWORK_ERROR`，`/api/agent/status` 仍显示 `ready`（状态只校验本地签发的凭据，不发请求），实际聊天退化为「没有检索到」模板回答。
+
+负责人决定：不改动原有调用次序，线上仍为 `stepfun → deepseek`。gdufs 保留为可选层级，仅在运营方显式设置 `MODEL_PRIORITY=gdufs` 时进入链路；默认链路不包含它，因此它也不会吞掉原本能到达 deepseek 的额度回退。`wrangler.jsonc` 的 `MODEL_PRIORITY` 已改回 `stepfun`，Worker 已重新部署（版本 `b3577b02-b60d-41f2-a758-060f90f99f74`），`/api/agent/status` 显示 `stepfun`，真实提问「校园网怎么开通？」返回正常回答且 `queryUnderstanding` 有有效计划。
+
+未改动的内容：gdufs 适配器（含 `chat_template_kwargs:{thinking:false}` 关闭推理、`finish_reason:"stop"` 与 tool_calls 的归一化、404 的密钥/模型区分）、`GDUFS_POLICY_VERSION = "gdufs-openai-v1"`、能力凭据、`tests/unit/gdufs-model.test.ts`（11 项）与 `tests/integration/gdufs-live.test.ts`。机密仍只存于 Cloudflare Secret（`GDUFS_MODEL_API_KEY`、`GDUFS_MODEL_CAPABILITIES_JSON`），未写入仓库或配置文件。要在线上真正启用该网关，需要一台能访问校内网的机器提供中继，或改用校内托管的运行环境；这属于新的范围与部署决定，需负责人另行确认。

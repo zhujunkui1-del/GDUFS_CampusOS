@@ -691,3 +691,9 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 ## 2026-11-04｜地图兼容性与模型资源回归
 
 无新增GIS、地点、道路或建筑模型来源。继续使用已批准的campus-15060d099418.geojson、29组清单及已验收南苑7栋原件，文件内容和坐标未改。verify-map-model-assets实际读取GLB JSON/实例扩展计算三角数并校验SHA与尺寸，60资产/59不同URL通过；新增食堂/门诊模型须通过同一资源预算。Android官方platform-tools仅作为本地工具下载，未进入public，USB未授权后停止该测试方案。实际手机回执仅保存浏览器版本、渲染能力、加载阶段和公开资源路径，公开报告排除Cloudflare请求IP等元数据，不采集GPS/账号/密钥。独立测试域名在本人控制的gdufs.ccwu.cc区域新增子域名，仅绑定ASSETS Worker，无业务D1绑定。
+
+## 2026-11-06｜Dify 最近100篇知识快照
+
+来源为 D1 的 `/api/public/content` 列表和 `/api/public/article?id=...` 正文接口。筛选 `readable=true`，逐篇重新读取以确认当前公开完整正文；2篇部分正文排除，并用稳定发布时间游标补入后续2篇完整文章。快照包含100个唯一文档 ID/版本，按发布时间从新到旧。每段重复保留 D1 标题、来源、发布日期、原文 URL、document ID 和 version。
+
+目的地为校内 Dify 数据集 `CampusOS 校园知识试点`（ID `6083f0fe-ea98-4048-b74d-88b6e7dce50e`），依据负责人单次 D-144 范围授权导入，使用原有经济倒排索引。Dify 文件是手动快照，不自动同步 D1，也不构成新权威源。正文图片仅保留 HTML 已有替代文本和可访问资源 URL；未执行 OCR，因此不包含无法从正文文字读取的海报信息。

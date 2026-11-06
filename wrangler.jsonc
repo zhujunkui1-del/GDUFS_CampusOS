@@ -30,21 +30,38 @@
       "main": "preview-worker.ts",
       "workers_dev": true,
       "preview_urls": false,
-      "routes": [],
+      "routes": [
+        {
+          "pattern": "campusos.zhiyuapp.site/api/console-*",
+          "zone_name": "zhiyuapp.site",
+        },
+        {
+          "pattern": "campusos.zhiyuapp.site/api/admin*",
+          "zone_name": "zhiyuapp.site",
+        },
+      ],
       "triggers": { "crons": ["* * * * *"] },
       "vars": {
         "APP_ENV": "preview",
         "USER_ACCOUNTS_ENABLED": "true",
         "ACCOUNT_ORIGIN": "https://campusos-preview.zhujunkui1.workers.dev",
         "ACCOUNT_ALLOWED_ORIGINS": "https://gdufs.ccwu.cc",
+        "CONSOLE_ALLOWED_ORIGINS": "https://gdufs.ccwu.cc,https://gdufs.zhiyuapp.site,https://campusos.zhiyuapp.site",
         "EXTERNAL_SEARCH_TRANSPORT": "cloud",
         "AGENT_VALIDATION_UNLIMITED": "true",
         "MODEL_MAX_OUTPUT_TOKENS": "2048",
         "MODEL_PRIORITY": "stepfun",
+        // Campus gateway (modelsq.gdufs.edu.cn) is only reachable from the
+        // campus network, so it stays out of the default chain. Set
+        // MODEL_PRIORITY=gdufs to make it the primary tier; secrets stay out
+        // of this file.
+        "GDUFS_MODEL_NAME": "DeepSeek-V4.1-Flash-1017",
+        "GDUFS_MODEL_BASE_URL": "https://modelsq.gdufs.edu.cn/v1-openai",
         "HYBRID_RETRIEVAL": "true",
         "VECTOR_BACKFILL": "true",
         "CALENDAR_ENABLED": "true",
         "CALENDAR_AUTO_ENRICH": "true",
+        "DIFY_CHAT_ENABLED": "false",
       },
       "ai": { "binding": "AI" },
       "vectorize": [

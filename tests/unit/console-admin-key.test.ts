@@ -32,11 +32,25 @@ const loginRequest = () =>
     method: "POST",
     headers: { Origin: origin },
   });
+const loginRequestAt = (url: string) =>
+  new Request(url + "/api/console-auth", {
+    method: "POST",
+    headers: { Origin: url },
+  });
 const sessionRequest = (cookie: string, csrf?: string) =>
   new Request(origin + "/api/admin/sources", {
     method: csrf ? "POST" : "GET",
     headers: {
       Origin: origin,
+      Cookie: cookie.split(";")[0],
+      ...(csrf ? { "X-Console-CSRF": csrf } : {}),
+    },
+  });
+const sessionRequestAt = (base: string, cookie: string, csrf?: string) =>
+  new Request(base + "/api/admin/sources", {
+    method: csrf ? "POST" : "GET",
+    headers: {
+      Origin: base,
       Cookie: cookie.split(";")[0],
       ...(csrf ? { "X-Console-CSRF": csrf } : {}),
     },
@@ -162,6 +176,27 @@ describe("explicit HTTPS administrator key mode", () => {
       await expect(
         requireConsole(sessionRequest(login.cookie), true, c),
       ).rejects.toMatchObject({ code: "FORBIDDEN" });
+    } finally {
+      f.close();
+    }
+  });
+  it("accepts only separately configured exact HTTPS aliases for the shared Worker", async () => {
+    const f = sqliteD1();
+    try {
+      const alias = "https://gdufs.ccwu.cc";
+      const c = { ...config(f.db), allowedOrigins: [alias] };
+      expect(consoleMode(loginRequestAt(alias), c)).toBe("key");
+      const login = await createConsoleSession(loginRequestAt(alias), { key }, c);
+      expect(
+        (await requireConsole(sessionRequestAt(alias, login.cookie), false, c))
+          .actor.role,
+      ).toBe("admin");
+      for (const url of ["https://gdufs.ccwu.cc.evil.invalid", "http://gdufs.ccwu.cc"]) {
+        expect(() => consoleMode(loginRequestAt(url), c)).toThrow();
+      }
+      await expect(
+        createConsoleSession(loginRequestAt("https://campusos.zhiyuapp.site"), { key }, c),
+      ).rejects.toMatchObject({ code: "SERVICE_UNAVAILABLE" });
     } finally {
       f.close();
     }

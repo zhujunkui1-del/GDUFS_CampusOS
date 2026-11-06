@@ -1766,3 +1766,116 @@ Dify 召回实测：查询「校园网怎么开通？」首条返回《使用指
 已创建 Chatflow「广外通·校园助理（Dify试点）」ID `39945f9b-9ee0-4c2c-a3a0-fc5298b3f861`，工作流为输入→知识检索→LLM→直接回复；知识结果接入 LLM 上下文，提示词有证据限制和轻量大肥鱼口吻，引用归属功能已开启。应用仍为未发布草稿。预览「校园卡如何补办？」时，`DeepSeek-V4-Flash-0731` API 返回 404 `Model not found`，没有生成回答。因此还不能验收为可运行 Agent。
 
 未配置/上传新模型 Key、未安装 StepFun 插件、未调用 Embedding、未发布 Chatflow；模型路由及 Dify 供应商设置未改。下一步需由 Dify 管理员核对已启用模型的真实 API model ID/端点，并提供/配置符合 StepFun 优先、DeepSeek 额度耗尽备用的可用模型入口；修复后再以校园卡与校园网问题做小样本 Preview 验收。Dify 原生知识副本为手动快照，不会随 D1 自动更新。
+
+## 2026-11-06｜Dify 原生知识快照扩展至最近100篇
+
+按负责人明确授权的 D-144，从 Preview D1 公共接口按发布时间倒序读取文章。逐篇使用 `/api/public/article` 复核公开正文；最近100条中2篇标记为部分正文，未导入，并沿稳定 D1 游标补入其后的2篇完整文章。最终快照100篇、100个唯一 D1 ID/版本，发布日期范围为2026-11-02至2026-11-05。每段重复文章原题、来源、日期、原文 URL 和 D1 ID/版本；图片保留替代文本/可访问资源 URL，没有 OCR。临时源文件在用户 TEMP 目录，没有加入 Git。
+
+校内 Dify 知识库 `CampusOS 校园知识试点`（ID `6083f0fe-ea98-4048-b74d-88b6e7dce50e`）沿用经济倒排索引与通用分块，未调用模型或 Embedding。首次 HTML 版本的链接分隔导致原文 URL 自动链接时带入后续字段，已停用但保留；修正分隔符后上传 `CampusOS_最近100篇公开文章_20261106_来源链接修正.md`，UI 显示“可用”，分段预览1403块。现库共8份文档，4份可用、4份禁用；未删除既有试点文件。
+
+检索实测：「观影活动 2026.11.6」召回目标文章和完整正确原文 URL，但只排 Top 3 第三位，另两条不相关；记录为索引可用、相关性不足。Chatflow 仍未发布，`DeepSeek-V4-Flash-0731` 404 `Model not found` 保持阻塞；本轮未修改 D1、Production 或模型设置。
+
+
+## 2026-11-06｜共享 Preview 后台精确域名白名单
+
+修复原因：Console `admin_key/admin_password` 模式此前只接受单一 `CONSOLE_ORIGIN`，而 gdufs.ccwu.cc 与 gdufs.zhiyuapp.site 实际共用 campusos-preview，域名不同导致后台返回“管理员登录尚未配置”。新增服务端 `CONSOLE_ALLOWED_ORIGINS` 精确HTTPS白名单，保留原 `CONSOLE_ORIGIN`、管理员密码模式、邮箱名单、CSRF、会话签名及D1权限检查；未更换或新建任何密码、Session Secret、Salt，也未改D1。Preview列表当前包含两个Cloudflare域名及待接入的campusos.zhiyuapp.site。
+
+专项Vitest 22/22、TypeScript、修改文件ESLint和`npm run build:worker`通过。更新版部署至现有共享Worker `campusos-preview`，版本 `64c98b09-1119-46b2-9fc7-ef3ff8ebcbe6`；Cloudflare Preview 与gdufs.ccwu.cc、gdufs.zhiyuapp.site三个后台均真实刷新验证显示“管理员访问密钥”表单。未尝试管理员登录、未写入D1；现有Preview Secret保持。
+
+`campusos.zhiyuapp.site` 的 CNAME 当前指向 `f3b69826a4c4d637.vercel-dns-017.com`，DNS为未代理状态，Vercel仍是页面源站。为使页面原样留在Vercel、仅由Preview Worker处理管理API，`wrangler.jsonc` 暂存严格路由 `campusos.zhiyuapp.site/api/console-*` 和 `/api/admin*`，Preview部署守卫也仅接受这两条固定路由。Cloudflare DNS API当前OAuth会话缺DNS编辑权限，浏览器控制台要求登录；故尚未开启CNAME代理、尚未发布两条路由。确认及代理生效前，第三域名后台仍会提示未配置。
+
+## 2026-11-06｜Dify 外部知识 API 三域名只读探测
+
+负责人要求同时比较 `gdufs.ccwu.cc`、`gdufs.zhiyuapp.site`、`campusos.zhiyuapp.site`。本机使用同一方法请求公开文章列表及 Dify 正确的 `POST /api/dify/external-knowledge/retrieval` 路径；未发送 Bearer 密钥、未保存 Dify 外部 API 配置、未修改 DNS/Worker。三个域名的公开文章 GET 均为 HTTP 200，并返回相同 D1 最新记录。空 POST 无认证时，`gdufs.ccwu.cc` 与 `campusos.zhiyuapp.site` 返回应用认证错误 401；`gdufs.zhiyuapp.site` 返回“知识源不存在”404。测试环境的 DNS 显示为 198.18.x 合成地址，结果仅代表当前电脑经过本地网络路径的响应，不证明校园 Dify 容器出站可达。
+
+Dify 文档要求在 API Endpoint 填基础地址，由 Dify 追加 `/retrieval`；本次测试路径符合该约定。[External Knowledge API](https://docs.dify.ai/en/self-host/use-dify/knowledge/external-knowledge-api)。真实连接仍需从 Dify 网络使用有效 Bearer 做连接测试并查看 Dify/Squid 日志。当前代码配置仅把 `gdufs.ccwu.cc` 列入 `ACCOUNT_ALLOWED_ORIGINS`；`campusos.zhiyuapp.site` 的401响应尚未证明其实际由 Preview Worker 的 Dify 路由响应，因为本地路由文件只将该主机的 Console/Admin 路径指向 Preview Worker。`gdufs.zhiyuapp.site` 的404与现有主机白名单不符，暂不能作为已可用端点。
+
+## 2026-11-06｜Dify 外部知识 Token 恢复与规范端点授权探测
+
+负责人索要 API Endpoint 和 API Key，并说明由其本人在 Dify 添加。原 `DIFY_EXTERNAL_KB_TOKEN` 仅存于 Cloudflare Secret，Cloudflare 不提供读取明文；本机 `.dev.vars`、`.env.local` 与 `anykey.md` 未找到其副本。按此前对 D-140 只读 Dify 接入的授权，生成新的32字节随机 Bearer（43字符 Base64URL），保存为本机 TEMP 单值文件，并更新到 `campusos-preview` Secret；Dify 页面配置未提交。Preview Worker 发布版本 `85b53bb1-6594-4532-a2a1-ed3014633fda`，该 Worker 仍同时服务 gdufs.ccwu.cc。
+
+本机使用该新 Bearer 对 `POST https://gdufs.ccwu.cc/api/dify/external-knowledge/retrieval` 发送空请求，返回 HTTP 200 `{"records":[]}`，确认 Secret 与规范端点匹配，且Dify空探测路径有效。该请求来自当前工作站，不代表校内 Dify 出站已通过；Dify 外部 API 尚未保存。`gdufs.zhiyuapp.site` 与 `campusos.zhiyuapp.site` 未发送 Bearer，避免将密钥发往未确认主机。
+
+操作中 Wrangler 参数被 `npm exec` 错误解析，误建了无代码/路由/D1绑定的 `campusos-local` Worker；已立即使用 Wrangler 删除并确认成功。随后通过本地 Wrangler 二进制将 Secret 更新到正确 `campusos-preview` 环境。未改代码、D1、DNS 或 Dify 配置。
+
+补充验证：使用临时文件中的新 Bearer 调用 `gdufs.ccwu.cc` 的知识查询 `campusos-public-knowledge-v1`，API 返回 HTTP 200/4条记录；查询“校园网怎么开通”的前三个标题均未命中校园网指南，显示当前 D1 检索相关性不佳。该请求来自本机而非 Dify 容器。API Key 仅保留在用户TEMP单值文件，未写入 Git；用户准备手动添加到 Dify。
+
+
+## 2026-11-06｜「深度思考」Dify Chatflow 项目集成准备
+
+按 D-146，在现有全局助理输入区新增会话级「深度思考」开关和服务端分支。启用后，服务端沿用 `contentIntent` 与 `searchContent` 从 D1 查询至多4条当前公开证据，将编号、标题、来源、发布时间、原文 URL 和正文摘录放入当前请求；Dify 只收到本轮上下文，历史 Dify conversation ID 与同一个 CampusOS conversation owner 绑定在现有 `conversation_messages` 系统状态中。Dify 结果经现有 SSE/历史消息保存，引用编号只显示对应的 D1 来源卡片。Dify调用采用固定校内 `/v1/chat-messages`，API Key 使用服务器端 `DIFY_APP_API_KEY`，不进入浏览器。智能搜索与深度思考互斥；显式地图/导航意图继续原有地图 Agent。
+
+没有读取或上传本地 `D:\WeChat MP Tools_v2.3.1\data\articles_full`，没有添加 RSS→Dify 同步，没有修改 D1 文章数据、账号、地图、模型供应商设置或 Worker Secret。新增偏好使用既有 D1 对话表，不增加迁移。
+
+校内 Dify Chatflow「广外通·校园助理（Dify试点）」当前模型为 Qwen3.8-27B。按负责人授权，现已发布该 Chatflow，并创建了1个专用 App API Key；Key 保留在 Dify 密钥管理界面，尚未复制到 Cloudflare Secret。已为现有 LLM 节点补上 CampusOS 回答规则及 D1 引用边界；没有添加无法可靠放大到证据长度的 Dify 输入字段，因此后端把证据块追加到本轮 query。一次 Dify Web 预览以真实公开 D1 文章摘录作为输入，问“这篇文章的预报名时间是什么？”，返回“2026年10月9日—10月12日，每日9:00—22:00”并引用 `[1]`；这验证模型能使用显式提供的 D1 证据，不证明 Dify 自己已连接 D1。
+
+规范 D1 API 用同一已授权 Preview Bearer 从本工作站做只读复核：精确标题查询“2027研招统考预报名今日开始，填写报考信息功能已开通”返回同名文章、正确原文 URL、得分0.6834；自然问法“校园网怎么开通”返回4条但标题不相关。后者保留为实际检索排序失败，不能以精确标题样例代替通用相关性验收。该请求不是由 Dify 发起。
+
+本地专项测试 `dify-chat.test.ts` 3/3，AI偏好/身份及检索回归测试共25/25；TypeScript 与本次修改文件 ESLint 通过。未部署 Worker；未点击 Dify 外部知识库“保存”；App Key 尚未配置成 Cloudflare Secret，故 CampusOS→Dify 服务端真实 API 和 Dify→D1 出站仍未验收。
+
+`npm run build:worker` 尝试两次均在 OpenNext/esbuild 写临时 `open-next.config.mjs` 时返回 Windows `Access is denied`；改用工作区外任务临时目录后仍复现。没有继续重试或部署。此任务临时目录在 `D:\tlydcg\Codex_work\CampusOS-open-next-tmp-20261106`，清理操作被本机操作策略拒绝，目录不在 Git 工作区。
+
+## 2026-11-06｜深度思考共享部署与真实 API 回执
+
+负责人授权发布 Dify Chatflow并部署共享 Worker。Chatflow已发布，生成了专用App API Key；Cloudflare仅保存为加密 Secret `DIFY_APP_API_KEY`，Secret变更版 `68ec12eb-f731-46c5-b250-b530712c1e4e`；含当前Dify SSE兼容检查的代码版 `1fb00a34-be32-4f46-9e08-3a14c4ff90c8` 已部署至 `campusos-preview`。该Worker同时服务 `gdufs.ccwu.cc`。Worker状态接口返回 `deepThinkingAvailable=true`；根页面在 gdufs.ccwu.cc、gdufs.zhiyuapp.site、campusos-preview、两个www域名均HTTP200。
+
+真实集成测试使用新的独立游客会话，不触碰负责人账号或私人对话。CampusOS→D1证据查询正常启动，随后 Worker 对 Dify `/v1/chat-messages` 的调用收到HTTP 200，但响应不是 `text/event-stream`，未产生 Dify 消息事件；CampusOS SSE终态为失败“Dify API 未返回流式响应（HTTP 200）”。刷新 Dify 日志页仍无此调用记录。真实API链仍未完成；须由校内 Dify 管理员检查 Worker 到 Dify API 的网关/出站路径及响应类型。Dify Web 预览此前用相同类型的真实D1公开摘录能回答并保留 `[1]`，但这不能代替 Worker→Dify API验收。
+
+同一时段对D1外部知识接口的精确标题只读查询返回真实文章和正确URL；自然语言“校园网怎么开通”仍返回4条无关文章。Dify外部知识库连接表单没有保存，因此Dify没有直接出站读取D1；当前系统设计为CampusOS先查D1、再把本轮证据交给Dify。用户明确要求保留现有密钥并停止轮换；Dify中两把App Key保留，Cloudflare Secret当前含其中一把，值不记录在仓库或报告。
+
+
+
+## 2026-11-06｜深度思考最终运行状态
+
+代码经 typecheck、修改文件 ESLint、4个相关测试文件共37/37通过后部署至共享 Worker，最终版本 b5f6f81d-a4ca-4c0b-88eb-a58ac25740e8；DIFY_APP_API_KEY Secret 保留在 Worker，Secret变更版本 68ec12eb-f731-46c5-b250-b530712c1e4e。gdufs.ccwu.cc 与 Preview 根页已核验HTTP200。
+
+真实独立游客请求显示 CampusOS 可完成 D1 检索，但 Dify /v1/chat-messages 返回 HTTP200 text/html 而不是 SSE/JSON，Dify日志没有相应运行。预览阶段 Dify 使用手动提供的真实 D1 公共摘录答对日期并引用[1]，证明该模型能处理显式证据；不证明 Worker→Dify API 可用，也不证明 Dify 直接访问 D1。
+
+为隐藏不可用的开关，配置 DIFY_CHAT_ENABLED=false；独立 /api/agent/session 回执 deepThinkingAvailable=false。Chatflow 已发布，API Key 两把保留按负责人要求不再轮换；Dify外部知识库 API 仍未保存。没有导入 articles_full，也没有 RSS 同步。
+
+
+## 2026-11-06｜深度思考最终验收状态
+
+当前共享 Worker 版 b5f6f81d-a4ca-4c0b-88eb-a58ac25740e8 已部署；DIFY_APP_API_KEY Secret 版本 68ec12eb-f731-46c5-b250-b530712c1e4e 保留。校内 Chatflow 已发布。DIFY_CHAT_ENABLED=false，独立游客 session 返回 deepThinkingAvailable=false，因此网站暂不展示不可用开关。
+
+端到端请求的实际回执：CampusOS D1检索执行后，Worker 调用 Dify /v1/chat-messages 得到 HTTP 200、Content-Type text/html；不是 API 所需 SSE 或 JSON，Dify Logs 没有对应记录。Dify Web 预览里手工放入真实 D1 文章摘录能答出正确日期并引用[1]，仅证明模型能使用显式证据，不代表网站 API 链已通。下一步需校内 Dify 管理员提供/确认 Worker 能访问的 App API 网关路径。Dify外部知识库表单未保存，Dify直读D1未验收；本地文章目录和RSS同步均未使用。
+
+typecheck、修改文件 ESLint、相关37项测试通过，最后 Worker 构建部署成功。为实测深度分支创建了独立游客短期会话，不修改负责人账号或私人对话。工作区仍有未提交修改，当前 HEAD 为 b5079de；未提交项目临时构建目录 .tmp-open-next-build，清理命令被本机策略拦截。
+
+## 2026-11-06｜校内 Dify 外部知识 API 连通故障定位（归因更正）
+
+负责人指出 Dify 管理员无法访问 `gdufs.ccwu.cc` 与外部知识 API 是 CampusOS/Cloudflare 一侧的问题。只读核查确认 `gdufs.ccwu.cc` 绑定到 `campusos-preview` Worker；Dify 来源 `107.20.118.235`（Amazon ASN 14618、User-Agent `node`）于 2026-11-06 20:07:09 对 `POST /api/dify/external-knowledge/retrieval` 发起请求。Cloudflare Security Analytics 将该请求标为“边缘响应：已缓解”；按同一 IP 过滤后显示 1 次由 Cloudflare 提供服务、未显示转发到源站的请求，因此这次连接没有到达 Worker。
+
+`gdufs.ccwu.cc` 区域的 Browser Integrity Check 当前开启；Bot Fight Mode 关闭，安全规则页显示没有自定义规则、速率规则或托管规则配置。Dify 请求使用 `node` 非浏览器 User-Agent，与 BIC 对非标准客户端请求的拦截机制相符；但按 IP 查询没有对应的安全事件/规则 ID，故 BIC 是高概率原因，精确触发产品尚未被事件日志证实。Dify 应填写不含 `/retrieval` 的 API 基础路径 `/api/dify/external-knowledge`，由 Dify 拼接 `/retrieval`。当前机对两个 Worker 主机名的 POST 探针均到达应用并返回 JSON 401；已有授权本机空 POST 回执为 HTTP 200 `{"records":[]}`。本机验证不代替 Dify 侧验收。
+
+尚未修改 Cloudflare 安全规则或 Dify 外部 API 表单。可选的窄范围修复是在 `gdufs.ccwu.cc` 上仅对 `POST /api/dify/external-knowledge/retrieval` 跳过 BIC（应用层 Bearer 校验仍保留）；这是安全策略变更，需负责人于执行前明确确认。`campusos-preview.zhujunkui1.workers.dev` 是可供测试的替代主机，但 Dify 出站代理是否允许该主机仍未验证。CampusOS Worker 到 Dify Chat API 返回 HTTP 200 HTML 的故障是相反方向的独立问题，本次没有处理。
+
+## 2026-11-06｜Dify 外部知识 API 的窄范围 BIC 例外已部署
+
+负责人授权仅为 `gdufs.ccwu.cc` 的 `POST /api/dify/external-knowledge/retrieval` 跳过 Browser Integrity Check。Cloudflare 自定义规则 `Dify 外部知识 API 仅跳过 BIC` 已部署并显示 Active，规则 ID `b455f403a0b24013927ff0fd1e73779b`。表达式同时限定 host、POST 方法与完整 retrieval 路径；只选择 BIC 产品，未跳过其他自定义规则、速率规则、托管规则、Bot Fight Mode、Security Level 或其他安全产品。全站 BIC 保持开启。
+
+规则部署后，本机以 `User-Agent: node` 对该 POST 路径作无凭据探针，得到应用层 JSON 401 `知识服务认证失败。`，而不是 Cloudflare HTML/挑战页，说明该精确路径已可进入 Worker，且 Bearer 校验仍在生效。真实 Dify 外部 API 保存尚未重新执行；需负责人用已有 Dify 表单重试保存，并确认其网络请求是否成功。未改 Worker、D1、DNS、Secrets 或 Dify 表单；Worker→Dify Chat API 的 200 HTML 故障仍是另一个未解决项。
+
+## 2026-11-06｜Dify 保存错误截图复核（BIC 规则后仍待 Dify 重试）
+
+负责人反馈保存仍失败，并附两次截图。第一张 Endpoint 为正确基础地址 `https://gdufs.ccwu.cc/api/dify/external-knowledge`，错误请求落在 `/api/dify/external-knowledge/retrieval`；第二张把 Endpoint 改成 `https://gdufs.ccwu.cc/`，错误请求落在 `/retrieval`，该输入路径错误。使用负责人给出的本地 Token 文件内容对正确接口发送空 POST，得到 HTTP 200 `{"records":[]}`，未输出 Token。Cloudflare 当前采样日志中 Dify 识别到的 Amazon 来源 IP `107.20.118.235` 只有 20:07:09 的请求，发生在 BIC 豁免部署之前；20:38 和20:44 的同路径请求来自本机公网 IP `23.172.200.89`。因此尚无部署后 Dify 来源请求的 Cloudflare 回执，不能断言 BIC 规则已解决 Dify 保存，也不能断言它失效。需要在当前 Dify 表单使用第一张正确 Endpoint 和 Token 文件内容重新保存，再按新请求时间查 Cloudflare 记录。没有提交 Dify 表单或读取其掩码字段。
+
+## 2026-11-06｜20:58 回执与 Cloudflare 采样日志对照
+
+负责人提供的 Dify 截图显示当前表单 Endpoint 为正确基础路径 `https://gdufs.ccwu.cc/api/dify/external-knowledge`，API Key 在 UI 中掩码；第二张历史截图的根路径 Endpoint 会拼出错误的 `/retrieval`，不可使用。Cloudflare 20:58:16 采样项实际是来自本机 Chrome 的 GET，路径含 URL 编码的 Markdown 反引号、中文逗号和 `Dify` 文本，且边缘已缓解；它不是 Dify 验证所需的 POST `/api/dify/external-knowledge/retrieval`，也不匹配精确 BIC 规则。现有日志中最后一条识别为 Dify Node/Amazon 的 POST 在 20:07，早于 BIC 规则。Token 文件内容本机验证仍为 HTTP 200 `{"records":[]}`。因此 20:58 截图尚未与部署后 Dify POST 对上；Dify 侧保存仍未验收，需一次在正确 Endpoint 下的新 POST 回执或 Dify/Squid 当时的错误详情。未读取掩码 API Key、未提交 Dify 表单。
+
+## 2026-11-06 21:09｜BIC 例外后 Dify 保存仍失败
+
+负责人反馈 21:09 保存失败。按负责人随后授权，我在 Dify 当前表单中确认 Endpoint 为 `https://gdufs.ccwu.cc/api/dify/external-knowledge`、API Key 仍掩码，然后点击一次保存。Dify 控制台日志只给出 `Error saving/updating external API: Response`，表单未关闭、没有保存成功提示。表单没有被改写，API Key 未读取或输出。
+
+Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路径 `/api/dify/external-knowledge%60%EF%BC%8CDify`，边缘已缓解；它不是 Dify 校验 POST。最后可确认的 Dify Node/Amazon POST 仍是 20:07（BIC 规则部署前）；我点击保存后，Cloudflare 采样日志没有对应的新 Dify POST。相同时间本机带有效 Token 的空 POST可返回 HTTP 200 `{"records":[]}`。当前 BIC 豁免已 Active，但真实 Dify→Cloudflare→Worker 连接仍未验收。下一步需获取 Dify API/SSRF Proxy 对本次保存的单条日志（时间约 21:13 Asia/Shanghai、目标 `/api/dify/external-knowledge/retrieval`、HTTP/TLS/`X-Squid-Error`，不得包含 Bearer）以判定请求是否离开 Dify 网络；不要先扩大 Cloudflare 豁免或更改 Token。
+
+## 2026-11-06｜gdufs 校内网关接入实现与线上回退
+
+实现了 gdufs（`https://modelsq.gdufs.edu.cn/v1-openai`）作为第三个模型供应商：新增 `gdufs-openai-v1` 策略版本、端点白名单、按 `chat_template_kwargs:{thinking:false}` 关闭推理（实测 reasoning token 为 0）、把该网关「有 tool_calls 却返回 `finish_reason:"stop"`」的行为归一化为 `tool_calls`、以及按其把鉴权失败伪装成 404 的响应体文案区分 `MODEL_KEY_INVALID` 与 `MODEL_NOT_FOUND_OR_FORBIDDEN`。路由层改为 N 路优先级链并支持跳过尚未验证的层级；单元测试 11 项与真实网关集成测试（`GDUFS_LIVE_TEST=1`）均通过，能力凭据写入 `docs/verification/s2-a/gdufs-model.json`。
+
+按此配置部署到 `campusos-preview`（版本 `11bbc935-0f86-40ee-a26c-fcdc9d382d3a`）后，三个域名的 `/api/agent/status` 均报告 `gdufs` 就绪，但真实聊天全部失败：响应中 `queryUnderstanding` 为 `MODEL_NETWORK_ERROR`，最终回答变成「没有检索到」模板。
+
+用临时 Worker `campusos-gdufs-probe` 从 Cloudflare 边缘取证：对 `modelsq.gdufs.edu.cn` 的多个路径均返回 HTTP 200 `text/html`，内容为「本系统只允许校内访问…请通过广外VPN访问」；相同请求从本机发出则是 `application/json`。据此确认该网关只对校内网或 VPN 开放，边缘无法访问，属网络可达性限制而非适配器缺陷。该临时 Worker 已删除。
+
+按负责人决定不改动原调用次序，线上恢复为 `stepfun → deepseek`。调整了默认链路：gdufs 仅在显式设置 `MODEL_PRIORITY=gdufs` 时进入，避免不可达层级吞掉通往 deepseek 的额度回退。已重新部署（版本 `b3577b02-b60d-41f2-a758-060f90f99f74`），验证 `/api/agent/status` 返回 `stepfun`，且真实提问「校园网怎么开通？」返回正常答案、`queryUnderstanding` 得到有效计划。类型检查通过，模型相关单元测试 53 项通过。

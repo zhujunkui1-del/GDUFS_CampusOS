@@ -2,6 +2,20 @@
 export function assertPreviewTarget(config, accountId) {
   const env = config.env?.preview;
   const db = env?.d1_databases;
+  const allowedPreviewRoutes = new Set([
+    "campusos.zhiyuapp.site/api/console-*|zhiyuapp.site",
+    "campusos.zhiyuapp.site/api/admin*|zhiyuapp.site",
+  ]);
+  const previewRoutes = Array.isArray(env?.routes) ? env.routes : [];
+  const routesAreAllowed =
+    Array.isArray(env?.routes) &&
+    previewRoutes.length === allowedPreviewRoutes.size &&
+    new Set(
+      previewRoutes.map((route) => `${route.pattern}|${route.zone_name || ""}`),
+    ).size === allowedPreviewRoutes.size &&
+    previewRoutes.every((route) =>
+      allowedPreviewRoutes.has(`${route.pattern}|${route.zone_name || ""}`),
+    );
   if (!accountId || !/^[a-f0-9]{32}$/.test(accountId))
     throw new Error("An explicit Cloudflare account is required");
   if (
@@ -9,11 +23,10 @@ export function assertPreviewTarget(config, accountId) {
     env.main !== "preview-worker.ts" ||
     env.workers_dev !== true ||
     env.preview_urls !== false ||
-    !Array.isArray(env.routes) ||
-    env.routes.length
+    !routesAreAllowed
   )
     throw new Error(
-      "Preview must target campusos-preview on workers.dev without routes",
+      "Preview may only route the campusos.zhiyuapp.site Console API through the dedicated worker",
     );
   if (
     db?.length !== 1 ||

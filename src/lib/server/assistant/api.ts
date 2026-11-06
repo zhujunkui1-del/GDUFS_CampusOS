@@ -93,6 +93,8 @@ export const sessionGet = api(async (request, context) => {
         )
       : null,
     model: await defaultModelRuntime().status(),
+    deepThinkingAvailable:
+      context.difyChatEnabled && !!context.difyAppApiKey,
   };
 });
 export const historyGet = api(async (request, context) => {
@@ -127,11 +129,24 @@ export const conversationsGet = api(async (request, context) => {
 export const conversationPatch = api(async (request, context) => {
   const id = idSchema.parse(new URL(request.url).pathname.split("/").at(-1));
   const body = z
-    .object({ smartSearch: z.boolean() })
+    .object({ smartSearch: z.boolean().optional(), deepThinking: z.boolean().optional() })
     .strict()
+    .refine((value) => value.smartSearch !== undefined || value.deepThinking !== undefined)
     .parse(await readJson(request));
-  await context.store.setSmartSearch(context.identity, id, body.smartSearch);
-  return context.store.searchPreference(context.identity, id);
+  if (body.smartSearch !== undefined)
+    await context.store.setSmartSearch(context.identity, id, body.smartSearch);
+  if (body.deepThinking !== undefined) {
+    if (
+      body.deepThinking &&
+      (!context.difyChatEnabled || !context.difyAppApiKey)
+    )
+      throw new ApiError("SERVICE_UNAVAILABLE", "深度思考暂未配置。");
+    await context.store.setDeepThinking(context.identity, id, body.deepThinking);
+  }
+  return {
+    ...(await context.store.searchPreference(context.identity, id)),
+    ...(await context.store.deepThinkingPreference(context.identity, id)),
+  };
 }, true);
 export const conversationDelete = api(async (request, context) => {
   const body = await readJson(request, 1024, true);

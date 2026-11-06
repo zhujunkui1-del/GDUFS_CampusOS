@@ -45,9 +45,16 @@ export interface ModelClient {
     schema: z.ZodType<T>,
   ): Promise<T>;
 }
+export type ModelProviderId =
+  | "gdufs"
+  | "deepseek"
+  | "stepfun"
+  | "openai"
+  | "anthropic"
+  | "gemini";
 export type ModelSnapshot = {
   source: "platform" | "personal";
-  provider: "deepseek" | "stepfun" | "openai" | "anthropic" | "gemini";
+  provider: ModelProviderId;
   model: string;
   policyVersion: string;
   testedAt: string;

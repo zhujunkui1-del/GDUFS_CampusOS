@@ -28,6 +28,7 @@ import {
   ArrowLeft,
   Trash2,
   Globe,
+  BrainCircuit,
 } from "lucide-react";
 
 const SNAP_POINTS = [0.62, 1];
@@ -631,6 +632,7 @@ export function AssistantPanel({
                         aria-pressed={chat.smartSearch}
                         disabled={
                           chat.savingSearch ||
+                          chat.savingDeepThinking ||
                           chat.loadingConversation ||
                           (chat.busy && !chat.conversationId)
                         }
@@ -641,6 +643,25 @@ export function AssistantPanel({
                         <Globe size={16} />
                         智能搜索
                       </button>
+                      {chat.deepThinkingAvailable && (
+                        <button
+                          type="button"
+                          className="assistant-deep-thinking-toggle"
+                          aria-pressed={chat.deepThinking}
+                          disabled={
+                            chat.savingSearch ||
+                            chat.savingDeepThinking ||
+                            chat.loadingConversation ||
+                            (chat.busy && !chat.conversationId)
+                          }
+                          onClick={() =>
+                            void chat.setDeepThinking(!chat.deepThinking)
+                          }
+                        >
+                          <BrainCircuit size={16} />
+                          深度思考
+                        </button>
+                      )}
                     </div>
                   </div>
                 )}

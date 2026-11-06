@@ -60,6 +60,31 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
       false,
     );
   });
+  it("persists deep-thinking mode and its Dify conversation inside the owning conversation", async () => {
+    const store = new AssistantStore(fixture.db, () => now);
+    const owner = await store.identity(request());
+    const other = await store.identity(request());
+    const conversation = await store.conversation(owner);
+
+    expect(
+      await store.deepThinkingPreference(owner, conversation.id),
+    ).toEqual({ deepThinking: false, deepThinkingVersion: 0 });
+    await store.setDeepThinking(owner, conversation.id, true);
+    await store.setDifyConversation(owner, conversation.id, "dify-conversation-1");
+
+    const restored = await new AssistantStore(fixture.db, () => now).history(
+      owner,
+      conversation.id,
+    );
+    expect(restored.deepThinking).toBe(true);
+    expect(restored.deepThinkingVersion).toBe(1);
+    expect(await store.difyConversation(owner, conversation.id)).toBe(
+      "dify-conversation-1",
+    );
+    expect(restored.messages).toEqual([]);
+    await expect(store.deepThinkingPreference(other, conversation.id)).rejects.toThrow();
+    await expect(store.difyConversation(other, conversation.id)).rejects.toThrow();
+  });
   it("restores a guest through a new store instance, without trusting forged identity", async () => {
     const a = await new AssistantStore(fixture.db, () => now).identity(
       request("userId=admin; campusos_assistant=admin"),

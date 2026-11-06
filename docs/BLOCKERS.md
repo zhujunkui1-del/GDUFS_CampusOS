@@ -691,3 +691,84 @@ Worker/D1/域名当前读数已完成，wrangler.jsonc 生产目标已准备，�
 校内 Dify 的 Chatflow 草稿已经选择现有模型 `DeepSeek-V4-Flash-0731`。真实预览请求返回 API 404 `Model not found`，因此没有回答，尚不能发布或验收 Agent。需要 Dify 模型供应商管理员检查该配置实际使用的 API endpoint 与 model ID，或配置一个经授权的可用模型入口；目前 Workspace 的已配置模型列表未显示 StepFun，不能满足项目 StepFun 优先、仅额度耗尽才 DeepSeek 备用的路由契约。
 
 Dify 内置知识试点库已创建并索引 29 篇公开全文，使用不消耗 Embedding tokens 的经济倒排索引。召回已验证可命中校园网指南，但校园卡问题首条混入热水卡补办文章，仍需优化/验收。启用 High Quality Embedding 是不可轻易回退且配额/成本未确认的变更，暂不切换。该库是手动快照，不是 D1 实时镜像。
+
+## 2026-11-06｜Dify 外部知识连接仍待校内网络实测
+
+本机无认证探测显示 `gdufs.ccwu.cc` 与 `campusos.zhiyuapp.site` 的检索 POST 到达认证响应；`gdufs.zhiyuapp.site` 返回知识源不存在。三个主机的公开内容 GET 都返回同一 D1 记录，但这些结果不代表 Dify 容器的出站网络。未把密钥放入命令或聊天，也未保存 Dify API 配置。
+
+需在 Dify 实际运行网络内，以有效 Bearer 对正确 base endpoint 触发一次连接测试，并让管理员查看同时间的 Dify/Squid 日志。`campusos.zhiyuapp.site` 在当前本地路由与 Dify Host 白名单中缺乏明确配置；`gdufs.zhiyuapp.site` 的接口已拒绝来源。共享 Worker/路由/DNS均未修改。
+
+## 2026-11-06｜Dify Token 已轮换，本机验证通过，校内出站仍待验
+
+`DIFY_EXTERNAL_KB_TOKEN` 已重设到 `campusos-preview`，本机使用相同 Token 对规范 `gdufs.ccwu.cc` 检索路径的空 POST 返回200 `records:[]`。因此本机可达和鉴权/空探测已通过；Dify/Squid网络仍未用有效 Bearer 从校内服务端实测。Token值不写入项目或聊天，用户本地 TEMP 文件可供其手动填写。Dify API尚未保存。
+
+## 2026-11-06｜Dify 原生知识快照扩展已导入，排序仍待优化
+
+D-144 授权的最近100篇完整公开全文快照已索引。原 URL 连写错误的初版文件已禁用，修正版可用；D1 仍是唯一事实源，图片没有 OCR。召回测试确认精确文章可回传正确原文 URL，但目标为 Top 3 第三、另两条无关，因此经济倒排索引的相关性排序仍未验收通过。
+
+Chatflow 仍因 `DeepSeek-V4-Flash-0731` 返回 404 `Model not found` 无法生成真实回答，尚未发布；模型路由不符合 StepFun 优先/额度耗尽 DeepSeek 备用契约。快照不会同步更新，Dify Agent 仍不能对外宣称可用。
+
+## 2026-11-06｜有效 Token 本机查询通过，但 Dify 网络与检索质量未通过
+
+`DIFY_EXTERNAL_KB_TOKEN` 新值已在 Preview Secret 保存；本机对规范域名的空探测返回200，校园网查询返回4条但Top 3标题均不相关。此结果证明当前机到规范端点的认证及HTTP链路可用，不证明校内 Dify egress 或知识召回可用。真实 Dify 配置仍由负责人手动添加；需从 Dify 网络验证同一 Token，并改善 D1/Dify 词法查询排序后再验收。
+
+
+## 2026-11-06｜campusos.zhiyuapp.site 的后台 API 仍待 Cloudflare DNS 代理
+
+Cloudflare 两个域名已正常显示管理员访问密钥表单。`campusos.zhiyuapp.site` 仍解析至 Vercel CNAME，DNS 目前未代理；其页面的服务器 API 不具备 Preview Worker 的 D1/Console 环境。继续处理需将该 CNAME 改为 Cloudflare Proxied，并把 `campusos.zhiyuapp.site/api/console-*` 与 `/api/admin*` 精确转发到 `campusos-preview`，其余路径保留Vercel源站。该操作会让此主机的全部HTTPS流量先经Cloudflare；按浏览器操作确认策略，待负责人明确确认此DNS/代理变更后再执行。
+
+
+## 2026-11-06｜深度思考 API 与 D1 直连仍待真实验收
+
+项目端「深度思考」代码已接服务端 D1 证据检索和 Dify Chatflow SSE 适配，但当前运行配置没有 `DIFY_APP_API_KEY`。校内 Dify Chatflow 已按负责人授权发布，访问点已创建1个 App API Key；该 Key 仍留在 Dify，尚未配置到 Worker Secret。不能把已验证的 D1 外部知识 Bearer 当成 Dify App API Key。
+
+Dify 的“连接外部知识库”表单尚未保存。当前本机有效 Bearer 查询规范接口证明本机→Worker/D1 路由工作；不能证明 Dify 容器可出站访问 Worker。最近的自然语言试例仍把“校园网怎么开通”排成无关结果；因此深度模式当前复用的 D1 召回质量不应宣称已验收。实际项目部署也未执行：`campusos-preview` 同时服务 Preview 与 `gdufs.ccwu.cc`，发布变更可能影响正式域名。
+
+本轮 `npm run build:worker` 两次均因 Windows OpenNext/esbuild 临时文件写入 `Access is denied` 失败（默认 TEMP 与工作区外替代目录均复现）；完整 Worker 产物未生成，未部署。
+
+### 2026-11-06 部署后状态
+
+构建在项目内临时目录成功，最终部署版 `1fb00a34-be32-4f46-9e08-3a14c4ff90c8`，Dify Secret 变更版 `68ec12eb-f731-46c5-b250-b530712c1e4e`；Worker仍同时服务正式域名。独立游客测试进入深度分支、D1检索执行，但 Dify `/v1/chat-messages` 返回HTTP200非SSE，事件列表为空；刷新 Dify Logs 仍无调用记录。精确原因不能从当前回执判定，最可能阻塞在Cloudflare Worker→校内Dify API的出站/网关响应路径。需要校内 Dify 管理员确认此 API 对 Worker 请求的可达地址、鉴权及返回Content-Type。当前按负责人要求保留现有Dify App Keys，不再轮换。
+
+
+
+## 2026-11-06｜深度思考仍待 Dify 服务端 API 连通
+
+最终 Worker 版本 b5f6f81d-a4ca-4c0b-88eb-a58ac25740e8 已部署；DIFY_APP_API_KEY Secret 存在。独立游客的真实请求中，D1 检索完成，Dify /v1/chat-messages 返回 HTTP200 text/html、没有 SSE/JSON；Dify运行日志没有对应条目。DIFY_CHAT_ENABLED 已设为 false，Session API 验证 deepThinkingAvailable=false，网站暂不显示入口。
+
+下一步需要校内 Dify 管理员确认是否有 Cloudflare Worker 可访问的服务端 API 域名/网关路径，并解释为什么当前域名返回 HTML 登录页。已发布 Chatflow 的 Dify Web 预览能读取手工提供的 D1 证据，但这不是服务端链路验收。Dify 外部知识库连接表单未保存，Dify直接读取D1未验证。现有App Key和Worker Secret按负责人指令保留，不再轮换。
+
+
+## 2026-11-06｜最终阻断：Worker 到 Dify API
+
+当前 App Key 已作为加密 Worker Secret 存在，Chatflow 已发布，但真实 Worker 请求拿到 HTTP 200 text/html 而非 SSE/JSON，Dify Logs 也没有运行记录。DIFY_CHAT_ENABLED=false 已部署并验证，网站隐藏入口。需要校内 Dify 管理员确认一个允许 Cloudflare Worker 服务端调用、返回 Dify Chat API 协议的地址/网关；修复后才能启用。Dify 内置外部知识库 API连接页仍未保存，所以Dify自身直连D1也没有通过。
+
+## 2026-11-06｜Dify 外部知识 API 被 Cloudflare 边缘缓解
+
+更正此前“需要管理员确认 CampusOS API 可达地址”的笼统归因：Dify 到 CampusOS 外部知识 API 的请求已抵达 Cloudflare，但采样日志显示被 Cloudflare 边缘缓解且未转发 Worker。`gdufs.ccwu.cc` 的 Browser Integrity Check 已开启，Dify 请求 User-Agent 为 `node`；BIC 是高概率触发项，但当前未取得该请求的具体安全规则 ID。优先处理方向是为精确的外部知识 POST 路径增加最小化 BIC 豁免，仍需负责人明确授权后才可改安全设置。Dify API 保存测试尚未成功，仍为阻塞；不要把它与 Worker→Dify Chat API 返回 HTML 的反向问题混为一谈。
+
+## 2026-11-06｜BIC 例外已部署，等待 Dify 侧连接验收
+
+已根据负责人授权部署 Cloudflare 规则 `Dify 外部知识 API 仅跳过 BIC`（ID `b455f403a0b24013927ff0fd1e73779b`），仅匹配 `gdufs.ccwu.cc` 上的 `POST /api/dify/external-knowledge/retrieval`；其他 Cloudflare 安全产品和应用 Bearer 校验保留。本机以 `User-Agent: node` 探针已获得 Worker JSON 401。仍需在校内 Dify 对原外部知识 API 表单点击保存，以真实 Dify 出站请求验证该修复；在此之前不可记录为 Dify 连通已验收。Worker→Dify Chat API 返回 HTML 的独立问题仍阻塞“深度思考”。
+
+## 2026-11-06｜待获取 BIC 豁免部署后的 Dify 保存回执
+
+负责人最新截图包含一条正确 Endpoint 与一条错误的根路径 Endpoint。正确路径上的 Token 文件内容经本机验证有效；Cloudflare 当前采样日志没有 BIC 规则部署后的 Dify 来源请求，已看到的后续 API 请求均来自本机测试。因此尚未获得真实 Dify 重试回执，保存问题仍待验证。需使用 `https://gdufs.ccwu.cc/api/dify/external-knowledge`（不要将 `/retrieval` 写入 Endpoint），并在 API Key 填 Token 文件内容而不是文件路径；之后按保存时间核对 Cloudflare 边缘日志。
+
+### 2026-11-06 20:58 回执补充
+
+Dify 表单当前 Endpoint 显示正确基础路径，但 Cloudflare 20:58:16 仅记录到来自本机 Chrome 的 GET，URI 含编码格式字符和额外文本，不是 Dify validator 的 POST `/api/dify/external-knowledge/retrieval`；该 GET 被边缘缓解且不匹配精确 BIC 豁免。当前没有部署后 Dify POST 的 Cloudflare 回执；Token 本机验证有效。需要 Dify 保存触发的真实 POST 或 Dify/Squid 详细日志来区分未出站、凭据不匹配与其他响应问题。不要扩大现有 BIC 豁免以覆盖错误 GET。
+
+### 2026-11-06 21:09｜BIC 后的真实 Dify 验证仍失败
+
+已在用户授权下提交现有 Dify 表单一次，Dify 前端仅返回泛化 `Error saving/updating external API: Response`，未保存成功。Token 文件对 Worker 的授权空 POST 仍返回200。Cloudflare 20:58 样本是 Chrome GET 到格式污染路径，不是 Dify POST；截至本轮，未在 BIC 规则部署后看到新的 Dify 来源 POST。需要 Dify API/SSRF Proxy 对该次请求的脱敏状态/错误（尤其 TLS、连接错误或 X-Squid-Error，不能含 API Key）来继续定位；目前不能宣称 Dify 连接通过，也不能把后续失败直接归因给 Worker。
+
+## 2026-11-06｜校内模型网关无法从 Cloudflare 边缘访问
+
+`https://modelsq.gdufs.edu.cn/v1-openai` 只对校内网络或广外 VPN 开放。从 Cloudflare Worker 边缘请求其任意路径（含 `/v1-openai/models`、`/v1/chat/completions`）均返回 HTTP 200 `text/html`，正文为「本系统只允许校内访问，如果需使用，请通过广外VPN访问」；同一请求从本机发出返回 `application/json`。因此把该网关设为线上首选会导致每次模型调用都以 `MODEL_NETWORK_ERROR` 失败，而 `/api/agent/status` 因只校验本地签发的能力凭据仍显示就绪。线上已按负责人决定回退为 `stepfun → deepseek`；gdufs 仅在显式设置 `MODEL_PRIORITY=gdufs` 时启用。要在生产启用，需要能访问校内网的中继或校内托管运行环境，属新的部署决定。顺带记录：同一拦截页也会影响任何从公网访问 `dify.gdufs.edu.cn` API 的调用。
+
+## 2026-11-06｜Worker→Dify 的 HTTP 200 HTML 已定位为校内网络限制
+
+此前记录的「DeepSeek 深度思考」阻断项（Worker 调用 `dify.gdufs.edu.cn` 的 Chat API 返回 HTTP 200 `text/html`、Dify 日志无运行记录）在本次取证中找到了同一类原因：`dify.gdufs.edu.cn` 与 `modelsq.gdufs.edu.cn` 使用同一站点限制，从 Cloudflare Worker 边缘请求 `https://dify.gdufs.edu.cn/v1/parameters` 与 `/` 均返回 HTTP 200 `text/html`，正文为「本系统只允许校内访问，如果需使用，请通过广外VPN访问」。本机请求同一地址则返回 Dify 的正常 JSON/307 响应。
+
+因此该故障不是 Dify API Key、网关路径或 Chatflow 配置问题，而是 Worker 无法访问校内服务。要让 Worker 侧调用 Dify 或 Dify 调用 Worker 成立，需要一方位于能访问校内网的网络中继上；`DIFY_CHAT_ENABLED=false` 保持现状，深度思考开关继续隐藏。Dify 侧作为**出站**发起方（Dify→CampusOS 外部知识 API）不受此限制影响，其保存失败的排查仍以前一条记录为准。

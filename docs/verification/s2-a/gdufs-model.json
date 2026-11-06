@@ -1,0 +1,46 @@
+{
+  "provider": "gdufs",
+  "model": "DeepSeek-V4.1-Flash-1017",
+  "realApi": true,
+  "generation": "passed",
+  "toolCalling": "passed",
+  "toolResultFollowup": "passed",
+  "streaming": "passed",
+  "jsonObjectWithServerSchema": "passed",
+  "strictJsonSchema": "not_tested",
+  "requests": 3,
+  "maxOutputTokensPerRequest": 256,
+  "durationMs": 7298,
+  "testedAt": "2026-11-06T13:07:23.218Z",
+  "events": [
+    {
+      "type": "tool.started",
+      "name": "campusos_diagnostic"
+    },
+    {
+      "type": "tool.finished",
+      "name": "campusos_diagnostic",
+      "ok": true
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "message.delta"
+    },
+    {
+      "type": "run.completed"
+    }
+  ],
+  "diagnosticToolOnly": true,
+  "businessSkillsTested": false
+}

@@ -25,7 +25,7 @@ npx wrangler d1 migrations apply campusos-preview --remote --env preview
 npm run deploy:preview
 ```
 
-管理员shell须明确设置已核对的`CLOUDFLARE_ACCOUNT_ID`。脚本检查预览名称、专用DB、main、自引用和无正式Routes，并显式传入配置/env；不要在tail等命令同时传入Worker位置名称和env，否则某些命令会追加第二个-preview。当前预览入口`preview-worker.ts`复用原API处理函数和OpenNext请求ALS；页面使用原ASSETS只读缓存，无R2/KV/DO。升级OpenNext后必须回归该入口，不把其内部生成模块视作永久兼容保证。
+管理员shell须明确设置已核对的`CLOUDFLARE_ACCOUNT_ID`。脚本检查预览名称、专用DB、main、自引用和严格路由白名单（仅允许负责人指定的campusos.zhiyuapp.site Console API 两条路径），并显式传入配置/env；不要在tail等命令同时传入Worker位置名称和env，否则某些命令会追加第二个-preview。当前预览入口`preview-worker.ts`复用原API处理函数和OpenNext请求ALS；页面使用原ASSETS只读缓存，无R2/KV/DO。升级OpenNext后必须回归该入口，不把其内部生成模块视作永久兼容保证。
 
 预览build包装器还dry-run编译最终入口、扫描实际Worker bundle后才允许部署；不可绕过。迁移前列出目标名/UUID/账户和待执行列表，只执行新增非破坏性迁移，不能为测试删除重建库。0004为云端CASE分句增加的括号不改规则，既有已应用本地库不重跑。
 

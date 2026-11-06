@@ -61,6 +61,9 @@ export function assistantBindings() {
             process.env.ACCOUNT_OTP_SECRET ||
             "",
     environment: String(env.APP_ENV || "local"),
+    difyAppApiKey:
+      typeof env.DIFY_APP_API_KEY === "string" ? env.DIFY_APP_API_KEY : "",
+    difyChatEnabled: env.DIFY_CHAT_ENABLED === "true",
     modelRequestOutputLimit:
       env.MODEL_MAX_OUTPUT_TOKENS === "2048" ? 2048 : 1024,
     openValidation:

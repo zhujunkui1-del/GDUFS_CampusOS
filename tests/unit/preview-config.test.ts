@@ -23,6 +23,20 @@ it("targets exactly the dedicated preview with no production domain", () => {
     environment: "preview",
   });
 });
+it("allows only the exact campusos.zhiyuapp.site Console API proxy routes", () => {
+  const c = config();
+  expect(assertPreviewTarget(c, account).worker).toBe("campusos-preview");
+  c.env.preview.routes = [
+    { pattern: "campusos.zhiyuapp.site/api/console-*", zone_name: "zhiyuapp.site" },
+    { pattern: "campusos.zhiyuapp.site/api/admin*", zone_name: "zhiyuapp.site" },
+  ];
+  expect(assertPreviewTarget(c, account).worker).toBe("campusos-preview");
+  const broader = config();
+  broader.env.preview.routes = [
+    { pattern: "campusos.zhiyuapp.site/*", zone_name: "zhiyuapp.site" },
+  ];
+  expect(() => assertPreviewTarget(broader, account)).toThrow();
+});
 it.each(["name", "main", "routes", "workers_dev", "preview_urls"])(
   "rejects unsafe preview %s",
   (field) => {

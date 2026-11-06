@@ -96,6 +96,8 @@ import { citedAnswer } from "./citations";
 import { searchControlBusiness } from "@/lib/retrieval/query-controls";
 import { revalidateCalendarEvidence } from "../calendar/search";
 import { eventEvidenceAnswer } from "./evidence-answer";
+import { retrieveDeepThinkingEvidence, citedEvidenceCards } from "./deep-thinking-evidence";
+import { difyChatEvents, stopDifyChat } from "./dify-chat";
 
 /** The same article can arrive from several indexes; cite it once. */
 function titleKey(title: string) {
@@ -269,9 +271,250 @@ export async function chatResponse(request: Request) {
         conversation.id,
         input.smartSearch,
       );
+    if (
+      input.deepThinking &&
+      (!ctx.difyChatEnabled || !ctx.difyAppApiKey)
+    )
+      throw new ApiError("SERVICE_UNAVAILABLE", "深度思考暂未配置。");
+    if (
+      (await ctx.store.deepThinkingPreference(ctx.identity, conversation.id))
+        .deepThinking !== input.deepThinking
+    )
+      await ctx.store.setDeepThinking(
+        ctx.identity,
+        conversation.id,
+        input.deepThinking,
+      );
     const gate = inputGate(businessMessage, history.messages);
     const content = contentIntent(businessMessage, history.messages);
     const personaMessage = content.active ? content.query : businessMessage;
+    const mapWork =
+      content.map ||
+      /(?:带我去|带我走|带我过去|导航到|导航去|怎么去|如何去|怎样去|规划.{0,6}路线|清除路线)/.test(
+        businessMessage,
+      );
+    if (input.deepThinking && !mapWork) {
+      const evidence = await retrieveDeepThinkingEvidence(
+        ctx.db,
+        input.message,
+        history.messages,
+        request.signal,
+      );
+      const runId = await ctx.store.reserve(
+        ctx.identity,
+        conversation,
+        requestId,
+        ctx.ip,
+      );
+      await ctx.store.append(conversation, "user", input.message, [], requestId);
+      const abort = new AbortController();
+      const streamSignal = AbortSignal.any([request.signal, abort.signal]);
+      let taskId: string | undefined;
+      let streamController: ReadableStreamDefaultController<Uint8Array> | undefined;
+      let eventSequence = 0;
+      const encode = (type: AgentEvent["type"], payload: Record<string, unknown>) =>
+        encodeAgentEvent({
+          runId,
+          eventId: `${runId}:${++eventSequence}`,
+          timestamp: new Date().toISOString(),
+          type,
+          payload,
+        });
+      const stream = new ReadableStream<Uint8Array>({
+        start(controller) {
+          streamController = controller;
+          const emit = (type: AgentEvent["type"], payload: Record<string, unknown>) => {
+            try {
+              controller.enqueue(new TextEncoder().encode(encode(type, payload)));
+            } catch {}
+          };
+          emit("artifact.ready", {
+            conversationId: conversation.id,
+            requestId,
+            started: true,
+          });
+          const work = async () => {
+            let answer = "";
+            let difyConversationId: string | undefined;
+            let usage: Record<string, unknown> | undefined;
+            const difyEventTypes: string[] = [];
+            try {
+              const difyUser = `campusos-${(
+                await tokenHash(
+                  (ctx.identity.user?.id || ctx.identity.owner) +
+                    ctx.signingSecret,
+                )
+              ).slice(0, 32)}`;
+              for await (const event of difyChatEvents({
+                apiKey: ctx.difyAppApiKey,
+                query: input.message,
+                evidence: evidence.context,
+                user: difyUser,
+                conversationId: await ctx.store.difyConversation(
+                  ctx.identity,
+                  conversation.id,
+                ),
+                signal: streamSignal,
+              })) {
+                streamSignal.throwIfAborted();
+                if (!difyEventTypes.includes(event.event) && difyEventTypes.length < 12)
+                  difyEventTypes.push(event.event);
+                if (event.task_id) taskId = event.task_id;
+                if (event.conversation_id)
+                  difyConversationId = event.conversation_id;
+                const data = event.data || {};
+                if (event.event === "error")
+                  throw new ApiError(
+                    "UPSTREAM_ERROR",
+                    "深度思考暂不可用，请稍后重试。",
+                    true,
+                  );
+                if (
+                  event.event === "workflow_finished" &&
+                  data.status === "failed"
+                )
+                  throw new ApiError(
+                    "UPSTREAM_ERROR",
+                    "深度思考暂不可用，请稍后重试。",
+                    true,
+                  );
+                const delta =
+                  (typeof event.answer === "string" && event.answer) ||
+                  (typeof data.answer === "string" && data.answer) ||
+                  "";
+                if (
+                  delta &&
+                  (event.event === "message" ||
+                    event.event === "agent_message")
+                ) {
+                  answer += delta;
+                  emit("message.delta", { text: delta });
+                }
+                const metadata =
+                  event.metadata ||
+                  (data.metadata && typeof data.metadata === "object"
+                    ? (data.metadata as Record<string, unknown>)
+                    : undefined);
+                const eventUsage = metadata?.usage as
+                  | Record<string, unknown>
+                  | undefined;
+                if (eventUsage) usage = eventUsage;
+                if (
+                  !answer &&
+                  (event.event === "message_end" ||
+                    event.event === "workflow_finished")
+                ) {
+                  const outputs =
+                    data.outputs && typeof data.outputs === "object"
+                      ? (data.outputs as Record<string, unknown>)
+                      : {};
+                  const finalText =
+                    (typeof outputs.answer === "string" && outputs.answer) ||
+                    (typeof outputs.text === "string" && outputs.text) ||
+                    "";
+                  if (finalText) {
+                    answer = finalText;
+                    emit("message.delta", { text: finalText });
+                  }
+                }
+              }
+              if (!answer.trim())
+                throw new ApiError(
+                  "UPSTREAM_ERROR",
+                  "Dify 未返回最终答复，请稍后重试。",
+                );
+              if (difyConversationId)
+                await ctx.store.setDifyConversation(
+                  ctx.identity,
+                  conversation.id,
+                  difyConversationId,
+                );
+              const cards = citedEvidenceCards(answer, evidence.cards);
+              const metrics = {
+                execution: "dify-chatflow",
+                provider: "dify",
+                deepThinking: true,
+                d1EvidenceCount: evidence.cards.length,
+                d1RetrievalAvailable: evidence.available,
+                difyEventTypes,
+                usage: usage || null,
+                usageComplete: !!usage,
+                serverElapsedMs: Math.round(performance.now() - receivedAt),
+              };
+              const chargedTokens = Number(usage?.total_tokens || 0);
+              await ctx.store.append(
+                conversation,
+                "assistant",
+                answer,
+                cards,
+                requestId,
+              );
+              await ctx.store.finish(
+                ctx.identity,
+                runId,
+                "completed",
+                metrics,
+                Number.isSafeInteger(chargedTokens) ? chargedTokens : 0,
+              );
+              emit("artifact.ready", {
+                conversationId: conversation.id,
+                cards,
+                routes: [],
+              });
+              emit("run.completed", { conversationId: conversation.id, requestId, metrics });
+            } catch (error) {
+              if (streamSignal.aborted) {
+                await ctx.store.cancel(ctx.identity, requestId).catch(() => {});
+                if (taskId) void stopDifyChat(ctx.difyAppApiKey, taskId, `campusos-${(await tokenHash((ctx.identity.user?.id || ctx.identity.owner) + ctx.signingSecret)).slice(0, 32)}`);
+                return;
+              }
+              const controlled =
+                error instanceof ApiError
+                  ? error
+                  : new ApiError("UPSTREAM_ERROR", "深度思考暂不可用，请稍后重试。", true);
+              await ctx.store
+                .finish(
+                  ctx.identity,
+                  runId,
+                  "failed",
+                  {
+                    execution: "dify-chatflow",
+                    deepThinking: true,
+                    difyEventTypes,
+                    serverElapsedMs: Math.round(performance.now() - receivedAt),
+                  },
+                  0,
+                  controlled.code,
+                )
+                .catch(() => {});
+              emit("run.failed", {
+                conversationId: conversation.id,
+                error: { code: controlled.code, message: controlled.message },
+              });
+            } finally {
+              try {
+                streamController?.close();
+              } catch {}
+            }
+          };
+          void work();
+        },
+        cancel() {
+          abort.abort();
+          void ctx.store.cancel(ctx.identity, requestId);
+        },
+      });
+      response = new Response(stream, {
+        headers: {
+          "Content-Type": "text/event-stream; charset=utf-8",
+          "Cache-Control": "no-store, no-transform",
+          "X-Accel-Buffering": "no",
+          "Set-Cookie": ctx.identity.cookie,
+          "X-Request-Id": apiContext.requestId,
+        },
+      });
+      return { started: true };
+    }
     const directReply =
       !input.smartSearch &&
       /(?:联网|上网|全网|互联网|网上搜|外部搜索)/.test(businessMessage) &&

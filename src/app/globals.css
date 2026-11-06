@@ -640,7 +640,8 @@ p {
   gap: 8px;
   margin-top: 8px;
 }
-.assistant-search-toggle {
+.assistant-search-toggle,
+.assistant-deep-thinking-toggle {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -654,12 +655,14 @@ p {
   font-size: 0.85rem;
   cursor: pointer;
 }
-.assistant-search-toggle[aria-pressed="true"] {
+.assistant-search-toggle[aria-pressed="true"],
+.assistant-deep-thinking-toggle[aria-pressed="true"] {
   background: #eaf3ff;
   border-color: #8cb8ed;
   color: var(--brand-primary);
 }
-.assistant-search-toggle:focus-visible {
+.assistant-search-toggle:focus-visible,
+.assistant-deep-thinking-toggle:focus-visible {
   outline: 2px solid var(--brand-primary);
   outline-offset: 2px;
 }

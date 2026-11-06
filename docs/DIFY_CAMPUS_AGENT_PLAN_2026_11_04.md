@@ -1,6 +1,6 @@
 # CampusOS Dify 校园助理实施方案
 
-**状态：2026-11-05 Dify 原生知识试点库已创建（29 篇 D1 公共全文、经济索引）并建立 Chatflow 草稿。Chatflow 模型预览返回 404 `Model not found`，未发布。外部知识 API 仍未保存；本地空 POST 修复待 Wrangler 重新授权后发布。**
+**状态：2026-11-06 D-144 授权的最近100篇 D1 完整公开全文快照已导入校内 Dify 经济倒排索引；100篇/100个唯一 ID/版本，修正版显示可用。精确标题召回目标文章和正确 URL，但目标仅排 Top 3 第三，另两条不相关；排序仍弱。D-140 规范端点 `gdufs.ccwu.cc` 的 Preview Token 已轮换：本机有效 Bearer 空 POST 返回200，知识检索查询返回4条但Top 3标题无关。校内 Dify 出站仍未用有效 Bearer 验收，外部 API 尚未保存。Chatflow 预览模型返回 404 `Model not found`，未发布。知识快照为手动副本，不自动同步 D1。**
 
 ## 结论与当前工作区
 
@@ -224,3 +224,27 @@ Dify 官方说明注册外部知识 API 时会将 `/retrieval` 附加到基础�
 已创建 Chatflow「广外通·校园助理（Dify试点）」，ID `39945f9b-9ee0-4c2c-a3a0-fc5298b3f861`，结构为用户输入→知识检索→LLM→直接回复；知识检索结果接入上下文，系统提示包含有限数据范围、事实约束、来源链接和轻量大肥鱼语气，引用归属已开启。应用未发布。一次预览「校园卡如何补办？」由已配置的 `DeepSeek-V4-Flash-0731` 调用，Dify 返回 404 `Model not found`，未生成答案。
 
 未更改 Dify 模型供应商或密钥，未安装 StepFun 插件。当前模型列表与网站原有 StepFun 优先/额度耗尽后 DeepSeek 路由不一致；需管理员核对 OpenAI-compatible provider 的 model ID/endpoint，且后续要提供可用的 StepFun/DeepSeek 路由后才能完成真实 Agent 答案验收。全站 Agent、雷达、活动日历、地图、智能搜索和现有 Dify 外部 API 尚未接入该 Chatflow。
+
+
+## 2026-11-06 实施进度：CampusOS「深度思考」运行分支
+
+按负责人 D-146 要求，项目现有全局助理已加入服务器端 Dify Chatflow 适配分支。本轮不是从本地 `articles_full` 导入数据，也不会在 wechat-mp-rss 采集后推送文章；每轮仍只由 CampusOS 现有 D1 公开检索取少量证据后交给 Dify。D1 为事实来源，Dify 只负责综合并生成最终答复。偏好及 Dify conversation ID 绑定现有 CampusOS conversation owner，API Key 只由服务端 Secret 读取。地图/导航和外网智能搜索不由此 Dify Chatflow 代替。
+
+已将现有 Chatflow LLM 节点补充简洁的大肥鱼表达、当前 D1 证据边界、[n] 引用和最终答复规则；一条真实 D1 预报名文章摘录在校内 Dify Web 预览中得到正确日期和引用。Chatflow 已按负责人授权发布并创建1个 Dify App API Key；外部知识库 API 表单仍未保存，App API Key 尚未配置为 Cloudflare Secret。此预览是“CampusOS提供证据后Dify可用证据回答”的探针，不证明 Dify 出站直连 D1。
+
+## 2026-11-06 状态更新
+
+Chatflow 已发布，Dify App API Key 已建立；其中一把作为 `DIFY_APP_API_KEY` Cloudflare Secret 保存。代码已部署到共享 `campusos-preview`（版本 `1fb00a34-be32-4f46-9e08-3a14c4ff90c8`；Secret变更版本 `68ec12eb-f731-46c5-b250-b530712c1e4e`），因此同时更新 `gdufs.ccwu.cc`。API的真实调用仍未通过：Cloudflare Worker 收到 Dify `POST /v1/chat-messages` 的HTTP200，但Content-Type不是SSE、无事件/回答；Dify日志页没有对应执行记录。直接网页预览可以消费手动提供的D1证据，但不证明Worker出站已通。Dify外部知识库API也未保存。负责人明确保留现有密钥并停止轮换。
+
+
+
+## 2026-11-06 联调最终状态
+
+Dify Chatflow已发布，App API Key 已配置到共享 Worker Secret；本地代码已部署到共享 campusos-preview，最终代码版 b5f6f81d-a4ca-4c0b-88eb-a58ac25740e8，Secret变更版 68ec12eb-f731-46c5-b250-b530712c1e4e。Worker真实请求返回 HTTP200 text/html，不是 Dify Chatflow API 的 SSE/JSON，Dify日志也没有对应运行。独立游客Session回执 deepThinkingAvailable=false，因为 DIFY_CHAT_ENABLED=false；网站不会显示尚不可用的开关。
+
+手动 Dify Web 预览在用户消息里提供公开 D1 文章摘录后，能给出准确预报名日期并引用[1]。因此当前可行架构是CampusOS D1按当前问题检索后，将少量证据传入Dify；不是Dify直接连接D1。外部知识 API 表单未保存，直接出站检索尚未验证。articles_full本地目录没有导入，RSS无同步。负责人要求保留现有密钥并停止轮换。
+
+
+## 2026-11-06 最终验收结论
+
+Chatflow已发布，App API Key Secret 已配置并保留，Worker共享部署版 b5f6f81d-a4ca-4c0b-88eb-a58ac25740e8。真实 Worker→Dify 请求返回HTTP200 text/html而非SSE/JSON，Dify日志无调用；因此已部署代码但没有可用的线上深度思考答复。DIFY_CHAT_ENABLED=false 已部署，按钮隐藏。需要校内 Dify 管理员提供可从Cloudflare Worker访问的 API 路径，再复验。D1来源仍由CampusOS服务端检索；没有导入articles_full或开启RSS自动同步。

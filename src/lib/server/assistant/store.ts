@@ -275,6 +275,7 @@ export class AssistantStore {
     return {
       conversationId: id,
       ...(await this.searchPreference(identity, id)),
+      ...(await this.deepThinkingPreference(identity, id)),
       messages,
       selectedPlaceId: conversation.selected_place_id,
       activeRouteId: conversation.active_route_id,
@@ -569,6 +570,84 @@ export class AssistantStore {
         "smart-search:" + conversationId,
         conversationId,
         JSON.stringify({ enabled, version: 1 }),
+        conversationId,
+        identity.owner,
+        this.now(),
+      )
+      .run();
+    if (!result.meta.changes) throw new ApiError("NOT_FOUND", "对话已失效。");
+  }
+  async deepThinkingPreference(identity: AssistantIdentity, conversationId: string) {
+    await this.conversation(identity, conversationId);
+    const row = await this.db
+      .prepare(
+        "SELECT content FROM conversation_messages WHERE id=? AND conversation_id=? AND role='system'",
+      )
+      .bind("deep-thinking:" + conversationId, conversationId)
+      .first<{ content: string }>();
+    try {
+      const value = JSON.parse(row?.content || "{}");
+      return {
+        deepThinking: value.enabled === true || value.enabled === 1,
+        deepThinkingVersion: Number.isSafeInteger(value.version)
+          ? value.version
+          : 0,
+      };
+    } catch {
+      return { deepThinking: false, deepThinkingVersion: 0 };
+    }
+  }
+  async setDeepThinking(
+    identity: AssistantIdentity,
+    conversationId: string,
+    enabled: boolean,
+  ) {
+    const result = await this.db
+      .prepare(
+        "INSERT INTO conversation_messages(id,conversation_id,role,content,artifacts_json) SELECT ?,?,'system',?,'[]' WHERE EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?)) ON CONFLICT(id) DO UPDATE SET content=json_object('enabled',json_extract(excluded.content,'$.enabled'),'version',COALESCE(json_extract(conversation_messages.content,'$.version'),0)+1)",
+      )
+      .bind(
+        "deep-thinking:" + conversationId,
+        conversationId,
+        JSON.stringify({ enabled, version: 1 }),
+        conversationId,
+        identity.owner,
+        this.now(),
+      )
+      .run();
+    if (!result.meta.changes) throw new ApiError("NOT_FOUND", "对话已失效。");
+  }
+  async difyConversation(identity: AssistantIdentity, conversationId: string) {
+    await this.conversation(identity, conversationId);
+    const row = await this.db
+      .prepare(
+        "SELECT content FROM conversation_messages WHERE id=? AND conversation_id=? AND role='system'",
+      )
+      .bind("dify-conversation:" + conversationId, conversationId)
+      .first<{ content: string }>();
+    try {
+      const value = JSON.parse(row?.content || "{}");
+      return typeof value.id === "string" && value.id.length <= 128
+        ? value.id
+        : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+  async setDifyConversation(
+    identity: AssistantIdentity,
+    conversationId: string,
+    difyConversationId: string,
+  ) {
+    const externalId = z.string().min(1).max(128).parse(difyConversationId);
+    const result = await this.db
+      .prepare(
+        "INSERT INTO conversation_messages(id,conversation_id,role,content,artifacts_json) SELECT ?,?,'system',?,'[]' WHERE EXISTS(SELECT 1 FROM conversations WHERE id=? AND owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?)) ON CONFLICT(id) DO UPDATE SET content=excluded.content",
+      )
+      .bind(
+        "dify-conversation:" + conversationId,
+        conversationId,
+        JSON.stringify({ id: externalId }),
         conversationId,
         identity.owner,
         this.now(),

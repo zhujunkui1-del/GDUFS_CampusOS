@@ -16,6 +16,7 @@ export type ConsoleBindings = {
   adminKey?: string;
   credentialSalt?: string;
   origin?: string;
+  allowedOrigins?: string[];
   emails: string[];
   team: string;
   audience: string;
@@ -50,6 +51,10 @@ export function consoleBindings(): ConsoleBindings {
     adminKey: value("CONSOLE_ADMIN_ACCESS_KEY"),
     credentialSalt: value("CONSOLE_CREDENTIAL_SALT"),
     origin: value("CONSOLE_ORIGIN"),
+    allowedOrigins: value("CONSOLE_ALLOWED_ORIGINS")
+      .split(",")
+      .map((origin) => origin.trim())
+      .filter(Boolean),
     emails: parsed.data,
     team: value("CONSOLE_ACCESS_TEAM_DOMAIN"),
     audience: value("CONSOLE_ACCESS_AUD"),
@@ -77,10 +82,24 @@ export function consoleMode(request: Request, config: ConsoleBindings) {
   if (localConsole(request, config)) return "local" as const;
   if (["admin_key", "admin_password"].includes(config.mode)) {
     const url = new URL(request.url);
+    const allowedOrigins = [config.origin, ...(config.allowedOrigins || [])]
+      .filter((origin): origin is string => Boolean(origin))
+      .some((origin) => {
+        try {
+          const configured = new URL(origin);
+          return (
+            configured.protocol === "https:" &&
+            configured.origin === origin &&
+            configured.origin === url.origin
+          );
+        } catch {
+          return false;
+        }
+      });
     if (
       !["preview", "production"].includes(config.environment) ||
       url.protocol !== "https:" ||
-      url.origin !== config.origin ||
+      !allowedOrigins ||
       config.emails.length !== 1 ||
       !config.adminKey ||
       config.adminKey.length < 40 ||

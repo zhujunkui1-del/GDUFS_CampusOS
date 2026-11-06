@@ -98,6 +98,8 @@ export const AssistantHistorySchema = z
   .object({
     smartSearch: z.boolean().optional(),
     smartSearchVersion: z.number().int().nonnegative().optional(),
+    deepThinking: z.boolean().optional(),
+    deepThinkingVersion: z.number().int().nonnegative().optional(),
     conversationId: z.string().uuid(),
     messages: z.array(StoredMessageSchema),
     selectedPlaceId: z.string().nullable(),
@@ -136,6 +138,8 @@ export function historyForClient(
       ? {
           smartSearch: history.smartSearch ?? false,
           smartSearchVersion: history.smartSearchVersion ?? 0,
+          deepThinking: history.deepThinking ?? false,
+          deepThinkingVersion: history.deepThinkingVersion ?? 0,
         }
       : {}),
     messages: paginated

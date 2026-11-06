@@ -5,6 +5,8 @@ export type ConversationView = {
   messages: StoredMessage[];
   smartSearch?: boolean;
   smartSearchVersion?: number;
+  deepThinking?: boolean;
+  deepThinkingVersion?: number;
 };
 export const blankConversation = (): ConversationView => ({
   title: "新对话",
@@ -27,18 +29,34 @@ export function restoredSearchPreference(
     conversationId: string;
     smartSearch?: boolean;
     smartSearchVersion?: number;
+    deepThinking?: boolean;
+    deepThinkingVersion?: number;
   },
   writing: boolean,
+  writingDeepThinking = false,
 ) {
-  return prior.id === incoming.conversationId &&
+  const sameConversation = prior.id === incoming.conversationId;
+  const preserveSearch =
+    sameConversation &&
     (writing ||
-      (prior.smartSearchVersion ?? 0) > (incoming.smartSearchVersion ?? 0))
-    ? {
-        smartSearch: prior.smartSearch ?? false,
-        smartSearchVersion: prior.smartSearchVersion ?? 0,
-      }
-    : {
-        smartSearch: incoming.smartSearch ?? false,
-        smartSearchVersion: incoming.smartSearchVersion ?? 0,
-      };
+      (prior.smartSearchVersion ?? 0) > (incoming.smartSearchVersion ?? 0));
+  const preserveDeepThinking =
+    sameConversation &&
+    (writingDeepThinking ||
+      (prior.deepThinkingVersion ?? 0) >
+        (incoming.deepThinkingVersion ?? 0));
+  return {
+    smartSearch: preserveSearch
+      ? (prior.smartSearch ?? false)
+      : (incoming.smartSearch ?? false),
+    smartSearchVersion: preserveSearch
+      ? (prior.smartSearchVersion ?? 0)
+      : (incoming.smartSearchVersion ?? 0),
+    deepThinking: preserveDeepThinking
+      ? (prior.deepThinking ?? false)
+      : (incoming.deepThinking ?? false),
+    deepThinkingVersion: preserveDeepThinking
+      ? (prior.deepThinkingVersion ?? 0)
+      : (incoming.deepThinkingVersion ?? 0),
+  };
 }

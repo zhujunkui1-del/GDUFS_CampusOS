@@ -3,14 +3,17 @@ import type { ModelClient, ModelSnapshot } from "@/domain/models/contracts";
 import { ApiError } from "../errors";
 import {
   DeepseekModelClient,
+  GDUFS_POLICY_VERSION,
   MODEL_POLICY_VERSION,
   approvedDeepseekEndpoint,
+  approvedGdufsEndpoint,
   approvedStepEndpoint,
   STEP_POLICY_VERSION,
+  type ProviderId,
 } from "./deepseek";
 
 export type DefaultModelConfig = {
-  provider?: "deepseek" | "stepfun";
+  provider?: ProviderId;
   apiKey?: string;
   model?: string;
   baseUrl?: string;
@@ -18,11 +21,21 @@ export type DefaultModelConfig = {
   maxOutputTokens?: number;
   providerManagedOutput?: boolean;
 };
+export const policyVersionFor = (provider: ProviderId | undefined) =>
+  provider === "gdufs"
+    ? GDUFS_POLICY_VERSION
+    : provider === "stepfun"
+      ? STEP_POLICY_VERSION
+      : MODEL_POLICY_VERSION;
 export const CapabilityReceiptSchema = z
   .object({
-    provider: z.enum(["deepseek", "stepfun"]),
+    provider: z.enum(["deepseek", "stepfun", "gdufs"]),
     model: z.string().max(100),
-    policyVersion: z.enum([MODEL_POLICY_VERSION, STEP_POLICY_VERSION]),
+    policyVersion: z.enum([
+      MODEL_POLICY_VERSION,
+      STEP_POLICY_VERSION,
+      GDUFS_POLICY_VERSION,
+    ]),
     fingerprint: z.string().regex(/^[a-f0-9]{64}$/),
     testedAt: z.iso.datetime(),
     toolCalling: z.literal(true),
@@ -33,16 +46,20 @@ export const CapabilityReceiptSchema = z
 export type CapabilityReceipt = z.infer<typeof CapabilityReceiptSchema>;
 export async function configurationFingerprint(config: DefaultModelConfig) {
   const endpoint =
-    config.provider === "stepfun"
-      ? approvedStepEndpoint(
-          config.baseUrl || "https://api.stepfun.com/step_plan/v1",
+    config.provider === "gdufs"
+      ? approvedGdufsEndpoint(
+          config.baseUrl || "https://modelsq.gdufs.edu.cn/v1-openai",
         )
-      : approvedDeepseekEndpoint(config.baseUrl || "https://api.deepseek.com");
+      : config.provider === "stepfun"
+        ? approvedStepEndpoint(
+            config.baseUrl || "https://api.stepfun.com/step_plan/v1",
+          )
+        : approvedDeepseekEndpoint(
+            config.baseUrl || "https://api.deepseek.com",
+          );
   const bytes = new TextEncoder().encode(
     JSON.stringify([
-      config.provider === "stepfun"
-        ? STEP_POLICY_VERSION
-        : MODEL_POLICY_VERSION,
+      policyVersionFor(config.provider),
       endpoint,
       config.model,
       config.apiKey,
@@ -55,11 +72,8 @@ export async function configurationFingerprint(config: DefaultModelConfig) {
 
 // Only registered providers can be constructed. No user URL/config ID reaches this factory.
 export class ProviderRegistry {
-  create(
-    provider: "deepseek" | "stepfun",
-    config: DefaultModelConfig,
-  ): ModelClient {
-    if (!["deepseek", "stepfun"].includes(provider))
+  create(provider: ProviderId, config: DefaultModelConfig): ModelClient {
+    if (!["deepseek", "stepfun", "gdufs"].includes(provider))
       throw new ApiError("MODEL_SELECTION_REQUIRED", "供应商未配置。");
     return new DeepseekModelClient(
       config.model || "",
@@ -100,10 +114,7 @@ export class ModelRouter {
       age < 0 ||
       receipt.model !== this.#config.model ||
       receipt.provider !== (this.#config.provider || "deepseek") ||
-      receipt.policyVersion !==
-        (this.#config.provider === "stepfun"
-          ? STEP_POLICY_VERSION
-          : MODEL_POLICY_VERSION) ||
+      receipt.policyVersion !== policyVersionFor(this.#config.provider) ||
       receipt.fingerprint !== (await configurationFingerprint(this.#config))
     )
       throw new ApiError(

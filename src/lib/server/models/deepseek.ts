@@ -9,6 +9,20 @@ import { ApiError } from "../errors";
 
 export const MODEL_POLICY_VERSION = "deepseek-default-v1";
 export const STEP_POLICY_VERSION = "stepfun-plan-v1";
+export const GDUFS_POLICY_VERSION = "gdufs-openai-v1";
+export type ProviderId = "deepseek" | "stepfun" | "gdufs";
+// The campus gateway is an OpenAI-compatible endpoint on the school's own
+// host. It is not api.deepseek.com: different base path, different quirks.
+export function approvedGdufsEndpoint(baseUrl: string) {
+  if (
+    ![
+      "https://modelsq.gdufs.edu.cn/v1-openai",
+      "https://modelsq.gdufs.edu.cn/v1-openai/",
+    ].includes(baseUrl)
+  )
+    throw new ApiError("MODEL_ENDPOINT_INVALID", "模型服务地址未获准。");
+  return "https://modelsq.gdufs.edu.cn/v1-openai/chat/completions";
+}
 export function approvedStepEndpoint(baseUrl: string) {
   if (
     ![
@@ -117,10 +131,18 @@ function safeReply(
   calls: ModelToolCall[],
   finish: string | undefined,
   usage?: z.infer<typeof usageSchema>,
+  provider: ProviderId = "deepseek",
 ): ModelReply {
+  // The campus gateway reports finish_reason "stop" even when it returns
+  // tool_calls. Normalize that observed quirk; every other provider keeps the
+  // strict two-way contract.
+  const normalized =
+    provider === "gdufs" && calls.length > 0 && finish === "stop"
+      ? "tool_calls"
+      : finish;
   if (
-    (finish !== "stop" && finish !== "tool_calls") ||
-    (finish === "tool_calls") !== calls.length > 0 ||
+    (normalized !== "stop" && normalized !== "tool_calls") ||
+    (normalized === "tool_calls") !== calls.length > 0 ||
     content.length > 200000 ||
     new Set(calls.map((c) => c.id)).size !== calls.length
   )
@@ -132,7 +154,7 @@ function safeReply(
   return {
     content,
     toolCalls: calls,
-    finishReason: finish,
+    finishReason: normalized,
     usage: usage
       ? {
           promptTokens: usage.prompt_tokens,
@@ -170,6 +192,7 @@ async function readLimited(response: Response, limit = 262144) {
 async function streamedReply(
   response: Response,
   onText: (text: string) => void,
+  provider: ProviderId = "deepseek",
 ) {
   if (!response.body)
     throw new ApiError("MODEL_SERVICE_UNAVAILABLE", "模型回复为空。", true);
@@ -270,6 +293,7 @@ async function streamedReply(
         .map(([, call]) => toolCallSchema.parse(call)),
       finish,
       usage,
+      provider,
     );
   } finally {
     await reader.cancel().catch(() => {});
@@ -286,7 +310,7 @@ export class DeepseekModelClient implements ModelClient {
     baseUrl = "https://api.deepseek.com",
     private readonly transport: typeof fetch = fetch,
     private readonly timeoutMs = 15000,
-    private readonly provider: "deepseek" | "stepfun" = "deepseek",
+    private readonly provider: ProviderId = "deepseek",
     // Server-only opt-in; production callers retain the existing 1024 default.
     private readonly maxOutputTokens = 1024,
     private readonly providerManagedOutput = false,
@@ -298,9 +322,11 @@ export class DeepseekModelClient implements ModelClient {
     )
       throw new ApiError("MODEL_SELECTION_REQUIRED", "模型输出预算配置无效。");
     this.#endpoint =
-      provider === "stepfun"
-        ? approvedStepEndpoint(baseUrl)
-        : approvedDeepseekEndpoint(baseUrl);
+      provider === "gdufs"
+        ? approvedGdufsEndpoint(baseUrl)
+        : provider === "stepfun"
+          ? approvedStepEndpoint(baseUrl)
+          : approvedDeepseekEndpoint(baseUrl);
     this.#key = apiKey;
     if (!apiKey || !/^[a-zA-Z0-9._-]{1,100}$/.test(model))
       throw new ApiError("MODEL_SELECTION_REQUIRED", "默认模型尚未配置。");
@@ -340,7 +366,12 @@ export class DeepseekModelClient implements ModelClient {
           temperature: 0.2,
           ...(this.provider === "deepseek"
             ? { thinking: { type: "disabled" } }
-            : { reasoning_effort: "low" }),
+            : this.provider === "gdufs"
+              ? // The gateway ignores OpenAI-style reasoning switches; its
+                // chat template only honours this flag. Verified: 0 reasoning
+                // tokens, normal content.
+                { chat_template_kwargs: { thinking: false } }
+              : { reasoning_effort: "low" }),
           stream: !!request.onText,
           ...(request.onText
             ? { stream_options: { include_usage: true } }
@@ -362,6 +393,32 @@ export class DeepseekModelClient implements ModelClient {
         );
       }
       if (!response.ok) {
+        if (this.provider === "gdufs") {
+          // The campus gateway answers 404 for both an unknown key and an
+          // unknown model, so the status alone cannot classify the failure.
+          let message = "";
+          try {
+            const data = JSON.parse(await readLimited(response, 8192));
+            message = String(data.message ?? data.error?.message ?? "");
+          } catch {
+            /* No raw provider error leaves this boundary. */
+          }
+          if (/密钥|api[\s_-]?key|unauthori[sz]ed|invalid token/i.test(message))
+            throw new ApiError("MODEL_KEY_INVALID", "模型密钥无效或已失效。");
+          if (/model not found|模型不存在|not found/i.test(message))
+            throw new ApiError(
+              "MODEL_NOT_FOUND_OR_FORBIDDEN",
+              "模型不存在或当前账号没有权限。",
+            );
+          // Quota exhaustion is the only condition the owner authorized to
+          // fall back; the gateway is inconsistent about its HTTP status.
+          if (
+            [402, 429].includes(response.status) &&
+            /quota|额度|余额|配额|insufficient|exhaust/i.test(message)
+          )
+            throw new ApiError("MODEL_QUOTA_EXHAUSTED", "首选模型额度已用完。");
+          throw upstreamError(response.status);
+        }
         if (
           this.provider === "stepfun" &&
           [402, 429].includes(response.status)
@@ -387,7 +444,8 @@ export class DeepseekModelClient implements ModelClient {
         } else await response.body?.cancel();
         throw upstreamError(response.status);
       }
-      if (request.onText) return await streamedReply(response, request.onText);
+      if (request.onText)
+        return await streamedReply(response, request.onText, this.provider);
       const parsed = replySchema.safeParse(
         JSON.parse(await readLimited(response)),
       );
@@ -399,6 +457,7 @@ export class DeepseekModelClient implements ModelClient {
         choice.message.tool_calls || [],
         choice.finish_reason,
         parsed.data.usage,
+        this.provider,
       );
     } catch (error) {
       if (request.signal.aborted)

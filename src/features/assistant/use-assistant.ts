@@ -94,6 +94,7 @@ type Session = {
   kind: string;
   history: unknown;
   model: { ready: boolean };
+  deepThinkingAvailable?: boolean;
 };
 
 export function useAssistant(
@@ -135,6 +136,9 @@ export function useAssistant(
   const [error, setError] = useState("");
   const [savingSearch, setSavingSearch] = useState(false);
   const searchWrite = useRef(false);
+  const [deepThinkingAvailable, setDeepThinkingAvailable] = useState(false);
+  const [savingDeepThinking, setSavingDeepThinking] = useState(false);
+  const deepThinkingWrite = useRef(false);
   const initialized = useRef(false),
     scope = useRef("");
   const generation = useRef(0);
@@ -236,7 +240,12 @@ export function useAssistant(
       conversationRef.current = history.conversationId;
       setView((prior) => ({
         id: history.conversationId,
-        ...restoredSearchPreference(prior, history, searchWrite.current),
+        ...restoredSearchPreference(
+          prior,
+          history,
+          searchWrite.current,
+          deepThinkingWrite.current,
+        ),
         messages:
           mode === "replace" || prior.id !== history.conversationId
             ? history.messages
@@ -268,6 +277,7 @@ export function useAssistant(
     try {
       const session = (await jsonApi("/api/agent/session")) as Session;
       if (started !== generation.current) return;
+      setDeepThinkingAvailable(session.deepThinkingAvailable === true);
       if (scope.current && scope.current !== session.scopeKey) {
         invalidate();
         if (
@@ -699,7 +709,11 @@ export function useAssistant(
     }
   };
   const send = async (text: string) => {
-    const searchSnapshot = viewRef.current.smartSearch ?? false;
+    const deepThinkingSnapshot =
+      deepThinkingAvailable && (viewRef.current.deepThinking ?? false);
+    const searchSnapshot = deepThinkingSnapshot
+      ? false
+      : (viewRef.current.smartSearch ?? false);
     if (pending.current || loadingConversation || !text.trim() || !ready)
       return;
     const controller = new AbortController(),
@@ -708,7 +722,7 @@ export function useAssistant(
     pending.current = { controller, requestId };
     setBusy(true);
     setError("");
-    setStatus("正在查询");
+    setStatus(deepThinkingSnapshot ? "深度思考中" : "正在查询");
     let cid = conversationRef.current;
     const messageScope =
       cid || (await requestConversationId(scope.current, requestId));
@@ -932,6 +946,7 @@ export function useAssistant(
           clientRequestId: requestId,
           message: text,
           smartSearch: searchSnapshot,
+          deepThinking: deepThinkingSnapshot,
           mapContext: {
             selectedPlaceId: selectedContext() || undefined,
             activeRouteId: activeRoute?.id || null,
@@ -1053,12 +1068,20 @@ export function useAssistant(
   return {
     smartSearch: view.smartSearch ?? false,
     savingSearch,
+    deepThinking: view.deepThinking ?? false,
+    deepThinkingAvailable,
+    savingDeepThinking,
     setSmartSearch: async (enabled: boolean) => {
       if (searchWrite.current) return;
       const id = conversationRef.current,
         revision = generation.current;
       const previous = viewRef.current.smartSearch ?? false;
-      setView((prior) => ({ ...prior, smartSearch: enabled }));
+      const previousDeepThinking = viewRef.current.deepThinking ?? false;
+      setView((prior) => ({
+        ...prior,
+        smartSearch: enabled,
+        ...(enabled ? { deepThinking: false } : {}),
+      }));
       if (!id) return;
       searchWrite.current = true;
       setSavingSearch(true);
@@ -1067,11 +1090,16 @@ export function useAssistant(
           .object({
             smartSearch: z.boolean(),
             smartSearchVersion: z.number().int().nonnegative().optional(),
+            deepThinking: z.boolean().optional(),
+            deepThinkingVersion: z.number().int().nonnegative().optional(),
           })
           .parse(
             await jsonApi(
               `/api/agent/conversations/${id}`,
-              { smartSearch: enabled },
+              {
+                smartSearch: enabled,
+                ...(enabled ? { deepThinking: false } : {}),
+              },
               undefined,
               "PATCH",
             ),
@@ -1080,12 +1108,65 @@ export function useAssistant(
           setView((prior) => ({ ...prior, ...saved }));
       } catch {
         if (revision === generation.current && id === conversationRef.current) {
-          setView((prior) => ({ ...prior, smartSearch: previous }));
+          setView((prior) => ({
+            ...prior,
+            smartSearch: previous,
+            deepThinking: previousDeepThinking,
+          }));
           setError("搜索设置未保存，请重试。");
         }
       } finally {
         searchWrite.current = false;
         setSavingSearch(false);
+      }
+    },
+    setDeepThinking: async (enabled: boolean) => {
+      if (deepThinkingWrite.current || (enabled && !deepThinkingAvailable)) return;
+      const id = conversationRef.current,
+        revision = generation.current;
+      const previous = viewRef.current.deepThinking ?? false;
+      const previousSearch = viewRef.current.smartSearch ?? false;
+      setView((prior) => ({
+        ...prior,
+        deepThinking: enabled,
+        ...(enabled ? { smartSearch: false } : {}),
+      }));
+      if (!id) return;
+      deepThinkingWrite.current = true;
+      setSavingDeepThinking(true);
+      try {
+        const saved = z
+          .object({
+            deepThinking: z.boolean(),
+            deepThinkingVersion: z.number().int().nonnegative().optional(),
+            smartSearch: z.boolean().optional(),
+            smartSearchVersion: z.number().int().nonnegative().optional(),
+          })
+          .parse(
+            await jsonApi(
+              `/api/agent/conversations/${id}`,
+              {
+                deepThinking: enabled,
+                ...(enabled ? { smartSearch: false } : {}),
+              },
+              undefined,
+              "PATCH",
+            ),
+          );
+        if (revision === generation.current && id === conversationRef.current)
+          setView((prior) => ({ ...prior, ...saved }));
+      } catch {
+        if (revision === generation.current && id === conversationRef.current) {
+          setView((prior) => ({
+            ...prior,
+            deepThinking: previous,
+            smartSearch: previousSearch,
+          }));
+          setError("深度思考设置未保存，请重试。");
+        }
+      } finally {
+        deepThinkingWrite.current = false;
+        setSavingDeepThinking(false);
       }
     },
     conversationId,

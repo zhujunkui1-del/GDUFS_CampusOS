@@ -3,13 +3,10 @@ import { AgentOrchestrator } from "../agent/orchestrator";
 import { SkillRegistry } from "../agent/skill-registry";
 import { ApiError } from "../errors";
 import type { ModelClient, ModelRequest } from "@/domain/models/contracts";
-import {
-  DeepseekModelClient,
-  MODEL_POLICY_VERSION,
-  STEP_POLICY_VERSION,
-} from "./deepseek";
+import { DeepseekModelClient } from "./deepseek";
 import {
   configurationFingerprint,
+  policyVersionFor,
   type CapabilityReceipt,
   type DefaultModelConfig,
 } from "./router";
@@ -76,10 +73,7 @@ export async function verifyDefaultModel(config: DefaultModelConfig) {
           source: "platform",
           provider: config.provider || "deepseek",
           model: config.model!,
-          policyVersion:
-            config.provider === "stepfun"
-              ? STEP_POLICY_VERSION
-              : MODEL_POLICY_VERSION,
+          policyVersion: policyVersionFor(config.provider),
           testedAt,
           capabilities: {
             toolCalling: true,
@@ -144,10 +138,7 @@ export async function verifyDefaultModel(config: DefaultModelConfig) {
   const receipt: CapabilityReceipt = {
     provider: config.provider || "deepseek",
     model: config.model!,
-    policyVersion:
-      config.provider === "stepfun"
-        ? STEP_POLICY_VERSION
-        : MODEL_POLICY_VERSION,
+    policyVersion: policyVersionFor(config.provider),
     fingerprint: await configurationFingerprint(config),
     testedAt,
     toolCalling: true,
