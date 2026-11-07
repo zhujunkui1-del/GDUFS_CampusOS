@@ -108,13 +108,25 @@ export function contentReadPlan(
   // one article: read a wider page so a single college's notice cannot hide
   // the others. The answer still cites at most five cards.
   const activity = activityNounQuery(retrievalQuery);
+  // Each tool schema caps its own page: knowledge is a passage lookup at 4,
+  // events is a list at 6. Asking for more fails the whole call before any
+  // retrieval runs, so the ceiling is enforced here rather than at the caller.
+  const PAGE_SIZE: Record<ContentTool, number> = {
+    search_campus_knowledge: 4,
+    search_campus_events: 6,
+  };
   const inputFor = (name: ContentTool, text: string, exactTitle = true) => ({
     query: text,
     ...(/官网|官方网页|官方网站/.test(query)
       ? { sourceTypes: ["official_web"] }
       : {}),
     ...(exactTitle && articleTitle ? { title: articleTitle } : {}),
-    limit: exactTitle && articleTitle ? 3 : recentDiscovery || activity ? 5 : 3,
+    limit:
+      exactTitle && articleTitle
+        ? 3
+        : recentDiscovery || activity
+          ? Math.min(5, PAGE_SIZE[name])
+          : 3,
     ...(recentDiscovery ? { sort: "published_desc" as const } : {}),
     ...(recentDiscovery && publishedCursor ? { publishedCursor } : {}),
     ...(recentDiscovery && recentBefore
