@@ -1951,3 +1951,105 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 - 「信息学院有没有院运会」→ 「原定2026年11月7日在假草场举办，设置了径赛、田赛多个项目…」，引用来源为「信息科学与技术学院2026院运会报名通知」。
 
 **过程中发现并修复的一个新缺陷**：为枚举型查询把 `read-plan` 的读取上限提到 5 时，`search_campus_knowledge` 的 schema 上限是 4（`src/domain/retrieval/skills.ts:10`），整轮调用在零耗时内被 schema 拒绝，线上回答退化成「这次查询未完成，请重新提问。」表现为 `tool.finished` 的 `durationMs: 0, ok: false`。现已改为按工具名分别取上限（`PAGE_SIZE`），并新增 `tests/unit/read-plan-limits.test.ts`（5 项）断言每个计划读入都能通过它自己的 schema。
+## 2026-11-07｜向量索引、OCR 与 15 个知识库的三套对比
+
+**负责人授权**：「启动 embedding，另起一组新库存量对比（旧库不动，可随时退回）。使用 OCR。」据此解除 D-143/D-144 的免 Embedding 限制，**仅限新建库**，既有库不满。
+
+**实际执行**：
+
+1. **Embedding 接入**：`bge-m3`（`langgenius/openai_api_compatible/openai_api_compatible`，dim=1024，context 8192）。实测 token/char=0.613，语料约 131.1 万 tokens；网关单请求上限 8000 tokens。
+2. **OCR**：`scripts/kb_build/ocr_articles.py` 抓图 + `ocr_batch.py` 扁平 image-pool 并发。197 篇纯图片文章，**196 篇完成、278,655 字、61 篇最终入库**（另 48 篇商业推广、36 篇过短、10 篇节日问候、16 篇图片型包装被既有清洗规则挡掉）。唯一彻底失败 `e5974f261cdf9c34`。合并后 `data/kb/chunks_ocr/` 1225 篇 / 4561 chunks。
+3. **三套知识库**：`economy` 5 个（1164 篇）、`hq` 5 个（1164）、`ocr+hq` 5 个（1225），共 **15 个**。原「CampusOS 校园知识试点」8 篇未动。
+4. **检索对比**（hit-testing，top_k=5，绕开 LLM）：
+
+| 后端 | 标题派生（47） | 自然问法（19） | OCR-only（40） |
+|---|---|---|---|
+| `economy` | 0.851 | 0.579 | 0.000 |
+| `hq` | **1.000** | **0.684** | 0.000 |
+| `ocr+hq` | **1.000** | **0.684** | **1.000** |
+
+5. **关掉思考**：`completion_params.chat_template_kwargs = {"enable_thinking": false}` 是唯一有效写法；其余四种写法无效。修正后 v3 端到端 **47/47 成功、47/47 带引用、47/47 命中金标**，中位 37.4 s、P90 103.9 s。
+6. **交付版应用**：`CampusOS 问答（OCR+向量）`（`15dce9e8-ab4d-4375-8630-2b1a4c343220`，site `3a2B9Dxoh5rKh5yv`）已发布。生产 `39945f9b` **未改动**。
+
+**尚未完成**：P90 103.9 s vs 生产基线 32.0 s，仍阻塞发布；自然问法 recall@5 停在 0.684，需 rerank；`bge-reranker-v2-m3` 已注册未启用；未做线上灰度。
+## 2026-11-07｜Dify 智能体离线交付包（评委打不开网站时的兜底）
+
+**性质**：负责人要求的兜底方案，不是生产变更。Dify 上的应用与知识库**未改动**，只做只读导出与本地打包。
+
+**做了什么**：
+
+1. **只读盘点**：5 个应用、15 个知识库。确认 `GET /console/api/apps/{id}/export?include_secret=false` 返回 YAML（12,625 B / 451 行），含 `app:` / `dependencies:` / `workflow:`。
+2. **确认无知识库导出接口**：`GET /console/api/datasets/{id}/export` → 404（`?format=csv` 同样 404），社区版如此。因此只能从本地语料 `data/kb/chunks_ocr/` 重建。
+3. **`scripts/kb_build/pack_delivery.py`**（新增，纯增量、可重跑）：把 DSL、插件依赖、1225 篇 `.md`、`articles.csv` 清单、导入说明 README 打到
+   `C:\Users\zhuju\Desktop\v我50_朱俊魁_CampusOS(广外通)\安装包等文件\04_dify智能体\`，最终 zip 1,229 个条目 / 3.3 MB，`testzip` 通过。
+4. **DSL 里的 `dataset_ids` 是加密串**，换环境解不开，导入后必须重新勾选知识库；README 里已写明这一步。
+
+**踩过的坑**：文件名用文章中文标题会跨平台出问题，改用 `article_id.md`；源文件按 `category` 分目录、而 Dify 库按 `bucket` 分，两者不等，必须经 `kb_import_state_hqocr.json` 映射。
+
+**遗留**：打包内 README 的实测数据表最初是两列（缺 ocr+hq），已就地更正为三列并补上 OCR-only 集端到端数字。
+
+
+## 2026-11-08｜路线类查询：归一化、动词与地点别名
+
+**问题**：负责人实测 8 轮路线提问，全部失败。典型表现是「从南苑七栋到假草场」报「这次查询未完成」，而「从南苑7栋到假草场」能成功；「从南苑七栋前往广外假草场」被当成正文检索，回答「未检索到正文」。
+
+**只读排查结论**（地图子系统本身没有问题，`plan()` 直算南苑7栋→假草场 = 976 m / 14 分钟）：
+
+1. 存在两份归一化实现：`src/lib/server/maps/campus-map-service.ts` 会把「南苑七栋」转成「南苑7栋」，`src/domain/agent/navigation-intent.ts` 没有。于是中文数字的起点解析不出来，`requiredRoute` 不会被注入，模型只能自己拼 `plan_route` 参数，拼错即整轮失败。
+2. `navigationIntent()` 的路线正则不含「前往／走向／走到」，`contentIntent()` 的 `map` 正则同样不含。同一句「从A到B」换个动词就走进完全不同的链路。
+3. `campus.json` 里「文采园（一饭）」的 `aliases` 是空数组，「第一饭堂」「第一食堂」「一食堂」全部 `NOT_FOUND`；「一饭」能命中只是因为它恰好是名称的子串。
+4. 「三饭」命中「三饭打印店」和「风采园（三饭）」，返回 `ambiguous=true` 且没有消歧策略。
+
+**改动**：
+
+- 新增 `src/features/campus-map/data/campus-text.ts`：`normalizePlaceText()`，把 NFKC、去空格、小写、`[南北师友]苑 + 中文数字 + 栋/楼` → 阿拉伯数字集中一处。地图服务与导航意图都改为调用它。
+- `src/domain/agent/navigation-intent.ts`：抽出 `ROUTE_RE` / `PAIR_RE`，路线动词补入「前往｜走向｜走到」，并补「怎么过去／怎么走到」；`explicitFrom` 与待定目的地判断同步。
+- `src/lib/server/assistant/content-intent.ts`：`map` 正则补「前往｜走向｜走到」「怎么走｜怎么过去｜怎么走到」，并在 `从…去|到|至` 里补「前往」。
+- `src/features/campus-map/data/campus.json`：只补别名，不新增地点、不改坐标。一饭 = 文采园／一饭／一饭堂／第一饭堂／第一食堂／一食堂；二饭 = 博雅园／…；三饭 = 风采园／…；假草场 = 广外假草场／人工草场；真草场 = 真草场／真草地／田径场。官方名称带括号（「文采园（一饭）」），只写园区名的问法原本完全匹配不到，因此把裸名也补上。
+- `src/lib/server/maps/campus-map-service.ts`：搜索前剥掉「广外／大学城校区／南校区」这类校区限定词，使「大学城校区第一饭堂」能命中。
+
+补充一处：`contentIntent()` 的 `map` 判定改为直接调用 `navigationIntent(message).routeQuestion`，不再维护第二套正则的近似副本——这正是「换个动词就换条链路」的根因。
+
+**验证**：`tests/unit/route-language.test.ts`（新增，21 项）覆盖中文数字归一化、五种动词的起终点解析、四个饭堂问法、路线句不进正文检索、多轮承接、别名唯一命中、以及「三饭」不再被打印店抢走。`vitest run tests/unit` → **143 文件 / 1002 用例全绿**；`tsc --noEmit`、eslint、prettier 通过。
+
+**线上复核**（preview Worker，提交 `846b9f3`）：
+
+| 提问 | 结果 |
+|---|---|
+| 从南苑七栋到假草场 | `plan_route ok (27ms)` → `control_map ok` |
+| 怎么从南苑七栋前往广外假草场 | `plan_route ok (34ms)` → `control_map ok` |
+| 从 南苑七栋 到 假草场（带空格） | `plan_route ok (36ms)` → `control_map ok` |
+| 从南苑七栋到文采园 | `plan_route ok (30ms)` → `control_map ok` |
+| 请问怎么去大学城校区第一饭堂 | 答「就是文采园（一饭）」，并追问起点 |
+| 三饭怎么走 | 答「你要从哪出发呀？」 |
+
+前四例在无头浏览器里最终报 `TIMEOUT「地图操作等待超时，请重试。」`，原因是 `control_map` 之后等待页面回执，而无头浏览器不会真的执行地图动作；真实浏览器不受影响。此前同样四例在 `plan_route` 阶段就以 `INVALID_ARGUMENT` 失败，现在已推进到地图动作阶段。
+
+**未做**：`plan_route` 失败时仍会把整轮判为失败（`stopOnToolError: true`），没有服务端降级重试；路线类失败的错误文案仍是通用文案。这两项留待确认是否需要。
+
+## 2026-11-08｜91 个官网采集入口重跑与复核
+
+负责人要求重新跑通 91 个官网的采集入口，纠正「配了入口但并非文章索引页」的配置，确保自动采集能从索引页取到 `2026-01-01` 门禁内的最新文章。当前状态：**已配置 88 / 91，已采到门禁内文章 75，剩余 16 个为客观不可采**（逐站原因见 `docs/官网采集入口配置表-2026-11-08.md`）。
+
+**已修复的五个采集缺陷**（均已合并进 `7ee30c9`，部署版本 `83ab37f1-392e-4d53-bd82-d5a707627f05`）：
+
+1. `src/lib/ingestion/worker-safe-fetch.ts` 与 `src/lib/ingestion/safe-fetch.ts`：原先只要 `content-encoding !== "identity"` 就抛 `TOO_LARGE`。Cloudflare Workers 的 fetch 会自动解压 gzip 但保留该响应头，因此所有 gzip 站点被误杀。现只保留 `content-length > 524288` 与逐块累计上限。
+2. `src/lib/ingestion/connector.ts`：`discover()` 的 `rowNode` 原为 `a.closest("li") || a.parentElement`，Boda WCM / NanKai 模板的列表行是 `<tr><td><a></td><td class="timestyle…">日期</td></tr>`，日期落在兄弟 `<td>`，取不到日期。现补 `a.closest("tr")` 回退。
+3. `src/lib/ingestion/connector.ts`：`parse()` 的日期只认带标签的 `发布时间：…`，无标签裸日期（如 `<p class="details-time">2026-10-22</p>`、`<span>2026-05-20 5828</span>`）会被丢弃并触发 `cutoff` 门禁。现新增 `bareDates` 回退，取日期节点内首个匹配日期；`discover()` 另补 `yearFirst`（YYYY-MM-DD）与 `yearMonth`（YYYY-MM）两个正则。
+4. `src/lib/ingestion/worker-safe-fetch.ts` 与 `safe-fetch.ts`：`Accept` 头原为 `text/html,text/plain;q=0.8`，无通配符，Spring Boot 门户（如 `gw-alumni.gdufs.edu.cn`）直接返回 HTTP 500 Whitelabel Error Page。现改为 `text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.7`。
+5. `src/lib/server/console/cloud-web-runner.ts`：每轮取任务前先清理 `rule_version` 与当前策略不一致的活跃任务。此前每次改动 profile 都会让在跑任务永久失败，5 个僵尸任务占满每轮仅有的 12 个名额，后续站点全部饿死。
+
+**数据侧修复**：84 个 profile 的 `earliestImportDay` 原为 `null`，导致 `discover()` 不设截止日期、无界翻页，把十几年前的旧文章排进队列（GDUFS-SRC-0061 曾翻到第 5 页、2018–2019 年文章）。现已对全部 profile 显式写入 `2026-01-01`。同时补齐 owner-policy、governance、verify，使 `automatic`（自动采集资格）从 33 个提升到 88 个。
+
+**本轮新打通的站点**：商学院、法学院、土地法制研究院、纪检监察研究院、新闻与传播学院、迎新网、校友事务与合作发展处、教学质量监测与评估中心、国际合作与可持续发展研究院、国家安全研究院、校医院、体育部等。定点验证：GDUFS-SRC-0007 定时任务（`scheduled:GDUFS-SRC-0007:…`）found=32、body=25，落库 30 篇、最新 2026-11-06；GDUFS-SRC-0025 found=16、最新 2026-11-04；GDUFS-SRC-0069 found=3、最新 2026-10-26。
+
+**不可采的客观原因**：
+- Cloudflare 出口 IP 被 WebberRASP 拦截：`bwc`、`cwc`、`fzgh`、`gwmzb` 这类 Boda WCM + query-JSP（`.jsp?urltype=…&wbnewsid=…`）详情页。用自建探针 Worker 实测，出口 IP 访问详情页返回固定 ~847 字节的「您没有访问当前栏目的权限」；同站栏目页、列表页正常。UA / Referer / Cookie / Accept / URL 变体均无效，且这些站点的 `/info/NNN/NNN.htm` 静态别名全部 404。
+- Cloudflare error 1016（源站 DNS 不存在）：科研部、纪检监察室。
+- TLS/证书或源站不可达：英文网（证书链不被信任）、建校六十周年专题网。
+- SSO / SPA / 死链：智慧广外信息门户（CAS SSO）、留学生教育学院（文章全指向外域且详情页 404）、黄埔研究院（Vue/AJAX）。
+- 门禁内无文章：教务部（同源最新 2025-12-15）、机关党委（2021）、跨国并购研究中心（2025-04）、审计工作部（2025-05）。
+
+**验证**：`npx tsc --noEmit -p tsconfig.json` → 0 error；`npx vitest run tests/unit/ingestion-pipeline.test.ts tests/unit/official-publication-date.test.ts` → 26 passed。入口审计脚本对每个已配置来源真实跑 `discover()`：85 个入口有产出，74 个站点至少一个入口在门禁内有货。
+
+**未做**：39 个站点仍使用占位选择器（`title="h1, title"` / `date="time, .date, .time"` / `body="article, main"`），靠 `parse()` 兜底正常工作，但未逐站精修；上述 RASP / SPA / SSO 站点需要改走代理或浏览器渲染才能覆盖。
