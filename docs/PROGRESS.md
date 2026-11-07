@@ -1879,3 +1879,23 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 用临时 Worker `campusos-gdufs-probe` 从 Cloudflare 边缘取证：对 `modelsq.gdufs.edu.cn` 的多个路径均返回 HTTP 200 `text/html`，内容为「本系统只允许校内访问…请通过广外VPN访问」；相同请求从本机发出则是 `application/json`。据此确认该网关只对校内网或 VPN 开放，边缘无法访问，属网络可达性限制而非适配器缺陷。该临时 Worker 已删除。
 
 按负责人决定不改动原调用次序，线上恢复为 `stepfun → deepseek`。调整了默认链路：gdufs 仅在显式设置 `MODEL_PRIORITY=gdufs` 时进入，避免不可达层级吞掉通往 deepseek 的额度回退。已重新部署（版本 `b3577b02-b60d-41f2-a758-060f90f99f74`），验证 `/api/agent/status` 返回 `stepfun`，且真实提问「校园网怎么开通？」返回正常答案、`queryUnderstanding` 得到有效计划。类型检查通过，模型相关单元测试 53 项通过。
+
+## 2026-11-07｜文章全量知识库与 Dify 问答流水线试点
+
+**阶段一 文章扫描**：`scripts/kb_build/scan_articles.py` 扫描 `D:\WeChat MP Tools_v2.3.1\data\articles_full`（1456 个 HTML、115 个公众号、正文 2,002,402 字）。产出 `data/kb/article_inventory.json`、`article_texts.jsonl`、`article_processing_status.json`、`article_audit_report.md`。197 篇为纯图片文章（无任何可提取文本），本轮不入库，需 OCR 或人工补录。
+
+**阶段二 分类**：`scripts/kb_build/classify.py` 确定性关键词加权，输出 `article_classification.json`（13 个主题 + 6 类用途 + 时效三档）。低置信度 487 篇，是已知短板。
+
+**阶段三 清洗与切块**：`scripts/kb_build/chunk.py` 去重 + 跳过纯图片/纯广告/过短/节日问候 → 1164 篇可入库，切出 4302 块（最短 99 / 中位 395 / 最长 1171 / 均值 497），PII 脱敏，块头带标题+公众号+日期。
+
+**阶段四 Dify 导入**：新建 5 个 economy 知识库（制度与办事指南 229、教务与学生事务 149、校园活动与通知 361、招生就业与升学 198、校园新闻文化与生活 227），合计 1164 篇、2,355,174 词，逐页核验重名 0，失败清单为空。原有「CampusOS 校园知识试点」未动。
+
+**阶段五 检索评测**：hit-testing 直测，不经过 LLM。标题派生题集（n=47）recall@5 = 0.851；自然问法题集（n=19）recall@5 = 0.579。实测发现全库广播与 oracle 路由桶得分完全相同（0.851 vs 0.851），路由层被整体删除。
+
+**阶段六 候选工作流**：`data/kb/candidate_dsl.json`（8 节点 / 8 边）`start → retrieve → fmt → gate → ans_llm → strip → answer`，保存并发布到候选应用 `fbe5ce39-c204-47df-9409-c179c4abfce9`。生产应用未改动。
+
+**阶段七 对照与故障注入**：生产版 47/47 `n_resources=0`（无检索）且答案泄漏思维链；候选版 46/46 有检索资源、45/46 命中金标、0 条空答案。KB-down → 0.8s 兜底；模型不可用 → Dify 前置校验拒绝；模型运行时失败 → 1.6s 兜底。
+
+**阶段八 发布门禁**：未发布。P90 延迟从 32s 升到 100s、自然问法 recall@5 = 0.579、DeepSeek-V4-Flash-0731 网关报 `Model not found`，三项都需负责人拍板。回滚备份在 `backups/dify/`。
+
+**尚未完成**：生产工作流未替换；未做 Embedding；未做 OCR；未做线上灰度。

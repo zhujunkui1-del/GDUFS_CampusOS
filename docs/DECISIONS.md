@@ -1248,3 +1248,19 @@ D-146 最终验收更新（2026-11-06）：Dify App API Key Secret 与已发布 
 负责人决定：不改动原有调用次序，线上仍为 `stepfun → deepseek`。gdufs 保留为可选层级，仅在运营方显式设置 `MODEL_PRIORITY=gdufs` 时进入链路；默认链路不包含它，因此它也不会吞掉原本能到达 deepseek 的额度回退。`wrangler.jsonc` 的 `MODEL_PRIORITY` 已改回 `stepfun`，Worker 已重新部署（版本 `b3577b02-b60d-41f2-a758-060f90f99f74`），`/api/agent/status` 显示 `stepfun`，真实提问「校园网怎么开通？」返回正常回答且 `queryUnderstanding` 有有效计划。
 
 未改动的内容：gdufs 适配器（含 `chat_template_kwargs:{thinking:false}` 关闭推理、`finish_reason:"stop"` 与 tool_calls 的归一化、404 的密钥/模型区分）、`GDUFS_POLICY_VERSION = "gdufs-openai-v1"`、能力凭据、`tests/unit/gdufs-model.test.ts`（11 项）与 `tests/integration/gdufs-live.test.ts`。机密仍只存于 Cloudflare Secret（`GDUFS_MODEL_API_KEY`、`GDUFS_MODEL_CAPABILITIES_JSON`），未写入仓库或配置文件。要在线上真正启用该网关，需要一台能访问校内网的机器提供中继，或改用校内托管的运行环境；这属于新的范围与部署决定，需负责人另行确认。
+
+## D-148｜文章全量知识库试点：5 个 economy 库 + 无路由候选流水线（2026-11-07）
+
+在 D-143/D-144 的免 Embedding 授权下，把 `articles_full` 的 1456 篇公开文章做成完整知识库：1164 篇可入库、4302 个语义块，分成 5 个 economy（倒排索引）知识库，合计 1164 篇文档、2,355,174 词，重名 0。原有的「CampusOS 校园知识试点」8 篇文档未删未改。
+
+**关键技术决定**：economy 库的 `semantic_search` / `hybrid_search` 在 hit-testing 下恒返回空 records，只有 `keyword_search` + `reranking_enable=false` 能召回，且所有 score 恒为 0.0。因此五个库统一设为 `keyword_search`，并且**不能**用 score 做阈值过滤。
+
+**取消了检索路由**：原本设计了「按问题选库」的 LLM 分类器 + 关键词路由两层。实测全库广播 recall@5 = 0.851，与 oracle 路由桶 recall@5 = 0.851 完全相等；关键词路由准确率仅 17/47（33%）；LLM 分类器因 JSON 解析失败在一半运行中崩溃。三层全部删除，候选流水线只做一次跨库检索。
+
+**候选流水线**（`data/kb/candidate_dsl.json`，8 节点 / 8 边）`start → retrieve → fmt → gate → ans_llm → strip → answer`，外加 gate=true 时的兜底 answer。它只发布在独立候选应用 `fbe5ce39-c204-47df-9409-c179c4abfce9`，生产应用 `39945f9b-9ee0-4c2c-a3a0-fc5298b3f861` 未改动。
+
+**双层兜底**：`knowledge-retrieval` 保留 `error_strategy: "fail-branch"` 与 `retrieve --fail-branch--> fallback` 边，同时保留 `gate`（证据段为空即兜底）。中途曾误判 fail-branch 会让 `retriever_resources` 变空，实为评测脚本读取顶层字段所致，已更正。
+
+**未采纳**：LLM 分类器逐字保留 —— prompt 与契约写在 `scripts/kb_build/nodes/route.py` 作为参考实现并注明为何弃用。
+
+**发布前待决**：P90 延迟从 32s 升到 100s（Qwen3.8-27B 会吐长思维链）；自然问法 recall@5 仅 0.579；DeepSeek-V4-Flash-0731 虽在网关注册但实际调用报 `Model not found`。三项都需负责人拍板后才可发布。详见 `docs/KB_DIFY_PILOT_2026_11_07.md`。

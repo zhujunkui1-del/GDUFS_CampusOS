@@ -772,3 +772,13 @@ Dify 表单当前 Endpoint 显示正确基础路径，但 Cloudflare 20:58:16 �
 此前记录的「DeepSeek 深度思考」阻断项（Worker 调用 `dify.gdufs.edu.cn` 的 Chat API 返回 HTTP 200 `text/html`、Dify 日志无运行记录）在本次取证中找到了同一类原因：`dify.gdufs.edu.cn` 与 `modelsq.gdufs.edu.cn` 使用同一站点限制，从 Cloudflare Worker 边缘请求 `https://dify.gdufs.edu.cn/v1/parameters` 与 `/` 均返回 HTTP 200 `text/html`，正文为「本系统只允许校内访问，如果需使用，请通过广外VPN访问」。本机请求同一地址则返回 Dify 的正常 JSON/307 响应。
 
 因此该故障不是 Dify API Key、网关路径或 Chatflow 配置问题，而是 Worker 无法访问校内服务。要让 Worker 侧调用 Dify 或 Dify 调用 Worker 成立，需要一方位于能访问校内网的网络中继上；`DIFY_CHAT_ENABLED=false` 保持现状，深度思考开关继续隐藏。Dify 侧作为**出站**发起方（Dify→CampusOS 外部知识 API）不受此限制影响，其保存失败的排查仍以前一条记录为准。
+
+## 2026-11-07｜知识库问答试点的三个未决项
+
+**1. 延迟 100s 阻塞发布。** 候选流水线在 47 题上 P90 延迟 100.1s（生产版 32.0s）。根因是 Qwen3.8-27B 会先生成长段思维链，再靠 `strip` 节点剥掉。`/no_think` 开关对该模型无效。`DeepSeek-V4-Flash-0731` 虽在模型网关注册，但应用内调用报 `PluginInvokeError ... 404 NotFound: Model not found`。要解决必须先确认校内网关哪个模型能真正关闭 thinking，否则只能接受延迟或换模型。
+
+**2. 自然问法 recall@5 仅 0.579。** 五个 economy（倒排）库对「校园卡丢了怎么补办」这类自然问法与金标文章「校园卡补办」字面重合不足。这是倒排索引的固有局限。启用 Embedding 需要 D-143 之外的额外授权，本轮未做。
+
+**3. 197 篇纯图片文章未入库。** 这些文章正文为空（`images>0`），微信把整篇内容做成图片，无任何可提取文本。需要 OCR 或人工补录，本轮不计入覆盖。
+
+**一处已澄清的误判**：候选流水线一度被认为「加了 knowledge-retrieval 的 fail-branch 就让 `metadata.retriever_resources` 变空」。复查发现是评测脚本从顶层而非 `metadata` 里取字段导致的假象；fail-branch 与资源列表可以共存，最终版保留了两层兜底（fail-branch + gate）。
