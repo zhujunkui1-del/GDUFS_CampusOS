@@ -906,7 +906,7 @@
         [113.392178, 23.0717658],
         [113.3928033, 23.0719097]
       ],
-      "aliases": ["足球场"],
+      "aliases": ["足球场", "真草场", "真草地", "田径场"],
       "nameSource": "负责人指定：广外南校区地图.jpg",
       "nameReviewedAt": "2026-10-13"
     },
@@ -1428,7 +1428,7 @@
         [113.3894626, 23.0691733],
         [113.3901072, 23.069172]
       ],
-      "aliases": ["足球场"],
+      "aliases": ["足球场", "广外假草场", "人工草场"],
       "nameSource": "负责人指定：广外南校区地图.jpg",
       "nameReviewedAt": "2026-10-13"
     },
@@ -2195,7 +2195,7 @@
       "navigationVerified": false,
       "minZoom": 15,
       "name": "文采园（一饭）",
-      "aliases": [],
+      "aliases": ["文采园", "一饭", "一饭堂", "第一饭堂", "第一食堂", "一食堂"],
       "nameSource": "负责人指定：广外南校区地图.jpg",
       "nameReviewedAt": "2026-10-13"
     },
@@ -2224,7 +2224,7 @@
       "navigationVerified": false,
       "minZoom": 15,
       "name": "风采园（三饭）",
-      "aliases": [],
+      "aliases": ["风采园", "三饭", "三饭堂", "第三饭堂", "第三食堂", "三食堂"],
       "nameSource": "负责人指定：广外南校区地图.jpg",
       "nameReviewedAt": "2026-10-13"
     },
@@ -2252,7 +2252,7 @@
       "navigationVerified": false,
       "minZoom": 15,
       "name": "博雅园（二饭）",
-      "aliases": [],
+      "aliases": ["博雅园", "二饭", "二饭堂", "第二饭堂", "第二食堂", "二食堂"],
       "nameSource": "负责人指定：广外南校区地图.jpg",
       "nameReviewedAt": "2026-10-13"
     },

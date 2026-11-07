@@ -4,6 +4,7 @@ import {
   searchCampusPlaces,
   type CampusPlace,
 } from "@/features/campus-map/data/campus";
+import { normalizePlaceText } from "@/features/campus-map/data/campus-text";
 import {
   distanceMeters,
   pointInPolygon,
@@ -50,31 +51,7 @@ export const MAP_VERSIONS = {
   networkVersion: tunnelNetwork.version,
 };
 const visiblePlaces = searchCampusPlaces("");
-const normalize = (s: string) =>
-  s
-    .normalize("NFKC")
-    .toLowerCase()
-    .replace(/\s+/g, "")
-    .replace(
-      /([南北师友]苑)([一二三四五六七八九十]+)(?=栋|号楼|楼)/g,
-      (_all, prefix, number: string) => {
-        const digits: Record<string, number> = {
-          一: 1,
-          二: 2,
-          三: 3,
-          四: 4,
-          五: 5,
-          六: 6,
-          七: 7,
-          八: 8,
-          九: 9,
-        };
-        const value = number.includes("十")
-          ? (digits[number[0]] || 1) * 10 + (digits[number.at(-1)!] || 0)
-          : digits[number];
-        return value ? prefix + value : prefix + number;
-      },
-    );
+const normalize = normalizePlaceText;
 function oneEdit(a: string, b: string) {
   if (Math.abs(a.length - b.length) > 1 || a === b) return false;
   let i = 0,
@@ -199,8 +176,14 @@ export class CampusMapService {
     this.assertContext(context);
     const checked = SearchPlacesInputSchema.parse(input);
     const nearest = /最近|附近/.test(checked.query);
+    // 「大学城校区第一饭堂」 is a campus-qualified name, not a different place.
+    // The campus is already fixed by the data set, so the qualifier is noise.
     const query = normalize(checked.query)
       .replace(/^(?:请)?(?:帮我)?(?:找(?:到)?|查找|搜索|定位(?:到)?)?/, "")
+      .replace(
+        /^(?:广外|广东外语外贸大学|大学城校区|南校区|小谷围)?(?:的)?/,
+        "",
+      )
       .replace(/最近(?:的)?|附近(?:的)?|在哪里[？?]?$/g, "");
     if (!query)
       throw new ApiError("INVALID_ARGUMENT", "请输入地点名称或类别。");

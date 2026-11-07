@@ -1,8 +1,15 @@
 import { searchCampusPlaces } from "@/features/campus-map/data/campus";
+import { normalizePlaceText } from "@/features/campus-map/data/campus-text";
 import { requestsDeviceLocation } from "./location-intent";
 
-const normalize = (text: string) =>
-  text.normalize("NFKC").replace(/\s+/g, "").toLowerCase();
+const normalize = normalizePlaceText;
+// 「前往」「走向」「走到」describe the same relation as 「去」「到」「至」.
+// Leaving them out sent 「从南苑七栋前往假草场」 to article search instead of
+// the map tool, so the same sentence meant different things depending on the
+// verb the user happened to pick.
+const ROUTE_RE =
+  /从.+(?:去|到|至|前往|走向|走到)|(?:去|到|导航|前往|走向|走到|→|->).+|怎么走|怎么去|怎么过去|怎么走到|规划.*路线/;
+const PAIR_RE = /(?:从)?(.+?)(?:到|去|至|前往|走向|走到|→|->)(.+)/;
 const places = searchCampusPlaces("");
 
 export function pendingNavigationMessages(
@@ -88,12 +95,12 @@ export function navigationIntent(
   // Pending destinations come only from recent user requests, never model prose.
   if (
     (requestsDeviceLocation(message) || manualOrigin) &&
-    !/(?:到|去|至|→|->).+/.test(question)
+    !/(?:到|去|至|前往|走向|走到|→|->).+/.test(question)
   ) {
     for (const previous of previousUserMessages.slice(-3).reverse()) {
       if (
         requestsDeviceLocation(previous) &&
-        !/(?:到|去|至|→|->).+/.test(normalize(previous))
+        !/(?:到|去|至|前往|走向|走到|→|->).+/.test(normalize(previous))
       )
         continue;
       const pending = navigationIntent(previous, selected, false);
@@ -111,14 +118,10 @@ export function navigationIntent(
   const namedPlaces = mentions(question);
   const routeQuestion =
     !/不要|不用|不必|别去|不去|取消/.test(question) &&
-    /从.+(?:去|到|至)|(?:去|到|导航|→|->).+|怎么走|怎么去|规划.*路线/.test(
-      question.replace(/找到|查到|定位到/g, "找"),
-    );
-  const pair = /(?:从)?(.+?)(?:到|去|至|→|->)(.+)/.exec(
-    question.replace(/找到|查到|定位到/g, "找"),
-  );
+    ROUTE_RE.test(question.replace(/找到|查到|定位到/g, "找"));
+  const pair = PAIR_RE.exec(question.replace(/找到|查到|定位到/g, "找"));
   const startText = pair?.[1];
-  const explicitFrom = /从.+(?:去|到|至)/.test(question);
+  const explicitFrom = /从.+(?:去|到|至|前往|走向|走到)/.test(question);
   const deictic = !!startText && /这里|这儿|此处/.test(startText);
   const startPlaces = startText ? mentions(startText) : [];
   const explicitOrigin =

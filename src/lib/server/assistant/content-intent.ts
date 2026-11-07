@@ -11,6 +11,7 @@ import {
   explicitMapCommand,
 } from "./intent";
 import { buildQueryPlan } from "@/lib/retrieval/query-plan";
+import { navigationIntent } from "@/domain/agent/navigation-intent";
 import { VENUE_GROUPS } from "@/lib/retrieval/aliases";
 import { inputGate } from "./input-gate";
 import {
@@ -195,9 +196,10 @@ export function contentIntent(
       : searchKeywords(message);
   const map =
     !articleLookup &&
-    (explicitMapCommand(message) !== null ||
+    (navigationIntent(message).routeQuestion ||
+      explicitMapCommand(message) !== null ||
       /^(?:这里|那里|这栋|那栋)[。？?]*$/.test(message) ||
-      /(?:地图|定位|路线|导航|在哪|告诉我.*哪里|带我去|带我走|带我过去|导航到|导航去|怎么去|如何去|怎样去|从.+?(?:去|到)|(?:帮我找|找一下|找)(?:图书馆|教学楼|饭堂|食堂|超市|宿舍|校门|体育馆|操场|打印店|快递|校医院))/.test(
+      /(?:地图|定位|路线|导航|在哪|告诉我.*哪里|带我去|带我走|带我过去|导航到|导航去|怎么去|怎么走|怎么过去|怎么走到|如何去|怎样去|前往|走向|走到|从.+?(?:去|到|至|前往)|(?:帮我找|找一下|找)(?:图书馆|教学楼|饭堂|食堂|超市|宿舍|校门|体育馆|操场|打印店|快递|校医院))/.test(
         message,
       ));
   // Radar tags are the product's own business categories. Lock the event search
