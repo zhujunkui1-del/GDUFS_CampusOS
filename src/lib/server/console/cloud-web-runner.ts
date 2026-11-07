@@ -25,13 +25,23 @@ export async function runCloudWebBatch(
   options: { now?: number; maxSteps?: number } = {},
 ) {
   const now = options.now || Date.now(),
-    store = new ConsoleSyncStore(db, cloudRunnerActor),
-    jobs = await db
-      .prepare(
-        "SELECT id FROM ingestion_jobs WHERE job_kind='web' AND control_state='active' AND phase<>'complete' AND status IN('queued','running') AND lease_until_ms<=? AND next_run_after_ms<=? AND ((SELECT auto_sync_enabled FROM console_engine_settings WHERE id='console-v2-settings')=1 OR run_key NOT LIKE 'scheduled:%') ORDER BY created_at,id LIMIT ?",
-      )
-      .bind(now, now, options.maxSteps || MAX_STEPS_PER_TICK)
-      .all<{ id: string }>(),
+    store = new ConsoleSyncStore(db, cloudRunnerActor);
+  // Editing a profile bumps its rule_version, which makes every job created
+  // under the previous rule unclaimable (claim() rejects it). Those jobs used
+  // to sit at the front of the ORDER BY forever and starve the whole queue, so
+  // retire them here instead of letting them block later work.
+  await db
+    .prepare(
+      "UPDATE ingestion_jobs SET status='failed',control_state='cancelled',error_code='RULE_CHANGED',lease_hash=NULL,lease_until_ms=0,updated_at=? WHERE job_kind='web' AND phase<>'complete' AND control_state='active' AND status IN('queued','running') AND EXISTS (SELECT 1 FROM source_collection_policies p WHERE p.source_id=ingestion_jobs.source_id AND p.rule_version<>ingestion_jobs.rule_version)",
+    )
+    .bind(now)
+    .run();
+  const jobs = await db
+    .prepare(
+      "SELECT id FROM ingestion_jobs WHERE job_kind='web' AND control_state='active' AND phase<>'complete' AND status IN('queued','running') AND lease_until_ms<=? AND next_run_after_ms<=? AND ((SELECT auto_sync_enabled FROM console_engine_settings WHERE id='console-v2-settings')=1 OR run_key NOT LIKE 'scheduled:%') ORDER BY created_at,id LIMIT ?",
+    )
+    .bind(now, now, options.maxSteps || MAX_STEPS_PER_TICK)
+    .all<{ id: string }>(),
     results: { jobId: string; phase?: string; outcome: string }[] = [];
 
   for (const row of jobs.results) {

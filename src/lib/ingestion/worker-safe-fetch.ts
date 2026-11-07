@@ -53,7 +53,10 @@ export class WorkerSafeWebFetcher {
         headers: {
           "User-Agent":
             "CampusOS-Research/0.1 (official public information collection)",
-          Accept: "text/html,text/plain;q=0.8",
+          // Some Spring Boot portals answer 500 when the Accept header has no
+          // wildcard; keep */* so content negotiation never fails.
+          Accept:
+            "text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.7",
           ...(validators?.etag ? { "If-None-Match": validators.etag } : {}),
           ...(validators?.lastModified
             ? { "If-Modified-Since": validators.lastModified }
@@ -80,11 +83,10 @@ export class WorkerSafeWebFetcher {
       await response.body?.cancel();
       throw Error("MIME_NOT_ALLOWED");
     }
-    if (
-      Number(response.headers.get("content-length")) > 524288 ||
-      (response.headers.get("content-encoding") &&
-        response.headers.get("content-encoding") !== "identity")
-    ) {
+    // fetch() transparently decodes gzip/br but keeps the Content-Encoding
+    // header, so a present encoding is not a size signal. The byte counter
+    // below enforces the decoded cap for every response.
+    if (Number(response.headers.get("content-length")) > 524288) {
       await response.body?.cancel();
       throw Error("TOO_LARGE");
     }

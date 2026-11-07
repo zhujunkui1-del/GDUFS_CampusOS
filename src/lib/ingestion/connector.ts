@@ -10,6 +10,12 @@ import { sanitizeReadingHtml } from "@/lib/server/console/reading-html";
 const hash = (s: string) => createHash("sha256").update(s).digest("hex");
 const text = (node: { textContent: string | null } | null) =>
   node?.textContent?.replace(/\s+/g, " ").trim() || "";
+// Boda/WCM list rows often render the timestamp as a bare cell
+// ("2026-10-23", "2026年10月23日", "2026-10-23 16:11") with no label.
+const isStandaloneDate = (value: string) =>
+  /^20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?$/.test(
+    value,
+  );
 function absoluteHttpsReference(raw: string, pageUrl: string) {
   const value = raw.trim();
   if (/^data:image\/(?:png|jpe?g|gif|webp|avif|svg\+xml)[;,]/i.test(value))
@@ -204,23 +210,34 @@ export class OfficialWebConnector {
         resolved = new URL(href, page).toString();
         const u = approvedUrl(this.profile, resolved);
         if (!configuredEntries.has(u) && !candidates.has(u)) {
-          const rowNode = a.closest("li") || a.parentElement || a;
+          const rowNode = a.closest("li") || a.closest("tr") || a.parentElement || a;
           const row = text(rowNode);
           const dateNode = [...rowNode.querySelectorAll("time,span")]
             .map(text)
-            .filter((s) => /^20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?$/.test(s))
+            .filter(isStandaloneDate)
             .at(-1);
           const leading = row.match(
             /(?:^|\s)(\d{1,2})\s+(20\d{2})[/.\-](\d{1,2})(?:\s|$)/,
+          );
+          const yearFirst = row.match(
+            /(?:^|\s)(20\d{2})[/.\-](\d{1,2})[/.\-](\d{1,2})(?!\d)/,
+          );
+          // Some galleries only publish a year-month stamp ("2026/05").
+          const yearMonth = row.match(
+            /(?:^|\s)(20\d{2})[/.\-](\d{1,2})(?![\d/.\-])/,
           );
           const labeled = row.match(
             /发布时间[：:]?\s*(20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?)/,
           );
           const raw = leading
             ? `${leading[2]}-${leading[3].padStart(2, "0")}-${leading[1].padStart(2, "0")}`
-            : labeled?.[1] ||
-              dateNode ||
-              row.match(/20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?/)?.[0];
+            : yearFirst
+              ? `${yearFirst[1]}-${yearFirst[2].padStart(2, "0")}-${yearFirst[3].padStart(2, "0")}`
+              : yearMonth
+                ? `${yearMonth[1]}-${yearMonth[2].padStart(2, "0")}-01`
+                : labeled?.[1] ||
+                  dateNode ||
+                  row.match(/20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?/)?.[0];
           const date = raw ? parseCampusTime(raw).date : null;
           candidates.set(u, { url: u, date, order: candidates.size });
         }
@@ -302,11 +319,31 @@ export class OfficialWebConnector {
           .filter(Boolean),
       ),
     ];
+    // A few CMS templates render the timestamp as a bare node with no
+    // "发布时间：" label. Fall back to the first date-shaped value inside the
+    // configured date node instead of dropping the article at the cutoff gate.
+    // Some templates append a view counter after the date ("2026-05-20 5828"),
+    // so a leading date is enough.
+    const bareDates = values.length
+      ? []
+      : [
+          ...new Set(
+            [...document.querySelectorAll(this.profile.dateSelector)]
+              .map(text)
+              .map(
+                (s) =>
+                  s.match(/^20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?/)?.[0],
+              )
+              .filter((value): value is string => !!value),
+          ),
+        ];
     // This CMS puts an explicit publication timestamp in its header rather than
     // the configured date node. Read only that labeled header, never body dates.
     const headerDates = values.length
       ? values
-      : [
+      : bareDates.length
+        ? bareDates
+        : [
           ...new Set(
             [...document.querySelectorAll(".other-s")]
               .map(text)

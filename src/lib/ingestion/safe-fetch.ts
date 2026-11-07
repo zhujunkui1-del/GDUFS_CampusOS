@@ -87,7 +87,8 @@ export class SafeWebFetcher {
           headers: {
             "User-Agent":
               "CampusOS-Research/0.1 (manual bounded public-metadata review)",
-            Accept: "text/html,text/plain;q=0.8",
+            Accept:
+              "text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.7",
             "Accept-Encoding": "identity",
             ...(validators?.etag ? { "If-None-Match": validators.etag } : {}),
             ...(validators?.lastModified
