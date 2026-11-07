@@ -1943,3 +1943,11 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **验证**：`vitest run tests/unit` 141 文件 973 项全绿，`tsc --noEmit` 通过。新增测试：`tests/unit/alias-vocabulary.test.ts`（5）、`tests/unit/article-facets.test.ts`（6）、`tests/unit/college-roundup.test.ts`（2）、`tests/unit/date-conflicts.test.ts`（6）、`tests/unit/assistant-conversation-regressions.test.ts`（3，把三轮验收对话写成事实断言）。
 
 **已知边界**：event_start 只覆盖 147/3135，原因是大量「回顾」类文章正文不写具体日期，抽取器不猜；学院覆盖 1393/3135，其余文章正文与标题都不提学院。联网结果仍未复用同一套抽取（外部结果只作为卡片进入，未入库）。
+
+**线上复核（2026-11-07 23:00，preview 版本 `ed84c0d7` / `2c97b24` 之后重部署）**：三轮验收对话在真实站点 `https://gdufs.zhiyuapp.site/map` 上重跑，结果与预期一致：
+
+- 「院运会」→ 列出西语学院第 25 届（10-24）、公管×金融联合（10-25）、会计学院第 12 届（11-01）、英语教育学院第 21 届（11-07）、信息科学与技术学院第 20 届（11-07），信息学院在列。
+- 「还有别的学院的院运会吗」→ 会计学院、公管×金融、英语教育学院、信息学院，**信息学院的日期是 2026-11-07**，不再出现「1月7日」。
+- 「信息学院有没有院运会」→ 「原定2026年11月7日在假草场举办，设置了径赛、田赛多个项目…」，引用来源为「信息科学与技术学院2026院运会报名通知」。
+
+**过程中发现并修复的一个新缺陷**：为枚举型查询把 `read-plan` 的读取上限提到 5 时，`search_campus_knowledge` 的 schema 上限是 4（`src/domain/retrieval/skills.ts:10`），整轮调用在零耗时内被 schema 拒绝，线上回答退化成「这次查询未完成，请重新提问。」表现为 `tool.finished` 的 `durationMs: 0, ok: false`。现已改为按工具名分别取上限（`PAGE_SIZE`），并新增 `tests/unit/read-plan-limits.test.ts`（5 项）断言每个计划读入都能通过它自己的 schema。
