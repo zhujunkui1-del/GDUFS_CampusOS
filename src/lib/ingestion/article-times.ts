@@ -6,6 +6,7 @@ import type {
   RegistrationWindow,
 } from "@/domain/console/article-analysis";
 import { articleText, evidence, type ArticleText } from "./article-text";
+import { detectCollege, detectEventType } from "./article-college";
 
 type Span = { text: string; start: number; end: number };
 const datePattern =
@@ -239,7 +240,17 @@ export function extractArticleStructure(
 ): ArticleAnalysis {
   const text = articleText(input),
     publishedAt = input.publishedAt || null;
-  if (!text.bodyAvailable) return analysis;
+  // Facets are derived from the title alone when there is no body, so they are
+  // computed before the early return that skips activity extraction.
+  if (!text.bodyAvailable) {
+    const college = detectCollege(text, []);
+    return {
+      ...analysis,
+      college: college?.id || null,
+      collegeName: college?.name || null,
+      eventType: detectEventType(text),
+    };
+  }
   const headings = [
     ...text.text.matchAll(
       /(?:^|\n)(?:活动名称|讲座题目|活动主题|\d+[.、]\s*(?:讲座|活动|比赛))[：:]\s*([^\n]{1,100})/g,
@@ -494,8 +505,18 @@ export function extractArticleStructure(
       ? points(expires, text, publishedAt)[0] || null
       : null,
   };
+  const college = detectCollege(text, activities.map((a) => a.organizer));
+  const firstStart = activities.find((a) => a.startsAt?.date)?.startsAt?.date;
+  const lastEnd = [...activities]
+    .reverse()
+    .find((a) => a.endsAt?.date || a.startsAt?.date);
   return {
     ...analysis,
+    college: college?.id || null,
+    collegeName: college?.name || null,
+    eventType: detectEventType(text),
+    eventStart: firstStart || null,
+    eventEnd: lastEnd?.endsAt?.date || lastEnd?.startsAt?.date || null,
     registrationStatus: required
       ? "required"
       : notRequired

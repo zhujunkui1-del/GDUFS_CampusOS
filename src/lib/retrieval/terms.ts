@@ -1,28 +1,10 @@
 import { queryFocus, sportsQueryTerms } from "./query-focus";
 import { buildQueryPlan, entityTerms, type QueryPlan } from "./query-plan";
 import { stripSearchControls } from "./query-controls";
+import { ALIAS_GROUPS } from "./aliases";
 // Encoded two-character Chinese terms avoid unicode61's whole-Han-run behavior.
 // This is keyword expansion, not paid embedding or a second classifier.
-const groups = [
-  ["食堂", "饭堂", "餐厅", "好吃", "美食"],
-  ["社团", "漫协", "二次元", "动漫协会", "ACG"],
-  ["借书", "借阅", "图书借阅", "续借", "借阅规则"],
-  ["图书馆", "入馆", "读者"],
-  ["校园卡", "一卡通", "补卡", "挂失", "校园卡补办"],
-  ["选课", "课程选择", "选课规则"],
-  ["奖学金", "奖助", "学生资助"],
-  ["助学金", "学生资助", "助学贷款"],
-  ["就业协议", "三方协议", "签约"],
-  ["招聘", "宣讲", "招聘会", "实习"],
-  ["申请条件", "评定条件", "申请资格", "条件"],
-  ["申请材料", "所需材料", "提交材料", "材料"],
-  ["讲座", "讲坛", "学术沙龙", "论坛"],
-  ["竞赛", "比赛", "大赛"],
-  ["报名", "预约席位", "参会回执", "申请时间"],
-  ["办事", "办理流程", "操作指南"],
-  ["科研项目", "项目申报", "课题"],
-  ["停水", "停电", "临时通知"],
-];
+const groups = ALIAS_GROUPS.map((group) => group.aliases);
 export function keywords(query: string) {
   const cleaned = stripSearchControls(query)
     .normalize("NFKC")

@@ -13,7 +13,10 @@ import {
   DerivedEventStatusSchema,
 } from "./taxonomy";
 
-export const ARTICLE_CLASSIFIER_VERSION = "article-content-v3";
+// v4 adds the derived article-level facets (college, eventType, eventStart,
+// eventEnd). The version is bumped so every stored row is re-derived instead of
+// being mixed with v3 rows that lack the facets.
+export const ARTICLE_CLASSIFIER_VERSION = "article-content-v4";
 export const ArticleAnalysisInputSchema = z
   .object({
     documentId: z.string().optional(),
@@ -128,6 +131,16 @@ export const ArticleAnalysisSchema = z
     bodyAvailable: z.boolean(),
     registrationStatus: RegistrationRequirementSchema,
     hasRegistration: z.boolean(),
+    /**
+     * Derived facets of the article as a whole. They are projections over text
+     * we already store, never a judgement about the article: null means the
+     * rules found no reliable mention, not that there is none.
+     */
+    college: z.string().max(60).nullable().default(null),
+    collegeName: z.string().max(60).nullable().default(null),
+    eventType: z.string().max(40).nullable().default(null),
+    eventStart: z.iso.date().nullable().default(null),
+    eventEnd: z.iso.date().nullable().default(null),
     activities: z.array(ArticleActivitySchema).max(12),
     knowledge: z.object({
       topic: z.string().nullable(),

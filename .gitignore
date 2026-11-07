@@ -125,3 +125,4 @@ docs/model-previews/**/*.glb
 /docs/verification/**/*.jpg
 /verification/**/*.png
 /verification/**/*.jpg
+docs/KB_DIFY_PILOT*.md

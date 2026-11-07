@@ -23,6 +23,7 @@ import { requestTimeWindow } from "../assistant/time-window";
 import { universityScope } from "../assistant/grounding";
 import { completeSnippetTimes } from "@/lib/retrieval/snippet-time";
 import { calendarContentSearch } from "../calendar/search";
+import { collegeRoundupIds } from "./college-roundup";
 import { calendarIdentity } from "@/lib/ingestion/calendar-identity";
 
 const time = (t: ArticleTimePoint | null) =>
@@ -130,6 +131,23 @@ export async function searchContent(
       queries: 1,
       usageAvailable: typeof r.meta?.rows_read === "number",
     };
+  }
+  // An enumeration question ("还有别的学院的院运会吗") is answered by the
+  // derived facets, not by a top-k guess: read one upcoming notice per
+  // college. A date or registration filter still wins, because it is a
+  // narrower constraint than the enumeration.
+  if (
+    purpose === "events" &&
+    !documentIds &&
+    !event?.after &&
+    !event?.before &&
+    !event?.registrationState
+  ) {
+    const roundup = await collegeRoundupIds(db, q.query, now);
+    if (roundup.length) {
+      documentIds = roundup;
+      filterMetrics.queries += 1;
+    }
   }
   const {
     after: _after,

@@ -58,9 +58,9 @@ export async function analysisStatements(
   return [
     db
       .prepare(
-        `INSERT INTO document_article_analysis(document_id,content_revision,input_hash,classifier_version,input_digest,projection_hash,processed_at,primary_destination,radar_category,knowledge_category,has_registration,analysis_json,calendar_version,calendar_status,calendar_attempts)
-      SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,? FROM knowledge_documents d WHERE d.id=? AND d.content_revision=? AND d.input_hash=? AND d.owner_user_id IS NULL AND d.data_domain<>'user_private'
-      ON CONFLICT(document_id) DO UPDATE SET content_revision=excluded.content_revision,input_hash=excluded.input_hash,classifier_version=excluded.classifier_version,input_digest=excluded.input_digest,projection_hash=excluded.projection_hash,processed_at=excluded.processed_at,primary_destination=excluded.primary_destination,radar_category=excluded.radar_category,knowledge_category=excluded.knowledge_category,has_registration=excluded.has_registration,analysis_json=excluded.analysis_json
+        `INSERT INTO document_article_analysis(document_id,content_revision,input_hash,classifier_version,input_digest,projection_hash,processed_at,primary_destination,radar_category,knowledge_category,has_registration,college,event_type,event_start,event_end,analysis_json,calendar_version,calendar_status,calendar_attempts)
+      SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? FROM knowledge_documents d WHERE d.id=? AND d.content_revision=? AND d.input_hash=? AND d.owner_user_id IS NULL AND d.data_domain<>'user_private'
+      ON CONFLICT(document_id) DO UPDATE SET content_revision=excluded.content_revision,input_hash=excluded.input_hash,classifier_version=excluded.classifier_version,input_digest=excluded.input_digest,projection_hash=excluded.projection_hash,processed_at=excluded.processed_at,primary_destination=excluded.primary_destination,radar_category=excluded.radar_category,knowledge_category=excluded.knowledge_category,has_registration=excluded.has_registration,college=excluded.college,event_type=excluded.event_type,event_start=excluded.event_start,event_end=excluded.event_end,analysis_json=excluded.analysis_json
       ,calendar_version=excluded.calendar_version,calendar_status=excluded.calendar_status,calendar_attempts=excluded.calendar_attempts,calendar_lease_until_ms=0
       WHERE document_article_analysis.content_revision<>excluded.content_revision OR document_article_analysis.input_hash<>excluded.input_hash OR document_article_analysis.classifier_version<>excluded.classifier_version OR document_article_analysis.projection_hash<>excluded.projection_hash`,
       )
@@ -76,6 +76,10 @@ export async function analysisStatements(
         analysis.radarCategory,
         analysis.knowledgeCategory,
         Number(analysis.hasRegistration),
+        analysis.college || "",
+        analysis.eventType || "",
+        analysis.eventStart || null,
+        analysis.eventEnd || null,
         projection,
         analysis.calendar?.version || "",
         analysis.calendar?.status || "pending",

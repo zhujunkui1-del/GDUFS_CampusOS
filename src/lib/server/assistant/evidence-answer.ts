@@ -4,6 +4,7 @@ import { matchesQueryFocus } from "@/lib/retrieval/query-focus";
 import { chinaDay } from "./time-window";
 import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
 import { alignWindowEnd } from "@/lib/retrieval/evidence-window";
+import { dateConflictNote } from "@/lib/retrieval/dates";
 import type { ContentSearchResult } from "@/domain/retrieval/skills";
 
 /** Listing asks for known items, not an invented narrative or inferred availability. */
@@ -271,11 +272,14 @@ export function retrievedEvidenceAnswer(
             `${m[1]}-${m[2].padStart(2, "0")}-${m[3].padStart(2, "0")}` >=
             today,
         );
+      // A source that contradicts itself is still usable evidence: say so
+      // instead of quietly reporting whichever date we happened to quote.
+      const conflict = dateConflictNote(normalized);
       return quote
         ? [
             {
               future,
-              text: `- ${c.title}${attribution}： “${quote}${quote.length === 160 ? "…" : ""}”[${index + 1}]`,
+              text: `- ${c.title}${attribution}： “${quote}${quote.length === 160 ? "…" : ""}”[${index + 1}]${conflict ? `\n  ${conflict}` : ""}`,
             },
           ]
         : [];

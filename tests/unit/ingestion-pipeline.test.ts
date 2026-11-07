@@ -301,7 +301,9 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
       review: 0,
       denominator: 8,
     });
-  });
+    // Eight fresh SQLite fixtures: the default 5s is too close to the machine
+    // cost when the suite runs in parallel.
+  }, 20000);
   it("keeps metadata-only as default and limits explicitly licensed body extraction", () => {
     const c = new OfficialWebConnector(p),
       url = p.origin + "/info/1056/1.htm",

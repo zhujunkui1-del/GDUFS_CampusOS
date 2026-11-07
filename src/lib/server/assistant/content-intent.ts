@@ -11,6 +11,7 @@ import {
   explicitMapCommand,
 } from "./intent";
 import { buildQueryPlan } from "@/lib/retrieval/query-plan";
+import { VENUE_GROUPS } from "@/lib/retrieval/aliases";
 import { inputGate } from "./input-gate";
 import {
   searchControlBusiness,
@@ -24,13 +25,7 @@ import {
 export type ContentTool = "search_campus_knowledge" | "search_campus_events";
 /** Campus facts need evidence; advice may use general knowledge with a clear gap. */
 export type AnswerRequirement = "strict" | "advisory" | "open";
-const ENTITY_GROUPS = [
-  ["门诊部", "门诊楼", "门诊室", "校医院"],
-  ["一饭", "文采园", "第一饭堂", "第一食堂"],
-  ["二饭", "博雅园", "第二饭堂", "第二食堂"],
-  ["三饭", "风采园", "第三饭堂", "第三食堂"],
-  ["云山学者", "云山青年学者", "云山领军学者"],
-];
+const ENTITY_GROUPS = VENUE_GROUPS.map((group) => group.names);
 /** Same entity, different wording: retry with the official alias instead of "no data". */
 export function entityQueryVariants(query: string) {
   const variants: string[] = [];

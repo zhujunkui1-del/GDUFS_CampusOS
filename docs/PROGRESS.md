@@ -1927,3 +1927,19 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **已部署到 preview**：2026-11-07 20:45 执行 `npm run deploy:preview`，仅更新 `campusos-preview`，未做 D1 迁移、未改 Secret、未动生产与 DNS。版本 ID `a0475462-29f7-4818-a0bb-bea47a9aaa99`。真实浏览器复核：`https://gdufs.zhiyuapp.site/map` 展开「校园助理」后显示开场白与两个示例按钮，旧的「想了解校园里的什么？」已不存在；线上 chunk `/_next/static/chunks/0z45emp1jxj76.js` 含开场白，原 `0m-c8pbahgtt6.js` 已不再被引用。
 
 **本机环境备注**：Windows 下 `next dev` 与 `@opennextjs/cloudflare` 的 Miniflare 默认目录会撞上 `C:\Users\<user>\AppData\Local\Temp` 的 ACL（报 `failed: CreateDirectory: #5 拒绝访问。; path = miniflare-email-store`）。把 `TEMP`/`TMP`/`TMPDIR` 指向工作区内目录（如 `.tmp/build-tmp`）后 `next dev`、`npm run build:worker`、`npm run deploy:preview` 均可正常执行。
+
+## 2026-11-07｜智能体第二层：统一词表、文章 facet、按学院枚举
+
+**问题来源**：上一节的四处小修只处理了排序与截断，回答仍有两个结构性缺口——同一批词散在三个词表里互相不知道；「有哪些学院的院运会」这类问题只能靠 top-k 碰运气，没有按学院的枚举。
+
+**改动**：
+
+1. **统一词表**：`src/lib/retrieval/aliases.ts` 新增 `ALIAS_GROUPS`（21 组，含 topic / keyword 两种角色）、`TOPIC_GROUPS`、`VENUE_GROUPS`，并 re-export `colleges.ts` 的 `COLLEGE_GROUPS` / `COLLEGE_NAMES` / `collegeAliases`。`src/lib/retrieval/query-plan.ts`、`src/lib/retrieval/terms.ts`、`src/lib/server/assistant/content-intent.ts` 三处改为从这一份取词。「报名/申请材料/申请条件/办事流程」标为 keyword-only——它们一旦当 topic，会让「报名通知」与「比赛」被判定为不同主题。
+2. **文章 facet**：`src/lib/ingestion/article-college.ts` 新增 `detectCollege()`（标题 > 主办单位 > 正文，长名优先）与 `EVENT_KINDS` / `detectEventType()`。`ArticleAnalysisSchema` 新增 `college` / `collegeName` / `eventType` / `eventStart` / `eventEnd`，`ARTICLE_CLASSIFIER_VERSION` 升到 `article-content-v4`。迁移 `migrations/0063_article_facets.sql` 加四列与两个索引。
+3. **按学院枚举**：`src/lib/server/retrieval/college-roundup.ts` 新增 `collegeRoundupIds()`。它是「点名某学院」之外的活动查询专用通道：先判定 query 是枚举而非点名，再按 `event_type` + `college <> ''` 取最近 30 天，每院只留一篇，最多 24 篇。接入 `src/lib/server/retrieval/skills.ts` 的 events 路径，日期范围等更窄的筛选优先。
+4. **日期冲突**：`src/lib/retrieval/dates.ts` 新增 `statedDates()` / `dateConflicts()` / `dateConflictNote()`。同一件事（报名截止 / 报名时间 / 举办时间）出现两个不同日期时，在摘录末尾并列标注，不静默选一个；同一日期换写法不算冲突。
+5. **回填**：`scripts/backfill-article-facets.mjs`（一次性，默认 dry-run，`--apply` 才提交）对 preview D1 的 3135 条分析回填 facet。结果：有 college 1393 条、有 event_type 1679 条、有 event_start 147 条。
+
+**验证**：`vitest run tests/unit` 141 文件 973 项全绿，`tsc --noEmit` 通过。新增测试：`tests/unit/alias-vocabulary.test.ts`（5）、`tests/unit/article-facets.test.ts`（6）、`tests/unit/college-roundup.test.ts`（2）、`tests/unit/date-conflicts.test.ts`（6）、`tests/unit/assistant-conversation-regressions.test.ts`（3，把三轮验收对话写成事实断言）。
+
+**已知边界**：event_start 只覆盖 147/3135，原因是大量「回顾」类文章正文不写具体日期，抽取器不猜；学院覆盖 1393/3135，其余文章正文与标题都不提学院。联网结果仍未复用同一套抽取（外部结果只作为卡片进入，未入库）。

@@ -7,51 +7,11 @@ import {
 } from "./query-focus";
 import { stripSearchControls } from "./query-controls";
 import { COLLEGE_NAMES, collegeAliases } from "./colleges";
+import { ALIAS_GROUPS, TOPIC_GROUPS, VENUE_GROUPS } from "./aliases";
 
 // Retrieval concepts are query vocabulary, not a parallel article taxonomy.
-// Aliases expand each original concept; broad action words never replace it.
-const concepts = [
-  { id: "borrowing", aliases: ["借书", "借阅", "续借", "借阅规则"] },
-  { id: "library", aliases: ["图书馆", "入馆", "读者"] },
-  { id: "card", aliases: ["校园卡", "一卡通", "补卡", "挂失"] },
-  { id: "courses", aliases: ["选课", "课程选择", "选课规则"] },
-  { id: "scholarship", aliases: ["奖学金", "奖助", "学生资助"] },
-  { id: "aid", aliases: ["助学金", "助学贷款"] },
-  { id: "agreement", aliases: ["就业协议", "三方协议", "签约手续"] },
-  {
-    id: "volunteer",
-    aliases: ["志愿者", "志愿活动", "志愿服务", "志愿招募"],
-  },
-  { id: "recruitment", aliases: ["招聘", "招聘会", "宣讲会", "实习"] },
-  {
-    id: "research",
-    aliases: ["科研项目", "科研管理", "项目申报", "课题", "项目招标"],
-  },
-  {
-    id: "food",
-    aliases: [
-      "食堂",
-      "饭堂",
-      "餐厅",
-      "好吃",
-      "美食",
-      "口味",
-      "一饭",
-      "文采园",
-      "博雅园",
-      "风采园",
-    ],
-  },
-  {
-    id: "housing",
-    aliases: ["宿舍", "寝室", "住宿", "南苑", "北苑", "入住", "居住", "隔音"],
-  },
-  { id: "club", aliases: ["社团", "漫协", "二次元", "动漫协会", "ACG"] },
-  { id: "water", aliases: ["停水", "供水", "用水中断"] },
-  { id: "power", aliases: ["停电", "供电中断", "用电施工"] },
-  { id: "lecture", aliases: ["讲座", "讲坛", "学术沙龙", "论坛"] },
-  { id: "competition", aliases: ["竞赛", "比赛", "大赛"] },
-] as const;
+// The vocabulary lives in ./aliases so lexical search and entity retries read
+// the same table; broad action words never replace a subject.
 export type QueryGoal =
   | "registration"
   | "participation"
@@ -95,13 +55,13 @@ export function buildQueryPlan(
     /(?:不要|排除|不含|除了)\s*[\p{Script=Han}a-zA-Z]{2,12}(?=[，。；\s]|$)/gu,
     " ",
   );
-  let topics: QueryPlan["topics"] = concepts
-    .filter((c) => c.aliases.some((t) => positive.includes(t)))
-    .map((c) => ({
-      id: c.id,
-      originalTerms: c.aliases.filter((t) => positive.includes(t)),
-      alternatives: [...c.aliases],
-    }));
+  let topics: QueryPlan["topics"] = TOPIC_GROUPS.filter((c) =>
+    c.aliases.some((t) => positive.includes(t)),
+  ).map((c) => ({
+    id: c.id,
+    originalTerms: c.aliases.filter((t) => positive.includes(t)),
+    alternatives: [...c.aliases],
+  }));
   if (queryFocus(positive) === "sports")
     topics.unshift({
       id: "sports",
@@ -175,7 +135,7 @@ export function buildQueryPlan(
   let residual = positive;
   for (const term of [
     ...new Set([
-      ...concepts.flatMap((c) => [...c.aliases]),
+      ...ALIAS_GROUPS.flatMap((c) => [...c.aliases]),
       ...sportsQueryTerms(positive),
       ...entities,
       ...goalTerms[goal],
@@ -291,12 +251,8 @@ type QueryEvidence = {
   snippet?: string;
 };
 export function entityTerms(entity: string) {
-  const venues = [
-    ["一饭", "第一饭堂", "第一食堂", "文采园"],
-    ["二饭", "第二饭堂", "第二食堂", "博雅园"],
-    ["三饭", "第三饭堂", "第三食堂", "风采园"],
-  ];
-  return venues.find((g) => g.includes(entity)) || [entity];
+  const venue = VENUE_GROUPS.find((group) => group.names.includes(entity));
+  return venue ? [...venue.names] : [entity];
 }
 export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const title = (hit.title || "").normalize("NFKC").toLowerCase(),
