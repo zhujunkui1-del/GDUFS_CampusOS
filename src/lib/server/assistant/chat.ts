@@ -21,6 +21,7 @@ import type { MapAction } from "@/domain/maps/contracts";
 import { AgentOrchestrator } from "../agent/orchestrator";
 import { SkillRegistry } from "../agent/skill-registry";
 import { CampusMapService, MAP_VERSIONS } from "../maps/campus-map-service";
+import { routeDirectionsText } from "../maps/route-directions";
 import { createMapSkillRegistry } from "../maps/skills";
 import { defaultModelRuntime } from "../models/runtime";
 import { personalModelRuntime } from "../models/personal-runtime";
@@ -1883,6 +1884,44 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                 text = fallback;
                 answerMode = "evidence_excerpt";
                 modelFailureCode = result.code;
+                result = { ...result, status: "completed" };
+              }
+            }
+            // The map can refuse to draw: the browser never acknowledged the
+            // action, the tab closed, or the stream dropped mid-run. The route
+            // itself is still real data from plan_route, so it is answered in
+            // words instead of failing a question that already has an answer.
+            if (result.status !== "completed" && !streamSignal.aborted) {
+              const recorded = [...routeArtifacts.values()].at(-1);
+              const parsed =
+                routeQuestion &&
+                originIds.length === 1 &&
+                destinations.length === 1;
+              const route =
+                recorded ??
+                (parsed
+                  ? await service
+                      .plan(
+                        {
+                          start: { type: "place", placeId: originIds[0] },
+                          endPlaceId: destinations[0].id,
+                          mode: "walking",
+                        },
+                        {
+                          requestId: apiContext.requestId,
+                          sessionId: ctx.identity.owner,
+                          user: ctx.identity.user,
+                          permissions: [],
+                          campusId: "gdufs_university_town",
+                          signal: AbortSignal.timeout(5000),
+                        },
+                      )
+                      .catch(() => undefined)
+                  : undefined);
+              if (route) {
+                text = routeDirectionsText(route);
+                answerMode = "route_directions";
+                modelFailureCode = result.code ?? null;
                 result = { ...result, status: "completed" };
               }
             }

@@ -2053,3 +2053,18 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **验证**：`npx tsc --noEmit -p tsconfig.json` → 0 error；`npx vitest run tests/unit/ingestion-pipeline.test.ts tests/unit/official-publication-date.test.ts` → 26 passed。入口审计脚本对每个已配置来源真实跑 `discover()`：85 个入口有产出，74 个站点至少一个入口在门禁内有货。
 
 **未做**：39 个站点仍使用占位选择器（`title="h1, title"` / `date="time, .date, .time"` / `body="article, main"`），靠 `parse()` 兜底正常工作，但未逐站精修；上述 RASP / SPA / SSO 站点需要改走代理或浏览器渲染才能覆盖。
+
+## 2026-11-08｜路线失败改走文字指路
+
+负责人要求「失败后改用文字指路」：地图没能画出路线时，不能把整轮判成失败。
+
+**问题**：`plan_route` 成功、`control_map` 也成功，但浏览器从不回执（关标签页、后台节流、流中断），`src/lib/server/assistant/chat.ts` 的 `beforeAnswer` 轮询 15 秒后抛 `TIMEOUT`，整轮以「地图操作未完成，请重试。」结束。此时**路线数据已经算出来了**，只是画不出来。
+
+**改动**：
+
+1. 新增 `src/lib/server/maps/route-directions.ts`：`routeDirectionsText(route)` 只渲染 `plan_route` 已返回的内容——起终点名、总距离、预计分钟数、逐步 `steps`、跨区时提示下沉隧道。不虚构距离、不虚构步骤。
+2. `src/lib/server/assistant/chat.ts`：在既有证据兜底之后、发布日期兜底之前插入一段降级。当 `result.status !== "completed"` 且未主动中止时，优先取本轮已缓存的路由 artifact（`routeArtifacts`），没有则用本轮已解析出的唯一起终点重新调一次 `plan_route`（5 秒超时）。成功则改写为文字指路、`answerMode = "route_directions"`、`modelFailureCode` 保留原失败码，并把整轮改判为完成。
+
+**验证**：新增 `tests/unit/route-directions.test.ts`（2 项）——(a) 文字只含 planner 返回的步骤；(b) 模型超时后仍以 `route_directions` 完成，正文含「先用文字给你指路」与「下沉隧道」，且不发 `run.failed`。`npx vitest run tests/unit` → **144 文件 / 1004 用例全绿**；`npx tsc --noEmit`、eslint 通过。
+
+**未做**：`plan_route` 本身失败（如 `ROUTE_UNAVAILABLE`）时仍无路线数据可渲染，只能沿用通用错误文案；此时没有可信的距离与步骤可讲，不做猜测。
