@@ -1922,4 +1922,8 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 
 **边界**：开场白只承诺已上线的能力（校园雷达、校园知识库、原文引用、文章查找、活动日历），不提 Embedding、不提全站同步。
 
-**验证**：新增 `tests/unit/assistant-welcome.test.ts`（2 项，断言开场白点名的能力与示例一一对应）；`vitest run tests/unit` 136 文件 949 项全绿，`tsc --noEmit`、eslint 通过。视觉未在浏览器里复核：本机 `next dev` 起不来，`wrangler dev` 报 `failed: CreateDirectory: #5 拒绝访问。; path = miniflare-email-store`。
+**验证**：新增 `tests/unit/assistant-welcome.test.ts`（2 项，断言开场白点名的能力与示例一一对应）；`vitest run tests/unit` 136 文件 949 项全绿，`tsc --noEmit`、eslint 通过。
+
+**已部署到 preview**：2026-11-07 20:45 执行 `npm run deploy:preview`，仅更新 `campusos-preview`，未做 D1 迁移、未改 Secret、未动生产与 DNS。版本 ID `a0475462-29f7-4818-a0bb-bea47a9aaa99`。真实浏览器复核：`https://gdufs.zhiyuapp.site/map` 展开「校园助理」后显示开场白与两个示例按钮，旧的「想了解校园里的什么？」已不存在；线上 chunk `/_next/static/chunks/0z45emp1jxj76.js` 含开场白，原 `0m-c8pbahgtt6.js` 已不再被引用。
+
+**本机环境备注**：Windows 下 `next dev` 与 `@opennextjs/cloudflare` 的 Miniflare 默认目录会撞上 `C:\Users\<user>\AppData\Local\Temp` 的 ACL（报 `failed: CreateDirectory: #5 拒绝访问。; path = miniflare-email-store`）。把 `TEMP`/`TMP`/`TMPDIR` 指向工作区内目录（如 `.tmp/build-tmp`）后 `next dev`、`npm run build:worker`、`npm run deploy:preview` 均可正常执行。
