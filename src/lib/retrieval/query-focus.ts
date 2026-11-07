@@ -25,6 +25,20 @@ export function sportsQueryTerms(query: string) {
   const explicit = sportsSubjects.filter((t) => query.includes(t));
   return explicit.length ? explicit : ["体育", "运动会", ...sportsSubjects];
 }
+/** A bare activity noun ("院运会", "讲座") is a discovery question: what exists
+ * and what can still be joined. A retrospective of an event that already
+ * happened is background, not the answer. Titles only; no text is rewritten. */
+export function activityNounQuery(query: string) {
+  return (
+    /运会|运动会|比赛|赛事|竞赛|讲座|论坛|大赛|招新|评选/.test(query) &&
+    !/怎么样|如何|流程|指南|材料/.test(query)
+  );
+}
+export function activityTitleTier(title: string) {
+  if (/通知|报名|招募|规程|预告|预热|即将|来袭|等你来/.test(title)) return 2;
+  if (/回顾|圆满|落幕|收官|喜报|佳绩|顺利举行/.test(title)) return 0;
+  return 1;
+}
 export function participationQuery(query: string) {
   return (
     /参加|参与|参赛|报名|可报|能报|可参加|能参加/.test(query) &&

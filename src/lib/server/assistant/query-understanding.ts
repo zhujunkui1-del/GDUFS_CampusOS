@@ -14,7 +14,7 @@ export const QueryUnderstandingSchema = z
     entities: z
       .array(z.string().min(1).max(60))
       .max(4)
-      .describe("明确的人名、学院全名或地点；学院、学生等泛称不算具体实体"),
+      .describe("明确的人名、机构名（含学院简称）或地点；泛称如学院、学生不算"),
     constraints: z
       .array(z.string().min(1).max(60))
       .max(4)

@@ -94,3 +94,34 @@ Thumbs.db
 *.swp
 *.swo
 .eslintcache
+
+# ---------------------------------------------------------------------------
+# 体积治理（2026-11-07）
+#
+# 以下规则只作用于"之后新增"的未跟踪文件。已经提交的文件不会被删除，也不会
+# 自动取消跟踪；它们仍然留在仓库里，可以正常使用。若要把仓库真正瘦身，需要
+# 另行执行 git rm --cached（停止跟踪）以及历史重写（缩小 .git）。
+# 需要显式保留某个被忽略的文件时，用 git add -f <path>。
+# ---------------------------------------------------------------------------
+
+# Playwright 原始会话产物（CLI 的 .code.txt / .json / .yml dump）
+/output/playwright/
+**/.playwright-cli/
+
+# 模型预览包：上线资产在 public/models/，这里只保留可复现的脚本、清单与文案
+docs/model-previews/**/*.zip
+docs/model-previews/**/*.glb
+
+# 已被取代的底图版本：运行时只读取 local-map-manifest.json 锁定的那一份
+/public/maps/campus-0f7a1a36e85c.geojson
+/public/maps/campus-bcf19a94d00a.geojson
+/public/maps/campus-e81df54c66ed.geojson
+
+# 验收截图：Chrome/Edge 成对截图与重复副本不再入库；
+# JSON / TXT / Markdown 回执继续保留，便于复核。
+/docs/screenshots/**/*.png
+/docs/screenshots/**/*.jpg
+/docs/verification/**/*.png
+/docs/verification/**/*.jpg
+/verification/**/*.png
+/verification/**/*.jpg

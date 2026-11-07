@@ -14,7 +14,11 @@ import {
 } from "@/domain/retrieval/contracts";
 import { ftsRecallLanes, keywords } from "@/lib/retrieval/terms";
 import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
-import { participationQuery } from "@/lib/retrieval/query-focus";
+import {
+  participationQuery,
+  activityNounQuery,
+  activityTitleTier,
+} from "@/lib/retrieval/query-focus";
 import type { SqlDatabase } from "../assistant/database";
 import { ApiError } from "../errors";
 import { isOfficialCampusUrl } from "../external-search/policy";
@@ -671,9 +675,15 @@ ${sourceFilterSql}
                 end_offset: d.title.length,
               },
         );
+      // A binary match made every article that mentions "院运会" once score
+      // exactly 6.0, so 22 documents tied and the tie-break fell through to the
+      // FTS rank. Repeats keep the signal: a notice that develops the topic
+      // outranks a passing mention in an unrelated digest.
+      const occurrences = (s: string, term: string) => s.split(term).length - 1;
       const count = (s: string) =>
         terms.reduce(
-          (sum, t) => sum + (s.includes(t) ? Math.min(4, t.length / 2) : 0),
+          (sum, t) =>
+            sum + Math.min(4, t.length / 2) * Math.min(4, occurrences(s, t)),
           0,
         );
       const chunkRelevance = (text: string) =>
@@ -748,18 +758,24 @@ ${sourceFilterSql}
       // Discovering opportunities favours notices over prize reports, but a
       // recent publication never establishes an event/registration date.
       const opportunity = q.purpose === "events" && participationQuery(q.query);
+      // A bare activity noun ("院运会") is a question about what exists, not a
+      // report of what happened. A recap of an already-held event is real
+      // evidence, so it ranks below the notice instead of being dropped.
+      const activity = activityNounQuery(q.query);
+      const activityTier = activity ? activityTitleTier(d.title) : 0;
       const ageDays = d.published_at
         ? (Date.now() - Date.parse(d.published_at)) / 86400000
         : NaN;
+      const freshness =
+        Number.isFinite(ageDays) && ageDays >= 0
+          ? 3 * Math.exp(-ageDays / 90)
+          : 0;
       const opportunityBoost = opportunity
         ? (/获奖|斩获|圆满|落下帷幕|成功举办|喜讯/.test(d.title)
             ? -6
             : /通知|报名|招募|规程|预告/.test(d.title)
               ? 2
-              : 0) +
-          (Number.isFinite(ageDays) && ageDays >= 0
-            ? 3 * Math.exp(-ageDays / 90)
-            : 0)
+              : 0) + freshness
         : 0;
       const score =
         relevance.score +
@@ -769,7 +785,8 @@ ${sourceFilterSql}
         purposeBoost +
         (categoryMatch ? 2 : 0) -
         c.score +
-        opportunityBoost;
+        opportunityBoost +
+        (activity ? freshness : 0);
       const selectedWindow = windows.get(c.id)!,
         start = selectedWindow.start,
         snippet = selectedWindow.text;
@@ -832,15 +849,17 @@ ${sourceFilterSql}
       ranked.push({
         hit,
         analysis,
-        intentTier: opportunity
-          ? /获奖|斩获|圆满|落下帷幕|成功举办|喜讯|展风采|回顾|庆典|候选人|我们换届/.test(
-              d.title,
-            )
-            ? 0
-            : /通知|报名|招募|规程|预告/.test(d.title)
-              ? 2
-              : 1
-          : 0,
+        intentTier: activity
+          ? activityTier
+          : opportunity
+            ? /获奖|斩获|圆满|落下帷幕|成功举办|喜讯|展风采|回顾|庆典|候选人|我们换届/.test(
+                d.title,
+              )
+              ? 0
+              : /通知|报名|招募|规程|预告/.test(d.title)
+                ? 2
+                : 1
+            : 0,
         directSubject:
           plan.topics.some((t) =>
             t.alternatives.some((a) =>
@@ -856,10 +875,19 @@ ${sourceFilterSql}
             : d.url.replace(/#.*$/, ""),
       });
     }
+    // Activity notices tie on lexical score (every one mentions "院运会" once
+    // or twice), so the newest actionable notice is the one still open. The
+    // date only breaks ties inside the same tier; it never lifts a recap over
+    // a notice.
+    const activitySort = activityNounQuery(q.query);
     ranked.sort(
       (a, b) =>
         b.intentTier - a.intentTier ||
-        b.hit.relevanceScore - a.hit.relevanceScore,
+        b.hit.relevanceScore - a.hit.relevanceScore ||
+        (activitySort
+          ? (Date.parse(b.hit.publishedAt || "") || 0) -
+            (Date.parse(a.hit.publishedAt || "") || 0)
+          : 0),
     );
     if (sortMode === "published_desc")
       ranked.sort(

@@ -3,6 +3,7 @@ import { containsToolProtocol } from "@/lib/assistant-output";
 import { matchesQueryFocus } from "@/lib/retrieval/query-focus";
 import { chinaDay } from "./time-window";
 import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
+import { alignWindowEnd } from "@/lib/retrieval/evidence-window";
 import type { ContentSearchResult } from "@/domain/retrieval/skills";
 
 /** Listing asks for known items, not an invented narrative or inferred availability. */
@@ -248,7 +249,12 @@ export function retrievedEvidenceAnswer(
         ? normalized.search(/定于|将于|(?:比赛|活动|讲座)(?:举办)?时间[：:]?/)
         : -1;
       const start = anchor >= 0 ? Math.max(0, anchor - 5) : 0;
-      const quote = normalized.slice(start, start + 160);
+      // The same cut applies here: a 160-character quote must not stop inside
+      // "2026年11月7日", which would read as a different date.
+      const quote = normalized.slice(
+        start,
+        alignWindowEnd(normalized, start + 160),
+      );
       const dates = [
         ...normalized.matchAll(
           /(20\d{2})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})(?:\s*[—至-]\s*\d{1,2})?\s*日/g,

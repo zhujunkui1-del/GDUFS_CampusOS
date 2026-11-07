@@ -3,8 +3,10 @@ import {
   sportsQueryTerms,
   matchesQueryFocus,
   participationQuery,
+  activityNounQuery,
 } from "./query-focus";
 import { stripSearchControls } from "./query-controls";
+import { COLLEGE_NAMES, collegeAliases } from "./colleges";
 
 // Retrieval concepts are query vocabulary, not a parallel article taxonomy.
 // Aliases expand each original concept; broad action words never replace it.
@@ -128,7 +130,8 @@ export function buildQueryPlan(
             ? "policy"
             : /好吃|口味|怎么样|体验|推荐|踩雷/.test(positive)
               ? "experience"
-              : /哪些|有什么|活动|赛事|讲座|比赛/.test(positive)
+              : /哪些|有什么|活动|赛事|讲座|比赛/.test(positive) ||
+                  activityNounQuery(positive)
                 ? "discovery"
                 : "facts";
   const goalTerms: Record<QueryGoal, string[]> = {
@@ -179,12 +182,35 @@ export function buildQueryPlan(
     ]),
   ].sort((a, b) => b.length - a.length))
     residual = residual.split(term).join(" ");
+  // A college name is one subject: "信息科学与技术学院" must not be split at
+  // "与" by the generic cleanup below, and "信息学院院运会" must not become one
+  // Han run whose every bigram (including the cross-boundary "院院") has to
+  // match. Park each name in a placeholder, then restore it after the cleanup.
+  const parked = new Map<string, string>();
+  residual = residual.replace(/[\p{Script=Han}]+/gu, (run) => {
+    const found = COLLEGE_NAMES.filter((name) => run.includes(name));
+    if (!found.length) return run;
+    let out = run;
+    for (const name of found) {
+      const key = `\u0000${parked.size}\u0000`;
+      parked.set(key, name);
+      out = out.split(name).join(` ${key} `);
+    }
+    return out;
+  });
   residual = residual
     .replace(/20\d{2}年?|\d{1,2}月\d{1,2}日?|\d{4}-\d{2}-\d{2}/g, " ")
     .replace(
       /广东外语外贸大学|大学城校区|白云山校区|大学城|广外|白云山|南校区?|北校区?|校园|学校|校内|最近一周|下个月|本周|这周|下周|今天|今日|明天|明日|近期|最近|目前|现在|请问|帮我|我想|介绍|具体|相关|是否|有没有|有哪些|有什么|有啥|什么|哪些|如何|怎么办理|怎么办|怎么|能够|能不能|能否|还可以|还能|可以|参加|参与|参赛|申请|申报|通知|管理办法|规定|规则|制度|政策|条件|材料|资格|要求|手续|办理|截止|截至|开始|时间|日期|临时|学科|学术|追问|那么|以及|同时|还有|不要联网|只查内部|只用内部|的|吗|呢|那|和|与|及|有/g,
       " ",
     );
+  for (const [key, name] of parked) residual = residual.split(key).join(name);
+  // An interrogative is how the question is asked, not what it is about:
+  // "哪个食堂好吃", "宿舍停电了找谁", "有多少奖学金" must not keep "哪个",
+  // "了找谁" or "多少" as a hard subject filter.
+  residual = residual
+    .replace(/哪个|哪里|哪儿|多少|几个|找谁|什么时候|几点|为什么/g, " ")
+    .replace(/(?:^|\s)(?:了|吧|啊|呀|哦|嘛)(?=\s|$)/g, " ");
   const modifiers = [
     ...new Set([
       ...(residual.match(/[\p{Script=Han}]{2,}|[A-Za-z][A-Za-z0-9]{1,}/gu) ||
@@ -194,6 +220,12 @@ export function buildQueryPlan(
       ),
     ]),
   ]
+    .map((t) =>
+      t
+        .replace(/^[了去找办补进出和与及的有吗呢吧啊]+/, "")
+        .replace(/[了去找办补进出和与及的有吗呢吧啊]+$/, ""),
+    )
+    .filter((t) => t.length >= 2)
     .filter(
       (t) =>
         !/或/.test(t) &&
@@ -219,7 +251,9 @@ export function buildQueryPlan(
       original,
       alternatives: /^(?:ai|人工智能)$/i.test(original)
         ? ["AI", "人工智能"]
-        : [original],
+        : collegeAliases(original).length
+          ? collegeAliases(original)
+          : [original],
     }));
   return {
     version: "query-v2",

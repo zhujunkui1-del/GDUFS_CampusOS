@@ -62,7 +62,10 @@ export function lexicalTokens(text: string) {
 }
 export function ftsExpression(query: string) {
   const plan = buildQueryPlan(query);
-  if (plan.topics.length || plan.entities.length)
+  // A plan subject is a separate phrase per subject ("信息学院" AND "院运会").
+  // Falling back to the whole query would glue them into one Han run whose
+  // every bigram must match, including the cross-boundary "院院".
+  if (plan.topics.length || plan.entities.length || plan.modifiers.length)
     return planExpression(plan, false);
   // Require an actual topic rather than OR-ing every bigram of words such as
   // “申请条件”. The latter brings back most of the corpus for common syllables.
@@ -137,7 +140,7 @@ export function ftsRecallLanes(query: string) {
   const plan = buildQueryPlan(query),
     expanded = ftsExpression(query);
   if (!expanded) return [];
-  if (!plan.topics.length && !plan.entities.length)
+  if (!plan.topics.length && !plan.entities.length && !plan.modifiers.length)
     return [{ name: "lexical", expression: expanded, limit: 96 }];
   return [
     {

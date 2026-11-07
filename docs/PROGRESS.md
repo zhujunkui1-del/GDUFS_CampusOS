@@ -1899,3 +1899,27 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **阶段八 发布门禁**：未发布。P90 延迟从 32s 升到 100s、自然问法 recall@5 = 0.579、DeepSeek-V4-Flash-0731 网关报 `Model not found`，三项都需负责人拍板。回滚备份在 `backups/dify/`。
 
 **尚未完成**：生产工作流未替换；未做 Embedding；未做 OCR；未做线上灰度。
+
+## 2026-11-07｜智能体检索：活动排序、简称与全称、日期截断
+
+**问题来源**：线上如实提问「院运会」只返回 2 个学院，「信息学院有没有院运会」召回的报名通知摘要开头是「1月7日」，与正文「2026年11月7日」矛盾。
+
+**已修**（未涉及 Embedding、未扩大数据范围、未改 D1 表结构）：
+
+1. **活动排序**：`src/lib/retrieval/query-focus.ts` 新增 `activityNounQuery()` 与 `activityTitleTier()`（通知/报名/预告=2，回顾/圆满=0）。`src/lib/server/retrieval/retriever.ts` 的 `count()` 由「出现即满分」改为按出现次数加权，`intentTier` 与排序改用标题分层，同层内按发布时间倒序。22 篇真实「院运会」文档中，信息学院报名通知从第 6–10 位提到第 1。
+2. **枚举型查询**：`src/lib/retrieval/query-plan.ts` 的 `goal` 对裸活动名词返回 `discovery`；`src/lib/server/assistant/read-plan.ts` 的取值上限由 3 提到 5。
+3. **日期截断**：`src/lib/retrieval/evidence-window.ts` 新增 `alignWindowStart()` / `alignWindowEnd()`，窗口起点与终点不再落在日期、时刻字面量中间；`src/lib/server/assistant/evidence-answer.ts` 的抽取式引文走同一收尾函数。真实文章窗口起点 183→116，开头变为「赛事基本信息…比赛时间：2026年11月7日」。
+4. **学院简称/全称**：新增 `src/lib/retrieval/colleges.ts`（20 个学院的全称与简称对照）。`buildQueryPlan()` 的 modifier 现在携带两种写法并互相接受；全称不再被通用清洗在「与」字处切成「信息科学」+「技术学院」；`ftsExpression()` 不再把整句退回成一串 bigram（否则「信息学院院运会」必须命中跨词的「院院」，必然 0 召回）。`src/lib/server/assistant/query-understanding.ts` 的 schema 描述由「学院全名」改为「含学院简称」。
+5. **疑问词清理**：modifier 不再把「哪个」「多少」「找谁」「了找谁」这类提问方式当硬约束。
+
+**验证**：新增 `tests/unit/activity-ranking.test.ts`（2 项）、`tests/unit/college-alias.test.ts`（5 项）、`tests/unit/evidence-window.test.ts` 增 1 项；`vitest run tests/unit` 135 文件 947 项全绿，`tsc --noEmit`、eslint、prettier 通过。真实语料抽查：文中含「信息科学与技术学院」的 25 篇、含「院运会」的 24 篇，两种写法都能命中同一批。
+
+**未完成**：日期冲突（同一篇里「报名时间」前后两个不同日期）仍只在原文里并列，没有显式标注；改名后的生产回归尚未跑。
+
+## 2026-11-07｜智能体开场白
+
+**改动**：`src/lib/assistant/welcome.ts` 新增 `ASSISTANT_WELCOME` 与 `ASSISTANT_WELCOME_EXAMPLES`（「最近有什么讲座」「带我去图书馆」）。`src/features/assistant/components/assistant-panel.tsx` 的空对话状态由原来的 `<h3>想了解校园里的什么？</h3>` 换成整段开场白，两个示例作为按钮，点击即以该文本发起提问（复用 `sendPrompt()`，与手输走同一路径）。`src/app/globals.css` 新增 `.assistant-welcome*` 样式。
+
+**边界**：开场白只承诺已上线的能力（校园雷达、校园知识库、原文引用、文章查找、活动日历），不提 Embedding、不提全站同步。
+
+**验证**：新增 `tests/unit/assistant-welcome.test.ts`（2 项，断言开场白点名的能力与示例一一对应）；`vitest run tests/unit` 136 文件 949 项全绿，`tsc --noEmit`、eslint 通过。视觉未在浏览器里复核：本机 `next dev` 起不来，`wrangler dev` 报 `failed: CreateDirectory: #5 拒绝访问。; path = miniflare-email-store`。

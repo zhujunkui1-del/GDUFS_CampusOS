@@ -1262,3 +1262,14 @@ p {
   .assistant-history-open:hover { background: rgb(0 0 0 / 3%); border-radius: 16px; }
 }
 .assistant-calendar-links{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin:12px 0}.assistant-calendar-links a{color:var(--brand-primary);background:var(--brand-soft);border-radius:14px;padding:10px 14px;text-decoration:none;font-size:.9rem;line-height:1.5;overflow-wrap:anywhere}
+
+/* Welcome copy shown before the first message of a conversation. */
+.assistant-welcome { display: grid; gap: 14px; margin: 0 0 22px; }
+.assistant-chat .assistant-welcome-text { font-size: 1rem; line-height: 1.75; color: var(--text-primary); }
+.assistant-welcome-examples { display: flex; flex-wrap: wrap; gap: 8px; }
+.assistant-welcome-example { min-height: 44px; padding: 9px 14px; border: 1px solid #e5e9ef; border-radius: 999px; background: #f8fafd; color: var(--brand-primary); font-size: .9375rem; line-height: 1.4; }
+.assistant-welcome-example:disabled { opacity: .55; }
+.assistant-welcome-example:focus-visible { outline: 2px solid var(--brand-primary); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  .assistant-welcome-example:not(:disabled):hover { background: #eef3f9; }
+}

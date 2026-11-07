@@ -7,6 +7,7 @@ import {
   queryFocus,
   sportsQueryTerms,
   participationQuery,
+  activityNounQuery,
 } from "@/lib/retrieval/query-focus";
 /** Forward a bounded public topic, never identifiers or private application material. */
 export function publicQuery(query: string) {
@@ -103,13 +104,17 @@ export function contentReadPlan(
 ): PlannedRead[] {
   void discoveryFollowup;
   const external = publicQuery(query);
+  // A bare activity noun ("院运会") asks what exists across the campus, not for
+  // one article: read a wider page so a single college's notice cannot hide
+  // the others. The answer still cites at most five cards.
+  const activity = activityNounQuery(retrievalQuery);
   const inputFor = (name: ContentTool, text: string, exactTitle = true) => ({
     query: text,
     ...(/官网|官方网页|官方网站/.test(query)
       ? { sourceTypes: ["official_web"] }
       : {}),
     ...(exactTitle && articleTitle ? { title: articleTitle } : {}),
-    limit: exactTitle && articleTitle ? 3 : recentDiscovery ? 5 : 3,
+    limit: exactTitle && articleTitle ? 3 : recentDiscovery || activity ? 5 : 3,
     ...(recentDiscovery ? { sort: "published_desc" as const } : {}),
     ...(recentDiscovery && publishedCursor ? { publishedCursor } : {}),
     ...(recentDiscovery && recentBefore

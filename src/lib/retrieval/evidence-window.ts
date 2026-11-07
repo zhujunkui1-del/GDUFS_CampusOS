@@ -1,5 +1,44 @@
 import { buildQueryPlan, type QueryGoal } from "./query-plan";
 import { keywords } from "./terms";
+/** A window may lead into its sentence on purpose, but never through the
+ * middle of a date or number: slicing "2026年11月7日" at its second "1"
+ * reads as "1月7日", which states a different fact than the source. */
+const BACKTRACK = 60;
+const DATE_LITERAL = /\d{4}年\d{1,2}月\d{1,2}日|\d{1,2}月\d{1,2}日|\d{1,2}[:：]\d{2}/g;
+/** A date or clock is one fact: half of it ("10日", "9月7日" for "2026年11月7日")
+ * is a different claim. Move the window start to the start of the literal. */
+function literalStart(text: string, raw: number) {
+  for (const m of text.matchAll(DATE_LITERAL)) {
+    const at = m.index!;
+    if (raw > at && raw < at + m[0].length) return at;
+  }
+  return raw;
+}
+function alignWindowStart(text: string, raw: number) {
+  const at = literalStart(text, raw);
+  if (at <= 0) return 0;
+  const floor = Math.max(0, at - BACKTRACK);
+  for (let pos = at; pos > floor; pos--)
+    if (/[\n。！？!?]/.test(text[pos - 1])) return pos;
+  if (!/[\d]/.test(text[at])) return at;
+  let begin = at;
+  while (begin > floor && /[\d]/.test(text[begin - 1])) begin--;
+  // A leading year belongs to the same literal: "2026年11月7日".
+  if (/20\d{2}年$/.test(text.slice(Math.max(0, begin - 5), begin)))
+    return Math.max(0, begin - 5);
+  return begin;
+}
+/** Drop a literal that the window ends inside: "2026年11月" is not a date
+ * either, and completing it would be an inference. */
+export function alignWindowEnd(text: string, end: number) {
+  if (end >= text.length) return end;
+  const literal = literalStart(text, end);
+  if (literal !== end) return literal;
+  if (!/[\d年月日时分]/.test(text[end])) return end;
+  let at = end;
+  while (at > 0 && /[\d年月日时分]/.test(text[at - 1])) at--;
+  return at;
+}
 /** Select task-bearing prose, rather than the first page introduction/FAQ.
  * Uses text already retrieved; never fetches, indexes or changes source text. */
 export function evidenceWindow(
@@ -61,9 +100,10 @@ export function evidenceWindow(
   const start =
     text.length <= maxChars && best.priority === 0
       ? 0
-      : Math.max(0, best.at - 60);
+      : alignWindowStart(text, Math.max(0, best.at - BACKTRACK));
+  const end = alignWindowEnd(text, start + maxChars);
   return {
-    text: text.slice(start, start + maxChars),
+    text: text.slice(start, end),
     start,
     score: best.score,
     priority: best.priority,

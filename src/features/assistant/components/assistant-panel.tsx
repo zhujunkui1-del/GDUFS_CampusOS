@@ -18,6 +18,10 @@ import { AssistantSources } from "./assistant-sources";
 import { AssistantMessageText } from "./assistant-message-text";
 import { precedingQuestion } from "@/lib/assistant-output";
 import {
+  ASSISTANT_WELCOME,
+  ASSISTANT_WELCOME_EXAMPLES,
+} from "@/lib/assistant/welcome";
+import {
   ArrowUp,
   Maximize2,
   Minimize2,
@@ -205,6 +209,13 @@ export function AssistantPanel({
     if (!input.trim() || chat.busy || !chat.ready) return;
     const text = input.trim();
     if (compact) document.getElementById("assistant-message")?.blur();
+    stickToBottom.current = true;
+    setInput("");
+    void chat.send(text);
+  };
+  // A welcome example sends the same question the reader would have typed.
+  const sendPrompt = (text: string) => {
+    if (!text.trim() || chat.busy || !chat.ready) return;
     stickToBottom.current = true;
     setInput("");
     void chat.send(text);
@@ -455,7 +466,24 @@ export function AssistantPanel({
                         <p role="status">正在打开对话…</p>
                       )}
                       {!chat.messages.length && !chat.loadingConversation && (
-                        <h3>想了解校园里的什么？</h3>
+                        <div className="assistant-welcome">
+                          <p className="assistant-welcome-text">
+                            {ASSISTANT_WELCOME}
+                          </p>
+                          <div className="assistant-welcome-examples">
+                            {ASSISTANT_WELCOME_EXAMPLES.map((example) => (
+                              <button
+                                key={example}
+                                type="button"
+                                className="assistant-welcome-example"
+                                disabled={!chat.ready || chat.busy}
+                                onClick={() => void sendPrompt(example)}
+                              >
+                                {example}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
                       )}
                       <div
                         role="log"

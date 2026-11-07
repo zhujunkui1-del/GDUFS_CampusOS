@@ -31,6 +31,22 @@ it("keeps the entry step of a workflow ahead of a denser later form section", ()
   expect(w.text).toContain("打开微信小程序");
   expect(w.start).toBe(0);
 });
+it("never starts a window inside a date or clock literal", () => {
+  // A cut inside "2026年11月7日" reads as "11月7日", and inside its second
+  // digit as "1月7日" — a different fact from the source.
+  for (let n = 0; n < 120; n++) {
+    const text =
+      "会议筹备说明".repeat(n) +
+      "初定于2026年11月7日在假草场举行，请留意。" +
+      "讲座时间：2026年11月7日 14:00，地点在图书馆。\\n" +
+      "后续内容。".repeat(20);
+    const w = evidenceWindow(text, "讲座", 300);
+    for (const m of text.matchAll(/20\\d{2}年\\d{1,2}月\\d{1,2}日/g)) {
+      const at = m.index!;
+      expect(w.start > at && w.start < at + m[0].length).toBe(false);
+    }
+  }
+});
 it("does not pad a late workflow entry with a long preamble just to fill the snippet budget", () => {
   const text =
     "注意事项与背景。".repeat(65) +
