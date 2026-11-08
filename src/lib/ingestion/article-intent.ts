@@ -119,11 +119,14 @@ export function classifyArticleContent(
   const policy = add(
     hit(
       text,
-      /(?:办法|条例|规章|管理规定|实施细则|章程|借阅规则|借阅须知|选课规则)(?:说明|解读|[》）)]|$|的通知)/,
+      /(?:办法|条例|规章|管理规定|实施细则|章程|借阅规则|借阅须知|选课规则)(?:说明|解读|[》）)]|$)/,
       "standing_rule",
       "title",
     ),
-  );
+  ) &&
+    !/(?:学习|传达|领会|贯彻|落实|重温)[^。]{0,20}(?:条例|办法|规定|细则|章程)/.test(
+      text.title,
+    );
   const guide = add(
     hit(
       text,
@@ -350,27 +353,49 @@ export function classifyArticleContent(
     } else if (reference >= 6 && reference > timely) destination = "knowledge";
     else if (timely >= 5 && timely > reference) destination = "radar";
   }
+  // A large share of official-site posts score on neither side: photo-only
+  // posts, short notices and brochures whose title already names the
+  // document family. Resolve them here instead of leaving them in the
+  // unclassified bucket that the radar feed then shows as "unclassified".
+  if (destination === "unknown") {
+    const soft =
+      /云享|访谈|特辑|资讯|推荐|故事|心得|侧记|纪实|来啦|上线啦|真的太需要|倡议书|救场|精选课程|语培/.test(
+        text.title,
+      );
+    const docTitle =
+      /招生简章|招生方案|招生简介|实施细则|工作方案|培养方案|考核细则/.test(text.title);
+    const HEAD =
+      /^(?:[一二三四五六七八九十]{1,3}[、.．]|\d{1,2}[、.．])?\s*(?:申请条件|招生对象|报考条件|收费标准|学费标准|办理流程|所需材料|申请材料|报名材料|办理时间|办理地点|服务时间|服务地点|预约方式|开放时间|奖助政策|学制)\s*[:：]?\s*$/;
+    const headings = new Set(
+      text.paragraphs
+        .filter((p) => p.text.length < 30 && HEAD.test(p.text))
+        .map((p) => p.text.replace(/^[\d一二三四五六七八九十\s、.．]+/, "")),
+    );
+    const noticeLike =
+      /讲座|讲坛|论坛|沙龙|研讨会|值班表|答辩|公示|公告|通知|日程|议程|宣讲|咨询会|直播|校招|招聘|招募|签署|来访|座谈|调研|获奖|表彰|举办|召开|举行|交流|签约|揭牌|慰问|走访|动态|统计表|成绩表|名单/.test(
+        text.title,
+      );
+    // A one-word title such as "通知" is not enough on its own.
+    const substantive = text.title.length >= 8;
+    // A real HTML body means the page has content even when the extracted
+    // text is empty, which happens on image-only posts.
+    const hasContent = text.bodyAvailable || input.body.length >= 200;
+    if (!soft && (docTitle || (headings.size >= 2 && !noticeLike))) {
+      destination = "knowledge";
+    } else if (substantive && hasContent) {
+      // Photos, galleries, greetings and short notices are all campus posts.
+      destination = "radar";
+    }
+  }
+
   let radarCategory: ArticleAnalysis["radarCategory"] =
     destination === "radar" ? category(text, radarSignals) : null;
   const knowledgeCategory =
     destination === "knowledge"
       ? category(text, knowledgeSignals) || "administrative_services"
       : null;
-  if (destination === "radar" && !radarCategory) {
-    if (
-      temporary ||
-      titleCall ||
-      report ||
-      timed ||
-      datedCall ||
-      (noticePurpose && noticeBody) ||
-      datedEvent ||
-      leadTask ||
-      reportPurpose
-    )
-      radarCategory = "campus_notice";
-    else destination = "unknown";
-  }
+  if (destination === "radar" && !radarCategory)
+    radarCategory = "campus_notice";
   if (destination === "knowledge")
     reasons.push("正文包含规则条件、重复使用的服务说明或连续操作流程");
   if (destination === "radar")

@@ -17,7 +17,10 @@ import {
 // training plans, work schemes) so those documents land in the knowledge
 // surface even when they carry a dated batch scope. The version is bumped so
 // every stored row is re-derived instead of being mixed with v4 rows.
-export const ARTICLE_CLASSIFIER_VERSION = "article-content-v5";
+// v6 adds a residual fallback for posts that scored on neither side (photo
+// posts, short notices, brochures) and stops demoting a radar row back to
+// unclassified, so the radar feed no longer carries a large unclassified bucket.
+export const ARTICLE_CLASSIFIER_VERSION = "article-content-v6";
 export const ArticleAnalysisInputSchema = z
   .object({
     documentId: z.string().optional(),
