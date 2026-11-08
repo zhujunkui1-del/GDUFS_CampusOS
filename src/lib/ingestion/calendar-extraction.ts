@@ -601,7 +601,9 @@ function placeOf(text: string): string | null {
   for (let i = text.length - 1; i >= 0; i--) {
     if (text[i] !== "在" && text[i] !== "于") continue;
     const m = text.slice(i).match(
-      new RegExp("^[在于]\\s*([^，。；\\n]{2,100}?)(?:举行|举办|召开|开展|开讲|开幕)"),
+      new RegExp(
+        "^[在于]\\s*([^，。；\\n]{2,100}?)(?:顺利|成功|隆重|正式)?(?:举行|举办|召开|开展|开讲|开幕)",
+      ),
     );
     const value = cleanPlace(m?.[1]);
     if (!value) continue;
