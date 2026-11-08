@@ -2213,3 +2213,19 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **验证**：`npx tsc --noEmit` 0 error；`npx vitest run tests/unit` 150 文件 1027 用例全绿。提交 `755bde4`，预览版本 `2620e0d1-b221-4a4c-a47f-b8b2f75a9a21`。
 
 **部署踩坑**：`TEMP`/`TMPDIR` 必须给绝对路径，相对路径会让 esbuild 写临时文件失败且不报错；`.next` 里残留的构建锁会让 `next build` 直接退出，需先 `rm -rf .next .open-next`。
+
+## 2026-11-09｜官网采集：分页不再死循环，队列不再被旧任务霸占
+
+三处缺陷都出在采集器的调度侧，表现却像「官网没更新」。
+
+**深分页页面永远翻不到头。** `src/lib/ingestion/connector.ts` 的翻页终止条件原本要求「这一页每一行都有日期且都早于门禁」。`gwyjs.gdufs.edu.cn/index/tzgg/29.htm` 这类深分页页面的日期列被模板丢掉了，一行日期都读不到，条件恒不成立，于是 job 一直往后翻，`ingestion_job_steps` 里的页码每小时加一，`attempts` 涨到一百多也不结束。现在只要「读到日期的行」全部早于门禁就停；一页日期都读不到时也停，但配置里的入口页例外，避免落地页跳转到首个列表页时被切断。另加 `MAX_PAGES_PER_ENTRY = 20` 兜底，单次最多翻 20 页，进入下一个入口时归零。
+
+**新任务排不到队。** `src/lib/server/console/cloud-web-runner.ts` 的取任务 SQL 是 `ORDER BY created_at,id`，队列里二十多个 11 月 8 日创建、`attempts` 已经上百的老 job 始终在队首，每 tick 的 55 秒预算全花在它们身上。改成 `ORDER BY updated_at,id` 按最后活跃时间轮转，新任务三分钟内就能被领到。
+
+**一个 tick 只推进一步。** 原来每 tick 对每个 job 只做一次 fetch，`MAX_STEPS_PER_TICK` 名不副实。改成先把单步逻辑抽成 `step(row)`，再在外层循环里每批并发 4 个 job，直到用完步数预算或 55 秒到期。
+
+**列表日期与年份分处两个节点。** 体育部（`GDUFS-SRC-0003`）的列表戳是 `<div class="text-ldata"><div><p>10/26</p><span>2026</span></div></div>`，`text()` 压成 `10/262026`，原正则读不出来，`published_at` 退化成正文里的活动日期 `2026-11-14`。新增「MM/DD + 年份」分支，并把日期标签与冒号之间的空格一并容忍（`发布时间 : 2026-10-27`）。该站 profile 同时从通用模板换成实测节点：`div.art-tit.cont-tit.d h3` / `div.art-tit.cont-tit.d p` / `div.v_news_content`。
+
+**标题带站点横幅。** 仍用通用模板 `h1, title` 的站取到 `head>title`，库里 278 条标题以「-广东外语外贸大学新闻中心」结尾。现在 fallback 到 `<title>` 时去掉这段横幅。
+
+**验证**：`npx tsc --noEmit` 0 error；`npx vitest run tests/unit/official-publication-date.test.ts tests/unit/ingestion-pipeline.test.ts` 28 用例全绿（含新增的两条日期戳与一条标题横幅回归）。提交 `14cca94`、`c2ef628`、`faaa218`、`cbb29e6`，预览版本 `a19f9bd5-f14c-48ed-8da7-f3cf67cc9eb4`。文章总数 3454 → 4458，`published_at` 晚于当天的记录为 0 条。
