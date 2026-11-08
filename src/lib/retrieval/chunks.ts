@@ -29,7 +29,9 @@ export function chunkArticle(input: ArticleAnalysisInput, rights: string) {
     terms: string;
   }[] = [];
   let start = 0;
-  while (start < text.length && chunks.length < 160) {
+  // A converted student handbook is one document of ~200k characters; the old
+  // ceiling of 160 would silently drop the tail of every long reference file.
+  while (start < text.length && chunks.length < 480) {
     let end = Math.min(start + 900, text.length);
     if (end < text.length) {
       const newline = text.lastIndexOf("\n", end);

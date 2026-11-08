@@ -235,7 +235,9 @@ export const consoleAdministration = withApi(async (request) => {
   }
   if (section === "content") {
     if (request.method === "POST" && id === "import" && !action)
-      return store.importBatch(await read());
+      // A converted handbook or calendar is far larger than the default 256 KiB
+      // console payload; the manual channel is the only one that carries it.
+      return store.importBatch(await read(2_200_000));
     if (request.method === "POST" && !id)
       throw new ApiError("INVALID_ARGUMENT", "请使用人工导入入口登记内容。");
     if (request.method === "PATCH" && id && !action) {

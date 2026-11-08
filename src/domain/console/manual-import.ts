@@ -33,7 +33,9 @@ export const ManualArticleSchema = ContentInputSchema.pick({
   tags: true,
 })
   .extend({
-    body: z.string().max(50000).default(""),
+    // A converted handbook or school calendar easily exceeds 50k characters; the
+    // manual channel keeps the same ceiling as ContentInputSchema.
+    body: z.string().max(1_000_000).default(""),
     bodyStatus: z
       .enum(["not_provided", "partial", "complete"])
       .default("not_provided"),
