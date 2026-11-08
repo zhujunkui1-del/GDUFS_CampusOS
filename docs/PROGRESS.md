@@ -2242,6 +2242,6 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 
 `src/lib/server/assistant/read-plan.ts` 的默认 `limit` 由 3 提到 5（精确标题命中仍读 3）。语料涨到 160 篇知识后，正确答案常常正好落在第 4、5 位，读三篇就会得出「资料里没说」的结论。
 
-**验证**：`npx tsc --noEmit` 0 error；`npx vitest run tests/unit` 150 文件 1029 用例通过（`public-feed-jump.test.ts` 在并发全量跑时偶发 5 秒超时，单独跑通过，属既有问题）。提交 `9240aaf`、`5d0d8bb`，预览版本 `707cf438-50c8-41a8-a26a-7499e1c00641`。
+**验证**：`npx tsc --noEmit` 0 error；`npx vitest run tests/unit` 150 文件 1029 用例通过（`public-feed-jump.test.ts` 在并发全量跑时偶发 5 秒超时，单独跑通过，属既有问题）。提交 `9240aaf`、`3afa622`，预览版本 `707cf438-50c8-41a8-a26a-7499e1c00641`。
 
 **仍待解决**：手册里明明有「缓考」4 段、校历文档也在库（2 分块、已发布），但这两题仍答「资料里没有」。候选召回到了（29 / 51 条），是排序把它们排到了 5 名之外，需要继续看 `queryRelevance` 的打分与 bm25 的相对权重。
