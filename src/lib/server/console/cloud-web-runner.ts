@@ -53,9 +53,13 @@ export async function runCloudWebBatch(
     )
     .bind(now)
     .run();
+  // Round-robin by last touch. Ordering by created_at put the same oldest
+  // jobs first every minute, and the 55s budget ran out before the tail of
+  // the list was reached, so a freshly queued job could sit at attempts=0
+  // indefinitely while older jobs kept taking the whole tick.
   const jobs = await db
     .prepare(
-      "SELECT id FROM ingestion_jobs WHERE job_kind='web' AND control_state='active' AND phase<>'complete' AND status IN('queued','running') AND lease_until_ms<=? AND next_run_after_ms<=? AND ((SELECT auto_sync_enabled FROM console_engine_settings WHERE id='console-v2-settings')=1 OR run_key NOT LIKE 'scheduled:%') ORDER BY created_at,id LIMIT ?",
+      "SELECT id FROM ingestion_jobs WHERE job_kind='web' AND control_state='active' AND phase<>'complete' AND status IN('queued','running') AND lease_until_ms<=? AND next_run_after_ms<=? AND ((SELECT auto_sync_enabled FROM console_engine_settings WHERE id='console-v2-settings')=1 OR run_key NOT LIKE 'scheduled:%') ORDER BY updated_at,id LIMIT ?",
     )
     .bind(now, now, options.maxSteps || MAX_STEPS_PER_TICK)
     .all<{ id: string }>(),
