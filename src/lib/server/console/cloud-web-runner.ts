@@ -245,9 +245,16 @@ export async function runCloudWebBatch(
       .bind(now, now, Math.min(budget - results.length, 20))
       .all<{ id: string }>();
     if (!jobs.results.length) break;
-    for (const row of jobs.results) {
+    // Each step is one HTTP fetch, and a fetch against a slow campus host takes
+    // seconds. Running the pass one job at a time meant a tick finished a single
+    // sweep of the queue, so seventeen jobs advanced one URL per minute. Four at
+    // a time keeps well inside the subrequest budget while cutting the wall
+    // clock per pass by roughly the same factor.
+    for (let i = 0; i < jobs.results.length; i += 4) {
       if (results.length >= budget || Date.now() > deadline) break;
-      await step(row);
+      await Promise.all(
+        jobs.results.slice(i, i + 4).map((row) => step(row)),
+      );
     }
   }
   return { processed: results.length, results };
