@@ -323,10 +323,13 @@ export class OfficialWebConnector {
     )
       throw Error("BLOCKED");
     const rawTitle = text(document.querySelector(this.profile.titleSelector));
+    // A profile that falls back to <title> picks up the site name as a
+    // suffix ("…-广东外语外贸大学新闻中心"). Strip that tail so the headline is
+    // the headline and not the banner.
     const title =
       this.profile.titleSuffix && rawTitle.endsWith(this.profile.titleSuffix)
         ? rawTitle.slice(0, -this.profile.titleSuffix.length)
-        : rawTitle;
+        : rawTitle.replace(/\s*[-–—|]\s*广东外语外贸大学[^-–—|]{0,14}$/, "").trim();
     // Some templates put a space before the colon ("发布时间 : 2026-10-27"),
     // so match the label with optional whitespace instead of a fixed suffix.
     const labelRe = new RegExp(`${this.profile.dateLabel}\\s*[：:]`);

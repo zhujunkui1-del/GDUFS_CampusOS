@@ -75,3 +75,18 @@ it("accepts a space between the date label and its colon", () => {
   const html = `<html><body><h1>讲座预告</h1><div class="page-date">发布时间 : 2026-10-27 浏览次数：12</div><div class="v_news_content"><p>正文内容。</p></div></body></html>`;
   expect(connector.parse(html, url).publishedAt).toBe("2026-10-27");
 });
+
+it("drops the site banner from a title that fell back to <title>", () => {
+  const profile = {
+    ...webProfiles[0],
+    titleSelector: "title",
+    titleSuffix: "",
+    bodySelector: "div.v_news_content",
+    dateSelector: ".page-date",
+    dateLabel: "发布时间",
+  };
+  const connector = new OfficialWebConnector(profile),
+    url = profile.origin + profile.detailPathPrefixes![0] + "10279.htm";
+  const html = `<html><head><title>我校男女足在联赛中斩获佳绩-广东外语外贸大学新闻中心</title></head><body><div class="page-date">发布时间：2026-10-20</div><div class="v_news_content"><p>正文内容。</p></div></body></html>`;
+  expect(connector.parse(html, url).title).toBe("我校男女足在联赛中斩获佳绩");
+});
