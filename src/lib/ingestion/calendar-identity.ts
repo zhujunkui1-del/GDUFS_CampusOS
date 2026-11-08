@@ -19,19 +19,18 @@ export async function calendarIdentity(
     .replace(/[-—]广东外语外贸大学.*$/, "")
     .replace(/^关于举办/, "")
     .replace(/的通知$/, "");
-  // Generic names require an organiser; a formal title also needs a precise venue and schedule.
+  // Generic names require an organiser; a full title plus a full street
+  // address is enough on its own. The same notice often reaches us twice,
+  // once from a college page and once from the WeChat mirror, and the
+  // "关于举办…的通知" wrapper is stripped before the length check.
   const mergeable =
     !!a.startsAt?.date &&
     !!a.placeRaw &&
     (!!a.organizer ||
-      (title.length >= 20 &&
+      (title.length >= 12 &&
         a.placeRaw.length >= 12 &&
         /大学|校区/.test(a.placeRaw) &&
-        /路|号|楼|中心|馆|会议室/.test(a.placeRaw) &&
-        !!(
-          a.startsAt.at ||
-          (a.endsAt?.date && a.endsAt.date !== a.startsAt.date)
-        )));
+        /路|号|楼|中心|馆|会议室/.test(a.placeRaw)));
   const material = mergeable
     ? [
         title,
