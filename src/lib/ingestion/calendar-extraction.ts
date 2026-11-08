@@ -99,7 +99,7 @@ function years(title: string, near: string) {
   // the intake, not the event. Stamping that year onto every bare body date
   // produced phantom events a full year past the publication date.
   const cohort =
-    /(?:20\d{2})[^。；\n]{0,14}(?:届|级|校招|校园招聘|招聘|招生|推免|保研|考研|毕业|入学|新生|批次|报考|考试|考核|转段|专升本)/;
+    /(?:20\d{2})[^。；\n]{0,14}(?:届|级|校招|校园招聘|招聘|招生|推免|保研|考研|毕业|入学|新生|批次|报考|考试|考核|转段|专升本|招录|录用|遴选|选调|引进)/;
   const all = [...title.matchAll(/\b(20\d{2})年?/g)]
     .filter((m) => {
       const at = m.index ?? 0;
