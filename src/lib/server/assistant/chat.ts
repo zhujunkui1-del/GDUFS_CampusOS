@@ -49,7 +49,11 @@ import {
   type ContentSearchResult,
 } from "@/domain/retrieval/skills";
 import { ExternalSearchResultSchema } from "@/domain/retrieval/external";
-import { externalPolicy, supplementRequired } from "../external-search/policy";
+import {
+  externalPolicy,
+  explicitWebRequest,
+  supplementRequired,
+} from "../external-search/policy";
 import { registerExternalSearch } from "../external-search/skill";
 import {
   qualifyCampusRosterAnswer,
@@ -518,7 +522,7 @@ export async function chatResponse(request: Request) {
     }
     const directReply =
       !input.smartSearch &&
-      /(?:联网|上网|全网|互联网|网上搜|外部搜索)/.test(businessMessage) &&
+      explicitWebRequest(businessMessage) &&
       !/不要联网|关闭智能搜索/.test(businessMessage)
         ? "请先开启输入框下方的「智能搜索」。"
         : persona.changed && !persona.business
@@ -709,9 +713,7 @@ export async function chatResponse(request: Request) {
     supplementPolicy.active = input.smartSearch && supplementPolicy.active;
     supplementPolicy.useXiaohongshu = false;
     supplementPolicy.onlyXhs = false;
-    supplementPolicy.explicit ||= /联网|上网|全网|互联网|网上搜|外部搜索/.test(
-      businessMessage,
-    );
+    supplementPolicy.explicit ||= explicitWebRequest(businessMessage);
     const contentResults: ContentSearchResult[] = [];
     supplementPolicy.officialOnly ||= /官网|官方/.test(businessMessage);
     let externalDone = false;

@@ -199,7 +199,13 @@ export function contentIntent(
     (navigationIntent(message).routeQuestion ||
       explicitMapCommand(message) !== null ||
       /^(?:这里|那里|这栋|那栋)[。？?]*$/.test(message) ||
-      /(?:地图|定位|路线|导航|在哪|告诉我.*哪里|带我去|带我走|带我过去|导航到|导航去|怎么去|怎么走|怎么过去|怎么走到|如何去|怎样去|前往|走向|走到|从.+?(?:去|到|至|前往)|(?:帮我找|找一下|找)(?:图书馆|教学楼|饭堂|食堂|超市|宿舍|校门|体育馆|操场|打印店|快递|校医院))/.test(
+      // “假草场在哪” is a place question, but only when the sentence names a
+      // real place. A bare “在哪” used to send “校历在哪看得到” and “期末考试
+      // 安排在哪里公布” to the map, where search_places failed and the whole
+      // turn ended with NOT_FOUND.
+      (navigationIntent(message).namedPlaces.length > 0 &&
+        /在哪|哪里|哪儿|告诉我.*哪里|位置|怎么去/.test(message)) ||
+      /(?:地图|定位|路线|导航|带我去|带我走|带我过去|导航到|导航去|怎么走|怎么过去|怎么走到|如何去|怎样去|前往|走向|走到|从.+?(?:去|到|至|前往)|(?:帮我找|找一下|找)(?:图书馆|教学楼|饭堂|食堂|超市|宿舍|校门|体育馆|操场|打印店|快递|校医院))/.test(
         message,
       ));
   // Radar tags are the product's own business categories. Lock the event search
@@ -254,6 +260,13 @@ export function contentIntent(
       policy.explicit ||
       /只用内部|只查内部|仅用内部|仅查内部/.test(query) ||
       (act === "campus" && policy.active) ||
+      // A campus question is worth searching even when it ends in “？” and
+      // matches none of the curated keywords. “期末考试安排在哪里公布？” was
+      // the one campus question that produced no tool call at all. A sentence
+      // that names a real campus place stays a map/place question instead.
+      (act === "campus" &&
+        !navigationIntent(message).namedPlaces.length &&
+        /[？?]|吗|呢|怎么|如何|哪|什么|多少|几/.test(query)) ||
       act === "general");
   const tools: ContentTool[] = [];
   if (search) {

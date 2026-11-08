@@ -2,7 +2,11 @@ import type { AssistantCard } from "@/domain/agent/assistant-contracts";
 import { containsToolProtocol } from "@/lib/assistant-output";
 import { matchesQueryFocus } from "@/lib/retrieval/query-focus";
 import { chinaDay } from "./time-window";
-import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
+import {
+  buildQueryPlan,
+  queryRelevance,
+  type QueryPlan,
+} from "@/lib/retrieval/query-plan";
 import { alignWindowEnd } from "@/lib/retrieval/evidence-window";
 import { dateConflictNote } from "@/lib/retrieval/dates";
 import type { ContentSearchResult } from "@/domain/retrieval/skills";
@@ -113,6 +117,35 @@ export function foodEvidenceAnswer(
     "\n以上为原文片段，当前菜品供应以现场为准。"
   );
 }
+/** A quote speaks for the article it came from: the article must name the
+ * asked subject, not merely sit next to it. “校医院看病要预约吗” reached
+ * “校史馆参观指南” because the only shared token was “预约”; “国家助学贷款
+ * …申请” reached “志特助学金颁发仪式” because “助学” is a substring of both.
+ * Requiring the longest subject’s prefix (≥3 characters, so real names such as
+ * “校医院” survive) rejects those neighbours while keeping the articles that
+ * actually use the subject. */
+function titleAnswersQuestion(
+  card: { title: string; snippet: string },
+  plan: QueryPlan,
+) {
+  const text = `${card.title} ${card.snippet}`.toLowerCase();
+  const subjects = [
+    ...plan.modifiers.map((m) => m.original),
+    ...plan.topics.flatMap((t) => t.alternatives),
+    ...plan.entities,
+  ]
+    .map((s) => s.toLowerCase())
+    .filter((s) => s.length >= 3);
+  if (!subjects.length) return true;
+  // Any subject that names the article counts, but only from three characters
+  // up: “助学金” is a substring of “助学贷款” and must not stand in for it.
+  return subjects.some((subject) => {
+    for (let length = subject.length; length >= 3; length--)
+      if (text.includes(subject.slice(0, length))) return true;
+    return false;
+  });
+}
+
 /** Roster questions use one deterministic extractive path, so the same question
  * never alternates between a generated list and a paragraph excerpt. */
 const SURNAMES =
@@ -227,6 +260,11 @@ export function retrievedEvidenceAnswer(
       if (c.kind !== "source" && c.kind !== "external_source") return [];
       if (!queryRelevance(plan, c).relevant || containsToolProtocol(c.snippet))
         return [];
+      // Relevance alone is not enough to quote: “校医院看病要预约吗” used to
+      // reach “校史馆参观指南”, because the only shared token was “预约”.
+      // A quote must come from a title that names the subject, not just a
+      // neighbour of it.
+      if (!titleAnswersQuestion(c, plan)) return [];
       if (
         c.kind === "source" &&
         (c.evidenceType === "metadata" ||

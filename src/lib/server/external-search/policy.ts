@@ -10,6 +10,17 @@ import {
   participationQuery,
   matchesQueryFocus,
 } from "@/lib/retrieval/query-focus";
+
+// “互联网+” is a competition name, not a request to search the web. Asking for
+// “挑战杯和互联网+校内选拔怎么报名” must not nag the user to turn on 智能搜索.
+const WEB_REQUEST =
+  /(?:联网|上网|全网|网上搜索|网上搜|外部搜索|互联网搜索|互联网上查)/;
+const COMPETITION_NAME = /互联网\s*\+/g;
+
+export function explicitWebRequest(query: string): boolean {
+  return WEB_REQUEST.test(query.replace(COMPETITION_NAME, " "));
+}
+
 export type ExternalPolicy = {
   intent: "official" | "experience" | "mixed" | "events" | "general";
   active: boolean;
@@ -102,7 +113,7 @@ export function externalPolicy(query: string): ExternalPolicy {
         query,
       ),
     needsDeadline: /截止|截至|最后.{0,4}(?:时间|日期)|还能报名/.test(query),
-    explicit: /小红书|联网|上网|外部搜索|网上搜|互联网/.test(query),
+    explicit: /小红书/.test(query) || explicitWebRequest(query),
     needsOfficialVerification,
     needsParticipation: participationQuery(query),
     needsRoster,

@@ -9,6 +9,12 @@ import { stripSearchControls } from "./query-controls";
 import { COLLEGE_NAMES, collegeAliases } from "./colleges";
 import { ALIAS_GROUPS, TOPIC_GROUPS, VENUE_GROUPS } from "./aliases";
 
+// A question word glued onto a noun is not a subject: “分算优秀”, “时候开”,
+// “大一要选”, “各是”, “困难认定流程是”. They are removed before the query
+// planner keeps a modifier, because a modifier is a hard filter.
+const MODIFIER_NOISE =
+  /(?:什么|哪些|哪里|哪儿|怎么|如何|多少|几个|几时|时候|是否|多久|多大|要不要)/;
+
 // Retrieval concepts are query vocabulary, not a parallel article taxonomy.
 // The vocabulary lives in ./aliases so lexical search and entity retries read
 // the same table; broad action words never replace a subject.
@@ -206,6 +212,14 @@ export function buildQueryPlan(
           "是否",
         ].includes(t),
     )
+    // A modifier is a hard subject filter, so it must be something an article
+    // can literally contain. “多少分算优秀” yielded “分算优秀”, “什么时候开”
+    // yielded “时候开”, “大一要选哪些课” yielded “大一要选” — none of them
+    // occur anywhere in the corpus, so every candidate was rejected and the
+    // answer became “没有检索到”. Keep the nouns, drop the question.
+    .filter((t) => !MODIFIER_NOISE.test(t))
+    .map((t) => t.replace(/^(?:要|需要|可以|能|会|应该|想|打算)/, ""))
+    .filter((t) => t.length >= 2 && !MODIFIER_NOISE.test(t))
     .slice(0, 4)
     .map((original) => ({
       original,
@@ -283,13 +297,31 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const matched = plan.topics.map((t) =>
     t.alternatives.some((a) => text.includes(a.toLowerCase())),
   );
-  if (
-    plan.modifiers.length &&
-    !plan.modifiers.every((m) =>
-      m.alternatives.some((t) => text.includes(t.toLowerCase())),
-    )
-  )
-    return { relevant: false, score: 0, reason: "subject_modifier_missing" };
+  // A modifier is a hard filter, but not every leftover fragment deserves that
+  // weight: “绩点怎么算，多少分算优秀” leaves “分算优秀”, which no article
+  // contains. Requiring every modifier rejected all evidence for two thirds of
+  // real campus questions. A named college still binds every constraint,
+  // because it is what makes “信息学院院运会” different from “院运会”.
+  const modifierMatched = plan.modifiers.map((m) =>
+    m.alternatives.some((t) => text.includes(t.toLowerCase())),
+  );
+  const collegeBound = plan.modifiers.some((m) =>
+    m.alternatives.some((a) => COLLEGE_NAMES.includes(a)),
+  );
+  // A number or a code is a discriminator, not a topic: “414期” must never
+  // match “412期”, and “云山” alone must not rescue it.
+  const distinctive = plan.modifiers.map((m) =>
+    /[0-9]|[A-Za-z]/.test(m.original),
+  );
+  if (plan.modifiers.length) {
+    const ok = collegeBound
+      ? modifierMatched.every(Boolean)
+      : distinctive.some(Boolean)
+        ? plan.modifiers.every((_, i) => !distinctive[i] || modifierMatched[i])
+        : modifierMatched.some(Boolean);
+    if (!ok)
+      return { relevant: false, score: 0, reason: "subject_modifier_missing" };
+  }
   const coreInTitle = plan.topics.some((t) =>
     t.alternatives.some((a) => title.includes(a.toLowerCase())),
   );
@@ -425,7 +457,10 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
         (t.alternatives.some((a) => title.includes(a.toLowerCase())) ? 6 : 3),
       0,
     ) +
-    plan.goalTerms.filter((t) => text.includes(t)).length * 2;
+    plan.goalTerms.filter((t) => text.includes(t)).length * 2 +
+    // More matched subjects beat fewer: an article that mentions “绩点” and
+    // “优秀” outranks one that only mentions “绩点”.
+    modifierMatched.filter(Boolean).length * 2;
   return {
     relevant: true,
     score,

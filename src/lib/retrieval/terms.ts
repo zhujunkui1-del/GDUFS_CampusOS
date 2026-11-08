@@ -2,6 +2,7 @@ import { queryFocus, sportsQueryTerms } from "./query-focus";
 import { buildQueryPlan, entityTerms, type QueryPlan } from "./query-plan";
 import { stripSearchControls } from "./query-controls";
 import { ALIAS_GROUPS } from "./aliases";
+import { COLLEGE_NAMES } from "./colleges";
 // Encoded two-character Chinese terms avoid unicode61's whole-Han-run behavior.
 // This is keyword expansion, not paid embedding or a second classifier.
 const groups = ALIAS_GROUPS.map((group) => group.aliases);
@@ -105,6 +106,22 @@ function planExpression(plan: QueryPlan, literal: boolean) {
     ),
   );
   const entity = plan.entities.map((e) => phraseExpression(entityTerms(e)));
+  // Recall must be as wide as the relevance gate that follows it. A named
+  // college is what separates “信息学院院运会” from “院运会”, so it still
+  // binds every modifier; the leftover fragments of an ordinary question
+  // (“比例”, “区别”) are hints, and requiring all of them in one chunk
+  // returned nothing to read.
+  const collegeBound = plan.modifiers.some((m) =>
+    m.alternatives.some((a) => COLLEGE_NAMES.includes(a)),
+  );
+  const modifier = plan.modifiers.map((m) =>
+    phraseExpression(literal ? [m.original] : m.alternatives),
+  );
+  const modifierExpression = collegeBound
+    ? modifier.join(" AND ")
+    : modifier.length
+      ? "(" + modifier.join(" OR ") + ")"
+      : "";
   const parts = [
     ...(topics.length
       ? ["(" + topics.join(plan.topicMode === "any" ? " OR " : " AND ") + ")"]
@@ -112,9 +129,7 @@ function planExpression(plan: QueryPlan, literal: boolean) {
     ...(entity.length
       ? ["(" + entity.join(plan.topicMode === "any" ? " OR " : " AND ") + ")"]
       : []),
-    ...plan.modifiers.map((m) =>
-      phraseExpression(literal ? [m.original] : m.alternatives),
-    ),
+    ...(modifierExpression ? [modifierExpression] : []),
   ];
   return parts.join(" AND ");
 }

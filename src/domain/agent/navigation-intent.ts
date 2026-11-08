@@ -9,6 +9,11 @@ const normalize = normalizePlaceText;
 // verb the user happened to pick.
 const ROUTE_RE =
   /从.+(?:去|到|至|前往|走向|走到)|(?:去|到|导航|前往|走向|走到|→|->).+|怎么走|怎么去|怎么过去|怎么走到|规划.*路线/;
+// A bare verb is not a route: “东西丢了去哪里报失” and “校内兼职去哪找” both
+// contain 去 but ask where to go for help, not how to walk somewhere. A route
+// needs a real destination, so the named-place check below is what separates
+// them — without it seven campus questions were answered by the map tool.
+const ROUTE_KEYWORD_RE = /怎么走|怎么去|怎么过去|怎么走到|规划.*路线/;
 const PAIR_RE = /(?:从)?(.+?)(?:到|去|至|前往|走向|走到|→|->)(.+)/;
 const places = searchCampusPlaces("");
 
@@ -118,7 +123,8 @@ export function navigationIntent(
   const namedPlaces = mentions(question);
   const routeQuestion =
     !/不要|不用|不必|别去|不去|取消/.test(question) &&
-    ROUTE_RE.test(question.replace(/找到|查到|定位到/g, "找"));
+    ROUTE_RE.test(question.replace(/找到|查到|定位到/g, "找")) &&
+    (namedPlaces.length > 0 || ROUTE_KEYWORD_RE.test(question));
   const pair = PAIR_RE.exec(question.replace(/找到|查到|定位到/g, "找"));
   const startText = pair?.[1];
   const explicitFrom = /从.+(?:去|到|至|前往|走向|走到)/.test(question);
