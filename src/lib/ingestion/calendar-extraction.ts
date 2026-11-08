@@ -369,17 +369,12 @@ function candidates(s: Source, title: string): Candidate[] {
           valid.push({ p: t, at: d.index!, end: d.index! + d[0].length });
       }
       if (!valid.length) continue;
+      // The paragraph may hold a truncated label ("会议地点：广外") while
+      // the full venue sits in the body, so keep whichever is longer.
       const place =
-        (
-          p.match(
-            /(?:活动地点|讲座地点|比赛地点|举办地点|地点)[：:]\s*([^，。；\n]{1,130})/,
-          )?.[1] ||
-          body.match(
-            /(?:活动地点|讲座地点|比赛地点|举办地点|地点)[：:]\s*([^，。；\n]{1,130})/,
-          )?.[1] ||
-          p.match(/在([^，。；\n]{2,100}?)(?:举行|举办|开展|开讲|开幕)/)?.[1] ||
-          null
-        )?.replace(/(?:顺利|成功|隆重|正式|联合|共同)$/g, "") || null;
+        [placeOf(p), placeOf(body)]
+          .filter((v): v is string => !!v)
+          .sort((a, b) => b.length - a.length)[0] ?? null;
       const organizer =
         body.match(/(?:主办单位|主办方)[：:]\s*([^，。；\n]{1,100})/)?.[1] ||
         body.match(/由([^，。；\n]{2,80})主办/)?.[1] ||
@@ -571,6 +566,51 @@ function proposalCandidates(
   }
   return out;
 }
+/**
+ * Place strings arrive in several shapes across GDUFS portals:
+ *   - labelled "地点：广东外语外贸大学白云山校区行政楼国际会议厅"
+ *   - labelled in a table cell ("✅ 比赛地点：假草场")
+ *   - verb phrases "在白云山校区尚行报告厅举行" / "于腾讯会议线上平台顺利举行"
+ *   - verb phrases using 召开, which the old list missed
+ * The old patterns only knew 在+举行 and dropped roughly a third of places.
+ */
+const PLACE_LABEL =
+  /(?:活动地点|讲座地点|比赛地点|举办地点|会议地点|报到地点|地点为|地点)\s*[：:]\s*([^，。；\n]{1,130})/;
+const PLACE_VERB =
+  /(?:在|于)\s*([^，。；\n]{2,100}?)(?:举行|举办|召开|开展|开讲|开幕)/g;
+const PLACE_HINT = /(?:校区|楼|厅|室|馆|场|中心|平台|大学|学院|广场|线上|会议)/;
+
+function cleanPlace(raw: string | undefined): string | null {
+  if (!raw) return null;
+  const value = raw
+
+    .replace(/(?:顺利|成功|隆重|正式|联合|共同)$/g, "")
+    .replace(/^[\s、，,]+/, "")
+    .trim();
+  if (!value || value.length < 2) return null;
+  if (/^\d{4}\s*年/.test(value) || /^\d{1,2}[:：]\d{2}/.test(value)) return null;
+  return value;
+}
+
+/** A labelled place is trusted as-is; a verb phrase needs a place hint. */
+function placeOf(text: string): string | null {
+  const labelled = cleanPlace(text.match(PLACE_LABEL)?.[1]);
+  if (labelled) return labelled;
+  // Scan from the last preposition: "定于2026年11月20日—22日在北京举行"
+  // would otherwise drag the date range into the match.
+  for (let i = text.length - 1; i >= 0; i--) {
+    if (text[i] !== "在" && text[i] !== "于") continue;
+    const m = text.slice(i).match(
+      new RegExp("^[在于]\\s*([^，。；\\n]{2,100}?)(?:举行|举办|召开|开展|开讲|开幕)"),
+    );
+    const value = cleanPlace(m?.[1]);
+    if (!value) continue;
+    if (!PLACE_HINT.test(value) && value.length < 4) continue;
+    return value;
+  }
+  return null;
+}
+
 export function calendarizeArticle(
   input: ArticleAnalysisInput,
   base: ArticleAnalysis,
