@@ -57,20 +57,15 @@ export async function runCloudWebBatch(
   // jobs first every minute, and the 55s budget ran out before the tail of
   // the list was reached, so a freshly queued job could sit at attempts=0
   // indefinitely while older jobs kept taking the whole tick.
-  const jobs = await db
-    .prepare(
-      "SELECT id FROM ingestion_jobs WHERE job_kind='web' AND control_state='active' AND phase<>'complete' AND status IN('queued','running') AND lease_until_ms<=? AND next_run_after_ms<=? AND ((SELECT auto_sync_enabled FROM console_engine_settings WHERE id='console-v2-settings')=1 OR run_key NOT LIKE 'scheduled:%') ORDER BY updated_at,id LIMIT ?",
-    )
-    .bind(now, now, options.maxSteps || MAX_STEPS_PER_TICK)
-    .all<{ id: string }>(),
+  const budget = options.maxSteps || MAX_STEPS_PER_TICK,
     results: { jobId: string; phase?: string; outcome: string }[] = [];
 
   // Cron invocations are wall-clock limited, so stop taking new steps once a
   // tick has used most of its budget; whatever is left is picked up next
   // minute. Without this a large batch would be killed mid-step.
   const deadline = Date.now() + 55_000;
-  for (const row of jobs.results) {
-    if (Date.now() > deadline) break;
+  const step = async (row: { id: string }) => {
+    if (Date.now() > deadline) return;
     let lease: Awaited<ReturnType<typeof store.claim>>;
     try {
       const current = await store.job(row.id);
@@ -83,7 +78,7 @@ export async function runCloudWebBatch(
         jobId: row.id,
         outcome: error instanceof Error ? error.message : "CLAIM_FAILED",
       });
-      continue;
+      return;
     }
 
     const profile = lease.profile,
@@ -235,6 +230,24 @@ export async function runCloudWebBatch(
         phase: lease.phase,
         outcome: error instanceof Error ? error.message : "COMMIT_FAILED",
       });
+    }
+  };
+
+  // One pass advances every queue head by a single step, so a job holding a
+  // ten-article list waited ten minutes for one tick. Re-run passes while the
+  // budget lasts: updated_at ordering means each pass starts with the jobs that
+  // were touched longest ago, so the extra steps spread across the queue.
+  while (results.length < budget && Date.now() < deadline) {
+    const jobs = await db
+      .prepare(
+        "SELECT id FROM ingestion_jobs WHERE job_kind='web' AND control_state='active' AND phase<>'complete' AND status IN('queued','running') AND lease_until_ms<=? AND next_run_after_ms<=? AND ((SELECT auto_sync_enabled FROM console_engine_settings WHERE id='console-v2-settings')=1 OR run_key NOT LIKE 'scheduled:%') ORDER BY updated_at,id LIMIT ?",
+      )
+      .bind(now, now, Math.min(budget - results.length, 20))
+      .all<{ id: string }>();
+    if (!jobs.results.length) break;
+    for (const row of jobs.results) {
+      if (results.length >= budget || Date.now() > deadline) break;
+      await step(row);
     }
   }
   return { processed: results.length, results };
