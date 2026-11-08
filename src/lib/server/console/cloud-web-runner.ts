@@ -3,7 +3,13 @@ import { OfficialWebConnector, extractEvents } from "@/lib/ingestion/connector";
 import { WorkerSafeWebFetcher } from "@/lib/ingestion/worker-safe-fetch";
 import { ConsoleSyncStore, cloudRunnerActor } from "./v2-sync";
 
-const MAX_STEPS_PER_TICK = 12;
+// Each tick is one minute, and each step is a single fetch plus a handful of
+// D1 statements, so the ceiling is really "how many sites advance per minute".
+// 12 left the queue permanently behind: 91 sources needing a discover sweep
+// plus a fetch per article is thousands of steps, and the backlog never
+// cleared. 40 keeps a tick well inside the worker's subrequest budget while
+// letting a full sweep finish in hours instead of days.
+const MAX_STEPS_PER_TICK = 40;
 
 function outcomeFor(error: unknown) {
   const code = error instanceof Error ? error.message : "NETWORK_ERROR";
@@ -55,7 +61,12 @@ export async function runCloudWebBatch(
     .all<{ id: string }>(),
     results: { jobId: string; phase?: string; outcome: string }[] = [];
 
+  // Cron invocations are wall-clock limited, so stop taking new steps once a
+  // tick has used most of its budget; whatever is left is picked up next
+  // minute. Without this a large batch would be killed mid-step.
+  const deadline = Date.now() + 55_000;
   for (const row of jobs.results) {
+    if (Date.now() > deadline) break;
     let lease: Awaited<ReturnType<typeof store.claim>>;
     try {
       const current = await store.job(row.id);
