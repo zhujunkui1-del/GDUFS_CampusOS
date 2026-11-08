@@ -19,6 +19,7 @@ export const CheckpointSchema = z
       .max(100)
       .default([]),
     entryIndex: z.number().int().min(0).max(49).default(0),
+    pageCount: z.number().int().min(0).default(0),
     revalidate: z.boolean().default(false),
   })
   .strict();

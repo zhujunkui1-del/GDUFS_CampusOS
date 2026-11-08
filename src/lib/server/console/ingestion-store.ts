@@ -17,6 +17,7 @@ import {
   approvedUrl as configuredUrl,
   profileFromSource,
 } from "@/lib/ingestion/profiles";
+const MAX_PAGES_PER_ENTRY = 20;
 async function profileFor(db: IngestionStore["db"], id: string) {
   const row = await db
     .prepare(
@@ -490,13 +491,22 @@ export class IngestionStore extends ConsoleStore {
           const publishedAt = discoveredDates.get(url);
           return !!publishedAt && publishedAt < cutoff;
         });
+      // A hard ceiling on how far a single entry may be walked. Every run
+      // re-reads from the newest page, so anything past this depth will be
+      // reached by a later run anyway; without the cap a site whose pager
+      // keeps producing fresh links can hold a job hostage for hours.
+      const pageCapReached = checkpoint.pageCount >= MAX_PAGES_PER_ENTRY;
       const nextPage =
         value.nextPage &&
+        !pageCapReached &&
         !allUnknownArticlesAreBeforeCutoff &&
         !repeatedPage &&
         !checkpoint.visitedPageHashes.includes(nextPageHash || "")
           ? value.nextPage
           : null;
+      checkpoint.pageCount = nextPage
+        ? checkpoint.pageCount + 1
+        : checkpoint.pageCount;
       checkpoint.urls =
         checkpoint.revalidate && known.length ? known : [...unknown, ...known];
       checkpoint.publishedDates = checkpoint.urls.map((url) => ({
@@ -512,6 +522,7 @@ export class IngestionStore extends ConsoleStore {
         checkpoint.page = null;
         checkpoint.urls = [];
         checkpoint.index = 0;
+        checkpoint.pageCount = 0;
       } else {
         nextPhase = "complete";
         status = "completed";
@@ -861,6 +872,7 @@ export class IngestionStore extends ConsoleStore {
           checkpoint.page = null;
           checkpoint.urls = [];
           checkpoint.index = 0;
+          checkpoint.pageCount = 0;
         } else {
           nextPhase = "complete";
           status = "completed";

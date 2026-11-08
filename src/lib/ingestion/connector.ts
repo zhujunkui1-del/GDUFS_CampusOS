@@ -270,12 +270,23 @@ export class OfficialWebConnector {
           !row.date ||
           row.date <= this.profile.latestImportDay),
     );
-    if (
-      cutoff &&
-      rows.length &&
-      rows.every((row) => row.date && row.date < cutoff)
-    )
+    // Stop paging as soon as the current page is entirely older than the gate.
+    // Requiring every row to carry a date made the terminator unreachable on
+    // templates that mix undated rows (navigation, banners) into the list, so
+    // runs walked hundreds of stale pages and never finished.
+    if (cutoff && datedRows.length && datedRows.every((row) => row.date! < cutoff))
       nextPage = null;
+    // A page with no dates at all sits past the dated region, where the older
+    // pages are rendered without a date column. Only the configured entry page
+    // is exempt, so a dateless landing page still leads to its first listing.
+    const isEntryPage = (this.profile.entryUrls || [this.profile.entryUrl]).some(
+      (entryUrl) => {
+        const entry = new URL(entryUrl);
+        const current = new URL(page);
+        return entry.pathname === current.pathname && entry.search === current.search;
+      },
+    );
+    if (cutoff && datedRows.length === 0 && !isEntryPage) nextPage = null;
     const selected = filtered.slice(0, 50);
     return {
       urls: selected.map((r) => r.url),
