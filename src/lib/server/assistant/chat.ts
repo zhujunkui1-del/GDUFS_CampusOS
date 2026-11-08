@@ -969,8 +969,17 @@ export async function chatResponse(request: Request) {
           };
         },
         validateFinal: (text) => {
+          // An honest “no evidence” answer cites nothing because it asserts
+          // nothing from the sources. Demanding [n] made every refusal burn two
+          // repair rounds and then fail the whole run, which is how nine of
+          // fifty questions ended as “回复生成异常”.
+          const admitsNoEvidence =
+            /(?:没有|未|暂未|未能|无法)(?:检索到|查到|找到|获得|获取|取得)/.test(
+              text,
+            );
           if (
             content.active &&
+            !admitsNoEvidence &&
             answerSourceCount() > 0 &&
             !/\[(?:来源\s*)?\d+\]/.test(text)
           )
@@ -1860,6 +1869,25 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
                   result.code,
                 ))
             ) {
+              const channelFor = () =>
+                content.focus === "food"
+                  ? "校园地图APP或现场咨询"
+                  : content.focus === "housing"
+                    ? "学校官网或宿管"
+                    : "广外官网、院系公示或校园地图APP";
+              // Nothing quotable survived, but the model still failed. The fixed
+              // no-evidence answer is the honest one: it says the corpus does not
+              // cover the question, instead of “AI 暂时不可用” making a data gap
+              // look like an outage.
+              const noEvidence = evidenceFallback(
+                contentResults,
+                externalResult,
+                supplementPolicy,
+                dailyTone,
+                content.attemptedKeywords,
+                channelFor(),
+                Boolean(content.articleQuery),
+              );
               const fallback =
                 (content.focus === "food" && !supplementPolicy.officialOnly
                   ? foodEvidenceAnswer(
@@ -1884,10 +1912,12 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
                       ),
                       dailyTone,
                     )
-                  : undefined);
+                  : undefined) ||
+                noEvidence;
               if (fallback) {
                 text = fallback;
-                answerMode = "evidence_excerpt";
+                answerMode =
+                  fallback === noEvidence ? "no_evidence" : "evidence_excerpt";
                 modelFailureCode = result.code;
                 result = { ...result, status: "completed" };
               }
