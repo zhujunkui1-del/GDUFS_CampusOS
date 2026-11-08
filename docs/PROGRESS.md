@@ -2190,3 +2190,10 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **脚本**：`group_key` 只存在于活动索引里，`analysisStatements` 的 upsert 不会因为身份规则变化而重写它，所以另写了 `.tmp/reidentify.mjs` 按 D1 里的 `activity_json` 重算 group_key，可重复执行（第二次运行 changed=0）。
 
 **验证**：`npx tsc --noEmit` 0 error；`npx vitest run` 149 文件 1021 用例全绿。
+
+## 2026-11-09｜重点文档入库：手册、校历与九篇参考文件
+
+- 两本 2026 年学生手册（本科、研究生）从 PDF 转入人工导入通道，各约 22 万字符；校历另行整理为可读文本。三条通道限制一并放宽：文章正文上限 50k→1M、控制台读体 96 KiB→2.2 MB、分块上限 160→480（提交 `ce48ae1`）。
+- 九篇参考文件全部入库并标记为 published + approved：两本手册、校历、学生宿舍管理规定、本科生课程修读管理规定、本科生转专业实施办法、校园网开通与使用、饮食服务。
+- 九篇逐篇加 document 级白名单（`historyExempt=true`），改门禁日期时不会被下架。
+- 导入后 `knowledge` 公开总数 152→160，`radar` 3118→3197。
