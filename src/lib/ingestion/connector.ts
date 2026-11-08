@@ -252,8 +252,15 @@ export class OfficialWebConnector {
         } catch {}
     }
     const rows = [...candidates.values()];
-    if (rows.every((r) => r.date))
-      rows.sort((a, b) => b.date!.localeCompare(a.date!) || a.order - b.order);
+    // Always rank dated rows first: a single undated row used to disable the
+    // sort for the whole page, which pushed stale/undated links ahead of the
+    // newest articles and burned the per-run budget on them.
+    rows.sort((a, b) => {
+      if (a.date && b.date) return b.date.localeCompare(a.date) || a.order - b.order;
+      if (a.date) return -1;
+      if (b.date) return 1;
+      return a.order - b.order;
+    });
     const cutoff = this.profile.earliestImportDay;
     const datedRows = rows.filter((row) => row.date);
     const filtered = rows.filter(

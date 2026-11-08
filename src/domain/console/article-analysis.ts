@@ -13,10 +13,11 @@ import {
   DerivedEventStatusSchema,
 } from "./taxonomy";
 
-// v4 adds the derived article-level facets (college, eventType, eventStart,
-// eventEnd). The version is bumped so every stored row is re-derived instead of
-// being mixed with v3 rows that lack the facets.
-export const ARTICLE_CLASSIFIER_VERSION = "article-content-v4";
+// v5 adds the institutional-document signal (brochures, implementing rules,
+// training plans, work schemes) so those documents land in the knowledge
+// surface even when they carry a dated batch scope. The version is bumped so
+// every stored row is re-derived instead of being mixed with v4 rows.
+export const ARTICLE_CLASSIFIER_VERSION = "article-content-v5";
 export const ArticleAnalysisInputSchema = z
   .object({
     documentId: z.string().optional(),

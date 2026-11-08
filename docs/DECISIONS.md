@@ -1264,3 +1264,29 @@ D-146 最终验收更新（2026-11-06）：Dify App API Key Secret 与已发布 
 **未采纳**：LLM 分类器逐字保留 —— prompt 与契约写在 `scripts/kb_build/nodes/route.py` 作为参考实现并注明为何弃用。
 
 **发布前待决**：P90 延迟从 32s 升到 100s（Qwen3.8-27B 会吐长思维链）；自然问法 recall@5 仅 0.579；DeepSeek-V4-Flash-0731 虽在网关注册但实际调用报 `Model not found`。三项都需负责人拍板后才可发布。详见 `docs/KB_DIFY_PILOT_2026_11_07.md`。
+
+**后续状态（2026-11-07）**：其中「启用 Embedding」一项已由 D-149 授权并执行，新建 hq 与 ocr+hq 两套向量库；`chat_template_kwargs.enable_thinking=false` 解决了思维链泄漏。**延迟与自然问法召回两项仍未解决**，见 D-149。
+## D-149｜启用 bge-m3 向量索引与 OCR，三套知识库并存（2026-11-07）
+
+负责人 2026-11-07 明确授权「启动 embedding，另起一组新库存量对比（旧库不动，可随时退回）。使用 OCR」。这解除了 D-143 与 D-144 中「不授权启用 Embedding、不创建第二套向量索引」的限制，但**仅限新建独立知识库**，不复用、不修改任何既有库。
+
+**做法**：三套知识库并行，每套 5 个，共 15 个。`economy` 5 个（D-143/D-144 约束下的第一版，1164 篇）；`hq` 5 个（同一语料换 `high_quality` + `bge-m3`，1164 篇）；`ocr+hq` 5 个（同上再加 OCR 补全的 61 篇，1225 篇）。原有「CampusOS 校园知识试点」8 篇文档未删未改。这样切是为了让「换索引」和「加 OCR」两个变量各自可归因。
+
+**Embedding provider**：`langgenius/openai_api_compatible/openai_api_compatible` 下的 `bge-m3`，dim=1024，context_size=8192，status=active。实测 token/char = 0.613，语料约 131.1 万 tokens。网关单请求上限 8000 tokens，超限报 HTTP 422。
+
+**检索结果（hit-testing，top_k=5，绕开 LLM）**：
+
+| 后端 | 标题派生（47） | 自然问法（19） | OCR-only（40） |
+|---|---|---|---|
+| `economy` | 0.851 | 0.579 | 0.000 |
+| `hq` | **1.000** | **0.684** | 0.000 |
+| `ocr+hq` | **1.000** | **0.684** | **1.000** |
+
+换索引是唯一有效的一步：标题派生集从 0.851 直接到 1.000。OCR-only 集的 0.000 → 1.000 属于「从文档不存在到存在」，不是检索质量提升。自然问法只从 0.579 涨到 0.684，说明向量检索解决了字面对不上，没解决「问的和写的不是同一件事」，下一步应上 rerank（`bge-reranker-v2-m3` 已注册但未启用）而不是继续换 embedding。
+
+**OCR**：197 篇纯图片文章，196 篇完成、278,655 字、61 篇最终入库。合并后语料 1225 篇 / 4561 chunks。唯一彻底失败是 `e5974f261cdf9c34`（康师傅抢票攻略）。
+
+**关掉思考**：只有 `completion_params.chat_template_kwargs = {"enable_thinking": false}` 有效；`enable_thinking: false`、`reasoning_effort: "none"`、`thinking: {type: disabled}`、`extra_body` 全部无效。Dify 的 llm 节点能持久化并生效该字段。
+
+**发布状态**：交付版应用 `CampusOS 问答（OCR+向量）`（`15dce9e8-ab4d-4375-8630-2b1a4c343220`，site `3a2B9Dxoh5rKh5yv`）已发布可用。生产应用 `广外通·校园助理（Dify试点）`（`39945f9b-9ee0-4c2c-a3a0-fc5298b3f861`）**仍未改动**，graph 仍是 `start → llm → answer`。P90 = 103.9 s vs 生产基线 32.0 s，故不覆盖生产。
+

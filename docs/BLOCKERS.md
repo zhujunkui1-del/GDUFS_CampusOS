@@ -782,3 +782,32 @@ Dify 表单当前 Endpoint 显示正确基础路径，但 Cloudflare 20:58:16 �
 **3. 197 篇纯图片文章未入库。** 这些文章正文为空（`images>0`），微信把整篇内容做成图片，无任何可提取文本。需要 OCR 或人工补录，本轮不计入覆盖。
 
 **一处已澄清的误判**：候选流水线一度被认为「加了 knowledge-retrieval 的 fail-branch 就让 `metadata.retriever_resources` 变空」。复查发现是评测脚本从顶层而非 `metadata` 里取字段导致的假象；fail-branch 与资源列表可以共存，最终版保留了两层兜底（fail-branch + gate）。
+
+## 2026-11-07｜三个未决项的现状（Embedding 与 OCR 落地后）
+
+原先列的三条里，两条已有进展，一条仍未解决：
+
+**1. 延迟——仍未解决，仍是唯一阻塞项。** 关掉思考（`chat_template_kwargs.enable_thinking=false`）修掉了思维链泄漏，也只把 P90 从 121.7 s 压到 **103.9 s**；生产基线是 32.0 s。链路是 `knowledge-retrieval`（5 个向量库）→ LLM → 代码节点，串行且每跳都要等。网关本身也在抖：v3 自然集 19 题里 7 题直接 `URLError`（连接失败，不是业务错误），同一时段 OCR-only 集只错 1 题。要真正解决，需要减少检索库数、并行检索、或换更快的模型；这三项都还没做。
+
+**2. 自然问法召回——已解决一半。** 启用 bge-m3 后 recall@5 从 0.579 升到 **0.684**，但仍不高。逐条看 hq 的 6 个 miss，gold 文档**全部在语料里**，失败原因是语义近邻干扰（如「宿舍条件怎么样」的 gold 是「宿舍默契大比拼活动」，检索却命中了「宿舍文化节」「新宿舍入住」）。下一步应上 `bge-reranker-v2-m3`（已在 workspace 注册但未启用）配合 top_k=10，而不是继续换 embedding。
+
+**3. OCR——已解决。** 197 篇纯图片文章，196 篇完成、**278,655 字**，61 篇最终入库（另 48 篇商业推广、36 篇过短、10 篇节日问候、16 篇图片型包装被既有清洗规则挡掉）。OCR-only 专属题集 n=40 的 recall@5 从 **0.000 → 1.000**。唯一彻底失败是 `e5974f261cdf9c34`（康师傅抢票攻略）。
+
+附带新增两条限制：
+
+- **`bge-m3` 单请求上限 8000 tokens**（超限 HTTP 422）；token/char = 0.613，语料约 131.1 万 tokens。
+- **Dify 社区版没有知识库导出接口**（`GET /console/api/datasets/{id}/export` → 404）。交付只能靠本地语料或逐文档 API 重建。
+
+## 2026-11-08｜微信文章 → Dify 流水线的结构性阻塞（阶段一核查发现）
+
+阶段一只读核查发现四条**不是「还没做」而是「平台不给」**的阻塞，都需要在设计上绕开，而不是靠加班解决：
+
+**B-101 Dify 社区版没有工作流版本管理 API。** 实测 `/workflows/history`、`/workflows/versions`、`/workflows/draft/restore`、`/workflows/publish/restore`、`/node-runs` 全部 405/404，`PATCH` 回 `{"message":"No valid fields to update"}`。因此第九节要求的「版本号 / DSL 快照 / 回滚」无法由 Dify 提供，只能由 CampusOS 自建：D1 存 DSL YAML 快照，回滚时用 `POST /apps/imports` + `POST /apps/{id}/workflows/publish` 重建。已实测该路径可行，且**导入导出会保留 `dataset_ids` 绑定**（YAML 里是加密串，导入后 draft 读回是明文 UUID 且与原值一致）。
+
+**B-102 `GET /v1/datasets/{id}/indexing-status` 不存在（404）。** 官方文档里有这个端点，但社区版 1.16.1 没有实现，batch 级与文档级都是 404。后果是无法精确知道「这篇文档什么时候索引完」，只能轮询 `GET /datasets/{id}/documents/{doc}` 的 `indexing_status` 字段并做指数退避。同步状态机必须按「轮询 + 超时」设计，不能按「回调」设计。
+
+**B-103 `POST /v1/datasets/{id}/document/create-by-file` 必须 multipart。** 用纯 JSON body + console `file_id` 会返回 `400 no_file_uploaded "Please upload your file."`；而用 v1 dataset key 调 `/v1/files/upload` 又是 `401 Access token is invalid`。结论：**文件上传只能用 Console API（Cookie + CSRF），建文档只能用 v1 multipart**。两套凭据混用是唯一可行路径，Worker 侧需要能同时持有两者。
+
+**B-104 mp-tools → CampusOS 的同步当前是失败的。** `D:\WeChat MP Tools_v2.3.1\data\CampusOS_collector\last-sync.json` = `{"at":"2026-11-07T08:43:52Z","syncMode":"add_update_only","error":"CLOUD_UNAVAILABLE"}`。按负责人约束（文件传输已打通、不要动），不修它；但这意味着 **CampusOS D1 里的文章数据可能滞后于本地目录**，导入流水线必须以 `data/articles_full` 为唯一事实源，不能以 D1 为准。
+
+附带记录：`dataset_ids: []` 的 service key **对全部数据集可见**（含旧试点库），最小权限要求在创建时显式指定数据集 ID。

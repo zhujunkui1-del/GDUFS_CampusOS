@@ -310,17 +310,34 @@ export function classifyArticleContent(
   if (titleCall && window) timely += 3;
   if (procedure && referencePurpose && !window && !timed && !temporary)
     reference += 2;
+  // Institutional documents (recruitment brochures, implementing rules,
+  // training plans, work schemes) are reusable reference material even when
+  // they also carry a dated batch scope such as "2026年复试". The reference
+  // side previously had no signal for this whole family, so the whole family
+  // fell into the unclassified bucket.
+  const documentTitle = add(
+    hit(
+      text,
+      /招生简章|招生方案|实施细则|管理办法|培养方案|工作方案|考核细则|管理规定|规章制度|学籍管理|学位授予/,
+      "document_title",
+      "title",
+    ),
+  );
+  if (documentTitle) reference += 6;
   const mixed = reference >= 6 && timely >= 6;
   let destination: ArticleAnalysis["primaryDestination"] = "unknown";
   if (text.bodyAvailable) {
     if (mixed) {
-      destination =
-        titleCall ||
-        datedCall ||
-        leadTask ||
-        reportPurpose ||
-        (eventTitle && window) ||
-        (noticePurpose && noticeBody && window && !policy && !guide)
+      // A document titled as a brochure / implementing rule / scheme is
+      // reference material even when it also carries a dated batch scope.
+      destination = documentTitle
+        ? "knowledge"
+        : titleCall ||
+            datedCall ||
+            leadTask ||
+            reportPurpose ||
+            (eventTitle && window) ||
+            (noticePurpose && noticeBody && window && !policy && !guide)
           ? "radar"
           : guide || policy
             ? "knowledge"
