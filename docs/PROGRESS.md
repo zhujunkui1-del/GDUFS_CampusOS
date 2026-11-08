@@ -2136,3 +2136,23 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **验证**：`npx vitest run` → 146 文件 / 1015 用例全绿（除并发改动中的 `tests/unit/food-timeout-flow.test.ts` 因他人 `chat.ts` 的 `fallbacks is not defined` 失败，与本轮无关）；`npx tsc --noEmit` 无新增错误。全量重算 3344 篇：最后一批 `rowsWritten` 22。预览部署版本 `89f40262-ae1c-4975-a81c-db9c97c1d67c`。公开接口 `/api/public/activities?after=2026-11-08&before=2026-12-08` 返回 18 条，校区分布 baiyun 7 / unknown 6 / university_town 2 / online 3。
 
 **未做**：活动去重仍偏保守。`calendar-identity.ts` 的 `mergeable` 要求「有主办方」或「标题 ≥20 字且地点 ≥12 字且含大学/校区且含路号楼层」。语料里 13 组同标题同日期的重复（《讲座预告丨广外金融论坛第134讲》等）本应合并成一条，但放宽这条规则会让 `tests/unit/calendar-query.test.ts`「deduplicates matching organisers/venues but not different colleges or sessions」失败（该用例要求「无主办方时不得合并」），属于契约变更，先不动，待负责人确认。
+
+## 2026-11-08｜50 题实测：数据缺口不再冒充服务故障
+
+以新生视角跑了 50 个与地图无关的问题，逐条比对修复前后。
+
+**首轮问题**：7 条 `NOT_FOUND`（「新生报到要带哪些材料」「校历在哪看」这类问题被当成地点查询）、25 条 `no_evidence`、9 条 `MODEL_SERVICE_UNAVAILABLE`。
+
+**改动一：地图误判**（`src/domain/agent/navigation-intent.ts`、`src/lib/server/assistant/content-intent.ts`）。`ROUTE_RE` 里的裸 `(?:去|到).+` 会把「东西丢了去哪里报失」判成送路线；现在要求命中原生路线关键词或句子里真有地名。`map` 分支同理，不再靠裸的「在哪」判定。7 条 `NOT_FOUND` 清零。
+
+**改动二：AND 过严**（`src/lib/retrieval/query-plan.ts`、`src/lib/retrieval/terms.ts`）。`modifiers` 原先要求每个都出现在同一 chunk 才算相关，疑问词残片（「多少分算优秀」「什么时候开」）因此把全部候选拒掉。改为三级：学院名必须全部命中，带数字/字母的期号必须命中，其余任一中即可。FTS 侧同步放宽，否则 gate 放宽了召回仍为空。
+
+**改动三：联网误判**（`src/lib/server/external-search/policy.ts`）。「挑战杯和互联网+校内选拔怎么报名」里的「互联网+」被当成联网请求，回「请先开启智能搜索」。现在先把「互联网+」抹掉再判断。
+
+**改动四：答非所问**（`src/lib/server/assistant/evidence-answer.ts`）。新增 `titleAnswersQuestion()`，候选的标题或摘要里必须命中主题的最长前缀，否则不进摘录。「校医院看病要预约吗」不再召回「校史馆参观指南」。
+
+**改动五：数据缺口 ≠ 服务故障**（`src/lib/server/assistant/chat.ts`、新增 `src/lib/server/assistant/evidence-refusal.ts`）。`validateFinal()` 要求「有资料就必须标 [n]」，而诚实说「没查到」的回答没有可引用的东西，于是被拒两次后抛 `MODEL_SERVICE_UNAVAILABLE`。现在 `admitsNoEvidence()` 豁免这种措辞；降级链补上 `evidenceFallback()` 与最后一句诚实说明，让整轮以 `completed` 结束并记下 `modelFailureCode`。
+
+**结果**：50 题中失败 0 条（首轮 9 条）。分布 `model` 21 / `no_evidence` 18 / `evidence_excerpt` 7 / `event_list` 2 / `radar_list` 1 / `attributed_excerpt` 1。耗时中位 15.0s、最慢 61.1s。
+
+**仍未完成**：语料缺口仍在——宿舍门禁、熄灯、入学体检、电磁炉、清真窗口、快递驿站这些新生高频问题在 D1 里没有正文，18 条 `no_evidence` 中大部分源于此。耗时也有改善空间，最慢的几条仍在 60s 上下。
