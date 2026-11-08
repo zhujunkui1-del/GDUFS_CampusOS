@@ -219,6 +219,10 @@ export function buildQueryPlan(
     // answer became “没有检索到”. Keep the nouns, drop the question.
     .filter((t) => !MODIFIER_NOISE.test(t))
     .map((t) => t.replace(/^(?:要|需要|可以|能|会|应该|想|打算)/, ""))
+    // Same failure on the other end: “门禁熄灯是” and “缓考请假要走” kept the
+    // trailing verb, and the two-character chunks then ended in “灯是” / “要走”,
+    // which also appear nowhere.
+    .map((t) => t.replace(/[是有走要看查找办做用评算去来]+$/u, ""))
     .filter((t) => t.length >= 2 && !MODIFIER_NOISE.test(t))
     .slice(0, 4)
     .map((original) => ({
@@ -268,6 +272,17 @@ export function entityTerms(entity: string) {
   const venue = VENUE_GROUPS.find((group) => group.names.includes(entity));
   return venue ? [...venue.names] : [entity];
 }
+// “门禁熄灯” is two words, so no chunk contains it as one string. Accept the
+// modifier when every non-overlapping pair of characters appears in order.
+function modifierPresent(text: string, term: string) {
+  const literal = term.toLowerCase();
+  if (text.includes(literal)) return true;
+  const chars = [...literal];
+  if (chars.length < 4 || !/^[\p{Script=Han}]+$/u.test(literal)) return false;
+  for (let i = 0; i + 1 < chars.length; i += 2)
+    if (!text.includes(chars[i] + chars[i + 1])) return false;
+  return true;
+}
 export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const title = (hit.title || "").normalize("NFKC").toLowerCase(),
     body = (hit.contentSnippet ?? hit.snippet ?? "")
@@ -303,7 +318,7 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   // real campus questions. A named college still binds every constraint,
   // because it is what makes “信息学院院运会” different from “院运会”.
   const modifierMatched = plan.modifiers.map((m) =>
-    m.alternatives.some((t) => text.includes(t.toLowerCase())),
+    m.alternatives.some((t) => modifierPresent(text, t)),
   );
   const collegeBound = plan.modifiers.some((m) =>
     m.alternatives.some((a) => COLLEGE_NAMES.includes(a)),

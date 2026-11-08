@@ -87,17 +87,36 @@ export function ftsExpression(query: string) {
     .map((p) => "(" + p.map((t) => '"' + t + '"').join(" AND ") + ")");
   return expressions.length ? "(" + expressions.join(" OR ") + ")" : null;
 }
-function phraseExpression(phrases: string[]) {
+// A two-character chunk of a Han run, encoded the same way as a bigram.
+function chunkToken(pair: string) {
   return (
-    "(" +
-    phrases
-      .slice(0, 24)
-      .map((p) => [...new Set(lexicalTokens(p))].slice(0, 12))
-      .filter((p) => p.length)
-      .map((p) => "(" + p.map((t) => '"' + t + '"').join(" AND ") + ")")
-      .join(" OR ") +
-    ")"
+    "h" +
+    pair.codePointAt(0)!.toString(16) +
+    "x" +
+    pair.codePointAt(1)!.toString(16)
   );
+}
+// “门禁熄灯” is two words, not one phrase: the overlapping bigrams include the
+// cross-word “禁熄”, which no article contains, so requiring all of them
+// returned nothing. Non-overlapping chunks (“门禁” AND “熄灯”) survive that,
+// and OR-ing them with the strict phrase keeps exact titles working.
+function chunkExpression(phrase: string) {
+  const chars = [...phrase];
+  if (chars.length < 4 || !/^[\p{Script=Han}]+$/u.test(phrase)) return null;
+  const chunks: string[] = [];
+  for (let i = 0; i + 1 < chars.length; i += 2)
+    chunks.push('"' + chunkToken(chars[i] + chars[i + 1]) + '"');
+  return chunks.length >= 2 ? "(" + chunks.join(" AND ") + ")" : null;
+}
+function phraseExpression(phrases: string[]) {
+  const groups = phrases.slice(0, 24).flatMap((phrase) => {
+    const tokens = [...new Set(lexicalTokens(phrase))].slice(0, 12);
+    if (!tokens.length) return [];
+    const strict = "(" + tokens.map((t) => '"' + t + '"').join(" AND ") + ")";
+    const chunks = chunkExpression(phrase);
+    return [chunks ? "(" + strict + " OR " + chunks + ")" : strict];
+  });
+  return "(" + groups.join(" OR ") + ")";
 }
 function planExpression(plan: QueryPlan, literal: boolean) {
   const topics = plan.topics.map((t) =>
