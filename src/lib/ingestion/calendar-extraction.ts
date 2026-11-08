@@ -576,23 +576,29 @@ function proposalCandidates(
  */
 const PLACE_LABEL =
   /(?:活动地点|讲座地点|比赛地点|举办地点|会议地点|报到地点|地点为|地点)\s*[：:]\s*([^，。；\n]{1,130})/;
-const PLACE_VERB =
-  /(?:在|于)\s*([^，。；\n]{2,100}?)(?:举行|举办|召开|开展|开讲|开幕)/g;
 const PLACE_HINT = /(?:校区|楼|厅|室|馆|场|中心|平台|大学|学院|广场|线上|会议)/;
+// A verb phrase such as "在X举行" also matches prose ("在双方合作领域"),
+// so anything carrying enumeration punctuation, a relative-time word or a
+// trailing 及/等 is treated as prose rather than a venue.
+const PLACE_REJECT =
+  /[、，,；;]|(?:之前|之后|期间|以来|方面|领域|工作|团队|代表|人士|一行)|(?:及|等)[^校区楼厅室馆场中心]*$/;
 
 function cleanPlace(raw: string | undefined): string | null {
   if (!raw) return null;
-  const value = raw
-
-    .replace(/(?:顺利|成功|隆重|正式|联合|共同)$/g, "")
+  let value = raw
+    .replace(/(?:顺利|成功|隆重|正式|联合|共同)$/, "")
     .replace(/^[\s、，,]+/, "")
     .trim();
-  if (!value || value.length < 2) return null;
+  // A date clause can sit between the preposition and the venue
+  // ("9月22日至23日在深圳举行"), so drop everything up to the last 在/于.
+  value = value.replace(/^.*[在于]/, "").trim();
+  if (!value || value.length < 2 || value.length > 60) return null;
   if (/^\d{4}\s*年/.test(value) || /^\d{1,2}[:：]\d{2}/.test(value)) return null;
+  if (PLACE_REJECT.test(value)) return null;
   return value;
 }
 
-/** A labelled place is trusted as-is; a verb phrase needs a place hint. */
+/** A labelled place is trusted more than a verb phrase; both are cleaned. */
 function placeOf(text: string): string | null {
   const labelled = cleanPlace(text.match(PLACE_LABEL)?.[1]);
   if (labelled) return labelled;
