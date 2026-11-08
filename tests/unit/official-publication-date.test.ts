@@ -43,3 +43,35 @@ it("reads the labeled CMS publication header without taking dates from article t
     ).dateText,
   ).toBe("2026年04月05日");
 });
+
+it("reads a list stamp that splits the month/day from the year", () => {
+  const profile = {
+    ...webProfiles[0],
+    origin: "https://tyb.gdufs.edu.cn",
+    entryUrl: "https://tyb.gdufs.edu.cn/tzgg.htm",
+    entryUrls: ["https://tyb.gdufs.edu.cn/tzgg.htm"],
+    detailPath: "^/info/1032/[0-9]+\.htm$",
+    detailPathPrefixes: ["/info/1032/"],
+  };
+  const connector = new OfficialWebConnector(profile);
+  const html = `<html><body><ul>
+    <li><a href="/info/1032/2978.htm"><div class="text-ldata"><div><p>10/26</p><span>2026</span></div></div><div class="text-linfo">关于举办比赛的通知</div></a></li>
+  </ul></body></html>`;
+  const found = connector.discover(html, profile.entryUrl);
+  expect(found.dates[0]?.publishedAt).toBe("2026-10-26");
+});
+
+it("accepts a space between the date label and its colon", () => {
+  const profile = {
+    ...webProfiles[0],
+    titleSelector: "h1",
+    titleSuffix: "",
+    bodySelector: "div.v_news_content",
+    dateSelector: ".page-date",
+    dateLabel: "发布时间",
+  };
+  const connector = new OfficialWebConnector(profile),
+    url = profile.origin + profile.detailPathPrefixes![0] + "10279.htm";
+  const html = `<html><body><h1>讲座预告</h1><div class="page-date">发布时间 : 2026-10-27 浏览次数：12</div><div class="v_news_content"><p>正文内容。</p></div></body></html>`;
+  expect(connector.parse(html, url).publishedAt).toBe("2026-10-27");
+});

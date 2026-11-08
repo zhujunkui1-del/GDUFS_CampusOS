@@ -229,7 +229,13 @@ export class OfficialWebConnector {
           const labeled = row.match(
             /发布时间[：:]?\s*(20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?)/,
           );
-          const raw = leading
+          // Some templates split the stamp: "<p>10/26</p><span>2026</span>".
+          const monthDay = row.match(
+            /(?:^|\s)(\d{1,2})\/(\d{1,2})\s*(20\d{2})(?!\d)/,
+          );
+          const raw = monthDay
+            ? `${monthDay[3]}-${monthDay[1].padStart(2, "0")}-${monthDay[2].padStart(2, "0")}`
+            : leading
             ? `${leading[2]}-${leading[3].padStart(2, "0")}-${leading[1].padStart(2, "0")}`
             : yearFirst
               ? `${yearFirst[1]}-${yearFirst[2].padStart(2, "0")}-${yearFirst[3].padStart(2, "0")}`
@@ -321,19 +327,16 @@ export class OfficialWebConnector {
       this.profile.titleSuffix && rawTitle.endsWith(this.profile.titleSuffix)
         ? rawTitle.slice(0, -this.profile.titleSuffix.length)
         : rawTitle;
+    // Some templates put a space before the colon ("发布时间 : 2026-10-27"),
+    // so match the label with optional whitespace instead of a fixed suffix.
+    const labelRe = new RegExp(`${this.profile.dateLabel}\\s*[：:]`);
     const dates = [...document.querySelectorAll(this.profile.dateSelector)]
       .map(text)
-      .filter(
-        (s) =>
-          s.includes(this.profile.dateLabel + "：") ||
-          s.includes(this.profile.dateLabel + ":"),
-      );
+      .filter((s) => labelRe.test(s));
     const values = [
       ...new Set(
         dates
-          .map((s) =>
-            s.split(new RegExp(this.profile.dateLabel + "[：:]"))[1]?.trim(),
-          )
+          .map((s) => s.split(labelRe)[1]?.trim())
           .filter(Boolean),
       ),
     ];
