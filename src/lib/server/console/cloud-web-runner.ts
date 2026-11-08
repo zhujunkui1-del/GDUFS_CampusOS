@@ -36,6 +36,17 @@ export async function runCloudWebBatch(
     )
     .bind(now)
     .run();
+  // Adding a whitelist entry or confirming governance bumps the source version,
+  // and claim()/permit() both require ingestion_jobs.source_version to equal it.
+  // Jobs queued before that bump then fail every permit before a single request
+  // is made, which surfaced as an endless network_error with zero bytes. Re-point
+  // them at the current version instead of waiting for a brand new job.
+  await db
+    .prepare(
+      "UPDATE ingestion_jobs SET source_version=(SELECT version FROM knowledge_sources s WHERE s.id=ingestion_jobs.source_id),policy_version=COALESCE((SELECT p.version FROM source_collection_policies p WHERE p.source_id=ingestion_jobs.source_id),policy_version),updated_at=? WHERE job_kind='web' AND phase<>'complete' AND control_state='active' AND status IN('queued','running') AND EXISTS (SELECT 1 FROM knowledge_sources s WHERE s.id=ingestion_jobs.source_id AND s.version<>ingestion_jobs.source_version)",
+    )
+    .bind(now)
+    .run();
   const jobs = await db
     .prepare(
       "SELECT id FROM ingestion_jobs WHERE job_kind='web' AND control_state='active' AND phase<>'complete' AND status IN('queued','running') AND lease_until_ms<=? AND next_run_after_ms<=? AND ((SELECT auto_sync_enabled FROM console_engine_settings WHERE id='console-v2-settings')=1 OR run_key NOT LIKE 'scheduled:%') ORDER BY created_at,id LIMIT ?",
