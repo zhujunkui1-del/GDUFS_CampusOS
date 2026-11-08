@@ -170,15 +170,27 @@ function nature(
  * campuses stays unknown rather than guessing.
  */
 function campus(place: string | null, body = "") {
-  const read = (text: string) => {
-    if (/线上|腾讯会议|Zoom|直播/i.test(text)) return "online" as const;
+  const named = (text: string) => {
     const baiyun = /白云|北校/.test(text);
     const town = /大学城|南校/.test(text);
     if (baiyun && !town) return "baiyun" as const;
     if (town && !baiyun) return "university_town" as const;
     return null;
   };
-  return read(place || "") ?? read(body) ?? ("unknown" as const);
+  const online = (text: string) => /线上|腾讯会议|Zoom|直播/i.test(text);
+  // A venue that is only a stream ("腾讯会议", "线上直播") is not a place.
+  const remoteOnly = /^(?:腾讯会议|线上|网络直播|直播|Zoom|钉钉|会议号)/i;
+  const venue = (place || "").trim();
+  const fromPlace = named(venue);
+  if (fromPlace) return fromPlace;
+  const fromBody = named(body);
+  if (fromBody) return fromBody;
+  // A real venue wins over a passing mention of a live stream: "现场：六教
+  // B202（线上同步）" is a classroom event, and reading "线上" first used to
+  // put it on the online list.
+  if (venue && !remoteOnly.test(venue)) return "unknown" as const;
+  if (online(venue) || online(body)) return "online" as const;
+  return "unknown" as const;
 }
 function category(title: string, base: ArticleAnalysis) {
   return /讲座|讲堂|讲坛|报告会|沙龙|Lecture/i.test(title)
