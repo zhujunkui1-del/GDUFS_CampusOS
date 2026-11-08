@@ -45,7 +45,7 @@
         "APP_ENV": "preview",
         "USER_ACCOUNTS_ENABLED": "true",
         "ACCOUNT_ORIGIN": "https://campusos-preview.zhujunkui1.workers.dev",
-        "ACCOUNT_ALLOWED_ORIGINS": "https://gdufs.ccwu.cc",
+        "ACCOUNT_ALLOWED_ORIGINS": "https://gdufs.ccwu.cc,https://gdufs.zhiyuapp.site",
         "CONSOLE_ALLOWED_ORIGINS": "https://gdufs.ccwu.cc,https://gdufs.zhiyuapp.site,https://campusos.zhiyuapp.site",
         "EXTERNAL_SEARCH_TRANSPORT": "cloud",
         "AGENT_VALIDATION_UNLIMITED": "true",
