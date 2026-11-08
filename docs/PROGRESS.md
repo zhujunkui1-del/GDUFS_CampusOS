@@ -2052,6 +2052,8 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 
 **验证**：`npx tsc --noEmit -p tsconfig.json` → 0 error；`npx vitest run tests/unit/ingestion-pipeline.test.ts tests/unit/official-publication-date.test.ts` → 26 passed。入口审计脚本对每个已配置来源真实跑 `discover()`：85 个入口有产出，74 个站点至少一个入口在门禁内有货。
 
+**第二批打通（2026-11-08 凌晨）**：翻译学研究中心（cts）、招标采购中心（zcc）、教师发展中心（ctd）、科研部（kyc）、出国人员培训部（gwpxb）、纪检监察室（jwjc）、区域国别研究院（gbqy）、中南半岛研究中心（cicps）、语言学习与人工智能研究院（llai）、校医院（gwmzb）。其中 gwmzb 与 jwjc 改为只采静态 `/info/NNN/NNN.htm` 别名，绕开 query-JSP 详情页被 RASP 拦截的问题；jwjc 采到 12 篇、最新 2026-09-30，gwmzb 采到 2 篇、最新 2026-05-13。盘面：`total=91 / configured=89 / withRecent=79 / zero=12`。
+
 **未做**：39 个站点仍使用占位选择器（`title="h1, title"` / `date="time, .date, .time"` / `body="article, main"`），靠 `parse()` 兜底正常工作，但未逐站精修；上述 RASP / SPA / SSO 站点需要改走代理或浏览器渲染才能覆盖。
 
 ## 2026-11-08｜路线失败改走文字指路
@@ -2068,3 +2070,43 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **验证**：新增 `tests/unit/route-directions.test.ts`（2 项）——(a) 文字只含 planner 返回的步骤；(b) 模型超时后仍以 `route_directions` 完成，正文含「先用文字给你指路」与「下沉隧道」，且不发 `run.failed`。`npx vitest run tests/unit` → **144 文件 / 1004 用例全绿**；`npx tsc --noEmit`、eslint 通过。
 
 **未做**：`plan_route` 本身失败（如 `ROUTE_UNAVAILABLE`）时仍无路线数据可渲染，只能沿用通用错误文案；此时没有可信的距离与步骤可讲，不做猜测。
+
+## 2026-11-08｜微信文章 → Dify 知识库流水线：阶段一现状核查
+
+负责人下达新任务：把「微信文章 → wechat-mp-tools 采集 → CampusOS 上传 → 清洗 → 本地知识库 → Dify 同步 → AI 分析分类 → 评估 Workflow → 生成新版本 → 测试 → 审核发布」做成可持续流水线，并按十五节分七阶段。明确约束：**wechat-mp-tools 与网站后台之间的文件传输已打通，不要动；只负责 wechat-mp-tools 与 Dify 知识库这一段。**
+
+本轮只做阶段一（只读核查），未改任何生产环境、未删任何既有知识库或应用、未碰 `services/wechat-collector/` 与 `src/app/api/collector/**`。
+
+**核查报告已落盘**：`docs/微信文章Dify流水线_阶段一核查报告-2026-11-08.md`（369 行，9 节）。
+
+**关键发现**：
+
+1. **mp-tools 导出格式已确定**：`data/articles_full/<公众号>/<标题>/<标题>.html`，每篇 `<head>` 有 `<meta name="campusos-article" content="{...}">`，含 title/url/source/publish_time/has_markdown/has_pdf 等。**1508 个 HTML、80 个公众号、1508 个 meta 全部解析成功、1508 个唯一 URL**，时间跨度 2026-10-20 → 2026-11-08。导入适配器不需要解析 DOM，直接读 meta + body。
+2. **`data/CampusOS_collector/last-sync.json` 显示 `error: "CLOUD_UNAVAILABLE"`**（2026-11-07T08:43:52Z）——同步当前是失败的。按约束不动，但导入必须以本地目录为唯一事实源。
+3. **Dify 工作流全生命周期实测闭环**：导出 `export?include_secret=false` → 导入 `POST /apps/imports`（**必须 JSON body**，multipart 会报 `422 missing field mode`）→ 草稿运行 `POST /apps/{id}/advanced-chat/workflows/draft/run`（SSE 22 帧）→ 发布 `POST /apps/{id}/workflows/publish`（200 success）→ 删除 `DELETE /apps/{id}`（204）。
+4. **导出再导入，DSL 的 `dataset_ids` 绑定会保留**：YAML 里是加密串，但导入后 `GET /workflows/draft` 读回是明文 UUID 且与原值一致。→ 同一实例内 DSL 快照/回滚是安全的。
+5. **Dify 没有版本管理 API**：`/workflows/history|versions|draft/restore|publish/restore|node-runs` 全 405/404。版本与回滚必须自建（D1 存 DSL 快照 + imports/publish 重建）。
+6. **知识库写通道双轨**：v1 `create-by-text` / `create-by-file`（必须 multipart）/ `update-by-text` / `delete` 全部可用；Console 侧 `files/upload` + `datasets/{id}/documents` + `PATCH/DELETE segments` 可用。**但 `v1/datasets/{id}/indexing-status` 不存在**（Flask 404），只能轮询 document detail。
+7. **CampusOS 仅有 Dify 读路径**：`dify-chat.ts`、`dify-external.ts`、`external-knowledge/retrieval/route.ts`。**没有任何一行代码往 Dify 写知识库**——现有 15 个知识库全是脚本直灌的。
+8. **Cron + D1 + Vectorize + AI binding 已有；R2 与 Queues 未绑定**。异步任务建议用现有 Cron + D1 任务表，不引入 Queues。
+
+**风险清单**（10 条，R1–R10）：R1 Dify 无版本管理 API；R2 `/v1/chat-messages` 60s 网关超时；R3 create-by-file 必须 multipart；R4 indexing-status 不存在；R5 dataset key `dataset_ids: []` = 全库可见；R6 无 Queues；R7 mp-tools→CampusOS 同步失败；R8 文章内容不可信；R9 P90 ≈104s；R10 无 R2。
+
+**待用户确认四项**：①是否允许配置 `DIFY_DATASET_API_KEY` Secret；②阶段六发布是否仍只做候选+测试+报告；③是否允许新增迁移 `0046_wechat_knowledge.sql`（纯新增表）；④图片/PDF 是否需要落地（当前无 R2）。
+
+**未做**：阶段二至七全部未开始。未新增迁移、未改任何源码、未写 Secret。
+
+## 2026-11-08｜定位起点：授权成功后仍报「请授权定位或输入起点」
+
+负责人反馈：点开场白里的「带我去图书馆」，弹窗允许定位，随后仍然失败并提示「请授权定位或输入起点」。
+
+**根因**：`navigationIntent()` 把「一个路线问句 + 一个地名 + 没有明示起点」判成需要定位，`originIds` 用字符串 `"device_location"` 表示设备起点。但 `src/lib/server/assistant/chat.ts` 把它当成地点 ID 编码成 `{type:"place", placeId:"device_location"}`，`CampusMapService.resolveOrigin()` 在 `requiresDeviceOrigin` 为真时只接受 `origin.type === "device_location"`，于是抛出 `LOCATION_REQUIRED`。浏览器授权本身是成功的，坐标也送到了服务端，只是在服务端被自己的包装挡掉了。
+
+**改动**：
+
+1. `src/lib/server/assistant/model-run.ts`：`requiredRoute.start` 的类型改为 `{type:"place"; placeId} | {type:"device_location"}`；生成 tool schema 时按设备起点分支，只声明 `type:"device_location"`，不再要求 `placeId`。
+2. `src/lib/server/assistant/chat.ts`：构造 `requiredRoute` 与降级重算路线时都按 `device_location` 分支；降级重算还要把 `location` 和 `needsLocation` 放进 `map` 上下文，否则 `resolveOrigin` 拿不到授权；系统指令里把 `device_location` 标注为「用户已授权的一次性定位」，避免模型把它当地点名。
+
+**验证**：新增 `tests/unit/route-device-origin.test.ts`（2 项）——(a) 直接调 `plan()` 用 `device_location` + 授权坐标可以算出路线，起点名是「我的位置」；(b) 走完整 HTTP 链路「带我去图书馆」+ locationGrant，模型收到的 tool schema 里出现 `"const":"device_location"`，`plan_route` 成功，且整轮没有 `run.failed`。`npx vitest run tests/unit` → **145 文件 / 1006 用例全绿**；`npx tsc --noEmit`、eslint 通过。
+
+**未做**：客户端 `requestOneTimeLocation()` 仍会在 `accuracy > 100` 米时直接拒绝并提示「定位精度不足，请输入起点。」；室内或基站定位的精度的确可能超过 100 米，但放宽阈值属于另一个判断，未在本轮改动。

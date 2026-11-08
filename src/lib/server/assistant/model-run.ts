@@ -43,7 +43,10 @@ export function meteredClient(
   options: {
     unrestricted?: boolean;
     requiredRoute?: {
-      start: { type: "place"; placeId: string };
+      // A device origin is the browser-supplied location, not a place id.
+      // Encoding it as {type:"place", placeId:"device_location"} made
+      // resolveOrigin reject the very grant the client had just collected.
+      start: { type: "place"; placeId: string } | { type: "device_location" };
       endPlaceId: string;
       mode: "walking";
     };
@@ -273,19 +276,37 @@ export function meteredClient(
                                 additionalProperties: false,
                                 required: ["start", "endPlaceId", "mode"],
                                 properties: {
-                                  start: {
-                                    type: "object",
-                                    additionalProperties: false,
-                                    required: ["type", "placeId"],
-                                    properties: {
-                                      type: { type: "string", const: "place" },
-                                      placeId: {
-                                        type: "string",
-                                        const:
-                                          options.requiredRoute.start.placeId,
-                                      },
-                                    },
-                                  },
+                                  start:
+                                    options.requiredRoute.start.type ===
+                                    "device_location"
+                                      ? {
+                                          type: "object",
+                                          additionalProperties: false,
+                                          required: ["type"],
+                                          properties: {
+                                            type: {
+                                              type: "string",
+                                              const: "device_location",
+                                            },
+                                          },
+                                        }
+                                      : {
+                                          type: "object",
+                                          additionalProperties: false,
+                                          required: ["type", "placeId"],
+                                          properties: {
+                                            type: {
+                                              type: "string",
+                                              const: "place",
+                                            },
+                                            placeId: {
+                                              type: "string",
+                                              const:
+                                                options.requiredRoute.start
+                                                  .placeId,
+                                            },
+                                          },
+                                        },
                                   endPlaceId: {
                                     type: "string",
                                     const: options.requiredRoute.endPlaceId,

@@ -880,7 +880,10 @@ export async function chatResponse(request: Request) {
         ...(routeQuestion && originIds.length === 1 && destinations.length === 1
           ? {
               requiredRoute: {
-                start: { type: "place" as const, placeId: originIds[0] },
+                start:
+                  originIds[0] === "device_location"
+                    ? { type: "device_location" as const }
+                    : { type: "place" as const, placeId: originIds[0] },
                 endPlaceId: destinations[0].id,
                 mode: "walking" as const,
               },
@@ -1492,7 +1495,7 @@ export async function chatResponse(request: Request) {
 查找唯一地点后必须调用control_map，生成FOCUS_PLACE及SHOW_PLACE_DETAILS。规划路线后必须调用control_map生成SHOW_ROUTE。切换模式/清路线必须调用control_map。动作是否成功以浏览器回执为准，不提前声称已切换或显示。不追加无必要的追问，只有缺起点或歧义时询问。
 已验证当前地点：${selectedPlace ? selectedPlace.name + " (" + selectedPlace.id + ")" : "无"}。最近规划路线：${(!needsOriginQuestion && activeRoute) || "无"}。当前模式：${input.mapContext?.mode || "2d"}。
 已验证实体数据：${JSON.stringify(needsOriginQuestion ? [] : verifiedEntities)}。这些ID来自当前固定校园资料及本会话已核对实体，可直接用于路线输入。不要凭空编写ID。${needsOriginQuestion ? "本轮没有有效起点，必须只用一句话询问用户从哪里出发。不复述旧路线，不生成距离或时间，不声称已经显示路线或完成操作。" : ""}
-${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSON.stringify(originIds)}；终点候选ID：${JSON.stringify(destinations.map((p) => p.id))}。起终点各唯一时直接调用plan_route，不重复询问已写明的起点。` : ""}
+${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.stringify(originIds.map((id) => (id === "device_location" ? "device_location（用户已授权的一次性定位）" : id)))}；终点候选ID：${JSON.stringify(destinations.map((p) => p.id))}。起终点各唯一时直接调用plan_route，不重复询问已写明的起点。` : ""}
 “这里/这栋/那栋”只引用上述已验证地点，不能猜测用户位置。${needsLocation ? "本轮明确请求设备位置；只能用device_location，无授权必须询问起点，不能改用历史地点。" : ""}`;
             finalSystemInstructions = () =>
               content.active
@@ -1903,7 +1906,10 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                   ? await service
                       .plan(
                         {
-                          start: { type: "place", placeId: originIds[0] },
+                          start:
+                            originIds[0] === "device_location"
+                              ? { type: "device_location" }
+                              : { type: "place", placeId: originIds[0] },
                           endPlaceId: destinations[0].id,
                           mode: "walking",
                         },
@@ -1914,6 +1920,10 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点ID：${JSO
                           permissions: [],
                           campusId: "gdufs_university_town",
                           signal: AbortSignal.timeout(5000),
+                          map: {
+                            authorizedLocation: location,
+                            requiresDeviceOrigin: needsLocation,
+                          },
                         },
                       )
                       .catch(() => undefined)
