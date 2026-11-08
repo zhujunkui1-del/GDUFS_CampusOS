@@ -2122,3 +2122,17 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **验证**：`npx vitest run` → 145 文件 / 1006 用例全绿；`tests/fixtures/calendar-real-articles.json` 的 12 个地点断言全部通过；`npx tsc --noEmit` 通过。全量重算 3344 篇后，`article_activity_index` 中 `starts_day >= '2027-01-01'` 的记录从 76 条降到 3 条。预览部署版本 `7ae73329-ff35-468e-acd3-b28c7f5cd3dd`。
 
 **仍未做**：`processor.ts` 的 `catch{}` 仍会在第二次失败后把记录永久置为 `excluded`，而 `tests/unit/calendar-enrichment.test.ts` 明确断言了这个行为，放宽需要先改测试约定；需要负责人确认后再动。
+
+## 2026-11-08｜活动日历：地点误判、校区兜底、招录年份
+
+接上一轮「幽灵年份与地点抽取」，本轮继续修三件事。
+
+**改动一：动词短语不再把散文当地点**（`src/lib/ingestion/calendar-extraction.ts`，`placeOf()`）。放宽到「于X举行」之后，一批正文被误读成地点：「本次实训营于7月5日至11日举行」取到「7月5日至11日」，「旨在检视‘在地项目微改造’参与队伍的阶段性成果并」取到整句。新增两道过滤：`PLACE_REJECT` 拒绝含顿号逗号、引号、相对时间词（之前/之后/期间/领域/团队/代表）以及「及/等」结尾的片段；`PLACE_DATE` 拒绝以日期或时刻开头的片段。同时 `cleanPlace()` 会丢掉介词之前的一切（「9月22日至23日在深圳举行」→「深圳」），长度上限 60 字。已接受活动中有地点的记录 215 → 208 条，减少的 7 条全部是误判。
+
+**改动二：地点缺失时从正文兜底校区**（`campus()`）。`campus()` 原来只看 `placeRaw`，地点为空就一律 `unknown`，即使正文写着「于白云山校区举行」。现在改成 `campus(place, body)`：先读地点，读不出再读正文；正文同时提到两个校区时仍返回 `unknown`，不猜。语料校区分布：`unknown` 146 → 102，`baiyun` 78 → 95，`online` 3 → 21，`university_town` 57 → 60。D1 落地后 `baiyun` 97 / `online` 21 / `university_town` 60 / `unknown` 103。
+
+**改动三：招录年份也是届次**（`years()`）。`cohort` 词表补上「招录/录用/遴选/选调/引进」，《商务部在我校举办2027年招录工作宣讲会》不再被写成 2027-10-08。语料中「比发布日期晚 180 天以上」的记录从 3 条降到 1 条，剩下的是《…第十二届年会（2027）（一号通知）》，标题年份确实指活动年份。
+
+**验证**：`npx vitest run` → 146 文件 / 1015 用例全绿（除并发改动中的 `tests/unit/food-timeout-flow.test.ts` 因他人 `chat.ts` 的 `fallbacks is not defined` 失败，与本轮无关）；`npx tsc --noEmit` 无新增错误。全量重算 3344 篇：最后一批 `rowsWritten` 22。预览部署版本 `89f40262-ae1c-4975-a81c-db9c97c1d67c`。公开接口 `/api/public/activities?after=2026-11-08&before=2026-12-08` 返回 18 条，校区分布 baiyun 7 / unknown 6 / university_town 2 / online 3。
+
+**未做**：活动去重仍偏保守。`calendar-identity.ts` 的 `mergeable` 要求「有主办方」或「标题 ≥20 字且地点 ≥12 字且含大学/校区且含路号楼层」。语料里 13 组同标题同日期的重复（《讲座预告丨广外金融论坛第134讲》等）本应合并成一条，但放宽这条规则会让 `tests/unit/calendar-query.test.ts`「deduplicates matching organisers/venues but not different colleges or sessions」失败（该用例要求「无主办方时不得合并」），属于契约变更，先不动，待负责人确认。
