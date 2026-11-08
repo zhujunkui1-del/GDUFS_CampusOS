@@ -163,14 +163,22 @@ function nature(
     return "announcement";
   return "uncertain";
 }
-function campus(place: string | null) {
-  return /线上|腾讯会议|Zoom|直播/i.test(place || "")
-    ? ("online" as const)
-    : /大学城|南校/.test(place || "") && !/白云|北校/.test(place || "")
-      ? ("university_town" as const)
-      : /白云|北校/.test(place || "") && !/大学城|南校/.test(place || "")
-        ? ("baiyun" as const)
-        : ("unknown" as const);
+/**
+ * The campus is read from the venue when there is one. When the venue text is
+ * missing the article body still often names exactly one campus ("于白云山校区
+ * 举行", "线上直播"), so that is used as a fallback. A body that mentions both
+ * campuses stays unknown rather than guessing.
+ */
+function campus(place: string | null, body = "") {
+  const read = (text: string) => {
+    if (/线上|腾讯会议|Zoom|直播/i.test(text)) return "online" as const;
+    const baiyun = /白云|北校/.test(text);
+    const town = /大学城|南校/.test(text);
+    if (baiyun && !town) return "baiyun" as const;
+    if (town && !baiyun) return "university_town" as const;
+    return null;
+  };
+  return read(place || "") ?? read(body) ?? ("unknown" as const);
 }
 function category(title: string, base: ArticleAnalysis) {
   return /讲座|讲堂|讲坛|报告会|沙龙|Lecture/i.test(title)
@@ -581,7 +589,10 @@ const PLACE_HINT = /(?:校区|楼|厅|室|馆|场|中心|平台|大学|学院|�
 // so anything carrying enumeration punctuation, a relative-time word or a
 // trailing 及/等 is treated as prose rather than a venue.
 const PLACE_REJECT =
-  /[、，,；;]|(?:之前|之后|期间|以来|方面|领域|工作|团队|代表|人士|一行)|(?:及|等)[^校区楼厅室馆场中心]*$/;
+  /[、，,；;“”"]|(?:之前|之后|期间|以来|方面|领域|工作|团队|代表|人士|一行)|(?:及|等)[^校区楼厅室馆场中心]*$/;
+// A date range ("7月5日至11日", "11月14日晚上21:00") is not a venue, and the
+// verb phrase "……于7月5日至11日举行" is common in recap posts.
+const PLACE_DATE = /^(?:\d{1,2}\s*月|\d{1,2}\s*日|\d{4}\s*[-/年])|\d{1,2}\s*[:：]\s*\d{2}/;
 
 function cleanPlace(raw: string | undefined): string | null {
   if (!raw) return null;
@@ -594,7 +605,7 @@ function cleanPlace(raw: string | undefined): string | null {
   value = value.replace(/^.*[在于]/, "").trim();
   if (!value || value.length < 2 || value.length > 60) return null;
   if (/^\d{4}\s*年/.test(value) || /^\d{1,2}[:：]\d{2}/.test(value)) return null;
-  if (PLACE_REJECT.test(value)) return null;
+  if (PLACE_REJECT.test(value) || PLACE_DATE.test(value)) return null;
   return value;
 }
 
@@ -791,7 +802,7 @@ export function calendarizeArticle(
         eligible: true,
         reason: "dated_event",
         nature: c.nature,
-        campus: campus(c.place),
+        campus: campus(c.place, canonical.text),
         candidateDates: [...new Set(list.map((x) => x.start.date!))].slice(
           0,
           20,
@@ -842,7 +853,7 @@ export function calendarizeArticle(
           eligible: false,
           reason,
           nature: nature(a.title, canonical.text),
-          campus: campus(a.placeRaw),
+          campus: campus(a.placeRaw, canonical.text),
           candidateDates: [],
           origins: [],
           usesBody: true,
