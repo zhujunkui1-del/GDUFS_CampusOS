@@ -138,3 +138,24 @@ it("recognises both shapes of a refusal", () => {
   expect(admitsNoEvidence("校医院在工作日8:00-17:00开放[1]。")).toBe(false);
   expect(admitsNoEvidence("宿舍没有空调，建议自备风扇[1]。")).toBe(false);
 });
+
+it("still answers when the corpus has bodies but none of them fits", async () => {
+  // evidenceFallback declines while readable bodies exist, and the excerpt
+  // builder declines when the title does not name the subject. Neither is
+  // wrong on its own, but together they used to leave the turn a failure.
+  const { failed, text } = await ask(
+    new MockModelProvider([
+      new ApiError(
+        "MODEL_SERVICE_UNAVAILABLE",
+        "回复生成异常，请重新提问。",
+        true,
+      ),
+    ]),
+    "关于做好近期校园服务工作的通知",
+    "<p>各食堂延长营业时间，晚自习后可继续就餐。</p>",
+    "关于做好近期校园服务工作的通知",
+  );
+  expect(failed).toHaveLength(0);
+  expect(text).not.toContain("回复生成异常");
+  expect(text.length).toBeGreaterThan(20);
+});

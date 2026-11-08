@@ -1912,10 +1912,19 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
                     )
                   : undefined) ||
                 noEvidence;
-              if (fallback) {
-                text = fallback;
+              // evidenceFallback declines when the corpus does have readable
+              // bodies, and the excerpt builder declines when none of them
+              // names the subject. Both are right on their own, but together
+              // they left nothing to say and the turn failed as an outage.
+              const lastResort = `${dailyTone ? "本鱼" : ""}这次没能把资料整理成可靠回答，也不确定现有文章是否覆盖这个问题。建议通过${channelFor()}核实。`;
+              if (fallback || result.status === "failed") {
+                text = fallback || lastResort;
                 answerMode =
-                  fallback === noEvidence ? "no_evidence" : "evidence_excerpt";
+                  fallback === noEvidence
+                    ? "no_evidence"
+                    : fallback
+                      ? "evidence_excerpt"
+                      : "no_evidence";
                 modelFailureCode = result.code;
                 result = { ...result, status: "completed" };
               }
