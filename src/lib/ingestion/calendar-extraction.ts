@@ -95,8 +95,18 @@ function ev(
   return e;
 }
 function years(title: string, near: string) {
-  const all = [...title.matchAll(/\b(20\d{2})年?/g)].map((m) => +m[1]);
-  if (new Set(all).size === 1)
+  // A cohort name such as "2027届毕业生" / "2027校招" / "2027年招生" names
+  // the intake, not the event. Stamping that year onto every bare body date
+  // produced phantom events a full year past the publication date.
+  const cohort =
+    /(?:20\d{2})[^。；\n]{0,14}(?:届|级|校招|校园招聘|招聘|招生|推免|保研|考研|毕业|入学|新生|批次|报考|考试|考核|转段|专升本)/;
+  const all = [...title.matchAll(/\b(20\d{2})年?/g)]
+    .filter((m) => {
+      const at = m.index ?? 0;
+      return !cohort.test(title.slice(at, at + m[0].length + 12));
+    })
+    .map((m) => +m[1]);
+  if (all.length && new Set(all).size === 1)
     return { year: all[0], basis: "活动标题明确标注年份" };
   const lines = near
     .split(/\n/)
