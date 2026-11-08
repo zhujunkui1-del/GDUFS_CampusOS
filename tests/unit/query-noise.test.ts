@@ -93,3 +93,23 @@ describe("“互联网+” is a competition, not a request to browse", () => {
     expect(explicitWebRequest("互联网上查一下")).toBe(true);
   });
 });
+
+describe("a question about where to look keeps only the noun", () => {
+  it("drops a lookup clause instead of searching for it", () => {
+    // “校历在哪看得到” used to require 校历 AND (在哪 OR 看得到), which no
+    // article satisfies: the calendar page says 校历, never 看得到.
+    expect(
+      buildQueryPlan("校历在哪看得到，什么时候放假？").modifiers.map(
+        (m) => m.original,
+      ),
+    ).toEqual(["校历"]);
+  });
+
+  it("treats a count question as the question, not a subject", () => {
+    // “一年评几次” is how the asker phrased the frequency, not a phrase any
+    // article contains; the scholarship topic already carries the recall.
+    expect(
+      buildQueryPlan("奖学金申请条件是什么，一年评几次？").modifiers,
+    ).toHaveLength(0);
+  });
+});

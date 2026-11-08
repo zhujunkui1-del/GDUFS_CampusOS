@@ -15,6 +15,15 @@ import { ALIAS_GROUPS, TOPIC_GROUPS, VENUE_GROUPS } from "./aliases";
 const MODIFIER_NOISE =
   /(?:什么|哪些|哪里|哪儿|怎么|如何|多少|几个|几时|时候|是否|多久|多大|要不要)/;
 
+// “几” questions ask for a count, not a subject: “一年评几次” is the shape of
+// the question, and a phrase built from it matches nothing.
+const COUNT_QUESTION = /几(?:次|个|场|门|位|种|名|天|年|月|周)/;
+
+// “校历在哪看得到” carries a real subject plus a whole clause about looking it
+// up. Stripping the clause leaves the noun the articles actually use.
+const LOOKUP_CLAUSE =
+  /在?哪(?:里|儿)?(?:能|可以)?(?:看|找|查|问)?(?:得到|到)?/gu;
+
 // Retrieval concepts are query vocabulary, not a parallel article taxonomy.
 // The vocabulary lives in ./aliases so lexical search and entity retries read
 // the same table; broad action words never replace a subject.
@@ -223,7 +232,12 @@ export function buildQueryPlan(
     // trailing verb, and the two-character chunks then ended in “灯是” / “要走”,
     // which also appear nowhere.
     .map((t) => t.replace(/[是有走要看查找办做用评算去来]+$/u, ""))
-    .filter((t) => t.length >= 2 && !MODIFIER_NOISE.test(t))
+    .map((t) => t.replace(LOOKUP_CLAUSE, ""))
+    .map((t) => t.replace(/(?:得到|知道|获取|看到|查到|找到)$/u, ""))
+    .filter(
+      (t) =>
+        t.length >= 2 && !MODIFIER_NOISE.test(t) && !COUNT_QUESTION.test(t),
+    )
     .slice(0, 4)
     .map((original) => ({
       original,
