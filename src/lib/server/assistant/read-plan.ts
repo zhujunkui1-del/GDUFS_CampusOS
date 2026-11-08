@@ -126,7 +126,10 @@ export function contentReadPlan(
         ? 3
         : recentDiscovery || activity
           ? Math.min(5, PAGE_SIZE[name])
-          : 3,
+          : // Three was too few once the corpus grew: the rule that answers a
+            // question often sits just outside the top three, and the write-up
+            // then claims the corpus says nothing.
+            Math.min(5, PAGE_SIZE[name]),
     ...(recentDiscovery ? { sort: "published_desc" as const } : {}),
     ...(recentDiscovery && publishedCursor ? { publishedCursor } : {}),
     ...(recentDiscovery && recentBefore
