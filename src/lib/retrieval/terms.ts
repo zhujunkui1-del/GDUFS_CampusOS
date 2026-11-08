@@ -98,15 +98,24 @@ function chunkToken(pair: string) {
 }
 // “门禁熄灯” is two words, not one phrase: the overlapping bigrams include the
 // cross-word “禁熄”, which no article contains, so requiring all of them
-// returned nothing. Non-overlapping chunks (“门禁” AND “熄灯”) survive that,
-// and OR-ing them with the strict phrase keeps exact titles working.
+// returned nothing. Non-overlapping chunks (“门禁”, “熄灯”) survive that, and
+// OR-ing them with the strict phrase keeps exact titles working.
+//
+// The chunks still cannot be required together: a dormitory rule states the
+// curfew in one paragraph and the lights-out time in another, so a single
+// chunk rarely holds both. A two-word compound is recalled on either word, and
+// a longer one is anchored on its head word so the tail can stay optional.
+// The relevance gate then demands the whole compound from the document.
 function chunkExpression(phrase: string) {
   const chars = [...phrase];
   if (chars.length < 4 || !/^[\p{Script=Han}]+$/u.test(phrase)) return null;
   const chunks: string[] = [];
   for (let i = 0; i + 1 < chars.length; i += 2)
     chunks.push('"' + chunkToken(chars[i] + chars[i + 1]) + '"');
-  return chunks.length >= 2 ? "(" + chunks.join(" AND ") + ")" : null;
+  if (chunks.length < 2) return null;
+  if (chunks.length === 2) return "(" + chunks.join(" OR ") + ")";
+  const [head, ...rest] = chunks;
+  return "(" + head + " AND (" + rest.join(" OR ") + "))";
 }
 function phraseExpression(phrases: string[]) {
   const groups = phrases.slice(0, 24).flatMap((phrase) => {

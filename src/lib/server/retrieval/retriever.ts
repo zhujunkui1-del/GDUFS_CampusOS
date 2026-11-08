@@ -710,11 +710,28 @@ ${sourceFilterSql}
       );
       const c = choices[0];
       if (!c) continue;
-      const relevance = queryRelevance(plan, {
+      let relevance = queryRelevance(plan, {
         title: d.title,
         sourceName: d.display_name,
         contentSnippet: c.text,
       });
+      // A rulebook can answer one question in two places: the curfew sits in
+      // one article and the lights-out time in the next, so no single chunk
+      // names both. Judge the subject against everything the document offered
+      // rather than dropping a document for being organised in paragraphs.
+      if (
+        !relevance.relevant &&
+        relevance.reason === "subject_modifier_missing" &&
+        choices.length > 1
+      )
+        relevance = queryRelevance(plan, {
+          title: d.title,
+          sourceName: d.display_name,
+          contentSnippet: choices
+            .map((chunk) => chunk.text)
+            .join("\n")
+            .slice(0, 20000),
+        });
       if (!titleIds && sortMode !== "published_desc" && !relevance.relevant)
         continue;
       if (

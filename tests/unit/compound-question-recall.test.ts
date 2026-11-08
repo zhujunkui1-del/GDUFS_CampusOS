@@ -66,3 +66,34 @@ it("still requires a topic that a plain college question names", () => {
   expect(expression).toContain("h4fe1x606f");
   expect(expression).toContain("h9662x8fd0");
 });
+
+it("finds a rule whose two clauses landed in different chunks", async () => {
+  const f = await dateGateFixture();
+  try {
+    // Real handbooks separate the curfew from the lights-out time by pages of
+    // text, so the two words never share a 900-character chunk. Recall must
+    // still reach the document and the subject check must look at the whole
+    // document, not one paragraph.
+    const filler =
+      "第一条 学生应当遵守宿舍管理规定，爱护公共财物，保持室内整洁。\n".repeat(
+        30,
+      );
+    await add(
+      f,
+      "dorm-split",
+      "广东外语外贸大学学生宿舍管理规定（试行）",
+      "第二十条 宿舍门禁时间为每日23时30分。\n" +
+        filler +
+        "第三十一条 学生宿舍熄灯时间为每日23时30分。",
+    );
+    const r = await searchContent(
+      f.db,
+      "knowledge",
+      { query: "宿舍门禁熄灯是几点？", limit: 4 },
+      "2026-11-06T00:00:00Z",
+    );
+    expect(r.hits.map((h) => h.documentId)).toContain("dorm-split");
+  } finally {
+    f.close();
+  }
+}, 15000);

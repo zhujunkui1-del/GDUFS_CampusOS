@@ -273,15 +273,20 @@ export function entityTerms(entity: string) {
   return venue ? [...venue.names] : [entity];
 }
 // “门禁熄灯” is two words, so no chunk contains it as one string. Accept the
-// modifier when every non-overlapping pair of characters appears in order.
+// modifier when its head word is present and any of the following words
+// qualifies it — a rulebook states the curfew and the lights-out time in
+// separate paragraphs, and demanding both in one chunk rejected every real
+// answer.
 function modifierPresent(text: string, term: string) {
   const literal = term.toLowerCase();
   if (text.includes(literal)) return true;
   const chars = [...literal];
   if (chars.length < 4 || !/^[\p{Script=Han}]+$/u.test(literal)) return false;
+  const pairs: string[] = [];
   for (let i = 0; i + 1 < chars.length; i += 2)
-    if (!text.includes(chars[i] + chars[i + 1])) return false;
-  return true;
+    pairs.push(chars[i] + chars[i + 1]);
+  const [head, ...rest] = pairs;
+  return text.includes(head) && rest.some((p) => text.includes(p));
 }
 export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const title = (hit.title || "").normalize("NFKC").toLowerCase(),
