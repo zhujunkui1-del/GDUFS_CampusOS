@@ -3,6 +3,7 @@ import { dateGateFixture } from "../fixtures/date-gate";
 import { ensureRetrievalIndex } from "@/lib/server/retrieval/indexer";
 import { MockModelProvider } from "../fixtures/mock-model";
 import { ApiError } from "@/lib/server/errors";
+import { admitsNoEvidence } from "@/lib/server/assistant/evidence-refusal";
 const runtime = vi.hoisted(() => ({
   env: {} as Record<string, unknown>,
   resolve: vi.fn(),
@@ -24,6 +25,7 @@ async function ask(
   client: MockModelProvider,
   question = QUESTION,
   body = DORM_BODY,
+  title = DORM_TITLE,
 ) {
   const f = await dateGateFixture();
   runtime.env = {
@@ -52,12 +54,7 @@ async function ask(
       .prepare(
         `INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,body_status,content_hash,fetched_at,campus_scope,data_domain,published_at,content_revision,input_hash,rights_scope,content_type,knowledge_category) VALUES('dorm-fixture',?,?,?,'${body}','reading_html','complete','dorm','2026-10-25','all','campus_announcements','2026-10-24',1,?,'licensed_full_text','notice','campus_life')`,
       )
-      .run(
-        f.source.id,
-        DORM_TITLE,
-        "https://example.invalid/dorm",
-        "d".repeat(64),
-      );
+      .run(f.source.id, title, "https://example.invalid/dorm", "d".repeat(64));
     await f.store.publishCollectedWebArticle("dorm-fixture");
     await ensureRetrievalIndex(f.db, "dorm-fixture");
     const response = await chatResponse(
@@ -92,10 +89,7 @@ async function ask(
   }
 }
 
-it("answers a data gap with no-evidence instead of an outage when the model fails", async () => {
-  // Nine of fifty real questions ended as “回复生成异常” because the model
-  // burned its repair rounds and then the whole run failed. A data gap must
-  // look like a data gap, not like an outage.
+it("answers with no-evidence instead of an outage when the model fails", async () => {
   const { requests, failed, metrics, text } = await ask(
     new MockModelProvider([
       new ApiError(
@@ -107,8 +101,6 @@ it("answers a data gap with no-evidence instead of an outage when the model fail
   );
   expect(requests).toBeGreaterThan(0);
   expect(failed).toHaveLength(0);
-  // The model died, but the run still has a real answer: either the retained
-  // excerpt or the fixed no-evidence sentence. It must never be “回复生成异常”.
   expect(metrics?.modelFailureCode).toBe("MODEL_SERVICE_UNAVAILABLE");
   expect(["no_evidence", "evidence_excerpt"]).toContain(metrics?.answerMode);
   expect(text).not.toContain("回复生成异常");
@@ -116,8 +108,6 @@ it("answers a data gap with no-evidence instead of an outage when the model fail
 });
 
 it("does not demand a citation for a refusal", async () => {
-  // The refusal quotes nothing, so it cannot cite [n]. Requiring one made
-  // every no-evidence answer fail validation twice.
   const reply = {
     content:
       "本鱼目前没有检索到能回答这个问题的正文信息，建议通过学校官网核实。",
@@ -129,4 +119,22 @@ it("does not demand a citation for a refusal", async () => {
   expect(requests).toBeGreaterThan(0);
   expect(failed).toHaveLength(0);
   expect(text).toContain("没有检索到能回答这个问题的正文信息");
+});
+
+it("recognises both shapes of a refusal", () => {
+  expect(admitsNoEvidence("本鱼没有检索到能回答这个问题的正文信息。")).toBe(
+    true,
+  );
+  expect(
+    admitsNoEvidence(
+      "本轮检索到的资料里没有提到校医院预约的规则，建议电话确认。",
+    ),
+  ).toBe(true);
+  expect(
+    admitsNoEvidence(
+      "本轮检索到的3份资料均未包含校医院就诊预约的相关规则，无法回答该问题。",
+    ),
+  ).toBe(true);
+  expect(admitsNoEvidence("校医院在工作日8:00-17:00开放[1]。")).toBe(false);
+  expect(admitsNoEvidence("宿舍没有空调，建议自备风扇[1]。")).toBe(false);
 });

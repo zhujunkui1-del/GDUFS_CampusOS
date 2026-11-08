@@ -101,6 +101,7 @@ import { citedAnswer } from "./citations";
 import { searchControlBusiness } from "@/lib/retrieval/query-controls";
 import { revalidateCalendarEvidence } from "../calendar/search";
 import { eventEvidenceAnswer } from "./evidence-answer";
+import { admitsNoEvidence } from "./evidence-refusal";
 import { retrieveDeepThinkingEvidence, citedEvidenceCards } from "./deep-thinking-evidence";
 import { difyChatEvents, stopDifyChat } from "./dify-chat";
 
@@ -973,13 +974,10 @@ export async function chatResponse(request: Request) {
           // nothing from the sources. Demanding [n] made every refusal burn two
           // repair rounds and then fail the whole run, which is how nine of
           // fifty questions ended as “回复生成异常”.
-          const admitsNoEvidence =
-            /(?:没有|未|暂未|未能|无法)(?:检索到|查到|找到|获得|获取|取得)/.test(
-              text,
-            );
+          const noCitation = admitsNoEvidence(text);
           if (
             content.active &&
-            !admitsNoEvidence &&
+            !noCitation &&
             answerSourceCount() > 0 &&
             !/\[(?:来源\s*)?\d+\]/.test(text)
           )
