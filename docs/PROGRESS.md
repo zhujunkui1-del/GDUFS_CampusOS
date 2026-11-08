@@ -2197,3 +2197,19 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 - 九篇参考文件全部入库并标记为 published + approved：两本手册、校历、学生宿舍管理规定、本科生课程修读管理规定、本科生转专业实施办法、校园网开通与使用、饮食服务。
 - 九篇逐篇加 document 级白名单（`historyExempt=true`），改门禁日期时不会被下架。
 - 导入后 `knowledge` 公开总数 152→160，`radar` 3118→3197。
+
+## 2026-11-09｜跨段落规则：一条规定分两段写也能答
+
+「宿舍门禁熄灯是几点？」长期只回 54 字。线上 D1 实测说明问题不在查询：`门禁` 命中 15 个 chunk、`熄灯` 命中 7 个，两者 AND 是 0 —— 《学生宿舍管理规定》里「门禁」只出现在「门禁系统设备管理」，真正的熄灯时间在手册里，两者隔着好几条。
+
+改动三处：
+
+1. `src/lib/retrieval/terms.ts` 的 `chunkExpression()` 按非重叠双字成组，两组时 OR、三组以上首词 AND 其余 OR，与整串 bigram 的严格短语 OR 起来；学院名等实体仍走原来的全部命中约束。
+2. `src/lib/retrieval/query-plan.ts` 的 `modifierPresent()` 从「所有双字都在」放宽为「首词在 + 任一词在」。
+3. `src/lib/server/retrieval/retriever.ts` 在单个 chunk 判不相关时，按该文档所有候选 chunk 拼接后重判一次；引用片段则把承载两个分句的 chunk 各取一段拼起来，避免只引到半个规则。
+
+线上复测：「宿舍门禁熄灯是几点？」由 `no_evidence` 54 字变为 `supported` 205 字，`relatedDocuments` 命中宿舍管理规定、本科手册、研究生手册三篇。
+
+**验证**：`npx tsc --noEmit` 0 error；`npx vitest run tests/unit` 150 文件 1027 用例全绿。提交 `755bde4`，预览版本 `2620e0d1-b221-4a4c-a47f-b8b2f75a9a21`。
+
+**部署踩坑**：`TEMP`/`TMPDIR` 必须给绝对路径，相对路径会让 esbuild 写临时文件失败且不报错；`.next` 里残留的构建锁会让 `next build` 直接退出，需先 `rm -rf .next .open-next`。
