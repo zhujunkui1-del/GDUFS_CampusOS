@@ -710,15 +710,36 @@ ${sourceFilterSql}
       );
       const c = choices[0];
       if (!c) continue;
+      const halves = plan.modifiers.flatMap((m) => {
+        const chars = [...m.original];
+        return chars.length >= 4
+          ? chars
+              .filter((_, i) => i % 2 === 0)
+              .map((ch) => ch + (chars[chars.indexOf(ch) + 1] ?? ""))
+          : [m.original];
+      });
+      const covering = halves
+        .map((half) => {
+          const chunk = choices.find((c2) => c2.text.includes(half));
+          return chunk ? { ...chunk, half } : null;
+        })
+        .filter(
+          (chunk): chunk is (typeof choices)[number] & { half: string } =>
+            !!chunk,
+        )
+        .filter(
+          (chunk, i, all) => all.findIndex((c2) => c2.id === chunk.id) === i,
+        )
+        .slice(0, 2);
+      // A rulebook can answer one question in two places: the curfew sits in
+      // one article and the lights-out time in the next, so no single chunk
+      // names both. Judge the subject against everything the document offered
+      // rather than dropping a document for being organised in paragraphs.
       let relevance = queryRelevance(plan, {
         title: d.title,
         sourceName: d.display_name,
         contentSnippet: c.text,
       });
-      // A rulebook can answer one question in two places: the curfew sits in
-      // one article and the lights-out time in the next, so no single chunk
-      // names both. Judge the subject against everything the document offered
-      // rather than dropping a document for being organised in paragraphs.
       if (
         !relevance.relevant &&
         relevance.reason === "subject_modifier_missing" &&
@@ -806,7 +827,18 @@ ${sourceFilterSql}
         (activity ? freshness : 0);
       const selectedWindow = windows.get(c.id)!,
         start = selectedWindow.start,
-        snippet = selectedWindow.text;
+        snippet = covering.length
+          ? covering
+              .map((chunk) => {
+                const at = chunk.text.indexOf(chunk.half);
+                return chunk.text.slice(
+                  Math.max(0, at - 60),
+                  Math.max(0, at) + 300,
+                );
+              })
+              .join("\n\u2026\n")
+              .slice(0, 780)
+          : selectedWindow.text;
       const effectiveUntil = analysis?.knowledge.effectiveUntil;
       const today = new Date(Date.now() + 8 * 3600000)
         .toISOString()

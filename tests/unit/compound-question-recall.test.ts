@@ -92,7 +92,11 @@ it("finds a rule whose two clauses landed in different chunks", async () => {
       { query: "宿舍门禁熄灯是几点？", limit: 4 },
       "2026-11-06T00:00:00Z",
     );
-    expect(r.hits.map((h) => h.documentId)).toContain("dorm-split");
+    const hit = r.hits.find((h) => h.documentId === "dorm-split");
+    expect(hit).toBeDefined();
+    // The snippet is the citation. Half a rule reads like a wrong answer.
+    expect(hit!.contentSnippet).toContain("门禁");
+    expect(hit!.contentSnippet).toContain("熄灯");
   } finally {
     f.close();
   }
