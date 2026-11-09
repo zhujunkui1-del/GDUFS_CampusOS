@@ -2381,3 +2381,19 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 结果：`GDUFS-SRC-0013` completed，8 篇正文入库，最新 2026-10-09；`GDUFS-SRC-0015` 已发现 10 篇，最新 2026-01-03。91 站盘面随之变成 configured=89 / withRecent=80 / zero=11。
 
 验证：新增 `tests/unit/ingestion-pipeline.test.ts`「keeps other sources HTTPS-only but lets a plain-HTTP source through」与 `tests/unit/official-publication-date.test.ts`「reads the English month stamp and the dotted day stamp」；`npx vitest run` 154 文件 1068 用例全绿；`tsc --noEmit` 0 error。部署 `61defe42-7fd3-4799-a3a9-55dcfb42bf60`。
+
+## 2026-11-09｜采集器：一个坏页面不该让整条源停工
+
+`python` 那批「attempts 上百、body_count 不涨」的任务里，`GDUFS-SRC-0031`（英语教育学院）的 `https://see.gdufs.edu.cn/info/1154/14658.htm` 是一张 1MB 的表格页，`GDUFS-SRC-0011`（就业信息网）的 `notice-detail?id=2131` 是正文为空的通知。这两篇都反复出现，每次都把整条源拖死。
+
+**问题在错误的计数口径。** `commit()` 里判死刑的条件是 `Number(row.error_count) >= 2`——那是**终身累计**，不是连续。一条源只要历史上碰到过两个坏页面，此后无论中间抓到多少好文章，作业都会被判 `failed` 并 `paused`。而 `too_large` 又不计入 `error_count`（它在另一处被排除），于是「一个超大页面」和「两个坏页面」这两条路径互相矛盾。
+
+**改成连续失败。** `Checkpoint` 新增 `errorStreak`，出错时 +1、成功时清零；只有连续 3 个页面都坏才判 `failed`，`blocked` 仍然立刻判死。`too_large` 既不算失败也不打断计数——它是那一页的属性，不是这条源的属性。这样散落的空页、坏图会被跳过，而整站改版仍然会被识别出来。
+
+验证：新增 `tests/unit/ingestion-pipeline.test.ts`「keeps fetching after a handful of unreadable pages and only stops on a run of them」（两坏一好继续跑，三坏才停）；`npx vitest run` 155 文件 1075 用例全绿；`tsc --noEmit` 0 error。部署 `1b49ca92-3da9-4784-8228-fc2f3bd353c7` → `27edcdfc-2a10-4965-8924-9054acb6e7e1`。
+
+## 2026-11-09｜国际经济贸易研究院：正文选择器与列表入口
+
+`GDUFS-SRC-0054`（国际经济贸易研究院）的 profile 一直是通用模板（`titleSelector="h1, title"`、`bodySelector="article, main"`），该站三样都没有：详情页是 `.article_box .title` + `.article_box .other_info li`（`2026-10-14`）+ `div.v_news_content`。改成实测选择器后，列表入口也从 `/kxqj/lps.htm`（蓝皮书目录，16 条链接但**一条日期都没有**）换成 `/kxyj/lps.htm` 之外的 `/xwdt.htm` + `/kxyj/xslz.htm`，前缀收到 `/info/1100/`、`/info/1107/`。结果：found=20 / body=5，入库 5 篇，最新 `2026-10-14`。
+
+复核方法：`.tmp/gain.mjs` 用真实 connector 对每个源的每个入口跑一遍 discover，把「列表上能看到的最新日期」与「库里已有的最新日期」对比，只列出落后的源。89 个已配置源里只有 4 个落后：0007（已补到 2026-11-09）、0071（首页新文章全是 `mp.weixin.qq.com` 外链，同源列表最新 2026-08-01）、0095 与 0041（RASP）。这个方法比逐个翻 job 可靠得多。
