@@ -2329,3 +2329,23 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 - `article_search_documents` ready **5618**、stale **9**
 
 **教训**：往 `knowledge_documents` 写内容列时要么同时写新的 `input_hash`，要么先确认这次修改不会触发 `console_legacy_content_write`。线上回填前应先在一个事务里跑一遍「预期影响行数」和「触发器是否会改写状态」。
+
+## 2026-11-09｜采集器：六个让任务原地打转的缺陷
+
+排查「作业卡在 fetch、attempts 几百、body_count 不涨」时，先后挖出六个缺陷，全部已修并部署。
+
+**1. 提交时外键指向不存在的版本（最严重）**。`document_fetches.snapshot_version` 外键指向 `console_content_versions(document_id,version)`，而写入时取的是 `knowledge_documents.version`（业务版本号）。两者不等价：1552 篇文档被分类/发布/回写过之后版本号已经跑到内容版本前面，于是这些文档再被抓到时 `INSERT` 一律 `FOREIGN KEY constraint failed`。用户看到的是「操作未保存，请稍后重试。」，因为这条错误不属于任何 `CONSOLE_*`，最后被兜底成 `SERVICE_UNAVAILABLE`。改为取 `MAX(version) FROM console_content_versions WHERE document_id=?`。
+
+**2. 一条源不合格让整批调度回滚**。`GDUFS-SRC-0024` 的 `affiliation_status='unknown'`、`governance_checked_at=null`，`console_v2_command_guard` 拒绝为它建任务，而调度器是整批 `db.batch`，于是整批失败，却只体现在 `scheduler_result_json` 里——`scheduler_last_at` 每分钟照常更新，看上去一切正常。已重跑 governance。
+
+**3. paused 的陈旧任务不会被作废**。自愈 SQL 只匹配 `control_state='active'`；一个 `paused` + `STALE_SOURCE_OR_POLICY` 的任务永远停在队首。改为 `IN('active','paused')`。
+
+**4. 一次失败就把源永久停用**。`sync_state` 只要不是 completed 就写 `blocked`，而 `blocked` 的源会被调度器排除。改成只有 `BLOCKED` 才置 blocked，其余置 `failed` 可重试。
+
+**5. 超大页面终止整轮**。`too_large` 既算致命又计入错误阈值，一个 1MB 的课程表就把整轮结束掉。现在只跳过该页，不计入错误。
+
+**6. 失败的页面原地重试**。fetch 阶段出错时没有推进 `checkpoint.index`，同一个 URL 每 tick 再抓一次直到作业死掉。现在出错也推进索引，走完就翻页/换入口/结束。
+
+另外把「摘要」与「提交」的失败原因打到 tail（`cloud.web.commit_failed`、`console.command.failed`），否则外键这类错误永远只能看到兜底文案。
+
+验证：`npx vitest run tests/unit` 151 文件 / 1041 用例全绿；`tsc --noEmit` 0 error。部署后文档数从 5685 涨到 5730，条目产出恢复正常。
