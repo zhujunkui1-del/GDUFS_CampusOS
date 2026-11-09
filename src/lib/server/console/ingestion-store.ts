@@ -286,6 +286,11 @@ export class IngestionStore extends ConsoleStore {
     const checkpoint = CheckpointSchema.parse(
       JSON.parse(String(claimed.checkpoint_json)),
     );
+    // A checkpoint that ran past the last configured entry used to fall back
+    // to the first entry and rediscover it forever; clamp it so the run can
+    // finish instead of looping.
+    const entryCount = profile.entryUrls?.length || 1;
+    if (checkpoint.entryIndex >= entryCount) checkpoint.entryIndex = entryCount - 1;
     const url =
       claimed.phase === "discover"
         ? checkpoint.page ||
@@ -388,13 +393,15 @@ export class IngestionStore extends ConsoleStore {
     const checkpoint = CheckpointSchema.parse(
         JSON.parse(String(row.checkpoint_json)),
       ),
-      phase = String(row.phase),
-      url =
-        phase === "discover"
-          ? checkpoint.page ||
-            profile.entryUrls?.[checkpoint.entryIndex] ||
-            profile.entryUrl
-          : checkpoint.urls[checkpoint.index];
+      phase = String(row.phase);
+    const entryCount = profile.entryUrls?.length || 1;
+    if (checkpoint.entryIndex >= entryCount) checkpoint.entryIndex = entryCount - 1;
+    const url =
+      phase === "discover"
+        ? checkpoint.page ||
+          profile.entryUrls?.[checkpoint.entryIndex] ||
+          profile.entryUrl
+        : checkpoint.urls[checkpoint.index];
     const { policy } = await this.policy(sourceId);
     if (value.url !== url)
       throw new ApiError("INVALID_ARGUMENT", "采集结果与任务目标不一致。");
