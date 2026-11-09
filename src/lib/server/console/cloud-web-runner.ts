@@ -225,6 +225,16 @@ export async function runCloudWebBatch(
         outcome: String(result.outcome),
       });
     } catch (error) {
+      console.info(
+        JSON.stringify({
+          event: "cloud.web.commit_failed",
+          jobId: row.id,
+          sourceId: lease.sourceId,
+          phase: lease.phase,
+          url: lease.url,
+          message: error instanceof Error ? error.message : String(error),
+        }),
+      );
       results.push({
         jobId: row.id,
         phase: lease.phase,
