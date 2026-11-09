@@ -511,8 +511,20 @@ export class IngestionStore extends ConsoleStore {
       checkpoint.pageCount = nextPage
         ? checkpoint.pageCount + 1
         : checkpoint.pageCount;
+      // Re-fetching an article we already hold is a conditional request
+      // (not_modified), which is cheap but still occupies a whole step. Known
+      // rows older than the gate can never be imported again, so they are
+      // dropped here instead of being walked on every run.
+      const knownInGate = cutoff
+        ? known.filter((url) => {
+            const publishedAt = discoveredDates.get(url);
+            return !publishedAt || publishedAt >= cutoff;
+          })
+        : known;
       checkpoint.urls =
-        checkpoint.revalidate && known.length ? known : [...unknown, ...known];
+        checkpoint.revalidate && knownInGate.length
+          ? knownInGate
+          : [...unknown, ...knownInGate];
       checkpoint.publishedDates = checkpoint.urls.map((url) => ({
         url,
         publishedAt: discoveredDates.get(url) || null,
