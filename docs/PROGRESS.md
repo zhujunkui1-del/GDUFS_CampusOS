@@ -2304,3 +2304,16 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 复测：校园卡挂失 66→358 字、图书馆借书 69→110 字、缓考 58→428 字、校车 0→368 字。
 
 剩下 14 条短答，基本都是语料缺口：访客进校只有 6 篇、快递只有 38 篇、ATM 13 篇、吹风机 4 篇、校车 3 篇、游泳 14 篇。这些不该靠改检索去凑，得先补数据源。
+
+## 2026-11-09｜已发布却看不见的文章：回填空分类 + 发布时复用分析结果
+
+后台 5451 篇，公开面只有 4000 出头。查下来是 721 篇已发布文章的 `radar_category` 与 `knowledge_category` 两列都是空的，而公开视图 `console_public_documents` 要求两列恰好一列有值，于是这些文章被挡在门外——它们在后台列表里显示「已发布」，实际上谁都看不到。
+
+分类并不是丢了：`document_article_analysis` 里每篇都有明确的目的地（`radar/campus_notice` 441 篇、`radar/lecture` 95 篇等），只是发布路径没有把它写回那两列。
+
+处理两件事：
+
+1. 线上把 `document_article_analysis` 的结果回填到 `knowledge_documents` 的两个分类列，721 篇全部补上，两列全空的从 751 降到 30。
+2. 新增 `src/lib/server/console/placement.ts` 的 `storedPlacement()`，在 `publishOwnerDirectedWeb()` 分类器返回空时回退读分析表，避免后续发布再产生同样的问题。测试 `tests/unit/placement-fallback.test.ts` 覆盖「同一 revision 命中」和「不同 revision 不命中」。
+
+验证：`npx vitest run tests/unit` 151 文件 / 1041 用例全绿；`tsc --noEmit`、eslint、prettier 通过。

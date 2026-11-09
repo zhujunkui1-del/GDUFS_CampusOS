@@ -21,6 +21,7 @@ import { tokenHash } from "../assistant/crypto";
 import { CommandSchema, ContentInputSchema } from "@/domain/console/contracts";
 import { classifyArticle } from "@/domain/console/article-classification";
 import { normalizedContent } from "./store";
+import { storedPlacement } from "./placement";
 import { contentProvenanceSql } from "./ingestion-queries";
 import {
   KnowledgeCategorySchema,
@@ -973,6 +974,22 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
             publishedAt: d.publishedAt,
             originalUrl: d.url,
           });
+    // The analyser already decided where this article belongs; the classifier
+    // sometimes abstains on the same body. Publishing without a placement would
+    // hide the article from the public view, which requires exactly one of the
+    // two columns, so reuse the stored decision instead of dropping it.
+    if (!placement.radarCategory && !placement.knowledgeCategory) {
+      const stored = await storedPlacement(
+        this.db,
+        id,
+        d.contentRevision,
+        d.inputHash,
+      );
+      if (stored) {
+        placement.radarCategory = stored.radarCategory;
+        placement.knowledgeCategory = stored.knowledgeCategory;
+      }
+    }
     if (d.kind === "event" && !placement.radarCategory)
       throw new ApiError("INVALID_ARGUMENT", "官网活动文章缺少雷达分类。");
     const input = ContentInputSchema.parse({
