@@ -811,3 +811,15 @@ Dify 表单当前 Endpoint 显示正确基础路径，但 Cloudflare 20:58:16 �
 **B-104 mp-tools → CampusOS 的同步当前是失败的。** `D:\WeChat MP Tools_v2.3.1\data\CampusOS_collector\last-sync.json` = `{"at":"2026-11-07T08:43:52Z","syncMode":"add_update_only","error":"CLOUD_UNAVAILABLE"}`。按负责人约束（文件传输已打通、不要动），不修它；但这意味着 **CampusOS D1 里的文章数据可能滞后于本地目录**，导入流水线必须以 `data/articles_full` 为唯一事实源，不能以 D1 为准。
 
 附带记录：`dataset_ids: []` 的 service key **对全部数据集可见**（含旧试点库），最小权限要求在创建时显式指定数据集 ID。
+
+## 2026-11-09｜91 站里 11 个采不到文章的原因
+
+91 个官网经逐站实测后，89 个已配置、80 个已采到门禁（2026-01-01）内的文章。剩下 11 个分三类，都不是配置问题：
+
+**A. WebberRASP 拦截（3 个）**：`GDUFS-SRC-0041` 保卫部、`GDUFS-SRC-0046` 发展规划部、`GDUFS-SRC-0095` 财务与资产管理部。这三个站的详情页都是 Boda WCM 的 `content.jsp?urltype=news.NewsContentUrl&wbtreeid=…&wbnewsid=…`。从 Cloudflare 出网 IP 请求，一律返回 **200 / 847 字节 / `x-protected-by: WebberRASP`**；同样的 URL 在本机请求返回完整页面。UA、Accept、Referer、Cookie、去掉 `urltype`、换参数顺序、加随机参数全部无效；静态别名 `/info/NNN/NNN.htm` 在 cwc（0095）上 **40 条全部 404**，在 bwc（0041）上只有少数旧文章存在。RSS（`/rss.xml`、`/rss.jsp`、`/system/resource/rss/news.jsp`）也是 404。**这条限制在配置层面无解**，只能靠校园网内的中继或浏览器渲染。
+
+**B. 站点自身早已停更（5 个）**：这 5 个站的列表页最新条目就早于门禁，采集器没有可抓的东西。`GDUFS-SRC-0047`（国家安全研究院，最新 2025-09-15）、`GDUFS-SRC-0049`（国际合作与可持续发展研究院，最新 2024-12-12）、`GDUFS-SRC-0061`（审计工作部，最新 2025-03-18）、`GDUFS-SRC-0073`（机关党委，最新 2021-06-18）、`GDUFS-SRC-0096`（跨国并购与创新战略研究中心，最新 2025-04-21）。配置本身是对的（能 discover、能解析），只是门禁内无文章。
+
+**C. 平台形态不支持静态抓取（3 个）**：`GDUFS-SRC-0019`（教务部，同源页面最新 2025-12-15，新文章全部外链到 `news.gdufs.edu.cn`）、`GDUFS-SRC-0022`（智慧广外信息门户，CAS SSO，未配置）、`GDUFS-SRC-0102`（黄埔研究院，Vue/AJAX SPA，`.txt-list ul` 为空、无后端 JSON API，页面显示「共0条」）。
+
+**有待观察的一类**：`GDUFS-SRC-0071`（教育合作与发展中心）首页最新文章全部是 `mp.weixin.qq.com` 外链，同源列表页 `/xw/tzgg.htm` 最新只到 2026-08-01。这是该站自身的发布习惯，不是采集器问题。
