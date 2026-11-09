@@ -38,7 +38,7 @@ export async function runCloudWebBatch(
   // retire them here instead of letting them block later work.
   await db
     .prepare(
-      "UPDATE ingestion_jobs SET status='failed',control_state='cancelled',error_code='RULE_CHANGED',lease_hash=NULL,lease_until_ms=0,updated_at=? WHERE job_kind='web' AND phase<>'complete' AND control_state='active' AND status IN('queued','running') AND EXISTS (SELECT 1 FROM source_collection_policies p WHERE p.source_id=ingestion_jobs.source_id AND p.rule_version<>ingestion_jobs.rule_version)",
+      "UPDATE ingestion_jobs SET status='failed',control_state='cancelled',error_code='RULE_CHANGED',lease_hash=NULL,lease_until_ms=0,updated_at=? WHERE job_kind='web' AND phase<>'complete' AND control_state IN('active','paused') AND status IN('queued','running') AND EXISTS (SELECT 1 FROM source_collection_policies p WHERE p.source_id=ingestion_jobs.source_id AND p.rule_version<>ingestion_jobs.rule_version)",
     )
     .bind(now)
     .run();
