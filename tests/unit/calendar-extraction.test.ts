@@ -37,6 +37,23 @@ it.each([
 ])("excludes unsupported calendar entries: %s", (title, body) =>
   expect(accepted(title, body)).toHaveLength(0),
 );
+it.each([
+  ["我院成功举办学术讲座", "11月5日，我院成功举办了学术讲座。"],
+  ["2026年院运会圆满落幕", "院运会圆满落幕。"],
+  ["讲座回顾", "讲座于11月5日举行，现场反响热烈。"],
+])(
+  "treats a retrospective as a past event, not a queue item: %s",
+  (title, body) => {
+    const a = get(title, body);
+    expect(a.calendar?.status).toBe("excluded");
+    expect(a.calendar?.reason).toBe("past_event");
+  },
+);
+it("still queues an upcoming announcement for enrichment", () => {
+  const a = get("2026年学术讲座预告", "欢迎参加，11月5日老地方。");
+  expect(a.calendar?.status).toBe("needs_enrichment");
+  expect(a.calendar?.reason).not.toBe("past_event");
+});
 it("selects earliest event candidate and ignores publication/registration", () => {
   const a = accepted(
     "2026年讲座预告",

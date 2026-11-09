@@ -274,6 +274,16 @@ export async function readCalendar(
       (g.registrationState === q.registration &&
         !(q.registration === "open" && g.historical)),
   );
+  // An empty week is honest but useless on its own: the reader needs to know
+  // whether the calendar is empty or whether this particular week is empty.
+  // One lookup answers that without inventing anything.
+  const nextEventDay =
+    (
+      await read<{ day: string }>(
+        `SELECT MIN(a.starts_day) AS day FROM article_activity_index a WHERE a.calendar_eligible=1 AND a.calendar_version=? AND a.starts_day>? AND EXISTS(SELECT 1 FROM knowledge_documents d JOIN document_article_analysis x ON x.document_id=d.id AND x.calendar_version=a.calendar_version AND x.content_revision=d.content_revision AND x.input_hash=d.input_hash WHERE d.id=a.document_id AND d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id AND p.version=d.version))`,
+        [CALENDAR_VERSION, before],
+      )
+    )[0]?.day ?? null;
   const dailyCounts: Record<string, number> = {};
   for (const day of intervalDays(after, before))
     dailyCounts[day] = all.filter((g) => g.dates.includes(day)).length;
@@ -321,6 +331,7 @@ export async function readCalendar(
     before,
     day: q.day || null,
     dailyCounts,
+    nextEventDay,
     total: all.length,
     hasMore,
     nextCursor: hasMore

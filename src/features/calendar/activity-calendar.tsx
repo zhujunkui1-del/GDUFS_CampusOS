@@ -28,6 +28,7 @@ import "./calendar.css";
 type Result = {
   items: CalendarItem[];
   dailyCounts: Record<string, number>;
+  nextEventDay: string | null;
   total: number;
   hasMore: boolean;
   nextCursor: string | null;
@@ -188,6 +189,8 @@ export function ActivityCalendar() {
     u.searchParams.set("article", source.documentId);
     history.replaceState(null, "", u);
   }
+  const weekEmpty =
+    !!data && Object.values(data.dailyCounts).every((n) => n === 0);
   const entries = (data?.items || []).flatMap((item) =>
       item.sources.map((source) => ({ item, source })),
     ),
@@ -347,7 +350,16 @@ export function ActivityCalendar() {
         {!busy && !error && data?.items.length === 0 && (
           <div className="calendar-empty">
             <CalendarDays size={28} />
-            <p>这一天暂无符合条件的活动</p>
+            <p>
+              {weekEmpty
+                ? "本周暂无符合条件的活动"
+                : "这一天暂无符合条件的活动"}
+            </p>
+            {weekEmpty && data.nextEventDay && (
+              <button type="button" onClick={() => choose(data.nextEventDay!)}>
+                {fmt(data.nextEventDay)}有活动
+              </button>
+            )}
           </div>
         )}
       </div>

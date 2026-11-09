@@ -853,6 +853,20 @@ export function calendarizeArticle(
             ? "year_unconfirmed"
             : "no_reliable_event_date"
           : "no_event_date";
+    // A retrospective ("我院成功举办...") describes something that already
+    // happened; asking the model to read its dates back can only invent a
+    // future appearance on the calendar. Fold the date-shaped reasons above
+    // into one honest verdict so the queue stops spending budget on reviews.
+    if (
+      [
+        "no_activity",
+        "no_reliable_event_date",
+        "year_unconfirmed",
+        "no_event_date",
+      ].includes(reason) &&
+      ["recap", "held"].includes(nature(input.title, canonical.text))
+    )
+      reason = "past_event";
     for (const a of base.activities.filter(
       (a) =>
         !a.calendar?.origins.some(
@@ -887,6 +901,7 @@ export function calendarizeArticle(
               "media_conflict",
               "invalid_interval",
               "cancelled",
+              "past_event",
             ].includes(reason) &&
             (eventWords.test(input.title) ||
               /活动时间|讲座时间|举办时间/.test(canonical.text)) &&

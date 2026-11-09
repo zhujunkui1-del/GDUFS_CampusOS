@@ -2397,3 +2397,21 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 `GDUFS-SRC-0054`（国际经济贸易研究院）的 profile 一直是通用模板（`titleSelector="h1, title"`、`bodySelector="article, main"`），该站三样都没有：详情页是 `.article_box .title` + `.article_box .other_info li`（`2026-10-14`）+ `div.v_news_content`。改成实测选择器后，列表入口也从 `/kxqj/lps.htm`（蓝皮书目录，16 条链接但**一条日期都没有**）换成 `/kxyj/lps.htm` 之外的 `/xwdt.htm` + `/kxyj/xslz.htm`，前缀收到 `/info/1100/`、`/info/1107/`。结果：found=20 / body=5，入库 5 篇，最新 `2026-10-14`。
 
 复核方法：`.tmp/gain.mjs` 用真实 connector 对每个源的每个入口跑一遍 discover，把「列表上能看到的最新日期」与「库里已有的最新日期」对比，只列出落后的源。89 个已配置源里只有 4 个落后：0007（已补到 2026-11-09）、0071（首页新文章全是 `mp.weixin.qq.com` 外链，同源列表最新 2026-08-01）、0095 与 0041（RASP）。这个方法比逐个翻 job 可靠得多。
+
+## 2026-11-10｜活动日历：把预算花在未来，而不是回顾
+
+用户拿 PKU Know 的日历对照（同一周 11 月 9 日—15 日，我们只有 17 条，其中落在今天之后的只有 2 条）。查下来不是「没采到」，是「采到了但没变成日历条目」。
+
+**盘面。** 已发布 5854 篇，`calendar_status` 为 accepted **352** / needs_enrichment **694** / excluded **4850**。`article_activity_index` 里 `calendar_eligible=1` 的只有 **360** 行，其中 `starts_day >= 2026-11-09` 的只有 **22** 条——其余 338 条全是过去的。正文里含「2026年11月／12月／2027年」的已发布文档只有 345 篇，其中判成 accepted 的 35 篇。所以供给本身窄，但队列也没花在对的地方。
+
+**1. 队列不看发布时间（P0-1）。** `runCalendarBatch` 的候选 SQL 是 `ORDER BY x.calendar_status,x.calendar_attempts,x.calendar_lease_until_ms,x.document_id`，从不参考 `published_at`。于是每天那点预算被最老的积压吃掉。现在 JOIN `knowledge_documents`，按 `CASE WHEN d.published_at>=? THEN 0 ELSE 1 END` 先排 90 天内发布的（`RECENT_PUBLISH_DAYS = 90`），再按 status/attempts/`published_at DESC`。
+
+**2. 回顾稿在抢配额（P0-2）。** `calendarizeArticle()` 的 `nature()` 只认标题里的「回顾／圆满／落幕／成功举办」和正文里的「……了／顺利／已举行」，但没人用它决定要不要进队列。一篇「我院成功举办××讲座」抽不出日期就被归到 `no_reliable_event_date`，然后排进 needs_enrichment 等模型去「读」——模型只能把已经发生的日期读成一个未来的日程。新增 `reason='past_event'`：抽不出日期时若 `nature∈{recap,held}`，直接 excluded，不再进队。线上按同一口径回填 **188** 行（`needs_enrichment` 694 → **600**，`excluded` → **4950**）。
+
+**3. 配额写死在两个地方（P1）。** `processor.ts` 里 `calendar_ai_calls<40` 与 `(budget?.calls||0)<40` 各写一次。新增迁移 `0064_calendar_ai_cap.sql`（`console_engine_settings.calendar_ai_cap INTEGER NOT NULL DEFAULT 40 CHECK(1..400)`），`reserveCalendarModel()` 与 `canEnrich` 都改读它，默认值仍是 40。**调高它救不了多少**：历史 enrich 日志里 6 篇用了 17 次模型调用，只捞回 1 条 accepted——大约每篇 3 次调用、命中率 1/6。600 条积压按这个命中率也就一百来条。
+
+**4. 空周至少得给出下一步（P3）。** `readCalendar()` 多返回一个 `nextEventDay`（同一套可见性过滤下最近的将来有活动的一天），前端在整周都为空时改说「本周暂无符合条件的活动」，并给一个跳到那天的按钮。原来只会说「这一天暂无符合条件的活动」，而用户点开哪一周都一样空。
+
+真正的天花板是供给：正文含未来日期的只有 345 篇，PKU Know 那一周是三位数。要在这个量级上追赶，得补活动导向的来源（院系、社团、图书馆讲座栏目）并把海报图的 OCR 纳入主路径——这两件事本轮没做。
+
+验证：新增 `tests/unit/calendar-extraction.test.ts`（三个回顾类归 `past_event`、一个预告仍进队）、`tests/unit/calendar-enrichment.test.ts`（新文章先用预算、操作员 cap 生效）、`tests/unit/calendar-query.test.ts`（空周指向下一个有活动的日子）；`npx vitest run tests/unit` 155 文件 1082 用例全绿；`tsc --noEmit` 0 error。

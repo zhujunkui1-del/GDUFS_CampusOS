@@ -29,6 +29,34 @@ it("starts weeks on Monday and preserves year boundaries", () =>
     "2027-01-02",
     "2027-01-03",
   ]));
+it("points an empty week at the next day that actually has an event", async () => {
+  const f = await dateGateFixture();
+  try {
+    const d = await f.store.document("spring");
+    await f.db.batch(
+      await analysisStatements(f.db, d.id, d.contentRevision, d.inputHash!, {
+        title: "2026年学术论坛通知",
+        body: "论坛时间：2026年12月20日至21日。",
+        publishedAt: "2026-12-01",
+      }),
+    );
+    const empty = await readCalendar(f.db, {
+      after: "2026-11-09",
+      before: "2026-11-15",
+      day: "2026-11-09",
+    });
+    expect(empty.items).toEqual([]);
+    expect(empty.nextEventDay).toBe("2026-12-20");
+    const busy = await readCalendar(f.db, {
+      after: "2026-12-20",
+      before: "2026-12-26",
+      day: "2026-12-20",
+    });
+    expect(busy.nextEventDay).toBeNull();
+  } finally {
+    f.close();
+  }
+});
 it("returns one interval on every day, exact counts, no manufactured clock, and no query writes", async () => {
   const f = await dateGateFixture();
   try {

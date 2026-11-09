@@ -6,7 +6,10 @@ import {
 } from "@/lib/server/calendar/enrichment";
 import { dateGateFixture } from "../fixtures/date-gate";
 import { analysisStatements } from "@/lib/server/console/article-analysis";
-import { runCalendarBatch } from "@/lib/server/calendar/processor";
+import {
+  runCalendarBatch,
+  reserveCalendarModel,
+} from "@/lib/server/calendar/processor";
 it("defers work when the daily model budget ends without consuming an extraction attempt", async () => {
   const input = {
     title: "2026年学术讲座预告",
@@ -191,6 +194,67 @@ it("stops automatic attempts after three and never adds a review gate", async ()
         .get(d.id),
     ).toEqual({ calendar_attempts: 3, calendar_status: "excluded" });
     expect(f.visible()).toContain("spring");
+  } finally {
+    f.close();
+  }
+});
+
+it("spends the daily budget on the newest articles first", async () => {
+  const f = await dateGateFixture();
+  try {
+    const ids = await Promise.all(
+      ["spring", "autumn", "white"].map((id) => f.store.document(id)),
+    );
+    for (const d of ids) {
+      await f.db.batch(
+        await analysisStatements(f.db, d.id, d.contentRevision, d.inputHash!, {
+          title: "2026年讲座预告",
+          body: "详情见海报。",
+        }),
+      );
+    }
+    f.sqlite
+      .prepare(
+        "UPDATE document_article_analysis SET calendar_status='needs_enrichment'",
+      )
+      .run();
+    // The fixture publishes spring (2026-04), autumn (2026-10) and white
+    // (2026-02). Only autumn is inside the recent window, so it is the one
+    // worth spending model calls on; the older two are usually reviews of
+    // something that already happened.
+    const run = vi.fn(async () => ({ response: { events: [] } }));
+    await runCalendarBatch(f.db, { run });
+    const touched = f.sqlite
+      .prepare(
+        "SELECT document_id FROM document_article_analysis WHERE calendar_attempts>0 OR calendar_lease_until_ms>0 ORDER BY document_id",
+      )
+      .all()
+      .map((r) => (r as { document_id: string }).document_id);
+    expect(touched).toContain("autumn");
+    expect(touched).not.toContain("white");
+  } finally {
+    f.close();
+  }
+});
+it("honours the operator cap instead of a hard-coded 40", async () => {
+  const f = await dateGateFixture();
+  try {
+    f.sqlite
+      .prepare(
+        "UPDATE console_engine_settings SET calendar_ai_day='2026-11-10',calendar_ai_calls=5,calendar_ai_cap=5",
+      )
+      .run();
+    expect(await reserveCalendarModel(f.db, "2026-11-10T00:00:00.000Z")).toBe(
+      false,
+    );
+    f.sqlite
+      .prepare(
+        "UPDATE console_engine_settings SET calendar_ai_calls=0,calendar_ai_cap=200",
+      )
+      .run();
+    expect(await reserveCalendarModel(f.db, "2026-11-10T00:00:00.000Z")).toBe(
+      true,
+    );
   } finally {
     f.close();
   }

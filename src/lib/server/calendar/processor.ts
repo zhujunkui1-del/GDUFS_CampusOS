@@ -10,16 +10,29 @@ import {
 } from "@/lib/ingestion/calendar-extraction";
 import { analysisStatements } from "../console/article-analysis";
 import { enrichCalendar, type CalendarAI } from "./enrichment";
+/** How long after publication an article is still worth enriching. */
+export const RECENT_PUBLISH_DAYS = 90;
+/** The daily budget is an operator setting; the default keeps the cost bounded. */
+export const DEFAULT_CALENDAR_AI_CAP = 40;
+async function calendarAiCap(db: SqlDatabase) {
+  const r = await db
+    .prepare(
+      "SELECT calendar_ai_cap AS cap FROM console_engine_settings WHERE id='console-v2-settings'",
+    )
+    .first<{ cap: number | null }>();
+  return r?.cap ?? DEFAULT_CALENDAR_AI_CAP;
+}
 export async function reserveCalendarModel(
   db: SqlDatabase,
   now = new Date().toISOString(),
 ) {
-  const day = now.slice(0, 10);
+  const day = now.slice(0, 10),
+    cap = await calendarAiCap(db);
   const r = await db
     .prepare(
-      "UPDATE console_engine_settings SET calendar_ai_day=?,calendar_ai_calls=CASE WHEN calendar_ai_day=? THEN calendar_ai_calls+1 ELSE 1 END WHERE id='console-v2-settings' AND (calendar_ai_day IS NULL OR calendar_ai_day<>? OR calendar_ai_calls<40)",
+      "UPDATE console_engine_settings SET calendar_ai_day=?,calendar_ai_calls=CASE WHEN calendar_ai_day=? THEN calendar_ai_calls+1 ELSE 1 END WHERE id='console-v2-settings' AND (calendar_ai_day IS NULL OR calendar_ai_day<>? OR calendar_ai_calls<?)",
     )
-    .bind(day, day, day)
+    .bind(day, day, day, cap)
     .run();
   return (r.meta?.changes || 0) > 0;
 }
@@ -33,18 +46,25 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
   };
   const budget = await db
     .prepare(
-      "SELECT calendar_ai_day AS day,calendar_ai_calls AS calls FROM console_engine_settings WHERE id='console-v2-settings'",
+      "SELECT calendar_ai_day AS day,calendar_ai_calls AS calls,calendar_ai_cap AS cap FROM console_engine_settings WHERE id='console-v2-settings'",
     )
-    .first<{ day: string | null; calls: number }>();
+    .first<{ day: string | null; calls: number; cap: number | null }>();
   const canEnrich =
     !!ai &&
     (budget?.day !== new Date().toISOString().slice(0, 10) ||
-      (budget?.calls || 0) < 40);
+      (budget?.calls || 0) < (budget?.cap ?? DEFAULT_CALENDAR_AI_CAP));
+  // Oldest-first is the wrong order for a queue that feeds a calendar: an
+  // article from two years ago is a review of something that already happened,
+  // and enriching it produces nothing anyone can attend. A recent publication
+  // is the only cheap signal that the dates inside it may still be ahead.
+  const recent = new Date(Date.now() - RECENT_PUBLISH_DAYS * 86400000)
+    .toISOString()
+    .slice(0, 10);
   const candidates = await db
     .prepare(
-      `SELECT x.document_id,x.content_revision,x.input_hash,x.calendar_status FROM document_article_analysis x WHERE x.calendar_status ${canEnrich ? "IN('pending','needs_enrichment')" : "='pending'"} AND x.calendar_attempts IN(0,1,2) AND x.calendar_lease_until_ms<? ORDER BY x.calendar_status,x.calendar_attempts,x.calendar_lease_until_ms,x.document_id LIMIT 2`,
+      `SELECT x.document_id,x.content_revision,x.input_hash,x.calendar_status FROM document_article_analysis x JOIN knowledge_documents d ON d.id=x.document_id WHERE x.calendar_status ${canEnrich ? "IN('pending','needs_enrichment')" : "='pending'"} AND x.calendar_attempts IN(0,1,2) AND x.calendar_lease_until_ms<? ORDER BY CASE WHEN d.published_at>=? THEN 0 ELSE 1 END,x.calendar_status,x.calendar_attempts,d.published_at DESC,x.document_id LIMIT 2`,
     )
-    .bind(Date.now())
+    .bind(Date.now(), recent)
     .all<{
       document_id: string;
       content_revision: number;
