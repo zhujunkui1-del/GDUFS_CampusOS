@@ -2427,3 +2427,13 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 验证：`npx vitest run tests/unit/ingestion-pipeline.test.ts` 28 passed；`tsc --noEmit` 0 error；干净构建后部署 `0612c573-a520-44a7-ab18-2523ebf252db`（commit `faa9126`）。
 
 附带确认：`/api/admin/v2/sync` 只接受 `{commandId, sourceId}`（`syncNow` 的 strict schema），要指定 `mode`/`maxArticles` 得走 `/api/admin/jobs` 的 `createJob`；后者是 v2 里唯一会顺带把 `sync_state` 置 `queued` 的入口。
+
+## 2026-11-10｜存量横幅标题：revalidate 太慢，直接按同一规则改写
+
+上一节修好了 revalidate 的 304 问题，但它的覆盖面是**新**页面：作业按列表页顺序往下走，一轮 40 篇、每分钟 3–7 步，要走到十月下旬那些旧文章得跑几个小时，而存量脏标题一共 118 条。
+
+这 118 条的脏法是机械的——`<title>` 把站点名接在文章名后面。连接器现在读页面时做的也就是 `/\s*[-–—|]\s*广东外语外贸大学[^-–—|]{0,14}$/` 这一刀，所以对存量行套同一条正则，结果与重新抓一遍页面等价。`.tmp/fixtitles-sql.mjs` 生成 112 条 `UPDATE`，`.tmp/fixtitles.sql` 一次执行；剩余 6 条是 `...-广东外语外贸大学 |`（尾部还带一个竖线）这种变体，正则扩了一位后一并覆盖。执行后 `title LIKE '%-广东外语外贸大学%'` 归零。
+
+顺带清掉一批**卡在草稿里的文章**：`knowledge_documents` 里 144 行 `publication_status='draft'`、`input_hash IS NULL`、`content_revision=2`，而 `document_article_analysis` 里只有 `content_revision=1` 那一行有哈希。这是 `0010_document_topics.sql` 的话题触发器留下的痕迹——插一条话题就把内容版本 +1 并把审批字段清空，但正文其实没变。这类行在公开视图里被 `approved_*` 校验挡掉，于是 113 篇文章凭空消失（雷达 5661 → 5548）。`.tmp/republish-drafts.sql` 把 `content_revision`、`input_hash`、`approved_*` 回填成分析表里那一版，`publication_status` 复位为 `published`；改完雷达回到 5661，剩 31 行草稿是真正等待审核的新内容。
+
+验证：公开接口 `/api/public/content?surface=radar` total 5661、`surface=knowledge` total 210；`title LIKE '%-广东外语外贸大学%'` 0 条；`publication_status` published 5872 / draft 31。
