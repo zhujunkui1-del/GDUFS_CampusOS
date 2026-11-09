@@ -931,7 +931,7 @@ export class IngestionStore extends ConsoleStore {
     statements.push(
       this.db
         .prepare(
-          "INSERT INTO document_fetches(id,job_id,source_id,document_id,snapshot_version,url,checked_at,status,outcome,bytes,etag,last_modified,body_hash,published_raw) VALUES(?,?,?,?,(SELECT version FROM knowledge_documents WHERE id=?),?,?,?,?,?,?,?,?,?)",
+          "INSERT INTO document_fetches(id,job_id,source_id,document_id,snapshot_version,url,checked_at,status,outcome,bytes,etag,last_modified,body_hash,published_raw) VALUES(?,?,?,?,(SELECT MAX(version) FROM console_content_versions WHERE document_id=?),?,?,?,?,?,?,?,?,?)",
         )
         .bind(
           value.commandId,
