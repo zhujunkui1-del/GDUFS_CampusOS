@@ -480,10 +480,18 @@ export class IngestionStore extends ConsoleStore {
             .map((x) => x.canonical_url)
             .filter((url) => !ignored.has(url))
         : [];
-      const unknown = value.discovered.filter(
-        (url) => !known.includes(url) && !ignored.has(url),
-      );
       const cutoff = profile.earliestImportDay;
+      // An article outside the gate is never imported, so it never enters
+      // document_origins and would otherwise look "new" on every single run.
+      // Dropping it here is what keeps a deep archive from being re-fetched
+      // forever.
+      const inGate = (url: string) => {
+        const publishedAt = discoveredDates.get(url);
+        return !cutoff || !publishedAt || publishedAt >= cutoff;
+      };
+      const unknown = value.discovered.filter(
+        (url) => !known.includes(url) && !ignored.has(url) && inGate(url),
+      );
       // Every dated row on this page is older than the gate, so deeper pages
       // cannot hold anything newer. This used to look at the *unknown* rows
       // only, which meant a page whose links were all already known never
