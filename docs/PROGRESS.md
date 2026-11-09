@@ -2317,3 +2317,15 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 2. 新增 `src/lib/server/console/placement.ts` 的 `storedPlacement()`，在 `publishOwnerDirectedWeb()` 分类器返回空时回退读分析表，避免后续发布再产生同样的问题。测试 `tests/unit/placement-fallback.test.ts` 覆盖「同一 revision 命中」和「不同 revision 不命中」。
 
 验证：`npx vitest run tests/unit` 151 文件 / 1041 用例全绿；`tsc --noEmit`、eslint、prettier 通过。
+
+## 2026-11-09｜回填把 869 篇打回草稿（已恢复）
+
+上面那次回填只改了 `radar_category` / `knowledge_category` 两列，却撞上了 `migrations/0010_document_topics.sql` 的 `console_legacy_content_write` 触发器：只要 `input_hash` 没变而内容列变了，它就认为这是「旧版本程序在改内容」，把 `content_revision` 加一、`input_hash` 置空、`approved_*` 清空、状态退回 `draft`。结果 869 篇刚补上分类的文档被同时打回草稿，公开面从 5400 多掉回 4600 多。
+
+恢复方式：这些文档的 `document_article_analysis` 里还留着上一版的 `content_revision` 与 `input_hash`，按它把 `content_revision` / `input_hash` / `approved_*` 写回、状态改回 `published` / `approved`，再把对应的 `article_search_documents.status` 从 `stale` 改回 `ready`。分两批处理（713 篇 + 156 篇），最终：
+
+- 草稿 894 → **30**（剩下的是 30 篇老的 `console_legacy_public_documents`，本来就该走 legacy 分支）
+- 公开视图 **4600 → 5597**，已发布不在公开视图 **0** 篇
+- `article_search_documents` ready **5618**、stale **9**
+
+**教训**：往 `knowledge_documents` 写内容列时要么同时写新的 `input_hash`，要么先确认这次修改不会触发 `console_legacy_content_write`。线上回填前应先在一个事务里跑一遍「预期影响行数」和「触发器是否会改写状态」。
