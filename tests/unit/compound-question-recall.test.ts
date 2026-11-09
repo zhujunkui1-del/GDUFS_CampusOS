@@ -153,3 +153,29 @@ it("ranks the document that the subject names, not a neighbour that shares a wor
     await f.close();
   }
 });
+
+it("finds a rule whose two words are stated in different chapters", async () => {
+  const f = await dateGateFixture();
+  try {
+    // “缓考” is in chapter nine, “请假” is in chapter seven. The question glues
+    // both into one subject, so no single chunk carries the whole phrase.
+    const filler = "第五条 学生应当按时参加教学计划规定的一切活动。\n".repeat(
+      40,
+    );
+    await add(
+      f,
+      "exam-handbook",
+      "广东外语外贸大学本科生课程修读管理规定",
+      `${filler}第七条 学生请假须经学院批准，报教务处备案。\n${filler}第九条 学生因病不能参加考试，可申请缓考，须在考试前提交书面申请。\n`,
+    );
+    const r = await searchContent(
+      f.db,
+      "knowledge",
+      { query: "缓考请假要走什么手续？", limit: 4 },
+      "2026-11-06T00:00:00Z",
+    );
+    expect(r.hits.map((h) => h.documentId)).toContain("exam-handbook");
+  } finally {
+    f.close();
+  }
+}, 15000);

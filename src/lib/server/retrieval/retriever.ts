@@ -751,7 +751,8 @@ ${sourceFilterSql}
       });
       if (
         !relevance.relevant &&
-        relevance.reason === "subject_modifier_missing" &&
+        (relevance.reason === "subject_modifier_missing" ||
+          relevance.reason === "goal_evidence_missing") &&
         choices.length > 1
       )
         relevance = queryRelevance(plan, {
@@ -838,10 +839,22 @@ ${sourceFilterSql}
         /手册|条例|细则|规定|办法|章程|规章/.test(d.title)
           ? 3
           : 0;
+      // "缓考安排" is a timetable for this term's exams, not the procedure for
+      // asking for one. When someone asks how to do something, a title that
+      // merely names a schedule should not outrank the rulebook that states
+      // the rule.
+      const scheduleNotice =
+        /安排|通知|名单|公示|通报/.test(d.title) &&
+        !/手册|条例|细则|规定|办法|章程|规章/.test(d.title);
+      const titleWeight =
+        ["procedure", "policy", "requirements"].includes(plan.goal) &&
+        scheduleNotice
+          ? 0
+          : titleMatch * 6;
       const score =
         relevance.score +
         rulebookBoost +
-        titleMatch * 6 +
+        titleWeight +
         bodyMatch +
         (fusion?.get(c.id) || 0) * 80 +
         purposeBoost +
