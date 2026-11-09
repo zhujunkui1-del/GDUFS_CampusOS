@@ -964,7 +964,9 @@ export class IngestionStore extends ConsoleStore {
           controlState,
           json(checkpoint),
           errorCode,
-          error ? 1 : 0,
+          // An oversize page is skipped, not counted: counting it toward the
+          // fatal threshold made one megabyte table end the whole entry.
+          error && value.outcome !== "too_large" ? 1 : 0,
           phase === "discover" ? value.discovered.length : 0,
           bodyCount,
           duplicate,
