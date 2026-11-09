@@ -731,7 +731,7 @@ export class IngestionStore extends ConsoleStore {
             origin && origin.input_fingerprint !== fingerprint
               ? await this.db
                   .prepare(
-                    "SELECT 1 AS ok FROM knowledge_documents WHERE id=? AND title=? AND body=? AND url=? AND published_at IS ? AND source_updated_at IS ? AND rights_scope=? AND body_format=? AND body_status=?",
+                    "SELECT 1 AS ok FROM knowledge_documents WHERE id=? AND title=? AND body=? AND url=? AND published_at IS ? AND source_updated_at IS ? AND rights_scope=? AND body_format=? AND body_status=? AND input_hash IS NOT NULL",
                   )
                   .bind(
                     origin.document_id,

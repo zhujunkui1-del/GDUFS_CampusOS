@@ -2437,3 +2437,19 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 顺带清掉一批**卡在草稿里的文章**：`knowledge_documents` 里 144 行 `publication_status='draft'`、`input_hash IS NULL`、`content_revision=2`，而 `document_article_analysis` 里只有 `content_revision=1` 那一行有哈希。这是 `0010_document_topics.sql` 的话题触发器留下的痕迹——插一条话题就把内容版本 +1 并把审批字段清空，但正文其实没变。这类行在公开视图里被 `approved_*` 校验挡掉，于是 113 篇文章凭空消失（雷达 5661 → 5548）。`.tmp/republish-drafts.sql` 把 `content_revision`、`input_hash`、`approved_*` 回填成分析表里那一版，`publication_status` 复位为 `published`；改完雷达回到 5661，剩 31 行草稿是真正等待审核的新内容。
 
 验证：公开接口 `/api/public/content?surface=radar` total 5661、`surface=knowledge` total 210；`title LIKE '%-广东外语外贸大学%'` 0 条；`publication_status` published 5872 / draft 31。
+
+## 2026-11-10｜「没变」的判据要多看一列：没有内容哈希的行不算存过
+
+上一节把 113 篇文章从草稿状态里放了回来，但 0013（英文网）还剩 9 篇同样病状：`content_revision=3`、`input_hash IS NULL`、`publication_status='draft'`，正文和标题都在，只是哈希被话题触发器清掉了。
+
+对这些行跑 revalidate 也修不回来：`claim()` 之后的写入路径有一处「没变就跳过」的快路径——先比对 `document_origins.input_fingerprint`，一致就直接记 `duplicate`，不去看这一行自己是否还有 `input_hash`。于是页面抓了、步数花了、行还是残的。
+
+修法是把「存过」的判据补全：比对 SQL 末尾加 `AND input_hash IS NOT NULL`。一行没有内容哈希，就不是一条完成的记录，抓到了也该重写一遍。
+
+```ts
+"SELECT 1 AS ok FROM knowledge_documents WHERE id=? AND title=? AND body=? AND url=? AND published_at IS ? AND source_updated_at IS ? AND rights_scope=? AND body_format=? AND body_status=? AND input_hash IS NOT NULL",
+```
+
+验证：`npx tsc --noEmit` 0 error；`npx vitest run tests/unit/ingestion-pipeline.test.ts` 28 passed；干净构建后部署。
+
+残留：这 9 篇的旧页面已经不在 0013 的当前列表页上，revalidate 只重抓「这次 discover 能看到、且仍在门禁内」的 URL，所以要等这些栏目翻到更深的分页才会被重写。文章本身是英文网 2026 年 5–10 月的来访消息，不影响中文站的雷达与知识。
