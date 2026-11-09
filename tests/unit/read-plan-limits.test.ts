@@ -51,3 +51,32 @@ it("keeps the knowledge page at its own cap", () => {
   for (const read of knowledge)
     expect((read.input as { limit: number }).limit).toBeLessThanOrEqual(4);
 });
+
+it("pages past the entries already shown on a follow-up", () => {
+  const c = contentIntent("最近两周可以去参加的活动");
+  const shown = ["doc-a", "doc-b", "doc-c"];
+  const reads = contentReadPlan(
+    c.tools,
+    c.query,
+    externalPolicy(c.query),
+    () => false,
+    c.retrievalQuery,
+    () => false,
+    c.radarCategory,
+    c.recentDiscovery,
+    true,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    shown,
+  );
+  const events = reads.filter((r) => r.name === "search_campus_events");
+  expect(events.length).toBeGreaterThan(0);
+  for (const read of events) {
+    expect(
+      (read.input as { excludeDocumentIds?: string[] }).excludeDocumentIds,
+    ).toEqual(shown);
+    expect(EventSearchInputSchema.safeParse(read.input).success).toBe(true);
+  }
+});

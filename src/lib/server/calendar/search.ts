@@ -10,6 +10,8 @@ import type { SqlDatabase } from "../assistant/database";
 import { isOfficialCampusUrl } from "../external-search/policy";
 import { registrationWindowState } from "@/lib/retrieval/registration-state";
 import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
+import { stripTimeRange } from "../assistant/time-window";
+import { addDays, chinaDate } from "@/lib/retrieval/calendar-dates";
 import type { ArticleTimePoint } from "@/domain/console/article-analysis";
 import type { EvidenceHit } from "@/domain/retrieval/contracts";
 
@@ -72,12 +74,18 @@ export async function calendarContentSearch(
     },
     now,
   );
-  const plan = buildQueryPlan(event.query);
+  // Time words are constraints, not subjects: “最近两周” must not become a
+  // relevance modifier that rejects every lecture in the window.
+  const plan = buildQueryPlan(stripTimeRange(event.query));
   const specific =
     plan.topics.some((t) => !["competition"].includes(t.id)) ||
     plan.entities.length ||
     plan.modifiers.length;
-  const items = query.items
+  // A follow-up page must skip what the previous answer already showed, or the
+  // same five entries come back forever.
+  const excluded = new Set(event.excludeDocumentIds ?? []);
+  let items = query.items
+    .filter((g) => !excluded.has(g.sources[0]?.documentId))
     .filter(
       (g) =>
         !specific ||
@@ -87,6 +95,61 @@ export async function calendarContentSearch(
         }).relevant,
     )
     .slice(0, event.limit);
+  // An empty page inside a time box is not the same as "no such event": the
+  // useful answer is the nearest one outside the box. Say so instead of
+  // claiming the corpus has nothing.
+  const warnings: string[] = [];
+  if (!items.length && (event.after || event.before) && event.nearestIfEmpty) {
+    // readCalendar defaults to the current week when no range is given, so a
+    // single "no range" read could never see next month's lecture. The useful
+    // fallback is the nearest upcoming match, so scan forward in 30-day
+    // windows (the schema's own ceiling) until something is found.
+    const today = chinaDate(Date.parse(now));
+    for (let offset = 0; offset < 90 && !items.length; offset += 30) {
+      const next = await readCalendar(
+        db,
+        {
+          after: addDays(today, offset),
+          before: addDays(today, offset + 30),
+          category: event.category,
+          sourceId: event.sourceId,
+          sourceTypes: event.sourceTypes,
+          registration: event.registrationState,
+          timeRole: event.timeRole,
+          limit: 50,
+        },
+        now,
+      );
+      const upcoming = next.items
+        .filter(
+          (g) =>
+            !excluded.has(g.sources[0]?.documentId) &&
+            // The category filter already names the subject; demanding the
+            // word “讲座” in the title would drop the nearest forum whose
+            // title says “研讨会”. Without a category, relevance still guards
+            // the page against unrelated activities.
+            (!specific ||
+              !!event.category ||
+              queryRelevance(plan, {
+                title: g.activity.title,
+                contentSnippet: g.activity.evidence.map((e) => e.text).join(" "),
+              }).relevant) &&
+            (g.activity.startsAt?.date ?? "") >= today,
+        )
+        .sort((a, b) =>
+          (a.activity.startsAt?.date ?? "").localeCompare(
+            b.activity.startsAt?.date ?? "",
+          ),
+        )
+        .slice(0, event.limit);
+      if (upcoming.length) {
+        items = upcoming;
+        warnings.push(
+          "所问时间范围内没有符合条件的活动，以下是之后最近的安排，日期不在所问范围内。",
+        );
+      }
+    }
+  }
   const seen = new Set<string>();
   const hits = items.flatMap((item) =>
     item.sources.flatMap((s) => {
@@ -140,7 +203,7 @@ export async function calendarContentSearch(
     },
     indexVersion: CALENDAR_VERSION,
     method: "calendar_index",
-    warnings: [],
+    warnings,
     purpose: "events",
     query: event.query,
     now,

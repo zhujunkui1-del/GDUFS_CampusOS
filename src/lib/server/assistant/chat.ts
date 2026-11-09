@@ -97,7 +97,7 @@ import {
 } from "./persona";
 import { inputGate, inputGateReply } from "./input-gate";
 import { understandQuery } from "./query-understanding";
-import { citedAnswer } from "./citations";
+import { citedAnswer, normalizeCitations } from "./citations";
 import { searchControlBusiness } from "@/lib/retrieval/query-controls";
 import { revalidateCalendarEvidence } from "../calendar/search";
 import { eventEvidenceAnswer } from "./evidence-answer";
@@ -746,6 +746,20 @@ export async function chatResponse(request: Request) {
       const tail = sources.at(-1);
       return tail ? { at: tail.publishedAt!, id: tail.documentId } : undefined;
     }
+    // "还有吗" must not be answered with the same list again: the previous
+    // answer's cards are the already-shown page.
+    function shownDocumentIds() {
+      const last = [...history.messages]
+        .reverse()
+        .find((m) => m.role === "assistant");
+      return [
+        ...new Set(
+          (last?.cards || [])
+            .filter((c) => c.kind === "source")
+            .map((c) => c.documentId),
+        ),
+      ].slice(0, 40);
+    }
     const previous = history.messages
       .map((message) => ({
         role: message.role,
@@ -970,6 +984,7 @@ export async function chatResponse(request: Request) {
           };
         },
         validateFinal: (text) => {
+          const normalized = normalizeCitations(text);
           // An honest “no evidence” answer cites nothing because it asserts
           // nothing from the sources. Demanding [n] made every refusal burn two
           // repair rounds and then fail the whole run, which is how nine of
@@ -979,13 +994,17 @@ export async function chatResponse(request: Request) {
             content.active &&
             !noCitation &&
             answerSourceCount() > 0 &&
-            !/\[(?:来源\s*)?\d+\]/.test(text)
+            !/\[\d+\]/.test(normalized)
           )
             return "每项来自本轮资料的具体事实都必须标对应[n]引用；不支持的细节删除，不输出无引用的资料概述。";
-          if (content.active && /来源\s*[:：]|https?:\/\//.test(text))
+          if (content.active && /来源\s*[:：]|https?:\/\//.test(normalized))
             return "正文不要输出标题、URL 或“来源：”清单；关键事实只用 [n] 标注，具体来源由界面下方展示。";
           if (!mapActionRequested && claimsMapAction(text))
-            return "本轮没有执行地图动作，不能声称已标出、定位或放大。只说明地点所在区域，或询问是否要在图上查看。";
+            return {
+              message:
+                "本轮没有执行地图动作，不能声称已标出、定位或放大。只说明地点所在区域，或询问是否要在图上查看。",
+              hard: true,
+            };
           if (
             unsupportedUrls(
               text,
@@ -996,7 +1015,11 @@ export async function chatResponse(request: Request) {
               ),
             ).length
           )
-            return "引用的 URL 必须逐字复制本轮来源卡片，删除编造或不存在的链接。";
+            return {
+              message:
+                "引用的 URL 必须逐字复制本轮来源卡片，删除编造或不存在的链接。",
+              hard: true,
+            };
           if (
             content.active &&
             falseNegativeAnswer(text, content.query, contentResults)
@@ -1591,6 +1614,10 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
                         content.articleQuery,
                         content.articleKeywords,
                         content.discoveryFollowup ? recentCursor() : undefined,
+                        content.discoveryFollowup
+                          ? shownDocumentIds()
+                          : undefined,
+                        !content.explicitDateRange,
                       ),
                       afterInitialReads: () => {
                         finalPhase = true;
@@ -1607,6 +1634,45 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
                         if (
                           !content.map &&
                           !content.recentDiscovery &&
+                          content.tools.includes("search_campus_events") &&
+                          !content.tools.includes("search_campus_knowledge") &&
+                          content.timeWindow?.role === "event" &&
+                          contentResults.length > 0 &&
+                          contentResults.every((r) => r.hits.length === 0)
+                        ) {
+                          // The date index was actually read and holds nothing
+                          // in the window. "No evidence was retrieved" implies
+                          // the corpus is missing; the honest answer is that
+                          // the window itself is empty.
+                          answerMode = "no_events";
+                          const label =
+                            content.radarCategory === "lecture"
+                              ? "讲座"
+                              : content.radarCategory === "competition"
+                                ? "竞赛"
+                                : content.radarCategory === "culture_sports"
+                                  ? "文体活动"
+                                  : content.radarCategory === "education_career"
+                                    ? "升学就业"
+                                    : content.radarCategory ===
+                                        "scholarship_opportunity"
+                                      ? "奖助机会"
+                                      : content.radarCategory ===
+                                          "academic_research"
+                                        ? "科研活动"
+                                        : "活动";
+                          const window = content.timeWindow;
+                          return (
+                            `本鱼查了校园活动日历，${window.after ?? ""} 至 ${window.before ?? ""} 期间没有${label}的安排。` +
+                            (content.explicitDateRange
+                              ? "这个日期范围是写死的，我没有把范围外的内容算进来。"
+                              : "想看更早或更晚的，可以说个具体日期范围。") +
+                            "\n\n也可以补充院系或主题，我再帮你查。"
+                          );
+                        }
+                        if (
+                          !content.map &&
+                          !content.recentDiscovery &&
                           !content.tools.includes("search_campus_knowledge") &&
                           (content.queryPlan.goal === "discovery" ||
                             content.timeWindow?.role === "event")
@@ -1617,7 +1683,13 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
                           );
                           if (list) {
                             answerMode = "event_list";
-                            return list;
+                            // The window held no event: the list below is the
+                            // nearest upcoming one, so the user must be told
+                            // it is outside the range they asked for.
+                            const outside = contentResults
+                              .flatMap((r) => r.warnings)
+                              .find((w) => w.startsWith("所问时间范围内"));
+                            return outside ? `${outside}\n\n${list}` : list;
                           }
                         }
                         if (

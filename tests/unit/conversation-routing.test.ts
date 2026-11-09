@@ -64,6 +64,28 @@ it("tells a feedback turn to explain the previous answer instead of searching", 
   );
 });
 
+it("routes a facility listing to the map instead of the article corpus", () => {
+  // The campus map knows every courier counter; the article corpus has almost
+  // nothing. Asking "which" or "where" is a place lookup, so it must not be
+  // answered with "no evidence was retrieved".
+  const couriers = contentIntent("收快递除了驿站还有别的点吗？");
+  expect(couriers.map).toBe(true);
+  expect(couriers.active).toBe(false);
+  const printers = contentIntent("校内有哪些打印店？");
+  expect(printers.map).toBe(true);
+  // A fee question is a rule question, not a place lookup.
+  const fees = contentIntent("打印店打印一张多少钱？");
+  expect(fees.map).toBe(false);
+});
+
+it("routes a competition prize question to knowledge, not the event list", () => {
+  // "奖金怎么发放" asks about a rule; the event lane answered it with a list of
+  // unrelated competitions.
+  const intent = contentIntent("学科竞赛的奖金怎么发放？");
+  expect(intent.tools).toContain("search_campus_knowledge");
+  expect(intent.answerRequirement).toBe("strict");
+});
+
 it("routes a bare campus event name to event search, not a refusal", () => {
   const intent = contentIntent("了解下秋之声");
   expect(intent.active).toBe(true);

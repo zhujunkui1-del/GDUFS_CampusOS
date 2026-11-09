@@ -441,6 +441,40 @@ it("distinguishes failed recall, irrelevant candidates, metadata, and missing de
   expect(
     falseNegativeAnswer("没有相关文章或通知。", "体育比赛", [found]),
   ).toBe(true);
+  // A fact question that fetched same-topic articles without the answer slot is
+  // exactly the honest-refusal case. Treating it as a recall failure made the
+  // model rewrite until the run died as MODEL_SERVICE_UNAVAILABLE.
+  const sameTopic = [
+    {
+      hits: [
+        {
+          documentId: "d",
+          title: "食堂营业时间调整通知",
+          bodyAvailable: true,
+          contentSnippet:
+            "因设备检修，食堂营业时间另行通知，请师生留意后续公告。",
+        },
+      ],
+      activities: [],
+    },
+  ];
+  expect(
+    assessEvidence("食堂的营业时间是几点到几点", sameTopic).relatedDocuments,
+  ).toHaveLength(1);
+  expect(
+    falseNegativeAnswer(
+      "食堂的营业时间是几点到几点",
+      "食堂的营业时间是几点到几点",
+      sameTopic,
+    ),
+  ).toBe(false);
+  expect(
+    falseNegativeAnswer(
+      "没有检索到食堂的营业时间。",
+      "食堂的营业时间是几点到几点",
+      sameTopic,
+    ),
+  ).toBe(false);
 });
 it("does not turn a missing indexed date, cutoff or capacity into availability", () => {
   const analysis = analyzeArticle({

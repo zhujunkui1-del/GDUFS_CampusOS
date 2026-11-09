@@ -154,10 +154,19 @@ export function falseNegativeAnswer(
 ) {
   const assessment = assessEvidence(query, results);
   if (!assessment.relatedDocuments.length) return false;
-  // Only a denial about the *related material itself* is a recall failure.
-  // "没有具体开放时间" / "没有空调" are honest limitations, not claims that
-  // the retrieved articles do not exist.
-  return /(?:没有|未(?:能)?(?:找到|查到|检索到)|没(?:找到|查到))[^。\n]{0,20}(?:相关(?:信息|资料|文章)|(?:活动|赛事|讲座|通知|名单|安排)(?:信息|通知|文章|资料)?)/.test(
+  // Only a denial about the *related material itself* can be a recall failure.
+  // "没有具体开放时间" / "没有查到递交窗口" are honest limitations of the
+  // corpus, not claims that the retrieved articles do not exist.
+  //
+  // A list-shaped question ("有哪些比赛") is the one case where saying "no
+  // related articles" contradicts the hits we just returned. A fact question
+  // ("入党申请书交给谁") that fetched same-topic articles lacking the answer
+  // slot is exactly what an honest refusal looks like, and flagging it made
+  // the model rewrite until the run died as MODEL_SERVICE_UNAVAILABLE.
+  const goal = buildQueryPlan(query).goal;
+  if (!["discovery", "participation", "registration"].includes(goal))
+    return false;
+  return /(?:没有|未(?:能)?(?:找到|查到|检索到)|没(?:找到|查到))[^。\n]{0,20}(?:相关|(?:活动|赛事|讲座|通知|名单|安排)(?:信息|通知|文章|资料)?)/.test(
     answer,
   );
 }

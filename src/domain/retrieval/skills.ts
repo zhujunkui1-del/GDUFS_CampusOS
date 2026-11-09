@@ -15,6 +15,13 @@ export const EventSearchInputSchema = KnowledgeSearchInputSchema.extend({
   after: z.iso.date().optional(),
   before: z.iso.date().optional(),
   timeRole: z.enum(["event", "registration"]).default("event"),
+  // A follow-up ("还有吗") must page past the rows already shown, otherwise
+  // every page repeats the same list.
+  excludeDocumentIds: z.array(z.string().max(128)).max(40).optional(),
+  // A browse inside a time box ("最近两周有哪些讲座") may fall back to the
+  // nearest upcoming items when the box is empty. An explicit date filter
+  // ("11月1日到11月5日") must stay strict, so this is opt-in.
+  nearestIfEmpty: z.boolean().optional(),
   registrationState: z
     .enum([
       "open",

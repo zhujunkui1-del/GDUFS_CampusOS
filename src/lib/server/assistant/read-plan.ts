@@ -101,6 +101,8 @@ export function contentReadPlan(
   articleTitle?: string,
   articleKeywords?: string,
   publishedCursor?: { at: string; id: string },
+  excludeDocumentIds?: string[],
+  nearestIfEmpty?: boolean,
 ): PlannedRead[] {
   void discoveryFollowup;
   const external = publicQuery(query);
@@ -134,6 +136,12 @@ export function contentReadPlan(
     ...(recentDiscovery && publishedCursor ? { publishedCursor } : {}),
     ...(recentDiscovery && recentBefore
       ? { publishedBefore: recentBefore }
+      : {}),
+    ...(name === "search_campus_events" && excludeDocumentIds?.length
+      ? { excludeDocumentIds: excludeDocumentIds.slice(0, 40) }
+      : {}),
+    ...(name === "search_campus_events" && nearestIfEmpty
+      ? { nearestIfEmpty: true }
       : {}),
     ...(name === "search_campus_events" &&
     radarCategory &&

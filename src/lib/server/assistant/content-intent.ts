@@ -1,6 +1,11 @@
 import type { StoredMessage } from "@/domain/agent/assistant-contracts";
 import { externalPolicy } from "../external-search/policy";
-import { requestTimeWindow } from "./time-window";
+import {
+  chinaDay,
+  dateRangeIn,
+  requestTimeWindow,
+  stripTimeRange,
+} from "./time-window";
 import { dialogueReply } from "./dialogue";
 import { campusFoodQuery, queryFocus } from "@/lib/retrieval/query-focus";
 import {
@@ -139,26 +144,45 @@ export function contentIntent(
         .find(
           (turn) =>
             turn.role === "user" &&
-            /最近|近期|最新/.test(turn.text) &&
-            /竞赛|比赛|大赛|讲座|讲坛|论坛|沙龙|招聘|宣讲|通知|公告|就业|奖学金|科研/.test(
+            (/最近|近期|最新/.test(turn.text) ||
+              requestTimeWindow(turn.text, now) !== undefined) &&
+            /竞赛|比赛|大赛|讲座|讲坛|论坛|沙龙|招聘|宣讲|通知|公告|资讯|新闻|活动|就业|奖学金|科研/.test(
               turn.text,
             ),
         )
     : undefined;
+  // "换成讲座呢" / "那比赛呢" changes the subject of the previous list but
+  // keeps its time box. Treating the whole sentence as a keyword lost both the
+  // window and the category, so the follow-up fell back to no evidence.
+  const topicSwitch =
+    /^(?:那|那么)?\s*(?:换成|换个|改成|改看|再看|看看)\s*(.{2,14}?)(?:呢|吧|啊)?[。！!？?，,\s]*$/.exec(
+      message.trim(),
+    )?.[1]?.trim();
+  // The window is inherited from the turn that introduced it, not from the
+  // immediately preceding line: "还有吗" carries no date of its own, so looking
+  // only at the last message would drop the "最近两周" box on a topic switch.
+  const windowTurn = [...history]
+    .reverse()
+    .find(
+      (t) => t.role === "user" && requestTimeWindow(t.text, now) !== undefined,
+    );
+  const carriedWindow = windowTurn ? requestTimeWindow(windowTurn.text, now) : undefined;
   const query = campusFoodQuery(
-    previousDiscovery
-      ? previousDiscovery.text + "；再找更多；"
-      : previous
-        ? isResultFollowup(message)
-          ? previous + "；再查更多；"
-          : previous + "；追问：" + message
-        : message,
+    topicSwitch
+      ? `${topicSwitch}${carriedWindow ? `；${windowTurn!.text}` : ""}`
+      : previousDiscovery
+        ? previousDiscovery.text + "；再找更多；"
+        : previous
+          ? isResultFollowup(message)
+            ? previous + "；再查更多；"
+            : previous + "；追问：" + message
+          : message,
   );
   // A new explicit time constraint wins over a relative date in previous turns.
   const timeWindow =
     requestTimeWindow(message, now) || requestTimeWindow(query, now);
   const knowledge =
-    /规则|规定|制度|政策|办法|流程|指南|手续|借书|借阅|续借|选课|申请条件|评定条件|资格|材料|怎么办|怎么[办理借]|如何[办理借]|奖学金.*(?:条件|有哪些)|(?:有哪些|什么).*奖学金|需要满足/.test(
+    /规则|规定|制度|政策|办法|流程|指南|手续|借书|借阅|续借|选课|申请条件|评定条件|资格|材料|怎么办|怎么[办理借]|如何[办理借]|奖学金.*(?:条件|有哪些)|(?:有哪些|什么).*奖学金|需要满足|奖金|发放|奖励标准|报销|补贴/.test(
       query,
     );
   const timeMarkerOnly =
@@ -194,9 +218,23 @@ export function contentIntent(
           .replace(/\s+/g, "")
           .slice(0, 120)
       : searchKeywords(message);
+  // A facility question ("校内有哪些快递点", "收快递除了驿站还有别的点吗") is a
+  // place lookup, not a knowledge lookup: the campus map knows every courier
+  // counter, printer and supermarket, while the article corpus has almost
+  // nothing. Only an existence/list/location question qualifies; asking about
+  // opening hours or fees stays a knowledge question.
+  const facilityListing =
+    /(?:有哪些|有没有|哪个|哪几|哪些|在哪|位置|除了|还有别的|还有没有)/.test(
+      message,
+    ) &&
+    /(?:快递|驿站|打印|图文|超市|便利店|充值点|水电充值)/.test(message) &&
+    !/(?:几点|时间|收费|多少钱|费用|怎么办理|怎么申请|怎么挂失)/.test(
+      message,
+    );
   const map =
     !articleLookup &&
-    (navigationIntent(message).routeQuestion ||
+    (facilityListing ||
+      navigationIntent(message).routeQuestion ||
       explicitMapCommand(message) !== null ||
       /^(?:这里|那里|这栋|那栋)[。？?]*$/.test(message) ||
       // “假草场在哪” is a place question, but only when the sentence names a
@@ -238,7 +276,11 @@ export function contentIntent(
   // published_at DESC; older items only appear when more are requested.
   const recentDiscovery =
     multiTopic ||
-    (/最近|近期|最新/.test(query) &&
+    // A time-boxed browse ("最近两周有什么讲座") is an event-date query, not
+    // "newest articles in this category". Letting the recency lane win hid the
+    // whole window and produced a publication list instead of upcoming events.
+    (timeWindow?.role !== "event" &&
+      /最近|近期|最新/.test(query) &&
       (!!radarCategory || /资讯|新闻|动态|消息|资料|文章/.test(query)));
   // Feedback about the previous answer must not become a new search keyword;
   // otherwise campus context from the resolved follow-up query decides the act.
@@ -314,7 +356,7 @@ export function contentIntent(
   const RETRIEVAL_LEAD =
     /^(?:请|帮我|我想|想|要|了解一下|了解下|了解|介绍一下|介绍下|介绍|说说|讲讲|查询|查一下|查下|查查|搜一下|搜下|搜搜|看看|看下|找一下|找找|推荐一下)\s*/;
   const coreQuery =
-    stripSearchControls(query)
+    stripTimeRange(stripSearchControls(query))
       .replace(RETRIEVAL_LEAD, "")
       .replace(/^广外(?=法学院|学院|大学|校区)/, " ")
       .replace(/广东外语外贸大学/g, " ")
@@ -384,6 +426,20 @@ export function contentIntent(
       ? core
       : "校园资讯";
   }
+  // “最近两周有什么可以参加的活动” is a time-boxed browse, not a keyword
+  // search. Once the time words and the verbs are gone nothing is left to
+  // filter on, and the event index must be read by date instead of requiring
+  // every article to contain the phrase “可以去参加”.
+  if (timeWindow && !articleLookup && !recentDiscovery) {
+    const subject = stripTimeRange(retrievalQuery)
+      .replace(
+        /可以去|能够去|能去|可以|能够|想|参加|参与|报名|活动|事情|校园|学校|的/g,
+        " ",
+      )
+      .replace(/[\s，,。！!？?；;]/g, "")
+      .trim();
+    retrievalQuery = subject || "活动";
+  }
   return {
     active: search && tools.length > 0,
     tools,
@@ -407,5 +463,8 @@ export function contentIntent(
     contentStatement,
     multiTopic,
     discoveryFollowup: !!previousDiscovery,
+    // A relative browse ("最近两周") may fall back to the nearest upcoming
+    // events; a written date range ("11月1日到11月5日") is a hard filter.
+    explicitDateRange: dateRangeIn(message, chinaDay(now)!) !== null,
   };
 }

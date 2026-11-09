@@ -154,6 +154,8 @@ export async function searchContent(
     before: _before,
     timeRole: _role,
     registrationState: _reg,
+    excludeDocumentIds: _exclude,
+    nearestIfEmpty: _nearest,
     ...base
   } = event || {
     ...q,
@@ -161,11 +163,15 @@ export async function searchContent(
     before: undefined,
     timeRole: undefined,
     registrationState: undefined,
+    excludeDocumentIds: undefined,
+    nearestIfEmpty: undefined,
   };
   void _after;
   void _before;
   void _role;
   void _reg;
+  void _exclude;
+  void _nearest;
   const search = await new D1KeywordRetriever(
     db,
     requestSemanticRetriever(),
@@ -176,7 +182,9 @@ export async function searchContent(
       limit:
         event && (event.registrationState || event.after || event.before)
           ? Math.min(6, q.limit * 2)
-          : q.limit,
+          : event?.excludeDocumentIds?.length
+            ? Math.min(6, q.limit + event.excludeDocumentIds.length)
+            : q.limit,
     },
     PUBLIC_RETRIEVAL_SCOPE,
     undefined,
@@ -304,6 +312,11 @@ export async function searchContent(
     result.warnings.push(
       "部分相关原文尚无可靠的对应日期，作为待核对资料返回；不能声称符合所问日期范围或没有活动，需继续官方补查。",
     );
+  // A page must never repeat a row the previous turn already listed, so the
+  // exclusion is applied before the limit rather than after it.
+  const excluded = new Set(event?.excludeDocumentIds ?? []);
+  if (excluded.size)
+    result.hits = result.hits.filter((h) => !excluded.has(h.documentId));
   result.hits = result.hits.slice(0, q.limit);
   const returned = new Set(result.hits.map((h) => h.documentId));
   result.activities = result.activities.filter((a) =>
