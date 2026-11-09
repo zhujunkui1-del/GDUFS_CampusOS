@@ -499,11 +499,17 @@ export class IngestionStore extends ConsoleStore {
       // re-reads from the newest page, so anything past this depth will be
       // reached by a later run anyway; without the cap a site whose pager
       // keeps producing fresh links can hold a job hostage for hours.
+      // Nothing new on this page means every link on it is already stored.
+      // Archives are ordered newest-first, so a mid-list page that is entirely
+      // known cannot have fresh articles behind it; walking deeper only burns
+      // steps re-reading the same old pages run after run.
+      const nothingNew = value.discovered.length > 0 && unknown.length === 0;
       const pageCapReached = checkpoint.pageCount >= MAX_PAGES_PER_ENTRY;
       const nextPage =
         value.nextPage &&
         !pageCapReached &&
         !allDatedArticlesAreBeforeCutoff &&
+        !nothingNew &&
         !repeatedPage &&
         !checkpoint.visitedPageHashes.includes(nextPageHash || "")
           ? value.nextPage
