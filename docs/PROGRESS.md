@@ -2262,3 +2262,31 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 仍有 16 条短答，分三类：语料确实没有（清真窗口、快递驿站、电磁炉、出国交换）；关键词抽得太窄（「国家助学贷款」只抽到「国家」）；模型两轮写不出带引用的答案，落到最后兜底（新生报到材料）。
 
 **未能解决**：手册里「缓考」有 4 段、《2026-2027 学年第一学期校历》就在库里（2 分块、已发布、已加白名单），但这两题仍然答「资料里没有」。候选是召回到了的（29 / 51 条），是排序把它们挤出了前 5。下一步要看 `queryRelevance` 打分与 bm25 的相对权重，而不是继续放宽召回。
+
+## 2026-11-09｜采集器：调度器恢复登记、标题去横幅、队列分页收尾
+
+**调度器停摆的根因**：`console_engine_settings.scheduler_result_json` 长期是
+`{"state":"failed","registered":0,"reason":"POLICY_OR_VERSION_CHANGED","detail":"CONSOLE_SOURCE_NOT_READY"}`，
+而 `scheduler_last_at` 每分钟都在更新，表面上像是正常。逐源用原生 SQL 重放 `job.create` 才发现，
+36 个到期源里只有 `GDUFS-SRC-0024`（国际学院）会失败：它的 `affiliation_status='unknown'`、
+`governance_checked_at=null`，而迁移 `0034_owner_directed_manual_web_runs.sql` 的
+`console_v2_command_guard` 要求 `affiliation_status='confirmed'` 且 `governance_checked_at IS NOT NULL`
+（`0032_owner_directed_web_collection.sql` 的 `ingestion_command_guard` 另查许可有效期）。
+一条源的守卫失败就让整批 `db.batch` 回滚，于是调度器一分钟也没有登记成功过。
+
+**修复**：对 `GDUFS-SRC-0024` 重跑 `admin/v2/sources/{id}/governance`（affiliation=confirmed、
+operating=active、evidence 用官网首页），版本升到 16。之后 36 个到期源全部通过守卫探测，
+`scheduler_result_json` 回到 `{"state":"no_eligible_due_source","registered":0,"completed":0}`，
+队列重新流动（completed 361 → 374，queued 28 → 0）。
+
+**标题带站点横幅**：`connector.ts` 的 parse() 现在优先读 `<meta name="pageTitle">` 的 `content`，
+选择器命中「标题-站点名」时用 meta 替换，再退回去掉横幅的 `<title>`。新采集的
+`GDUFS-SRC-0029` 文章标题已无「-经济贸易学院」后缀。存量 283 条旧标题没有批量改：
+`knowledge_documents` 的 `console_contract_publish_update` 触发器要求
+`candidate_kind='knowledge'` 的行必须有 `knowledge_category`，而库里这类行有 771 条分类为空，
+批量 UPDATE 会整批 `CONSOLE_CONTENT_NOT_READY [SQLITE_CONSTRAINT_TRIGGER]`，只能等下次采集自然刷新。
+
+**分页与吞吐**：一次采集最多走 20 页（`MAX_PAGES_PER_ENTRY`）、每 tick 最多 40 步（`MAX_STEPS_PER_TICK`），
+55 秒软截止；队列按 `updated_at` 轮转，避免新任务被老任务饿死。
+
+**验证**：`npx tsc --noEmit` 0 error；`npx vitest run` 150 文件 1029 用例通过；预览版本 `55bf3ee1-2728-408d-969d-62e7f4ec12d8`。
