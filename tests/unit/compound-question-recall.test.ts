@@ -179,3 +179,30 @@ it("finds a rule whose two words are stated in different chapters", async () => 
     f.close();
   }
 }, 15000);
+
+it("still finds the chapter that the subject names", async () => {
+  const f = await dateGateFixture();
+  try {
+    await add(
+      f,
+      "handbook",
+      "2026年本科生学生手册（全文）",
+      "第九章 缓考与补考\n第三十九条 学生因故不能参加考试的，可以申请缓考，办理缓考手续须在考前提交书面申请。",
+    );
+    await add(
+      f,
+      "notice",
+      "2026年春季学期期末考试安排",
+      "本次期末考试安排如下，请各位同学按时参加。",
+    );
+    const r = await searchContent(
+      f.db,
+      "knowledge",
+      { query: "缓考请假要走什么手续？", limit: 4 },
+      "2026-10-21T00:00:00Z",
+    );
+    expect(r.hits[0]?.documentId).toBe("handbook");
+  } finally {
+    await f.close();
+  }
+});

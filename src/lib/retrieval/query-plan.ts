@@ -302,6 +302,19 @@ function modifierPresent(text: string, term: string) {
   const [head, ...rest] = pairs;
   return text.includes(head) && rest.some((p) => text.includes(p));
 }
+// “缓考请假” is one subject with a second word glued on. When a document
+// holds the subject but not the tail — the handbook has a chapter on 缓考 but
+// never says 请假 — the question is still about that chapter. Narrowing to the
+// head word gives the second pass a chance without loosening the first.
+export function headOfSubject(plan: QueryPlan): QueryPlan {
+  const modifiers = plan.modifiers.map((m) => {
+    const chars = [...m.original];
+    if (chars.length < 4 || !/^[\p{Script=Han}]+$/u.test(m.original)) return m;
+    const head = chars[0] + chars[1];
+    return { original: head, alternatives: [head] };
+  });
+  return { ...plan, modifiers };
+}
 export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const title = (hit.title || "").normalize("NFKC").toLowerCase(),
     body = (hit.contentSnippet ?? hit.snippet ?? "")

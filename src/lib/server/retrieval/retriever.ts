@@ -13,7 +13,11 @@ import {
   type RetrievalResult,
 } from "@/domain/retrieval/contracts";
 import { ftsRecallLanes, keywords } from "@/lib/retrieval/terms";
-import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
+import {
+  buildQueryPlan,
+  headOfSubject,
+  queryRelevance,
+} from "@/lib/retrieval/query-plan";
 import {
   participationQuery,
   activityNounQuery,
@@ -752,17 +756,34 @@ ${sourceFilterSql}
       if (
         !relevance.relevant &&
         (relevance.reason === "subject_modifier_missing" ||
-          relevance.reason === "goal_evidence_missing") &&
-        choices.length > 1
-      )
-        relevance = queryRelevance(plan, {
-          title: d.title,
-          sourceName: d.display_name,
-          contentSnippet: choices
-            .map((chunk) => chunk.text)
-            .join("\n")
-            .slice(0, 20000),
-        });
+          relevance.reason === "goal_evidence_missing")
+      ) {
+        const whole =
+          choices.length > 1
+            ? choices
+                .map((chunk) => chunk.text)
+                .join("\n")
+                .slice(0, 20000)
+            : c.text;
+        if (choices.length > 1)
+          relevance = queryRelevance(plan, {
+            title: d.title,
+            sourceName: d.display_name,
+            contentSnippet: whole,
+          });
+        // The question glued a second word onto the subject (“缓考请假”).
+        // The handbook has a chapter on 缓考 and never says 请假, so the
+        // joined text still fails; the head word is what the question asks.
+        if (
+          !relevance.relevant &&
+          relevance.reason === "subject_modifier_missing"
+        )
+          relevance = queryRelevance(headOfSubject(plan), {
+            title: d.title,
+            sourceName: d.display_name,
+            contentSnippet: whole,
+          });
+      }
       if (!titleIds && sortMode !== "published_desc" && !relevance.relevant)
         continue;
       if (
