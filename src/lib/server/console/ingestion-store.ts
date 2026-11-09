@@ -484,13 +484,17 @@ export class IngestionStore extends ConsoleStore {
         (url) => !known.includes(url) && !ignored.has(url),
       );
       const cutoff = profile.earliestImportDay;
-      const allUnknownArticlesAreBeforeCutoff =
+      // Every dated row on this page is older than the gate, so deeper pages
+      // cannot hold anything newer. This used to look at the *unknown* rows
+      // only, which meant a page whose links were all already known never
+      // stopped the walk and the job crawled the whole archive forever.
+      const dated = value.discovered.filter((url) =>
+        discoveredDates.has(url),
+      );
+      const allDatedArticlesAreBeforeCutoff =
         !!cutoff &&
-        unknown.length > 0 &&
-        unknown.every((url) => {
-          const publishedAt = discoveredDates.get(url);
-          return !!publishedAt && publishedAt < cutoff;
-        });
+        dated.length > 0 &&
+        dated.every((url) => discoveredDates.get(url)! < cutoff);
       // A hard ceiling on how far a single entry may be walked. Every run
       // re-reads from the newest page, so anything past this depth will be
       // reached by a later run anyway; without the cap a site whose pager
@@ -499,7 +503,7 @@ export class IngestionStore extends ConsoleStore {
       const nextPage =
         value.nextPage &&
         !pageCapReached &&
-        !allUnknownArticlesAreBeforeCutoff &&
+        !allDatedArticlesAreBeforeCutoff &&
         !repeatedPage &&
         !checkpoint.visitedPageHashes.includes(nextPageHash || "")
           ? value.nextPage
