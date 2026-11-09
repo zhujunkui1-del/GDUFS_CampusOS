@@ -426,12 +426,15 @@ export class IngestionStore extends ConsoleStore {
       // A single oversize page is a property of that page, not of the source:
       // a course-list table with a megabyte of markup used to end the whole
       // run. Keep it as a counted error so the next page still gets fetched.
-      const streak = checkpoint.errorStreak + 1;
-      if (value.outcome === "blocked" || streak >= 3) {
+      // An oversize page is a property of that page, not of the source, so it
+      // neither counts toward the streak nor breaks it.
+      const counts = value.outcome !== "too_large";
+      const streak = counts ? checkpoint.errorStreak + 1 : checkpoint.errorStreak;
+      if (value.outcome === "blocked" || (counts && streak >= 3)) {
         status = "failed";
         controlState = "paused";
       } else {
-        checkpoint.errorStreak = streak;
+        if (counts) checkpoint.errorStreak = streak;
         // A page that fails must be stepped over, not retried forever: the
         // same URL used to come back on every tick until the job died, and
         // the rest of the entry was never fetched.
