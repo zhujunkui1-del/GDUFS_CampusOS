@@ -299,6 +299,17 @@ export class ConsoleStore {
       const raced = await previous();
       if (raced) return duplicate(raced);
       const message = String(error);
+      // A generic failure hides the constraint that actually fired; log it so
+      // the next run can tell a trigger abort from a transport fault.
+      if (!message.includes("CONSOLE_"))
+        console.info(
+          JSON.stringify({
+            event: "console.command.failed",
+            action,
+            id,
+            message: message.slice(0, 400),
+          }),
+        );
       if (message.includes("CONSOLE_DENIED"))
         throw new ApiError("FORBIDDEN", "管理权限已失效。");
       if (message.includes("CONSOLE_STALE"))
