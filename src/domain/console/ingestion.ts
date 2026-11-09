@@ -21,6 +21,10 @@ export const CheckpointSchema = z
     entryIndex: z.number().int().min(0).max(49).default(0),
     pageCount: z.number().int().min(0).default(0),
     revalidate: z.boolean().default(false),
+    // How many pages in a row came back broken. A run with a handful of
+    // unreadable pages out of dozens is normal; only a run of them means the
+    // source itself is gone.
+    errorStreak: z.number().int().min(0).default(0),
   })
   .strict();
 export const PolicySchema = CommandSchema.extend({

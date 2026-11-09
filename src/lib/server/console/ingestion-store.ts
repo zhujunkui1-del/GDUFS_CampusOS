@@ -426,13 +426,12 @@ export class IngestionStore extends ConsoleStore {
       // A single oversize page is a property of that page, not of the source:
       // a course-list table with a megabyte of markup used to end the whole
       // run. Keep it as a counted error so the next page still gets fetched.
-      if (
-        value.outcome === "blocked" ||
-        Number(row.error_count) >= 2
-      ) {
+      const streak = checkpoint.errorStreak + 1;
+      if (value.outcome === "blocked" || streak >= 3) {
         status = "failed";
         controlState = "paused";
       } else {
+        checkpoint.errorStreak = streak;
         // A page that fails must be stepped over, not retried forever: the
         // same URL used to come back on every tick until the job died, and
         // the rest of the entry was never fetched.
@@ -461,6 +460,8 @@ export class IngestionStore extends ConsoleStore {
         }
       }
     } else if (phase === "discover") {
+      // A good page breaks the streak: scattered unreadable pages are normal.
+      checkpoint.errorStreak = 0;
       const pageHash = await tokenHash(value.url),
         nextPageHash = value.nextPage ? await tokenHash(value.nextPage) : null,
         repeatedPage =
@@ -612,6 +613,7 @@ export class IngestionStore extends ConsoleStore {
         status = "completed";
       }
     } else {
+      checkpoint.errorStreak = 0;
       let origin = await this.db
         .prepare(
           "SELECT * FROM document_origins WHERE source_id=? AND canonical_url=?",

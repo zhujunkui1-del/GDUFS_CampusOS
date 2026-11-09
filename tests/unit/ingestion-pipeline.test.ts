@@ -687,6 +687,36 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
       f.close();
     }
   });
+  it("keeps fetching after a handful of unreadable pages and only stops on a run of them", async () => {
+    const f = await setup();
+    try {
+      const urls = [0, 1, 2, 3, 4, 5].map((i) =>
+        f.url.replace("999001", String(999001 + i)),
+      );
+      await f.commit(await f.claim(), { discovered: urls });
+      const step = async (extra: Record<string, unknown> = {}) => {
+        const lease = await f.claim();
+        return f.commit(lease, {
+          ...extra,
+          article: { ...f.article, url: lease.url },
+        });
+      };
+      // Two unreadable pages in a row, then a good one: the run continues.
+      await step({ outcome: "parse_error" });
+      expect((await f.store.job(f.job.id)).status).toBe("queued");
+      await step({ outcome: "parse_error" });
+      expect((await f.store.job(f.job.id)).status).toBe("queued");
+      await step({ bodyHash: "a".repeat(64) });
+      expect((await f.store.job(f.job.id)).status).toBe("queued");
+      // Three in a row means the source itself is broken, not one page.
+      await step({ outcome: "parse_error" });
+      await step({ outcome: "parse_error" });
+      await step({ outcome: "parse_error" });
+      expect((await f.store.job(f.job.id)).status).toBe("failed");
+    } finally {
+      f.close();
+    }
+  });
   it("retains failure checkpoints and allows a job to pass the former daily request ceiling", async () => {
     const f = await setup();
     try {
