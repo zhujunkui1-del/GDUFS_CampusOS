@@ -791,7 +791,10 @@ describe("ingestion lease identity, clock and write races", () => {
       await f.commit(await f.claim(revalidate.id), {
         discovered: [f.url, fresh],
       });
-      expect((await f.claim(revalidate.id)).url).toBe(f.url);
+      const reread = await f.claim(revalidate.id);
+      expect(reread.url).toBe(f.url);
+      // A revalidate run must re-read the page instead of collecting a 304.
+      expect(reread.validators).toEqual({ etag: null, lastModified: null });
     } finally {
       f.close();
     }

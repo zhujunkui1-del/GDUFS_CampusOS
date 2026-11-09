@@ -316,10 +316,15 @@ export class IngestionStore extends ConsoleStore {
       publishedAtFromList:
         checkpoint.publishedDates.find((entry) => entry.url === url)
           ?.publishedAt || null,
-      validators: {
-        etag: origin?.etag || null,
-        lastModified: origin?.last_modified || null,
-      },
+      // A revalidate run exists to re-read a page we already hold, so it must
+      // not ask the server for a 304: the parser never sees a body then and
+      // the stored title can never be corrected.
+      validators: checkpoint.revalidate
+        ? { etag: null, lastModified: null }
+        : {
+            etag: origin?.etag || null,
+            lastModified: origin?.last_modified || null,
+          },
     };
   }
   async control(
