@@ -333,7 +333,16 @@ export class OfficialWebConnector {
       this.profile.titleSuffix && rawTitle.endsWith(this.profile.titleSuffix)
         ? rawTitle.slice(0, -this.profile.titleSuffix.length)
         : rawTitle.replace(/\s*[-–—|]\s*广东外语外贸大学[^-–—|]{0,14}$/, "").trim();
-    const title = meta && base.startsWith(meta) && base.length > meta.length ? meta : base;
+    // When the configured selector matches nothing, fall back to the page
+    // title so a document is never filed under an empty headline.
+    const banner = text(document.querySelector("title")).replace(
+      /\s*[-–—|]\s*广东外语外贸大学[^-–—|]{0,14}$/,
+      "",
+    ).trim();
+    const title =
+      meta && base.startsWith(meta) && base.length > meta.length
+        ? meta
+        : base || meta || banner;
     // Some templates put a space before the colon ("发布时间 : 2026-10-27"),
     // so match the label with optional whitespace instead of a fixed suffix.
     const labelRe = new RegExp(`${this.profile.dateLabel}\\s*[：:]`);

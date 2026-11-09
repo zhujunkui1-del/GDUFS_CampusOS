@@ -105,3 +105,18 @@ it("reads the headline from the pageTitle meta when the banner is appended", () 
   const html = `<html><head><meta name="pageTitle" content="喜报！我院项目入选省级试点名单"><title>喜报！我院项目入选省级试点名单-创新创业学院</title></head><body><div class="page-date">发布时间：2026-10-20</div><div class="v_news_content"><p>正文内容。</p></div></body></html>`;
   expect(connector.parse(html, url).title).toBe("喜报！我院项目入选省级试点名单");
 });
+
+it("falls back to the page title when the configured selector matches nothing", () => {
+  const profile = {
+    ...webProfiles[0],
+    titleSelector: ".missing-heading",
+    titleSuffix: "",
+    bodySelector: "div.v_news_content",
+    dateSelector: ".page-date",
+    dateLabel: "发布时间",
+  };
+  const connector = new OfficialWebConnector(profile),
+    url = profile.origin + profile.detailPathPrefixes![0] + "10279.htm";
+  const html = `<html><head><title>基础建设部2025年度职称推荐评审公示-广东外语外贸大学</title></head><body><div class="page-date">发布时间：2026-10-20</div><div class="v_news_content"><p>正文内容。</p></div></body></html>`;
+  expect(connector.parse(html, url).title).toBe("基础建设部2025年度职称推荐评审公示");
+});
