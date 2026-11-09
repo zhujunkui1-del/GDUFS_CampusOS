@@ -2365,3 +2365,19 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 **改 profile 后必须重刷 owner-policy**：`scheduler.ts` 要求 `profile.ruleVersion === source_collection_policies.rule_version`，而 profile 每次保存都会把 ruleVersion 里的版本号加一。只改 profile 不重刷 policy，调度器会一直跳过该源，且表面上一切正常（`sync_state='ready'`、到期时间已过）。用 `POST /api/admin/v2/web-collection/<id>/owner-policy` 即可。
 
 验证：新增 `tests/unit/ingestion-pipeline.test.ts`「ends an entry at the page cap instead of rediscovering the same page forever」；`npx vitest run tests/unit/ingestion-pipeline.test.ts tests/unit/console-v2-sync.test.ts tests/unit/official-publication-date.test.ts` → 44 passed；`tsc --noEmit` 0 error。部署 `f78ccd95-5b12-400e-9dfb-9061e9f95aed` → `6096f525-0c62-4954-889a-68a43b02b62e`。
+
+## 2026-11-09｜两张过期证书的站点：HTTP 回退与 robots.txt 缺失
+
+`GDUFS-SRC-0013`（英文网）与 `GDUFS-SRC-0015`（建校六十周年专题网）的证书仍是旧的 `*.gdufs.edu.cn`（`notAfter` 为 2026-11-06），Cloudflare 出网一律 526，这两站在采集器里一直是 `blocked`。但两站的 HTTP 页面完全正常：`http://english.gdufs.edu.cn/News_Events/News.htm` 200 / 19313 字节，`http://gdufs60.gdufs.edu.cn/xqxw/xqyw.htm` 200 / 23577 字节。
+
+**1. HTTP 回退只对该站生效。** 原 `approvedUrl()` 硬编码 `protocol !== "https:"` 就抛 `URL_NOT_ALLOWED`。现在 `WebProfile` 增加 `allowInsecureHttp`，由 `profileFromSource()` 从该源自己的 `website_url` 推导（`http:` 才为 true），并把它钉在自己的 scheme 上：`http` 源不允许被静默升级成 HTTPS，因为那正是证书失效的那条路径。其余源照旧 HTTPS-only。`connector.ts` 里 `absoluteHttpsReference` / `absoluteCssReferences` / `absolutizeHtmlReferences`、附件与图片地址解析都透传这个开关。
+
+**2. 英文站的时间戳是英文月份。** `parseCampusTime()` 只认 `2026-10-09` 这种数字戳，而英文站详情页写的是 `Time:October 9, 2026`，于是 `publishedAt` 恒为空、门禁把每一篇都挡掉。新增 `englishDate()` 识别 `October 9, 2026` 形式。
+
+**3. 校庆站列表是「01.03 2026」。** 列表行的日期是半分日戳，原正则只认 `10/26` 形式，补一条 `01.03 2026` 的点分形式。
+
+**4. robots.txt 取不到不等于站点关闭。** 两站对 `/robots.txt` 都返回 520（页面本身正常），而 `WorkerSafeWebFetcher` 遇到非 200/404 直接抛 `ROBOTS_UNAVAILABLE`，整个 discover 在读到第一条链接之前就失败了——这一步发生在任何文章页之前，所以即便 HTTP 修好也只是换成另一个 `BLOCKED`。改为：取不到 robots.txt 视作「没有规则集」，照常抓取，来源策略里仍记录这次观测。
+
+结果：`GDUFS-SRC-0013` completed，8 篇正文入库，最新 2026-10-09；`GDUFS-SRC-0015` 已发现 10 篇，最新 2026-01-03。91 站盘面随之变成 configured=89 / withRecent=80 / zero=11。
+
+验证：新增 `tests/unit/ingestion-pipeline.test.ts`「keeps other sources HTTPS-only but lets a plain-HTTP source through」与 `tests/unit/official-publication-date.test.ts`「reads the English month stamp and the dotted day stamp」；`npx vitest run` 154 文件 1068 用例全绿；`tsc --noEmit` 0 error。部署 `61defe42-7fd3-4799-a3a9-55dcfb42bf60`。
