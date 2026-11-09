@@ -416,8 +416,11 @@ export class IngestionStore extends ConsoleStore {
     const error = !["ok", "not_modified"].includes(value.outcome);
     if (error) {
       errorCode = value.outcome.toUpperCase();
+      // A single oversize page is a property of that page, not of the source:
+      // a course-list table with a megabyte of markup used to end the whole
+      // run. Keep it as a counted error so the next page still gets fetched.
       if (
-        ["blocked", "too_large"].includes(value.outcome) ||
+        value.outcome === "blocked" ||
         Number(row.error_count) >= 2
       ) {
         status = "failed";
