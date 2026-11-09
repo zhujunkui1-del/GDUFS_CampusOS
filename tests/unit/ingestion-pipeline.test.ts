@@ -414,8 +414,9 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
       // The cap is terminal for this entry: the page pointer must not survive,
       // otherwise the next tick re-reads the same deep page and the entries
       // behind it are never reached.
-      expect(JSON.parse(job.checkpoint_json ?? "{}").page).toBeNull();
-      expect(job.checkpoint_json ?? "").not.toContain("/37.htm");
+      const checkpoint = String(job.checkpoint_json ?? "{}");
+      expect(JSON.parse(checkpoint).page).toBeNull();
+      expect(checkpoint).not.toContain("/37.htm");
     } finally {
       f.close();
     }
