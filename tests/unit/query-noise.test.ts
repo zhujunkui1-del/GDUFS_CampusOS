@@ -113,3 +113,22 @@ describe("a question about where to look keeps only the noun", () => {
     ).toHaveLength(0);
   });
 });
+
+it("drops a time word and a counted question from the subject", () => {
+  // 「校园卡挂失之后怎么补办」 — the notice says 挂失后, never 之后.
+  expect(buildQueryPlan("校园卡挂失之后怎么补办？").modifiers).toEqual([]);
+  // 「图书馆一次能借几本书」 — the article says 每次可借 5 册, so the question
+  // phrase cannot match and the topic word has to carry the search.
+  expect(buildQueryPlan("图书馆一次能借几本书？").modifiers).toEqual([]);
+});
+
+it("splits a question that glues two clauses into one phrase", () => {
+  expect(
+    buildQueryPlan("收快递除了驿站还有别的点吗？").modifiers.map(
+      (m) => m.original,
+    ),
+  ).toEqual(["收快递", "驿站"]);
+  expect(
+    buildQueryPlan("外来访客进校需要登记吗？").modifiers.map((m) => m.original),
+  ).toEqual(["外来访客进校", "登记"]);
+});

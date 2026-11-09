@@ -234,6 +234,20 @@ export function buildQueryPlan(
     .map((t) => t.replace(/[是有走要看查找办做用评算去来]+$/u, ""))
     .map((t) => t.replace(LOOKUP_CLAUSE, ""))
     .map((t) => t.replace(/(?:得到|知道|获取|看到|查到|找到)$/u, ""))
+    // “校园卡挂失之后怎么补办” kept “之后” as the subject: the article says
+    // “挂失后”, never “之后”. Time words are not what the question is about.
+    .map((t) => t.replace(/(?:之后|以前|之前|以后|的时候|时)$/u, ""))
+    // “一次能借几本书” is a counted question, not a subject. The article
+    // writes “每次可借 5 册”, so the question phrase matches nothing and the
+    // topic word has to carry the search. Keep short ones (“功率限制”).
+    .filter((t) => !(t.length > 4 && /[几多少]/.test(t)))
+    // “收快递除了驿站还有别的点吗” and “外来访客进校需要登记吗” are two
+    // clauses glued together. The clause boundary is a verb, not a noun, so
+    // the subject is what comes before it.
+    .flatMap((t) => {
+      const parts = t.split(/需要|除了|可以|能够|能不能|有没有|还有/u);
+      return parts.filter((p) => p.length >= 2);
+    })
     .filter(
       (t) =>
         t.length >= 2 && !MODIFIER_NOISE.test(t) && !COUNT_QUESTION.test(t),
