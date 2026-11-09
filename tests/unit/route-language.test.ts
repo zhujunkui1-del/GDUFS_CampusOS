@@ -100,3 +100,14 @@ describe("map route language", () => {
     ]);
   });
 });
+
+it("does not treat a service question as a route", () => {
+  // 「路线怎么走」 asks about the bus line, not a path between two places.
+  // Reading it as a route sent the map tool looking for a destination that
+  // does not exist, and the user got 「未找到该地点或路线」.
+  for (const text of ["校园里有校车吗，路线怎么走？", "校车怎么走？"]) {
+    const intent = navigationIntent(text);
+    expect(intent.routeQuestion).toBe(false);
+    expect(contentIntent(text).map).toBe(false);
+  }
+});

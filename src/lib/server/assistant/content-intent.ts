@@ -205,9 +205,13 @@ export function contentIntent(
       // turn ended with NOT_FOUND.
       (navigationIntent(message).namedPlaces.length > 0 &&
         /在哪|哪里|哪儿|告诉我.*哪里|位置|怎么去/.test(message)) ||
-      /(?:地图|定位|路线|导航|带我去|带我走|带我过去|导航到|导航去|怎么走|怎么过去|怎么走到|如何去|怎样去|前往|走向|走到|从.+?(?:去|到|至|前往)|(?:帮我找|找一下|找)(?:图书馆|教学楼|饭堂|食堂|超市|宿舍|校门|体育馆|操场|打印店|快递|校医院))/.test(
-        message,
-      ));
+      // The same word without a place is a question about the service, not a
+      // path: 「校园里有校车吗，路线怎么走？」 asks where the bus runs, and
+      // sending it to the map made search_places answer NOT_FOUND.
+      (navigationIntent(message).namedPlaces.length > 0 &&
+        /(?:地图|定位|路线|导航|带我去|带我走|带我过去|导航到|导航去|怎么走|怎么过去|怎么走到|如何去|怎样去|前往|走向|走到|从.+?(?:去|到|至|前往)|(?:帮我找|找一下|找)(?:图书馆|教学楼|饭堂|食堂|超市|宿舍|校门|体育馆|操场|打印店|快递|校医院))/.test(
+          message,
+        )));
   // Radar tags are the product's own business categories. Lock the event search
   // to the category the user actually named instead of relying on FTS words.
   const radarCategory = multiTopic

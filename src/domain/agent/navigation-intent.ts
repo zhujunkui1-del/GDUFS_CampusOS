@@ -13,7 +13,13 @@ const ROUTE_RE =
 // contain 去 but ask where to go for help, not how to walk somewhere. A route
 // needs a real destination, so the named-place check below is what separates
 // them — without it seven campus questions were answered by the map tool.
-const ROUTE_KEYWORD_RE = /怎么走|怎么去|怎么过去|怎么走到|规划.*路线/;
+//
+// “校园里有校车吗，路线怎么走？” asks about a bus service, not a path: the
+// phrase 路线怎么走 is there but no campus place is named, so the map tool
+// would search for a destination that does not exist and answer NOT_FOUND.
+// The keyword alone therefore no longer qualifies; it only decides between
+// asking for a start point and answering an article question once a place
+// has been named.
 const PAIR_RE = /(?:从)?(.+?)(?:到|去|至|前往|走向|走到|→|->)(.+)/;
 const places = searchCampusPlaces("");
 
@@ -124,7 +130,7 @@ export function navigationIntent(
   const routeQuestion =
     !/不要|不用|不必|别去|不去|取消/.test(question) &&
     ROUTE_RE.test(question.replace(/找到|查到|定位到/g, "找")) &&
-    (namedPlaces.length > 0 || ROUTE_KEYWORD_RE.test(question));
+    namedPlaces.length > 0;
   const pair = PAIR_RE.exec(question.replace(/找到|查到|定位到/g, "找"));
   const startText = pair?.[1];
   const explicitFrom = /从.+(?:去|到|至|前往|走向|走到)/.test(question);
