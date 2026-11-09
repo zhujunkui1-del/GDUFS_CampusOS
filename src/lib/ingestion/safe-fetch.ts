@@ -156,11 +156,9 @@ export class SafeWebFetcher {
               return;
             }
             if (kind === "robots") {
-              if (![200, 404].includes(status)) {
-                reject(Error("ROBOTS_UNAVAILABLE"));
-                return;
-              }
-              this.robots = status === 404 ? "" : html;
+              // Same rule as the worker fetcher: an unavailable robots.txt
+              // means "no rule set", not "site closed".
+              this.robots = [200, 204].includes(status) ? html : "";
               this.delayMs = Math.max(
                 this.delayMs,
                 robotsCrawlDelay(this.robots),

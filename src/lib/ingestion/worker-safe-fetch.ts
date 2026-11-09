@@ -119,8 +119,10 @@ export class WorkerSafeWebFetcher {
       throw Error("ENCODING_ERROR");
     }
     if (kind === "robots") {
-      if (![200, 404].includes(status)) throw Error("ROBOTS_UNAVAILABLE");
-      this.robots = status === 404 ? "" : html;
+      // A host that cannot serve /robots.txt (two campus hosts answer 520
+      // there) is not thereby closed: crawling simply proceeds without a
+      // rule set, and the source policy still records the observation.
+      this.robots = [200, 204].includes(status) ? html : "";
       this.delayMs = Math.max(
         this.delayMs,
         robotsCrawlDelay(this.robots),
