@@ -156,7 +156,7 @@ it("bounds input media and refuses non-public destinations before any fetch", as
     { kind: "image", url: "https://mmbiz.qpic.cn/poster", locator: "img[4]" },
   ]);
 });
-it("stops automatic attempts after two and never adds a review gate", async () => {
+it("stops automatic attempts after three and never adds a review gate", async () => {
   const f = await dateGateFixture();
   try {
     const d = await f.store.document("spring"),
@@ -179,14 +179,17 @@ it("stops automatic attempts after two and never adds a review gate", async () =
     await runCalendarBatch(f.db, { run });
     await runCalendarBatch(f.db, { run });
     await runCalendarBatch(f.db, { run });
-    expect(run.mock.calls.length).toBeLessThanOrEqual(2);
+    // A thrown step is a transient fault, not a verdict: one bad minute must
+    // not park the row forever, so it takes three consecutive failures.
+    await runCalendarBatch(f.db, { run });
+    expect(run.mock.calls.length).toBeLessThanOrEqual(3);
     expect(
       f.sqlite
         .prepare(
           "SELECT calendar_attempts,calendar_status FROM document_article_analysis WHERE document_id=?",
         )
         .get(d.id),
-    ).toEqual({ calendar_attempts: 2, calendar_status: "excluded" });
+    ).toEqual({ calendar_attempts: 3, calendar_status: "excluded" });
     expect(f.visible()).toContain("spring");
   } finally {
     f.close();

@@ -42,7 +42,7 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
       (budget?.calls || 0) < 40);
   const candidates = await db
     .prepare(
-      `SELECT x.document_id,x.content_revision,x.input_hash,x.calendar_status FROM document_article_analysis x WHERE x.calendar_status ${canEnrich ? "IN('pending','needs_enrichment')" : "='pending'"} AND x.calendar_attempts IN(0,1) AND x.calendar_lease_until_ms<? ORDER BY x.calendar_status,x.calendar_attempts,x.calendar_lease_until_ms,x.document_id LIMIT 2`,
+      `SELECT x.document_id,x.content_revision,x.input_hash,x.calendar_status FROM document_article_analysis x WHERE x.calendar_status ${canEnrich ? "IN('pending','needs_enrichment')" : "='pending'"} AND x.calendar_attempts IN(0,1,2) AND x.calendar_lease_until_ms<? ORDER BY x.calendar_status,x.calendar_attempts,x.calendar_lease_until_ms,x.document_id LIMIT 2`,
     )
     .bind(Date.now())
     .all<{
@@ -124,9 +124,13 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
       if (a.calendar?.status === "accepted") result.accepted++;
     } catch {
       result.failures++;
+      // A thrown step is usually a transient fault (a lost lease, a D1
+      // hiccup), not a verdict about the article. Parking the row on the
+      // second failure made one bad minute permanent, so it takes three
+      // consecutive failures before the row is given up on.
       await db
         .prepare(
-          "UPDATE document_article_analysis SET calendar_attempts=calendar_attempts+1,calendar_lease_until_ms=0,calendar_status=CASE WHEN calendar_attempts>=1 THEN 'excluded' ELSE 'needs_enrichment' END WHERE document_id=? AND input_hash=? AND content_revision=?",
+          "UPDATE document_article_analysis SET calendar_attempts=calendar_attempts+1,calendar_lease_until_ms=0,calendar_status=CASE WHEN calendar_attempts+1>=3 THEN 'excluded' ELSE 'needs_enrichment' END WHERE document_id=? AND input_hash=? AND content_revision=?",
         )
         .bind(c.document_id, c.input_hash, c.content_revision)
         .run();
