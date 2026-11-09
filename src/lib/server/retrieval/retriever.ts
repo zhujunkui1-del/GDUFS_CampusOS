@@ -834,10 +834,22 @@ ${sourceFilterSql}
       // "How do I apply for a deferred exam" is answered by the rulebook, not
       // by a faculty notice that lists when this term's deferred exams happen.
       // Both mention the word; only one states the procedure.
+      // A rulebook states the rule once per article; a notice that merely
+      // mentions the word repeats it in a table header. Count how often the
+      // subject actually appears in the body, so a handbook that spends a
+      // chapter on deferred exams outranks an announcement that lists dates.
+      const rulebookTitle = /手册|条例|细则|规定|办法|章程|规章/.test(d.title);
       const rulebookBoost =
         ["procedure", "policy", "requirements"].includes(plan.goal) &&
-        /手册|条例|细则|规定|办法|章程|规章/.test(d.title)
-          ? 3
+        rulebookTitle
+          ? 3 +
+            Math.min(
+              3,
+              plan.modifiers.reduce(
+                (n, m) => n + occurrences(c.text, m.original),
+                0,
+              ),
+            )
           : 0;
       // "缓考安排" is a timetable for this term's exams, not the procedure for
       // asking for one. When someone asks how to do something, a title that
