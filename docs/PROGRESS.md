@@ -2415,3 +2415,15 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 真正的天花板是供给：正文含未来日期的只有 345 篇，PKU Know 那一周是三位数。要在这个量级上追赶，得补活动导向的来源（院系、社团、图书馆讲座栏目）并把海报图的 OCR 纳入主路径——这两件事本轮没做。
 
 验证：新增 `tests/unit/calendar-extraction.test.ts`（三个回顾类归 `past_event`、一个预告仍进队）、`tests/unit/calendar-enrichment.test.ts`（新文章先用预算、操作员 cap 生效）、`tests/unit/calendar-query.test.ts`（空周指向下一个有活动的日子）；`npx vitest run tests/unit` 155 文件 1082 用例全绿；`tsc --noEmit` 0 error。
+
+## 2026-11-10｜revalidate 拿不到正文：条件请求把 304 当成了「读过了」
+
+存量里还有 118 篇标题带站点横幅（「-广东外语外贸大学新闻中心」之类），因为早期 profile 用 `h1, title` 取到了 `<title>`。改对选择器只能影响**新**入库的文章，已有的必须重新读一遍页面。
+
+为此建了 `mode: "revalidate"` 的作业：它把 `document_origins` 里已知的、仍在门禁内的 URL 排到最前面重抓。但跑完发现 `body_count` 涨了、标题却没变——`claim()` 无论什么模式都把 `etag`/`last_modified` 交给抓取器，服务器回 **304**，`parse()` 根本没看到 HTML，`not_modified` 分支只复用旧记录，标题自然原封不动。
+
+修法是让 revalidate 不带条件请求头：它存在的意义就是重读，不该被自己的缓存拦下来。`claim()` 里改成 `validators: checkpoint.revalidate ? { etag: null, lastModified: null } : {...}`，并在 `tests/unit/ingestion-pipeline.test.ts` 的 revalidate 用例里断言 `validators` 全为 null。
+
+验证：`npx vitest run tests/unit/ingestion-pipeline.test.ts` 28 passed；`tsc --noEmit` 0 error；干净构建后部署 `0612c573-a520-44a7-ab18-2523ebf252db`（commit `faa9126`）。
+
+附带确认：`/api/admin/v2/sync` 只接受 `{commandId, sourceId}`（`syncNow` 的 strict schema），要指定 `mode`/`maxArticles` 得走 `/api/admin/jobs` 的 `createJob`；后者是 v2 里唯一会顺带把 `sync_state` 置 `queued` 的入口。
