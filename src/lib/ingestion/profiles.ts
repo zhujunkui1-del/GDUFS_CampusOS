@@ -23,6 +23,10 @@ export type WebProfile = {
   detailPath: string;
   detailPathPrefixes?: string[];
   allowQueryUrls?: boolean;
+  // A handful of campus sites still serve only plain HTTP because their
+  // certificate expired and nobody renewed it. The profile keeps the
+  // restriction explicit so every other source stays HTTPS-only.
+  allowInsecureHttp?: boolean;
   requestIntervalMs?: number;
 };
 const ruleVersion = "official-web-2026-10-19.4";
@@ -115,15 +119,19 @@ export function profileFromSource(input: {
       JSON.parse(raw),
     );
     const homepage = input.websiteUrl ? new URL(input.websiteUrl) : null;
-    if (!homepage || homepage.protocol !== "https:")
+    if (!homepage || !["https:", "http:"].includes(homepage.protocol))
       throw Error("PROFILE_ORIGIN_REQUIRED");
-    const origin = homepage.origin;
+    const origin = homepage.origin,
+      // An expired certificate leaves the site on plain HTTP only; carry the
+      // exception through the profile so approvedUrl() can stay strict for
+      // every other source.
+      allowInsecureHttp = homepage.protocol === "http:";
     if (
       config.entryUrls.some((value) => {
         const entry = new URL(value);
         return (
-          entry.origin !== origin ||
-          entry.protocol !== "https:" ||
+          entry.host !== homepage.host ||
+          entry.protocol !== homepage.protocol ||
           !!entry.username ||
           !!entry.password ||
           !!entry.port ||
@@ -151,6 +159,7 @@ export function profileFromSource(input: {
       detailPath: "",
       detailPathPrefixes: config.articlePathPrefixes,
       allowQueryUrls: config.allowQueryUrls,
+      allowInsecureHttp,
       requestIntervalMs: config.requestIntervalMs,
     } satisfies WebProfile;
   }
@@ -170,9 +179,15 @@ export function approvedUrl(
 ) {
   const u = new URL(raw, p.entryUrl);
   u.hash = "";
+  const origin = new URL(p.origin),
+    // A plain-HTTP profile stays on its own scheme: HTTPS there is a different
+    // certificate, which is exactly what broke.
+    schemeOk = p.allowInsecureHttp
+      ? u.protocol === "http:"
+      : u.protocol === "https:";
   if (
-    u.origin !== p.origin ||
-    u.protocol !== "https:" ||
+    u.host !== origin.host ||
+    !schemeOk ||
     u.username ||
     u.password ||
     [...u.searchParams.keys()].some((key) =>

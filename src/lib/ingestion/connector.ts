@@ -16,32 +16,43 @@ const isStandaloneDate = (value: string) =>
   /^20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?$/.test(
     value,
   );
-function absoluteHttpsReference(raw: string, pageUrl: string) {
+function absoluteHttpsReference(raw: string, pageUrl: string, allowInsecure = false) {
   const value = raw.trim();
   if (/^data:image\/(?:png|jpe?g|gif|webp|avif|svg\+xml)[;,]/i.test(value))
     return value;
   try {
     const url = new URL(value, pageUrl);
-    return url.protocol === "https:" && !url.username && !url.password
+    return (url.protocol === "https:" || (allowInsecure && url.protocol === "http:")) &&
+      !url.username &&
+      !url.password
       ? url.href
       : null;
   } catch {
     return null;
   }
 }
-function absoluteCssReferences(value: string, pageUrl: string) {
+function absoluteCssReferences(
+  value: string,
+  pageUrl: string,
+  allowInsecure = false,
+) {
   return value.replace(
     /url\(\s*(?:"([^"]*)"|'([^']*)'|([^)]*))\s*\)/gi,
     (_match, doubleQuoted, singleQuoted, unquoted) => {
       const resolved = absoluteHttpsReference(
         String(doubleQuoted ?? singleQuoted ?? unquoted ?? ""),
         pageUrl,
+        allowInsecure,
       );
       return resolved ? `url("${resolved.replaceAll('"', "%22")}")` : "none";
     },
   );
 }
-function absolutizeHtmlReferences(root: Element, pageUrl: string) {
+function absolutizeHtmlReferences(
+  root: Element,
+  pageUrl: string,
+  allowInsecure = false,
+) {
   for (const element of [root, ...Array.from(root.querySelectorAll("*"))]) {
     for (const attribute of [
       "src",
@@ -53,16 +64,20 @@ function absolutizeHtmlReferences(root: Element, pageUrl: string) {
     ]) {
       const raw = element.getAttribute(attribute);
       if (!raw || raw.startsWith("#")) continue;
-      const resolved = absoluteHttpsReference(raw, pageUrl);
+      const resolved = absoluteHttpsReference(raw, pageUrl, allowInsecure);
       if (resolved) element.setAttribute(attribute, resolved);
     }
     const style = element.getAttribute("style");
     if (style)
-      element.setAttribute("style", absoluteCssReferences(style, pageUrl));
+      element.setAttribute(
+        "style",
+        absoluteCssReferences(style, pageUrl, allowInsecure),
+      );
     if (element.tagName.toLowerCase() === "style")
       element.textContent = absoluteCssReferences(
         element.textContent || "",
         pageUrl,
+        allowInsecure,
       );
   }
 }
@@ -77,8 +92,8 @@ function embeddedAttachmentUrl(
       keys = [...url.searchParams.keys()],
       allowedKeys = new Set(["afc", "oid", "tid", "nid", "e"]);
     if (
-      url.protocol !== "https:" ||
-      url.origin !== profile.origin ||
+      (url.protocol !== "https:" && !(profile.allowInsecureHttp && url.protocol === "http:")) ||
+      url.host !== new URL(profile.origin).host ||
       url.username ||
       url.password ||
       url.port ||
@@ -126,8 +141,9 @@ function embeddedAttachments(
         keys = [...viewer.searchParams.keys()],
         file = viewer.searchParams.get("file");
       if (
-        viewer.protocol !== "https:" ||
-        viewer.origin !== profile.origin ||
+        (viewer.protocol !== "https:" &&
+          !(profile.allowInsecureHttp && viewer.protocol === "http:")) ||
+        viewer.host !== new URL(profile.origin).host ||
         viewer.username ||
         viewer.password ||
         viewer.port ||
@@ -229,9 +245,12 @@ export class OfficialWebConnector {
           const labeled = row.match(
             /发布时间[：:]?\s*(20\d{2}[-年/.]\d{1,2}[-月/.]\d{1,2}日?)/,
           );
-          // Some templates split the stamp: "<p>10/26</p><span>2026</span>".
+          // Some templates split the stamp: "<p>10/26</p><span>2026</span>",
+          // and the anniversary site writes a dotted "01.03 2026".
           const monthDay = row.match(
             /(?:^|\s)(\d{1,2})\/(\d{1,2})\s*(20\d{2})(?!\d)/,
+          ) ?? row.match(
+            /(?:^|\s)(\d{1,2})\.(\d{1,2})\s+(20\d{2})(?!\d)/,
           );
           const raw = monthDay
             ? `${monthDay[3]}-${monthDay[1].padStart(2, "0")}-${monthDay[2].padStart(2, "0")}`
@@ -421,8 +440,9 @@ export class OfficialWebConnector {
             .map(([reference]) => {
               try {
                 const imageUrl = new URL(reference, url);
-                return imageUrl.protocol === "https:" &&
-                  imageUrl.origin === this.profile.origin &&
+                return (imageUrl.protocol === "https:" ||
+                  (this.profile.allowInsecureHttp && imageUrl.protocol === "http:")) &&
+                  imageUrl.host === new URL(this.profile.origin).host &&
                   !imageUrl.username &&
                   !imageUrl.password &&
                   ![...imageUrl.searchParams.keys()].some((key) =>
@@ -491,7 +511,7 @@ export class OfficialWebConnector {
       );
     const bodyText = cleanBodyText(body);
     if (bodyText.length > 50000) throw Error("TOO_LARGE");
-    absolutizeHtmlReferences(body, url);
+    absolutizeHtmlReferences(body, url, this.profile.allowInsecureHttp);
     const bodyHtml = sanitizeReadingHtml(body.outerHTML).html;
     const attachments = [...body.querySelectorAll("a[href]")]
       .flatMap((a) => {

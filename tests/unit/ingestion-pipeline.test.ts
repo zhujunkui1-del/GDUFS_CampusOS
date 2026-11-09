@@ -147,6 +147,44 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
       approvedUrl(profile!, "https://dept.example.edu/private/42"),
     ).toThrow("URL_NOT_ALLOWED");
   });
+  it("keeps other sources HTTPS-only but lets a plain-HTTP source through", () => {
+    const secure = profileFromSource({
+      sourceId: "GDUFS-SRC-1098",
+      name: "隔离部门官网",
+      websiteUrl: "https://dept.example.edu/",
+      webProfileJson: JSON.stringify({
+        ruleVersion: "official-web-isolated.1",
+        entryUrls: ["https://dept.example.edu/news/"],
+        articlePathPrefixes: ["/news/detail/"],
+      }),
+    });
+    expect(secure?.allowInsecureHttp).toBe(false);
+    expect(() => approvedUrl(secure!, "http://dept.example.edu/news/")).toThrow(
+      "URL_NOT_ALLOWED",
+    );
+    // An expired certificate leaves the site on plain HTTP; the profile carries
+    // the exception, and the host must still match.
+    const plain = profileFromSource({
+      sourceId: "GDUFS-SRC-1097",
+      name: "证书过期官网",
+      websiteUrl: "http://legacy.example.edu/",
+      webProfileJson: JSON.stringify({
+        ruleVersion: "official-web-isolated.1",
+        entryUrls: ["http://legacy.example.edu/news/"],
+        articlePathPrefixes: ["/news/detail/"],
+      }),
+    });
+    expect(plain?.allowInsecureHttp).toBe(true);
+    expect(
+      approvedUrl(plain!, "http://legacy.example.edu/news/detail/42"),
+    ).toBe("http://legacy.example.edu/news/detail/42");
+    expect(() =>
+      approvedUrl(plain!, "http://elsewhere.example.edu/news/detail/42"),
+    ).toThrow("URL_NOT_ALLOWED");
+    expect(() =>
+      approvedUrl(plain!, "https://legacy.example.edu/news/detail/42"),
+    ).toThrow("URL_NOT_ALLOWED");
+  });
   it("V2 preserves human correction on unchanged fetch and lets real author changes supersede it with history", async () => {
     const f = await setup("metadata_only", true);
     try {

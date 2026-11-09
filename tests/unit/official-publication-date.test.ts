@@ -1,6 +1,7 @@
 import { it, expect } from "vitest";
 import { OfficialWebConnector } from "@/lib/ingestion/connector";
 import { webProfiles } from "@/lib/ingestion/profiles";
+import { parseCampusTime } from "@/lib/ingestion/time";
 
 it("reads the labeled CMS publication header without taking dates from article text", () => {
   const profile = {
@@ -42,6 +43,14 @@ it("reads the labeled CMS publication header without taking dates from article t
       url,
     ).dateText,
   ).toBe("2026年04月05日");
+});
+
+it("reads the English month stamp and the dotted day stamp", () => {
+  // The English site publishes "October 9, 2026"; a numeric-only parser dropped
+  // every article on that site.
+  expect(parseCampusTime("Time:October 9, 2026").date).toBe("2026-10-09");
+  expect(parseCampusTime("September 23, 2026").date).toBe("2026-09-23");
+  expect(parseCampusTime("十一月三日").date).toBeNull();
 });
 
 it("reads a list stamp that splits the month/day from the year", () => {

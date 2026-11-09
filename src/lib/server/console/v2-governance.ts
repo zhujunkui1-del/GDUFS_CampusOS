@@ -419,7 +419,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
     } catch {
       throw new ApiError(
         "INVALID_ARGUMENT",
-        "列表入口和文章路径必须属于该官网的 HTTPS 域名。",
+        "列表入口和文章路径必须属于该官网的域名（默认 HTTPS；仅证书失效的站点允许 HTTP）。",
       );
     }
     return this.mutate(

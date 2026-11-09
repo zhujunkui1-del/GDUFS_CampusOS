@@ -1,11 +1,38 @@
 import type { EventCandidate } from "@/domain/console/ingestion";
 // Explicit dates only. Relative/yearless expressions have no trusted anchor here.
+const MONTHS: Record<string, number> = {
+  january: 1, february: 2, march: 3, april: 4, may: 5, june: 6,
+  july: 7, august: 8, september: 9, october: 10, november: 11, december: 12,
+};
+// The English site stamps articles as "October 9, 2026"; every other
+// template uses a numeric stamp.
+function englishDate(raw: string) {
+  const m = raw.match(
+    /(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(20\d{2})/i,
+  );
+  if (!m) return null;
+  const month = MONTHS[m[1].toLowerCase()];
+  if (!month) return null;
+  return `${m[3]}-${String(month).padStart(2, "0")}-${String(+m[2]).padStart(2, "0")}`;
+}
+
 export function parseCampusTime(raw: string) {
   const m = raw.match(
     /(20\d{2})[年./-](\d{1,2})[月./-](\d{1,2})(?:(日)\s*|(\s+|T))?(?:(\d{1,2})[:：](\d{2})(?:[:：](\d{2}))?)?/,
   );
-  if (!m)
-    return { date: null, time: null, iso: null, precision: "unknown" as const };
+  if (!m) {
+    const english = englishDate(raw);
+    if (!english) {
+      return { date: null, time: null, iso: null, precision: "unknown" as const };
+    }
+    const stamp = Date.parse(`${english}T00:00:00Z`);
+    if (
+      !Number.isFinite(stamp) ||
+      new Date(stamp).toISOString().slice(0, 10) !== english
+    )
+      return { date: null, time: null, iso: null, precision: "unknown" as const };
+    return { date: english, time: null, iso: null, precision: "date" as const };
+  }
   const date = `${m[1]}-${m[2].padStart(2, "0")}-${m[3].padStart(2, "0")}`;
   const stamp = Date.parse(date + "T00:00:00Z");
   if (
