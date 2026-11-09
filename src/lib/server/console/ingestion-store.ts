@@ -425,6 +425,33 @@ export class IngestionStore extends ConsoleStore {
       ) {
         status = "failed";
         controlState = "paused";
+      } else {
+        // A page that fails must be stepped over, not retried forever: the
+        // same URL used to come back on every tick until the job died, and
+        // the rest of the entry was never fetched.
+        if (phase === "fetch") {
+          checkpoint.index++;
+          if (checkpoint.index >= checkpoint.urls.length) {
+            if (checkpoint.page) {
+              nextPhase = "discover";
+              checkpoint.urls = [];
+              checkpoint.index = 0;
+            } else if (
+              checkpoint.entryIndex + 1 <
+              (profile.entryUrls?.length || 1)
+            ) {
+              nextPhase = "discover";
+              checkpoint.entryIndex++;
+              checkpoint.page = null;
+              checkpoint.urls = [];
+              checkpoint.index = 0;
+              checkpoint.pageCount = 0;
+            } else {
+              nextPhase = "complete";
+              status = "completed";
+            }
+          }
+        }
       }
     } else if (phase === "discover") {
       const pageHash = await tokenHash(value.url),
