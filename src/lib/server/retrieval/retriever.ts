@@ -308,7 +308,16 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
     // Category phrases are not subjects. Remove them as whole phrases before
     // tokenizing; otherwise Chinese bigrams like 赛活/动情 become hard filters
     // that discard every real article.
-    const terms = keywords(q.query);
+    // Score on the subject, not on the sentence the question was asked in.
+    // "校历在哪看得到" is a phrase no article contains, so counting it scored
+    // nothing and left every candidate tied on the same two points; the
+    // document that actually is the calendar then lost to whichever neighbour
+    // happened to say "管理办法" in its title.
+    const scoringTerms = [
+      ...plan.modifiers.map((m) => m.original),
+      ...plan.topics.map((t) => t.alternatives[0]),
+    ].filter((t): t is string => !!t && t.length >= 2);
+    const terms = scoringTerms.length ? scoringTerms : keywords(q.query);
     const categoryPhrases =
       /竞赛活动情况|竞赛|比赛|大赛|讲座|讲坛|论坛|学术沙龙|沙龙|文体活动|文体|文化|体育|通知|公告|资讯|新闻|预告|情况|信息|方面|内容|介绍|了解|告诉|问题|东西|相关|广外|校园|大学|最新|近期|最近|有什么|哪些|吗|的/g;
     const genericBigrams = new Set(
@@ -815,9 +824,13 @@ ${sourceFilterSql}
               ? 2
               : 0) + freshness
         : 0;
+      // A document whose title *is* the subject answers the question; one that
+      // merely qualifies as a "管理办法" is background. The title weight has to
+      // outrank the generic purpose boost, or "校历" loses to a regulation that
+      // happens to mention it.
       const score =
         relevance.score +
-        titleMatch * 3 +
+        titleMatch * 6 +
         bodyMatch +
         (fusion?.get(c.id) || 0) * 80 +
         purposeBoost +

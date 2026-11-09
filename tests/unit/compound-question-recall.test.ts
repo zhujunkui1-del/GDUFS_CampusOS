@@ -101,3 +101,55 @@ it("finds a rule whose two clauses landed in different chunks", async () => {
     f.close();
   }
 }, 15000);
+
+it("ranks the document that the subject names, not a neighbour that shares a word", async () => {
+  const f = await dateGateFixture();
+  try {
+    // "校历在哪看得到" is a phrase no article contains, so the old scoring
+    // counted nothing and every candidate tied at the same two points; the
+    // calendar itself then lost to a neighbour that merely said "管理办法".
+    await f.sqlite
+      .prepare(
+        `INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,body_status,content_hash,fetched_at,campus_scope,data_domain,published_at,content_revision,input_hash,rights_scope,content_type,knowledge_category) VALUES(?,?,?,?,?,'plain','complete',?,'2026-10-10','all','campus_announcements','2026-09-01',1,?,'licensed_full_text','guide','academic_affairs')`,
+      )
+      .run(
+        "cal",
+        f.source.id,
+        "2026-2027学年第一学期校历",
+        "https://example.invalid/cal",
+        "1．9月4、5日本科、研究生老生报到。9月6日本科新生报到。9月10、11日举行开学典礼。",
+        "cal",
+        "d".repeat(64),
+      );
+    await f.sqlite
+      .prepare(
+        `INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,body_status,content_hash,fetched_at,campus_scope,data_domain,published_at,content_revision,input_hash,rights_scope,content_type,knowledge_category) VALUES(?,?,?,?,?,'plain','complete',?,'2026-10-10','all','campus_announcements','2026-09-01',1,?,'licensed_full_text','policy','academic_affairs')`,
+      )
+      .run(
+        "rule",
+        f.source.id,
+        "研究生教学管理办法实施细则",
+        "https://example.invalid/rule",
+        "校历见教务处网站。本办法由研究生院负责解释。",
+        "rule",
+        "e".repeat(64),
+      );
+    for (const id of ["cal", "rule"]) {
+      await f.store.publishCollectedWebArticle(id);
+      f.sqlite
+        .prepare("DELETE FROM knowledge_chunks WHERE document_id=?")
+        .run(id);
+      f.sqlite
+        .prepare("DELETE FROM article_search_documents WHERE document_id=?")
+        .run(id);
+      await ensureRetrievalIndex(f.db, id);
+    }
+    const r = await searchContent(f.db, "knowledge", {
+      query: "校历在哪看得到，什么时候放假？",
+      limit: 4,
+    });
+    expect(r.hits[0]?.documentId).toBe("cal");
+  } finally {
+    await f.close();
+  }
+});
