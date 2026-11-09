@@ -45,7 +45,17 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
         this.actor.id === cloudRunnerActor.id ? "cloud" : "local",
         Number(completed),
         now,
-        failed ? "blocked" : completed ? "completed" : "running",
+        // A refusal is a permission problem that needs a human; a network
+        // blip or a parse miss is transient and must be retried next cycle.
+        // Marking every failure "blocked" parked the source out of the
+        // scheduler for good, so one bad fetch silently ended collection.
+        failed
+          ? errorCode === "BLOCKED"
+            ? "blocked"
+            : "failed"
+          : completed
+            ? "completed"
+            : "running",
         Number(completed),
         Date.parse(now),
         Number(failed),
