@@ -779,7 +779,9 @@ ${sourceFilterSql}
         analysis?.knowledge.conditions.length ||
         analysis?.knowledge.steps.length ||
         analysis?.knowledge.materials.length ||
-        /指南|流程|规则|管理办法|规章|办理|手册|条例|细则|规定|章程/.test(d.title);
+        /指南|流程|规则|管理办法|规章|办理|手册|条例|细则|规定|章程/.test(
+          d.title,
+        );
       const purposeBoost =
         q.purpose === "knowledge"
           ? knowledgeEvidence
