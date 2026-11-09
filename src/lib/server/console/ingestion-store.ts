@@ -552,9 +552,16 @@ export class IngestionStore extends ConsoleStore {
         !checkpoint.visitedPageHashes.includes(nextPageHash || "")
           ? value.nextPage
           : null;
-      checkpoint.pageCount = nextPage
-        ? checkpoint.pageCount + 1
-        : checkpoint.pageCount;
+      // Hitting the cap ends this entry rather than looping it: the page
+      // pointer used to survive while `pageCount` stayed at the ceiling, so
+      // every later discover re-read the same deep page and burned a step
+      // forever without ever reaching the entries behind it.
+      const capHit = pageCapReached && !nextPage;
+      checkpoint.pageCount = capHit
+        ? 0
+        : nextPage
+          ? checkpoint.pageCount + 1
+          : checkpoint.pageCount;
       // Re-fetching an article we already hold is a conditional request
       // (not_modified), which is cheap but still occupies a whole step. Known
       // rows older than the gate can never be imported again, so they are
@@ -574,10 +581,20 @@ export class IngestionStore extends ConsoleStore {
         publishedAt: discoveredDates.get(url) || null,
       }));
       checkpoint.index = 0;
-      checkpoint.page = nextPage;
+      checkpoint.page = capHit ? null : nextPage;
       if (checkpoint.urls.length) nextPhase = "fetch";
       else if (nextPage) nextPhase = "discover";
-      else if (checkpoint.entryIndex + 1 < (profile.entryUrls?.length || 1)) {
+      else if (capHit && checkpoint.entryIndex + 1 < (profile.entryUrls?.length || 1)) {
+        checkpoint.entryIndex++;
+        checkpoint.page = null;
+        checkpoint.urls = [];
+        checkpoint.index = 0;
+        checkpoint.pageCount = 0;
+        nextPhase = "discover";
+      } else if (capHit) {
+        nextPhase = "complete";
+        status = "completed";
+      } else if (checkpoint.entryIndex + 1 < (profile.entryUrls?.length || 1)) {
         checkpoint.entryIndex++;
         checkpoint.page = null;
         checkpoint.urls = [];

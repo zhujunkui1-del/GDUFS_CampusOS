@@ -393,6 +393,33 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
       f.close();
     }
   });
+  it("ends an entry at the page cap instead of rediscovering the same page forever", async () => {
+    const f = await setup();
+    try {
+      const deep = p.origin + "/index/tzgg/37.htm";
+      f.sqlite
+        .prepare(
+          "UPDATE ingestion_jobs SET checkpoint_json=? WHERE id=?",
+        )
+        .run(
+          JSON.stringify({ entryIndex: 0, urls: [], pageCount: 20 }),
+          f.job.id,
+        );
+      const lease = await f.claim();
+      await f.commit(lease, {
+        discovered: [f.url],
+        nextPage: deep,
+      });
+      const job = await f.store.job(f.job.id);
+      // The cap is terminal for this entry: the page pointer must not survive,
+      // otherwise the next tick re-reads the same deep page and the entries
+      // behind it are never reached.
+      expect(JSON.parse(job.checkpoint_json ?? "{}").page).toBeNull();
+      expect(job.checkpoint_json ?? "").not.toContain("/37.htm");
+    } finally {
+      f.close();
+    }
+  });
   it("persists discovery -> draft -> checkpoint atomically, keeps four success stages separate", async () => {
     const f = await setup();
     try {
