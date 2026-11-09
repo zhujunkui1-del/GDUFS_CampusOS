@@ -2349,3 +2349,19 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 另外把「摘要」与「提交」的失败原因打到 tail（`cloud.web.commit_failed`、`console.command.failed`），否则外键这类错误永远只能看到兜底文案。
 
 验证：`npx vitest run tests/unit` 151 文件 / 1041 用例全绿；`tsc --noEmit` 0 error。部署后文档数从 5685 涨到 5730，条目产出恢复正常。
+
+## 2026-11-09｜采集器：翻页上限、入口越界与入口裁剪
+
+队列里还剩几个「attempts 几百、body_count 不涨」的老任务。逐个看 checkpoint 后，是三个各自独立的问题。
+
+**1. 翻页上限让 entry 永远走不完**。`MAX_PAGES_PER_ENTRY = 20` 是防止一个入口被无限深挖的硬上限，但代码到达上限后只把 `nextPage` 置空，`checkpoint.page` 还留着那个深页 URL、`pageCount` 也停在 20。下一次 discover 又从这个 URL 开始，很快再次撞到上限，于是同一个入口被反复重读，后面的入口永远轮不到。实测 `GDUFS-SRC-0048` 的 `entryIndex` 停在 4、`pageCount` 恒为 19，`GDUFS-SRC-0010` 的 `entryIndex` 停在 4、`pageCount` 恒为 1。现在撞到上限就当作该入口结束：清掉 `page`、`pageCount` 归零，并推进到下一个入口（已经没有下一个入口就结束）。
+
+**2. 越界入口索引回落到第一个入口**。`checkpoint.entryIndex` 只有 `claim()` / `commit()` 两处用来取 URL：`profile.entryUrls?.[checkpoint.entryIndex] || profile.entryUrl`。索引一旦越界，数组下标是 `undefined`，于是回退到 `profile.entryUrl`（也就是第一个入口），从头再跑一遍。现在两处都先把 `entryIndex` 夹到 `entryCount - 1`。
+
+**3. 五个源的日期门禁还是 2022-01-01**。`earliestImportDay` 是逐源配置的，早期批量设置时漏了 `GDUFS-SRC-0017 / 0026 / 0043 / 0048 / 0081`，它们一直在翻 2022 年以来的归档（库里合计已有 952 篇门禁前文章）。已统一改成 `2026-01-01`，与平台默认一致。
+
+**4. 25 个死入口**。用真实 connector 对 223 个入口逐个 discover，有 25 个 `urls=0` 或 `fetch failed`：`GDUFS-SRC-0042`（信息公开）8 个栏目全部无列表、`GDUFS-SRC-0008`（图书馆）的 `/gybg/gzzd/rgsz.htm`、`GDUFS-SRC-0010`（学生工作部）的 `/xszz/qgzx.htm`、`GDUFS-SRC-0083`（科研部）的 `/kydt.htm`、`GDUFS-SRC-0019/0061/0073/0096` 各一到两个栏目，以及 `GDUFS-SRC-0013/0015` 的全部入口（TLS 过期）。凡是「该站还有别的入口有产出」的，都已从 profile 里剔除；整站都不可达的（0013、0015）保留原样以便日后证书恢复后自动重试。
+
+**改 profile 后必须重刷 owner-policy**：`scheduler.ts` 要求 `profile.ruleVersion === source_collection_policies.rule_version`，而 profile 每次保存都会把 ruleVersion 里的版本号加一。只改 profile 不重刷 policy，调度器会一直跳过该源，且表面上一切正常（`sync_state='ready'`、到期时间已过）。用 `POST /api/admin/v2/web-collection/<id>/owner-policy` 即可。
+
+验证：新增 `tests/unit/ingestion-pipeline.test.ts`「ends an entry at the page cap instead of rediscovering the same page forever」；`npx vitest run tests/unit/ingestion-pipeline.test.ts tests/unit/console-v2-sync.test.ts tests/unit/official-publication-date.test.ts` → 44 passed；`tsc --noEmit` 0 error。部署 `f78ccd95-5b12-400e-9dfb-9061e9f95aed` → `6096f525-0c62-4954-889a-68a43b02b62e`。
