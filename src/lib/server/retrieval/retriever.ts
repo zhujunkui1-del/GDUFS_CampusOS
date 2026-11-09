@@ -779,7 +779,7 @@ ${sourceFilterSql}
         analysis?.knowledge.conditions.length ||
         analysis?.knowledge.steps.length ||
         analysis?.knowledge.materials.length ||
-        /指南|流程|规则|管理办法|规章|办理/.test(d.title);
+        /指南|流程|规则|管理办法|规章|办理|手册|条例|细则|规定|章程/.test(d.title);
       const purposeBoost =
         q.purpose === "knowledge"
           ? knowledgeEvidence
@@ -828,8 +828,17 @@ ${sourceFilterSql}
       // merely qualifies as a "管理办法" is background. The title weight has to
       // outrank the generic purpose boost, or "校历" loses to a regulation that
       // happens to mention it.
+      // "How do I apply for a deferred exam" is answered by the rulebook, not
+      // by a faculty notice that lists when this term's deferred exams happen.
+      // Both mention the word; only one states the procedure.
+      const rulebookBoost =
+        ["procedure", "policy", "requirements"].includes(plan.goal) &&
+        /手册|条例|细则|规定|办法|章程|规章/.test(d.title)
+          ? 3
+          : 0;
       const score =
         relevance.score +
+        rulebookBoost +
         titleMatch * 6 +
         bodyMatch +
         (fusion?.get(c.id) || 0) * 80 +
