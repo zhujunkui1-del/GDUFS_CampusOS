@@ -756,7 +756,8 @@ ${sourceFilterSql}
       if (
         !relevance.relevant &&
         (relevance.reason === "subject_modifier_missing" ||
-          relevance.reason === "goal_evidence_missing")
+          relevance.reason === "goal_evidence_missing" ||
+          relevance.reason === "entity_missing")
       ) {
         const whole =
           choices.length > 1
@@ -776,7 +777,8 @@ ${sourceFilterSql}
         // joined text still fails; the head word is what the question asks.
         if (
           !relevance.relevant &&
-          relevance.reason === "subject_modifier_missing"
+          (relevance.reason === "subject_modifier_missing" ||
+            relevance.reason === "entity_missing")
         )
           relevance = queryRelevance(headOfSubject(plan), {
             title: d.title,

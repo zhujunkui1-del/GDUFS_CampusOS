@@ -302,6 +302,14 @@ function modifierPresent(text: string, term: string) {
   const [head, ...rest] = pairs;
   return text.includes(head) && rest.some((p) => text.includes(p));
 }
+// The head word of a compound entity is the subject: "缓考请假" is asked about
+// 缓考, and no chapter writes both words together.
+function entityPresent(text: string, term: string) {
+  if (text.includes(term)) return true;
+  const chars = [...term];
+  if (chars.length < 4 || !/^[\p{Script=Han}]+$/u.test(term)) return false;
+  return text.includes(chars[0] + chars[1]);
+}
 // “缓考请假” is one subject with a second word glued on. When a document
 // holds the subject but not the tail — the handbook has a chapter on 缓考 but
 // never says 请假 — the question is still about that chapter. Narrowing to the
@@ -435,10 +443,15 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const focus = queryFocus(plan.original);
   if (plan.topics.length <= 1 && !matchesQueryFocus(focus, hit, plan.original))
     return { relevant: false, score: 0, reason: "purpose_mismatch" };
+  // A planner that rewrites the question into quoted anchors ("缓考请假"
+  // "手续") turns them into entities, and the handbook chapter that states the
+  // rule never writes the two words together — it says "缓考" in one article
+  // and "请假" in another. The head word is the subject; demanding the tail
+  // too threw away the chapter that answers the question.
   if (
     plan.entities.length &&
     !plan.entities.some((e) =>
-      entityTerms(e).some((a) => text.includes(a.toLowerCase())),
+      entityTerms(e).some((a) => entityPresent(text, a.toLowerCase())),
     )
   )
     return { relevant: false, score: 0, reason: "entity_missing" };
