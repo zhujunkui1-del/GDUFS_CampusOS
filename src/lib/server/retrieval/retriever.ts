@@ -1067,6 +1067,8 @@ ${sourceFilterSql}
       } else unique.set(item.key, item);
     }
     const articles = [...unique.values()].slice(0, q.limit);
+    if (!articles.length)
+      warnings.push("未找到当前公开、版本及来源权限均可核验的相关资料。");
     if (articles.some((a) => !a.hit.bodyAvailable))
       warnings.push("部分结果仅有元数据，不能据此回答正文中的规则或要求。");
     metrics.durationMs = Math.round(performance.now() - started);
