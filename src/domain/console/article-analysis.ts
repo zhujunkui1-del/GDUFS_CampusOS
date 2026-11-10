@@ -145,7 +145,9 @@ export const ArticleAnalysisSchema = z
     eventType: z.string().max(40).nullable().default(null),
     eventStart: z.iso.date().nullable().default(null),
     eventEnd: z.iso.date().nullable().default(null),
-    activities: z.array(ArticleActivitySchema).max(12),
+    // A notice may honestly list dozens of slots ("16场考试", "本周20场宣讲会").
+    // Twelve was enough to hide a whole day from a table that ran past row 12.
+    activities: z.array(ArticleActivitySchema).max(40),
     knowledge: z.object({
       topic: z.string().nullable(),
       audience: z.array(z.string()).max(8),

@@ -713,7 +713,7 @@ export function calendarizeArticle(
         : [...s.text.matchAll(/(?:^[^\n]*\|[^\n]*(?:\n|$)){2,}/gm)].map(
             (m) => m[0],
           );
-    for (const table of tables.slice(0, 2)) {
+    for (const table of tables.slice(0, 4)) {
       const [header, ...rows] = table.trim().split("\n"),
         cols = header.split("|").map((x) => x.trim());
       const ni = cols.findIndex((x) => /名称|主题|题目/.test(x)),
@@ -723,21 +723,46 @@ export function calendarizeArticle(
         pi = cols.findIndex((x) => /地点/.test(x)),
         oi = cols.findIndex((x) => /主办/.test(x));
       if (ni < 0 || ti < 0) continue;
-      for (const row of rows.slice(0, 12)) {
+      const dated = [];
+      for (const row of rows.slice(0, MAX_ACTIVITIES)) {
         const c = row.split("|").map((x) => x.trim());
         if (!c[ni] || !c[ti]) continue;
         const dates = calendarDates(c[ti]).map((m) => m[0].trim());
-        if (dates.length)
+        if (dates.length) dated.push({ row, c, dates });
+      }
+      // A table without a venue column schedules one proceeding over several
+      // days ("1 | 综合英语 | 12月3日上午"), it does not announce N separate
+      // events. Emitting one card per row put ten cards on one day and hid the
+      // rest of the timetable behind the twelve-row cap; readers expect the
+      // notice once per day it covers. Tables that do name a venue keep their
+      // rows apart, because each row really is a different event.
+      if (pi < 0 && dated.length > 2) {
+        const byDay = new Map<string, string>();
+        for (const { row, dates } of dated)
+          for (const day of dates) if (!byDay.has(day)) byDay.set(day, row);
+        for (const [day, row] of byDay)
           tableEvents.push({
-            title: c[ni],
+            title: input.title,
             sourceId: s.id,
             occurrenceQuote: row,
-            dates,
-            place: pi >= 0 ? c[pi] || null : null,
-            organizer: oi >= 0 ? c[oi] || null : null,
+            dates: [day],
+            scope: day,
+            place: null,
+            organizer: null,
             nature: "announcement",
           });
+        continue;
       }
+      for (const { row, c, dates } of dated)
+        tableEvents.push({
+          title: c[ni],
+          sourceId: s.id,
+          occurrenceQuote: row,
+          dates,
+          place: pi >= 0 ? c[pi] || null : null,
+          organizer: oi >= 0 ? c[oi] || null : null,
+          nature: "announcement",
+        });
     }
   }
   const tableCandidates = proposalCandidates(sources, input, {
@@ -873,7 +898,7 @@ export function calendarizeArticle(
       continue;
     }
     activities.push(a);
-    if (activities.length >= 12) break;
+    if (activities.length >= MAX_ACTIVITIES) break;
   }
   if (!activities.length) {
     if (unresolvedMultiple) reason = "multiple_events_unresolved";

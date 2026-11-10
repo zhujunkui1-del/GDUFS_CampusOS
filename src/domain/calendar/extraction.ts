@@ -50,6 +50,9 @@ export const CalendarProposalSchema = z
           dates: z.array(z.string().min(1).max(100)).min(1).max(12),
           place: z.string().max(150).nullable(),
           organizer: z.string().max(100).nullable(),
+          // Rules that collapse one timetable into several cards keep the same
+          // reading title but need a separate identity per day.
+          scope: z.string().max(100).optional(),
           nature: z.enum([
             "announcement",
             "recruitment",
@@ -59,7 +62,8 @@ export const CalendarProposalSchema = z
           ]),
         }),
       )
-      .max(12),
+      // Matches the article schema: a real notice can list dozens of slots.
+      .max(40),
   })
   .strict();
 export type CalendarSource = z.infer<typeof CalendarSourceSchema>;

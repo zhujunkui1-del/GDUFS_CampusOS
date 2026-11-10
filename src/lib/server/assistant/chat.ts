@@ -1190,11 +1190,15 @@ export async function chatResponse(request: Request) {
           while (Date.now() - started < 15000) {
             streamSignal.throwIfAborted();
             const measured = ctx.databaseTiming();
+            // The run has already spent most of the invocation's query budget
+            // on retrieval, so polling the receipt would push it over the
+            // limit. Stop waiting and answer in text instead of failing the
+            // turn: the place cards are already published.
             if (
               measured.readQueries + measured.writeQueries >=
               RECEIPT_QUERY_SOFT_LIMIT
             )
-              throw new ApiError("TIMEOUT", "地图操作等待超时，请重试。", true);
+              return false;
             const receipt = await ctx.store.execution(
               ctx.identity.owner,
               packet.id,
