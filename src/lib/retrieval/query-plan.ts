@@ -27,7 +27,9 @@ const COUNT_QUESTION = /几(?:次|个|场|门|位|种|名|天|年|月|周)/;
 const CLAUSE_VERB = /(?:不够|不会|会影响|会不会)|^(?:[里在中被把给用对从往随趁按照们收交办查找买卖寄借还去来做看听进出开关])/u;
 // A rule is written as “功率不超过 1000 瓦”, not as the question's “功率限制”.
 // The attribute word is how the question was phrased, so it cannot be a gate.
-const CLAUSE_TAIL = /(?:开放|关闭|提交|交付|报修|保修|记录|影响|办理|使用|收费|发放|收取)$/u;
+// A symptom is not a subject either: “宿舍东西坏了” asks about repairs, and
+// no article writes “东西坏” as a word.
+const CLAUSE_TAIL = /(?:开放|关闭|提交|交付|报修|保修|记录|影响|办理|使用|收费|发放|收取|坏|坏了|坏掉|破了|漏了|堵了|断了|没了)$/u;
 const ATTRIBUTE = /(?:限制|要求|标准|条件|费用|价格|流程|手续|时间|规定)$/u;
 // A question glued to a particle or a modal is a clause, not a term:
 // “报修在哪儿” leaves “报修在”, “宿舍好不好” leaves “好不好”. No article
@@ -492,13 +494,29 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
     matchesQueryFocus("sports", hit, "体育比赛")
   )
     return { relevant: false, score: 0, reason: "discipline_conflict" };
+  // A guide that names the operation answers the question even when the
+  // place word only appears in the question: “故障报修全攻略” covers dormitory
+  // repairs, while “宿舍文化节” shares 宿舍 but never mentions 报修.
+  const guideAboutOperation =
+    plan.topics.length > 0 &&
+    /指南|攻略|全流程|手册|须知|教程|一览/.test(title) &&
+    plan.modifiers.some((m) =>
+      [...m.original].slice(0, 2).some((head) => title.includes(head)),
+    );
   if (
     matched.length &&
-    !(plan.topicMode === "any" ? matched.some(Boolean) : matched.every(Boolean))
+    !(plan.topicMode === "any" ? matched.some(Boolean) : matched.every(Boolean)) &&
+    !guideAboutOperation
   )
     return { relevant: false, score: 0, reason: "core_topic_missing" };
   const focus = queryFocus(plan.original);
-  if (plan.topics.length <= 1 && !matchesQueryFocus(focus, hit, plan.original))
+  // The same guide carve-out applies here: “故障报修全攻略” names the repair
+  // operation, not the dormitory, so it is not an off-topic article.
+  if (
+    plan.topics.length <= 1 &&
+    !guideAboutOperation &&
+    !matchesQueryFocus(focus, hit, plan.original)
+  )
     return { relevant: false, score: 0, reason: "purpose_mismatch" };
   // A planner that rewrites the question into quoted anchors ("缓考请假"
   // "手续") turns them into entities, and the handbook chapter that states the
