@@ -26,6 +26,10 @@ type Source = {
 };
 const eventWords =
   /讲座|讲坛|论坛|研讨会|报告会|招聘会|宣讲|比赛|竞赛|运动会|读书会|音乐会|演出|展览|开放日|体验日|选拔赛|决赛|复赛|挑战杯|工作坊|分享会|交流会|颁奖典礼|学术沙龙|活动预告|活动报名|讲堂|Workshop|Seminar|Lecture/i;
+// A notice can honestly list dozens of slots ("16场考试", "本周20场宣讲会").
+// The old ceiling of twelve silently cut off whatever came later in the table,
+// which looked like missing days rather than a truncated extraction.
+const MAX_ACTIVITIES = 40;
 const confirmedValue = (v: string | null) =>
   v &&
   /^(?:待定|未知|暂无|未定|另行通知|详见后续|待通知|TBD|to be announced)/i.test(
