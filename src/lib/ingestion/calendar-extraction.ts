@@ -25,7 +25,7 @@ type Source = {
   digest: string;
 };
 const eventWords =
-  /讲座|讲坛|论坛|研讨会|报告会|招聘会|宣讲会|比赛|竞赛|运动会|读书会|音乐会|演出|展览|开放日|体验日|选拔赛|决赛|复赛|挑战杯|工作坊|分享会|交流会|颁奖典礼|学术沙龙|活动预告|活动报名|讲堂|Workshop|Seminar|Lecture/i;
+  /讲座|讲坛|论坛|研讨会|报告会|招聘会|宣讲|比赛|竞赛|运动会|读书会|音乐会|演出|展览|开放日|体验日|选拔赛|决赛|复赛|挑战杯|工作坊|分享会|交流会|颁奖典礼|学术沙龙|活动预告|活动报名|讲堂|Workshop|Seminar|Lecture/i;
 const confirmedValue = (v: string | null) =>
   v &&
   /^(?:待定|未知|暂无|未定|另行通知|详见后续|待通知|TBD|to be announced)/i.test(
@@ -34,7 +34,12 @@ const confirmedValue = (v: string | null) =>
     ? null
     : v;
 const eventRole =
-  /(?:讲座|讲坛|讲堂|沙龙|活动|比赛|竞赛|会议|演出|论坛|考试|复赛|决赛|开幕|报告会|报告)(?:举办)?(?:时\s*间|日期)|举办时间|开始时间|结束时间|定于|将于|将在|举行|举办|开讲|开幕|(?:^|\n)时\s*间[：:]/g;
+  /(?:讲座|讲坛|讲堂|沙龙|活动|比赛|竞赛|会议|演出|论坛|考试|复赛|决赛|开幕|报告会|报告)(?:举办)?(?:时\s*间|日期)|举办时间|开始时间|结束时间|定于|将于|将在|举行|举办|开讲|开幕|(?:^|\n|[\s，。；])\s*(?:[一二三四五六七八九十]+[、.．]|\d+[、.．])?\s*时\s*间\s*[：:]/g;
+// Labels that carry the article's own metadata rather than the event's time.
+// The library's lecture pages print "作者： 时间：2026年11月05日", and treating
+// that date as the event date put every lecture on its publication day.
+const metaTimeLabel =
+  /(?:作者|编辑|审核|浏览人次|发布时间|发布日期|更新日期)[^\n]{0,20}时\s*间\s*[：:]\s*$/;
 const otherRole =
   /报名|申请截止|申报截止|提交截止|材料提交|作品提交|缴费|公示|获奖|发布时间|发布日期|发布于|稿件|成绩公布/g;
 const dateRe =
@@ -125,6 +130,7 @@ function point(
   offset: number,
   year: ReturnType<typeof years>,
   previous?: ArticleTimePoint,
+  publishedAt: string | null = null,
 ) {
   const raw = m[0].trim(),
     start = offset + m.index! + m[0].indexOf(raw);
@@ -132,7 +138,7 @@ function point(
     clock(raw),
     { text: raw, start, end: start + raw.length },
     asText(s, title),
-    null,
+    publishedAt,
     previous,
     year,
   );
@@ -309,12 +315,20 @@ type Candidate = {
   organizer: string | null;
   nature: NonNullable<Activity["calendar"]>["nature"];
 };
-function candidates(s: Source, title: string): Candidate[] {
+function candidates(
+  s: Source,
+  title: string,
+  publishedAt: string | null = null,
+): Candidate[] {
   const output: Candidate[] = [];
   const sections = blocks(s, title);
   for (const b of sections) {
     const body = s.text.slice(b.start, b.end),
-      type = nature(b.title, body);
+      type = nature(b.title, body),
+      // A retrospective describes something that already happened; its bare
+      // dates are the least trustworthy of all, so they never borrow the year
+      // from the publication date.
+      forward = type !== "held" && type !== "recap";
     if (
       type === "award" ||
       type === "uncertain" ||
@@ -360,6 +374,7 @@ function candidates(s: Source, title: string): Candidate[] {
           [...prefix.matchAll(new RegExp(re.source, "g"))].at(-1)?.index ?? -1;
         const role = last(eventRole),
           other = last(otherRole);
+        if (metaTimeLabel.test(prefix)) continue;
         const rescheduled = /原定/.test(p) && /改为|调整至|延期至/.test(prefix);
         if (other > role && !rescheduled) continue;
         if (/原定/.test(prefix) && !rescheduled) continue;
@@ -374,7 +389,16 @@ function candidates(s: Source, title: string): Candidate[] {
           /(?:讲座|比赛|活动|论坛|报告会|演出).{0,35}(?:将于|定于|举行|举办)/.test(
             combined,
           ) ||
-          (/举行|举办|开讲|召开/.test(tail) && other < 0);
+          (/举行|举办|开讲|召开/.test(tail) && other < 0) ||
+          // "2026年11月14日，就业指导中心将组织宣讲会" names the event
+          // after the date. Only forward-looking articles qualify: a
+          // retrospective ("2025年1月6日，李教授作了一场讲座") also mentions
+          // an event word after the date, and taking it produced activities
+          // that were a year old.
+          (type !== "held" &&
+            type !== "recap" &&
+            eventWords.test(tail.slice(0, 60)) &&
+            other < 0);
         if (!eventContext) continue;
         const t = point(
           s,
@@ -383,6 +407,11 @@ function candidates(s: Source, title: string): Candidate[] {
           absolute,
           years(b.title, body.slice(Math.max(0, m.index! - 180), m.index!)),
           pp,
+          // A bare "11月5日" in a notice takes its year from the article's
+          // own publication date. A retrospective is deliberately left out:
+          // "11月5日举行" in a piece published weeks later would otherwise
+          // stamp every anniversary write-up onto the calendar.
+          forward ? publishedAt : null,
         );
         pp = t;
         if (t.date)
@@ -525,6 +554,7 @@ function proposalCandidates(
           at + offset,
           years(input.title, e.occurrenceQuote),
           previous,
+          input.publishedAt ?? null,
         );
         previous = p;
         return p;
@@ -710,7 +740,9 @@ export function calendarizeArticle(
     events: tableEvents,
   });
   let found = [
-    ...sources.flatMap((s) => candidates(s, input.title)),
+    ...sources.flatMap((s) =>
+      candidates(s, input.title, input.publishedAt ?? null),
+    ),
     ...tableCandidates,
     ...proposalCandidates(sources, input, proposal),
   ].filter(

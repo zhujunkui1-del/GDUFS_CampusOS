@@ -32,10 +32,32 @@ it.each([
   ["讲座报名通知", "报名截止：2026年11月3日17:00。"],
   ["喜报！比赛获奖", "获奖公示：2026年11月5日。"],
   ["学校工作新闻", "2026年11月5日，学校介绍工作进展。"],
-  ["讲座预告", "讲座时间：11月5日14:30。"],
   ["2026年讲座通知", "讲座时间：2026年2月30日。"],
 ])("excludes unsupported calendar entries: %s", (title, body) =>
   expect(accepted(title, body)).toHaveLength(0),
+);
+// A bare date in a notice carries the year of the article it was published
+// in; the body itself never says "2026".
+it.each([
+  [
+    "讲座预告",
+    "讲座时间：11月5日14:30。",
+    "2026-11-05",
+    "2026-11-05T14:30:00+08:00",
+  ],
+  [
+    "【11月10日宣讲】某公司",
+    "11月10日（周二）14:30 大学城校区E302 宣讲会",
+    "2026-11-10",
+    "2026-11-10T14:30:00+08:00",
+  ],
+])(
+  "takes the year of a bare date from the publication date: %s",
+  (title, body, date, at) => {
+    const a = accepted(title, body)[0];
+    expect(a?.startsAt?.date).toBe(date);
+    expect(a?.startsAt?.at).toBe(at);
+  },
 );
 it.each([
   ["我院成功举办学术讲座", "11月5日，我院成功举办了学术讲座。"],
@@ -49,6 +71,24 @@ it.each([
     expect(a.calendar?.reason).toBe("past_event");
   },
 );
+// Official notices number their headings: "一、时间：" is the same label as
+// "时间：" and used to be dropped, losing the whole event.
+it.each([
+  ["一、时间：2026年11月5日14:00\n二、地点：六教B202"],
+  ["1. 时间：2026年11月5日14:00\n2. 地点：六教B202"],
+  ["\n时间：2026年11月5日14:00\n地点：六教B202"],
+])("reads a numbered event-time label: %s", (body) => {
+  const a = accepted("学术讲座", body)[0];
+  expect(a?.startsAt?.date).toBe("2026-11-05");
+});
+it("ignores the article's own publication stamp printed as a time label", () => {
+  // The library prints "作者： 时间：2026年10月30日" before the real event.
+  const a = accepted(
+    "“信息素养教育系列”讲座",
+    "作者： 时间：2026年10月30日 浏览人次：12\n主题：法律检索\n时间：2026年11月5日（周四）14:30-16:30\n地点：大学城校区 E203",
+  )[0];
+  expect(a?.startsAt?.date).toBe("2026-11-05");
+});
 it("still queues an upcoming announcement for enrichment", () => {
   const a = get("2026年学术讲座预告", "欢迎参加，11月5日老地方。");
   expect(a.calendar?.status).toBe("needs_enrichment");
