@@ -2476,3 +2476,32 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 存量全量重算（纯规则，不调模型）：5912 篇已发布文档中 832 篇投影发生变化，`accepted` 从 359 → **612**，`calendar_eligible` 事件从 367 → **704**，其中 `starts_day >= 2026-11-10` 的从个位数 → **51**。
 
 诚实说明：未来事件仍然只有 51 条，一周的日历不会因此变得像 pkuknow 那样密集。这一轮修的是「把已经存在的东西丢掉」，不是「凭空造出活动」。
+
+## 2026-11-10｜检索门禁：把句子碎片当硬过滤，把好答案挡在门外
+
+50 题评测里最刺眼的一类不是「答错」，而是**知识库明明有答案却拒答**。以「宿舍报修在哪里提交，多久能修？」为例：`search_campus_knowledge` 返回的候选里有《使用指南｜故障报修全攻略》，正文三种报修渠道一条不少，但 `relatedDocuments` 里只有一篇《宿舍文化节》。
+
+用 `wrangler tail` 逐层打点后确认：文档确实进了候选（32 个 id、排名 12），也确实按分数排在第 8 位，是 `queryRelevance` 在**打分之后**把它判掉的。判据有三道：
+
+1. `subject_modifier_missing`——问句里剩下的「报修在」「提交」被当成必须出现在标题里的主题词，而指南标题是「故障报修全攻略」。
+2. `core_topic_missing`——`rewriteQuery` 只留下「宿舍」一个 topic，标题里没有「宿舍」。
+3. `purpose_mismatch`——指南是 `procedure`，而 topic 判定为 `housing`。
+
+修法不是给这句话加特例，而是给「碎片」一个统一判据：`modifierIsHard()` 把以动词开头、以谓语/属性/症状词结尾的四字以上中文片段判为**软提示**，只参与排序、不参与否决；同时把「标题写得是指南、且命中了操作词」的文档视为覆盖该操作，`core_topic_missing` 与 `purpose_mismatch` 对它都放行。
+
+同样的根因还解释了「校园卡丢了怎么挂失」「游泳池开放时间」「宿舍晚归会被记录吗」——它们的 modifier 分别是 `里丢`、`池开放`、`晚归会被记录`，全部是被切碎的句子。
+
+验证：50 题从 `model 37 / no_evidence 8 / evidence_excerpt 4 / MODEL_SERVICE_UNAVAILABLE 7` 变成 `model 48 / no_evidence 2 / evidence_excerpt 0 / 失败 0`；p50 从 19.7s 降到 18.7s，最长从 97.5s 降到 41.9s。全量 156 文件 / 1098 用例通过。
+
+## 2026-11-10｜地图别名与学生口语，以及「没回执就当失败」
+
+「校内有哪些便利店？」在修复前返回的是 `run.failed TIMEOUT`，一个字都没有。两个独立缺陷叠加：
+
+- `campus.json` 里只有「又康超市」「三饭打印店」「B栋打印店」「菜鸟驿站」，别名只有「又康」，学生说的「便利店」「打印店」「快递」匹配不到任何地点。
+- 即使地点找到了，`beforeAnswer` 在发布 `artifact.ready` 后还要等浏览器回执，最多等 15 秒；等不到就抛 `TIMEOUT`，整轮回答变错误。脚本、未挂载的页面、关闭的标签页永远不会回执。
+
+新增 `src/features/campus-map/data/service-aliases.json`（只追加别名，不新增地点、不改坐标与来源），并把 `chat.ts` 里两处「等不到回执」改为直接返回 `false`，让模型用文字回答——卡片已经发布，用户照样能看到地点。`scripts/prepare-route-metadata.mjs` 的输入清单也加上该文件，否则部署会因 `Public walking metadata is stale` fail-closed。
+
+修复后：「便利店」→ 又康超市；「打印店」→ 三饭打印店 / B栋打印店 / 伟腾图文；「快递点」→ 菜鸟驿站与中通快递。
+
+另外更正上一轮的一个判断：我曾把 `article_search_documents.text_length` 偏小当成「入库截断」。实际是公众号 HTML 的字节被内联样式撑大——《故障报修全攻略》58,259 字节的 HTML，抽出正文只有 882 字。**入库没有截断**，这批文章本来就是图片为主、文字少。
