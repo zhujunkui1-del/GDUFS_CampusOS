@@ -317,8 +317,16 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
     // nothing and left every candidate tied on the same two points; the
     // document that actually is the calendar then lost to whichever neighbour
     // happened to say "管理办法" in its title.
+    // A clause fragment is not a term an article writes: “报修在” never appears
+    // in a title, so scoring it gave the repair guide zero title weight while
+    // “宿舍文化节” won on the word 宿舍 alone. The head of a soft modifier is
+    // what both the question and the article share.
+    const scoringTerm = (m: { original: string; hard?: boolean }) =>
+      m.hard === false
+        ? [...m.original].slice(0, 2).join("")
+        : m.original;
     const scoringTerms = [
-      ...plan.modifiers.map((m) => m.original),
+      ...plan.modifiers.map(scoringTerm),
       ...plan.topics.map((t) => t.alternatives[0]),
     ].filter((t): t is string => !!t && t.length >= 2);
     const terms = scoringTerms.length ? scoringTerms : keywords(q.query);
@@ -861,7 +869,11 @@ ${sourceFilterSql}
       // mentions the word repeats it in a table header. Count how often the
       // subject actually appears in the body, so a handbook that spends a
       // chapter on deferred exams outranks an announcement that lists dates.
-      const rulebookTitle = /手册|条例|细则|规定|办法|章程|规章/.test(d.title);
+      // A guide states the procedure as plainly as a rulebook does: “使用指南
+      // | 故障报修全攻略” answers “how do I report a repair”, while the
+      // payment-rules article that merely repeats the word 报修 does not.
+      const rulebookTitle =
+        /手册|条例|细则|规定|办法|章程|规章|指南|攻略|须知|全流程/.test(d.title);
       const rulebookBoost =
         ["procedure", "policy", "requirements"].includes(plan.goal) &&
         rulebookTitle
@@ -878,9 +890,19 @@ ${sourceFilterSql}
       // asking for one. When someone asks how to do something, a title that
       // merely names a schedule should not outrank the rulebook that states
       // the rule.
+      // A titled guide is the answer to "how do I do this", even when the
+      // question's topic word (宿舍) lives in the body rather than the title:
+      // “使用指南 | 故障报修全攻略” answers “宿舍报修在哪里提交”, while
+      // “宿舍文化节通知” only shares the word 宿舍.
+      const guideBoost = /指南|攻略|须知|全流程|教程|手册/.test(d.title) &&
+        plan.modifiers.some((m) =>
+          [...m.original].slice(0, 2).some((head) => d.title.includes(head)),
+        )
+        ? 8
+        : 0;
       const scheduleNotice =
         /安排|通知|名单|公示|通报/.test(d.title) &&
-        !/手册|条例|细则|规定|办法|章程|规章/.test(d.title);
+        !/手册|条例|细则|规定|办法|章程|规章|指南|攻略|须知/.test(d.title);
       const titleWeight =
         ["procedure", "policy", "requirements"].includes(plan.goal) &&
         scheduleNotice
@@ -889,6 +911,7 @@ ${sourceFilterSql}
       const score =
         relevance.score +
         rulebookBoost +
+        guideBoost +
         titleWeight +
         bodyMatch +
         (fusion?.get(c.id) || 0) * 80 +
@@ -981,12 +1004,19 @@ ${sourceFilterSql}
                 ? 2
                 : 1
             : 0,
+        // A guide is direct when its title names the operation the question
+        // asks for, even if the topic word itself lives in the body: “故障
+        // 报修全攻略” answers “宿舍报修”, while “宿舍文化节” does not.
         directSubject:
           plan.topics.some((t) =>
             t.alternatives.some((a) =>
               d.title.toLowerCase().includes(a.toLowerCase()),
             ),
           ) ||
+          (plan.modifiers.some((m) =>
+            [...m.original].slice(0, 2).some((head) => d.title.includes(head)),
+          ) &&
+            /指南|手册|攻略|须知|规则|规定|办法|流程|条例/.test(d.title)) ||
           (plan.topics.some((t) => t.id === "borrowing") &&
             /入馆|图书馆/.test(d.title) &&
             /指南|手册|规则/.test(d.title)),

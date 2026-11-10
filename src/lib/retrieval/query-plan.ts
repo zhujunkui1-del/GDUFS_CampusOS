@@ -19,6 +19,34 @@ const MODIFIER_NOISE =
 // the question, and a phrase built from it matches nothing.
 const COUNT_QUESTION = /几(?:次|个|场|门|位|种|名|天|年|月|周)/;
 
+// A leftover fragment can read like part of a sentence rather than a subject:
+// “里丢”, “用吹风机”, “池开放”, “时长不够会影响毕业”. No article writes those as
+// words, so treating them as required filters rejected documents that actually
+// answer the question (“校园卡业务” states how to report a lost card). Only a
+// fragment that names a subject — “人工智能”, “双学位”, “414期” — keeps the veto.
+const CLAUSE_VERB = /(?:不够|不会|会影响|会不会)|^(?:[里在中被把给用对从往随趁按照们收交办查找买卖寄借还去来做看听进出开关])/u;
+// A rule is written as “功率不超过 1000 瓦”, not as the question's “功率限制”.
+// The attribute word is how the question was phrased, so it cannot be a gate.
+const CLAUSE_TAIL = /(?:开放|关闭|提交|交付|报修|保修|记录|影响|办理|使用|收费|发放|收取)$/u;
+const ATTRIBUTE = /(?:限制|要求|标准|条件|费用|价格|流程|手续|时间|规定)$/u;
+// A question glued to a particle or a modal is a clause, not a term:
+// “报修在哪儿” leaves “报修在”, “宿舍好不好” leaves “好不好”. No article
+// writes those, so they rank instead of vetoing.
+// Only particles and question tails count as glue. Modal verbs such as 能 or
+// 会 end plenty of real subjects (“人工智能”, “全运会”), so they stay hard.
+const CLAUSE_GLUE = /(?:在|吗|呢|吧|的|了|啊|呀|否)$/u;
+const CLAUSE_MODAL = /(?:方便吗?|可以吗?|能不能?否?|需要吗?|怎么样?)$/u;
+function modifierIsHard(term: string): boolean {
+  if (!/[0-9A-Za-z]/.test(term)) {
+    if (CLAUSE_VERB.test(term)) return false;
+    if (CLAUSE_TAIL.test(term)) return false;
+    if (ATTRIBUTE.test(term)) return false;
+    if (CLAUSE_GLUE.test(term)) return false;
+    if (CLAUSE_MODAL.test(term)) return false;
+  }
+  return true;
+}
+
 // “校历在哪看得到” carries a real subject plus a whole clause about looking it
 // up. Stripping the clause leaves the noun the articles actually use.
 const LOOKUP_CLAUSE =
@@ -48,7 +76,7 @@ export type QueryPlan = {
   temporalExpression: string | null;
   excludedTerms: string[];
   qualifiers: string[];
-  modifiers: { original: string; alternatives: string[] }[];
+  modifiers: { original: string; alternatives: string[]; hard?: boolean }[];
   timeRange?: {
     after: string;
     before: string;
@@ -267,6 +295,8 @@ export function buildQueryPlan(
         : collegeAliases(original).length
           ? collegeAliases(original)
           : [original],
+      // A clause fragment is a hint, not a gate: see clauseFragment.
+      hard: modifierIsHard(original),
     }));
   return {
     version: "query-v2",
@@ -389,12 +419,18 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const distinctive = plan.modifiers.map((m) =>
     /[0-9]|[A-Za-z]/.test(m.original),
   );
-  if (plan.modifiers.length) {
+  // Only a modifier that reads as a subject may veto a document. A clause
+  // fragment such as “里丢” or “池开放” is a sentence piece no article writes,
+  // so it ranks instead of rejecting the article that answers the question.
+  const gating = plan.modifiers
+    .map((m, i) => ({ m, matched: modifierMatched[i], hard: distinctive[i] }))
+    .filter((x) => x.m.hard !== false);
+  if (gating.length) {
     const ok = collegeBound
-      ? modifierMatched.every(Boolean)
-      : distinctive.some(Boolean)
-        ? plan.modifiers.every((_, i) => !distinctive[i] || modifierMatched[i])
-        : modifierMatched.some(Boolean);
+      ? gating.every((x) => x.matched)
+      : gating.some((x) => x.hard)
+        ? gating.every((x) => !x.hard || x.matched)
+        : gating.some((x) => x.matched);
     if (!ok)
       return { relevant: false, score: 0, reason: "subject_modifier_missing" };
   }

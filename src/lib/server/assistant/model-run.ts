@@ -27,6 +27,11 @@ type RequiredTool =
   | "search_external_campus_info"
   | ContentTool;
 
+// The evidence judge is a second full model call. Its own latency was the
+// dominant term in the slowest turns, so it gets a budget of its own
+// instead of consuming the whole run's deadline.
+const JUDGE_TIMEOUT_MS = 12000;
+
 export function meteredClient(
   client: ModelClient,
   snapshot: ModelSnapshot,
@@ -96,7 +101,8 @@ export function meteredClient(
     stage?: "generation" | "evidence_check";
   }[] = [];
   const started = performance.now();
-  const checkEvidence = async (answer: string, signal: AbortSignal) => {    const evidence = options.groundingEvidence?.(answer);
+  const checkEvidence = async (answer: string, signal: AbortSignal) => {
+    const evidence = options.groundingEvidence?.(answer);
     if (!evidence) return undefined;
     if (groundingChecks >= 2) {
       // The budget is spent on the same answer twice. Replaying the second
@@ -135,7 +141,12 @@ export function meteredClient(
           function: { name: EVIDENCE_VERDICT_TOOL.function.name },
         },
         maxTokens,
-        signal,
+        // The judge is a second full model call and it routinely took 20-60s
+        // on its own, which pushed a five-request run past the 90s run limit
+        // and turned an otherwise good answer into a timeout. A judge that
+        // cannot finish inside its own budget is "unchecked" (the catch below
+        // already treats that as no verdict), never a rejection.
+        signal: AbortSignal.any([signal, AbortSignal.timeout(JUDGE_TIMEOUT_MS)]),
       });
       if (checked.usage) {
         outputBudgetUsed += checked.usage.completionTokens;
