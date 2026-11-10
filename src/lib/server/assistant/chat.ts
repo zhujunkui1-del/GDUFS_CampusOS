@@ -1212,7 +1212,13 @@ export async function chatResponse(request: Request) {
               setTimeout(resolve, receiptPollDelay(polls++, content.active)),
             );
           }
-          throw new ApiError("TIMEOUT", "地图操作未完成，请重试。");
+          // The map component acknowledges an action only when it is mounted.
+          // Without it — a closed tab, a headless client, a page that never
+          // hydrated — the packet stays unacknowledged and the whole turn used
+          // to fail with TIMEOUT, so 「校内有哪些便利店」 came back empty even
+          // though the places had been found. Answer in text instead; the
+          // cards are already published, so the user still sees the places.
+          return false;
         };
         let text = "";
         let error: { code: string; message: string } | undefined;
