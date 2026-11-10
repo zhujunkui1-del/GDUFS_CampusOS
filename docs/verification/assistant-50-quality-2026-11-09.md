@@ -149,5 +149,27 @@ v4/v6/v7 的并发度不同（v4 为 4，v6/v7 为 2），耗时列只作趋势�
 
 - **Q10「体育馆怎么预约，收费标准多少？」**：知识库确实没有体育馆预约与收费内容（D1 标题含「体育馆」的只有校史馆参观月报和游泳比赛报道），属于数据缺口，不是检索缺陷。
 - **Q18「校门口打车方便吗，哪个门最近？」**：应当走地图地点工具而不是知识库，当前 `facilityListing` 只覆盖「快递/驿站/打印/超市/便利店/充值点」，不覆盖校门与打车。
-- **地图别名仍缺**：便利店、打印店、快递、银行等常见叫法没有映射到 `campus.json` 的地名，导致「校内有哪些便利店」会返回 `search_places ok:false`。
-- **长文入库截断**：`article_search_documents.text_length` 小于正文长度的文档占多数（5830 篇 ready 文档中 4708 篇 text_length < 1500），部分公众号长文只入库了前几百字。这是入库链路问题，本轮未改动。
+- **地图别名**：已补（见下节）。
+- **长文入库「截断」是误判**：上一轮把 `text_length` 偏小当成截断，实际是**公众号 HTML 的字节数被内联样式撑大**。抽样核对 `body_format='reading_html'` 的文档，`articleText()` 抽出的正文与 `text_length` 基本一致——《故障报修全攻略》`body` 58,259 字节，去样式后正文 882 字，`text_length` 928；`wx-7f3ebc318681d421366` 356,227 字节对应正文 611 字。**入库没有截断**，这批文章本身就是图片为主、文字很少，可检索内容自然有限。
+
+## 2026-11-10｜地图别名与「地图没回执」降级
+
+两个独立的缺陷都能让「校内有哪些便利店」这类问题变成空回答。
+
+**其一：地图只有正式地名，没有学生叫法。** `campus.json` 里是「又康超市」「三饭打印店」「B栋打印店」「菜鸟驿站」「中通快递」，别名只有「又康」，所以 `search_places` 收到「便利店」「打印店」「快递」时匹配不到任何地点，`search_campus_knowledge` 又没有这类内容，最终只能拒答。
+
+新增 `src/features/campus-map/data/service-aliases.json`，只按 place id 追加口语别名（超市/便利店/小卖部、打印店/打印/复印、快递/快递点/驿站），不新增地点、不改坐标与来源。`campus.ts` 读取时合并进 `aliases`，`scripts/prepare-route-metadata.mjs` 的输入清单同步加入该文件，否则 `npm run deploy:preview` 会以 `Public walking metadata is stale` fail-closed。
+
+**其二：地图动作没有回执时整轮失败。** `chat.ts` 的 `beforeAnswer` 在发布 `artifact.ready` 后最多轮询 15 秒等浏览器回执；等不到就抛 `TIMEOUT`，整个回答变成「地图操作未完成」。无人值守的客户端（脚本、未挂载的页面、关闭的标签页）永远不会回执，于是地点明明已经找到、卡片也已经发出，前端却只拿到一个错误。现在两处都改为返回 `false`，让模型直接用文字回答——卡片已经发布，用户照样能看到地点。
+
+另外一处同样的问题：当本轮检索已经用掉大部分 D1 查询预算时，轮询会撞上 `RECEIPT_QUERY_SOFT_LIMIT`（40）并抛 `TIMEOUT`，现在也改为停止等待、直接回答。
+
+验证：
+
+| 问题 | 修复前 | 修复后 |
+| --- | --- | --- |
+| 「校内有哪些便利店？」 | `run.failed TIMEOUT`，无文字 | 「校内目前收录的便利店只有又康超市一家」 |
+| 「打印店在哪？」 | `search_places ok:false` | 三饭打印店 / B栋打印店 / 伟腾图文 |
+| 「快递点在哪？」 | `search_places ok:false` | 菜鸟驿站与中通快递都在生活区 |
+
+`npm run map:route-metadata` 重新生成后 `publicPlaces=113`；`tests/unit/place-coverage.test.ts` 增加一条口语别名断言；全量 156 文件 / 1098 用例通过。
