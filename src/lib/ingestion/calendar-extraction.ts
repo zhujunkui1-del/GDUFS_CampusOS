@@ -597,9 +597,10 @@ function proposalCandidates(
     for (let i = 0; i < pp.length; i++) {
       out.push({
         scope:
-          (proposal?.events.filter((x) => x.title === e.title).length || 0) > 1
+          e.scope ??
+          ((proposal?.events.filter((x) => x.title === e.title).length || 0) > 1
             ? String(at)
-            : undefined,
+            : undefined),
         title: e.title,
         source: s,
         start: pp[i],
@@ -737,15 +738,24 @@ export function calendarizeArticle(
       // notice once per day it covers. Tables that do name a venue keep their
       // rows apart, because each row really is a different event.
       if (pi < 0 && dated.length > 2) {
-        const byDay = new Map<string, string>();
-        for (const { row, dates } of dated)
-          for (const day of dates) if (!byDay.has(day)) byDay.set(day, row);
-        for (const [day, row] of byDay)
+        const byDay = new Map<string, { row: string; raw: string }>();
+        // Only the day part names the day; a trailing "9:30-11:00" is a clock
+        // range and must not split one morning into several cards.
+        const dayOf = (raw: string) =>
+          raw.replace(
+            /\s*(?:上午|下午|晚上|中午|凌晨)?\s*\d{1,2}[:：]\d{2}.*$/,
+            "",
+          );
+        for (const { row, dates } of dated) {
+          const day = dayOf(dates[0]);
+          if (!byDay.has(day)) byDay.set(day, { row, raw: dates[0] });
+        }
+        for (const [day, { row, raw }] of byDay)
           tableEvents.push({
             title: input.title,
             sourceId: s.id,
             occurrenceQuote: row,
-            dates: [day],
+            dates: [raw],
             scope: day,
             place: null,
             organizer: null,
@@ -776,6 +786,9 @@ export function calendarizeArticle(
     ...proposalCandidates(sources, input, proposal),
   ].filter(
     (c) =>
+      // Collapsed timetable rows are deliberately titled after the article and
+      // must survive this de-duplication; only unscoped body duplicates go.
+      !!c.scope ||
       !(
         ["body", "table"].includes(c.source.kind) &&
         c.title === input.title &&

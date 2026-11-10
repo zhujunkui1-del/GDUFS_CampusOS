@@ -2505,3 +2505,32 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 修复后：「便利店」→ 又康超市；「打印店」→ 三饭打印店 / B栋打印店 / 伟腾图文；「快递点」→ 菜鸟驿站与中通快递。
 
 另外更正上一轮的一个判断：我曾把 `article_search_documents.text_length` 偏小当成「入库截断」。实际是公众号 HTML 的字节被内联样式撑大——《故障报修全攻略》58,259 字节的 HTML，抽出正文只有 882 字。**入库没有截断**，这批文章本来就是图片为主、文字少。
+
+## 2026-11-10｜活动日历：一张表被拆成十二张卡，剩下的日子被丢掉
+
+用户报告：《广东外语外贸大学2027年三二分段专升本转段考核报考通知》里写了 16 场考试、跨 12 月 3/4/5 日，日历上却在 12 月 3 日出现 10 次、12 月 4 日 2 次、12 月 5 日**一次都没有**。
+
+三个缺陷叠在一起，都在 `src/lib/ingestion/calendar-extraction.ts`：
+
+1. **表格只读前 12 行。** `rows.slice(0, 12)` 与 `activities.length >= 12`，学校通知里超过 12 行的课程表，第 13 行以后直接消失——12 月 5 日那四场考试就是这么没的。
+2. **schema 也跟着卡在 12。** `ArticleAnalysisSchema.activities`、`CalendarProposalSchema.events` 都是 `.max(12)`，即使抽取器放宽也会被校验拒绝；`CalendarProposalSchema` 的 `dates` 也上限 12。
+3. **没有地点列的表被当成「N 个独立活动」。** 每行一个 `title`，于是 `activity_key` 每行一个、`group_key` 每行一个，日历上就是同一篇文章的十张卡片。而真正该逐行拆开的是**有**地点列的表（宣讲会汇总表、论坛分论坛），它们每行确实是一场独立活动。
+
+修法：`MAX_ACTIVITIES = 40`（抽取器、schema、proposal 三处一起放宽）；表格没有「地点」列且有效期超过 2 行时，**按日期折叠成一行**——一天一张卡，标题沿用文章标题，`scope` 用当天日期保证每天有不同的 `group_key`；有地点列的表保持逐行。折叠出来的行带着 `scope`，所以要绕过后面那条「标题与文章标题相同的表格候选去重」逻辑，否则刚折叠好的卡片会被自己删掉。
+
+顺带修了一个折叠时才会暴露的问题：`calendarDates()` 对 `6月23日9:30-11:00` 会切出 `6月23日9:30` 与 `11:00` 两段，按「每段一个日期」折叠会把同一个上午拆成两张卡。折叠时只取日期部分（去掉尾部时刻）作为分组键，但保留原文片段作为 `dates`，时刻仍然能解析。
+
+线上实测：
+
+| 文档 | 修复前 | 修复后 |
+|---|---|---|
+| `content-88f4b97d…`（三二分段考试） | 12 张卡，12/3 ×10、12/4 ×2、12/5 ×0 | 3 张卡，12/3、12/4、12/5 各一 |
+| `content-f047562a…`（数学学院期末考试） | 3 张卡，6/23 ×2 | 2 张卡，6/23、6/26 |
+| `content-8ae11df7…`（云山论坛分论坛） | 7 张卡 | **7 张卡不变**（有地点列） |
+| `content-48ad8121…`（培训日程） | 6 张卡 | **6 张卡不变**（有地点列） |
+
+存量全量重算：6035 篇已发布文档中 8 篇投影变化，`calendar_eligible` **746 → 773**，未来事件 **43 → 43**（这一轮只影响多日长表，不改变未来的供给）。线上 `/api/public/activities?day=2026-12-03|04|05` 现在是各 **1 / 1 / 4**（12/5 另有别篇文章）。
+
+验证：新增 `tests/unit/calendar-extraction.test.ts`「keeps a timetable without a venue as one card per day, not one card per course」「keeps every day of a long timetable, not just the first twelve rows」「keeps a venue table itemised because each row is a separate event」；`npx vitest run` **156 文件 1101 用例全绿**；`tsc --noEmit` 0 error。
+
+已知边界：如果一张表既没有地点列、又确实是多场独立活动（例如「多场讲座」），现在的启发式会把它折叠成一天一张卡。这类表目前靠标题里的「活动汇总 / N场讲座 / 系列讲座」触发 `unresolvedMultiple`，交给 AI enrich；纯规则阶段无法区分。

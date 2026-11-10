@@ -260,3 +260,97 @@ it("splits a converted attachment table into individually evidenced activities",
   expect(a.map((a) => a.startsAt?.date)).toEqual(["2026-11-05", "2026-11-07"]);
   expect(a[1].placeRaw).toBeNull();
 });
+it("keeps a timetable without a venue as one card per day, not one card per course", () => {
+  const rows = [
+    "综合英语 | 12月3日上午",
+    "国际贸易实务 | 12月3日下午",
+    "基础日语 | 12月3日上午",
+    "商务日语 | 12月4日上午",
+    "韩语翻译 | 12月4日上午",
+    "程序设计基础 | 12月5日上午",
+    "数据库原理与应用 | 12月5日下午",
+    "网络营销 | 12月5日下午",
+  ];
+  const a = analyzeArticle({
+    title: "2027年三二分段专升本转段考核报考通知",
+    publishedAt: "2026-10-26",
+    body: "考试安排见附件。",
+    calendarSources: [
+      {
+        id: "t1",
+        kind: "table" as const,
+        url: "https://jxjy.gdufs.edu.cn/info/1056/21067.htm",
+        locator: "table[1]",
+        digest: "isolated",
+        method: "html-table",
+        text:
+          "课程名称 | 考试时间\n" +
+          rows.map((r) => r.replace(" | ", " | ")).join("\n"),
+      },
+    ],
+  }).activities.filter((a) => a.calendar?.eligible);
+  expect(a.map((x) => x.startsAt?.date)).toEqual([
+    "2026-12-03",
+    "2026-12-04",
+    "2026-12-05",
+  ]);
+  expect(new Set(a.map((x) => x.title))).toEqual(
+    new Set(["2027年三二分段专升本转段考核报考通知"]),
+  );
+});
+it("keeps every day of a long timetable, not just the first twelve rows", () => {
+  const rows = Array.from({ length: 16 }, (_, i) =>
+    i < 12
+      ? `课程${i + 1} | 12月${i < 5 ? 3 : 4}日上午`
+      : `课程${i + 1} | 12月5日${i < 14 ? "上午" : "下午"}`,
+  );
+  const a = analyzeArticle({
+    title: "2027年三二分段专升本转段考核报考通知",
+    publishedAt: "2026-10-26",
+    body: "考试安排见附件。",
+    calendarSources: [
+      {
+        id: "t1",
+        kind: "table" as const,
+        url: "https://jxjy.gdufs.edu.cn/info/1056/21067.htm",
+        locator: "table[1]",
+        digest: "isolated",
+        method: "html-table",
+        text: "课程名称 | 考试时间\n" + rows.join("\n"),
+      },
+    ],
+  }).activities.filter((a) => a.calendar?.eligible);
+  expect(a.map((x) => x.startsAt?.date)).toEqual([
+    "2026-12-03",
+    "2026-12-04",
+    "2026-12-05",
+  ]);
+});
+it("keeps a venue table itemised because each row is a separate event", () => {
+  const a = analyzeArticle({
+    title: "2026年区域国别学论坛",
+    publishedAt: "2026-10-20",
+    body: "分论坛安排见附件。",
+    calendarSources: [
+      {
+        id: "t1",
+        kind: "table" as const,
+        url: "https://giis.gdufs.edu.cn/info/1.htm",
+        locator: "table[1]",
+        digest: "isolated",
+        method: "html-table",
+        text:
+          "日期 | 地点 | 分论坛主题\n" +
+          "2026年11月6日（星期五）9:00-12:00 | 行政楼第一会议室 | 分论坛一：气候对话\n" +
+          "2026年11月7日（星期六）9:00-12:00 | 一教南223 | 分论坛二：亚非研究\n" +
+          "2026年11月7日（星期六）14:30-17:00 | 行政楼第二会议室 | 分论坛三：大国关系",
+      },
+    ],
+  }).activities.filter((a) => a.calendar?.eligible);
+  expect(a).toHaveLength(3);
+  expect(a.map((x) => x.title)).toEqual([
+    "分论坛一：气候对话",
+    "分论坛二：亚非研究",
+    "分论坛三：大国关系",
+  ]);
+});
