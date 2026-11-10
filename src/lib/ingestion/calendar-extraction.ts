@@ -318,6 +318,8 @@ type Candidate = {
   place: string | null;
   organizer: string | null;
   nature: NonNullable<Activity["calendar"]>["nature"];
+  /** A clock printed in its own column, e.g. "开始时间 | 15:30". */
+  clock?: string;
 };
 function candidates(
   s: Source,
@@ -565,6 +567,19 @@ function proposalCandidates(
       })
       .filter((p): p is ArticleTimePoint => !!p?.date);
     if (!pp.length) continue;
+    // The table's clock column is the session's own time; the date cell only
+    // carries the day. Attaching it here keeps the evidence pointing at the
+    // date cell while the hour still reaches the card.
+    if (e.clock && pp[0]?.date) {
+      const clock = e.clock.match(/^(\d{1,2})[:：](\d{2})$/);
+      if (clock && +clock[1] < 24 && +clock[2] < 60)
+        pp[0] = {
+          ...pp[0],
+          at: `${pp[0].date}T${clock[1].padStart(2, "0")}:${clock[2]}:00+08:00`,
+          precision: "exact_time",
+          resolution: "minute",
+        };
+    }
     if (
       (e.place && !s.text.includes(e.place)) ||
       (e.organizer && !s.text.includes(e.organizer))
@@ -615,6 +630,7 @@ function proposalCandidates(
         place: confirmedValue(verifiedPlace),
         organizer: confirmedValue(verifiedOrganizer),
         nature: e.nature,
+        clock: e.clock,
       });
       if (range) break;
     }
@@ -721,15 +737,28 @@ export function calendarizeArticle(
         ti = cols.findIndex(
           (x) => /时间|日期/.test(x) && !/报名|截止|提交|发布|公示/.test(x),
         ),
+        // A timetable that prints "日期 | 开始时间" in two columns kept the
+        // date one only, so every session looked like it had no hour at all.
+        // The clock column is a separate fact, not a competitor to the date.
+        ci = cols.findIndex(
+          (x) =>
+            x !== cols[ti] &&
+            /^(?:开始|举办|活动|具体)?时间$/.test(x) &&
+            !/报名|截止|提交|发布|公示/.test(x),
+        ),
         pi = cols.findIndex((x) => /地点/.test(x)),
         oi = cols.findIndex((x) => /主办/.test(x));
       if (ni < 0 || ti < 0) continue;
+      const clockOf = (c: string[]) =>
+        ci >= 0 && /^\s*\d{1,2}[:：]\d{2}\s*$/.test(c[ci] || "")
+          ? c[ci].trim()
+          : undefined;
       const dated = [];
       for (const row of rows.slice(0, MAX_ACTIVITIES)) {
         const c = row.split("|").map((x) => x.trim());
         if (!c[ni] || !c[ti]) continue;
         const dates = calendarDates(c[ti]).map((m) => m[0].trim());
-        if (dates.length) dated.push({ row, c, dates });
+        if (dates.length) dated.push({ row, c, dates, clock: clockOf(c) });
       }
       // A table without a venue column schedules one proceeding over several
       // days ("1 | 综合英语 | 12月3日上午"), it does not announce N separate
@@ -738,7 +767,10 @@ export function calendarizeArticle(
       // notice once per day it covers. Tables that do name a venue keep their
       // rows apart, because each row really is a different event.
       if (pi < 0 && dated.length > 2) {
-        const byDay = new Map<string, { row: string; raw: string }>();
+        const byDay = new Map<
+          string,
+          { row: string; raw: string; clock?: string }
+        >();
         // Only the day part names the day; a trailing "9:30-11:00" is a clock
         // range and must not split one morning into several cards.
         const dayOf = (raw: string) =>
@@ -746,29 +778,31 @@ export function calendarizeArticle(
             /\s*(?:上午|下午|晚上|中午|凌晨)?\s*\d{1,2}[:：]\d{2}.*$/,
             "",
           );
-        for (const { row, dates } of dated) {
+        for (const { row, c, dates } of dated) {
           const day = dayOf(dates[0]);
-          if (!byDay.has(day)) byDay.set(day, { row, raw: dates[0] });
+          if (!byDay.has(day)) byDay.set(day, { row, raw: dates[0], clock: clockOf(c) });
         }
-        for (const [day, { row, raw }] of byDay)
+        for (const [day, { row, raw, clock }] of byDay)
           tableEvents.push({
             title: input.title,
             sourceId: s.id,
             occurrenceQuote: row,
             dates: [raw],
             scope: day,
+            clock,
             place: null,
             organizer: null,
             nature: "announcement",
           });
         continue;
       }
-      for (const { row, c, dates } of dated)
+      for (const { row, c, dates, clock } of dated)
         tableEvents.push({
           title: c[ni],
           sourceId: s.id,
           occurrenceQuote: row,
           dates,
+          clock,
           place: pi >= 0 ? c[pi] || null : null,
           organizer: oi >= 0 ? c[oi] || null : null,
           nature: "announcement",

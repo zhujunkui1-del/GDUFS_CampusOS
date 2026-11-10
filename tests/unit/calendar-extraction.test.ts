@@ -354,3 +354,29 @@ it("keeps a venue table itemised because each row is a separate event", () => {
     "分论坛三：大国关系",
   ]);
 });
+
+it("reads the clock that sits in its own column of a timetable", () => {
+  const a = analyzeArticle({
+    title: "【宣讲】广外第二周2027校招宣讲会汇总表",
+    publishedAt: "2026-09-10",
+    body: "详见附件。",
+    calendarSources: [
+      {
+        id: "t1",
+        kind: "table" as const,
+        url: "https://mp.weixin.qq.com/s/x",
+        locator: "table[1]",
+        digest: "isolated",
+        method: "html-table",
+        text:
+          "序号 | 日期 | 开始时间 | 单位名称 | 地点 | 形式 | 是否现场接收简历\n" +
+          "1 | 2026年9月14日（星期一） | 15:30 | 深圳市英维克科技股份有限公司 | 一教南109 | 宣讲会+面试 | 是\n" +
+          "2 | 2026年9月14日（星期一） | 19:00 | 锦翰网络科技(广州)有限公司 | 六教B305 | 宣讲会+面试 | 是",
+      },
+    ],
+  }).activities.filter((x) => x.calendar?.eligible);
+  expect(a.map((x) => [x.title, x.startsAt?.at])).toEqual([
+    ["深圳市英维克科技股份有限公司", "2026-09-14T15:30:00+08:00"],
+    ["锦翰网络科技(广州)有限公司", "2026-09-14T19:00:00+08:00"],
+  ]);
+});

@@ -232,3 +232,63 @@ it("stable cursors page over canonical activities and reject a changed visibilit
     f.close();
   }
 });
+
+it("shows a notice without hours once per day, and keeps stated sessions apart", async () => {
+  const f = await dateGateFixture();
+  try {
+    const [a, b] = [await f.store.document("spring"), await f.store.document("autumn")];
+    await f.db.batch(
+      await analysisStatements(f.db, a.id, a.contentRevision, a.inputHash!, {
+        title: "2026年运动会安排",
+        body: "详见附件。",
+        publishedAt: "2026-10-20",
+        calendarSources: [
+          {
+            id: "t1",
+            kind: "table" as const,
+            url: "https://www.gdufs.edu.cn/info/1.htm",
+            locator: "table[1]",
+            digest: "isolated",
+            method: "html-table",
+            text:
+              "日期 | 地点 | 项目名称\n2026年11月5日 | 田径场 | 男子百米\n2026年11月5日 | 体育馆 | 女子篮球\n2026年11月6日 | 田径场 | 决赛",
+          },
+        ],
+      }),
+    );
+    await f.db.batch(
+      await analysisStatements(f.db, b.id, b.contentRevision, b.inputHash!, {
+        title: "2026年宣讲会",
+        body: "详见附件。",
+        publishedAt: "2026-10-20",
+        calendarSources: [
+          {
+            id: "t1",
+            kind: "table" as const,
+            url: "https://www.gdufs.edu.cn/info/2.htm",
+            locator: "table[1]",
+            digest: "isolated",
+            method: "html-table",
+            text:
+              "序号 | 日期 | 开始时间 | 单位名称 | 地点 | 形式\n1 | 2026年11月5日 | 15:30 | 甲公司 | 一教109 | 宣讲\n2 | 2026年11月5日 | 19:00 | 乙公司 | 一教109 | 宣讲",
+          },
+        ],
+      }),
+    );
+    const r = await readCalendar(f.db, {
+      after: "2026-11-05",
+      before: "2026-11-06",
+      day: "2026-11-05",
+    });
+    expect(
+      r.items
+        .map((i) => i.activity.startsAt?.at)
+        .filter(Boolean)
+        .sort(),
+    ).toEqual(["2026-11-05T15:30:00+08:00", "2026-11-05T19:00:00+08:00"]);
+    // The two-hourless table is one card for the day, so the day holds three.
+    expect(r.dailyCounts["2026-11-05"]).toBe(3);
+  } finally {
+    f.close();
+  }
+});

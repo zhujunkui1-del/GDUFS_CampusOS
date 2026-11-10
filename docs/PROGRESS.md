@@ -2534,3 +2534,26 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 验证：新增 `tests/unit/calendar-extraction.test.ts`「keeps a timetable without a venue as one card per day, not one card per course」「keeps every day of a long timetable, not just the first twelve rows」「keeps a venue table itemised because each row is a separate event」；`npx vitest run` **156 文件 1101 用例全绿**；`tsc --noEmit` 0 error。
 
 已知边界：如果一张表既没有地点列、又确实是多场独立活动（例如「多场讲座」），现在的启发式会把它折叠成一天一张卡。这类表目前靠标题里的「活动汇总 / N场讲座 / 系列讲座」触发 `unresolvedMultiple`，交给 AI enrich；纯规则阶段无法区分。
+
+## 2026-11-10｜活动日历：一张表里没有钟点，同一天就只留一张卡
+
+前一轮修好了「一张表被拆成十二张卡」，但同一份宣讲汇总表在一天里仍然会冒出好几张卡。根源不是身份算法，而是**表格的第 3 列从来没被读过**。
+
+三处缺陷：
+
+1. `cols.findIndex((x) => /时间|日期/.test(x))` 先命中「日期」列就停，「开始时间」列整列被跳过。表头是 `序号 | 日期 | 开始时间 | 单位名称 | 地点 | 形式`，于是每行 `startsAt.at` 全是 `null`——文章明明写了「15:30」「19:00」，日历上却只剩一堆没有时刻的卡片。
+2. 表格单元格里的地点不走 `verifiedPlace`（`placeRaw` 要求「地点：」前缀或「在…举行」），所以这几张卡的地点也是空的。
+3. 没有时刻的卡片只能靠 `group_key` 区分，而 `group_key` 里含标题——同一篇文章的不同公司名就是不同的 `group_key`，于是「一篇文章同一天出现 N 次」。
+
+修法分两步，顺序不能反：
+
+- **第一步**：读「开始时间」列。新增 `ci`（`/^(?:开始|举办|活动|具体)?时间$/`，且不与 `ti` 同一列），把 `clock` 随 `CalendarProposal.events` 带进候选，在 `proposalCandidates()` 里把时刻并到 `pp[0].at`。指针仍指向日期单元格，证据不漂移。
+- **第二步**：查询层折叠。`readCalendar()` 的 SQL 里算出 `no_clock`（该文档没有任何带 `at` 的 eligible activity），为真的文档用 `${document_id}|${日期}` 当分组键，而不是 `group_key`。这样「日期都不明确」的文档一天只出现一次，而「时刻明确」的文档（宣讲会每场 15:30 / 19:00）仍然逐场分开。
+
+选查询层而不是身份层，是因为身份层的 `group_key` 同时被助手检索去重（`src/lib/server/retrieval/skills.ts`）使用，改它要全量重算且会影响检索；查询层折叠不动索引、可随时回退。
+
+线上存量重算（6058 篇，7 篇投影变化，826 行写入）：6 张校招宣讲汇总表（9–30 张卡不等）此前一张带时刻的卡都没有，现在全部拿到了「15:30 / 19:00」这样的钟点；全库带时刻的卡片因此达到 **244 / 784**。
+
+验证：`tests/unit/calendar-extraction.test.ts`「reads the clock that sits in its own column of a timetable」；`tests/unit/calendar-query.test.ts`「shows a notice without hours once per day, and keeps stated sessions apart」；`npx vitest run tests/unit` 156 文件 1103 用例全绿；`tsc --noEmit` 0 error。
+
+已知边界：折叠的判据是「该文档有没有任何一个带时刻的活动」，不是「这一行有没有时刻」。一篇文档里若一部分行有时刻、一部分没有，整篇仍按场次拆分——这是有意的保守选择，宁可多一张卡，也不把真实的逐场活动合并掉。

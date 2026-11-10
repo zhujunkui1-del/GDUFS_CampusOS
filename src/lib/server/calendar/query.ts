@@ -86,6 +86,7 @@ type Row = {
   activity_key: string;
   group_key: string;
   activity_json: string;
+  no_clock: number;
   version: number;
   content_revision: number;
   input_hash: string;
@@ -186,7 +187,7 @@ export async function readCalendar(
     `(json_extract(a.activity_json,'$.calendar.usesBody')=0 OR (${calendarBodyAllowedSql()}))`,
   );
   const rows = await read<Row>(
-    `WITH permitted AS MATERIALIZED (SELECT a.document_id,a.activity_key,a.group_key,a.activity_json,d.version,d.content_revision,d.input_hash,d.title AS document_title,d.url,d.published_at,d.source_id,s.display_name,d.rights_scope,CASE WHEN m.document_id IS NOT NULL THEN CASE WHEN m.radar_category IS NOT NULL THEN 'radar' ELSE 'knowledge' END ELSE x.primary_destination END AS primary_destination,CASE WHEN m.document_id IS NOT NULL THEN m.radar_category ELSE x.radar_category END AS radar_category,CASE WHEN m.document_id IS NOT NULL THEN m.knowledge_category ELSE x.knowledge_category END AS knowledge_category FROM article_activity_index a JOIN knowledge_documents d ON d.id=a.document_id JOIN document_article_analysis x ON x.document_id=d.id JOIN knowledge_sources s ON s.id=d.source_id LEFT JOIN document_classification_overrides m ON m.document_id=d.id WHERE ${filters.join(" AND ")}) SELECT v.* FROM permitted v WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=v.document_id AND p.version=v.version) ORDER BY json_extract(v.activity_json,'$.startsAt.date'),v.group_key,v.document_id LIMIT 1001`,
+    `WITH permitted AS MATERIALIZED (SELECT a.document_id,a.activity_key,a.group_key,a.activity_json,CASE WHEN NOT EXISTS (SELECT 1 FROM article_activity_index b WHERE b.document_id=a.document_id AND b.calendar_eligible=1 AND json_extract(b.activity_json,'$.startsAt.at') IS NOT NULL) THEN 1 ELSE 0 END AS no_clock,d.version,d.content_revision,d.input_hash,d.title AS document_title,d.url,d.published_at,d.source_id,s.display_name,d.rights_scope,CASE WHEN m.document_id IS NOT NULL THEN CASE WHEN m.radar_category IS NOT NULL THEN 'radar' ELSE 'knowledge' END ELSE x.primary_destination END AS primary_destination,CASE WHEN m.document_id IS NOT NULL THEN m.radar_category ELSE x.radar_category END AS radar_category,CASE WHEN m.document_id IS NOT NULL THEN m.knowledge_category ELSE x.knowledge_category END AS knowledge_category FROM article_activity_index a JOIN knowledge_documents d ON d.id=a.document_id JOIN document_article_analysis x ON x.document_id=d.id JOIN knowledge_sources s ON s.id=d.source_id LEFT JOIN document_classification_overrides m ON m.document_id=d.id WHERE ${filters.join(" AND ")}) SELECT v.* FROM permitted v WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=v.document_id AND p.version=v.version) ORDER BY json_extract(v.activity_json,'$.startsAt.date'),v.group_key,v.document_id LIMIT 1001`,
     args,
   );
   if (rows.length > 1000)
@@ -238,15 +239,21 @@ export async function readCalendar(
       history = a.endsAt?.at
         ? Date.parse(a.endsAt.at) < Date.parse(now)
         : end < today;
-    const group = groups.get(r.group_key);
-    const states = observations.get(r.group_key) || new Set<RegistrationNow>();
+    // An article whose activities carry no hour has no honest way to tell
+    // two sessions apart on the same day: "考试通知" listing four courses
+    // is one notice, not four cards. Articles that do state hours keep
+    // their separate cards, because there each row is a real session.
+    const foldKey =
+      r.no_clock === 1 ? `${r.document_id}|${a.startsAt.date}` : r.group_key;
+    const group = groups.get(foldKey);
+    const states = observations.get(foldKey) || new Set<RegistrationNow>();
     if (state !== "unknown") states.add(state);
-    observations.set(r.group_key, states);
+    observations.set(foldKey, states);
     if (group) {
       if (!group.sources.some((s) => s.documentId === source.documentId))
         group.sources.push(source);
     } else
-      groups.set(r.group_key, {
+      groups.set(foldKey, {
         eventId: r.group_key,
         activity: a,
         sources: [source],
@@ -257,8 +264,8 @@ export async function readCalendar(
         dates,
       });
   }
-  for (const g of groups.values()) {
-    const states = observations.get(g.eventId)!;
+  for (const [key, g] of groups) {
+    const states = observations.get(key)!;
     g.registrationState = states.size === 1 ? [...states][0] : "unknown";
     if (states.size > 1)
       g.activity = {

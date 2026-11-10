@@ -53,6 +53,9 @@ export const CalendarProposalSchema = z
           // Rules that collapse one timetable into several cards keep the same
           // reading title but need a separate identity per day.
           scope: z.string().max(100).optional(),
+          // A timetable prints its clock in its own column ("日期 | 开始时间"),
+          // so the date cell alone never carries it.
+          clock: z.string().max(20).optional(),
           nature: z.enum([
             "announcement",
             "recruitment",
