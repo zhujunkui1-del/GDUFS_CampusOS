@@ -9,6 +9,7 @@ const inputs = [
   "src/features/campus-map/data/campus.json",
   "src/features/campus-map/data/campus.ts",
   "src/features/campus-map/data/owner-sports-label-review.json",
+  "src/features/campus-map/data/service-aliases.json",
   "src/features/campus-map/data/walking-network.json",
   "src/features/campus-map/data/local-routing.ts",
   "src/features/campus-map/data/navigation-geometry.ts",
