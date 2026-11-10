@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { campusData } from "@/features/campus-map/data/campus";
+import { campusData, searchCampusPlaces } from "@/features/campus-map/data/campus";
 import { CampusMapService } from "@/lib/server/maps/campus-map-service";
 import { inputGate } from "@/lib/server/assistant/input-gate";
 import { writeFileSync, mkdirSync } from "node:fs";
@@ -61,4 +61,17 @@ it("every labelled campus place is routable and resolvable by name and alias", (
     JSON.stringify({ places: campusData.places.length, failures }, null, 2),
   );
   expect(failures).toEqual([]);
+});
+
+it("resolves the everyday service words students actually use", () => {
+  // Students ask for 超市 or 打印店, never 又康超市 or 三饭打印店. Without the
+  // alias overlay the map tool returned nothing and the assistant answered
+  // "not found" for a place that exists on the map.
+  const names = (query: string) =>
+    searchCampusPlaces(query).map((place) => place.name);
+  expect(names("便利店")).toContain("又康超市");
+  expect(names("超市")).toContain("又康超市");
+  expect(names("打印店")).toContain("三饭打印店");
+  expect(names("打印店")).toContain("B栋打印店");
+  expect(names("快递")).toContain("菜鸟驿站");
 });

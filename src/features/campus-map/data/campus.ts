@@ -1,6 +1,7 @@
 import { z } from "zod";
 import raw from "./campus.json";
 import sportsReview from "./owner-sports-label-review.json";
+import serviceAliases from "./service-aliases.json";
 
 export const CoordinateSchema = z.tuple([
   z.number().min(-180).max(180),
@@ -59,6 +60,10 @@ export const PlaceSchema = z.object({
   geometryRings: z.array(z.array(CoordinateSchema).min(4)).optional(),
 });
 export type CampusPlace = z.infer<typeof PlaceSchema>;
+const serviceAliasMap = serviceAliases.aliases as Record<string, string[]>;
+function serviceAlias(id: string): string[] | undefined {
+  return serviceAliasMap[id];
+}
 export const campusData = z
   .object({
     campusId: z.literal("gdufs_university_town"),
@@ -114,6 +119,19 @@ export const campusData = z
           : {}),
         ...(sportsReview.hiddenLabelIds.includes(place.id)
           ? { hiddenLabel: true }
+          : {}),
+        // Students ask for "超市" or "打印店", never "又康超市". The alias
+        // only widens the search text; it adds no place, coordinate or
+        // source, so the ODbL snapshot stays untouched.
+        ...(serviceAlias(place.id)
+          ? {
+              aliases: [
+                ...new Set([
+                  ...("aliases" in place ? place.aliases || [] : []),
+                  ...serviceAlias(place.id)!,
+                ]),
+              ],
+            }
           : {}),
       };
     }),
