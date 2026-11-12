@@ -1,0 +1,103 @@
+{
+  "version": "student-activity-center-v1-2026-11-12",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "placeId": "osm-way-313039010",
+  "sourceFootprintSha256": "82531414d9a963b0b974d3f97ae6e16ccd9adaea0c3c9369f1752babbb0b707b",
+  "orientationBasis": "owner-supplied satellite is north-up; local X=east and local Z=south",
+  "blueRoofCenterLocalMeters": [
+    16,
+    -3
+  ],
+  "redTowerCenterLocalMeters": [
+    -7,
+    12
+  ],
+  "displayCourtyardLocalMeters": [
+    [
+      -10,
+      -11
+    ],
+    [
+      -2,
+      -11
+    ],
+    [
+      -2,
+      -5
+    ],
+    [
+      -10,
+      -5
+    ]
+  ],
+  "facadeLevels": 4,
+  "estimatedWingHeightMeters": 12.4,
+  "estimatedHallHeightMeters": 17.2,
+  "estimatedTowerHeightMeters": 19.2,
+  "heightAccuracy": "visual_estimate_only_not_surveyed",
+  "palette": {
+    "ivory": "#e6e2d9",
+    "pale": "#d9d7cf",
+    "red": "#c62f35",
+    "blueRoof": "#83b5da",
+    "glass": "#5d7781",
+    "metal": "#8c9694",
+    "perforation": "#695d58",
+    "roof": "#747774"
+  },
+  "2.5dStyle": "plain white mass with a light roof cap",
+  "3dFeatures": [
+    "exact-twelve-vertex-connected-footprint",
+    "four-storey-perimeter-wing-visual-estimate",
+    "raised-blue-sheet-metal-activity-hall-roof",
+    "red-stair-tower-display-mass",
+    "perforated-facade-dot-grid",
+    "north-up-satellite-small-center-opening-display-only",
+    "window-bands-and-balcony-rails",
+    "display-only-entry-stair-and-portal-cue"
+  ],
+  "assets": {
+    "2.5d": {
+      "file": "student-activity-center-2.5d.glb",
+      "sha256": "3df80b3e4f61a8508b5b6dd5c7dfd27e8471de158d872904e3baf467f742928b",
+      "bytes": 15132,
+      "triangles": 128,
+      "drawCalls": 2,
+      "materialCount": 2,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -44.50922393798828,
+          -2.0538526679755214e-15,
+          -33.54203414916992
+        ],
+        "max": [
+          44.50922393798828,
+          18,
+          33.54195785522461
+        ]
+      }
+    },
+    "3d": {
+      "file": "student-activity-center-3d.glb",
+      "sha256": "d38198932dfc2216ee8f829654ea7780b100d714b223f78ac6df2ab84f0a40b9",
+      "bytes": 56316,
+      "triangles": 6128,
+      "drawCalls": 11,
+      "materialCount": 8,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -44.75439069420099,
+          -2.0538526679755214e-15,
+          -34.47203185968101
+        ],
+        "max": [
+          45.21159802004695,
+          19.200000762939453,
+          33.78718155622482
+        ]
+      }
+    }
+  }
+}

@@ -56,6 +56,10 @@ type Auth = {
   environment?: string;
 };
 type Client = <T>(path: string, method?: string, body?: unknown) => Promise<T>;
+// Reads stay snappy; a whole-site registration is allowed to take longer
+// because it writes one job per official website.
+const REQUEST_TIMEOUT_MS = 15000;
+const WRITE_TIMEOUT_MS = 90000;
 type List<T> = { items: T[]; total?: number; offset: number; limit: number };
 const navigation = [
   { id: "", label: "总览", icon: LayoutDashboard },
@@ -144,9 +148,10 @@ export function ConsoleApp() {
   }, [auth]);
   const request = useCallback<Client>(
     async <T,>(path: string, method = "GET", body?: unknown) => {
-      const response = await fetch(
-        path.startsWith("/api/") ? path : "/api/admin/" + path,
-        {
+      const consolePath = path.startsWith("/api/") ? path : "/api/admin/" + path;
+      let response: Response;
+      try {
+        response = await fetch(consolePath, {
           method,
           credentials: "same-origin",
           cache: "no-store",
@@ -157,9 +162,19 @@ export function ConsoleApp() {
               : {}),
           },
           ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-          signal: AbortSignal.timeout(15000),
-        },
-      );
+          // A whole-site sweep writes one job per source, so it can take
+          // longer than a normal panel read. Timing it out at fifteen seconds
+          // cancelled the request while the worker kept registering, which
+          // showed up as a raw English "signal timed out" toast.
+          signal: AbortSignal.timeout(
+            method === "GET" ? REQUEST_TIMEOUT_MS : WRITE_TIMEOUT_MS,
+          ),
+        });
+      } catch (failure) {
+        if (failure instanceof DOMException && failure.name === "TimeoutError")
+          throw Error("请求超时，服务器仍在处理，请稍后刷新查看结果。");
+        throw failure;
+      }
       let result;
       try {
         result = await response.json();

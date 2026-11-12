@@ -338,15 +338,25 @@ export function contentIntent(
     entityLookup ||
     policy.officialOnly ||
     policy.needsOfficialVerification;
-  const answerRequirement: AnswerRequirement = strictFact
-    ? "strict"
-    : /注意|建议|经验|攻略|推荐|怎么(?:准备|选|办|避免)|如何(?:准备|选择|避免)|要不要|该不该|怎么办|技巧|注意事项|合适吗|值得吗/.test(
-          query,
-        )
-      ? "advisory"
-      : search
-        ? "strict"
-        : "open";
+  // A request for a method or an opinion ("宿舍太潮湿有什么办法", "大一该怎么
+  // 安排时间") is answered from general knowledge first, then the campus
+  // specifics that still need checking. Requiring evidence for the whole
+  // sentence turned every practical question into a refusal, because the
+  // campus corpus has no article titled after the user's problem.
+  const advice =
+    /(?:有什么|有啥|哪些|什么).{0,8}(?:办法|方法|建议|技巧|注意)|怎么(?:安排|准备|选|办|避免|缓解|解决|处理|改善|调节|应对|除|防)|要不要|该不该|值不值得|合适吗|推荐(?:一下|点)|注意些什么/.test(
+      query,
+    );
+  const answerRequirement: AnswerRequirement =
+    articleLookup || entityLookup || policy.officialOnly || policy.needsOfficialVerification
+      ? "strict"
+      : advice
+        ? "advisory"
+        : strictFact
+          ? "strict"
+          : search
+            ? "strict"
+            : "open";
   const discovery =
     /有哪些|有什么|举几|举\d|名单|曾经|哪些|谁|几个|几场|几篇|情况|信息|方面|内容/.test(
       query,

@@ -23,6 +23,22 @@ const CORRECTION =
 const CHITCHAT =
   /你是一只|你是只|大肥鱼|小鱼干|鲸鱼|扮演|人设|陪我聊|聊两句|好无聊|好困|好累|好饿|想吃|次饭|摸摸|抱抱|夸夸|晚安|早安|在吗|你是谁|你会什么/;
 
+/**
+ * Small talk about the assistant's own state ("你今天心情怎么样"). Recognised
+ * by structure — addressed to the assistant plus a state word — instead of a
+ * growing list of whole sentences, and only while the turn carries no campus
+ * subject, so "你觉得宿舍怎么样" is still a campus question.
+ */
+const STATE_WORD =
+  /(?:心情怎么样|心情好不好|心情如何|心情好吗|开心吗|开心不|高兴吗|难过吗|累不累|累吗|困吗|在忙吗|忙不忙|在干嘛|干嘛呢|过得怎么样|最近怎么样|你好吗|睡了吗)/;
+const ADDRESSED_TO_ASSISTANT = /(?:你|本鱼|大肥鱼)/;
+
+function smallTalkToAssistant(text: string) {
+  if (!ADDRESSED_TO_ASSISTANT.test(text)) return false;
+  if (!STATE_WORD.test(text)) return false;
+  return !CAMPUS_SIGNAL.test(text);
+}
+
 export function conversationAct(message: string): ConversationAct {
   const text = message.normalize("NFKC").trim();
   // A punctuation-only turn can only be a reaction to the previous answer.
@@ -33,6 +49,7 @@ export function conversationAct(message: string): ConversationAct {
   if (/^(?:我|本鱼)(?:喜欢|讨厌|觉得|今天.{0,4}(?:开心|难过|累|困))/.test(text))
     return "chitchat";
   if (CHITCHAT.test(text)) return "chitchat";
+  if (smallTalkToAssistant(text)) return "chitchat";
   return "general";
 }
 

@@ -280,6 +280,27 @@ await collectCourts(teachingRoot, "teaching-a-d-2.5d.geojson");
     );
   }
 }
+{
+  const root = "docs/model-previews/student-activity-center-v1",
+    m = await read(`${root}/manifest.json`);
+  checkSource(m.placeId, m.sourceGeometryWgs84);
+  const assets = Object.fromEntries(
+    ["2.5d", "3d"].map((mode) => [
+      mode,
+      { ...m.assets[mode], url: `./${m.assets[mode].file}` },
+    ]),
+  );
+  await add(
+    "student-activity-center",
+    m.name,
+    m.placeId,
+    root,
+    m,
+    assets,
+    [m.placeId],
+  );
+  await collectCourts(root, "student-activity-center-2.5d.geojson");
+}
 // These two visual links were already part of the approved A-D draft. Components omit them.
 globalThis.FileReader = class {
   readAsArrayBuffer(blob) {
@@ -391,19 +412,19 @@ const courtyardData =
   courtyardName = `courtyards-${sha(courtyardData).slice(0, 12)}.geojson`;
 await writeFile(`${out}/${courtyardName}`, courtyardData);
 const catalog = {
-  version: "campus-building-models-2026-11-12.3",
+  version: "campus-building-models-2026-11-12.4",
   mapVersion: campus.mapVersion,
   approvedForMap: true,
   ownerApproval:
-    "2026-11-01：将已完成的2.5D/3D模型放入网页；2026-11-12：新增友苑模型并统一其2.5D纯白模；新增师苑1-4栋2.5D/3D模型",
+    "2026-11-01：将已完成的2.5D/3D模型放入网页；2026-11-12：新增友苑模型并统一其2.5D纯白模；新增师苑1-4栋与学生活动中心2.5D/3D模型",
   ownerRenderingCorrection:
-    "2026-11-02：3D不随距离/中心位置退回白模，平移保留模型；统一南苑7栋与其他宿舍的2.5D光照。2026-11-12：友苑2.5D为纯白体块，原3D资产保持不变；师苑1-4栋为独立可选模型，六层为照片估算",
+    "2026-11-02：3D不随距离/中心位置退回白模，平移保留模型；统一南苑7栋与其他宿舍的2.5D光照。2026-11-12：友苑2.5D为纯白体块，原3D资产保持不变；师苑1-4栋为独立可选模型，六层为照片估算；学生活动中心为一个GIS实体，2.5D纯白体块、3D区分主厅屋顶和楼梯塔，4层围翼为照片估算",
   referenceOrigin: [113.392, 23.066],
   legacySouth7Preserved: true,
   renderingPolicy: "mode-faithful-resident-models",
   south7VolumeRenderer: "shared",
-  displayBuildingCount: 33,
-  newBuildingCount: 32,
+  displayBuildingCount: 34,
+  newBuildingCount: 33,
   visualConnectorCount: 1,
   courtyardsUrl: `/models/campus/${courtyardName}`,
   entries,
@@ -414,7 +435,7 @@ await writeFile(
 );
 await writeFile(
   `${out}/SOURCE.md`,
-  "# CampusOS building models\n\nOwner authorized integration on 2026-11-01 and corrected visibility/rendering on 2026-11-02. Youyuan and Shiyuan dormitory GLBs were added on 2026-11-12. Youyuan 2.5D is the same plain white mass style as the North/South dormitories; its existing 3D GLB SHA256 is preserved. Shiyuan 1–4 are independent entries with exact source outlines; six stories/18 metres and facade details are visual estimates. No reference photographs, image textures, supplier meshes or external buffer resources are published. Footprints © OpenStreetMap contributors, ODbL-1.0. Source/approval/hash/origins are recorded in src/features/campus-map/data/building-model-catalog.json and docs/model-previews.\n\nMetric heights and photo-informed courtyard/facade details remain visual approximations, not surveyed GIS or indoor/navigation facts. Original campus map and walking network are unchanged. South-7 keeps its approved public V2 3D file; its unchanged 21-metre footprint/courtyard uses the shared 2.5D material/light path with its original native volume as a failure fallback. Completed 3D models remain detailed across zoom and pan. A-D uses V2 with the corrected B clock tower. Shared-origin components are positioned in their GLBs.\n",
+  "# CampusOS building models\n\nOwner authorized integration on 2026-11-01 and corrected visibility/rendering on 2026-11-02. Youyuan, Shiyuan 1–4 and the Student Activity Center GLBs were added on 2026-11-12. Youyuan 2.5D is the same plain white mass style as the North/South dormitories; its existing 3D GLB SHA256 is preserved. Shiyuan 1–4 are independent entries with exact source outlines; six stories/18 metres and facade details are visual estimates. The Student Activity Center remains one GIS entity; its white 2.5D volume and blue hall roof/red tower/entrance cues in 3D are visual estimates from the provided views. No reference photographs, image textures, supplier meshes or external buffer resources are published. Footprints © OpenStreetMap contributors, ODbL-1.0. Source/approval/hash/origins are recorded in src/features/campus-map/data/building-model-catalog.json and docs/model-previews.\n\nMetric heights and photo-informed courtyard/facade details remain visual approximations, not surveyed GIS or indoor/navigation facts. Original campus map and walking network are unchanged. South-7 keeps its approved public V2 3D file; its unchanged 21-metre footprint/courtyard uses the shared 2.5D material/light path with its original native volume as a failure fallback. Completed 3D models remain detailed across zoom and pan. A-D uses V2 with the corrected B clock tower. Shared-origin components are positioned in their GLBs.\n",
 );
 console.log(
   JSON.stringify(

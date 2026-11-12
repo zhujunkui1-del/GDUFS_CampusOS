@@ -714,3 +714,12 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 - 顶视参考 `C:/Users/zhuju/Downloads/师苑卫星图.png` 用于四栋分布语境；粗图 `CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/粗略/n.jpg` 只作校园位置背景。
 - 楼层/高度：GIS没有师苑楼层或高度字段；约6层/18米为参考图估算，不作为实测或导航信息。
 - 参考图片保留在文档/下载目录，没有复制到 `public/` 或嵌入模型纹理。模型GLB为程序生成、零纹理。
+
+## 2026-11-12｜学生活动中心模型来源
+
+- GIS地点：`src/features/campus-map/data/campus.json` 中现有 `osm-way-313039010`（学生活动中心），复用其12点外环、WGS84坐标和ID；未修改地点、入口或道路数据。
+- 立面/侧面参考：`CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/学生活动中心侧面23.jpg` 与 `学生活动中心正面23.png`。
+- 屋顶/体量参考：`CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/学生活动中心_正面俯视.png`；校园位置粗图 `CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/粗略/n.jpg` 仅供背景理解。
+- 负责人2026-11-13补充朝北卫星图 `C:/Users/zhuju/AppData/Local/Temp/codex-clipboard-2a26f8be-9947-4116-9cd0-887942439fe2.png`，用于校正蓝色主厅朝东/东南、红塔朝西南，并推定中部约8×6米小空隙。该空隙只在模型/display-only地面呈现，不作为GIS内环。
+- 楼层/高度：GIS未提供实测数据；围翼约4层、主体约12.4米、主厅约17.2米、塔楼最高约19.2米为图像估算，不作实测或导航事实。
+- 原图片保留在文档包，不复制至 `public/`，GLB不含参考图片/纹理；邻近二饭仅在图片中作背景，未建模。

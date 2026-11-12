@@ -56,8 +56,15 @@ export function explicitMapCommand(message: string): MapAction | null {
  */
 const TITLE_ENDING =
   /(?:通知|公告|公报|公示|名单|报道|新闻稿|全文|原文|速览|方案|办法|意见|决定|决议|报告|细则|条例)$/;
+// A sentence that asks something is never a title, whatever it ends with:
+// “宿舍太潮湿了，有什么除潮的办法” ends in 办法 but is a request for advice,
+// and treating it as an article title made the assistant answer “未找到这篇
+// 文章” instead of helping. Titles are also short and declarative.
+const QUESTION_SHAPE =
+  /[？?]|(?:吗|呢|么)\s*[。.!！]?$|有什么|怎么(?:办|样|做|用)|如何|为什么|哪里|哪种|哪个|能不能|可不可以|要不要|该不该/;
 export function titleLike(message: string) {
   const text = message.normalize("NFKC").trim();
+  if (QUESTION_SHAPE.test(text)) return false;
   return (
     /[《「『“"][^》」』”"]{4,300}[》」』”"]/.test(text) ||
     (text.length >= 12 &&

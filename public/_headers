@@ -220,6 +220,14 @@
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
 
+/models/campus/student-activity-center-2.5d-3df80b3e4f61.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/student-activity-center-3d-d38198932dfc.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
 /models/campus/teaching-A-2.5d-ded5d83a1f31.glb
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
@@ -280,7 +288,7 @@
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
 
-/models/campus/courtyards-bd7ad71eacbf.geojson
+/models/campus/courtyards-22aa91e4464b.geojson
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: application/geo+json
 # END verified map model assets

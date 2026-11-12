@@ -92,10 +92,14 @@ async function requestManualSync(
   body: { commandId: string; sourceId?: string },
   onRetry: (attempt: number) => void,
 ) {
+  // The scheduler lease lasts thirty seconds, so a busy answer usually clears
+  // within a couple of short waits. Two retries were not enough and made the
+  // panel look like it had ignored the click.
+  const MAX_RETRIES = 5;
   let attempt = 0;
   while (true) {
     const result = await request<SyncResult>("v2/sync", "POST", body);
-    if (result.state !== "busy" || attempt >= 2) return result;
+    if (result.state !== "busy" || attempt >= MAX_RETRIES) return result;
     attempt++;
     onRetry(attempt);
     await new Promise((resolve) =>
@@ -229,7 +233,7 @@ export function OfficialWebCollectionPanel({
       const result = await requestManualSync(
         request,
         { commandId: crypto.randomUUID() },
-        (attempt) => setMessage(`调度器暂忙，自动重试 ${attempt}/2…`),
+        (attempt) => setMessage(`调度器暂忙，自动重试 ${attempt}/5…`),
       );
       setMessage(
         result.registered > 0
@@ -384,7 +388,7 @@ function OfficialWebSourceRow({
       const result = await requestManualSync(
         request,
         { commandId: crypto.randomUUID(), sourceId: source.id },
-        (attempt) => setMessage(`调度器暂忙，自动重试 ${attempt}/2…`),
+        (attempt) => setMessage(`调度器暂忙，自动重试 ${attempt}/5…`),
       );
       setMessage(
         result.registered > 0

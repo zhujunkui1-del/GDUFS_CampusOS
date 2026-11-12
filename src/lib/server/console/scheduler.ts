@@ -14,6 +14,13 @@ type Due = {
 };
 // Task registration is separate from execution. Both the cloud Worker and the
 // local Node runner may claim work; D1 leases ensure only one executor owns a job.
+// Registration writes three statements per source, so they are grouped into
+// batches of this many sources to stay well inside D1's statement budget.
+const REGISTRATION_CHUNK = 20;
+// A manual "collect now" click must not queue a second run for a source that
+// was queued moments ago, otherwise impatient double clicks quadruple the
+// queue and starve the sources nobody clicked twice.
+const MANUAL_COOLDOWN_MS = 10 * 60 * 1000;
 export async function dispatchDue(
   db: SqlDatabase,
   options: {
@@ -35,13 +42,24 @@ export async function dispatchDue(
     )
     .bind(now + 30000, lease, now)
     .run();
-  if (!locked.meta.changes)
+  if (!locked.meta.changes) {
+    // Another registration holds the lease. Report how long it has left so the
+    // client can wait it out instead of giving up after two short retries.
+    const held = await db
+      .prepare(
+        "SELECT scheduler_lease_until_ms FROM console_engine_settings WHERE id='console-v2-settings'",
+      )
+      .first<{ scheduler_lease_until_ms: number }>();
     return {
       state: "busy",
       registered: 0,
       completed: 0,
-      retryAfterMs: 1200,
+      retryAfterMs: Math.min(
+        8000,
+        Math.max(1200, Number(held?.scheduler_lease_until_ms || 0) - now),
+      ),
     };
+  }
   let result: {
     state: string;
     registered: number;
@@ -65,30 +83,35 @@ export async function dispatchDue(
       )
       .bind(now)
       .all<{ id: string; source_id: string; version: number }>();
-    for (const j of stale.results)
-      await db.batch([
-        db
-          .prepare(
-            "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,details_json) VALUES(?,'sys-console-scheduler','job.pause','job',?,?,?,?,?)",
-          )
-          .bind(
-            crypto.randomUUID(),
-            j.id,
-            j.source_id,
-            j.version,
-            "stale:" + j.id + ":" + j.version,
-            JSON.stringify({
-              v2: 1,
-              schedulerLease: lease,
-              note: "来源或许可变化，隔离旧任务",
-            }),
-          ),
-        db
-          .prepare(
-            "UPDATE ingestion_jobs SET control_state='paused',error_code='STALE_SOURCE_OR_POLICY',lease_hash=NULL,lease_until_ms=0,lease_fence=lease_fence+1,version=version+1,updated_at=? WHERE id=?",
-          )
-          .bind(stamp, j.id),
-      ]);
+    for (let i = 0; i < stale.results.length; i += REGISTRATION_CHUNK) {
+      const statements = [];
+      for (const j of stale.results.slice(i, i + REGISTRATION_CHUNK)) {
+        statements.push(
+          db
+            .prepare(
+              "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,details_json) VALUES(?,'sys-console-scheduler','job.pause','job',?,?,?,?,?)",
+            )
+            .bind(
+              crypto.randomUUID(),
+              j.id,
+              j.source_id,
+              j.version,
+              "stale:" + j.id + ":" + j.version,
+              JSON.stringify({
+                v2: 1,
+                schedulerLease: lease,
+                note: "来源或许可变化，隔离旧任务",
+              }),
+            ),
+          db
+            .prepare(
+              "UPDATE ingestion_jobs SET control_state='paused',error_code='STALE_SOURCE_OR_POLICY',lease_hash=NULL,lease_until_ms=0,lease_fence=lease_fence+1,version=version+1,updated_at=? WHERE id=?",
+            )
+            .bind(stamp, j.id),
+        );
+      }
+      await db.batch(statements);
+    }
     const staticIds = webProfiles.map((p) => p.sourceId),
       allowedIds = options.allowedIds,
       profileSql = `(s.web_profile_json<>'{}' OR s.id IN(${staticIds
@@ -114,6 +137,17 @@ export async function dispatchDue(
         limit,
       )
       .all<Due>();
+    const pending: {
+      id: string;
+      commandId: string;
+      sourceId: string;
+      runKey: string;
+      ruleVersion: string;
+      version: number;
+      policyVersion: number;
+      hours: number;
+      syncRevision: number;
+    }[] = [];
     for (const s of rows.results) {
       let profile: ReturnType<typeof profileFromSource> = null;
       try {
@@ -133,53 +167,101 @@ export async function dispatchDue(
       )
         continue;
       const commandId =
-          (options.sourceId && options.manualId) || crypto.randomUUID(),
-        id = "job-" + commandId,
-        runKey = manualRun
+        (options.sourceId && options.manualId) || crypto.randomUUID();
+      pending.push({
+        id: "job-" + commandId,
+        commandId,
+        sourceId: s.id,
+        runKey: manualRun
           ? `manual:${s.id}:${options.manualId}`
-          : `scheduled:${s.id}:${s.version}:${s.next_sync_at_ms || 0}`;
-      const old = await db
-        .prepare("SELECT id FROM ingestion_jobs WHERE run_key=? OR id=?")
-        .bind(runKey, id)
-        .first();
-      if (old) continue;
-      await db.batch([
-        db
+          : `scheduled:${s.id}:${s.version}:${s.next_sync_at_ms || 0}`,
+        ruleVersion: s.rule_version,
+        version: s.version,
+        policyVersion: s.policy_version,
+        hours: s.hours,
+        syncRevision: s.sync_revision,
+      });
+    }
+    if (!pending.length) {
+      result.state = "no_eligible_due_source";
+      return result;
+    }
+    // Registration used to cost two D1 round trips per source — close to two
+    // hundred for a full sweep, which regularly ran past the console's
+    // fifteen second request timeout and looked like a broken button. One
+    // lookup for every candidate key plus one batch per chunk keeps a sweep
+    // at a few round trips.
+    const keys = pending.map((p) => p.runKey);
+    const taken = new Set(
+      (
+        await db
           .prepare(
-            "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,details_json) VALUES(?,'sys-console-scheduler','job.create','job',?,?,0,?,?)",
+            `SELECT run_key FROM ingestion_jobs WHERE run_key IN(${keys
+              .map(() => "?")
+              .join(",")})`,
           )
-          .bind(
-            commandId,
-            id,
-            s.id,
-            runKey,
-            JSON.stringify({
-              v2: 1,
-              schedulerLease: lease,
-              note: "官网采集到期任务登记",
-              manualOverride: manualRun,
-            }),
-          ),
-        db
-          .prepare(
-            "INSERT INTO ingestion_jobs(id,source_id,status,rule_version,source_version,policy_version,run_key,max_articles,updated_at,checkpoint_json) VALUES(?,?,'queued',?,?,?,?,2,?,'{}')",
-          )
-          .bind(
-            id,
-            s.id,
-            s.rule_version,
-            s.version,
-            s.policy_version,
-            runKey,
-            stamp,
-          ),
-        db
-          .prepare(
-            "UPDATE knowledge_sources SET sync_hours_override=NULL,sync_state='queued',next_sync_at_ms=?,sync_policy_version=? WHERE id=?",
-          )
-          .bind(now + s.hours * 3600000, s.sync_revision, s.id),
-      ]);
-      result.registered++;
+          .bind(...keys)
+          .all<{ run_key: string }>()
+      ).results.map((r) => r.run_key),
+    );
+    // Clicking "collect now" twice while the first request is still in flight
+    // used to register a second full batch for every source that had already
+    // finished its first job.
+    const cooled = new Set<string>();
+    if (manualRun) {
+      const recent = await db
+        .prepare(
+          "SELECT DISTINCT source_id FROM ingestion_jobs WHERE run_key LIKE 'manual:%' AND created_at>=?",
+        )
+        .bind(new Date(now - MANUAL_COOLDOWN_MS).toISOString())
+        .all<{ source_id: string }>();
+      for (const r of recent.results) cooled.add(r.source_id);
+    }
+    const fresh = pending.filter(
+      (p) => !taken.has(p.runKey) && !cooled.has(p.sourceId),
+    );
+    for (let i = 0; i < fresh.length; i += REGISTRATION_CHUNK) {
+      const statements = [];
+      for (const p of fresh.slice(i, i + REGISTRATION_CHUNK)) {
+        statements.push(
+          db
+            .prepare(
+              "INSERT INTO console_commands(id,admin_id,action,target_type,target_id,source_id,expected_version,request_hash,details_json) VALUES(?,'sys-console-scheduler','job.create','job',?,?,0,?,?)",
+            )
+            .bind(
+              p.commandId,
+              p.id,
+              p.sourceId,
+              p.runKey,
+              JSON.stringify({
+                v2: 1,
+                schedulerLease: lease,
+                note: "官网采集到期任务登记",
+                manualOverride: manualRun,
+              }),
+            ),
+          db
+            .prepare(
+              "INSERT INTO ingestion_jobs(id,source_id,status,rule_version,source_version,policy_version,run_key,max_articles,updated_at,checkpoint_json) VALUES(?,?,'queued',?,?,?,?,2,?,'{}')",
+            )
+            .bind(
+              p.id,
+              p.sourceId,
+              p.ruleVersion,
+              p.version,
+              p.policyVersion,
+              p.runKey,
+              stamp,
+            ),
+          db
+            .prepare(
+              "UPDATE knowledge_sources SET sync_hours_override=NULL,sync_state='queued',next_sync_at_ms=?,sync_policy_version=? WHERE id=?",
+            )
+            .bind(now + p.hours * 3600000, p.syncRevision, p.sourceId),
+        );
+      }
+      await db.batch(statements);
+      result.registered += fresh.slice(i, i + REGISTRATION_CHUNK).length;
     }
     result.state = result.registered ? "registered" : "no_eligible_due_source";
     return result;

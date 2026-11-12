@@ -9,6 +9,11 @@ const normalize = normalizePlaceText;
 // verb the user happened to pick.
 const ROUTE_RE =
   /从.+(?:去|到|至|前往|走向|走到)|(?:去|到|导航|前往|走向|走到|→|->).+|怎么走|怎么去|怎么过去|怎么走到|规划.*路线/;
+// 「图书馆可以带包进去吗」 is a library rule question, not a trip: 去 inside
+// 进去 is a movement compound, not a destination verb. Stripping the compound
+// before the route test keeps 「我想去图书馆」 a route while 「可以带进去吗」
+// stays an article question.
+const MOVEMENT_COMPOUND = /(?:进|出|上|下|回|过|起|看)去/g;
 // A bare verb is not a route: “东西丢了去哪里报失” and “校内兼职去哪找” both
 // contain 去 but ask where to go for help, not how to walk somewhere. A route
 // needs a real destination, so the named-place check below is what separates
@@ -127,9 +132,12 @@ export function navigationIntent(
     }
   }
   const namedPlaces = mentions(question);
+  const routeText = question
+    .replace(MOVEMENT_COMPOUND, " ")
+    .replace(/找到|查到|定位到/g, "找");
   const routeQuestion =
     !/不要|不用|不必|别去|不去|取消/.test(question) &&
-    ROUTE_RE.test(question.replace(/找到|查到|定位到/g, "找")) &&
+    ROUTE_RE.test(routeText) &&
     namedPlaces.length > 0;
   const pair = PAIR_RE.exec(question.replace(/找到|查到|定位到/g, "找"));
   const startText = pair?.[1];

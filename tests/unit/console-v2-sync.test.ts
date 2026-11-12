@@ -90,6 +90,17 @@ describe("V2 persistent scheduling and dual executors", () => {
       expect(
         f.sqlite.prepare("SELECT count(*) n FROM ingestion_jobs").get()?.n,
       ).toBe(2);
+      // A second click is a new command id, so it must not queue a second run
+      // for every source that the first click already queued.
+      expect(
+        await f.store.syncNow({ commandId: crypto.randomUUID() }),
+      ).toMatchObject({
+        state: "no_eligible_due_source",
+        registered: 0,
+      });
+      expect(
+        f.sqlite.prepare("SELECT count(*) n FROM ingestion_jobs").get()?.n,
+      ).toBe(2);
     } finally {
       f.close();
     }
