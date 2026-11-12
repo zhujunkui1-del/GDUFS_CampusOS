@@ -1,4 +1,5 @@
 "use client";
+import "./traffic-panel.css";
 import { useEffect, useState } from "react";
 import {
   BarChart3,
@@ -23,9 +24,11 @@ const failure = (e: unknown) =>
 export function TrafficPanel({
   request,
   revision,
+  publicRead = false,
 }: {
   request: Client;
   revision: number;
+  publicRead?: boolean;
 }) {
   const [data, setData] = useState<TrafficSummary | null>(null);
   const [error, setError] = useState("");
@@ -34,7 +37,7 @@ export function TrafficPanel({
   const [busy, setBusy] = useState(true);
   useEffect(() => {
     let active = true;
-    request<TrafficSummary>("v2/traffic")
+    request<TrafficSummary>(publicRead ? "/api/public/traffic" : "v2/traffic")
       .then((d) => {
         if (active) {
           setData(d);
@@ -50,7 +53,7 @@ export function TrafficPanel({
     return () => {
       active = false;
     };
-  }, [request, refresh, revision]);
+  }, [request, refresh, revision, publicRead]);
   const days = data?.days.slice(-range) ?? [],
     max = Math.max(1, ...days.map((d) => d.views ?? 0));
   const metrics = data
@@ -71,16 +74,18 @@ export function TrafficPanel({
           <BarChart3 size={22} />
           访问量
         </h2>
-        <button
-          aria-label="刷新访问量"
-          disabled={busy}
-          onClick={() => {
-            setBusy(true);
-            setRefresh((v) => v + 1);
-          }}
-        >
-          <RefreshCw size={18} />
-        </button>
+        {!publicRead && (
+          <button
+            aria-label="刷新访问量"
+            disabled={busy}
+            onClick={() => {
+              setBusy(true);
+              setRefresh((v) => v + 1);
+            }}
+          >
+            <RefreshCw size={18} />
+          </button>
+        )}
       </div>
       {error && (
         <p role="status" className="console-feedback">
@@ -103,7 +108,21 @@ export function TrafficPanel({
             ))}
           </div>
           <div className="console-traffic-toolbar">
-            <h3>近{range}天访问趋势</h3>
+            <div className="console-traffic-title">
+              <h3>近{range}天访问趋势</h3>
+              {publicRead && (
+                <button
+                  aria-label="刷新访问量"
+                  disabled={busy}
+                  onClick={() => {
+                    setBusy(true);
+                    setRefresh((v) => v + 1);
+                  }}
+                >
+                  <RefreshCw size={18} />
+                </button>
+              )}
+            </div>
             <div aria-label="访问趋势范围">
               {([7, 30] as const).map((n) => (
                 <button
@@ -152,10 +171,12 @@ export function TrafficPanel({
               ))}
             </ul>
           </div>
-          <p className="console-traffic-note">
-            页面浏览量（PV），北京时间；自 {time(data.startedAt)}{" "}
-            起记录，之前未统计。
-          </p>
+          {!publicRead && (
+            <p className="console-traffic-note">
+              页面浏览量（PV），北京时间；自 {time(data.startedAt)}{" "}
+              起记录，之前未统计。
+            </p>
+          )}
         </>
       )}
     </section>

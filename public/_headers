@@ -180,6 +180,38 @@
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
 
+/models/campus/shiyuan-1-2.5d-eb6c36f5d8a5.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/shiyuan-1-3d-d4675e88fafa.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/shiyuan-2-2.5d-e649dfe3e61d.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/shiyuan-2-3d-c1ec1698871d.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/shiyuan-3-2.5d-16ed6859aa49.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/shiyuan-3-3d-48bf377ebccc.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/shiyuan-4-2.5d-3b9a869ac987.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/shiyuan-4-3d-7ca997e381a5.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
 /models/campus/stadium-2.5d-a03d90598bbc.glb
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
@@ -233,6 +265,14 @@
   Content-Type: model/gltf-binary
 
 /models/campus/teaching-links-3d-ca2bd3b709ed.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/youyuan-2.5d-fc9a240f5815.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/youyuan-3d-5013c5a98ccc.glb
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
 

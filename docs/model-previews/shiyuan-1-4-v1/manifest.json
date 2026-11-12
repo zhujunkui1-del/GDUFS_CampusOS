@@ -1,0 +1,374 @@
+{
+  "modelVersion": "shiyuan-1-4-v1-2026-11-12",
+  "stage": "map_integrated_visual_estimate",
+  "mapIntegrated": true,
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "buildingCount": 4,
+  "sharedLevels": 6,
+  "sharedEstimatedHeightMeters": 18,
+  "heightAccuracy": "visual_estimate_only_not_surveyed",
+  "source": "OpenStreetMap campus snapshot plus owner-supplied visual references",
+  "visualInputs": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/二饭_师苑.png",
+      "usage": "visual facade and roof reference for Shiyuan 1–4 only; adjacent Second Dining Hall is excluded"
+    },
+    {
+      "path": "C:/Users/zhuju/Downloads/师苑卫星图.png",
+      "usage": "top-view layout reference only; no unverified inner ring is traced"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/粗略/n.jpg",
+      "usage": "rough campus context only; not geometry or texture source"
+    }
+  ],
+  "styles": {
+    "2.5d": "plain white mass matching North/South dormitory 2.5D models",
+    "3d": "pale walls, warm terracotta facade frames, red cores, blue-gray windows, balcony rails and flat roof; visual estimate"
+  },
+  "buildings": [
+    {
+      "key": "shiyuan-1",
+      "name": "师苑1栋",
+      "placeId": "osm-way-313039037",
+      "origin": [
+        113.39181165,
+        23.063056850000002
+      ],
+      "levels": 6,
+      "heightMeters": 18,
+      "heightAccuracy": "visual_estimate_only_not_surveyed",
+      "sourceGeometryWgs84": [
+        [
+          113.3915283,
+          23.0631041
+        ],
+        [
+          113.392095,
+          23.0631041
+        ],
+        [
+          113.392095,
+          23.0630096
+        ],
+        [
+          113.3915283,
+          23.0630096
+        ],
+        [
+          113.3915283,
+          23.0631041
+        ]
+      ],
+      "sourceFootprintSha256": "14fc55f4f67e84ac74361f0c4ad0d150978db82e36052a9842d611f5d66c0017",
+      "sourceVertexCount": 4,
+      "assets": {
+        "2.5d": {
+          "file": "shiyuan-1-2.5d.glb",
+          "sha256": "eb6c36f5d8a5f2d03bc7dae37ceb7b20cf8004935c9768a8ca352b80e93c25f0",
+          "bytes": 4972,
+          "triangles": 24,
+          "drawCalls": 2,
+          "materialCount": 2,
+          "textureCount": 0,
+          "bounds": {
+            "min": [
+              -28.988895416259766,
+              -3.217126689576195e-16,
+              -5.253968238830566
+            ],
+            "max": [
+              28.988895416259766,
+              18,
+              5.253966808319092
+            ]
+          }
+        },
+        "3d": {
+          "file": "shiyuan-1-3d.glb",
+          "sha256": "d4675e88fafa5fbdfcd177b223a211b1666836cb2cf2be4fdd54063f8bacb62b",
+          "bytes": 54144,
+          "triangles": 10152,
+          "drawCalls": 8,
+          "materialCount": 8,
+          "textureCount": 0,
+          "bounds": {
+            "min": [
+              -29.228896714746952,
+              -3.217126689576195e-16,
+              -6.163968352600932
+            ],
+            "max": [
+              29.228896714746952,
+              19.20999985933304,
+              6.163966445252299
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "shiyuan-2",
+      "name": "师苑2栋",
+      "placeId": "osm-way-313039038",
+      "origin": [
+        113.3918175,
+        23.06274355
+      ],
+      "levels": 6,
+      "heightMeters": 18,
+      "heightAccuracy": "visual_estimate_only_not_surveyed",
+      "sourceGeometryWgs84": [
+        [
+          113.3915323,
+          23.0627917
+        ],
+        [
+          113.3921027,
+          23.0627917
+        ],
+        [
+          113.3921027,
+          23.0626954
+        ],
+        [
+          113.3915323,
+          23.0626954
+        ],
+        [
+          113.3915323,
+          23.0627917
+        ]
+      ],
+      "sourceFootprintSha256": "a7321245c428c5c7e833d3bb399a0ab792df84624c807b0244bcfb707e91f55d",
+      "sourceVertexCount": 4,
+      "assets": {
+        "2.5d": {
+          "file": "shiyuan-2-2.5d.glb",
+          "sha256": "e649dfe3e61d696d5b9c37b5bebdbc5d70953efc592699a80c7c9aacf016f1fc",
+          "bytes": 4972,
+          "triangles": 24,
+          "drawCalls": 2,
+          "materialCount": 2,
+          "textureCount": 0,
+          "bounds": {
+            "min": [
+              -29.178234100341797,
+              -3.278405288145307e-16,
+              -5.354043960571289
+            ],
+            "max": [
+              29.178234100341797,
+              18,
+              5.354042053222656
+            ]
+          }
+        },
+        "3d": {
+          "file": "shiyuan-2-3d.glb",
+          "sha256": "c1ec1698871d64b968981fc68f244e3b385c19fd78336cec5785b1d5c44793fa",
+          "bytes": 54144,
+          "triangles": 10152,
+          "drawCalls": 8,
+          "materialCount": 8,
+          "textureCount": 0,
+          "bounds": {
+            "min": [
+              -29.41823349148035,
+              -3.278405288145307e-16,
+              -6.264044074341655
+            ],
+            "max": [
+              29.41823349148035,
+              19.20999985933304,
+              6.264042166993022
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "shiyuan-3",
+      "name": "师苑3栋",
+      "placeId": "osm-way-313039033",
+      "origin": [
+        113.39249004999999,
+        23.0631846
+      ],
+      "levels": 6,
+      "heightMeters": 18,
+      "heightAccuracy": "visual_estimate_only_not_surveyed",
+      "sourceGeometryWgs84": [
+        [
+          113.3922561,
+          23.0631241
+        ],
+        [
+          113.392724,
+          23.0631241
+        ],
+        [
+          113.392724,
+          23.0632451
+        ],
+        [
+          113.3922561,
+          23.0632451
+        ],
+        [
+          113.3922561,
+          23.0631241
+        ]
+      ],
+      "sourceFootprintSha256": "4fbff6638dfc0b7c74c0cf413cc7ddddd0962e3ce17a0ff1b887ad5fab2bab7b",
+      "sourceVertexCount": 4,
+      "assets": {
+        "2.5d": {
+          "file": "shiyuan-3-2.5d.glb",
+          "sha256": "16ed6859aa49df4819c61556f967e26ec236656c1383c32ec28c589f434b628f",
+          "bytes": 4972,
+          "triangles": 24,
+          "drawCalls": 2,
+          "materialCount": 2,
+          "textureCount": 0,
+          "bounds": {
+            "min": [
+              -23.934871673583984,
+              -4.119283482246621e-16,
+              -6.727303981781006
+            ],
+            "max": [
+              23.934871673583984,
+              18,
+              6.727300643920898
+            ]
+          }
+        },
+        "3d": {
+          "file": "shiyuan-3-3d.glb",
+          "sha256": "48bf377ebcccfa62e624d50736ba6563869a51f82123e14ef094dbe912eaa60d",
+          "bytes": 48228,
+          "triangles": 8376,
+          "drawCalls": 8,
+          "materialCount": 8,
+          "textureCount": 0,
+          "bounds": {
+            "min": [
+              -24.174871064722538,
+              -4.119283482246621e-16,
+              -7.637304095551372
+            ],
+            "max": [
+              24.174871064722538,
+              19.20999985933304,
+              7.637300757691264
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "shiyuan-4",
+      "name": "师苑4栋",
+      "placeId": "osm-way-313039056",
+      "origin": [
+        113.39262215,
+        23.06284655
+      ],
+      "levels": 6,
+      "heightMeters": 18,
+      "heightAccuracy": "visual_estimate_only_not_surveyed",
+      "sourceGeometryWgs84": [
+        [
+          113.3922988,
+          23.0628758
+        ],
+        [
+          113.3922988,
+          23.0627794
+        ],
+        [
+          113.3925639,
+          23.0627794
+        ],
+        [
+          113.3925639,
+          23.0628204
+        ],
+        [
+          113.3929455,
+          23.0628204
+        ],
+        [
+          113.3929455,
+          23.0629137
+        ],
+        [
+          113.3925639,
+          23.0629137
+        ],
+        [
+          113.3925639,
+          23.0628758
+        ],
+        [
+          113.3922988,
+          23.0628758
+        ]
+      ],
+      "sourceFootprintSha256": "4f5c29440da2e3e8acd2f35f5261bc2ed4c76740ff79715116b2d7f7f9ad0cc0",
+      "sourceVertexCount": 8,
+      "assets": {
+        "2.5d": {
+          "file": "shiyuan-4-2.5d.glb",
+          "sha256": "3b9a869ac9873cc58f7e18845b7ab75adfb5a6f0f7694fbd9f9625bc307357b2",
+          "bytes": 8044,
+          "triangles": 56,
+          "drawCalls": 2,
+          "materialCount": 2,
+          "textureCount": 0,
+          "bounds": {
+            "min": [
+              -33.08125686645508,
+              -4.572064150108019e-16,
+              -7.466751575469971
+            ],
+            "max": [
+              33.08125686645508,
+              18,
+              7.466747760772705
+            ]
+          }
+        },
+        "3d": {
+          "file": "shiyuan-4-3d.glb",
+          "sha256": "7ca997e381a596ee568cc9cee0c7a3849fd4f8c58f840a7a23babcb8c167819b",
+          "bytes": 61536,
+          "triangles": 11480,
+          "drawCalls": 8,
+          "materialCount": 8,
+          "textureCount": 0,
+          "bounds": {
+            "min": [
+              -33.32125625759363,
+              -4.572064150108019e-16,
+              -8.376751212403178
+            ],
+            "max": [
+              33.32125625759363,
+              19.20999985933304,
+              8.376747397705913
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "The four source outlines remain separate and retain their canonical OSM place IDs; no parent GIS geometry is created.",
+    "Six floors and approximately 18 m are inferred visually; campus GIS has no surveyed height or levels.",
+    "The satellite reference shows landscape gaps between blocks, but no inner-ring geometry or navigation entrances are added.",
+    "The adjacent dining hall visible in the oblique photo is not part of this model batch.",
+    "Reference photographs are not copied into public assets or embedded as textures."
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "modelVersion": "youyuan-v1-2026-11-12",
+  "stage": "map_integrated_visual_model",
+  "mapIntegrated": true,
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "placeId": "osm-way-313039031",
+  "name": "友苑",
+  "origin": [
+    113.39260254999999,
+    23.0619911
+  ],
+  "levels": 7,
+  "levelsSource": "Seven visible facade bands inferred from the supplied oblique photograph; not surveyed.",
+  "heightMeters": 21,
+  "heightAccuracy": "visual_estimate_only_not_surveyed",
+  "footprintSourceIds": [
+    "osm-way-313039031"
+  ],
+  "sourceGeometryWgs84": [
+    [
+      113.3922382,
+      23.0619111
+    ],
+    [
+      113.3922382,
+      23.0620444
+    ],
+    [
+      113.392597,
+      23.0620444
+    ],
+    [
+      113.392597,
+      23.0623355
+    ],
+    [
+      113.3922672,
+      23.0623355
+    ],
+    [
+      113.3922672,
+      23.0624278
+    ],
+    [
+      113.392597,
+      23.0624278
+    ],
+    [
+      113.392597,
+      23.0624852
+    ],
+    [
+      113.3932521,
+      23.0624852
+    ],
+    [
+      113.3932521,
+      23.0623786
+    ],
+    [
+      113.3927062,
+      23.0623786
+    ],
+    [
+      113.3927062,
+      23.0620444
+    ],
+    [
+      113.3928288,
+      23.0620444
+    ],
+    [
+      113.3928288,
+      23.0619111
+    ],
+    [
+      113.3924321,
+      23.0619111
+    ],
+    [
+      113.3924321,
+      23.0616261
+    ],
+    [
+      113.3925547,
+      23.0616261
+    ],
+    [
+      113.3925547,
+      23.061497
+    ],
+    [
+      113.391953,
+      23.061497
+    ],
+    [
+      113.391953,
+      23.0616261
+    ],
+    [
+      113.3923162,
+      23.0616261
+    ],
+    [
+      113.3923162,
+      23.0619111
+    ],
+    [
+      113.3922382,
+      23.0619111
+    ]
+  ],
+  "sourceFootprintSha256": "542ef86bc3a772bd3ed2ce14e1ebf0dc9b82c2ab85446ac7bc4d2f4b149dde85",
+  "sourceAreaMeters2": 3710.9966201277734,
+  "visualInputs": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/友苑.png",
+      "usage": "internal visual facade/roof reference only; no source pixels exported"
+    },
+    {
+      "path": "C:/Users/zhuju/Downloads/友苑卫星图.png",
+      "usage": "internal top-view relationship reference only; inner void dimensions are not measured"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/粗略/n.jpg",
+      "usage": "rough campus location context only; not geometry or texture source"
+    }
+  ],
+  "assets": {
+    "2.5d": {
+      "file": "youyuan-2.5d.glb",
+      "url": "/models/campus/youyuan-2.5d-fc9a240f5815.glb",
+      "sha256": "fc9a240f58150944ab82863abc9371989fbd41d83c58c7daeffe77924789cee5",
+      "bytes": 18872,
+      "triangles": 168,
+      "drawCalls": 2,
+      "bounds": {
+        "min": [
+          -66.45451354980469,
+          -3.364189767488348e-15,
+          -54.94158935546875
+        ],
+        "max": [
+          66.45451354980469,
+          21,
+          54.94138717651367
+        ]
+      },
+      "materialCount": 2,
+      "textureCount": 0,
+      "style": "plain_white_mass_matching_north_south_dormitories"
+    },
+    "3d": {
+      "file": "youyuan-3d.glb",
+      "sha256": "5013c5a98ccc949862573907e14005ea894664c9950558426793b7fd4a80e47e",
+      "bytes": 239812,
+      "triangles": 43658,
+      "drawCalls": 12,
+      "bounds": {
+        "min": [
+          -66.69451141357422,
+          0.06499999761581421,
+          -55.85159042291344
+        ],
+        "max": [
+          66.69451141357422,
+          23.114999923855066,
+          59.34138870239258
+        ]
+      },
+      "materialCount": 8,
+      "textureCount": 0
+    }
+  },
+  "limitations": [
+    "GIS source has one 22-vertex outer ring and no verified inner rings or independent wing IDs; no courtyard geometry is invented or written to GIS.",
+    "Seven stories and 21 m are visual estimates from facade bands; no height field is written to campus.json.",
+    "Red brick cores, balcony/window rhythm, roof service blocks and a shallow rounded lobby are display geometry inferred from photos.",
+    "Reference photographs remain in the source/documents folders; both GLBs have zero textures and zero embedded images."
+  ],
+  "twoFiveDStyle": "plain-white-mass matching the North/South dormitory 2.5D models",
+  "twoFiveDRevision": "2026-11-12: simplified to a plain white volume at owner request"
+}

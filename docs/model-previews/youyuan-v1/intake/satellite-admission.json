@@ -1,0 +1,14 @@
+{
+  "admitted": true,
+  "reasons": [],
+  "provenance": {
+    "viewpoint": "top_plan_courtyard",
+    "sourcePath": "C:\\Users\\zhuju\\Downloads\\友苑卫星图.png",
+    "width": 822,
+    "height": 840,
+    "foregroundCoverage": 0.764,
+    "largestComponentFraction": 0.9987,
+    "pHash": 17003447860779336432,
+    "duplicateOfHash": null
+  }
+}

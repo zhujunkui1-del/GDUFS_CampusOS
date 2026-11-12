@@ -1,15 +1,15 @@
 {
-  "version": "campus-building-models-2026-11-01.2",
+  "version": "campus-building-models-2026-11-12.3",
   "mapVersion": "s1-2026-10-14.2",
   "approvedForMap": true,
-  "ownerApproval": "2026-11-01：现在，把已经做好的这些2.5d/3d模型，放入网页中",
-  "ownerRenderingCorrection": "2026-11-02：3D不随距离/中心位置退回白模，平移保留模型；统一南苑7栋与其他宿舍的2.5D光照",
+  "ownerApproval": "2026-11-01：将已完成的2.5D/3D模型放入网页；2026-11-12：新增友苑模型并统一其2.5D纯白模；新增师苑1-4栋2.5D/3D模型",
+  "ownerRenderingCorrection": "2026-11-02：3D不随距离/中心位置退回白模，平移保留模型；统一南苑7栋与其他宿舍的2.5D光照。2026-11-12：友苑2.5D为纯白体块，原3D资产保持不变；师苑1-4栋为独立可选模型，六层为照片估算",
   "referenceOrigin": [113.392, 23.066],
   "legacySouth7Preserved": true,
   "renderingPolicy": "mode-faithful-resident-models",
   "south7VolumeRenderer": "shared",
-  "displayBuildingCount": 28,
-  "newBuildingCount": 27,
+  "displayBuildingCount": 33,
+  "newBuildingCount": 32,
   "visualConnectorCount": 1,
   "courtyardsUrl": "/models/campus/courtyards-bd7ad71eacbf.geojson",
   "entries": [
@@ -1033,6 +1033,196 @@
           "bounds": {
             "min": [-55.88146209716797, 0, -21.492671877145767],
             "max": [55.87997055053711, 20.999999850988388, 22.182006061077118]
+          }
+        }
+      }
+    },
+    {
+      "key": "youyuan",
+      "name": "友苑",
+      "placeId": "osm-way-313039031",
+      "memberPlaceIds": ["osm-way-313039031"],
+      "footprintSourceIds": ["osm-way-313039031"],
+      "origin": [113.39260254999999, 23.0619911],
+      "pickable": true,
+      "heightAccuracy": "visual_estimate_only_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/youyuan-2.5d-fc9a240f5815.glb",
+          "sha256": "fc9a240f58150944ab82863abc9371989fbd41d83c58c7daeffe77924789cee5",
+          "bytes": 18872,
+          "triangles": 168,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -66.45451354980469, -3.364189767488348e-15, -54.94158935546875
+            ],
+            "max": [66.45451354980469, 21, 54.94138717651367]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/youyuan-3d-5013c5a98ccc.glb",
+          "sha256": "5013c5a98ccc949862573907e14005ea894664c9950558426793b7fd4a80e47e",
+          "bytes": 239812,
+          "triangles": 43658,
+          "drawCalls": 12,
+          "bounds": {
+            "min": [
+              -66.69451141357422, 0.06499999761581421, -55.85159042291344
+            ],
+            "max": [66.69451141357422, 23.114999923855066, 59.34138870239258]
+          }
+        }
+      }
+    },
+    {
+      "key": "shiyuan-1",
+      "name": "师苑1栋",
+      "placeId": "osm-way-313039037",
+      "memberPlaceIds": ["osm-way-313039037"],
+      "footprintSourceIds": ["osm-way-313039037"],
+      "origin": [113.39181165, 23.063056850000002],
+      "pickable": true,
+      "heightAccuracy": "visual_estimate_only_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/shiyuan-1-2.5d-eb6c36f5d8a5.glb",
+          "sha256": "eb6c36f5d8a5f2d03bc7dae37ceb7b20cf8004935c9768a8ca352b80e93c25f0",
+          "bytes": 4972,
+          "triangles": 24,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -28.988895416259766, -3.217126689576195e-16, -5.253968238830566
+            ],
+            "max": [28.988895416259766, 18, 5.253966808319092]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/shiyuan-1-3d-d4675e88fafa.glb",
+          "sha256": "d4675e88fafa5fbdfcd177b223a211b1666836cb2cf2be4fdd54063f8bacb62b",
+          "bytes": 54144,
+          "triangles": 10152,
+          "drawCalls": 8,
+          "bounds": {
+            "min": [
+              -29.228896714746952, -3.217126689576195e-16, -6.163968352600932
+            ],
+            "max": [29.228896714746952, 19.20999985933304, 6.163966445252299]
+          }
+        }
+      }
+    },
+    {
+      "key": "shiyuan-2",
+      "name": "师苑2栋",
+      "placeId": "osm-way-313039038",
+      "memberPlaceIds": ["osm-way-313039038"],
+      "footprintSourceIds": ["osm-way-313039038"],
+      "origin": [113.3918175, 23.06274355],
+      "pickable": true,
+      "heightAccuracy": "visual_estimate_only_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/shiyuan-2-2.5d-e649dfe3e61d.glb",
+          "sha256": "e649dfe3e61d696d5b9c37b5bebdbc5d70953efc592699a80c7c9aacf016f1fc",
+          "bytes": 4972,
+          "triangles": 24,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -29.178234100341797, -3.278405288145307e-16, -5.354043960571289
+            ],
+            "max": [29.178234100341797, 18, 5.354042053222656]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/shiyuan-2-3d-c1ec1698871d.glb",
+          "sha256": "c1ec1698871d64b968981fc68f244e3b385c19fd78336cec5785b1d5c44793fa",
+          "bytes": 54144,
+          "triangles": 10152,
+          "drawCalls": 8,
+          "bounds": {
+            "min": [
+              -29.41823349148035, -3.278405288145307e-16, -6.264044074341655
+            ],
+            "max": [29.41823349148035, 19.20999985933304, 6.264042166993022]
+          }
+        }
+      }
+    },
+    {
+      "key": "shiyuan-3",
+      "name": "师苑3栋",
+      "placeId": "osm-way-313039033",
+      "memberPlaceIds": ["osm-way-313039033"],
+      "footprintSourceIds": ["osm-way-313039033"],
+      "origin": [113.39249004999999, 23.0631846],
+      "pickable": true,
+      "heightAccuracy": "visual_estimate_only_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/shiyuan-3-2.5d-16ed6859aa49.glb",
+          "sha256": "16ed6859aa49df4819c61556f967e26ec236656c1383c32ec28c589f434b628f",
+          "bytes": 4972,
+          "triangles": 24,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -23.934871673583984, -4.119283482246621e-16, -6.727303981781006
+            ],
+            "max": [23.934871673583984, 18, 6.727300643920898]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/shiyuan-3-3d-48bf377ebccc.glb",
+          "sha256": "48bf377ebcccfa62e624d50736ba6563869a51f82123e14ef094dbe912eaa60d",
+          "bytes": 48228,
+          "triangles": 8376,
+          "drawCalls": 8,
+          "bounds": {
+            "min": [
+              -24.174871064722538, -4.119283482246621e-16, -7.637304095551372
+            ],
+            "max": [24.174871064722538, 19.20999985933304, 7.637300757691264]
+          }
+        }
+      }
+    },
+    {
+      "key": "shiyuan-4",
+      "name": "师苑4栋",
+      "placeId": "osm-way-313039056",
+      "memberPlaceIds": ["osm-way-313039056"],
+      "footprintSourceIds": ["osm-way-313039056"],
+      "origin": [113.39262215, 23.06284655],
+      "pickable": true,
+      "heightAccuracy": "visual_estimate_only_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/shiyuan-4-2.5d-3b9a869ac987.glb",
+          "sha256": "3b9a869ac9873cc58f7e18845b7ab75adfb5a6f0f7694fbd9f9625bc307357b2",
+          "bytes": 8044,
+          "triangles": 56,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -33.08125686645508, -4.572064150108019e-16, -7.466751575469971
+            ],
+            "max": [33.08125686645508, 18, 7.466747760772705]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/shiyuan-4-3d-7ca997e381a5.glb",
+          "sha256": "7ca997e381a596ee568cc9cee0c7a3849fd4f8c58f840a7a23babcb8c167819b",
+          "bytes": 61536,
+          "triangles": 11480,
+          "drawCalls": 8,
+          "bounds": {
+            "min": [
+              -33.32125625759363, -4.572064150108019e-16, -8.376751212403178
+            ],
+            "max": [33.32125625759363, 19.20999985933304, 8.376747397705913]
           }
         }
       }

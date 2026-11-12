@@ -1,0 +1,14 @@
+{
+  "admitted": true,
+  "reasons": [],
+  "provenance": {
+    "viewpoint": "oblique_front_macro",
+    "sourcePath": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\CampusOS_Codex_完整设计文档_v2\\assets\\source_maps\\广外地图\\友苑.png",
+    "width": 1271,
+    "height": 429,
+    "foregroundCoverage": 0.5624,
+    "largestComponentFraction": 0.9929,
+    "pHash": 17290081539123677364,
+    "duplicateOfHash": null
+  }
+}

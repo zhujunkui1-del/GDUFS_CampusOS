@@ -1084,7 +1084,6 @@ Console独立认证保持；游客已有AI对话继续由原HttpOnly游客Cookie
 
 Preview恢复阶跃星辰优先、明确额度耗尽后DeepSeek备用。已真实验证的平台配置不再因能力记录满24小时使整个助理下线；配置/凭据/策略指纹改变、未测试或能力不符仍要求重测。BYOK短期凭证边界不变。沿用原诊断器，各模型3请求，不新增供应商、绕过能力测试或执行公开页面收费探测。只改Preview，不发SES测试邮件、不动负责人账号、外部搜索账号或D1结构；验收和资源限制见MAP_AI_RECOVERY_ACCEPTANCE_2026_11_01.md。
 
-
 ## 2026-11-01｜授权南北苑13栋独立批量评审，保留南7原版
 
 负责人本轮明确授权北苑1—6和南苑7—13建模，确认每栋7层；此前暂停批量的规则在这13栋制作范围内由新授权覆盖，师苑/友苑及其他批量不在本轮范围。当前仍不将制作授权解释为正式地图发布授权。
@@ -1155,13 +1154,11 @@ Persona只负责最终表达，日常对话实际进入模型，专业场景不�
 
 Preview与gdufs.ccwu.cc实际共用campusos-preview及D1，发布影响两地址，独立Production不变。验收口径、100题检索/真实回放区别、未覆盖跨模型及实机指标见docs/ASSISTANT_QUALITY_REFACTOR_2026_11_04.md。
 
-
 ## D-138｜地图能力检测、完整3D一致性与隔离验收（2026-11-04）
 
 按负责人本轮要求，内存提示只调预算，不据此禁用2.5D/3D；WebGL2实际绘制失败提供复用同一GIS/地点/路网的Canvas2D路径。2D不预取Three/GLB，完整底图不阻塞基础操作。负责人实机明确要求3D平移不退2.5D，最终取消视野驱动模型淘汰，改用像素比、并发、批次复用及构建总预算控成本。新增模型也须通过同一真实GLTF计数与资源门槛。
 
 正式域名仍与Preview共享Worker，未获共享发布授权不部署该Worker。负责人要求不用需VPN的workers.dev测试地址，因此仅新增map-test.gdufs.ccwu.cc指向独立ASSETS测试Worker，不变更原主站绑定。测试站只包含地图；其他模块未部署，不代表原站被删除。夸克按负责人最新意见不再作为阻断。其他设备无法加载尚未解决，部分实机通过不等于全网验收。
-
 
 ## D-139｜共享主站地图修复发布授权（2026-11-04）
 
@@ -1176,6 +1173,7 @@ Preview与gdufs.ccwu.cc实际共用campusos-preview及D1，发布影响两地址
 新增适配端点仅限 ACCOUNT_ORIGIN 与 ACCOUNT_ALLOWED_ORIGINS 中配置的 HTTPS Host（当前为 Preview workers.dev 与 gdufs.ccwu.cc），并需要独立的 DIFY_EXTERNAL_KB_TOKEN Bearer Secret。当前实现仅在本地工作区，尚未部署；Dify 外部 API、外部知识库和 API Key 均未创建或保存，Embedding 与大模型均未调用。Dify保存外部 API 时会向端点发起连接测试。校内 Dify 出站访问 Preview 的可达性仍须真实验证。
 
 Preview 与 gdufs.ccwu.cc 共用 campusos-preview Worker；部署新增路由会更新共享 Worker 版本。尽管端点限制为 Preview Host，本决定不授权此次部署或创建/保存 Bearer Secret。发布前须再次取得负责人对共享 Worker 部署和 Dify/Cloudflare 两端保存同一 API Secret 的明确授权。实施计划与实际 UI 状态见 docs/DIFY_CAMPUS_AGENT_PLAN_2026_11_04.md。
+
 ## D-141｜正式域名移至独立 campusos-product Worker（2026-11-05）
 
 负责人明确要求将 gdufs.ccwu.cc 从 campusos-preview Worker 移至新 Worker campusos-product，并保留 Preview 名称 campusos-preview。负责人选择先拆 Worker、暂时共享现有 D1，复用数据库 UUID 18299abc-b38b-4494-8d12-8ab4d482c304，以保留现有账号、AI历史、Console数据；当前账号下没有 campusos-production D1。此阶段不复制或迁移数据库。gdufs.zhiyuapp.site 未在本次指令中指定，暂留 campusos-preview。
@@ -1210,13 +1208,11 @@ D-140 的校内 Dify 外部知识库试点继续，使用现有 Preview Worker �
 
 Dify 知识库新增修正版 `CampusOS_最近100篇公开文章_20261106_来源链接修正.md`，UI 显示可用、预览1403块。初版快照的 URL 与后续元数据缺少空格，自动链接化时被连入链接，已将初版停用并保留（未删除）；修正版在分段预览和真实召回中验证了原文链接边界正确。精确查询「观影活动 2026.11.6」召回目标文章及正确原文链接，但目标排在 Top 3 第三位，且另两条候选无关，故只证明数据可召回和来源正确，不能声称排序质量达标。Chatflow 的模型 404 故障和未发布状态不在本决定覆盖范围内。
 
-
 ## D-145｜Console 登录支持已批准的多个精确域名（2026-11-06）
 
 负责人要求后台可在 gdufs.zhiyuapp.site、gdufs.ccwu.cc、campusos.zhiyuapp.site 使用，并以 Preview 为参考。只在现有 `CONSOLE_ORIGIN` 之外增加 `CONSOLE_ALLOWED_ORIGINS` 精确 HTTPS Origin 列表；仍校验 HTTPS、Origin 完全匹配、单管理员名单、现有 PBKDF2 密码/Secret、CSRF、同源与 D1 会话门禁。Preview 密码、验证器、salt、签名Secret和 D1 均未轮换或修改。
 
 Cloudflare 实测 gdufs.ccwu.cc 和 gdufs.zhiyuapp.site 均由共享 `campusos-preview` Worker/D1 服务，版本 `64c98b09-1119-46b2-9fc7-ef3ff8ebcbe6` 已更新；两个后台已显示管理员访问密钥登录框。`campusos.zhiyuapp.site` 目前 CNAME 指向 Vercel，无法从现有 Worker Secret 配置启用 Cloudflare D1 管理 API。为保留 Vercel 页面并把其后台 API 接到既有 Worker，配置已限定为 `/api/console-*` 与 `/api/admin*` 两条路径，但 Cloudflare 路由要求该 Vercel CNAME 开启代理。开启后全站流量先经过Cloudflare，非匹配路径继续到Vercel。该 DNS/代理变更待负责人确认后再做。
-
 
 ## D-146｜CampusOS 可选「深度思考」Dify Chatflow（2026-11-06）
 
@@ -1228,12 +1224,9 @@ Cloudflare 实测 gdufs.ccwu.cc 和 gdufs.zhiyuapp.site 均由共享 `campusos-p
 
 **状态更新：**Chatflow 已发布；负责人授权后，`DIFY_APP_API_KEY` 已保存为 `campusos-preview` 加密 Secret。Worker代码已部署，当前版本 `1fb00a34-be32-4f46-9e08-3a14c4ff90c8`，Secret变更版 `68ec12eb-f731-46c5-b250-b530712c1e4e`。独立游客端到端测试未通过：Dify API返回HTTP200但非SSE且没有消息事件，Dify日志页也未显示请求。后续需校内Dify管理员核实服务端到服务端的API地址/网关路径。负责人随后明确“保留现有密钥，停止轮换”；当前不撤销两把Dify App API Key。
 
-
-
 ### D-146 最终状态（2026-11-06）
 
 Dify Chatflow已发布；DIFY_APP_API_KEY 已作为 Cloudflare Secret 配置；共享 Worker 当前代码版 b5f6f81d-a4ca-4c0b-88eb-a58ac25740e8，Dify Secret版 68ec12eb-f731-46c5-b250-b530712c1e4e。独立游客真实请求证明 D1→CampusOS 检索执行，但 Dify API 返回 HTTP200 text/html，Dify Logs 没有运行记录。DIFY_CHAT_ENABLED=false 已部署并验证，使未验收开关隐藏。负责人要求保留现有 Dify App Keys，不再轮换；待校内管理员提供可用的 Worker→Dify API 路径后再启用。
-
 
 D-146 最终验收更新（2026-11-06）：Dify App API Key Secret 与已发布 Chatflow保留。Worker 实际请求仍返回 HTTP 200 text/html；DIFY_CHAT_ENABLED=false，未验收前隐藏深度思考开关。D1仍是唯一事实源，当前路径由CampusOS检索少量公开证据后再发给Dify；不导入本地文章目录，不做 RSS 上传同步。
 
@@ -1266,6 +1259,7 @@ D-146 最终验收更新（2026-11-06）：Dify App API Key Secret 与已发布 
 **发布前待决**：P90 延迟从 32s 升到 100s（Qwen3.8-27B 会吐长思维链）；自然问法 recall@5 仅 0.579；DeepSeek-V4-Flash-0731 虽在网关注册但实际调用报 `Model not found`。三项都需负责人拍板后才可发布。详见 `docs/KB_DIFY_PILOT_2026_11_07.md`。
 
 **后续状态（2026-11-07）**：其中「启用 Embedding」一项已由 D-149 授权并执行，新建 hq 与 ocr+hq 两套向量库；`chat_template_kwargs.enable_thinking=false` 解决了思维链泄漏。**延迟与自然问法召回两项仍未解决**，见 D-149。
+
 ## D-149｜启用 bge-m3 向量索引与 OCR，三套知识库并存（2026-11-07）
 
 负责人 2026-11-07 明确授权「启动 embedding，另起一组新库存量对比（旧库不动，可随时退回）。使用 OCR」。这解除了 D-143 与 D-144 中「不授权启用 Embedding、不创建第二套向量索引」的限制，但**仅限新建独立知识库**，不复用、不修改任何既有库。
@@ -1276,11 +1270,11 @@ D-146 最终验收更新（2026-11-06）：Dify App API Key Secret 与已发布 
 
 **检索结果（hit-testing，top_k=5，绕开 LLM）**：
 
-| 后端 | 标题派生（47） | 自然问法（19） | OCR-only（40） |
-|---|---|---|---|
-| `economy` | 0.851 | 0.579 | 0.000 |
-| `hq` | **1.000** | **0.684** | 0.000 |
-| `ocr+hq` | **1.000** | **0.684** | **1.000** |
+| 后端      | 标题派生（47） | 自然问法（19） | OCR-only（40） |
+| --------- | -------------- | -------------- | -------------- |
+| `economy` | 0.851          | 0.579          | 0.000          |
+| `hq`      | **1.000**      | **0.684**      | 0.000          |
+| `ocr+hq`  | **1.000**      | **0.684**      | **1.000**      |
 
 换索引是唯一有效的一步：标题派生集从 0.851 直接到 1.000。OCR-only 集的 0.000 → 1.000 属于「从文档不存在到存在」，不是检索质量提升。自然问法只从 0.579 涨到 0.684，说明向量检索解决了字面对不上，没解决「问的和写的不是同一件事」，下一步应上 rerank（`bge-reranker-v2-m3` 已注册但未启用）而不是继续换 embedding。
 
@@ -1289,7 +1283,6 @@ D-146 最终验收更新（2026-11-06）：Dify App API Key Secret 与已发布 
 **关掉思考**：只有 `completion_params.chat_template_kwargs = {"enable_thinking": false}` 有效；`enable_thinking: false`、`reasoning_effort: "none"`、`thinking: {type: disabled}`、`extra_body` 全部无效。Dify 的 llm 节点能持久化并生效该字段。
 
 **发布状态**：交付版应用 `CampusOS 问答（OCR+向量）`（`15dce9e8-ab4d-4375-8630-2b1a4c343220`，site `3a2B9Dxoh5rKh5yv`）已发布可用。生产应用 `广外通·校园助理（Dify试点）`（`39945f9b-9ee0-4c2c-a3a0-fc5298b3f861`）**仍未改动**，graph 仍是 `start → llm → answer`。P90 = 103.9 s vs 生产基线 32.0 s，故不覆盖生产。
-
 
 ## D-150｜91 个官网采集入口统一按「实测索引页」重建（2026-11-09）
 
@@ -1302,3 +1295,19 @@ D-146 最终验收更新（2026-11-06）：Dify App API Key Secret 与已发布 
 **顺带修掉的代码缺陷**（详见 `docs/PROGRESS.md`）：`document_fetches` 外键指向不存在的版本、调度器一条源失败整批回滚、`paused` 陈旧任务不作废、`sync_state` 一次失败就永久 blocked、一个坏页面拖垮整条源、翻页上限死循环、入口索引越界、robots.txt 缺失被当成站点关闭、HTTP-only 站点被强制 HTTPS、日期戳的分离/点分/英文月份三种形式、标题站点横幅、队列饥饿。
 
 **取舍**：WebberRASP 拦截的 query-JSP 站点（保卫部、发展规划部、财务与资产管理部）没有从配置层面绕过的办法——静态别名 `/info/NNN/NNN.htm` 在这些站上全部 404，Cloudflare 出网 IP 对 `.jsp?urltype=…&wbnewsid=…` 一律返回 847 字节的 `x-protected-by: WebberRASP`。不改用第三方代理或浏览器渲染，因为那会把「官方站点的公开页面」变成「经过中间人的抓取」，超出负责人授权范围。
+
+## D-151｜友苑地图模型保留GIS外环、估算立面（2026-11-12）
+
+按负责人本轮建模请求，使用友苑的既有校园来源外环 `osm-way-313039031` 作为2.5D/3D GLB定位几何，原外环逐坐标不变。照片可见约七层重复立面，模型采用七层、主体约21米作为视觉估算；不把估算高度写回校园GIS。卫星图中似有内部开敞空间，但来源只有一个外环，内院界线、入口与翼楼ID没有可靠测量，因此不新增GIS内环、路线入口或子建筑。
+
+正式资源由程序生成，零贴图/零参考照片；地图级材质以无贴图MeshStandardMaterial和重复几何表示。新增建筑通过既有全驻留模型目录加载、按建筑地点选取；不增加单个立面部件的交互、爆炸或室内语义。模型边界和视觉审查记录于 `docs/model-previews/youyuan-v1/`。
+
+**展示层级修订（2026-11-12）**：负责人明确要求友苑2.5D与南苑/北苑2.5D一样仅显示纯白体块。2.5D现复用同一白色墙体/浅灰屋顶材质和21米视觉高度，不画窗、红砖、阳台、屋顶设备或圆弧大厅；3D只读且保持原SHA256，不重建、不覆盖。
+
+## D-153｜师苑1—4栋按独立GIS地点建模（2026-11-12）
+
+负责人要求开始制作师苑1—4栋2.5D/3D。四栋分别沿用 `campus.json` 已有地点外环和ID，不合成新父级地点。2.5D采用已确认的南北苑纯白体块风格；3D用参考图可见的灰蓝窗带、暖色竖向构架和阳台栏线作立面近似。照片未给出实测楼层/高度，按约6层、18米作展示估算，不改GIS高度字段。参考图中出现的二饭不是本轮授权模型对象。
+
+## D-152｜公开展示聚合访问量（2026-11-12）
+
+负责人要求在校园地图首页提供用户可见的访问量入口。管理员后台的 `/api/admin/v2/traffic` 依赖 Console 会话，因此首页改用只读公开 `/api/public/traffic`，返回既有 PV 聚合指标与每日趋势，不公开批次 ID、IP、账号或页面明细。计数口径和 D1 数据源保持既有规则；首页复用后台指标/趋势组件，并提供关闭、刷新及 7/30 天切换。

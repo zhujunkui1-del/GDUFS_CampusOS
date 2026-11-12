@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "status": "stopped",
+  "profile": "generic",
+  "currentStep": "stopped",
+  "currentPass": "blockout",
+  "checklist": [
+    {
+      "id": "image-analysis",
+      "scope": "setup",
+      "status": "done",
+      "evidence": [
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/image-analysis.md",
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/intake/facade-probe.json",
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/intake/satellite-probe.json"
+      ],
+      "reason": "",
+      "command": "Read grimoire/intake/image_analysis.md and analyze {reference}"
+    },
+    {
+      "id": "reference-suitability",
+      "scope": "setup",
+      "status": "done",
+      "evidence": [
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/intake/reference-suitability.json",
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/intake/facade-admission.json",
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/intake/satellite-admission.json"
+      ],
+      "reason": "",
+      "command": "Read grimoire/intake/validation_rubric.md and record a pass, conditional, or reject verdict for {reference}"
+    },
+    {
+      "id": "reference-admission",
+      "scope": "setup",
+      "status": "done",
+      "evidence": [
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/intake/reference-suitability.json",
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/intake/facade-admission.json",
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/intake/satellite-admission.json"
+      ],
+      "reason": "",
+      "command": "python3 forge/stage1_intake/check_reference_admission.py {reference} --out admission.json --probe-out probe.json"
+    },
+    {
+      "id": "local-spec-search",
+      "scope": "setup",
+      "status": "done",
+      "evidence": [
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/pre-spec-assessment.json"
+      ],
+      "reason": "",
+      "command": "Run the local evidence search before authoring the assessment"
+    },
+    {
+      "id": "pre-spec-assessment",
+      "scope": "setup",
+      "status": "done",
+      "evidence": [
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/pre-spec-assessment.json",
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/detail-inventory.json"
+      ],
+      "reason": "",
+      "command": "python3 forge/stage2_spec/new_pre_spec_assessment.py \"<name>\" --image {reference} --domain generic --out assessment.json"
+    },
+    {
+      "id": "detail-inventory",
+      "scope": "setup",
+      "status": "done",
+      "evidence": [
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/pre-spec-assessment.json",
+        "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/detail-inventory.json"
+      ],
+      "reason": "",
+      "command": "python3 forge/stage1_intake/build_detail_inventory.py {reference} --mode grid-3x3 --out-dir detail-inventory --out di.json"
+    },
+    {
+      "id": "projection-route",
+      "scope": "setup",
+      "status": "skipped",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/image-analysis.md"
+      ],
+      "reason": "两张建筑参考图均为未标定的多视角外观/卫星影像，无法建立可靠相机姿态；正式模型采用校园GIS轮廓和代码化程序几何，不进行照片投射或纹理烘焙，n.jpg仅用于校园位置背景。",
+      "command": "Record whether projection is required; if required run solve_camera_pose.py, delight_albedo.py, and bake_projected_texture.py, otherwise skip with a reason"
+    },
+    {
+      "id": "spec-authoring",
+      "scope": "setup",
+      "status": "done",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/object-sculpt-spec.json"
+      ],
+      "reason": "",
+      "command": "python3 forge/stage2_spec/new_sculpt_spec.py \"<name>\" --image {reference} --assessment assessment.json --augmentation spec-augmentation.json --domain generic --out object-sculpt-spec.json"
+    },
+    {
+      "id": "material-evidence",
+      "scope": "setup",
+      "status": "skipped",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/material-evidence.md"
+      ],
+      "reason": "所给参考为未标定的日光航拍/压缩卫星图，不能可靠恢复PBR贴图；地图GLB需保持零图像/纹理负载。按照片可确认的材质分区已记录为视觉估算，正式模型使用无贴图MeshStandardMaterial。",
+      "command": "python3 forge/stage1_intake/material_region_analysis.py --manifest material-regions.json --out-dir material-evidence --out material-analysis.json (single-crop route: analyze_texture.py + extract_pbr_evidence.py per verified crop; otherwise skip with a reason)"
+    },
+    {
+      "id": "material-spec-wiring",
+      "scope": "setup",
+      "status": "done",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/object-sculpt-spec.json"
+      ],
+      "reason": "",
+      "command": "python3 forge/stage2_spec/apply_material_analysis.py {spec} material-analysis.json --in-place"
+    },
+    {
+      "id": "strict-validation",
+      "scope": "setup",
+      "status": "done",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/strict-validation.txt"
+      ],
+      "reason": "",
+      "command": "python3 forge/stage2_spec/validate_sculpt_spec.py {spec} --strict-quality"
+    },
+    {
+      "id": "build-current-pass",
+      "scope": "pass",
+      "status": "done",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/manifest.json"
+      ],
+      "reason": "",
+      "command": "python3 forge/stage3_build/generate_threejs_factory.py {spec} --out src/createObjectModel.ts --pass-id {pass_id}"
+    },
+    {
+      "id": "render-capture",
+      "scope": "pass",
+      "status": "done",
+      "evidence": [
+        "output/playwright/youyuan-model-2026-11-12/capture-summary.json"
+      ],
+      "reason": "",
+      "command": "Render {pass_id} and capture the fixed review view plus meaningful orbit views"
+    },
+    {
+      "id": "review-contract-read",
+      "scope": "pass",
+      "status": "done",
+      "evidence": [
+        "C:/Users/zhuju/.codex/skills/img2threejs/grimoire/review/gates_reference.md"
+      ],
+      "reason": "",
+      "command": "Read grimoire/review/gates_reference.md and grimoire/review/self_correction.md completely"
+    },
+    {
+      "id": "tier1-diagnostics",
+      "scope": "pass",
+      "status": "skipped",
+      "evidence": [
+        "output/playwright/youyuan-model-2026-11-12/visual-review.md"
+      ],
+      "reason": "已经运行Tier-1；照片与带底图/界面的地图截图相机、背景和裁切不同，故IoU 0.1279、纵横比差0.6384、面积差0.6384不代表友苑几何保真。按重建模式限制保留失败结果，不用像素对齐指导错误改模。该通用门还要求单独无材质blockout渲染，与现有地图GLB渲染链不匹配。",
+      "command": "python3 forge/stage4_review/diagnose_render.py --reference {reference} --render <shot> --spec {spec} --pass-id {pass_id} --in-place"
+    },
+    {
+      "id": "multi-angle-review",
+      "scope": "pass",
+      "status": "done",
+      "evidence": [
+        "output/playwright/youyuan-model-2026-11-12/multi-angle-analysis.json"
+      ],
+      "reason": "",
+      "command": "python3 forge/stage4_review/diagnose_render_multi_angle.py --reference <fixed-shot> --orbit <orbit-shot> --orbit <orbit-shot>"
+    },
+    {
+      "id": "pass-gate-check",
+      "scope": "pass",
+      "status": "skipped",
+      "evidence": [
+        "output/playwright/youyuan-model-2026-11-12/pass-gate-check.txt"
+      ],
+      "reason": "orchestrate_passes check was run and refused the generic blockout gate because Tier-1 did not pass. The mismatch is camera/background/framing (source photo versus full campus-map UI) and the gate also requires a map-stripped standalone blockout, which the production MapLibre GLB path does not emit. The failure and limitation are recorded in visual-review.md; no geometry was distorted to fit pixel IoU.",
+      "command": "python3 forge/stage3_build/orchestrate_passes.py check {spec} --pass-id {pass_id}"
+    },
+    {
+      "id": "ai-review-recorded",
+      "scope": "pass",
+      "status": "done",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/object-sculpt-spec.json"
+      ],
+      "reason": "",
+      "command": "Create the comparison sheet, inspect it with agent vision, and append exactly one review action"
+    },
+    {
+      "id": "pipeline-sync",
+      "scope": "pass",
+      "status": "done",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/object-sculpt-spec.json"
+      ],
+      "reason": "",
+      "command": "python3 forge/stage3_build/orchestrate_passes.py sync {spec} --in-place"
+    },
+    {
+      "id": "part-coverage",
+      "scope": "final",
+      "status": "skipped",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/visual-review.md"
+      ],
+      "reason": "静态校园地图按建筑级拾取；子构件爆炸/点选不是本轮目标，且模型按材质批处理。",
+      "command": "python3 forge/stage4_review/check_part_coverage.py --spec {spec} --manifest parts.json"
+    },
+    {
+      "id": "action-ready",
+      "scope": "final",
+      "status": "skipped",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/visual-review.md"
+      ],
+      "reason": "模型用于静态地图显示，现有业务支持建筑级选择，不要求物理、动画、拆解或室内交互。",
+      "command": "Verify explodable/clickable hierarchy, pivots, sockets, and root.userData.sculptRuntime"
+    },
+    {
+      "id": "emission-target",
+      "scope": "final",
+      "status": "skipped",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/visual-review.md"
+      ],
+      "reason": "项目使用 scripts/build-youyuan-model.mjs 内置 GLTFExporter 直接输出 GLB；无需 img2threejs 插件目标。",
+      "command": "python3 forge/stage3_build/emit_target.py --spec {spec} --workspace . [--target <kind> [--plugin <id>]]"
+    },
+    {
+      "id": "plugin-gates",
+      "scope": "final",
+      "status": "skipped",
+      "evidence": [
+        "docs/model-previews/youyuan-v1/visual-review.md"
+      ],
+      "reason": "未安装建筑域专用审阅插件；记录了通用可用的浏览器、资产预算与多角度证据。",
+      "command": "python3 forge/stage3_build/run_gates.py --workspace ."
+    }
+  ],
+  "loops": {
+    "perPass": {},
+    "total": 0,
+    "maxPerPass": 3,
+    "maxTotal": 6
+  },
+  "artifacts": {
+    "reference": "D:/tlydcg/Codex_work/广外AI应用大赛/CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/友苑.png",
+    "spec": "D:/tlydcg/Codex_work/广外AI应用大赛/docs/model-previews/youyuan-v1/object-sculpt-spec.json"
+  },
+  "passHistory": [],
+  "reviewCursor": 1,
+  "iterationAction": "initial",
+  "stopReason": "终态包含负责人要求的友苑2.5D纯白模修订；专用脚本只改2.5D，原3D SHA256仍为5013c5a98ccc949862573907e14005ea894664c9950558426793b7fd4a80e47e。其余子构件爆炸/动画/插件门禁不适用于静态地图资产，Tier-1像素失败因照片与地图UI相机不匹配如实保留。"
+}

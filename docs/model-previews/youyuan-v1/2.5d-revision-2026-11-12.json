@@ -1,0 +1,13 @@
+{
+  "changedAsset": "2.5d",
+  "style": "plain-white-mass matching the North/South dormitory 2.5D models",
+  "old2_5dUrl": "/models/campus/youyuan-2.5d-ac380a8c44f4.glb",
+  "new2_5dUrl": "/models/campus/youyuan-2.5d-fc9a240f5815.glb",
+  "new2_5dSha256": "fc9a240f58150944ab82863abc9371989fbd41d83c58c7daeffe77924789cee5",
+  "new2_5dBytes": 18872,
+  "new2_5dTriangles": 168,
+  "preserved3dUrl": "/models/campus/youyuan-3d-5013c5a98ccc.glb",
+  "preserved3dSha256": "5013c5a98ccc949862573907e14005ea894664c9950558426793b7fd4a80e47e",
+  "preserved3dBytes": 239812,
+  "sourceFootprintSha256": "542ef86bc3a772bd3ed2ce14e1ebf0dc9b82c2ab85446ac7bc4d2f4b149dde85"
+}

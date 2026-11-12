@@ -26,6 +26,7 @@ import {
   sourceSessionReportPost,
 } from "./external-search/relay-api";
 import { visitPost } from "./console/traffic";
+import { GET as publicTraffic } from "@/app/api/public/traffic/route";
 import { accountApi, accountMethods } from "./account/api";
 
 type Handler = (request: Request) => Promise<Response>;
@@ -35,6 +36,7 @@ const fixed: Record<string, { method: string; handle: Handler }> = {
   "/api/public/article": { method: "GET", handle: publicArticle },
   "/api/public/activities": { method: "GET", handle: publicActivities },
   "/api/public/visits": { method: "POST", handle: visitPost },
+  "/api/public/traffic": { method: "GET", handle: publicTraffic },
   "/api/agent/external-search/control-finish": {
     method: "POST",
     handle: sourceControlFinishPost,

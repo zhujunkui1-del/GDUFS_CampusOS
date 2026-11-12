@@ -1,0 +1,233 @@
+{
+  "sourceImage": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\CampusOS_Codex_完整设计文档_v2\\assets\\source_maps\\广外地图\\友苑.png",
+  "zonesDir": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\docs\\model-previews\\youyuan-v1\\detail-zones",
+  "detailInventory": {
+    "scanMethod": "grid-3x3 facade image and uncalibrated roof-plan visual scan",
+    "targetMinDetails": 10,
+    "details": [
+      {
+        "id": "zone-r0c0",
+        "kind": "contour",
+        "description": "A high pale roof block and the long parapet edge are directly visible; the roof-block internal equipment is occluded.",
+        "region": {
+          "x": 0,
+          "y": 0,
+          "width": 0.3333,
+          "height": 0.3333,
+          "units": "normalized"
+        },
+        "scale": "meso/repeated facade feature at campus-map viewing distance",
+        "affects": "visible form",
+        "mapsTo": {
+          "type": "component.localFeatures",
+          "ref": "roof-service-rooms"
+        },
+        "evidenceRef": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\docs\\model-previews\\youyuan-v1\\detail-zones\\zone-r0c0.png",
+        "confidence": 0.77
+      },
+      {
+        "id": "zone-r0c1",
+        "kind": "seam",
+        "description": "Stepped flat roof slabs connect two taller masses; panel joints read as shallow horizontal seams.",
+        "region": {
+          "x": 0.3333,
+          "y": 0,
+          "width": 0.3333,
+          "height": 0.3333,
+          "units": "normalized"
+        },
+        "scale": "meso/repeated facade feature at campus-map viewing distance",
+        "affects": "facade rhythm and material response",
+        "mapsTo": {
+          "type": "component.localFeatures",
+          "ref": "roofline-setbacks"
+        },
+        "evidenceRef": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\docs\\model-previews\\youyuan-v1\\detail-zones\\zone-r0c1.png",
+        "confidence": 0.79
+      },
+      {
+        "id": "zone-r0c2",
+        "kind": "contour",
+        "description": "A pale rectangular rooftop block rises one storey above the adjacent roof and meets red masonry below.",
+        "region": {
+          "x": 0.6667,
+          "y": 0,
+          "width": 0.3333,
+          "height": 0.3333,
+          "units": "normalized"
+        },
+        "scale": "meso/repeated facade feature at campus-map viewing distance",
+        "affects": "visible form",
+        "mapsTo": {
+          "type": "component.localFeatures",
+          "ref": "roof-service-rooms"
+        },
+        "evidenceRef": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\docs\\model-previews\\youyuan-v1\\detail-zones\\zone-r0c2.png",
+        "confidence": 0.73
+      },
+      {
+        "id": "zone-r1c0",
+        "kind": "ridge",
+        "description": "A broad uninterrupted brick-red stair-core band interrupts the balcony/window rhythm.",
+        "region": {
+          "x": 0,
+          "y": 0.3333,
+          "width": 0.3333,
+          "height": 0.3333,
+          "units": "normalized"
+        },
+        "scale": "meso/repeated facade feature at campus-map viewing distance",
+        "affects": "visible form",
+        "mapsTo": {
+          "type": "component.localFeatures",
+          "ref": "brick-stair-cores"
+        },
+        "evidenceRef": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\docs\\model-previews\\youyuan-v1\\detail-zones\\zone-r1c0.png",
+        "confidence": 0.89
+      },
+      {
+        "id": "zone-r1c1",
+        "kind": "seam",
+        "description": "Repeated floor slabs and projecting bands separate stacked window/balcony rows.",
+        "region": {
+          "x": 0.3333,
+          "y": 0.3333,
+          "width": 0.3333,
+          "height": 0.3333,
+          "units": "normalized"
+        },
+        "scale": "meso/repeated facade feature at campus-map viewing distance",
+        "affects": "facade rhythm and material response",
+        "mapsTo": {
+          "type": "component.localFeatures",
+          "ref": "floor-slab-bands"
+        },
+        "evidenceRef": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\docs\\model-previews\\youyuan-v1\\detail-zones\\zone-r1c1.png",
+        "confidence": 0.88
+      },
+      {
+        "id": "zone-r1c2",
+        "kind": "linework",
+        "description": "White horizontal balcony rails, thin mullions and warm-red vertical piers repeat across the elevation.",
+        "region": {
+          "x": 0.6667,
+          "y": 0.3333,
+          "width": 0.3333,
+          "height": 0.3333,
+          "units": "normalized"
+        },
+        "scale": "meso/repeated facade feature at campus-map viewing distance",
+        "affects": "facade rhythm and material response",
+        "mapsTo": {
+          "type": "component.localFeatures",
+          "ref": "balcony-window-grid"
+        },
+        "evidenceRef": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\docs\\model-previews\\youyuan-v1\\detail-zones\\zone-r1c2.png",
+        "confidence": 0.87
+      },
+      {
+        "id": "zone-r2c0",
+        "kind": "contour",
+        "description": "An inward-facing curved lobby canopy forms a low, rounded projection between wings.",
+        "region": {
+          "x": 0,
+          "y": 0.6667,
+          "width": 0.3333,
+          "height": 0.3333,
+          "units": "normalized"
+        },
+        "scale": "meso/repeated facade feature at campus-map viewing distance",
+        "affects": "visible form",
+        "mapsTo": {
+          "type": "component.localFeatures",
+          "ref": "round-inner-lobby"
+        },
+        "evidenceRef": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\docs\\model-previews\\youyuan-v1\\detail-zones\\zone-r2c0.png",
+        "confidence": 0.68
+      },
+      {
+        "id": "zone-r2c1",
+        "kind": "ridge",
+        "description": "Brick-red core panels continue through multiple storeys beside recessed openings.",
+        "region": {
+          "x": 0.3333,
+          "y": 0.6667,
+          "width": 0.3333,
+          "height": 0.3333,
+          "units": "normalized"
+        },
+        "scale": "meso/repeated facade feature at campus-map viewing distance",
+        "affects": "visible form",
+        "mapsTo": {
+          "type": "component.localFeatures",
+          "ref": "brick-stair-cores"
+        },
+        "evidenceRef": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\docs\\model-previews\\youyuan-v1\\detail-zones\\zone-r2c1.png",
+        "confidence": 0.78
+      },
+      {
+        "id": "zone-r2c2",
+        "kind": "linework",
+        "description": "A close view shows repeated bay spacing, light balcony rims and blue-gray glazing.",
+        "region": {
+          "x": 0.6667,
+          "y": 0.6667,
+          "width": 0.3333,
+          "height": 0.3333,
+          "units": "normalized"
+        },
+        "scale": "meso/repeated facade feature at campus-map viewing distance",
+        "affects": "facade rhythm and material response",
+        "mapsTo": {
+          "type": "component.localFeatures",
+          "ref": "balcony-window-grid"
+        },
+        "evidenceRef": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\docs\\model-previews\\youyuan-v1\\detail-zones\\zone-r2c2.png",
+        "confidence": 0.86
+      },
+      {
+        "id": "satellite-courtyard-west",
+        "kind": "contour",
+        "description": "The roof plan contains a broad open landscaped gap beside the offset central wing; its inner boundary is image-estimated and remains display-only.",
+        "region": {
+          "x": 0.16,
+          "y": 0.25,
+          "width": 0.37,
+          "height": 0.34,
+          "units": "normalized"
+        },
+        "scale": "macro court opening and adjoining wings",
+        "affects": "negative space and top plan",
+        "mapsTo": {
+          "type": "component.localFeatures",
+          "ref": "unverified-courtyard-limits"
+        },
+        "evidenceRef": "roof-plan",
+        "confidence": 0.62,
+        "realization": "not-modeled-unverified-inner-boundary"
+      },
+      {
+        "id": "satellite-inner-courtyard",
+        "kind": "contour",
+        "description": "A second inner garden/air gap is visible around the lower wing connection; exact courtyard limits cannot be measured from this image.",
+        "region": {
+          "x": 0.24,
+          "y": 0.52,
+          "width": 0.42,
+          "height": 0.3,
+          "units": "normalized"
+        },
+        "scale": "macro court opening",
+        "affects": "negative space and display-only landscaping",
+        "mapsTo": {
+          "type": "component.localFeatures",
+          "ref": "unverified-courtyard-limits"
+        },
+        "evidenceRef": "roof-plan",
+        "confidence": 0.57,
+        "realization": "not-modeled-unverified-inner-boundary"
+      }
+    ]
+  },
+  "authoringInstruction": "Open each zone crop under zonesDir and replace every detail stub's kind, description, scale, affects, mapsTo, and confidence with what is actually observed. Add more detail entries per zone if a single zone contains multiple distinct marks; do not leave stubs unfilled or unlinked (mapsTo must reference a real component.localFeatures or material.localOverrides entry)."
+}

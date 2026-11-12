@@ -1,0 +1,75 @@
+{
+  "version": "youyuan-v1-2026-11-12",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "placeId": "osm-way-313039031",
+  "sourceFootprintSha256": "542ef86bc3a772bd3ed2ce14e1ebf0dc9b82c2ab85446ac7bc4d2f4b149dde85",
+  "levels": 7,
+  "heightMeters": 21,
+  "heightAccuracy": "visual_estimate_only_not_surveyed",
+  "facadePalette": {
+    "tile": "#e5e1d8",
+    "brick": "#b96f5c",
+    "glass": "#647b83",
+    "metal": "#899493",
+    "balcony": "#d6d4cb",
+    "roof": "#cccac2",
+    "roofDark": "#6e716e",
+    "concrete": "#cbc8bd"
+  },
+  "buildingFeatures": [
+    "exact-connected-22-vertex-footprint",
+    "seven-floor-horizontal-datums",
+    "repeated-window-and-balcony-bays",
+    "brick-red-stair-service-core-bands",
+    "flat-stepped-roof-and-service-blocks",
+    "approximate-rounded-lobby-display-only"
+  ],
+  "assets": {
+    "2.5d": {
+      "file": "youyuan-2.5d.glb",
+      "url": "/models/campus/youyuan-2.5d-fc9a240f5815.glb",
+      "sha256": "fc9a240f58150944ab82863abc9371989fbd41d83c58c7daeffe77924789cee5",
+      "bytes": 18872,
+      "triangles": 168,
+      "drawCalls": 2,
+      "bounds": {
+        "min": [
+          -66.45451354980469,
+          -3.364189767488348e-15,
+          -54.94158935546875
+        ],
+        "max": [
+          66.45451354980469,
+          21,
+          54.94138717651367
+        ]
+      },
+      "materialCount": 2,
+      "textureCount": 0,
+      "style": "plain_white_mass_matching_north_south_dormitories"
+    },
+    "3d": {
+      "file": "youyuan-3d.glb",
+      "sha256": "5013c5a98ccc949862573907e14005ea894664c9950558426793b7fd4a80e47e",
+      "bytes": 239812,
+      "triangles": 43658,
+      "drawCalls": 12,
+      "bounds": {
+        "min": [
+          -66.69451141357422,
+          0.06499999761581421,
+          -55.85159042291344
+        ],
+        "max": [
+          66.69451141357422,
+          23.114999923855066,
+          59.34138870239258
+        ]
+      },
+      "materialCount": 8,
+      "textureCount": 0
+    }
+  },
+  "twoFiveDStyle": "plain-white-mass matching the North/South dormitory 2.5D models",
+  "twoFiveDRevision": "2026-11-12: simplified to a plain white volume at owner request"
+}

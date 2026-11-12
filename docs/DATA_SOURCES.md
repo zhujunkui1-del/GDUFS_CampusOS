@@ -697,3 +697,20 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 来源为 D1 的 `/api/public/content` 列表和 `/api/public/article?id=...` 正文接口。筛选 `readable=true`，逐篇重新读取以确认当前公开完整正文；2篇部分正文排除，并用稳定发布时间游标补入后续2篇完整文章。快照包含100个唯一文档 ID/版本，按发布时间从新到旧。每段重复保留 D1 标题、来源、发布日期、原文 URL、document ID 和 version。
 
 目的地为校内 Dify 数据集 `CampusOS 校园知识试点`（ID `6083f0fe-ea98-4048-b74d-88b6e7dce50e`），依据负责人单次 D-144 范围授权导入，使用原有经济倒排索引。Dify 文件是手动快照，不自动同步 D1，也不构成新权威源。正文图片仅保留 HTML 已有替代文本和可访问资源 URL；未执行 OCR，因此不包含无法从正文文字读取的海报信息。
+
+## 2026-11-12｜友苑建筑模型素材与边界
+
+- GIS外轮廓：`src/features/campus-map/data/campus.json` 中的 `osm-way-313039031`（友苑），OpenStreetMap way/校区既有地图快照，坐标与来源版本保持不变；公开署名仍由现有地图保留。
+- 外观参考：`CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/友苑.png`；仅用于立面、屋顶、红砖核心、窗带与圆弧大厅的视觉估计。
+- 顶视参考：负责人提供的 `C:/Users/zhuju/Downloads/友苑卫星图.png`；仅帮助理解屋顶开敞关系，不用于测绘内院或入口。
+- 校园背景：`CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/粗略/n.jpg`；只用于总体位置语境，不作为模型几何来源。
+- 参考照片保留在原文档/下载目录，没有复制进 `public/`，没有作为纹理嵌入GLB。模型输出由程序生成并采用无贴图材质。
+- 高度/层数：校园GIS无友苑高度字段；7层与约21米来自照片视觉估算，精度不得记作实测。
+
+## 2026-11-12｜师苑1—4栋模型来源
+
+- GIS地点与外环来自既有 `src/features/campus-map/data/campus.json`：师苑1栋 `osm-way-313039037`、师苑2栋 `osm-way-313039038`、师苑3栋 `osm-way-313039033`、师苑4栋 `osm-way-313039056`；沿用原坐标和ID，没有新增/改写校园地点与路网。
+- 外观参考 `CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/二饭_师苑.png`；图中包含二饭，视觉建模仅应用于GIS已有的四个师苑宿舍地点。
+- 顶视参考 `C:/Users/zhuju/Downloads/师苑卫星图.png` 用于四栋分布语境；粗图 `CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/粗略/n.jpg` 只作校园位置背景。
+- 楼层/高度：GIS没有师苑楼层或高度字段；约6层/18米为参考图估算，不作为实测或导航信息。
+- 参考图片保留在文档/下载目录，没有复制到 `public/` 或嵌入模型纹理。模型GLB为程序生成、零纹理。

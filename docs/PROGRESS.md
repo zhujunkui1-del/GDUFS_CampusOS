@@ -1630,7 +1630,6 @@ Preview最终版本8dee8bdb-84c9-4362-bf96-3900fbaed670，两域名均ready、St
 
 真实聊天已观测D1读58,847–58,862、写各15（计量不完整）；客户端23,659–40,169ms，2–4模型请求/题，总Token6,667–18,765，不当作完整计费或并发结论。CPU未采集。无真实手机GNSS/罗盘现场长轨迹验收，系统冻结浏览器时不能保证后台执行，恢复自动采集；正式域名Console独立认证503仍未处理。不使用/修改负责人账号、不发SES测试邮件、不改小红书账号、无D1迁移、不动Production。完整说明和回退见MAP_AI_RECOVERY_ACCEPTANCE_2026_11_01.md。
 
-
 ## 2026-11-01｜北苑1—6、南苑7—13共13栋宿舍批量建模
 
 负责人明确恢复此13栋的2.5D/3D制作，确认每栋7层、南北苑样式相同且占地不同，范围不含师苑/友苑。逐栋沿用原独立ID/坐标/外环，复用南苑7 V2的材质/柱梁/廊道/开间规则。南苑7 3D按原文件复制，SHA仍54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a，正式模型/原生2.5D不改；其他12栋21米为模板显示估算，7层为负责人确认。
@@ -1711,11 +1710,9 @@ Preview 部署 `01cb7fd6-632c-4889-aec2-e655207a3322`。1080×720 与 1440×900 
 
 最终交付补记：实现提交5fb61619e257126ad9edca69cea3a3548f40ecc1；Preview最终版本089e6478-8157-4cd1-9673-61525083927e。最终全量907/907（129文件），tsc与改动TS/TSX ESLint通过，完整Worker构建通过。Chrome桌面/手机视口隔离UI2项通过，Edge两视口真实对话/翻页/地图/开关保存2项通过；Edge桌面隔离截图超时保留为失败，未冒充通过。六项公网补充校验确认三次偏好版本读回、关闭时内部竞赛列表、开启时官网发布时间列表+真实网页补查、不存在文章实际检索无伪造搜索。两个域名状态与公共标题搜索均200。回滚git revert 5fb6161并仅重建部署Preview，保留D1历史。完整回执与限制见专项报告。
 
-
 ## 2026-11-04｜地图兼容性渲染里程碑，整体验收未完成
 
 实现真实WebGL绘制检测、Canvas2D业务兼容路径、渐进底图、按需模型、GPU有界恢复、模型完整性与容量门槛。按负责人实机反馈撤销按视野降档，3D平移保持完整模型。保留同期4eb9d16图标提交，无GIS/GLB/账号/D1修改。单元914/914，Chrome两视口28项及Edge桌面14项通过，tsc/改动文件lint/Worker构建通过；全仓lint未取得成功回执。独立map-test.gdufs.ccwu.cc仅部署地图，无D1/账号/AI服务，版本a9e1b15e-f476-4a05-baa0-90d44f0c8bd5。主站仍为campusos-preview，未部署本次代码。本人及部分真机完整3D正常，其他设备仍无法加载；最终子域名兼容性2通过/3初始化超时，公网稳定性不通过。负责人暂缓提供失败原始提示，继续P0排查。详细基线、实机记录、真实失败和回退见MAP_STABILITY_2026_11_04.md。
-
 
 ## 2026-11-04｜按后续授权同步地图修复至主站
 
@@ -1728,6 +1725,7 @@ Preview 部署 `01cb7fd6-632c-4889-aec2-e655207a3322`。1080×720 与 1440×900 
 新增 POST /api/dify/external-knowledge/retrieval 本地适配器：固定两种外部知识ID，复用现有公开 searchContent，沿用公开版本/来源权限，限制 Top K≤4；返回真实证据类型、原文链接及可选活动结构，并使用独立 Bearer Secret 鉴权。请求域仅允许 ACCOUNT_ORIGIN 与 ACCOUNT_ALLOWED_ORIGINS 中的精确 HTTPS 主机，不接受其它 Host。适配器、API Secret、Dify外部API与知识库均尚未部署/创建；校内 Dify 出站访问 Preview 仍未验证。
 
 Preview 和 gdufs.ccwu.cc 共用同一 Worker；本轮未部署、未设置 Cloudflare Secret、未保存 Dify API Key、未调用模型/Embedding、未上传文章全文或访问私人数据。未运行自动化测试；Windows 默认 TEMP 写入被拒后，改用项目忽略的 .tmp 临时目录执行 npm run build:worker 成功，构建路由列表包含 /api/dify/external-knowledge/retrieval。尚未部署或配置 Dify API Key，不能记为功能可用。计划与实测 UI 回执见 docs/DIFY_CAMPUS_AGENT_PLAN_2026_11_04.md。
+
 ## 2026-11-05｜正式 Worker 分离预备
 
 Cloudflare 只读核查确认：gdufs.ccwu.cc 与 gdufs.zhiyuapp.site 当前均绑定 campusos-preview；账户中没有 campusos-product，也没有 campusos-production D1。CampusOS 当前 D1 为 campusos-preview，UUID 18299abc-b38b-4494-8d12-8ab4d482c304，约193.79 MB；该库承载现有账号与 AI 历史。本轮按负责人选择先拆 Worker、共用该 D1，未复制数据库。
@@ -1735,6 +1733,7 @@ Cloudflare 只读核查确认：gdufs.ccwu.cc 与 gdufs.zhiyuapp.site 当前均�
 wrangler.jsonc 的 production 环境已本地准备为 campusos-product，包含 gdufs.ccwu.cc 目标域名、ACCOUNT_ORIGIN、现有 D1、Cloud Search、Workers AI 与 Vectorize 绑定。Preview Cron 保持唯一调度来源，产品 Worker不加 Cron，避免同库双重调度。没有创建 Worker、部署、移除/添加路由或修改 Cloudflare 数据。
 
 Preview Worker Settings 显示多项账号、Console、SES、Agent、模型和外部搜索 Secret，具体值不可读取。已检查本地 .env.local 与 anykey.md，未确认存在完整的 Worker Secret 副本；切换前须取得完整安全配置源并保留账号/Console会话能力。本轮未运行构建/测试，未修改 D1、Secrets 或正式域名。域名仍在 campusos-preview。
+
 ## 2026-11-05｜取消正式 Worker 拆分，恢复 Dify 工作路径
 
 负责人取消 campusos-product 迁移并要求继续校内 Dify 复刻。wrangler.jsonc 已恢复为拆分前状态；Cloudflare 未创建新 Worker、未改域名路由、未迁移 D1/Secrets。gdufs.ccwu.cc 仍由 campusos-preview 提供服务。D-141 中的拆分决策被本日 D-142 覆盖。
@@ -1775,7 +1774,6 @@ Dify 召回实测：查询「校园网怎么开通？」首条返回《使用指
 
 检索实测：「观影活动 2026.11.6」召回目标文章和完整正确原文 URL，但只排 Top 3 第三位，另两条不相关；记录为索引可用、相关性不足。Chatflow 仍未发布，`DeepSeek-V4-Flash-0731` 404 `Model not found` 保持阻塞；本轮未修改 D1、Production 或模型设置。
 
-
 ## 2026-11-06｜共享 Preview 后台精确域名白名单
 
 修复原因：Console `admin_key/admin_password` 模式此前只接受单一 `CONSOLE_ORIGIN`，而 gdufs.ccwu.cc 与 gdufs.zhiyuapp.site 实际共用 campusos-preview，域名不同导致后台返回“管理员登录尚未配置”。新增服务端 `CONSOLE_ALLOWED_ORIGINS` 精确HTTPS白名单，保留原 `CONSOLE_ORIGIN`、管理员密码模式、邮箱名单、CSRF、会话签名及D1权限检查；未更换或新建任何密码、Session Secret、Salt，也未改D1。Preview列表当前包含两个Cloudflare域名及待接入的campusos.zhiyuapp.site。
@@ -1800,7 +1798,6 @@ Dify 文档要求在 API Endpoint 填基础地址，由 Dify 追加 `/retrieval`
 
 补充验证：使用临时文件中的新 Bearer 调用 `gdufs.ccwu.cc` 的知识查询 `campusos-public-knowledge-v1`，API 返回 HTTP 200/4条记录；查询“校园网怎么开通”的前三个标题均未命中校园网指南，显示当前 D1 检索相关性不佳。该请求来自本机而非 Dify 容器。API Key 仅保留在用户TEMP单值文件，未写入 Git；用户准备手动添加到 Dify。
 
-
 ## 2026-11-06｜「深度思考」Dify Chatflow 项目集成准备
 
 按 D-146，在现有全局助理输入区新增会话级「深度思考」开关和服务端分支。启用后，服务端沿用 `contentIntent` 与 `searchContent` 从 D1 查询至多4条当前公开证据，将编号、标题、来源、发布时间、原文 URL 和正文摘录放入当前请求；Dify 只收到本轮上下文，历史 Dify conversation ID 与同一个 CampusOS conversation owner 绑定在现有 `conversation_messages` 系统状态中。Dify 结果经现有 SSE/历史消息保存，引用编号只显示对应的 D1 来源卡片。Dify调用采用固定校内 `/v1/chat-messages`，API Key 使用服务器端 `DIFY_APP_API_KEY`，不进入浏览器。智能搜索与深度思考互斥；显式地图/导航意图继续原有地图 Agent。
@@ -1823,8 +1820,6 @@ Dify 文档要求在 API Endpoint 填基础地址，由 Dify 追加 `/retrieval`
 
 同一时段对D1外部知识接口的精确标题只读查询返回真实文章和正确URL；自然语言“校园网怎么开通”仍返回4条无关文章。Dify外部知识库连接表单没有保存，因此Dify没有直接出站读取D1；当前系统设计为CampusOS先查D1、再把本轮证据交给Dify。用户明确要求保留现有密钥并停止轮换；Dify中两把App Key保留，Cloudflare Secret当前含其中一把，值不记录在仓库或报告。
 
-
-
 ## 2026-11-06｜深度思考最终运行状态
 
 代码经 typecheck、修改文件 ESLint、4个相关测试文件共37/37通过后部署至共享 Worker，最终版本 b5f6f81d-a4ca-4c0b-88eb-a58ac25740e8；DIFY_APP_API_KEY Secret 保留在 Worker，Secret变更版本 68ec12eb-f731-46c5-b250-b530712c1e4e。gdufs.ccwu.cc 与 Preview 根页已核验HTTP200。
@@ -1832,7 +1827,6 @@ Dify 文档要求在 API Endpoint 填基础地址，由 Dify 追加 `/retrieval`
 真实独立游客请求显示 CampusOS 可完成 D1 检索，但 Dify /v1/chat-messages 返回 HTTP200 text/html 而不是 SSE/JSON，Dify日志没有相应运行。预览阶段 Dify 使用手动提供的真实 D1 公共摘录答对日期并引用[1]，证明该模型能处理显式证据；不证明 Worker→Dify API 可用，也不证明 Dify 直接访问 D1。
 
 为隐藏不可用的开关，配置 DIFY_CHAT_ENABLED=false；独立 /api/agent/session 回执 deepThinkingAvailable=false。Chatflow 已发布，API Key 两把保留按负责人要求不再轮换；Dify外部知识库 API 仍未保存。没有导入 articles_full，也没有 RSS 同步。
-
 
 ## 2026-11-06｜深度思考最终验收状态
 
@@ -1951,6 +1945,7 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 - 「信息学院有没有院运会」→ 「原定2026年11月7日在假草场举办，设置了径赛、田赛多个项目…」，引用来源为「信息科学与技术学院2026院运会报名通知」。
 
 **过程中发现并修复的一个新缺陷**：为枚举型查询把 `read-plan` 的读取上限提到 5 时，`search_campus_knowledge` 的 schema 上限是 4（`src/domain/retrieval/skills.ts:10`），整轮调用在零耗时内被 schema 拒绝，线上回答退化成「这次查询未完成，请重新提问。」表现为 `tool.finished` 的 `durationMs: 0, ok: false`。现已改为按工具名分别取上限（`PAGE_SIZE`），并新增 `tests/unit/read-plan-limits.test.ts`（5 项）断言每个计划读入都能通过它自己的 schema。
+
 ## 2026-11-07｜向量索引、OCR 与 15 个知识库的三套对比
 
 **负责人授权**：「启动 embedding，另起一组新库存量对比（旧库不动，可随时退回）。使用 OCR。」据此解除 D-143/D-144 的免 Embedding 限制，**仅限新建库**，既有库不满。
@@ -1962,16 +1957,17 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 3. **三套知识库**：`economy` 5 个（1164 篇）、`hq` 5 个（1164）、`ocr+hq` 5 个（1225），共 **15 个**。原「CampusOS 校园知识试点」8 篇未动。
 4. **检索对比**（hit-testing，top_k=5，绕开 LLM）：
 
-| 后端 | 标题派生（47） | 自然问法（19） | OCR-only（40） |
-|---|---|---|---|
-| `economy` | 0.851 | 0.579 | 0.000 |
-| `hq` | **1.000** | **0.684** | 0.000 |
-| `ocr+hq` | **1.000** | **0.684** | **1.000** |
+| 后端      | 标题派生（47） | 自然问法（19） | OCR-only（40） |
+| --------- | -------------- | -------------- | -------------- |
+| `economy` | 0.851          | 0.579          | 0.000          |
+| `hq`      | **1.000**      | **0.684**      | 0.000          |
+| `ocr+hq`  | **1.000**      | **0.684**      | **1.000**      |
 
 5. **关掉思考**：`completion_params.chat_template_kwargs = {"enable_thinking": false}` 是唯一有效写法；其余四种写法无效。修正后 v3 端到端 **47/47 成功、47/47 带引用、47/47 命中金标**，中位 37.4 s、P90 103.9 s。
 6. **交付版应用**：`CampusOS 问答（OCR+向量）`（`15dce9e8-ab4d-4375-8630-2b1a4c343220`，site `3a2B9Dxoh5rKh5yv`）已发布。生产 `39945f9b` **未改动**。
 
 **尚未完成**：P90 103.9 s vs 生产基线 32.0 s，仍阻塞发布；自然问法 recall@5 停在 0.684，需 rerank；`bge-reranker-v2-m3` 已注册未启用；未做线上灰度。
+
 ## 2026-11-07｜Dify 智能体离线交付包（评委打不开网站时的兜底）
 
 **性质**：负责人要求的兜底方案，不是生产变更。Dify 上的应用与知识库**未改动**，只做只读导出与本地打包。
@@ -1987,7 +1983,6 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **踩过的坑**：文件名用文章中文标题会跨平台出问题，改用 `article_id.md`；源文件按 `category` 分目录、而 Dify 库按 `bucket` 分，两者不等，必须经 `kb_import_state_hqocr.json` 映射。
 
 **遗留**：打包内 README 的实测数据表最初是两列（缺 ocr+hq），已就地更正为三列并补上 OCR-only 集端到端数字。
-
 
 ## 2026-11-08｜路线类查询：归一化、动词与地点别名
 
@@ -2014,14 +2009,14 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 
 **线上复核**（preview Worker，提交 `846b9f3`）：
 
-| 提问 | 结果 |
-|---|---|
-| 从南苑七栋到假草场 | `plan_route ok (27ms)` → `control_map ok` |
-| 怎么从南苑七栋前往广外假草场 | `plan_route ok (34ms)` → `control_map ok` |
+| 提问                            | 结果                                      |
+| ------------------------------- | ----------------------------------------- |
+| 从南苑七栋到假草场              | `plan_route ok (27ms)` → `control_map ok` |
+| 怎么从南苑七栋前往广外假草场    | `plan_route ok (34ms)` → `control_map ok` |
 | 从 南苑七栋 到 假草场（带空格） | `plan_route ok (36ms)` → `control_map ok` |
-| 从南苑七栋到文采园 | `plan_route ok (30ms)` → `control_map ok` |
-| 请问怎么去大学城校区第一饭堂 | 答「就是文采园（一饭）」，并追问起点 |
-| 三饭怎么走 | 答「你要从哪出发呀？」 |
+| 从南苑七栋到文采园              | `plan_route ok (30ms)` → `control_map ok` |
+| 请问怎么去大学城校区第一饭堂    | 答「就是文采园（一饭）」，并追问起点      |
+| 三饭怎么走                      | 答「你要从哪出发呀？」                    |
 
 前四例在无头浏览器里最终报 `TIMEOUT「地图操作等待超时，请重试。」`，原因是 `control_map` 之后等待页面回执，而无头浏览器不会真的执行地图动作；真实浏览器不受影响。此前同样四例在 `plan_route` 阶段就以 `INVALID_ARGUMENT` 失败，现在已推进到地图动作阶段。
 
@@ -2044,6 +2039,7 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **本轮新打通的站点**：商学院、法学院、土地法制研究院、纪检监察研究院、新闻与传播学院、迎新网、校友事务与合作发展处、教学质量监测与评估中心、国际合作与可持续发展研究院、国家安全研究院、校医院、体育部等。定点验证：GDUFS-SRC-0007 定时任务（`scheduled:GDUFS-SRC-0007:…`）found=32、body=25，落库 30 篇、最新 2026-11-06；GDUFS-SRC-0025 found=16、最新 2026-11-04；GDUFS-SRC-0069 found=3、最新 2026-10-26。
 
 **不可采的客观原因**：
+
 - Cloudflare 出口 IP 被 WebberRASP 拦截：`bwc`、`cwc`、`fzgh`、`gwmzb` 这类 Boda WCM + query-JSP（`.jsp?urltype=…&wbnewsid=…`）详情页。用自建探针 Worker 实测，出口 IP 访问详情页返回固定 ~847 字节的「您没有访问当前栏目的权限」；同站栏目页、列表页正常。UA / Referer / Cookie / Accept / URL 变体均无效，且这些站点的 `/info/NNN/NNN.htm` 静态别名全部 404。
 - Cloudflare error 1016（源站 DNS 不存在）：科研部、纪检监察室。
 - TLS/证书或源站不可达：英文网（证书链不被信任）、建校六十周年专题网。
@@ -2166,6 +2162,7 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 **根因二：正文提取为空时整块分流被跳过。** `article-text.ts` 的 `bodyAvailable` 是「提取出的纯文本非空」，不是「页面有没有正文」。公众号式的图文帖、节日问候、只有图片的通告，HTML 有几千到十几万字符，纯文本却不到 50 字，于是 `bodyAvailable=false`，`reference` 与 `timely` 都算不出来，直接落 unknown。
 
 **改动**（`src/lib/ingestion/article-intent.ts`）：
+
 1. 新增残余兜底：标题本身是招生简章/实施细则/工作方案这类文书族，或正文里有两个以上「申请条件」「办理流程」这类小标题，判知识；否则只要有实质标题和真实正文就判雷达。软文、图文帖、节日问候走雷达的 `campus_notice`。
 2. 取消「雷达无分类就降级」。没有分类时直接归 `campus_notice`，不再退回 unknown。
 3. 制度文件正则补一条守卫：标题里出现「学习」「传达」「领会」「贯彻」「落实」「重温」再接条例名，说明这是学习某条例的新闻稿，不是条例本身。
@@ -2250,12 +2247,12 @@ Cloudflare 当时可见的 20:58:16 记录是来自本机 Chrome 的 GET，路�
 
 同一批 50 题，在「跨段落规则 + 虚词清洗 + 读 5 篇」三项改动之后重跑：
 
-| 指标 | 第四轮 | 第五轮 |
-|---|---|---|
-| 请求失败 | 0 | 0 |
-| 回答短于 120 字 | 22 | **16** |
-| `no_evidence` 兜底 | 18 | **12** |
-| 中位耗时 | 18.4s | 20.1s |
+| 指标               | 第四轮 | 第五轮 |
+| ------------------ | ------ | ------ |
+| 请求失败           | 0      | 0      |
+| 回答短于 120 字    | 22     | **16** |
+| `no_evidence` 兜底 | 18     | **12** |
+| 中位耗时           | 18.4s  | 20.1s  |
 
 明显变好的：「校历在哪看得到，什么时候放假？」69→611 字、「新生第一周都有什么安排？」58→649 字、「期末考试安排在哪里公布？」→701 字、「绩点怎么算的」58→379 字、「奖学金申请条件是什么」69→744 字、「宿舍门禁熄灯是几点？」54→176 字、「缓考请假要走什么手续？」58→170 字。
 
@@ -2458,11 +2455,11 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 
 上一轮把 AI 预算从回顾稿挪到了未来活动，但日历数字没变。原因不在预算，而在**抽取器**——把线上 `calendarizeArticle()` 离线对着真实语料重跑，结果是过去两年「标题或正文明确写了活动日期」的已发布稿件，**一条都没被抽出来**：
 
-| 语料 | 修复前 accepted | 修复后 accepted |
-|---|---|---|
-| 含「X月X日」+ 非 accepted 的 881 篇 | 0 | 85 |
-| 近 30 天全部非 accepted 的 1179 篇 | 0 | 167 |
-| 标题含「宣讲」的 96 篇 | 5 | 87 |
+| 语料                                | 修复前 accepted | 修复后 accepted |
+| ----------------------------------- | --------------- | --------------- |
+| 含「X月X日」+ 非 accepted 的 881 篇 | 0               | 85              |
+| 近 30 天全部非 accepted 的 1179 篇  | 0               | 167             |
+| 标题含「宣讲」的 96 篇              | 5               | 87              |
 
 四个缺陷，都在 `src/lib/ingestion/calendar-extraction.ts`：
 
@@ -2522,12 +2519,12 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 
 线上实测：
 
-| 文档 | 修复前 | 修复后 |
-|---|---|---|
-| `content-88f4b97d…`（三二分段考试） | 12 张卡，12/3 ×10、12/4 ×2、12/5 ×0 | 3 张卡，12/3、12/4、12/5 各一 |
-| `content-f047562a…`（数学学院期末考试） | 3 张卡，6/23 ×2 | 2 张卡，6/23、6/26 |
-| `content-8ae11df7…`（云山论坛分论坛） | 7 张卡 | **7 张卡不变**（有地点列） |
-| `content-48ad8121…`（培训日程） | 6 张卡 | **6 张卡不变**（有地点列） |
+| 文档                                    | 修复前                              | 修复后                        |
+| --------------------------------------- | ----------------------------------- | ----------------------------- |
+| `content-88f4b97d…`（三二分段考试）     | 12 张卡，12/3 ×10、12/4 ×2、12/5 ×0 | 3 张卡，12/3、12/4、12/5 各一 |
+| `content-f047562a…`（数学学院期末考试） | 3 张卡，6/23 ×2                     | 2 张卡，6/23、6/26            |
+| `content-8ae11df7…`（云山论坛分论坛）   | 7 张卡                              | **7 张卡不变**（有地点列）    |
+| `content-48ad8121…`（培训日程）         | 6 张卡                              | **6 张卡不变**（有地点列）    |
 
 存量全量重算：6035 篇已发布文档中 8 篇投影变化，`calendar_eligible` **746 → 773**，未来事件 **43 → 43**（这一轮只影响多日长表，不改变未来的供给）。线上 `/api/public/activities?day=2026-12-03|04|05` 现在是各 **1 / 1 / 4**（12/5 另有别篇文章）。
 
@@ -2557,3 +2554,31 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 验证：`tests/unit/calendar-extraction.test.ts`「reads the clock that sits in its own column of a timetable」；`tests/unit/calendar-query.test.ts`「shows a notice without hours once per day, and keeps stated sessions apart」；`npx vitest run tests/unit` 156 文件 1103 用例全绿；`tsc --noEmit` 0 error。
 
 已知边界：折叠的判据是「该文档有没有任何一个带时刻的活动」，不是「这一行有没有时刻」。一篇文档里若一部分行有时刻、一部分没有，整篇仍按场次拆分——这是有意的保守选择，宁可多一张卡，也不把真实的逐场活动合并掉。
+
+## 2026-11-12｜首页公开访问量面板
+
+按负责人给的 PKU Know 首页访问量弹层参考和后台批注，账号头像固定到首页右上角，带柱图图标的访问量入口固定在地图工具上方。弹层复用后台 `TrafficPanel` 与共享CSS，显示真实 D1 PV 的今日、近7天、近30天、累计数据及7/30天趋势；刷新按钮与趋势标题并排，位置在7/30天控件左侧；移除首页弹层底部PV说明。窄屏使用底部弹层。指标仍是页面浏览量，不是去重访客。
+
+后台统计 API 需要管理员认证，故新增只读 `/api/public/traffic`，仅返回既有聚合字段，不公开访问批次或身份信息，并接入 Next 与 OpenNext Preview 路由。统计来源仍为 `site_visit_days` / `site_visit_settings`，没有新增埋点或改变计数规则。
+
+修订验收：类型检查、相关文件 ESLint `--max-warnings=0`、Preview生产构建通过；真实浏览器在608px窄屏确认标题背景随内容收缩、头像与搜索栏不再碰撞。首页访问量入口仅显示图标；关闭按钮为44px圆角样式；访问量面板与后台7/30天控件、指标卡片和趋势图样式统一。最终部署至 `https://campusos-preview.zhujunkui1.workers.dev`，Worker版本 `06f9f15d-b4f8-4d59-955e-bb9f2021be8e`，无D1迁移或Secret变更；访问量接口返回真实汇总及趋势。未运行测试套件；未发布Production。
+
+## 2026-11-12｜友苑2.5D/3D模型接入校园地图
+
+依据负责人提供的友苑立面、卫星顶视与校园粗图，新增 `scripts/build-youyuan-model.mjs` 与 `docs/model-previews/youyuan-v1/`。模型以 `osm-way-313039031` 的原始22个唯一顶点为局部米制外轮廓，3D有七层视觉估计、红砖竖向核心、窗带、阳台栏线、平屋顶设备块和浅圆弧大厅提示；没有修改 `campus.json`，没有新增GIS内环、入口或翼楼ID。楼层约7层、主体约21米均为照片估算，不能作为实测高度。
+
+负责人随后指出2.5D应与南苑、北苑一样保持纯白模。用新增 `scripts/build-youyuan-2-5d.mjs` 将2.5D重制为单一白色外轮廓体块与浅灰屋顶帽：168三角面/18,872字节，2个材质/2个绘制调用；不含窗格、红砖、栏杆或大厅细节。原3D GLB SHA256 `5013c5a98ccc949862573907e14005ea894664c9950558426793b7fd4a80e47e`、239,812字节逐字节保持，构建脚本也会前后校验该哈希。`building-model-catalog.json` 升为 `campus-building-models-2026-11-12.2`，显示建筑数仍为29。资源预算脚本通过：62个模型资源校验；2.5D总量19,309三角面/约1.13MB，3D总量252,894三角面/约4.38MB。
+
+运行/验收：`npm run build` 通过；本地 Chrome 地图加载友苑2.5D和3D GLB均为HTTP 200，2.5D活动模型30/30、3D活动模型29/29，3D驻留59个，失败0；平移、旋转后模型未退回白模。多角度体积检查 `degenerate=false`。浏览器截图及回执见 `output/playwright/youyuan-model-2026-11-12/`。未新增或运行测试套件。
+
+边界：提供的照片与地图视角/背景不同，Tier-1像素指标不具备相机对齐条件；失败值与人工视觉复核和多角度检查一并留档，未按其像素IoU扭曲模型。内院精确边界、背面、入口方位、真实楼层高度仍未测量，见 `docs/model-previews/youyuan-v1/visual-review.md`。
+
+## 2026-11-12｜师苑1—4栋2.5D/3D模型
+
+按负责人的建模请求，为师苑1—4栋分别生成独立模型，沿用校园GIS四个原始外环和地点ID：1栋 `osm-way-313039037`、2栋 `osm-way-313039038`、3栋 `osm-way-313039033`、4栋 `osm-way-313039056`。相邻二饭只作为参考图中的语境，没有被纳入宿舍模型。
+
+2.5D为四栋纯白体块与浅色屋顶，分别24/24/24/56三角面。3D按照片视觉估作6层、约18米，加入灰蓝窗带、暖橙/红色竖向构架、阳台栏线和简化平屋顶；四栋合计40,160三角面/218,052字节，零纹理。楼层和高度未写回GIS。
+
+验证：`npm run build` 通过；地图模型预算核验70个资源通过，总3D 293,054三角面/约4.60MB，未超过目录面数预算。浏览器实际加载师苑四栋八个GLB均为HTTP 200；2.5D活动模型34/34、3D活动模型33/33，驻留67、pending 0、失败0；平移后3D驻留数不变。截图和回执在 `output/playwright/shiyuan-model-2026-11-12/`。未新增或运行测试套件。
+
+边界：师苑GIS无高度/层数字段，6层和18米是照片估算；卫星图只用于理解四栋分布，不创建内院/入口或新的父级GIS几何。参考图含二饭，未据此自动建模饭堂。

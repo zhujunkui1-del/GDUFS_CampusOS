@@ -1,0 +1,13 @@
+{
+  "path": "D:\\tlydcg\\Codex_work\\广外AI应用大赛\\CampusOS_Codex_完整设计文档_v2\\assets\\source_maps\\广外地图\\友苑.png",
+  "type": "png",
+  "bytes": 1104516,
+  "width": 1271,
+  "height": 429,
+  "aspectRatio": 2.9627039627039626,
+  "technicalSuitability": "conditional",
+  "warnings": [
+    "low resolution; small geometry/material details may be unreliable"
+  ],
+  "note": "This is only technical image probing. Semantic object suitability still requires visual inspection."
+}

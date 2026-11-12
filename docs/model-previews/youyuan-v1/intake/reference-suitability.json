@@ -1,0 +1,20 @@
+{
+  "verdict": "conditional",
+  "decision": "Proceed with the requested external 2.5D/3D reconstruction. The facade photograph and satellite view show the overall compound footprint and repeated residential elevations, but not survey dimensions or every concealed facade.",
+  "sourceImage": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/友苑.png",
+  "supportingPlan": "C:/Users/zhuju/Downloads/友苑卫星图.png",
+  "acceptedLimits": [
+    "Seven facade bands and approximately 21 m total height are visual estimates, not verified OSM building levels or measured height.",
+    "Satellite imagery informs display-only court landscaping; it does not alter GIS polygons, interior routes, or entrance facts.",
+    "The model uses the existing osm-way-313039031 footprint as one connected compound and does not invent subdivided place IDs."
+  ],
+  "imageAnalysis": "image-analysis.md",
+  "technicalProbes": [
+    "facade-probe.json",
+    "satellite-probe.json"
+  ],
+  "admissionReports": [
+    "facade-admission.json",
+    "satellite-admission.json"
+  ]
+}

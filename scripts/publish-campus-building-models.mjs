@@ -48,7 +48,16 @@ async function asset(root, a, key, mode, preservedUrl) {
   if (preservedUrl) {
     if (sha(await readFile(`public${preservedUrl}`)) !== hash)
       throw new Error(`Preserved asset mismatch ${key}`);
-  } else await copyFile(file, `${out}/${name}`);
+  } else {
+    const target = `${out}/${name}`;
+    let existing;
+    try {
+      existing = await readFile(target);
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+    if (!existing || sha(existing) !== hash) await copyFile(file, target);
+  }
   return {
     url: preservedUrl || `/models/campus/${name}`,
     sha256: hash,
@@ -226,6 +235,51 @@ await collectCourts(teachingRoot, "teaching-a-d-2.5d.geojson");
     });
   }
 }
+{
+  const root = "docs/model-previews/youyuan-v1",
+    m = await read(`${root}/manifest.json`),
+    p = campus.places.find((place) => place.id === m.placeId);
+  if (!p || p.name !== "友苑") throw new Error("Youyuan source place");
+  checkSource(m.placeId, m.sourceGeometryWgs84);
+  if (m.sourceFootprintSha256 !== sha(JSON.stringify(p.geometry)))
+    throw new Error("Youyuan footprint hash mismatch");
+  const assets = Object.fromEntries(
+    ["2.5d", "3d"].map((mode) => [
+      mode,
+      { ...m.assets[mode], url: `./${m.assets[mode].file}` },
+    ]),
+  );
+  await add("youyuan", p.name, p.id, root, m, assets, [p.id]);
+}
+{
+  const root = "docs/model-previews/shiyuan-1-4-v1",
+    m = await read(`${root}/manifest.json`);
+  if (m.sourceMapVersion !== campus.mapVersion)
+    throw new Error("Shiyuan map version");
+  if (!Array.isArray(m.buildings) || m.buildings.length !== 4)
+    throw new Error("Expected four Shiyuan buildings");
+  for (const building of m.buildings) {
+    checkSource(building.placeId, building.sourceGeometryWgs84);
+    const assets = Object.fromEntries(
+      ["2.5d", "3d"].map((mode) => [
+        mode,
+        {
+          ...building.assets[mode],
+          url: `./${building.assets[mode].file}`,
+        },
+      ]),
+    );
+    await add(
+      building.key,
+      building.name,
+      building.placeId,
+      root,
+      { ...m, origin: building.origin, heightAccuracy: building.heightAccuracy },
+      assets,
+      [building.placeId],
+    );
+  }
+}
 // These two visual links were already part of the approved A-D draft. Components omit them.
 globalThis.FileReader = class {
   readAsArrayBuffer(blob) {
@@ -337,18 +391,19 @@ const courtyardData =
   courtyardName = `courtyards-${sha(courtyardData).slice(0, 12)}.geojson`;
 await writeFile(`${out}/${courtyardName}`, courtyardData);
 const catalog = {
-  version: "campus-building-models-2026-11-01.2",
+  version: "campus-building-models-2026-11-12.3",
   mapVersion: campus.mapVersion,
   approvedForMap: true,
-  ownerApproval: "2026-11-01：现在，把已经做好的这些2.5d/3d模型，放入网页中",
+  ownerApproval:
+    "2026-11-01：将已完成的2.5D/3D模型放入网页；2026-11-12：新增友苑模型并统一其2.5D纯白模；新增师苑1-4栋2.5D/3D模型",
   ownerRenderingCorrection:
-    "2026-11-02：3D不随距离/中心位置退回白模，平移保留模型；统一南苑7栋与其他宿舍的2.5D光照",
+    "2026-11-02：3D不随距离/中心位置退回白模，平移保留模型；统一南苑7栋与其他宿舍的2.5D光照。2026-11-12：友苑2.5D为纯白体块，原3D资产保持不变；师苑1-4栋为独立可选模型，六层为照片估算",
   referenceOrigin: [113.392, 23.066],
   legacySouth7Preserved: true,
   renderingPolicy: "mode-faithful-resident-models",
   south7VolumeRenderer: "shared",
-  displayBuildingCount: 28,
-  newBuildingCount: 27,
+  displayBuildingCount: 33,
+  newBuildingCount: 32,
   visualConnectorCount: 1,
   courtyardsUrl: `/models/campus/${courtyardName}`,
   entries,
@@ -359,7 +414,7 @@ await writeFile(
 );
 await writeFile(
   `${out}/SOURCE.md`,
-  "# CampusOS building models\n\nOwner authorized integration on 2026-11-01 and corrected visibility/rendering on 2026-11-02. Original procedural geometry; no reference photographs, image textures, supplier meshes or external buffer resources. Footprints © OpenStreetMap contributors, ODbL-1.0. Source/approval/hash/origins are recorded in src/features/campus-map/data/building-model-catalog.json and docs/model-previews.\n\nMetric heights and photo-informed courtyard/facade details remain visual approximations, not surveyed GIS or indoor/navigation facts. Original campus map and walking network are unchanged. South-7 keeps its approved public V2 3D file; its unchanged 21-metre footprint/courtyard now uses the same 2.5D material/light path as the other dormitories, with its original native volume retained as a failure fallback. Completed 3D models remain detailed across zoom and pan. A-D uses V2 with the corrected B clock tower. Shared-origin components are already positioned in their GLBs.\n",
+  "# CampusOS building models\n\nOwner authorized integration on 2026-11-01 and corrected visibility/rendering on 2026-11-02. Youyuan and Shiyuan dormitory GLBs were added on 2026-11-12. Youyuan 2.5D is the same plain white mass style as the North/South dormitories; its existing 3D GLB SHA256 is preserved. Shiyuan 1–4 are independent entries with exact source outlines; six stories/18 metres and facade details are visual estimates. No reference photographs, image textures, supplier meshes or external buffer resources are published. Footprints © OpenStreetMap contributors, ODbL-1.0. Source/approval/hash/origins are recorded in src/features/campus-map/data/building-model-catalog.json and docs/model-previews.\n\nMetric heights and photo-informed courtyard/facade details remain visual approximations, not surveyed GIS or indoor/navigation facts. Original campus map and walking network are unchanged. South-7 keeps its approved public V2 3D file; its unchanged 21-metre footprint/courtyard uses the shared 2.5D material/light path with its original native volume as a failure fallback. Completed 3D models remain detailed across zoom and pan. A-D uses V2 with the corrected B clock tower. Shared-origin components are positioned in their GLBs.\n",
 );
 console.log(
   JSON.stringify(
