@@ -63,11 +63,20 @@ export function verifiedQueryUnderstanding(raw: unknown, question: string) {
       [plan.subject, ...plan.entities, ...plan.constraints].flatMap(fragments),
     ),
   ];
-  if (!anchors.length) throw new Error("Invalid query plan");
+  // A planner that copies the whole question into subject has not separated the
+  // subject from the ask. Quoting it verbatim searches for a sentence no article
+  // contains ("转专业需要什么条件,什么时候可以申请"), so the local plan — which
+  // drops the question words — is the better fallback.
+  const usable = anchors.filter(
+    (term) =>
+      term.normalize("NFKC").replace(/\s+/g, "") !== normalized ||
+      normalized.length < 10,
+  );
+  if (!usable.length) throw new Error("Invalid query plan");
   return {
     ...plan,
     query: [
-      ...anchors.map((term) => `“${term.replace(/[“”]/g, "")}”`),
+      ...usable.map((term) => `“${term.replace(/[“”]/g, "")}”`),
       ...plan.constraints,
       ...years,
     ]

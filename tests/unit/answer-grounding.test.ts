@@ -62,8 +62,10 @@ it("uses the fixed no-evidence structure with attempted keywords and a channel",
     false,
     ["一饭 推荐", "文采园"],
   );
-  expect(text).toContain("目前没有检索到能回答这个问题的正文信息");
-  expect(text).toContain("已尝试的关键词：一饭 推荐、文采园");
+  expect(text).toContain("没有检索到能回答这个问题的正文信息");
+  expect(text).toContain("（查过：一饭 推荐、文采园）");
+  // "This site has not collected it" must never become "the school has none".
+  expect(text).toContain("不代表学校没有相关规定");
   expect(text).toContain("建议通过");
   expect(text).not.toContain("大概");
 });
@@ -85,7 +87,7 @@ it("does not turn a login failure into a guess", () => {
     durationMs: 0,
   });
   expect(evidenceFallback([], result, externalPolicy("一饭好吃吗"))).toContain(
-    "目前没有检索到",
+    "没有检索到",
   );
   expect(evidenceFallback([], result, externalPolicy("一饭好吃吗"))).toContain(
     "部分外部查询未完成",

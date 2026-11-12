@@ -94,7 +94,10 @@ export function evidenceFallback(
       warning.startsWith("已排除"),
     );
     // Fixed no-evidence structure: no guess, no "大概/应该", no title-only answer.
-    return `${playful ? "本鱼" : ""}目前没有检索到能回答这个问题的正文信息。已尝试的关键词：${tried}。建议通过${channel}核实。${
+    // "This site has not collected it" is not "the school has no such rule", so
+    // the answer says which of the two it knows, and never both.
+    const looked = tried && tried !== "无" ? `（查过：${tried}）` : "";
+    return `${playful ? "本鱼" : ""}翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息${looked}。这不代表学校没有相关规定，只是本站还没收录到——建议通过${channel}核实。${
       excludedNote ? `（${excludedNote}）` : ""
     }${unavailable ? "（部分外部查询未完成，不代表信息不存在。）" : ""}`;
   }

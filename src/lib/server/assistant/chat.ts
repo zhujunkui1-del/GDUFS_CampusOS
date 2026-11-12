@@ -996,9 +996,9 @@ export async function chatResponse(request: Request) {
             answerSourceCount() > 0 &&
             !/\[\d+\]/.test(normalized)
           )
-            return "每项来自本轮资料的具体事实都必须标对应[n]引用；不支持的细节删除，不输出无引用的资料概述。";
+            return "每项来自本轮资料的具体事实都必须标对应编号引用（如 [1]）；不支持的细节删除，不输出无引用的资料概述。";
           if (content.active && /来源\s*[:：]|https?:\/\//.test(normalized))
-            return "正文不要输出标题、URL 或“来源：”清单；关键事实只用 [n] 标注，具体来源由界面下方展示。";
+            return "正文不要输出标题、URL 或“来源：”清单；关键事实只用 [1]、[2] 这样的编号标注，具体来源由界面下方展示。";
           if (!mapActionRequested && claimsMapAction(text))
             return {
               message:

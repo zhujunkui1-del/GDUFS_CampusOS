@@ -1,5 +1,8 @@
 import { expect, it } from "vitest";
 import { contentIntent } from "@/lib/server/assistant/content-intent";
+import { titleLike } from "@/lib/server/assistant/intent";
+import { navigationIntent } from "@/domain/agent/navigation-intent";
+import { searchCampusPlaces as scanPlaces } from "@/features/campus-map/data/campus";
 import { conversationAct } from "@/lib/server/assistant/conversation-act";
 import {
   contentInstructions,
@@ -192,4 +195,57 @@ it("routes recent culture and sports to the radar tag with five newest", () => {
     sort: "published_desc",
     limit: 5,
   });
+});
+
+it("answers a small-talk question about the assistant without a campus search", () => {
+  // The second question set included "你好呀，你今天心情怎么样", which used to
+  // be treated as a campus question and searched the article corpus.
+  const intent = contentIntent("你好呀，你今天心情怎么样");
+  expect(conversationAct("你好呀，你今天心情怎么样")).toBe("chitchat");
+  expect(intent.active).toBe(false);
+  expect(intent.tools).toEqual([]);
+  // A state word on a campus subject is still a campus question.
+  expect(contentIntent("你觉得宿舍怎么样").active).toBe(true);
+});
+
+it("does not read a request for advice as an article title", () => {
+  // "…有什么除潮的办法" ends with 办法, so the title heuristic claimed it and
+  // the answer became "当前公开资料中未找到这篇文章".
+  expect(titleLike("宿舍太潮湿了，有什么除潮的办法")).toBe(false);
+  expect(titleLike("关于开展2026年校园歌手大赛的通知")).toBe(true);
+  const intent = contentIntent("宿舍太潮湿了，有什么除潮的办法");
+  expect(intent.answerRequirement).toBe("advisory");
+  expect(intent.articleLookup).toBe(false);
+});
+
+it("keeps a practical question advisory while a policy stays strict", () => {
+  expect(contentIntent("大一新生该怎么安排时间").answerRequirement).toBe(
+    "advisory",
+  );
+  expect(contentIntent("宿舍钥匙丢了怎么办").answerRequirement).toBe(
+    "advisory",
+  );
+  // A named rule still has to be supported by a real document.
+  expect(contentIntent("缓考要怎么申请").answerRequirement).toBe("strict");
+  expect(contentIntent("广外图书馆借阅规则是什么").answerRequirement).toBe(
+    "strict",
+  );
+});
+
+it("does not turn a movement compound into a library route", () => {
+  // 「图书馆可以带包进去吗」 contains 去 inside 进去; the map tool would look
+  // for a destination and answer NOT_FOUND instead of the library rule.
+  const intent = contentIntent("图书馆可以带包进去吗");
+  expect(intent.map).toBe(false);
+  expect(intent.tools).toEqual(["search_campus_knowledge"]);
+  expect(navigationIntent("我想去图书馆").routeQuestion).toBe(true);
+});
+
+it("sends a facility question to the map only when the service word is a real place", () => {
+  // 「打印照片」 is not a print shop; sending it to the map made search_places
+  // fail and the whole turn answer nothing.
+  expect(scanPlaces("打印照片")).toEqual([]);
+  expect(contentIntent("校园里有照相馆或者打印照片的地方吗").map).toBe(true);
+  expect(contentIntent("校内有哪些打印店？").map).toBe(true);
+  expect(contentIntent("校内有快递点吗").map).toBe(true);
 });

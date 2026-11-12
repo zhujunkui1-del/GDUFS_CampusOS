@@ -68,3 +68,18 @@ it("retains literal entities and years and rejects model-invented query terms", 
     verifiedQueryUnderstanding({ ...plan, subject: "交换生" }, question),
   ).toThrow();
 });
+
+it("refuses a plan whose only subject is the whole question", () => {
+  const question = "转专业需要什么条件，什么时候可以申请";
+  expect(() =>
+    verifiedQueryUnderstanding(
+      {
+        subject: question,
+        entities: [],
+        constraints: [],
+        goal: "requirements",
+      },
+      question,
+    ),
+  ).toThrow();
+});
