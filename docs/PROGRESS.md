@@ -2590,3 +2590,13 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 验证：`npm run build` 通过；地图模型资源校验72项全部通过，全局3D合计299,182三角面/约4.65MB，未超过既有预算。浏览器中2.5D活动模型35/35、3D活动模型34/34；本建筑两个GLB均HTTP 200，平移后3D仍驻留69、pending 0、failed 空，页面JS错误0。回执/截图在 `output/playwright/student-activity-center-2026-11-12/`。未新增或运行测试套件。
 
 2026-11-13负责人补充朝北卫星图并指出首稿方向错误和中心小空隙。现已将蓝色主厅屋顶移至东侧、红色塔楼移至西南侧；2.5D/3D都留出约8×6米的中心显示性空隙，颜色地面从display-only GeoJSON显示。校园GIS仍只有原12点外环，没有写入内环或路线信息；新方向的浏览器截图与回执已更新。
+
+## 2026-11-13｜立即采集：一次登记一次全站，不再两分钟也点不完
+
+`https://gdufs.zhiyuapp.site/admin/web-collection` 点「立即采集」时常用英文 `signal timed out` 弹窗，且每点一次就多登记一整批任务。根因有两处：前台 `src/features/console/console-app.tsx:160` 的所有后台请求共用 `AbortSignal.timeout(15000)`，而 `src/lib/server/console/scheduler.ts` 的 `dispatchDue` 对每个源串行做两次 D1 往返（先查 `run_key` 再 `db.batch` 写三条语句），全站 89 个源约 180 次往返，本机 D1 往返 420–460ms，实测登记跨度 13.27s 与 14.65s，紧贴 15s 阈值；超额时客户端已断开，Worker 仍在继续写库，于是用户看到超时却也留下了一批任务。
+
+去重键 `run_key=? OR id=?` 里的 manual key 是 `manual:<source>:<commandId>`，每次点击都是新 commandId，所以第二次点击不会命中第一次的记录，实测当天三次点击后 job 167 条而源只有 89 个。
+
+改为：先一次性算出全部候选源与 `run_key`，用一条 `WHERE run_key IN(...)` 批量取已存在键，再按 `REGISTRATION_CHUNK=20` 分批 `db.batch`（每批仍是三条语句/源，D1 原子性不变）；manual 模式额外加 `MANUAL_COOLDOWN_MS=10min` 冷却，按 `source_id` 过滤十分钟内刚登记的源。`scheduler.ts` 的 stale-job 隔离也合并进同一批。前台把读请求超时留在 15s、写请求放宽到 90s，并把超时异常翻译成「请求超时，服务器仍在处理，请稍后刷新查看结果」。`busy` 分支改为返回真实剩余租约（`min(8000, max(1200, lease_until_ms - now))`），单站重试从 2 次提到 5 次。
+
+验证：`npx tsc --noEmit` 0 error；`npx vitest run` 156 文件 1103 用例全绿；新增断言「同一站点重复点击只登记一次」在 `tests/unit/console-v2-sync.test.ts`（第二次 `syncNow` 返回 `no_eligible_due_source`、`ingestion_jobs` 仍为 2）。部署 Preview Worker `fd309c59-6b38-4063-a0c4-821849c05532`。真实浏览器实测：首次点击 **3.05s** 返回「已登记 81 个已核验官网采集任务」，再次点击 **3.06s** 返回「没有新的已核验官网任务可启动」；API 直连两次均为 `no_eligible_due_source`，当日新增 job 81 条 / 81 个源，无重复。
