@@ -8,6 +8,14 @@
   Cache-Control: public,max-age=31536000,immutable
 
 # BEGIN verified map model assets
+/models/campus/academic-exchange-center-2.5d-f142357ef962.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/academic-exchange-center-3d-b45a895918d9.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
 /models/campus/administration-2.5d-e00f035ae0c8.glb
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
@@ -37,6 +45,14 @@
   Content-Type: model/gltf-binary
 
 /models/campus/b8-3d-2cd954731557.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/boya-cafeteria-2.5d-2cb6330f873e.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/boya-cafeteria-3d-92cbf0036838.glb
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
 
@@ -145,6 +161,14 @@
   Content-Type: model/gltf-binary
 
 /models/campus/faculty-3d-aa908ef5a2af.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/fengcai-cafeteria-2.5d-5796c5f705bd.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/fengcai-cafeteria-3d-1c9e857ab2a6.glb
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
 
@@ -276,6 +300,14 @@
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
 
+/models/campus/wencai-cafeteria-2.5d-01c29471362c.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/wencai-cafeteria-3d-32273074754a.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
 /models/campus/youyuan-2.5d-fc9a240f5815.glb
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
@@ -288,7 +320,7 @@
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
 
-/models/campus/courtyards-22aa91e4464b.geojson
+/models/campus/courtyards-c3dd4441697f.geojson
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: application/geo+json
 # END verified map model assets

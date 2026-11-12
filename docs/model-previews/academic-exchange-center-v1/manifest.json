@@ -1,0 +1,457 @@
+{
+  "modelVersion": "academic-exchange-center-v1-2026-11-13",
+  "stage": "map_ready_visual_estimate",
+  "mapIntegrated": false,
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "placeId": "osm-relation-4105910",
+  "name": "学术交流中心",
+  "origin": [
+    113.3942945,
+    23.0637285
+  ],
+  "sourceGeometryWgs84": [
+    [
+      113.3948689,
+      23.0640937
+    ],
+    [
+      113.394515,
+      23.064093
+    ],
+    [
+      113.3945151,
+      23.0640353
+    ],
+    [
+      113.3943649,
+      23.0640351
+    ],
+    [
+      113.3943652,
+      23.0638986
+    ],
+    [
+      113.3940715,
+      23.063898
+    ],
+    [
+      113.3940717,
+      23.0637947
+    ],
+    [
+      113.393674,
+      23.063794
+    ],
+    [
+      113.3936744,
+      23.0636008
+    ],
+    [
+      113.3940395,
+      23.0636014
+    ],
+    [
+      113.3940396,
+      23.0635485
+    ],
+    [
+      113.393941,
+      23.0635484
+    ],
+    [
+      113.3939411,
+      23.0634928
+    ],
+    [
+      113.3939068,
+      23.0634528
+    ],
+    [
+      113.3939069,
+      23.0633997
+    ],
+    [
+      113.3939466,
+      23.0633633
+    ],
+    [
+      113.3940152,
+      23.0633634
+    ],
+    [
+      113.3940486,
+      23.0633943
+    ],
+    [
+      113.3943461,
+      23.0633948
+    ],
+    [
+      113.3943902,
+      23.0634355
+    ],
+    [
+      113.3943901,
+      23.0634792
+    ],
+    [
+      113.3947093,
+      23.0634798
+    ],
+    [
+      113.3947089,
+      23.063659
+    ],
+    [
+      113.3948401,
+      23.0636592
+    ],
+    [
+      113.3948398,
+      23.0638078
+    ],
+    [
+      113.394915,
+      23.0638079
+    ],
+    [
+      113.3949148,
+      23.0638995
+    ],
+    [
+      113.3948693,
+      23.0638995
+    ],
+    [
+      113.3948689,
+      23.0640937
+    ]
+  ],
+  "sourceGeometryRingsWgs84": [
+    [
+      [
+        113.3948689,
+        23.0640937
+      ],
+      [
+        113.394515,
+        23.064093
+      ],
+      [
+        113.3945151,
+        23.0640353
+      ],
+      [
+        113.3943649,
+        23.0640351
+      ],
+      [
+        113.3943652,
+        23.0638986
+      ],
+      [
+        113.3940715,
+        23.063898
+      ],
+      [
+        113.3940717,
+        23.0637947
+      ],
+      [
+        113.393674,
+        23.063794
+      ],
+      [
+        113.3936744,
+        23.0636008
+      ],
+      [
+        113.3940395,
+        23.0636014
+      ],
+      [
+        113.3940396,
+        23.0635485
+      ],
+      [
+        113.393941,
+        23.0635484
+      ],
+      [
+        113.3939411,
+        23.0634928
+      ],
+      [
+        113.3939068,
+        23.0634528
+      ],
+      [
+        113.3939069,
+        23.0633997
+      ],
+      [
+        113.3939466,
+        23.0633633
+      ],
+      [
+        113.3940152,
+        23.0633634
+      ],
+      [
+        113.3940486,
+        23.0633943
+      ],
+      [
+        113.3943461,
+        23.0633948
+      ],
+      [
+        113.3943902,
+        23.0634355
+      ],
+      [
+        113.3943901,
+        23.0634792
+      ],
+      [
+        113.3947093,
+        23.0634798
+      ],
+      [
+        113.3947089,
+        23.063659
+      ],
+      [
+        113.3948401,
+        23.0636592
+      ],
+      [
+        113.3948398,
+        23.0638078
+      ],
+      [
+        113.394915,
+        23.0638079
+      ],
+      [
+        113.3949148,
+        23.0638995
+      ],
+      [
+        113.3948693,
+        23.0638995
+      ],
+      [
+        113.3948689,
+        23.0640937
+      ]
+    ],
+    [
+      [
+        113.3944458,
+        23.0637918
+      ],
+      [
+        113.394446,
+        23.0637005
+      ],
+      [
+        113.3944102,
+        23.0637004
+      ],
+      [
+        113.3944104,
+        23.0636364
+      ],
+      [
+        113.3946665,
+        23.0636369
+      ],
+      [
+        113.3946662,
+        23.0637922
+      ],
+      [
+        113.3944458,
+        23.0637918
+      ]
+    ],
+    [
+      [
+        113.3943199,
+        23.0637018
+      ],
+      [
+        113.3940902,
+        23.0637014
+      ],
+      [
+        113.3940906,
+        23.0635369
+      ],
+      [
+        113.3943202,
+        23.0635373
+      ],
+      [
+        113.3943199,
+        23.0637018
+      ]
+    ]
+  ],
+  "sourceOuterHash": "523933c43ddda3588735fd7cc4ac70efa5f10ea9792eb9cbc0c03bdeaed8f4e4",
+  "sourceRingHashes": [
+    "523933c43ddda3588735fd7cc4ac70efa5f10ea9792eb9cbc0c03bdeaed8f4e4",
+    "02476c1dad14e9081b52560db23a4dba3ffed8ea28f109311be6fa4c7e0ecc7f",
+    "60417e6416f19a867440c5287dfad88072436893ac10d4f13a4802317003edae"
+  ],
+  "ringVertexCounts": [
+    28,
+    6,
+    4
+  ],
+  "orientationBasis": "roof modules aligned to the existing local GIS axes; facade compass direction is unverified",
+  "levels": 4,
+  "levelsSource": "Four-storey office/faculty reference style; visual estimate only, not a source-map level tag.",
+  "eavesHeightMeters": 14.75,
+  "roofPeakMeters": 18.1,
+  "heightAccuracy": "visual_estimate_only_not_surveyed",
+  "roofModules": [
+    {
+      "id": "north-east",
+      "box": [
+        24,
+        57,
+        -39,
+        -21
+      ]
+    },
+    {
+      "id": "north-connector",
+      "box": [
+        8,
+        21,
+        -33,
+        -20
+      ]
+    },
+    {
+      "id": "north-center",
+      "box": [
+        -20,
+        5,
+        -17,
+        -9
+      ]
+    },
+    {
+      "id": "west-wing",
+      "box": [
+        -61,
+        -25,
+        -5,
+        12
+      ]
+    },
+    {
+      "id": "east-wing",
+      "box": [
+        44,
+        54,
+        -6,
+        5
+      ]
+    },
+    {
+      "id": "south-east",
+      "box": [
+        12,
+        40,
+        13,
+        25
+      ]
+    },
+    {
+      "id": "south-west",
+      "box": [
+        -32,
+        2,
+        24,
+        34
+      ]
+    }
+  ],
+  "assets": {
+    "2.5d": {
+      "file": "academic-exchange-center-2.5d.glb",
+      "sha256": "f142357ef962619d77c26712ef1e765aa805e9c398199e351f9eb454b6e950dd",
+      "bytes": 40152,
+      "triangles": 354,
+      "drawCalls": 9,
+      "materialCount": 2,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -63.481632232666016,
+          -2.486546531827935e-15,
+          -40.608497619628906
+        ],
+        "max": [
+          63.481632232666016,
+          17.399999618530273,
+          40.6083869934082
+        ]
+      }
+    },
+    "3d": {
+      "file": "academic-exchange-center-3d.glb",
+      "sha256": "b45a895918d927ca82fcb5c5427a604257ba3fa53e8247e89a0036beaa030382",
+      "bytes": 34320,
+      "triangles": 746,
+      "drawCalls": 12,
+      "materialCount": 7,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -63.60189904272556,
+          0,
+          -40.74875498461188
+        ],
+        "max": [
+          63.57501567201689,
+          18.100000381469727,
+          40.6083869934082
+        ]
+      }
+    }
+  },
+  "visualInputs": [
+    {
+      "path": "C:/Users/zhuju/Downloads/学术交流中心卫星图.png",
+      "usage": "top-down roof-module and two-courtyard arrangement reference; compass bearing is not independently verified"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/校行政办公楼正面99.png",
+      "usage": "facade material and portico style reference only"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/院系办公楼正面11.png",
+      "usage": "pale wall/red accent and window rhythm style reference only"
+    },
+    {
+      "path": "docs/model-previews/administration-complex-v1/manifest.json",
+      "usage": "hipped-roof and pale-wall/red-accent style reference"
+    },
+    {
+      "path": "docs/model-previews/faculty-office-v1/manifest.json",
+      "usage": "four-storey window rhythm and roof style reference"
+    }
+  ],
+  "limitations": [
+    "The source relation supplies one outer ring and two inner rings; all three are kept unchanged.",
+    "Four levels and approximately 18 m are image/reference-style estimates; campus GIS does not carry surveyed height tags.",
+    "Roof-module boundaries follow the north-up satellite and are visual subdivisions, not separate GIS buildings.",
+    "No facade photo or measured entrance is provided; windows and red bands are simple office-style visual estimates.",
+    "Photos are not copied into public assets or embedded as textures."
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "version": "wencai-cafeteria-v1-2026-11-13",
+  "placeId": "osm-way-313039048",
+  "levels": 3,
+  "floorDatums": [
+    0.28,
+    4.4,
+    8.5
+  ],
+  "roofTopMeters": 13.25,
+  "palette": {
+    "ivory": "#e6e3da",
+    "orange": "#c99574",
+    "brick": "#bf7a60",
+    "glass": "#648089",
+    "metal": "#9ba5a2",
+    "roof": "#dad8cf",
+    "solar": "#405966",
+    "solarGrid": "#9aaeb1",
+    "vent": "#818986",
+    "teal": "#6799a6"
+  },
+  "alignedToLocal": {
+    "anchor": [
+      -10.286932953729782,
+      -47.04115264137584
+    ],
+    "rotationYRadians": -0.9000863141157742
+  },
+  "alignedOuterMeters": [
+    [
+      48.90338057320209,
+      50.12315878417235
+    ],
+    [
+      -0.002900057632981401,
+      37.46579230644886
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      80.32540581340201,
+      -7.105427357601002e-15
+    ],
+    [
+      80.3279935818795,
+      50.124932864460526
+    ]
+  ],
+  "assets": {
+    "2.5d": {
+      "file": "wencai-cafeteria-2.5d.glb",
+      "sha256": "01c29471362c24954e9e1347cbb3bd23a33bed616643a09e67896b519bd9f0d5",
+      "bytes": 5816,
+      "triangles": 32,
+      "drawCalls": 2,
+      "materialCount": 2,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -49.5556322632128,
+          -3.0692668712980304e-15,
+          -47.04342449020614
+        ],
+        "max": [
+          39.64031832009657,
+          13.5,
+          47.04100514030251
+        ]
+      }
+    },
+    "3d": {
+      "file": "wencai-cafeteria-3d.glb",
+      "sha256": "32273074754a6b9330cc68fce107c4459c22357b1d9a4c1b20300b0cc3c4e49e",
+      "bytes": 53396,
+      "triangles": 3674,
+      "drawCalls": 15,
+      "materialCount": 10,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -60.43130674913744,
+          0,
+          -47.38069661745854
+        ],
+        "max": [
+          40.0266664543751,
+          15.625,
+          55.672777912468085
+        ]
+      }
+    }
+  }
+}

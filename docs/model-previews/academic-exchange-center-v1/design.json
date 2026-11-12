@@ -1,0 +1,139 @@
+{
+  "version": "academic-exchange-center-v1-2026-11-13",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "placeId": "osm-relation-4105910",
+  "sourceOuterHash": "523933c43ddda3588735fd7cc4ac70efa5f10ea9792eb9cbc0c03bdeaed8f4e4",
+  "sourceRingHashes": [
+    "523933c43ddda3588735fd7cc4ac70efa5f10ea9792eb9cbc0c03bdeaed8f4e4",
+    "02476c1dad14e9081b52560db23a4dba3ffed8ea28f109311be6fa4c7e0ecc7f",
+    "60417e6416f19a867440c5287dfad88072436893ac10d4f13a4802317003edae"
+  ],
+  "orientationBasis": "roof modules aligned to the existing local GIS axes; facade compass direction is unverified",
+  "levels": 4,
+  "eavesHeightMeters": 14.75,
+  "roofPeakMeters": 18.1,
+  "heightAccuracy": "visual_estimate_only_not_surveyed",
+  "roofModules": [
+    {
+      "id": "north-east",
+      "box": [
+        24,
+        57,
+        -39,
+        -21
+      ]
+    },
+    {
+      "id": "north-connector",
+      "box": [
+        8,
+        21,
+        -33,
+        -20
+      ]
+    },
+    {
+      "id": "north-center",
+      "box": [
+        -20,
+        5,
+        -17,
+        -9
+      ]
+    },
+    {
+      "id": "west-wing",
+      "box": [
+        -61,
+        -25,
+        -5,
+        12
+      ]
+    },
+    {
+      "id": "east-wing",
+      "box": [
+        44,
+        54,
+        -6,
+        5
+      ]
+    },
+    {
+      "id": "south-east",
+      "box": [
+        12,
+        40,
+        13,
+        25
+      ]
+    },
+    {
+      "id": "south-west",
+      "box": [
+        -32,
+        2,
+        24,
+        34
+      ]
+    }
+  ],
+  "palette": {
+    "wall": "#e8e5dc",
+    "band": "#c47762",
+    "trim": "#dedbd3",
+    "glass": "#617983",
+    "metal": "#87918f",
+    "roof": "#727875",
+    "cap": "#d5d2c8"
+  },
+  "styles": {
+    "2.5d": "plain pale mass, exact source courtyard holes and light cap",
+    "3d": "administration/faculty pale walls, red bands, window rhythm and hipped grey roof modules"
+  },
+  "assets": {
+    "2.5d": {
+      "file": "academic-exchange-center-2.5d.glb",
+      "sha256": "f142357ef962619d77c26712ef1e765aa805e9c398199e351f9eb454b6e950dd",
+      "bytes": 40152,
+      "triangles": 354,
+      "drawCalls": 9,
+      "materialCount": 2,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -63.481632232666016,
+          -2.486546531827935e-15,
+          -40.608497619628906
+        ],
+        "max": [
+          63.481632232666016,
+          17.399999618530273,
+          40.6083869934082
+        ]
+      }
+    },
+    "3d": {
+      "file": "academic-exchange-center-3d.glb",
+      "sha256": "b45a895918d927ca82fcb5c5427a604257ba3fa53e8247e89a0036beaa030382",
+      "bytes": 34320,
+      "triangles": 746,
+      "drawCalls": 12,
+      "materialCount": 7,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -63.60189904272556,
+          0,
+          -40.74875498461188
+        ],
+        "max": [
+          63.57501567201689,
+          18.100000381469727,
+          40.6083869934082
+        ]
+      }
+    }
+  },
+  "noEmbeddedImages": true
+}

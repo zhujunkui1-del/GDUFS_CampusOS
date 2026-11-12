@@ -1,0 +1,168 @@
+{
+  "modelVersion": "fengcai-cafeteria-v1-2026-11-13",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "mapIntegrated": true,
+  "placeId": "osm-way-313039057",
+  "name": "风采园（三饭）",
+  "origin": [
+    113.38962265,
+    23.060230500000003
+  ],
+  "sourceGeometryWgs84": [
+    [
+      113.3894488,
+      23.0604171
+    ],
+    [
+      113.389948,
+      23.0604171
+    ],
+    [
+      113.3899097,
+      23.0603125
+    ],
+    [
+      113.3897875,
+      23.0599783
+    ],
+    [
+      113.3893418,
+      23.0602367
+    ],
+    [
+      113.3892973,
+      23.060292
+    ],
+    [
+      113.3892973,
+      23.0603474
+    ],
+    [
+      113.3893641,
+      23.0604827
+    ],
+    [
+      113.3894533,
+      23.060454
+    ],
+    [
+      113.3894488,
+      23.0604171
+    ]
+  ],
+  "sourceFootprintSha256": "8fe09f096fad9b5ac6af7545d94d67ac7a432f6024b428686d6c1ecb4f964c6a",
+  "sourceVertexCount": 9,
+  "levels": 3,
+  "levelsSource": "Owner explicitly confirmed three storeys in this conversation.",
+  "heightAccuracy": "photo_visual_estimate_not_surveyed",
+  "mainRoofMeters": 13,
+  "towerTopMeters": 18.175,
+  "alignedToLocal": {
+    "anchor": [
+      33.28652001697612,
+      -20.749016354888777
+    ],
+    "rotationYRadians": -1.8954327748021953
+  },
+  "alignedOuterMeters": [
+    [
+      16.290490506651054,
+      48.40537927920366
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      12.273342506366735,
+      0.0039155787626459215
+    ],
+    [
+      51.48143185738836,
+      -3.552713678800501e-15
+    ],
+    [
+      38.79407063892012,
+      52.3824336610907
+    ],
+    [
+      34.41834522972121,
+      58.658756069727254
+    ],
+    [
+      28.57990157469005,
+      60.62364328582154
+    ],
+    [
+      12.141123595348354,
+      58.945047050036074
+    ],
+    [
+      12.25485491634555,
+      49.27777640077942
+    ]
+  ],
+  "orientation": "East-facing glazed entrance and white columns; silver-white tower at the south end of that facade; curved end to the west. Roof subdivision inferred from supplied images.",
+  "assets": {
+    "2.5d": {
+      "file": "fengcai-cafeteria-2.5d.glb",
+      "sha256": "5796c5f705bd82bb51691de999d6401cc12fe4442b34b005db5182dba5e92102",
+      "bytes": 8964,
+      "triangles": 64,
+      "drawCalls": 2,
+      "materialCount": 2,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -33.28652056440945,
+          -3.712127397056128e-15,
+          -28.043424839976247
+        ],
+        "max": [
+          33.28652001697612,
+          13.25,
+          28.043371247789555
+        ]
+      }
+    },
+    "3d": {
+      "file": "fengcai-cafeteria-3d.glb",
+      "sha256": "1c9e857ab2a67d3ef9c6399e0318bb7392b6a89d6d6910297983b84fa0e018c0",
+      "bytes": 59708,
+      "triangles": 2902,
+      "drawCalls": 15,
+      "materialCount": 9,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -40.60381749879516,
+          0.020000003278255463,
+          -40.09794686485404
+        ],
+        "max": [
+          36.15653757561827,
+          18.174999594688416,
+          29.017450838722166
+        ]
+      }
+    }
+  },
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/三饭正面.png",
+      "sha256": "d304371c34efee8c66609c630a223e01f367acf4af3802946a39c5472763ad0a",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    },
+    {
+      "path": "C:/Users/zhuju/Downloads/三饭卫星图.png",
+      "sha256": "ff46cbe524593d2ef973ca1f763adfa7c16ffd56ac87cf9fae66ac3159d73154",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    }
+  ],
+  "limitations": [
+    "Three floors are owner-confirmed; metric heights, window pitch, roof frames and devices remain visual estimates.",
+    "The western curve is a roof detail; source GIS outer ring remains unchanged in the model foundation and 2.5D volume.",
+    "Entrance steps are display geometry, not verified GIS entrances or walking paths.",
+    "2.5D is a plain white source volume; glazing, equipment and roof frames are 3D-only."
+  ]
+}

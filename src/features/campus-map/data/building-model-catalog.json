@@ -1,17 +1,17 @@
 {
-  "version": "campus-building-models-2026-11-12.4",
+  "version": "campus-building-models-2026-11-13.4",
   "mapVersion": "s1-2026-10-14.2",
   "approvedForMap": true,
-  "ownerApproval": "2026-11-01：将已完成的2.5D/3D模型放入网页；2026-11-12：新增友苑模型并统一其2.5D纯白模；新增师苑1-4栋与学生活动中心2.5D/3D模型",
-  "ownerRenderingCorrection": "2026-11-02：3D不随距离/中心位置退回白模，平移保留模型；统一南苑7栋与其他宿舍的2.5D光照。2026-11-12：友苑2.5D为纯白体块，原3D资产保持不变；师苑1-4栋为独立可选模型，六层为照片估算；学生活动中心为一个GIS实体，2.5D纯白体块、3D区分主厅屋顶和楼梯塔，4层围翼为照片估算",
+  "ownerApproval": "2026-11-01：将已完成的2.5D/3D模型放入网页；2026-11-12：新增友苑模型并统一其2.5D纯白模；新增师苑1-4栋、学生活动中心与学术交流中心2.5D/3D模型；2026-11-13：新增文采园（一饭）与博雅园（二饭）2.5D/3D模型，二饭4层由负责人确认；新增风采园（三饭）2.5D/3D模型，三饭3层由负责人确认",
+  "ownerRenderingCorrection": "2026-11-02：3D不随距离/中心位置退回白模，平移保留模型；统一南苑7栋与其他宿舍的2.5D光照。2026-11-12：友苑2.5D为纯白体块，原3D资产保持不变；师苑1-4栋为独立可选模型，六层为照片估算；学生活动中心按朝北卫星校正主厅/红塔方位并保留中部显示空隙；学术交流中心按行政/院系办公楼风格表现坡屋顶与围合庭院，4层为视觉估算",
   "referenceOrigin": [113.392, 23.066],
   "legacySouth7Preserved": true,
   "renderingPolicy": "mode-faithful-resident-models",
   "south7VolumeRenderer": "shared",
-  "displayBuildingCount": 34,
-  "newBuildingCount": 33,
+  "displayBuildingCount": 38,
+  "newBuildingCount": 37,
   "visualConnectorCount": 1,
-  "courtyardsUrl": "/models/campus/courtyards-22aa91e4464b.geojson",
+  "courtyardsUrl": "/models/campus/courtyards-c3dd4441697f.geojson",
   "entries": [
     {
       "key": "library",
@@ -1261,6 +1261,152 @@
               -44.75439069420099, -2.0538526679755214e-15, -34.47203185968101
             ],
             "max": [45.21159802004695, 19.200000762939453, 33.78718155622482]
+          }
+        }
+      }
+    },
+    {
+      "key": "academic-exchange-center",
+      "name": "学术交流中心",
+      "placeId": "osm-relation-4105910",
+      "memberPlaceIds": ["osm-relation-4105910"],
+      "footprintSourceIds": ["osm-relation-4105910"],
+      "origin": [113.3942945, 23.0637285],
+      "pickable": true,
+      "heightAccuracy": "visual_estimate_only_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/academic-exchange-center-2.5d-f142357ef962.glb",
+          "sha256": "f142357ef962619d77c26712ef1e765aa805e9c398199e351f9eb454b6e950dd",
+          "bytes": 40152,
+          "triangles": 354,
+          "drawCalls": 9,
+          "bounds": {
+            "min": [
+              -63.481632232666016, -2.486546531827935e-15, -40.608497619628906
+            ],
+            "max": [63.481632232666016, 17.399999618530273, 40.6083869934082]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/academic-exchange-center-3d-b45a895918d9.glb",
+          "sha256": "b45a895918d927ca82fcb5c5427a604257ba3fa53e8247e89a0036beaa030382",
+          "bytes": 34320,
+          "triangles": 746,
+          "drawCalls": 12,
+          "bounds": {
+            "min": [-63.60189904272556, 0, -40.74875498461188],
+            "max": [63.57501567201689, 18.100000381469727, 40.6083869934082]
+          }
+        }
+      }
+    },
+    {
+      "key": "wencai-cafeteria",
+      "name": "文采园（一饭）",
+      "placeId": "osm-way-313039048",
+      "memberPlaceIds": ["osm-way-313039048"],
+      "footprintSourceIds": ["osm-way-313039048"],
+      "origin": [113.39131745, 23.064490550000002],
+      "pickable": true,
+      "heightAccuracy": "photo_visual_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/wencai-cafeteria-2.5d-01c29471362c.glb",
+          "sha256": "01c29471362c24954e9e1347cbb3bd23a33bed616643a09e67896b519bd9f0d5",
+          "bytes": 5816,
+          "triangles": 32,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -49.5556322632128, -3.0692668712980304e-15, -47.04342449020614
+            ],
+            "max": [39.64031832009657, 13.5, 47.04100514030251]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/wencai-cafeteria-3d-32273074754a.glb",
+          "sha256": "32273074754a6b9330cc68fce107c4459c22357b1d9a4c1b20300b0cc3c4e49e",
+          "bytes": 53396,
+          "triangles": 3674,
+          "drawCalls": 15,
+          "bounds": {
+            "min": [-60.43130674913744, 0, -47.38069661745854],
+            "max": [40.0266664543751, 15.625, 55.672777912468085]
+          }
+        }
+      }
+    },
+    {
+      "key": "boya-cafeteria",
+      "name": "博雅园（二饭）",
+      "placeId": "osm-way-313039061",
+      "memberPlaceIds": ["osm-way-313039061"],
+      "footprintSourceIds": ["osm-way-313039061"],
+      "origin": [113.39209575000001, 23.063546799999997],
+      "pickable": true,
+      "heightAccuracy": "photo_visual_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/boya-cafeteria-2.5d-2cb6330f873e.glb",
+          "sha256": "2cb6330f873eee31fd4aaa35d44ba5a05245d4d6252a43cbe96ef917aceb7197",
+          "bytes": 8300,
+          "triangles": 56,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -41.02652243642529, -1.2680206040174228e-15, -30.373495261954464
+            ],
+            "max": [40.920971224867024, 14.949999809265137, 30.393112562405356]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/boya-cafeteria-3d-92cbf0036838.glb",
+          "sha256": "92cbf0036838c07f04d846e334c039907a7737d8c40d6d9463198e9e9bc83446",
+          "bytes": 64180,
+          "triangles": 5572,
+          "drawCalls": 12,
+          "bounds": {
+            "min": [-41.139689526629525, 0, -30.373495261954464],
+            "max": [41.046704641202574, 16.350000381469727, 30.525448836800226]
+          }
+        }
+      }
+    },
+    {
+      "key": "fengcai-cafeteria",
+      "name": "风采园（三饭）",
+      "placeId": "osm-way-313039057",
+      "memberPlaceIds": ["osm-way-313039057"],
+      "footprintSourceIds": ["osm-way-313039057"],
+      "origin": [113.38962265, 23.060230500000003],
+      "pickable": true,
+      "heightAccuracy": "photo_visual_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/fengcai-cafeteria-2.5d-5796c5f705bd.glb",
+          "sha256": "5796c5f705bd82bb51691de999d6401cc12fe4442b34b005db5182dba5e92102",
+          "bytes": 8964,
+          "triangles": 64,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -33.28652056440945, -3.712127397056128e-15, -28.043424839976247
+            ],
+            "max": [33.28652001697612, 13.25, 28.043371247789555]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/fengcai-cafeteria-3d-1c9e857ab2a6.glb",
+          "sha256": "1c9e857ab2a67d3ef9c6399e0318bb7392b6a89d6d6910297983b84fa0e018c0",
+          "bytes": 59708,
+          "triangles": 2902,
+          "drawCalls": 15,
+          "bounds": {
+            "min": [
+              -40.60381749879516, 0.020000003278255463, -40.09794686485404
+            ],
+            "max": [36.15653757561827, 18.174999594688416, 29.017450838722166]
           }
         }
       }

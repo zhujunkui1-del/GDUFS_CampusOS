@@ -1,0 +1,146 @@
+{
+  "modelVersion": "wencai-cafeteria-v1-2026-11-13",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "mapIntegrated": true,
+  "placeId": "osm-way-313039048",
+  "name": "文采园（一饭）",
+  "origin": [
+    113.39131745,
+    23.064490550000002
+  ],
+  "sourceGeometryWgs84": [
+    [
+      113.3911302,
+      23.0642889
+    ],
+    [
+      113.39093,
+      23.0647042
+    ],
+    [
+      113.3912169,
+      23.0649136
+    ],
+    [
+      113.3917049,
+      23.0643477
+    ],
+    [
+      113.3913211,
+      23.0640675
+    ],
+    [
+      113.3911302,
+      23.0642889
+    ]
+  ],
+  "sourceFootprintSha256": "48dc9884166d064cda5e2a41676a78bb5edad2de49cba875c9a2430965056dcb",
+  "sourceVertexCount": 5,
+  "levels": 3,
+  "levelsSource": "Three visible storeys inferred from supplied facade photos; not a surveyed GIS tag.",
+  "heightAccuracy": "photo_visual_estimate_not_surveyed",
+  "mainRoofMeters": 13.25,
+  "parapetMeters": 13.99,
+  "alignedToLocal": {
+    "anchor": [
+      -10.286932953729782,
+      -47.04115264137584
+    ],
+    "rotationYRadians": -0.9000863141157742
+  },
+  "alignedOuterMeters": [
+    [
+      48.90338057320209,
+      50.12315878417235
+    ],
+    [
+      -0.002900057632981401,
+      37.46579230644886
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      80.32540581340201,
+      -7.105427357601002e-15
+    ],
+    [
+      80.3279935818795,
+      50.124932864460526
+    ]
+  ],
+  "orientation": "Long axis northwest-southeast; open colonnade/stair and bridge face southwest, kitchen rear faces northeast.",
+  "assets": {
+    "2.5d": {
+      "file": "wencai-cafeteria-2.5d.glb",
+      "sha256": "01c29471362c24954e9e1347cbb3bd23a33bed616643a09e67896b519bd9f0d5",
+      "bytes": 5816,
+      "triangles": 32,
+      "drawCalls": 2,
+      "materialCount": 2,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -49.5556322632128,
+          -3.0692668712980304e-15,
+          -47.04342449020614
+        ],
+        "max": [
+          39.64031832009657,
+          13.5,
+          47.04100514030251
+        ]
+      }
+    },
+    "3d": {
+      "file": "wencai-cafeteria-3d.glb",
+      "sha256": "32273074754a6b9330cc68fce107c4459c22357b1d9a4c1b20300b0cc3c4e49e",
+      "bytes": 53396,
+      "triangles": 3674,
+      "drawCalls": 15,
+      "materialCount": 10,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -60.43130674913744,
+          0,
+          -47.38069661745854
+        ],
+        "max": [
+          40.0266664543751,
+          15.625,
+          55.672777912468085
+        ]
+      }
+    }
+  },
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/一饭背面09.png",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/文采园一饭侧面.png",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/一饭正面20.png",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/一饭左面093.png",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    },
+    {
+      "path": "C:/Users/zhuju/Downloads/一饭卫星图.png",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    }
+  ],
+  "limitations": [
+    "Roof panels, vents, window/bay pitch and heights are schematic visual estimates.",
+    "External stair and two-level link are display-only geometry, not verified walking routes.",
+    "Outer footprint and existing canteen place ID stay exact; no courtyard/entrance/path is added to GIS.",
+    "2.5D is a plain white mass; facade and rooftop detail belong to 3D."
+  ]
+}

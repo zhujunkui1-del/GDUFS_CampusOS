@@ -17,6 +17,7 @@ import {
 } from "./intent";
 import { buildQueryPlan } from "@/lib/retrieval/query-plan";
 import { navigationIntent } from "@/domain/agent/navigation-intent";
+import { searchCampusPlaces } from "@/features/campus-map/data/campus";
 import { VENUE_GROUPS } from "@/lib/retrieval/aliases";
 import { inputGate } from "./input-gate";
 import {
@@ -222,12 +223,18 @@ export function contentIntent(
   // place lookup, not a knowledge lookup: the campus map knows every courier
   // counter, printer and supermarket, while the article corpus has almost
   // nothing. Only an existence/list/location question qualifies; asking about
-  // opening hours or fees stays a knowledge question.
+  // opening hours or fees stays a knowledge question. The service word must
+  // also resolve to a real place — 「打印照片」 is not a print shop, and
+  // sending it to the map made the tool fail and the turn answer nothing.
+  const serviceKeyword = /(快递|驿站|打印|图文|超市|便利店|充值点|水电充值)/.exec(
+    message,
+  )?.[1];
   const facilityListing =
-    /(?:有哪些|有没有|哪个|哪几|哪些|在哪|位置|除了|还有别的|还有没有)/.test(
+    /(?:有哪些|有没有|哪个|哪几|哪些|在哪|位置|除了|还有别的|还有没有)|(?:有|有没有).{0,12}(?:地方|店|点)/.test(
       message,
     ) &&
-    /(?:快递|驿站|打印|图文|超市|便利店|充值点|水电充值)/.test(message) &&
+    !!serviceKeyword &&
+    searchCampusPlaces(serviceKeyword).length > 0 &&
     !/(?:几点|时间|收费|多少钱|费用|怎么办理|怎么申请|怎么挂失)/.test(
       message,
     );
@@ -344,13 +351,20 @@ export function contentIntent(
   // sentence turned every practical question into a refusal, because the
   // campus corpus has no article titled after the user's problem.
   const advice =
-    /(?:有什么|有啥|哪些|什么).{0,8}(?:办法|方法|建议|技巧|注意)|怎么(?:安排|准备|选|办|避免|缓解|解决|处理|改善|调节|应对|除|防)|要不要|该不该|值不值得|合适吗|推荐(?:一下|点)|注意些什么/.test(
+    /(?:有什么|有啥|哪些|什么).{0,8}(?:办法|方法|建议|技巧|注意)|怎么(?:安排|准备|选|避免|缓解|解决|处理|改善|调节|应对|除|防)|怎么办|要不要|该不该|值不值得|合适吗|推荐(?:一下|点)|注意些什么/.test(
+      query,
+    );
+  // “怎么安排时间” is advice, but “选课系统什么时候开放，没抢到课怎么办” also
+  // asks a dated fact. Asking for a specific date, place, fee or rule keeps the
+  // answer strict so the fact cannot be invented.
+  const factualAsk =
+    /(?:什么时候|几点|几号|多少|多少钱|哪[个里天]|条件|要求|流程|手续|规定|标准|时间表|截止)/.test(
       query,
     );
   const answerRequirement: AnswerRequirement =
     articleLookup || entityLookup || policy.officialOnly || policy.needsOfficialVerification
       ? "strict"
-      : advice
+      : advice && !factualAsk
         ? "advisory"
         : strictFact
           ? "strict"

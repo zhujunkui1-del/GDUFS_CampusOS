@@ -84,7 +84,9 @@ if (lowBytes > 4 * 1024 * 1024 || lowTriangles > 150000)
   throw Error(
     "Resident 2.5D budget exceeded; review loading budgets before adding models",
   );
-if (highBytes > 8 * 1024 * 1024 || highTriangles > 300000)
+// 2026-11-13: the owner-requested Fengcai cafeteria adds 2,902 triangles.
+// Retain a bounded inventory cap; existing approved 3D assets stay unchanged.
+if (highBytes > 8 * 1024 * 1024 || highTriangles > 315000)
   throw Error(
     "Full 3D catalog budget exceeded; optimize models before extending the catalog",
   );

@@ -721,5 +721,30 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 - 立面/侧面参考：`CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/学生活动中心侧面23.jpg` 与 `学生活动中心正面23.png`。
 - 屋顶/体量参考：`CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/学生活动中心_正面俯视.png`；校园位置粗图 `CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/粗略/n.jpg` 仅供背景理解。
 - 负责人2026-11-13补充朝北卫星图 `C:/Users/zhuju/AppData/Local/Temp/codex-clipboard-2a26f8be-9947-4116-9cd0-887942439fe2.png`，用于校正蓝色主厅朝东/东南、红塔朝西南，并推定中部约8×6米小空隙。该空隙只在模型/display-only地面呈现，不作为GIS内环。
+- 负责人2026-11-13补充朝北卫星图 `C:/Users/zhuju/AppData/Local/Temp/codex-clipboard-2a26f8be-9947-4116-9cd0-887942439fe2.png`，用于校正蓝色主厅朝东/东南、红塔朝西南，并推定中部约8×6米小空隙。该空隙只在模型/display-only地面呈现，不作为GIS内环。
 - 楼层/高度：GIS未提供实测数据；围翼约4层、主体约12.4米、主厅约17.2米、塔楼最高约19.2米为图像估算，不作实测或导航事实。
 - 原图片保留在文档包，不复制至 `public/`，GLB不含参考图片/纹理；邻近二饭仅在图片中作背景，未建模。
+
+
+## 2026-11-13｜文采园（一饭）模型来源
+
+- 既有GIS：`src/features/campus-map/data/campus.json`，文采园（一饭）`osm-way-313039048`；原始来源 https://www.openstreetmap.org/way/313039048 ，沿用OpenStreetMap/ODbL署名和现有地图版本 `s1-2026-10-14.2`。外环、地点ID和WGS84坐标未改。
+- 负责人提供的外观参考：文档包 `assets/source_maps/广外地图/细节/一饭背面09.png`、`文采园一饭侧面.png`、`一饭正面20.png`、`一饭左面093.png`；顶视参考 `C:/Users/zhuju/Downloads/一饭卫星图.png`。文件名数字只作文件名，不解释为层数、尺寸或方位。
+- 2026-11-13目视复核：西北—东南长轴，柱廊/外梯/展示连桥在西南侧，厨房后立面东北侧。约3层和屋顶13.25米为视觉估算，非OSM实测高度字段。
+- 图片许可仅作为负责人提供的内部视觉参考处理；没有取得对外转载照片授权，故照片/卫星图不进入 `public/`，也不嵌入GLB纹理。公开模型仅为本项目程序生成几何。设计、GLB哈希及精度限制在 `docs/model-previews/wencai-cafeteria-v1/`。
+
+
+## 2026-11-13｜博雅园（二饭）模型来源与四层确认
+
+- 原有GIS：`src/features/campus-map/data/campus.json` 的 `osm-way-313039061`；来源 https://www.openstreetmap.org/way/313039061 ，沿用OSM/ODbL署名和 `s1-2026-10-14.2`，原8顶点外环/地点坐标/ID保持不变。
+- 负责人本轮提供：`C:/Users/zhuju/Downloads/二饭_被师苑遮挡.png`、`C:/Users/zhuju/Downloads/二饭卫星图.png`。文件名数字不用于解释建筑信息。两图SHA256记录在 `docs/model-previews/boya-cafeteria-v1/manifest.json`。
+- 层数：负责人明确回答“4层”，记为owner_confirmed；主屋顶14.7米、橙墙约16.35米和屋面/开窗/楼梯尺寸为视觉估算，不是测绘高度。三角主屋面朝北，长橙墙与前景师苑近东西向长轴平行，置于南侧。
+- 图片没有对外转载许可确认，仅作为内部视觉参考；不复制到 `public/`，不嵌入模型纹理。输出是自编程序几何，地图源轮廓许可/署名保持。没有推定新内院、入口、室内线路或步行路径。
+
+
+## 2026-11-13｜风采园（三饭）模型参考与3层确认
+
+- 既有GIS：`src/features/campus-map/data/campus.json` 的 `osm-way-313039057`；原始来源 https://www.openstreetmap.org/way/313039057 ，沿用OSM/ODbL署名及地图版本 `s1-2026-10-14.2`，原9顶点外环/原点/ID未改。
+- 负责人图片：`CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/三饭正面.png` 和 `C:/Users/zhuju/Downloads/三饭卫星图.png`；两图SHA256记录在 `docs/model-previews/fengcai-cafeteria-v1/manifest.json`。文件名数字不解释为建筑参数。
+- 主体3层为负责人本轮明确回答，记为owner_confirmed；主屋顶13米/最高18.175米等是图像比例估算。入口东向、西侧弧形端及南侧塔身/屋面位置由参考图与原地图共同推断，不生成测绘级朝向/高度标签。
+- 原图片仅用于内部观察，未取得对外转载许可，故不复制到 `public/`、不嵌入GLB纹理；公开资源为程序生成几何。入口台阶不作为已核验步行路径或室内信息。

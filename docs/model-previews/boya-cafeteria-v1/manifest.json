@@ -1,0 +1,161 @@
+{
+  "modelVersion": "boya-cafeteria-v1-2026-11-13",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "mapIntegrated": true,
+  "placeId": "osm-way-313039061",
+  "name": "博雅园（二饭）",
+  "origin": [
+    113.39209575000001,
+    23.063546799999997
+  ],
+  "sourceGeometryWgs84": [
+    [
+      113.3922094,
+      23.0638185
+    ],
+    [
+      113.3916969,
+      23.0634597
+    ],
+    [
+      113.3918328,
+      23.0634617
+    ],
+    [
+      113.3918306,
+      23.0633346
+    ],
+    [
+      113.3919621,
+      23.0633346
+    ],
+    [
+      113.3920155,
+      23.0632751
+    ],
+    [
+      113.3922896,
+      23.0634679
+    ],
+    [
+      113.3924946,
+      23.0634638
+    ],
+    [
+      113.3922094,
+      23.0638185
+    ]
+  ],
+  "sourceFootprintSha256": "5ebe9213759d9c0b0122f46406272c60133ee245dc9e64a9ff394552e7b550b6",
+  "sourceVertexCount": 8,
+  "levels": 4,
+  "levelsSource": "Owner explicitly confirmed four storeys in this conversation.",
+  "heightAccuracy": "photo_visual_estimate_not_surveyed",
+  "mainRoofMeters": 14.7,
+  "roofFrameMeters": 16.1,
+  "alignedToLocal": {
+    "anchor": [
+      -40.805290763729055,
+      9.685088352030501
+    ],
+    "rotationYRadians": 0.005586221656738055
+  },
+  "alignedOuterMeters": [
+    [
+      52.654575526568934,
+      -39.603301480054576
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      13.904595675438033,
+      -0.14471852632468596
+    ],
+    [
+      13.600574011247343,
+      13.986682727559591
+    ],
+    [
+      27.05378201405669,
+      14.061836111201414
+    ],
+    [
+      32.47995104539624,
+      20.70834682048358
+    ],
+    [
+      60.641719973911606,
+      -0.5730517063484354
+    ],
+    [
+      81.61185490462283,
+      5.551115123125783e-17
+    ]
+  ],
+  "orientation": "North-pointing triangular main mass; orange screen across the southern near-east-west edge, parallel to the Shiyuan block in the reference; stepped projection and exposed stair frame to the south. View and metric details inferred from the supplied images.",
+  "assets": {
+    "2.5d": {
+      "file": "boya-cafeteria-2.5d.glb",
+      "sha256": "2cb6330f873eee31fd4aaa35d44ba5a05245d4d6252a43cbe96ef917aceb7197",
+      "bytes": 8300,
+      "triangles": 56,
+      "drawCalls": 2,
+      "materialCount": 2,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -41.02652243642529,
+          -1.2680206040174228e-15,
+          -30.373495261954464
+        ],
+        "max": [
+          40.920971224867024,
+          14.949999809265137,
+          30.393112562405356
+        ]
+      }
+    },
+    "3d": {
+      "file": "boya-cafeteria-3d.glb",
+      "sha256": "92cbf0036838c07f04d846e334c039907a7737d8c40d6d9463198e9e9bc83446",
+      "bytes": 64180,
+      "triangles": 5572,
+      "drawCalls": 12,
+      "materialCount": 7,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -41.139689526629525,
+          0,
+          -30.373495261954464
+        ],
+        "max": [
+          41.046704641202574,
+          16.350000381469727,
+          30.525448836800226
+        ]
+      }
+    }
+  },
+  "references": [
+    {
+      "path": "C:/Users/zhuju/Downloads/二饭_被师苑遮挡.png",
+      "sha256": "9ec5aad3930131a4fa02d45771bb6084f0f58615003a67ce8da28e2512c1f50f",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    },
+    {
+      "path": "C:/Users/zhuju/Downloads/二饭卫星图.png",
+      "sha256": "46444a0d8de4b2b64f24d9b72350386260c6729fa619ce2cd3692d9fa05c9e48",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    }
+  ],
+  "limitations": [
+    "Four floors are owner-confirmed; floor heights, facade bays, roof frames and annex tiers are visual estimates.",
+    "The foreground Shiyuan dormitory is contextual occlusion and is not part of this model.",
+    "Open spaces between upper roof bands and stepped volumes are display geometry, not surveyed GIS courtyard holes.",
+    "Exterior stairs are display-only, not verified navigation entrances or paths.",
+    "2.5D is a plain white source volume. Existing GIS, roads and completed 3D models are preserved."
+  ]
+}
