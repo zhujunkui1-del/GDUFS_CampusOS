@@ -313,11 +313,17 @@ export function retrievedEvidenceAnswer(
       // A source that contradicts itself is still usable evidence: say so
       // instead of quietly reporting whichever date we happened to quote.
       const conflict = dateConflictNote(normalized);
+      // A procedure quote is only trustworthy next to the date it was written:
+      // "关于2022届毕业生离校归还图书的通知" must not read as this year's rules.
+      const dated =
+        plan.goal === "procedure" && c.publishedAt
+          ? `（发布于 ${chinaDay(c.publishedAt)}）`
+          : "";
       return quote
         ? [
             {
               future,
-              text: `- ${c.title}${attribution}： “${quote}${quote.length === 160 ? "…" : ""}”[${index + 1}]${conflict ? `\n  ${conflict}` : ""}`,
+              text: `- ${c.title}${dated}${attribution}： “${quote}${quote.length === 160 ? "…" : ""}”[${index + 1}]${conflict ? `\n  ${conflict}` : ""}`,
             },
           ]
         : [];

@@ -75,8 +75,9 @@ it("treats a title-only hit as no body evidence instead of answering with it", a
       .map((e) => e.payload.text)
       .join("");
     expect(text).toContain("没有检索到能回答这个问题的正文信息");
-    expect(text).toContain("（查过：");
-    expect(text).toContain("图书馆借阅规则");
+    // The question itself is not a search keyword worth repeating back.
+    expect(text).not.toContain("（查过：");
+    expect(text).not.toContain("只查内部");
     expect(client.requests).toHaveLength(0);
   } finally {
     f.close();

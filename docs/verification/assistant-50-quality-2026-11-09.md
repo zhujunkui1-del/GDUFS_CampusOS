@@ -242,3 +242,40 @@ v4/v6/v7 的并发度不同（v4 为 4，v6/v7 为 2），耗时列只作趋势�
 **6）格式残留。** 「缓考要怎么申请」正文里出现 `[n]`（应为 `[1]`），说明 `normalizeCitations` 没有覆盖到该路径；同题无引用。
 
 **7）一条失败。** 「学生证丢了怎么办」返回 `MODEL_SERVICE_UNAVAILABLE`，兜底为「本鱼这次没能把资料整理成可靠回答」，属于模型侧偶发失败，不是检索问题。
+
+## 第二轮缺陷修复（2026-11-13）
+
+针对上面 7 条缺陷，改了五处判定而不是加关键词，Preview 部署 `d035e871-fe6b-4fc0-a30f-3542b0ba6abe`，全量单测 156 文件 / 1109 用例通过。
+
+| 现象 | 根因 | 改法 |
+| --- | --- | --- |
+| 闲聊「你好呀，你今天心情怎么样」也检索 | `input-gate.ts` 兜底返回 `campus`；`content-intent.ts` 让 `act === "general"` 直接进入检索 | `conversation-act.ts` 增加 `smallTalkToAssistant`：称呼本鱼 + 状态词且没有校园实体时判 `chitchat` |
+| 「宿舍太潮湿有什么办法」被当文章标题，回「未找到这篇文章」 | `intent.ts` 的 `TITLE_ENDING` + `titleLike()`（长度 ≥12）把疑问句当标题 | `titleLike()` 开头用 `QUESTION_SHAPE` 拦掉疑问句式 |
+| 50 题里 49 题都走 strict 事实门禁 | `content-intent.ts` 的 `answerRequirement` 只按 strictFact 粗分 | 引入 `advice` / `factualAsk`：「求建议且不问具体事实」判 advisory，事实型追问仍 strict |
+| 「图书馆可以带包进去吗」被当地图请求 | `navigation-intent.ts` 的 `ROUTE_RE` 把「进去」当位移 | 新增 `MOVEMENT_COMPOUND`，先把「进去/出去/上去…」剔掉再判路线 |
+| 正文里出现 `[n]` | 提示词里写了字面 `[n]`，模型照抄 | 提示词改成「编号引用（如 [1]）」 |
+| no-evidence 文案像机器，且把「本站没收录」说成「学校没有」 | `evidenceFallback` 固定句式 | 改为「翻遍了已收录的广外资料……这不代表学校没有相关规定，只是本站还没收录到」，并过滤掉「把问题原样念回来」的伪关键词 |
+| 转专业问句检索不到 | `query-plan.ts` 残留词清洗没有 `需要/需`，modifier 变成「转专业需」，任何文档都不匹配 | 清洗列表补 `需要|需`；同时 `query-understanding.ts` 拒绝「把整句当 subject」的 planner 结果 |
+
+复测（`.tmp/assistant-round2-v4.json`，每题独立会话，失败自动重试一次）：
+
+| 指标 | 修复前 | 修复后 |
+| --- | --- | --- |
+| `answerMode=model` | 39 | 39 |
+| `no_evidence` | 8 | 7 |
+| `article_not_found` | 1 | 0 |
+| `MODEL_SERVICE_UNAVAILABLE` | 1 | 0 |
+| 兜底文案回显问题本身 | 是 | 否 |
+| 正文 `[n]` 残留 | 1 例 | 0 |
+| `answerRequirement` 分布 | strict 49 / open 1 | strict 39 / advisory 7 / open 2 |
+| 含编号引用 | 30/50 | 28/50 |
+| p50 / p95 / max | 21.4s / 44.5s / 52.3s | 21.0s / 39.3s / 41.8s |
+
+仍未解决、且已确认不是检索门禁问题：
+
+1. **数据缺口 7 题**：打热水地点、清真食堂、夜宵、共享单车规定、图书馆能否带包、图书馆插座、篮球场夜间照明。D1 直查 `knowledge_chunks`：`清真` 全库只有 1 个 chunk 且是留学生游记里的「清真寺穹顶」，`夜宵` 0 chunk。这些题需要补采集，不是改代码。
+2. **「毕业离校要办哪些手续」仍走 `attributed_excerpt`**：命中《关于2022届毕业生离校归还图书的通知》。现在引文会带上「（发布于 2022-05-09）」并保留「政策是否仍有效也要再核」，但用四年前的通知回答当年离校流程仍然勉强，属于知识库缺现行离校文件。
+3. **「校门口打车方便吗，哪个门最近」仍只走知识库**：`facilityListing` 只覆盖快递/打印/超市一类服务点，校门与打车不在其中。
+4. **评测偶发断流**：50 题里仍有 2 题 `status:0`（`TypeError: terminated`），单条重跑即 200。属并发下的连接中断，不计入答案质量，但评测脚本需要重试（已加，最多 3 次）。
+
+一个必须记住的教训：**不要在评测进行中部署**。Worker 重载会掐断在途 SSE，一次部署就造出 21 条假失败（`status:0`），看起来像产品崩了。

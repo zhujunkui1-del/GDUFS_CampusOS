@@ -86,10 +86,17 @@ export function evidenceFallback(
     const unavailable = external?.providers.some(
       (p) => !["ok", "empty"].includes(p.status),
     );
-    const tried =
-      attemptedKeywords.filter(Boolean).join("、") ||
-      policy.relevanceQuery ||
-      "无";
+    // Naming the query back at the user ("查过：学校有清真食堂吗") adds nothing;
+    // only keywords that say something the question did not are worth printing.
+    const questionKey = (policy.relevanceQuery || "").replace(/\s+/g, "");
+    const tried = attemptedKeywords
+      .filter(
+        (k) =>
+          k &&
+          k.replace(/\s+/g, "") !== questionKey &&
+          !k.replace(/\s+/g, "").includes(questionKey),
+      )
+      .join("、");
     const excludedNote = external?.warnings.find((warning) =>
       warning.startsWith("已排除"),
     );
