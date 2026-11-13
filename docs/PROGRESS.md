@@ -2700,3 +2700,13 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 `CheckpointSchema` 是 `.strict()`，新增字段必须同步登记，否则 checkpoint 解析失败。`tests/unit/ingestion-pipeline.test.ts` 新增「ends a run at the article quota instead of walking the whole list」，断言 `maxArticles=1` 时采完一篇即 `status=completed`、`phase=complete`，且只产生一条带 `document_id` 的抓取记录。
 
 验证：`npx tsc --noEmit` 0 error；`npx vitest run` 157/158 文件、1121/1122 项通过（唯一失败是既有 flaky 的 `tests/unit/public-feed-jump.test.ts`，5 秒超时，单独跑通过）。部署 `52a11846-d025-4a70-a381-f0a7082bd080`。线上复核：0062/0082/0037 的 `entryIndex` 依次递增 0→1→2→3→4，0026/0082/0037 已 `completed`（body 6/8/10），队列从十余条收敛到 2–4 条，吞吐回落为 4–5 步/分钟（没有积压，不是变慢）。
+
+## 2026-11-13｜执行器每步重读时钟，长列表源不再一分钟走一步
+
+`cloud-web-runner.ts` 的批处理循环在整批开始时只取一次 `now`，`lease_until_ms<=now AND next_run_after_ms<=now` 全用它绑定；而 `commit()` 给刚提交的作业写 `next_run_after_ms` 等于提交时刻，必然 ≥ 批开始时刻，于是同一批的下一轮永远看不到刚做完的作业，每个作业每 tick 只能前进一格。实测步骤间隔恒为 60 秒，长列表源一轮要四十到五十分钟。
+
+改为循环体内每轮 `const passAt = Date.now()` 并重新绑定，`Math.min(budget - results.length, 20)` 控制单轮领取上限。修复后同一作业的步骤间隔从约 60 秒降到 8～10 秒：`job-52f804a7`（`GDUFS-SRC-0039`）9 步、body 6、`found_count=45`、`completed`，用时约 3 分钟。
+
+验证：`npx tsc --noEmit` 0 error；`npx vitest run` 158 文件 1122 项，2 项失败均为并发超时（`console-v2-sync.test.ts`、`public-feed-jump.test.ts`），单独运行均通过。部署 `da37044a-cceb-4a66-9551-da0190b114e1` 之后心跳正常。
+
+同时修掉一个调试脚本缺陷：`.tmp/sync-one.mjs` 把 `sourceId` 写死成 AI 源，导致对其他站点的「登记」实际登记的是 AI 源，看起来像「没有到期来源」。现改为从命令行参数读取。
