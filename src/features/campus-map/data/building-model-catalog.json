@@ -1,15 +1,15 @@
 {
-  "version": "campus-building-models-2026-11-13.4",
+  "version": "campus-building-models-2026-11-13.6",
   "mapVersion": "s1-2026-10-14.2",
   "approvedForMap": true,
-  "ownerApproval": "2026-11-01：将已完成的2.5D/3D模型放入网页；2026-11-12：新增友苑模型并统一其2.5D纯白模；新增师苑1-4栋、学生活动中心与学术交流中心2.5D/3D模型；2026-11-13：新增文采园（一饭）与博雅园（二饭）2.5D/3D模型，二饭4层由负责人确认；新增风采园（三饭）2.5D/3D模型，三饭3层由负责人确认",
+  "ownerApproval": "2026-11-01：将已完成的2.5D/3D模型放入网页；2026-11-12：新增友苑模型并统一其2.5D纯白模；新增师苑1-4栋、学生活动中心与学术交流中心2.5D/3D模型；2026-11-13：新增文采园（一饭）与博雅园（二饭）2.5D/3D模型，二饭4层由负责人确认；新增风采园（三饭）2.5D/3D模型，三饭3层由负责人确认；新增门诊部2.5D/3D模型，门诊部3层由负责人确认；新增后勤楼6/2/3层组合2.5D/3D模型，层数由负责人确认",
   "ownerRenderingCorrection": "2026-11-02：3D不随距离/中心位置退回白模，平移保留模型；统一南苑7栋与其他宿舍的2.5D光照。2026-11-12：友苑2.5D为纯白体块，原3D资产保持不变；师苑1-4栋为独立可选模型，六层为照片估算；学生活动中心按朝北卫星校正主厅/红塔方位并保留中部显示空隙；学术交流中心按行政/院系办公楼风格表现坡屋顶与围合庭院，4层为视觉估算",
   "referenceOrigin": [113.392, 23.066],
   "legacySouth7Preserved": true,
   "renderingPolicy": "mode-faithful-resident-models",
   "south7VolumeRenderer": "shared",
-  "displayBuildingCount": 38,
-  "newBuildingCount": 37,
+  "displayBuildingCount": 40,
+  "newBuildingCount": 39,
   "visualConnectorCount": 1,
   "courtyardsUrl": "/models/campus/courtyards-c3dd4441697f.geojson",
   "entries": [
@@ -1407,6 +1407,82 @@
               -40.60381749879516, 0.020000003278255463, -40.09794686485404
             ],
             "max": [36.15653757561827, 18.174999594688416, 29.017450838722166]
+          }
+        }
+      }
+    },
+    {
+      "key": "outpatient-clinic",
+      "name": "门诊部",
+      "placeId": "osm-way-313039046",
+      "memberPlaceIds": ["osm-way-313039046"],
+      "footprintSourceIds": ["osm-way-313039046"],
+      "origin": [113.390075, 23.06582195],
+      "pickable": true,
+      "heightAccuracy": "photo_visual_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/outpatient-clinic-2.5d-040ded760a87.glb",
+          "sha256": "040ded760a879393d6fa9fe1ca09beb1770adb066e5708a2de236ef3a0f6e03e",
+          "bytes": 5892,
+          "triangles": 32,
+          "drawCalls": 2,
+          "bounds": {
+            "min": [
+              -33.85293320475645, -1.687340029390928e-15, -19.77605809054033
+            ],
+            "max": [33.85293520929523, 11.399999618530273, 19.77603095896346]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/outpatient-clinic-3d-1e3f71d4de50.glb",
+          "sha256": "1e3f71d4de508859e8dcc29f1f2105b41c61d10f95f81a8a72271e7ee7614f40",
+          "bytes": 45796,
+          "triangles": 1464,
+          "drawCalls": 14,
+          "bounds": {
+            "min": [
+              -47.67527600927013, 0.020000003278255463, -20.17987938920653
+            ],
+            "max": [34.31686249808035, 14.294999539852142, 42.917652594574875]
+          }
+        }
+      }
+    },
+    {
+      "key": "logistics-building",
+      "name": "后勤楼",
+      "placeId": "osm-way-313039029",
+      "memberPlaceIds": ["osm-way-313039029"],
+      "footprintSourceIds": ["osm-way-313039029"],
+      "origin": [113.3902525, 23.065219499999998],
+      "pickable": true,
+      "heightAccuracy": "photo_visual_estimate_not_surveyed",
+      "assets": {
+        "2.5d": {
+          "url": "/models/campus/logistics-building-2.5d-050a0136a47c.glb",
+          "sha256": "050a0136a47c34da8ce86466d5eb0a0f01e2403c7265de3687b67863986f174d",
+          "bytes": 19192,
+          "triangles": 136,
+          "drawCalls": 6,
+          "bounds": {
+            "min": [
+              -39.55153274536133, -1.55987988791664e-15, -25.474815368652344
+            ],
+            "max": [39.55153274536133, 20.6200008392334, 25.47477149963379]
+          }
+        },
+        "3d": {
+          "url": "/models/campus/logistics-building-3d-bb2fef952d83.glb",
+          "sha256": "bb2fef952d83c2ae154d257596dcb890d873688220ed08b9989039389c877853",
+          "bytes": 81624,
+          "triangles": 3484,
+          "drawCalls": 14,
+          "bounds": {
+            "min": [
+              -39.69153320044279, 0.10000000149011612, -25.610397182404995
+            ],
+            "max": [39.69153320044279, 22.234999619424343, 25.610347904264927]
           }
         }
       }

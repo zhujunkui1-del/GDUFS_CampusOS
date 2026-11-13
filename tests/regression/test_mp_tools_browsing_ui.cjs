@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- This regression entry point is intentionally CommonJS. */
 // Owner-authorized offline checks of the actual staged/installed frontend.
 // Only the HTTP and DOM boundaries are replaced; no app data or network is used.
 const assert = require('node:assert/strict');

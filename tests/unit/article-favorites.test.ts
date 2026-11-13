@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { dateGateFixture } from "../fixtures/date-gate";
 import { ArticleFavoriteStore } from "@/lib/server/account/favorites";
 import { AccountService } from "@/lib/server/account/email";

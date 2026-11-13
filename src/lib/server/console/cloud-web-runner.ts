@@ -177,7 +177,14 @@ export async function runCloudWebBatch(
               lease.publishedAtFromList,
             ),
             policy = await store.policy(lease.sourceId),
-            rightsScope = String(policy.policy?.rights_scope || "");
+            // A source whose entry was saved from the console gets its policy
+            // row written in the same request; rows created before that change
+            // have none and used to fail every detail page with
+            // POLICY_SCOPE_REQUIRED. The console never offers a narrower scope,
+            // so full text is the same default the form itself registers.
+            rightsScope =
+              String(policy.policy?.rights_scope || "") ||
+              "licensed_full_text";
           if (
             rightsScope !== "metadata_only" &&
             rightsScope !== "excerpt_and_link" &&

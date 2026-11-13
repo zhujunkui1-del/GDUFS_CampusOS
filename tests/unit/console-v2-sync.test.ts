@@ -105,7 +105,7 @@ describe("V2 persistent scheduling and dual executors", () => {
       f.close();
     }
   });
-  it("limits global manual collection to verified official websites with verified entry profiles", async () => {
+  it("collects every enabled official website with a confirmed entry profile, review labels are not gates", async () => {
     const f = await setup();
     try {
       const readyId = await f.source(0),
@@ -147,15 +147,17 @@ describe("V2 persistent scheduling and dual executors", () => {
         await f.store.syncNow({ commandId: crypto.randomUUID() }),
       ).toMatchObject({
         state: "registered",
-        registered: 1,
+        registered: 2,
         completed: 0,
       });
+      // A review label that was never ticked used to park a fully configured
+      // site forever; only a draft entry profile still keeps a source out.
       expect(
         f.sqlite
-          .prepare("SELECT source_id FROM ingestion_jobs")
+          .prepare("SELECT source_id FROM ingestion_jobs ORDER BY source_id")
           .all()
           .map((job) => job.source_id),
-      ).toEqual([readyId]);
+      ).toEqual([readyId, unverifiedSourceId].sort());
     } finally {
       f.close();
     }

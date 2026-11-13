@@ -748,3 +748,24 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 - 负责人图片：`CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/三饭正面.png` 和 `C:/Users/zhuju/Downloads/三饭卫星图.png`；两图SHA256记录在 `docs/model-previews/fengcai-cafeteria-v1/manifest.json`。文件名数字不解释为建筑参数。
 - 主体3层为负责人本轮明确回答，记为owner_confirmed；主屋顶13米/最高18.175米等是图像比例估算。入口东向、西侧弧形端及南侧塔身/屋面位置由参考图与原地图共同推断，不生成测绘级朝向/高度标签。
 - 原图片仅用于内部观察，未取得对外转载许可，故不复制到 `public/`、不嵌入GLB纹理；公开资源为程序生成几何。入口台阶不作为已核验步行路径或室内信息。
+
+
+## 2026-11-13｜门诊部建筑模型来源与层数
+
+- 原GIS：`src/features/campus-map/data/campus.json` 中 `osm-way-313039046`，来源 https://www.openstreetmap.org/way/313039046 ，沿用OpenStreetMap/ODbL署名与 `s1-2026-10-14.2`，原5顶点外环、ID及WGS84原点未改。
+- 图片：`CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/门诊部.png`、`门诊部23.jpg` 与 `C:/Users/zhuju/Downloads/门诊部卫星图.png`，SHA256记录于 `docs/model-previews/outpatient-clinic-v1/manifest.json`。文件名数字不解释为楼层、尺寸或方向。
+- 主体3层为负责人本轮明确确认，记为owner_confirmed；主屋顶11.15米、设备间最高约14.295米及开窗/遮阳/设备尺寸为图像估算，不作为测绘或医疗服务事实。
+- 原图片仅作内部参考，没有对外转载许可确认，故不进入 `public/` 或GLB纹理。模型为自编几何；不生成科室、开放时间、就诊能力、真实入口或步行路径信息。
+
+
+## 2026-11-13｜后勤楼组合模型来源与层数
+
+- 原GIS：`src/features/campus-map/data/campus.json` 的 `osm-way-313039029`，来源 https://www.openstreetmap.org/way/313039029 ，沿用OSM/ODbL署名和地图版本 `s1-2026-10-14.2`。原16顶点外环、ID、WGS84原点不变。
+- 负责人图片：`CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/后勤楼89.png` 以及 `C:/Users/zhuju/Downloads/后勤楼卫星图.png`。图片SHA256在 `docs/model-previews/logistics-building-v1/manifest.json`；文件名数字无建模意义。
+- 负责人明确最高6层、拐角2层、对面3层，记为owner_confirmed；南/西/北对应关系、主体20.4/6.8/10.2米与构架22.235米为影像下的显示估算。显示分界只引用既有顶点，虽面积守恒，也不记为测绘分栋边界。
+- 图片未取得对外转载许可确认，仅内部参考，不进入 `public/` 或GLB纹理。输出自编几何保留GIS署名，不从照片文字新增服务、入口或路径。
+
+
+## 2026-11-13｜剩余建筑模型线上发布来源复核
+
+没有新增GIS、照片或供应商数据。沿用已审阅 `building-model-catalog.json` 的82个自编GLB及既有OSM署名；本次补齐二饭、三饭、门诊部、后勤楼8个线上缺失资源。原参考图仍只保留内部文档/下载目录，没有公开为网站图片或纹理。`https://gdufs.zhiyuapp.site` 发布前74个、发布后82个清单GLB均已实际下载核对SHA；原74个字节未变。线上哈希回执在 `output/playwright/completed-models-online-2026-11-13/after-all-assets.json`，核验只访问公开页面/资源，未使用管理员身份或真实个人位置。

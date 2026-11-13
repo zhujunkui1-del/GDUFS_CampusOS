@@ -366,6 +366,38 @@ await collectCourts(teachingRoot, "teaching-a-d-2.5d.geojson");
     m.placeId,
   ]);
 }
+{
+  const root = "docs/model-previews/outpatient-clinic-v1",
+    m = await read(`${root}/manifest.json`);
+  if (m.placeId !== "osm-way-313039046" || m.name !== "门诊部")
+    throw new Error("Outpatient clinic source place");
+  checkSource(m.placeId, m.sourceGeometryWgs84);
+  const assets = Object.fromEntries(
+    ["2.5d", "3d"].map((mode) => [
+      mode,
+      { ...m.assets[mode], url: `./${m.assets[mode].file}` },
+    ]),
+  );
+  await add("outpatient-clinic", m.name, m.placeId, root, m, assets, [
+    m.placeId,
+  ]);
+}
+{
+  const root = "docs/model-previews/logistics-building-v1",
+    m = await read(`${root}/manifest.json`);
+  if (m.placeId !== "osm-way-313039029" || m.name !== "后勤楼")
+    throw new Error("Logistics building source place");
+  checkSource(m.placeId, m.sourceGeometryWgs84);
+  const assets = Object.fromEntries(
+    ["2.5d", "3d"].map((mode) => [
+      mode,
+      { ...m.assets[mode], url: `./${m.assets[mode].file}` },
+    ]),
+  );
+  await add("logistics-building", m.name, m.placeId, root, m, assets, [
+    m.placeId,
+  ]);
+}
 // These two visual links were already part of the approved A-D draft. Components omit them.
 globalThis.FileReader = class {
   readAsArrayBuffer(blob) {
@@ -477,19 +509,19 @@ const courtyardData =
   courtyardName = `courtyards-${sha(courtyardData).slice(0, 12)}.geojson`;
 await writeFile(`${out}/${courtyardName}`, courtyardData);
 const catalog = {
-  version: "campus-building-models-2026-11-13.4",
+  version: "campus-building-models-2026-11-13.6",
   mapVersion: campus.mapVersion,
   approvedForMap: true,
   ownerApproval:
-    "2026-11-01：将已完成的2.5D/3D模型放入网页；2026-11-12：新增友苑模型并统一其2.5D纯白模；新增师苑1-4栋、学生活动中心与学术交流中心2.5D/3D模型；2026-11-13：新增文采园（一饭）与博雅园（二饭）2.5D/3D模型，二饭4层由负责人确认；新增风采园（三饭）2.5D/3D模型，三饭3层由负责人确认",
+    "2026-11-01：将已完成的2.5D/3D模型放入网页；2026-11-12：新增友苑模型并统一其2.5D纯白模；新增师苑1-4栋、学生活动中心与学术交流中心2.5D/3D模型；2026-11-13：新增文采园（一饭）与博雅园（二饭）2.5D/3D模型，二饭4层由负责人确认；新增风采园（三饭）2.5D/3D模型，三饭3层由负责人确认；新增门诊部2.5D/3D模型，门诊部3层由负责人确认；新增后勤楼6/2/3层组合2.5D/3D模型，层数由负责人确认",
   ownerRenderingCorrection:
     "2026-11-02：3D不随距离/中心位置退回白模，平移保留模型；统一南苑7栋与其他宿舍的2.5D光照。2026-11-12：友苑2.5D为纯白体块，原3D资产保持不变；师苑1-4栋为独立可选模型，六层为照片估算；学生活动中心按朝北卫星校正主厅/红塔方位并保留中部显示空隙；学术交流中心按行政/院系办公楼风格表现坡屋顶与围合庭院，4层为视觉估算",
   referenceOrigin: [113.392, 23.066],
   legacySouth7Preserved: true,
   renderingPolicy: "mode-faithful-resident-models",
   south7VolumeRenderer: "shared",
-  displayBuildingCount: 38,
-  newBuildingCount: 37,
+  displayBuildingCount: 40,
+  newBuildingCount: 39,
   visualConnectorCount: 1,
   courtyardsUrl: `/models/campus/${courtyardName}`,
   entries,
@@ -500,7 +532,7 @@ await writeFile(
 );
 await writeFile(
   `${out}/SOURCE.md`,
-  "# CampusOS building models\n\nOwner authorized integration on 2026-11-01 and corrected visibility/rendering on 2026-11-02. Youyuan, Shiyuan 1–4, the Student Activity Center and the Academic Exchange Center GLBs were added on 2026-11-12/13. Youyuan 2.5D is the same plain white mass style as the North/South dormitories; its existing 3D GLB SHA256 is preserved. Shiyuan 1–4 are independent entries with exact source outlines; six stories/18 metres and facade details are visual estimates. The Student Activity Center remains one GIS entity; its white 2.5D volume and north-up corrected blue hall/red tower plus display-only central opening are visual estimates. The Academic Exchange Center keeps its source relation outer ring and two courtyard rings; grey hip roofs, four levels and facade details follow the administration/faculty visual reference and remain estimates. The Wencai Garden (First Cafeteria) model was added on 2026-11-13: a plain white 2.5D footprint volume and a southwest-facing 3D colonnade with orange upper storey, stairs, two-level display bridge and schematic solar roof. Three levels and all metric heights are photo estimates; no new routes or entrances are asserted. Boya Garden (Second Cafeteria) was added on 2026-11-13 with owner-confirmed four levels, a north-pointing triangular mass, the southern orange screen parallel to Shiyuan, a stepped south annex, exposed white stairs and roof frames. All metric heights and detailed roof/facade subdivisions are visual estimates. Its 2.5D asset is a plain white source volume. Fengcai Garden (Third Cafeteria) was added on 2026-11-13 with owner-confirmed three levels, a plain white 2.5D source volume and an east-facing 3D glazed entrance, white portico columns, silver stair tower at its south end, western curved roof rim and roof service strip. All metric heights and roof/facade subdivisions remain visual estimates. No reference photographs, image textures, supplier meshes or external buffer resources are published. Footprints © OpenStreetMap contributors, ODbL-1.0. Source/approval/hash/origins are recorded in src/features/campus-map/data/building-model-catalog.json and docs/model-previews.\n\nMetric heights and photo-informed courtyard/facade details remain visual approximations, not surveyed GIS or indoor/navigation facts. Original campus map and walking network are unchanged. South-7 keeps its approved public V2 3D file; its unchanged 21-metre footprint/courtyard uses the shared 2.5D material/light path with its original native volume as a failure fallback. Completed 3D models remain detailed across zoom and pan. A-D uses V2 with the corrected B clock tower. Shared-origin components are positioned in their GLBs.\n",
+  "# CampusOS building models\n\nOwner authorized integration on 2026-11-01 and corrected visibility/rendering on 2026-11-02. Youyuan, Shiyuan 1–4, the Student Activity Center and the Academic Exchange Center GLBs were added on 2026-11-12/13. Youyuan 2.5D is the same plain white mass style as the North/South dormitories; its existing 3D GLB SHA256 is preserved. Shiyuan 1–4 are independent entries with exact source outlines; six stories/18 metres and facade details are visual estimates. The Student Activity Center remains one GIS entity; its white 2.5D volume and north-up corrected blue hall/red tower plus display-only central opening are visual estimates. The Academic Exchange Center keeps its source relation outer ring and two courtyard rings; grey hip roofs, four levels and facade details follow the administration/faculty visual reference and remain estimates. The Wencai Garden (First Cafeteria) model was added on 2026-11-13: a plain white 2.5D footprint volume and a southwest-facing 3D colonnade with orange upper storey, stairs, two-level display bridge and schematic solar roof. Three levels and all metric heights are photo estimates; no new routes or entrances are asserted. Boya Garden (Second Cafeteria) was added on 2026-11-13 with owner-confirmed four levels, a north-pointing triangular mass, the southern orange screen parallel to Shiyuan, a stepped south annex, exposed white stairs and roof frames. All metric heights and detailed roof/facade subdivisions are visual estimates. Its 2.5D asset is a plain white source volume. Fengcai Garden (Third Cafeteria) was added on 2026-11-13 with owner-confirmed three levels, a plain white 2.5D source volume and an east-facing 3D glazed entrance, white portico columns, silver stair tower at its south end, western curved roof rim and roof service strip. All metric heights and roof/facade subdivisions remain visual estimates. The Outpatient Clinic was added on 2026-11-13 with owner-confirmed three levels, a plain white 2.5D source volume and a folded white front facade, red rear/return walls, horizontal metal screen and rooftop plant box in 3D. All metric heights and facade/roof dimensions remain visual estimates; no clinical service information or navigation entrance is inferred. The Logistics Building complex was added on 2026-11-13 as one source place: a six-storey southern bar, two-storey western corner/connector and three-storey opposite northern bar. Source-vertex display cuts preserve the total concave footprint and its east-open courtyard; these are not new GIS building boundaries. 2.5D is stepped plain white massing and 3D adds pale facades, blue-grey windows, red low wing and open rooftop frames. Levels are owner-confirmed; metric heights remain visual estimates. No reference photographs, image textures, supplier meshes or external buffer resources are published. Footprints © OpenStreetMap contributors, ODbL-1.0. Source/approval/hash/origins are recorded in src/features/campus-map/data/building-model-catalog.json and docs/model-previews.\n\nMetric heights and photo-informed courtyard/facade details remain visual approximations, not surveyed GIS or indoor/navigation facts. Original campus map and walking network are unchanged. South-7 keeps its approved public V2 3D file; its unchanged 21-metre footprint/courtyard uses the shared 2.5D material/light path with its original native volume as a failure fallback. Completed 3D models remain detailed across zoom and pan. A-D uses V2 with the corrected B clock tower. Shared-origin components are positioned in their GLBs.\n",
 );
 console.log(
   JSON.stringify(

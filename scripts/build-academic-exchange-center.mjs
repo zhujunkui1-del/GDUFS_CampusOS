@@ -60,14 +60,12 @@ const localRings = ringsWgs84.map((ring) => ring.slice(0, -1).map(toLocal));
 const [outer, ...holes] = localRings;
 if (outer.length !== 28 || holes.length !== 2)
   throw new Error(`Expected one 28-vertex outer ring and two courtyard rings; got ${outer.length}/${holes.length}.`);
-const footprintHash = hash(JSON.stringify(place.geometry));
 const ringHashes = ringsWgs84.map((ring) => hash(JSON.stringify(ring)));
 
 const facadeLevels = 4;
 const floorRise = 3.5;
 const eaves = 14.75;
 const roofPeak = 18.1;
-const capThickness = 0.22;
 const colors = {
   wall: "#e8e5dc",
   band: "#c47762",
@@ -78,9 +76,6 @@ const colors = {
   cap: "#d5d2c8",
 };
 
-function closed(ring) {
-  return [...ring, ring[0]];
-}
 const signedArea = (ring) =>
   ring.reduce((sum, a, index) => {
     const b = ring[(index + 1) % ring.length];
@@ -260,10 +255,10 @@ const roofModules = [
   { id: "south-east", box: [12, 40, 13, 25] },
   { id: "south-west", box: [-32, 2, 24, 34] },
 ];
-for (const module of roofModules) {
-  const rect = rectangle(...module.box);
+for (const roofPart of roofModules) {
+  const rect = rectangle(...roofPart.box);
   if (!rect.every(pointInsideComplex))
-    throw new Error(`Roof module ${module.id} leaves the source ring or overlaps a courtyard.`);
+    throw new Error(`Roof module ${roofPart.id} leaves the source ring or overlaps a courtyard.`);
 }
 
 function createMass() {
@@ -273,8 +268,8 @@ function createMass() {
   scene.name = "学术交流中心-2.5d-white-mass";
   scene.add(new Mesh(extrude(outer, 0, 15.0, holes), materials.wall));
   scene.add(new Mesh(extrude(outer, 15.0, 0.2, holes), materials.roof));
-  for (const module of roofModules)
-    scene.add(new Mesh(hipRoof(module.box, 15.1, 17.4), materials.roof));
+  for (const roofPart of roofModules)
+    scene.add(new Mesh(hipRoof(roofPart.box, 15.1, 17.4), materials.roof));
   scene.userData = {
     modelVersion: "academic-exchange-center-v1-2026-11-13",
     sourcePlaceId: place.id,
@@ -305,8 +300,8 @@ function createDetailed() {
   // of a closed extrusion; this keeps the full resident 3D model budget below the campus limit.
   scene.add(new Mesh(verticalWallShell([outer, ...holes], 0.15, eaves), materials.wall));
   scene.add(new Mesh(roofDeck(outer, holes, eaves), materials.roof));
-  for (const module of roofModules)
-    scene.add(new Mesh(hipRoof(module.box, eaves, roofPeak), materials.roof));
+  for (const roofPart of roofModules)
+    scene.add(new Mesh(hipRoof(roofPart.box, eaves, roofPeak), materials.roof));
 
   const rings = [outer, ...holes];
   for (let ringIndex = 0; ringIndex < rings.length; ringIndex++) {

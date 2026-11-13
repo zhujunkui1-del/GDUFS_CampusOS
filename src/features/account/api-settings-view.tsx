@@ -303,7 +303,7 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
     }
   }
 
-  async function usePlatform() {
+  async function selectPlatform() {
     if (busy) return;
     setBusy("platform");
     try {
@@ -339,7 +339,7 @@ function ApiSettings({ loggedIn }: { loggedIn: boolean }) {
         {loggedIn && (
           <button
             type="button"
-            onClick={() => void usePlatform()}
+            onClick={() => void selectPlatform()}
             disabled={busy !== ""}
           >
             切回平台

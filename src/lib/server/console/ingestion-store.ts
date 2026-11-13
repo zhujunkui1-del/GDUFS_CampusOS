@@ -70,7 +70,7 @@ export class IngestionStore extends ConsoleStore {
       .prepare(
         "UPDATE knowledge_sources SET last_checked_at=?,last_success_at=CASE WHEN ? THEN ? ELSE last_success_at END,last_error=? WHERE id=?",
       )
-      .bind(now, Number(completed && !failed), now, errorCode, sourceId);
+      .bind(now, Number(completed && !failed), now, failed ? errorCode : null, sourceId);
   }
   private async intakeBlock(
     sourceId: string,
@@ -209,13 +209,11 @@ export class IngestionStore extends ConsoleStore {
       { profile, policy } = await this.policy(value.sourceId),
       source = await this.source(value.sourceId),
       id = "job-" + value.commandId;
-    if (
-      !source.enabled ||
-      !policy ||
-      policy.rule_version !== profile.ruleVersion ||
-      Number(policy.expires_at_ms) <= Date.parse(this.now())
-    )
-      throw new ApiError("INVALID_ARGUMENT", "采集策略尚未核验或已过期。");
+    // Creating a job only needs a usable entry profile. The collection policy
+    // used to be mandatory here, which left every site configured from the
+    // console unable to start a single run.
+    if (!source.enabled || !profile || profile.configurationStatus === "discovered")
+      throw new ApiError("INVALID_ARGUMENT", "该官网还没有配置可采集的入口。");
     return this.mutate(
       { commandId: value.commandId, expectedVersion: 0 },
       "job.create",
@@ -232,7 +230,7 @@ export class IngestionStore extends ConsoleStore {
             value.sourceId,
             profile.ruleVersion,
             source.version,
-            policy.version,
+            policy?.version ?? 0,
             value.sourceId + ":" + value.commandId,
             value.maxArticles,
             this.now(),

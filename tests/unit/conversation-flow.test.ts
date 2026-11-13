@@ -91,7 +91,7 @@ function answered(events: Event[]) {
 
 // A roleplay sentence is ordinary chat: answer in character, never search.
 it("answers an in-character roleplay turn without searching", async () => {
-  const { f, client, events } = await runTurn("你是一只大肥鱼", [
+  const { f, events } = await runTurn("你是一只大肥鱼", [
     "哼，本鱼当然是又大又肥的那条，不过校园问题还是得好好问。",
   ]);
   try {

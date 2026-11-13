@@ -396,7 +396,7 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
       f.close();
     }
   });
-  it("requires policy reapproval after a parser release and rejects old queued or in-flight rules", async () => {
+  it("starts a job under the current parser release but never resumes one pinned to an old release", async () => {
     const f = await setup();
     try {
       const setRule = (rule: string) => {
@@ -410,12 +410,21 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
           .run(rule, f.job.id);
       };
       setRule("superseded-fixture-rule");
-      await expect(
-        f.store.createJob({
-          commandId: crypto.randomUUID(),
-          sourceId: p.sourceId,
-        }),
-      ).rejects.toThrow();
+      // A stale policy row is not a reason to refuse a fresh run: the job the
+      // console asks for records the profile the console currently holds.
+      const commandId = crypto.randomUUID();
+      await f.store.createJob({
+        commandId,
+        sourceId: p.sourceId,
+        maxArticles: 1,
+      });
+      expect(
+        f.sqlite
+          .prepare("SELECT rule_version FROM ingestion_jobs WHERE id=?")
+          .get("job-" + commandId),
+      ).toEqual({ rule_version: p.ruleVersion });
+      // Work already queued under the old release is still refused, so a parser
+      // change cannot half-apply to a job written against the old one.
       await expect(f.claim()).rejects.toMatchObject({ code: "CONFLICT" });
       setRule(p.ruleVersion);
       const lease = await f.claim();

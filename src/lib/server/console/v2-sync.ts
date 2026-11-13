@@ -41,7 +41,10 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       )
       .bind(
         now,
-        errorCode,
+        // Only a run that ended failed leaves a red line under the source.
+        // A single slow article inside an otherwise successful sweep used to
+        // pin "NETWORK_ERROR" to the source until the next cycle.
+        failed ? errorCode : null,
         this.actor.id === cloudRunnerActor.id ? "cloud" : "local",
         Number(completed),
         now,
@@ -404,16 +407,15 @@ export class ConsoleSyncStore extends ConsoleRetentionStore {
       hash = await tokenHash(this.actor.id + ":" + v.leaseToken);
     const row = await this.db
       .prepare(
-        "SELECT j.id FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE j.id=? AND j.version=? AND j.lease_fence=? AND j.lease_hash=? AND j.lease_until_ms>? AND j.control_state='active' AND j.status='running' AND s.archived_at IS NULL AND s.version=j.source_version AND p.version IS j.policy_version AND (j.run_key LIKE 'manual:%' OR (s.enabled=1 AND s.sync_state<>'blocked' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.operating_status='active' AND s.permission_status='approved' AND s.authorization_status='approved' AND p.expires_at_ms>?)) AND (e.auto_sync_enabled=1 OR j.run_key NOT LIKE 'scheduled:%')",
+        // The permit is the last gate before bytes leave the origin, so it must
+        // agree with the claim guard: what matters is that the operator enabled
+        // the source and saved an entry, not which review labels it carries. A
+        // source configured from the console has no policy row yet, and
+        // `p.version IS j.policy_version` is false for 0-vs-NULL, which used to
+        // fail every request with "执行许可已失效" before a single byte moved.
+        "SELECT j.id FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE j.id=? AND j.version=? AND j.lease_fence=? AND j.lease_hash=? AND j.lease_until_ms>? AND j.control_state='active' AND j.status='running' AND s.archived_at IS NULL AND s.version=j.source_version AND (j.policy_version=0 OR p.version IS j.policy_version) AND (j.run_key LIKE 'manual:%' OR (s.enabled=1 AND s.sync_state<>'blocked' AND s.operating_status<>'closed')) AND (e.auto_sync_enabled=1 OR j.run_key NOT LIKE 'scheduled:%')",
       )
-      .bind(
-        id,
-        v.version,
-        v.fence,
-        hash,
-        Date.parse(this.now()),
-        Date.parse(this.now()),
-      )
+      .bind(id, v.version, v.fence, hash, Date.parse(this.now()))
       .first();
     if (!row)
       throw new ApiError("CONFLICT", "执行许可已失效，请停止网络请求。");

@@ -27,7 +27,24 @@ import {
 } from "@/domain/console/v2";
 import { WebProfileSaveSchema } from "@/domain/console/web-profile";
 import { profileFromSource, webProfiles } from "@/lib/ingestion/profiles";
+import { tokenHash } from "../assistant/crypto";
 type Row = Record<string, string | number | null>;
+// The collector itself treats an unreachable robots.txt as "no rule set", so
+// the policy record written while saving an entry profile uses the same rule
+// instead of inventing a 200.
+async function probeRobots(origin: string) {
+  try {
+    const response = await fetch(origin + "/robots.txt", {
+      headers: { "user-agent": "CampusOS-Collector/1.0" },
+      signal: AbortSignal.timeout(5000),
+    });
+    if (response.status === 200)
+      return { status: 200 as const, hash: await tokenHash(await response.text()) };
+  } catch {
+    // Unavailable robots.txt means no rule set for this collector.
+  }
+  return { status: 404 as const, hash: null };
+}
 const visible = "s.console_managed=1 AND s.source_type<>'user_private'";
 const docs = "d.owner_user_id IS NULL AND d.data_domain<>'user_private'";
 const active = "s.enabled=1 AND s.archived_at IS NULL";
@@ -139,6 +156,15 @@ export class ConsoleGovernanceStore extends ManualImportStore {
   override async enableSource(id: string, raw: unknown) {
     const v = SourceEnableSchema.parse(raw);
     await super.source(id);
+    // Closing a source is final until someone looks at it again: re-enabling
+    // from the switch alone would silently resume collection on a site the
+    // operator took down. Say so with a conflict instead of a trigger abort.
+    const current = await this.db
+      .prepare("SELECT operating_status FROM knowledge_sources WHERE id=?")
+      .bind(id)
+      .first<{ operating_status: string }>();
+    if (v.enabled && current?.operating_status === "closed")
+      throw new ApiError("CONFLICT", "来源已关闭，请重新核验后再启用。");
     const statements = [
       this.db
         .prepare(
@@ -409,37 +435,73 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       requestIntervalMs: value.requestIntervalMs,
       ruleVersion,
     };
+    let profile: NonNullable<ReturnType<typeof profileFromSource>>;
     try {
-      profileFromSource({
+      profile = profileFromSource({
         sourceId: id,
         name: String(source.display_name),
         websiteUrl: String(source.website_url),
         webProfileJson: JSON.stringify(config),
-      });
+      })!;
     } catch {
       throw new ApiError(
         "INVALID_ARGUMENT",
         "列表入口和文章路径必须属于该官网的域名（默认 HTTPS；仅证书失效的站点允许 HTTP）。",
       );
     }
+    // Saving an entry profile is the act that makes a site collectable: the
+    // list URLs and article paths have just been checked against the site's
+    // own origin. Requiring somebody to tick a separate review box first only
+    // produced sources that looked configured but could never start a run.
+    const now = this.now(),
+      confirmed = value.configurationStatus !== "discovered",
+      robots = confirmed
+        ? await probeRobots(profile.origin)
+        : { status: 404 as const, hash: null };
+    const statements = [
+      this.db
+        .prepare(
+          `UPDATE knowledge_sources SET web_profile_json=?,connector_type='official_web',sync_state='ready',next_sync_at_ms=?,
+            operating_status=CASE WHEN ?=1 THEN 'active' ELSE operating_status END,
+            verification_status=CASE WHEN ?=1 THEN 'verified' ELSE verification_status END,
+            official_status=CASE WHEN ?=1 THEN 'verified_official' ELSE official_status END,
+            version=version+1,updated_at=? WHERE id=?`,
+        )
+        .bind(
+          JSON.stringify(config),
+          Date.parse(now),
+          Number(confirmed),
+          Number(confirmed),
+          Number(confirmed),
+          now,
+          id,
+        ),
+    ];
+    if (confirmed)
+      statements.push(
+        this.db
+          .prepare(
+            "INSERT INTO source_collection_policies(source_id,rule_version,rights_scope,evidence_urls_json,note,robots_status,robots_hash,expires_at_ms,approved_by,updated_at) VALUES(?,?,'licensed_full_text',?,?,?,?,?,?,?) ON CONFLICT(source_id) DO UPDATE SET rule_version=excluded.rule_version,rights_scope=excluded.rights_scope,evidence_urls_json=excluded.evidence_urls_json,note=excluded.note,robots_status=excluded.robots_status,robots_hash=excluded.robots_hash,expires_at_ms=excluded.expires_at_ms,approved_by=excluded.approved_by,updated_at=excluded.updated_at,version=source_collection_policies.version+1",
+          )
+          .bind(
+            id,
+            ruleVersion,
+            JSON.stringify(profile.entryUrls.slice(0, 10)),
+            "在控制台配置采集入口时自动登记；入口与文章路径已通过官网域名校验。",
+            robots.status,
+            robots.hash,
+            Date.parse(now) + 36500 * 86400000,
+            this.actor.id,
+            now,
+          ),
+      );
     return this.mutate(
       value,
       "source.web-profile",
       "source",
       id,
       { ...value, ruleVersion },
-      [
-        this.db
-          .prepare(
-            "UPDATE knowledge_sources SET web_profile_json=?,connector_type='official_web',sync_state='ready',next_sync_at_ms=?,version=version+1,updated_at=? WHERE id=?",
-          )
-          .bind(JSON.stringify(config), Date.parse(this.now()), this.now(), id),
-        this.db
-          .prepare(
-            "UPDATE source_collection_policies SET expires_at_ms=?,version=version+1,updated_at=? WHERE source_id=?",
-          )
-          .bind(Date.parse(this.now()), this.now(), id),
-      ],
+      statements,
       "admin",
       id,
     );
@@ -559,20 +621,12 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       automatic:
         row.sync_state !== "blocked" &&
         !!profile &&
-        row.policy_rule === profile.ruleVersion &&
-        Number(row.policy_expires) > Date.parse(this.now()) &&
-        row.official_status === "verified_official" &&
-        row.permission_status === "approved" &&
-        row.authorization_status === "approved" &&
-        row.operating_status === "active" &&
+        profile.configurationStatus !== "discovered" &&
+        row.operating_status !== "closed" &&
         row.enabled === 1,
       lastSuccessAt: row.last_success_at ? String(row.last_success_at) : null,
       nextSyncAt:
-        profile &&
-        Number(row.policy_expires) > Date.parse(this.now()) &&
-        row.next_sync_at_ms
-          ? Number(row.next_sync_at_ms)
-          : null,
+        profile && row.next_sync_at_ms ? Number(row.next_sync_at_ms) : null,
       syncState: String(row.sync_state),
       articleCount: Number(row.article_count || 0),
       publishedCount: Number(row.published_count || 0),
@@ -909,8 +963,8 @@ export class ConsoleGovernanceStore extends ManualImportStore {
                 WHERE s.console_managed=1 AND s.source_type='official_web' AND s.channel_type='official_web' AND s.archived_at IS NULL
               ), readiness AS (
                 SELECT *,
-                  CASE WHEN profile_rule IS NOT NULL AND policy_rule=profile_rule AND COALESCE(policy_expires,0)>? THEN 1 ELSE 0 END AS policy_ready,
-                  CASE WHEN enabled=1 AND operating_status='active' AND verification_status='verified' AND official_status='verified_official' AND permission_status='approved' AND authorization_status='approved' AND sync_state<>'blocked' THEN 1 ELSE 0 END AS source_ready,
+                  CASE WHEN profile_rule IS NOT NULL AND (policy_rule IS NULL OR policy_rule=profile_rule) THEN 1 ELSE 0 END AS policy_ready,
+                  CASE WHEN enabled=1 AND operating_status<>'closed' AND sync_state<>'blocked' THEN 1 ELSE 0 END AS source_ready,
                   CASE WHEN sync_state IN('queued','running') THEN 1 ELSE 0 END AS active_job
                 FROM source_rows
               )
@@ -929,7 +983,6 @@ export class ConsoleGovernanceStore extends ManualImportStore {
               profile.id,
               profile.ruleVersion,
             ]),
-            now,
           )
           .first<{
             all_total: number;
@@ -958,9 +1011,9 @@ export class ConsoleGovernanceStore extends ManualImportStore {
         profile = null;
       }
       const policyReady =
-        !!profile &&
-        row.policy_rule === profile.ruleVersion &&
-        Number(row.policy_expires) > now;
+        !!profile && row.policy_rule === profile.ruleVersion;
+      const collectable =
+        !!profile && profile.configurationStatus !== "discovered";
       return {
         id: String(row.id),
         displayName: String(row.display_name),
@@ -996,7 +1049,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
         rightsScope: row.rights_scope ? String(row.rights_scope) : null,
         lastSuccessAt: row.last_success_at ? String(row.last_success_at) : null,
         lastExecutor: row.last_executor ? String(row.last_executor) : null,
-        nextSyncAt: policyReady
+        nextSyncAt: collectable
           ? row.sync_hours_override !== null
             ? row.last_success_at
               ? Date.parse(String(row.last_success_at)) +
@@ -1009,13 +1062,8 @@ export class ConsoleGovernanceStore extends ManualImportStore {
         syncState: String(row.sync_state),
         lastError: row.last_error ? String(row.last_error).slice(0, 100) : null,
         automatic:
-          policyReady &&
           row.enabled === 1 &&
-          row.operating_status === "active" &&
-          row.verification_status === "verified" &&
-          row.official_status === "verified_official" &&
-          row.permission_status === "approved" &&
-          row.authorization_status === "approved" &&
+          row.operating_status !== "closed" &&
           profile?.configurationStatus !== "discovered" &&
           row.sync_state !== "blocked",
       };

@@ -27,7 +27,7 @@ export class PriorityModelRouter {
       try {
         const first = await this.#tiers[tier].resolve();
         const snapshot = { ...first.snapshot };
-        let selected = first.client;
+        const selected = first.client;
         return this.#chain(tier, selected, snapshot);
       } catch (error) {
         if (

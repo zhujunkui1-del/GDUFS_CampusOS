@@ -109,7 +109,7 @@ async function requestManualSync(
 }
 
 function sourceCollectionBlock() {
-  return "没有可启动任务：该官网或入口尚未核验，或已有任务正在采集";
+  return "该官网还没有配置可用的采集入口，或已有任务正在采集";
 }
 
 function globalCollectionBlock() {
@@ -119,11 +119,9 @@ function globalCollectionBlock() {
 function canCollectSource(source: OfficialWebSource) {
   return (
     source.enabled &&
-    source.operatingStatus === "active" &&
-    source.verificationStatus === "verified" &&
-    source.officialStatus === "verified_official" &&
     source.profileConfigured &&
-    source.profile?.configurationStatus !== "discovered"
+    !!source.profile &&
+    source.profile.configurationStatus !== "discovered"
   );
 }
 
@@ -476,7 +474,7 @@ function OfficialWebSourceRow({
             title={
               canCollectSource(source)
                 ? undefined
-                : "只采集已核验且入口已确认的官网"
+                : "请先点「配置入口」保存可用的文章入口"
             }
             onClick={() => void runNow()}
           >

@@ -1,0 +1,287 @@
+{
+  "modelVersion": "logistics-building-v1-2026-11-13",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "mapIntegrated": true,
+  "placeId": "osm-way-313039029",
+  "name": "后勤楼",
+  "origin": [
+    113.3902525,
+    23.065219499999998
+  ],
+  "sourceGeometryWgs84": [
+    [
+      113.3899692,
+      23.0650468
+    ],
+    [
+      113.3898659,
+      23.0650468
+    ],
+    [
+      113.3898659,
+      23.0651349
+    ],
+    [
+      113.3899445,
+      23.0651349
+    ],
+    [
+      113.3898668,
+      23.0654123
+    ],
+    [
+      113.3900201,
+      23.0654486
+    ],
+    [
+      113.3900249,
+      23.0654312
+    ],
+    [
+      113.3905128,
+      23.0654312
+    ],
+    [
+      113.3905128,
+      23.0653061
+    ],
+    [
+      113.39006,
+      23.0653061
+    ],
+    [
+      113.3901079,
+      23.0651349
+    ],
+    [
+      113.3906391,
+      23.0651349
+    ],
+    [
+      113.3906391,
+      23.0650468
+    ],
+    [
+      113.3901326,
+      23.0650468
+    ],
+    [
+      113.3901382,
+      23.0650267
+    ],
+    [
+      113.389985,
+      23.0649904
+    ],
+    [
+      113.3899692,
+      23.0650468
+    ]
+  ],
+  "sourceFootprintSha256": "9cc7c2bac7c29af588310d588fe2c9c847e45744c7233fb0a2b1b8647976bf64",
+  "sourceVertexCount": 16,
+  "levels": {
+    "south": 6,
+    "corner": 2,
+    "north": 3
+  },
+  "levelsSource": "Owner confirmed highest block six levels, corner two levels, opposite block three levels. Placement follows the supplied imagery.",
+  "heightAccuracy": "photo_visual_estimate_not_surveyed",
+  "sourceAreaMetersSquared": 2064.8296536163516,
+  "partitionAreaMetersSquared": 2064.829653616352,
+  "parts": [
+    {
+      "key": "south-six",
+      "role": "southern tallest bar",
+      "levels": 6,
+      "heightMeters": 20.4,
+      "sourceVertexIndexes": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "localRingMeters": [
+        [
+          -14.79346044172357,
+          9.407100830214496
+        ],
+        [
+          39.55153393095593,
+          9.407100830214496
+        ],
+        [
+          39.55153393095593,
+          19.203378032990436
+        ],
+        [
+          -12.266500043759603,
+          19.203378032990436
+        ]
+      ]
+    },
+    {
+      "key": "west-two",
+      "role": "western corner/connecting wing",
+      "levels": 2,
+      "heightMeters": 6.8,
+      "sourceVertexIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        9,
+        10,
+        13,
+        14,
+        15
+      ],
+      "localRingMeters": [
+        [
+          -28.983314954570197,
+          19.203378032990436
+        ],
+        [
+          -39.55153392686695,
+          19.203378032990436
+        ],
+        [
+          -39.55153392686695,
+          9.407100830214496
+        ],
+        [
+          -31.51027534844519,
+          9.407100830214496
+        ],
+        [
+          -39.4594584475076,
+          -21.438426830532244
+        ],
+        [
+          -23.775935033191622,
+          -25.47481456874514
+        ],
+        [
+          -23.284865807215745,
+          -23.540017003209236
+        ],
+        [
+          -19.693922091756,
+          -9.629497048601241
+        ],
+        [
+          -14.79346044172357,
+          9.407100830214496
+        ],
+        [
+          -12.266500043759603,
+          19.203378032990436
+        ],
+        [
+          -11.69358594406176,
+          21.438396108035768
+        ],
+        [
+          -27.366878748651366,
+          25.474771194967094
+        ]
+      ]
+    },
+    {
+      "key": "north-three",
+      "role": "opposite northern bar",
+      "levels": 3,
+      "heightMeters": 10.2,
+      "sourceVertexIndexes": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "localRingMeters": [
+        [
+          -23.284865807215745,
+          -23.540017003209236
+        ],
+        [
+          26.630274917865492,
+          -23.540017003209236
+        ],
+        [
+          26.630274917865492,
+          -9.629497048601241
+        ],
+        [
+          -19.693922091756,
+          -9.629497048601241
+        ]
+      ]
+    }
+  ],
+  "orientation": "South bar six storeys; west corner/connector two storeys; opposite north bar three storeys. U-shaped footprint remains open to the east.",
+  "assets": {
+    "2.5d": {
+      "file": "logistics-building-2.5d.glb",
+      "sha256": "050a0136a47c34da8ce86466d5eb0a0f01e2403c7265de3687b67863986f174d",
+      "bytes": 19192,
+      "triangles": 136,
+      "drawCalls": 6,
+      "materialCount": 2,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -39.55153274536133,
+          -1.55987988791664e-15,
+          -25.474815368652344
+        ],
+        "max": [
+          39.55153274536133,
+          20.6200008392334,
+          25.47477149963379
+        ]
+      }
+    },
+    "3d": {
+      "file": "logistics-building-3d.glb",
+      "sha256": "bb2fef952d83c2ae154d257596dcb890d873688220ed08b9989039389c877853",
+      "bytes": 81624,
+      "triangles": 3484,
+      "drawCalls": 14,
+      "materialCount": 7,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -39.69153320044279,
+          0.10000000149011612,
+          -25.610397182404995
+        ],
+        "max": [
+          39.69153320044279,
+          22.234999619424343,
+          25.610347904264927
+        ]
+      }
+    }
+  },
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/后勤楼89.png",
+      "sha256": "84a4d0b0e62b749d7547f7f5bb461ba3638473b515a1a9594c2c10f098d5af91",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    },
+    {
+      "path": "C:/Users/zhuju/Downloads/后勤楼卫星图.png",
+      "sha256": "00270cf2d3ba2c70c9576c61e427385df767d442a8c9620f052c23f519e064d1",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    }
+  ],
+  "limitations": [
+    "Floor counts are owner-confirmed; metric heights, facade bays and roof frames remain visual estimates.",
+    "Part cuts join existing source vertices and preserve the footprint area, but are display partitions, not new GIS building boundaries or IDs.",
+    "Open courtyard is preserved through the source concave outline; no surveyed inner ring or navigation path is added.",
+    "2.5D uses only stepped plain white volumes and roof caps; all facade detail is 3D-only."
+  ]
+}

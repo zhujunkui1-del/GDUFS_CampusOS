@@ -1,0 +1,94 @@
+{
+  "version": "outpatient-clinic-v1-2026-11-13",
+  "placeId": "osm-way-313039046",
+  "levels": 3,
+  "datums": [
+    0.3,
+    3.9,
+    7.5
+  ],
+  "roofTop": 11.15,
+  "palette": {
+    "ivory": "#e5e4de",
+    "red": "#bc6059",
+    "glass": "#70868a",
+    "backGlass": "#b0bfc0",
+    "spandrel": "#a9c7c2",
+    "metal": "#c2c9c5",
+    "roof": "#d9d7cc",
+    "darkRoof": "#7b7f7a"
+  },
+  "alignedToLocal": {
+    "anchor": [
+      -33.85293320475645,
+      -19.77605809054033
+    ],
+    "rotationYRadians": -0.5135089631656428
+  },
+  "alignedOuterMeters": [
+    [
+      0,
+      0
+    ],
+    [
+      77.73115309884905,
+      0
+    ],
+    [
+      56.36589603047081,
+      13.619677712906235
+    ],
+    [
+      38.55815277444027,
+      13.845759989402413
+    ],
+    [
+      22.600079118117947,
+      27.556353849284346
+    ]
+  ],
+  "assets": {
+    "2.5d": {
+      "file": "outpatient-clinic-2.5d.glb",
+      "sha256": "040ded760a879393d6fa9fe1ca09beb1770adb066e5708a2de236ef3a0f6e03e",
+      "bytes": 5892,
+      "triangles": 32,
+      "drawCalls": 2,
+      "materialCount": 2,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -33.85293320475645,
+          -1.687340029390928e-15,
+          -19.77605809054033
+        ],
+        "max": [
+          33.85293520929523,
+          11.399999618530273,
+          19.77603095896346
+        ]
+      }
+    },
+    "3d": {
+      "file": "outpatient-clinic-3d.glb",
+      "sha256": "1e3f71d4de508859e8dcc29f1f2105b41c61d10f95f81a8a72271e7ee7614f40",
+      "bytes": 45796,
+      "triangles": 1464,
+      "drawCalls": 14,
+      "materialCount": 8,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -47.67527600927013,
+          0.020000003278255463,
+          -20.17987938920653
+        ],
+        "max": [
+          34.31686249808035,
+          14.294999539852142,
+          42.917652594574875
+        ]
+      }
+    }
+  }
+}

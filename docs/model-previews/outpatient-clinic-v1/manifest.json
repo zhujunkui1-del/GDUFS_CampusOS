@@ -1,0 +1,141 @@
+{
+  "modelVersion": "outpatient-clinic-v1-2026-11-13",
+  "sourceMapVersion": "s1-2026-10-14.2",
+  "mapIntegrated": true,
+  "placeId": "osm-way-313039046",
+  "name": "门诊部",
+  "origin": [
+    113.390075,
+    23.06582195
+  ],
+  "sourceGeometryWgs84": [
+    [
+      113.3897441,
+      23.0659998
+    ],
+    [
+      113.3904059,
+      23.0656564
+    ],
+    [
+      113.3901586,
+      23.0656441
+    ],
+    [
+      113.3900059,
+      23.065721
+    ],
+    [
+      113.3898042,
+      23.0656841
+    ],
+    [
+      113.3897441,
+      23.0659998
+    ]
+  ],
+  "sourceFootprintSha256": "d7bde4859c8324022d36e37f4ed75038bcc582c25b50ce23b92142366542b329",
+  "sourceVertexCount": 5,
+  "levels": 3,
+  "levelsSource": "Owner explicitly confirmed three storeys in this conversation.",
+  "heightAccuracy": "photo_visual_estimate_not_surveyed",
+  "mainRoofMeters": 11.15,
+  "rooftopPlantTopMeters": 14.295,
+  "alignedToLocal": {
+    "anchor": [
+      -33.85293320475645,
+      -19.77605809054033
+    ],
+    "rotationYRadians": -0.5135089631656428
+  },
+  "alignedOuterMeters": [
+    [
+      0,
+      0
+    ],
+    [
+      77.73115309884905,
+      0
+    ],
+    [
+      56.36589603047081,
+      13.619677712906235
+    ],
+    [
+      38.55815277444027,
+      13.845759989402413
+    ],
+    [
+      22.600079118117947,
+      27.556353849284346
+    ]
+  ],
+  "orientation": "Folded south/southwest-facing white frontage; long red rear wall follows northwest-southeast axis, with a west return/louver screen. Display details inferred from supplied images.",
+  "assets": {
+    "2.5d": {
+      "file": "outpatient-clinic-2.5d.glb",
+      "sha256": "040ded760a879393d6fa9fe1ca09beb1770adb066e5708a2de236ef3a0f6e03e",
+      "bytes": 5892,
+      "triangles": 32,
+      "drawCalls": 2,
+      "materialCount": 2,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -33.85293320475645,
+          -1.687340029390928e-15,
+          -19.77605809054033
+        ],
+        "max": [
+          33.85293520929523,
+          11.399999618530273,
+          19.77603095896346
+        ]
+      }
+    },
+    "3d": {
+      "file": "outpatient-clinic-3d.glb",
+      "sha256": "1e3f71d4de508859e8dcc29f1f2105b41c61d10f95f81a8a72271e7ee7614f40",
+      "bytes": 45796,
+      "triangles": 1464,
+      "drawCalls": 14,
+      "materialCount": 8,
+      "textureCount": 0,
+      "bounds": {
+        "min": [
+          -47.67527600927013,
+          0.020000003278255463,
+          -20.17987938920653
+        ],
+        "max": [
+          34.31686249808035,
+          14.294999539852142,
+          42.917652594574875
+        ]
+      }
+    }
+  },
+  "references": [
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/门诊部.png",
+      "sha256": "dea908bd4ddb60cf37d84c0a5361b8bc3c1c55915740625aa429e5308ae9ba63",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    },
+    {
+      "path": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/门诊部23.jpg",
+      "sha256": "280f52f2496d93eb0dbda0096f7f30cdd6e38da5e0cdd4c1af87bcbffb8470eb",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    },
+    {
+      "path": "C:/Users/zhuju/Downloads/门诊部卫星图.png",
+      "sha256": "f013d97540c3b49e6f95557a4af0e769a3354823e8f9544c63e96e51d6f45bf1",
+      "usage": "internal_visual_reference_only_no_pixels_published"
+    }
+  ],
+  "limitations": [
+    "Three floors are owner-confirmed; all metric heights, window spacing, roof units and screen dimensions remain visual estimates.",
+    "The rooftop plant/access box is not an additional full building storey.",
+    "No GIS entrance, courtyard, path, indoor floor plan or clinical service data is inferred from this visual model.",
+    "2.5D is a plain white source volume; facade and roof details are 3D-only."
+  ]
+}

@@ -196,6 +196,22 @@
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary
 
+/models/campus/logistics-building-2.5d-050a0136a47c.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/logistics-building-3d-bb2fef952d83.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/outpatient-clinic-2.5d-040ded760a87.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
+/models/campus/outpatient-clinic-3d-1e3f71d4de50.glb
+  Cache-Control: public,max-age=31536000,immutable
+  Content-Type: model/gltf-binary
+
 /models/campus/pavilion-2.5d-5c3b917e2d03.glb
   Cache-Control: public,max-age=31536000,immutable
   Content-Type: model/gltf-binary

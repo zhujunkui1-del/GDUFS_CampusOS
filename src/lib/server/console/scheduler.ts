@@ -3,8 +3,8 @@ import { profileFromSource, webProfiles } from "@/lib/ingestion/profiles";
 type Due = {
   id: string;
   version: number;
-  policy_version: number;
-  rule_version: string;
+  policy_version: number | null;
+  rule_version: string | null;
   display_name: string;
   website_url: string | null;
   web_profile_json: string | null;
@@ -77,11 +77,14 @@ export async function dispatchDue(
       result.state = "paused";
       return result;
     }
+    // Only a real change to the source itself invalidates a queued job. The
+    // review labels (verification, permission, policy expiry) used to be part
+    // of this test as well, which meant a job could be parked a tick after it
+    // was registered simply because an unrelated label had not been ticked.
     const stale = await db
       .prepare(
-        "SELECT j.id,j.source_id,j.version FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE j.job_kind='web' AND j.run_key NOT LIKE 'manual:%' AND j.control_state='active' AND j.phase<>'complete' AND (j.source_version<>s.version OR j.policy_version<>p.version OR p.source_id IS NULL OR p.expires_at_ms<=? OR s.enabled=0 OR s.operating_status<>'active' OR s.permission_status<>'approved') ORDER BY j.created_at,j.id LIMIT 50",
+        "SELECT j.id,j.source_id,j.version FROM ingestion_jobs j JOIN knowledge_sources s ON s.id=j.source_id LEFT JOIN source_collection_policies p ON p.source_id=s.id WHERE j.job_kind='web' AND j.run_key NOT LIKE 'manual:%' AND j.control_state='active' AND j.phase<>'complete' AND (j.source_version<>s.version OR (p.source_id IS NOT NULL AND j.policy_version<>p.version) OR s.enabled=0 OR s.archived_at IS NOT NULL OR s.operating_status='closed') ORDER BY j.created_at,j.id LIMIT 50",
       )
-      .bind(now)
       .all<{ id: string; source_id: string; version: number }>();
     for (let i = 0; i < stale.results.length; i += REGISTRATION_CHUNK) {
       const statements = [];
@@ -123,14 +126,13 @@ export async function dispatchDue(
       where = options.sourceId ? " AND s.id=?" : "";
     const rows = await db
       .prepare(
-        `SELECT s.id,s.display_name,s.website_url,s.web_profile_json,s.version,p.version AS policy_version,p.rule_version,e.sync_hours hours,s.next_sync_at_ms,e.sync_revision FROM knowledge_sources s JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE s.console_managed=1 AND s.source_type='official_web' AND s.channel_type='official_web' AND ${profileSql}${scopeSql} AND s.enabled=1 AND s.archived_at IS NULL AND (${manualRun ? "s.operating_status='active' AND s.verification_status='verified' AND s.official_status='verified_official'" : "s.operating_status='active' AND s.verification_status='verified' AND s.official_status='verified_official' AND s.permission_status='approved' AND s.authorization_status='approved' AND s.sync_state<>'blocked' AND p.expires_at_ms>?"})${where}
+        `SELECT s.id,s.display_name,s.website_url,s.web_profile_json,s.version,p.version AS policy_version,p.rule_version,e.sync_hours hours,s.next_sync_at_ms,e.sync_revision FROM knowledge_sources s LEFT JOIN source_collection_policies p ON p.source_id=s.id CROSS JOIN console_engine_settings e WHERE s.console_managed=1 AND s.source_type='official_web' AND s.channel_type='official_web' AND ${profileSql}${scopeSql} AND s.enabled=1 AND s.archived_at IS NULL AND s.operating_status<>'closed' AND s.sync_state<>'blocked'${where}
  AND (?=1 OR (CASE WHEN s.sync_hours_override IS NOT NULL OR (s.sync_policy_version>0 AND s.sync_policy_version<>e.sync_revision) THEN COALESCE(CAST((julianday(s.last_success_at)-2440587.5)*86400000 AS INTEGER),0)+e.sync_hours*3600000 ELSE COALESCE(s.next_sync_at_ms,0) END)<=?)
  AND NOT EXISTS(SELECT 1 FROM ingestion_jobs j WHERE j.source_id=s.id AND j.control_state='active' AND j.phase<>'complete' AND j.status IN('queued','running')) ORDER BY COALESCE(s.next_sync_at_ms,0),s.id LIMIT ?`,
       )
       .bind(
         ...staticIds,
         ...(allowedIds || []),
-        ...(manualRun ? [] : [now]),
         ...(options.sourceId ? [options.sourceId] : []),
         Number(!!options.manualId),
         now,
@@ -160,12 +162,11 @@ export async function dispatchDue(
       } catch {
         profile = null;
       }
-      if (
-        !profile ||
-        profile.configurationStatus === "discovered" ||
-        profile.ruleVersion !== s.rule_version
-      )
-        continue;
+      // A source is collectable once its entry profile is configured. The old
+      // check also demanded that the profile and the collection policy carried
+      // the same rule version, so a freshly configured site silently never
+      // ran until someone re-ticked it elsewhere.
+      if (!profile || profile.configurationStatus === "discovered") continue;
       const commandId =
         (options.sourceId && options.manualId) || crypto.randomUUID();
       pending.push({
@@ -175,9 +176,9 @@ export async function dispatchDue(
         runKey: manualRun
           ? `manual:${s.id}:${options.manualId}`
           : `scheduled:${s.id}:${s.version}:${s.next_sync_at_ms || 0}`,
-        ruleVersion: s.rule_version,
+        ruleVersion: s.rule_version || profile.ruleVersion,
         version: s.version,
-        policyVersion: s.policy_version,
+        policyVersion: s.policy_version ?? 0,
         hours: s.hours,
         syncRevision: s.sync_revision,
       });
