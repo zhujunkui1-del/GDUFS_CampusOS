@@ -2690,3 +2690,13 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 `亚非语言文化学院` 卡片上的 `NETWORK_ERROR` 定性为单页瞬时断连：失败步骤 `url=https://faas.gdufs.edu.cn/info/1127/3329.htm`、`outcome=network_error`、`requests=2`、`bytes=0`，本机复测同页三次均 200/19357 字节；红字长期不消是因为 `sourceProgressStatement` 无条件写入 `last_error`，现改为仅 `status='failed'` 时写入，整轮完成即清空。
 
 `智创无界` 的入口选择器同时修正：`titleSelector="div.art-tit.cont-tit h3"`、`dateSelector="div.art-tit.cont-tit p"`、`dateLabel="时间"`、`bodySelector="#vsb_content .v_news_content, .art-body"`。修正前日期取自正文活动时间被解析成 `2026-11-22`，修正后为 `2026-11-13`，`tryprof` 9 个 URL/6 OK/门禁内 4 篇，文档 `content-44b79fe0` 已 revalidate 为 2026-11-13。
+
+## 2026-11-13｜采集按栏目配额，不再把整个列表走一遍
+
+`ingestion_jobs.max_articles` 自建立起只被写入、从未被读取，所以 `maxArticles=2` 的作业照样把列表页 50 个链接逐个走一遍；`document_origins` 里已存过的链接也全量重读，每步一分钟，长列表源一轮要四十到五十分钟，队列永远落后。
+
+现在改为：`ingestion-store.ts` 顶部新增 `MAX_KNOWN_PER_RUN = 3`，`checkpoint.urls` 只取「未存过的全部 + 已存过的最近 3 个」，revalidate 仍读全部；`checkpoint.entryBodyCount` 在 `commit()` 里按当前栏目累计，达到 `max_articles` 就把该栏目的 URL 清空并跳到下一个入口（`entryIndex++`、`discover`），最后一个栏目采满即 `complete`。配额按栏目而不是按站：一个部门有四个新闻栏目时，每个栏目都要拿到最新文章。
+
+`CheckpointSchema` 是 `.strict()`，新增字段必须同步登记，否则 checkpoint 解析失败。`tests/unit/ingestion-pipeline.test.ts` 新增「ends a run at the article quota instead of walking the whole list」，断言 `maxArticles=1` 时采完一篇即 `status=completed`、`phase=complete`，且只产生一条带 `document_id` 的抓取记录。
+
+验证：`npx tsc --noEmit` 0 error；`npx vitest run` 157/158 文件、1121/1122 项通过（唯一失败是既有 flaky 的 `tests/unit/public-feed-jump.test.ts`，5 秒超时，单独跑通过）。部署 `52a11846-d025-4a70-a381-f0a7082bd080`。线上复核：0062/0082/0037 的 `entryIndex` 依次递增 0→1→2→3→4，0026/0082/0037 已 `completed`（body 6/8/10），队列从十余条收敛到 2–4 条，吞吐回落为 4–5 步/分钟（没有积压，不是变慢）。

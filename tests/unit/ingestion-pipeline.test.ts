@@ -468,6 +468,43 @@ describe("bounded ingestion, real SQLite, isolated fixtures only", () => {
       f.close();
     }
   });
+  it("ends a run at the article quota instead of walking the whole list", async () => {
+    const f = await setup();
+    try {
+      const second = f.url.replace("999001", "999003");
+      const lease = await f.claim();
+      await f.commit(lease, {
+        discovered: [f.url, second],
+        discoveredDates: [
+          { url: f.url, publishedAt: "2020-01-01" },
+          { url: second, publishedAt: "2020-01-02" },
+        ],
+      });
+      const next = await f.claim();
+      expect(next.url).toBe(f.url);
+      await f.commit(next, {
+        article: { ...f.article, url: next.url },
+        bodyHash: "a".repeat(64),
+        bodyTextChars: 100,
+      });
+      // The fixture job asks for one article; reaching it must end the run
+      // rather than spend another fifty ticks re-reading stored links.
+      expect(await f.store.job(f.job.id)).toMatchObject({
+        status: "completed",
+        phase: "complete",
+        body_count: 1,
+      });
+      expect(
+        f.sqlite
+          .prepare(
+            "SELECT count(*) AS n FROM document_fetches WHERE job_id=? AND document_id IS NOT NULL",
+          )
+          .get(f.job.id),
+      ).toMatchObject({ n: 1 });
+    } finally {
+      f.close();
+    }
+  });
   it("persists discovery -> draft -> checkpoint atomically, keeps four success stages separate", async () => {
     const f = await setup();
     try {

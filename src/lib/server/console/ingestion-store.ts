@@ -18,6 +18,11 @@ import {
   profileFromSource,
 } from "@/lib/ingestion/profiles";
 const MAX_PAGES_PER_ENTRY = 20;
+// How many already-stored articles a single run may re-read. Unseen ones are
+// always fetched; known ones are only refreshed up to this many, because a
+// incremental run exists to pick up new articles, not to re-check a whole
+// archive. Revalidate runs are exempt: re-reading stored pages is the point.
+const MAX_KNOWN_PER_RUN = 3;
 async function profileFor(db: IngestionStore["db"], id: string) {
   const row = await db
     .prepare(
@@ -589,7 +594,7 @@ export class IngestionStore extends ConsoleStore {
       checkpoint.urls =
         checkpoint.revalidate && knownInGate.length
           ? knownInGate
-          : [...unknown, ...knownInGate];
+          : [...unknown, ...knownInGate.slice(0, MAX_KNOWN_PER_RUN)];
       checkpoint.publishedDates = checkpoint.urls.map((url) => ({
         url,
         publishedAt: discoveredDates.get(url) || null,
@@ -969,6 +974,28 @@ export class IngestionStore extends ConsoleStore {
           nextPhase = "complete";
           status = "completed";
         }
+      }
+    }
+    // A run brings in the newest articles from each configured column, not a
+    // mirror of the whole archive. This quota used to be stored on the job and
+    // never read, so a source whose fifty newest links were already stored
+    // walked all fifty of them — one step per minute — and the queue never
+    // caught up. The quota is per entry: a department with four news columns
+    // still has to reach its newest article in each of them.
+    const maxArticles = Number(row.max_articles) || 0;
+    checkpoint.entryBodyCount += bodyCount;
+    if (maxArticles > 0 && checkpoint.entryBodyCount >= maxArticles) {
+      checkpoint.entryBodyCount = 0;
+      checkpoint.urls = [];
+      checkpoint.index = 0;
+      checkpoint.pageCount = 0;
+      if (checkpoint.entryIndex + 1 < (profile.entryUrls?.length || 1)) {
+        checkpoint.entryIndex++;
+        checkpoint.page = null;
+        nextPhase = "discover";
+      } else {
+        nextPhase = "complete";
+        status = "completed";
       }
     }
     // Guard the exact old document version inside the same batch before any write.

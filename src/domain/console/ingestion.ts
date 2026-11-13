@@ -20,6 +20,10 @@ export const CheckpointSchema = z
       .default([]),
     entryIndex: z.number().int().min(0).max(49).default(0),
     pageCount: z.number().int().min(0).default(0),
+    // Articles brought in from the current entry during this run. The quota is
+    // per column, not per site: a department with four news columns must still
+    // reach its newest article in each of them.
+    entryBodyCount: z.number().int().min(0).default(0),
     revalidate: z.boolean().default(false),
     // How many pages in a row came back broken. A run with a handful of
     // unreadable pages out of dozens is normal; only a run of them means the
