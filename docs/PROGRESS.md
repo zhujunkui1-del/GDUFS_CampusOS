@@ -2676,3 +2676,17 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 工程：类型检查通过；全量单测初次并发一项超时，单独复验通过，按4并发重跑156文件/1109项全通过。为通过静态检查，仅做既有命名/const/未用变量/CommonJS标注修正，ESLint排除Git忽略的生成缓存/备份；最终全仓Lint通过，相关37项复验通过，模型未重建。Worker生产构建、最终入口dry-run和1719文件凭据净化扫描通过，发布包82个GLB及新增客户端URL均核对。
 
 验收/修正范围见 `docs/BUILDING_MODELS_ONLINE_ACCEPTANCE_2026_11_13.md`，线上截图、全量资产哈希、发布前后版本及浏览器回执在 `output/playwright/completed-models-online-2026-11-13/`。
+
+## 2026-11-13｜采集许可改为看入口，「立即采集」不再被审核标签挡住
+
+负责人要求删除「只采集已核验且入口已确认的官网」这一闸门。改动落在三层：`official-web-collection-panel.tsx` 的 `canCollectSource`、`scheduler.ts` 的 `dispatchDue`、`ingestion-store.ts` 的 `createJob`，统一改为「来源已启用 + 未关闭 + 未封禁 + 已保存可用入口」。`saveWebProfile` 在入口确认时同步写 `verification_status='verified'`、`official_status='verified_official'`、`operating_status='active'`，并用 `probeRobots` 自动登记 `source_collection_policies`，使控制台里配好入口即可采集。
+
+数据库侧新增 `migrations/0065`–`0068` 并已应用到 `campusos-preview`：重写 `ingestion_command_guard`、`console_source_enable_guard`、`console_v2_command_guard`，去掉审核标签闸门与每日 claim/create 预算，只保留启用状态、policy 过期（manual 运行豁免）、租约与围栏。`v2-sync.ts` 的 `permit()` 同步放宽（`j.policy_version=0 OR p.version IS j.policy_version`），详情抓取在无 policy 行时按 `licensed_full_text` 回退；`0067` 已为历史来源回填 policy。
+
+过程中发现并修掉一处回归：`0065` 误把 `0011` 的「每日 claim 预算」抄回触发器，导致当天 58 次 claim 后所有排队作业停摆（05:35–05:40 零步骤，`CONSOLE_BUDGET`）。`0066`/`0068` 已删除该预算与 `request_count>18` 上限，恢复后队列立即继续。
+
+验证：`npx tsc --noEmit` 0 error；`npx vitest run` 156 文件 1109 项全绿（`ingestion-pipeline.test.ts` 的规则过期用例改写为「新作业以当前规则开工、旧作业仍不可续跑」）。部署 `72dc7ede-f90a-477f-9aef-30f6feadbd7d` 后在真实浏览器复验：`亚非语言文化学院` 按钮可用、1.6s 返回「已登记该已核验官网采集任务」；`智创无界，AI赋未来`（此前 `verification_status='candidate'`、无 policy 行）按钮可用，采集产出 `discover ok` + `fetch ok`。
+
+`亚非语言文化学院` 卡片上的 `NETWORK_ERROR` 定性为单页瞬时断连：失败步骤 `url=https://faas.gdufs.edu.cn/info/1127/3329.htm`、`outcome=network_error`、`requests=2`、`bytes=0`，本机复测同页三次均 200/19357 字节；红字长期不消是因为 `sourceProgressStatement` 无条件写入 `last_error`，现改为仅 `status='failed'` 时写入，整轮完成即清空。
+
+`智创无界` 的入口选择器同时修正：`titleSelector="div.art-tit.cont-tit h3"`、`dateSelector="div.art-tit.cont-tit p"`、`dateLabel="时间"`、`bodySelector="#vsb_content .v_news_content, .art-body"`。修正前日期取自正文活动时间被解析成 `2026-11-22`，修正后为 `2026-11-13`，`tryprof` 9 个 URL/6 OK/门禁内 4 篇，文档 `content-44b79fe0` 已 revalidate 为 2026-11-13。
