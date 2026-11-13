@@ -1,13 +1,13 @@
 # S3-D｜自研校园知识检索实施与验收计划
 
-> 2026-10-26实施更新：共享检索、双Skills、跨栏目问答和真实地图代表性链路已实施并在Preview验收。当前契约见 `S3_D_RETRIEVAL_CONTRACT.md`，实际数据/测试/性能/未覆盖项见 `verification/s3-d/README.md`。下文保留2026-10-17的原计划与验收基线，其中“尚无实现/等待启动/3篇元数据”是当时快照，不能作为当前状态。
+> 当前文档状态（2026-11-13）：D1统一检索、`search_campus_knowledge` / `search_campus_events` 双Skill及代表性地图联动已实现。接口与权限契约见 `S3_D_RETRIEVAL_CONTRACT.md`；真实数据、模型、浏览器、资源和未覆盖项见 `verification/s3-d/README.md`，该验收记录的数据量与性能数字是2026-10-26采样，不代表2026-11-13的最新运营指标。下方2026-10-17方案段落保留为历史设计/验收标准，不表示仍在等待启动。
 
 2026-10-17的原始实施基线，D-045曾正式废弃Dify路线。2026-11-05的D-140仅批准校内Dify外部知识库只读试点，复用现有D1检索，不复制文章库、不建第二套向量索引、不切换网站运行时；本计划和D1仍为公开检索权威。
 
 ## 1. 复用与责任
 
 - 保留Next.js/OpenNext/Workers、Console身份/CSRF/审计、来源登记、文章版本、审核、任务租约/检查点、`content_index_invalidations`及新鲜公开过滤；不删表/重导来源，不新增第二套知识库。
-- `KnowledgeRetriever.retrieve(validatedQuery, trustedPublicScope, limit, signal)`为平台无关自研契约，正式后端路线为`D1KeywordRetriever`。当前源码尚无这两个实现，不以命名冒充已上线检索。
+- `KnowledgeRetriever.retrieve(validatedQuery, trustedPublicScope, limit, signal)`与`D1KeywordRetriever`已在当前源码实现；公开权限、版本复核、分段和引用契约以`S3_D_RETRIEVAL_CONTRACT.md`及验收回执为准。
 - D1是来源、文章版本、审核、分类、片段、引用和索引状态权威。片段绑定documentId/snapshotVersion/contentRevision/inputHash和证据偏移，不引用失效修订。
 - 优先标题/关键词/分类过滤与有界分段检索；输入长度、分页、查询/结果数有限。中文分词/FTS5/ngram等方案须以真实问题集比较，未测试不承诺召回质量。
 - 分类、时间、地点提取优先TypeScript规则；unknown保留，不推断为已核验。模型仅使用现有明确授权服务/预算，旧测试额度不自动延续。向量检索另行技术/费用评估与批准，不自动创建资源。
@@ -30,15 +30,17 @@
 | 11  | 检索不足             | 无结果、冲突、D1故障及超时准确返回，不编造规定或偷偷切换付费后端；公共地图独立运行                                                       |
 | 12  | Free资源与性能       | 真实preview按API测CPU/Wall、D1读写行、子请求、Token/成本及样本窗口；本地/云端和Mock/真实分列，低频零错误不代表稳定容量，超限不删权限校验 |
 
-S3-B当前3篇metadata_only且全待审，不是可检索知识语料。缺许可/批准的真实正文时返回真实空结果，不能用Mock文章填生产或声称RAG通过。
+“S3-B当前3篇metadata_only且全待审”是2026-10-17历史快照，不是当前内容状态。当前公开内容数量以`docs/PROGRESS.md`当日接口核查为准；本计划不替代实时发布权限检查，也不因存在公开列表项就声称所有正文均可读。
 
-## 3. 次序、S3-E边界与停止点
+## 3. 原始实施顺序（2026-10-17历史计划）
+
+以下步骤记录原始实施顺序，已被2026-10-26起的实现与验收记录覆盖；不要把它们当成当前仍未启动的工作：
 
 1. 审计真实语料/许可和Schema，确认问题集、字段投影及中文查询基准。
 2. 实现自研接口/D1后端、分段证据/索引状态，复用DAO/outbox。需迁移先测空库/已有数据升级，危险迁移另批，不清空preview。
 3. 接匿名知识页面和只读知识Skill，测DeepSeek引用/不足/冲突/故障；原五地图Skills、多会话删除、SSE取消/回执保持。
-4. S3-D完成12项真实验收后停止。S3-E汇合校园雷达/事件Skill与知识链路，验证跨模块/地图/多轮/恢复/权限/性能，不重复建设知识Skill。
+4. 原计划要求S3-D完成12项真实验收后停止，再由S3-E汇合雷达/事件链路；实际完成范围与未通过/未覆盖项见`verification/s3-d/README.md`，不得仅凭历史计划中的门槛宣称全项通过。
 
 公共知识可覆盖全校，地图仅用已核验大学城placeId/mapVersion。个人收藏/日程等待S4真实本人身份与确认写入，运营密钥不能代替学生权限。
 
-复用campusos-preview Worker/D1，不开商业知识库，不改正式DNS/生产资源或增加模型预算。Free CPU历史风险保留；本计划不构成容量验收。等待负责人另行启动S3-D。
+运行事实源仍为D1；Dify快照或其他检索结果均不替代D1。历史Free CPU与性能采样只对其记录窗口有效，不能作为当前容量结论。最新阶段/发布边界见`docs/PROGRESS.md`与`docs/DEPLOYMENT.md`。
