@@ -279,3 +279,45 @@ v4/v6/v7 的并发度不同（v4 为 4，v6/v7 为 2），耗时列只作趋势�
 4. **评测偶发断流**：50 题里仍有 2 题 `status:0`（`TypeError: terminated`），单条重跑即 200。属并发下的连接中断，不计入答案质量，但评测脚本需要重试（已加，最多 3 次）。
 
 一个必须记住的教训：**不要在评测进行中部署**。Worker 重载会掐断在途 SSE，一次部署就造出 21 条假失败（`status:0`），看起来像产品崩了。
+
+## 第三轮 50 题（2026-11-13，全新问题集）
+
+第三轮题目与第一轮、第二轮零重复（`.tmp/round3-questions.txt`，用 python 逐题比对）。主题集中在党团学工、奖惩学籍、教务考试、图书馆细节、宿舍细项、安全应急、情感与多轮纠错。评测脚本 `.tmp/eval-round3.mjs`，每题独立游客会话，断流自动重试最多 3 次。
+
+### 首跑发现的问题：两条空回答
+
+`校园里发生火灾先打哪个电话` 和 `在校证明在哪个系统打印` 都返回了空正文，用户只看到「未找到该地点或路线，请换个名称。」
+
+根因不是模型，而是工具错误的传播方式：模型先调 `search_places`，该工具在 `src/lib/server/maps/campus-map-service.ts:231` 抛 `ApiError("NOT_FOUND", …)`；`src/lib/server/agent/orchestrator.ts:423` 的 `stopOnToolError` 分支把任何工具错误都重新抛出，于是整轮变成 `run.failed NOT_FOUND`，`chat.ts:2116` 只发一条错误消息，没有回答。
+
+修复：`orchestrator.ts` 新增 `tolerateNotFound` 选项，只对「只读 + NOT_FOUND」降级为一条系统说明并要求模型继续回答；`chat.ts` 打开该选项。参数错误（`INVALID_ARGUMENT`）原有的纠正路径不变，写操作与上游故障仍然整轮失败。回归用例在 `tests/unit/agent-core.test.ts`。
+
+### 第二遍修复：安全、抱怨、费用类句子
+
+| 现象 | 根因 | 修法 |
+| --- | --- | --- |
+| 「被人跟踪骚扰可以找谁帮忙」整题拒答 | 安全问题不在 `urgent` 词表里，语料也没有对应文章，strict 门禁直接产出「没有检索到正文」 | 扩充 `urgent`（尾随、跟踪、骚扰、猥亵、偷拍、性侵、着火、起火、突发疾病等），并让 `answerRequirement` 在 `urgent` 时直接为 `open`，用通用常识回答 |
+| 「好敷衍啊，你就这么回答问题吗」去检索并拿志愿故事回答 | 抱怨被 `inputGate` 判成 campus，`conversationAct` 判成 general | 新增 `COMPLAINT`：抱怨词 + 针对助手 + 无校园实体 → `confusion`，不检索 |
+| 「图书馆的书逾期了要交多少钱」「三方协议违约要赔多少钱」no_evidence | 「书逾期了要交」「违约要赔」是问法不是术语，被当成 hard modifier，任何文档都不匹配 | 新增 `CLAUSE_PAYMENT`（要/该/得 + 交/赔/付/缴纳），命中即为软修饰符 |
+| 「那借书的规矩来着，你再说一遍」no_evidence | 「你再说一遍」被当成硬主题词 | 新增 `META_INSTRUCTION`（你再说一遍/刚才那个/详细点…），从修饰符里剔除；`CLAUSE_GLUE` 补 `来着` |
+
+### 复测结果
+
+| 指标 | v1 | v2 | v3 |
+| --- | --- | --- | --- |
+| 空回答 | 2 | 0 | 0 |
+| `model` | 45 | 44 | 48 |
+| `no_evidence` | 4 | 5 | 1 |
+| `attributed_excerpt` | 1 | 1 | 1 |
+| `answerRequirement` | — | strict 44 / advisory 3 / open 3 | strict 42 / advisory 3 / open 5 |
+| 工具调用总数 | — | 53 | 48 |
+| p50 / p95 / max | — | 19.7s / 36.2s / 48.3s | 18.6s / 32.9s / 43.6s |
+
+全量测试：158 files / 1122 tests 全绿，`tsc --noEmit` 通过。
+
+### v3 仍存在的问题
+
+1. **「宿舍可以自己装路由器吗」**仍是 no_evidence。D1 `knowledge_documents.body LIKE '%路由器%'` 零命中，是数据缺口。
+2. **「休学和复学怎么办理」**仍走 `attributed_excerpt`，命中的是《2023-2024学年第一学期办理研究生学籍异动业务的通知》，缺现行本科生学籍异动文件。
+3. **「那借书的规矩来着」**现在能答且内容正确，但上一轮并没有问过借书，属于对指代对象的弱处理——它把「借书」当成新主题而不是回指上一轮。
+4. **安全类问题的措辞**：现在会直接给建议（保卫处、辅导员、110），但「校园保卫处」的电话号码仍需人工核对后再写进语料。
