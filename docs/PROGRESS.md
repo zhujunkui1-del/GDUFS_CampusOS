@@ -1,10 +1,34 @@
 # 开发进度
 
-更新时间：2026-11-13（Asia/Shanghai）
+更新时间：2026-11-14（Asia/Shanghai）
 
 状态：**核心 CampusOS Web 已部署并运行于共享 `campusos-preview` Worker/D1。大学城本地地图、路线、地图 Agent、D1 内容检索、雷达、校园知识和活动日历均有真实代码与线上接口；最近一轮完成建筑模型上站/Edge加载修复，以及官网采集队列配额和时钟推进修复。当前记录尚未宣布独立 Production 环境验收完成。**
 
 本页前面的 S0/S1 细节是 2026-10-13 的历史快照，不代表当前状态。以下最新按日期追加的实际运行记录为后续证据；旧阶段计划与旧验收数字需按其记录日期阅读。
+
+## 2026-11-14｜手机原文按钮、部署与智能体决定
+
+- **国内部署暂缓（D-165）**：负责人确认当前域名国内访问较稳定，阿里云方案仅留档于 `DOMESTIC_DEPLOYMENT_ASSESSMENT_2026_11_14.md`。未修改服务器、DNS或数据库。
+- **当前不再考虑Dify（D-166）**：保留自研Agent/RAG和D1唯一权威，停止推进Dify试点与演示；工程规则入口和索引同步最新决定。没有删除或调整Dify运行代码、配置、Secret和历史快照。
+- **手机文章按钮**：定位到 `public-article-dialog.css` 的560px断点主动设置 `font-size:0`、42px定宽及裁剪。改为完整“查看原文”文字和箭头；按钮按内容定宽，工具栏空间不足时换行、操作组不收缩，窄屏控件至少44px。雷达和校园知识共用该弹窗。
+- **浏览器验证**：本地Next页面通过受控GET代理读取现有线上公开文章，Edge/Playwright下320、390、546、760、1280px检查文字字号14px、按钮完整位于工具栏内、与收藏/关闭不重叠，截图位于 `output/playwright/article-original-*.png`。仅为浏览器视口验证，未连接物理手机。
+- **工程检查**：typecheck、lint通过。全量单测158文件/1122项，1120通过，账号PBKDF2与公共列表跳页两项超时；随后两项连同模型回退/客户端相关测试以单worker复跑，5文件61项通过。现有 `public-feed-ui.spec.ts` 桌面/手机均在完成雷达/知识弹窗、原文链接、正文和关闭步骤后，因最后的旧标题断言“个人日程”与当前“活动日历”不一致而失败；本轮未改该无关断言。
+
+### StepFun到期切换只读审查
+
+负责人提供StepFun到期时间 `2026-11-22 15:02:17`，按项目北京时间记录；未登录供应商后台核验。当前Preview `MODEL_PRIORITY=stepfun`，`runtime.ts` 默认链为StepFun → DeepSeek，不包含校内网模型。只读Secret清单确认两家的Key/模型/端点/能力记录绑定均存在；线上 `/api/agent/status` 返回StepFun ready，不能据此证明备用DeepSeek当前余额或调用成功。DeepSeek最近已有真实能力证据 `verification/cloud-search/deepseek-model.json` 为2026-11-01，生成、工具回传、流式、JSON通过；本轮不发起真实付费模型诊断。
+
+`priority.ts` 只在 `MODEL_QUOTA_EXHAUSTED` 且该次调用尚无可见部分文字时切换。`deepseek.ts` 将HTTP402、或HTTP429中明确匹配的额度错误映射为该错误；401密钥错误、403/404权限/模型错误、普通429、网络错误和超时不触发切换。流式已输出部分文字时也不会拼接另一供应商回答。切换状态只保持在当前路由实例内，新Run仍从StepFun优先解析；到期后若每次先收到可回退额度错误，会有额外上游尝试耗时。
+
+代码没有订阅到期字段、该日期的判断或主动定时切换，`status()`也不向供应商探测订阅。能力记录不会仅因超过24小时而失效，但配置/凭据/策略变化仍需重测。因此现状**不能保证到期无缝切换**：取决于StepFun届时实际错误分类和DeepSeek真实可用状态。建议后续明确安排在到期前将现有 `MODEL_PRIORITY` 配置设为 `deepseek`，完成真实问答、工具与流式验证；本轮保持只读，未变更优先级、Secret、回退实现或创建定时任务。
+
+### 本次网站发布与线上验证
+
+通过隔离目录 `.tmp/article-original-release-native-20261114` 使用原Turbopack/Next生产构建和原 `scripts/build-worker.mjs --config wrangler.jsonc --env preview` 包装器完成打包及dry-run，1715个生成文件通过凭据净化扫描；490个源代码/公开资源文件及发布配置与主工作区逐字节一致。主工作区旧生成目录删除被Windows ACL拒绝；早期临时目录使用node_modules联接的尝试遇到Turbopack根目录和symlink权限错误，均未发布。最终目录采用实际复制的依赖，未修改系统权限、正式依赖或构建配置。
+
+已更新原共享 `campusos-preview`，版本 `d1f00ae4-077f-47d2-a8af-43a70b1f44ef`；上一版/回滚点为 `92fd53da-c33f-4e93-a90e-73116757e6e6`。未执行迁移、修改Secret或DNS，`MODEL_PRIORITY=stepfun` 与 `DIFY_CHAT_ENABLED=false` 保持原值。
+
+在 `https://gdufs.zhiyuapp.site/radar` 移除本地测试GET代理后重新加载真实页面，打开真实文章：390px下原文按钮文字14px、尺寸100×44px，保留真实原文URL；320/390/546/760/1280px的边界与不重叠断言通过，截图 `output/playwright/article-original-live-*.png`。关闭按钮实测移除弹窗。公开 `/api/health` 正常，`/api/agent/status` 仍为StepFun ready；没有发起真实AI生成或验证DeepSeek当前余额，不宣称物理手机触感或到期实况已验收。
 
 ## 当前状态快照（2026-11-13）
 
@@ -2726,3 +2750,13 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 最终版本 `92fd53da-c33f-4e93-a90e-73116757e6e6` 已发布至现有 `campusos-preview`/`https://gdufs.zhiyuapp.site/map`，回滚点 `da37044a-cceb-4a66-9551-da0190b114e1`，无迁移、DNS或Secret变更。本地原3026端口同步最终生产构建；此前隔离3036截图并不表示用户原页面已更新，这一发布状态区别已向负责人纠正。
 
 验证：全仓Lint、类型检查；全量单测158文件/1122项，后续相关13项；Edge桌面/手机视口18项与Chrome生产构建18项E2E；原Worker净化构建、入口dry-run及1715文件扫描均通过。线上Edge三个域名HTTP/HTTPS六组合均安全上下文、两模式41/41、资源失败0/JS错误0；延迟GLB首次切换不出现旧体块；82个线上GLB均200/SHA匹配；5个公共页面和health为200。近景/整片宿舍截图已实际复核浅色无条纹屋顶和地面投影，手机视口不替代物理手机性能验收。详见 `docs/MAP_SHADOW_LOADING_FIX_ACCEPTANCE_2026_11_13.md` 与 `output/playwright/map-model-loading-2026-11-13/`。
+
+## 2026-11-14｜第二版三端安装包完成
+
+按负责人新授权在 `D:/tlydcg/Codex_work/CampusOS_广外通/v2/` 交付2.0.0版Windows x64 NSIS安装程序、Android APK和macOS Universal DMG。沿用第一版应用ID及Android测试证书，第一版文件保留在各平台`v1.1.0`目录。代码快照为`0d3a2c1f`；断点恢复时项目HEAD为`bb6f764`，两者仅文档有差异，应用源代码相同。
+
+资源：21个静态页面及Next路由载荷、完整前端与地图脚本、字体/图标、MapLibre Worker、底图和模型共274个静态文件/45,479,604字节。当前模型清单82个活动GLB与院落文件全部存在；public中保留的辅助模型也随包复制。地图/模型/vendor资源由安装包本地应答；D1、资讯、账号与AI仍为在线服务。线路固定为 `https://gdufs.zhiyuapp.site`、`https://gdufs.ccwu.cc`、`https://campusos.zhiyuapp.site`，启动健康探测及未内置GET资源按此顺序回退。
+
+真实验证：网站Next生产构建含TypeScript通过，壳JS语法检查和Android Java编译通过。Windows开发运行与实际构建后的应用在断网条件下打开地图，2D/2.5D/3D、82模式模型驻留及南苑7栋→图书馆848米路线通过，JS错误0；模拟前一/前两线路故障时分别实际连接第二/第三健康接口，在线雷达、账号Session接口及登录表单通过。Android 14模拟器关闭Wi-Fi/移动数据后完成相同三模式与848米路线验收，设备截图确认底图/路线实际显示，最终APK无debuggable标志、v2/v3签名通过且证书与第一版一致。macOS Universal主程序双架构、DMG签名与HFS可执行权限通过；读回543个应用文件和14个符号链接、274个静态资源及app.asar逐项核对一致。
+
+交付大小：Windows 140,791,905字节；Android 21,012,443字节；macOS 249,212,924字节。SHA、构建信息、安装说明与运行回执位于交付目录`checksums.sha256`、各平台`build-info.json`、`README.md`和`verification/`。Windows未签名，Android沿用测试签名，macOS为ad-hoc且未公证；未在实体Mac/物理Android设备运行，未提交真实账号或发起真实AI生成验收。没有重跑网站全量测试、修改网站业务代码、部署Worker、修改DNS或迁移D1。

@@ -46,6 +46,7 @@
   display: flex;
   flex: 0 0 auto;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 14px;
   min-height: 66px;
@@ -67,8 +68,10 @@
 
 .public-article-dialog-actions {
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: 9px;
+  margin-left: auto;
 }
 
 .public-article-dialog-actions a,
@@ -102,10 +105,12 @@
 }
 
 .public-article-dialog-actions .public-article-original {
+  flex: 0 0 auto;
   background: var(--brand-primary, #1261bb);
   color: #fff;
   font-size: 14px;
   font-weight: 550;
+  white-space: nowrap;
 }
 
 .public-article-dialog-actions .public-article-close {
@@ -208,15 +213,24 @@
 }
 
 @media (max-width: 560px) {
-  .public-article-dialog-actions .public-article-original {
-    width: 42px;
-    padding: 0;
-    overflow: hidden;
-    font-size: 0;
+  .public-article-dialog-toolbar {
+    gap: 8px;
   }
 
-  .public-article-dialog-actions .public-article-original svg {
-    flex: 0 0 auto;
+  .public-article-dialog-actions {
+    gap: 6px;
+  }
+
+  .public-article-dialog-actions .public-article-original {
+    min-height: 44px;
+    padding-inline: 10px;
+  }
+
+  .public-article-dialog-actions .favorite-button,
+  .public-article-dialog-actions .public-article-close {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
   }
 
   .public-article-meta {
