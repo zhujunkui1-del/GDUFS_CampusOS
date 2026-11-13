@@ -769,3 +769,7 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 ## 2026-11-13｜剩余建筑模型线上发布来源复核
 
 没有新增GIS、照片或供应商数据。沿用已审阅 `building-model-catalog.json` 的82个自编GLB及既有OSM署名；本次补齐二饭、三饭、门诊部、后勤楼8个线上缺失资源。原参考图仍只保留内部文档/下载目录，没有公开为网站图片或纹理。`https://gdufs.zhiyuapp.site` 发布前74个、发布后82个清单GLB均已实际下载核对SHA；原74个字节未变。线上哈希回执在 `output/playwright/completed-models-online-2026-11-13/after-all-assets.json`，核验只访问公开页面/资源，未使用管理员身份或真实个人位置。
+
+## 2026-11-13｜投影/加载修复来源复核
+
+本轮只调整运行时光照、共享加载与已知域名HTTPS入口；沿用原南7光照参数及已审核建筑清单，没有新增GIS、照片或纹理。82个公开GLB逐项下载SHA匹配，原校园OSM快照及3D模型字节保持；参考图片仍不公开分发。负责人提供的灰屋顶截图用于缺陷核对，不作为日照或尺寸资料。线上证据 `output/playwright/map-model-loading-2026-11-13/public-assets-after.json`、`edge-origin-after.json` 和投影截图；仅访问公共页面/资源，无管理员会话和真实设备位置。

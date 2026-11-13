@@ -85,7 +85,7 @@ it("keeps South 7 in the same 3D scene as the other approved models", () => {
     layer.onRemove();
   }
 });
-it("preserves shadow participation when preparing actual model batches", () => {
+it("casts ground shadows without darkening the approved model surfaces", () => {
   const { layer } = setup();
   try {
     const wrapper = new Group(),
@@ -112,7 +112,7 @@ it("preserves shadow participation when preparing actual model batches", () => {
     ]) as Group;
     const meshes = batch.children.filter((n) => n instanceof Mesh);
     expect(meshes.find((n) => n.material === wall)?.castShadow).toBe(true);
-    expect(meshes.find((n) => n.material === wall)?.receiveShadow).toBe(true);
+    expect(meshes.find((n) => n.material === wall)?.receiveShadow).toBe(false);
     expect(meshes.find((n) => n.material === glass)?.castShadow).toBe(false);
   } finally {
     layer.onRemove();

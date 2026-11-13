@@ -2710,3 +2710,11 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 验证：`npx tsc --noEmit` 0 error；`npx vitest run` 158 文件 1122 项，2 项失败均为并发超时（`console-v2-sync.test.ts`、`public-feed-jump.test.ts`），单独运行均通过。部署 `da37044a-cceb-4a66-9551-da0190b114e1` 之后心跳正常。
 
 同时修掉一个调试脚本缺陷：`.tmp/sync-one.mjs` 把 `sourceId` 写死成 AI 源，导致对其他站点的「登记」实际登记的是 AI 源，看起来像「没有到期来源」。现改为从命令行参数读取。
+
+## 2026-11-13｜旧南7白模、共享投影与 Edge HTTP 加载修复已上线
+
+负责人纠正灰暗投影与屋顶条纹后，最终保留原南7环境光2/方向光3/暖白方向和0.17地面投影强度，模型只投射、地面接收，取消模型表面精度自阴影；2.5D仍为纯白体块。全部41项两种模式共用渲染层与缓存阴影，原南7挤出不再作加载占位，GLB与GIS不改。Edge问题实际来自部分域名HTTP页面缺Web Crypto；已知公共页面升级HTTPS，保留SHA校验与凭据API边界。另修复切换取消、失败重试和MapLibre丢失上下文后的自定义层重加/可见状态。
+
+最终版本 `92fd53da-c33f-4e93-a90e-73116757e6e6` 已发布至现有 `campusos-preview`/`https://gdufs.zhiyuapp.site/map`，回滚点 `da37044a-cceb-4a66-9551-da0190b114e1`，无迁移、DNS或Secret变更。本地原3026端口同步最终生产构建；此前隔离3036截图并不表示用户原页面已更新，这一发布状态区别已向负责人纠正。
+
+验证：全仓Lint、类型检查；全量单测158文件/1122项，后续相关13项；Edge桌面/手机视口18项与Chrome生产构建18项E2E；原Worker净化构建、入口dry-run及1715文件扫描均通过。线上Edge三个域名HTTP/HTTPS六组合均安全上下文、两模式41/41、资源失败0/JS错误0；延迟GLB首次切换不出现旧体块；82个线上GLB均200/SHA匹配；5个公共页面和health为200。近景/整片宿舍截图已实际复核浅色无条纹屋顶和地面投影，手机视口不替代物理手机性能验收。详见 `docs/MAP_SHADOW_LOADING_FIX_ACCEPTANCE_2026_11_13.md` 与 `output/playwright/map-model-loading-2026-11-13/`。

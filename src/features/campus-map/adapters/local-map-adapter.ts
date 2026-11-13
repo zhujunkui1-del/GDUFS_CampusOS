@@ -395,6 +395,8 @@ export class LocalMapAdapter implements MapAdapter {
       }
     });
     this.native.on("webglcontextlost", () => {
+      // MapLibre destroys custom layers when it loses the context.
+      this.campusModelLayer = undefined;
       element.dataset.renderState = "context-lost";
       element.dataset.contextLosses = String(
         Number(element.dataset.contextLosses || 0) + 1,
@@ -402,6 +404,10 @@ export class LocalMapAdapter implements MapAdapter {
     });
     this.native.on("webglcontextrestored", () => {
       element.dataset.renderState = "ready";
+      this.native.once("style.load", () => {
+        if (!this.destroyed && this.displayMode !== "2d")
+          void this.loadCampusModels();
+      });
     });
     element.dataset.baseDataState = "loading";
     this.native.on("sourcedata", (event) => {
@@ -637,7 +643,11 @@ export class LocalMapAdapter implements MapAdapter {
     };
   }
   private setModelState(state: PilotModelState) {
-    if (this.destroyed || this.modelState === state) return;
+    if (this.destroyed) return;
+    if (this.modelState === state) {
+      this.updateModelVisibility();
+      return;
+    }
     this.modelState = state;
     this.element.dataset.modelState = state;
     this.updateModelVisibility();
@@ -647,11 +657,10 @@ export class LocalMapAdapter implements MapAdapter {
     if (mode === "2.5d" && !this.supports2_5D) mode = "2d";
     if (mode === "3d" && !this.modelAvailable) mode = "2.5d";
     this.displayMode = mode;
-    if (mode === "3d" && this.modelState === "error")
+    if (mode === "3d" && this.campusModelLayer?.pilotState === "error")
       this.campusModelLayer?.retryFailed();
     if (mode === "3d" && !this.campusModelLayer?.pilotDetailedReady)
       this.setModelState("loading");
-    if (mode !== "3d" && this.modelState !== "idle") this.setModelState("idle");
     if (mode === "2d" && this.modelState === "error")
       this.setModelState("idle");
     this.updateModelVisibility();
@@ -689,7 +698,10 @@ export class LocalMapAdapter implements MapAdapter {
       this.campusModelLayer = new CampusBuildingModelLayer(
         () => this.setModelState("error"),
         () => {
-          if (this.displayMode === "3d")
+          if (
+            this.displayMode === "3d" ||
+            this.campusModelLayer?.pilotState === "ready"
+          )
             this.setModelState(this.campusModelLayer?.pilotState || "loading");
           else this.updateModelVisibility();
         },

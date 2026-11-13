@@ -1,5 +1,6 @@
 import {
   Camera,
+  Box3,
   Group,
   InstancedMesh,
   Material,
@@ -141,9 +142,9 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
     return this.mode === "3d" && this.pilotActiveMode === "3d";
   }
   get pilotState() {
-    if (this.mode !== "3d") return "idle";
     if (this.failed.has("dormitory-s7:3d")) return "error";
-    return this.loaded.has("dormitory-s7:3d") ? "ready" : "loading";
+    if (this.loaded.has("dormitory-s7:3d")) return "ready";
+    return this.mode === "3d" ? "loading" : "idle";
   }
   retryFailed() {
     this.failed.clear();
@@ -527,6 +528,23 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
         queueMicrotask(() => this.reconcile());
       }
     }
+    const view = this.map.getBounds();
+    const nw = MercatorCoordinate.fromLngLat(view.getNorthWest());
+    const se = MercatorCoordinate.fromLngLat(view.getSouthEast());
+    const viewBounds = new Box3(
+      new Vector3(
+        (nw.x - this.origin.x) / this.units,
+        0,
+        (nw.y - this.origin.y) / this.units,
+      ),
+      new Vector3(
+        (se.x - this.origin.x) / this.units,
+        0,
+        (se.y - this.origin.y) / this.units,
+      ),
+    );
+    if (this.lighting?.fitView(viewBounds, !this.map.isMoving()))
+      this.renderer.shadowMap.needsUpdate = true;
     this.camera.projectionMatrix
       .fromArray(input.defaultProjectionData.mainMatrix)
       .multiply(this.localMatrix);
@@ -550,7 +568,10 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
     data.campusModelDrawCalls = String(this.renderer.info.render.calls);
     data.campusModelTriangles = String(this.renderer.info.render.triangles);
     data.campusModelShadowUpdates = String(this.shadowUpdates);
-    if (updateShadows) data.campusModelShadowMode = this.mode;
+    if (updateShadows) {
+      data.campusModelShadowMode = this.mode;
+      data.campusModelShadowRegion = this.lighting?.regionKey || "";
+    }
     data.campusModelFrames = String(Number(data.campusModelFrames || 0) + 1);
     if (this.pilotDetailedReady)
       data.modelFrameCount = String(Number(data.modelFrameCount || 0) + 1);
