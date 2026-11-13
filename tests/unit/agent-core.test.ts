@@ -111,6 +111,46 @@ it("corrects one pre-execution schema error without executing the invalid read",
   );
 });
 
+it("lets a lookup that found nothing still answer", async () => {
+  const execute = vi.fn(async () => {
+    throw new ApiError("NOT_FOUND", "未找到该地点，请换个名称。");
+  });
+  const provider = new MockModelProvider([
+    toolReply([call("test_echo", '{"value":"x"}', "miss")]),
+    final,
+  ]);
+  const events: AgentEvent[] = [];
+  const result = await new AgentOrchestrator(
+    { resolve: async () => ({ client: provider, snapshot }) },
+    registry({ execute }),
+    undefined,
+    { stopOnToolError: true, tolerateNotFound: true },
+  ).run({
+    message: "fixture",
+    context,
+    onEvent: (event) => events.push(event),
+  });
+  expect(result.status).toBe("completed");
+  expect(provider.requests).toHaveLength(2);
+  expect(JSON.stringify(provider.requests[1].messages)).toContain(
+    "没有找到任何匹配对象",
+  );
+  expect(events.some((e) => e.type === "run.failed")).toBe(false);
+});
+
+it("still fails the turn on a tool that is not a lookup", async () => {
+  const execute = vi.fn(async () => {
+    throw new ApiError("UPSTREAM_ERROR", "工具执行失败，请重试。", true);
+  });
+  const result = await new AgentOrchestrator(
+    { resolve: async () => ({ client: new MockModelProvider([toolReply([call("test_echo", '{"value":"x"}', "boom")])]), snapshot }) },
+    registry({ execute }),
+    undefined,
+    { stopOnToolError: true, tolerateNotFound: true },
+  ).run({ message: "fixture", context, onEvent: () => {} });
+  expect(result).toMatchObject({ status: "failed", code: "UPSTREAM_ERROR" });
+});
+
 it("shares frozen schema metadata without sharing executors or authorization", async () => {
   const a = registry();
   const b = registry({ auth: "user" });

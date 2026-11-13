@@ -1606,6 +1606,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
               {
                 unrestricted: true,
                 stopOnToolError: true,
+                tolerateNotFound: true,
                 instructions,
                 ...(content.active && !content.map
                   ? {

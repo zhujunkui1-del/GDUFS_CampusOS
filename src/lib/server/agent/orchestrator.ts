@@ -107,6 +107,8 @@ export class AgentOrchestrator {
     private readonly limiter = new RunLimiter(),
     private readonly options: {
       stopOnToolError?: boolean;
+      /** A lookup that found nothing is a result, not a failure. */
+      tolerateNotFound?: boolean;
       unrestricted?: boolean;
       instructions?: string;
       modelResult?: (name: string, result: SkillResult<unknown>) => unknown;
@@ -439,6 +441,19 @@ export class AgentOrchestrator {
                 tool: skill.name,
                 parameters: skill.tool.function.parameters,
                 inputIssues: skill.inputIssues(invalidInput),
+              });
+            } else if (
+              this.options.tolerateNotFound &&
+              result.error.code === "NOT_FOUND" &&
+              skill?.sideEffect === "none"
+            ) {
+              // "There is no place by that name" is an answer the model can use,
+              // not an outage. Ending the turn here made the user see
+              // "未找到该地点或路线" with no reply at all.
+              messages.push({
+                role: "system",
+                content:
+                  "上一个只读工具没有找到任何匹配对象（NOT_FOUND）。这不是系统故障，也不要重复同一个查询；请改用已有信息或直接用文字说明没有找到，并继续回答用户。",
               });
             } else
               throw new ApiError(
