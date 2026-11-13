@@ -1363,3 +1363,11 @@ D-146 最终验收更新（2026-11-06）：Dify App API Key Secret 与已发布 
 负责人明确要求把剩余2.5D/3D模型放入网站。线上全量资源核对后，范围确定为二饭、三饭、门诊部、后勤楼的8个缺失GLB及对应客户端清单；不新建模型、不改旧模型字节。沿用现有共享campusos-preview及其域名/D1/路由，通过既有净化构建后发布，未创建Production资源、执行迁移或改DNS/业务凭据。
 
 本次版本 `e2a2429f-3c4a-4f92-a65e-b375e5a0cfd5`，回滚点 `d035e871-fe6b-4fc0-a30f-3542b0ba6abe`；网站82个清单GLB哈希、四组2.5D/3D与移动驻留均已实载验证。2.5D维持纯白模，3D不因距离/平移降回白模；影像尺寸近似和真实手机性能边界沿用原记录。具体检查及无行为变化的Lint修正见 `docs/BUILDING_MODELS_ONLINE_ACCEPTANCE_2026_11_13.md`。
+
+## D-162｜采集许可看运营入口，不看审核标签（2026-11-13）
+
+负责人指出「自己新建信息源、自己配好入口，却不允许立即采集」是防御性编程，要求删除核验机制。据此定调：官网能否采集只取决于运营者是否启用该来源、是否保存了可用入口（`web_profile_json` 且 `configurationStatus<>'discovered'`）、来源是否已关闭或封禁；`verification_status`/`official_status`/`permission_status`/`authorization_status` 与 policy 审核标签不再作为采集闸门。
+
+实现分三层同时放宽：前端 `canCollectSource`、调度器 `dispatchDue`、建任务 `createJob`；`saveWebProfile` 在入口确认时同步把来源标为已核验/官方并用 `probeRobots` 自动登记 `source_collection_policies`（`licensed_full_text`，100 年有效），使「配好入口即可采」闭环。D1 侧由 `migrations/0065`–`0068` 重写三个触发器：去掉标签闸门与每日 claim/create 预算，只保留来源启用、未关闭、未封禁、policy 未过期（manual 运行豁免）与租约/围栏检查。字节出站前的 `permit()` 与 claim 守卫保持一致，无 policy 行的历史来源按 `licensed_full_text` 回退（`0067` 已回填）。
+
+代价与边界：审核标签仍保留在数据里供人工判断，只是不再阻断；已关闭来源重新启用仍返回 `CONFLICT`。单任务 `request_count>18` 与每日预算一并取消，长列表任务改由 `MAX_PAGES_PER_ENTRY=20`、`CheckpointSchema.urls.max(50)` 与租约兜底。
