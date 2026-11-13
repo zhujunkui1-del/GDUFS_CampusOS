@@ -28,6 +28,14 @@ it("shares one integrity-checked asset request across concurrent consumers", asy
   expect(x).toBe(y);
   expect(fetch).toHaveBeenCalledTimes(1);
 });
+it("reports an unavailable secure-context digest before fetching model bytes", async () => {
+  const a = await asset("missing-secure-digest");
+  const fetch = vi.fn(async () => new Response(a.bytes));
+  vi.stubGlobal("crypto", {});
+  vi.stubGlobal("fetch", fetch);
+  await expect(readModelAsset(a.meta)).rejects.toThrow("model-secure-context");
+  expect(fetch).not.toHaveBeenCalled();
+});
 it("rejects HTML responses and permits a later explicit retry", async () => {
   const a = await asset("retry"),
     fetch = vi

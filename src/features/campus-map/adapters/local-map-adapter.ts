@@ -40,7 +40,6 @@ import {
   pilotModelCorners,
   type PilotModelState,
 } from "../data/model-pilot";
-import type { Nanyuan7ModelLayer } from "../layers/nanyuan7-model-layer";
 import type { CampusBuildingModelLayer } from "../layers/campus-building-model-layer";
 import {
   buildingModelCatalog,
@@ -121,10 +120,8 @@ export class LocalMapAdapter implements MapAdapter {
   private cameraRevision = 0;
   private cameraTargetKey?: string;
   private displayMode: MapMode = "2d";
-  private modelLayer?: Nanyuan7ModelLayer;
   private campusModelLayer?: CampusBuildingModelLayer;
   private campusModelsLoading = false;
-  private modelLoading = false;
   private modelState: PilotModelState = "idle";
   private modelListeners = new Set<(state: PilotModelState) => void>();
   get modelAvailable() {
@@ -640,7 +637,7 @@ export class LocalMapAdapter implements MapAdapter {
     };
   }
   private setModelState(state: PilotModelState) {
-    if (this.destroyed) return;
+    if (this.destroyed || this.modelState === state) return;
     this.modelState = state;
     this.element.dataset.modelState = state;
     this.updateModelVisibility();
@@ -650,11 +647,16 @@ export class LocalMapAdapter implements MapAdapter {
     if (mode === "2.5d" && !this.supports2_5D) mode = "2d";
     if (mode === "3d" && !this.modelAvailable) mode = "2.5d";
     this.displayMode = mode;
+    if (mode === "3d" && this.modelState === "error")
+      this.campusModelLayer?.retryFailed();
+    if (mode === "3d" && !this.campusModelLayer?.pilotDetailedReady)
+      this.setModelState("loading");
+    if (mode !== "3d" && this.modelState !== "idle") this.setModelState("idle");
     if (mode === "2d" && this.modelState === "error")
       this.setModelState("idle");
     this.updateModelVisibility();
     if (mode !== "2d") void this.loadCampusModels();
-    if (mode === "3d") void this.loadDetailedModel();
+
     if (animate) this.setPitch(mode === "2d" ? 0 : CAMPUS_PITCH);
   }
   private async loadCampusModels() {
@@ -686,7 +688,11 @@ export class LocalMapAdapter implements MapAdapter {
       }
       this.campusModelLayer = new CampusBuildingModelLayer(
         () => this.setModelState("error"),
-        () => this.updateModelVisibility(),
+        () => {
+          if (this.displayMode === "3d")
+            this.setModelState(this.campusModelLayer?.pilotState || "loading");
+          else this.updateModelVisibility();
+        },
       );
       this.native.addLayer(
         this.campusModelLayer,
@@ -706,45 +712,6 @@ export class LocalMapAdapter implements MapAdapter {
       this.campusModelsLoading = false;
     }
   }
-  private async loadDetailedModel() {
-    if (
-      !modelPilotAvailable ||
-      !this.supports3D ||
-      this.modelLoading ||
-      this.modelState === "loading" ||
-      this.modelLayer?.ready
-    )
-      return;
-    this.modelLoading = true;
-    this.setModelState("loading");
-    try {
-      const { Nanyuan7ModelLayer } =
-        await import("../layers/nanyuan7-model-layer");
-      if (this.destroyed) return;
-      if (this.displayMode !== "3d") {
-        this.setModelState("idle");
-        return;
-      }
-      if (this.native.getLayer("nanyuan7-model"))
-        this.native.removeLayer("nanyuan7-model");
-      this.modelLayer = new Nanyuan7ModelLayer((state) =>
-        this.setModelState(state),
-      );
-      this.native.addLayer(
-        this.modelLayer,
-        this.native.getLayer("route") ? "route" : undefined,
-      );
-      this.modelLayer.setAppearance(
-        this.selected === modelPilot.placeId,
-        !!this.activeRouteId,
-      );
-      this.updateModelVisibility();
-    } catch {
-      if (!this.destroyed) this.setModelState("error");
-    } finally {
-      this.modelLoading = false;
-    }
-  }
   private updateModelVisibility() {
     this.campusModelLayer?.setMode(this.displayMode);
     if (this.native.getLayer("campus-model-courtyards"))
@@ -753,38 +720,28 @@ export class LocalMapAdapter implements MapAdapter {
         "visibility",
         this.displayMode === "2d" ? "none" : "visible",
       );
-    if (!this.native.getLayer("nanyuan7-volume")) return;
-    const detailed = this.displayMode === "3d" && !!this.modelLayer?.ready;
-    const volumeVisible = this.displayMode !== "2d" && !detailed;
-    const sharedVolume =
-      volumeVisible && !!this.campusModelLayer?.pilotVolumeReady;
-    const nativeVolumeVisible = volumeVisible && !sharedVolume;
-    this.native.setLayoutProperty(
-      "nanyuan7-volume",
-      "visibility",
-      nativeVolumeVisible ? "visible" : "none",
-    );
-    this.native.setLayoutProperty(
-      "nanyuan7-courtyard",
-      "visibility",
-      this.displayMode === "2d" ? "none" : "visible",
-    );
-    this.native.setPaintProperty(
-      "nanyuan7-volume",
-      "fill-extrusion-opacity",
-      this.activeRouteId ? 0.4 : 1,
-    );
-    if (this.modelLayer) this.modelLayer.visible = detailed;
-    this.element.dataset.modelVolume = volumeVisible ? "visible" : "none";
-    this.element.dataset.modelVolumeRenderer = volumeVisible
-      ? sharedVolume
-        ? "shared"
-        : "native"
-      : "none";
-    this.element.dataset.modelNativeVolume = nativeVolumeVisible
-      ? "visible"
-      : "none";
-    this.element.dataset.modelDetailed = detailed ? "visible" : "none";
+    // The old pilot extrusion is never a loading placeholder. All buildings use the shared scene.
+    for (const id of ["nanyuan7-volume", "nanyuan7-courtyard"])
+      if (this.native.getLayer(id))
+        this.native.setLayoutProperty(id, "visibility", "none");
+    const detailed =
+      this.displayMode === "3d" && !!this.campusModelLayer?.pilotDetailedReady;
+    const volume =
+      this.displayMode !== "2d" && !!this.campusModelLayer?.pilotVolumeReady;
+    const data = this.element.dataset;
+    data.modelVolume = volume ? "visible" : "none";
+    data.modelVolumeRenderer = volume ? "shared" : "none";
+    data.modelNativeVolume = "none";
+    data.modelDetailed = detailed ? "visible" : "none";
+    data.modelRenderer = detailed || volume ? "shared" : "none";
+    data.modelDrawCalls = "0";
+    if (detailed) {
+      const asset = modelPilot.assets.full;
+      data.modelLod = "full";
+      data.modelBytes = String(asset.bytes);
+      data.modelTriangles = String(asset.triangles);
+      data.modelAssetSha = asset.sha256;
+    }
     this.native.triggerRepaint();
   }
   private pickedPilot(point: { x: number; y: number }) {
@@ -795,20 +752,13 @@ export class LocalMapAdapter implements MapAdapter {
         Number(this.element.dataset.campusModelPickCount || 0) + 1,
       );
       this.element.dataset.campusModelPickedPlace = campusHit;
+      if (campusHit === modelPilot.placeId)
+        this.element.dataset.modelPickCount = String(
+          Number(this.element.dataset.modelPickCount || 0) + 1,
+        );
       return campusData.places.find((p) => p.id === campusHit);
     }
-    const hit =
-      this.modelLayer?.pick(point) ||
-      this.native.queryRenderedFeatures([point.x, point.y], {
-        layers: ["nanyuan7-volume"],
-      }).length > 0;
-    if (hit)
-      this.element.dataset.modelPickCount = String(
-        Number(this.element.dataset.modelPickCount || 0) + 1,
-      );
-    return hit
-      ? campusData.places.find((p) => p.id === modelPilot.placeId)
-      : undefined;
+    return undefined;
   }
   private elevatedPixel(
     point: Coordinate,
@@ -1252,17 +1202,12 @@ export class LocalMapAdapter implements MapAdapter {
       ["get", "sourceId"],
       place.geometry ? id : place.parentId || id,
     ]);
-    this.modelLayer?.setAppearance(
-      id === modelPilot.placeId,
-      !!this.activeRouteId,
-    );
     this.campusModelLayer?.setAppearance(id, !!this.activeRouteId);
     this.updateLabels();
   }
   clearSelection() {
     this.selected = undefined;
     this.native.setFilter("selected", ["==", ["get", "sourceId"], ""]);
-    this.modelLayer?.setAppearance(false, !!this.activeRouteId);
     this.campusModelLayer?.setAppearance(undefined, !!this.activeRouteId);
     this.updateLabels();
   }
@@ -1571,7 +1516,6 @@ export class LocalMapAdapter implements MapAdapter {
     if (!route) throw new Error("路线不存在或已失效。");
     this.activeRouteId = id;
     this.setDisplayMode("2d", false);
-    this.modelLayer?.setAppearance(this.selected === modelPilot.placeId, true);
     this.campusModelLayer?.setAppearance(this.selected, true);
     const path = route.pathGcj02
       .slice(route.approachPathGcj02 ? 1 : 0)
@@ -1699,7 +1643,6 @@ export class LocalMapAdapter implements MapAdapter {
     this.native.stop();
     this.element.dataset.cameraMoving = "false";
     this.activeRouteId = undefined;
-    this.modelLayer?.setAppearance(this.selected === modelPilot.placeId, false);
     this.campusModelLayer?.setAppearance(this.selected, false);
     this.updateModelVisibility();
     this.routePanelObserver?.disconnect();

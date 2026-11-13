@@ -86,7 +86,7 @@ test("South 7 volume and on-demand 3D keep their geography and label semantics",
     "54cc55342ae54c2f38743341490fe943de8a877f8a968bc7c46d7a6f2c14b79a",
   );
   await expect(page.getByTestId("map-mode-trigger")).toHaveText("3D");
-  const lod = info.project.name === "mobile" ? "low" : "full";
+  const lod = "full";
   await expect(map).toHaveAttribute("data-model-lod", lod);
   expect(Number(await map.getAttribute("data-model-bytes"))).toBeLessThan(
     200 * 1024,
@@ -167,10 +167,7 @@ test("all completed buildings retain full 3D across pan with shared dorm volumes
         "utf8",
       ),
     );
-  const expected3D = catalog.entries
-    .filter((e) => e.placeId !== "osm-way-312536955")
-    .map((e) => e.key)
-    .sort();
+  const expected3D = catalog.entries.map((e) => e.key).sort();
   const requests: string[] = [];
   page.on("request", (r) => {
     if (r.url().endsWith(".glb")) requests.push(r.url());

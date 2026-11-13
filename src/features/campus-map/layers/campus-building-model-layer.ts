@@ -1,7 +1,5 @@
 import {
-  AmbientLight,
   Camera,
-  DirectionalLight,
   Group,
   InstancedMesh,
   Material,
@@ -13,6 +11,7 @@ import {
   Vector3,
   WebGLRenderer,
   Texture,
+  PCFShadowMap,
   type Object3D,
 } from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
@@ -32,6 +31,10 @@ import type { MapMode } from "@/domain/maps/contracts";
 import { modelPilot, modelPilotAvailable } from "../data/model-pilot";
 import { readModelAsset } from "./model-asset-cache";
 import { modelBudget } from "../data/model-budget";
+import {
+  createCampusModelLighting,
+  setCampusModelShadows,
+} from "./campus-model-lighting";
 type OwnerRange = { start: number; count: number; key: string };
 type Loaded = {
   entry: BuildingModelEntry;
@@ -103,7 +106,11 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
   private frameSamples: number[] = [];
   private lastFrame = 0;
   private buildFrame = 0;
-  private notifiedPilotVolume = false;
+  private pilotNotification = "";
+  private pilotActiveMode?: "2.5d" | "3d";
+  private lighting?: ReturnType<typeof createCampusModelLighting>;
+  private shadowSignature = "";
+  private shadowUpdates = 0;
   private lost = false;
   private readonly contextLost = () => {
     this.lost = true;
@@ -111,6 +118,7 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
   };
   private readonly contextRestored = () => {
     this.lost = false;
+    if (this.renderer) this.renderer.shadowMap.needsUpdate = true;
     this.map?.triggerRepaint();
   };
   private origin = MercatorCoordinate.fromLngLat([
@@ -127,16 +135,43 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
     private onPilotVolumeChange?: () => void,
   ) {}
   get pilotVolumeReady() {
-    return this.mode === "2.5d" && this.loaded.has("dormitory-s7:2.5d");
+    return this.mode !== "2d" && this.pilotActiveMode === "2.5d";
+  }
+  get pilotDetailedReady() {
+    return this.mode === "3d" && this.pilotActiveMode === "3d";
+  }
+  get pilotState() {
+    if (this.mode !== "3d") return "idle";
+    if (this.failed.has("dormitory-s7:3d")) return "error";
+    return this.loaded.has("dormitory-s7:3d") ? "ready" : "loading";
+  }
+  retryFailed() {
+    this.failed.clear();
+    this.criticalReported.clear();
+    this.reconcile();
   }
   onAdd(map: LibreMap, gl: WebGL2RenderingContext) {
     this.map = map;
     this.renderer = new WebGLRenderer({ canvas: map.getCanvas(), context: gl });
     this.renderer.autoClear = false;
-    this.scene.add(new AmbientLight(0xffffff, 2));
-    const sun = new DirectionalLight(0xfff5e5, 3);
-    sun.position.set(-45, 90, 65);
-    this.scene.add(sun, this.drawRoot);
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = PCFShadowMap;
+    this.renderer.shadowMap.autoUpdate = false;
+    this.renderer.shadowMap.needsUpdate = true;
+    this.lighting = createCampusModelLighting(
+      this.scene,
+      this.origin,
+      this.units,
+      map.getContainer().dataset.renderProfile === "conservative"
+        ? "conservative"
+        : "standard",
+      map.getContainer().clientWidth,
+    );
+    this.scene.add(this.drawRoot);
+    map.getContainer().dataset.campusModelLighting = "shared-static-sun";
+    map.getContainer().dataset.campusModelShadowMapSize = String(
+      this.lighting.size,
+    );
     map.getCanvas().addEventListener("webglcontextlost", this.contextLost);
     map
       .getCanvas()
@@ -163,9 +198,7 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
         this.mode === "2d"
           ? []
           : buildingModelCatalog.entries.filter(
-              (e) =>
-                e.placeId !== modelPilot.placeId ||
-                (this.mode === "2.5d" && modelPilotAvailable),
+              (e) => e.placeId !== modelPilot.placeId || modelPilotAvailable,
             );
     this.wanted.clear();
     for (const entry of entries) {
@@ -373,11 +406,13 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
       b.geometries.forEach((g) => g.dispose());
       if (!geometry) continue;
       const mesh = new Mesh(geometry, b.material);
+      setCampusModelShadows(mesh);
       mesh.userData.ownerRanges = b.owners;
       group.add(mesh);
     }
     for (const b of instances.values()) {
       const mesh = new InstancedMesh(b.geometry, b.material, b.matrices.length);
+      setCampusModelShadows(mesh);
       b.matrices.forEach((m, i) => mesh.setMatrixAt(i, m));
       mesh.userData.ownerRanges = b.owners;
       mesh.computeBoundingBox();
@@ -399,10 +434,12 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
   private rebuild() {
     if (this.disposed) return;
     this.drawRoot.clear();
+    this.pilotActiveMode = undefined;
     const active = new Set<string>(),
       selected = buildingModelForPlace(this.selected);
     let ready = 0,
       highCount = 0;
+    const shadowCasters: string[] = [];
     for (const [key, mode] of this.wanted) {
       const item =
         this.loaded.get(key + ":" + mode) || this.loaded.get(key + ":2.5d");
@@ -410,6 +447,8 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
       active.add(key + ":" + item.mode);
       ready++;
       if (item.mode === "3d") highCount++;
+      if (item.entry.placeId === modelPilot.placeId)
+        this.pilotActiveMode = item.mode;
       for (const [m, o] of item.materials) {
         m.emissive.set(
           item.entry.pickable && key === selected?.key ? "#113454" : "#000000",
@@ -423,7 +462,22 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
         m.depthWrite = this.routeVisible ? false : o.depthWrite;
       }
 
-      this.drawRoot.add(this.prepareBatches(item, key));
+      const batches = this.prepareBatches(item, key);
+      this.drawRoot.add(batches);
+      if (batches.children.some((n) => n instanceof Mesh && n.castShadow))
+        shadowCasters.push(key);
+    }
+    this.lighting?.setRouteVisible(this.routeVisible);
+    if (this.lighting) this.lighting.receiver.visible = this.mode !== "2d";
+    const shadowSignature = this.mode + ":" + [...active].sort().join("|");
+    if (
+      active.size &&
+      this.pending.size === 0 &&
+      this.shadowSignature !== shadowSignature &&
+      this.renderer
+    ) {
+      this.shadowSignature = shadowSignature;
+      this.renderer.shadowMap.needsUpdate = true;
     }
     this.scene.updateMatrixWorld(true);
     if (this.map) {
@@ -437,10 +491,12 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
       data.campusModelKeys = JSON.stringify([...active]);
       data.campusModelSelected = selected?.placeId || "";
       data.campusModelRouteVisible = String(this.routeVisible);
+      data.campusModelShadowCasters = JSON.stringify(shadowCasters);
       this.map.triggerRepaint();
     }
-    if (this.notifiedPilotVolume !== this.pilotVolumeReady) {
-      this.notifiedPilotVolume = this.pilotVolumeReady;
+    const pilotNotification = `${this.mode}:${this.pilotState}:${this.pilotActiveMode}`;
+    if (this.pilotNotification !== pilotNotification) {
+      this.pilotNotification = pilotNotification;
       this.onPilotVolumeChange?.();
     }
   }
@@ -486,12 +542,18 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
       gl.drawingBufferWidth / ratio,
       gl.drawingBufferHeight / ratio,
     );
+    const updateShadows = this.renderer.shadowMap.needsUpdate;
     this.renderer.render(this.scene, this.camera);
+    if (updateShadows) this.shadowUpdates++;
     this.renderer.resetState();
     const data = this.map.getContainer().dataset;
     data.campusModelDrawCalls = String(this.renderer.info.render.calls);
     data.campusModelTriangles = String(this.renderer.info.render.triangles);
+    data.campusModelShadowUpdates = String(this.shadowUpdates);
+    if (updateShadows) data.campusModelShadowMode = this.mode;
     data.campusModelFrames = String(Number(data.campusModelFrames || 0) + 1);
+    if (this.pilotDetailedReady)
+      data.modelFrameCount = String(Number(data.modelFrameCount || 0) + 1);
   }
   pick(point: { x: number; y: number }) {
     if (!this.map || this.mode === "2d" || !this.projectionReady) return;
@@ -550,6 +612,7 @@ export class CampusBuildingModelLayer implements CustomLayerInterface {
     }
     this.loaded.clear();
     this.queue = [];
+    this.lighting?.dispose();
     this.scene.clear();
     this.renderer?.dispose();
     this.map = undefined;

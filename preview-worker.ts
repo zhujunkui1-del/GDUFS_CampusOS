@@ -8,6 +8,7 @@ import {
 } from "./src/lib/server/retrieval/vector";
 import handler from "./.open-next/worker.js";
 import { revalidateDocument } from "./src/lib/server/document-cache";
+import { publicHttpsRedirect } from "./src/lib/server/public-https";
 import { cleanAccountMetadata } from "./src/lib/server/account/api";
 import { runCalendarBatch } from "./src/lib/server/calendar/processor";
 import type { CalendarAI } from "./src/lib/server/calendar/enrichment";
@@ -70,6 +71,8 @@ const previewWorker = {
     env: Record<string, unknown>,
     ctx: { waitUntil(work: Promise<unknown>): void },
   ) {
+    const upgrade = publicHttpsRedirect(request);
+    if (upgrade) return upgrade;
     const route =
       env.APP_ENV === "preview"
         ? previewApiHandler(new URL(request.url).pathname, request.method)

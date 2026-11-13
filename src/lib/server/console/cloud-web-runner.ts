@@ -255,11 +255,15 @@ export async function runCloudWebBatch(
   // budget lasts: updated_at ordering means each pass starts with the jobs that
   // were touched longest ago, so the extra steps spread across the queue.
   while (results.length < budget && Date.now() < deadline) {
+    // Re-read the clock for every pass: commit() stamps the job it just finished
+    // with next_run_after_ms = now, so binding this tick's opening timestamp would
+    // hide that job from the very next pass and cap every job at one step a minute.
+    const passAt = Date.now();
     const jobs = await db
       .prepare(
         "SELECT id FROM ingestion_jobs WHERE job_kind='web' AND control_state='active' AND phase<>'complete' AND status IN('queued','running') AND lease_until_ms<=? AND next_run_after_ms<=? AND ((SELECT auto_sync_enabled FROM console_engine_settings WHERE id='console-v2-settings')=1 OR run_key NOT LIKE 'scheduled:%') ORDER BY updated_at,id LIMIT ?",
       )
-      .bind(now, now, Math.min(budget - results.length, 20))
+      .bind(passAt, passAt, Math.min(budget - results.length, 20))
       .all<{ id: string }>();
     if (!jobs.results.length) break;
     // Each step is one HTTP fetch, and a fetch against a slow campus host takes

@@ -18,6 +18,8 @@ export function readModelAsset(asset: Asset): Promise<ArrayBuffer> {
   }
   if (asset.bytes > MAX_ASSET_BYTES || asset.bytes < 20)
     return Promise.reject(new Error("model-budget"));
+  if (!globalThis.crypto?.subtle)
+    return Promise.reject(new Error("model-secure-context"));
   while (residentBytes + asset.bytes > MAX_BYTES && buffers.size) {
     const oldest = buffers.keys().next().value!;
     residentBytes -= buffers.get(oldest)!.bytes;
