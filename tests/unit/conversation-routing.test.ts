@@ -10,6 +10,7 @@ import {
 } from "@/lib/server/assistant/content-prompt";
 import { externalPolicy } from "@/lib/server/external-search/policy";
 import { contentReadPlan } from "@/lib/server/assistant/read-plan";
+import { buildQueryPlan as buildPlan } from "@/lib/retrieval/query-plan";
 
 // Regression seeds from the handover report. These assert routing decisions only:
 // they never encode a canned answer for the sentence.
@@ -248,4 +249,49 @@ it("sends a facility question to the map only when the service word is a real pl
   expect(contentIntent("校园里有照相馆或者打印照片的地方吗").map).toBe(true);
   expect(contentIntent("校内有哪些打印店？").map).toBe(true);
   expect(contentIntent("校内有快递点吗").map).toBe(true);
+});
+
+it("answers a safety question without waiting for campus evidence", () => {
+  // The corpus has no article on being followed, so a strict gate refused to
+  // answer at all. The answer is general knowledge, not a campus fact.
+  for (const message of [
+    "被人跟踪骚扰可以找谁帮忙",
+    "学校附近有人尾随我",
+    "宿舍着火了怎么办",
+  ]) {
+    const intent = contentIntent(message);
+    expect(intent.answerRequirement).toBe("open");
+    expect(intent.tools).toEqual([]);
+  }
+  // A routine rule question still needs a real document.
+  expect(contentIntent("宿舍可以自己装路由器吗").answerRequirement).toBe(
+    "strict",
+  );
+});
+
+it("treats a complaint about the previous answer as feedback, not a topic", () => {
+  expect(conversationAct("好敷衍啊，你就这么回答问题吗")).toBe("confusion");
+  expect(conversationAct("你怎么这么敷衍")).toBe("confusion");
+  const intent = contentIntent("好敷衍啊，你就这么回答问题吗");
+  expect(intent.tools).toEqual([]);
+  // A campus subject in the complaint is still a campus question.
+  expect(conversationAct("图书馆的回答太糊弄了")).toBe("campus");
+});
+
+it("drops the instruction to repeat from the search subject", () => {
+  const plan = buildPlan("那借书的规矩来着，你再说一遍");
+  expect(plan.topics.map((t) => t.id)).toEqual(["borrowing"]);
+  expect(plan.modifiers.map((m) => m.original)).not.toContain("你再说一遍");
+  // 「规矩来着」 is a spoken clause, not a term the article writes.
+  expect(plan.modifiers.every((m) => m.hard === false)).toBe(true);
+});
+
+it("keeps a fee clause as a hint instead of a hard filter", () => {
+  // "书逾期了要交" and "违约要赔" are how the question is phrased; the
+  // articles write 逾期 and 违约金.
+  for (const message of ["图书馆的书逾期了要交多少钱", "三方协议违约要赔多少钱"]) {
+    const plan = buildPlan(message);
+    expect(plan.modifiers.length).toBeGreaterThan(0);
+    expect(plan.modifiers.every((m) => m.hard === false)).toBe(true);
+  }
 });

@@ -57,8 +57,11 @@ export function contentIntent(
 ) {
   message = searchControlBusiness(message);
   const reply = dialogueReply(message);
+  // A safety question is answered from general knowledge first: waiting for
+  // campus evidence left “被人跟踪骚扰可以找谁帮忙” with no reply at all,
+  // because the corpus has no article on it and the gate refused to speak.
   const urgent =
-    /晕倒|昏迷|急救|火灾|人身(?:危险|威胁)|受到.{0,6}威胁|自伤|轻生|自杀/.test(
+    /晕倒|昏迷|急救|火灾|着火|起火|火警|人身(?:危险|威胁)|受到.{0,6}威胁|自伤|轻生|自杀|被.{0,4}(?:跟踪|尾随|骚扰|猥亵|偷拍)|尾随|跟踪|骚扰|猥亵|偷拍|性侵|遭遇.{0,4}(?:暴力|殴打)|突发疾病/.test(
       message,
     );
   // "带我去南苑11栋" is a fresh map task, not a follow-up about whatever was
@@ -362,7 +365,12 @@ export function contentIntent(
       query,
     );
   const answerRequirement: AnswerRequirement =
-    articleLookup || entityLookup || policy.officialOnly || policy.needsOfficialVerification
+    // A safety question is answered from general knowledge: the campus corpus
+    // cannot hold the answer to "someone is following me", and a strict gate
+    // would refuse to say anything at all.
+    urgent
+      ? "open"
+      : articleLookup || entityLookup || policy.officialOnly || policy.needsOfficialVerification
       ? "strict"
       : advice && !factualAsk
         ? "advisory"

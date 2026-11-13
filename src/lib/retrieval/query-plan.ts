@@ -30,18 +30,28 @@ const CLAUSE_VERB = /(?:不够|不会|会影响|会不会)|^(?:[里在中被把�
 // A symptom is not a subject either: “宿舍东西坏了” asks about repairs, and
 // no article writes “东西坏” as a word.
 const CLAUSE_TAIL = /(?:开放|关闭|提交|交付|报修|保修|记录|影响|办理|使用|收费|发放|收取|坏|坏了|坏掉|破了|漏了|堵了|断了|没了)$/u;
+// A fee or penalty question is a whole clause, not a subject: “书逾期了要交”
+// and “违约要赔” are how the user asks, while the article writes “逾期” and
+// “违约金”. Keeping the clause as a hard filter rejected the very documents
+// that answer the question.
+const CLAUSE_PAYMENT = /(?:要|该|得)(?:交|赔|付|付钱|缴纳)$/u;
 const ATTRIBUTE = /(?:限制|要求|标准|条件|费用|价格|流程|手续|时间|规定)$/u;
 // A question glued to a particle or a modal is a clause, not a term:
 // “报修在哪儿” leaves “报修在”, “宿舍好不好” leaves “好不好”. No article
 // writes those, so they rank instead of vetoing.
 // Only particles and question tails count as glue. Modal verbs such as 能 or
 // 会 end plenty of real subjects (“人工智能”, “全运会”), so they stay hard.
-const CLAUSE_GLUE = /(?:在|吗|呢|吧|的|了|啊|呀|否)$/u;
+const CLAUSE_GLUE = /(?:在|吗|呢|吧|的|了|啊|呀|否|来着)$/u;
+// Instructions about the conversation are not a subject: “你再说一遍”,
+// “刚才那个” and “详细点” describe how to answer, not what to search.
+const META_INSTRUCTION =
+  /(?:你|您)?(?:再|重点)?(?:说|讲|回答|解释)(?:一遍|一下)|(?:刚才|刚刚|上面|前面)的?(?:那个|这话|回答)|说得?(?:详细|简单|具体)点|重复(?:一遍|一下)/u;
 const CLAUSE_MODAL = /(?:方便吗?|可以吗?|能不能?否?|需要吗?|怎么样?)$/u;
 function modifierIsHard(term: string): boolean {
   if (!/[0-9A-Za-z]/.test(term)) {
     if (CLAUSE_VERB.test(term)) return false;
     if (CLAUSE_TAIL.test(term)) return false;
+    if (CLAUSE_PAYMENT.test(term)) return false;
     if (ATTRIBUTE.test(term)) return false;
     if (CLAUSE_GLUE.test(term)) return false;
     if (CLAUSE_MODAL.test(term)) return false;
@@ -263,7 +273,7 @@ export function buildQueryPlan(
     // yielded “时候开”, “大一要选哪些课” yielded “大一要选” — none of them
     // occur anywhere in the corpus, so every candidate was rejected and the
     // answer became “没有检索到”. Keep the nouns, drop the question.
-    .filter((t) => !MODIFIER_NOISE.test(t))
+    .filter((t) => !MODIFIER_NOISE.test(t) && !META_INSTRUCTION.test(t))
     .map((t) => t.replace(/^(?:要|需要|可以|能|会|应该|想|打算)/, ""))
     // Same failure on the other end: “门禁熄灯是” and “缓考请假要走” kept the
     // trailing verb, and the two-character chunks then ended in “灯是” / “要走”,
@@ -287,7 +297,10 @@ export function buildQueryPlan(
     })
     .filter(
       (t) =>
-        t.length >= 2 && !MODIFIER_NOISE.test(t) && !COUNT_QUESTION.test(t),
+        t.length >= 2 &&
+        !MODIFIER_NOISE.test(t) &&
+        !META_INSTRUCTION.test(t) &&
+        !COUNT_QUESTION.test(t),
     )
     .slice(0, 4)
     .map((original) => ({

@@ -15,6 +15,10 @@ const CAMPUS_SIGNAL =
 const CONFUSION =
   /^(?:(?:啊|哦|嗯|咦|什么|啥|这|那|哈)[\s?？!！。.,，]*)*(?:什么意思|没看懂|看不懂|你在说什么|答非所问|牛头不对马嘴|听不懂|说了个啥)[?？!！。.\s]*$/;
 
+/** A complaint about the previous answer, addressed to the assistant. */
+const COMPLAINT =
+  /(?:敷衍|糊弄|答非所问|不认真|瞎答|乱答|没回答|没说清楚|不靠谱)/;
+
 /** Explicit correction of the previous answer. */
 const CORRECTION =
   /^(?:不对|错了|不是这个|不是这个意思|不是我问的|你答错了|重新回答|我说的是|你刚才说的不对|没有回答我的问题)[!！。.\s]*$/;
@@ -45,6 +49,10 @@ export function conversationAct(message: string): ConversationAct {
   const bare = text.replace(/[\s?？!！。.,，、~～…]+/g, "");
   if (!bare || CONFUSION.test(text)) return "confusion";
   if (CORRECTION.test(text)) return "correction";
+  // "好敷衍啊，你就这么回答问题吗" is a verdict on the last answer, not a
+  // search topic. Searching for it returned an unrelated volunteer story.
+  if (COMPLAINT.test(text) && /你|本鱼|这/.test(text) && !CAMPUS_SIGNAL.test(text))
+    return "confusion";
   if (CAMPUS_SIGNAL.test(text)) return "campus";
   if (/^(?:我|本鱼)(?:喜欢|讨厌|觉得|今天.{0,4}(?:开心|难过|累|困))/.test(text))
     return "chitchat";
