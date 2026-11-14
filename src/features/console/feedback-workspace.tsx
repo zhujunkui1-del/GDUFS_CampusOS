@@ -1,7 +1,9 @@
+/* eslint-disable @next/next/no-img-element -- Pre-sized WebP assets and authenticated image responses bypass the optimizer. */
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
 import { Archive, RefreshCw } from "lucide-react";
+import "./buildings-workspace.css";
 import type { FeedbackInbox } from "@/domain/feedback";
 
 export function FeedbackWorkspace({
@@ -77,6 +79,20 @@ export function FeedbackWorkspace({
                   </time>
                 </header>
                 <p>{item.content}</p>
+                {!!item.images?.length && (
+                  <div className="feedback-attachments">
+                    {item.images.map((image) => (
+                      <a
+                        key={image.id}
+                        href={image.url + "&download=1"}
+                        download={image.name}
+                      >
+                        <img src={image.url} alt={image.name} loading="lazy" />
+                        <span>下载图片</span>
+                      </a>
+                    ))}
+                  </div>
+                )}
                 {status === "pending" && (
                   <button
                     type="button"

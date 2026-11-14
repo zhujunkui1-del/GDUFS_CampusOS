@@ -16,6 +16,7 @@ import { collectorAdministration } from "./collector-api";
 import { consolePermission } from "./auth";
 import { sourceControl, sourceSessionSnapshot } from "./source-session";
 import { trafficSummary } from "./traffic";
+import { buildingAdministration } from "../building-media";
 import { feedbackAdministration } from "../feedback";
 import { assistantBindings } from "../assistant/database";
 import {
@@ -111,6 +112,15 @@ export const consoleAdministration = withApi(async (request) => {
     .map(decodeURIComponent);
   const [section, id, action, version] = path;
   if (path.length > 4) throw new ApiError("NOT_FOUND", "未找到该管理接口。");
+  if (section === "v2" && id === "buildings") {
+    consolePermission(context.actor, "admin");
+    return buildingAdministration(
+      context.config.db,
+      request,
+      path.slice(2),
+      context.actor,
+    );
+  }
   if (section === "v2" && id === "feedback") {
     consolePermission(context.actor, "admin");
     return feedbackAdministration(context.config.db, request, path.slice(2));

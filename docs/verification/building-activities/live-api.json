@@ -1,0 +1,104 @@
+{
+  "origin": "https://gdufs.zhiyuapp.site",
+  "checkedAt": "2026-11-14T13:42:45.280Z",
+  "days": [
+    {
+      "date": "2026-10-14",
+      "cases": [
+        {
+          "title": "讲座预告丨广外金融论坛第137讲",
+          "place": "大学城校区院系楼401会议室",
+          "mapPlace": {
+            "placeId": "osm-way-307437431",
+            "name": "院系办公楼",
+            "precision": "building"
+          },
+          "sources": 2,
+          "match": true
+        }
+      ],
+      "northUnmapped": true
+    },
+    {
+      "date": "2026-11-12",
+      "cases": [
+        {
+          "title": "“信息素养教育系列”讲座 第五十三讲",
+          "place": "大学城校区E203",
+          "mapPlace": {
+            "placeId": "osm-node-3125704419",
+            "name": "教学楼E栋",
+            "precision": "building"
+          },
+          "sources": 1,
+          "match": true
+        },
+        {
+          "title": "知行共读·青春无艾｜防艾书籍专家×青年共读会来啦！",
+          "place": "广东外语外贸大学南校区 D512课室",
+          "mapPlace": {
+            "placeId": "osm-relation-19299170",
+            "name": "教学楼D栋",
+            "precision": "building"
+          },
+          "sources": 1,
+          "match": true
+        },
+        {
+          "title": "【职业发展力讲坛】公职类考试备考指导分享会",
+          "place": "大学城校区G座教学楼207",
+          "mapPlace": {
+            "placeId": "osm-node-3125704356",
+            "name": "教学楼G栋",
+            "precision": "building"
+          },
+          "sources": 1,
+          "match": true
+        }
+      ],
+      "northUnmapped": true
+    },
+    {
+      "date": "2026-11-14",
+      "cases": [
+        {
+          "title": "讲座预告丨广外金融论坛第138讲",
+          "place": "大学城校区院系楼401会议室",
+          "mapPlace": {
+            "placeId": "osm-way-307437431",
+            "name": "院系办公楼",
+            "precision": "building"
+          },
+          "sources": 1,
+          "match": true
+        }
+      ],
+      "northUnmapped": true
+    }
+  ],
+  "building": {
+    "total": 1,
+    "preview": [
+      {
+        "title": "讲座预告丨广外金融论坛第138讲",
+        "startsAt": "2026-11-14",
+        "mapPlace": {
+          "placeId": "osm-way-307437431",
+          "name": "院系办公楼",
+          "precision": "building"
+        },
+        "calendarUrl": "/calendar?date=2026-11-14&event=event-e08da4632f90e6f839fde319315bf0fef14e30f1"
+      }
+    ],
+    "hasMore": false,
+    "metrics": {
+      "rowsRead": 1601,
+      "rowsWritten": 0,
+      "queries": 2,
+      "durationMs": 327,
+      "usageAvailable": true
+    },
+    "after": "2026-11-14"
+  },
+  "failures": []
+}

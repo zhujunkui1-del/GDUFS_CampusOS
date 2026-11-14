@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-11-14T18:15:22.713Z",
+  "checks": [
+    {
+      "title": "【10月12日宣讲】厦门建发股份有限公司",
+      "locationVisible": true,
+      "mapLinks": 0
+    },
+    {
+      "title": "【10月12日宣讲】三立人（深圳）科技有限公司",
+      "locationVisible": true,
+      "mapLinks": 1
+    },
+    {
+      "title": "【10月13日宣讲】深圳市亚飞电子商务有限公司",
+      "locationVisible": true,
+      "mapLinks": 1
+    },
+    {
+      "title": "【10月14日宣讲】立信会计师事务所（特殊普通合伙）深圳分所",
+      "locationVisible": true,
+      "mapLinks": 1
+    },
+    {
+      "title": "职引未来，逐梦启航——公管学院举办求职技能系列讲座",
+      "locationVisible": true,
+      "mapLinks": 1
+    }
+  ],
+  "pastEventInBuilding": true
+}

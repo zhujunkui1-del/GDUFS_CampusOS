@@ -1,0 +1,507 @@
+{
+  "osm-way-307250997": {
+    "description": "大会堂（教工活动中心）位于大学城校区教学区，是校园公共活动场所。",
+    "photos": ["/buildings/15f530b94852cfe6b95dc9fa.webp"]
+  },
+  "osm-way-307250998": {
+    "description": "图书馆位于大学城校区教学区，是图书阅览与学习场所。",
+    "photos": [
+      "/buildings/6ccd5716bbf18b08fa377f2a.webp",
+      "/buildings/6f9fdb5d70c2640d82f36d18.webp",
+      "/buildings/3850a24164478afdd8eaec1f.webp",
+      "/buildings/c74cf9f6a1e6759b749163a2.webp",
+      "/buildings/5e46a9009da28247598037a5.webp"
+    ]
+  },
+  "osm-way-307437431": {
+    "description": "院系办公楼位于大学城校区教学区，是院系办公场所。",
+    "photos": [
+      "/buildings/6fe5e14f139bff375f47f906.webp",
+      "/buildings/163c0d2fa54e9f3826cdfec4.webp"
+    ]
+  },
+  "osm-way-307437432": {
+    "description": "校行政办公楼位于大学城校区教学区，是学校行政办公场所。",
+    "photos": [
+      "/buildings/3aa6b8489866a283e2ff2ef7.webp",
+      "/buildings/a53621a20e07d662750c5e25.webp"
+    ]
+  },
+  "osm-way-312536950": {
+    "description": "南苑9栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-312536951": {
+    "description": "南苑10栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-312536952": {
+    "description": "南苑11栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-312536954": {
+    "description": "南苑12栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-312536955": {
+    "description": "南苑7栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-312536956": {
+    "description": "南苑8栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-313039013": {
+    "description": "北苑1栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-313039014": {
+    "description": "北苑4栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-313039019": {
+    "description": "北苑5栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-313039020": {
+    "description": "北苑3栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-313039023": {
+    "description": "北苑6栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-313039024": {
+    "description": "北苑2栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-313039029": {
+    "description": "后勤楼位于大学城校区生活区，是校园公共建筑。",
+    "photos": []
+  },
+  "osm-way-313039033": {
+    "description": "师苑3栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-313039037": {
+    "description": "师苑1栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-313039046": {
+    "description": "门诊部位于大学城校区教学区，是校园医疗服务地点。",
+    "photos": ["/buildings/280f52f2496d93eb0dbda009.webp"]
+  },
+  "osm-way-313039056": {
+    "description": "师苑4栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-651642991": {
+    "description": "B8学术报告厅位于大学城校区教学区，是校园学术报告场所。",
+    "photos": ["/buildings/5d0d4301ce0d50a8fc813b2b.webp"]
+  },
+  "osm-way-1389756837": {
+    "description": "体育场（真草场）位于大学城校区教学区，是足球运动场地。",
+    "photos": [
+      "/buildings/5253a488a8e139ef14a2d8c4.webp",
+      "/buildings/bbf12a34eb9d409d23991f54.webp",
+      "/buildings/af590b8222739666143fc240.webp"
+    ]
+  },
+  "osm-way-1389756844": {
+    "description": "体育馆（羽毛球场）位于大学城校区教学区，是室内体育活动场所。",
+    "photos": ["/buildings/b41ab2b137692f5fc0c59b4d.webp"]
+  },
+  "osm-way-1389859416": {
+    "description": "排球场位于大学城校区教学区，是排球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859417": {
+    "description": "运动场地（类型待核验）位于大学城校区教学区，是体育活动场地。",
+    "photos": []
+  },
+  "osm-way-1389859418": {
+    "description": "排球场位于大学城校区教学区，是排球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859419": {
+    "description": "运动场地（类型待核验）位于大学城校区教学区，是体育活动场地。",
+    "photos": []
+  },
+  "osm-way-1389859420": {
+    "description": "排球场位于大学城校区教学区，是排球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859421": {
+    "description": "运动场地（类型待核验）位于大学城校区教学区，是体育活动场地。",
+    "photos": []
+  },
+  "osm-way-1389859422": {
+    "description": "运动场地（类型待核验）位于大学城校区教学区，是体育活动场地。",
+    "photos": []
+  },
+  "osm-way-1389859423": {
+    "description": "排球场位于大学城校区教学区，是排球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859424": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859425": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859426": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859427": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859428": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859429": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859430": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859431": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859432": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859433": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859437": {
+    "description": "假草场位于大学城校区教学区，是足球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859438": {
+    "description": "游泳场地位于大学城校区教学区，是游泳运动场所。",
+    "photos": []
+  },
+  "osm-way-1389859439": {
+    "description": "游泳场地位于大学城校区教学区，是游泳运动场所。",
+    "photos": []
+  },
+  "osm-way-1389859440": {
+    "description": "羽毛球场位于大学城校区教学区，是羽毛球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859441": {
+    "description": "羽毛球场位于大学城校区教学区，是羽毛球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859442": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859443": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859444": {
+    "description": "篮球场位于大学城校区教学区，是篮球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859445": {
+    "description": "网球场位于大学城校区教学区，是网球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859446": {
+    "description": "网球场位于大学城校区教学区，是网球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859447": {
+    "description": "网球场位于大学城校区教学区，是网球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859448": {
+    "description": "网球场位于大学城校区教学区，是网球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859449": {
+    "description": "网球场位于大学城校区教学区，是网球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859450": {
+    "description": "网球场位于大学城校区教学区，是网球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859451": {
+    "description": "网球场位于大学城校区教学区，是网球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859452": {
+    "description": "网球场位于大学城校区教学区，是网球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859453": {
+    "description": "网球场位于大学城校区教学区，是网球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389859454": {
+    "description": "网球场位于大学城校区教学区，是网球运动场地。",
+    "photos": []
+  },
+  "osm-way-1389970391": {
+    "description": "艺术楼位于大学城校区教学区，是艺术教学相关建筑。",
+    "photos": [
+      "/buildings/fec39956154979b80044b66f.webp",
+      "/buildings/030715bd139abed59cda1ad4.webp",
+      "/buildings/72ac666e64d6dbc5502aa154.webp"
+    ]
+  },
+  "osm-way-1410412691": {
+    "description": "教学楼C栋位于大学城校区教学区，是课堂教学场所。",
+    "photos": [
+      "/buildings/d9ab7761894d14425527d041.webp",
+      "/buildings/72029dfeb8bdf33d910be1ec.webp",
+      "/buildings/3d21e6f99510579cac22b310.webp",
+      "/buildings/cf0fdc0c4d363fb480a6e60d.webp"
+    ]
+  },
+  "osm-way-1410412694": {
+    "description": "教学楼A栋位于大学城校区教学区，是课堂教学场所。",
+    "photos": ["/buildings/0fc9e7e10abd8017ccda5fd6.webp"]
+  },
+  "osm-node-12866752417": {
+    "description": "西南门位于大学城校区教学区，是校园出入口。",
+    "photos": []
+  },
+  "osm-node-12958917228": {
+    "description": "京东物流位于大学城校区生活区，是校园生活服务地点。",
+    "photos": []
+  },
+  "osm-node-12958917229": {
+    "description": "菜鸟驿站位于大学城校区生活区，是校园生活服务地点。",
+    "photos": []
+  },
+  "osm-node-12958917230": {
+    "description": "顺丰速运位于大学城校区生活区，是校园生活服务地点。",
+    "photos": []
+  },
+  "osm-node-12958917231": {
+    "description": "中通快递位于大学城校区生活区，是校园生活服务地点。",
+    "photos": []
+  },
+  "osm-node-12958917232": {
+    "description": "韵达速递位于大学城校区生活区，是校园生活服务地点。",
+    "photos": []
+  },
+  "osm-node-12958917233": {
+    "description": "圆通速递位于大学城校区生活区，是校园生活服务地点。",
+    "photos": []
+  },
+  "osm-node-12958917239": {
+    "description": "三饭打印店位于大学城校区生活区，是校园生活服务地点。",
+    "photos": []
+  },
+  "osm-node-12958944874": {
+    "description": "B栋打印店位于大学城校区教学区，是校园生活服务地点。",
+    "photos": []
+  },
+  "osm-node-12959101438": {
+    "description": "又康超市位于大学城校区生活区，是校园生活服务地点。",
+    "photos": []
+  },
+  "osm-node-12959101439": {
+    "description": "云山凉茶坊位于大学城校区生活区，是校园生活服务地点。",
+    "photos": []
+  },
+  "osm-node-12959172026": {
+    "description": "伟腾图文位于大学城校区生活区，是校园生活服务地点。",
+    "photos": []
+  },
+  "osm-way-312536953": {
+    "description": "南苑13栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-313039010": {
+    "description": "学生活动中心位于大学城校区生活区，是校园学生活动场所。",
+    "photos": [
+      "/buildings/4eaa610d9c2598335c035185.webp",
+      "/buildings/1338df7744f2537ff9605e0d.webp",
+      "/buildings/baf125875df13c217984d321.webp"
+    ]
+  },
+  "osm-way-313039031": {
+    "description": "友苑位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-way-313039048": {
+    "description": "文采园（一饭）位于大学城校区生活区，是校园餐饮场所。",
+    "photos": [
+      "/buildings/e49725d537db800aa9b055e5.webp",
+      "/buildings/bd849925339c8864bd97c056.webp"
+    ]
+  },
+  "osm-way-313039057": {
+    "description": "风采园（三饭）位于大学城校区生活区，是校园餐饮场所。",
+    "photos": [
+      "/buildings/23b8f9da4c9ba2f2aa97e3b0.webp",
+      "/buildings/d304371c34efee8c66609c63.webp",
+      "/buildings/eb7bd61537d0aa2566f170b5.webp"
+    ]
+  },
+  "osm-way-313039061": {
+    "description": "博雅园（二饭）位于大学城校区生活区，是校园餐饮场所。",
+    "photos": ["/buildings/004acc21560766704961ce04.webp"]
+  },
+  "osm-way-313039038": {
+    "description": "师苑2栋位于大学城校区生活区，是生活住宿楼栋。",
+    "photos": []
+  },
+  "osm-relation-4105730": {
+    "description": "教学楼（E/F/G栋）位于大学城校区教学区，是课堂教学场所。",
+    "photos": [
+      "/buildings/0ff8d1e6cb10de99f89ffa18.webp",
+      "/buildings/d3092f94656b4b0059a1fcf0.webp"
+    ]
+  },
+  "osm-relation-4105911": {
+    "description": "实验楼（A/B/C/D/E栋）位于大学城校区教学区，是校园公共建筑。",
+    "photos": [
+      "/buildings/55b20605d120547caa813fba.webp",
+      "/buildings/8504ea2540fdb22e15cbe5fa.webp",
+      "/buildings/8e0e2173dfcb3f55ee71b987.webp",
+      "/buildings/040009595147055fdb841f60.webp",
+      "/buildings/0568064258eef9c478bbf8e3.webp"
+    ]
+  },
+  "osm-relation-4105910": {
+    "description": "学术交流中心位于大学城校区教学区，是校园公共建筑。",
+    "photos": []
+  },
+  "osm-relation-19299170": {
+    "description": "教学楼D栋位于大学城校区教学区，是课堂教学场所。",
+    "photos": ["/buildings/befcd6ac6bf8f84f0be0dad3.webp"]
+  },
+  "osm-relation-19299171": {
+    "description": "教学楼B栋位于大学城校区教学区，是课堂教学场所。",
+    "photos": [
+      "/buildings/37252131c507e3f68c44e1d0.webp",
+      "/buildings/a88c6eefaf59f61340efe98d.webp"
+    ]
+  },
+  "osm-node-3125704419": {
+    "description": "教学楼E栋位于大学城校区教学区，是课堂教学场所。",
+    "photos": []
+  },
+  "osm-node-3125704391": {
+    "description": "教学楼F栋位于大学城校区教学区，是课堂教学场所。",
+    "photos": ["/buildings/d3092f94656b4b0059a1fcf0.webp"]
+  },
+  "osm-node-3125704356": {
+    "description": "教学楼G栋位于大学城校区教学区，是课堂教学场所。",
+    "photos": ["/buildings/0ff8d1e6cb10de99f89ffa18.webp"]
+  },
+  "osm-node-3125808975": {
+    "description": "实验楼A栋位于大学城校区教学区，是校园公共建筑。",
+    "photos": []
+  },
+  "osm-node-3125808984": {
+    "description": "实验楼B栋位于大学城校区教学区，是校园公共建筑。",
+    "photos": []
+  },
+  "osm-node-3125808994": {
+    "description": "实验楼C栋位于大学城校区教学区，是校园公共建筑。",
+    "photos": []
+  },
+  "osm-node-3125809005": {
+    "description": "实验楼D栋位于大学城校区教学区，是校园公共建筑。",
+    "photos": []
+  },
+  "osm-node-3125809014": {
+    "description": "实验楼E栋位于大学城校区教学区，是校园公共建筑。",
+    "photos": ["/buildings/0568064258eef9c478bbf8e3.webp"]
+  },
+  "osm-way-1410275259": {
+    "description": "下沉广场位于大学城校区生活区，是校园广场。",
+    "photos": []
+  },
+  "osm-way-864205124": {
+    "description": "下沉隧道位于大学城校区教学区与生活区的连接区域，是校园步行通道。",
+    "photos": []
+  },
+  "osm-node-6110327053": {
+    "description": "下沉隧道生活区入口位于大学城校区生活区，是校园出入口。",
+    "photos": []
+  },
+  "osm-node-6110327054": {
+    "description": "下沉隧道教学区入口位于大学城校区教学区，是校园出入口。",
+    "photos": []
+  },
+  "owner-bridge-e": {
+    "description": "语心桥（教学楼E栋）位于大学城校区教学区，是校园步行通道。",
+    "photos": []
+  },
+  "owner-bridge-f": {
+    "description": "语心桥位于大学城校区教学区，是语心湖上的校园步行桥。",
+    "photos": [
+      "/buildings/60f04bbb3245fb08e61c0123.webp",
+      "/buildings/7d3d8925db2f57c4967b5223.webp",
+      "/buildings/0a459d06f753907363faab10.webp",
+      "/buildings/3006a0a15a6a852d4facdde8.webp"
+    ]
+  },
+  "owner-bridge-g": {
+    "description": "语心桥（教学楼G栋）位于大学城校区教学区，是校园步行通道。",
+    "photos": []
+  },
+  "owner-bajiaolou": {
+    "description": "八角楼位于大学城校区教学区，是校园公共建筑。",
+    "photos": ["/buildings/1310476acb9cbcb2f3781b1b.webp"]
+  },
+  "owner-parking-north": {
+    "description": "停车场位于大学城校区教学区，是停车场。",
+    "photos": []
+  },
+  "owner-gate-1": {
+    "description": "1号门位于大学城校区生活区，是校园出入口。",
+    "photos": []
+  },
+  "owner-gate-2": {
+    "description": "2号门位于大学城校区生活区，是校园出入口。",
+    "photos": []
+  },
+  "owner-gate-3": {
+    "description": "3号门位于大学城校区生活区，是校园出入口。",
+    "photos": []
+  },
+  "owner-gate-4": {
+    "description": "4号门（贝岗门）位于大学城校区生活区，是校园出入口。",
+    "photos": []
+  },
+  "owner-gate-northwest": {
+    "description": "西北门位于大学城校区教学区，是校园出入口。",
+    "photos": []
+  },
+  "owner-gate-west": {
+    "description": "西门位于大学城校区教学区，是校园出入口。",
+    "photos": []
+  },
+  "owner-gate-east": {
+    "description": "东门位于大学城校区教学区，是校园出入口。",
+    "photos": []
+  },
+  "owner-gate-southeast": {
+    "description": "东南门位于大学城校区教学区，是校园出入口。",
+    "photos": []
+  },
+  "owner-utilities-recharge": {
+    "description": "大学城校区水电冷充值点位于大学城校区生活区，是校园生活服务地点。",
+    "photos": []
+  }
+}

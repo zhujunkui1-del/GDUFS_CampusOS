@@ -1,3 +1,5 @@
+import type { SqlDatabase } from "../assistant/database";
+import { buildingAssistantProfile } from "../assistant/building-evidence";
 import type { SkillDefinition, SkillContext } from "@/domain/skills/contracts";
 import {
   SearchPlacesInputSchema,
@@ -45,7 +47,10 @@ function define<I, O>(
     }),
   };
 }
-export function createMapSkillRegistry(service = new CampusMapService()) {
+export function createMapSkillRegistry(
+  service = new CampusMapService(),
+  db?: SqlDatabase,
+) {
   return new SkillRegistry()
     .register(
       "spatial-domain",
@@ -61,10 +66,15 @@ export function createMapSkillRegistry(service = new CampusMapService()) {
       "spatial-domain",
       define(
         "get_place_details",
-        "按真实placeId查询地点、区域、来源、核验状态和已知建筑信息。null/unknown表示尚无资料，不补造楼层、入口或开放情况。",
+        "按真实placeId查询地点、区域、来源、核验状态、管理员维护的最新简介与近两周以来活动。null/unknown表示尚无资料，不补造楼层、入口或开放情况。",
         PlaceDetailsInputSchema,
         PlaceDetailsOutputSchema,
-        (input, context) => service.details(input, context),
+        async (input, context) => ({
+          ...service.details(input, context),
+          ...(db
+            ? { profile: await buildingAssistantProfile(db, input.placeId) }
+            : {}),
+        }),
       ),
     )
     .register(

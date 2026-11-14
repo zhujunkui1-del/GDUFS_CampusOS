@@ -28,6 +28,11 @@ import {
 import { visitPost } from "./console/traffic";
 import { GET as publicTraffic } from "@/app/api/public/traffic/route";
 import { accountApi, accountMethods } from "./account/api";
+import {
+  publicBuilding,
+  publicBuildingImage,
+  privateFeedbackImage,
+} from "./building-media";
 import { feedbackPost } from "./feedback";
 
 type Handler = (request: Request) => Promise<Response>;
@@ -38,6 +43,9 @@ const fixed: Record<string, { method: string; handle: Handler }> = {
   "/api/public/activities": { method: "GET", handle: publicActivities },
   "/api/public/visits": { method: "POST", handle: visitPost },
   "/api/public/traffic": { method: "GET", handle: publicTraffic },
+  "/api/public/building": { method: "GET", handle: publicBuilding },
+  "/api/public/building-image": { method: "GET", handle: publicBuildingImage },
+  "/api/admin/feedback-image": { method: "GET", handle: privateFeedbackImage },
   "/api/public/feedback": { method: "POST", handle: feedbackPost },
   "/api/agent/external-search/control-finish": {
     method: "POST",

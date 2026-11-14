@@ -18,8 +18,13 @@ type Event = {
   payload: Record<string, unknown>;
 };
 
-async function runTurn(message: string, replies: string[]) {
+async function runTurn(
+  message: string,
+  replies: string[],
+  setup?: (f: ReturnType<typeof sqliteD1>) => void,
+) {
   const f = sqliteD1();
+  setup?.(f);
   fixtureEnv(f);
   const client = new MockModelProvider(
     replies.map((content) => ({
@@ -146,6 +151,31 @@ it("keeps a specific campus fact on the evidence gate when no body exists", asyn
       evidenceGateUsed: true,
       requests: 0,
     });
+  } finally {
+    f.close();
+  }
+});
+
+it("keeps a building service-location question on live owner evidence rather than forcing map tools", async () => {
+  const description = "收发室取挂号信要提供编码和日期。";
+  const { f, client, events } = await runTurn(
+    "我想取挂号信，去校行政办公楼需要准备哪些信息？",
+    ["校园建筑资料记载，取挂号信需提供编码和日期。"],
+    (fixture) => {
+      fixture.sqlite
+        .prepare(
+          "INSERT INTO building_profiles(place_id,description,photos_json,updated_at) VALUES(?,?,'[]',?)",
+        )
+        .run("osm-way-307437432", description, new Date().toISOString());
+    },
+  );
+  try {
+    expect(
+      events.find((event) => event.type === "run.completed")?.payload.metrics,
+    ).toMatchObject({ answerMode: "building_profile" });
+    expect(answered(events)).toContain("编码和日期");
+    expect(JSON.stringify(client.requests)).toContain(description);
+    expect(events.some((event) => event.type === "tool.started")).toBe(false);
   } finally {
     f.close();
   }

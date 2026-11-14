@@ -1,0 +1,14 @@
+{
+  "questions": 30,
+  "round1Completed": 28,
+  "round2Completed": 30,
+  "passed": 26,
+  "partial": 4,
+  "failed": 0,
+  "meanEndToEndMs": 5794.466666666666,
+  "medianEndToEndMs": 5541.0,
+  "modelNames": [
+    "step-3.5-flash-2603"
+  ],
+  "deployment": "e10a86c5-0713-4f74-a114-9b82136e994c"
+}

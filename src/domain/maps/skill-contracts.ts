@@ -77,6 +77,25 @@ export const PlaceDetailsInputSchema = z
   .strict();
 export const PlaceDetailsOutputSchema = z
   .object({
+    profile: z
+      .object({
+        description: z.string(),
+        mapUrl: z.string(),
+        activityWindowStart: z.string(),
+        activityTotal: z.number(),
+        activities: z.array(
+          z
+            .object({
+              title: z.string(),
+              place: z.string().nullable(),
+              calendarUrl: z.string(),
+              historical: z.boolean(),
+            })
+            .passthrough(),
+        ),
+      })
+      .passthrough()
+      .optional(),
     place: PlaceSummarySchema,
     building: z
       .object({

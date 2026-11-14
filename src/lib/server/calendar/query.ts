@@ -1,3 +1,4 @@
+import { articleLocation } from "@/lib/ingestion/calendar-extraction";
 import { calendarBodyAllowedSql } from "./content-scope";
 import { z } from "zod";
 import { ArticleActivitySchema } from "@/domain/console/article-analysis";
@@ -15,12 +16,15 @@ import {
   registrationState,
   type RegistrationNow,
 } from "@/lib/retrieval/registration-state";
+import { campusData } from "@/features/campus-map/data/campus";
+import { buildingActivityPlaceIds } from "@/lib/retrieval/activity-place";
 import { articleMapPlace } from "@/lib/retrieval/activity-place";
 import type { SqlDatabase } from "../assistant/database";
 import { ApiError } from "../errors";
 export const CalendarQuerySchema = z
   .object({
     category: RadarCategorySchema.optional(),
+    placeId: z.string().min(1).max(128).optional(),
     after: CalendarDateSchema.optional(),
     before: CalendarDateSchema.optional(),
     day: CalendarDateSchema.optional(),
@@ -82,6 +86,8 @@ export type CalendarItem = {
   dates: string[];
 };
 type Row = {
+  location_body: string | null;
+  body_format: string;
   document_id: string;
   activity_key: string;
   group_key: string;
@@ -108,11 +114,16 @@ export async function readCalendar(
   const started = performance.now(),
     q = CalendarQuerySchema.parse(raw),
     days = weekOf(q.day || chinaDate(Date.parse(now))),
-    after = q.after || days[0],
-    before = q.before || days[6];
+    after = q.placeId
+      ? addDays(chinaDate(Date.parse(now)), -14)
+      : q.after || days[0],
+    before = q.placeId ? "9999-12-31" : q.before || days[6];
+  if (q.placeId && !campusData.places.some((place) => place.id === q.placeId))
+    throw new ApiError("NOT_FOUND", "建筑不存在。");
+  const placeIds = q.placeId ? buildingActivityPlaceIds(q.placeId) : null;
   if (
-    after > before ||
-    (Date.parse(before) - Date.parse(after)) / 86400000 > 30
+    !q.placeId &&
+    (after > before || (Date.parse(before) - Date.parse(after)) / 86400000 > 30)
   )
     throw new ApiError("INVALID_ARGUMENT", "请选择不超过31天的日期范围。");
   if (q.day && (q.day < after || q.day > before))
@@ -150,7 +161,10 @@ export async function readCalendar(
       "d.data_domain<>'user_private'",
     ],
     args: unknown[] = [CALENDAR_VERSION, CALENDAR_VERSION];
-  if (q.event) {
+  if (q.placeId) {
+    filters.push("COALESCE(a.ends_day,a.starts_day)>=?");
+    args.push(after);
+  } else if (q.event) {
     filters.push("a.group_key=?");
     args.push(q.event);
   } else if (q.timeRole === "registration") {
@@ -187,10 +201,10 @@ export async function readCalendar(
     `(json_extract(a.activity_json,'$.calendar.usesBody')=0 OR (${calendarBodyAllowedSql()}))`,
   );
   const rows = await read<Row>(
-    `WITH permitted AS MATERIALIZED (SELECT a.document_id,a.activity_key,a.group_key,a.activity_json,CASE WHEN NOT EXISTS (SELECT 1 FROM article_activity_index b WHERE b.document_id=a.document_id AND b.calendar_eligible=1 AND json_extract(b.activity_json,'$.startsAt.at') IS NOT NULL) THEN 1 ELSE 0 END AS no_clock,d.version,d.content_revision,d.input_hash,d.title AS document_title,d.url,d.published_at,d.source_id,s.display_name,d.rights_scope,CASE WHEN m.document_id IS NOT NULL THEN CASE WHEN m.radar_category IS NOT NULL THEN 'radar' ELSE 'knowledge' END ELSE x.primary_destination END AS primary_destination,CASE WHEN m.document_id IS NOT NULL THEN m.radar_category ELSE x.radar_category END AS radar_category,CASE WHEN m.document_id IS NOT NULL THEN m.knowledge_category ELSE x.knowledge_category END AS knowledge_category FROM article_activity_index a JOIN knowledge_documents d ON d.id=a.document_id JOIN document_article_analysis x ON x.document_id=d.id JOIN knowledge_sources s ON s.id=d.source_id LEFT JOIN document_classification_overrides m ON m.document_id=d.id WHERE ${filters.join(" AND ")}) SELECT v.* FROM permitted v WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=v.document_id AND p.version=v.version) ORDER BY json_extract(v.activity_json,'$.startsAt.date'),v.group_key,v.document_id LIMIT 1001`,
+    `WITH permitted AS MATERIALIZED (SELECT a.document_id,a.activity_key,a.group_key,a.activity_json, d.body_format, CASE WHEN json_extract(a.activity_json,'$.placeRaw') IS NULL AND (SELECT COUNT(*) FROM article_activity_index loc WHERE loc.document_id=a.document_id AND loc.calendar_eligible=1)=1 AND (${calendarBodyAllowedSql()}) THEN d.body ELSE NULL END AS location_body,CASE WHEN NOT EXISTS (SELECT 1 FROM article_activity_index b WHERE b.document_id=a.document_id AND b.calendar_eligible=1 AND json_extract(b.activity_json,'$.startsAt.at') IS NOT NULL) THEN 1 ELSE 0 END AS no_clock,d.version,d.content_revision,d.input_hash,d.title AS document_title,d.url,d.published_at,d.source_id,s.display_name,d.rights_scope,CASE WHEN m.document_id IS NOT NULL THEN CASE WHEN m.radar_category IS NOT NULL THEN 'radar' ELSE 'knowledge' END ELSE x.primary_destination END AS primary_destination,CASE WHEN m.document_id IS NOT NULL THEN m.radar_category ELSE x.radar_category END AS radar_category,CASE WHEN m.document_id IS NOT NULL THEN m.knowledge_category ELSE x.knowledge_category END AS knowledge_category FROM article_activity_index a JOIN knowledge_documents d ON d.id=a.document_id JOIN document_article_analysis x ON x.document_id=d.id JOIN knowledge_sources s ON s.id=d.source_id LEFT JOIN document_classification_overrides m ON m.document_id=d.id WHERE ${filters.join(" AND ")}) SELECT v.* FROM permitted v WHERE EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=v.document_id AND p.version=v.version) ORDER BY json_extract(v.activity_json,'$.startsAt.date'),v.group_key,v.document_id${q.placeId ? "" : " LIMIT 1001"}`,
     args,
   );
-  if (rows.length > 1000)
+  if (!q.placeId && rows.length > 1000)
     throw new ApiError("INVALID_ARGUMENT", "活动较多，请缩小日期或筛选范围。");
   const groups = new Map<string, CalendarItem>(),
     today = chinaDate(Date.parse(now));
@@ -208,14 +222,31 @@ export async function readCalendar(
       ["cancelled", "postponed"].includes(a.status)
     )
       continue;
+    if (!a.placeRaw && r.location_body) {
+      const location = articleLocation({
+        title: r.document_title,
+        body: r.location_body,
+        bodyFormat: r.body_format === "reading_html" ? "reading_html" : "plain",
+        bodyStatus: "complete",
+      });
+      if (location) {
+        a.placeRaw = location.place;
+        a.evidence = [...a.evidence, location.evidence];
+        a.calendar.campus = location.campus;
+      }
+    }
+    const mapPlace = articleMapPlace(a.placeRaw, a.calendar?.campus);
+    if (placeIds && (!mapPlace || !placeIds.has(mapPlace.placeId))) continue;
     const end = a.endsAt?.date || a.startsAt.date;
     let dates;
     try {
       dates = intervalDays(
         a.startsAt.date,
         end,
-        q.event || q.timeRole === "registration" ? a.startsAt.date : after,
-        q.event || q.timeRole === "registration" ? end : before,
+        !q.placeId && (q.event || q.timeRole === "registration")
+          ? a.startsAt.date
+          : after,
+        !q.placeId && (q.event || q.timeRole === "registration") ? end : before,
       );
     } catch {
       continue;
@@ -259,7 +290,7 @@ export async function readCalendar(
         sources: [source],
         registrationState: state,
         historical: history,
-        mapPlace: articleMapPlace(a.placeRaw),
+        mapPlace,
         calendarUrl: `/calendar?date=${dates[0]}&event=${r.group_key}`,
         dates,
       });
@@ -284,19 +315,20 @@ export async function readCalendar(
   // An empty week is honest but useless on its own: the reader needs to know
   // whether the calendar is empty or whether this particular week is empty.
   // One lookup answers that without inventing anything.
-  const nextEventDay =
-    (
-      await read<{ day: string }>(
-        `SELECT MIN(a.starts_day) AS day FROM article_activity_index a WHERE a.calendar_eligible=1 AND a.calendar_version=? AND a.starts_day>? AND EXISTS(SELECT 1 FROM knowledge_documents d JOIN document_article_analysis x ON x.document_id=d.id AND x.calendar_version=a.calendar_version AND x.content_revision=d.content_revision AND x.input_hash=d.input_hash WHERE d.id=a.document_id AND d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id AND p.version=d.version))`,
-        [CALENDAR_VERSION, before],
-      )
-    )[0]?.day ?? null;
+  const nextEventDay = q.placeId
+    ? null
+    : ((
+        await read<{ day: string }>(
+          `SELECT MIN(a.starts_day) AS day FROM article_activity_index a WHERE a.calendar_eligible=1 AND a.calendar_version=? AND a.starts_day>? AND EXISTS(SELECT 1 FROM knowledge_documents d JOIN document_article_analysis x ON x.document_id=d.id AND x.calendar_version=a.calendar_version AND x.content_revision=d.content_revision AND x.input_hash=d.input_hash WHERE d.id=a.document_id AND d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id AND p.version=d.version))`,
+          [CALENDAR_VERSION, before],
+        )
+      )[0]?.day ?? null);
   const dailyCounts: Record<string, number> = {};
-  for (const day of intervalDays(after, before))
+  for (const day of q.placeId ? [] : intervalDays(after, before))
     dailyCounts[day] = all.filter((g) => g.dates.includes(day)).length;
-  if (q.day) all = all.filter((g) => g.dates.includes(q.day!));
+  if (q.day && !q.placeId) all = all.filter((g) => g.dates.includes(q.day!));
   const key = (g: CalendarItem) => {
-    const day = q.day || g.dates[0],
+    const day = (!q.placeId && q.day) || g.dates[0],
       t = occurrenceTime(day, g.activity).startTime || "99:99";
     return `${day}|${t}|${g.eventId}`;
   };
@@ -312,6 +344,7 @@ export async function readCalendar(
     q.sourceId,
     q.sourceTypes,
     q.event,
+    ...(q.placeId ? [q.placeId] : []),
   ]);
   let cursorKey = "";
   if (q.cursor) {

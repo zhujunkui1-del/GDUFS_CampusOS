@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-11-14T14:40:16.294Z",
+  "total": 81,
+  "groups": [
+    {
+      "name": "篮球场",
+      "count": 1,
+      "id": "osm-way-1389859426"
+    },
+    {
+      "name": "羽毛球场",
+      "count": 1,
+      "id": "osm-way-1389859440"
+    },
+    {
+      "name": "排球场",
+      "count": 1,
+      "id": "osm-way-1389859420"
+    },
+    {
+      "name": "网球场",
+      "count": 1,
+      "id": "osm-way-1389859447"
+    },
+    {
+      "name": "游泳馆",
+      "count": 1,
+      "id": "osm-way-1389859438"
+    },
+    {
+      "name": "语心桥",
+      "count": 1,
+      "id": "owner-bridge-f"
+    }
+  ],
+  "bridgesShared": true,
+  "bridgePhotos": 4
+}

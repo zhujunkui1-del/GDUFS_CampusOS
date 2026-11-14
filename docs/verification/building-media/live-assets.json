@@ -1,0 +1,302 @@
+{
+  "origin": "https://gdufs.zhiyuapp.site",
+  "checkedAt": "2026-11-14T12:35:02.417Z",
+  "assets": [
+    {
+      "path": "/buildings/15f530b94852cfe6b95dc9fa.webp",
+      "status": 200,
+      "bytes": 123802,
+      "match": true
+    },
+    {
+      "path": "/buildings/6ccd5716bbf18b08fa377f2a.webp",
+      "status": 200,
+      "bytes": 298502,
+      "match": true
+    },
+    {
+      "path": "/buildings/6f9fdb5d70c2640d82f36d18.webp",
+      "status": 200,
+      "bytes": 113162,
+      "match": true
+    },
+    {
+      "path": "/buildings/3850a24164478afdd8eaec1f.webp",
+      "status": 200,
+      "bytes": 85858,
+      "match": true
+    },
+    {
+      "path": "/buildings/c74cf9f6a1e6759b749163a2.webp",
+      "status": 200,
+      "bytes": 108922,
+      "match": true
+    },
+    {
+      "path": "/buildings/5e46a9009da28247598037a5.webp",
+      "status": 200,
+      "bytes": 82028,
+      "match": true
+    },
+    {
+      "path": "/buildings/6fe5e14f139bff375f47f906.webp",
+      "status": 200,
+      "bytes": 120638,
+      "match": true
+    },
+    {
+      "path": "/buildings/163c0d2fa54e9f3826cdfec4.webp",
+      "status": 200,
+      "bytes": 116194,
+      "match": true
+    },
+    {
+      "path": "/buildings/3aa6b8489866a283e2ff2ef7.webp",
+      "status": 200,
+      "bytes": 472386,
+      "match": true
+    },
+    {
+      "path": "/buildings/a53621a20e07d662750c5e25.webp",
+      "status": 200,
+      "bytes": 105694,
+      "match": true
+    },
+    {
+      "path": "/buildings/280f52f2496d93eb0dbda009.webp",
+      "status": 200,
+      "bytes": 67734,
+      "match": true
+    },
+    {
+      "path": "/buildings/5d0d4301ce0d50a8fc813b2b.webp",
+      "status": 200,
+      "bytes": 121756,
+      "match": true
+    },
+    {
+      "path": "/buildings/5253a488a8e139ef14a2d8c4.webp",
+      "status": 200,
+      "bytes": 243726,
+      "match": true
+    },
+    {
+      "path": "/buildings/bbf12a34eb9d409d23991f54.webp",
+      "status": 200,
+      "bytes": 231552,
+      "match": true
+    },
+    {
+      "path": "/buildings/af590b8222739666143fc240.webp",
+      "status": 200,
+      "bytes": 163890,
+      "match": true
+    },
+    {
+      "path": "/buildings/b41ab2b137692f5fc0c59b4d.webp",
+      "status": 200,
+      "bytes": 502282,
+      "match": true
+    },
+    {
+      "path": "/buildings/fec39956154979b80044b66f.webp",
+      "status": 200,
+      "bytes": 122540,
+      "match": true
+    },
+    {
+      "path": "/buildings/030715bd139abed59cda1ad4.webp",
+      "status": 200,
+      "bytes": 115096,
+      "match": true
+    },
+    {
+      "path": "/buildings/72ac666e64d6dbc5502aa154.webp",
+      "status": 200,
+      "bytes": 171840,
+      "match": true
+    },
+    {
+      "path": "/buildings/d9ab7761894d14425527d041.webp",
+      "status": 200,
+      "bytes": 359988,
+      "match": true
+    },
+    {
+      "path": "/buildings/72029dfeb8bdf33d910be1ec.webp",
+      "status": 200,
+      "bytes": 92544,
+      "match": true
+    },
+    {
+      "path": "/buildings/3d21e6f99510579cac22b310.webp",
+      "status": 200,
+      "bytes": 26326,
+      "match": true
+    },
+    {
+      "path": "/buildings/cf0fdc0c4d363fb480a6e60d.webp",
+      "status": 200,
+      "bytes": 124624,
+      "match": true
+    },
+    {
+      "path": "/buildings/0fc9e7e10abd8017ccda5fd6.webp",
+      "status": 200,
+      "bytes": 125548,
+      "match": true
+    },
+    {
+      "path": "/buildings/4eaa610d9c2598335c035185.webp",
+      "status": 200,
+      "bytes": 247878,
+      "match": true
+    },
+    {
+      "path": "/buildings/1338df7744f2537ff9605e0d.webp",
+      "status": 200,
+      "bytes": 190056,
+      "match": true
+    },
+    {
+      "path": "/buildings/baf125875df13c217984d321.webp",
+      "status": 200,
+      "bytes": 164698,
+      "match": true
+    },
+    {
+      "path": "/buildings/e49725d537db800aa9b055e5.webp",
+      "status": 200,
+      "bytes": 35898,
+      "match": true
+    },
+    {
+      "path": "/buildings/bd849925339c8864bd97c056.webp",
+      "status": 200,
+      "bytes": 271234,
+      "match": true
+    },
+    {
+      "path": "/buildings/23b8f9da4c9ba2f2aa97e3b0.webp",
+      "status": 200,
+      "bytes": 28738,
+      "match": true
+    },
+    {
+      "path": "/buildings/d304371c34efee8c66609c63.webp",
+      "status": 200,
+      "bytes": 128618,
+      "match": true
+    },
+    {
+      "path": "/buildings/eb7bd61537d0aa2566f170b5.webp",
+      "status": 200,
+      "bytes": 59740,
+      "match": true
+    },
+    {
+      "path": "/buildings/004acc21560766704961ce04.webp",
+      "status": 200,
+      "bytes": 53924,
+      "match": true
+    },
+    {
+      "path": "/buildings/0ff8d1e6cb10de99f89ffa18.webp",
+      "status": 200,
+      "bytes": 174214,
+      "match": true
+    },
+    {
+      "path": "/buildings/d3092f94656b4b0059a1fcf0.webp",
+      "status": 200,
+      "bytes": 186252,
+      "match": true
+    },
+    {
+      "path": "/buildings/55b20605d120547caa813fba.webp",
+      "status": 200,
+      "bytes": 89118,
+      "match": true
+    },
+    {
+      "path": "/buildings/8504ea2540fdb22e15cbe5fa.webp",
+      "status": 200,
+      "bytes": 255918,
+      "match": true
+    },
+    {
+      "path": "/buildings/8e0e2173dfcb3f55ee71b987.webp",
+      "status": 200,
+      "bytes": 146666,
+      "match": true
+    },
+    {
+      "path": "/buildings/040009595147055fdb841f60.webp",
+      "status": 200,
+      "bytes": 139128,
+      "match": true
+    },
+    {
+      "path": "/buildings/0568064258eef9c478bbf8e3.webp",
+      "status": 200,
+      "bytes": 105378,
+      "match": true
+    },
+    {
+      "path": "/buildings/befcd6ac6bf8f84f0be0dad3.webp",
+      "status": 200,
+      "bytes": 169128,
+      "match": true
+    },
+    {
+      "path": "/buildings/37252131c507e3f68c44e1d0.webp",
+      "status": 200,
+      "bytes": 93644,
+      "match": true
+    },
+    {
+      "path": "/buildings/a88c6eefaf59f61340efe98d.webp",
+      "status": 200,
+      "bytes": 112916,
+      "match": true
+    },
+    {
+      "path": "/buildings/60f04bbb3245fb08e61c0123.webp",
+      "status": 200,
+      "bytes": 229248,
+      "match": true
+    },
+    {
+      "path": "/buildings/7d3d8925db2f57c4967b5223.webp",
+      "status": 200,
+      "bytes": 121814,
+      "match": true
+    },
+    {
+      "path": "/buildings/0a459d06f753907363faab10.webp",
+      "status": 200,
+      "bytes": 312688,
+      "match": true
+    },
+    {
+      "path": "/buildings/3006a0a15a6a852d4facdde8.webp",
+      "status": 200,
+      "bytes": 349292,
+      "match": true
+    },
+    {
+      "path": "/buildings/1310476acb9cbcb2f3781b1b.webp",
+      "status": 200,
+      "bytes": 80762,
+      "match": true
+    }
+  ],
+  "library": {
+    "status": 200,
+    "name": "图书馆",
+    "photos": 5,
+    "description": "图书馆位于大学城校区教学区，是图书阅览与学习场所。"
+  },
+  "adminPage": 200,
+  "privateImageAnonymous": 401
+}

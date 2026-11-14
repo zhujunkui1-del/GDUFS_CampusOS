@@ -22,6 +22,7 @@ export function generateStaticParams() {
     ["retention"],
     ["whitelist"],
     ["feedback"],
+    ["buildings"],
   ].map((section) => ({ section }));
 }
 export default function ConsolePage() {

@@ -28,6 +28,7 @@ import {
   Plus,
   Search,
   MessageCirclePlus,
+  Building2,
 } from "lucide-react";
 import {
   sourceTypeNames,
@@ -70,6 +71,7 @@ const navigation = [
   { id: "collector", label: "公众号采集", icon: RefreshCw },
   { id: "retention", label: "过时信息清理", icon: Archive },
   { id: "whitelist", label: "白名单", icon: ShieldCheck },
+  { id: "buildings", label: "建筑管理", icon: Building2 },
   { id: "feedback", label: "反馈", icon: MessageCirclePlus },
 ];
 const date = (value: string | null | undefined) =>
@@ -160,12 +162,16 @@ export function ConsoleApp() {
           credentials: "same-origin",
           cache: "no-store",
           headers: {
-            "Content-Type": "application/json",
+            ...(body instanceof FormData
+              ? {}
+              : { "Content-Type": "application/json" }),
             ...(method !== "GET" && current.current?.csrf
               ? { "X-Console-CSRF": current.current.csrf }
               : {}),
           },
-          ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+          ...(body === undefined
+            ? {}
+            : { body: body instanceof FormData ? body : JSON.stringify(body) }),
           // A whole-site sweep writes one job per source, so it can take
           // longer than a normal panel read. Timing it out at fifteen seconds
           // cancelled the request while the worker kept registering, which

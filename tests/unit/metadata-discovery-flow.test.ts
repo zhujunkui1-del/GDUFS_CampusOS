@@ -40,6 +40,15 @@ it("treats a title-only hit as no body evidence instead of answering with it", a
   try {
     f.sqlite
       .prepare(
+        "INSERT INTO building_profiles(place_id,description,photos_json,updated_at) VALUES(?, ?,'[]',?)",
+      )
+      .run(
+        "osm-way-307250998",
+        "图书馆五层，设自习室。",
+        new Date().toISOString(),
+      );
+    f.sqlite
+      .prepare(
         `INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,body_status,content_hash,fetched_at,campus_scope,data_domain,published_at,content_revision,input_hash,rights_scope,content_type,knowledge_category) VALUES('metadata-fixture',?,'图书馆借阅规则','https://example.invalid/borrow','仅元数据','plain','not_provided','meta','2026-10-28','all','campus_announcements','2026-10-28',1,?,'metadata_only','guide','campus_life')`,
       )
       .run(f.source.id, "c".repeat(64));

@@ -1,0 +1,461 @@
+[
+  {
+    "placeId": "osm-way-307250998",
+    "building": "图书馆",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/图书馆.jpg",
+    "sourceSha256": "6ccd5716bbf18b08fa377f2a00f89c3ec998c22fe01a295700a877a96c8ef74b",
+    "publicPath": "/buildings/6ccd5716bbf18b08fa377f2a.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-307250998",
+    "building": "图书馆",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/图书馆细节.jpg",
+    "sourceSha256": "6f9fdb5d70c2640d82f36d18899dda8bbc9ded71fe445551355ad3f323e9105f",
+    "publicPath": "/buildings/6f9fdb5d70c2640d82f36d18.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-307250998",
+    "building": "图书馆",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/图书馆内部.jpg",
+    "sourceSha256": "3850a24164478afdd8eaec1f485e4416a9e4d51a4f6cfe1e20c5a12c5957214c",
+    "publicPath": "/buildings/3850a24164478afdd8eaec1f.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-307250998",
+    "building": "图书馆",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/图书馆内部1.jpg",
+    "sourceSha256": "c74cf9f6a1e6759b749163a25002c2fb21916ab54d768f4aa8fa15df6d24df9e",
+    "publicPath": "/buildings/c74cf9f6a1e6759b749163a2.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-307250998",
+    "building": "图书馆",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/图书馆正面.jpg",
+    "sourceSha256": "5e46a9009da28247598037a5bcaef9c765f745cbe413c35da86b93a5eb6e3cfd",
+    "publicPath": "/buildings/5e46a9009da28247598037a5.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-relation-19299171",
+    "building": "教学楼B栋",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/教学楼B栋.jpg",
+    "sourceSha256": "37252131c507e3f68c44e1d041b8e6637d3b90dd49f8ff1ac54051df1c2a804c",
+    "publicPath": "/buildings/37252131c507e3f68c44e1d0.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-relation-19299171",
+    "building": "教学楼B栋",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/教学楼B栋1.jpg",
+    "sourceSha256": "a88c6eefaf59f61340efe98d2a72fd474ce7c280e3914b7a4345cf7824291caf",
+    "publicPath": "/buildings/a88c6eefaf59f61340efe98d.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1410412691",
+    "building": "教学楼C栋",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/教学楼c栋.jpg",
+    "sourceSha256": "d9ab7761894d14425527d041ad359cd77bd5dbd6363472a138619b2b3891c669",
+    "publicPath": "/buildings/d9ab7761894d14425527d041.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1410412691",
+    "building": "教学楼C栋",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼c栋.jpg",
+    "sourceSha256": "72029dfeb8bdf33d910be1ec2d3c397319d1433e240a85c21d8a854bfead81a9",
+    "publicPath": "/buildings/72029dfeb8bdf33d910be1ec.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1410412691",
+    "building": "教学楼C栋",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼c栋1.jpg",
+    "sourceSha256": "3d21e6f99510579cac22b310887596634a496a82d47369c293e2a94850eb01a8",
+    "publicPath": "/buildings/3d21e6f99510579cac22b310.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1410412691",
+    "building": "教学楼C栋",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼C栋左部分.png",
+    "sourceSha256": "cf0fdc0c4d363fb480a6e60d10deb816c97c8d939f865f7c6baf511e524ea7ed",
+    "publicPath": "/buildings/cf0fdc0c4d363fb480a6e60d.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1389756837",
+    "building": "体育场（真草场）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/体育场.jpg",
+    "sourceSha256": "5253a488a8e139ef14a2d8c432e0254bd5929a44becd6380de946a32624403b9",
+    "publicPath": "/buildings/5253a488a8e139ef14a2d8c4.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1389756837",
+    "building": "体育场（真草场）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/体育场1.jpg",
+    "sourceSha256": "bbf12a34eb9d409d23991f54a81b9d086e526654164758407437753a873c0dab",
+    "publicPath": "/buildings/bbf12a34eb9d409d23991f54.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1389756837",
+    "building": "体育场（真草场）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/体育场2.jpg",
+    "sourceSha256": "af590b8222739666143fc2409eb4520dd30ec40905e1768cad309d0ddd59c472",
+    "publicPath": "/buildings/af590b8222739666143fc240.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1389756844",
+    "building": "体育馆（羽毛球场）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/体育馆.jpg",
+    "sourceSha256": "b41ab2b137692f5fc0c59b4d34b66fe7917f6923ee3c464ea698ec031798711e",
+    "publicPath": "/buildings/b41ab2b137692f5fc0c59b4d.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-313039048",
+    "building": "文采园（一饭）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/一饭.png",
+    "sourceSha256": "e49725d537db800aa9b055e528f1fadc779819d0a6a86d645420d06c63bc38d8",
+    "publicPath": "/buildings/e49725d537db800aa9b055e5.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-313039048",
+    "building": "文采园（一饭）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/一饭正面20.png",
+    "sourceSha256": "bd849925339c8864bd97c05690842f0e3317faff2152dc6709b5bf46efcbbdb8",
+    "publicPath": "/buildings/bd849925339c8864bd97c056.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-313039061",
+    "building": "博雅园（二饭）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/二饭.png",
+    "sourceSha256": "004acc21560766704961ce040008a6dad3e3e847edb3bdd5aa32b62d06d93d6a",
+    "publicPath": "/buildings/004acc21560766704961ce04.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-313039057",
+    "building": "风采园（三饭）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/三饭.png",
+    "sourceSha256": "23b8f9da4c9ba2f2aa97e3b062aa702c81d4953ff888fbe0d9fcd7e675dc9815",
+    "publicPath": "/buildings/23b8f9da4c9ba2f2aa97e3b0.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-313039057",
+    "building": "风采园（三饭）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/三饭正面.png",
+    "sourceSha256": "d304371c34efee8c66609c630a223e01f367acf4af3802946a39c5472763ad0a",
+    "publicPath": "/buildings/d304371c34efee8c66609c63.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-313039057",
+    "building": "风采园（三饭）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/风采园三饭.jpg",
+    "sourceSha256": "eb7bd61537d0aa2566f170b55b6c8543fb5150ffb69f39ee00a00fb51258f91e",
+    "publicPath": "/buildings/eb7bd61537d0aa2566f170b5.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-307437432",
+    "building": "校行政办公楼",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/校行政办公楼.jpg",
+    "sourceSha256": "3aa6b8489866a283e2ff2ef71f7b247483bc9268664d601fc09e609211bebe36",
+    "publicPath": "/buildings/3aa6b8489866a283e2ff2ef7.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-307437432",
+    "building": "校行政办公楼",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/校行政办公楼正面99.png",
+    "sourceSha256": "a53621a20e07d662750c5e2505c52727d81af8614d465f17907cfb9362caf864",
+    "publicPath": "/buildings/a53621a20e07d662750c5e25.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-313039010",
+    "building": "学生活动中心",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/学生活动中心.jpg",
+    "sourceSha256": "4eaa610d9c2598335c035185e69505d8b4d3ba3643d32207073337f238e71b92",
+    "publicPath": "/buildings/4eaa610d9c2598335c035185.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-313039010",
+    "building": "学生活动中心",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/学生活动中心侧面23.jpg",
+    "sourceSha256": "1338df7744f2537ff9605e0d2ceb19d719591544f6165e74e0bd61feb72fcd20",
+    "publicPath": "/buildings/1338df7744f2537ff9605e0d.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-313039010",
+    "building": "学生活动中心",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/学生活动中心正面23.png",
+    "sourceSha256": "baf125875df13c217984d3216f5e2c8ff1723b372f5a796f68adc9fffd9fa411",
+    "publicPath": "/buildings/baf125875df13c217984d321.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "owner-bridge-f",
+    "building": "语心桥",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/语心桥.jpg",
+    "sourceSha256": "60f04bbb3245fb08e61c01232100ef2df4ae669a1e362c8103b14d3a76200c63",
+    "publicPath": "/buildings/60f04bbb3245fb08e61c0123.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "owner-bridge-f",
+    "building": "语心桥",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/语心桥1.jpg",
+    "sourceSha256": "7d3d8925db2f57c4967b522386b866b6fcd0caba5828558d599cb04342a336e0",
+    "publicPath": "/buildings/7d3d8925db2f57c4967b5223.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "owner-bridge-f",
+    "building": "语心桥",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/语心桥近景.jpg",
+    "sourceSha256": "0a459d06f753907363faab1061f1ff2e29d9c8b4a8b180301b673a5bc90024de",
+    "publicPath": "/buildings/0a459d06f753907363faab10.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "owner-bridge-f",
+    "building": "语心桥",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/风景图/语心桥远景.jpg",
+    "sourceSha256": "3006a0a15a6a852d4facdde89637dce8c91d63fa90e3c2ae20a90f148486d5e1",
+    "publicPath": "/buildings/3006a0a15a6a852d4facdde8.webp",
+    "priority": "风景图",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-651642991",
+    "building": "B8学术报告厅",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/B8学术报告厅正门.jpg",
+    "sourceSha256": "5d0d4301ce0d50a8fc813b2be0dec2630f6dfb1f5230dbef2868204b48fcb931",
+    "publicPath": "/buildings/5d0d4301ce0d50a8fc813b2b.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "owner-bajiaolou",
+    "building": "八角楼",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/八角楼983.png",
+    "sourceSha256": "1310476acb9cbcb2f3781b1b4a6c491b814d2fac750b9129ca57d3e78dd8a946",
+    "publicPath": "/buildings/1310476acb9cbcb2f3781b1b.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-307250997",
+    "building": "大会堂（教工活动中心）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/大会堂正面1.jpg",
+    "sourceSha256": "15f530b94852cfe6b95dc9fa601b068e135690daf334c26f251e3e2da0b0b434",
+    "publicPath": "/buildings/15f530b94852cfe6b95dc9fa.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-relation-4105911",
+    "building": "实验楼（A/B/C/D/E栋）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼1.jpg",
+    "sourceSha256": "55b20605d120547caa813fba334e759945ed8b320b233dff09172ca8f00032aa",
+    "publicPath": "/buildings/55b20605d120547caa813fba.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-relation-4105911",
+    "building": "实验楼（A/B/C/D/E栋）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼2.jpg",
+    "sourceSha256": "8504ea2540fdb22e15cbe5faa7002335616b24110eb5675b6c808e18e4e03bdf",
+    "publicPath": "/buildings/8504ea2540fdb22e15cbe5fa.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-relation-4105911",
+    "building": "实验楼（A/B/C/D/E栋）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼A-B栋.png",
+    "sourceSha256": "8e0e2173dfcb3f55ee71b9872b5cd010fc65f39011a40a87853a2dadf2bce1df",
+    "publicPath": "/buildings/8e0e2173dfcb3f55ee71b987.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-relation-4105911",
+    "building": "实验楼（A/B/C/D/E栋）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼D-E连接处.png",
+    "sourceSha256": "040009595147055fdb841f6066a77a8dd6389248ad0b0aefffa0b27d32c3679e",
+    "publicPath": "/buildings/040009595147055fdb841f60.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-relation-4105911",
+    "building": "实验楼（A/B/C/D/E栋）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼E栋11.png",
+    "sourceSha256": "0568064258eef9c478bbf8e376c2b248dcb58ad07d86f66b241d77a7289c0265",
+    "publicPath": "/buildings/0568064258eef9c478bbf8e3.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1410412694",
+    "building": "教学楼A栋",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼A栋正面.png",
+    "sourceSha256": "0fc9e7e10abd8017ccda5fd69bf66a50884e6a4ae77e1081ff093c2852270159",
+    "publicPath": "/buildings/0fc9e7e10abd8017ccda5fd6.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-relation-19299170",
+    "building": "教学楼D栋",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼D栋.png",
+    "sourceSha256": "befcd6ac6bf8f84f0be0dad362a06735791e12dca35fec73fe8d80f17ef1ce30",
+    "publicPath": "/buildings/befcd6ac6bf8f84f0be0dad3.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-node-3125704391",
+    "building": "教学楼F栋",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼F栋.png",
+    "sourceSha256": "d3092f94656b4b0059a1fcf00348547fc863d3094d11ad77ae31f7b3f7eeb2d3",
+    "publicPath": "/buildings/d3092f94656b4b0059a1fcf0.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-relation-4105730",
+    "building": "教学楼（E/F/G栋）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼F-G栋连接处及G栋.png",
+    "sourceSha256": "0ff8d1e6cb10de99f89ffa18985f81a82767aa3ca488c97f14585150988f2c36",
+    "publicPath": "/buildings/0ff8d1e6cb10de99f89ffa18.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-relation-4105730",
+    "building": "教学楼（E/F/G栋）",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼F栋.png",
+    "sourceSha256": "d3092f94656b4b0059a1fcf00348547fc863d3094d11ad77ae31f7b3f7eeb2d3",
+    "publicPath": "/buildings/d3092f94656b4b0059a1fcf0.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-node-3125704356",
+    "building": "教学楼G栋",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/教学楼F-G栋连接处及G栋.png",
+    "sourceSha256": "0ff8d1e6cb10de99f89ffa18985f81a82767aa3ca488c97f14585150988f2c36",
+    "publicPath": "/buildings/0ff8d1e6cb10de99f89ffa18.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-node-3125809014",
+    "building": "实验楼E栋",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/实验楼E栋11.png",
+    "sourceSha256": "0568064258eef9c478bbf8e376c2b248dcb58ad07d86f66b241d77a7289c0265",
+    "publicPath": "/buildings/0568064258eef9c478bbf8e3.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1389970391",
+    "building": "艺术楼",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/艺术楼右侧面1.jpg",
+    "sourceSha256": "fec39956154979b80044b66f733b6cf82ac7153091a06f558af3e7958b3f0235",
+    "publicPath": "/buildings/fec39956154979b80044b66f.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1389970391",
+    "building": "艺术楼",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/艺术楼背面1.jpg",
+    "sourceSha256": "030715bd139abed59cda1ad4f621aebd2657aa5c373f2a109de98ba330d8a243",
+    "publicPath": "/buildings/030715bd139abed59cda1ad4.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-1389970391",
+    "building": "艺术楼",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/艺术楼背面3.png",
+    "sourceSha256": "72ac666e64d6dbc5502aa15406677beaf250ec421e99684a91d52db2f4a4a2d1",
+    "publicPath": "/buildings/72ac666e64d6dbc5502aa154.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-313039046",
+    "building": "门诊部",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/门诊部23.jpg",
+    "sourceSha256": "280f52f2496d93eb0dbda0096f7f30cdd6e38da5e0cdd4c1af87bcbffb8470eb",
+    "publicPath": "/buildings/280f52f2496d93eb0dbda009.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-307437431",
+    "building": "院系办公楼",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/院系办公楼正门.jpg",
+    "sourceSha256": "6fe5e14f139bff375f47f906a230a6f517719b5dba626d1722f10bead4948587",
+    "publicPath": "/buildings/6fe5e14f139bff375f47f906.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  },
+  {
+    "placeId": "osm-way-307437431",
+    "building": "院系办公楼",
+    "source": "CampusOS_Codex_完整设计文档_v2/assets/source_maps/广外地图/细节/院系办公楼正面11.png",
+    "sourceSha256": "163c0d2fa54e9f3826cdfec4672d3049d4e0b1c6c7a3183fee878f3501db54ae",
+    "publicPath": "/buildings/163c0d2fa54e9f3826cdfec4.webp",
+    "priority": "细节实景",
+    "approval": "负责人本轮明确指示导入建筑图片；人工排除卫星、地图及模型截图"
+  }
+]

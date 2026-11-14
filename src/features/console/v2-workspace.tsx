@@ -4,6 +4,7 @@ import { WhitelistWorkspace, RetentionWorkspace } from "./retention-workspace";
 import { CollectorPanel } from "./collector-panel";
 import { OfficialWebCollectionPanel } from "./official-web-collection-panel";
 import { TrafficPanel, SourceSessionPanel } from "./dashboard-panels";
+import { BuildingsWorkspace } from "./buildings-workspace";
 import { FeedbackWorkspace } from "./feedback-workspace";
 import Link from "next/link";
 import {
@@ -1085,6 +1086,8 @@ function Dashboard(props: WorkspaceProps) {
   );
 }
 export function ConsoleV2Workspace(props: WorkspaceProps) {
+  if (props.section === "buildings")
+    return <BuildingsWorkspace request={props.request} />;
   if (props.section === "feedback")
     return <FeedbackWorkspace request={props.request} />;
   if (props.section === "web-collection")

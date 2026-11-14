@@ -1,0 +1,66 @@
+{
+  "origin": "https://gdufs.zhiyuapp.site",
+  "checkedAt": "2026-11-14T13:45:45.636Z",
+  "calendar": [
+    {
+      "date": "2026-11-12",
+      "title": "“信息素养教育系列”讲座 第五十三讲",
+      "cards": 1,
+      "mapLinks": 1,
+      "placeId": "osm-node-3125704419"
+    },
+    {
+      "date": "2026-11-12",
+      "title": "知行共读·青春无艾｜防艾书籍专家×青年共读会来啦！",
+      "cards": 1,
+      "mapLinks": 1,
+      "placeId": "osm-relation-19299170"
+    },
+    {
+      "date": "2026-11-12",
+      "title": "【职业发展力讲坛】公职类考试备考指导分享会",
+      "cards": 1,
+      "mapLinks": 1,
+      "placeId": "osm-node-3125704356"
+    },
+    {
+      "date": "2026-10-14",
+      "title": "讲座预告丨广外金融论坛第137讲",
+      "cards": 2,
+      "mapLinks": 2,
+      "placeId": "osm-way-307437431"
+    },
+    {
+      "date": "2026-11-14",
+      "title": "讲座预告丨广外金融论坛第138讲",
+      "cards": 1,
+      "mapLinks": 1,
+      "placeId": "osm-way-307437431"
+    }
+  ],
+  "map": [
+    {
+      "width": 585,
+      "building": "院系办公楼",
+      "activities": 1,
+      "before": {
+        "x": 8,
+        "y": 303.4599914550781,
+        "width": 569,
+        "height": 475.5312194824219
+      },
+      "after": {
+        "x": 8,
+        "y": 12,
+        "width": 569,
+        "height": 767
+      },
+      "touchExpanded": true
+    },
+    {
+      "width": 1440,
+      "building": "院系办公楼",
+      "activities": 1
+    }
+  ]
+}

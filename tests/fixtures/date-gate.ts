@@ -5,7 +5,9 @@ export const command = (expectedVersion: number, action?: string) => ({
   expectedVersion,
   ...(action ? { action } : {}),
 });
-export async function dateGateFixture() {
+export async function dateGateFixture(
+  fixtureBody = "<p>原文全文与CDN引用</p>",
+) {
   const f = await consoleV2Fixture(),
     store = new ConsoleSyncStore(f.db, f.actor);
   f.sqlite.exec(
@@ -17,13 +19,14 @@ export async function dateGateFixture() {
   async function article(id: string, date: string) {
     f.sqlite
       .prepare(
-        "INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,body_status,content_hash,fetched_at,campus_scope,data_domain,published_at,content_revision,input_hash,rights_scope,content_type,knowledge_category) VALUES(?,?,?,?,'<p>原文全文与CDN引用</p>','reading_html','complete',?,'2026-10-25','all','campus_announcements',?,1,?,'licensed_full_text','notice','campus_life')",
+        "INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,body_status,content_hash,fetched_at,campus_scope,data_domain,published_at,content_revision,input_hash,rights_scope,content_type,knowledge_category) VALUES(?,?,?,?,?,'reading_html','complete',?,'2026-10-25','all','campus_announcements',?,1,?,'licensed_full_text','notice','campus_life')",
       )
       .run(
         id,
         source.id,
         id,
         "https://example.invalid/" + id,
+        fixtureBody,
         id,
         date,
         "a".repeat(64),

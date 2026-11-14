@@ -1,0 +1,510 @@
+[
+  {
+    "date": "2026-10-14",
+    "status": 200,
+    "total": 8,
+    "items": [
+      {
+        "eventId": "event-349e68ab3d9ccafb59108c9f7952049923117210",
+        "title": "讲座预告丨广外金融论坛第137讲",
+        "location": "大学城校区院系楼401会议室",
+        "map": null,
+        "start": {
+          "raw": "2026年10月14日（星期三）10:00",
+          "date": "2026-10-14",
+          "at": "2026-10-14T10:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": {
+            "field": "body",
+            "startOffset": 15,
+            "endOffset": 36,
+            "text": "2026年10月14日（星期三）10:00",
+            "role": "event_time"
+          }
+        },
+        "end": {
+          "raw": "12:30",
+          "date": "2026-10-14",
+          "at": "2026-10-14T12:30:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "同一明确时间区间的起始日期",
+          "evidence": {
+            "field": "body",
+            "startOffset": 37,
+            "endOffset": 42,
+            "text": "12:30",
+            "role": "event_time"
+          }
+        },
+        "calendar": "/calendar?date=2026-10-14&event=event-349e68ab3d9ccafb59108c9f7952049923117210",
+        "sources": [
+          "content-7c82d6bb-6a24-45f8-bede-4c49fe79f0f3",
+          "wx-e94ca9c36c26dd632e3c1261f9ddb0dd6d26dddd"
+        ]
+      },
+      {
+        "eventId": "event-d1d8c71a0817a99614649e3834ffda927ebc8d6b",
+        "title": "职引未来｜从“学生脑”到“商业脑”，我院新生职业规划讲座开讲",
+        "location": "北二教132室",
+        "map": null,
+        "start": {
+          "raw": "10月14日",
+          "date": "2026-10-14",
+          "at": null,
+          "timezone": "Asia/Shanghai",
+          "precision": "date",
+          "resolution": "day",
+          "inferred": true,
+          "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+          "evidence": {
+            "field": "body",
+            "startOffset": 0,
+            "endOffset": 6,
+            "text": "10月14日",
+            "role": "event_time"
+          }
+        },
+        "end": null,
+        "calendar": "/calendar?date=2026-10-14&event=event-d1d8c71a0817a99614649e3834ffda927ebc8d6b",
+        "sources": [
+          "wx-b497ecb1fc9159de83330273f3a859ec97568ebf"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-11-12",
+    "status": 200,
+    "total": 23,
+    "items": [
+      {
+        "eventId": "event-f4b105415984bb6d56cc07186222b8ddd27fcea5",
+        "title": "雅典大学Christina K. Alexandris教授讲座预告",
+        "location": "白云校区第六教学楼A310教室",
+        "map": null,
+        "start": {
+          "raw": "2026年11月12日（周四）10:00",
+          "date": "2026-11-12",
+          "at": "2026-11-12T10:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": {
+            "field": "body",
+            "startOffset": 150,
+            "endOffset": 170,
+            "text": "2026年11月12日（周四）10:00",
+            "role": "event_time",
+            "sourceId": "media-ddcd3812b499cfd9"
+          }
+        },
+        "end": {
+          "raw": "12:00",
+          "date": "2026-11-12",
+          "at": "2026-11-12T12:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "同一明确时间区间的起始日期",
+          "evidence": {
+            "field": "body",
+            "startOffset": 171,
+            "endOffset": 176,
+            "text": "12:00",
+            "role": "event_time",
+            "sourceId": "media-ddcd3812b499cfd9"
+          }
+        },
+        "calendar": "/calendar?date=2026-11-12&event=event-f4b105415984bb6d56cc07186222b8ddd27fcea5",
+        "sources": [
+          "content-dfe231a6-23c0-41ee-99ee-18a232c524ae"
+        ]
+      },
+      {
+        "eventId": "event-2c1ffe4b156167b6993a4321c4b5bca04cd4b192",
+        "title": "【用人单位邀请函】11月12日广东外语外贸大学2026年秋季校园招聘会之十",
+        "location": "白云山校区第六教学楼中庭",
+        "map": null,
+        "start": {
+          "raw": "2026年11月12日（星期四）14:00",
+          "date": "2026-11-12",
+          "at": "2026-11-12T14:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": {
+            "field": "body",
+            "startOffset": 150,
+            "endOffset": 171,
+            "text": "2026年11月12日（星期四）14:00",
+            "role": "event_time"
+          }
+        },
+        "end": {
+          "raw": "17:00",
+          "date": "2026-11-12",
+          "at": "2026-11-12T17:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "同一明确时间区间的起始日期",
+          "evidence": {
+            "field": "body",
+            "startOffset": 172,
+            "endOffset": 177,
+            "text": "17:00",
+            "role": "event_time"
+          }
+        },
+        "calendar": "/calendar?date=2026-11-12&event=event-2c1ffe4b156167b6993a4321c4b5bca04cd4b192",
+        "sources": [
+          "wx-4f3603c259459a17da40dd5786ed3e97fac8ea6a"
+        ]
+      },
+      {
+        "eventId": "event-b56aa864730e3f0f51fed1ba63846a063ca33d38",
+        "title": "【学生邀请函】11月12日广东外语外贸大学2026年秋季校园招聘会之十",
+        "location": "白云山校区第六教学楼中庭",
+        "map": null,
+        "start": {
+          "raw": "2026年11月12日（星期四）14:00",
+          "date": "2026-11-12",
+          "at": "2026-11-12T14:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": {
+            "field": "body",
+            "startOffset": 14,
+            "endOffset": 35,
+            "text": "2026年11月12日（星期四）14:00",
+            "role": "event_time"
+          }
+        },
+        "end": {
+          "raw": "17:00",
+          "date": "2026-11-12",
+          "at": "2026-11-12T17:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "同一明确时间区间的起始日期",
+          "evidence": {
+            "field": "body",
+            "startOffset": 36,
+            "endOffset": 41,
+            "text": "17:00",
+            "role": "event_time"
+          }
+        },
+        "calendar": "/calendar?date=2026-11-12&event=event-b56aa864730e3f0f51fed1ba63846a063ca33d38",
+        "sources": [
+          "wx-2b754d47490ceafca5e70352425e393d8e204817"
+        ]
+      },
+      {
+        "eventId": "event-169fd0360663d0fac4d2fd0e9d38de7c7aea9bfb",
+        "title": "青春赴乡野，实践正当时｜“百千万工程”成果展示会暨经验分享会邀你参加",
+        "location": "大学城校区八角楼",
+        "map": {
+          "placeId": "owner-bajiaolou",
+          "name": "八角楼",
+          "precision": "building"
+        },
+        "start": {
+          "raw": "11月12日（周四）下午14：30",
+          "date": "2026-11-12",
+          "at": "2026-11-12T14:30:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+          "evidence": {
+            "field": "body",
+            "startOffset": 86,
+            "endOffset": 103,
+            "text": "11月12日（周四）下午14：30",
+            "role": "event_time"
+          }
+        },
+        "end": null,
+        "calendar": "/calendar?date=2026-11-12&event=event-169fd0360663d0fac4d2fd0e9d38de7c7aea9bfb",
+        "sources": [
+          "wx-1119abdf1d257276d2f809620c93a4db748a327a"
+        ]
+      },
+      {
+        "eventId": "event-248b2ca0b63f4896b87862324e437630e40397a3",
+        "title": "“信息素养教育系列”讲座 第五十三讲",
+        "location": "大学城校区E203",
+        "map": null,
+        "start": {
+          "raw": "2026年11月12日（周四）14:30",
+          "date": "2026-11-12",
+          "at": "2026-11-12T14:30:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": {
+            "field": "body",
+            "startOffset": 29,
+            "endOffset": 49,
+            "text": "2026年11月12日（周四）14:30",
+            "role": "event_time"
+          }
+        },
+        "end": {
+          "raw": "16:30",
+          "date": "2026-11-12",
+          "at": "2026-11-12T16:30:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "同一明确时间区间的起始日期",
+          "evidence": {
+            "field": "body",
+            "startOffset": 50,
+            "endOffset": 55,
+            "text": "16:30",
+            "role": "event_time"
+          }
+        },
+        "calendar": "/calendar?date=2026-11-12&event=event-248b2ca0b63f4896b87862324e437630e40397a3",
+        "sources": [
+          "content-f939d804-a4a1-4062-8fc5-bce0c041f674"
+        ]
+      },
+      {
+        "eventId": "event-7e5380b4e0081f3af7d9b0a3c9a3749e504a73ae",
+        "title": "知行共读·青春无艾｜防艾书籍专家×青年共读会来啦！",
+        "location": "广东外语外贸大学南校区 D512课室",
+        "map": null,
+        "start": {
+          "raw": "11月12日（周四）14:30",
+          "date": "2026-11-12",
+          "at": "2026-11-12T14:30:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "同一活动上下文明确标注年份",
+          "evidence": {
+            "field": "body",
+            "startOffset": 271,
+            "endOffset": 286,
+            "text": "11月12日（周四）14:30",
+            "role": "event_time"
+          }
+        },
+        "end": {
+          "raw": "16:30",
+          "date": "2026-11-12",
+          "at": "2026-11-12T16:30:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "同一明确时间区间的起始日期",
+          "evidence": {
+            "field": "body",
+            "startOffset": 287,
+            "endOffset": 292,
+            "text": "16:30",
+            "role": "event_time"
+          }
+        },
+        "calendar": "/calendar?date=2026-11-12&event=event-7e5380b4e0081f3af7d9b0a3c9a3749e504a73ae",
+        "sources": [
+          "wx-6f01c11ce0a510d7fc4a9eeed75cb0d6cf08fd98"
+        ]
+      },
+      {
+        "eventId": "event-b6028c748d533e17b8456d03e8ddcc14bc6fb8c9",
+        "title": "“译路领航”学生发展中心 | 十一月活动安排",
+        "location": "六教B202",
+        "map": null,
+        "start": {
+          "raw": "2026年11月12日18:30",
+          "date": "2026-11-12",
+          "at": "2026-11-12T18:30:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": {
+            "field": "body",
+            "startOffset": 534,
+            "endOffset": 550,
+            "text": "2026年11月12日18:30",
+            "role": "event_time"
+          }
+        },
+        "end": {
+          "raw": "19:00",
+          "date": "2026-11-12",
+          "at": "2026-11-12T19:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "同一明确时间区间的起始日期",
+          "evidence": {
+            "field": "body",
+            "startOffset": 551,
+            "endOffset": 556,
+            "text": "19:00",
+            "role": "event_time"
+          }
+        },
+        "calendar": "/calendar?date=2026-11-12&event=event-b6028c748d533e17b8456d03e8ddcc14bc6fb8c9",
+        "sources": [
+          "wx-0ba3fb7ec119a3c50ae12cd9dcd03601db1b50d1"
+        ]
+      },
+      {
+        "eventId": "event-e11b8c2f455fa4a4c9d8084b98213d174ea12c2f",
+        "title": "商学院2026年“百千万工程”突击队行动暨暑期“三下乡”社会实践活动成果展示报告会",
+        "location": "学生活动中心（广东外语外贸大学大学城校区）",
+        "map": {
+          "placeId": "osm-way-313039010",
+          "name": "学生活动中心",
+          "precision": "building"
+        },
+        "start": {
+          "raw": "11月12日18:30",
+          "date": "2026-11-12",
+          "at": "2026-11-12T18:30:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "活动标题明确标注年份",
+          "evidence": {
+            "field": "body",
+            "startOffset": 2064,
+            "endOffset": 2075,
+            "text": "11月12日18:30",
+            "role": "event_time"
+          }
+        },
+        "end": null,
+        "calendar": "/calendar?date=2026-11-12&event=event-e11b8c2f455fa4a4c9d8084b98213d174ea12c2f",
+        "sources": [
+          "wx-93de1200c3c4bbd2e0ee0c0e2fd5adbf1071f3d9"
+        ]
+      },
+      {
+        "eventId": "event-0ca42425aa70c7576cdb04a6f90339c5e64882ca",
+        "title": "自强相逢，温暖同行 | 自强社社员见面会",
+        "location": "大学城校区教学楼A302",
+        "map": null,
+        "start": {
+          "raw": "11月12日晚上19:00",
+          "date": "2026-11-12",
+          "at": "2026-11-12T19:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+          "evidence": {
+            "field": "body",
+            "startOffset": 67,
+            "endOffset": 80,
+            "text": "11月12日晚上19:00",
+            "role": "event_time"
+          }
+        },
+        "end": null,
+        "calendar": "/calendar?date=2026-11-12&event=event-0ca42425aa70c7576cdb04a6f90339c5e64882ca",
+        "sources": [
+          "wx-8bb66812d52f944d9b66884ad7fd701190d62f8e"
+        ]
+      },
+      {
+        "eventId": "event-cce09e6167f4db809224b98c58c105db7190a138",
+        "title": "【职业发展力讲坛】公职类考试备考指导分享会",
+        "location": "大学城校区G座教学楼207",
+        "map": null,
+        "start": {
+          "raw": "11月12日（周四）19:00",
+          "date": "2026-11-12",
+          "at": "2026-11-12T19:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": true,
+          "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+          "evidence": {
+            "field": "body",
+            "startOffset": 47,
+            "endOffset": 62,
+            "text": "11月12日（周四）19:00",
+            "role": "event_time"
+          }
+        },
+        "end": null,
+        "calendar": "/calendar?date=2026-11-12&event=event-cce09e6167f4db809224b98c58c105db7190a138",
+        "sources": [
+          "wx-e4ccaa8b2553b0ef49a9756567bb2e8179ea9f96"
+        ]
+      }
+    ]
+  },
+  {
+    "date": "2026-11-14",
+    "status": 200,
+    "total": 5,
+    "items": [
+      {
+        "eventId": "event-e08da4632f90e6f839fde319315bf0fef14e30f1",
+        "title": "讲座预告丨广外金融论坛第138讲",
+        "location": "大学城校区院系楼401会议室",
+        "map": null,
+        "start": {
+          "raw": "2026年11月14日（星期六）15:00",
+          "date": "2026-11-14",
+          "at": "2026-11-14T15:00:00+08:00",
+          "timezone": "Asia/Shanghai",
+          "precision": "exact_time",
+          "resolution": "minute",
+          "inferred": false,
+          "inferenceBasis": null,
+          "evidence": {
+            "field": "body",
+            "startOffset": 15,
+            "endOffset": 36,
+            "text": "2026年11月14日（星期六）15:00",
+            "role": "event_time"
+          }
+        },
+        "end": null,
+        "calendar": "/calendar?date=2026-11-14&event=event-e08da4632f90e6f839fde319315bf0fef14e30f1",
+        "sources": [
+          "wx-38bb29144ae42540f082cba0cf5bf9143a3dea83"
+        ]
+      }
+    ]
+  }
+]

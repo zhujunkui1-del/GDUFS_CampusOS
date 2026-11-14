@@ -1,0 +1,4780 @@
+[
+  {
+    "id": 1,
+    "building": "图书馆",
+    "question": "图书馆有几层，里面可以自习吗？",
+    "status": 200,
+    "elapsedMs": 8478,
+    "answer": "图书馆一共五层，里面设有自习室可以自习哦～一、二、三层开放时间为7:00-24:00，四、五层开放时间为8:30-22:00，期末时段想去学习的话记得趁早占位呀🐟",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-307250998"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 4426,
+          "firstTextMs": 4162,
+          "finishReason": "stop",
+          "contentChars": 82
+        }
+      ],
+      "promptTokens": 881,
+      "completionTokens": 288,
+      "cachedPromptTokens": 0,
+      "totalTokens": 1169,
+      "usageComplete": true,
+      "chargedTokens": 1169,
+      "durationMs": 4559,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 2016,
+        "serverElapsedMs": 6575,
+        "firstTextMs": 6539,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 2149,
+          "maxCallMs": 554,
+          "rowsRead": 4807,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307250998",
+          "name": "图书馆",
+          "category": "library",
+          "zone": "teaching",
+          "location": [
+            113.39131405,
+            23.0680465
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "大学城校区图书馆"
+          ],
+          "labelPlaceId": "osm-way-307250998",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-307250998",
+      "name": "图书馆",
+      "description": "图书馆有五层楼，内有空调和自习室，可刷脸和刷卡进入。\n一、二、三层开放时间为7:00-24:00，四、五层开放时间为8:30-22:00。\n图书馆也是广外学子们常去的地方，期末更是座无虚席。因此如果期末想去图书馆学习，要趁早。\n🌟图书馆也有会议厅，主要用于举办悦读课堂、阅读沙龙观影会、英语角、读书分享会图书漂流和各种比赛赛事。",
+      "photos": [
+        "/buildings/6ccd5716bbf18b08fa377f2a.webp",
+        "/buildings/6f9fdb5d70c2640d82f36d18.webp",
+        "/buildings/3850a24164478afdd8eaec1f.webp",
+        "/buildings/c74cf9f6a1e6759b749163a2.webp",
+        "/buildings/5e46a9009da28247598037a5.webp"
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "building": "图书馆",
+    "question": "图书馆一至三层和四至五层分别几点开放、几点关闭？",
+    "status": 200,
+    "elapsedMs": 6970,
+    "answer": "图书馆一、二、三层开放时间为7:00-24:00，四、五层开放时间为8:30-22:00哦～🐟",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-307250998"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 3161,
+          "firstTextMs": 3041,
+          "finishReason": "stop",
+          "contentChars": 48
+        }
+      ],
+      "promptTokens": 888,
+      "completionTokens": 139,
+      "cachedPromptTokens": 0,
+      "totalTokens": 1027,
+      "usageComplete": true,
+      "chargedTokens": 1027,
+      "durationMs": 3245,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1915,
+        "serverElapsedMs": 5160,
+        "firstTextMs": 5118,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1999,
+          "maxCallMs": 512,
+          "rowsRead": 4809,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307250998",
+          "name": "图书馆",
+          "category": "library",
+          "zone": "teaching",
+          "location": [
+            113.39131405,
+            23.0680465
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "大学城校区图书馆"
+          ],
+          "labelPlaceId": "osm-way-307250998",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-307250998",
+      "name": "图书馆",
+      "description": "图书馆有五层楼，内有空调和自习室，可刷脸和刷卡进入。\n一、二、三层开放时间为7:00-24:00，四、五层开放时间为8:30-22:00。\n图书馆也是广外学子们常去的地方，期末更是座无虚席。因此如果期末想去图书馆学习，要趁早。\n🌟图书馆也有会议厅，主要用于举办悦读课堂、阅读沙龙观影会、英语角、读书分享会图书漂流和各种比赛赛事。",
+      "photos": [
+        "/buildings/6ccd5716bbf18b08fa377f2a.webp",
+        "/buildings/6f9fdb5d70c2640d82f36d18.webp",
+        "/buildings/3850a24164478afdd8eaec1f.webp",
+        "/buildings/c74cf9f6a1e6759b749163a2.webp",
+        "/buildings/5e46a9009da28247598037a5.webp"
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "building": "图书馆",
+    "question": "进入图书馆可以刷脸吗，还是必须带校园卡？",
+    "status": 200,
+    "elapsedMs": 4268,
+    "answer": "可以刷脸也可以刷校园卡进图书馆哒😉 资料里明确写了两种方式都能用~",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-307250998"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 1757,
+          "firstTextMs": 1757,
+          "finishReason": "stop",
+          "contentChars": 34
+        }
+      ],
+      "promptTokens": 885,
+      "completionTokens": 119,
+      "cachedPromptTokens": 0,
+      "totalTokens": 1004,
+      "usageComplete": true,
+      "chargedTokens": 1004,
+      "durationMs": 1847,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1516,
+        "serverElapsedMs": 3363,
+        "firstTextMs": 3320,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1606,
+          "maxCallMs": 218,
+          "rowsRead": 4811,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307250998",
+          "name": "图书馆",
+          "category": "library",
+          "zone": "teaching",
+          "location": [
+            113.39131405,
+            23.0680465
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "大学城校区图书馆"
+          ],
+          "labelPlaceId": "osm-way-307250998",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-307250998",
+      "name": "图书馆",
+      "description": "图书馆有五层楼，内有空调和自习室，可刷脸和刷卡进入。\n一、二、三层开放时间为7:00-24:00，四、五层开放时间为8:30-22:00。\n图书馆也是广外学子们常去的地方，期末更是座无虚席。因此如果期末想去图书馆学习，要趁早。\n🌟图书馆也有会议厅，主要用于举办悦读课堂、阅读沙龙观影会、英语角、读书分享会图书漂流和各种比赛赛事。",
+      "photos": [
+        "/buildings/6ccd5716bbf18b08fa377f2a.webp",
+        "/buildings/6f9fdb5d70c2640d82f36d18.webp",
+        "/buildings/3850a24164478afdd8eaec1f.webp",
+        "/buildings/c74cf9f6a1e6759b749163a2.webp",
+        "/buildings/5e46a9009da28247598037a5.webp"
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "building": "大会堂（教工活动中心）",
+    "question": "大会堂有多少个观众席，分几层？",
+    "status": 200,
+    "elapsedMs": 4233,
+    "answer": "大会堂（教工活动中心）有1300个观众席，是上下两层布局哦~ 🐟",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-307250997"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 1316,
+          "firstTextMs": 1245,
+          "finishReason": "stop",
+          "contentChars": 33
+        }
+      ],
+      "promptTokens": 518,
+      "completionTokens": 80,
+      "cachedPromptTokens": 0,
+      "totalTokens": 598,
+      "usageComplete": true,
+      "chargedTokens": 598,
+      "durationMs": 1403,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1524,
+        "serverElapsedMs": 2927,
+        "firstTextMs": 2887,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1611,
+          "maxCallMs": 300,
+          "rowsRead": 4813,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307250997",
+          "name": "大会堂（教工活动中心）",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.39157995,
+            23.06922125
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "大会堂"
+          ],
+          "labelPlaceId": "osm-way-307250997",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-307250997",
+      "name": "大会堂（教工活动中心）",
+      "description": "广外南校最大的室内活动场所，1300 个观众席，上下两层布局。\n位置​​：教学区，雅思考试中心旁边，图书馆左前方。\n常见活动​​：思政学时讲座/观影（报名上限 850 人）、校庆文艺展演分会场、校园舞蹈大赛、音乐剧演出、高雅艺术进校园等。",
+      "photos": [
+        "/buildings/15f530b94852cfe6b95dc9fa.webp",
+        "/api/public/building-image?id=3b68cc7a-5824-4c41-a456-296faed2b7a0"
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "building": "院系办公楼",
+    "question": "院系办公楼里有哪些学院？找辅导员和办资助手续是不是也去那里？",
+    "status": 200,
+    "elapsedMs": 12372,
+    "answer": "院系办公楼的具体学院分布、辅导员办公点和资助手续办理点这些细节，我目前没有查到确切信息呢😅\n\n你可以试试这几个渠道确认：\n- 学校官网的院系设置或学生工作栏目\n- 院系办公楼的楼层指引牌（一般一楼大厅会有）\n- 直接联系你要找的学院或辅导员问清楚\n\n需要我帮你查院系办公楼的具体位置吗？",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "model",
+      "buildingProfiles": [
+        "osm-way-307437431"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 4,
+      "correctionRetries": 1,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2126,
+          "firstTextMs": null,
+          "finishReason": "stop",
+          "contentChars": 320
+        },
+        {
+          "durationMs": 1347,
+          "firstTextMs": null,
+          "finishReason": "tool_calls",
+          "contentChars": 0
+        },
+        {
+          "durationMs": 2674,
+          "firstTextMs": null,
+          "finishReason": "tool_calls",
+          "contentChars": 0
+        },
+        {
+          "durationMs": 2570,
+          "firstTextMs": 1926,
+          "finishReason": "stop",
+          "contentChars": 144
+        }
+      ],
+      "promptTokens": 10370,
+      "completionTokens": 854,
+      "cachedPromptTokens": 0,
+      "totalTokens": 11224,
+      "usageComplete": true,
+      "chargedTokens": 11224,
+      "durationMs": 9963,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1622,
+        "serverElapsedMs": 11585,
+        "firstTextMs": 11546,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_places",
+            "durationMs": 0,
+            "ok": true
+          },
+          {
+            "name": "control_map",
+            "durationMs": 0,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 29,
+          "writeQueries": 13,
+          "calls": 34,
+          "failures": 0,
+          "durationMs": 2118,
+          "maxCallMs": 305,
+          "rowsRead": 4818,
+          "rowsWritten": 27,
+          "rowUsageStatements": 17,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307437431",
+          "name": "院系办公楼",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.39555615,
+            23.065696799999998
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-way-307437431",
+          "verificationStatus": "source_mapped"
+        }
+      },
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307437431",
+          "name": "院系办公楼",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.39555615,
+            23.065696799999998
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-way-307437431",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-307437431",
+      "name": "院系办公楼",
+      "description": "院系办公楼是南校教学区的一栋行政建筑，集中了六个学院的教务办公室、辅导员办公室和资助办公室。日常找辅导员、办资助手续基本都来这。\n\n📍 位置\n在教学区偏北的后山区域，紧挨着校办公楼和八角楼。从校名石门（面向广外东路那个门）进来，院系办公楼就在右手边不远处。\n\n🏢 入驻学院\n这栋楼集中了六个学院：\n经济贸易学院\n商学院\n会计学院\n金融学院\n英语教育学院\n数学与统计学院\n除了学院办公室，辅导员办公室和资助办公室也在这里。\n\n🗺️ 其他学院办公室在哪\n不是所有学院都挤在院系楼，还有几个分散在教学楼里：\n​​B 栋​​：新闻与传播学院\n​​D 栋​​：法学院、国际关系学院、社会与公共管理学院\n​​实验楼​​：信息科学与技术学院\n​​艺术楼​​：艺术学院",
+      "photos": [
+        "/buildings/6fe5e14f139bff375f47f906.webp",
+        "/buildings/163c0d2fa54e9f3826cdfec4.webp"
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "building": "校行政办公楼",
+    "question": "校行政办公楼116室是什么部门，能办什么事？",
+    "status": 200,
+    "elapsedMs": 4928,
+    "answer": "校行政办公楼116室是学生工作部哦，主要负责勤工俭学相关的事务~ 要办这类事跑这栋楼就对啦🐟",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-307437432"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2447,
+          "firstTextMs": 2335,
+          "finishReason": "stop",
+          "contentChars": 47
+        }
+      ],
+      "promptTokens": 795,
+      "completionTokens": 238,
+      "cachedPromptTokens": 0,
+      "totalTokens": 1033,
+      "usageComplete": true,
+      "chargedTokens": 1033,
+      "durationMs": 2533,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1456,
+        "serverElapsedMs": 3989,
+        "firstTextMs": 3953,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1542,
+          "maxCallMs": 198,
+          "rowsRead": 4817,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307437432",
+          "name": "校行政办公楼",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.3944163,
+            23.065009699999997
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "校办公楼"
+          ],
+          "labelPlaceId": "osm-way-307437432",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-307437432",
+      "name": "校行政办公楼",
+      "description": "学校核心行政部门都集中在这里，日常办教务、财务、勤工俭学之类的事基本都跑这栋楼。\n\n📍 位置\n教学区后山区域，紧挨着院系办公楼和八角楼。从校名石门（面向广外东路那个门）进来，左手边就是校行政办公楼，右手边是院系办公楼。\n🏢 入驻部门\n教务部\n财务处\n考务处\n学生工作部（116 室，负责勤工俭学等）\n收发室（取平信 / 挂号信）\n📮 收发室取信\n南校没有单独的邮局，平信和挂号信都寄到这里。进门跟老师说要找平信或挂号信就行——平信直接在小盒子里自己翻，挂号信要提供编码和日期，提前问好。",
+      "photos": [
+        "/buildings/3aa6b8489866a283e2ff2ef7.webp",
+        "/buildings/a53621a20e07d662750c5e25.webp"
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "building": "校行政办公楼",
+    "question": "我想取挂号信，去校行政办公楼需要准备哪些信息？",
+    "status": 200,
+    "elapsedMs": 10994,
+    "answer": "取挂号信一般带好**学生证/身份证**和**取件码**就行～如果挂号信上写了具体编号也可以带上，以防万一。\n\n不过不同学校行政楼收发室的具体流程可能略有差异，要是能提前打个电话确认下开放时间就更稳妥啦 📬",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "model",
+      "buildingProfiles": [
+        "osm-way-307437432"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "open",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 4,
+      "correctionRetries": 1,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 1772,
+          "firstTextMs": null,
+          "finishReason": "stop",
+          "contentChars": 94
+        },
+        {
+          "durationMs": 1214,
+          "firstTextMs": null,
+          "finishReason": "tool_calls",
+          "contentChars": 0
+        },
+        {
+          "durationMs": 1861,
+          "firstTextMs": null,
+          "finishReason": "tool_calls",
+          "contentChars": 0
+        },
+        {
+          "durationMs": 2333,
+          "firstTextMs": 1834,
+          "finishReason": "stop",
+          "contentChars": 103
+        }
+      ],
+      "promptTokens": 9024,
+      "completionTokens": 533,
+      "cachedPromptTokens": 0,
+      "totalTokens": 9557,
+      "usageComplete": true,
+      "chargedTokens": 9557,
+      "durationMs": 8590,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1469,
+        "serverElapsedMs": 10059,
+        "firstTextMs": 10018,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_places",
+            "durationMs": 0,
+            "ok": true
+          },
+          {
+            "name": "control_map",
+            "durationMs": 0,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 29,
+          "writeQueries": 13,
+          "calls": 34,
+          "failures": 0,
+          "durationMs": 2129,
+          "maxCallMs": 278,
+          "rowsRead": 4822,
+          "rowsWritten": 27,
+          "rowUsageStatements": 17,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307437432",
+          "name": "校行政办公楼",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.3944163,
+            23.065009699999997
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "校办公楼"
+          ],
+          "labelPlaceId": "osm-way-307437432",
+          "verificationStatus": "source_mapped"
+        }
+      },
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307437432",
+          "name": "校行政办公楼",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.3944163,
+            23.065009699999997
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "校办公楼"
+          ],
+          "labelPlaceId": "osm-way-307437432",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-307437432",
+      "name": "校行政办公楼",
+      "description": "学校核心行政部门都集中在这里，日常办教务、财务、勤工俭学之类的事基本都跑这栋楼。\n\n📍 位置\n教学区后山区域，紧挨着院系办公楼和八角楼。从校名石门（面向广外东路那个门）进来，左手边就是校行政办公楼，右手边是院系办公楼。\n🏢 入驻部门\n教务部\n财务处\n考务处\n学生工作部（116 室，负责勤工俭学等）\n收发室（取平信 / 挂号信）\n📮 收发室取信\n南校没有单独的邮局，平信和挂号信都寄到这里。进门跟老师说要找平信或挂号信就行——平信直接在小盒子里自己翻，挂号信要提供编码和日期，提前问好。",
+      "photos": [
+        "/buildings/3aa6b8489866a283e2ff2ef7.webp",
+        "/buildings/a53621a20e07d662750c5e25.webp"
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "building": "北苑6栋",
+    "question": "北苑6栋楼下丰巢可以24小时取件吗？超过多久会收费？",
+    "status": 200,
+    "elapsedMs": 5624,
+    "answer": "当然可以呀🐟 北苑6栋楼下的丰巢快递柜是24小时都能取件的，要是超过24小时没取就会开始收保管费，0.5元/天，最多收3元封顶哦～",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-313039023",
+        "osm-node-12958917229"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2766,
+          "firstTextMs": 2580,
+          "finishReason": "stop",
+          "contentChars": 66
+        }
+      ],
+      "promptTokens": 681,
+      "completionTokens": 241,
+      "cachedPromptTokens": 0,
+      "totalTokens": 922,
+      "usageComplete": true,
+      "chargedTokens": 922,
+      "durationMs": 2870,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1781,
+        "serverElapsedMs": 4651,
+        "firstTextMs": 4607,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 26,
+          "writeQueries": 12,
+          "calls": 30,
+          "failures": 0,
+          "durationMs": 2326,
+          "maxCallMs": 425,
+          "rowsRead": 9281,
+          "rowsWritten": 25,
+          "rowUsageStatements": 19,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-313039023",
+          "name": "北苑6栋",
+          "category": "dormitory",
+          "zone": "living",
+          "location": [
+            113.39156055,
+            23.061719250000003
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-way-313039023",
+          "verificationStatus": "source_mapped"
+        }
+      },
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-node-12958917229",
+          "name": "菜鸟驿站",
+          "category": "service",
+          "zone": "living",
+          "location": [
+            113.390238,
+            23.0622195
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "菜鸟",
+            "快递",
+            "快递点",
+            "驿站",
+            "取件"
+          ],
+          "labelPlaceId": "osm-node-12958917229",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-313039023",
+      "name": "北苑6栋",
+      "description": "北苑6栋位于大学城校区生活区，是生活住宿楼栋，楼下有丰巢快递柜。\n\n📦 丰巢快递柜1-10号柜（24h）\n小件快递会优先放丰巢柜，24小时可取。\n⚠️ 丰巢超过24小时开始收费，0.5元/天，封顶3元。",
+      "photos": [
+        "/api/public/building-image?id=d7f93443-9f94-4194-8f71-ced2eda44027"
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "building": "门诊部",
+    "question": "门诊部周一至周五的开诊时间是什么？",
+    "status": 200,
+    "elapsedMs": 4037,
+    "answer": "门诊部周一至周五的开诊时间为8:30-12:00、14:00-17:10哦。",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-313039046"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 1344,
+          "firstTextMs": 1270,
+          "finishReason": "stop",
+          "contentChars": 38
+        }
+      ],
+      "promptTokens": 473,
+      "completionTokens": 89,
+      "cachedPromptTokens": 0,
+      "totalTokens": 562,
+      "usageComplete": true,
+      "chargedTokens": 562,
+      "durationMs": 1436,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1604,
+        "serverElapsedMs": 3040,
+        "firstTextMs": 2996,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1696,
+          "maxCallMs": 251,
+          "rowsRead": 4824,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-313039046",
+          "name": "门诊部",
+          "category": "service",
+          "zone": "living",
+          "location": [
+            113.390075,
+            23.06582195
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "大学城校区门诊部"
+          ],
+          "labelPlaceId": "osm-way-313039046",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-313039046",
+      "name": "门诊部",
+      "description": "门诊部位于大学城校区教学区，是校园医疗服务地点。\n开诊时间：​​\n周一至周五：8:30-12:00、14:00-17:10\n周六日及节假日：8:30-12:00、14:30-17:30\n其他时间为急诊，24小时有人值班，按铃就诊",
+      "photos": [
+        "/buildings/280f52f2496d93eb0dbda009.webp"
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "building": "门诊部",
+    "question": "门诊部周六日和节假日几点开诊？",
+    "status": 200,
+    "elapsedMs": 5814,
+    "answer": "周六日和节假日的开诊时间是8:30-12:00、14:30-17:30哦，其他时间有急诊24小时值班，按铃就能就诊哒🐟",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-313039046"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2905,
+          "firstTextMs": 2860,
+          "finishReason": "stop",
+          "contentChars": 60
+        }
+      ],
+      "promptTokens": 472,
+      "completionTokens": 290,
+      "cachedPromptTokens": 0,
+      "totalTokens": 762,
+      "usageComplete": true,
+      "chargedTokens": 762,
+      "durationMs": 3058,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 2001,
+        "serverElapsedMs": 5059,
+        "firstTextMs": 4969,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 2154,
+          "maxCallMs": 478,
+          "rowsRead": 4826,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-313039046",
+          "name": "门诊部",
+          "category": "service",
+          "zone": "living",
+          "location": [
+            113.390075,
+            23.06582195
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "大学城校区门诊部"
+          ],
+          "labelPlaceId": "osm-way-313039046",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-313039046",
+      "name": "门诊部",
+      "description": "门诊部位于大学城校区教学区，是校园医疗服务地点。\n开诊时间：​​\n周一至周五：8:30-12:00、14:00-17:10\n周六日及节假日：8:30-12:00、14:30-17:30\n其他时间为急诊，24小时有人值班，按铃就诊",
+      "photos": [
+        "/buildings/280f52f2496d93eb0dbda009.webp"
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "building": "B8学术报告厅",
+    "question": "B8学术报告厅现在又叫什么名字？在什么位置？",
+    "status": 200,
+    "elapsedMs": 12896,
+    "answer": "本鱼查过了，B8学术报告厅目前没有更名，还是叫B8学术报告厅（别名\"报告厅\"），位置坐标[113.3932707, 23.06863825]，属于教学区~ 🐟",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "model",
+      "buildingProfiles": [
+        "osm-way-651642991"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "open",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 1569,
+          "firstTextMs": null,
+          "finishReason": "tool_calls",
+          "contentChars": 0
+        },
+        {
+          "durationMs": 1591,
+          "firstTextMs": null,
+          "finishReason": "tool_calls",
+          "contentChars": 0
+        },
+        {
+          "durationMs": 5409,
+          "firstTextMs": 5193,
+          "finishReason": "stop",
+          "contentChars": 80
+        }
+      ],
+      "promptTokens": 4162,
+      "completionTokens": 1024,
+      "cachedPromptTokens": 0,
+      "totalTokens": 5186,
+      "usageComplete": true,
+      "chargedTokens": 5186,
+      "durationMs": 10574,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1559,
+        "serverElapsedMs": 12133,
+        "firstTextMs": 12091,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_places",
+            "durationMs": 0,
+            "ok": true
+          },
+          {
+            "name": "control_map",
+            "durationMs": 0,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 29,
+          "writeQueries": 13,
+          "calls": 34,
+          "failures": 0,
+          "durationMs": 2064,
+          "maxCallMs": 338,
+          "rowsRead": 4831,
+          "rowsWritten": 27,
+          "rowUsageStatements": 17,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-651642991",
+          "name": "B8学术报告厅",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.3932707,
+            23.06863825
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "报告厅"
+          ],
+          "labelPlaceId": "osm-way-651642991",
+          "verificationStatus": "owner_confirmed"
+        }
+      },
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-651642991",
+          "name": "B8学术报告厅",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.3932707,
+            23.06863825
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "报告厅"
+          ],
+          "labelPlaceId": "osm-way-651642991",
+          "verificationStatus": "owner_confirmed"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-651642991",
+      "name": "B8学术报告厅",
+      "description": "图书馆对面、实验楼旁边​​。现在官方改名叫\"语心报告厅\"了。\n场地情况：​​ 555个座位，有47平方米的LED大屏幕、电子会标屏、专业音响和舞台灯光，是南校最大的学术活动场地之一。经常办讲座、迎新晚会、音乐剧分享会、考研复试这些。",
+      "photos": [
+        "/buildings/5d0d4301ce0d50a8fc813b2b.webp",
+        "/api/public/building-image?id=11a5787a-926e-4415-bf52-0f8ada41ab45"
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "building": "B8学术报告厅",
+    "question": "B8学术报告厅有多少座位，配了哪些设备？",
+    "status": 200,
+    "elapsedMs": 5385,
+    "answer": "B8学术报告厅现在官方改名叫语心报告厅啦，有555个座位，配了47平方米的LED大屏幕、电子会标屏、专业音响和舞台灯光，是南校最大的学术活动场地之一哦🐟",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-651642991"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 3016,
+          "firstTextMs": 2831,
+          "finishReason": "stop",
+          "contentChars": 77
+        }
+      ],
+      "promptTokens": 682,
+      "completionTokens": 353,
+      "cachedPromptTokens": 0,
+      "totalTokens": 1035,
+      "usageComplete": true,
+      "chargedTokens": 1035,
+      "durationMs": 3105,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1523,
+        "serverElapsedMs": 4628,
+        "firstTextMs": 4591,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1612,
+          "maxCallMs": 311,
+          "rowsRead": 4830,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-651642991",
+          "name": "B8学术报告厅",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.3932707,
+            23.06863825
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "报告厅"
+          ],
+          "labelPlaceId": "osm-way-651642991",
+          "verificationStatus": "owner_confirmed"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-651642991",
+      "name": "B8学术报告厅",
+      "description": "图书馆对面、实验楼旁边​​。现在官方改名叫\"语心报告厅\"了。\n场地情况：​​ 555个座位，有47平方米的LED大屏幕、电子会标屏、专业音响和舞台灯光，是南校最大的学术活动场地之一。经常办讲座、迎新晚会、音乐剧分享会、考研复试这些。",
+      "photos": [
+        "/buildings/5d0d4301ce0d50a8fc813b2b.webp",
+        "/api/public/building-image?id=11a5787a-926e-4415-bf52-0f8ada41ab45"
+      ]
+    }
+  },
+  {
+    "id": 13,
+    "building": "体育馆（羽毛球场）",
+    "question": "体育馆室内羽毛球场有几个，学生打球多少钱一小时？",
+    "status": 200,
+    "elapsedMs": 4741,
+    "answer": "室内羽毛球场有10个场地哦，学生打球是20元一小时~ 🏸",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-1389756844"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2009,
+          "firstTextMs": 2009,
+          "finishReason": "stop",
+          "contentChars": 29
+        }
+      ],
+      "promptTokens": 601,
+      "completionTokens": 109,
+      "cachedPromptTokens": 0,
+      "totalTokens": 710,
+      "usageComplete": true,
+      "chargedTokens": 710,
+      "durationMs": 2120,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1666,
+        "serverElapsedMs": 3786,
+        "firstTextMs": 3741,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 26,
+          "writeQueries": 12,
+          "calls": 30,
+          "failures": 0,
+          "durationMs": 2317,
+          "maxCallMs": 273,
+          "rowsRead": 9294,
+          "rowsWritten": 25,
+          "rowUsageStatements": 19,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-1389756844",
+          "name": "体育馆（羽毛球场）",
+          "category": "sports_hall",
+          "zone": "teaching",
+          "location": [
+            113.39123445,
+            23.072108749999998
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "体育馆"
+          ],
+          "labelPlaceId": "osm-way-1389756844",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-1389756844",
+      "name": "体育馆（羽毛球场）",
+      "description": "🏟️ 馆内设施\n​​室内篮球场​​：1个，免费\n​​室内羽毛球馆​​：10个场地，学生20元/小时，门口有自动售卖机。\n​​室内乒乓球室​​：3个（体育馆内+图书馆负一层）\n​​舞蹈室​​：4个，体育舞蹈和艺术体操上课用\n​​跆拳道室​​、​​形体室​​：各1个",
+      "photos": [
+        "/buildings/b41ab2b137692f5fc0c59b4d.webp",
+        "/api/public/building-image?id=cf123f22-8045-4d17-b0ad-c49ef4627439",
+        "/api/public/building-image?id=2f0b70a5-059d-49eb-b50d-dcc4788ed6b4",
+        "/api/public/building-image?id=5c65a295-d973-4c46-ab61-fd57ec3ca096"
+      ]
+    }
+  },
+  {
+    "id": 14,
+    "building": "体育馆（羽毛球场）",
+    "question": "体育馆里有室内篮球场吗，要收费吗？",
+    "status": 200,
+    "elapsedMs": 4675,
+    "answer": "有的哦～根据现有资料，体育馆里有1个室内篮球场，是免费的🥳",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-1389756844"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 1874,
+          "firstTextMs": 1786,
+          "finishReason": "stop",
+          "contentChars": 30
+        }
+      ],
+      "promptTokens": 601,
+      "completionTokens": 106,
+      "cachedPromptTokens": 0,
+      "totalTokens": 707,
+      "usageComplete": true,
+      "chargedTokens": 707,
+      "durationMs": 1975,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1730,
+        "serverElapsedMs": 3705,
+        "firstTextMs": 3663,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 26,
+          "writeQueries": 12,
+          "calls": 30,
+          "failures": 0,
+          "durationMs": 2255,
+          "maxCallMs": 389,
+          "rowsRead": 9307,
+          "rowsWritten": 25,
+          "rowUsageStatements": 19,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-1389756844",
+          "name": "体育馆（羽毛球场）",
+          "category": "sports_hall",
+          "zone": "teaching",
+          "location": [
+            113.39123445,
+            23.072108749999998
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "体育馆"
+          ],
+          "labelPlaceId": "osm-way-1389756844",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-1389756844",
+      "name": "体育馆（羽毛球场）",
+      "description": "🏟️ 馆内设施\n​​室内篮球场​​：1个，免费\n​​室内羽毛球馆​​：10个场地，学生20元/小时，门口有自动售卖机。\n​​室内乒乓球室​​：3个（体育馆内+图书馆负一层）\n​​舞蹈室​​：4个，体育舞蹈和艺术体操上课用\n​​跆拳道室​​、​​形体室​​：各1个",
+      "photos": [
+        "/buildings/b41ab2b137692f5fc0c59b4d.webp",
+        "/api/public/building-image?id=cf123f22-8045-4d17-b0ad-c49ef4627439",
+        "/api/public/building-image?id=2f0b70a5-059d-49eb-b50d-dcc4788ed6b4",
+        "/api/public/building-image?id=5c65a295-d973-4c46-ab61-fd57ec3ca096"
+      ]
+    }
+  },
+  {
+    "id": 15,
+    "building": "假草场",
+    "question": "假草场晚上几点关闭，需要预约或买票吗？",
+    "status": 200,
+    "elapsedMs": 6748,
+    "answer": "假草场晚上24:00关闭，免费开放，不需要预约也不用买票哦～🏃",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-1389859437"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2442,
+          "firstTextMs": 2336,
+          "finishReason": "stop",
+          "contentChars": 32
+        }
+      ],
+      "promptTokens": 697,
+      "completionTokens": 209,
+      "cachedPromptTokens": 0,
+      "totalTokens": 906,
+      "usageComplete": true,
+      "chargedTokens": 906,
+      "durationMs": 2528,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 2279,
+        "serverElapsedMs": 4807,
+        "firstTextMs": 4772,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 2365,
+          "maxCallMs": 429,
+          "rowsRead": 4837,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-1389859437",
+          "name": "假草场",
+          "category": "football",
+          "zone": "teaching",
+          "location": [
+            113.38978230000001,
+            23.0686679
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "足球场",
+            "广外假草场",
+            "人工草场"
+          ],
+          "labelPlaceId": "osm-way-1389859437",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-1389859437",
+      "name": "假草场",
+      "description": "🏟️ 基本配置\n400米标准塑胶跑道 + 1个足球场\n几乎全天开放，​​晚上24:00关闭​​，灯光亮，是南校最适合夜跑的地方\n免费，不需要预约\n🏀 周边设施\n假草场周围一圈全是运动场地，跑完步还能顺便打打球：\n篮球场：13个，在假草场两边，免费，需自备球\n排球场：19个，篮球场旁边，有网隔开\n游泳池：假草场旁边\n网球场：游泳池旁，校内10元/小时，周六日 9:00-19:00 开放",
+      "photos": [
+        "/api/public/building-image?id=d5e93097-357c-49eb-acd4-44a9dd07d483"
+      ]
+    }
+  },
+  {
+    "id": 16,
+    "building": "游泳馆",
+    "question": "游泳馆周六开放吗？周日的开放时间和单次价格是什么？",
+    "status": 200,
+    "elapsedMs": 4607,
+    "answer": "周六不开放哦～周日的开放时间是16:30-18:00，单次游泳3元/次，别跑空啦😉",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-1389859438"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2184,
+          "firstTextMs": 2184,
+          "finishReason": "stop",
+          "contentChars": 42
+        }
+      ],
+      "promptTokens": 674,
+      "completionTokens": 176,
+      "cachedPromptTokens": 0,
+      "totalTokens": 850,
+      "usageComplete": true,
+      "chargedTokens": 850,
+      "durationMs": 2269,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1612,
+        "serverElapsedMs": 3881,
+        "firstTextMs": 3843,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1697,
+          "maxCallMs": 260,
+          "rowsRead": 4842,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-1389859438",
+          "name": "游泳馆",
+          "category": "swimming",
+          "zone": "teaching",
+          "location": [
+            113.39048134999999,
+            23.06980885
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "游泳场地"
+          ],
+          "labelPlaceId": "osm-way-1389859438",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-1389859438",
+      "name": "游泳馆",
+      "description": "🏊 基本信息\n位置：教学区，假草操场旁边\n水深：1.3-1.5m 左右\n泳道：50米\n价格：3元/次\n\n⏰ 学期开放时间\n周一至周五：17:10-18:40\n周日：16:30-18:00\n周六不开放，法定节假日不开放\n\n🪪 游泳证怎么办\n地点：体育馆场馆中心办公室 ​​138室​​\n时间：每周二、周四 9:00-12:00、14:00-17:00\n材料：小一寸照片 + 校园卡\n工本费：5元\n流程：签一份游泳健康承诺书",
+      "photos": [
+        "/api/public/building-image?id=79ea2f2f-3d70-47f4-817e-8fbfc46cb9b2",
+        "/api/public/building-image?id=777ed5b5-b95e-4904-896a-7c2d8a3377d4",
+        "/api/public/building-image?id=9d0f604a-9bd0-44e4-963f-d4a99ebc09f7",
+        "/api/public/building-image?id=05f8d53a-9e89-43b8-a596-f6fc89decc3e"
+      ]
+    }
+  },
+  {
+    "id": 17,
+    "building": "游泳馆",
+    "question": "游泳馆的游泳证在哪里办理，需要什么材料和费用？",
+    "status": 200,
+    "elapsedMs": 6788,
+    "answer": "",
+    "terminal": "run.failed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "model",
+      "buildingProfiles": [
+        "osm-way-1389859438"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "professional",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 2,
+      "correctionRetries": 1,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2345,
+          "firstTextMs": null,
+          "finishReason": "stop",
+          "contentChars": 266
+        },
+        {
+          "durationMs": 2217,
+          "firstTextMs": null,
+          "finishReason": "stop",
+          "contentChars": 266
+        }
+      ],
+      "promptTokens": 2714,
+      "completionTokens": 587,
+      "cachedPromptTokens": 0,
+      "totalTokens": 3301,
+      "usageComplete": true,
+      "chargedTokens": 3301,
+      "durationMs": 4645,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1373,
+        "serverElapsedMs": 6018,
+        "firstTextMs": null,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1456,
+          "maxCallMs": 176,
+          "rowsRead": 4844,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "error": {
+      "error": {
+        "code": "MODEL_TOOLS_UNSUPPORTED",
+        "message": "模型未执行必要的查询，请重试。"
+      },
+      "conversationId": "8e9e184a-ebc9-5c84-8237-f2cbd8e90668",
+      "metrics": {
+        "smartSearch": false,
+        "queryUnderstanding": {
+          "failed": false
+        },
+        "answerMode": "model",
+        "buildingProfiles": [
+          "osm-way-1389859438"
+        ],
+        "conversationAct": "campus",
+        "answerRequirement": "strict",
+        "modelFailureCode": null,
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "professional",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 2,
+        "correctionRetries": 1,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "softAcceptances": 0,
+        "groundingChecks": 0,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [],
+        "upstreamTimings": [
+          {
+            "durationMs": 2345,
+            "firstTextMs": null,
+            "finishReason": "stop",
+            "contentChars": 266
+          },
+          {
+            "durationMs": 2217,
+            "firstTextMs": null,
+            "finishReason": "stop",
+            "contentChars": 266
+          }
+        ],
+        "promptTokens": 2714,
+        "completionTokens": 587,
+        "cachedPromptTokens": 0,
+        "totalTokens": 3301,
+        "usageComplete": true,
+        "chargedTokens": 3301,
+        "durationMs": 4645,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 1373,
+          "serverElapsedMs": 6018,
+          "firstTextMs": null,
+          "mapActionMs": null,
+          "skills": [],
+          "database": {
+            "readQueries": 22,
+            "writeQueries": 12,
+            "calls": 26,
+            "failures": 0,
+            "durationMs": 1456,
+            "maxCallMs": 176,
+            "rowsRead": 4844,
+            "rowsWritten": 25,
+            "rowUsageStatements": 16,
+            "rowUsageComplete": false
+          },
+          "retrieval": [],
+          "externalSearch": []
+        }
+      }
+    },
+    "cards": [],
+    "truth": {
+      "id": "osm-way-1389859438",
+      "name": "游泳馆",
+      "description": "🏊 基本信息\n位置：教学区，假草操场旁边\n水深：1.3-1.5m 左右\n泳道：50米\n价格：3元/次\n\n⏰ 学期开放时间\n周一至周五：17:10-18:40\n周日：16:30-18:00\n周六不开放，法定节假日不开放\n\n🪪 游泳证怎么办\n地点：体育馆场馆中心办公室 ​​138室​​\n时间：每周二、周四 9:00-12:00、14:00-17:00\n材料：小一寸照片 + 校园卡\n工本费：5元\n流程：签一份游泳健康承诺书",
+      "photos": [
+        "/api/public/building-image?id=79ea2f2f-3d70-47f4-817e-8fbfc46cb9b2",
+        "/api/public/building-image?id=777ed5b5-b95e-4904-896a-7c2d8a3377d4",
+        "/api/public/building-image?id=9d0f604a-9bd0-44e4-963f-d4a99ebc09f7",
+        "/api/public/building-image?id=05f8d53a-9e89-43b8-a596-f6fc89decc3e"
+      ]
+    }
+  },
+  {
+    "id": 18,
+    "building": "艺术楼",
+    "question": "艺术楼也叫德馨楼吗，它是不是雅思笔试考场？",
+    "status": 200,
+    "elapsedMs": 4861,
+    "answer": "对呀，艺术楼的别名就是德馨楼，也是广外雅思纸笔笔试的固定考场，从东北门进去最近哦🐟",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-1389970391"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2693,
+          "firstTextMs": 2577,
+          "finishReason": "stop",
+          "contentChars": 42
+        }
+      ],
+      "promptTokens": 627,
+      "completionTokens": 243,
+      "cachedPromptTokens": 0,
+      "totalTokens": 870,
+      "usageComplete": true,
+      "chargedTokens": 870,
+      "durationMs": 2790,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1339,
+        "serverElapsedMs": 4129,
+        "firstTextMs": 4086,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1436,
+          "maxCallMs": 139,
+          "rowsRead": 4843,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-1389970391",
+          "name": "艺术楼",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.39281705,
+            23.0693811
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-way-1389970391",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-1389970391",
+      "name": "艺术楼",
+      "description": "🎵 楼内有什么\n​​琴房钥匙申领室​​：1楼大堂上楼左转第一间，艺术生练琴借琴房的据点。非艺术生也可以租琴房，带校园卡去就行。\n​​演艺厅​​：2楼走廊右侧黑色大门，艺术楼最大的演出场地。\n​​导员办公室​​：2楼走廊左侧。\n1楼大堂两侧有楼梯，还有电梯，上下楼挺方便。\n\n📝 日常用途\n​​雅思考点​​：艺术楼又叫\"德馨楼\"，是广外雅思纸笔笔试的固定考场，从东北门进最近。\n​​艺术学院上课​​：音乐、美术等艺术类课程在这里上。\n​​正门对着学校主大门​​，出正门就能看到校训石碑。",
+      "photos": [
+        "/buildings/fec39956154979b80044b66f.webp",
+        "/buildings/030715bd139abed59cda1ad4.webp",
+        "/buildings/72ac666e64d6dbc5502aa154.webp"
+      ]
+    }
+  },
+  {
+    "id": 19,
+    "building": "艺术楼",
+    "question": "艺术楼的琴房钥匙在哪里申领，非艺术生能租琴房吗？",
+    "status": 200,
+    "elapsedMs": 12121,
+    "answer": "关于琴房钥匙申领和非艺术生租琴房的具体政策，我这边没有查到详细的官方信息呢 😅\n\n这类涉及琴房使用权限和管理规定的问题，建议你直接联系**艺术楼的管理办公室**或者**学校的艺术教育中心**咨询，他们能给你最准确的答复~\n\n如果艺术楼有公告栏或者门卫室，也可以去那里问问看有没有相关的申领流程说明~",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "model",
+      "buildingProfiles": [
+        "osm-way-1389970391"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "open",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 4,
+      "correctionRetries": 1,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 1691,
+          "firstTextMs": null,
+          "finishReason": "stop",
+          "contentChars": 65
+        },
+        {
+          "durationMs": 2253,
+          "firstTextMs": null,
+          "finishReason": "tool_calls",
+          "contentChars": 0
+        },
+        {
+          "durationMs": 1473,
+          "firstTextMs": null,
+          "finishReason": "tool_calls",
+          "contentChars": 0
+        },
+        {
+          "durationMs": 2512,
+          "firstTextMs": 1927,
+          "finishReason": "stop",
+          "contentChars": 150
+        }
+      ],
+      "promptTokens": 5405,
+      "completionTokens": 819,
+      "cachedPromptTokens": 0,
+      "totalTokens": 6224,
+      "usageComplete": true,
+      "chargedTokens": 6224,
+      "durationMs": 9146,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 2063,
+        "serverElapsedMs": 11209,
+        "firstTextMs": 11170,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_places",
+            "durationMs": 0,
+            "ok": true
+          },
+          {
+            "name": "control_map",
+            "durationMs": 0,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 29,
+          "writeQueries": 13,
+          "calls": 34,
+          "failures": 0,
+          "durationMs": 2530,
+          "maxCallMs": 448,
+          "rowsRead": 4848,
+          "rowsWritten": 27,
+          "rowUsageStatements": 17,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-1389970391",
+          "name": "艺术楼",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.39281705,
+            23.0693811
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-way-1389970391",
+          "verificationStatus": "source_mapped"
+        }
+      },
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-1389970391",
+          "name": "艺术楼",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.39281705,
+            23.0693811
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-way-1389970391",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-1389970391",
+      "name": "艺术楼",
+      "description": "🎵 楼内有什么\n​​琴房钥匙申领室​​：1楼大堂上楼左转第一间，艺术生练琴借琴房的据点。非艺术生也可以租琴房，带校园卡去就行。\n​​演艺厅​​：2楼走廊右侧黑色大门，艺术楼最大的演出场地。\n​​导员办公室​​：2楼走廊左侧。\n1楼大堂两侧有楼梯，还有电梯，上下楼挺方便。\n\n📝 日常用途\n​​雅思考点​​：艺术楼又叫\"德馨楼\"，是广外雅思纸笔笔试的固定考场，从东北门进最近。\n​​艺术学院上课​​：音乐、美术等艺术类课程在这里上。\n​​正门对着学校主大门​​，出正门就能看到校训石碑。",
+      "photos": [
+        "/buildings/fec39956154979b80044b66f.webp",
+        "/buildings/030715bd139abed59cda1ad4.webp",
+        "/buildings/72ac666e64d6dbc5502aa154.webp"
+      ]
+    }
+  },
+  {
+    "id": 20,
+    "building": "又康超市",
+    "question": "又康超市学期中和暑假的营业时间分别是什么？",
+    "status": 200,
+    "elapsedMs": 4828,
+    "answer": "学期中营业时间是早8:00 - 晚11:30，暑假营业时间是12:00 - 21:00哦~",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-node-12959101438"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 1440,
+          "firstTextMs": 1320,
+          "finishReason": "stop",
+          "contentChars": 45
+        }
+      ],
+      "promptTokens": 635,
+      "completionTokens": 87,
+      "cachedPromptTokens": 0,
+      "totalTokens": 722,
+      "usageComplete": true,
+      "chargedTokens": 722,
+      "durationMs": 1521,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 2495,
+        "serverElapsedMs": 4016,
+        "firstTextMs": 3976,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 2576,
+          "maxCallMs": 550,
+          "rowsRead": 4847,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-node-12959101438",
+          "name": "又康超市",
+          "category": "service",
+          "zone": "living",
+          "location": [
+            113.3909551,
+            23.0621667
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "又康",
+            "超市",
+            "便利店",
+            "小卖部",
+            "又康超市"
+          ],
+          "labelPlaceId": "osm-node-12959101438",
+          "verificationStatus": "owner_confirmed"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-node-12959101438",
+      "name": "又康超市",
+      "description": "广外南校生活区最大的超市，在学生活动中心一楼，校内同学日常买零食日用品基本都靠它。\n🕐 营业时间\n学期中：早 8:00 - 晚 11:30。暑假会缩短到 12:00 - 21:00。\n🛒 能买啥\n常规超市该有的都有：零食、饮料、日用品、应急小物件\n门口有水果摊和蔬菜\n右侧能打包日式盖浇饭，不想去食堂的时候能救急\n每天下午 3 点出炉下午茶：烤肠 3.5 元/条（10 元 3 条）、蛋挞 4 元 2 个（9.9 元 6 个）、烤红薯 9.9 元/个、炒栗子 9.9 元",
+      "photos": [
+        "/api/public/building-image?id=280fb46e-1f5a-435c-98e8-2ce900055df2",
+        "/api/public/building-image?id=f3c17ec5-e0dd-4a4f-a707-61abf63c2f0b"
+      ]
+    }
+  },
+  {
+    "id": 21,
+    "building": "学生活动中心",
+    "question": "学生活动中心里的云健健身房几点营业？还有一个主训练馆在哪里？",
+    "status": 200,
+    "elapsedMs": 5456,
+    "answer": "抱歉呀，目前没有查到云健健身房的营业时间和主训练馆的具体位置信息哦，你可以留意下学生活动中心里的公示牌或者官方通知，应该会有相关说明哒～🐟",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "model",
+      "buildingProfiles": [
+        "osm-way-313039010"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2967,
+          "firstTextMs": 2785,
+          "finishReason": "stop",
+          "contentChars": 70
+        }
+      ],
+      "promptTokens": 370,
+      "completionTokens": 290,
+      "cachedPromptTokens": 0,
+      "totalTokens": 660,
+      "usageComplete": true,
+      "chargedTokens": 660,
+      "durationMs": 3056,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1521,
+        "serverElapsedMs": 4577,
+        "firstTextMs": 4535,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1610,
+          "maxCallMs": 159,
+          "rowsRead": 4849,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-313039010",
+          "name": "学生活动中心",
+          "category": "building",
+          "zone": "living",
+          "location": [
+            113.39074775,
+            23.06231735
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-way-313039010",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-313039010",
+      "name": "学生活动中心",
+      "description": "广外南校生活区的核心多功能建筑，一楼到二楼承载了超市、健身房、招聘会、社团办公等一大堆功能。旁边就是又康超市和快递驿站。\n\n🏢一楼\n​​又康超市​​：生活区唯一的校内超市，日常买零食日用品全靠它。\n​​云健健身房（综合训练馆）​​：2026 年 9 月新开的，南校唯一校内健身房，有储物柜、更衣室、淋浴间。营业时间 10:00-22:30。另一个主训练馆在北苑四栋架空层。\n旁边就是快递驿站，取快递很方便。\n\n🎤 二楼\n​​多功能报告厅​​，是南校最频繁使用的小型活动场地：\n校园招聘会（春秋招、暑招会都在这办，一次能放 60 家企业）\n企业宣讲会\n学院迎新晚会\n各种社团活动",
+      "photos": [
+        "/buildings/4eaa610d9c2598335c035185.webp",
+        "/buildings/1338df7744f2537ff9605e0d.webp",
+        "/buildings/baf125875df13c217984d321.webp",
+        "/api/public/building-image?id=21f00e89-45ff-4e00-b85e-250b0cbcedff"
+      ]
+    }
+  },
+  {
+    "id": 22,
+    "building": "友苑",
+    "question": "友苑A栋和B栋主要住哪些人？",
+    "status": 200,
+    "elapsedMs": 5392,
+    "answer": "友苑A栋主要住教职工和博士生🐟，B栋住留学生、雅思培训学员、专插本学生和硕士研究生～",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-313039031",
+        "osm-node-3125808975",
+        "osm-node-3125808984"
+      ],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2280,
+          "firstTextMs": 2149,
+          "finishReason": "stop",
+          "contentChars": 43
+        }
+      ],
+      "promptTokens": 782,
+      "completionTokens": 149,
+      "cachedPromptTokens": 0,
+      "totalTokens": 931,
+      "usageComplete": true,
+      "chargedTokens": 931,
+      "durationMs": 2386,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 2001,
+        "serverElapsedMs": 4387,
+        "firstTextMs": 4344,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 30,
+          "writeQueries": 12,
+          "calls": 34,
+          "failures": 0,
+          "durationMs": 3505,
+          "maxCallMs": 520,
+          "rowsRead": 13772,
+          "rowsWritten": 25,
+          "rowUsageStatements": 22,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-313039031",
+          "name": "友苑",
+          "category": "dormitory",
+          "zone": "living",
+          "location": [
+            113.39260254999999,
+            23.0619911
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-way-313039031",
+          "verificationStatus": "source_mapped"
+        }
+      },
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-node-3125808975",
+          "name": "实验楼A栋",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.3950759,
+            23.0667826
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "A栋",
+            "实验楼A"
+          ],
+          "labelPlaceId": "osm-node-3125808975",
+          "verificationStatus": "source_mapped"
+        }
+      },
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-node-3125808984",
+          "name": "实验楼B栋",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.3949862,
+            23.0671247
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "B栋",
+            "实验楼B"
+          ],
+          "labelPlaceId": "osm-node-3125808984",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-313039031",
+      "name": "友苑",
+      "description": "📍 位置与构成\n友苑分 A、B 两栋，在南校生活区里，离教学区、一二饭堂、贝岗门、快递点和超市都不远。\n​​友苑A栋​​：教职工和博士生为主\n​​友苑B栋​​：曾经是对外招待所，现在住留学生、雅思培训、专插本学生和硕士研究生",
+      "photos": [
+        "/api/public/building-image?id=7634e94f-a7dc-4ea1-bbfe-2f5cb23a95ba"
+      ]
+    }
+  },
+  {
+    "id": 23,
+    "building": "文采园（一饭）",
+    "question": "文采园一饭几点营业到几点，三楼也是饭堂吗？",
+    "status": 200,
+    "elapsedMs": 9232,
+    "answer": "根据已验证的校园资料：\n\n**文采园（一饭）营业时间：09:00-22:30**\n\n三楼**不是饭堂**，是健身房，吃完可以直接去锻炼。",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "model",
+      "buildingProfiles": [
+        "osm-way-313039048"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "open",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 1,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 1666,
+          "firstTextMs": null,
+          "finishReason": "stop",
+          "contentChars": 57
+        },
+        {
+          "durationMs": 1151,
+          "firstTextMs": null,
+          "finishReason": "tool_calls",
+          "contentChars": 0
+        },
+        {
+          "durationMs": 2831,
+          "firstTextMs": null,
+          "finishReason": "stop",
+          "contentChars": 68
+        }
+      ],
+      "promptTokens": 8290,
+      "completionTokens": 359,
+      "cachedPromptTokens": 0,
+      "totalTokens": 8649,
+      "usageComplete": true,
+      "chargedTokens": 8649,
+      "durationMs": 5859,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1562,
+        "serverElapsedMs": 7421,
+        "firstTextMs": 7380,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_places",
+            "durationMs": 0,
+            "ok": false
+          }
+        ],
+        "database": {
+          "readQueries": 25,
+          "writeQueries": 12,
+          "calls": 29,
+          "failures": 0,
+          "durationMs": 1773,
+          "maxCallMs": 245,
+          "rowsRead": 4854,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-313039048",
+          "name": "文采园（一饭）",
+          "category": "canteen",
+          "zone": "living",
+          "location": [
+            113.39131745,
+            23.064490550000002
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "文采园",
+            "一饭",
+            "一饭堂",
+            "第一饭堂",
+            "第一食堂",
+            "一食堂"
+          ],
+          "labelPlaceId": "osm-way-313039048",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-313039048",
+      "name": "文采园（一饭）",
+      "description": "📍 位置和营业时间\n1 号门旁边，北苑 2 栋对面，住北苑的同学走几步就到。\n营业时间 09:00-22:30，三个饭堂里开得最久，夜宵友好。\n\n🍚 一楼——全能型，日常干饭首选\n自选窗口种类多，还有糖水铺、金早绿点、五谷渔粉、烧腊、笼仔蒸饭、自选小火锅。早餐是三个饭堂里最全的（粥、包子、粉面都有）。人均 8-12 元，一荤一素常低于 10 块。\n笼仔蒸饭值得一提——荷叶蒸笼饭，颜值在食堂里很能打，黄焖鸡和香菇鸡评价不错，鸡肉嫩不柴。\n\n🔥 二楼——特色档口，口碑最好的一层\n麻辣香锅、烧腊、瓦罐汤、肠粉、蛋包饭、意面、冬阴功、石锅饭、烤肉饭……现点现做，选择超多。\n\n⭐ 必吃推荐\n​​泰岛蛋​​：广外食堂公认天花板级别\n​​鸭血粉丝汤​​：开了很多年，毕业三年的人回来看还在\n​​土豆泥牛肉饭​​：2025 年新开的档口，辣椒炒肉 13 元、辣子鸡 14 元，可以双拼 16 元\n\n💡 几个实用 tips\n三楼不是饭堂，是健身房，吃完直接去练也行。\n中午 11:30 后人最多，建议错峰。\n支持校园卡 + 微信支付宝，校外访客也能手机付款。\n社团、部门约饭聚会首选地，座位多。",
+      "photos": [
+        "/buildings/e49725d537db800aa9b055e5.webp",
+        "/buildings/bd849925339c8864bd97c056.webp"
+      ]
+    }
+  },
+  {
+    "id": 24,
+    "building": "风采园（三饭）",
+    "question": "风采园三饭三楼能自己做饭吗，需要提前预约吗？",
+    "status": 200,
+    "elapsedMs": 5161,
+    "answer": "当然可以呀～三饭三楼是DIY厨房，电磁炉、调料这些厨具都能租借，自己做饭完全没问题🥳 要是办班级社团聚餐的话提前预约就行啦。",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-313039057"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 2938,
+          "firstTextMs": 2765,
+          "finishReason": "stop",
+          "contentChars": 63
+        }
+      ],
+      "promptTokens": 950,
+      "completionTokens": 270,
+      "cachedPromptTokens": 0,
+      "totalTokens": 1220,
+      "usageComplete": true,
+      "chargedTokens": 1220,
+      "durationMs": 3067,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1372,
+        "serverElapsedMs": 4439,
+        "firstTextMs": 4361,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1501,
+          "maxCallMs": 140,
+          "rowsRead": 4856,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-313039057",
+          "name": "风采园（三饭）",
+          "category": "canteen",
+          "zone": "living",
+          "location": [
+            113.38962265,
+            23.060230500000003
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "风采园",
+            "三饭",
+            "三饭堂",
+            "第三饭堂",
+            "第三食堂",
+            "三食堂"
+          ],
+          "labelPlaceId": "osm-way-313039057",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-313039057",
+      "name": "风采园（三饭）",
+      "description": "风采园（三饭）是南校三个食堂里位置最偏但性价比最高的，住南苑的同学日常首选，分量大、人少不用排队。\n\n📍 位置\n生活区最南边，南苑 8 栋旁边，3 号门（内环路/贝岗门）旁，靠近南苑 7-13 栋。离教学区最远，但住南苑走几步就到。\n\n⏰ 营业时间\n早餐：7:00-9:00\n午餐：一楼 11:00-13:30，二楼 10:40-13:30\n晚餐：一楼 17:00-19:00，二楼 16:30-19:30\n二楼开得比一楼早、收得比一楼晚，想吃早午餐或晚归吃个饭可以直奔二楼。\n\n🍚 一楼——大众窗口 + 面食\n普通自选菜、烧腊、手擀面，家常粤菜为主，烧鸭腿等正餐价格超实惠。还有一间面食档口。一楼有奶茶店（桃园三章/库迪）。\n\n🔥 二楼——南苑同学固定食堂\n​​清真食堂​​：新疆大盘鸡，西北同学专属\n​​麻辣香锅​​：性价比比一饭还高，辣度可选，加泡面和年糕很搭\n​​螺蛳粉、兰州拉面​​、自选饺子、水煮鱼/水煮肉片\n大圆台自助、烤盘饭：菜量足肉给得多，人少安静\n二楼也有奶茶店（益禾堂）。\n\n🍳 三楼——DIY 厨房\n可以租借厨具自己做饭，电磁炉、调料齐全，班级社团聚餐直接在这办，提前预约就行。偶尔还办厨艺大赛。\n\n💡 几个实用点\n人均 10 元左右，分量大、很实在。\n男生多、人相对少、不用排长队。\n支持校园卡 + 微信支付宝，校外访客也能手机付款。\n和一饭对比：一饭品类最多但饭点挤，三饭胜在安静 + 量大 + 便宜。\n位置偏是最大缺点——住北苑的同学走过去要穿整个生活区。",
+      "photos": [
+        "/buildings/23b8f9da4c9ba2f2aa97e3b0.webp",
+        "/buildings/d304371c34efee8c66609c63.webp",
+        "/buildings/eb7bd61537d0aa2566f170b5.webp"
+      ]
+    }
+  },
+  {
+    "id": 25,
+    "building": "博雅园（二饭）",
+    "question": "请根据现有建筑简介介绍博雅园二饭的楼层和特色。",
+    "status": 200,
+    "elapsedMs": 9406,
+    "answer": "来啦来啦，博雅园二饭的楼层和特色给你捋得明明白白👇\n📍先指个路：在北苑3、4栋对面、下沉广场右侧，从教学区走隧道上来就到，住北苑3-6栋和友苑的同学跑这儿吃饭最近~\n\n楼层&特色：\n1️⃣ 一楼是大众窗口+个体档，走自动配餐不用等阿姨打菜，口味偏清淡干净，可选潮汕粉、馄饨、饭团、轻食减脂餐、炸鸡、糖水、鸭血粉丝汤、饺子这些。\n2️⃣ 二楼是升级小炒套餐，有石锅拌饭、铁板烧、酸菜鱼、湛江鸡、汉堡、麻辣拌/焖面、烧腊，价格稍贵但好吃量足，他家的广式烧腊是TOP推荐，肉质嫩分量足酱汁特别下饭，蜜汁叉烧必点！\n\n另外烘焙区会开到21:30，晚9点半后还能打八折哦~",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-313039061"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 6284,
+          "firstTextMs": 5220,
+          "finishReason": "stop",
+          "contentChars": 283
+        }
+      ],
+      "promptTokens": 673,
+      "completionTokens": 822,
+      "cachedPromptTokens": 0,
+      "totalTokens": 1495,
+      "usageComplete": true,
+      "chargedTokens": 1495,
+      "durationMs": 6372,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1562,
+        "serverElapsedMs": 7934,
+        "firstTextMs": 7899,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1650,
+          "maxCallMs": 267,
+          "rowsRead": 4858,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-313039061",
+          "name": "博雅园（二饭）",
+          "category": "canteen",
+          "zone": "living",
+          "location": [
+            113.39209575000001,
+            23.063546799999997
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "博雅园",
+            "二饭",
+            "二饭堂",
+            "第二饭堂",
+            "第二食堂",
+            "二食堂"
+          ],
+          "labelPlaceId": "osm-way-313039061",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-313039061",
+      "name": "博雅园（二饭）",
+      "description": "📍 位置和营业时间\n北苑 3、4 栋对面，下沉广场右侧，从教学区走隧道上来就是。住北苑 3-6 栋和友苑的同学最近。\n早餐 7:00-9:00\n午餐 11:00-13:00\n晚餐 17:00-19:00\n烘焙区开到 21:30，晚 9 点半后打八折\n\n🍽️ 一楼——大众窗口 + 个体档\n自动配餐不用等阿姨打菜，口味偏清淡干净。有潮汕粉、馄饨、饭团、轻食减脂餐、炸鸡、糖水、鸭血粉丝汤、饺子。\n🔥 二楼——升级小炒套餐\n石锅拌饭、铁板烧、酸菜鱼、湛江鸡、汉堡、麻辣拌/焖面、烧腊，价格稍贵但好吃量足。\n​​广式烧腊​​是二饭二楼的 TOP 推荐：肉质嫩、分量足、酱汁特别下饭，蜜汁叉烧必点。",
+      "photos": [
+        "/buildings/004acc21560766704961ce04.webp",
+        "/api/public/building-image?id=494d2113-503c-4028-9808-ec6aa07096b5"
+      ]
+    }
+  },
+  {
+    "id": 26,
+    "building": "学术交流中心",
+    "question": "学术交流中心最近两周以来举办过哪些讲座？请给出日期和活动名称。",
+    "status": 200,
+    "elapsedMs": 8245,
+    "answer": "🐟 目前收录到的学术交流中心近两周已举办的讲座只有1场哦：\n📅 2026年11月11日\n🎤 职引未来，逐梦启航——公管学院举办求职技能系列讲座\n如果还有其他讲座的话当前资料还没收录到啦～",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-relation-4105910"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 5089,
+          "firstTextMs": 4853,
+          "finishReason": "stop",
+          "contentChars": 96
+        }
+      ],
+      "promptTokens": 995,
+      "completionTokens": 552,
+      "cachedPromptTokens": 0,
+      "totalTokens": 1547,
+      "usageComplete": true,
+      "chargedTokens": 1547,
+      "durationMs": 5178,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1465,
+        "serverElapsedMs": 6643,
+        "firstTextMs": 6602,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1554,
+          "maxCallMs": 164,
+          "rowsRead": 4860,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-relation-4105910",
+          "name": "学术交流中心",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.3942945,
+            23.0637285
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-relation-4105910",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-relation-4105910",
+      "name": "学术交流中心",
+      "description": "南校教学区东南角的一栋楼，学生宿舍 + 食堂​​，主要住研究生。\n\n📍 位置\n靠近东南门/东门，进门上个坡就到。距离教学楼、院系楼和校办公楼比较近，但离生活区（食堂、超市、快递）很远\n🍽️ 一楼食堂——南校\"第四饭\"\n之前主要服务老师，现在学生也能吃了，算是南校的隐藏食堂。\n自选称重，刷校园卡自动扣费，夹完菜直接走不用排队结账\n人均 10-15 元，饭和汤免费续\n菜品有凉拌牛肉、辣子鸡、炸鸡腿、咕噜肉、椒盐虾等，品种还行但菜单很少换\n​​周末不开​​，只工作日营业\n支持校园卡和微信支付\n🛏️ 宿舍情况\n原酒店改造，房型随机分配，主要四人间，也有三人间和八人间\n上下铺为主（不是上床下桌），个人空间偏小\n有电梯、24h 热水不断电\n一楼四排免费洗衣机 + 两台烘干机 + 阳光房晾衣\n床板实际偏小，买床帘要配伸缩架子，下铺高度最多 105cm 左右",
+      "photos": [
+        "/api/public/building-image?id=07b323b6-25b6-4a0f-b520-acd9e0f00f9d",
+        "/api/public/building-image?id=6ee3af1e-e9b2-4e55-8be0-556f221c9f7a",
+        "/api/public/building-image?id=2f2b22d1-0b46-4522-8fa6-e9e3d10a8c3a",
+        "/api/public/building-image?id=2b95fecd-85d5-4712-90f2-54f0ab46870c",
+        "/api/public/building-image?id=4c137675-bea5-4cd7-b63e-dd1585894da8"
+      ],
+      "events": {
+        "items": [
+          {
+            "eventId": "event-aff23ea7e56c70052cf48c5eba001fd87ed98ce7",
+            "activity": {
+              "key": "activity-1",
+              "title": "职引未来，逐梦启航——公管学院举办求职技能系列讲座",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "2026年11月11日",
+                "date": "2026-11-11",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": {
+                  "field": "body",
+                  "startOffset": 0,
+                  "endOffset": 11,
+                  "text": "2026年11月11日",
+                  "role": "event_time"
+                }
+              },
+              "endsAt": null,
+              "placeRaw": "学术交流中心 MPA 第一会议室",
+              "organizer": null,
+              "registrationStatus": "unknown",
+              "registrationWindows": [],
+              "registrationUrl": null,
+              "otherDeadlines": [],
+              "status": "unknown",
+              "evidence": [
+                {
+                  "field": "body",
+                  "startOffset": 0,
+                  "endOffset": 56,
+                  "text": "2026年11月11日19时，公管学院 “职引未来” 求职技能系列讲座于学术交流中心 MPA 第一会议室顺利开讲",
+                  "role": "event_time"
+                },
+                {
+                  "field": "body",
+                  "startOffset": 36,
+                  "endOffset": 52,
+                  "text": "学术交流中心 MPA 第一会议室",
+                  "role": "place"
+                }
+              ],
+              "issues": [],
+              "calendar": {
+                "eligible": true,
+                "reason": "dated_event",
+                "nature": "held",
+                "campus": "unknown",
+                "candidateDates": [
+                  "2026-11-11"
+                ],
+                "origins": [],
+                "usesBody": true
+              }
+            },
+            "sources": [
+              {
+                "documentId": "wx-8cebc4772f64ea9545a1609d5fbec742a5e69a40",
+                "version": 1,
+                "title": "职引未来，逐梦启航——公管学院举办求职技能系列讲座",
+                "originalUrl": "https://mp.weixin.qq.com/s/GqB3Aw928sV3lKUDymOqdA",
+                "publishedAt": "2026-11-14T12:19:08.000Z",
+                "source": {
+                  "id": "GDUFS-SRC-0178",
+                  "name": "广外公管学院"
+                },
+                "bodyAvailable": true,
+                "contentRevision": 1,
+                "inputHash": "a5f519abd29dfbfa4d16b9f239286499a4fa2245337fcefa0204e529ac75d71a",
+                "classificationState": "radar",
+                "radarCategory": "lecture",
+                "knowledgeCategory": null
+              }
+            ],
+            "registrationState": "unknown",
+            "historical": true,
+            "mapPlace": {
+              "placeId": "osm-relation-4105910",
+              "name": "学术交流中心",
+              "precision": "building"
+            },
+            "calendarUrl": "/calendar?date=2026-11-11&event=event-aff23ea7e56c70052cf48c5eba001fd87ed98ce7",
+            "dates": [
+              "2026-11-11"
+            ]
+          }
+        ],
+        "after": "2026-11-01",
+        "before": "9999-12-31",
+        "day": null,
+        "dailyCounts": {},
+        "nextEventDay": null,
+        "total": 1,
+        "hasMore": false,
+        "nextCursor": null,
+        "occurrences": [
+          {
+            "eventId": "event-aff23ea7e56c70052cf48c5eba001fd87ed98ce7",
+            "date": "2026-11-11",
+            "startTime": null,
+            "endTime": null
+          }
+        ],
+        "limit": 50,
+        "now": "2026-11-14T18:41:43.759Z",
+        "timeZone": "Asia/Shanghai",
+        "modelCalls": 0,
+        "metrics": {
+          "rowsRead": 4459,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 183,
+          "usageAvailable": true
+        }
+      }
+    }
+  },
+  {
+    "id": 27,
+    "building": "院系办公楼",
+    "question": "院系办公楼最近两周以来有哪些金融论坛活动，地点是什么？",
+    "status": 200,
+    "elapsedMs": 9367,
+    "answer": "目前院系办公楼的公开活动资料里只捞到1场金融论坛活动哦🐟：\n👉 广外金融论坛第138讲\n时间：2026年11月14日15:00（北京时间）\n地点：大学城校区院系楼401会议室\n要是想查更多相关活动可以戳对应日历链接翻翻看呀～",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-307437431"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 5690,
+          "firstTextMs": 5431,
+          "finishReason": "stop",
+          "contentChars": 114
+        }
+      ],
+      "promptTokens": 1241,
+      "completionTokens": 666,
+      "cachedPromptTokens": 0,
+      "totalTokens": 1907,
+      "usageComplete": true,
+      "chargedTokens": 1907,
+      "durationMs": 5870,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1647,
+        "serverElapsedMs": 7517,
+        "firstTextMs": 7478,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1827,
+          "maxCallMs": 297,
+          "rowsRead": 4862,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307437431",
+          "name": "院系办公楼",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.39555615,
+            23.065696799999998
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-way-307437431",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-307437431",
+      "name": "院系办公楼",
+      "description": "院系办公楼是南校教学区的一栋行政建筑，集中了六个学院的教务办公室、辅导员办公室和资助办公室。日常找辅导员、办资助手续基本都来这。\n\n📍 位置\n在教学区偏北的后山区域，紧挨着校办公楼和八角楼。从校名石门（面向广外东路那个门）进来，院系办公楼就在右手边不远处。\n\n🏢 入驻学院\n这栋楼集中了六个学院：\n经济贸易学院\n商学院\n会计学院\n金融学院\n英语教育学院\n数学与统计学院\n除了学院办公室，辅导员办公室和资助办公室也在这里。\n\n🗺️ 其他学院办公室在哪\n不是所有学院都挤在院系楼，还有几个分散在教学楼里：\n​​B 栋​​：新闻与传播学院\n​​D 栋​​：法学院、国际关系学院、社会与公共管理学院\n​​实验楼​​：信息科学与技术学院\n​​艺术楼​​：艺术学院",
+      "photos": [
+        "/buildings/6fe5e14f139bff375f47f906.webp",
+        "/buildings/163c0d2fa54e9f3826cdfec4.webp"
+      ],
+      "events": {
+        "items": [
+          {
+            "eventId": "event-263193b789c9c3ec98a0161f91ae920942d17cd5",
+            "activity": {
+              "key": "activity-1",
+              "title": "商学院举办高层次社会科学基金项目申报经验交流会",
+              "kind": "event",
+              "category": "academic_research",
+              "startsAt": {
+                "raw": "11月5日",
+                "date": "2026-11-05",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": {
+                  "field": "body",
+                  "startOffset": 0,
+                  "endOffset": 5,
+                  "text": "11月5日",
+                  "role": "event_time"
+                }
+              },
+              "endsAt": null,
+              "placeRaw": "大学城校区院系楼360会议室",
+              "organizer": null,
+              "registrationStatus": "unknown",
+              "registrationWindows": [],
+              "registrationUrl": null,
+              "otherDeadlines": [],
+              "status": "unknown",
+              "evidence": [
+                {
+                  "field": "body",
+                  "startOffset": 0,
+                  "endOffset": 46,
+                  "text": "11月5日下午，商学院在大学城校区院系楼360会议室举办高层次社会科学基金项目申报经验交流会",
+                  "role": "event_time"
+                },
+                {
+                  "field": "body",
+                  "startOffset": 12,
+                  "endOffset": 26,
+                  "text": "大学城校区院系楼360会议室",
+                  "role": "place"
+                }
+              ],
+              "issues": [],
+              "calendar": {
+                "eligible": true,
+                "reason": "dated_event",
+                "nature": "announcement",
+                "campus": "university_town",
+                "candidateDates": [
+                  "2026-11-05"
+                ],
+                "origins": [],
+                "usesBody": true
+              }
+            },
+            "sources": [
+              {
+                "documentId": "content-3aec0b34-d287-4135-8256-7518998c6273",
+                "version": 2,
+                "title": "商学院举办高层次社会科学基金项目申报经验交流会",
+                "originalUrl": "https://bs.gdufs.edu.cn/info/1134/10706.htm",
+                "publishedAt": "2026-11-12",
+                "source": {
+                  "id": "GDUFS-SRC-0007",
+                  "name": "商学院"
+                },
+                "bodyAvailable": true,
+                "contentRevision": 1,
+                "inputHash": "8c8fc5a982a97df775bc6316b141a1184ea70c99fad733d4d184804d2eea481a",
+                "classificationState": "radar",
+                "radarCategory": "academic_research",
+                "knowledgeCategory": null
+              }
+            ],
+            "registrationState": "unknown",
+            "historical": true,
+            "mapPlace": {
+              "placeId": "osm-way-307437431",
+              "name": "院系办公楼",
+              "precision": "building"
+            },
+            "calendarUrl": "/calendar?date=2026-11-05&event=event-263193b789c9c3ec98a0161f91ae920942d17cd5",
+            "dates": [
+              "2026-11-05"
+            ]
+          },
+          {
+            "eventId": "event-263193b789c9c3ec98a0161f91ae920942d17cd5",
+            "activity": {
+              "key": "activity-1",
+              "title": "商学院举办高层次社会科学基金项目申报经验交流会",
+              "kind": "event",
+              "category": "academic_research",
+              "startsAt": {
+                "raw": "11月5日",
+                "date": "2026-11-05",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": {
+                  "field": "body",
+                  "startOffset": 0,
+                  "endOffset": 5,
+                  "text": "11月5日",
+                  "role": "event_time"
+                }
+              },
+              "endsAt": null,
+              "placeRaw": "大学城校区院系楼360会议室",
+              "organizer": null,
+              "registrationStatus": "unknown",
+              "registrationWindows": [],
+              "registrationUrl": null,
+              "otherDeadlines": [],
+              "status": "unknown",
+              "evidence": [
+                {
+                  "field": "body",
+                  "startOffset": 0,
+                  "endOffset": 46,
+                  "text": "11月5日下午，商学院在大学城校区院系楼360会议室举办高层次社会科学基金项目申报经验交流会",
+                  "role": "event_time"
+                },
+                {
+                  "field": "body",
+                  "startOffset": 12,
+                  "endOffset": 26,
+                  "text": "大学城校区院系楼360会议室",
+                  "role": "place"
+                }
+              ],
+              "issues": [],
+              "calendar": {
+                "eligible": true,
+                "reason": "dated_event",
+                "nature": "announcement",
+                "campus": "university_town",
+                "candidateDates": [
+                  "2026-11-05"
+                ],
+                "origins": [],
+                "usesBody": true
+              }
+            },
+            "sources": [
+              {
+                "documentId": "content-dbc8ccba-ba43-43d1-90b9-c31d745ab9da",
+                "version": 2,
+                "title": "商学院举办高层次社会科学基金项目申报经验交流会",
+                "originalUrl": "https://bs.gdufs.edu.cn/info/1124/10666.htm",
+                "publishedAt": "2026-11-12",
+                "source": {
+                  "id": "GDUFS-SRC-0007",
+                  "name": "商学院"
+                },
+                "bodyAvailable": true,
+                "contentRevision": 1,
+                "inputHash": "23b3972f2160de85fd800d79079348702cd9d17d6798fc7d23f8e1512b13d2f2",
+                "classificationState": "radar",
+                "radarCategory": "academic_research",
+                "knowledgeCategory": null
+              }
+            ],
+            "registrationState": "unknown",
+            "historical": true,
+            "mapPlace": {
+              "placeId": "osm-way-307437431",
+              "name": "院系办公楼",
+              "precision": "building"
+            },
+            "calendarUrl": "/calendar?date=2026-11-05&event=event-263193b789c9c3ec98a0161f91ae920942d17cd5",
+            "dates": [
+              "2026-11-05"
+            ]
+          },
+          {
+            "eventId": "event-d953b2892ce81a7967b5a40be3bf4fdca9a85aaf",
+            "activity": {
+              "key": "activity-1",
+              "title": "讲座预告 | 数学与统计学院“前沿学术论坛”第51讲",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "2026年11月6日",
+                "date": "2026-11-06",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": {
+                  "field": "body",
+                  "startOffset": 56,
+                  "endOffset": 66,
+                  "text": "2026年11月6日",
+                  "role": "event_time",
+                  "sourceId": "media-99a1223d93b6e957"
+                }
+              },
+              "endsAt": null,
+              "placeRaw": "大学城校区院系楼152会议室",
+              "organizer": null,
+              "registrationStatus": "unknown",
+              "registrationWindows": [],
+              "registrationUrl": null,
+              "otherDeadlines": [],
+              "status": "unknown",
+              "evidence": [
+                {
+                  "field": "body",
+                  "startOffset": 0,
+                  "endOffset": 66,
+                  "text": "数学与统计学院“前沿学术论坛”第51讲 de 报告人：狄增如 教授（北京师范大学） 张希昀 副教授（暨南大学） 2026年11月6日",
+                  "role": "event_time",
+                  "sourceId": "media-99a1223d93b6e957"
+                },
+                {
+                  "field": "body",
+                  "startOffset": 31,
+                  "endOffset": 45,
+                  "text": "大学城校区院系楼152会议室",
+                  "role": "event_place"
+                }
+              ],
+              "issues": [],
+              "calendar": {
+                "eligible": true,
+                "reason": "dated_event",
+                "nature": "announcement",
+                "campus": "university_town",
+                "candidateDates": [
+                  "2026-11-06"
+                ],
+                "origins": [
+                  {
+                    "id": "media-99a1223d93b6e957",
+                    "kind": "image",
+                    "url": "https://mmbiz.qpic.cn/mmbiz_png/tE3niaHA6hKBfcXLWdKwlOiaqiaWicZibHVFicBq4GBqpsCA1NuCfjibzyDmjrehgFDGRGeehiaz1q5oS33pgxVU8IPznicqiaFIEaawUvoED6DCepc1Y/640?wx_fmt=png&from=appmsg",
+                    "locator": "img[2]",
+                    "digest": "ba15fe44ba1e7f39ffa78400a4abb8215bbf88949a428e6b8a920048078eb535",
+                    "method": "@cf/google/gemma-4-26b-a4b-it-ocr-v2"
+                  }
+                ],
+                "usesBody": true
+              }
+            },
+            "sources": [
+              {
+                "documentId": "wx-511406cea04137ae9bd74303aaba826ef79aeb4a",
+                "version": 1,
+                "title": "讲座预告 | 数学与统计学院“前沿学术论坛”第51讲",
+                "originalUrl": "https://mp.weixin.qq.com/s/x57gEOrq6VdUROOPiAAHZg",
+                "publishedAt": "2026-11-05T02:10:22.000Z",
+                "source": {
+                  "id": "GDUFS-SRC-0146",
+                  "name": "广外数学与统计学院"
+                },
+                "bodyAvailable": true,
+                "contentRevision": 1,
+                "inputHash": "fe5e1a991799df5eaac934c21551caf1a4bbb6acac26b839485ecad71c44f02c",
+                "classificationState": "radar",
+                "radarCategory": "lecture",
+                "knowledgeCategory": null
+              }
+            ],
+            "registrationState": "unknown",
+            "historical": true,
+            "mapPlace": {
+              "placeId": "osm-way-307437431",
+              "name": "院系办公楼",
+              "precision": "building"
+            },
+            "calendarUrl": "/calendar?date=2026-11-06&event=event-d953b2892ce81a7967b5a40be3bf4fdca9a85aaf",
+            "dates": [
+              "2026-11-06"
+            ]
+          },
+          {
+            "eventId": "event-e08da4632f90e6f839fde319315bf0fef14e30f1",
+            "activity": {
+              "key": "activity-1",
+              "title": "讲座预告丨广外金融论坛第138讲",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "2026年11月14日（星期六）15:00",
+                "date": "2026-11-14",
+                "at": "2026-11-14T15:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": {
+                  "field": "body",
+                  "startOffset": 15,
+                  "endOffset": 36,
+                  "text": "2026年11月14日（星期六）15:00",
+                  "role": "event_time"
+                }
+              },
+              "endsAt": null,
+              "placeRaw": "大学城校区院系楼401会议室",
+              "organizer": null,
+              "registrationStatus": "unknown",
+              "registrationWindows": [],
+              "registrationUrl": null,
+              "otherDeadlines": [],
+              "status": "unknown",
+              "evidence": [
+                {
+                  "field": "body",
+                  "startOffset": 12,
+                  "endOffset": 36,
+                  "text": "时间：2026年11月14日（星期六）15:00",
+                  "role": "event_time"
+                },
+                {
+                  "field": "body",
+                  "startOffset": 40,
+                  "endOffset": 54,
+                  "text": "大学城校区院系楼401会议室",
+                  "role": "place"
+                }
+              ],
+              "issues": [],
+              "calendar": {
+                "eligible": true,
+                "reason": "dated_event",
+                "nature": "announcement",
+                "campus": "university_town",
+                "candidateDates": [
+                  "2026-11-14"
+                ],
+                "origins": [],
+                "usesBody": true
+              }
+            },
+            "sources": [
+              {
+                "documentId": "wx-38bb29144ae42540f082cba0cf5bf9143a3dea83",
+                "version": 1,
+                "title": "讲座预告丨广外金融论坛第138讲",
+                "originalUrl": "https://mp.weixin.qq.com/s/aE3AlWJQJnBa8qi_d8dkFQ",
+                "publishedAt": "2026-11-12T13:26:07.000Z",
+                "source": {
+                  "id": "GDUFS-SRC-0162",
+                  "name": "广外金融学院"
+                },
+                "bodyAvailable": true,
+                "contentRevision": 1,
+                "inputHash": "7c8abed8b99736504c9c692623756d2c026973b6316d05515caf38b859548a93",
+                "classificationState": "radar",
+                "radarCategory": "lecture",
+                "knowledgeCategory": null
+              }
+            ],
+            "registrationState": "unknown",
+            "historical": true,
+            "mapPlace": {
+              "placeId": "osm-way-307437431",
+              "name": "院系办公楼",
+              "precision": "building"
+            },
+            "calendarUrl": "/calendar?date=2026-11-14&event=event-e08da4632f90e6f839fde319315bf0fef14e30f1",
+            "dates": [
+              "2026-11-14"
+            ]
+          }
+        ],
+        "after": "2026-11-01",
+        "before": "9999-12-31",
+        "day": null,
+        "dailyCounts": {},
+        "nextEventDay": null,
+        "total": 4,
+        "hasMore": false,
+        "nextCursor": null,
+        "occurrences": [
+          {
+            "eventId": "event-263193b789c9c3ec98a0161f91ae920942d17cd5",
+            "date": "2026-11-05",
+            "startTime": null,
+            "endTime": null
+          },
+          {
+            "eventId": "event-263193b789c9c3ec98a0161f91ae920942d17cd5",
+            "date": "2026-11-05",
+            "startTime": null,
+            "endTime": null
+          },
+          {
+            "eventId": "event-d953b2892ce81a7967b5a40be3bf4fdca9a85aaf",
+            "date": "2026-11-06",
+            "startTime": null,
+            "endTime": null
+          },
+          {
+            "eventId": "event-e08da4632f90e6f839fde319315bf0fef14e30f1",
+            "date": "2026-11-14",
+            "startTime": "15:00",
+            "endTime": null
+          }
+        ],
+        "limit": 50,
+        "now": "2026-11-14T18:41:52.137Z",
+        "timeZone": "Asia/Shanghai",
+        "modelCalls": 0,
+        "metrics": {
+          "rowsRead": 4459,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 192,
+          "usageAvailable": true
+        }
+      }
+    }
+  },
+  {
+    "id": 28,
+    "building": "教学楼F栋",
+    "question": "教学楼F栋最近两周以来有什么活动？请区分已举办和未举办。",
+    "status": 200,
+    "elapsedMs": 38865,
+    "answer": "",
+    "terminal": "run.failed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-node-3125704391"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 35480,
+          "firstTextMs": null
+        }
+      ],
+      "promptTokens": 0,
+      "completionTokens": 0,
+      "cachedPromptTokens": 0,
+      "totalTokens": 0,
+      "usageComplete": false,
+      "chargedTokens": 250000,
+      "durationMs": 35525,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1576,
+        "serverElapsedMs": 37101,
+        "firstTextMs": null,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 21,
+          "writeQueries": 12,
+          "calls": 25,
+          "failures": 0,
+          "durationMs": 1621,
+          "maxCallMs": 172,
+          "rowsRead": 4863,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "error": {
+      "error": {
+        "code": "MODEL_SERVICE_UNAVAILABLE",
+        "message": "模型流超过限制。"
+      },
+      "conversationId": "6348cd15-666f-5893-b203-9582c1625d00",
+      "metrics": {
+        "smartSearch": false,
+        "queryUnderstanding": {
+          "failed": false
+        },
+        "answerMode": "building_profile",
+        "buildingProfiles": [
+          "osm-node-3125704391"
+        ],
+        "conversationAct": "campus",
+        "answerRequirement": "strict",
+        "modelFailureCode": null,
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 1,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "softAcceptances": 0,
+        "groundingChecks": 0,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [],
+        "upstreamTimings": [
+          {
+            "durationMs": 35480,
+            "firstTextMs": null
+          }
+        ],
+        "promptTokens": 0,
+        "completionTokens": 0,
+        "cachedPromptTokens": 0,
+        "totalTokens": 0,
+        "usageComplete": false,
+        "chargedTokens": 250000,
+        "durationMs": 35525,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 1576,
+          "serverElapsedMs": 37101,
+          "firstTextMs": null,
+          "mapActionMs": null,
+          "skills": [],
+          "database": {
+            "readQueries": 21,
+            "writeQueries": 12,
+            "calls": 25,
+            "failures": 0,
+            "durationMs": 1621,
+            "maxCallMs": 172,
+            "rowsRead": 4863,
+            "rowsWritten": 25,
+            "rowUsageStatements": 16,
+            "rowUsageComplete": false
+          },
+          "retrieval": [],
+          "externalSearch": []
+        }
+      }
+    },
+    "cards": [],
+    "truth": {
+      "id": "osm-node-3125704391",
+      "name": "教学楼F栋",
+      "description": "教学楼F栋位于大学城校区教学区，是课堂教学场所。",
+      "photos": [
+        "/buildings/d3092f94656b4b0059a1fcf0.webp"
+      ],
+      "events": {
+        "items": [
+          {
+            "eventId": "event-972f33eed44b299190971082f15e436d669fbfd0",
+            "activity": {
+              "key": "activity-1",
+              "title": "【11月2日宣讲】上海曼伦商贸有限公司",
+              "kind": "event",
+              "category": "education_career",
+              "startsAt": {
+                "raw": "11月2日",
+                "date": "2026-11-02",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": {
+                  "field": "title",
+                  "startOffset": 1,
+                  "endOffset": 6,
+                  "text": "11月2日",
+                  "role": "event_time"
+                }
+              },
+              "endsAt": null,
+              "placeRaw": "大学城校区F205",
+              "organizer": null,
+              "registrationStatus": "unknown",
+              "registrationWindows": [],
+              "registrationUrl": null,
+              "otherDeadlines": [],
+              "status": "unknown",
+              "evidence": [
+                {
+                  "field": "title",
+                  "startOffset": 0,
+                  "endOffset": 19,
+                  "text": "【11月2日宣讲】上海曼伦商贸有限公司",
+                  "role": "event_time"
+                },
+                {
+                  "field": "body",
+                  "startOffset": 16,
+                  "endOffset": 25,
+                  "text": "大学城校区F205",
+                  "role": "event_place"
+                }
+              ],
+              "issues": [],
+              "calendar": {
+                "eligible": true,
+                "reason": "dated_event",
+                "nature": "announcement",
+                "campus": "university_town",
+                "candidateDates": [
+                  "2026-11-02"
+                ],
+                "origins": [],
+                "usesBody": false
+              }
+            },
+            "sources": [
+              {
+                "documentId": "wx-6de7f118d580b4feb3bf24435591eda307cdbf29",
+                "version": 1,
+                "title": "【11月2日宣讲】上海曼伦商贸有限公司",
+                "originalUrl": "https://mp.weixin.qq.com/s/rBWB9mk4FlxwZD5idBhRhw",
+                "publishedAt": "2026-11-01T15:16:50.000Z",
+                "source": {
+                  "id": "GDUFS-SRC-0114",
+                  "name": "广外就业"
+                },
+                "bodyAvailable": true,
+                "contentRevision": 1,
+                "inputHash": "95adc46c6450b3212e7befc47d2b41d189dc2782ea5747ee8988d81e9b1d81ec",
+                "classificationState": "radar",
+                "radarCategory": "education_career",
+                "knowledgeCategory": null
+              }
+            ],
+            "registrationState": "unknown",
+            "historical": true,
+            "mapPlace": {
+              "placeId": "osm-node-3125704391",
+              "name": "教学楼F栋",
+              "precision": "building"
+            },
+            "calendarUrl": "/calendar?date=2026-11-02&event=event-972f33eed44b299190971082f15e436d669fbfd0",
+            "dates": [
+              "2026-11-02"
+            ]
+          }
+        ],
+        "after": "2026-11-01",
+        "before": "9999-12-31",
+        "day": null,
+        "dailyCounts": {},
+        "nextEventDay": null,
+        "total": 1,
+        "hasMore": false,
+        "nextCursor": null,
+        "occurrences": [
+          {
+            "eventId": "event-972f33eed44b299190971082f15e436d669fbfd0",
+            "date": "2026-11-02",
+            "startTime": null,
+            "endTime": null
+          }
+        ],
+        "limit": 50,
+        "now": "2026-11-14T18:41:52.859Z",
+        "timeZone": "Asia/Shanghai",
+        "modelCalls": 0,
+        "metrics": {
+          "rowsRead": 4459,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 188,
+          "usageAvailable": true
+        }
+      }
+    }
+  },
+  {
+    "id": 29,
+    "building": "图书馆",
+    "question": "图书馆最近两周以来有哪些已收录的活动？没有记录就直接说明。",
+    "status": 200,
+    "elapsedMs": 8387,
+    "answer": "本鱼扒拉完图书馆的收录活动记录啦🐟 最近两周（截至2026年11月19日）的已举办活动有2场哦：\n1. 11月5日：会计学院与图书馆联合红色财经读书会，举办地点为大学城校区图书馆\n2. 11月7日：乒乓球赛预热活动，举办地点为大学城校区图书馆负一楼乒乓球场\n\n除此之外当前图书馆的建筑资料里没有其他匹配的活动记录啦～",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-way-307250998"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 5284,
+          "firstTextMs": 4872,
+          "finishReason": "stop",
+          "contentChars": 159
+        }
+      ],
+      "promptTokens": 886,
+      "completionTokens": 650,
+      "cachedPromptTokens": 0,
+      "totalTokens": 1536,
+      "usageComplete": true,
+      "chargedTokens": 1536,
+      "durationMs": 5371,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1406,
+        "serverElapsedMs": 6777,
+        "firstTextMs": 6738,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1493,
+          "maxCallMs": 166,
+          "rowsRead": 4866,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307250998",
+          "name": "图书馆",
+          "category": "library",
+          "zone": "teaching",
+          "location": [
+            113.39131405,
+            23.0680465
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "大学城校区图书馆"
+          ],
+          "labelPlaceId": "osm-way-307250998",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-way-307250998",
+      "name": "图书馆",
+      "description": "图书馆有五层楼，内有空调和自习室，可刷脸和刷卡进入。\n一、二、三层开放时间为7:00-24:00，四、五层开放时间为8:30-22:00。\n图书馆也是广外学子们常去的地方，期末更是座无虚席。因此如果期末想去图书馆学习，要趁早。\n🌟图书馆也有会议厅，主要用于举办悦读课堂、阅读沙龙观影会、英语角、读书分享会图书漂流和各种比赛赛事。",
+      "photos": [
+        "/buildings/6ccd5716bbf18b08fa377f2a.webp",
+        "/buildings/6f9fdb5d70c2640d82f36d18.webp",
+        "/buildings/3850a24164478afdd8eaec1f.webp",
+        "/buildings/c74cf9f6a1e6759b749163a2.webp",
+        "/buildings/5e46a9009da28247598037a5.webp"
+      ],
+      "events": {
+        "items": [
+          {
+            "eventId": "event-aa2ec34dbb87e04fb22e0cdd82bf49f4123829ec",
+            "activity": {
+              "key": "activity-1",
+              "title": "会计学院与图书馆联合开展红色财经读书会",
+              "kind": "event",
+              "category": "culture_sports",
+              "startsAt": {
+                "raw": "11月5日",
+                "date": "2026-11-05",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": {
+                  "field": "body",
+                  "startOffset": 21,
+                  "endOffset": 26,
+                  "text": "11月5日",
+                  "role": "event_time"
+                }
+              },
+              "endsAt": null,
+              "placeRaw": "大学城校区图书馆",
+              "organizer": null,
+              "registrationStatus": "unknown",
+              "registrationWindows": [],
+              "registrationUrl": null,
+              "otherDeadlines": [],
+              "status": "unknown",
+              "evidence": [
+                {
+                  "field": "body",
+                  "startOffset": 0,
+                  "endOffset": 88,
+                  "text": "为深化馆院共建实效，传承弘扬红色财经精神，11月5日，会计学院联合图书馆（档案馆）在大学城校区图书馆举办红色文化节系列活动之“坚守会计初心使命，共话财经报国担当”红色财经读书会",
+                  "role": "event_time"
+                },
+                {
+                  "field": "body",
+                  "startOffset": 42,
+                  "endOffset": 50,
+                  "text": "大学城校区图书馆",
+                  "role": "place"
+                }
+              ],
+              "issues": [],
+              "calendar": {
+                "eligible": true,
+                "reason": "dated_event",
+                "nature": "announcement",
+                "campus": "university_town",
+                "candidateDates": [
+                  "2026-11-05"
+                ],
+                "origins": [],
+                "usesBody": true
+              }
+            },
+            "sources": [
+              {
+                "documentId": "content-d1817be0-acef-4c2f-b648-87bcdbbf644b",
+                "version": 2,
+                "title": "会计学院与图书馆联合开展红色财经读书会",
+                "originalUrl": "https://lib.gdufs.edu.cn/info/1133/10468.htm",
+                "publishedAt": "2026-11-09",
+                "source": {
+                  "id": "GDUFS-SRC-0008",
+                  "name": "图书馆"
+                },
+                "bodyAvailable": true,
+                "contentRevision": 1,
+                "inputHash": "fee26a812f3a4c9e8401bd77762847079700e89f00cb656ece69c1140922d1f3",
+                "classificationState": "radar",
+                "radarCategory": "education_career",
+                "knowledgeCategory": null
+              }
+            ],
+            "registrationState": "unknown",
+            "historical": true,
+            "mapPlace": {
+              "placeId": "osm-way-307250998",
+              "name": "图书馆",
+              "precision": "building"
+            },
+            "calendarUrl": "/calendar?date=2026-11-05&event=event-aa2ec34dbb87e04fb22e0cdd82bf49f4123829ec",
+            "dates": [
+              "2026-11-05"
+            ]
+          },
+          {
+            "eventId": "event-994ef148f2db78c7077f0bfddb728148eae6702e",
+            "activity": {
+              "key": "activity-1",
+              "title": "乒乓球赛预热 | 以球会友 快乐乒乓",
+              "kind": "event",
+              "category": "competition",
+              "startsAt": {
+                "raw": "2026年11月7日",
+                "date": "2026-11-07",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": {
+                  "field": "body",
+                  "startOffset": 64,
+                  "endOffset": 74,
+                  "text": "2026年11月7日",
+                  "role": "event_time"
+                }
+              },
+              "endsAt": null,
+              "placeRaw": "大学城校区图书馆负一楼乒乓球场",
+              "organizer": null,
+              "registrationStatus": "required",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": {
+                    "raw": "11月2日20:00",
+                    "date": "2026-11-02",
+                    "at": "2026-11-02T20:00:00+08:00",
+                    "timezone": "Asia/Shanghai",
+                    "precision": "exact_time",
+                    "resolution": "minute",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": {
+                      "field": "body",
+                      "startOffset": 301,
+                      "endOffset": 311,
+                      "text": "11月2日20:00",
+                      "role": "time_expression"
+                    }
+                  },
+                  "deadlineSemantics": "before",
+                  "capacityLimited": false,
+                  "confidence": "medium",
+                  "evidence": [
+                    {
+                      "field": "body",
+                      "startOffset": 275,
+                      "endOffset": 338,
+                      "text": "报名方式\n报名方式\n全体会计学院学生皆在报名截止时间11月2日20:00前填写问卷进行自主报名（问卷星将由各班体委发送至班群）",
+                      "role": "registration"
+                    }
+                  ],
+                  "issues": []
+                }
+              ],
+              "registrationUrl": null,
+              "otherDeadlines": [],
+              "status": "unknown",
+              "evidence": [
+                {
+                  "field": "body",
+                  "startOffset": 64,
+                  "endOffset": 74,
+                  "text": "2026年11月7日",
+                  "role": "event_time"
+                },
+                {
+                  "field": "body",
+                  "startOffset": 275,
+                  "endOffset": 338,
+                  "text": "报名方式\n报名方式\n全体会计学院学生皆在报名截止时间11月2日20:00前填写问卷进行自主报名（问卷星将由各班体委发送至班群）",
+                  "role": "registration"
+                },
+                {
+                  "field": "body",
+                  "startOffset": 99,
+                  "endOffset": 114,
+                  "text": "大学城校区图书馆负一楼乒乓球场",
+                  "role": "event_place"
+                }
+              ],
+              "issues": [],
+              "calendar": {
+                "eligible": true,
+                "reason": "dated_event",
+                "nature": "announcement",
+                "campus": "university_town",
+                "candidateDates": [
+                  "2026-11-07"
+                ],
+                "origins": [],
+                "usesBody": true
+              }
+            },
+            "sources": [
+              {
+                "documentId": "wx-b3e783715f59098f17aad6f5311713e47581d7d4",
+                "version": 1,
+                "title": "乒乓球赛预热 | 以球会友 快乐乒乓",
+                "originalUrl": "https://mp.weixin.qq.com/s/f2eBGvYQcQCiByXUEs3iQw",
+                "publishedAt": "2026-10-30T12:00:00.000Z",
+                "source": {
+                  "id": "GDUFS-SRC-0128",
+                  "name": "广外会院青年"
+                },
+                "bodyAvailable": true,
+                "contentRevision": 1,
+                "inputHash": "7004fba11202dae86bb1cae1abee11154e66d55ca821aae3ae7ee868bf209288",
+                "classificationState": "radar",
+                "radarCategory": "competition",
+                "knowledgeCategory": null
+              }
+            ],
+            "registrationState": "closed",
+            "historical": true,
+            "mapPlace": {
+              "placeId": "osm-way-307250998",
+              "name": "图书馆",
+              "precision": "building"
+            },
+            "calendarUrl": "/calendar?date=2026-11-07&event=event-994ef148f2db78c7077f0bfddb728148eae6702e",
+            "dates": [
+              "2026-11-07"
+            ]
+          }
+        ],
+        "after": "2026-11-01",
+        "before": "9999-12-31",
+        "day": null,
+        "dailyCounts": {},
+        "nextEventDay": null,
+        "total": 2,
+        "hasMore": false,
+        "nextCursor": null,
+        "occurrences": [
+          {
+            "eventId": "event-aa2ec34dbb87e04fb22e0cdd82bf49f4123829ec",
+            "date": "2026-11-05",
+            "startTime": null,
+            "endTime": null
+          },
+          {
+            "eventId": "event-994ef148f2db78c7077f0bfddb728148eae6702e",
+            "date": "2026-11-07",
+            "startTime": null,
+            "endTime": null
+          }
+        ],
+        "limit": 50,
+        "now": "2026-11-14T18:42:01.498Z",
+        "timeZone": "Asia/Shanghai",
+        "modelCalls": 0,
+        "metrics": {
+          "rowsRead": 4459,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 194,
+          "usageAvailable": true
+        }
+      }
+    }
+  },
+  {
+    "id": 30,
+    "building": "学术交流中心",
+    "question": "学术交流中心11月11日的求职技能系列讲座现在还能参加吗？",
+    "status": 200,
+    "elapsedMs": 6671,
+    "answer": "那场11月11日的求职技能讲座已经是举办过的往期活动啦，现在参加不了哦😉 要是想蹲学术交流中心后续的活动，可以戳这个日历链接瞅瞅：/calendar?date=2026-11-11&event=event-aff23ea7e56c70052cf48c5eba001fd87ed98ce7",
+    "terminal": "run.completed",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "building_profile",
+      "buildingProfiles": [
+        "osm-relation-4105910"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 3354,
+          "firstTextMs": 3025,
+          "finishReason": "stop",
+          "contentChars": 144
+        }
+      ],
+      "promptTokens": 993,
+      "completionTokens": 390,
+      "cachedPromptTokens": 0,
+      "totalTokens": 1383,
+      "usageComplete": true,
+      "chargedTokens": 1383,
+      "durationMs": 3446,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1385,
+        "serverElapsedMs": 4831,
+        "firstTextMs": 4790,
+        "mapActionMs": null,
+        "skills": [],
+        "database": {
+          "readQueries": 22,
+          "writeQueries": 12,
+          "calls": 26,
+          "failures": 0,
+          "durationMs": 1477,
+          "maxCallMs": 164,
+          "rowsRead": 4868,
+          "rowsWritten": 25,
+          "rowUsageStatements": 16,
+          "rowUsageComplete": false
+        },
+        "retrieval": [],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-relation-4105910",
+          "name": "学术交流中心",
+          "category": "building",
+          "zone": "teaching",
+          "location": [
+            113.3942945,
+            23.0637285
+          ],
+          "crs": "WGS84",
+          "aliases": [],
+          "labelPlaceId": "osm-relation-4105910",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ],
+    "truth": {
+      "id": "osm-relation-4105910",
+      "name": "学术交流中心",
+      "description": "南校教学区东南角的一栋楼，学生宿舍 + 食堂​​，主要住研究生。\n\n📍 位置\n靠近东南门/东门，进门上个坡就到。距离教学楼、院系楼和校办公楼比较近，但离生活区（食堂、超市、快递）很远\n🍽️ 一楼食堂——南校\"第四饭\"\n之前主要服务老师，现在学生也能吃了，算是南校的隐藏食堂。\n自选称重，刷校园卡自动扣费，夹完菜直接走不用排队结账\n人均 10-15 元，饭和汤免费续\n菜品有凉拌牛肉、辣子鸡、炸鸡腿、咕噜肉、椒盐虾等，品种还行但菜单很少换\n​​周末不开​​，只工作日营业\n支持校园卡和微信支付\n🛏️ 宿舍情况\n原酒店改造，房型随机分配，主要四人间，也有三人间和八人间\n上下铺为主（不是上床下桌），个人空间偏小\n有电梯、24h 热水不断电\n一楼四排免费洗衣机 + 两台烘干机 + 阳光房晾衣\n床板实际偏小，买床帘要配伸缩架子，下铺高度最多 105cm 左右",
+      "photos": [
+        "/api/public/building-image?id=07b323b6-25b6-4a0f-b520-acd9e0f00f9d",
+        "/api/public/building-image?id=6ee3af1e-e9b2-4e55-8be0-556f221c9f7a",
+        "/api/public/building-image?id=2f2b22d1-0b46-4522-8fa6-e9e3d10a8c3a",
+        "/api/public/building-image?id=2b95fecd-85d5-4712-90f2-54f0ab46870c",
+        "/api/public/building-image?id=4c137675-bea5-4cd7-b63e-dd1585894da8"
+      ],
+      "events": {
+        "items": [
+          {
+            "eventId": "event-aff23ea7e56c70052cf48c5eba001fd87ed98ce7",
+            "activity": {
+              "key": "activity-1",
+              "title": "职引未来，逐梦启航——公管学院举办求职技能系列讲座",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "2026年11月11日",
+                "date": "2026-11-11",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": {
+                  "field": "body",
+                  "startOffset": 0,
+                  "endOffset": 11,
+                  "text": "2026年11月11日",
+                  "role": "event_time"
+                }
+              },
+              "endsAt": null,
+              "placeRaw": "学术交流中心 MPA 第一会议室",
+              "organizer": null,
+              "registrationStatus": "unknown",
+              "registrationWindows": [],
+              "registrationUrl": null,
+              "otherDeadlines": [],
+              "status": "unknown",
+              "evidence": [
+                {
+                  "field": "body",
+                  "startOffset": 0,
+                  "endOffset": 56,
+                  "text": "2026年11月11日19时，公管学院 “职引未来” 求职技能系列讲座于学术交流中心 MPA 第一会议室顺利开讲",
+                  "role": "event_time"
+                },
+                {
+                  "field": "body",
+                  "startOffset": 36,
+                  "endOffset": 52,
+                  "text": "学术交流中心 MPA 第一会议室",
+                  "role": "place"
+                }
+              ],
+              "issues": [],
+              "calendar": {
+                "eligible": true,
+                "reason": "dated_event",
+                "nature": "held",
+                "campus": "unknown",
+                "candidateDates": [
+                  "2026-11-11"
+                ],
+                "origins": [],
+                "usesBody": true
+              }
+            },
+            "sources": [
+              {
+                "documentId": "wx-8cebc4772f64ea9545a1609d5fbec742a5e69a40",
+                "version": 1,
+                "title": "职引未来，逐梦启航——公管学院举办求职技能系列讲座",
+                "originalUrl": "https://mp.weixin.qq.com/s/GqB3Aw928sV3lKUDymOqdA",
+                "publishedAt": "2026-11-14T12:19:08.000Z",
+                "source": {
+                  "id": "GDUFS-SRC-0178",
+                  "name": "广外公管学院"
+                },
+                "bodyAvailable": true,
+                "contentRevision": 1,
+                "inputHash": "a5f519abd29dfbfa4d16b9f239286499a4fa2245337fcefa0204e529ac75d71a",
+                "classificationState": "radar",
+                "radarCategory": "lecture",
+                "knowledgeCategory": null
+              }
+            ],
+            "registrationState": "unknown",
+            "historical": true,
+            "mapPlace": {
+              "placeId": "osm-relation-4105910",
+              "name": "学术交流中心",
+              "precision": "building"
+            },
+            "calendarUrl": "/calendar?date=2026-11-11&event=event-aff23ea7e56c70052cf48c5eba001fd87ed98ce7",
+            "dates": [
+              "2026-11-11"
+            ]
+          }
+        ],
+        "after": "2026-11-01",
+        "before": "9999-12-31",
+        "day": null,
+        "dailyCounts": {},
+        "nextEventDay": null,
+        "total": 1,
+        "hasMore": false,
+        "nextCursor": null,
+        "occurrences": [
+          {
+            "eventId": "event-aff23ea7e56c70052cf48c5eba001fd87ed98ce7",
+            "date": "2026-11-11",
+            "startTime": null,
+            "endTime": null
+          }
+        ],
+        "limit": 50,
+        "now": "2026-11-14T18:42:09.939Z",
+        "timeZone": "Asia/Shanghai",
+        "modelCalls": 0,
+        "metrics": {
+          "rowsRead": 4459,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 187,
+          "usageAvailable": true
+        }
+      }
+    }
+  }
+]

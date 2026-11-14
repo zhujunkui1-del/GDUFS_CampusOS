@@ -1,0 +1,91 @@
+.building-manager {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+.building-manager label {
+  display: grid;
+  gap: 10px;
+  font-weight: 550;
+}
+.building-manager input,
+.building-manager select,
+.building-manager textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  font: inherit;
+}
+.building-editor {
+  display: grid;
+  gap: 20px;
+}
+.building-editor textarea {
+  resize: vertical;
+  line-height: 1.7;
+}
+.building-editor-heading,
+.building-editor footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.building-editor-heading h2 {
+  margin: 0;
+}
+.building-editor-photos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.building-editor-photos figure {
+  margin: 0;
+  min-width: 0;
+}
+.building-editor-photos img {
+  width: 100%;
+  aspect-ratio: 1.4;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+}
+.building-editor-photos figcaption {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+.building-editor-photos figcaption span {
+  flex: 1;
+}
+.building-editor-photos figcaption button {
+  padding: 8px;
+  min-width: 40px;
+  min-height: 44px;
+}
+.feedback-attachments {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.feedback-attachments a {
+  display: grid;
+  gap: 6px;
+  color: var(--brand-primary);
+  font-size: 14px;
+  text-decoration: none;
+}
+.feedback-attachments img {
+  width: 140px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+@media (max-width: 760px) {
+  .building-editor-photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}

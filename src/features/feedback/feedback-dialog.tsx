@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { MessageCirclePlus, Send, X } from "lucide-react";
+import { MessageCirclePlus, Send, X, ImagePlus } from "lucide-react";
 import "./feedback.css";
+import { uploadImage } from "./image-upload";
 
 export function FeedbackEntry() {
   const [open, setOpen] = useState(false);
@@ -27,6 +28,8 @@ function FeedbackDialog({ onClose }: { onClose: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
+  const [images, setImages] = useState<File[]>([]);
+  const fileInput = useRef<HTMLInputElement>(null);
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
   useEffect(() => {
@@ -37,16 +40,20 @@ function FeedbackDialog({ onClose }: { onClose: () => void }) {
     setSending(true);
     setMessage("");
     try {
+      const form = new FormData();
+      form.set("nickname", nickname);
+      form.set("content", content);
+      for (const file of images) form.append("images", await uploadImage(file));
       const response = await fetch("/api/public/feedback", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nickname, content }),
+        body: form,
       });
       const result = await response.json();
       if (!response.ok || !result.ok)
         throw Error(result.error?.message || "提交失败，请重试。");
       setNickname("");
       setContent("");
+      setImages([]);
       setMessage("已提交");
     } catch (error) {
       setMessage(error instanceof Error ? error.message : "提交失败，请重试。");
@@ -97,6 +104,48 @@ function FeedbackDialog({ onClose }: { onClose: () => void }) {
               rows={5}
             />
           </label>
+          <input
+            ref={fileInput}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+            hidden
+            onChange={(event) => {
+              const files = Array.from(event.target.files || []);
+              setImages((previous) => [...previous, ...files]);
+              event.target.value = "";
+            }}
+          />
+          <button
+            className="feedback-upload"
+            type="button"
+            disabled={sending}
+            onClick={() => fileInput.current!.click()}
+          >
+            <ImagePlus size={19} />
+            上传图片
+          </button>
+          {images.length > 0 && (
+            <ul className="feedback-files">
+              {images.map((file, index) => (
+                <li key={index}>
+                  <span>{file.name}</span>
+                  <button
+                    type="button"
+                    aria-label={"移除图片 " + file.name}
+                    disabled={sending}
+                    onClick={() =>
+                      setImages((previous) =>
+                        previous.filter((_, i) => i !== index),
+                      )
+                    }
+                  >
+                    <X size={17} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
           <footer>
             <span role="status">{message}</span>
             <button

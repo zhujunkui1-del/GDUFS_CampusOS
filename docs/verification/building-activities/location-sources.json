@@ -1,0 +1,101 @@
+{
+  "checkedAt": "2026-11-14T13:45:55.230Z",
+  "entries": [
+    {
+      "day": "2026-10-14",
+      "eventId": "event-349e68ab3d9ccafb59108c9f7952049923117210",
+      "location": "大学城校区院系楼401会议室",
+      "mapPlace": {
+        "placeId": "osm-way-307437431",
+        "name": "院系办公楼",
+        "precision": "building"
+      },
+      "sources": [
+        {
+          "title": "讲座预告丨广外金融论坛第137讲",
+          "source": "金融学院",
+          "url": "https://jrxy.gdufs.edu.cn/info/1063/10047.htm",
+          "publishedAt": "2026-10-14"
+        },
+        {
+          "title": "讲座预告丨广外金融论坛第137讲",
+          "source": "广外金融学院",
+          "url": "https://mp.weixin.qq.com/s/7GC8YThyq6BUohavctjpaw",
+          "publishedAt": "2026-10-12T03:31:52.000Z"
+        }
+      ]
+    },
+    {
+      "day": "2026-11-12",
+      "eventId": "event-248b2ca0b63f4896b87862324e437630e40397a3",
+      "location": "大学城校区E203",
+      "mapPlace": {
+        "placeId": "osm-node-3125704419",
+        "name": "教学楼E栋",
+        "precision": "building"
+      },
+      "sources": [
+        {
+          "title": "“信息素养教育系列”讲座 第五十三讲",
+          "source": "图书馆",
+          "url": "https://lib.gdufs.edu.cn/info/1087/10398.htm",
+          "publishedAt": "2026-11-05"
+        }
+      ]
+    },
+    {
+      "day": "2026-11-12",
+      "eventId": "event-7e5380b4e0081f3af7d9b0a3c9a3749e504a73ae",
+      "location": "广东外语外贸大学南校区 D512课室",
+      "mapPlace": {
+        "placeId": "osm-relation-19299170",
+        "name": "教学楼D栋",
+        "precision": "building"
+      },
+      "sources": [
+        {
+          "title": "知行共读·青春无艾｜防艾书籍专家×青年共读会来啦！",
+          "source": "校红会学生分会",
+          "url": "https://mp.weixin.qq.com/s/WxNBSkAh-fvnCl7dAJggDg",
+          "publishedAt": "2026-11-08T04:15:00.000Z"
+        }
+      ]
+    },
+    {
+      "day": "2026-11-12",
+      "eventId": "event-cce09e6167f4db809224b98c58c105db7190a138",
+      "location": "大学城校区G座教学楼207",
+      "mapPlace": {
+        "placeId": "osm-node-3125704356",
+        "name": "教学楼G栋",
+        "precision": "building"
+      },
+      "sources": [
+        {
+          "title": "【职业发展力讲坛】公职类考试备考指导分享会",
+          "source": "广外就业",
+          "url": "https://mp.weixin.qq.com/s/udaLeLBy6qaNuSzlOKuIsA",
+          "publishedAt": "2026-11-10T12:25:55.000Z"
+        }
+      ]
+    },
+    {
+      "day": "2026-11-14",
+      "eventId": "event-e08da4632f90e6f839fde319315bf0fef14e30f1",
+      "location": "大学城校区院系楼401会议室",
+      "mapPlace": {
+        "placeId": "osm-way-307437431",
+        "name": "院系办公楼",
+        "precision": "building"
+      },
+      "sources": [
+        {
+          "title": "讲座预告丨广外金融论坛第138讲",
+          "source": "广外金融学院",
+          "url": "https://mp.weixin.qq.com/s/aE3AlWJQJnBa8qi_d8dkFQ",
+          "publishedAt": "2026-11-12T13:26:07.000Z"
+        }
+      ]
+    }
+  ]
+}

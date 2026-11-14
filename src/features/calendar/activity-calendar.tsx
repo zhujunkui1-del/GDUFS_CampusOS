@@ -24,6 +24,7 @@ import { PublicArticleDialog } from "@/features/content/public-article-dialog";
 import { FavoriteButton } from "@/features/content/favorite-button";
 import { useFavoriteTracking } from "@/features/content/favorites-context";
 import type { PublicArticleSummary } from "@/features/content/public-feed";
+import { calendarArticleSummary as articleSummary } from "./activity-summary";
 import "./calendar.css";
 type Result = {
   items: CalendarItem[];
@@ -408,21 +409,4 @@ export function ActivityCalendar() {
       )}
     </section>
   );
-}
-function articleSummary(
-  item: CalendarItem,
-  source: CalendarItem["sources"][number],
-): PublicArticleSummary {
-  return {
-    id: source.documentId,
-    version: source.version,
-    title: source.title,
-    url: source.originalUrl,
-    publishedAt: source.publishedAt,
-    readable: source.bodyAvailable,
-    contentType: "event",
-    knowledgeCategory: source.knowledgeCategory,
-    radarCategory: item.activity.category,
-    source: { name: source.source.name, official: false },
-  };
 }

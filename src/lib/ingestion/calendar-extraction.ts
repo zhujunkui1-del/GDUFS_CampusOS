@@ -179,7 +179,7 @@ function nature(
  * 举行", "线上直播"), so that is used as a fallback. A body that mentions both
  * campuses stays unknown rather than guessing.
  */
-function campus(place: string | null, body = "") {
+export function campus(place: string | null, body = "") {
   const named = (text: string) => {
     const baiyun = /白云|北校/.test(text);
     const town = /大学城|南校/.test(text);
@@ -655,7 +655,8 @@ const PLACE_REJECT =
   /[、，,；;“”"]|(?:之前|之后|期间|以来|方面|领域|工作|团队|代表|人士|一行)|(?:及|等)[^校区楼厅室馆场中心]*$/;
 // A date range ("7月5日至11日", "11月14日晚上21:00") is not a venue, and the
 // verb phrase "……于7月5日至11日举行" is common in recap posts.
-const PLACE_DATE = /^(?:\d{1,2}\s*月|\d{1,2}\s*日|\d{4}\s*[-/年])|\d{1,2}\s*[:：]\s*\d{2}/;
+const PLACE_DATE =
+  /^(?:\d{1,2}\s*月|\d{1,2}\s*日|\d{4}\s*[-/年])|\d{1,2}\s*[:：]\s*\d{2}/;
 
 function cleanPlace(raw: string | undefined): string | null {
   if (!raw) return null;
@@ -667,24 +668,42 @@ function cleanPlace(raw: string | undefined): string | null {
   // ("9月22日至23日在深圳举行"), so drop everything up to the last 在/于.
   value = value.replace(/^.*[在于]/, "").trim();
   if (!value || value.length < 2 || value.length > 60) return null;
-  if (/^\d{4}\s*年/.test(value) || /^\d{1,2}[:：]\d{2}/.test(value)) return null;
+  if (/^\d{4}\s*年/.test(value) || /^\d{1,2}[:：]\d{2}/.test(value))
+    return null;
   if (PLACE_REJECT.test(value) || PLACE_DATE.test(value)) return null;
   return value;
 }
 
 /** A labelled place is trusted more than a verb phrase; both are cleaned. */
-function placeOf(text: string): string | null {
+export function placeOf(text: string): string | null {
   const labelled = cleanPlace(text.match(PLACE_LABEL)?.[1]);
   if (labelled) return labelled;
+  const addressLines = [
+    ...new Set(
+      text
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(
+          (line) =>
+            line.length <= 130 &&
+            /校区/.test(line) &&
+            /(?:[A-Za-z]\s*\d{2,4}|[楼馆厅室场中心])/.test(line) &&
+            !/[。；！？]|(?:位于|坐落|欢迎|请|届|毕业|招聘对象)/.test(line),
+        ),
+    ),
+  ];
+  if (addressLines.length === 1) return cleanPlace(addressLines[0]);
   // Scan from the last preposition: "定于2026年11月20日—22日在北京举行"
   // would otherwise drag the date range into the match.
   for (let i = text.length - 1; i >= 0; i--) {
     if (text[i] !== "在" && text[i] !== "于") continue;
-    const m = text.slice(i).match(
-      new RegExp(
-        "^[在于]\\s*([^，。；\\n]{2,100}?)(?:顺利|成功|隆重|正式)?(?:举行|举办|召开|开展|开讲|开幕)",
-      ),
-    );
+    const m = text
+      .slice(i)
+      .match(
+        new RegExp(
+          "^[在于]\\s*([^，。；\\n]{2,100}?)(?:顺利|成功|隆重|正式)?(?:举行|举办|召开|开展|开讲|开幕)",
+        ),
+      );
     const value = cleanPlace(m?.[1]);
     if (!value) continue;
     if (!PLACE_HINT.test(value) && value.length < 4) continue;
@@ -780,7 +799,8 @@ export function calendarizeArticle(
           );
         for (const { row, c, dates } of dated) {
           const day = dayOf(dates[0]);
-          if (!byDay.has(day)) byDay.set(day, { row, raw: dates[0], clock: clockOf(c) });
+          if (!byDay.has(day))
+            byDay.set(day, { row, raw: dates[0], clock: clockOf(c) });
         }
         for (const [day, { row, raw, clock }] of byDay)
           tableEvents.push({
@@ -1029,5 +1049,23 @@ export function calendarizeArticle(
           ? base.calendar.attempts
           : 0,
     },
+  };
+}
+
+export function articleLocation(input: ArticleAnalysisInput) {
+  const canonical = articleText(input),
+    place = placeOf(canonical.text);
+  if (!place) return null;
+  const start = canonical.text.indexOf(place);
+  return {
+    place,
+    campus: campus(place, canonical.text),
+    evidence: evidence(
+      canonical,
+      "body",
+      start,
+      start + place.length,
+      "event_place",
+    ),
   };
 }

@@ -11,6 +11,7 @@ export type FeedbackItem = {
   content: string;
   status: "pending" | "archived";
   submittedAt: string;
+  images?: { id: string; name: string; url: string }[];
 };
 
 export type FeedbackInbox = {
