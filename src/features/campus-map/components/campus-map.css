@@ -773,7 +773,7 @@
     border-radius: 20px;
   }
   .map-toolbar {
-    width: min(340px, calc(100% - 62px));
+    width: min(340px, calc(100% - 118px));
     align-items: stretch;
     gap: 8px;
   }

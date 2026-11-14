@@ -27,6 +27,7 @@ import {
   LogOut,
   Plus,
   Search,
+  MessageCirclePlus,
 } from "lucide-react";
 import {
   sourceTypeNames,
@@ -69,6 +70,7 @@ const navigation = [
   { id: "collector", label: "公众号采集", icon: RefreshCw },
   { id: "retention", label: "过时信息清理", icon: Archive },
   { id: "whitelist", label: "白名单", icon: ShieldCheck },
+  { id: "feedback", label: "反馈", icon: MessageCirclePlus },
 ];
 const date = (value: string | null | undefined) =>
   value
@@ -148,7 +150,9 @@ export function ConsoleApp() {
   }, [auth]);
   const request = useCallback<Client>(
     async <T,>(path: string, method = "GET", body?: unknown) => {
-      const consolePath = path.startsWith("/api/") ? path : "/api/admin/" + path;
+      const consolePath = path.startsWith("/api/")
+        ? path
+        : "/api/admin/" + path;
       let response: Response;
       try {
         response = await fetch(consolePath, {

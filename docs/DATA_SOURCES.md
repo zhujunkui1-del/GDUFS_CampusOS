@@ -773,3 +773,8 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 ## 2026-11-13｜投影/加载修复来源复核
 
 本轮只调整运行时光照、共享加载与已知域名HTTPS入口；沿用原南7光照参数及已审核建筑清单，没有新增GIS、照片或纹理。82个公开GLB逐项下载SHA匹配，原校园OSM快照及3D模型字节保持；参考图片仍不公开分发。负责人提供的灰屋顶截图用于缺陷核对，不作为日照或尺寸资料。线上证据 `output/playwright/map-model-loading-2026-11-13/public-assets-after.json`、`edge-origin-after.json` 和投影截图；仅访问公共页面/资源，无管理员会话和真实设备位置。
+
+
+## 2026-11-14｜服务点导航的既有建筑周边接入
+
+本轮不引入新地图来源或下载GIS。又康超市（osm-node-12959101438）和伟腾图文（osm-node-12959172026）的原WGS84坐标分别位于现有学生活动中心（osm-way-313039010）和北苑6栋（osm-way-313039023）轮廓内；三饭打印店（osm-node-12958917239）位于walking-network.json既有未命名建筑障碍轮廓内。来源仍为上述对应的 https://www.openstreetmap.org/node/… 与 /way/… 及固定OSM快照，沿用已记录许可和OSM署名。只按既有建筑外周计算到达位置，不将计算端点登记为实测门口。源campus.json、walking-network.json和模型资产未改，派生公共路由候选重新离线生成。

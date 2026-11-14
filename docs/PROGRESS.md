@@ -6,6 +6,14 @@
 
 本页前面的 S0/S1 细节是 2026-10-13 的历史快照，不代表当前状态。以下最新按日期追加的实际运行记录为后续证据；旧阶段计划与旧验收数字需按其记录日期阅读。
 
+## 2026-11-14｜新增主页私密留言与后台反馈（D-167）
+
+新增主页留言图标及昵称选填/留言弹窗，游客与登录用户均可提交；前台没有留言列表、本人历史或公开读取接口。后台新增 `/admin/feedback`，待处理/已归档按提交时间倒序，单击归档。独立D1表、管理员会话/CSRF、no-store及纯文本渲染保证私密边界；未增加验证码、冷却、800字限制或解释段落。
+
+迁移0069已应用既有Preview D1，类型检查、Lint、全量159文件/1126项单测通过；最终Next/Worker生产构建、dry-run及1721个生成文件凭据净化扫描通过。最终版本 `c0e6a305-920e-4c84-801c-98c75ed32acc`，功能发布前回滚点 `d1f00ae4-077f-47d2-a8af-43a70b1f44ef`。新后台页面已加入静态路由清单并返回200。
+
+桌面和320px浏览器布局、真实游客匿名/已登录昵称提交、后台倒序接收及两条验收留言归档/刷新持久化已验证：最终待处理0、已归档2。公开GET405、未登录管理GET401，响应不含留言；主页不显示本人或其他人的留言。未改模型设置、Secret、DNS或阿里云；物理手机键盘/触感未验收。详见 `FEEDBACK_ACCEPTANCE_2026_11_14.md` 和 `output/playwright/feedback-live-mobile-20261114.png`。
+
 ## 2026-11-14｜手机原文按钮、部署与智能体决定
 
 - **国内部署暂缓（D-165）**：负责人确认当前域名国内访问较稳定，阿里云方案仅留档于 `DOMESTIC_DEPLOYMENT_ASSESSMENT_2026_11_14.md`。未修改服务器、DNS或数据库。
@@ -2760,3 +2768,37 @@ operating=active、evidence 用官网首页），版本升到 16。之后 36 个
 真实验证：网站Next生产构建含TypeScript通过，壳JS语法检查和Android Java编译通过。Windows开发运行与实际构建后的应用在断网条件下打开地图，2D/2.5D/3D、82模式模型驻留及南苑7栋→图书馆848米路线通过，JS错误0；模拟前一/前两线路故障时分别实际连接第二/第三健康接口，在线雷达、账号Session接口及登录表单通过。Android 14模拟器关闭Wi-Fi/移动数据后完成相同三模式与848米路线验收，设备截图确认底图/路线实际显示，最终APK无debuggable标志、v2/v3签名通过且证书与第一版一致。macOS Universal主程序双架构、DMG签名与HFS可执行权限通过；读回543个应用文件和14个符号链接、274个静态资源及app.asar逐项核对一致。
 
 交付大小：Windows 140,791,905字节；Android 21,012,443字节；macOS 249,212,924字节。SHA、构建信息、安装说明与运行回执位于交付目录`checksums.sha256`、各平台`build-info.json`、`README.md`和`verification/`。Windows未签名，Android沿用测试签名，macOS为ad-hoc且未公证；未在实体Mac/物理Android设备运行，未提交真实账号或发起真实AI生成验收。没有重跑网站全量测试、修改网站业务代码、部署Worker、修改DNS或迁移D1。
+
+
+## 2026-11-14｜三端安装包2.0.1更新留言功能
+
+负责人要求重新打包，交付 `D:/tlydcg/Codex_work/CampusOS_广外通/v2.0.1/`，原v2/2.0.0保留。新前端来自当前反馈版本对应已净化构建，275文件45,489,697字节，82个活动GLB与院落完整、三条线路优先级不变。Windows NSIS x64 140,794,655字节；Android APK 21,016,633字节、versionCode20001、沿用原测试证书；macOS Universal DMG 249,213,765字节、ad-hoc签名未公证。SHA和build-info见交付目录。
+
+Windows成品及开发壳断网地图2D/2.5D/3D、848米路线、留言表单打开/输入通过；第二/第三线路回退及表单通过，JS错误0。Android14模拟器/WebView113断网冷启动完成三模式/848米路线/留言表单输入，JS错误0；诊断用同资源同签名可调试APK，随后覆盖安装最终无debuggable的APK成功，v2/v3签名通过。未提交真实留言。macOS双架构/签名、DMG读回及275资源/asar核对通过，未在Mac原生启动。Windows/Android逐资源SHA与客户端密钥扫描通过。未改网站运行代码、部署、DNS或D1。
+
+
+## 2026-11-14｜Windows 2.0.2修复登录来源
+
+用户报告Windows登录“请求来源不受支持”。实际Electron链路用虚构账号复现403：协议请求Origin/Sec-Fetch-Site为空，但initiatorOrigin为真实网站；ses.fetch实际出站Origin为空、Sec-Fetch-Site=none。修复仅在Windows壳remoteFetch中对非GET/HEAD请求核对initiatorOrigin、请求URL、转发目标严格同源且已有Origin不矛盾，然后设置真实Origin。不改网站白名单/CSRF或放宽跨站请求。
+
+三线路真实上游复验返回401账号密码不匹配，出站Origin正确、Sec-Fetch-Site=same-origin；异源写请求未转发。没有读取/提交真实用户密码或创建真实账号，不能据此声称用户账号成功登录。Windows成品进程与现有用户实例冲突，未强关用户应用；使用隔离profile的同源代码执行回归，并逐字节核对成品asar，275资源SHA通过。
+
+交付 `D:/tlydcg/Codex_work/CampusOS_广外通/v2.0.2/Windows/CampusOS-2.0.2-Windows-x64-Setup.exe`；旧版保留，Android/macOS仍2.0.1。NSIS最终使用ASCII临时输出路径规避工作目录中“Can't open output file”，成功后复制交付，校验和/回执/说明均在v2.0.2目录。未修改现有安装或账号数据。
+
+
+## 2026-11-14｜macOS来源修复与三端统一v2.0.2
+
+按负责人指令修复macOS并统一版本。Windows保留已修复的2.0.2安装程序（SHA不变）；macOS使用同一main.cjs来源转发修复，Universal DMG重新签名并读回，275文件及app.asar与固定源一致，桌面main SHA为346ae41bcf951401ab4d9ef55cf6fb13d9e94b6413a3d1c5f7382a106ef25811。Android重新构建为versionName2.0.2/versionCode20002，证书沿用原测试证书，v2/v3签名通过、无debuggable，模拟器覆盖安装最终APK成功。
+
+三端安装文件及统一README、checksums、build-info均位于 `D:/tlydcg/Codex_work/CampusOS_广外通/v2.0.2/`。旧版保留。Android安装包21,016,633字节；macOS249,213,862字节；Windows140,794,523字节。资源哈希和客户端密钥扫描通过，82活动GLB、院落与三线路优先级不变。
+
+共享桌面修复沿用上一轮三条线路真实来源校验/异源拒绝回归；未在Mac原生启动或使用真实密码验证。额外Android登录探测因模拟器Wi-Fi未连接且无活动网络而返回Failed to fetch，未记为来源校验/登录成功，未因此修改生产代码或关闭保护；已恢复最终非调试APK并关闭本轮启动的模拟器。未改网站、D1、DNS或任何真实账号。
+
+
+## 2026-11-14｜手机方位与服务点导航修复、三端2.0.3
+
+已复现基础Canvas导航按钮仅改图标、bearing不变，以及又康超市/伟腾图文本地路由返回null后落入高德未配置错误。BasicMapAdapter现实际旋转并保留可靠跟随段，Provider显式切换朝向恢复跟随。服务点按现有建筑周边接入，含三饭打印店所在未命名OSM轮廓；源地图/道路/模型坐标不改，离线公共候选113地点468项。
+
+类型检查、Lint、全量160文件1129用例通过；本地新增10项回归、既有4项定位/方向回归通过。公开域名最终10项场景中9项首轮通过、1项在page.goto时ERR_CONNECTION_CLOSED，单独复跑通过。最终Worker版本6a36e91d-9ea8-4626-a8eb-8284ec21e1d0，基线回滚点c0e6a305-920e-4c84-801c-98c75ed32acc。构建及1721生成文件凭据净化通过。Wrangler请求曾失败，IPv4后完成上传；Cron阶段CLI仍返回fetch failed，但已用只读Cloudflare API确认最终版本100%生效，原每分钟Cron及原创建/修改时间保持，未改D1、DNS、Secret或计费资源。
+
+三端2.0.3交付于 D:/tlydcg/Codex_work/CampusOS_广外通/v2.0.3/。275静态文件45,490,503字节、82活动GLB与院落完整，资源SHA/客户端密钥扫描通过。Windows冻结前端壳断网普通地图/Canvas三服务点、方向切换、848米路线和普通地图三模式通过，JS错误0。Android14模拟器/WebView113断网普通地图与模拟GL上下文丢失后的Canvas均实际按预期180.326°旋转且可朝北，三服务点路线通过；同资源诊断APK完成后已恢复最终非调试APK，版本20003/旧证书/v2-v3验证通过。macOS Universal签名/DMG读回/275文件和asar核对通过，未实机启动。详见NAVIGATION_FIX_ACCEPTANCE_2026_11_14.md及交付README。

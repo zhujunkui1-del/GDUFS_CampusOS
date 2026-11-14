@@ -244,8 +244,38 @@ test("full-campus route and focused navigation retain honest GPS failure state",
       2,
     ) + "\n",
   );
+  const routeHeading = await page
+    .locator(".navigation-arrow svg")
+    .evaluate((el) =>
+      Number(
+        (el as SVGElement).style.transform.match(/rotate\(([-\d.]+)deg\)/)![1],
+      ),
+    );
   await page.getByRole("button", { name: "切换路线方向朝上" }).click();
   await expect(page.getByRole("button", { name: "切换朝北" })).toBeVisible();
+  await expect
+    .poll(async () =>
+      Math.abs(
+        ((Number(
+          await page.getByTestId("campus-map").getAttribute("data-bearing"),
+        ) -
+          routeHeading +
+          540) %
+          360) -
+          180,
+      ),
+    )
+    .toBeLessThan(1);
+  await page.getByRole("button", { name: "切换朝北", exact: true }).click();
+  await expect
+    .poll(async () =>
+      Math.abs(
+        Number(
+          await page.getByTestId("campus-map").getAttribute("data-bearing"),
+        ),
+      ),
+    )
+    .toBeLessThan(1);
   await page.getByRole("button", { name: "退出步行导航" }).click();
   await expect(page.locator(".route-result")).toHaveCount(0);
   await expect(page.getByLabel("导航终点")).toHaveValue("");
@@ -308,6 +338,32 @@ test("controlled GPS updates progress and view orientation without external requ
     ).match(/\d+/)![0],
   );
   expect(before).toBeGreaterThan(100);
+  await page.mouse.move(140, 360);
+  await page.mouse.down();
+  await page.mouse.move(190, 400, { steps: 5 });
+  await page.mouse.up();
+  await page
+    .getByRole("button", { name: "切换路线方向朝上", exact: true })
+    .click();
+  await expect
+    .poll(async () =>
+      Math.abs(
+        Number(
+          await page.getByTestId("campus-map").getAttribute("data-bearing"),
+        ),
+      ),
+    )
+    .toBeGreaterThan(1);
+  await page.getByRole("button", { name: "切换朝北", exact: true }).click();
+  await expect
+    .poll(async () =>
+      Math.abs(
+        Number(
+          await page.getByTestId("campus-map").getAttribute("data-bearing"),
+        ),
+      ),
+    )
+    .toBeLessThan(1);
   await context.setGeolocation({
     longitude: 113.392672,
     latitude: 23.0650147,

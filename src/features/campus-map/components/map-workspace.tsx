@@ -35,6 +35,7 @@ import { FocusedNavigation } from "./focused-navigation";
 import { MapViewButtons } from "./map-view-buttons";
 import { useAccount } from "@/features/account/account-context";
 import { TrafficPanel } from "@/features/console/dashboard-panels";
+import { FeedbackEntry } from "@/features/feedback/feedback-dialog";
 
 async function requestPublicTraffic<T>(path: string): Promise<T> {
   const response = await fetch(path, { cache: "no-store" });
@@ -206,6 +207,7 @@ export function MapWorkspace() {
       >
         <BarChart3 size={21} />
       </button>
+      <FeedbackEntry />
       {trafficOpen && (
         <div
           className="map-traffic-backdrop"

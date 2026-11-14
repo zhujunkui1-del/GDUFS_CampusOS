@@ -17,6 +17,8 @@ import type { PilotModelState } from "../data/model-pilot";
 import manifest from "../data/local-map-manifest.json";
 import { campusViewport } from "../data/viewport";
 import { locationHalo } from "../data/device-location";
+import { headingBetween } from "../data/navigation-geometry";
+import { projectOnPath } from "../data/route-progress";
 
 const cameraScope = campusViewport(
   campusData.places.flatMap((p) => p.geometry || [p.coordinate]),
@@ -50,6 +52,7 @@ export class BasicMapAdapter implements CampusRenderer {
   private selected?: string;
   private interaction: "browse" | "pick" | "navigation" = "browse";
   private followSuspended = false;
+  private lastFollow?: Coordinate;
   private listeners = new Set<(id: string) => void>();
   private coordinateListeners = new Set<(point: RoutePoint) => void>();
   private events = new Map<
@@ -683,18 +686,32 @@ export class BasicMapAdapter implements CampusRenderer {
     this.drawSoon();
   }
   followLocation(point: Coordinate, heading?: number) {
-    void heading;
-    if (!this.followSuspended) this.setView(point, Math.max(this.zoom, 17));
+    if (this.followSuspended) return;
+    this.lastFollow = point;
+    if (heading !== undefined) this.map.setRotation(heading);
+    this.setView(point, Math.max(this.zoom, 17));
   }
   resumeFollow() {
     this.followSuspended = false;
   }
   setNavigationView(heading?: number) {
-    void heading;
     this.interaction = "navigation";
+    if (this.route) {
+      const path = this.route.pathGcj02.map(toWgs84);
+      const index = this.lastFollow
+        ? projectOnPath(this.lastFollow, path).index
+        : 0;
+      const bearing =
+        heading ??
+        headingBetween(path[index], path[Math.min(index + 1, path.length - 1)]);
+      this.map.setRotation(bearing);
+      if (this.lastFollow) this.followLocation(this.lastFollow, bearing);
+      else this.fitPoints(path);
+    }
     this.drawSoon();
   }
   setInteractionMode(value: "browse" | "pick" | "navigation") {
+    if (value !== this.interaction) this.lastFollow = undefined;
     this.interaction = value;
     this.drawSoon();
   }

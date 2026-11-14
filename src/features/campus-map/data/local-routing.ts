@@ -6,6 +6,7 @@ import {
 import raw from "./walking-network.json";
 import {
   campusData,
+  placeLayer,
   CoordinateSchema,
   type Coordinate,
   type CampusPlace,
@@ -154,11 +155,29 @@ export function loadPublicWalkingAttachments(input: unknown) {
 function targetRing(place: CampusPlace) {
   const parent =
     place.parentId && campusData.places.find((p) => p.id === place.parentId);
+  const host =
+    place.category === "service" &&
+    campusData.places.find(
+      (candidate) =>
+        candidate.geometry &&
+        ["buildings", "dormitories"].includes(placeLayer(candidate)) &&
+        pointInPolygon(place.coordinate, candidate.geometry),
+    );
   return place.geometry?.length && place.geometry.length > 3
     ? place.geometry
     : parent
       ? parent.geometry
-      : undefined;
+      : host
+        ? host.geometry
+        : place.category === "service"
+          ? (raw.obstacles.buildings as Coordinate[][][]).find(
+              (rings) =>
+                pointInPolygon(place.coordinate, rings[0]) &&
+                !rings
+                  .slice(1)
+                  .some((hole) => pointInPolygon(place.coordinate, hole)),
+            )?.[0]
+          : undefined;
 }
 function belongsToPart(place: CampusPlace, p: Coordinate) {
   if (!place.parentId || place.geometry) return true;

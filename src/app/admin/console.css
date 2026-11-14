@@ -5,6 +5,45 @@
   grid-template-columns: 208px minmax(0, 1fr);
   background: var(--surface-page);
 }
+.feedback-inbox > h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.feedback-inbox > h2 span {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+.feedback-inbox-item {
+  padding: 20px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+.feedback-inbox-item header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.feedback-inbox-item strong {
+  overflow-wrap: anywhere;
+}
+.feedback-inbox-item time {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+.feedback-inbox-item > p {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+  margin: 16px 0;
+}
+.feedback-inbox-item button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
 .console-article-whitelist {
   margin-left: auto;
   white-space: nowrap;

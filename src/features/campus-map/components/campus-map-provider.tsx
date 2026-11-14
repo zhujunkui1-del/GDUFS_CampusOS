@@ -603,7 +603,10 @@ export function CampusMapProvider({
     dismissLocationNotice: setDismissedNotice,
     navigating: navigationActive,
     navigationOrientation,
-    setNavigationOrientation,
+    setNavigationOrientation: (value) => {
+      adapter.current?.resumeFollow();
+      setNavigationOrientation(value);
+    },
     navigationProgress,
     locate: () => {
       ++interactionVersion.current;
