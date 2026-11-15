@@ -43,7 +43,12 @@ function metadataRadarCategory(
   if (/演出|展览|书展|文体|运动会/.test(title)) return "culture_sports";
   return "campus_notice";
 }
-export function importUrl(source: SourceDetail, raw: string, detail = true) {
+export function importUrl(
+  source: SourceDetail,
+  raw: string,
+  detail = true,
+  attachment?: { originalChecked?: boolean; discoveryUrls: string[] },
+) {
   const u = new URL(SafeUrlSchema.parse(raw));
   if (
     u.protocol !== "https:" ||
@@ -72,6 +77,24 @@ export function importUrl(source: SourceDetail, raw: string, detail = true) {
     try {
       return approvedUrl(profile, u.toString());
     } catch {
+      const publicFile =
+        /\.(pdf|docx?|xlsx?|pptx?|txt|md)$/i.test(u.pathname) ||
+        (u.pathname === "/system/_content/download.jsp" &&
+          u.searchParams.get("urltype") === "news.DownloadAttachUrl" &&
+          !!u.searchParams.get("owner") &&
+          !!u.searchParams.get("wbfileid"));
+      if (
+        publicFile &&
+        attachment?.originalChecked &&
+        attachment.discoveryUrls.some((parent) => {
+          try {
+            return !!approvedUrl(profile, parent);
+          } catch {
+            return false;
+          }
+        })
+      )
+        return u.toString();
       throw new ApiError("INVALID_ARGUMENT", "原文不在已批准栏目内。");
     }
   }
@@ -343,7 +366,7 @@ export class ManualImportStore extends IngestionStore {
     let bodies = 0,
       duplicates = 0;
     for (const [ordinal, item] of value.items.entries()) {
-      const url = importUrl(source, item.url);
+      const url = importUrl(source, item.url, true, item);
       if (seen.has(url))
         throw new ApiError("INVALID_ARGUMENT", "批次中存在重复原文链接。");
       seen.add(url);

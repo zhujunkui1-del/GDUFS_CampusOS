@@ -50,7 +50,7 @@ export const RetrievalMetricsSchema = z.object({
     .array(
       z.object({ name: z.string(), limit: z.number(), candidates: z.number() }),
     )
-    .max(3)
+    .max(5)
     .optional(),
 });
 export const EvidenceHitSchema = z

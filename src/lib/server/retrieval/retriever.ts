@@ -12,7 +12,7 @@ import {
   type RetrievalQuery,
   type RetrievalResult,
 } from "@/domain/retrieval/contracts";
-import { ftsRecallLanes, keywords } from "@/lib/retrieval/terms";
+import { ftsRecallLanes, keywords, lexicalTokens } from "@/lib/retrieval/terms";
 import {
   buildQueryPlan,
   headOfSubject,
@@ -322,9 +322,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
     // “宿舍文化节” won on the word 宿舍 alone. The head of a soft modifier is
     // what both the question and the article share.
     const scoringTerm = (m: { original: string; hard?: boolean }) =>
-      m.hard === false
-        ? [...m.original].slice(0, 2).join("")
-        : m.original;
+      m.hard === false ? [...m.original].slice(0, 2).join("") : m.original;
     const scoringTerms = [
       ...plan.modifiers.map(scoringTerm),
       ...plan.topics.map((t) => t.alternatives[0]),
@@ -606,6 +604,38 @@ ${sourceFilterSql}
         });
         candidateLanes.push(found.results);
       }
+    const passageRanks = new Map<string, number>();
+    if (
+      q.purpose === "knowledge" &&
+      !recentChunks.length &&
+      sortMode === "relevance"
+    ) {
+      const tokens = [
+        ...new Set(keywords(q.query).flatMap(lexicalTokens)),
+      ].slice(0, 64);
+      if (tokens.length) {
+        const constrained = titleIds ? [...titleIds] : [];
+        const found = await read<ChunkRow>(
+          `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,rank AS score
+ FROM article_chunk_fts JOIN knowledge_chunks k ON k.rowid=article_chunk_fts.rowid JOIN knowledge_documents d ON d.id=k.document_id JOIN knowledge_sources s ON s.id=d.source_id
+ WHERE ${conditions.join(" AND ")}${constrained.length ? ` AND k.document_id IN(${constrained.map(() => "?").join(",")})` : ""} ORDER BY rank LIMIT 32`,
+          [
+            "body_terms : (" +
+              tokens.map((t) => '"' + t + '"').join(" OR ") +
+              ")",
+            ...params,
+            ...constrained,
+          ],
+        );
+        candidateLanes.push(found.results);
+        found.results.forEach((c) => passageRanks.set(c.id, c.score));
+        metrics.recallLanes.push({
+          name: "body_passages",
+          limit: 32,
+          candidates: found.results.length,
+        });
+      }
+    }
     // Semantic recall is a supplemental lane only for open natural-language
     // queries. Structured/filtered searches keep the deterministic FTS path so
     // a vector candidate cannot bypass date, source or document constraints.
@@ -651,8 +681,9 @@ ${sourceFilterSql}
     // Interleave document candidates so one recall lane cannot consume all
     // public revalidation slots. Total raw chunks <=96; current IDs <=32.
     const merged: ChunkRow[] = [];
-    for (let i = 0; i < 96; i++)
-      for (const lane of candidateLanes) if (lane[i]) merged.push(lane[i]);
+    for (let i = 0; i < 96 && merged.length < 96; i++)
+      for (const lane of candidateLanes)
+        if (lane[i] && merged.length < 96) merged.push(lane[i]);
     const rows = {
       results: [...new Map(merged.map((c) => [c.id, c])).values()],
     };
@@ -672,13 +703,52 @@ ${sourceFilterSql}
       intentTier: number;
       directSubject: boolean;
     }[] = [];
+    let refinedCandidates = 0;
     for (const d of documents) {
       if (titleIds && !titleIds.has(d.id)) continue;
       const parsed = d.analysis_json
           ? ArticleAnalysisSchema.safeParse(JSON.parse(d.analysis_json))
           : null,
         analysis = parsed?.success ? parsed.data : null;
-      const choices = rows.results
+      let candidates = rows.results;
+      if (
+        q.purpose === "knowledge" &&
+        d.can_read_body &&
+        d.text_length > 5400 &&
+        sortMode === "relevance"
+      ) {
+        const titleTokens = new Set(lexicalTokens(d.title));
+        const tokens = [...new Set(keywords(q.query).flatMap(lexicalTokens))]
+          .filter((t) => !titleTokens.has(t))
+          .slice(0, 64);
+        if (tokens.length) {
+          candidates
+            .filter((c) => c.document_id === d.id)
+            .forEach((c) => passageRanks.delete(c.id));
+          const passages = await read<ChunkRow>(
+            `SELECT k.document_id,k.id,k.text,k.start_offset,k.end_offset,k.text_basis,k.content_revision,k.input_hash,rank AS score
+ FROM article_chunk_fts JOIN knowledge_chunks k ON k.rowid=article_chunk_fts.rowid
+ WHERE article_chunk_fts MATCH ? AND k.document_id=? AND k.content_revision=? AND k.input_hash=? AND k.index_version=? ORDER BY rank LIMIT 16`,
+            [
+              "body_terms : (" +
+                tokens.map((t) => '"' + t + '"').join(" OR ") +
+                ")",
+              d.id,
+              d.content_revision,
+              d.input_hash,
+              RETRIEVAL_INDEX_VERSION,
+            ],
+          );
+          passages.results.forEach((c) => passageRanks.set(c.id, c.score));
+          candidates = [
+            ...new Map(
+              [...candidates, ...passages.results].map((c) => [c.id, c]),
+            ).values(),
+          ];
+          refinedCandidates += passages.results.length;
+        }
+      }
+      const choices = candidates
         .filter(
           (c) =>
             c.document_id === d.id &&
@@ -710,7 +780,10 @@ ${sourceFilterSql}
       const chunkRelevance = (text: string) =>
         queryRelevance(plan, { title: d.title, contentSnippet: text });
       const windows = new Map(
-        choices.map((c) => [c.id, evidenceWindow(c.text, q.query, 780)]),
+        choices.map((c) => [
+          c.id,
+          evidenceWindow(c.text, q.query, 780, undefined, d.title),
+        ]),
       );
       const relevanceByChunk = new Map(
         choices.map((c) => [c.id, chunkRelevance(c.text)]),
@@ -719,6 +792,9 @@ ${sourceFilterSql}
         (a, b) =>
           Number(relevanceByChunk.get(b.id)!.relevant) -
             Number(relevanceByChunk.get(a.id)!.relevant) ||
+          (d.text_length > 5400
+            ? (passageRanks.get(a.id) ?? 0) - (passageRanks.get(b.id) ?? 0)
+            : 0) ||
           windows.get(b.id)!.priority - windows.get(a.id)!.priority ||
           (windows.get(a.id)!.priority === 2
             ? a.start_offset - b.start_offset
@@ -739,7 +815,7 @@ ${sourceFilterSql}
               .map((ch) => ch + (chars[chars.indexOf(ch) + 1] ?? ""))
           : [m.original];
       });
-      const covering = halves
+      const covering = (d.text_length > 5400 ? [] : halves)
         .map((half) => {
           const chunk = choices.find((c2) => c2.text.includes(half));
           return chunk ? { ...chunk, half } : null;
@@ -873,7 +949,9 @@ ${sourceFilterSql}
       // | 故障报修全攻略” answers “how do I report a repair”, while the
       // payment-rules article that merely repeats the word 报修 does not.
       const rulebookTitle =
-        /手册|条例|细则|规定|办法|章程|规章|指南|攻略|须知|全流程/.test(d.title);
+        /手册|条例|细则|规定|办法|章程|规章|指南|攻略|须知|全流程/.test(
+          d.title,
+        );
       const rulebookBoost =
         ["procedure", "policy", "requirements"].includes(plan.goal) &&
         rulebookTitle
@@ -894,12 +972,13 @@ ${sourceFilterSql}
       // question's topic word (宿舍) lives in the body rather than the title:
       // “使用指南 | 故障报修全攻略” answers “宿舍报修在哪里提交”, while
       // “宿舍文化节通知” only shares the word 宿舍.
-      const guideBoost = /指南|攻略|须知|全流程|教程|手册/.test(d.title) &&
+      const guideBoost =
+        /指南|攻略|须知|全流程|教程|手册/.test(d.title) &&
         plan.modifiers.some((m) =>
           [...m.original].slice(0, 2).some((head) => d.title.includes(head)),
         )
-        ? 8
-        : 0;
+          ? 8
+          : 0;
       const scheduleNotice =
         /安排|通知|名单|公示|通报/.test(d.title) &&
         !/手册|条例|细则|规定|办法|章程|规章|指南|攻略|须知/.test(d.title);
@@ -1071,6 +1150,12 @@ ${sourceFilterSql}
       warnings.push("未找到当前公开、版本及来源权限均可核验的相关资料。");
     if (articles.some((a) => !a.hit.bodyAvailable))
       warnings.push("部分结果仅有元数据，不能据此回答正文中的规则或要求。");
+    if (refinedCandidates)
+      metrics.recallLanes.push({
+        name: "document_passages",
+        limit: 16 * documents.length,
+        candidates: refinedCandidates,
+      });
     metrics.durationMs = Math.round(performance.now() - started);
     return {
       result: RetrievalResultSchema.parse({

@@ -1,0 +1,2269 @@
+[
+  {
+    "id": 1,
+    "topic": "本科手册",
+    "question": "按2026版本科生学生手册，本科学制几年，最短和最长在籍学习年限分别是多少？休学算在里面吗？",
+    "status": 200,
+    "elapsedMs": 17294,
+    "terminal": "run.completed",
+    "answer": "现在从已检索到的2026版本科生学生手册相关内容里，暂未找到本科学制、最短/最长在籍学习年限及休学是否计入的相关具体规定，你可以查阅手册的学籍管理相关章节获取准确信息。",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": true,
+        "code": "NON_LITERAL_PLAN"
+      },
+      "answerMode": "model",
+      "buildingProfiles": [],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+          "content-679acdc8-583a-48e5-b654-23a7e6cf9796"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-679acdc8-583a-48e5-b654-23a7e6cf9796",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [
+        {
+          "supported": true,
+          "issues": []
+        }
+      ],
+      "upstreamTimings": [
+        {
+          "durationMs": 4461,
+          "firstTextMs": 4265,
+          "finishReason": "stop",
+          "contentChars": 84
+        },
+        {
+          "durationMs": 2881,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        }
+      ],
+      "promptTokens": 5310,
+      "completionTokens": 638,
+      "cachedPromptTokens": 0,
+      "totalTokens": 5948,
+      "usageComplete": false,
+      "chargedTokens": 255948,
+      "durationMs": 8481,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 7473,
+        "serverElapsedMs": 15954,
+        "firstTextMs": 15912,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 1000,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 24,
+          "writeQueries": 12,
+          "calls": 28,
+          "failures": 0,
+          "durationMs": 1538,
+          "maxCallMs": 203,
+          "rowsRead": 863,
+          "rowsWritten": 26,
+          "rowUsageStatements": 17,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 688,
+            "rowsWritten": 0,
+            "queries": 4,
+            "durationMs": 1000,
+            "candidateChunks": 105,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 9
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": []
+  },
+  {
+    "id": 2,
+    "topic": "本科手册",
+    "question": "本科生开学不能按时报到注册，应该怎么办？家庭经济困难暂时交不起学费还能注册吗？",
+    "status": 200,
+    "elapsedMs": 35423,
+    "terminal": "run.completed",
+    "answer": "### 关于不能按时报到注册\n如果本科生无法按时报到，建议第一时间联系所在学院的辅导员或教务老师，说明具体原因，按要求提交相关证明材料（比如因病需提供医院诊断证明、因家庭突发困难需提供相关证明等），申请延期报到，获批后才能按新安排办理注册手续；若无故逾期且未提前申请，可能会被取消入学资格哦。\n\n### 关于家庭经济困难交不起学费能否注册\n是可以正常注册的！学校有学费缓缴和新生绿色通道政策，允许先办理入学注册手续、再缓缴学费，不会因为暂时交不起学费就影响正常入学，还可以同步申请国家助学贷款、学校各类助学金、社会资助项目等解决学费问题。\n\n目前检索到的2026版广外本科生学生手册明确提到「申请缓缴学费，再办理入学手续，保证家庭经济困难新生顺利入学」的相关要求[1]，但具体的缓缴申请流程、所需提交材料、缓缴期限、绿色通道的详细申请条件等操作细则，当前检索内容暂未覆盖，需要向学校学生资助管理部门或所在学院进一步核实哦。\n\n[1] 2026版本科生学生手册（学生工作部）",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": true,
+        "code": "INVALID_PLAN"
+      },
+      "answerMode": "model",
+      "buildingProfiles": [],
+      "conversationAct": "general",
+      "answerRequirement": "advisory",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 1,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 9572,
+          "firstTextMs": 8472,
+          "finishReason": "stop",
+          "contentChars": 436
+        },
+        {
+          "durationMs": 12000,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        }
+      ],
+      "promptTokens": 2475,
+      "completionTokens": 1177,
+      "cachedPromptTokens": 0,
+      "totalTokens": 3652,
+      "usageComplete": false,
+      "chargedTokens": 500000,
+      "durationMs": 22484,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 11995,
+        "serverElapsedMs": 34479,
+        "firstTextMs": 34440,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 781,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 23,
+          "writeQueries": 12,
+          "calls": 27,
+          "failures": 0,
+          "durationMs": 1571,
+          "maxCallMs": 309,
+          "rowsRead": 1527,
+          "rowsWritten": 26,
+          "rowUsageStatements": 17,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 1354,
+            "rowsWritten": 0,
+            "queries": 4,
+            "durationMs": 781,
+            "candidateChunks": 117,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 21
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+        "title": "2026版本科生学生手册（全文）",
+        "sourceName": "学生工作部",
+        "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+        "publishedAt": "2026-09-20T11:16:00.000Z",
+        "snippet": "申请缓缴学费，再办理入学手续，保证家庭经济困难\n新生顺利入学。\n第二十七条其他校内资助项目。根据学校相关文件组织实施。\n本科学生手册\n164\n第六章社会奖助学项目\n第二十八条学校教育发展基金会秘书处负责开拓社会奖助学项目，\n与出资人确定奖助学项目的标准、申请条件等。\n第二十九条学生工作部、研究生院根据学校教育发展基金会秘书处\n提供的社会奖助学项目相关要求，组织各学院（培养单位）具体实施，加\n强学生教育工作等。\n第七章监督检查机制\n第三十条学生资助经费实行专款专用，任何单位和个人不得截留、\n挤占、挪用，同时接受财务、审计、纪检监察和上级主管机关的检查和监\n督。对弄虚作假、挤占、挪用、滞留学生资助经费的行为，将按照有关规\n定予以严肃处理。\n第三十一条学生资助管理中心组织各学院（培养单位）相关人员，\n对家庭经济困难学\n…\n费、住宿费。 第十一条有下列情况之一者，学校不给予补助：\n学生工作管理\n187\n（一）由于自身责任造成被盗、火灾等而造成暂时生活困难。 （二）平时有高消费或抽烟、酗酒、铺张浪费等行为。 （三）学习态度不端正，不求上进，消极懒散。 （四）受校、院通报批评或警告及以上违纪处分。\n第四章附则\n第十二条本办法由学生工作部（处）负责解释。 第十三条本办法自公布之日起施行，原《广东外语外贸大学学生困难补助实施办法》（广外大学〔2006〕26 号）同时废止。\n本科学生手册\n188\n# 广东外语外贸大学\n# 学生出国（境）学习助学金管理办法\n（广外校〔2018〕25 号2018 年5 月11 日）\n第一章总则\n第一条为加快我校教育国际化进程，资助家庭经济困难学生出国 （境）学习，加强对学生出国（境）学习助学金（以下简称“助学金",
+        "evidenceType": "full_text",
+        "classificationState": "knowledge",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "topic": "本科手册",
+    "question": "本科生因病申请休学需要走什么手续？复学时需要什么证明？",
+    "status": 200,
+    "elapsedMs": 15147,
+    "terminal": "run.completed",
+    "answer": "可核对的信息：\n- 2026版本科生学生手册（全文）（发布于 2026-09-20）： “理由的。 学生因学校培养条件改变等非本人原因需要转学的，学校出具证明， 由所在地省级教育行政部门协调转学到同层次学校。 本科学生手册 58 第三章转学的程序 第四条转学工作必须程序规范，转学程序如下： （一）转学受理时间学生转学申请受理时间为每年的4 月1－15 日、10 月1－15 日。 （二）转学具体程序 1．学生…”[1]\n  ⚠️ 原文对同一件事给出了不同日期（举办/活动时间：4月1 / 10月1），按原文并列，请自行核对。\n原文没写的条件不补，政策是否仍有效也要再核。",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": true,
+        "code": "CANCELLED"
+      },
+      "answerMode": "attributed_excerpt",
+      "buildingProfiles": [],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "professional",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 1,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [],
+      "promptTokens": 0,
+      "completionTokens": 0,
+      "cachedPromptTokens": 0,
+      "totalTokens": 0,
+      "usageComplete": false,
+      "chargedTokens": 250000,
+      "durationMs": 1504,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 12886,
+        "serverElapsedMs": 14390,
+        "firstTextMs": 14390,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 1504,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 20,
+          "writeQueries": 12,
+          "calls": 24,
+          "failures": 0,
+          "durationMs": 1738,
+          "maxCallMs": 459,
+          "rowsRead": 1559,
+          "rowsWritten": 26,
+          "rowUsageStatements": 17,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 1382,
+            "rowsWritten": 0,
+            "queries": 4,
+            "durationMs": 1504,
+            "candidateChunks": 109,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 13
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+        "title": "2026版本科生学生手册（全文）",
+        "sourceName": "学生工作部",
+        "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+        "publishedAt": "2026-09-20T11:16:00.000Z",
+        "snippet": "理由的。 学生因学校培养条件改变等非本人原因需要转学的，学校出具证明， 由所在地省级教育行政部门协调转学到同层次学校。\n本科学生手册\n58\n第三章转学的程序\n第四条转学工作必须程序规范，转学程序如下： （一）转学受理时间学生转学申请受理时间为每年的4 月1－15 日、10 月1－15 日。 （二）转学具体程序 1．学生申请。 学生需亲笔撰写转学申请，填写《广东省普通高等学校转学备案表》 （在教务处主页办事流程下载），并附上本办法第五条所列相关证明材料， 一并提交教务处。 2．教务处受理。 根据学生申请情况，教务处进行初步审核，对符合转学条件的准予受理。 3．学校审核。 拟转出我校的，严格审核学生转学理由及相关证明，确属因患病或者有特殊困难、特别需要，无法继续在我校学习或者不适应我校学习要求的，由院、校两级会议集\n…\n； （二）辅导员和培养单位同意后，报学生工作部备案； （三）学生到宿舍管理执行机构办理外宿相关事项。 第二十一条因退学、休学、转学、出国等情况需要退宿的学生， 须持学校职能部门的书面通知，到宿舍管理执行机构提前办理相关手续。 第二十二条已办理退宿手续的学生，申请回学生宿舍住宿的，应由本人书面申请，经批准后由宿舍管理执行机构做出相应的安排。 第二十三条未通过入学体检复查但保留入学资格的新生，应在2 周内到宿舍管理执行机构办理退宿手续，原床位不予保留；复学后，持复学证明重新办理住宿手续。 第二十四条患有传染性疾病的学生，应持校医院证明及时向宿舍管理执行机构说明情况，宿舍管理执行机构根据实际情况作相应的安排或调整。 第二十五条对于终止学籍的学生，应在一个月内办理退宿手续并搬离宿舍，期间应爱护公共财物，主动配合工作人员",
+        "evidenceType": "full_text",
+        "classificationState": "knowledge",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "topic": "本科手册",
+    "question": "学生对学校处分决定有异议，应该在收到决定后多久提出书面申诉？",
+    "status": 200,
+    "elapsedMs": 24128,
+    "terminal": "run.completed",
+    "answer": "根据学校现行学生管理规定，学生对学校处分决定有异议的，需在**接到处分决定书之日起10日内**向学校学生申诉处理委员会提出书面申诉 [1][2]。\n\n如果处分决定书未告知申诉期限，申诉期限自学生知道或应当知道处分决定之日起计算，但最长不得超过6个月；申诉期内未提出申诉的视为放弃申诉，学校不再受理 [1][2]。\n\n关键依据：\n[1] 《2026年研究生手册（全文）》（学生工作部发布）\n[2] 《2026版本科生学生手册（全文）》（学生工作部发布）",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "plan": {
+          "subject": "学生对学校处分决定有异议的书面申诉",
+          "entities": [],
+          "constraints": [
+            "收到决定后"
+          ],
+          "goal": "procedure",
+          "query": "“学生对学校处分决定有异议” “书面申诉” “收到决定后” 收到决定后"
+        },
+        "durationMs": 4597,
+        "usage": {
+          "promptTokens": 534,
+          "completionTokens": 458,
+          "totalTokens": 992
+        }
+      },
+      "answerMode": "model",
+      "buildingProfiles": [],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+          "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+          "content-54770d82-fad6-4866-bae6-476ae804a697",
+          "content-9fc9e5ba-a65c-4ad7-b297-3f3876b3973b"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-9fc9e5ba-a65c-4ad7-b297-3f3876b3973b",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [
+        {
+          "supported": true,
+          "issues": []
+        }
+      ],
+      "upstreamTimings": [
+        {
+          "durationMs": 5816,
+          "firstTextMs": 5016,
+          "finishReason": "stop",
+          "contentChars": 225
+        },
+        {
+          "durationMs": 11158,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        }
+      ],
+      "promptTokens": 8870,
+      "completionTokens": 2338,
+      "cachedPromptTokens": 0,
+      "totalTokens": 11208,
+      "usageComplete": true,
+      "chargedTokens": 11208,
+      "durationMs": 17914,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 5499,
+        "serverElapsedMs": 23413,
+        "firstTextMs": 23371,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 575,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 25,
+          "writeQueries": 12,
+          "calls": 29,
+          "failures": 0,
+          "durationMs": 1643,
+          "maxCallMs": 284,
+          "rowsRead": 6908,
+          "rowsWritten": 26,
+          "rowUsageStatements": 18,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 6729,
+            "rowsWritten": 0,
+            "queries": 5,
+            "durationMs": 575,
+            "candidateChunks": 37,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 37
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 0
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+        "title": "2026年研究生手册（全文）",
+        "sourceName": "学生工作部",
+        "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+        "publishedAt": "2026-09-20T11:27:05.000Z",
+        "snippet": "32\n学校制定学生申诉的具体办法，健全学生申诉处理委员会的组成与工作规则，提供必要条件，保证其能够客观、公正地履行职责。 第三十一条学生对学校的处理或者处分决定有异议的，可以在接到学校处理或者处分决定书之日起10 日内，向学校学生申诉处理委员会提出书面申诉。 第三十二条学生申诉处理委员会对学生提出的申诉进行复查，并在接到书面申诉之日起15 日内作出复查结论并告知申诉人。情况复杂不能在规定限期内作出结论的，经学校负责人批准，可延长15 日。学生申诉处理委员会认为必要的，可以建议学校暂缓执行有关决定。 学生申诉处理委员会经复查，认为做出处理或者处分的事实、依据、程序等存在不当，可以作出建议撤销或变更的复查意见，要求相关职能部门予以研究，重新提交校长办公会或者专门会议作出决定。 第三十三条学生对复查决定有异议的，在接到学校复查决定书之日起15 日内，可以向学校所在地省级教育行政部门提出书面申诉。 第三十四条自处理、处分或者复查决定书送达之日起，学生在申诉期内未提出申诉的视为放弃申诉，学校不再受理其提出的申诉。 处理、处分或者复查决定书未告知学生申诉期限的，申诉期限自学生知道或者应当知道处理或者处分决定之日起计算，但最长不得超过6 个月。 第三十五条学生认为学校及其工作人员违反本规定，侵害其合法权益的；或者学校制定的规章制度与法律法规和本规定抵触的，可以向学校所在地省级教育行政部门投诉。\n第七章附则\n第三十六条学校对接受高等学历继续教育的学生、港澳台侨学生、\n留学生的管理，参照本规定执行。\n第三十七条本规定自2017 年9 月1 日起施行。原《广东外语外贸\n大学学生管理规定》（广外大校〔2005〕52 号）同时废止。学校内其他\n有关文件规定与本规定不一致的，以本规定为准。\n第三十八条本规定由学校学生工作部（处）负责解释。\n研究生培养\n33\n#",
+        "evidenceType": "full_text",
+        "classificationState": "knowledge",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+        "title": "2026版本科生学生手册（全文）",
+        "sourceName": "学生工作部",
+        "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+        "publishedAt": "2026-09-20T11:16:00.000Z",
+        "snippet": " 学生申诉处理委员会由学校相关负责人、职能部门负责人、教师代表、学生代表、负责法律事务的相关机构负责人等组成。 学校制定学生申诉的具体办法，健全学生申诉处理委员会的组成与工作规则，提供必要条件，保证其能够客观、公正地履行职责。 第三十一条学生对学校的处理或者处分决定有异议的，可以在接到学校处理或者处分决定书之日起10 日内，向学校学生申诉处理委员会提出书面申诉。 第三十二条学生申诉处理委员会对学生提出的申诉进行复查，并在接到书面申诉之日起15 日内作出复查结论并告知申诉人。情况复杂不能在规定限期内作出结论的，经学校负责人批准，可延长15 日。学生申诉处理委员会认为必要的，可以建议学校暂缓执行有关决定。 学生申诉处理委员会经复查，认为做出处理或者处分的事实、依据、 程序等存在不当，可以作出建议撤销或变更的复查意见，要求相关职能部门予以研究，重新提交校长办公会或者专门会议作出决定。 第三十三条学生对复查决定有异议的，在接到学校复查决定书之日起15 日内，可以向学校所在地省级教育行政部门提出书面申诉。 第三十四条自处理、处分或者复查决定书送达之日起，学生在申诉期内未提出申诉的视为放弃申诉，学校不再受理其提出的申诉。 处理、处分或者复查决定书未告知学生申诉期限的，申诉期限自学生知道或者应当知道处理或者处分决定之日起计算，但最长不得超过6 个月。 第三十五条学生认为学校及其工作人员违反本规定，侵害其合法权益的；或者学校制定的规章制度与法律法规和本规定抵触的，可以向学校所在地省级教育行政部门投诉。\n第七章附则\n第三十六条学校对接受高等学历继续教育的学生、港澳台侨学生、 留学生的管理，参照本规定执行。 第三十七条本规定自2017 年9 月1 日起施行。原《广东外语外贸",
+        "evidenceType": "full_text",
+        "classificationState": "knowledge",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "topic": "本科手册",
+    "question": "图书馆本科生可以借几本书，借多久，续借有什么要求？",
+    "status": 200,
+    "elapsedMs": 38602,
+    "terminal": "run.completed",
+    "answer": "给你查好啦👇\n根据2026版本科生学生手册的图书馆读者权限规则 [1]：\n- 本科生可借图书最多10本，单本借期30天；\n- 常规无续借权限，若因特殊情况需要延期，可持所在系/单位开具的担保书向图书馆申请。",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "model",
+      "buildingProfiles": [
+        "osm-way-307250998"
+      ],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 4,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 1,
+      "groundingChecks": 2,
+      "groundingFailures": 2,
+      "groundingCheckFailures": 0,
+      "groundingResults": [
+        {
+          "supported": false,
+          "severity": "unverified",
+          "issues": [
+            "本轮无对应引用来源，答复标注的[1]无支撑材料",
+            "可借35本、借期30天的规则无来源支持",
+            "续借权限表述无来源支持"
+          ]
+        },
+        {
+          "supported": false,
+          "severity": "unverified",
+          "issues": [
+            "本轮未提供任何引用来源，答复所引[1]无法核实",
+            "本科生借书册数、借期等规则在给定资料中未体现",
+            "2026版本科生手册相关内容未在本次资料中确认"
+          ]
+        }
+      ],
+      "upstreamTimings": [
+        {
+          "durationMs": 13346,
+          "firstTextMs": 12861,
+          "finishReason": "stop",
+          "contentChars": 161
+        },
+        {
+          "durationMs": 6311,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        },
+        {
+          "durationMs": 10518,
+          "firstTextMs": 10241,
+          "finishReason": "stop",
+          "contentChars": 104
+        },
+        {
+          "durationMs": 4919,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        }
+      ],
+      "promptTokens": 6462,
+      "completionTokens": 4185,
+      "cachedPromptTokens": 0,
+      "totalTokens": 10647,
+      "usageComplete": true,
+      "chargedTokens": 10647,
+      "durationMs": 36277,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 1804,
+        "serverElapsedMs": 38081,
+        "firstTextMs": 38010,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 925,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 32,
+          "writeQueries": 12,
+          "calls": 36,
+          "failures": 0,
+          "durationMs": 2683,
+          "maxCallMs": 384,
+          "rowsRead": 12311,
+          "rowsWritten": 26,
+          "rowUsageStatements": 21,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 7437,
+            "rowsWritten": 0,
+            "queries": 5,
+            "durationMs": 925,
+            "candidateChunks": 75,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 11
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "place",
+        "place": {
+          "placeId": "osm-way-307250998",
+          "name": "图书馆",
+          "category": "library",
+          "zone": "teaching",
+          "location": [
+            113.39131405,
+            23.0680465
+          ],
+          "crs": "WGS84",
+          "aliases": [
+            "大学城校区图书馆"
+          ],
+          "labelPlaceId": "osm-way-307250998",
+          "verificationStatus": "source_mapped"
+        }
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "topic": "研究生手册",
+    "question": "2026年研究生手册规定，硕士和博士研究生的基本学制与最长学习年限分别是多少？",
+    "status": 200,
+    "elapsedMs": 25374,
+    "terminal": "run.completed",
+    "answer": "### 2026年研究生手册相关学制与学习年限规定（基于现有检索到的官方资料）\n1. **硕士研究生**\n   - 基本学制分为2年、3年两类；\n   - 对应最长学习年限：2年学制为4年，3年学制为5年 [1]。\n2. **博士研究生**\n   - 最长学习年限：非定向生为6年，定向生为7年 [1]；\n   - 基本学制当前检索到的2026年研究生手册相关内容未明确披露。\n\n> 注：上述硕士学制、博士最长学习年限规则出自研究生院2026年发布的预警通知，该通知明确依据《广东外语外贸大学研究生学籍管理规定》（广外校〔2017〕37号、广外校〔2023〕28号）执行，2026年新版研究生手册未在检索结果中披露对应学制条款。",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "plan": {
+          "subject": "硕士和博士研究生的基本学制与最长学习年限",
+          "entities": [
+            "研究生手册"
+          ],
+          "constraints": [
+            "2026年",
+            "硕士",
+            "博士研究生"
+          ],
+          "goal": "facts",
+          "query": "“硕士和博士研究生的基本学制与最长学习年限” “研究生手册” “2026年” “硕士” “博士研究生” 2026年 硕士 博士研究生 2026"
+        },
+        "durationMs": 4396,
+        "usage": {
+          "promptTokens": 540,
+          "completionTokens": 544,
+          "totalTokens": 1084
+        }
+      },
+      "answerMode": "model",
+      "buildingProfiles": [],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+          "content-0e922bc4-7c36-4e3b-9def-a66cb5b69563",
+          "content-0edb76be-7e47-449a-85b0-b925082cc05e",
+          "content-7ecec9ec-8198-4b2e-9781-34f5067870c5"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-0e922bc4-7c36-4e3b-9def-a66cb5b69563",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-0edb76be-7e47-449a-85b0-b925082cc05e",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "professional",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [
+        {
+          "supported": true,
+          "issues": []
+        }
+      ],
+      "upstreamTimings": [
+        {
+          "durationMs": 12072,
+          "firstTextMs": 11070,
+          "finishReason": "stop",
+          "contentChars": 314
+        },
+        {
+          "durationMs": 5109,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        }
+      ],
+      "promptTokens": 5749,
+      "completionTokens": 2780,
+      "cachedPromptTokens": 0,
+      "totalTokens": 8529,
+      "usageComplete": true,
+      "chargedTokens": 8529,
+      "durationMs": 19387,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 5304,
+        "serverElapsedMs": 24691,
+        "firstTextMs": 24647,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 2076,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 25,
+          "writeQueries": 12,
+          "calls": 29,
+          "failures": 0,
+          "durationMs": 2864,
+          "maxCallMs": 978,
+          "rowsRead": 7699,
+          "rowsWritten": 26,
+          "rowUsageStatements": 18,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 7516,
+            "rowsWritten": 0,
+            "queries": 5,
+            "durationMs": 2076,
+            "candidateChunks": 111,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 15
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-0e922bc4-7c36-4e3b-9def-a66cb5b69563",
+        "title": "关于对2026年即将达到最长学习年限研究生进行预警工作的通知",
+        "sourceName": "研究生院",
+        "originalUrl": "https://gwyjs.gdufs.edu.cn/info/1035/14081.htm",
+        "publishedAt": "2026-01-04",
+        "snippet": "各研究生培养单位：\n根据《广东外语外贸大学研究生学籍管理规定》（广外校〔2017〕37号、广外校〔2023〕28号）的要求，为使2026年6月即将达到最长学习年限的研究生了解相关政策，在学校规定的最长学习年限内及时完成学业，各培养单位须提前做好相关研究生的预警工作，现将有关事项通知如下：\n一．预警对象\n1.博士生\n2024级以前（不含2024级）非定向博士研究生最长学习年限为6年，定向博士研究生最长学习年限为7年。此次预警对象为2020级非定向博士生和2019级定向博士生。\n2.硕士生\n两年学制硕士研究生最长学习年限为4年，三年学制硕士研究生最长学习年限为5年。此次预警对象为2021级（三年学制）和2022级（两年学制）硕士研究生。\n二．工作要求\n各培养单位应准确掌握本单位即将达到最长学习年限研究生名单，及时与研究生本人取得联系，了解其学业尤其是学位论文进展情况，提醒其加快进度，务必于2026年6月前完成学位申请的全部工作。同时，应要求导师加强对此部分研究生的管理与指导工作，深入了解研究生的实际学习情况，帮助和督促其按期完成学业。\n三．材料报送\n请相关培养单位于2026年1月12日前将《广东外语外贸大学即将达到最长学习年限研究生登记表》（附件1）、《广东外语外贸大学即将达到最长学习年限研究生汇总表》（附件2）签字盖章版材料交至研究生院培养科。\n研究生院\n2026年1月4日",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "topic": "研究生手册",
+    "question": "研究生申请休学每次多长时间，累计最多多久？",
+    "status": 200,
+    "elapsedMs": 15853,
+    "terminal": "run.completed",
+    "answer": "根据《2026年研究生手册》规定：\n1. 研究生休学原则上以学期为单位，申请休学不满一学期的，按一学期计算；\n2. 休学时间累计不得超过两学期 [1]。\n\n补充说明：休学期满前需向所在培养单位申请复学，逾期未办理复学手续的作退学处理；休学期间学校保留学籍，但不享受在校研究生待遇，因病休学的医疗费按学校相关规定执行 [1]。",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "plan": {
+          "subject": "研究生休学",
+          "entities": [],
+          "constraints": [],
+          "goal": "requirements",
+          "query": "“研究生” “休学”"
+        },
+        "durationMs": 3024,
+        "usage": {
+          "promptTokens": 529,
+          "completionTokens": 265,
+          "totalTokens": 794
+        }
+      },
+      "answerMode": "model",
+      "buildingProfiles": [],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+          "content-51c712fb-51ce-4cfe-bb90-da8e2c413586",
+          "content-17764404-703c-4a6d-be85-5dd815cccd14",
+          "content-2bc373e2-4bd9-4c9c-96eb-de6a57dcdbc3"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-51c712fb-51ce-4cfe-bb90-da8e2c413586",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-17764404-703c-4a6d-be85-5dd815cccd14",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-2bc373e2-4bd9-4c9c-96eb-de6a57dcdbc3",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "professional",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [
+        {
+          "supported": true,
+          "issues": []
+        }
+      ],
+      "upstreamTimings": [
+        {
+          "durationMs": 6973,
+          "firstTextMs": 6546,
+          "finishReason": "stop",
+          "contentChars": 162
+        },
+        {
+          "durationMs": 3561,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        }
+      ],
+      "promptTokens": 7577,
+      "completionTokens": 818,
+      "cachedPromptTokens": 0,
+      "totalTokens": 8395,
+      "usageComplete": true,
+      "chargedTokens": 8395,
+      "durationMs": 11236,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 3902,
+        "serverElapsedMs": 15138,
+        "firstTextMs": 15094,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 572,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 25,
+          "writeQueries": 12,
+          "calls": 29,
+          "failures": 0,
+          "durationMs": 1370,
+          "maxCallMs": 113,
+          "rowsRead": 7865,
+          "rowsWritten": 26,
+          "rowUsageStatements": 18,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 7680,
+            "rowsWritten": 0,
+            "queries": 5,
+            "durationMs": 572,
+            "candidateChunks": 81,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 17
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+        "title": "2026年研究生手册（全文）",
+        "sourceName": "学生工作部",
+        "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+        "publishedAt": "2026-09-20T11:27:05.000Z",
+        "snippet": "保留学籍)。\n第六章休学与复学\n第十六条研究生有以下情况之一者，应办理休学：\n(一)研究生因身体或心理健康问题不宜在校学习，经学校门诊部诊\n断或县级以上医院诊断需较长时间治疗休养；\n(二)因正当原因请假，缺课累计超过一学期教学活动时间的三分之\n一；\n(三)经学校认定的其他应休学的情况。\n第十七条研究生休学原则上以学期为单位，不满一学期的， 按一\n学期计算。休学时间累计不得超过两学期。\n第十八条休学的研究生，应在休学期满前向所在培养单位提出复\n学申请，经培养单位签署意见、研究生院批准后，方可办理复学手续。\n因身体或心理健康等原因休学者，还需由二级甲等以上医院诊断，审查\n合格，方可复学。\n研究生休学期满，未按期办理复学手续，作退学处理。\n第十九条研究生申请休学须书面陈述理由，并提交必要的证明，报\n学校批准。研究生休学期间，学校为其保留学籍，但不享受在校学习研\n究生待遇。因病休学研究生的医疗费按学校有关规定执行。\n第二十条新生和在校研究生有下列情形的，可申请保留学籍：\n(一)应征参加中国人民解放军(含中国人民武装警察部队), 学校保\n留其入学资格或者学籍至退役后2 年；\n研究生手册\n50\n(二)参加学校组织的跨校联合培养项目，在联合培养学校学习期\n间，学校同时为其保留学籍。\n研究生保留学籍期间，与其实际所在的部队、学校等组织建立管理\n关系。\n第七章退学\n第二十一条研究生有下列情况之一者，应予退学：\n（一）在学校规定的学习年限内未完成学业的；\n（二）修业年限内有2 门必修课程考试不及格，重修后仍不及格；\n（三）修业年限内所修课程中，考核成绩累计3 门不及格；\n（四）根据学校指定医院诊断，患有疾病或者意外伤残不能继续在\n校学习的；\n（五）未经批准连续两周未参加学校规定的教学活动，或在一学期\n内无正当理由缺课累计超过教学活动时间的三分之一；\n（六",
+        "evidenceType": "full_text",
+        "classificationState": "knowledge",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "topic": "研究生手册",
+    "question": "按2026年研究生手册，硕士生和博士生的国家奖学金奖励标准分别是多少？",
+    "status": 200,
+    "elapsedMs": 11230,
+    "terminal": "run.completed",
+    "answer": "目前可确认2026年硕士研究生国家奖学金奖励标准为每人2万元[1]，但博士生对应的奖励标准在现有检索到的资料中暂未找到明确信息，2026年研究生手册的公开片段也未包含该部分具体内容。",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": false
+      },
+      "answerMode": "model",
+      "buildingProfiles": [],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+          "content-ad394738-5a73-428a-8a42-cc3b39a2db15",
+          "content-48e16439-07a9-48d6-824d-2f9dd013b95c",
+          "content-236767db-68f9-44b6-ab2b-9d1ad076b89d"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-ad394738-5a73-428a-8a42-cc3b39a2db15",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-48e16439-07a9-48d6-824d-2f9dd013b95c",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-236767db-68f9-44b6-ab2b-9d1ad076b89d",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "professional",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 2,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [
+        {
+          "supported": true,
+          "issues": []
+        }
+      ],
+      "upstreamTimings": [
+        {
+          "durationMs": 5314,
+          "firstTextMs": 5063,
+          "finishReason": "stop",
+          "contentChars": 91
+        },
+        {
+          "durationMs": 3265,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        }
+      ],
+      "promptTokens": 5352,
+      "completionTokens": 485,
+      "cachedPromptTokens": 0,
+      "totalTokens": 5837,
+      "usageComplete": true,
+      "chargedTokens": 5837,
+      "durationMs": 9617,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 863,
+        "serverElapsedMs": 10480,
+        "firstTextMs": 10439,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 905,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 25,
+          "writeQueries": 12,
+          "calls": 29,
+          "failures": 0,
+          "durationMs": 1867,
+          "maxCallMs": 305,
+          "rowsRead": 7797,
+          "rowsWritten": 26,
+          "rowUsageStatements": 18,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 7610,
+            "rowsWritten": 0,
+            "queries": 5,
+            "durationMs": 905,
+            "candidateChunks": 113,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 17
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-ad394738-5a73-428a-8a42-cc3b39a2db15",
+        "title": "关于开展2026年国际治理创新学院研究生国家奖学金评选工作的通知",
+        "sourceName": "国际治理创新学院",
+        "originalUrl": "https://sigi.gdufs.edu.cn/info/1003/6755.htm",
+        "publishedAt": "2026-09-05",
+        "snippet": "科技竞赛中获得较高级别竞赛奖励优于较低级别竞赛奖励。\n同等条件下，为国家和集体做出突出贡献者优先。\n3.未通过学校评审的研究生，推荐研究生培养单位原则上不能补推荐。\n（五）凡有下列情况之一者，不具备当年研究生国家奖学金参评资格：\n1.受过各级、各类处分的；\n2.有课程考核不合格的；\n3.考试作弊或有学术不端行为的；\n4.一学期无故缺课10学时以上的；\n5.不按学校规定时间进行学籍注册、缴纳学费的；\n6.在申报材料中隐瞒事实或提供虚假内容的；\n7.超出基本修业年限的；\n8.学校认定的其他情形。\n三、评选名额及奖励标准\n根据学工部下达的文件，国际治理创新学院2026年硕士研究生国家奖学金名额为2人，奖励标准为每人2万元。\n四、评审工作要求\n（一）基本要求：\n1、我院将成立研究生国家奖学金评审委员会，单位主要负责人任",
+        "evidenceType": "full_text",
+        "classificationState": "radar",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "topic": "研究生手册",
+    "question": "硕士学位论文答辩委员会至少要多少人，专业学位答辩委员会是否需要行业专家？",
+    "status": 200,
+    "elapsedMs": 25424,
+    "terminal": "run.completed",
+    "answer": "硕士学位答辩委员会至少需要3人，且为单数；专业学位答辩委员会需要包含至少1名行业专家 [1][2]。\n\n依据《2026年研究生手册》第三十九条的规定：硕士学位答辩委员会由具备高级专业技术职称的专家或硕士生指导教师组成，人数不少于3人的单数，答辩委员会主席需由具备高级职称的硕士生指导教师担任；专业学位答辩委员会应包含至少1名行业专家 [1][2]。",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": true,
+        "code": "NON_LITERAL_PLAN"
+      },
+      "answerMode": "model",
+      "buildingProfiles": [],
+      "conversationAct": "general",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+          "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+          "content-1e576f7a-b708-4628-8881-438a666b2573",
+          "content-59f07ed9-24cc-41d1-a84c-7b0e5680649d"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-1e576f7a-b708-4628-8881-438a666b2573",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-59f07ed9-24cc-41d1-a84c-7b0e5680649d",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "daily",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [
+        {
+          "supported": true,
+          "issues": []
+        }
+      ],
+      "upstreamTimings": [
+        {
+          "durationMs": 7279,
+          "firstTextMs": 6899,
+          "finishReason": "stop",
+          "contentChars": 174
+        },
+        {
+          "durationMs": 8329,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        }
+      ],
+      "promptTokens": 7327,
+      "completionTokens": 1695,
+      "cachedPromptTokens": 0,
+      "totalTokens": 9022,
+      "usageComplete": false,
+      "chargedTokens": 259022,
+      "durationMs": 17275,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 7433,
+        "serverElapsedMs": 24708,
+        "firstTextMs": 24667,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 1528,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 25,
+          "writeQueries": 12,
+          "calls": 29,
+          "failures": 0,
+          "durationMs": 2594,
+          "maxCallMs": 680,
+          "rowsRead": 7677,
+          "rowsWritten": 26,
+          "rowUsageStatements": 18,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 7488,
+            "rowsWritten": 0,
+            "queries": 5,
+            "durationMs": 1528,
+            "candidateChunks": 108,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 12
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+        "title": "2026年研究生手册（全文）",
+        "sourceName": "学生工作部",
+        "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+        "publishedAt": "2026-09-20T11:27:05.000Z",
+        "snippet": "的前提\n下，可重新提出学位申请。\n研究生培养\n63\n第二节研究生学位论文或实践成果答辩\n第三十八条培养单位应当按照学科、专业组织硕士、博士学位答\n辩委员会。学位论文或者实践成果应当在答辩前送答辩委员会组成人员\n审阅，答辩委员会组成人员应当独立负责地履行职责。\n第三十九条硕士学位答辩委员会组成人员由培养单位审核确定。\n答辩委员会应由具备高级专业技术职称的专家或硕士生指导教师组成，\n人数为不少于3 人的单数。答辩委员会主席应由具备高级职称的专家且\n硕士生指导教师担任。专业学位答辩委员会应包含至少1 名行业专家。\n答辩委员会设秘书1 名。\n新批准的硕士学位点在授予前两届学位时，应聘请校外专家参加答\n辩委员会。\n第四十条博士学位答辩委员会组成人员由培养单位审核确定。答\n辩委员会应由具备高级专业技术职称的专家或博士生指导",
+        "evidenceType": "full_text",
+        "classificationState": "knowledge",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      },
+      {
+        "kind": "source",
+        "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+        "title": "2026版本科生学生手册（全文）",
+        "sourceName": "学生工作部",
+        "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+        "publishedAt": "2026-09-20T11:16:00.000Z",
+        "snippet": "学校规定最长学习年限的前提下，可重新提出学位申请。\n第二节研究生学位论文或实践成果答辩\n第三十八条培养单位应当按照学科、专业组织硕士、博士学位答辩委员会。学位论文或者实践成果应当在答辩前送答辩委员会组成人员审阅，答辩委员会组成人员应当独立负责地履行职责。 第三十九条硕士学位答辩委员会组成人员由培养单位审核确定。 答辩委员会应由具备高级专业技术职称的专家或硕士生指导教师组成，人数为不少于3 人的单数。答辩委员会主席应由具备高级职称的专家且硕士生指导教师组成。专业学位答辩委员会应包含至少1 名行业专家。答辩委员会设秘书1 名。新批准的硕士学位点在授予前两届学位时，应聘请校外专家参加答辩委员会。 第四十条博士学位答辩委员会组成人员由培养单位审核确定。答辩委员会应由具备高级专业技术职称的专家或博士生指导教师组成，其中副",
+        "evidenceType": "full_text",
+        "classificationState": "knowledge",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "topic": "研究生手册",
+    "question": "博士论文答辩没达到博士水平、但达到硕士水平时，可以申请授予硕士学位吗？",
+    "status": 200,
+    "elapsedMs": 17897,
+    "terminal": "run.completed",
+    "answer": "可以，广东外语外贸大学对此有明确规定。\n\n需同时满足以下条件：\n1. 博士学位答辩委员会认定你未达到博士水平，但已达到硕士水平；\n2. 你尚未获得过学校该学科、专业的硕士学位，且本人同意授予硕士学位；\n3. 答辩委员会作出建议授予硕士学位的决议后，报送学位评定分委员会审核、校学位评定委员会审定通过。\n\n关键依据：广东外语外贸大学学位授予实施细则第四十七条 [1]",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "plan": {
+          "subject": "博士论文答辩没达到博士水平、但达到硕士水平时申请授予硕士学位",
+          "entities": [],
+          "constraints": [
+            "博士论文答辩没达到博士水平、但达到硕士水平"
+          ],
+          "goal": "requirements",
+          "query": "“博士论文答辩没达到博士水平、但达到硕士水平时” “申请授予硕士学位” “博士论文答辩没达到博士水平、但达到硕士水平” 博士论文答辩没达到博士水平、但达到硕士水平"
+        },
+        "durationMs": 8356,
+        "usage": {
+          "promptTokens": 538,
+          "completionTokens": 759,
+          "totalTokens": 1297
+        }
+      },
+      "answerMode": "model",
+      "buildingProfiles": [],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+          "content-50498af1-3dda-4af6-a9b5-026689a75031",
+          "content-8dad490c-9b9a-4129-9276-fcda47ec3e97",
+          "content-9d233545-63c8-41d6-92e9-6a3b2f8e1521"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "professional",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [
+        {
+          "supported": true,
+          "issues": []
+        }
+      ],
+      "upstreamTimings": [
+        {
+          "durationMs": 4714,
+          "firstTextMs": 4147,
+          "finishReason": "stop",
+          "contentChars": 182
+        },
+        {
+          "durationMs": 2454,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        }
+      ],
+      "promptTokens": 5263,
+      "completionTokens": 1321,
+      "cachedPromptTokens": 0,
+      "totalTokens": 6584,
+      "usageComplete": true,
+      "chargedTokens": 6584,
+      "durationMs": 8092,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 9270,
+        "serverElapsedMs": 17362,
+        "firstTextMs": 17322,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 806,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 25,
+          "writeQueries": 12,
+          "calls": 29,
+          "failures": 0,
+          "durationMs": 1413,
+          "maxCallMs": 137,
+          "rowsRead": 6646,
+          "rowsWritten": 26,
+          "rowUsageStatements": 18,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 6455,
+            "rowsWritten": 0,
+            "queries": 5,
+            "durationMs": 806,
+            "candidateChunks": 13,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 0
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 13
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-50498af1-3dda-4af6-a9b5-026689a75031",
+        "title": "广东外语外贸大学学位授予实施细则",
+        "sourceName": "信息公开网站",
+        "originalUrl": "https://xxgk.gdufs.edu.cn/info/1203/3468.htm",
+        "publishedAt": "2025-04-07",
+        "snippet": "位论文或实践成果，经答辩委员会投票同意，可在1年内修改并重新申请答辩1次。硕士两次答辩间隔不少于七周，博士两次答辩间隔不少于六个月，重新答辩的申请应在学校规定的最长学习年限内完成。\n第四十六条 研究生培养单位应自学位答辩委员会作出决议之日起5个工作日内将不通过告知书及处理决议告知送达学位申请人及其指导教师，可采取直接送达、邮政快递、电话（录音）、短信、微信、电子邮件等方式进行送达，由本人签收。如无法送达当事人本人，应通过留置送达、社会公告等方式送达。\n第四十七条 博士学位答辩委员会认为学位申请人虽未达到博士学位的水平，但已达到硕士学位的水平，且学位申请人尚未获得过学校该学科、专业硕士学位的，经学位申请人同意，答辩委员会可以作出建议授予硕士学位的决议，报送学位评定分委员会审核以及校学位评定委员会审定。\n第四十八条 学位申请人在答辩通过后，应按要求将修改后的学位论文或实践成果全文的电子版、纸质版交研究生院存档。\n第三节 学位评定与授予\n第四十九条 本科毕业生申请学士学位，由本科教学单位根据本细则的规定对其在学期间的思想品德表现、课程学习及毕业论文的成绩、毕业鉴定等材料进行审核，并将符合条件的学士学位申请人名单和相关材料报教务部、留学生教育学院或高等继续教育学院（公开学院）复核，再提交学位评定分委员会审核、学位评定委员会审定。\n第五十条 本科毕业生在申请毕业的同时提交学士学位申请材料。特殊情况下，申请和授予学位的时间不得晚于毕业证书签发时间6个月。\n第五十一条 各研究生培养单位对符合规定的研究生学位申请人进行资格审查，并将符合条件的学位申请人名单和相关材料提交学位评定分委员会。\n第五十二条 学校学位评定分委员会应当根据答辩委员会的决议，在对学位申请进行审核的基础上，作出是否授予硕士、博士学位的建议。\n第五十三条 学校学位评定委员会应当根据答",
+        "evidenceType": "full_text",
+        "classificationState": "knowledge",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "topic": "课程修读",
+    "question": "本科生课程修读管理规定中，正常修读、免修、免听和重修有什么区别？",
+    "status": 200,
+    "elapsedMs": 18861,
+    "terminal": "run.completed",
+    "answer": "当前检索到的广东外语外贸大学公开本科生管理类规定中，暂未找到对“正常修读、免修、免听、重修”四种修读方式的具体定义及区别说明。\n上述修读方式属于本科生课程修读相关规则范畴，对应的上位管理依据为《广东外语外贸大学本科生学籍管理规定》（广外校〔2019〕39号）[1]，但该规定的当前公开检索片段未包含对应条款内容，你可以联系教务部获取该规定的完整内容，或直接向教务部门咨询相关规则的具体说明。",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "plan": {
+          "subject": "本科生课程修读管理规定中正常修读、免修、免听和重修的的区别",
+          "entities": [],
+          "constraints": [
+            "本科生"
+          ],
+          "goal": "facts",
+          "query": "“本科生课程修读管理规定中” “正常修读、免修、免听和重修” “区别” “本科生” 本科生"
+        },
+        "durationMs": 5397,
+        "usage": {
+          "promptTokens": 538,
+          "completionTokens": 728,
+          "totalTokens": 1266
+        }
+      },
+      "answerMode": "model",
+      "buildingProfiles": [],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-13176a8d-5d60-4c9d-bd70-355f0be15928",
+          "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+          "content-93d71fe2-e149-4e0c-9de3-5255d3761695",
+          "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "professional",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [
+        {
+          "supported": true,
+          "issues": []
+        }
+      ],
+      "upstreamTimings": [
+        {
+          "durationMs": 7968,
+          "firstTextMs": 7433,
+          "finishReason": "stop",
+          "contentChars": 195
+        },
+        {
+          "durationMs": 2862,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        }
+      ],
+      "promptTokens": 4941,
+      "completionTokens": 1868,
+      "cachedPromptTokens": 0,
+      "totalTokens": 6809,
+      "usageComplete": true,
+      "chargedTokens": 6809,
+      "durationMs": 11738,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 6409,
+        "serverElapsedMs": 18147,
+        "firstTextMs": 18106,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 781,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 25,
+          "writeQueries": 12,
+          "calls": 29,
+          "failures": 0,
+          "durationMs": 1680,
+          "maxCallMs": 165,
+          "rowsRead": 7725,
+          "rowsWritten": 26,
+          "rowUsageStatements": 18,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 7532,
+            "rowsWritten": 0,
+            "queries": 5,
+            "durationMs": 781,
+            "candidateChunks": 99,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 3
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-93d71fe2-e149-4e0c-9de3-5255d3761695",
+        "title": "广外校〔2019〕39号关于印发《广东外语外贸大学本科生学籍管理规定》的通知",
+        "sourceName": "信息公开网站",
+        "originalUrl": "https://xxgk.gdufs.edu.cn/info/1206/2671.htm",
+        "publishedAt": "2022-01-07",
+        "snippet": "广外校〔2019〕39号关于印发《广东外语外贸大学本科生学籍管理规定》的通知",
+        "evidenceType": "full_text",
+        "classificationState": "knowledge",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "topic": "课程修读",
+    "question": "本科申请自学免修需要达到多少平均学分绩点，免修考试至少多少分，每学期最多几门？",
+    "status": 200,
+    "elapsedMs": 17549,
+    "terminal": "run.completed",
+    "answer": "### 自学免修核心要求\n1. **平均学分绩点门槛**：前期已修读的所有课程平均学分绩点需达到3.7及以上 [1]\n2. **免修考试合格线**：免修考试成绩需达85分及以上，方可获得对应课程学分，成绩计入平均学分绩点计算 [1]\n3. **每学期申请上限**：自学免修课程每学期最多可申请2门，且每门课程仅能申请1次自学免修 [1]\n\n### 补充申请要求\n需在开课学期第一周向开课部门提交申请，审批通过后于第二周参加免修考试；仅可申请本学期人才培养方案内正在修读的课程，重修课程不可申请 [1]\n\n---\n[1] 广东外语外贸大学2026版本科生学生手册，学生工作部发布",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": true,
+        "code": "NON_LITERAL_PLAN"
+      },
+      "answerMode": "model",
+      "buildingProfiles": [],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "supported",
+        "relatedDocuments": [
+          "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+          "content-038ff35b-c636-4712-9217-e2ee5ea197ef",
+          "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+          "content-373fefb1-af06-4d56-b76e-d84379e34a4e"
+        ],
+        "missing": [],
+        "activities": [
+          {
+            "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": false,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "professional",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 0,
+      "groundingChecks": 1,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [
+        {
+          "supported": true,
+          "issues": []
+        }
+      ],
+      "upstreamTimings": [
+        {
+          "durationMs": 5975,
+          "firstTextMs": 5174,
+          "finishReason": "stop",
+          "contentChars": 288
+        },
+        {
+          "durationMs": 4908,
+          "firstTextMs": null,
+          "stage": "evidence_check"
+        }
+      ],
+      "promptTokens": 6885,
+      "completionTokens": 1012,
+      "cachedPromptTokens": 0,
+      "totalTokens": 7897,
+      "usageComplete": false,
+      "chargedTokens": 257897,
+      "durationMs": 12374,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 4658,
+        "serverElapsedMs": 17032,
+        "firstTextMs": 16990,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 1366,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 25,
+          "writeQueries": 12,
+          "calls": 29,
+          "failures": 0,
+          "durationMs": 1649,
+          "maxCallMs": 227,
+          "rowsRead": 7734,
+          "rowsWritten": 26,
+          "rowUsageStatements": 18,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 7539,
+            "rowsWritten": 0,
+            "queries": 5,
+            "durationMs": 1366,
+            "candidateChunks": 106,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 10
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": [
+      {
+        "kind": "source",
+        "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+        "title": "2026版本科生学生手册（全文）",
+        "sourceName": "学生工作部",
+        "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+        "publishedAt": "2026-09-20T11:16:00.000Z",
+        "snippet": "提出申请，开课部门负责审核办理。 第十二条自学免修。前期已修读的所有课程平均学分绩点达3.7 及以上的学生，可以申请免修本科人才培养方案规定的课程。 学生应在开课学期第一周向开课部门提出申请，审批通过后参加免修考试。免修考试由开课部门在第二周组织。免修考试的命题和阅卷参照学校课程考核相关规定执行。免修考试成绩达85 分及以上者，准予免修课程直接取得学分，考试成绩记为该课程成绩，参与平均学分绩点计算。 开课部门应于每学期第三周将取得免修资格的学生及课程汇总信息报教务处备案。 第十三条每门课程只能申请1 次自学免修。自学免修课程每学期不得超过2 门。 第十四条赴国（境）外交换的学生通过学分互认免修相关课程， 其认定办法另行规定。 第十五条申请免修的课程须是本学期人才培养方案内正在修读的课程，须重修的课程不得申请免修\n…\n基本条件。\n2. 平均学分绩点不低于（含）3.5 分（四分制）。\n3. 英语水平达到雅思6.5 分或托福95 分，或符合拟访学大学的外语\n要求。\n4. 已获得世界知名大学的录取信。\n5. 符合世界顶尖大学访学项目申请条件未获得资助的学生可自动获\n得世界知名大学访学项目的参评资格。 第七条非通用语种国家知名大学访学项目 （一）项目目的与内容本子项目旨在资助我校全日制在读非通用语种专业本科生及研究生，赴非通用语种所在国大学修读学分课程或攻读学位。原则上只资助学生赴非通用语种所在国排名前3 名的大学学习，成建制派出的非通用语种\n本科学生手册\n196\n专业学生拟赴非通用语种所在国前3 名以外的其他高水平大学访学的，需经学校认可。 （二）资助额度本子项目原则上资助额度的上限为10 ",
+        "evidenceType": "full_text",
+        "classificationState": "knowledge",
+        "validity": "unknown",
+        "readable": true,
+        "calendarLinks": []
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "topic": "课程修读",
+    "question": "本科课程申请免听后，还要完成作业和参加期末考核吗？什么时候向哪个部门申请？",
+    "status": 200,
+    "elapsedMs": 17655,
+    "terminal": "run.completed",
+    "answer": "本次检索到的4条来源均为研究生教学与成绩管理相关通知，未涉及本科课程免听的相关规定，因此无法回答关于免听后是否需要完成作业、参加期末考核，以及申请时间和对应部门的问题。",
+    "metrics": {
+      "smartSearch": false,
+      "queryUnderstanding": {
+        "failed": true,
+        "code": "INVALID_PLAN"
+      },
+      "answerMode": "model",
+      "buildingProfiles": [],
+      "conversationAct": "campus",
+      "answerRequirement": "strict",
+      "modelFailureCode": null,
+      "evidenceGateUsed": false,
+      "publicationFallbackUsed": false,
+      "evidenceAssessment": {
+        "state": "related_but_incomplete",
+        "relatedDocuments": [
+          "content-4e8def79-3bd4-4983-8e4d-ce24a700d048",
+          "content-80c1a90c-9f4e-43ed-9125-51cad2ae9516",
+          "content-de4e625c-4c98-494f-bbe9-db31bbf45119",
+          "content-758ceb82-d2b8-4632-8d84-32beda4ce334"
+        ],
+        "missing": [
+          "current_event_evidence",
+          "participation_or_registration_evidence"
+        ],
+        "activities": [
+          {
+            "documentId": "content-4e8def79-3bd4-4983-8e4d-ce24a700d048",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-80c1a90c-9f4e-43ed-9125-51cad2ae9516",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-de4e625c-4c98-494f-bbe9-db31bbf45119",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          },
+          {
+            "documentId": "content-758ceb82-d2b8-4632-8d84-32beda4ce334",
+            "existence": "documented",
+            "eventState": "unknown",
+            "registrationState": "unknown",
+            "participation": "unknown"
+          }
+        ],
+        "needsSupplement": true,
+        "negativeExistenceProven": false
+      },
+      "persona": {
+        "version": "campus-dafeiyu-v1",
+        "tone": "professional",
+        "aside": false,
+        "concise": false
+      },
+      "requests": 3,
+      "correctionRetries": 0,
+      "emptyAnswerRetries": 0,
+      "answerRepairRetries": 0,
+      "softAcceptances": 1,
+      "groundingChecks": 0,
+      "groundingFailures": 0,
+      "groundingCheckFailures": 0,
+      "groundingResults": [],
+      "upstreamTimings": [
+        {
+          "durationMs": 4412,
+          "firstTextMs": 4152,
+          "finishReason": "stop",
+          "contentChars": 115
+        },
+        {
+          "durationMs": 4472,
+          "firstTextMs": 4252,
+          "finishReason": "stop",
+          "contentChars": 84
+        }
+      ],
+      "promptTokens": 7545,
+      "completionTokens": 764,
+      "cachedPromptTokens": 0,
+      "totalTokens": 8309,
+      "usageComplete": false,
+      "chargedTokens": 258309,
+      "durationMs": 9858,
+      "estimatedUsdRange": null,
+      "priceSource": null,
+      "priceCheckedAt": null,
+      "model": "step-3.5-flash-2603",
+      "timings": {
+        "version": "camera-settled-v2",
+        "preparationMs": 7119,
+        "serverElapsedMs": 16977,
+        "firstTextMs": 16937,
+        "mapActionMs": null,
+        "skills": [
+          {
+            "name": "search_campus_knowledge",
+            "durationMs": 837,
+            "ok": true
+          }
+        ],
+        "database": {
+          "readQueries": 23,
+          "writeQueries": 12,
+          "calls": 27,
+          "failures": 0,
+          "durationMs": 1557,
+          "maxCallMs": 269,
+          "rowsRead": 1458,
+          "rowsWritten": 26,
+          "rowUsageStatements": 17,
+          "rowUsageComplete": false
+        },
+        "retrieval": [
+          {
+            "skill": "search_campus_knowledge",
+            "rowsRead": 1261,
+            "rowsWritten": 0,
+            "queries": 4,
+            "durationMs": 837,
+            "candidateChunks": 111,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 15
+              }
+            ]
+          }
+        ],
+        "externalSearch": []
+      }
+    },
+    "cards": []
+  }
+]

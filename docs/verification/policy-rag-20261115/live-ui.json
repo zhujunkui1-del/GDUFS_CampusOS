@@ -1,0 +1,818 @@
+{
+  "checkedAt": "2026-11-15T07:27:13.731Z",
+  "nodes": 12,
+  "edges": 19,
+  "dragged": true,
+  "savedAfterRefresh": true,
+  "wheelZoom": true,
+  "inspectorWidth": 546,
+  "sources": [
+    {
+      "title": "[1] 2026版本科生学生手册（全文）学生工作部",
+      "url": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0"
+    }
+  ],
+  "mobileNoOverflow": true,
+  "pageErrors": [],
+  "answer": "关于广东外语外贸大学本科自学免修的相关要求，目前可查到的明确规则如下：\n1. **免修考试要求**：成绩需达到85分及以上，方可准予免修并取得对应课程学分，该成绩会纳入平均学分绩点计算 [1]。\n2. **每学期申请限制**：自学免修课程每学期不得超过2门，且每门课程仅能申请1次自学免修 [1]。\n3. **平均学分绩点门槛**：当前检索到的公开学生管理文件中，未明确提及申请自学免修需要达到的平均学分绩点具体标准，建议你咨询所在学院教务老师或学校教务部确认最新要求。",
+  "cards": [
+    {
+      "kind": "source",
+      "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+      "title": "2026版本科生学生手册（全文）",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+      "publishedAt": "2026-09-20T11:16:00.000Z",
+      "snippet": " 学生应在开课学期第一周向开课部门提出申请，审批通过后参加免修考试。免修考试由开课部门在第二周组织。免修考试的命题和阅卷参照学校课程考核相关规定执行。免修考试成绩达85 分及以上者，准予免修课程直接取得学分，考试成绩记为该课程成绩，参与平均学分绩点计算。 开课部门应于每学期第三周将取得免修资格的学生及课程汇总信息报教务处备案。 第十三条每门课程只能申请1 次自学免修。自学免修课程每学期不得超过2 门。 第十四条赴国（境）外交换的学生通过学分互认免修相关课程， 其认定办法另行规定。 第十五条申请免修的课程须是本学期人才培养方案内正在修读的课程，须重修的课程不得申请免修。政治理论、德育、体育、实验、实习、 毕业论文（设计）、军事理论与军训等课程及其他经开课部门确定为不能免修的课程不得申请免修。免修资格一旦取得，不得放弃。\n第四章免听\n第十六条免听是指学生不参与某课程课堂教学活动，但按任课教师的要求完成作业和参加考核的课程修读方式。 第十七条符合下列条件之一的，可申请免听： （一）学生赴国（境）外学习或赴国（境）外实习期间无法正常修读的课程； （二）学生因课程时间冲突而无法参加课堂教学活动的重修课程； （三）修读本科生辅修专业的学生，凡在主修专业中已修过教学要求相同或较高的课程，且课程成绩达78 分及以上的。 第十八条学生应在开课学期第一周向开课部门提出申请，审批通过后，报教务处备案。学生应主动和任课教师联系，知晓教学安排，完成\n本科学生手册\n64",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": true,
+      "code": "NON_LITERAL_PLAN"
+    },
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+        "content-038ff35b-c636-4712-9217-e2ee5ea197ef",
+        "content-373fefb1-af06-4d56-b76e-d84379e34a4e",
+        "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown"
+        },
+        {
+          "documentId": "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown"
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 3,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [
+      {
+        "supported": true,
+        "issues": []
+      }
+    ],
+    "upstreamTimings": [
+      {
+        "durationMs": 6770,
+        "firstTextMs": 6141,
+        "finishReason": "stop",
+        "contentChars": 235
+      },
+      {
+        "durationMs": 3762,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 6420,
+    "completionTokens": 1156,
+    "cachedPromptTokens": 0,
+    "totalTokens": 7576,
+    "usageComplete": false,
+    "chargedTokens": 257576,
+    "durationMs": 12316,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 6226,
+      "serverElapsedMs": 18542,
+      "firstTextMs": 18505,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1664,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 28,
+        "writeQueries": 21,
+        "calls": 34,
+        "failures": 0,
+        "durationMs": 2546,
+        "maxCallMs": 311,
+        "rowsRead": 8596,
+        "rowsWritten": 29,
+        "rowUsageStatements": 30,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 8228,
+          "rowsWritten": 0,
+          "queries": 8,
+          "durationMs": 1664,
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 14
+            },
+            {
+              "name": "document_passages",
+              "limit": 480,
+              "candidates": 32
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-15T07:26:54.024Z",
+      "elapsedMs": 142,
+      "data": {
+        "question": "本科申请自学免修需要达到多少平均学分绩点，免修考试至少多少分，每学期最多几门？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-15T07:26:54.024Z",
+      "elapsedMs": 142,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-15T07:26:54.814Z",
+      "elapsedMs": 932,
+      "data": {
+        "question": "本科申请自学免修需要达到多少平均学分绩点，免修考试至少多少分，每学期最多几门？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-15T07:26:54.814Z",
+      "elapsedMs": 932,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-15T07:26:54.814Z",
+      "elapsedMs": 932,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-15T07:26:54.814Z",
+      "elapsedMs": 932,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-15T07:26:54.814Z",
+      "elapsedMs": 932,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-15T07:26:54.814Z",
+      "elapsedMs": 932,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "facts",
+        "campus": null,
+        "topics": [],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "running",
+      "at": "2026-11-15T07:26:54.868Z",
+      "elapsedMs": 986,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答或工具选择",
+        "tools": [
+          "plan_campus_query"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "success",
+      "at": "2026-11-15T07:27:00.055Z",
+      "elapsedMs": 6173,
+      "durationMs": 5187,
+      "data": {
+        "finishReason": "tool_calls",
+        "toolCalls": [
+          "plan_campus_query"
+        ],
+        "characters": 0,
+        "usage": {
+          "promptTokens": 544,
+          "completionTokens": 636,
+          "totalTokens": 1180
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "running",
+      "at": "2026-11-15T07:27:00.108Z",
+      "elapsedMs": 6226,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "本科申请自学免修需要达到多少平均学分绩点 免修考试至少多少分 每学期最多几门",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "success",
+      "at": "2026-11-15T07:27:01.772Z",
+      "elapsedMs": 7890,
+      "durationMs": 1664,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "chunkId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285:fts:bc4c3d7651c7c2fc:72",
+              "title": "2026版本科生学生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+              "publishedAt": "2026-09-20T11:16:00.000Z",
+              "contentSnippet": " 学生应在开课学期第一周向开课部门提出申请，审批通过后参加免修考试。免修考试由开课部门在第二周组织。免修考试的命题和阅卷参照学校课程考核相关规定执行。免修考试成绩达85 分及以上者，准予免修课程直接取得学分，考试成绩记为该课程成绩，参与平均学分绩点计算。 开课部门应于每学期第三周将取得免修资格的学生及课程汇总信息报教务处备案。 第十三条每门课程只能申请1 次自学免修。自学免修课程每学期不得超过2 门。 第十四条赴国（境）外交换的学生通过学分互认免修相关课程， 其认定办法另行规定。 第十五条申请免修的课程须是本学期人才培养方案内正在修读的课程，须重修的课程不得申请免修。政治理论、德育、体育、实验、实习、 毕业论文（设计）、军事理论与军训等课程及其他经开课部门确定为不能免修的课程不得申请免修。免修资格一旦取得，不得放弃。\n第四章免听\n第十六条免听是指学生不参与某课程课堂教学活动，但按任课教师的要求完成作业和参加考核的课程修读方式。 第十七条符合下列条件之一的，可申请免听： （一）学生赴国（境）外学习或赴国（境）外实习期间无法正常修读的课程； （二）学生因课程时间冲突而无法参加课堂教学活动的重修课程； （三）修读本科生辅修专业的学生，凡在主修专业中已修过教学要求相同或较高的课程，且课程成绩达78 分及以上的。 第十八条学生应在开课学期第一周向开课部门提出申请，审批通过后，报教务处备案。学生应主动和任课教师联系，知晓教学安排，完成\n本科学生手册\n64",
+              "startOffset": 51363,
+              "endOffset": 51994,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 132.24,
+              "rankingReasons": [
+                "标题词组匹配 1",
+                "片段词组匹配 18",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "f72fdd02d8506d6c8bec1326ecc47e069aa5eb71309bc2f952db35c853fe5e2e",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-038ff35b-c636-4712-9217-e2ee5ea197ef",
+              "chunkId": "content-038ff35b-c636-4712-9217-e2ee5ea197ef:fts:68360a50c28ccba8:0",
+              "title": "广东外语外贸大学本科生课程修读管理规定",
+              "sourceId": "GDUFS-SRC-0043",
+              "sourceName": "党委办公室（校长办公室）",
+              "originalUrl": "https://dbxb.gdufs.edu.cn/info/1094/2417.htm",
+              "publishedAt": null,
+              "contentSnippet": "（广外校〔2022〕12号 2022年1月29日）\n第一章 总 则\n为规范本科生课程修读管理，根据《普通高等学校学生管理规定》（教育部令第41号），结合学校实际情况，制定本规定。\n课程修读管理以本科人才培养方案为依据。\n根据学生修读方式，课程修读分为正常修读、免修、免听、重修等4类。\n学生完成学籍注册后，须通过选课取得课程修读资格。\n第二章 正常修读\n正常修读是指学生依据本科人才培养方案首次取得某课程修读资格，并参与该课程教学各个环节的课程修读方式。\n对于有先后修读关系的课程，学生如未取得先修课程学分，不得修读后续课程。\n第三章 免 修\n免修是指学生不参与某课程的教学环节，经申请审核后，直接取得该课程学分的修读方式。\n免修分为课程替代免修和自学免修两类。\n第八条 课",
+              "startOffset": 714,
+              "endOffset": 1051,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 121.54,
+              "rankingReasons": [
+                "标题词组匹配 1",
+                "片段词组匹配 17",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "academic_affairs",
+              "classificationOrigin": "manual",
+              "contentRevision": 2,
+              "inputHash": "d2feddeedf210bd38774ec1b0fd32f2b80cc07918f1ea56b4aa737509d18fcf5",
+              "documentVersion": 5,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-373fefb1-af06-4d56-b76e-d84379e34a4e",
+              "chunkId": "content-373fefb1-af06-4d56-b76e-d84379e34a4e:fts:4a28fcb4e15b44bf:1",
+              "title": "广东外语外贸大学会计学院2026年大数据审计微专业招生工作方案",
+              "sourceId": "GDUFS-SRC-0002",
+              "sourceName": "会计学院",
+              "originalUrl": "https://kjxy.gdufs.edu.cn/info/1444/8017.htm",
+              "publishedAt": "2026-05-22",
+              "contentSnippet": "数不足20人，则本年度微专业不予开班。\n六、录取条件\n主要面向学有余力的全日制在校2023-2025级本科生，主修专业平均学分绩点需达到2.0及以上，无违纪处分记录。\n七、录取办法\n按报名学生的主修专业平均学分绩点从高到低排序，依据学院招生计划数依序录取。拟录取学生名单统一报教务部审批。通过审批的学生按要求在规定时间内办理注册手续，逾期不注册视为自动放弃。\n八、政策支持\n按照《广东外语外贸大学微专业建设与管理办法》和学校本科教学工作的有关管理规定执行。学制1年，完成微专业课程学习并达到微专业结业要求者（12学分），由学校发放微专业结业证书。不具有学士学位授予资格。\n九、收费标准\n参照学校学分制收费有关规定执行（按照每学分120元的收费标准，共12学分，收取学费1440元）。\n本方案中的录取办法",
+              "startOffset": 767,
+              "endOffset": 1118,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 75.84,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 10",
+                "查询主题与限定复核：lexical_query"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "academic_affairs",
+              "classificationOrigin": "automatic",
+              "contentRevision": 2,
+              "inputHash": "fcb65ac3ac02421ff2de0daa8c50ec74a9c3a4fe23fa97601cfab0a29653422d",
+              "documentVersion": 4,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc",
+              "chunkId": "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc:fts:231f4e0b1edd921c:2",
+              "title": "广东外语外贸大学本科生辅修专业管理规定",
+              "sourceId": "GDUFS-SRC-0042",
+              "sourceName": "信息公开网站",
+              "originalUrl": "https://xxgk.gdufs.edu.cn/info/1203/3007.htm",
+              "publishedAt": "2022-02-20",
+              "contentSnippet": "）。\n第十九条 开办学院将预警结果通知学生本人。\n第六章 证书颁发\n第二十条 学生在完成主修专业学业的同时，完成辅修专业本科人才培养方案规定的课程并获得相应学分的，可在主修专业毕业离校前提出申请，经审核合格后，学校颁发辅修专业证书。\n第二十一条 学校对学生主修专业进行毕业及学位审核时，应同时对其辅修专业进行学位审查。辅修专业的学位授予条件按照学校学士学位授予的有关规定执行。\n学生的主修专业准予毕业并获得主修学士学位时，符合辅修专业学位条件的，学校授予辅修学士学位。对已授予辅修学士学位的学生，学校不再颁发辅修专业证书。\n学生的主修专业准予毕业并获得主修学士学位时，不符合辅修专业学位条件的，学校终止其辅修专业的修读，不授予辅修学士学位。\n学生的主修专业未准予毕业，或未获得主修学士学位的，学校终止其辅修专业的修读，不",
+              "startOffset": 1551,
+              "endOffset": 1911,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 74.27,
+              "rankingReasons": [
+                "标题词组匹配 1",
+                "片段词组匹配 9",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "academic_affairs",
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "529fe50c3d39b136250b968f63be28b2e3732d781b52f27fe716beb0b050f2ce",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 8228,
+            "rowsWritten": 0,
+            "queries": 8,
+            "durationMs": 1664,
+            "candidateChunks": 96,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 14
+              },
+              {
+                "name": "document_passages",
+                "limit": 480,
+                "candidates": 32
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "本科申请自学免修需要达到多少平均学分绩点 免修考试至少多少分 每学期最多几门",
+          "now": "2026-11-15T07:27:00.108Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "eventId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285/activity-1",
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "activityKey": "activity-1",
+              "name": "2026版本科生学生手册（全文）",
+              "kind": "event",
+              "category": null,
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": "学生第二饭堂对面小木屋）",
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "是指每年研究生报名开始时已进入毕业学年学习的本科生（不含辅修学位、专升本、 第二学士学位学生、本硕项目的国际班学生和独立学院学生）"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "具体申报时间以教育部规定及学校相关通知为准。申请者应列明本人已具备的推荐免试条件、报读的研究生专业和专业方向"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "1. 申请时间：学校一般于每年9 月集中受理创新创业学分认定申请；\n2. 申请材料：学生本人填写《广东外语外贸大学本科生创新创业学分"
+                  ]
+                }
+              ],
+              "otherDeadlines": [
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                }
+              ],
+              "registrationUrl": null,
+              "evidence": [
+                "是指每年研究生报名开始时已进入毕业学年学习的本科生（不含辅修学位、专升本、 第二学士学位学生、本硕项目的国际班学生和独立学院学生）",
+                "具体申报时间以教育部规定及学校相关通知为准。申请者应列明本人已具备的推荐免试条件、报读的研究生专业和专业方向",
+                "1. 申请时间：学校一般于每年9 月集中受理创新创业学分认定申请；\n2. 申请材料：学生本人填写《广东外语外贸大学本科生创新创业学分"
+              ],
+              "mapPlace": null
+            },
+            {
+              "eventId": "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc/activity-1",
+              "documentId": "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc",
+              "activityKey": "activity-1",
+              "name": "广东外语外贸大学本科生辅修专业管理规定",
+              "kind": "opportunity",
+              "category": null,
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": []
+                }
+              ],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [],
+              "mapPlace": null
+            }
+          ],
+          "knowledge": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "符合申请条件的学生可在当年暑假前后向拟报读的接收单位或学科点进行初步联系",
+                "除需满足本规定第九条、第十条的条件外",
+                "第二章奖励标准与申请条件"
+              ],
+              "materials": [
+                "可申请转学： （一）患病学生需提供我校及拟转入学校指定医院的检查证明（需盖疾病诊断证明专用章）",
+                "有特殊困难和特别需要的学生需提供相关证明材料"
+              ],
+              "steps": [
+                "国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续 3 年上榜“US News”世界大学排名；入选软科中国文科实力A 类大学，稳居全国前50 强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI 全球前5‰，工程学、环境 /生态学、经济学与商学进入ESI 前1%；12 个学科上榜软科中国最好学科；外国语言文学学科连续多年上榜软科“中国顶尖学科”， 稳居全国前3；应用经济学、法学连续多年上榜软科“中国一流学科”。 科学研究学校深入推进有组织科研，构建服务共建“一带一路”倡议、 高水平对外开放与粤港澳大湾区建设、法治中国与涉外法治建设、 国际传播建设等四大科研平台体系",
+                "学校各单位： 为深入贯彻落实党的十八届三中全会关于深化教育领域综合改革的精神，积极适应经济社会发展新常态对高等教育人才培养的需求，根据《中华人民共和国教育法》《普通高等学校学生管理规定》（教育部令第21 号）等法律法规和《教育部关于全面提高高等教育质量的若干意见》（教高〔2012〕4 号）、《广东省人民政府办公厅转发教育厅关于进一步扩大和落实高校办学自主权促进高校加快发展若干意见的通知》（粤府办 〔2013〕26 号）等文件要求，学校结合实际，研究制定了本科教学实施学分制管理的若干意见，经2015 年1 月12 日校党委常委会审议并原则通过，具体如下。 一、指导思想坚持育人为本，立德树人，全面",
+                "3．选课制。学生根据专业培养方案自主安排学习进程，对于必修课， 可选择任课教师；对于选修课，可选择课程和任课教师；每学期前两周， 学生试听课程，试听结束后作出选课确认。 4．主辅修制。学生在达到主修专业学习要求的前提下，可以辅修其他专业；在主修专业达到毕业要求的前提下，其修读的辅修专业如达到要求，可向其发放辅修专业证书；学生在主修专业具备学位授予资格的前提下，如其辅修专业达到学位授予条件，可获得相应专业学位证书。 5．学分互认制。学生在与我校签订了学分互认协议的境内外高校或在我校认可的境内外高校或MOOC 等网络学习平台修读课程获得的成绩和学分，可以转换为本校课程成绩和学分；学生修读校外课程，"
+              ]
+            },
+            {
+              "documentId": "content-038ff35b-c636-4712-9217-e2ee5ea197ef",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "content-373fefb1-af06-4d56-b76e-d84379e34a4e",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            }
+          ]
+        },
+        "durationMs": 1664
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "running",
+      "at": "2026-11-15T07:27:01.818Z",
+      "elapsedMs": 7936,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答生成",
+        "tools": []
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "success",
+      "at": "2026-11-15T07:27:08.588Z",
+      "elapsedMs": 14706,
+      "durationMs": 6770,
+      "data": {
+        "finishReason": "stop",
+        "toolCalls": [],
+        "characters": 235,
+        "usage": {
+          "promptTokens": 3711,
+          "completionTokens": 797,
+          "totalTokens": 4508
+        }
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "state": "running",
+      "at": "2026-11-15T07:27:08.625Z",
+      "elapsedMs": 14743,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答或工具选择",
+        "tools": [
+          "report_evidence_verdict"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "state": "success",
+      "at": "2026-11-15T07:27:12.351Z",
+      "elapsedMs": 18469,
+      "durationMs": 3726,
+      "data": {
+        "finishReason": "tool_calls",
+        "toolCalls": [
+          "report_evidence_verdict"
+        ],
+        "characters": 0,
+        "usage": {
+          "promptTokens": 2709,
+          "completionTokens": 359,
+          "totalTokens": 3068
+        }
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "running",
+      "at": "2026-11-15T07:27:12.424Z",
+      "elapsedMs": 18542,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "success",
+      "at": "2026-11-15T07:27:12.469Z",
+      "elapsedMs": 18587,
+      "durationMs": 45,
+      "data": {
+        "characters": 235,
+        "cards": 1
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "running",
+      "at": "2026-11-15T07:27:12.469Z",
+      "elapsedMs": 18587,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "success",
+      "at": "2026-11-15T07:27:12.469Z",
+      "elapsedMs": 18587,
+      "durationMs": 0,
+      "data": {
+        "characters": 235,
+        "cards": 1
+      }
+    }
+  ]
+}

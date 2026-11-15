@@ -35,6 +35,48 @@ const routeInput = {
 };
 
 describe("D1-backed identity, history and shared budgets (isolated SQLite)", () => {
+  it("runs studio and assistant independently while preserving same-lane exclusion and ownership", async () => {
+    const store = new AssistantStore(fixture.db, () => now);
+    const owner = await store.identity(request()),
+      other = await store.identity(request());
+    const studio = await store.conversation(owner),
+      chat = await store.conversation(owner);
+    await store.reserve(
+      owner,
+      studio,
+      crypto.randomUUID(),
+      "isolated-ip",
+      "workflow",
+    );
+    await expect(
+      store.reserve(owner, chat, crypto.randomUUID(), "isolated-ip"),
+    ).resolves.toBeTypeOf("string");
+    await expect(
+      store.reserve(owner, chat, crypto.randomUUID(), "isolated-ip"),
+    ).rejects.toMatchObject({ code: "RATE_LIMITED" });
+    await expect(
+      store.reserve(
+        owner,
+        studio,
+        crypto.randomUUID(),
+        "isolated-ip",
+        "workflow",
+      ),
+    ).rejects.toMatchObject({ code: "RATE_LIMITED" });
+    await expect(store.history(other, studio.id)).rejects.toMatchObject({
+      code: "NOT_FOUND",
+    });
+    for (const c of [studio, chat])
+      fixture.sqlite
+        .prepare(
+          "INSERT INTO conversation_messages(id,conversation_id,role,content,sequence) VALUES(?,?,'user','隔离测试',1)",
+        )
+        .run(crypto.randomUUID(), c.id);
+    expect((await store.list(owner)).conversations.map((c) => c.id)).toEqual([
+      chat.id,
+    ]);
+    expect(await store.latest(owner)).toMatchObject({ id: chat.id });
+  });
   it("persists smart search by owned conversation without exposing system state as messages", async () => {
     const store = new AssistantStore(fixture.db, () => now);
     const a = await store.identity(request()),
@@ -48,9 +90,12 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
     );
     expect(restored.smartSearch).toBe(true);
     expect(restored.smartSearchVersion).toBe(1);
-    await store.setSmartSearch(a,conversation.id,false);
-    await store.setSmartSearch(a,conversation.id,true);
-    expect(await store.searchPreference(a,conversation.id)).toEqual({smartSearch:true,smartSearchVersion:3});
+    await store.setSmartSearch(a, conversation.id, false);
+    await store.setSmartSearch(a, conversation.id, true);
+    expect(await store.searchPreference(a, conversation.id)).toEqual({
+      smartSearch: true,
+      smartSearchVersion: 3,
+    });
     expect(restored.messages).toEqual([]);
     await expect(
       store.setSmartSearch(b, conversation.id, false),
@@ -66,11 +111,16 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
     const other = await store.identity(request());
     const conversation = await store.conversation(owner);
 
-    expect(
-      await store.deepThinkingPreference(owner, conversation.id),
-    ).toEqual({ deepThinking: false, deepThinkingVersion: 0 });
+    expect(await store.deepThinkingPreference(owner, conversation.id)).toEqual({
+      deepThinking: false,
+      deepThinkingVersion: 0,
+    });
     await store.setDeepThinking(owner, conversation.id, true);
-    await store.setDifyConversation(owner, conversation.id, "dify-conversation-1");
+    await store.setDifyConversation(
+      owner,
+      conversation.id,
+      "dify-conversation-1",
+    );
 
     const restored = await new AssistantStore(fixture.db, () => now).history(
       owner,
@@ -82,8 +132,12 @@ describe("D1-backed identity, history and shared budgets (isolated SQLite)", () 
       "dify-conversation-1",
     );
     expect(restored.messages).toEqual([]);
-    await expect(store.deepThinkingPreference(other, conversation.id)).rejects.toThrow();
-    await expect(store.difyConversation(other, conversation.id)).rejects.toThrow();
+    await expect(
+      store.deepThinkingPreference(other, conversation.id),
+    ).rejects.toThrow();
+    await expect(
+      store.difyConversation(other, conversation.id),
+    ).rejects.toThrow();
   });
   it("restores a guest through a new store instance, without trusting forged identity", async () => {
     const a = await new AssistantStore(fixture.db, () => now).identity(

@@ -1,0 +1,123 @@
+[
+  {
+    "results": [
+      {
+        "id": "content-038ff35b-c636-4712-9217-e2ee5ea197ef",
+        "title": "广东外语外贸大学本科生课程修读管理规定",
+        "body_format": "reading_html",
+        "version": 5,
+        "chunk_count": 2,
+        "text_length": 1684,
+        "status": "ready",
+        "public_visible": 1,
+        "indexed_end": 1684
+      },
+      {
+        "id": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+        "title": "2026年研究生手册（全文）",
+        "body_format": "plain",
+        "version": 2,
+        "chunk_count": 278,
+        "text_length": 217287,
+        "status": "ready",
+        "public_visible": 1,
+        "indexed_end": 217287
+      },
+      {
+        "id": "content-1ba4ae02-5ef5-481b-962c-92e8621b50b2",
+        "title": "饮食服务",
+        "body_format": "reading_html",
+        "version": 5,
+        "chunk_count": 4,
+        "text_length": 2739,
+        "status": "ready",
+        "public_visible": 1,
+        "indexed_end": 2739
+      },
+      {
+        "id": "content-1f95666d-f58d-4335-aed7-efa5835e373e",
+        "title": "广东外语外贸大学学生宿舍管理规定（试行）",
+        "body_format": "reading_html",
+        "version": 5,
+        "chunk_count": 10,
+        "text_length": 7413,
+        "status": "ready",
+        "public_visible": 1,
+        "indexed_end": 7413
+      },
+      {
+        "id": "content-3b2e5986-6bc5-4bfc-b307-1bd34645772b",
+        "title": "学生如何开通校园网？",
+        "body_format": "reading_html",
+        "version": 3,
+        "chunk_count": 1,
+        "text_length": 284,
+        "status": "ready",
+        "public_visible": 1,
+        "indexed_end": 284
+      },
+      {
+        "id": "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+        "title": "广东外语外贸大学本科生转专业实施办法",
+        "body_format": "reading_html",
+        "version": 3,
+        "chunk_count": 3,
+        "text_length": 1743,
+        "status": "ready",
+        "public_visible": 1,
+        "indexed_end": 1743
+      },
+      {
+        "id": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+        "title": "2026版本科生学生手册（全文）",
+        "body_format": "plain",
+        "version": 3,
+        "chunk_count": 305,
+        "text_length": 218596,
+        "status": "ready",
+        "public_visible": 1,
+        "indexed_end": 218596
+      },
+      {
+        "id": "content-7bc9a95d-cab3-4590-a7f7-b1b816bb66b4",
+        "title": "2026-2027学年第一学期校历",
+        "body_format": "plain",
+        "version": 3,
+        "chunk_count": 2,
+        "text_length": 1003,
+        "status": "ready",
+        "public_visible": 1,
+        "indexed_end": 1003
+      },
+      {
+        "id": "content-fbfbd584-663a-4378-95a6-c4e8b3312c0b",
+        "title": "如何使用校园网？",
+        "body_format": "reading_html",
+        "version": 3,
+        "chunk_count": 2,
+        "text_length": 1285,
+        "status": "ready",
+        "public_visible": 1,
+        "indexed_end": 1285
+      }
+    ],
+    "success": true,
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "NRT",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 713.0869
+      },
+      "duration": 713.0869,
+      "changes": 0,
+      "last_row_id": 2358,
+      "changed_db": false,
+      "size_after": 564367360,
+      "rows_read": 179965,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  }
+]

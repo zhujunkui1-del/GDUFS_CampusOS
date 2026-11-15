@@ -112,6 +112,35 @@ it("preserves quoted titles and selects matching body evidence beyond the first 
     f.close();
   }
 });
+it("retrieves an interior chapter of a long named reference instead of stopping at its first six chunks", async () => {
+  const f = await dateGateFixture();
+  try {
+    const title = "校园综合服务手册";
+    await article(
+      f,
+      "校园综合服务手册。\n" +
+        "第一章：申请时应当遵守服务流程。\n".repeat(700) +
+        "\n设备维修保修期为六个月，凭设备维修凭证办理。\n" +
+        "其他校园事项。\n".repeat(500),
+      "reference",
+      false,
+      undefined,
+      title,
+    );
+    await ensureRetrievalIndex(f.db, "reference");
+    const result = await new D1KeywordRetriever(f.db).retrieve(
+      { query: "校园综合服务手册中设备维修的保修期多久？", title },
+      PUBLIC_RETRIEVAL_SCOPE,
+    );
+    expect(result.hits[0]?.contentSnippet).toContain("设备维修保修期为六个月");
+    expect(result.hits[0]?.startOffset).toBeGreaterThan(6000);
+    expect(
+      result.metrics.recallLanes?.some((l) => l.name === "document_passages"),
+    ).toBe(true);
+  } finally {
+    f.close();
+  }
+});
 it("starts a directly matched procedural guide at its beginning instead of a keyword-heavy late step", async () => {
   const f = await dateGateFixture();
   try {

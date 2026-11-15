@@ -1,0 +1,374 @@
+{
+  "checkedAt": "2026-11-15T07:23:40.477Z",
+  "question": "本科申请自学免修需要达到多少平均学分绩点，免修考试至少多少分，每学期最多几门？",
+  "smartSearch": false,
+  "started": 1794727394668,
+  "ordinaryStarted": 1794727399480,
+  "overlapped": true,
+  "sameOwner": true,
+  "databaseLanes": [
+    {
+      "execution_lane": "workflow",
+      "status": "completed"
+    },
+    {
+      "execution_lane": "assistant",
+      "status": "completed"
+    }
+  ],
+  "latestIsOrdinary": true,
+  "results": [
+    {
+      "lane": "workflow",
+      "status": 200,
+      "terminal": "run.completed",
+      "answer": "### 自学免修相关要求\n1. **免修考试分数要求**：免修考试成绩需达到85分及以上，方可准予免修并直接取得课程学分，该成绩会记为课程成绩、参与平均学分绩点计算 [1]。\n2. **每学期最多申请门数**：自学免修课程每学期不得超过2门 [1]。\n3. **平均学分绩点要求**：当前检索到的官方公开资料未明确说明申请自学免修的最低平均学分绩点门槛，暂无法确认具体标准。\n\n关键依据为《2026版本科生学生手册》中关于免修的相关规定 [1]。",
+      "conversationId": "8f1e6a0d-405c-5ec1-94ea-3bc4a568149e",
+      "metrics": {
+        "smartSearch": false,
+        "queryUnderstanding": {
+          "failed": true,
+          "code": "NON_LITERAL_PLAN"
+        },
+        "answerMode": "model",
+        "buildingProfiles": [],
+        "conversationAct": "campus",
+        "answerRequirement": "strict",
+        "modelFailureCode": null,
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "evidenceAssessment": {
+          "state": "supported",
+          "relatedDocuments": [
+            "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+            "content-038ff35b-c636-4712-9217-e2ee5ea197ef",
+            "content-373fefb1-af06-4d56-b76e-d84379e34a4e",
+            "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc"
+          ],
+          "missing": [],
+          "activities": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            }
+          ],
+          "needsSupplement": false,
+          "negativeExistenceProven": false
+        },
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "professional",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 3,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "softAcceptances": 0,
+        "groundingChecks": 1,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [
+          {
+            "supported": true,
+            "issues": []
+          }
+        ],
+        "upstreamTimings": [
+          {
+            "durationMs": 6564,
+            "firstTextMs": 5982,
+            "finishReason": "stop",
+            "contentChars": 223
+          },
+          {
+            "durationMs": 3376,
+            "firstTextMs": null,
+            "stage": "evidence_check"
+          }
+        ],
+        "promptTokens": 6414,
+        "completionTokens": 1062,
+        "cachedPromptTokens": 0,
+        "totalTokens": 7476,
+        "usageComplete": false,
+        "chargedTokens": 257476,
+        "durationMs": 12203,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 4563,
+          "serverElapsedMs": 16766,
+          "firstTextMs": 16726,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 2131,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 28,
+            "writeQueries": 12,
+            "calls": 32,
+            "failures": 0,
+            "durationMs": 3000,
+            "maxCallMs": 434,
+            "rowsRead": 8436,
+            "rowsWritten": 26,
+            "rowUsageStatements": 21,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 8228,
+              "rowsWritten": 0,
+              "queries": 8,
+              "durationMs": 2131,
+              "candidateChunks": 96,
+              "usageAvailable": true,
+              "queryPlanVersion": "query-v2",
+              "recallLanes": [
+                {
+                  "name": "title_subject",
+                  "limit": 32,
+                  "candidates": 32
+                },
+                {
+                  "name": "expanded_subject",
+                  "limit": 64,
+                  "candidates": 64
+                },
+                {
+                  "name": "body_passages",
+                  "limit": 32,
+                  "candidates": 32
+                },
+                {
+                  "name": "semantic",
+                  "limit": 24,
+                  "candidates": 14
+                },
+                {
+                  "name": "document_passages",
+                  "limit": 480,
+                  "candidates": 32
+                }
+              ]
+            }
+          ],
+          "externalSearch": []
+        }
+      },
+      "endedAt": "2026-11-15T07:23:31.579Z",
+      "cards": [
+        {
+          "kind": "source",
+          "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+          "title": "2026版本科生学生手册（全文）",
+          "sourceName": "学生工作部",
+          "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+          "publishedAt": "2026-09-20T11:16:00.000Z",
+          "snippet": " 学生应在开课学期第一周向开课部门提出申请，审批通过后参加免修考试。免修考试由开课部门在第二周组织。免修考试的命题和阅卷参照学校课程考核相关规定执行。免修考试成绩达85 分及以上者，准予免修课程直接取得学分，考试成绩记为该课程成绩，参与平均学分绩点计算。 开课部门应于每学期第三周将取得免修资格的学生及课程汇总信息报教务处备案。 第十三条每门课程只能申请1 次自学免修。自学免修课程每学期不得超过2 门。 第十四条赴国（境）外交换的学生通过学分互认免修相关课程， 其认定办法另行规定。 第十五条申请免修的课程须是本学期人才培养方案内正在修读的课程，须重修的课程不得申请免修。政治理论、德育、体育、实验、实习、 毕业论文（设计）、军事理论与军训等课程及其他经开课部门确定为不能免修的课程不得申请免修。免修资格一旦取得，不得放弃。\n第四章免听\n第十六条免听是指学生不参与某课程课堂教学活动，但按任课教师的要求完成作业和参加考核的课程修读方式。 第十七条符合下列条件之一的，可申请免听： （一）学生赴国（境）外学习或赴国（境）外实习期间无法正常修读的课程； （二）学生因课程时间冲突而无法参加课堂教学活动的重修课程； （三）修读本科生辅修专业的学生，凡在主修专业中已修过教学要求相同或较高的课程，且课程成绩达78 分及以上的。 第十八条学生应在开课学期第一周向开课部门提出申请，审批通过后，报教务处备案。学生应主动和任课教师联系，知晓教学安排，完成\n本科学生手册\n64",
+          "evidenceType": "full_text",
+          "classificationState": "knowledge",
+          "validity": "unknown",
+          "readable": true,
+          "calendarLinks": []
+        }
+      ]
+    },
+    {
+      "lane": "assistant",
+      "status": 200,
+      "terminal": "run.completed",
+      "answer": "### 自学免修核心要求\n1. **免修考试分数要求**：免修考试成绩达85分及以上，方可准予免修课程直接取得学分，成绩记为该课程成绩并参与平均学分绩点计算 [1]。\n2. **每学期最多申请门数**：自学免修课程每学期不得超过2门 [1]。\n3. **平均学分绩点要求**：当前检索到的官方文件未提及本科自学免修对平均学分绩点的具体要求，暂不能确认。\n\n### 其他相关要求\n- 申请时间：学生应在开课学期第一周向开课部门提出申请，审批通过后参加免修考试，免修考试由开课部门在第二周组织 [1]。\n- 限制情形：申请免修的课程须是本学期人才培养方案内正在修读的课程，须重修的课程不得申请免修；政治理论、德育、体育、实验、实习、毕业论文（设计）、军事理论与军训等课程及其他经开课部门确定为不能免修的课程不得申请免修 [1]。\n- 其他规则：每门课程只能申请1次自学免修，免修资格一旦取得不得放弃 [1]。\n\n关键依据为《2026版本科生学生手册》相关规定 [1]。",
+      "conversationId": "2567f088-f44d-5283-9825-26aa66d016d6",
+      "metrics": {
+        "smartSearch": false,
+        "queryUnderstanding": {
+          "failed": true,
+          "code": "NON_LITERAL_PLAN"
+        },
+        "answerMode": "model",
+        "buildingProfiles": [],
+        "conversationAct": "campus",
+        "answerRequirement": "strict",
+        "modelFailureCode": null,
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "evidenceAssessment": {
+          "state": "supported",
+          "relatedDocuments": [
+            "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+            "content-038ff35b-c636-4712-9217-e2ee5ea197ef",
+            "content-373fefb1-af06-4d56-b76e-d84379e34a4e",
+            "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc"
+          ],
+          "missing": [],
+          "activities": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            },
+            {
+              "documentId": "content-29667e68-0f46-432e-8c1b-0d7b288ddbcc",
+              "existence": "documented",
+              "eventState": "unknown",
+              "registrationState": "unknown",
+              "participation": "unknown"
+            }
+          ],
+          "needsSupplement": false,
+          "negativeExistenceProven": false
+        },
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "professional",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 3,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "softAcceptances": 0,
+        "groundingChecks": 1,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [
+          {
+            "supported": true,
+            "issues": []
+          }
+        ],
+        "upstreamTimings": [
+          {
+            "durationMs": 6849,
+            "firstTextMs": 5668,
+            "finishReason": "stop",
+            "contentChars": 432
+          },
+          {
+            "durationMs": 3019,
+            "firstTextMs": null,
+            "stage": "evidence_check"
+          }
+        ],
+        "promptTokens": 6548,
+        "completionTokens": 1166,
+        "cachedPromptTokens": 0,
+        "totalTokens": 7714,
+        "usageComplete": false,
+        "chargedTokens": 257714,
+        "durationMs": 11702,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 6520,
+          "serverElapsedMs": 18222,
+          "firstTextMs": 18182,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "search_campus_knowledge",
+              "durationMs": 1707,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 28,
+            "writeQueries": 12,
+            "calls": 32,
+            "failures": 0,
+            "durationMs": 2762,
+            "maxCallMs": 383,
+            "rowsRead": 8444,
+            "rowsWritten": 26,
+            "rowUsageStatements": 21,
+            "rowUsageComplete": false
+          },
+          "retrieval": [
+            {
+              "skill": "search_campus_knowledge",
+              "rowsRead": 8228,
+              "rowsWritten": 0,
+              "queries": 8,
+              "durationMs": 1707,
+              "candidateChunks": 96,
+              "usageAvailable": true,
+              "queryPlanVersion": "query-v2",
+              "recallLanes": [
+                {
+                  "name": "title_subject",
+                  "limit": 32,
+                  "candidates": 32
+                },
+                {
+                  "name": "expanded_subject",
+                  "limit": 64,
+                  "candidates": 64
+                },
+                {
+                  "name": "body_passages",
+                  "limit": 32,
+                  "candidates": 32
+                },
+                {
+                  "name": "semantic",
+                  "limit": 24,
+                  "candidates": 14
+                },
+                {
+                  "name": "document_passages",
+                  "limit": 480,
+                  "candidates": 32
+                }
+              ]
+            }
+          ],
+          "externalSearch": []
+        }
+      },
+      "endedAt": "2026-11-15T07:23:38.708Z",
+      "cards": [
+        {
+          "kind": "source",
+          "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+          "title": "2026版本科生学生手册（全文）",
+          "sourceName": "学生工作部",
+          "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+          "publishedAt": "2026-09-20T11:16:00.000Z",
+          "snippet": " 学生应在开课学期第一周向开课部门提出申请，审批通过后参加免修考试。免修考试由开课部门在第二周组织。免修考试的命题和阅卷参照学校课程考核相关规定执行。免修考试成绩达85 分及以上者，准予免修课程直接取得学分，考试成绩记为该课程成绩，参与平均学分绩点计算。 开课部门应于每学期第三周将取得免修资格的学生及课程汇总信息报教务处备案。 第十三条每门课程只能申请1 次自学免修。自学免修课程每学期不得超过2 门。 第十四条赴国（境）外交换的学生通过学分互认免修相关课程， 其认定办法另行规定。 第十五条申请免修的课程须是本学期人才培养方案内正在修读的课程，须重修的课程不得申请免修。政治理论、德育、体育、实验、实习、 毕业论文（设计）、军事理论与军训等课程及其他经开课部门确定为不能免修的课程不得申请免修。免修资格一旦取得，不得放弃。\n第四章免听\n第十六条免听是指学生不参与某课程课堂教学活动，但按任课教师的要求完成作业和参加考核的课程修读方式。 第十七条符合下列条件之一的，可申请免听： （一）学生赴国（境）外学习或赴国（境）外实习期间无法正常修读的课程； （二）学生因课程时间冲突而无法参加课堂教学活动的重修课程； （三）修读本科生辅修专业的学生，凡在主修专业中已修过教学要求相同或较高的课程，且课程成绩达78 分及以上的。 第十八条学生应在开课学期第一周向开课部门提出申请，审批通过后，报教务处备案。学生应主动和任课教师联系，知晓教学安排，完成\n本科学生手册\n64",
+          "evidenceType": "full_text",
+          "classificationState": "knowledge",
+          "validity": "unknown",
+          "readable": true,
+          "calendarLinks": []
+        }
+      ]
+    }
+  ]
+}

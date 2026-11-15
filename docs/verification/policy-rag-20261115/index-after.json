@@ -1,0 +1,64 @@
+[
+  {
+    "results": [
+      {
+        "id": "content-038ff35b-c636-4712-9217-e2ee5ea197ef",
+        "title": "广东外语外贸大学本科生课程修读管理规定",
+        "review_status": "approved",
+        "publication_status": "published",
+        "chunk_count": 2,
+        "text_length": 1684,
+        "status": "ready",
+        "indexed_end": 1684
+      },
+      {
+        "id": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+        "title": "2026年研究生手册（全文）",
+        "review_status": "approved",
+        "publication_status": "published",
+        "chunk_count": 278,
+        "text_length": 217287,
+        "status": "ready",
+        "indexed_end": 217287
+      },
+      {
+        "id": "content-1f95666d-f58d-4335-aed7-efa5835e373e",
+        "title": "广东外语外贸大学学生宿舍管理规定（试行）",
+        "review_status": "approved",
+        "publication_status": "published",
+        "chunk_count": 10,
+        "text_length": 7413,
+        "status": "ready",
+        "indexed_end": 7413
+      },
+      {
+        "id": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+        "title": "2026版本科生学生手册（全文）",
+        "review_status": "approved",
+        "publication_status": "published",
+        "chunk_count": 305,
+        "text_length": 218596,
+        "status": "ready",
+        "indexed_end": 218596
+      }
+    ],
+    "success": true,
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "NRT",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 3.5492
+      },
+      "duration": 3.5492,
+      "changes": 0,
+      "last_row_id": 11485,
+      "changed_db": false,
+      "size_after": 564822016,
+      "rows_read": 611,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  }
+]

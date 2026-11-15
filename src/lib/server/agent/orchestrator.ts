@@ -195,6 +195,7 @@ export class AgentOrchestrator {
         const id = `${runId}:plan:${index}`;
         emit("tool.started", {
           name: read.name,
+          input: read.input,
           toolCallId: id,
           origin: "server_plan",
         });
@@ -216,6 +217,7 @@ export class AgentOrchestrator {
         ]);
         emit("tool.finished", {
           name: read.name,
+          input: read.input,
           toolCallId: id,
           origin: "server_plan",
           result,
@@ -371,6 +373,7 @@ export class AgentOrchestrator {
             origin: "model",
             toolCallId: call.id,
             name: call.function.name,
+            input: call.function.arguments,
           });
           toolsExecuted++;
           const toolStarted = performance.now();

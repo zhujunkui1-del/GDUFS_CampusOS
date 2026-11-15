@@ -10,5 +10,8 @@
   "modelNames": [
     "step-3.5-flash-2603"
   ],
-  "deployment": "e10a86c5-0713-4f74-a114-9b82136e994c"
+  "deployment": "e10a86c5-0713-4f74-a114-9b82136e994c",
+  "testedDeployment": "e10a86c5-0713-4f74-a114-9b82136e994c",
+  "currentDeployment": "44f7d707-6e2c-4e5a-b70f-ae83008a2556",
+  "laterChanges": "Natural voice and original north-campus/policy routing compatibility; thirty original answers retained."
 }

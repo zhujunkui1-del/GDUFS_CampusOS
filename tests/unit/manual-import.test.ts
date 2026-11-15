@@ -1,6 +1,9 @@
 import { describe, it, expect } from "vitest";
 import { sqliteD1 } from "../fixtures/sqlite-d1";
-import { ManualImportStore } from "@/lib/server/console/manual-store";
+import {
+  ManualImportStore,
+  importUrl,
+} from "@/lib/server/console/manual-store";
 import { readPublicContent } from "@/lib/server/console/public-content";
 import { filterPublicContent } from "@/lib/server/console/store";
 import { ManualImportSchema } from "@/domain/console/manual-import";
@@ -13,6 +16,52 @@ const actor = {
 const command = (expectedVersion: number) => ({
   commandId: crypto.randomUUID(),
   expectedVersion,
+});
+it("accepts checked public attachments from an approved parent without expanding automatic crawl paths", async () => {
+  const f = await setup("licensed_full_text");
+  try {
+    const source = {
+      ...(await f.store.source(f.source.id)),
+      webProfileJson: JSON.stringify({
+        ruleVersion: "fixture",
+        entryUrls: ["https://example.invalid/list.htm"],
+        articlePathPrefixes: ["/info/"],
+        titleSelector: "h1",
+        dateSelector: "time",
+        bodySelector: "article",
+      }),
+    };
+    const url =
+      "https://example.invalid/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=123&wbfileid=ABC";
+    const context = {
+      originalChecked: true,
+      discoveryUrls: ["https://example.invalid/info/1041/123.htm"],
+    };
+    expect(importUrl(source, url, true, context)).toBe(url);
+    expect(() => importUrl(source, url)).toThrow();
+    expect(() =>
+      importUrl(source, url, true, { ...context, originalChecked: false }),
+    ).toThrow();
+    expect(() =>
+      importUrl(
+        source,
+        url.replace("example.invalid", "other.invalid"),
+        true,
+        context,
+      ),
+    ).toThrow();
+    expect(() =>
+      importUrl(source, url + "&key=secret", true, context),
+    ).toThrow();
+    expect(() =>
+      importUrl(source, url, true, {
+        ...context,
+        discoveryUrls: ["https://example.invalid/unapproved/123.htm"],
+      }),
+    ).toThrow();
+  } finally {
+    f.close();
+  }
 });
 async function setup(
   rights:

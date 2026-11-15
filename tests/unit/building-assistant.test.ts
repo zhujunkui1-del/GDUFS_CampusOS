@@ -46,6 +46,7 @@ it("uses a verified selected place for here, and does not attach building facts 
 it("keeps the thirty measured building questions outside the pre-existing formal-policy route", () => {
   for (const item of questions) {
     const plan = contentIntent(item.question, []).queryPlan;
+    expect(plan.campus, item.question).not.toBe("north");
     expect(plan.goal, item.question).not.toBe("policy");
     expect(
       plan.topics.some((topic) => topic.id === "borrowing"),

@@ -11,7 +11,10 @@ export function supportsAnswerPurpose(
   return (
     /指南|流程|操作|步骤|借阅规则|借还书/.test(hit.title) ||
     evidenceWindow(hit.contentSnippet ?? hit.snippet ?? "", query, 780)
-      .priority > 0
+      .priority > 0 ||
+    /提交|(?:应当|需要|须|应).{0,40}(?:申请|办理)|向.{0,30}(?:申请|办理)/.test(
+      hit.contentSnippet ?? hit.snippet ?? "",
+    )
   );
 }
 

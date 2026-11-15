@@ -1,0 +1,353 @@
+{
+  "checkedAt": "2026-11-15T05:16:14.939Z",
+  "status": 200,
+  "stages": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-15T05:16:08.561Z",
+      "elapsedMs": 124,
+      "data": {
+        "question": "把地图切换到2.5D",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-15T05:16:08.561Z",
+      "elapsedMs": 124,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-15T05:16:09.308Z",
+      "elapsedMs": 871,
+      "data": {
+        "question": "把地图切换到2.5D"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-15T05:16:09.308Z",
+      "elapsedMs": 871,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-15T05:16:09.308Z",
+      "elapsedMs": 871,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-15T05:16:09.308Z",
+      "elapsedMs": 871,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-15T05:16:09.308Z",
+      "elapsedMs": 871,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-15T05:16:09.308Z",
+      "elapsedMs": 871,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "facts",
+        "campus": null,
+        "topics": [],
+        "path": "map",
+        "plannedTools": []
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "running",
+      "at": "2026-11-15T05:16:09.486Z",
+      "elapsedMs": 1049,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答或工具选择",
+        "tools": [
+          "control_map"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "success",
+      "at": "2026-11-15T05:16:12.572Z",
+      "elapsedMs": 4135,
+      "durationMs": 3086,
+      "data": {
+        "finishReason": "tool_calls",
+        "toolCalls": [
+          "control_map"
+        ],
+        "characters": 0,
+        "usage": {
+          "promptTokens": 795,
+          "completionTokens": 150,
+          "totalTokens": 945
+        }
+      }
+    },
+    {
+      "node": "map",
+      "span": "map:6",
+      "state": "running",
+      "at": "2026-11-15T05:16:12.612Z",
+      "elapsedMs": 4175,
+      "data": {
+        "name": "control_map",
+        "origin": "model",
+        "input": "{\"actions\": [{\"type\": \"SET_VIEW_MODE\", \"mode\": \"2.5d\"}]}"
+      }
+    },
+    {
+      "node": "map",
+      "span": "map:6",
+      "state": "success",
+      "at": "2026-11-15T05:16:12.612Z",
+      "elapsedMs": 4175,
+      "durationMs": 0,
+      "data": {
+        "name": "control_map",
+        "result": {
+          "acceptedActions": [
+            {
+              "type": "SET_VIEW_MODE",
+              "mode": "2.5d"
+            }
+          ],
+          "execution": "intent_only",
+          "mapVersion": "s1-2026-10-14.2"
+        },
+        "durationMs": 0
+      }
+    },
+    {
+      "node": "receipt",
+      "span": "receipt:7",
+      "state": "running",
+      "at": "2026-11-15T05:16:12.664Z",
+      "elapsedMs": 4227,
+      "data": {
+        "actions": [
+          "SET_VIEW_MODE"
+        ]
+      }
+    },
+    {
+      "node": "receipt",
+      "span": "receipt:7",
+      "state": "unconfirmed",
+      "at": "2026-11-15T05:16:12.664Z",
+      "elapsedMs": 4227,
+      "durationMs": 0,
+      "data": {
+        "acknowledged": false,
+        "reason": "查询预算已到回执等待门槛"
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "state": "running",
+      "at": "2026-11-15T05:16:12.705Z",
+      "elapsedMs": 4268,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答生成",
+        "tools": []
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "state": "success",
+      "at": "2026-11-15T05:16:14.576Z",
+      "elapsedMs": 6139,
+      "durationMs": 1871,
+      "data": {
+        "finishReason": "stop",
+        "toolCalls": [],
+        "characters": 21,
+        "usage": {
+          "promptTokens": 543,
+          "completionTokens": 127,
+          "totalTokens": 670
+        }
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "running",
+      "at": "2026-11-15T05:16:14.620Z",
+      "elapsedMs": 6183,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "success",
+      "at": "2026-11-15T05:16:14.620Z",
+      "elapsedMs": 6183,
+      "durationMs": 0,
+      "data": {
+        "characters": 21,
+        "cards": 0
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "running",
+      "at": "2026-11-15T05:16:14.620Z",
+      "elapsedMs": 6183,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "success",
+      "at": "2026-11-15T05:16:14.620Z",
+      "elapsedMs": 6183,
+      "durationMs": 0,
+      "data": {
+        "characters": 21,
+        "cards": 0
+      }
+    }
+  ],
+  "terminal": {
+    "runId": "8da813c5-8ea7-46fa-8f42-5b3898c7643e",
+    "eventId": "8da813c5-8ea7-46fa-8f42-5b3898c7643e:27",
+    "timestamp": "2026-11-15T05:16:14.760Z",
+    "type": "run.completed",
+    "payload": {
+      "conversationId": "5d3b2c30-085a-5c8d-a162-ef60da529998",
+      "requestId": "05e9558f-c56e-4d09-a2e0-0f11b2221a0b",
+      "metrics": {
+        "smartSearch": false,
+        "queryUnderstanding": {
+          "failed": false
+        },
+        "answerMode": "model",
+        "buildingProfiles": [],
+        "conversationAct": "campus",
+        "answerRequirement": "open",
+        "modelFailureCode": null,
+        "evidenceGateUsed": false,
+        "publicationFallbackUsed": false,
+        "persona": {
+          "version": "campus-dafeiyu-v1",
+          "tone": "daily",
+          "aside": false,
+          "concise": false
+        },
+        "requests": 2,
+        "correctionRetries": 0,
+        "emptyAnswerRetries": 0,
+        "answerRepairRetries": 0,
+        "softAcceptances": 0,
+        "groundingChecks": 0,
+        "groundingFailures": 0,
+        "groundingCheckFailures": 0,
+        "groundingResults": [],
+        "upstreamTimings": [
+          {
+            "durationMs": 3086,
+            "firstTextMs": null,
+            "finishReason": "tool_calls",
+            "contentChars": 0
+          },
+          {
+            "durationMs": 1871,
+            "firstTextMs": 1810,
+            "finishReason": "stop",
+            "contentChars": 21
+          }
+        ],
+        "promptTokens": 1338,
+        "completionTokens": 277,
+        "cachedPromptTokens": 0,
+        "totalTokens": 1615,
+        "usageComplete": true,
+        "chargedTokens": 1615,
+        "durationMs": 5177,
+        "estimatedUsdRange": null,
+        "priceSource": null,
+        "priceCheckedAt": null,
+        "model": "step-3.5-flash-2603",
+        "timings": {
+          "version": "camera-settled-v2",
+          "preparationMs": 1006,
+          "serverElapsedMs": 6183,
+          "firstTextMs": 6139,
+          "mapActionMs": null,
+          "skills": [
+            {
+              "name": "control_map",
+              "durationMs": 0,
+              "ok": true
+            }
+          ],
+          "database": {
+            "readQueries": 20,
+            "writeQueries": 22,
+            "calls": 27,
+            "failures": 0,
+            "durationMs": 1226,
+            "maxCallMs": 70,
+            "rowsRead": 744,
+            "rowsWritten": 30,
+            "rowUsageStatements": 23,
+            "rowUsageComplete": false
+          },
+          "retrieval": [],
+          "externalSearch": []
+        }
+      }
+    }
+  },
+  "answer": "2.5D模式已开启，立体视角get✓ 🐟"
+}

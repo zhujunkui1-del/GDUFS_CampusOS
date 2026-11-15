@@ -14,7 +14,7 @@ import {
 // “互联网+” is a competition name, not a request to search the web. Asking for
 // “挑战杯和互联网+校内选拔怎么报名” must not nag the user to turn on 智能搜索.
 const WEB_REQUEST =
-  /(?:联网|上网|全网|网上搜索|网上搜|外部搜索|互联网搜索|互联网上查)/;
+  /(?:(?:联网|上网)(?:来|去|帮我)?(?:搜|查|找)|全网|网上搜索|网上搜|外部搜索|互联网搜索|互联网上查)/;
 const COMPETITION_NAME = /互联网\s*\+/g;
 
 export function explicitWebRequest(query: string): boolean {

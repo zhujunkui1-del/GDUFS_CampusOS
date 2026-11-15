@@ -22,6 +22,7 @@ async function runTurn(
   message: string,
   replies: string[],
   setup?: (f: ReturnType<typeof sqliteD1>) => void,
+  workflow = false,
 ) {
   const f = sqliteD1();
   setup?.(f);
@@ -41,6 +42,7 @@ async function runTurn(
       headers: {
         Origin: "https://campus.invalid",
         "Content-Type": "application/json",
+        ...(workflow ? { "X-CampusOS-Workflow": "1" } : {}),
       },
       body: JSON.stringify({ message, clientRequestId: crypto.randomUUID() }),
     }),
@@ -176,6 +178,55 @@ it("keeps a building service-location question on live owner evidence rather tha
     expect(answered(events)).toContain("编码和日期");
     expect(JSON.stringify(client.requests)).toContain(description);
     expect(events.some((event) => event.type === "tool.started")).toBe(false);
+  } finally {
+    f.close();
+  }
+});
+
+it("streams opt-in workflow stages for the real chat path without exposing system prompts", async () => {
+  const { f, events, client } = await runTurn(
+    "图书馆有几层？",
+    ["图书馆有五层。"],
+    (fixture) => {
+      fixture.sqlite
+        .prepare(
+          "INSERT INTO building_profiles(place_id,description,photos_json,updated_at) VALUES(?,?,'[]',?)",
+        )
+        .run(
+          "osm-way-307250998",
+          "图书馆五层，提供自习室。",
+          new Date().toISOString(),
+        );
+    },
+    true,
+  );
+  try {
+    expect((await runtime.resolve.mock.results.at(-1)!.value).client).toBe(
+      client,
+    );
+    const stages = events
+      .filter((event) => event.payload.workflow)
+      .map(
+        (event) => event.payload.workflow as { node: string; state: string },
+      );
+    for (const node of [
+      "input",
+      "gate",
+      "route",
+      "building",
+      "events",
+      "model",
+      "expression",
+      "output",
+    ])
+      expect(
+        stages.some(
+          (stage) => stage.node === node && stage.state === "success",
+        ),
+        node,
+      ).toBe(true);
+    expect(events.some((event) => event.type === "run.completed")).toBe(true);
+    expect(JSON.stringify(stages)).not.toContain("AGENT_SIGNING_SECRET");
   } finally {
     f.close();
   }

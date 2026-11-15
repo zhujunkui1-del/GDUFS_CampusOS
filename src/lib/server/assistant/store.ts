@@ -216,7 +216,7 @@ export class AssistantStore {
   async latest(identity: AssistantIdentity) {
     return this.db
       .prepare(
-        "SELECT id FROM conversations WHERE owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?) AND EXISTS(SELECT 1 FROM conversation_messages WHERE conversation_id=conversations.id) ORDER BY updated_at_ms DESC,id DESC LIMIT 1",
+        "SELECT id FROM conversations WHERE NOT EXISTS(SELECT 1 FROM agent_runs scope WHERE scope.conversation_id=conversations.id AND scope.execution_lane='workflow') AND owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?) AND EXISTS(SELECT 1 FROM conversation_messages WHERE conversation_id=conversations.id) ORDER BY updated_at_ms DESC,id DESC LIMIT 1",
       )
       .bind(identity.owner, this.now())
       .first<{ id: string }>();
@@ -303,7 +303,7 @@ export class AssistantStore {
     if (parsed) z.string().uuid().parse(parsed[1]);
     const rows = await this.db
       .prepare(
-        "SELECT id,title,updated_at_ms FROM conversations WHERE owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?) AND EXISTS(SELECT 1 FROM conversation_messages WHERE conversation_id=conversations.id)" +
+        "SELECT id,title,updated_at_ms FROM conversations WHERE NOT EXISTS(SELECT 1 FROM agent_runs scope WHERE scope.conversation_id=conversations.id AND scope.execution_lane='workflow') AND owner_key=? AND deleted_at_ms IS NULL AND (retention='account' OR expires_at_ms>?) AND EXISTS(SELECT 1 FROM conversation_messages WHERE conversation_id=conversations.id)" +
           (parsed
             ? " AND (updated_at_ms<? OR (updated_at_ms=? AND id<?))"
             : "") +
@@ -381,12 +381,13 @@ export class AssistantStore {
     conversation: Conversation,
     requestId: string,
     ip: string,
+    lane: "assistant" | "workflow" = "assistant",
   ) {
     const runId = crypto.randomUUID();
     try {
       await this.db
         .prepare(
-          "INSERT INTO agent_runs(id,conversation_id,status,owner_key,request_id,ip_key,is_user,started_at_ms,lease_until_ms,charged_tokens,validation_unlimited) VALUES(?,?,'running',?,?,?,?,?,?,250000,?)",
+          "INSERT INTO agent_runs(id,conversation_id,status,owner_key,request_id,ip_key,is_user,started_at_ms,lease_until_ms,charged_tokens,validation_unlimited,execution_lane) VALUES(?,?,'running',?,?,?,?,?,?,250000,?,?)",
         )
         .bind(
           runId,
@@ -398,6 +399,7 @@ export class AssistantStore {
           this.now(),
           this.now() + 120000,
           this.openValidation ? 1 : 0,
+          lane,
         )
         .run();
     } catch (error) {
@@ -577,7 +579,10 @@ export class AssistantStore {
       .run();
     if (!result.meta.changes) throw new ApiError("NOT_FOUND", "对话已失效。");
   }
-  async deepThinkingPreference(identity: AssistantIdentity, conversationId: string) {
+  async deepThinkingPreference(
+    identity: AssistantIdentity,
+    conversationId: string,
+  ) {
     await this.conversation(identity, conversationId);
     const row = await this.db
       .prepare(

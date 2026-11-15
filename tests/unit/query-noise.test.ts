@@ -85,6 +85,8 @@ describe("“互联网+” is a competition, not a request to browse", () => {
   it("does not ask the user to turn on 智能搜索", () => {
     expect(explicitWebRequest("挑战杯和互联网+校内选拔怎么报名？")).toBe(false);
     expect(explicitWebRequest("学校互联网+大赛")).toBe(false);
+    expect(explicitWebRequest("电脑连接校园网后如何进行上网认证？")).toBe(false);
+    expect(explicitWebRequest("如何开通网络并联网使用？")).toBe(false);
   });
 
   it("still recognises an explicit request", () => {

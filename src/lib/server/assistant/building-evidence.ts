@@ -29,9 +29,26 @@ export function mentionedBuildingIds(query: string, selected?: string) {
     ids.push(buildingProfileId(selected));
   return ids.slice(0, 4);
 }
-export async function buildingAssistantProfile(db: SqlDatabase, id: string) {
-  const profile = await readBuilding(db, id),
-    events = await readCalendar(db, { placeId: id, limit: 20 });
+export async function buildingAssistantProfile(
+  db: SqlDatabase,
+  id: string,
+  activityTrace?: (id: string) => (data: unknown) => void,
+) {
+  const profile = await readBuilding(db, id);
+  const finishActivity = activityTrace?.(id);
+  const events = await readCalendar(db, { placeId: id, limit: 20 });
+  finishActivity?.({
+    placeId: id,
+    after: events.after,
+    total: events.total,
+    items: events.items.map((item) => ({
+      title: item.sources[0].title,
+      date: item.activity.startsAt?.date,
+      place: item.activity.placeRaw,
+      calendarUrl: item.calendarUrl,
+    })),
+    metrics: events.metrics,
+  });
   const members = buildingProfileMembers(id);
   const maintained = !!(await db
     .prepare(
@@ -71,11 +88,14 @@ export async function buildingEvidence(
   db: SqlDatabase,
   query: string,
   selected?: string,
+  activityTrace?: (id: string) => (data: unknown) => void,
 ) {
   const ids = mentionedBuildingIds(query, selected);
   if (ids.length)
     return (
-      await Promise.all(ids.map((id) => buildingAssistantProfile(db, id)))
+      await Promise.all(
+        ids.map((id) => buildingAssistantProfile(db, id, activityTrace)),
+      )
     ).filter((profile) => profile.maintained || profile.activityTotal > 0);
   if (
     !/哪里|哪儿|哪栋|哪个(?:楼|地方|建筑|场馆)|什么(?:地方|楼)|去[哪何]/.test(
@@ -122,6 +142,6 @@ export async function buildingEvidence(
     .sort((a, b) => b.score - a.score)
     .slice(0, 3);
   return Promise.all(
-    hits.map((hit) => buildingAssistantProfile(db, hit.row.id)),
+    hits.map((hit) => buildingAssistantProfile(db, hit.row.id, activityTrace)),
   );
 }

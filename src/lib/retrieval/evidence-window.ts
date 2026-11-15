@@ -1,10 +1,11 @@
 import { buildQueryPlan, type QueryGoal } from "./query-plan";
-import { keywords } from "./terms";
+import { keywords, lexicalTokens } from "./terms";
 /** A window may lead into its sentence on purpose, but never through the
  * middle of a date or number: slicing "2026年11月7日" at its second "1"
  * reads as "1月7日", which states a different fact than the source. */
 const BACKTRACK = 60;
-const DATE_LITERAL = /\d{4}年\d{1,2}月\d{1,2}日|\d{1,2}月\d{1,2}日|\d{1,2}[:：]\d{2}/g;
+const DATE_LITERAL =
+  /\d{4}年\d{1,2}月\d{1,2}日|\d{1,2}月\d{1,2}日|\d{1,2}[:：]\d{2}/g;
 /** A date or clock is one fact: half of it ("10日", "9月7日" for "2026年11月7日")
  * is a different claim. Move the window start to the start of the literal. */
 function literalStart(text: string, raw: number) {
@@ -46,10 +47,15 @@ export function evidenceWindow(
   query: string,
   maxChars: number,
   goalOverride?: QueryGoal,
+  contextTitle = "",
 ) {
   const plan = buildQueryPlan(query),
     terms = keywords(query),
     goal = goalOverride || plan.goal;
+  const titleTokens = new Set(lexicalTokens(contextTitle));
+  const queryTokens = [...new Set(terms.flatMap(lexicalTokens))].filter(
+    (token) => !titleTokens.has(token),
+  );
   const cues: Record<string, RegExp> = {
     procedure:
       /登录|打开|进入|点击|选择|核对|扫描|刷卡|凭|持本人|填写|提交|确认|下载|打印|人工办理|自助借还/g,
@@ -73,6 +79,11 @@ export function evidenceWindow(
     let score =
       terms.reduce((n, t) => n + Number(s.includes(t)), 0) +
       Math.min(10, cueCount) * 3;
+    const sentenceTokens = new Set(lexicalTokens(s));
+    score += queryTokens.reduce(
+      (sum, token) => sum + Number(sentenceTokens.has(token)) * 2,
+      0,
+    );
     // A workflow entry is more useful for “how do I” than a later field with
     // many repeated action verbs. This preference applies only to procedures.
     const priority =
