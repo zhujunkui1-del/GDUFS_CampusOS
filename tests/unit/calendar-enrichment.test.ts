@@ -259,3 +259,41 @@ it("honours the operator cap instead of a hard-coded 40", async () => {
     f.close();
   }
 });
+it("reports the backlog instead of going silent when the budget is spent", async () => {
+  const f = await dateGateFixture();
+  try {
+    const d = await f.store.document("autumn");
+    await f.db.batch(
+      await analysisStatements(f.db, d.id, d.contentRevision, d.inputHash!, {
+        title: "2026年讲座预告",
+        body: "详情见海报。",
+      }),
+    );
+    f.sqlite
+      .prepare(
+        "UPDATE document_article_analysis SET calendar_status='needs_enrichment',calendar_attempts=0",
+      )
+      .run();
+    // Spend today's budget so the batch has nothing to draw from. The row must
+    // stay queued and countable rather than being dropped on the floor.
+    f.sqlite
+      .prepare(
+        "UPDATE console_engine_settings SET calendar_ai_day=?,calendar_ai_calls=100,calendar_ai_cap=100",
+      )
+      .run(new Date().toISOString().slice(0, 10));
+    const run = vi.fn(async () => ({ response: { events: [] } }));
+    const result = await runCalendarBatch(f.db, { run });
+    expect(run).not.toHaveBeenCalled();
+    expect(result.deferred).toBe(1);
+    expect(result.processed).toBe(0);
+    expect(
+      f.sqlite
+        .prepare(
+          "SELECT calendar_status,calendar_attempts FROM document_article_analysis WHERE document_id=?",
+        )
+        .get(d.id),
+    ).toEqual({ calendar_status: "needs_enrichment", calendar_attempts: 0 });
+  } finally {
+    f.close();
+  }
+});

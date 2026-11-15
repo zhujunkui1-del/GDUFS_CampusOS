@@ -2895,3 +2895,13 @@ Windows成品及开发壳断网地图2D/2.5D/3D、848米路线、留言表单打
 离线 1778 篇真实语料：徽章 758 → 1084（+330 / −4），removed 四篇为驾校广告、27Fall英签预警、马院思政课检查新闻、辅修管理规定。全量 6318 篇：899 → 944，`primaryDestination` 与 `radarCategory` 变动均为 0。`scripts/apply-article-analysis.mjs` 新增 `--baseline-gold=`，只拦相对基线新增的 gold 分歧（不传时仍 fail-closed）。
 
 类型检查通过，全量 167 文件 1178 用例通过；Preview D1 已落库（applied 6318，stale 0，v8 行 6309），Worker `0a057539-0f3f-4b20-83b2-2b3d10476ac8`。线上接口复核：拼多多/山东高速/宣讲会汇总表/论坛/翻译年会均为 true，金融论坛讲座与两份缴费办法为 false。详见 `docs/verification/registration-badge-2026-11-15.md`。
+
+## 2026-11-16｜日历 AI 限额 100 并按积压降级
+
+用户报告「活动日历后面几周活动量远少于前几周」。只读核查后发现「后几周少」是真实的发布规律（80% 的活动在发布后 3 天内举行），但同时暴露一个真实缺陷：`calendar_ai_calls=40` 打满 `calendar_ai_cap=40` 后，`runCalendarBatch` 的候选 SQL 退回 `calendar_status='pending'`，而库里从来没写过 `'pending'`（只有 accepted/excluded/needs_enrichment），于是整条 enrich 队列当天完全静默，看起来像采集器坏了。117 条 `needs_enrichment` 的 `calendar_attempts` 全部是 0，一次都没轮到。
+
+`src/lib/server/calendar/processor.ts`：`DEFAULT_CALENDAR_AI_CAP` 40 → 100；预算耗尽时不再静默返回，而是数一遍 `needs_enrichment` 积压写进 `result.deferred` 并返回；候选 SQL 去掉随 `canEnrich` 分支的 `'pending'` 回退；批次中途被 `CALENDAR_DAILY_BUDGET` 拒绝时置 `budgetLeft=false` 并 break，避免同一 tick 里每个候选都白领一次租约。`migrations/0072_calendar_ai_cap_100.sql` 把线上 `calendar_ai_cap` 抬到 100（CHECK 上限仍是 400）。
+
+新增 `tests/unit/calendar-enrichment.test.ts`「reports the backlog instead of going silent when the budget is spent」：预算打满时模型调用 0 次、`deferred=1`、该行仍是 `needs_enrichment/attempts=0`。类型检查通过；全量 167 文件 1179 用例中唯一失败是既有 flaky `tests/unit/public-feed-jump.test.ts`（5s 超时，单独跑通过）。
+
+线上复核：cap=100，`calendar_ai_calls` 40 → 50 → 74，`needs_enrichment` 117 → 112 → 110，accepted 681 → 688。剩余积压构成：`no_reliable_event_date` 89（attempts=0）、`year_unconfirmed` 10、`multiple_events_unresolved` 2、已尝试一次的 9。Worker `ccf18891-3d01-464c-aa3e-a45ca99f4207`。

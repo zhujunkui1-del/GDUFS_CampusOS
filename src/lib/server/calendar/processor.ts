@@ -13,7 +13,7 @@ import { enrichCalendar, type CalendarAI } from "./enrichment";
 /** How long after publication an article is still worth enriching. */
 export const RECENT_PUBLISH_DAYS = 90;
 /** The daily budget is an operator setting; the default keeps the cost bounded. */
-export const DEFAULT_CALENDAR_AI_CAP = 40;
+export const DEFAULT_CALENDAR_AI_CAP = 100;
 async function calendarAiCap(db: SqlDatabase) {
   const r = await db
     .prepare(
@@ -43,16 +43,31 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
     modelCalls: 0,
     ocrCalls: 0,
     failures: 0,
+    deferred: 0,
   };
   const budget = await db
     .prepare(
       "SELECT calendar_ai_day AS day,calendar_ai_calls AS calls,calendar_ai_cap AS cap FROM console_engine_settings WHERE id='console-v2-settings'",
     )
     .first<{ day: string | null; calls: number; cap: number | null }>();
-  const canEnrich =
+  let budgetLeft =
     !!ai &&
     (budget?.day !== new Date().toISOString().slice(0, 10) ||
       (budget?.calls || 0) < (budget?.cap ?? DEFAULT_CALENDAR_AI_CAP));
+  // An exhausted budget used to mean "do nothing": the query fell back to
+  // calendar_status='pending', which nothing ever writes, so the whole queue
+  // went silent until midnight and looked like a broken collector. Report the
+  // backlog instead so an operator can see the queue is budget-blocked rather
+  // than dead; raising calendar_ai_cap wakes it on the next tick.
+  if (!budgetLeft) {
+    const backlog = await db
+      .prepare(
+        "SELECT COUNT(*) AS n FROM document_article_analysis WHERE calendar_status='needs_enrichment' AND calendar_attempts IN(0,1,2)",
+      )
+      .first<{ n: number }>();
+    result.deferred = backlog?.n || 0;
+    return result;
+  }
   // Oldest-first is the wrong order for a queue that feeds a calendar: an
   // article from two years ago is a review of something that already happened,
   // and enriching it produces nothing anyone can attend. A recent publication
@@ -62,7 +77,7 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
     .slice(0, 10);
   const candidates = await db
     .prepare(
-      `SELECT x.document_id,x.content_revision,x.input_hash,x.calendar_status FROM document_article_analysis x JOIN knowledge_documents d ON d.id=x.document_id WHERE x.calendar_status ${canEnrich ? "IN('pending','needs_enrichment')" : "='pending'"} AND x.calendar_attempts IN(0,1,2) AND x.calendar_lease_until_ms<? ORDER BY CASE WHEN d.published_at>=? THEN 0 ELSE 1 END,x.calendar_status,x.calendar_attempts,d.published_at DESC,x.document_id LIMIT 2`,
+      `SELECT x.document_id,x.content_revision,x.input_hash,x.calendar_status FROM document_article_analysis x JOIN knowledge_documents d ON d.id=x.document_id WHERE x.calendar_status IN('pending','needs_enrichment') AND x.calendar_attempts IN(0,1,2) AND x.calendar_lease_until_ms<? ORDER BY CASE WHEN d.published_at>=? THEN 0 ELSE 1 END,x.calendar_status,x.calendar_attempts,d.published_at DESC,x.document_id LIMIT 2`,
     )
     .bind(Date.now(), recent)
     .all<{
@@ -120,7 +135,7 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
         calendarSources: base.calendar?.sources || [],
       });
       let a = calendarizeArticle(input, base);
-      if (c.calendar_status === "needs_enrichment" && ai && canEnrich) {
+      if (c.calendar_status === "needs_enrichment" && ai) {
         const enriched = await enrichCalendar(input, base, ai, () =>
           reserveCalendarModel(db),
         );
@@ -129,6 +144,13 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
         result.modelCalls += enriched.metrics.modelCalls;
         result.ocrCalls += enriched.metrics.ocrCalls;
         result.failures += enriched.metrics.failures.length;
+        // The budget can run out in the middle of a batch even though the
+        // header said there was room. Park this row and stop: every further
+        // candidate would only burn another claim for the same refusal.
+        if (a.calendar?.reason === "daily_budget_deferred") {
+          result.deferred++;
+          budgetLeft = false;
+        }
       }
       await db.batch(
         await analysisStatements(
@@ -142,6 +164,7 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
       );
       result.processed++;
       if (a.calendar?.status === "accepted") result.accepted++;
+      if (!budgetLeft) break;
     } catch {
       result.failures++;
       // A thrown step is usually a transient fault (a lost lease, a D1
