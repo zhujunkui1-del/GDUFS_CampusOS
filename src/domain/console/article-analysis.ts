@@ -24,7 +24,9 @@ import {
 // reader something they can act on: a dated window, a registration link, or an
 // explicit invitation to sign up. A bare "报名方式" mention in a sales advert
 // no longer earns the badge, and a recruitment post that never says 报名 does.
-export const ARTICLE_CLASSIFIER_VERSION = "article-content-v7";
+// v8 adds the exam notices that only say 报考, and the conference posts that
+// announce a check-in desk or a registration fee instead of a sign-up form.
+export const ARTICLE_CLASSIFIER_VERSION = "article-content-v8";
 export const ArticleAnalysisInputSchema = z
   .object({
     documentId: z.string().optional(),

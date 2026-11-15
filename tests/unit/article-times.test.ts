@@ -170,6 +170,22 @@ describe("registration badge needs an offer the reader can act on", () => {
     );
     expect(a.hasRegistration).toBe(true);
   });
+  it("recognises an exam notice that says 报考 but never 报名", () => {
+    const a = run(
+      "三、报考时间：2026年9月14-16日，下午4:00后截止报考及缴费。四、报考方式：考生网上报考。",
+      "2026-09-01",
+      "关于2026年10月公开学院实践考核课程补考考试的报考通知",
+    );
+    expect(a.hasRegistration).toBe(true);
+  });
+  it("does not badge a tuition payment notice that only says 缴费", () => {
+    const a = run(
+      "学生应在规定时间内通过学校缴费平台缴纳学费，缴费方式见附件。",
+      "2026-09-01",
+      "广东外语外贸大学本科生缴费办法",
+    );
+    expect(a.hasRegistration).toBe(false);
+  });
   it("does not badge a warning that quotes other people's process", () => {
     const a = run(
       "警惕以招聘为名收取费用，咨询电话 12333。",
