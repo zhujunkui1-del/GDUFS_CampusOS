@@ -816,3 +816,17 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 ## 2026-11-15｜工作流观察数据（D-177）
 
 无新采集源、地图素材或业务数据。节点取自本次原chatResponse、Skill执行器、ModelClient、建筑/活动读取和浏览器回执流程的结构化事件；不取模型自述作为执行证据。连线仅为当前代码可能路径。知识片段仍受原公开/版本/使用范围约束，建筑资料来自现有D1，来源链接未改变。验证夹具仅留tests，真实自己测试记录留verification/agent-workflow，不作为生产知识或预设答案。
+
+## 2026-11-15｜手册、规章与校园服务（D-178）
+
+负责人指定九项公开官方资料。复用站内已批准的来源与全文使用范围，人工核对两本手册的官方发布页和附件地址，导入用户提供的 Markdown。校历对照官网 PDF 核验。课程修读和宿舍管理原文按 HTML 重新索引，其余资料保留现有公开版本。文档版本、公开状态、片段数量、末尾覆盖和导入文件摘要见 [D1 核验](verification/policy-rag-20261115/documents.json) 与 [导入回执](verification/policy-rag-20261115/ingestion-receipts.json)。
+
+- [2026 版本科生学生手册](https://nstu.gdufs.edu.cn/info/1041/68421.htm)
+- [2026 年研究生手册](https://nstu.gdufs.edu.cn/info/1042/68461.htm)
+- [本科生课程修读管理规定](https://dbxb.gdufs.edu.cn/info/1094/2417.htm)
+- [2026–2027 第一学期校历](https://www.gdufs.edu.cn/fwdh/xl.htm)
+- [本科生转专业实施办法](https://dbxb.gdufs.edu.cn/info/1094/2604.htm)
+- [学生宿舍管理规定（试行）](https://xxgk.gdufs.edu.cn/info/1203/2433.htm)
+- [学生如何开通校园网](https://etr.gdufs.edu.cn/info/1303/5141.htm)
+- [如何使用校园网](https://etr.gdufs.edu.cn/info/1303/5137.htm)
+- [饮食服务](https://hqc.gdufs.edu.cn/info/1002/1444.htm)

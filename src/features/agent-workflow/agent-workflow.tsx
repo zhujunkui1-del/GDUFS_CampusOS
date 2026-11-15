@@ -7,13 +7,13 @@ import {
   type PointerEvent,
   type CSSProperties,
 } from "react";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { AssistantMessageText } from "@/features/assistant/components/assistant-message-text";
 import type { AssistantCard } from "@/domain/agent/assistant-contracts";
 import {
   defaultPositions,
   fitPositions,
   layoutKey,
+  minWorkflowZoom,
   readLayout,
 } from "./layout";
 import {
@@ -73,7 +73,9 @@ function nodeState(id: string, records: WorkflowRecord[], status: Status) {
   if (id === "output" && status === "success") return "success";
   const spans = new Map(
     records
-      .filter((record) => record.node === id)
+      .filter(
+        (record) => record.node === id && record.phase !== "evidence_check",
+      )
       .map((record) => [record.span, record]),
   );
   const all = [...spans.values()];
@@ -90,6 +92,14 @@ function nodeState(id: string, records: WorkflowRecord[], status: Status) {
   return all.length || ["success", "error", "stopped"].includes(status)
     ? "skipped"
     : "idle";
+}
+function recordStatus(record: WorkflowRecord) {
+  if (record.phase === "evidence_check") {
+    const result = record.data as { status?: string; supported?: boolean };
+    if (record.state === "error") return result.status || "失败";
+    if (record.state === "success") return result.supported ? "通过" : "未通过";
+  }
+  return labels[record.state];
 }
 const json = (value: unknown) => JSON.stringify(value, null, 2);
 export function AgentWorkflow() {
@@ -113,6 +123,8 @@ export function AgentWorkflow() {
   const [inspectorWidth, setInspectorWidth] = useState(390);
   const [saved, setSaved] = useState("");
   const [cards, setCards] = useState<AssistantCard[]>([]);
+  const [runQuestion, setRunQuestion] = useState("");
+  const conversationId = useRef<string | undefined>(undefined);
   const viewport = useRef({ zoom: 0.65, offset: { x: 30, y: 35 } });
   const nodeDrag = useRef<{
     id: string;
@@ -201,7 +213,7 @@ export function AgentWorkflow() {
         event.deltaY *
         (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? box.height : 1);
       const nextZoom = Math.max(
-        0.25,
+        minWorkflowZoom,
         Math.min(1.6, v.zoom * Math.exp(-delta * 0.0015)),
       );
       const x = event.clientX - box.left,
@@ -263,6 +275,7 @@ export function AgentWorkflow() {
     setEvents([]);
     setCards([]);
     setAnswer("");
+    setRunQuestion(question);
     setMetrics(null);
     setError("");
     setElapsed(0);
@@ -275,6 +288,7 @@ export function AgentWorkflow() {
           "X-CampusOS-Workflow": "1",
         },
         body: json({
+          conversationId: conversationId.current,
           message: question,
           smartSearch,
           clientRequestId: requestId.current,
@@ -290,6 +304,12 @@ export function AgentWorkflow() {
         response,
         (event) => {
           if (current !== epoch.current) return;
+          if (
+            event.type === "artifact.ready" &&
+            event.payload.started &&
+            typeof event.payload.conversationId === "string"
+          )
+            conversationId.current = event.payload.conversationId;
           if (event.payload.cards)
             setCards(event.payload.cards as AssistantCard[]);
           if (event.payload.workflow) {
@@ -340,6 +360,7 @@ export function AgentWorkflow() {
   }
   function reset() {
     epoch.current++;
+    conversationId.current = undefined;
     abort.current?.abort();
     setRecords([]);
     setEvents([]);
@@ -351,27 +372,35 @@ export function AgentWorkflow() {
     setElapsed(0);
   }
   function download() {
+    const layout = { positions, zoom, offset, inspectorWidth };
     const url = URL.createObjectURL(
       new Blob(
         [
-          json({
-            question,
-            smartSearch,
-            status,
-            answer,
-            cards,
-            error,
-            records,
-            events,
-            metrics,
-          }),
+          json(
+            hasRun
+              ? {
+                  question,
+                  smartSearch,
+                  status,
+                  answer,
+                  cards,
+                  error,
+                  records,
+                  events,
+                  metrics,
+                  layout,
+                }
+              : layout,
+          ),
         ],
         { type: "application/json" },
       ),
     );
     const a = document.createElement("a");
     a.href = url;
-    a.download = "campusos-agent-run.json";
+    a.download = hasRun
+      ? "campusos-agent-run.json"
+      : "campusos-agent-layout.json";
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -421,6 +450,22 @@ export function AgentWorkflow() {
   const completed = workflowNodes.filter(
     (node) => nodeState(node.id, records, status) === "success",
   ).length;
+  const hasRun = !!(events.length || records.length || error);
+  const exportLabel = hasRun ? "导出运行" : "导出布局";
+  const evidenceCheck = records.findLast(
+    (record) => record.phase === "evidence_check",
+  );
+  function nodeLabel(id: string, state: ReturnType<typeof nodeState>) {
+    if (
+      id === "model" &&
+      state === "success" &&
+      evidenceCheck?.state === "error"
+    )
+      return recordStatus(evidenceCheck) === "超时"
+        ? "完成 · 核验超时"
+        : "完成 · 核验未完成";
+    return labels[state];
+  }
   return (
     <main
       className="agent-studio"
@@ -445,14 +490,9 @@ export function AgentWorkflow() {
             <Save size={17} />
             <span>保存</span>
           </button>
-          <button
-            type="button"
-            aria-label="导出运行"
-            onClick={download}
-            disabled={!events.length && !records.length && !error}
-          >
+          <button type="button" aria-label={exportLabel} onClick={download}>
             <Download size={17} />
-            <span>导出运行</span>
+            <span>{exportLabel}</span>
           </button>
           <button
             type="button"
@@ -557,8 +597,12 @@ export function AgentWorkflow() {
               {workflowNodes.map((item) => {
                 const Icon = icons[item.icon];
                 const state = nodeState(item.id, records, status);
+                const label = nodeLabel(item.id, state);
                 const calls = records.filter(
-                  (r) => r.node === item.id && r.state !== "running",
+                  (r) =>
+                    r.node === item.id &&
+                    r.state !== "running" &&
+                    r.phase !== "evidence_check",
                 );
                 return (
                   <button
@@ -612,7 +656,7 @@ export function AgentWorkflow() {
                       setSelected(item.id);
                       setTab("node");
                     }}
-                    aria-label={item.title + "，" + labels[state]}
+                    aria-label={item.title + "，" + label}
                     data-node={item.id}
                     data-state={state}
                   >
@@ -627,7 +671,7 @@ export function AgentWorkflow() {
                     </span>
                     <span className="workflow-node-footer">
                       <span className={"node-state-dot " + state} />
-                      {labels[state]}
+                      {label}
                       <span>
                         {calls.length
                           ? calls.reduce((n, r) => n + (r.durationMs || 0), 0) +
@@ -660,7 +704,9 @@ export function AgentWorkflow() {
             <div className="studio-zoom">
               <button
                 aria-label="缩小工作流"
-                onClick={() => setZoom((z) => Math.max(0.25, z - 0.1))}
+                onClick={() =>
+                  setZoom((z) => Math.max(minWorkflowZoom, z - 0.1))
+                }
               >
                 <Minus size={17} />
               </button>
@@ -787,7 +833,11 @@ export function AgentWorkflow() {
                 </div>
                 <div className="studio-answer" aria-live="polite">
                   {answer ? (
-                    <Markdown remarkPlugins={[remarkGfm]}>{answer}</Markdown>
+                    <AssistantMessageText
+                      text={answer}
+                      cards={cards}
+                      question={runQuestion}
+                    />
                   ) : (
                     <p className="studio-empty">
                       {status === "running"
@@ -861,7 +911,7 @@ export function AgentWorkflow() {
                     "studio-state-badge " + nodeState(selected, records, status)
                   }
                 >
-                  {labels[nodeState(selected, records, status)]}
+                  {nodeLabel(selected, nodeState(selected, records, status))}
                 </span>
                 {!nodeRecords.length ? (
                   <p className="studio-empty">
@@ -873,7 +923,12 @@ export function AgentWorkflow() {
                   nodeRecords.map((record, index) => (
                     <section className="studio-record" key={index}>
                       <header>
-                        <strong>{labels[record.state]}</strong>
+                        <strong>
+                          {record.phase === "evidence_check"
+                            ? "证据核验 · "
+                            : ""}
+                          {recordStatus(record)}
+                        </strong>
                         <span>
                           +{record.elapsedMs} ms
                           {record.durationMs !== undefined
@@ -907,10 +962,13 @@ export function AgentWorkflow() {
                   >
                     <span className={"node-state-dot " + record.state} />
                     <strong>
-                      {workflowNodes.find((n) => n.id === record.node)?.title}
+                      {record.phase === "evidence_check"
+                        ? "证据核验"
+                        : workflowNodes.find((n) => n.id === record.node)
+                            ?.title}
                     </strong>
                     <span>
-                      {labels[record.state]} · +{record.elapsedMs} ms
+                      {recordStatus(record)} · +{record.elapsedMs} ms
                     </span>
                   </button>
                 ))}

@@ -7,6 +7,7 @@ import type {
 import { ZodError } from "zod";
 import { ApiError } from "../errors";
 import type { AssistantStore } from "./store";
+import type { WorkflowTrace } from "./workflow-trace";
 import type { MapAction } from "@/domain/maps/contracts";
 import { ControlMapInputSchema } from "@/domain/maps/skill-contracts";
 import type { ContentTool } from "./content-intent";
@@ -69,6 +70,7 @@ export function meteredClient(
       text: string,
     ) => string | { message: string; hard?: boolean } | undefined;
     groundingEvidence?: (answer: string) => unknown | undefined;
+    workflowTrace?: WorkflowTrace;
     isolateFinalEvidence?: boolean;
   } = {},
 ) {
@@ -132,6 +134,16 @@ export function meteredClient(
     requests++;
     groundingChecks++;
     const began = performance.now();
+    const deadline = AbortSignal.timeout(JUDGE_TIMEOUT_MS);
+    const finishCheck = options.workflowTrace?.start(
+      "model",
+      {
+        model: snapshot.model,
+        tool: EVIDENCE_VERDICT_TOOL.function.name,
+        timeoutMs: JUDGE_TIMEOUT_MS,
+      },
+      "evidence_check",
+    );
     try {
       const checked = await client.generateWithTools({
         messages,
@@ -146,7 +158,7 @@ export function meteredClient(
         // and turned an otherwise good answer into a timeout. A judge that
         // cannot finish inside its own budget is "unchecked" (the catch below
         // already treats that as no verdict), never a rejection.
-        signal: AbortSignal.any([signal, AbortSignal.timeout(JUDGE_TIMEOUT_MS)]),
+        signal: AbortSignal.any([signal, deadline]),
       });
       if (checked.usage) {
         outputBudgetUsed += checked.usage.completionTokens;
@@ -171,6 +183,10 @@ export function meteredClient(
       );
       groundingResults.push(verdict);
       await store.running(owner, runId);
+      finishCheck?.({
+        supported: verdict.supported,
+        issueCount: verdict.issues.length,
+      });
       if (!verdict.supported) {
         groundingFailures++;
         // Only a proven contradiction is a factual defect. "The source does not
@@ -191,6 +207,16 @@ export function meteredClient(
       }
       return undefined;
     } catch (error) {
+      finishCheck?.(
+        {
+          status: signal.aborted
+            ? "已取消"
+            : deadline.aborted
+              ? "超时"
+              : "未能取得核验结论",
+        },
+        "error",
+      );
       groundingCheckFailures++;
       reliable = false;
       // The judge is a separate model call. Its protocol error or timeout is not
@@ -480,8 +506,7 @@ export function meteredClient(
           evidenceIssue = await checkEvidence(reply.content, request.signal);
         if (outputIssue || answerIssue || evidenceIssue) {
           const groundIssue = evidenceIssue;
-          const issueText =
-            answerIssue?.message || groundIssue?.message || "";
+          const issueText = answerIssue?.message || groundIssue?.message || "";
           // A contradiction proven by the evidence judge is a factual defect,
           // not a style one: it stays fatal. Style/completeness rules and
           // unverified details retry once and then ship the answer.

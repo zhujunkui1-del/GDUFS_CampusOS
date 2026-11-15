@@ -1023,6 +1023,7 @@ export async function chatResponse(request: Request) {
           : {}),
         finalSystem: () => finalSystemInstructions(),
         isolateFinalEvidence: content.active && !content.map,
+        workflowTrace: workflow.enabled ? workflow : undefined,
         groundingEvidence: (answer) => {
           if (!content.active || content.map || !answerCards().length)
             return undefined;
@@ -1296,6 +1297,15 @@ export async function chatResponse(request: Request) {
               "地图操作与请求不符，请重试。",
             );
           published = true;
+          if (workflow.enabled) {
+            workflow.start("receipt", {
+              actions: actions.map((action) => action.type),
+            })(
+              { acknowledged: false, reason: "工作台不执行地图操作" },
+              "skipped",
+            );
+            return false;
+          }
           const mapStarted = performance.now();
           if (actions.length > 8)
             throw new ApiError("RUN_LIMIT_EXCEEDED", "请分次执行地图操作。");
@@ -2282,6 +2292,19 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
                 publicationFallbackUsed = true;
               }
             }
+            if (result.status === "completed" && !acknowledged) {
+              if (requiredAction) {
+                text = workflow.enabled
+                  ? "请在校园地图执行此操作。"
+                  : "地图操作未确认，请重试。";
+              } else if (workflow.enabled && routeQuestion) {
+                const route = [...routeArtifacts.values()].at(-1);
+                if (route) {
+                  text = routeDirectionsText(route);
+                  answerMode = "route_directions";
+                }
+              }
+            }
             const metrics = runMetrics();
             if (result.status !== "completed" || streamSignal.aborted) {
               const code = error?.code || "CANCELLED";
@@ -2426,13 +2449,14 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
               metrics,
               metrics.chargedTokens,
             );
+            const executedActions = workflow.enabled ? [] : actions;
             const routeId =
-              actions.find((action) => action.type === "SHOW_ROUTE")?.routeId ||
-              activeRoute;
-            const cleared = actions.some(
+              executedActions.find((action) => action.type === "SHOW_ROUTE")
+                ?.routeId || activeRoute;
+            const cleared = executedActions.some(
               (action) => action.type === "CLEAR_ROUTE",
             );
-            const focus = actions.find(
+            const focus = executedActions.find(
               (action) => action.type === "FOCUS_PLACE",
             );
             if (focus?.type === "FOCUS_PLACE") selected = focus.placeId;

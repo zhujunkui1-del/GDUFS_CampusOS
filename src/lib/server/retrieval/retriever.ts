@@ -1134,7 +1134,14 @@ ${sourceFilterSql}
     const preferDirect =
       ["procedure", "policy", "requirements"].includes(plan.goal) &&
       ranked.some((r) => r.directSubject);
-    for (const item of ranked.filter((r) => !preferDirect || r.directSubject)) {
+    const directOfficial = ranked.some(
+      ({ directSubject, hit }) =>
+        directSubject && hit.official && hit.bodyAvailable,
+    );
+    for (const item of ranked) {
+      const officialSupplement =
+        !directOfficial && item.hit.official && item.hit.bodyAvailable;
+      if (preferDirect && !item.directSubject && !officialSupplement) continue;
       const old = unique.get(item.key);
       if (old) {
         if (old.hit.linkedSources.length < 4)

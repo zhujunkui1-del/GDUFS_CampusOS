@@ -4,6 +4,10 @@ import { MockModelProvider } from "../fixtures/mock-model";
 import { AssistantStore } from "@/lib/server/assistant/store";
 import { sqliteD1 } from "../fixtures/sqlite-d1";
 import type { ModelSnapshot } from "@/domain/models/contracts";
+import {
+  observeWorkflowModel,
+  WorkflowTrace,
+} from "@/lib/server/assistant/workflow-trace";
 const snapshot: ModelSnapshot = {
   source: "platform",
   provider: "stepfun",
@@ -144,6 +148,74 @@ it("keeps an unsupported answer out after a bounded failed correction", async ()
     expect(emit).not.toHaveBeenCalled();
     expect(client.requests).toHaveLength(4);
   } finally {
+    f.close();
+  }
+});
+
+it("keeps the answer and records a separate evidence timeout", async () => {
+  const f = sqliteD1();
+  const timeout = vi
+    .spyOn(AbortSignal, "timeout")
+    .mockReturnValue(
+      AbortSignal.abort(new DOMException("fixture deadline", "TimeoutError")),
+    );
+  try {
+    const store = new AssistantStore(f.db);
+    vi.spyOn(store, "running").mockResolvedValue();
+    const provider = new MockModelProvider([
+      reply("请在还书日期前归还图书[来源1]。"),
+    ]);
+    const generate = provider.generateWithTools.bind(provider);
+    vi.spyOn(provider, "generateWithTools").mockImplementation((request) => {
+      request.signal?.throwIfAborted();
+      return generate(request);
+    });
+    const trace = new WorkflowTrace(true);
+    const bounded = meteredClient(
+      observeWorkflowModel(provider, trace, snapshot.model),
+      snapshot,
+      store,
+      "fixture",
+      "fixture",
+      () => true,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      1024,
+      undefined,
+      {
+        workflowTrace: trace,
+        groundingEvidence: () => ({
+          sources: [{ citation: 1, snippet: "请在还书日期前归还图书。" }],
+        }),
+      },
+    );
+    const answer = await bounded.client.generateWithTools({
+      messages: [],
+      tools: [],
+      maxTokens: 1024,
+      signal: new AbortController().signal,
+    });
+    expect(answer.content).toContain("归还图书");
+    expect(bounded.metrics()).toMatchObject({
+      groundingChecks: 1,
+      groundingCheckFailures: 1,
+    });
+    expect(trace.records).toMatchObject([
+      { node: "model", state: "running" },
+      { node: "model", state: "success" },
+      { node: "model", phase: "evidence_check", state: "running" },
+      {
+        node: "model",
+        phase: "evidence_check",
+        state: "error",
+        data: { status: "超时" },
+      },
+    ]);
+  } finally {
+    timeout.mockRestore();
     f.close();
   }
 });

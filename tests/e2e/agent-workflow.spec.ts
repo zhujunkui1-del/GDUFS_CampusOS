@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { mkdirSync } from "node:fs";
+import { mkdirSync, readFileSync } from "node:fs";
 test.skip(
   process.env.AGENT_WORKFLOW_E2E !== "1",
   "Isolated workflow interface fixtures",
@@ -11,6 +11,8 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
     /^(127\.0\.0\.1|localhost)$/,
   );
   const errors: string[] = [];
+  const requests: { conversationId?: string }[] = [];
+  const conversationId = crypto.randomUUID();
   page.on("pageerror", (error) => errors.push(error.message));
   await page.route("**/api/agent/status", (route) =>
     route.fulfill({
@@ -25,9 +27,12 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
   );
   await page.route("**/api/agent/chat", async (route) => {
     expect(route.request().headers()["x-campusos-workflow"]).toBe("1");
+    requests.push(route.request().postDataJSON());
     const id = crypto.randomUUID();
     let n = 0;
-    const frames: { type: string; payload: unknown }[] = [];
+    const frames: { type: string; payload: unknown }[] = [
+      { type: "artifact.ready", payload: { started: true, conversationId } },
+    ];
     for (const node of [
       "input",
       "gate",
@@ -59,6 +64,21 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
       }
     }
     frames.push(
+      ...["running", "error"].map((state) => ({
+        type: "artifact.ready",
+        payload: {
+          workflow: {
+            node: "model",
+            span: "model:judge",
+            phase: "evidence_check",
+            state,
+            at: new Date().toISOString(),
+            elapsedMs: state === "error" ? 12000 : 0,
+            durationMs: state === "error" ? 12000 : undefined,
+            data: state === "error" ? { status: "超时" } : {},
+          },
+        },
+      })),
       {
         type: "artifact.ready",
         payload: {
@@ -115,12 +135,19 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
   await expect(page.locator(".studio-runtime")).toContainText(
     "fixture-runtime",
   );
+  const layoutDownload = page.waitForEvent("download");
+  await page.getByRole("button", { name: "导出布局", exact: true }).click();
+  const layoutFile = await layoutDownload;
+  expect(layoutFile.suggestedFilename()).toBe("campusos-agent-layout.json");
+  const layout = JSON.parse(readFileSync(await layoutFile.path(), "utf8"));
+  expect(Object.keys(layout.positions)).toHaveLength(12);
   await expect(page.getByTestId("campus-map")).toHaveCount(0);
   await expect(
     page.getByRole("button", { name: "打开校园助理", exact: true }),
   ).toHaveCount(0);
   await page.getByRole("button", { name: "运行", exact: true }).click();
   await expect(page.locator(".studio-answer")).toContainText("图书馆有五层");
+  expect(requests.at(-1)?.conversationId).toBeUndefined();
   await expect(
     page.getByRole("link", { name: /隔离规则来源/ }),
   ).toHaveAttribute("href", "https://example.invalid/rules");
@@ -132,11 +159,25 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
     "data-state",
     "success",
   );
+  await expect(page.locator('[data-node="model"]')).toContainText(
+    "完成 · 核验超时",
+  );
+  await page.locator('[data-node="model"]').click();
+  await expect(
+    page.locator(".studio-record").filter({ hasText: "证据核验 · 超时" }),
+  ).toContainText("12000 ms");
   await page.locator('[data-node="building"]').click();
   await expect(page.locator(".studio-inspector-body")).toContainText(
     "本地隔离建筑资料结果",
   );
   await page.getByRole("button", { name: "测试运行", exact: true }).click();
+  await page.getByRole("button", { name: "运行", exact: true }).click();
+  await expect(page.locator(".studio-answer")).toContainText("图书馆有五层");
+  expect(requests.at(-1)?.conversationId).toBe(conversationId);
+  await page.getByRole("button", { name: "新运行", exact: true }).click();
+  await page.getByRole("button", { name: "运行", exact: true }).click();
+  await expect(page.locator(".studio-answer")).toContainText("图书馆有五层");
+  expect(requests.at(-1)?.conversationId).toBeUndefined();
   if (info.project.name === "desktop") {
     const node = page.locator('[data-node="route"]');
     const before = await node.getAttribute("style"),
@@ -185,12 +226,17 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
     expect((await pane.boundingBox())!.width).toBeGreaterThan(
       paneBefore.width + 100,
     );
-    await page.setViewportSize({width:760,height:900});
+    await page.setViewportSize({ width: 760, height: 900 });
     expect((await pane.boundingBox())!.width).toBeLessThanOrEqual(460);
-    const narrow=(await page.getByRole("separator",{name:"调整侧栏宽度"}).boundingBox())!;
-    await page.mouse.move(narrow.x+narrow.width/2,narrow.y+100);await page.mouse.down();await page.mouse.move(narrow.x+36,narrow.y+100,{steps:5});await page.mouse.up();
+    const narrow = (await page
+      .getByRole("separator", { name: "调整侧栏宽度" })
+      .boundingBox())!;
+    await page.mouse.move(narrow.x + narrow.width / 2, narrow.y + 100);
+    await page.mouse.down();
+    await page.mouse.move(narrow.x + 36, narrow.y + 100, { steps: 5 });
+    await page.mouse.up();
     expect((await pane.boundingBox())!.width).toBeLessThan(440);
-    await page.setViewportSize({width:1440,height:900});
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.getByRole("button", { name: "运行", exact: true }).click();
     await expect(page.locator(".studio-answer")).toContainText("图书馆有五层");
   }

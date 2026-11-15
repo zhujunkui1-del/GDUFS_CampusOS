@@ -1,0 +1,125 @@
+{
+  "checkedAt": "2026-11-15T07:53:21.593Z",
+  "question": "学生在宿舍用电脑连接有线校园网后，应该如何进行上网认证？",
+  "status": 200,
+  "elapsedMs": 4738,
+  "terminal": "run.completed",
+  "answer": "本鱼翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息。这不代表学校没有相关规定，只是本站还没收录到——建议通过学校官网或宿管核实。",
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "answerMode": "no_evidence",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": true,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "off_topic",
+      "relatedDocuments": [],
+      "missing": [
+        "relevant_readable_evidence"
+      ],
+      "activities": [],
+      "needsSupplement": true,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 2870,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 865,
+      "serverElapsedMs": 3735,
+      "firstTextMs": 3735,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 2870,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 25,
+        "writeQueries": 12,
+        "calls": 29,
+        "failures": 0,
+        "durationMs": 3364,
+        "maxCallMs": 437,
+        "rowsRead": 26077,
+        "rowsWritten": 26,
+        "rowUsageStatements": 22,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 25806,
+          "rowsWritten": 0,
+          "queries": 9,
+          "durationMs": 2870,
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 16
+            },
+            {
+              "name": "document_passages",
+              "limit": 512,
+              "candidates": 50
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "cards": []
+}

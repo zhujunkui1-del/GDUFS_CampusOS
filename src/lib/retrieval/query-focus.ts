@@ -61,7 +61,11 @@ export function queryFocus(query: string): QueryFocus {
   if (venue.test(query) || /好吃|美食|口味|味道|干饭/.test(query))
     return "food";
   if (/社团|漫协|动漫协会|二次元|ACG|cosplay/i.test(query)) return "club";
-  if (/宿舍|住宿|入住|居住|隔音|寝室/.test(query)) return "housing";
+  if (
+    /宿舍|住宿|入住|居住|隔音|寝室/.test(query) &&
+    !/校园网|上网认证|有线网络|无线网络/.test(query)
+  )
+    return "housing";
   if (
     /体育|运动会/.test(query) ||
     sportsSubjects.some((t) => query.includes(t))

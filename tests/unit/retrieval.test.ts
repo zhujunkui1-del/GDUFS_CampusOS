@@ -37,6 +37,44 @@ it("encodes Chinese bigrams and keeps arbitrary query syntax out of MATCH", () =
   expect(lexicalTokens("图书馆借阅")).toHaveLength(4);
   expect(ftsExpression('" OR * 借书')).not.toContain("*");
 });
+it("keeps relevant official handbook clauses when only an informal guide has the exact subject in its title", async () => {
+  const f = await dateGateFixture();
+  try {
+    await article(
+      f,
+      "图书馆借阅规则可查看官网服务入口。",
+      "guide",
+      false,
+      undefined,
+      "图书馆借阅规则导览",
+    );
+    await article(
+      f,
+      "第十条 图书馆借阅规则：学生应当在借期内归还图书。逾期未还暂停借阅权限。",
+      "handbook",
+      false,
+      "https://lib.gdufs.edu.cn/info/fixture",
+      "学生手册",
+    );
+    await ensureRetrievalIndex(f.db, "guide");
+    await ensureRetrievalIndex(f.db, "handbook");
+    const result = await new D1KeywordRetriever(f.db).retrieve(
+      { query: "图书馆借阅规则是什么" },
+      PUBLIC_RETRIEVAL_SCOPE,
+    );
+    expect(result.hits).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          documentId: "handbook",
+          official: true,
+          contentSnippet: expect.stringContaining("逾期未还暂停借阅权限"),
+        }),
+      ]),
+    );
+  } finally {
+    f.close();
+  }
+});
 it("prefers a literal stored headline over neighbouring body matches without requiring a title hint", async () => {
   const f = await dateGateFixture();
   try {

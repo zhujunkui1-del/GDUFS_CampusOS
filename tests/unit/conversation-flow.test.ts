@@ -12,6 +12,7 @@ vi.mock("@/lib/server/models/runtime", () => ({
   defaultModelRuntime: () => ({ resolve: runtime.resolve }),
 }));
 import { chatResponse } from "@/lib/server/assistant/chat";
+import type { ModelReply } from "@/domain/models/contracts";
 
 type Event = {
   type: string;
@@ -20,7 +21,7 @@ type Event = {
 
 async function runTurn(
   message: string,
-  replies: string[],
+  replies: (string | ModelReply)[],
   setup?: (f: ReturnType<typeof sqliteD1>) => void,
   workflow = false,
 ) {
@@ -28,12 +29,16 @@ async function runTurn(
   setup?.(f);
   fixtureEnv(f);
   const client = new MockModelProvider(
-    replies.map((content) => ({
-      content,
-      finishReason: "stop" as const,
-      toolCalls: [],
-      usage: { promptTokens: 10, completionTokens: 10, totalTokens: 20 },
-    })),
+    replies.map((content) =>
+      typeof content === "string"
+        ? {
+            content,
+            finishReason: "stop" as const,
+            toolCalls: [],
+            usage: { promptTokens: 10, completionTokens: 10, totalTokens: 20 },
+          }
+        : content,
+    ),
   );
   runtime.resolve.mockResolvedValue({ client, snapshot });
   const response = await chatResponse(
@@ -227,6 +232,77 @@ it("streams opt-in workflow stages for the real chat path without exposing syste
       ).toBe(true);
     expect(events.some((event) => event.type === "run.completed")).toBe(true);
     expect(JSON.stringify(stages)).not.toContain("AGENT_SIGNING_SECRET");
+  } finally {
+    f.close();
+  }
+});
+
+it("uses the same model requests and answer for a fresh conversation on both surfaces", async () => {
+  const question = "你是一只大肥鱼吗？";
+  const replies = ["是呀，本鱼就在这儿。"];
+  const assistant = await runTurn(question, replies);
+  try {
+    const studio = await runTurn(question, replies, undefined, true);
+    try {
+      expect(answered(studio.events)).toBe(answered(assistant.events));
+      expect(answered(studio.events)).toContain("本鱼就在这儿");
+      expect(
+        studio.client.requests.map(({ messages, tools }) => ({
+          messages,
+          tools,
+        })),
+      ).toEqual(
+        assistant.client.requests.map(({ messages, tools }) => ({
+          messages,
+          tools,
+        })),
+      );
+      expect(
+        studio.events.filter((event) => event.payload.workflow),
+      ).not.toHaveLength(0);
+      expect(
+        assistant.events.filter((event) => event.payload.workflow),
+      ).toHaveLength(0);
+    } finally {
+      studio.f.close();
+    }
+  } finally {
+    assistant.f.close();
+  }
+});
+
+it("observes a map command in the studio without dispatching an action or claiming success", async () => {
+  const { f, events } = await runTurn(
+    "切换到2.5D",
+    [
+      {
+        content: "",
+        finishReason: "tool_calls",
+        toolCalls: [
+          {
+            id: "switch-mode",
+            type: "function",
+            function: {
+              name: "control_map",
+              arguments: JSON.stringify({
+                actions: [{ type: "SET_VIEW_MODE", mode: "2.5d" }],
+              }),
+            },
+          },
+        ],
+      },
+      "已切换到2.5D。",
+    ],
+    undefined,
+    true,
+  );
+  try {
+    expect(answered(events)).toBe("请在校园地图执行此操作。");
+    expect(events.some((event) => event.type === "run.completed")).toBe(true);
+    expect(events.some((event) => event.payload.packet)).toBe(false);
+    expect(events.map((event) => event.payload.workflow)).toContainEqual(
+      expect.objectContaining({ node: "receipt", state: "skipped" }),
+    );
   } finally {
     f.close();
   }

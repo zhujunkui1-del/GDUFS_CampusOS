@@ -24,12 +24,14 @@ const COUNT_QUESTION = /几(?:次|个|场|门|位|种|名|天|年|月|周)/;
 // words, so treating them as required filters rejected documents that actually
 // answer the question (“校园卡业务” states how to report a lost card). Only a
 // fragment that names a subject — “人工智能”, “双学位”, “414期” — keeps the veto.
-const CLAUSE_VERB = /(?:不够|不会|会影响|会不会)|^(?:[里在中被把给用对从往随趁按照们收交办查找买卖寄借还去来做看听进出开关])/u;
+const CLAUSE_VERB =
+  /(?:不够|不会|会影响|会不会)|^(?:[里在中被把给用对从往随趁按照们收交办查找买卖寄借还去来做看听进出开关])/u;
 // A rule is written as “功率不超过 1000 瓦”, not as the question's “功率限制”.
 // The attribute word is how the question was phrased, so it cannot be a gate.
 // A symptom is not a subject either: “宿舍东西坏了” asks about repairs, and
 // no article writes “东西坏” as a word.
-const CLAUSE_TAIL = /(?:开放|关闭|提交|交付|报修|保修|记录|影响|办理|使用|收费|发放|收取|坏|坏了|坏掉|破了|漏了|堵了|断了|没了)$/u;
+const CLAUSE_TAIL =
+  /(?:开放|关闭|提交|交付|报修|保修|记录|影响|办理|使用|收费|发放|收取|坏|坏了|坏掉|破了|漏了|堵了|断了|没了)$/u;
 // A fee or penalty question is a whole clause, not a subject: “书逾期了要交”
 // and “违约要赔” are how the user asks, while the article writes “逾期” and
 // “违约金”. Keeping the clause as a hard filter rejected the very documents
@@ -133,6 +135,8 @@ export function buildQueryPlan(
     topics = topics.filter((t) => t.id !== "competition");
   if (topics.some((t) => t.id === "agreement"))
     topics = topics.filter((t) => t.id !== "recruitment");
+  if (topics.some((t) => t.id === "network"))
+    topics = topics.filter((t) => t.id !== "housing");
   const goal: QueryGoal = /报名|可报|能报|申请.*截止/.test(positive)
     ? "registration"
     : participationQuery(positive)
@@ -518,7 +522,9 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
     );
   if (
     matched.length &&
-    !(plan.topicMode === "any" ? matched.some(Boolean) : matched.every(Boolean)) &&
+    !(plan.topicMode === "any"
+      ? matched.some(Boolean)
+      : matched.every(Boolean)) &&
     !guideAboutOperation
   )
     return { relevant: false, score: 0, reason: "core_topic_missing" };

@@ -1,7 +1,9 @@
 import type { ModelClient } from "@/domain/models/contracts";
+import { EVIDENCE_VERDICT_TOOL } from "./evidence-check";
 export type WorkflowRecord = {
   node: string;
   span: string;
+  phase?: "evidence_check";
   state: "running" | "success" | "skipped" | "error" | "unconfirmed";
   at: string;
   elapsedMs: number;
@@ -23,7 +25,7 @@ export class WorkflowTrace {
   get attached() {
     return !!this.sink;
   }
-  start(node: string, input: unknown = {}) {
+  start(node: string, input: unknown = {}, phase?: WorkflowRecord["phase"]) {
     const started = performance.now(),
       span = node + ":" + ++this.sequence;
     const send = (state: WorkflowRecord["state"], data: unknown) => {
@@ -31,6 +33,7 @@ export class WorkflowTrace {
       const record: WorkflowRecord = {
         node,
         span,
+        ...(phase ? { phase } : {}),
         state,
         at: new Date().toISOString(),
         elapsedMs: Math.round(performance.now() - this.startAt),
@@ -55,6 +58,9 @@ export function observeWorkflowModel(
   if (!trace.enabled) return client;
   return {
     async generateWithTools(request) {
+      // The evidence checker records the parsed verdict and its own deadline.
+      if (request.tools[0] === EVIDENCE_VERDICT_TOOL)
+        return client.generateWithTools(request);
       const finish = trace.start("model", {
         model,
         phase: request.tools.length ? "回答或工具选择" : "回答生成",

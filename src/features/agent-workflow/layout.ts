@@ -1,10 +1,11 @@
 import { z } from "zod";
 import { workflowNodes } from "./graph";
 export const layoutKey = "campusos.agent.layout.v1";
+export const minWorkflowZoom = 0.125;
 const point = z.object({ x: z.number(), y: z.number() });
 export const layoutSchema = z.object({
   positions: z.record(z.string(), point),
-  zoom: z.number().min(0.25).max(1.6),
+  zoom: z.number().min(minWorkflowZoom).max(1.6),
   offset: point,
   inspectorWidth: z.number().min(280).max(900),
 });
@@ -24,7 +25,7 @@ export function fitPositions(
   const w = Math.max(...ps.map((p) => p.x + 185)) - left,
     h = Math.max(...ps.map((p) => p.y + 112)) - top;
   const zoom = Math.max(
-    0.25,
+    minWorkflowZoom,
     Math.min(1.6, (width - 48) / w, (height - 48) / h),
   );
   return { zoom, offset: { x: 24 - left * zoom, y: 24 - top * zoom } };
