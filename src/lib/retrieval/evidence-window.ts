@@ -1,5 +1,10 @@
 import { buildQueryPlan, type QueryGoal } from "./query-plan";
 import { keywords, lexicalTokens } from "./terms";
+import {
+  asksPaymentProcedure,
+  paymentChannelEvidence,
+  paymentSubjects,
+} from "./payment-evidence";
 /** A window may lead into its sentence on purpose, but never through the
  * middle of a date or number: slicing "2026年11月7日" at its second "1"
  * reads as "1月7日", which states a different fact than the source. */
@@ -52,6 +57,55 @@ export function evidenceWindow(
   const plan = buildQueryPlan(query),
     terms = keywords(query),
     goal = goalOverride || plan.goal;
+  if (goal === "procedure" && asksPaymentProcedure(query)) {
+    const proof = paymentChannelEvidence(
+      text,
+      plan.campus,
+      paymentSubjects(
+        query,
+        plan.topics.flatMap((topic) => topic.alternatives),
+      ),
+    );
+    if (proof.score) {
+      const headings = [
+        ...text.matchAll(
+          /(?:^|\n)[ \t#]*(?:(?:\d+|[一二三四五六七八九十]+)[.．、][ \t]*)?(?:白云山校区|北校区|大学城校区|南校区|◆)[^\n]*/g,
+        ),
+      ];
+      const floor =
+        headings.findLast((heading) => heading.index <= proof.at)?.index ?? 0;
+      const ceiling =
+        headings.find((heading) => heading.index > proof.at)?.index ??
+        text.length;
+      const start = Math.max(
+        floor,
+        alignWindowStart(text, Math.max(0, proof.at - 300)),
+      );
+      const boundedEnd = Math.min(
+        ceiling,
+        alignWindowEnd(text, start + maxChars),
+      );
+      const passage = text.slice(start, boundedEnd);
+      const oldNote =
+        /[（(]注\s*[:：][^）)\n]{0,160}(?:建设|改造)[^）)\n]{0,100}(?:完成后|另行通知)[^）)\n]*[）)]/.exec(
+          passage,
+        );
+      // Keep the working channel and the window instructions ahead of a stale rollout note.
+      const end =
+        oldNote &&
+        /线上(?:充值|缴费)(?:渠道|入口)\s*[:：]/.test(
+          passage.slice(0, oldNote.index),
+        )
+          ? start + oldNote.index
+          : boundedEnd;
+      return {
+        text: text.slice(start, end).trimEnd(),
+        start,
+        score: proof.score,
+        priority: 3,
+      };
+    }
+  }
   const titleTokens = new Set(lexicalTokens(contextTitle));
   const queryTokens = [...new Set(terms.flatMap(lexicalTokens))].filter(
     (token) => !titleTokens.has(token),

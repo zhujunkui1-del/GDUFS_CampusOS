@@ -1,5 +1,21 @@
 import { it, expect } from "vitest";
 import { evidenceWindow } from "@/lib/retrieval/evidence-window";
+
+it("keeps payment evidence inside the requested campus section of a handbook", () => {
+  const body =
+    "1. 白云山校区\n水电线上充值系统建设中。\n2. 大学城校区\n水、电IC卡充值服务。充值服务地址：学生宿舍1栋。\n◆食堂用餐\n食堂营业时间。";
+  const passage = evidenceWindow(body, "广外南校宿舍水电费怎么交", 780);
+  expect(passage.text).toContain("学生宿舍1栋");
+  expect(passage.text).not.toMatch(/建设中|食堂|白云山/);
+});
+it("preserves an explicit online route and the window address ahead of a rollout note", () => {
+  const body =
+    "白云山校区\n水电线上充值渠道：从应用中心进入水电缴费。\n水电充值地点：云山学1栋。（注：已启动线上充值系统建设，完成后另行通知）";
+  const passage = evidenceWindow(body, "广外白云山校区宿舍水电费怎么交", 780);
+  expect(passage.text).toContain("应用中心");
+  expect(passage.text).toContain("云山学1栋");
+  expect(passage.text).not.toContain("建设");
+});
 it("selects actual procedural sentences after the introductory questions without adding a model call", () => {
   const text =
     "图书馆：你怎么还不来？如何借书？自助借还怎么操作？\n" +

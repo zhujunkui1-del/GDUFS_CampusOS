@@ -16,6 +16,7 @@ import {
   explicitMapCommand,
 } from "./intent";
 import { buildQueryPlan } from "@/lib/retrieval/query-plan";
+import { asksPaymentProcedure } from "@/lib/retrieval/payment-evidence";
 import { navigationIntent } from "@/domain/agent/navigation-intent";
 import { searchCampusPlaces } from "@/features/campus-map/data/campus";
 import { VENUE_GROUPS } from "@/lib/retrieval/aliases";
@@ -159,9 +160,9 @@ export function contentIntent(
   // keeps its time box. Treating the whole sentence as a keyword lost both the
   // window and the category, so the follow-up fell back to no evidence.
   const topicSwitch =
-    /^(?:那|那么)?\s*(?:换成|换个|改成|改看|再看|看看)\s*(.{2,14}?)(?:呢|吧|啊)?[。！!？?，,\s]*$/.exec(
-      message.trim(),
-    )?.[1]?.trim();
+    /^(?:那|那么)?\s*(?:换成|换个|改成|改看|再看|看看)\s*(.{2,14}?)(?:呢|吧|啊)?[。！!？?，,\s]*$/
+      .exec(message.trim())?.[1]
+      ?.trim();
   // The window is inherited from the turn that introduced it, not from the
   // immediately preceding line: "还有吗" carries no date of its own, so looking
   // only at the last message would drop the "最近两周" box on a topic switch.
@@ -170,7 +171,9 @@ export function contentIntent(
     .find(
       (t) => t.role === "user" && requestTimeWindow(t.text, now) !== undefined,
     );
-  const carriedWindow = windowTurn ? requestTimeWindow(windowTurn.text, now) : undefined;
+  const carriedWindow = windowTurn
+    ? requestTimeWindow(windowTurn.text, now)
+    : undefined;
   const query = campusFoodQuery(
     topicSwitch
       ? `${topicSwitch}${carriedWindow ? `；${windowTurn!.text}` : ""}`
@@ -186,6 +189,7 @@ export function contentIntent(
   const timeWindow =
     requestTimeWindow(message, now) || requestTimeWindow(query, now);
   const knowledge =
+    asksPaymentProcedure(query) ||
     /规则|规定|制度|政策|办法|流程|指南|手续|借书|借阅|续借|选课|申请条件|评定条件|资格|材料|怎么办|怎么[办理借]|如何[办理借]|奖学金.*(?:条件|有哪些)|(?:有哪些|什么).*奖学金|需要满足|奖金|发放|奖励标准|报销|补贴/.test(
       query,
     );
@@ -229,18 +233,15 @@ export function contentIntent(
   // opening hours or fees stays a knowledge question. The service word must
   // also resolve to a real place — 「打印照片」 is not a print shop, and
   // sending it to the map made the tool fail and the turn answer nothing.
-  const serviceKeyword = /(快递|驿站|打印|图文|超市|便利店|充值点|水电充值)/.exec(
-    message,
-  )?.[1];
+  const serviceKeyword =
+    /(快递|驿站|打印|图文|超市|便利店|充值点|水电充值)/.exec(message)?.[1];
   const facilityListing =
     /(?:有哪些|有没有|哪个|哪几|哪些|在哪|位置|除了|还有别的|还有没有)|(?:有|有没有).{0,12}(?:地方|店|点)/.test(
       message,
     ) &&
     !!serviceKeyword &&
     searchCampusPlaces(serviceKeyword).length > 0 &&
-    !/(?:几点|时间|收费|多少钱|费用|怎么办理|怎么申请|怎么挂失)/.test(
-      message,
-    );
+    !/(?:几点|时间|收费|多少钱|费用|怎么办理|怎么申请|怎么挂失)/.test(message);
   const map =
     !articleLookup &&
     (facilityListing ||
@@ -370,15 +371,18 @@ export function contentIntent(
     // would refuse to say anything at all.
     urgent
       ? "open"
-      : articleLookup || entityLookup || policy.officialOnly || policy.needsOfficialVerification
-      ? "strict"
-      : advice && !factualAsk
-        ? "advisory"
-        : strictFact
-          ? "strict"
-          : search
+      : articleLookup ||
+          entityLookup ||
+          policy.officialOnly ||
+          policy.needsOfficialVerification
+        ? "strict"
+        : advice && !factualAsk
+          ? "advisory"
+          : strictFact
             ? "strict"
-            : "open";
+            : search
+              ? "strict"
+              : "open";
   const discovery =
     /有哪些|有什么|举几|举\d|名单|曾经|哪些|谁|几个|几场|几篇|情况|信息|方面|内容/.test(
       query,

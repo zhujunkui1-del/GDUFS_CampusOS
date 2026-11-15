@@ -8,6 +8,7 @@ import {
 import { stripSearchControls } from "./query-controls";
 import { COLLEGE_NAMES, collegeAliases } from "./colleges";
 import { ALIAS_GROUPS, TOPIC_GROUPS, VENUE_GROUPS } from "./aliases";
+import { asksPaymentProcedure } from "./payment-evidence";
 
 // A question word glued onto a noun is not a subject: “分算优秀”, “时候开”,
 // “大一要选”, “各是”, “困难认定流程是”. They are removed before the query
@@ -135,13 +136,14 @@ export function buildQueryPlan(
     topics = topics.filter((t) => t.id !== "competition");
   if (topics.some((t) => t.id === "agreement"))
     topics = topics.filter((t) => t.id !== "recruitment");
-  if (topics.some((t) => t.id === "network"))
+  if (topics.some((t) => t.id === "network" || t.id === "utilities"))
     topics = topics.filter((t) => t.id !== "housing");
   const goal: QueryGoal = /报名|可报|能报|申请.*截止/.test(positive)
     ? "registration"
     : participationQuery(positive)
       ? "participation"
-      : /怎么办|如何办理|办理流程|手续|操作|怎么借|怎么选/.test(positive)
+      : asksPaymentProcedure(positive) ||
+          /怎么办|如何办理|办理流程|手续|操作|怎么借|怎么选/.test(positive)
         ? "procedure"
         : /条件|资格|材料|要求/.test(positive)
           ? "requirements"
@@ -552,7 +554,7 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const goalEvidence: Partial<Record<QueryGoal, RegExp>> = {
     policy: /办法|规定|规则|制度|政策/,
     procedure:
-      /流程|办理|步骤|指南|手续|借阅规则|续借|凭.{0,12}(?:卡|证)|登录|提交/,
+      /流程|办理|步骤|指南|手续|借阅规则|续借|凭.{0,12}(?:卡|证)|登录|提交|充值|缴费/,
     requirements: /条件|资格|材料|要求|须|需满足|面向/,
     experience:
       /推荐|好吃|口味|味道|体验|测评|踩雷|隔音|居住|价格|喜欢|不错|难吃/,

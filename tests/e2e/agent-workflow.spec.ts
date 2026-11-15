@@ -84,15 +84,24 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
         payload: {
           cards: [
             {
-              kind: "external_source",
+              kind: "source",
+              documentId: "fixture-activity",
               title: "隔离规则来源",
               sourceName: "隔离官网",
               originalUrl: "https://example.invalid/rules",
               publishedAt: null,
               snippet: "",
-              authority: "official",
-              evidenceKind: "page_excerpt",
-              searchMode: "web",
+              evidenceType: "metadata",
+              classificationState: "radar",
+              validity: "unknown",
+              readable: true,
+              calendarLinks: [
+                {
+                  title: "隔离活动",
+                  href:
+                    "/calendar?date=2026-11-11&event=event-" + "a".repeat(40),
+                },
+              ],
             },
           ],
         },
@@ -151,6 +160,10 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
   await expect(
     page.getByRole("link", { name: /隔离规则来源/ }),
   ).toHaveAttribute("href", "https://example.invalid/rules");
+  await expect(page.getByRole("link", { name: /隔离活动/ })).toHaveAttribute(
+    "href",
+    "/calendar?date=2026-11-11&event=event-" + "a".repeat(40),
+  );
   await expect(page.locator('[data-node="rag"]')).toHaveAttribute(
     "data-state",
     "skipped",

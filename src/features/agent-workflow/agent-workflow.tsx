@@ -445,6 +445,16 @@ export function AgentWorkflow() {
   )
     ? references.filter((reference) => cited.has(reference.number))
     : references;
+  const calendarLinks = [
+    ...new Map(
+      usedReferences.flatMap(({ number }) => {
+        const card = cards[number - 1];
+        return card?.kind === "source"
+          ? (card.calendarLinks ?? []).map((link) => [link.href, link] as const)
+          : [];
+      }),
+    ).values(),
+  ];
   const node = workflowNodes.find((node) => node.id === selected)!,
     nodeRecords = records.filter((record) => record.node === selected);
   const completed = workflowNodes.filter(
@@ -849,6 +859,12 @@ export function AgentWorkflow() {
                 {!!answer && usedReferences.length > 0 && (
                   <section className="studio-references" aria-label="引用来源">
                     <h3>引用来源</h3>
+                    {calendarLinks.map((link) => (
+                      <Link key={link.href} href={link.href}>
+                        <span>{link.title}</span>
+                        <small>活动日历</small>
+                      </Link>
+                    ))}
                     {usedReferences.map((reference) => (
                       <a
                         key={reference.url + reference.number}

@@ -20,17 +20,30 @@ const auth = execFileSync(
 );
 const { token } = JSON.parse(auth.slice(auth.indexOf("{")));
 const usage = { rowsRead: 0, rowsWritten: 0, queries: 0 };
+// A six thousand document read is hundreds of round trips; the D1 API rejects
+// one now and then. Retrying the same SELECT is safe, and keeps a long snapshot
+// from losing every page it already collected.
 async function query(sql, params = []) {
   if (!/^SELECT\b/.test(sql)) throw Error("Read only");
-  const [r] = await previewCloudflareJson(
-    `https://api.cloudflare.com/client/v4/accounts/${account}/d1/database/${id}/query`,
-    token,
-    { sql, params },
-  );
-  usage.rowsRead += r.meta.rows_read;
-  usage.rowsWritten += r.meta.rows_written;
-  usage.queries++;
-  return r.results;
+  let lastError;
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    try {
+      const [r] = await previewCloudflareJson(
+        `https://api.cloudflare.com/client/v4/accounts/${account}/d1/database/${id}/query`,
+        token,
+        { sql, params },
+      );
+      usage.rowsRead += r.meta.rows_read;
+      usage.rowsWritten += r.meta.rows_written;
+      usage.queries++;
+      return r.results;
+    } catch (error) {
+      lastError = error;
+      if (attempt === 5) break;
+      await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+    }
+  }
+  throw lastError;
 }
 const bundle = path.resolve(output + "/text.mjs");
 await build({

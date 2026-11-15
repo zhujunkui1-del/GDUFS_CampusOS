@@ -1,6 +1,10 @@
 import { requestTimeWindow } from "../assistant/time-window";
 import { dialogueReply } from "../assistant/dialogue";
 import {
+  asksPaymentProcedure,
+  campusUtilityQueries,
+} from "@/lib/retrieval/payment-evidence";
+import {
   assessEvidence,
   type EvidenceInput,
 } from "@/lib/retrieval/evidence-assessment";
@@ -54,6 +58,7 @@ export function externalPolicy(query: string): ExternalPolicy {
     );
   const official =
     needsOfficialVerification ||
+    asksPaymentProcedure(query) ||
     (focus === "sports" && /比赛|赛事|运动会|报名|赛程|参赛/.test(query)) ||
     /规章|制度|政策|管理办法|借阅|借书|续借|办理|流程|指南|手续|申请条件|评定条件|资格|选课|学校规定|截止|奖学金/.test(
       query,
@@ -130,6 +135,15 @@ export function supplementRequired(
   if (!policy.active) return false;
   // Archive matches cannot establish a current appointment, complete roster or campus assignment.
   if (policy.needsOfficialVerification || policy.needsRoster) return true;
+  const scopedUtilities = campusUtilityQueries(policy.relevanceQuery || "");
+  if (
+    scopedUtilities?.some(
+      (query) =>
+        assessEvidence(query, results, { officialOnly: policy.officialOnly })
+          .needsSupplement,
+    )
+  )
+    return true;
   const assessment = assessEvidence(policy.relevanceQuery || "", results, {
     officialOnly: policy.officialOnly,
   });

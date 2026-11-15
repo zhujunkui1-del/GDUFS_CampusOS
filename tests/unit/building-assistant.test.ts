@@ -4,8 +4,48 @@ import { it, expect } from "vitest";
 import { sqliteD1 } from "../fixtures/sqlite-d1";
 import {
   buildingEvidence,
+  buildingActivityCards,
+  citeMentionedBuildingActivities,
   mentionedBuildingIds,
 } from "@/lib/server/assistant/building-evidence";
+import { citedAnswer } from "@/lib/server/assistant/citations";
+
+it("keeps the calendar link for a named event even if the generated answer missed its citation", () => {
+  const events = ["讲座预告｜求职技能系列讲座", "艺术节作品展示"].map(
+    (title, index) => ({
+      title,
+      startsAt: { date: "2026-11-11", at: null },
+      endsAt: null,
+      place: "学术交流中心",
+      historical: true,
+      calendarUrl: `/calendar?date=2026-11-11&event=event-${String(index).repeat(40)}`,
+      sources: [
+        {
+          documentId: `doc-${index}`,
+          title,
+          url: `https://example.invalid/${index}`,
+          name: "公管学院",
+          publishedAt: null,
+          readable: true,
+        },
+      ],
+    }),
+  );
+  const cards = buildingActivityCards(events);
+  const result = citedAnswer(
+    citeMentionedBuildingActivities(
+      "11月11日举办了公管学院的求职技能系列讲座。",
+      cards,
+    ),
+    cards,
+  );
+  expect(result.text).toContain("活动链接 [1]");
+  expect(result.cards).toHaveLength(1);
+  expect(result.cards[0]).toMatchObject({
+    documentId: "doc-0",
+    calendarLinks: [{ href: events[0].calendarUrl }],
+  });
+});
 it("reads current owner edits rather than a frozen prompt copy and excludes private feedback", async () => {
   const f = sqliteD1();
   try {

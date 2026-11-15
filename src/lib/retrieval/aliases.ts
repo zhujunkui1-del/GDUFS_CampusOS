@@ -80,6 +80,15 @@ export const ALIAS_GROUPS: AliasGroup[] = [
   topic("club", ["社团", "漫协", "二次元", "动漫协会", "ACG"]),
   topic("water", ["停水", "供水", "用水中断"]),
   topic("power", ["停电", "供电中断", "用电施工"]),
+  topic("utilities", [
+    "水电费",
+    "水电",
+    "水、电",
+    "水电冷",
+    "水费",
+    "电费",
+    "购电",
+  ]),
   topic("network", [
     "校园网",
     "上网认证",

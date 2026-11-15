@@ -1,12 +1,37 @@
 import type { ContentSearchResult } from "@/domain/retrieval/skills";
 import { buildQueryPlan, queryRelevance } from "./query-plan";
 import { evidenceWindow } from "./evidence-window";
+import {
+  asksPaymentProcedure,
+  paymentChannelEvidence,
+  paymentSubjects,
+} from "./payment-evidence";
+
+function hasPaymentChannel(
+  query: string,
+  hits: { contentSnippet?: string; snippet?: string }[],
+) {
+  const plan = buildQueryPlan(query);
+  const subjects = paymentSubjects(
+    query,
+    plan.topics.flatMap((topic) => topic.alternatives),
+  );
+  return hits.some(
+    (hit) =>
+      paymentChannelEvidence(
+        hit.contentSnippet ?? hit.snippet ?? "",
+        plan.campus,
+        subjects,
+      ).score >= (plan.campus ? 2 : 1),
+  );
+}
 
 /** Related links are not necessarily instructions for the requested workflow. */
 export function supportsAnswerPurpose(
   query: string,
   hit: { title: string; contentSnippet?: string; snippet?: string },
 ) {
+  if (asksPaymentProcedure(query)) return hasPaymentChannel(query, [hit]);
   if (buildQueryPlan(query).goal !== "procedure") return true;
   return (
     /指南|流程|操作|步骤|借阅规则|借还书/.test(hit.title) ||
@@ -82,7 +107,15 @@ export function assessEvidence(
   if (options.officialOnly && !bodies.some((h) => h.official))
     missing.push("official_authority_unconfirmed");
   const text = bodies.map((h) => h.contentSnippet).join("\n");
-  if (
+  if (asksPaymentProcedure(query)) {
+    if (
+      !hasPaymentChannel(
+        query,
+        options.officialOnly ? bodies.filter((hit) => hit.official) : bodies,
+      )
+    )
+      missing.push("payment_channel_evidence");
+  } else if (
     plan.goal === "procedure" &&
     !/流程|办理|步骤|指南|手续|登录|点击|凭.{0,12}(?:卡|证)|依次|提交/.test(
       text,

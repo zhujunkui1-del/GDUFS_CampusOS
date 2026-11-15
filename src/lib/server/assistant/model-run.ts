@@ -31,7 +31,7 @@ type RequiredTool =
 // The evidence judge is a second full model call. Its own latency was the
 // dominant term in the slowest turns, so it gets a budget of its own
 // instead of consuming the whole run's deadline.
-const JUDGE_TIMEOUT_MS = 12000;
+const JUDGE_TIMEOUT_MS = 24000;
 
 export function meteredClient(
   client: ModelClient,

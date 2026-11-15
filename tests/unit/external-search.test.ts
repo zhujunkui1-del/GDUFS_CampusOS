@@ -12,6 +12,7 @@ import {
 import { registerExternalSearch } from "@/lib/server/external-search/skill";
 import { SkillRegistry } from "@/lib/server/agent/skill-registry";
 import { contentIntent } from "@/lib/server/assistant/content-intent";
+import { contentReadPlan } from "@/lib/server/assistant/read-plan";
 import type { SkillContext } from "@/domain/skills/contracts";
 const context: SkillContext = {
   requestId: "test",
@@ -51,6 +52,74 @@ it("experience questions still search internal content first", () =>
   expect(contentIntent("广外哪个食堂好吃？").tools).toEqual([
     "search_campus_knowledge",
   ]));
+it("supplements a campus payment question when evidence only names the collecting department or another campus", () => {
+  const query = "广外南校宿舍水电费怎么交";
+  const policy = externalPolicy(query);
+  expect(contentIntent(query).tools).toContain("search_campus_knowledge");
+  expect(policy.intent).toBe("official");
+  const reads = contentReadPlan(
+    ["search_campus_knowledge"],
+    query,
+    policy,
+    () => true,
+  );
+  expect(
+    reads
+      .filter((read) => read.name === "search_campus_knowledge")
+      .map((read) => read.input),
+  ).toMatchObject([{ query }]);
+  const north = "广外白云山校区宿舍水电费怎么交";
+  expect(
+    contentReadPlan(
+      ["search_campus_knowledge"],
+      north,
+      externalPolicy(north),
+      () => true,
+    )
+      .filter((read) => read.name === "search_campus_knowledge")
+      .map((read) => read.input),
+  ).toMatchObject([{ query: north }]);
+  const both = "广外宿舍水电费怎么交";
+  expect(
+    contentReadPlan(
+      ["search_campus_knowledge"],
+      both,
+      externalPolicy(both),
+      () => true,
+    )
+      .slice(0, 2)
+      .map((read) => read.input),
+  ).toMatchObject([
+    { query: expect.stringContaining("大学城校区") },
+    { query: expect.stringContaining("白云山校区") },
+  ]);
+  const evaluate = (...snippets: string[]) =>
+    supplementRequired(policy, [
+      {
+        hits: snippets.map((contentSnippet) => ({
+          title: "后勤服务指南",
+          bodyAvailable: true,
+          official: true,
+          contentSnippet,
+        })),
+        activities: [],
+      },
+    ]);
+  expect(evaluate("大学城校区宿舍水电费由公寓中心收缴。")).toBe(true);
+  expect(evaluate("白云山校区宿舍水电线上充值渠道：数智广外。")).toBe(true);
+  expect(evaluate("大学城校区的宿舍热水费。进入校园卡选择南校热水充值。")).toBe(
+    true,
+  );
+  expect(
+    evaluate("大学城校区水、电IC卡充值服务。充值服务地址：学生宿舍1栋。"),
+  ).toBe(false);
+  expect(
+    evaluate(
+      "大学城校区水、电IC卡充值服务。充值服务地址：学生宿舍1栋。",
+      "白云山校区宿舍水电线上充值渠道：数智广外。",
+    ),
+  ).toBe(false);
+});
 it("only exact official hosts can confirm administrative sources", () => {
   expect(isOfficialCampusUrl("https://lib.gdufs.edu.cn/rules")).toBe(true);
   for (const url of [

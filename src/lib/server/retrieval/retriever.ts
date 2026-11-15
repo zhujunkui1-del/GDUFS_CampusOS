@@ -788,8 +788,13 @@ ${sourceFilterSql}
       const relevanceByChunk = new Map(
         choices.map((c) => [c.id, chunkRelevance(c.text)]),
       );
+      const paymentPriority = (chunk: ChunkRow) => {
+        const window = windows.get(chunk.id)!;
+        return window.priority === 3 ? window.score : 0;
+      };
       choices.sort(
         (a, b) =>
+          paymentPriority(b) - paymentPriority(a) ||
           Number(relevanceByChunk.get(b.id)!.relevant) -
             Number(relevanceByChunk.get(a.id)!.relevant) ||
           (d.text_length > 5400
@@ -815,7 +820,9 @@ ${sourceFilterSql}
               .map((ch) => ch + (chars[chars.indexOf(ch) + 1] ?? ""))
           : [m.original];
       });
-      const covering = (d.text_length > 5400 ? [] : halves)
+      const covering = (
+        d.text_length > 5400 || windows.get(c.id)!.priority === 3 ? [] : halves
+      )
         .map((half) => {
           const chunk = choices.find((c2) => c2.text.includes(half));
           return chunk ? { ...chunk, half } : null;
@@ -1082,11 +1089,14 @@ ${sourceFilterSql}
               : /通知|报名|招募|规程|预告/.test(d.title)
                 ? 2
                 : 1
-            : 0,
+            : selectedWindow.priority === 3
+              ? selectedWindow.score
+              : 0,
         // A guide is direct when its title names the operation the question
         // asks for, even if the topic word itself lives in the body: “故障
         // 报修全攻略” answers “宿舍报修”, while “宿舍文化节” does not.
         directSubject:
+          selectedWindow.priority === 3 ||
           plan.topics.some((t) =>
             t.alternatives.some((a) =>
               d.title.toLowerCase().includes(a.toLowerCase()),

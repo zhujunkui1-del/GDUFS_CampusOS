@@ -7,6 +7,7 @@ import {
 } from "@/domain/retrieval/skills";
 import type { ArticleTimePoint } from "@/domain/console/article-analysis";
 import { PUBLIC_RETRIEVAL_SCOPE } from "@/domain/retrieval/contracts";
+import { asksUtilityPayment } from "@/lib/retrieval/payment-evidence";
 import {
   registrationState,
   registrationWindowState,
@@ -174,7 +175,7 @@ export async function searchContent(
   void _nearest;
   const search = await new D1KeywordRetriever(
     db,
-    requestSemanticRetriever(),
+    asksUtilityPayment(q.query) ? undefined : requestSemanticRetriever(),
   ).search(
     {
       ...base,
