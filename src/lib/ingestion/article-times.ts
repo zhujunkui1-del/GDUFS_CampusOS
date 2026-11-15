@@ -13,8 +13,57 @@ const datePattern =
   /(?:20\d{2}[年./-]\s*)?\d{1,2}(?:月|[./-])\s*\d{1,2}日?(?:\s*[（(](?:周|星期)[一二三四五六日天][）)])?(?:\s*(?:上午|下午|晚上|晚|中午|凌晨)?\s*\d{1,2}[:：]\d{2}(?:[:：]\d{2})?)?|(?<=至|到|—|–|~|～|-)\s*\d{1,2}日(?:\s*\d{1,2}[:：]\d{2})?|(?<=至|到|—|–|~|～|-)\s*\d{1,2}[:：]\d{2}/g;
 const registrationAnchor =
   /(?:报名(?:[：:]|时间|开始|截止|截至|期限|方式|通道|链接|信息|要求|表)|开始接受报名|扫码报名|参赛报名|参会回执|预约席位|填写报名|提交报名|申请(?:时间|截止|截至|期限)|申报(?:时间|截止|截至|期限)|即日起报名|报名，额满|请.{0,45}(?:前报名|报名)|报名前)/;
+/**
+ * Recruitment and conference posts often never say "报名": they route people
+ * through a web portal, a CV inbox, a check-in desk or a conference fee. The
+ * same promise written in different words has to count.
+ */
+const channelAnchor =
+  /(?:网申(?:通道|入口)?|简历投递|在线投递|投递[^。；\n]{0,8}(?:简历|材料)|参会登记|(?:会议|注册)费[^。；\n]{0,12}(?:缴纳|收取|标准)|(?:缴纳|收取)[^。；\n]{0,12}(?:会议费|注册费))/;
 const negativeAnchor =
-  /无需(?:预约|报名)|不(?:需要|用)报名|免(?:预约|报名)|直接到场/;
+  /(?:无需(?:预约|报名)|不(?:需要|用)报名|免(?:预约|报名)|直接到场)/;
+/**
+ * A registration clause is only trustworthy when nearby text says how or when
+ * to act on it: a date, a link or QR code, an email address, a form, a file
+ * attachment, or a channel worth contacting. Sales copy that repeats “报名方式”
+ * while selling driving lessons has none of those.
+ */
+const corroboration =
+  /(?:https?:\/\/|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}|二维码|扫码|扫描|表单|问卷|回执|小程序|阅读原文|附件|电话|微信|QQ群|群号)/;
+/**
+ * An explicit invitation is itself proof that somebody can still sign up.
+ */
+const invitationCue =
+  /(?:请[^。；\n]{0,24}(?:报名|参加|填写|提交)|欢迎[^。；\n]{0,24}(?:报名|参加)|踊跃报名|即可报名|报名参加|点击[^。；\n]{0,10}(?:报名|链接))/;
+/**
+ * A headline that names a recruitment drive is itself an advertisement to the
+ * reader: nobody writes “招新补录” or “选拔通知” as background colour.
+ */
+const titleInvites =
+  /(?:招募|招新|招录|选拔|报名|宣讲|招聘会|招聘|校招|大赛|比赛|竞赛|征集|体验营|开放日|夏令营)/;
+/**
+ * A warning or a round-up about recruitment describes what others do to
+ * applicants; it does not invite this reader to apply.
+ */
+const advisoryTitle =
+  /(?:预警|提示|防骗|风险提示|资讯速览|提醒)/;
+/**
+ * A badge promises a reader can still act on this article, so the activity
+ * needs a usable window, a channel they can reach, or an explicit invitation.
+ * A commercial advert that repeats “报名方式” in its sales copy has none of
+ * them, and neither does a result list that only reports who already applied.
+ */
+function hasActionableOffer(
+  activity: { registrationWindows: { start: unknown; end: unknown }[]; registrationUrl: string | null },
+  blockText: string,
+): boolean {
+  if (activity.registrationWindows.some((w) => w.start || w.end)) return true;
+  if (activity.registrationUrl) return true;
+  if (invitationCue.test(blockText)) return true;
+  if (corroboration.test(blockText)) return true;
+  return false;
+}
+
 const otherAnchor =
   /(?:作品|论文|稿件|分析报告|成果)(?:提交|报送)?(?:时间|截止|截至)|(?:材料)(?:提交|报送)?(?:时间|截止|截至)|(?:缴费|付款)(?:时间|截止|截至)|(?:成绩公布|结果公布|名单公示|公示时间)/;
 const eventAnchor =
@@ -283,7 +332,8 @@ export function extractArticleStructure(
       analysis.contentType === "event" ||
       headings.length > 0 ||
       eventAnchor.test(blockText);
-    const hasReg = registrationAnchor.test(blockText),
+    const hasReg =
+        registrationAnchor.test(blockText) || channelAnchor.test(blockText),
       noReg = negativeAnchor.test(blockText);
     if (
       !isEvent &&
@@ -330,6 +380,7 @@ export function extractArticleStructure(
       const other = otherAnchor.test(current.text),
         registration =
           registrationAnchor.test(current.text) ||
+          channelAnchor.test(current.text) ||
           (registrationSection &&
             /第[一二三四五六七八九十\d]+(?:批|轮).*截止/.test(current.text)),
         event = eventAnchor.test(current.text);
@@ -465,6 +516,19 @@ export function extractArticleStructure(
     a.otherDeadlines = a.otherDeadlines.slice(0, 15);
     activities.push(a);
   }
+  for (const a of activities)
+    if (a.registrationStatus === "required") {
+      const block =
+        blocks.find((b) => b.title === a.title) ?? blocks[0];
+      const hasOffer = hasActionableOffer(a, text.text.slice(block.start, block.end));
+      if (
+        !hasOffer &&
+        !(titleInvites.test(text.title) && !advisoryTitle.test(text.title))
+      ) {
+        a.registrationStatus = "unknown";
+        a.issues.push("只提到报名字样，没有可用的时间或渠道");
+      }
+    }
   const required = activities.some((a) => a.registrationStatus === "required"),
     notRequired =
       activities.length > 0 &&

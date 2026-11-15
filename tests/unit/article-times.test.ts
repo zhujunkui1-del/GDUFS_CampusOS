@@ -136,3 +136,46 @@ describe("evidence bound registration times", () => {
     expect(window("报名截止2026年2月30日。").end?.date).toBeNull();
   });
 });
+
+describe("registration badge needs an offer the reader can act on", () => {
+  it("recognises a recruitment post that never says 报名", () => {
+    const a = run(
+      "报名方式：请将简历发送至 hr@example.com，邮件主题注明应聘岗位。",
+      "2026-10-01",
+      "【2027校招】某集团校园招聘正式启动",
+    );
+    expect(a.hasRegistration).toBe(true);
+  });
+  it("drops a sales advert that only repeats 报名方式", () => {
+    const a = run(
+      "报名方式：报名体检接送一站式服务，名额有限，先到先得。",
+      "2026-10-01",
+      "广外表白墙|穿白衣服的女生，已经在驾校偶遇你好几次了",
+    );
+    expect(a.hasRegistration).toBe(false);
+  });
+  it("drops a result list that reports who already applied", () => {
+    const a = run(
+      "报名名单公示如下，录取名单见附件。",
+      "2026-10-01",
+      "关于赴香港浸会大学交换生报名名单公示",
+    );
+    expect(a.hasRegistration).toBe(false);
+  });
+  it("keeps a selection notice whose title invites applications", () => {
+    const a = run(
+      "报名前请确认自己是否符合条件，录取名单后续公布。",
+      "2026-10-01",
+      "关于赴爱尔兰都柏林圣三一大学交流生项目选拔的通知",
+    );
+    expect(a.hasRegistration).toBe(true);
+  });
+  it("does not badge a warning that quotes other people's process", () => {
+    const a = run(
+      "警惕以招聘为名收取费用，咨询电话 12333。",
+      "2026-10-01",
+      "【就业资讯】注意防骗！五部门发布重要风险提示",
+    );
+    expect(a.hasRegistration).toBe(false);
+  });
+});

@@ -20,7 +20,11 @@ import {
 // v6 adds a residual fallback for posts that scored on neither side (photo
 // posts, short notices, brochures) and stops demoting a radar row back to
 // unclassified, so the radar feed no longer carries a large unclassified bucket.
-export const ARTICLE_CLASSIFIER_VERSION = "article-content-v6";
+// v7 marks an article as registrable only when the announcement offers the
+// reader something they can act on: a dated window, a registration link, or an
+// explicit invitation to sign up. A bare "报名方式" mention in a sales advert
+// no longer earns the badge, and a recruitment post that never says 报名 does.
+export const ARTICLE_CLASSIFIER_VERSION = "article-content-v7";
 export const ArticleAnalysisInputSchema = z
   .object({
     documentId: z.string().optional(),
