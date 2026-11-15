@@ -2884,3 +2884,14 @@ Windows成品及开发壳断网地图2D/2.5D/3D、848米路线、留言表单打
 类型检查、Lint、全量160文件1129用例通过；本地新增10项回归、既有4项定位/方向回归通过。公开域名最终10项场景中9项首轮通过、1项在page.goto时ERR_CONNECTION_CLOSED，单独复跑通过。最终Worker版本6a36e91d-9ea8-4626-a8eb-8284ec21e1d0，基线回滚点c0e6a305-920e-4c84-801c-98c75ed32acc。构建及1721生成文件凭据净化通过。Wrangler请求曾失败，IPv4后完成上传；Cron阶段CLI仍返回fetch failed，但已用只读Cloudflare API确认最终版本100%生效，原每分钟Cron及原创建/修改时间保持，未改D1、DNS、Secret或计费资源。
 
 三端2.0.3交付于 D:/tlydcg/Codex_work/CampusOS_广外通/v2.0.3/。275静态文件45,490,503字节、82活动GLB与院落完整，资源SHA/客户端密钥扫描通过。Windows冻结前端壳断网普通地图/Canvas三服务点、方向切换、848米路线和普通地图三模式通过，JS错误0。Android14模拟器/WebView113断网普通地图与模拟GL上下文丢失后的Canvas均实际按预期180.326°旋转且可朝北，三服务点路线通过；同资源诊断APK完成后已恢复最终非调试APK，版本20003/旧证书/v2-v3验证通过。macOS Universal签名/DMG读回/275文件和asar核对通过，未实机启动。详见NAVIGATION_FIX_ACCEPTANCE_2026_11_14.md及交付README。
+
+
+## 2026-11-15｜报名徽章判定规则 v8
+
+用户指出校招与会议类文章标题前没有「报」、而驾校广告有「报」。只读核查确认徽章链路（组件、三处调用点、CSS 主题、接口、视图、领域不变量）完好，线上不变量违例 0，问题出在判定正则：v6 只认「报名…」字面，且不校验正文是否真的给出了可行动的报名途径。
+
+`src/lib/ingestion/article-times.ts` 新增 `channelAnchor`（网申、简历投递、在线投递、接收简历、参会登记、报到和注册、会务/注册/会议费缴纳标准）与 `registrationAnchor` 的 `报考(时间|方式|截止|缴费|对象|条件)`；新增 `hasActionableOffer` 按活动逐条要求「带日期的窗口 / 报名链接 / 明确的邀请 / 可联系的渠道」，`corroboration` 刻意不含「名额有限、先到先得、即日起」。`titleInvites` 补 `报考`，`advisoryTitle` 排除防骗提示。`ARTICLE_CLASSIFIER_VERSION` 升到 `article-content-v8`。
+
+离线 1778 篇真实语料：徽章 758 → 1084（+330 / −4），removed 四篇为驾校广告、27Fall英签预警、马院思政课检查新闻、辅修管理规定。全量 6318 篇：899 → 944，`primaryDestination` 与 `radarCategory` 变动均为 0。`scripts/apply-article-analysis.mjs` 新增 `--baseline-gold=`，只拦相对基线新增的 gold 分歧（不传时仍 fail-closed）。
+
+类型检查通过，全量 167 文件 1178 用例通过；Preview D1 已落库（applied 6318，stale 0，v8 行 6309），Worker `0a057539-0f3f-4b20-83b2-2b3d10476ac8`。线上接口复核：拼多多/山东高速/宣讲会汇总表/论坛/翻译年会均为 true，金融论坛讲座与两份缴费办法为 false。详见 `docs/verification/registration-badge-2026-11-15.md`。
