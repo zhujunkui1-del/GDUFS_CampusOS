@@ -138,9 +138,7 @@ export function FavoritesPage() {
         </div>
       )}
 
-      {!result && !error && (
-        <p className="favorites-status">正在加载收藏…</p>
-      )}
+      {!result && !error && <p className="favorites-status">正在加载收藏…</p>}
 
       {result && !result.items.length && !error && (
         <div className="favorites-empty">
@@ -154,6 +152,7 @@ export function FavoritesPage() {
         <>
           <div className="favorites-list" aria-live="polite">
             {result.items.map((item) => {
+              const surfaces = item.surfaces ?? [item.originSurface];
               const article: PublicArticleSummary = {
                 id: item.articleId,
                 version: item.version,
@@ -176,7 +175,7 @@ export function FavoritesPage() {
                       if (item.available)
                         setSelected({
                           article,
-                          surface: item.originSurface,
+                          surface: filter === "all" ? surfaces[0] : filter,
                         });
                     }}
                   >
@@ -186,8 +185,10 @@ export function FavoritesPage() {
                       <span>{formatTime(item.publishedAt)}</span>
                     </span>
                     <span className="favorites-card-favorite-time">
-                      {surfaceLabels[item.originSurface]} · 收藏于{" "}
-                      {formatFavoriteTime(item.createdAt)}
+                      {surfaces
+                        .map((surface) => surfaceLabels[surface])
+                        .join(" · ")}{" "}
+                      · 收藏于 {formatFavoriteTime(item.createdAt)}
                     </span>
                     {!item.available && (
                       <span className="favorites-card-unavailable">
@@ -224,7 +225,8 @@ export function FavoritesPage() {
                 上一页
               </button>
               <span>
-                第 {result.page} / {Math.max(1, Math.ceil(result.total / 20))} 页
+                第 {result.page} / {Math.max(1, Math.ceil(result.total / 20))}{" "}
+                页
               </span>
               <button
                 type="button"

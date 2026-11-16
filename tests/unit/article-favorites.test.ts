@@ -3,6 +3,8 @@ import { dateGateFixture } from "../fixtures/date-gate";
 import { ArticleFavoriteStore } from "@/lib/server/account/favorites";
 import { AccountService } from "@/lib/server/account/email";
 import { createAccountApi } from "@/lib/server/account/api";
+import { readCalendar } from "@/lib/server/calendar/query";
+import { analysisStatements } from "@/lib/server/console/article-analysis";
 
 async function favoritesFixture() {
   const f = await dateGateFixture();
@@ -16,12 +18,66 @@ async function favoritesFixture() {
 }
 
 describe("article favorites store", () => {
+  it("shows an existing Radar favorite in both of its current public sections", async () => {
+    const f = await favoritesFixture();
+    const store = new ArticleFavoriteStore(f.db);
+    const user = f.user("favorites-user-a");
+    const [id] = f.ids;
+    const doc = await f.store.document(id);
+    await f.db.batch(
+      await analysisStatements(
+        f.db,
+        doc.id,
+        doc.contentRevision,
+        doc.inputHash!,
+        {
+          title: "校园宣讲预告",
+          body: "讲座时间：2026年11月16日19:00。",
+          publishedAt: "2026-11-15",
+        },
+      ),
+    );
+    f.sqlite
+      .prepare(
+        "INSERT INTO document_classification_overrides(document_id,radar_category,updated_by,updated_at) VALUES(?,'education_career',?,'2026-11-15')",
+      )
+      .run(id, f.actor.id);
+    const calendar = await readCalendar(f.db, { day: "2026-11-16" });
+    expect(calendar.items.flatMap((event) => event.sources)).toEqual(
+      expect.arrayContaining([expect.objectContaining({ documentId: id })]),
+    );
+    await store.add(user, id, { originSurface: "radar" });
+    for (const surface of ["all", "radar", "calendar"]) {
+      const list = await store.list(user, { surface, limit: 1 });
+      expect(list).toMatchObject({
+        total: 1,
+        hasMore: false,
+        items: [
+          {
+            articleId: id,
+            originSurface: "radar",
+            surfaces: ["radar", "calendar"],
+          },
+        ],
+      });
+    }
+    expect((await store.list(user, { surface: "knowledge" })).total).toBe(0);
+    f.sqlite
+      .prepare(
+        "UPDATE article_activity_index SET calendar_eligible=0 WHERE document_id=?",
+      )
+      .run(id);
+    expect((await store.list(user, { surface: "calendar" })).total).toBe(0);
+    expect((await store.list(user, { surface: "radar" })).total).toBe(1);
+  });
   it("keeps one row per user and article and lists newest first", async () => {
     const f = await favoritesFixture();
     const store = new ArticleFavoriteStore(f.db);
     const user = f.user("favorites-user-a");
     const [spring, autumn, white] = f.ids;
-    expect(f.visible()).toEqual(expect.arrayContaining([spring, autumn, white]));
+    expect(f.visible()).toEqual(
+      expect.arrayContaining([spring, autumn, white]),
+    );
 
     await store.add(user, spring, { originSurface: "radar" });
     await store.add(user, spring, { originSurface: "calendar" });
@@ -29,10 +85,7 @@ describe("article favorites store", () => {
 
     const list = await store.list(user, {});
     expect(list.total).toBe(2);
-    expect(list.items.map((item) => item.articleId)).toEqual([
-      autumn,
-      spring,
-    ]);
+    expect(list.items.map((item) => item.articleId)).toEqual([autumn, spring]);
     expect(list.items.find((item) => item.articleId === spring)).toMatchObject({
       originSurface: "radar",
       available: true,
@@ -85,7 +138,9 @@ describe("article favorites store", () => {
     const id = f.ids[0];
     await store.add(user, id, { originSurface: "knowledge" });
     f.sqlite
-      .prepare("UPDATE knowledge_documents SET publication_status='draft' WHERE id=?")
+      .prepare(
+        "UPDATE knowledge_documents SET publication_status='draft' WHERE id=?",
+      )
       .run(id);
 
     const list = await store.list(user, {});
@@ -98,11 +153,16 @@ describe("article favorites store", () => {
     expect((await store.list(user, {})).total).toBe(0);
   });
 
-  it("filters by origin surface and paginates", async () => {
+  it("filters by current surface before paginating", async () => {
     const f = await favoritesFixture();
     const store = new ArticleFavoriteStore(f.db);
     const user = f.user("favorites-user-a");
-    await store.add(user, f.ids[0], { originSurface: "radar" });
+    const override = f.sqlite.prepare(
+      "INSERT INTO document_classification_overrides(document_id,radar_category,updated_by,updated_at) VALUES(?,'lecture',?,'2026-11-15')",
+    );
+    override.run(f.ids[0], f.actor.id);
+    override.run(f.ids[1], f.actor.id);
+    await store.add(user, f.ids[0], { originSurface: "calendar" });
     await store.add(user, f.ids[1], { originSurface: "radar" });
     await store.add(user, f.ids[2], { originSurface: "calendar" });
 
@@ -120,6 +180,9 @@ describe("article favorites store", () => {
       page: 2,
     });
     expect(next.items[0].articleId).not.toBe(radar.items[0].articleId);
+    expect(
+      await store.list(user, { surface: "radar", limit: 1, page: 3 }),
+    ).toMatchObject({ total: 2, items: [], hasMore: false });
   });
 });
 
@@ -143,7 +206,12 @@ describe("article favorites API", () => {
       enabled: true,
       defer: () => {},
     });
-    const call = (method: string, path: string, token?: string, body?: unknown) =>
+    const call = (
+      method: string,
+      path: string,
+      token?: string,
+      body?: unknown,
+    ) =>
       api(
         new Request("https://campus.example" + path, {
           method,
@@ -172,9 +240,14 @@ describe("article favorites API", () => {
     );
     expect((await json(invalid)).error?.code).toBe("INVALID_ARGUMENT");
 
-    const missing = await call("PUT", "/api/me/favorites/missing-article", a.token, {
-      originSurface: "radar",
-    });
+    const missing = await call(
+      "PUT",
+      "/api/me/favorites/missing-article",
+      a.token,
+      {
+        originSurface: "radar",
+      },
+    );
     expect((await json(missing)).error?.code).toBe("NOT_FOUND");
 
     const articleId = f.ids[0];
@@ -208,15 +281,27 @@ describe("article favorites API", () => {
     expect(listData.total).toBe(1);
     expect(listData.items[0].articleId).toBe(articleId);
 
-    const removeB = await call("DELETE", "/api/me/favorites/" + articleId, b.token);
+    const removeB = await call(
+      "DELETE",
+      "/api/me/favorites/" + articleId,
+      b.token,
+    );
     expect((await json(removeB)).data).toMatchObject({ removed: false });
-    expect((await json(await call("GET", "/api/me/favorites", a.token))).data).toMatchObject({
+    expect(
+      (await json(await call("GET", "/api/me/favorites", a.token))).data,
+    ).toMatchObject({
       total: 1,
     });
 
-    const removeA = await call("DELETE", "/api/me/favorites/" + articleId, a.token);
+    const removeA = await call(
+      "DELETE",
+      "/api/me/favorites/" + articleId,
+      a.token,
+    );
     expect((await json(removeA)).data).toMatchObject({ removed: true });
-    expect((await json(await call("GET", "/api/me/favorites", a.token))).data).toMatchObject({
+    expect(
+      (await json(await call("GET", "/api/me/favorites", a.token))).data,
+    ).toMatchObject({
       total: 0,
     });
   });

@@ -1,13 +1,11 @@
 import { z } from "zod";
 import { ConsoleIdSchema } from "@/domain/console/contracts";
+import { CALENDAR_VERSION } from "@/domain/calendar/extraction";
+import { calendarBodyAllowedSql } from "../calendar/content-scope";
 import type { SqlDatabase } from "../assistant/database";
 import { ApiError } from "../errors";
 
-export const FavoriteSurfaceSchema = z.enum([
-  "radar",
-  "knowledge",
-  "calendar",
-]);
+export const FavoriteSurfaceSchema = z.enum(["radar", "knowledge", "calendar"]);
 export type FavoriteSurface = z.infer<typeof FavoriteSurfaceSchema>;
 
 export const FavoriteQuerySchema = z
@@ -32,6 +30,7 @@ export type FavoriteItem = {
   articleId: string;
   favoriteId: string;
   originSurface: FavoriteSurface;
+  surfaces: FavoriteSurface[];
   createdAt: string;
   available: boolean;
   readable: boolean;
@@ -54,36 +53,50 @@ type FavoriteRow = {
   display_name: string | null;
   available: number;
   readable: number;
+  radar: number;
+  knowledge: number;
+  calendar: number;
 };
 
-const selection = `
-  f.id,
-  f.article_id,
-  f.origin_surface,
-  f.created_at_ms,
-  d.title,
-  d.url,
-  d.published_at,
-  d.version,
-  s.display_name,
-  CASE WHEN p.id IS NULL THEN 0 ELSE 1 END AS available,
-  CASE
-    WHEN p.id IS NOT NULL
-      AND d.body_format = 'reading_html'
-      AND d.rights_scope = 'licensed_full_text'
-    THEN 1 ELSE 0
-  END AS readable
-  FROM user_article_favorites f
-  LEFT JOIN knowledge_documents d ON d.id = f.article_id
-  LEFT JOIN knowledge_sources s ON s.id = d.source_id
-  LEFT JOIN console_public_documents p ON p.id = f.article_id
-`;
+const favoriteMemberships = `
+  WITH saved AS MATERIALIZED (
+    SELECT f.*,d.title,d.url,d.published_at,d.version,d.content_revision,d.input_hash,
+      d.source_id,d.body_format,d.rights_scope,s.display_name
+    FROM user_article_favorites f
+    LEFT JOIN knowledge_documents d ON d.id=f.article_id
+    LEFT JOIN knowledge_sources s ON s.id=d.source_id WHERE f.user_id=?
+  ), visible AS MATERIALIZED (
+    SELECT d.*,
+      EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.article_id AND p.version=d.version) AS available,
+      (SELECT c.primary_destination FROM console_article_classifications c WHERE c.document_id=d.article_id) AS destination
+    FROM saved d
+  ), memberships AS MATERIALIZED (
+    SELECT d.*,
+      CASE WHEN d.available AND d.body_format='reading_html' AND d.rights_scope='licensed_full_text' THEN 1 ELSE 0 END AS readable,
+      CASE WHEN d.available AND (d.destination IN('radar','unknown')
+        OR EXISTS(SELECT 1 FROM campus_article_hotspots h WHERE h.document_id=d.article_id)) THEN 1 ELSE 0 END AS radar,
+      CASE WHEN d.available AND d.destination='knowledge' THEN 1 ELSE 0 END AS knowledge,
+      CASE WHEN d.available AND EXISTS(
+        SELECT 1 FROM article_activity_index a JOIN document_article_analysis x ON x.document_id=a.document_id
+        WHERE a.document_id=d.article_id AND a.calendar_eligible=1 AND a.starts_day IS NOT NULL
+          AND a.calendar_version=? AND x.calendar_version=?
+          AND x.content_revision=d.content_revision AND x.input_hash=d.input_hash
+          AND COALESCE(json_extract(a.activity_json,'$.status'),'') NOT IN('cancelled','postponed')
+          AND (json_extract(a.activity_json,'$.calendar.usesBody')=0 OR (${calendarBodyAllowedSql()}))
+      ) THEN 1 ELSE 0 END AS calendar
+    FROM visible d
+  )`;
 
 function item(row: FavoriteRow): FavoriteItem {
+  const originSurface = FavoriteSurfaceSchema.parse(row.origin_surface);
+  const surfaces = FavoriteSurfaceSchema.options.filter(
+    (surface) => row[surface] === 1,
+  );
   return {
     articleId: row.article_id,
     favoriteId: row.id,
-    originSurface: row.origin_surface as FavoriteSurface,
+    originSurface,
+    surfaces: surfaces.length ? surfaces : [originSurface],
     createdAt: new Date(Number(row.created_at_ms)).toISOString(),
     available: row.available === 1,
     readable: row.readable === 1,
@@ -100,33 +113,30 @@ export class ArticleFavoriteStore {
 
   async list(userId: string, raw: unknown) {
     const query = FavoriteQuerySchema.parse(raw);
-    const where = ["f.user_id = ?"];
-    const params: unknown[] = [userId];
+    const params: unknown[] = [userId, CALENDAR_VERSION, CALENDAR_VERSION];
+    let filter = "";
     if (query.surface !== "all") {
-      where.push("f.origin_surface = ?");
+      filter = `WHERE ${query.surface}=1 OR (radar=0 AND knowledge=0 AND calendar=0 AND origin_surface=?)`;
       params.push(query.surface);
     }
-    const clause = where.join(" AND ");
-    const count = await this.db
-      .prepare(
-        `SELECT count(*) AS n FROM user_article_favorites f WHERE ${clause}`,
-      )
-      .bind(...params)
-      .first<{ n: number }>();
-    const total = Number(count?.n || 0);
     const offset = (query.page - 1) * query.limit;
     const rows = await this.db
       .prepare(
-        `SELECT ${selection} WHERE ${clause} ORDER BY f.created_at_ms DESC, f.id DESC LIMIT ? OFFSET ?`,
+        `${favoriteMemberships}, matching AS MATERIALIZED (SELECT * FROM memberships ${filter}),
+          page AS (SELECT * FROM matching ORDER BY created_at_ms DESC,id DESC LIMIT ? OFFSET ?)
+         SELECT p.*,summary.total FROM (SELECT count(*) AS total FROM matching) summary LEFT JOIN page p ON 1=1
+         ORDER BY p.created_at_ms DESC,p.id DESC`,
       )
       .bind(...params, query.limit, offset)
-      .all<FavoriteRow>();
+      .all<FavoriteRow & { total: number }>();
+    const total = Number(rows.results[0]?.total || 0);
+    const items = rows.results.filter((row) => row.id).map(item);
     return {
-      items: rows.results.map(item),
+      items,
       page: query.page,
       limit: query.limit,
       total,
-      hasMore: offset + rows.results.length < total,
+      hasMore: offset + items.length < total,
     };
   }
 
@@ -169,7 +179,8 @@ export class ArticleFavoriteStore {
     return {
       articleId: id,
       favorited: true,
-      originSurface: (saved?.origin_surface || originSurface) as FavoriteSurface,
+      originSurface: (saved?.origin_surface ||
+        originSurface) as FavoriteSurface,
       createdAt: new Date(Number(saved?.created_at_ms || now)).toISOString(),
     };
   }
@@ -182,6 +193,10 @@ export class ArticleFavoriteStore {
       )
       .bind(userId, id)
       .run();
-    return { articleId: id, favorited: false, removed: Number(result.meta.changes || 0) > 0 };
+    return {
+      articleId: id,
+      favorited: false,
+      removed: Number(result.meta.changes || 0) > 0,
+    };
   }
 }
