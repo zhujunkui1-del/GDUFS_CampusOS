@@ -46,8 +46,16 @@ export const LoginSchema = z
   .object({
     identifier: z.string().trim().min(1).max(254),
     password: z.string().min(1).max(256),
+    selectAccount: z.boolean().optional(),
   })
   .strict();
+export const EmailLoginSelectSchema = z
+  .object({
+    choiceToken: TokenSchema,
+    index: z.number().int().nonnegative(),
+  })
+  .strict();
+export type EmailLoginChoice = { choiceToken: string; accounts: string[] };
 export const RenameSchema = z
   .object({
     username: UsernameSchema,
@@ -63,7 +71,9 @@ export const EmailBindSchema = z.object({ email: EmailSchema }).strict();
 export const EmailUnbindSchema = z
   .object({ challenge: TokenSchema, code: OtpSchema })
   .strict();
-export const ResetRequestSchema = z.object({ email: EmailSchema }).strict();
+export const ResetRequestSchema = z
+  .object({ email: EmailSchema, username: UsernameSchema.optional() })
+  .strict();
 export const ResetConfirmSchema = z
   .object({
     challenge: TokenSchema,
@@ -80,5 +90,6 @@ export type AccountProfile = {
   email: string | null;
   pendingEmail: string | null;
   emailVerified: boolean;
+  showConsoleEntry: boolean;
   createdAt: string;
 };

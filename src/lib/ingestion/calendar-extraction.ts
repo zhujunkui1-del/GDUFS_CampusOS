@@ -37,8 +37,14 @@ const confirmedValue = (v: string | null) =>
   )
     ? null
     : v;
-const eventRole =
-  /(?:讲座|讲坛|讲堂|沙龙|活动|比赛|竞赛|会议|演出|论坛|考试|复赛|决赛|开幕|报告会|报告)(?:举办)?(?:时\s*间|日期)|举办时间|开始时间|结束时间|定于|将于|将在|举行|举办|开讲|开幕|(?:^|\n|[\s，。；])\s*(?:[一二三四五六七八九十]+[、.．]|\d+[、.．])?\s*时\s*间\s*[：:]/g;
+const eventTimeLabel =
+  /(?:讲座|讲坛|讲堂|沙龙|活动|比赛|竞赛|会议|演出|论坛|考试|复赛|决赛|开幕|报告会|报告)(?:举办)?(?:时\s*间|日期)|举办时间/;
+const eventRole = new RegExp(
+  eventTimeLabel.source +
+    /|开始时间|结束时间|定于|将于|将在|举行|举办|开讲|开幕|(?:^|\n|[\s，。；])\s*(?:[一二三四五六七八九十]+[、.．]|\d+[、.．])?\s*时\s*间\s*[：:]/
+      .source,
+  "g",
+);
 // Labels that carry the article's own metadata rather than the event's time.
 // The library's lecture pages print "作者： 时间：2026年11月05日", and treating
 // that date as the event date put every lecture on its publication day.
@@ -168,7 +174,7 @@ function nature(
   if (
     eventWords.test(title) ||
     /将于|定于|将在/.test(body) ||
-    /(?:比赛|活动|讲座|会议|报告)(?:举办)?时间/.test(body)
+    eventTimeLabel.test(body)
   )
     return "announcement";
   return "uncertain";
@@ -340,12 +346,14 @@ function candidates(
       type === "uncertain" ||
       (!eventWords.test(b.title) &&
         !eventWords.test(body) &&
-        !/(?:活动|讲座|会议|举办|报告)(?:举办)?时间[：:]/.test(body)) ||
+        !eventTimeLabel.test(body)) ||
       /每周|每月|每逢/.test(body)
     )
       continue;
     let carry = "";
-    for (const m of body.matchAll(/[^\n。；;]+/g)) {
+    for (const m of body.matchAll(
+      /[^\n。；;]+(?:\n(?:上午|下午|晚上|中午|凌晨)?[ \t]*\d{1,2}[:：]\d{2}[^\n。；;]*)?/g,
+    )) {
       const p = m[0],
         absolute = b.start + m.index!,
         hasDate = calendarDates(p).length > 0;
@@ -646,7 +654,7 @@ function proposalCandidates(
  * The old patterns only knew 在+举行 and dropped roughly a third of places.
  */
 const PLACE_LABEL =
-  /(?:活动地点|讲座地点|比赛地点|举办地点|会议地点|报到地点|地点为|地点)\s*[：:]\s*([^，。；\n]{1,130})/;
+  /(?:地点为|地点)[ \t]*(?:[：:][ \t]*\n?|\n)[ \t]*([^，。；\n]{1,130}(?:\n[A-Za-z][ \t]*\d{2,4}(?:课室|教室)?(?=\n|$))?)/;
 const PLACE_HINT = /(?:校区|楼|厅|室|馆|场|中心|平台|大学|学院|广场|线上|会议)/;
 // A verb phrase such as "在X举行" also matches prose ("在双方合作领域"),
 // so anything carrying enumeration punctuation, a relative-time word or a
@@ -1032,11 +1040,10 @@ export function calendarizeArticle(
               "past_event",
             ].includes(reason) &&
             (eventWords.test(input.title) ||
-              /活动时间|讲座时间|举办时间/.test(canonical.text)) &&
+              eventTimeLabel.test(canonical.text)) &&
             (mediaHint ||
               (input.calendarSources?.length || 0) > 0 ||
-              (eventWords.test(input.title) &&
-                calendarDates(canonical.text).length)) &&
+              calendarDates(canonical.text).length) &&
             (base.calendar?.attempts || 0) < 2
           ? "needs_enrichment"
           : "excluded",

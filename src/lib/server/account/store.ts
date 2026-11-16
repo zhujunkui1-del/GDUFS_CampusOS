@@ -4,9 +4,11 @@ import { ApiError } from "../errors";
 import {
   RegisterSchema,
   LoginSchema,
+  EmailLoginSelectSchema,
   RenameSchema,
   PasswordChangeSchema,
   type AccountProfile,
+  type EmailLoginChoice,
 } from "@/domain/account/contracts";
 import { hashPassword, verifyPassword, DUMMY_PASSWORD_HASH } from "./password";
 import { authLimit, cookieValue, SESSION_MS } from "./security";
@@ -32,6 +34,7 @@ export type AccountRow = {
   username_norm: string;
   password_hash: string;
   verified_email: string | null;
+  show_console_entry: number;
   pending_email: string | null;
   email_verified_at_ms: number | null;
   auth_version: number;
@@ -45,8 +48,20 @@ export type AccountSession = {
   row: AccountRow;
   expiresAt: number;
 };
-const genericLogin = () =>
-  new ApiError("UNAUTHORIZED", "用户名或邮箱与密码不匹配。");
+type LoginSession = {
+  token: string;
+  expiresAt: number;
+  profile: AccountProfile;
+};
+const genericLogin = (legacyEmail = false) =>
+  new ApiError(
+    "UNAUTHORIZED",
+    legacyEmail
+      ? "邮箱与密码不匹配，或该邮箱需使用用户名登录。"
+      : "用户名或邮箱与密码不匹配。",
+  );
+const invalidChoice = () =>
+  new ApiError("UNAUTHORIZED", "账号选项已失效，请重新登录。");
 export const changed = (r: unknown) =>
   Number((r as { meta?: { changes?: number } })?.meta?.changes || 0);
 export class AccountStore {
@@ -91,6 +106,7 @@ export class AccountStore {
       email: row.verified_email,
       pendingEmail: row.pending_email,
       emailVerified: row.verified_email !== null,
+      showConsoleEntry: row.show_console_entry === 1,
       createdAt: /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(row.created_at)
         ? row.created_at.replace(" ", "T") + "Z"
         : row.created_at,
@@ -128,11 +144,7 @@ export class AccountStore {
       this.db,
       action + ":ip",
       ip,
-      action === "register"
-        ? 10
-        : action === "article_favorites"
-          ? 240
-          : 60,
+      action === "register" ? 10 : action === "article_favorites" ? 240 : 60,
       600000,
       now,
     );
@@ -175,10 +187,29 @@ export class AccountStore {
   guard() {
     return `EXISTS(SELECT 1 FROM login_sessions s JOIN users u ON u.id=s.user_id JOIN user_password_identities p ON p.user_id=u.id WHERE s.session_hash=? AND s.user_id=user_password_identities.user_id AND s.revoked_at IS NULL AND s.expires_at>? AND s.auth_version=p.auth_version AND u.status='active' AND u.role='user')`;
   }
-  sessionStatement(hash: string, userId: string, version: number, now: number) {
+  sessionStatement(
+    hash: string,
+    userId: string,
+    version: number,
+    now: number,
+    choice?: string,
+  ) {
     return this.db
       .prepare(
-        `INSERT INTO login_sessions(session_hash,user_id,expires_at,auth_version,last_seen_at_ms) SELECT ?,u.id,?,?,? FROM users u JOIN user_password_identities i ON i.user_id=u.id WHERE u.id=? AND u.role='user' AND u.status='active' AND i.auth_version=?`,
+        `INSERT INTO login_sessions(session_hash,user_id,expires_at,auth_version,last_seen_at_ms) SELECT ?,u.id,?,?,? FROM users u JOIN user_password_identities i ON i.user_id=u.id WHERE u.id=? AND u.role='user' AND u.status='active' AND i.auth_version=?${
+          choice
+            ? ` AND EXISTS (
+          SELECT 1 FROM user_email_login_choices t
+          JOIN user_password_identities verifier ON verifier.user_id=t.proof_user_id
+          JOIN users owner ON owner.id=verifier.user_id
+          WHERE t.token_hash=? AND t.expires_at_ms>? AND t.email=i.verified_email
+            AND verifier.verified_email=t.email AND verifier.email_epoch=t.proof_email_epoch
+            AND owner.status='active' AND owner.role='user'
+            AND EXISTS(SELECT 1 FROM json_each(t.options_json) opt
+              WHERE json_extract(opt.value,'$.id')=i.user_id AND json_extract(opt.value,'$.epoch')=i.email_epoch)
+        )`
+            : ""
+        }`,
       )
       .bind(
         hash,
@@ -187,6 +218,7 @@ export class AccountStore {
         now,
         userId,
         version,
+        ...(choice ? [choice, now] : []),
       );
   }
   async row(id: string) {
@@ -232,7 +264,7 @@ export class AccountStore {
         ? [
             this.db
               .prepare(
-                "UPDATE user_auth_tokens SET used_at_ms=?,consumption_id=?,attempts=attempts+1 WHERE token_hash=? AND code_hash=? AND purpose='register_email' AND username_norm=? AND email=? AND used_at_ms IS NULL AND attempts<5 AND expires_at_ms>? AND NOT EXISTS(SELECT 1 FROM user_password_identities WHERE verified_email=user_auth_tokens.email)",
+                "UPDATE user_auth_tokens SET used_at_ms=?,consumption_id=?,attempts=attempts+1 WHERE token_hash=? AND code_hash=? AND purpose='register_email' AND username_norm=? AND email=? AND used_at_ms IS NULL AND attempts<5 AND expires_at_ms>?",
               )
               .bind(
                 now,
@@ -290,7 +322,7 @@ export class AccountStore {
         );
     } catch (e) {
       if (/UNIQUE constraint/i.test(String(e)))
-        throw new ApiError("CONFLICT", "用户名或邮箱不可用，请更换后重试。");
+        throw new ApiError("CONFLICT", "用户名不可用，请更换用户名。");
       throw e;
     }
     return {
@@ -299,39 +331,108 @@ export class AccountStore {
       profile: this.profile((await this.row(id))!),
     };
   }
-  async login(raw: unknown, request: Request, ip: string) {
+  login(raw: unknown, request: Request, ip: string): Promise<LoginSession>;
+  login(
+    raw: unknown,
+    request: Request,
+    ip: string,
+    allowChoice: boolean,
+  ): Promise<LoginSession | EmailLoginChoice>;
+  async login(
+    raw: unknown,
+    request: Request,
+    ip: string,
+    supportsChoice = false,
+  ) {
     const input = LoginSchema.parse(raw),
-      identifier = input.identifier.toLowerCase();
+      identifier = input.identifier.toLowerCase(),
+      emailLogin = identifier.includes("@"),
+      allowChoice = supportsChoice && input.selectAccount === true;
     await this.limit("login", ip, identifier);
-    const row = await this.db
+    const { results } = await this.db
       .prepare(
-        `SELECT i.*,u.created_at FROM user_password_identities i JOIN users u ON u.id=i.user_id WHERE ${identifier.includes("@") ? "i.verified_email=? AND i.email_verified_at_ms IS NOT NULL" : "i.username_norm=?"} AND u.status='active' AND u.role='user'`,
+        `SELECT i.*,u.created_at FROM user_password_identities i JOIN users u ON u.id=i.user_id WHERE ${emailLogin ? "i.verified_email=? AND i.email_verified_at_ms IS NOT NULL" : "i.username_norm=?"} AND u.status='active' AND u.role='user' ORDER BY i.username_norm${allowChoice && emailLogin ? "" : " LIMIT 2"}`,
       )
       .bind(identifier)
-      .first<AccountRow>();
-    if (row)
-      await authLimit(
-        this.db,
-        "login:account",
-        row.user_id,
-        10,
-        900000,
-        this.now(),
-      );
-    const verified = await this.passwords.verify(
-      input.password,
-      row?.password_hash || DUMMY_PASSWORD_HASH,
-    );
-    if (!row || !verified) {
-      await this.event("login_failed", null).run();
-      throw genericLogin();
+      .all<AccountRow>();
+    const choices = emailLogin && allowChoice && results.length > 1;
+    const candidates = choices || results.length === 1 ? results : [];
+    const limitAccount = (id: string) =>
+      authLimit(this.db, "login:account", id, 10, 900000, this.now());
+    if (!choices && candidates[0]) await limitAccount(candidates[0].user_id);
+    if (!candidates.length)
+      await this.passwords.verify(input.password, DUMMY_PASSWORD_HASH);
+    let row: AccountRow | undefined;
+    for (const candidate of candidates) {
+      if (
+        await this.passwords.verify(input.password, candidate.password_hash)
+      ) {
+        row = candidate;
+        break;
+      }
     }
+    if (!row) {
+      await this.event("login_failed", null).run();
+      throw genericLogin(emailLogin && !allowChoice);
+    }
+    if (!choices) return this.startLoginSession(row, request);
+    await limitAccount(row.user_id);
+    const choiceToken = randomToken();
+    const ticket = await this.db
+      .prepare(
+        `INSERT INTO user_email_login_choices(token_hash,email,proof_user_id,proof_email_epoch,options_json,expires_at_ms)
+         SELECT ?,verified_email,user_id,email_epoch,?,? FROM user_password_identities i
+         WHERE user_id=? AND verified_email=? AND email_epoch=?
+           AND EXISTS(SELECT 1 FROM users u WHERE u.id=i.user_id AND u.role='user' AND u.status='active')`,
+      )
+      .bind(
+        await tokenHash(choiceToken),
+        JSON.stringify(
+          results.map((r) => ({ id: r.user_id, epoch: r.email_epoch })),
+        ),
+        this.now() + 300000,
+        row.user_id,
+        identifier,
+        row.email_epoch,
+      )
+      .run();
+    if (!changed(ticket)) throw genericLogin();
+    return { choiceToken, accounts: results.map((r) => r.username) };
+  }
+  async selectEmailLogin(raw: unknown, request: Request, ip: string) {
+    const { choiceToken, index } = EmailLoginSelectSchema.parse(raw);
+    await this.limit("login_select", ip);
+    const hash = await tokenHash(choiceToken);
+    const option = await this.db
+      .prepare(
+        `SELECT json_extract(options_json,?) AS id FROM user_email_login_choices WHERE token_hash=? AND expires_at_ms>?`,
+      )
+      .bind(`$[${index}].id`, hash, this.now())
+      .first<{ id: string | null }>();
+    const row = option?.id ? await this.row(option.id) : null;
+    if (!row) throw invalidChoice();
+    return this.startLoginSession(row, request, hash);
+  }
+  private async startLoginSession(
+    row: AccountRow,
+    request: Request,
+    choice?: string,
+  ): Promise<LoginSession> {
     const token = randomToken(),
       hash = await tokenHash(token),
       now = this.now();
     const old = cookieValue(request);
-    const results = await this.db.batch([
-      this.sessionStatement(hash, row.user_id, row.auth_version, now),
+    const writes = await this.db.batch([
+      this.sessionStatement(hash, row.user_id, row.auth_version, now, choice),
+      ...(choice
+        ? [
+            this.db
+              .prepare(
+                "DELETE FROM user_email_login_choices WHERE token_hash=? AND EXISTS(SELECT 1 FROM login_sessions WHERE session_hash=?)",
+              )
+              .bind(choice, hash),
+          ]
+        : []),
       ...(old
         ? [
             this.db
@@ -352,7 +453,7 @@ export class AccountStore {
         )
         .bind(crypto.randomUUID(), row.user_id, now, hash),
     ]);
-    if (!changed(results[0])) throw genericLogin();
+    if (!changed(writes[0])) throw choice ? invalidChoice() : genericLogin();
     return { token, expiresAt: now + SESSION_MS, profile: this.profile(row) };
   }
   async logout(request: Request) {

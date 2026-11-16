@@ -21,6 +21,14 @@
   );
   color: #162b45;
 }
+.account-group.account-choice-list {
+  max-height: 50dvh;
+  overflow-y: auto;
+}
+.account-choice .account-row-label {
+  flex-shrink: 1;
+  overflow-wrap: anywhere;
+}
 .account-header {
   display: flex;
   align-items: center;

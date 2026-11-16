@@ -17,6 +17,12 @@
 .building-activities > header h3 {
   font-size: 18px;
 }
+.building-info > header {
+  margin-bottom: 14px;
+}
+.building-info > header h3 {
+  margin: 0;
+}
 .building-photo-preview {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -117,6 +123,7 @@
 .building-activity-source {
   color: var(--text-secondary);
 }
+.building-info > header button,
 .building-activities > header button {
   margin-top: 0;
 }

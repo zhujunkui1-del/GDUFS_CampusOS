@@ -19,6 +19,7 @@ export const accountMethods: Record<string, readonly string[]> = {
   "/api/auth/register": ["POST"],
   "/api/auth/register/email-code": ["POST"],
   "/api/auth/login": ["POST"],
+  "/api/auth/login/select": ["POST"],
   "/api/auth/logout": ["POST"],
   "/api/auth/session": ["GET"],
   "/api/auth/password/change": ["POST"],
@@ -172,7 +173,10 @@ export function createAccountApi(options: {
           };
         }
         if (request.method === "DELETE") {
-          const input = z.object({ id: z.string().uuid() }).strict().parse(body);
+          const input = z
+            .object({ id: z.string().uuid() })
+            .strict()
+            .parse(body);
           await configs.remove(session.row.user_id, input.id);
           return payload();
         }
@@ -182,7 +186,12 @@ export function createAccountApi(options: {
           return payload();
         }
         if (input.action === "test-draft") {
-          if (!input.displayName || !input.provider || !input.baseUrl || !input.model)
+          if (
+            !input.displayName ||
+            !input.provider ||
+            !input.baseUrl ||
+            !input.model
+          )
             throw new ApiError("INVALID_ARGUMENT", "请填写完整的配置信息。");
           return configs.testDraft(
             session.row.user_id,
@@ -200,7 +209,11 @@ export function createAccountApi(options: {
         if (!input.id)
           throw new ApiError("INVALID_ARGUMENT", "缺少模型配置 ID。");
         if (input.action === "activate") {
-          await configs.setPreference(session.row.user_id, "personal", input.id);
+          await configs.setPreference(
+            session.row.user_id,
+            "personal",
+            input.id,
+          );
           return payload();
         }
         if (input.action === "disable") {
@@ -211,7 +224,12 @@ export function createAccountApi(options: {
           const result = await configs.test(session.row.user_id, input.id);
           return { ...result, ...(await payload()) };
         }
-        if (!input.displayName || !input.provider || !input.baseUrl || !input.model)
+        if (
+          !input.displayName ||
+          !input.provider ||
+          !input.baseUrl ||
+          !input.model
+        )
           throw new ApiError("INVALID_ARGUMENT", "请填写完整的配置信息。");
         await configs.update(session.row.user_id, input.id, {
           displayName: input.displayName,
@@ -242,8 +260,7 @@ export function createAccountApi(options: {
           model: input.model,
           apiKey: input.apiKey,
         }).catch((error) => {
-          if (error instanceof ApiError)
-            return { ok: false as const, error };
+          if (error instanceof ApiError) return { ok: false as const, error };
           throw error;
         });
         if (!test.ok) throw test.error;
@@ -279,8 +296,12 @@ export function createAccountApi(options: {
         await store.limit("email_unbind_request", ip);
         return store.requestUnbind(request);
       }
-      if (path === "/api/auth/login") {
-        const result = await store.login(body, request, ip);
+      if (path === "/api/auth/login" || path === "/api/auth/login/select") {
+        const result =
+          path === "/api/auth/login"
+            ? await store.login(body, request, ip, true)
+            : await store.selectEmailLogin(body, request, ip);
+        if ("choiceToken" in result) return result;
         cookie = accountCookie(result.token);
         return {
           user: result.profile,
@@ -391,6 +412,11 @@ export async function cleanAccountMetadata(db: SqlDatabase, now = Date.now()) {
         "DELETE FROM user_auth_tokens WHERE token_hash IN(SELECT token_hash FROM user_auth_tokens WHERE expires_at_ms<? LIMIT 200)",
       )
       .bind(now - 86400000),
+    db
+      .prepare(
+        "DELETE FROM user_email_login_choices WHERE token_hash IN(SELECT token_hash FROM user_email_login_choices WHERE expires_at_ms<=? LIMIT 200)",
+      )
+      .bind(now),
     db
       .prepare(
         "DELETE FROM login_sessions WHERE session_hash IN(SELECT session_hash FROM login_sessions WHERE expires_at<? LIMIT 200)",

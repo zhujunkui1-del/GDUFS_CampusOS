@@ -1,4 +1,5 @@
 import { WorkflowTrace, observeWorkflowModel } from "./workflow-trace";
+import { requireConsole } from "../console/auth";
 import {
   campusUtilityAnswerQuestion,
   campusUtilityQueries,
@@ -197,6 +198,7 @@ export async function chatResponse(request: Request) {
   );
   let response: Response | undefined;
   const fallback = await withApi(async (req, apiContext) => {
+    if (workflow.enabled) await requireConsole(req, true);
     const input = AgentChatRequestSchema.parse(await readJson(req));
     const ctx = await assistantContext(req);
     workflow.start("input", {
@@ -2612,7 +2614,7 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
     return { started: true };
   })(request);
   const result = response || fallback;
-  if (workflow.enabled && !workflow.attached) {
+  if (workflow.records.length && !workflow.attached) {
     if (result.headers.get("Content-Type")?.includes("text/event-stream")) {
       const raw = await result.text(),
         line = raw.split("\n").find((line) => line.startsWith("data:"));

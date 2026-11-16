@@ -8,6 +8,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import { ArrowRight, RefreshCw, Search } from "lucide-react";
+import { campusHotspot } from "@/domain/console/hotspots";
 import {
   knowledgeCategories,
   radarCategories,
@@ -62,6 +63,7 @@ type FeedState = {
 const pageSize = 12;
 const columnMemory: Record<string, number> = {};
 const radarFeedCategories = [
+  campusHotspot,
   ...radarCategories,
   { code: "unclassified", label: "校园资讯" },
 ];
@@ -218,7 +220,9 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
         }
         const grouped = await fetchGrouped();
         const visibleCategories = categories.filter(
-          (category) => (grouped.counts[category.code] || 0) > 0,
+          (category) =>
+            (grouped.counts[category.code] || 0) > 0 ||
+            (category.code === campusHotspot.code && !query.q && !query.source),
         );
         if (!abort.signal.aborted)
           setState({
@@ -484,18 +488,24 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
                       {group.count} 篇
                     </span>
                   </h2>
-                  <button
-                    type="button"
-                    className="public-feed-more"
-                    onClick={() => chooseCategory(group.category.code)}
-                  >
-                    查看更多
-                    <ArrowRight size={16} aria-hidden="true" />
-                  </button>
+                  {group.count > 0 && (
+                    <button
+                      type="button"
+                      className="public-feed-more"
+                      onClick={() => chooseCategory(group.category.code)}
+                    >
+                      查看更多
+                      <ArrowRight size={16} aria-hidden="true" />
+                    </button>
+                  )}
                 </div>
-                <div className="public-feed-group-list">
-                  {group.items.map(renderCard)}
-                </div>
+                {group.items.length ? (
+                  <div className="public-feed-group-list">
+                    {group.items.map(renderCard)}
+                  </div>
+                ) : (
+                  <p className="public-feed-status">暂无校园热点</p>
+                )}
               </section>
             ))}
           </div>
@@ -519,7 +529,11 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
             </section>
           ) : (
             <p className="public-feed-status">
-              {query.q || query.source ? "没有找到匹配内容" : "暂无已发布内容"}
+              {query.q || query.source
+                ? "没有找到匹配内容"
+                : query.category === campusHotspot.code
+                  ? "暂无校园热点"
+                  : "暂无已发布内容"}
             </p>
           )}
           {current.data && (

@@ -131,7 +131,7 @@ process.on("SIGINT", () => {
 for (let i = 0; i < Math.min(limit, corpus.length) && !stopping; i += 20) {
   const chunk = corpus.slice(i, Math.min(i + 20, limit));
   const [result] = await request({
-    sql: `SELECT d.id,d.input_hash,d.content_revision,d.content_hash,d.publication_status,d.lifecycle_status,d.version,a.input_hash AS analysis_hash,a.content_revision AS analysis_revision,a.classifier_version FROM knowledge_documents d LEFT JOIN document_article_analysis a ON a.document_id=d.id WHERE d.id IN(${chunk.map(() => "?").join(",")}) AND d.owner_user_id IS NULL AND d.data_domain<>'user_private'`,
+    sql: `SELECT d.id,d.input_hash,d.content_revision,d.content_hash,d.publication_status,d.lifecycle_status,d.version,d.body,d.body_format,a.input_hash AS analysis_hash,a.content_revision AS analysis_revision,a.classifier_version,a.analysis_json,a.projection_hash FROM knowledge_documents d LEFT JOIN document_article_analysis a ON a.document_id=d.id WHERE d.id IN(${chunk.map(() => "?").join(",")}) AND d.owner_user_id IS NULL AND d.data_domain<>'user_private'`,
     params: chunk.map((d) => d.id),
   });
   const statements = [],
@@ -156,6 +156,20 @@ for (let i = 0; i < Math.min(limit, corpus.length) && !stopping; i += 20) {
     }
     const analysis = predictions.get(d.id);
     if (!analysis) throw Error("Missing evaluated prediction");
+    const current =
+      live.analysis_hash === live.input_hash &&
+      live.analysis_revision === live.content_revision &&
+      live.analysis_json
+        ? JSON.parse(live.analysis_json)
+        : null;
+    const projection = current?.calendar
+      ? {
+          ...analysis,
+          activities: current.activities,
+          calendar: current.calendar,
+        }
+      : { ...analysis, calendar: undefined };
+    const statementIndex = statements.length;
     statements.push(
       ...(await analysisStatements(
         adapter,
@@ -164,22 +178,34 @@ for (let i = 0; i < Math.min(limit, corpus.length) && !stopping; i += 20) {
         d.input_hash,
         {
           title: d.title,
-          body: d.body,
-          bodyFormat: "plain",
+          body: live.body,
+          bodyFormat:
+            live.body_format === "reading_html" ? "reading_html" : "plain",
           bodyStatus: d.body_status,
           publishedAt: d.published_at,
           originalUrl: d.url,
+          sourceName: d.display_name,
+          calendarSources: current?.calendar?.sources,
         },
-        analysis,
+        projection,
+        undefined,
+        live.projection_hash,
       )),
     );
-    ids.push({ id: d.id, before: live });
+    const before = { ...live };
+    delete before.body;
+    delete before.analysis_json;
+    ids.push({ id: d.id, before, statementIndex });
   }
   if (statements.length) {
-    await request({
+    const results = await request({
       batch: statements.map((s) => ({ sql: s.sql, params: s.params })),
     });
-    report.applied.push(...ids);
+    for (const { id, before, statementIndex } of ids) {
+      if (results[statementIndex]?.meta.changes)
+        report.applied.push({ id, before });
+      else report.stale.push(id);
+    }
   }
   writeFileSync(
     dir + "/application.json",

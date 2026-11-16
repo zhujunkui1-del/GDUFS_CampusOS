@@ -847,6 +847,13 @@
   height: 20px;
   flex-shrink: 0;
 }
+.console-hotspot-row > button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.console-list > .console-hotspot-row {
+  padding-inline-end: 18px;
+}
 .console-danger-button,
 .console-actions .console-danger-button {
   background: #b42318;

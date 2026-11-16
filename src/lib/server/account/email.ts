@@ -75,15 +75,6 @@ export class AccountService extends AccountStore {
         .first()
     )
       throw new ApiError("CONFLICT", "用户名已被使用。");
-    if (
-      await this.db
-        .prepare(
-          "SELECT user_id FROM user_password_identities WHERE verified_email=?",
-        )
-        .bind(input.email)
-        .first()
-    )
-      throw new ApiError("CONFLICT", "邮箱已被绑定。");
     await this.mailLimit(input.email, undefined, "registration");
     const c = await this.code("register_email"),
       n = this.now();
@@ -133,15 +124,6 @@ export class AccountService extends AccountStore {
         true,
       );
 
-    if (
-      await this.db
-        .prepare(
-          "SELECT user_id FROM user_password_identities WHERE verified_email=? AND user_id<>?",
-        )
-        .bind(input.email, s.row.user_id)
-        .first()
-    )
-      throw new ApiError("CONFLICT", "该邮箱暂不可绑定，请更换邮箱。");
     if (s.row.verified_email && input.email !== s.row.verified_email)
       throw new ApiError("CONFLICT", "请先解绑当前邮箱。");
     if (input.email === s.row.verified_email)
@@ -264,22 +246,16 @@ export class AccountService extends AccountStore {
       hash = await tokenHash(input.challenge),
       nonce = crypto.randomUUID(),
       n = this.now();
-    let r: unknown[];
-    try {
-      r = await this.db.batch([
-        this.claim(hash, digest, "verify_email", nonce, n, s),
-        this.db
-          .prepare(
-            `UPDATE user_password_identities SET verified_email=?,email_verified_at_ms=?,pending_email=NULL,email_epoch=email_epoch+1,revision=revision+1,mutation_id=?,updated_at_ms=? WHERE user_id=? AND EXISTS(SELECT 1 FROM user_auth_tokens WHERE token_hash=? AND consumption_id=?)`,
-          )
-          .bind(row.email, n, nonce, n, row.user_id, hash, nonce),
-        this.revokeTickets(row.user_id, nonce, n),
-        this.auditGuard("email_verified", row.user_id, nonce),
-      ]);
-    } catch (e) {
-      if (/UNIQUE constraint/i.test(String(e))) throw invalidCode();
-      throw e;
-    }
+    const r = await this.db.batch([
+      this.claim(hash, digest, "verify_email", nonce, n, s),
+      this.db
+        .prepare(
+          `UPDATE user_password_identities SET verified_email=?,email_verified_at_ms=?,pending_email=NULL,email_epoch=email_epoch+1,revision=revision+1,mutation_id=?,updated_at_ms=? WHERE user_id=? AND EXISTS(SELECT 1 FROM user_auth_tokens WHERE token_hash=? AND consumption_id=?)`,
+        )
+        .bind(row.email, n, nonce, n, row.user_id, hash, nonce),
+      this.revokeTickets(row.user_id, nonce, n),
+      this.auditGuard("email_verified", row.user_id, nonce),
+    ]);
     if (!changed(r[0]) || !changed(r[1])) throw invalidCode();
     return {
       user: this.profile((await this.row(row.user_id))!),
@@ -348,7 +324,8 @@ export class AccountService extends AccountStore {
     defer: (task: Promise<unknown>) => void,
   ) {
     const start = performance.now(),
-      { email } = ResetRequestSchema.parse(raw);
+      { email, username } = ResetRequestSchema.parse(raw),
+      norm = username?.toLowerCase() ?? null;
     await this.limit("reset_request", ip, email);
     if (!this.mailer.available)
       throw new ApiError(
@@ -361,9 +338,16 @@ export class AccountService extends AccountStore {
       n = this.now();
     const r = await this.db
       .prepare(
-        `INSERT INTO user_auth_tokens(token_hash,code_hash,user_id,purpose,email,auth_version,email_epoch,created_at_ms,expires_at_ms) SELECT ?,?,i.user_id,'reset_password',i.verified_email,i.auth_version,i.email_epoch,?,? FROM user_password_identities i JOIN users u ON u.id=i.user_id WHERE i.verified_email=? AND i.email_verified_at_ms IS NOT NULL AND u.status='active' AND u.role='user'`,
+        `WITH candidates AS MATERIALIZED (
+          SELECT i.user_id,i.verified_email,i.auth_version,i.email_epoch
+          FROM user_password_identities i JOIN users u ON u.id=i.user_id
+          WHERE i.verified_email=? AND i.email_verified_at_ms IS NOT NULL
+            AND (? IS NULL OR i.username_norm=?) AND u.status='active' AND u.role='user' LIMIT 2
+        ) INSERT INTO user_auth_tokens(token_hash,code_hash,user_id,purpose,email,auth_version,email_epoch,created_at_ms,expires_at_ms)
+          SELECT ?,?,user_id,'reset_password',verified_email,auth_version,email_epoch,?,? FROM candidates
+          WHERE (SELECT count(*) FROM candidates)=1`,
       )
-      .bind(c.hash, c.digest, n, n + 600000, email)
+      .bind(email, norm, norm, c.hash, c.digest, n, n + 600000)
       .run();
     if (r.meta.changes)
       defer(

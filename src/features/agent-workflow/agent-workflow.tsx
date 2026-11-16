@@ -102,7 +102,7 @@ function recordStatus(record: WorkflowRecord) {
   return labels[record.state];
 }
 const json = (value: unknown) => JSON.stringify(value, null, 2);
-export function AgentWorkflow() {
+export function AgentWorkflow({ csrf }: { csrf: string }) {
   const [question, setQuestion] = useState("广外一饭有什么好吃的？"),
     [smartSearch, setSmartSearch] = useState(false);
   const [status, setStatus] = useState<Status>("idle"),
@@ -286,6 +286,7 @@ export function AgentWorkflow() {
         headers: {
           "Content-Type": "application/json",
           "X-CampusOS-Workflow": "1",
+          "X-Console-CSRF": csrf,
         },
         body: json({
           conversationId: conversationId.current,
@@ -482,7 +483,7 @@ export function AgentWorkflow() {
       style={{ "--inspector-width": inspectorWidth + "px" } as CSSProperties}
     >
       <header className="studio-header">
-        <Link href="/map" className="studio-back" aria-label="返回校园">
+        <Link href="/admin" className="studio-back" aria-label="返回总览">
           <ArrowLeft size={20} />
         </Link>
         <div className="studio-brand">

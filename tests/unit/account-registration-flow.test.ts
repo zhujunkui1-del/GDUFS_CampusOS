@@ -53,7 +53,7 @@ it("creates no account until registration mailbox code is proven and then binds 
     f.close();
   }
 });
-it("rejects invalid and already bound email before sending registration codes", async () => {
+it("rejects invalid emails and keeps the per-mailbox resend cooldown across usernames", async () => {
   const f = accountFixture();
   try {
     await expect(
@@ -75,7 +75,7 @@ it("rejects invalid and already bound email before sending registration codes", 
         { username: "OtherUser", email: "owner@example.com" },
         "ip",
       ),
-    ).rejects.toThrow("邮箱");
+    ).rejects.toMatchObject({ code: "RATE_LIMITED" });
     expect(f.sent).toHaveLength(count);
     await expect(
       f.store.registrationCode(

@@ -119,47 +119,10 @@
   border-radius: 11px 11px 3px 3px;
   background: linear-gradient(#415f98, #8297bd);
 }
-.console-traffic-note,
-.console-session-time {
+.console-traffic-note {
   margin-top: 14px;
   color: var(--text-secondary);
   font-size: 13px;
-}
-.console-session-state {
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: #f3f0e9;
-  color: #85652f;
-  font-size: 14px;
-}
-.console-session-state.is-connected {
-  background: #e9f5ed;
-  color: #287646;
-}
-.console-source-session .console-actions {
-  margin-top: 18px;
-}
-.console-source-session .console-actions button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.console-session-qr {
-  margin: 20px 0;
-  padding: 20px;
-  border-radius: 20px;
-  background: #f5f7fb;
-  text-align: center;
-}
-.console-session-qr img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  margin: auto;
-  padding: 12px;
-  background: white;
-  image-rendering: pixelated;
-  object-fit: contain;
 }
 @media (max-width: 750px) {
   .console-traffic-metrics {

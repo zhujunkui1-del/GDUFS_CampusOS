@@ -8,6 +8,17 @@ const get = (title: string, body: string) =>
   analyzeArticle({ title, body, publishedAt: "2026-10-30" });
 const accepted = (title: string, body: string) =>
   get(title, body).activities.filter((a) => a.calendar?.eligible);
+it("binds a labelled date and adjacent time and venue in a notice", () => {
+  const activities = accepted(
+    "（南校区专场）国际组织与国际治理沙龙 | 人工智能治理（第16期）",
+    "沙龙信息\n沙龙时间\n2026年11月17日（周二）\n19：30-21：30\n沙龙地点\n广东外语外贸大学南校区\nF310\n报名截止：2026年11月16日18:00",
+  );
+  expect(activities).toHaveLength(1);
+  expect(activities[0]).toMatchObject({
+    startsAt: { date: "2026-11-17", at: "2026-11-17T19:30:00+08:00" },
+    placeRaw: "广东外语外贸大学南校区\nF310",
+  });
+});
 it.each([
   [
     "2026年讲座预告",

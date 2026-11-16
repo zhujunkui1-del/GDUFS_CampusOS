@@ -2,11 +2,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Dialog } from "@base-ui/react/dialog";
+import { ChevronRight, UserRound } from "lucide-react";
 import {
   UsernameSchema,
   PasswordSchema,
   EmailSchema,
   OtpSchema,
+  type EmailLoginChoice,
 } from "@/domain/account/contracts";
 import { useAccount, accountRequest } from "./account-context";
 import { useEmailCodeAction } from "./use-email-code-action";
@@ -22,7 +25,12 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
     [confirm, setConfirm] = useState(""),
     [email, setEmail] = useState(""),
     [challenge, setChallenge] = useState(""),
-    [code, setCode] = useState("");
+    [code, setCode] = useState(""),
+    [choice, setChoice] = useState<EmailLoginChoice | null>(null);
+  async function signedIn() {
+    await account.changed("identity");
+    router.replace("/account");
+  }
   const clearCode = () => {
     setChallenge("");
     setCode("");
@@ -43,7 +51,9 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
           (!challenge || !OtpSchema.safeParse(code).success)
         )
           throw Error("请输入邮箱验证码。");
-        await accountRequest(
+        const result = await accountRequest<
+          EmailLoginChoice | { user: unknown }
+        >(
           "/api/auth/" + mode,
           register
             ? {
@@ -51,15 +61,19 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
                 password,
                 ...(email ? { email, challenge, code } : {}),
               }
-            : { identifier, password },
+            : {
+                identifier,
+                password,
+                ...(identifier.includes("@") ? { selectAccount: true } : {}),
+              },
         );
         setPassword("");
         setConfirm("");
         setCode("");
-        await account.changed("identity");
-        router.replace("/account");
+        if ("choiceToken" in result) setChoice(result);
+        else await signedIn();
       },
-      register ? "注册成功" : "登录成功",
+      register ? "注册成功" : "",
     );
   return (
     <AccountFrame title={register ? "注册账号" : "登录"} backHref="/account">
@@ -200,7 +214,70 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
           {!register && <Link href="/account/forgot-password">找回密码</Link>}
         </div>
       </div>
+      {choice && (
+        <EmailAccountPicker
+          choice={choice}
+          onClose={() => setChoice(null)}
+          onSelect={signedIn}
+        />
+      )}
     </AccountFrame>
+  );
+}
+function EmailAccountPicker({
+  choice,
+  onClose,
+  onSelect,
+}: {
+  choice: EmailLoginChoice;
+  onClose(): void;
+  onSelect(): Promise<void>;
+}) {
+  const choiceAction = useAccountAction();
+  return (
+    <Dialog.Root
+      open
+      onOpenChange={(open) => {
+        if (!open && !choiceAction.busy) onClose();
+      }}
+    >
+      <Dialog.Portal>
+        <Dialog.Backdrop className="conversation-confirm-backdrop" />
+        <Dialog.Popup className="conversation-confirm account-choice">
+          <Dialog.Title>选择登录账号</Dialog.Title>
+          <div className="account-group account-choice-list">
+            {choice.accounts.map((username, index) => (
+              <button
+                type="button"
+                className="account-row"
+                key={username}
+                disabled={choiceAction.busy}
+                onClick={() =>
+                  void choiceAction.run(async () => {
+                    await accountRequest("/api/auth/login/select", {
+                      choiceToken: choice.choiceToken,
+                      index,
+                    });
+                    await onSelect();
+                    onClose();
+                  }, "")
+                }
+              >
+                <span className="account-row-icon">
+                  <UserRound size={21} strokeWidth={1.8} />
+                </span>
+                <span className="account-row-label">{username}</span>
+                <ChevronRight className="account-row-chevron" size={18} />
+              </button>
+            ))}
+          </div>
+          <FormFeedback error={choiceAction.error} success="" />
+          <div className="conversation-confirm-actions">
+            <Dialog.Close disabled={choiceAction.busy}>取消</Dialog.Close>
+          </div>
+        </Dialog.Popup>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }
 export function ForgotPassword({
@@ -212,6 +289,7 @@ export function ForgotPassword({
     action = useAccountAction(),
     send = useEmailCodeAction("reset"),
     [email, setEmail] = useState(account.session?.user?.email || ""),
+    [username, setUsername] = useState(account.session?.user?.username || ""),
     [challenge, setChallenge] = useState(""),
     [code, setCode] = useState(""),
     [password, setPassword] = useState(""),
@@ -261,12 +339,27 @@ export function ForgotPassword({
             }}
           >
             <label>
+              用户名（共用邮箱时必填）
+              <input
+                autoComplete="username"
+                value={username}
+                disabled={send.busy}
+                maxLength={24}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                  setChallenge("");
+                  setCode("");
+                }}
+              />
+            </label>
+            <label>
               邮箱
               <input
                 aria-label="邮箱"
                 type="email"
                 autoComplete="email"
                 value={email}
+                disabled={send.busy}
                 onChange={(e) => {
                   setEmail(e.target.value);
                   setChallenge("");
@@ -297,9 +390,12 @@ export function ForgotPassword({
                     void send.run(async () => {
                       if (!EmailSchema.safeParse(email).success)
                         throw Error("请输入有效邮箱。");
+                      const name = username.trim();
+                      if (name && !UsernameSchema.safeParse(name).success)
+                        throw Error("请输入有效用户名。");
                       const r = await accountRequest<{ challenge: string }>(
                         "/api/auth/password/reset/request",
-                        { email },
+                        { email, ...(name ? { username: name } : {}) },
                       );
                       setChallenge(r.challenge);
                     }, "已申请发送")

@@ -2,6 +2,108 @@ import { test, expect } from "@playwright/test";
 import { randomBytes } from "node:crypto";
 import { mkdirSync } from "node:fs";
 test.use({ trace: "off", video: "off" });
+test("offers a shared-email account picker before establishing the selected session", async ({
+  page,
+}) => {
+  let selected = false;
+  await page.route("**/api/auth/session", (route) =>
+    route.fulfill({
+      json: {
+        ok: true,
+        data: {
+          available: true,
+          mailAvailable: true,
+          user: selected
+            ? {
+                id: "fixture-bobby",
+                username: "BobbyFixture",
+                email: "shared@example.com",
+                pendingEmail: null,
+                emailVerified: true,
+              }
+            : null,
+        },
+      },
+    }),
+  );
+  await page.route("**/api/auth/login", (route) => {
+    expect(route.request().postDataJSON()).toEqual({
+      identifier: "shared@example.com",
+      password: "Alice-fixture-password",
+      selectAccount: true,
+    });
+    return route.fulfill({
+      json: {
+        ok: true,
+        data: {
+          choiceToken: "T".repeat(43),
+          accounts: ["AliceFixture", "BobbyFixture"],
+        },
+      },
+    });
+  });
+  await page.route("**/api/auth/login/select", (route) => {
+    expect(route.request().postDataJSON()).toEqual({
+      choiceToken: "T".repeat(43),
+      index: 1,
+    });
+    selected = true;
+    return route.fulfill({ json: { ok: true, data: {} } });
+  });
+  await page.goto("/account/login");
+  await page.getByLabel("用户名或邮箱").fill("shared@example.com");
+  await page.getByLabel("密码", { exact: true }).fill("Alice-fixture-password");
+  await page.getByRole("button", { name: "登录", exact: true }).click();
+  const dialog = page.getByRole("dialog", { name: "选择登录账号" });
+  await expect(
+    dialog.getByRole("button", { name: "AliceFixture" }),
+  ).toBeVisible();
+  expect(selected).toBe(false);
+  await expect(page).toHaveURL(/\/account\/login$/);
+  await dialog.getByRole("button", { name: "BobbyFixture" }).click();
+  await expect(page).toHaveURL(/\/account$/);
+  await expect(
+    page.getByRole("heading", { name: "BobbyFixture", exact: true }),
+  ).toBeVisible();
+});
+test("shows the Console shortcut as an account row only for eligible profiles", async ({
+  page,
+}) => {
+  let eligible = false;
+  await page.route("**/api/auth/session", (route) =>
+    route.fulfill({
+      json: {
+        ok: true,
+        data: {
+          available: true,
+          mailAvailable: true,
+          user: {
+            id: eligible ? "fixture-shortcut" : "fixture-ordinary",
+            username: eligible ? "AdminFixture" : "OrdinaryFixture",
+            email: null,
+            pendingEmail: null,
+            emailVerified: false,
+            showConsoleEntry: eligible,
+          },
+        },
+      },
+    }),
+  );
+  await page.goto("/account");
+  await expect(
+    page.getByRole("link", { name: "设置", exact: true }),
+  ).toBeVisible();
+  const shortcut = page.getByRole("link", { name: "进入后台", exact: true });
+  await expect(shortcut).toHaveCount(0);
+  eligible = true;
+  await page.reload();
+  await expect(shortcut).toHaveClass("account-row");
+  await shortcut.click();
+  await expect(page).toHaveURL(/\/admin$/);
+  await expect(
+    page.getByRole("heading", { name: "内容运营后台" }),
+  ).toBeVisible();
+});
 test("real Preview compact account hierarchy and username editing without passwords or cooldown", async ({
   page,
   context,
@@ -265,6 +367,10 @@ test("recovery code cooldown is 60 seconds, survives refresh and does not start 
   );
   await page.route("**/api/auth/password/reset/request", (r) => {
     calls++;
+    expect(r.request().postDataJSON()).toEqual({
+      email: "fixture@example.com",
+      username: "fixture_user",
+    });
     return r.fulfill({
       status: calls === 1 ? 503 : 200,
       json:
@@ -275,6 +381,7 @@ test("recovery code cooldown is 60 seconds, survives refresh and does not start 
   });
   await page.goto("/account/forgot-password");
   const form = page.getByRole("form", { name: "重置密码", exact: true });
+  await form.getByLabel("用户名（共用邮箱时必填）").fill("fixture_user");
   await form.getByLabel("邮箱", { exact: true }).fill("fixture@example.com");
   await form.getByRole("button", { name: "获取验证码", exact: true }).click();
   await expect(form.getByRole("alert")).toContainText("发送失败");
@@ -286,9 +393,8 @@ test("recovery code cooldown is 60 seconds, survives refresh and does not start 
     form.getByRole("button", { name: "60秒后重发", exact: true }),
   ).toBeDisabled();
   expect(calls).toBe(2);
-  mkdirSync("verification/account-mail-budget-2026-11-01", { recursive: true });
   await page.screenshot({
-    path: `verification/account-mail-budget-2026-11-01/${info.project.name}-cooldown.png`,
+    path: info.outputPath("recovery-cooldown.png"),
     fullPage: true,
   });
   await page.clock.fastForward(59000);

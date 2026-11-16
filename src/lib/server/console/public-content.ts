@@ -8,6 +8,7 @@ import {
   articleTitleSql,
 } from "@/lib/retrieval/article-title";
 import { ConsoleIdSchema } from "@/domain/console/contracts";
+import { campusHotspot } from "@/domain/console/hotspots";
 import {
   KnowledgeCategorySchema,
   RadarCategorySchema,
@@ -55,6 +56,8 @@ export async function readPublicContent(
   cacheScope: object = db,
 ) {
   const q = QuerySchema.parse(raw);
+  const hotspotSelected =
+    q.surface === "radar" && q.category === campusHotspot.code;
   if (q.version && !q.id)
     throw new ApiError("INVALID_ARGUMENT", "请指定内容记录。");
   if (q.page && (!q.surface || !q.category || q.id || q.cursor || q.offset))
@@ -84,18 +87,25 @@ export async function readPublicContent(
     }
     const hit = cache.get(cacheKey);
     if (hit && hit.expiresAt > Date.now()) {
+      const cachedItems = new Map(
+        [
+          ...hit.result.items,
+          ...(hit.result.groups?.[campusHotspot.code] ?? []),
+        ].map((item) => [String(item.id), item.version]),
+      );
+      const ids = [...cachedItems.keys()];
       const fresh = new Map<string, number>();
-      for (let i = 0; i < hit.result.items.length; i += 50) {
-        const ids = hit.result.items.slice(i, i + 50).map((r) => r.id);
+      for (let i = 0; i < ids.length; i += 50) {
+        const batch = ids.slice(i, i + 50);
         const rows = await db
           .prepare(
-            `WITH ids(id) AS (VALUES ${ids.map(() => "(?)").join(",")}) SELECT id,(SELECT version FROM console_public_documents p WHERE p.id=ids.id) AS version FROM ids`,
+            `WITH ids(id) AS (VALUES ${batch.map(() => "(?)").join(",")}) SELECT id,(SELECT version FROM console_public_documents p WHERE p.id=ids.id) AS version FROM ids`,
           )
-          .bind(...ids)
+          .bind(...batch)
           .all<{ id: string; version: number }>();
         for (const r of rows.results) fresh.set(r.id, r.version);
       }
-      if (hit.result.items.every((r) => fresh.get(String(r.id)) === r.version))
+      if (ids.every((id) => fresh.get(id) === cachedItems.get(id)))
         return hit.result;
       cache.delete(cacheKey);
     }
@@ -122,17 +132,15 @@ export async function readPublicContent(
     where.push("d.version=?");
     params.push(q.version);
   }
-  if (q.surface)
-    where.push(
-      q.surface === "radar"
-        ? "a.primary_destination IN('radar','unknown')"
-        : "a.primary_destination='knowledge'",
-    );
+  const surfaceFilter = q.surface === "radar"
+    ? "a.primary_destination IN('radar','unknown')"
+    : q.surface === "knowledge" ? "a.primary_destination='knowledge'" : "1=1";
   const category = q.category
     ? (() => {
         if (!q.surface)
           throw new ApiError("INVALID_ARGUMENT", "请指定内容页面。");
-        return q.surface === "radar" && q.category === "unclassified"
+        return q.surface === "radar" &&
+          (q.category === "unclassified" || hotspotSelected)
           ? q.category
           : (q.surface === "radar"
               ? RadarCategorySchema
@@ -148,7 +156,32 @@ export async function readPublicContent(
     where.push("instr(s.display_name, ?) > 0");
     params.push(searchTerm(q.source));
   }
-  const base = `FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)`;
+  const related =
+    "JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id";
+  const joined = `FROM knowledge_documents d ${related}`;
+  const hotspotJoin = `FROM campus_article_hotspots h CROSS JOIN knowledge_documents d ON d.id=h.document_id ${related}`;
+  const publicGate = "EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)";
+  const projection =
+    "d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.content_type,d.campus_scope,a.knowledge_category,a.radar_category,a.primary_destination,a.has_registration,a.classification_origin,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status";
+  const hotspotBase =
+    q.surface === "radar" && !q.id
+      ? `${hotspotJoin} WHERE ${where.join(" AND ")} AND ${publicGate}`
+      : null;
+  const hotspotRows =
+    hotspotBase && q.grouped
+      ? (await db
+          .prepare(`SELECT ${projection},count(*) OVER () AS category_count ${hotspotBase} ORDER BY d.published_at DESC,d.id LIMIT ?`)
+          .bind(...params, q.limit)
+          .all<Record<string, string | number | null>>()).results
+      : [];
+  const hotspotCount =
+    hotspotBase && !q.grouped
+      ? (await db
+          .prepare(`SELECT count(*) AS n ${hotspotBase}`)
+          .bind(...params)
+          .first<{ n: number }>())?.n ?? 0
+      : Number(hotspotRows[0]?.category_count ?? 0);
+  const base = `${joined} WHERE ${where.join(" AND ")} AND ${surfaceFilter} AND ${publicGate}`;
   const categoryColumn =
     q.surface === "radar"
       ? "COALESCE(a.radar_category,'unclassified')"
@@ -179,15 +212,14 @@ export async function readPublicContent(
   const counts: Record<string, number> = Object.fromEntries(
     facets.results.map((r) => [r.category, r.n]),
   );
-  const selectedTotal = category
-    ? counts[category] || 0
-    : Object.values(counts).reduce((n, count) => n + count, 0);
   // Direct jumps use the actual visible category size; normal next/previous reads keep cursors.
+  const selectedTotal = hotspotSelected ? hotspotCount : counts[category ?? ""] || 0;
   const offset = q.page
     ? (Math.min(q.page, Math.max(1, Math.ceil(selectedTotal / q.limit))) - 1) *
       q.limit
     : q.offset;
-  if (category) {
+  if (!hotspotSelected) where.push(surfaceFilter);
+  if (category && !hotspotSelected) {
     where.push(categoryColumn + "=?");
     params.push(category);
   }
@@ -212,10 +244,8 @@ export async function readPublicContent(
       params.push(cursor[0], cursor[0], cursor[1]);
     }
   }
-  const from = `FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")} AND EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id)`;
-  const projection =
-    "d.id,d.version,d.title,d.url,d.published_at,d.updated_at,d.content_type,d.campus_scope,a.knowledge_category,a.radar_category,a.primary_destination,a.has_registration,a.classification_origin,d.body_format,d.rights_scope,s.id AS source_id,s.display_name,s.channel_type,s.official_status";
-  const candidateBase = `FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications a ON a.document_id=d.id WHERE ${where.join(" AND ")}`;
+  const from = `${hotspotSelected ? hotspotJoin : joined} WHERE ${where.join(" AND ")} AND ${publicGate}`;
+  const candidateBase = `${joined} WHERE ${where.join(" AND ")}`;
   const rows = q.grouped
     ? await db
         .prepare(
@@ -232,13 +262,14 @@ export async function readPublicContent(
   if (q.grouped)
     for (const row of rows.results)
       counts[String(row.feed_category)] = Number(row.category_count);
-  const total = Object.values(counts).reduce((n, count) => n + count, 0);
+  const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+  if (hotspotCount > 0) counts[campusHotspot.code] = hotspotCount;
   const selectedRows = q.id
     ? rows.results.slice(0, 1)
     : q.grouped
       ? rows.results
       : rows.results.slice(0, q.limit);
-  const items = selectedRows.map((r) => ({
+  const toItem = (r: Record<string, string | number | null>) => ({
     id: r.id,
     version: r.version,
     title: r.title,
@@ -261,7 +292,8 @@ export async function readPublicContent(
       type: r.channel_type,
       official: r.official_status === "verified_official",
     },
-  }));
+  });
+  const items = selectedRows.map(toItem);
   const groups = q.grouped
     ? items.reduce<Record<string, typeof items>>((result, item) => {
         const code =
@@ -270,6 +302,7 @@ export async function readPublicContent(
         return result;
       }, {})
     : undefined;
+  if (groups && hotspotBase) groups[campusHotspot.code] = hotspotRows.map(toItem);
   if (q.id && !items.length)
     throw new ApiError("NOT_FOUND", "此内容尚未公开或已失效。");
   const result = {

@@ -1,9 +1,13 @@
 "use client";
 import { articlePublicationNames } from "@/domain/console/article-publication";
+import {
+  campusHotspot,
+  type CampusHotspotItem,
+} from "@/domain/console/hotspots";
 import { WhitelistWorkspace, RetentionWorkspace } from "./retention-workspace";
 import { CollectorPanel } from "./collector-panel";
 import { OfficialWebCollectionPanel } from "./official-web-collection-panel";
-import { TrafficPanel, SourceSessionPanel } from "./dashboard-panels";
+import { TrafficPanel } from "./dashboard-panels";
 import { BuildingsWorkspace } from "./buildings-workspace";
 import { FeedbackWorkspace } from "./feedback-workspace";
 import Link from "next/link";
@@ -308,16 +312,22 @@ export const articleFilters: ConsoleFilter[] = [
     ],
   },
 ];
+function consoleArticleHref(sourceId: unknown, id: unknown) {
+  return `/admin/sources?record=${encodeURIComponent(String(sourceId))}&article=${encodeURIComponent(String(id))}`;
+}
+
 export function ConsoleV2Articles({
   request,
   sourceId,
   exceptions = false,
   canReview = false,
+  manageHotspots = false,
 }: {
   request: Client;
   sourceId?: string;
   exceptions?: boolean;
   canReview?: boolean;
+  manageHotspots?: boolean;
 }) {
   const [filters, setFilters] = useState<Record<string, string>>({}),
     [offset, setOffset] = useState(0),
@@ -334,6 +344,29 @@ export function ConsoleV2Articles({
   const { data, error, reload } = useConsoleV2Data<
     List<Record<string, string | number | null>>
   >(request, "v2/articles?" + query);
+  const hotspots = useConsoleV2Data<{ items: CampusHotspotItem[] }>(
+    request,
+    manageHotspots ? "v2/hotspots" : null,
+  );
+  const [hotspotBusy, setHotspotBusy] = useState(false);
+  const [hotspotError, setHotspotError] = useState("");
+  const hotspotIds = new Set(hotspots.data?.items.map((item) => item.id));
+
+  async function changeHotspot(id: string, adding: boolean) {
+    setHotspotBusy(true);
+    setHotspotError("");
+    try {
+      await request(
+        `v2/hotspots/${encodeURIComponent(id)}`,
+        adding ? "POST" : "DELETE",
+      );
+      hotspots.reload();
+    } catch (e) {
+      setHotspotError(e instanceof Error ? e.message : "操作失败。");
+    } finally {
+      setHotspotBusy(false);
+    }
+  }
   async function batch(action: "publish" | "withdraw") {
     setBusy(true);
     let done = 0;
@@ -367,6 +400,46 @@ export function ConsoleV2Articles({
           setSelected([]);
         }}
       />
+      {manageHotspots && (
+        <section
+          className="console-card"
+          aria-labelledby="campus-hotspots-heading"
+        >
+          <h2 id="campus-hotspots-heading">{campusHotspot.label}</h2>
+          <Feedback message={hotspotError} />
+          {!hotspots.data ? (
+            <Loading error={hotspots.error} />
+          ) : hotspots.data.items.length ? (
+            hotspots.data.items.map((item) => (
+              <div
+                key={item.id}
+                className="console-v2-select-row console-hotspot-row"
+              >
+                <Link
+                  className="console-source-row"
+                  href={consoleArticleHref(item.source_id, item.id)}
+                >
+                  <div>
+                    <strong>{item.title}</strong>
+                    <span>
+                      {item.source_name} · {date(item.published_at)}
+                    </span>
+                  </div>
+                </Link>
+                <button
+                  type="button"
+                  disabled={hotspotBusy}
+                  onClick={() => void changeHotspot(item.id, false)}
+                >
+                  撤下
+                </button>
+              </div>
+            ))
+          ) : (
+            <p className="console-empty">暂无校园热点。</p>
+          )}
+        </section>
+      )}
       {exceptions && canReview && (
         <div className="console-card console-actions">
           <button
@@ -393,7 +466,14 @@ export function ConsoleV2Articles({
           <div className="console-card console-list">
             {data.items.length ? (
               data.items.map((d) => (
-                <div key={String(d.id)} className="console-v2-select-row">
+                <div
+                  key={String(d.id)}
+                  className={
+                    manageHotspots
+                      ? "console-v2-select-row console-hotspot-row"
+                      : "console-v2-select-row"
+                  }
+                >
                   {exceptions && canReview && (
                     <input
                       type="checkbox"
@@ -411,8 +491,7 @@ export function ConsoleV2Articles({
                   )}
                   <Link
                     className="console-source-row"
-                    key={String(d.id)}
-                    href={`/admin/sources?record=${encodeURIComponent(String(d.source_id))}&article=${encodeURIComponent(String(d.id))}`}
+                    href={consoleArticleHref(d.source_id, d.id)}
                   >
                     <div>
                       <strong>{d.title}</strong>
@@ -430,6 +509,20 @@ export function ConsoleV2Articles({
                       }
                     </span>
                   </Link>
+                  {manageHotspots && (
+                    <button
+                      type="button"
+                      disabled={
+                        hotspotBusy ||
+                        !hotspots.data ||
+                        hotspotIds.has(String(d.id)) ||
+                        d.publication_state !== "published"
+                      }
+                      onClick={() => void changeHotspot(String(d.id), true)}
+                    >
+                      {hotspotIds.has(String(d.id)) ? "已添加" : "添加热点"}
+                    </button>
+                  )}
                 </div>
               ))
             ) : (
@@ -1046,12 +1139,6 @@ function Dashboard(props: WorkspaceProps) {
           </article>
         ))}
       </div>
-      <SourceSessionPanel
-        key={"source-" + revision}
-        request={props.request}
-        admin={props.actor.role === "admin"}
-        revision={revision}
-      />
       <section className="console-card">
         <h2>D1存储</h2>
         {data.storage.length ? (
@@ -1106,7 +1193,12 @@ export function ConsoleV2Workspace(props: WorkspaceProps) {
         <div className="console-heading">
           <h1>文章</h1>
         </div>
-        <ConsoleV2Articles request={props.request} />
+        <ConsoleV2Articles
+          request={props.request}
+          manageHotspots={
+            props.section === "articles" && props.actor.role === "admin"
+          }
+        />
       </>
     );
   if (props.section === "whitelist")

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { mkdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 test.skip(
   process.env.AGENT_WORKFLOW_E2E !== "1",
   "Isolated workflow interface fixtures",
@@ -27,6 +27,7 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
   );
   await page.route("**/api/agent/chat", async (route) => {
     expect(route.request().headers()["x-campusos-workflow"]).toBe("1");
+    expect(route.request().headers()["x-console-csrf"]).toBe("fixture-csrf");
     requests.push(route.request().postDataJSON());
     const id = crypto.randomUUID();
     let n = 0;
@@ -137,7 +138,34 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
       .join("");
     await route.fulfill({ contentType: "text/event-stream", body });
   });
+  let signedIn = false;
+  await page.route("**/api/console-auth", (route) =>
+    route.fulfill({
+      json: {
+        ok: true,
+        data: signedIn
+          ? {
+              authenticated: true,
+              mode: "key",
+              csrf: "fixture-csrf",
+              actor: {
+                id: "fixture-console",
+                email: "admin@example.invalid",
+                role: "admin",
+              },
+            }
+          : { authenticated: false, mode: "key" },
+      },
+    }),
+  );
   await page.goto("/agent");
+  await expect(page).toHaveURL(/\/admin\/agent$/);
+  await expect(page.getByLabel("管理员访问密钥")).toBeVisible();
+  await expect(page.locator(".agent-studio")).toHaveCount(0);
+  signedIn = true;
+  await page.goto("/admin");
+  await page.getByRole("link", { name: "Agent工作流", exact: true }).click();
+  await expect(page).toHaveURL(/\/admin\/agent$/);
   await expect(
     page.getByRole("heading", { name: "Agent 工作流", exact: true }),
   ).toBeVisible();
@@ -262,9 +290,13 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
     ),
   ).toBe(true);
   expect(errors).toEqual([]);
-  mkdirSync("docs/verification/agent-workflow", { recursive: true });
   await page.screenshot({
-    path: `docs/verification/agent-workflow/local-${info.project.name}.png`,
+    path: info.outputPath("agent-workflow.png"),
     fullPage: true,
   });
+  await page.getByRole("link", { name: "返回总览", exact: true }).click();
+  await expect(page).toHaveURL(/\/admin$/);
+  await expect(
+    page.getByRole("link", { name: "总览", exact: true }),
+  ).toHaveAttribute("aria-current", "page");
 });

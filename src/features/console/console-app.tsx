@@ -7,6 +7,7 @@ import {
   type ConsoleCredentialDerivation,
 } from "@/domain/console/credential";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
 import {
   useCallback,
   useEffect,
@@ -29,6 +30,7 @@ import {
   Search,
   MessageCirclePlus,
   Building2,
+  Workflow,
 } from "lucide-react";
 import {
   sourceTypeNames,
@@ -62,11 +64,17 @@ type Client = <T>(path: string, method?: string, body?: unknown) => Promise<T>;
 // because it writes one job per official website.
 const REQUEST_TIMEOUT_MS = 15000;
 const WRITE_TIMEOUT_MS = 90000;
+const AgentWorkflow = dynamic(() =>
+  import("@/features/agent-workflow/agent-workflow").then(
+    (mod) => mod.AgentWorkflow,
+  ),
+);
 type List<T> = { items: T[]; total?: number; offset: number; limit: number };
 const navigation = [
   { id: "", label: "总览", icon: LayoutDashboard },
   { id: "sources", label: "信息源", icon: Library },
   { id: "articles", label: "文章", icon: ClipboardCheck },
+  { id: "agent", label: "Agent工作流", icon: Workflow },
   { id: "web-collection", label: "官网采集", icon: RefreshCw },
   { id: "collector", label: "公众号采集", icon: RefreshCw },
   { id: "retention", label: "过时信息清理", icon: Archive },
@@ -327,6 +335,7 @@ export function ConsoleApp() {
         </section>
       </main>
     );
+  if (section === "agent") return <AgentWorkflow csrf={auth.csrf ?? ""} />;
   return (
     <div className="console-shell">
       <aside className="console-sidebar">

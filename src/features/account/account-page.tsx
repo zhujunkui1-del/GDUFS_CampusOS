@@ -12,6 +12,7 @@ import {
   Mail,
   ChevronRight,
   LogOut,
+  LayoutDashboard,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -134,6 +135,9 @@ function AccountContent({ user, view }: { user: AccountProfile; view: View }) {
         <div className="account-home-links">
           <div className="account-card account-group">
             <Row icon={Settings} label="设置" href="/account/settings" />
+            {user.showConsoleEntry && (
+              <Row icon={LayoutDashboard} label="进入后台" href="/admin" />
+            )}
           </div>
           <div className="account-card account-group">
             <Row

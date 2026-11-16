@@ -12,6 +12,7 @@ vi.mock("@/lib/server/models/runtime", () => ({
   defaultModelRuntime: () => ({ resolve: runtime.resolve }),
 }));
 import { chatResponse } from "@/lib/server/assistant/chat";
+import { createConsoleSession } from "@/lib/server/console/auth";
 import type { ModelReply } from "@/domain/models/contracts";
 
 type Event = {
@@ -28,6 +29,14 @@ async function runTurn(
   const f = sqliteD1();
   setup?.(f);
   fixtureEnv(f);
+  const session = workflow
+    ? await createConsoleSession(
+        new Request("https://campus.invalid/api/console-auth", {
+          method: "POST",
+        }),
+        { key: consoleKey },
+      )
+    : null;
   const client = new MockModelProvider(
     replies.map((content) =>
       typeof content === "string"
@@ -47,7 +56,13 @@ async function runTurn(
       headers: {
         Origin: "https://campus.invalid",
         "Content-Type": "application/json",
-        ...(workflow ? { "X-CampusOS-Workflow": "1" } : {}),
+        ...(session
+          ? {
+              "X-CampusOS-Workflow": "1",
+              "X-Console-CSRF": session.csrf,
+              Cookie: session.cookie.split(";")[0],
+            }
+          : {}),
       },
       body: JSON.stringify({ message, clientRequestId: crypto.randomUUID() }),
     }),
@@ -72,10 +87,16 @@ const snapshot = {
   },
 };
 
+const consoleKey = "isolated-test-console-key-for-workflow-access";
 function fixtureEnv(f: ReturnType<typeof sqliteD1>) {
   runtime.env = {
     DB: f.db,
     APP_ENV: "preview",
+    CONSOLE_AUTH_MODE: "admin_key",
+    CONSOLE_ADMIN_ACCESS_KEY: consoleKey,
+    CONSOLE_ORIGIN: "https://campus.invalid",
+    CONSOLE_ADMIN_EMAILS: "admin@example.invalid",
+    CONSOLE_SESSION_SECRET: "isolated-test-console-secret-for-workflow-access",
     AGENT_VALIDATION_UNLIMITED: "true",
     AGENT_SIGNING_SECRET:
       "isolated-test-signing-key-at-least-thirty-two-characters",
@@ -93,6 +114,23 @@ function fixtureEnv(f: ReturnType<typeof sqliteD1>) {
     EXTERNAL_WEB_SEARCH_ENABLED: "false",
   };
 }
+
+it("rejects a workflow run without a Console session before reading the chat", async () => {
+  const f = sqliteD1();
+  try {
+    fixtureEnv(f);
+    const response = await chatResponse(
+      new Request("https://campus.invalid/api/agent/chat", {
+        method: "POST",
+        headers: { "X-CampusOS-Workflow": "1" },
+      }),
+    );
+    expect(response.status).toBe(401);
+    expect(await response.json()).not.toHaveProperty("workflow");
+  } finally {
+    f.close();
+  }
+});
 
 function answered(events: Event[]) {
   return events
