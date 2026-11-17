@@ -1,0 +1,1172 @@
+{
+  "question": "广外最近一个月有哪些还可以报名参加的比赛？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息。这不代表学校没有相关规定，只是本站还没收录到——建议通过广外官网、院系公示或校园地图APP核实。",
+  "cards": [],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T02:07:30.955Z",
+      "elapsedMs": 176,
+      "data": {
+        "question": "广外最近一个月有哪些还可以报名参加的比赛？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T02:07:30.955Z",
+      "elapsedMs": 176,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T02:07:31.952Z",
+      "elapsedMs": 1173,
+      "data": {
+        "question": "广外最近一个月有哪些还可以报名参加的比赛？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T02:07:31.952Z",
+      "elapsedMs": 1173,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T02:07:31.952Z",
+      "elapsedMs": 1173,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T02:07:31.952Z",
+      "elapsedMs": 1173,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T02:07:31.952Z",
+      "elapsedMs": 1173,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T02:07:31.952Z",
+      "elapsedMs": 1173,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "registration",
+        "campus": null,
+        "topics": [
+          "competition"
+        ],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_events"
+        ]
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "running",
+      "at": "2026-11-17T02:07:32.089Z",
+      "elapsedMs": 1310,
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外一个月还比赛",
+          "limit": 5,
+          "nearestIfEmpty": true,
+          "category": "competition"
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "success",
+      "at": "2026-11-17T02:07:32.924Z",
+      "elapsedMs": 2145,
+      "durationMs": 835,
+      "data": {
+        "name": "search_campus_events",
+        "result": {
+          "hits": [
+            {
+              "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+              "chunkId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c:fts:e43ce1f00f62cf2a:0",
+              "title": "活动预告｜2026年新生语音语调大赛",
+              "sourceId": "GDUFS-SRC-0193",
+              "sourceName": "广外西语团委学生会",
+              "originalUrl": "https://mp.weixin.qq.com/s/psPaYF0bMc7aNIQAgsF_xQ",
+              "publishedAt": "2026-11-04T03:30:00.000Z",
+              "contentSnippet": "Русский\n葡萄牙语\nPortuguês\n寄语\n愿各位饼饼在这次比赛中稳定发挥\n将自己在语音阶段所收获的知识\n外化为一个个悦耳的音标\n我们期待着你们的精彩表现！\nAllez!\nLos!\n¡Vamos!\nДавай!\nForça!\nEND\n海报｜宣传部 / 李若彤\n编辑｜新闻部 / 谭锦骐\n责任编辑｜唐芮 李乐仪 曾心悦\n初审｜张琦 王予含 贾美玉 汤梦鑫城\n复审｜王斌龙 潘泽俊\n终审｜魏少娟",
+              "startOffset": 0,
+              "endOffset": 199,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 28.69,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权",
+                "业务类别匹配"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "competition",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "9679df3c33c416599ac519d6957093dee949a1273cdcfecad4b54959901a17f1",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-7370d5ce-60fe-4df2-a2da-5ee3a89638a7",
+              "chunkId": "content-7370d5ce-60fe-4df2-a2da-5ee3a89638a7:fts:7b098ee847f92c2a:3",
+              "title": "第二届多语种游戏翻译本地化与国际化大赛系列培训通知",
+              "sourceId": "GDUFS-SRC-0101",
+              "sourceName": "高级翻译学院",
+              "originalUrl": "https://sits.gdufs.edu.cn/info/1186/7546.htm",
+              "publishedAt": "2026-06-22",
+              "contentSnippet": "戏LQA项目人员培训、质量监督等经验为大家详细介绍。\n抽奖环节：培训期间在观众中随机抽奖，奖品包括：YiCAT团队加强版一个月会员3个、热脉发行游戏《吾今有世家》CDKey 5个。\n(三) 大赛模拟培训：参赛选手专属\n模拟培训之一\n培训专家：杨静怡（上海一者信息科技有限公司，高校事业部总监）、赵明纯（上海一者信息科技有限公司，高级产品经理）\n培训时间：2026年7月27日（周一）18:00\n培训主题：YiCAT比赛平台操作培训\n培训内容：赛前平台使用方法及注意事项培训，帮助参赛选手熟悉大赛初赛和决赛内容规则、比赛平台操作流程和使用方法、比赛设备、比赛限时、防作弊设置说明等。\n抽奖环节：培训期间在观众中随机抽奖，奖品包括：YiCAT团队加强版一个月会员3个、热脉发行游戏Coma 3 CDKey 5个。\n模拟培训之",
+              "startOffset": 2539,
+              "endOffset": 2899,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 26.67,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权",
+                "业务类别匹配"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "competition",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 2,
+              "inputHash": "3ff440702eddd0242b31fa9964a7819cc0d2c9ac5fc818cf0b449f0d6e628afd",
+              "documentVersion": 4,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "wx-6cf0ad3d10047a1991a92ff9f6d53e93d9af1221",
+              "chunkId": "wx-6cf0ad3d10047a1991a92ff9f6d53e93d9af1221:fts:682b53562dcd8e9b:0",
+              "title": "挑战杯 _ 2026年会计学院“小挑”选拔赛正式报名通知",
+              "sourceId": "GDUFS-SRC-0128",
+              "sourceName": "广外会院青年",
+              "originalUrl": "https://mp.weixin.qq.com/s/TgH5_JPQ4mpQswI3UNnT0Q",
+              "publishedAt": "2026-10-07T12:00:00.000Z",
+              "contentSnippet": "大赛\n也向你发来了一份邀请函\n只要你乐于创新并富有创意\n你就有机会在这里创造一片天地\n2026年“小挑”创业大赛\n欢迎每一个勇于尝试的你\n期待每一个全力以赴的你\n01、赛事介绍\n为进一步培养和提升大学生的创造精神、创新意识和创业能力，省市校协同推动大学生创新创业成果的有效转化，激励全校大学生积极投身创新创业，助力广东创新驱动发展，学校决定举办2026-2027学年 “挑战杯”广外大学生创业计划竞赛。\n一一大赛设置五个组别，分为科技创新和未来产业、乡村振兴和农业农村现代化、生态文明建设和绿色低碳发展、文化创意和区域交流合作、社会治理和公共服务，覆盖了社会经济发展的多个重要领域，鼓励学生围绕这些领域提出创新的商业计划和解决方案，以此激发学生的创新意识和社会责任感，同时为社会培养具有创新精神和实践能力的复合型人才。\n",
+              "startOffset": 83,
+              "endOffset": 443,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 24.49,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 2",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权",
+                "业务类别匹配"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "competition",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "80937c50ffb43467b2e1cad4a29ad97c6665eb8a792ee7532e584c6bd2fd76f2",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 7700,
+            "rowsWritten": 0,
+            "queries": 5,
+            "durationMs": 379,
+            "stagesMs": {
+              "lexical": 269,
+              "supplement": 0,
+              "revalidationAndRanking": 110
+            },
+            "candidateChunks": 48,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "structured_date",
+                "limit": 48,
+                "candidates": 0
+              },
+              {
+                "name": "lexical_date_completion",
+                "limit": 48,
+                "candidates": 48
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [
+            "部分相关原文尚无可靠的对应日期，作为待核对资料返回；不能声称符合所问日期范围或没有活动，需继续官方补查。"
+          ],
+          "purpose": "events",
+          "query": "广外一个月还比赛",
+          "now": "2026-11-17T02:07:32.089Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "eventId": "event-0a662aa06185be5920de1fee38184fcfa68049e0",
+              "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+              "activityKey": "activity-1",
+              "name": "2026年新生语音语调大赛",
+              "kind": "event",
+              "category": "competition",
+              "startsAt": {
+                "raw": "11.19 13:50",
+                "date": "2026-11-19",
+                "at": "2026-11-19T13:50:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11.19 13:50"
+              },
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "upcoming",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "法语 11.19 13:50-15:10"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-19&event=event-0a662aa06185be5920de1fee38184fcfa68049e0&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+            },
+            {
+              "eventId": "event-d4ac6ee23f6fdc880f60ea9195fce953afe3ca03",
+              "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+              "activityKey": "activity-2",
+              "name": "2026年新生语音语调大赛",
+              "kind": "event",
+              "category": "competition",
+              "startsAt": {
+                "raw": "11.5 17:20",
+                "date": "2026-11-05",
+                "at": "2026-11-05T17:20:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11.5 17:20"
+              },
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": true,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "德语 11.5 17:20-18:20"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-05&event=event-d4ac6ee23f6fdc880f60ea9195fce953afe3ca03&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+            },
+            {
+              "eventId": "event-918b6a9aae4336a6926901bc4675c866225af748",
+              "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+              "activityKey": "activity-3",
+              "name": "2026年新生语音语调大赛",
+              "kind": "event",
+              "category": "competition",
+              "startsAt": {
+                "raw": "11.26 14:00",
+                "date": "2026-11-26",
+                "at": "2026-11-26T14:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11.26 14:00"
+              },
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "upcoming",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "西单 11.26 14:00-15:10"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-26&event=event-918b6a9aae4336a6926901bc4675c866225af748&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+            },
+            {
+              "documentId": "content-7370d5ce-60fe-4df2-a2da-5ee3a89638a7",
+              "activityKey": "activity-1",
+              "name": "第二届多语种游戏翻译本地化与国际化大赛系列培训通知",
+              "kind": "event",
+              "category": "competition",
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "before",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "请注意：在培训日期之前缴费报名的参赛选手，大赛组委会将根据报名时填写的微信号"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "报名时间、报名费用、报名方式等信息，参见大赛信息发布平台上“第二届多语种游戏翻译本地化与国际化大赛报名通知”推文内容"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "请注意：“报名通知”中的“团队优惠报名”指的是10人以上组团报名享受报名费八折优惠"
+                  ]
+                }
+              ],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "请注意：在培训日期之前缴费报名的参赛选手，大赛组委会将根据报名时填写的微信号",
+                "报名时间、报名费用、报名方式等信息，参见大赛信息发布平台上“第二届多语种游戏翻译本地化与国际化大赛报名通知”推文内容",
+                "请注意：“报名通知”中的“团队优惠报名”指的是10人以上组团报名享受报名费八折优惠"
+              ],
+              "mapPlace": null
+            },
+            {
+              "eventId": "event-387f83e1c29b68021e36807d7c4c37d098d1ac7f",
+              "documentId": "wx-6cf0ad3d10047a1991a92ff9f6d53e93d9af1221",
+              "activityKey": "activity-1",
+              "name": "挑战杯 _ 2026年会计学院“小挑”选拔赛正式报名通知",
+              "kind": "event",
+              "category": "competition",
+              "startsAt": {
+                "raw": "11月7日",
+                "date": "2026-11-07",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": true,
+                "inferenceBasis": "活动标题明确标注年份",
+                "evidence": "11月7日"
+              },
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": true,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "04、报名时间及方式\n01\n报名时间\n请有意参赛的队伍于\n11月3日 24：00 前"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "由队长填写报名问卷报名\n报名链接请在咨询群中获取\n注意：问卷只能填写一次"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "5、有意向参赛的队伍在填写报名问卷报名参加时，报名问卷中的队伍信息（【作品所属组别】、【作品名称】、【项目成员】和【指导老师】等）需要与申报表和参赛作品中保持一致"
+                  ]
+                }
+              ],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "时间：11月7日",
+                "04、报名时间及方式\n01\n报名时间\n请有意参赛的队伍于\n11月3日 24：00 前",
+                "由队长填写报名问卷报名\n报名链接请在咨询群中获取\n注意：问卷只能填写一次"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-07&event=event-387f83e1c29b68021e36807d7c4c37d098d1ac7f&article=wx-6cf0ad3d10047a1991a92ff9f6d53e93d9af1221"
+            }
+          ],
+          "knowledge": [
+            {
+              "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "content-7370d5ce-60fe-4df2-a2da-5ee3a89638a7",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "wx-6cf0ad3d10047a1991a92ff9f6d53e93d9af1221",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [
+                "（原件和匿名件均须提交pdf和word各一份）"
+              ],
+              "steps": [
+                "7、申报表处需要规范填写专业年级和专业，例如：25级会计学、24级会计学。具体规范专业填写可自行查询校园官网教务系统。",
+                "8、所有登记表信息和文件命名必须按照相关要求填写，对命名和填写内容要求有疑问的部分可通过咨询群询问工作人员。",
+                "10、已提交作品若有延误，可在【11月5日20：00前】另提交作品【两次及两次以内】，将【以最后一次为准】。"
+              ]
+            }
+          ]
+        },
+        "durationMs": 835
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:6",
+      "state": "running",
+      "at": "2026-11-17T02:07:32.924Z",
+      "elapsedMs": 2145,
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外最近一个月有哪些还可以报名参加的比赛",
+          "limit": 5,
+          "nearestIfEmpty": true,
+          "category": "competition"
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:6",
+      "state": "success",
+      "at": "2026-11-17T02:07:33.182Z",
+      "elapsedMs": 2403,
+      "durationMs": 258,
+      "data": {
+        "name": "search_campus_events",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-7370d5ce-60fe-4df2-a2da-5ee3a89638a7",
+              "chunkId": "content-7370d5ce-60fe-4df2-a2da-5ee3a89638a7:fts:7b098ee847f92c2a:3",
+              "title": "第二届多语种游戏翻译本地化与国际化大赛系列培训通知",
+              "sourceId": "GDUFS-SRC-0101",
+              "sourceName": "高级翻译学院",
+              "originalUrl": "https://sits.gdufs.edu.cn/info/1186/7546.htm",
+              "publishedAt": "2026-06-22",
+              "contentSnippet": "戏LQA项目人员培训、质量监督等经验为大家详细介绍。\n抽奖环节：培训期间在观众中随机抽奖，奖品包括：YiCAT团队加强版一个月会员3个、热脉发行游戏《吾今有世家》CDKey 5个。\n(三) 大赛模拟培训：参赛选手专属\n模拟培训之一\n培训专家：杨静怡（上海一者信息科技有限公司，高校事业部总监）、赵明纯（上海一者信息科技有限公司，高级产品经理）\n培训时间：2026年7月27日（周一）18:00\n培训主题：YiCAT比赛平台操作培训\n培训内容：赛前平台使用方法及注意事项培训，帮助参赛选手熟悉大赛初赛和决赛内容规则、比赛平台操作流程和使用方法、比赛设备、比赛限时、防作弊设置说明等。\n抽奖环节：培训期间在观众中随机抽奖，奖品包括：YiCAT团队加强版一个月会员3个、热脉发行游戏Coma 3 CDKey 5个。\n模拟培训之",
+              "startOffset": 3003,
+              "endOffset": 3363,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 38.18,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 3",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权",
+                "业务类别匹配",
+                "参赛发现：通知与时新性优先，非报名开放证明"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "competition",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 2,
+              "inputHash": "3ff440702eddd0242b31fa9964a7819cc0d2c9ac5fc818cf0b449f0d6e628afd",
+              "documentVersion": 4,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 446,
+            "rowsWritten": 0,
+            "queries": 4,
+            "durationMs": 194,
+            "stagesMs": {
+              "lexical": 132,
+              "supplement": 0,
+              "revalidationAndRanking": 62
+            },
+            "candidateChunks": 19,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "structured_date",
+                "limit": 48,
+                "candidates": 0
+              },
+              {
+                "name": "lexical_date_completion",
+                "limit": 48,
+                "candidates": 19
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [
+            "部分相关原文尚无可靠的对应日期，作为待核对资料返回；不能声称符合所问日期范围或没有活动，需继续官方补查。"
+          ],
+          "purpose": "events",
+          "query": "广外最近一个月有哪些还可以报名参加的比赛",
+          "now": "2026-11-17T02:07:32.924Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "documentId": "content-7370d5ce-60fe-4df2-a2da-5ee3a89638a7",
+              "activityKey": "activity-1",
+              "name": "第二届多语种游戏翻译本地化与国际化大赛系列培训通知",
+              "kind": "event",
+              "category": "competition",
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "before",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "请注意：在培训日期之前缴费报名的参赛选手，大赛组委会将根据报名时填写的微信号"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "报名时间、报名费用、报名方式等信息，参见大赛信息发布平台上“第二届多语种游戏翻译本地化与国际化大赛报名通知”推文内容"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "请注意：“报名通知”中的“团队优惠报名”指的是10人以上组团报名享受报名费八折优惠"
+                  ]
+                }
+              ],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "请注意：在培训日期之前缴费报名的参赛选手，大赛组委会将根据报名时填写的微信号",
+                "报名时间、报名费用、报名方式等信息，参见大赛信息发布平台上“第二届多语种游戏翻译本地化与国际化大赛报名通知”推文内容",
+                "请注意：“报名通知”中的“团队优惠报名”指的是10人以上组团报名享受报名费八折优惠"
+              ],
+              "mapPlace": null
+            }
+          ],
+          "knowledge": [
+            {
+              "documentId": "content-7370d5ce-60fe-4df2-a2da-5ee3a89638a7",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            }
+          ]
+        },
+        "durationMs": 258
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "running",
+      "at": "2026-11-17T02:07:33.182Z",
+      "elapsedMs": 2403,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "success",
+      "at": "2026-11-17T02:07:33.182Z",
+      "elapsedMs": 2403,
+      "durationMs": 0,
+      "data": {
+        "characters": 78,
+        "cards": 0
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "running",
+      "at": "2026-11-17T02:07:33.182Z",
+      "elapsedMs": 2403,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "success",
+      "at": "2026-11-17T02:07:33.182Z",
+      "elapsedMs": 2403,
+      "durationMs": 0,
+      "data": {
+        "characters": 78,
+        "cards": 0
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:07:32.089Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T02:07:32.089Z",
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T02:07:32.924Z",
+      "data": {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 835,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T02:07:32.924Z",
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T02:07:33.182Z",
+      "data": {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 258,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:07:33.384Z",
+      "data": {
+        "cards": [],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T02:07:33.384Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "no_evidence",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": true,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "off_topic",
+            "relatedDocuments": [],
+            "missing": [
+              "relevant_readable_evidence"
+            ],
+            "activities": [],
+            "needsSupplement": true,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 0,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [],
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "cachedPromptTokens": 0,
+          "totalTokens": 0,
+          "usageComplete": true,
+          "chargedTokens": 0,
+          "durationMs": 1093,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 0,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1310,
+            "serverElapsedMs": 2403,
+            "firstTextMs": 2403,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_events",
+                "durationMs": 835,
+                "ok": true
+              },
+              {
+                "name": "search_campus_events",
+                "durationMs": 258,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 31,
+              "writeQueries": 12,
+              "calls": 35,
+              "failures": 0,
+              "durationMs": 2285,
+              "maxCallMs": 128,
+              "rowsRead": 8797,
+              "rowsWritten": 26,
+              "rowUsageStatements": 28,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_events",
+                "rowsRead": 7700,
+                "rowsWritten": 0,
+                "queries": 5,
+                "durationMs": 379,
+                "stagesMs": {
+                  "lexical": 269,
+                  "supplement": 0,
+                  "revalidationAndRanking": 110
+                },
+                "candidateChunks": 48,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "structured_date",
+                    "limit": 48,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "lexical_date_completion",
+                    "limit": 48,
+                    "candidates": 48
+                  }
+                ]
+              },
+              {
+                "skill": "search_campus_events",
+                "rowsRead": 446,
+                "rowsWritten": 0,
+                "queries": 4,
+                "durationMs": 194,
+                "stagesMs": {
+                  "lexical": 132,
+                  "supplement": 0,
+                  "revalidationAndRanking": 62
+                },
+                "candidateChunks": 19,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "structured_date",
+                    "limit": 48,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "lexical_date_completion",
+                    "limit": 48,
+                    "candidates": 19
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "no_evidence",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": true,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "off_topic",
+      "relatedDocuments": [],
+      "missing": [
+        "relevant_readable_evidence"
+      ],
+      "activities": [],
+      "needsSupplement": true,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 1093,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 0,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1310,
+      "serverElapsedMs": 2403,
+      "firstTextMs": 2403,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_events",
+          "durationMs": 835,
+          "ok": true
+        },
+        {
+          "name": "search_campus_events",
+          "durationMs": 258,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 31,
+        "writeQueries": 12,
+        "calls": 35,
+        "failures": 0,
+        "durationMs": 2285,
+        "maxCallMs": 128,
+        "rowsRead": 8797,
+        "rowsWritten": 26,
+        "rowUsageStatements": 28,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 7700,
+          "rowsWritten": 0,
+          "queries": 5,
+          "durationMs": 379,
+          "stagesMs": {
+            "lexical": 269,
+            "supplement": 0,
+            "revalidationAndRanking": 110
+          },
+          "candidateChunks": 48,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "structured_date",
+              "limit": 48,
+              "candidates": 0
+            },
+            {
+              "name": "lexical_date_completion",
+              "limit": 48,
+              "candidates": 48
+            }
+          ]
+        },
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 446,
+          "rowsWritten": 0,
+          "queries": 4,
+          "durationMs": 194,
+          "stagesMs": {
+            "lexical": 132,
+            "supplement": 0,
+            "revalidationAndRanking": 62
+          },
+          "candidateChunks": 19,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "structured_date",
+              "limit": 48,
+              "candidates": 0
+            },
+            {
+              "name": "lexical_date_completion",
+              "limit": 48,
+              "candidates": 19
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

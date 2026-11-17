@@ -60,7 +60,7 @@ export function stripTimeRange(query: string): string {
     .replace(ISO_RANGE, " ")
     .replace(MONTH_DAY_RANGE, " ")
     .replace(
-      /最近一两周|最近两周|近两周|这两周|未来两周|接下来两周|过去两周|前两周|最近一周|这一周|过去一周|过去7天|最近7天|本周|这周|下周|下个月|今天|今日|明天|明日|后天|近半个月|半个月/g,
+      /最近一个月|近一个月|最近一两周|最近两周|近两周|这两周|未来两周|接下来两周|过去两周|前两周|最近一周|这一周|过去一周|过去7天|最近7天|本周末|这周末|下周末|周末|本周|这周|下周|下个月|今天|今日|明天|明日|后天|近半个月|半个月/g,
       " ",
     )
     .replace(/\s+/g, " ")
@@ -78,6 +78,11 @@ export function requestTimeWindow(
   let range: [string, string] | undefined;
   const explicit = dateRangeIn(query, today);
   if (explicit) range = [explicit.after, explicit.before];
+  else if (/本周末|这周末|下周末|周末/.test(query)) {
+    const monday =
+      -((new Date(day).getUTCDay() + 6) % 7) + (/下周末/.test(query) ? 7 : 0);
+    range = [at(monday + 5), at(monday + 6)];
+  } else if (/最近一个月|近一个月/.test(query)) range = [today, at(30)];
   else if (/这一周|最近一周|过去一周|过去7天|最近7天/.test(query))
     range = [at(-6), today];
   else if (/最近一两周|最近两周|近两周|这两周|未来两周|接下来两周/.test(query))
@@ -130,7 +135,11 @@ export function requestTimeWindow(
     before: range[1],
     role: news
       ? "publication"
-      : /报名|申请.*截止/.test(query)
+      : /报名/.test(query) &&
+          !/哪些.{0,8}需要.{0,4}报名|需要提前报名|是否需要报名|哪些要报名/.test(
+            query,
+          ) &&
+          !/还没(?:有)?正式开始|尚未(?:正式)?开始/.test(query)
         ? "registration"
         : "event",
     timezone: "Asia/Shanghai",

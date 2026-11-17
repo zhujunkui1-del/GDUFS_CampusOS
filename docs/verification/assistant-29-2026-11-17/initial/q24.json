@@ -1,0 +1,6 @@
+{
+  "question": "南校区有哪些食堂？",
+  "status": "harness_error",
+  "answer": "",
+  "error": "Error: response.text: Protocol error (Network.getResponseBody): No data found for resource with given identifier\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation."
+}

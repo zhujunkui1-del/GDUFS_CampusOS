@@ -1,0 +1,519 @@
+{
+  "question": "帮我安排一个周六下午的南校区学习计划，包括图书馆、自习和晚餐地点。",
+  "status": "success",
+  "entry": "campus-assistant-map",
+  "answer": "给你捋捋南校区周六下午的学习安排呀👇\n\n通用常识建议（无校园来源要求）\n去图书馆前可以提前查好当天馆内人流情况，带齐学习用品、充电宝，入馆后优先找空位安静自习，不要大声喧哗影响他人。\n自习结束后可以提前查好周边晚餐地点的营业时间，避开用餐高峰。\n广外已确认的具体规定\n南校区（大学城校区）图书馆非寒暑假周六的公共阅览区一般开放至22:00，24小时自助还书机、线上数字资源全天可用；如果周六恰逢国家法定节假日，公共阅览区也正常开放，数字资源正常服务 [2][4]。每日21:50-22:00为书库区域清馆整理时间，需要配合工作人员离场 [3][4]。\n入馆需刷本人脸/借阅证，禁止穿背心、拖鞋等衣冠不整者入馆，禁止携带任何食品进馆，馆内全区域禁止吸烟、进餐吃零食，检索机位仅供馆藏检索使用，不要占用自习 [3][4]。\n除了图书馆公共阅览区，还可以通过广外图书馆官网「服务指南-空间预约」板块查询可预约的自习空间 [3]。\n尚待核实的广外具体信息\n\n当前检索结果未覆盖2026年11月常规周六南校区的以下信息，需要进一步确认：\n\n图书馆是否有临时闭馆、区域调整等特殊安排；\n教学楼公共自习室、24小时自习区的具体开放位置和时段；\n南校区食堂及周边适合晚餐的具体地点、营业时间。\n3 个来源\n图书馆",
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "model",
+    "buildingProfiles": [
+      "osm-way-307250998"
+    ],
+    "conversationAct": "campus",
+    "answerRequirement": "advisory",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-4979a27f-ffbe-4131-97d7-82ccc47adc80",
+        "content-6c134a98-2faf-42af-b579-3c32f6142731",
+        "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+        "wx-e65f3688d0c219ed305ca5c944f2751660067122"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "content-4979a27f-ffbe-4131-97d7-82ccc47adc80",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-6c134a98-2faf-42af-b579-3c32f6142731",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 2,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 1,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 17026,
+        "firstTextMs": 15026,
+        "finishReason": "stop",
+        "contentChars": 585
+      },
+      {
+        "durationMs": 10000,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 5419,
+    "completionTokens": 1883,
+    "cachedPromptTokens": 0,
+    "totalTokens": 7302,
+    "usageComplete": false,
+    "chargedTokens": 7302,
+    "durationMs": 31380,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 250000,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1826,
+      "serverElapsedMs": 33206,
+      "firstTextMs": 33164,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 4203,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 32,
+        "writeQueries": 12,
+        "calls": 36,
+        "failures": 0,
+        "durationMs": 5570,
+        "maxCallMs": 1125,
+        "rowsRead": 16343,
+        "rowsWritten": 26,
+        "rowUsageStatements": 25,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 10473,
+          "rowsWritten": 0,
+          "queries": 9,
+          "durationMs": 4203,
+          "stagesMs": {
+            "lexical": 455,
+            "supplement": 1433,
+            "revalidationAndRanking": 2315
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 24
+            },
+            {
+              "name": "document_passages",
+              "limit": 512,
+              "candidates": 48
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "cards": [
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-307250998",
+        "name": "图书馆",
+        "category": "library",
+        "zone": "teaching",
+        "location": [
+          113.39131405,
+          23.0680465
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "大学城校区图书馆"
+        ],
+        "labelPlaceId": "osm-way-307250998",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "source",
+      "documentId": "content-4979a27f-ffbe-4131-97d7-82ccc47adc80",
+      "title": "图书馆2023年寒假开放安排",
+      "sourceName": "图书馆",
+      "originalUrl": "https://lib.gdufs.edu.cn/info/1134/6815.htm",
+      "publishedAt": "2022-12-16",
+      "snippet": "图书馆2023年寒假开放安排\n(2023年1月9日—2月16日)\n时间\n区域\n周一\n周二\n周三\n周四\n周五\n周六\n周日\n24小时还书、图书馆网站、在线数字资源\n0:00-24:00 全天全时段提供自助服务\n白云山、大学城校区\n公共阅览区\n8:00—22:00，按照读者入馆量集中区域开放\n白云山、大学城校区\n图书馆总服务台各书库\n逢周一周二开放\n开放时间：9:00-16:30\n（1月16日、17日、\n23日、24日除外）\n休 假\n办公室\n周一至周五（法定节假日除外） 9:00-11:30, 14：00-16:00\n白云山校区馆办公室（一楼110室） 36317020（3715）\n大学城校区办公区（假期设在一楼总服务台）",
+      "evidenceType": "full_text",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    },
+    {
+      "kind": "source",
+      "documentId": "content-6c134a98-2faf-42af-b579-3c32f6142731",
+      "title": "图书馆2024年暑假开放安排",
+      "sourceName": "图书馆",
+      "originalUrl": "https://lib.gdufs.edu.cn/info/1134/7694.htm",
+      "publishedAt": "2024-07-05",
+      "snippet": "图书馆2024年暑假开放安排\n(2024年7月8日—8月29日)\n时间\n区域\n周一\n周二\n周三\n周四\n周五\n周六\n周日\n24小时还书机、图书馆网站、在线数字资源\n0:00-24:00 全天全时段提供自助服务\n公共阅览区\n7:00—24:00，按照读者入馆量集中区域开放\n南北馆、知识城校区总服务台\n各书库\n8:30--17:00\n办公室\n周一至周五（法定节假日除外） 9:30-11:30, 14：00-16:00\n白云山校区图书馆办公室（一楼110室） 36317020（3715）\n大学城校区图书馆办公区（假期设在一楼总服务台） 39328161（8161）\n1.因中央空调维修，大学城校区图书馆2024年7月7日17时",
+      "evidenceType": "full_text",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    },
+    {
+      "kind": "source",
+      "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+      "title": "2026版本科生学生手册（全文）",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+      "publishedAt": "2026-09-20T11:16:00.000Z",
+      "snippet": "转移至图书馆外风雨回廊处。\n4. 为防鼠蚁、蟑螂滋生，毁坏馆内书籍和设施，清理出的食物及饮料\n统一按垃圾处理，直接丢弃。\n5. 图书馆严正声明，被清理的物品如丢失，图书馆概不负责。\n第七条计算机检索区OPAC 检索终端供读者检索本馆馆藏资源的收藏及分布情况，同时可提供教育网内信息检索，不得它用，不得占用检索机位自习、休息，不得影响他人。 第八条爱护书刊和公用设施，严禁在书刊上圈划、涂写、撕剪或污损，严禁在桌椅、书架等家具设备上刻划、涂抹。 第九条读者不得擅自开关电器、门窗，不得擅自改变图书馆设备设施（含桌椅）位置。计算机、复印机等机器设备，运行中若发生故障或错误，应立即通知工作人员解决，读者不得擅自处理。 第十条图书馆为消防安全重点单位，读者不得在图书馆私拉电源、 违规使用大功率电器。禁止滑板、滑板车、电动自行车及配套充电设备入馆。严禁充电宝、暖手宝、小型风扇等存在安全隐患的电器设备在馆充电和使用。 第十一条图书馆全馆区域，包括馆内各楼层、阅览室、过道，楼梯间、卫生间及消防通道等场所，一律禁止吸烟。若有违反，将视情节通报所在学院（单位），并按照校纪校规进行处理。 第十二条保持清洁，不得在馆内进餐、吃零食，不得随地吐痰，\n本科学生手册\n276",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-11-17T02:57:03.912Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:57:03.912Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:57:08.115Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 4203,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:57:35.348Z",
+      "type": "message.delta",
+      "payload": {
+        "text": "给你捋捋南校区周六下午的学习安排呀👇\n\n### 通用常识建议（无校园来源要求）\n1. 去图书馆前可以提前查好当天馆内人流情况，带齐学习用品、充电宝，入馆后优先找空位安静自习，不要大声喧哗影响他人。\n2. 自习结束后可以提前查好周边晚餐地点的营业时间，避开用餐高峰。\n\n---\n\n### 广外已确认的具体规定\n1. 南校区（大学城校区）图书馆非寒暑假周六的公共阅览区一般开放至22:00，24小时自助还书机、线上数字资源全天可用；如果周六恰逢国家法定节假日，公共阅览区也正常开放，数字资源正常服务 [1][2][4]。每日21:50-22:00为书库区域清馆整理时间，需要配合工作人员离场 [3][4]。\n2. 入馆需刷本人脸/借阅证，禁止穿背心、拖鞋等衣冠不整者入馆，禁止携带任何食品进馆，馆内全区域禁止吸烟、进餐吃零食，检索机位仅供馆藏检索使用，不要占用自习 [3][4]。\n3. 除了图书馆公共阅览区，还可以通过广外图书馆官网「服务指南-空间预约」板块查询可预约的自习空间 [3]。\n\n---\n\n### 尚待核实的广外具体信息\n当前检索结果未覆盖2026年11月常规周六南校区的以下信息，需要进一步确认：\n- 图书馆是否有临时闭馆、区域调整等特殊安排；\n- 教学楼公共自习室、24小时自习区的具体开放位置和时段；\n- 南校区食堂及周边适合晚餐的具体地点、营业时间。"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:57:35.498Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-307250998",
+              "name": "图书馆",
+              "category": "library",
+              "zone": "teaching",
+              "location": [
+                113.39131405,
+                23.0680465
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "大学城校区图书馆"
+              ],
+              "labelPlaceId": "osm-way-307250998",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "source",
+            "documentId": "content-4979a27f-ffbe-4131-97d7-82ccc47adc80",
+            "title": "图书馆2023年寒假开放安排",
+            "sourceName": "图书馆",
+            "originalUrl": "https://lib.gdufs.edu.cn/info/1134/6815.htm",
+            "publishedAt": "2022-12-16",
+            "snippet": "图书馆2023年寒假开放安排\n(2023年1月9日—2月16日)\n时间\n区域\n周一\n周二\n周三\n周四\n周五\n周六\n周日\n24小时还书、图书馆网站、在线数字资源\n0:00-24:00 全天全时段提供自助服务\n白云山、大学城校区\n公共阅览区\n8:00—22:00，按照读者入馆量集中区域开放\n白云山、大学城校区\n图书馆总服务台各书库\n逢周一周二开放\n开放时间：9:00-16:30\n（1月16日、17日、\n23日、24日除外）\n休 假\n办公室\n周一至周五（法定节假日除外） 9:00-11:30, 14：00-16:00\n白云山校区馆办公室（一楼110室） 36317020（3715）\n大学城校区办公区（假期设在一楼总服务台）",
+            "evidenceType": "full_text",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          },
+          {
+            "kind": "source",
+            "documentId": "content-6c134a98-2faf-42af-b579-3c32f6142731",
+            "title": "图书馆2024年暑假开放安排",
+            "sourceName": "图书馆",
+            "originalUrl": "https://lib.gdufs.edu.cn/info/1134/7694.htm",
+            "publishedAt": "2024-07-05",
+            "snippet": "图书馆2024年暑假开放安排\n(2024年7月8日—8月29日)\n时间\n区域\n周一\n周二\n周三\n周四\n周五\n周六\n周日\n24小时还书机、图书馆网站、在线数字资源\n0:00-24:00 全天全时段提供自助服务\n公共阅览区\n7:00—24:00，按照读者入馆量集中区域开放\n南北馆、知识城校区总服务台\n各书库\n8:30--17:00\n办公室\n周一至周五（法定节假日除外） 9:30-11:30, 14：00-16:00\n白云山校区图书馆办公室（一楼110室） 36317020（3715）\n大学城校区图书馆办公区（假期设在一楼总服务台） 39328161（8161）\n1.因中央空调维修，大学城校区图书馆2024年7月7日17时",
+            "evidenceType": "full_text",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          },
+          {
+            "kind": "source",
+            "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+            "title": "2026版本科生学生手册（全文）",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+            "publishedAt": "2026-09-20T11:16:00.000Z",
+            "snippet": "转移至图书馆外风雨回廊处。\n4. 为防鼠蚁、蟑螂滋生，毁坏馆内书籍和设施，清理出的食物及饮料\n统一按垃圾处理，直接丢弃。\n5. 图书馆严正声明，被清理的物品如丢失，图书馆概不负责。\n第七条计算机检索区OPAC 检索终端供读者检索本馆馆藏资源的收藏及分布情况，同时可提供教育网内信息检索，不得它用，不得占用检索机位自习、休息，不得影响他人。 第八条爱护书刊和公用设施，严禁在书刊上圈划、涂写、撕剪或污损，严禁在桌椅、书架等家具设备上刻划、涂抹。 第九条读者不得擅自开关电器、门窗，不得擅自改变图书馆设备设施（含桌椅）位置。计算机、复印机等机器设备，运行中若发生故障或错误，应立即通知工作人员解决，读者不得擅自处理。 第十条图书馆为消防安全重点单位，读者不得在图书馆私拉电源、 违规使用大功率电器。禁止滑板、滑板车、电动自行车及配套充电设备入馆。严禁充电宝、暖手宝、小型风扇等存在安全隐患的电器设备在馆充电和使用。 第十一条图书馆全馆区域，包括馆内各楼层、阅览室、过道，楼梯间、卫生间及消防通道等场所，一律禁止吸烟。若有违反，将视情节通报所在学院（单位），并按照校纪校规进行处理。 第十二条保持清洁，不得在馆内进餐、吃零食，不得随地吐痰，\n本科学生手册\n276",
+            "evidenceType": "full_text",
+            "classificationState": "knowledge",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:57:35.498Z",
+      "type": "run.completed",
+      "payload": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "model",
+          "buildingProfiles": [
+            "osm-way-307250998"
+          ],
+          "conversationAct": "campus",
+          "answerRequirement": "advisory",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-4979a27f-ffbe-4131-97d7-82ccc47adc80",
+              "content-6c134a98-2faf-42af-b579-3c32f6142731",
+              "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "wx-e65f3688d0c219ed305ca5c944f2751660067122"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "content-4979a27f-ffbe-4131-97d7-82ccc47adc80",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-6c134a98-2faf-42af-b579-3c32f6142731",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 2,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 1,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 1,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 17026,
+              "firstTextMs": 15026,
+              "finishReason": "stop",
+              "contentChars": 585
+            },
+            {
+              "durationMs": 10000,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 5419,
+          "completionTokens": 1883,
+          "cachedPromptTokens": 0,
+          "totalTokens": 7302,
+          "usageComplete": false,
+          "chargedTokens": 7302,
+          "durationMs": 31380,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 250000,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1826,
+            "serverElapsedMs": 33206,
+            "firstTextMs": 33164,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 4203,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 32,
+              "writeQueries": 12,
+              "calls": 36,
+              "failures": 0,
+              "durationMs": 5570,
+              "maxCallMs": 1125,
+              "rowsRead": 16343,
+              "rowsWritten": 26,
+              "rowUsageStatements": 25,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 10473,
+                "rowsWritten": 0,
+                "queries": 9,
+                "durationMs": 4203,
+                "stagesMs": {
+                  "lexical": 455,
+                  "supplement": 1433,
+                  "revalidationAndRanking": 2315
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 64
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 24
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 512,
+                    "candidates": 48
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

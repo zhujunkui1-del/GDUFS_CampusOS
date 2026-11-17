@@ -4,7 +4,10 @@ import { ApiError } from "@/lib/server/errors";
 import { MockModelProvider } from "../fixtures/mock-model";
 import { CampusMapService } from "@/lib/server/maps/campus-map-service";
 import { MemoryRouteSnapshotStore } from "@/lib/server/maps/route-store";
-import { routeDirectionsText } from "@/lib/server/maps/route-directions";
+import {
+  routeDirectionsText,
+  routeSummaryText,
+} from "@/lib/server/maps/route-directions";
 const runtime = vi.hoisted(() => ({
   env: {} as Record<string, unknown>,
   resolve: vi.fn(),
@@ -53,6 +56,16 @@ it("renders only the steps the planner returned", async () => {
   expect(text.split("\n").filter((line) => /^\d+\. /.test(line))).toHaveLength(
     route.steps.length,
   );
+});
+
+it("summarizes a route using the planner's exact total", async () => {
+  const route = await plannedRoute();
+  const text = routeSummaryText(route);
+  expect(text).toContain(`从${route.start.name}到${route.end.name}`);
+  expect(text).toContain("路线已按校园步行路网计算");
+  expect(text).toContain(`约${Math.round(route.distanceMeters)}米`);
+  expect(text).toContain(`步行约${route.estimatedMinutes}分钟`);
+  expect(text).not.toMatch(/\n\d+\./);
 });
 
 it("answers with words when the model cannot finish a route that was already parsed", async () => {

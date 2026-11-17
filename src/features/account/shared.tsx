@@ -8,11 +8,13 @@ export function AccountFrame({
   children,
   backHref,
   home = false,
+  heading,
 }: {
   title: string;
   children: React.ReactNode;
   backHref?: string;
   home?: boolean;
+  heading?: React.ReactNode;
 }) {
   return (
     <section
@@ -34,8 +36,9 @@ export function AccountFrame({
           <span className="module-heading-separator" aria-hidden="true">
             {" | "}
           </span>
-          <strong>{title}</strong>
+          {heading ? null : <strong>{title}</strong>}
         </h1>
+        {heading}
       </header>
       {children}
     </section>

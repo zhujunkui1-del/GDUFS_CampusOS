@@ -1,0 +1,916 @@
+{
+  "question": "广外2028年的校历已经公布了吗？如果没有，请不要猜测。",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "目前检索到的资料里完全没有广外2028年校历的相关信息，没法确认是否已经公布哦🥹\n\n关键依据：本轮检索到的4条资料均为文学研究访谈、实习经验分享、学者报道类内容，未涉及校历相关公告，无对应证据支持结论。",
+  "cards": [],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T07:46:13.448Z",
+      "elapsedMs": 181,
+      "data": {
+        "question": "广外2028年的校历已经公布了吗？如果没有，请不要猜测。",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T07:46:13.448Z",
+      "elapsedMs": 181,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T07:46:14.441Z",
+      "elapsedMs": 1174,
+      "data": {
+        "question": "广外2028年的校历已经公布了吗？如果没有，请不要猜测"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T07:46:14.441Z",
+      "elapsedMs": 1174,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T07:46:14.441Z",
+      "elapsedMs": 1174,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T07:46:14.441Z",
+      "elapsedMs": 1174,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T07:46:14.441Z",
+      "elapsedMs": 1174,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T07:46:14.441Z",
+      "elapsedMs": 1174,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "facts",
+        "campus": null,
+        "topics": [],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "running",
+      "at": "2026-11-17T07:46:14.506Z",
+      "elapsedMs": 1239,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答或工具选择",
+        "tools": [
+          "plan_campus_query"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "success",
+      "at": "2026-11-17T07:46:21.891Z",
+      "elapsedMs": 8624,
+      "durationMs": 7385,
+      "data": {
+        "finishReason": "tool_calls",
+        "toolCalls": [
+          "plan_campus_query"
+        ],
+        "characters": 0,
+        "usage": {
+          "promptTokens": 533,
+          "completionTokens": 629,
+          "totalTokens": 1162
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "running",
+      "at": "2026-11-17T07:46:21.957Z",
+      "elapsedMs": 8690,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外2028年 校历已经公布了吗 如果没有 请不要猜测",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "success",
+      "at": "2026-11-17T07:46:24.079Z",
+      "elapsedMs": 10812,
+      "durationMs": 2122,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "wx-6cb6d946c711ae50992e196f3648da24160c94be",
+              "chunkId": "wx-6cb6d946c711ae50992e196f3648da24160c94be:fts:9b8ad7b468e44a16:18",
+              "title": "文逸闻、陈众议｜文学之道：外国文学研究与中国自主知识体系建构——陈众议教授访谈录",
+              "sourceId": "GDUFS-WX-3886121960",
+              "sourceName": "广东外语外贸大学学报",
+              "originalUrl": "https://mp.weixin.qq.com/s/taXUWclb35SRRdkt3lh3GQ",
+              "publishedAt": "2026-11-13T11:11:22.000Z",
+              "contentSnippet": "用卡尔维诺的话说，经典可资反复阅读，且常读常新。而布鲁姆（Harold Bloom）的“西方正典”，则基本取法既有传统又有创新的作家作品。诸如此类，不一而足。但我更计较话语权，如果没有浪漫派，莎士比亚和塞万提斯难以拂去几个世纪的尘埃；如果没有英国和法国的强大，那么英法文学不可能横行世界，就像20世纪的美苏文学。而拉美文学之所以“爆炸”，也多少因为美苏的推崇，这毋庸讳言，尽管拉美文学自有其后发优势。同理，作为我们“四大名著”之首的《红楼梦》至今仍未被西方列入经典，即或偶被提及，那也在几百部开外。因而，中国文学要被世界真正认可和由衷欢迎，恐怕仍需仰仗国力的进一步强盛。至于歌德曾经拥抱的《好逑传》《玉娇梨》等作品，他与其说出于喜欢，毋宁说是为了彰显其“世界文学”理念。就后者而言，除了他急切需要从仅有七八万人口的魏玛公国突围，并像英法文学那样走向世界，其中的理想主义不言自明。马克思虽然没有点名批判之，但他建立在历史唯物主义基础上言说的世界文学却是资本一统天下后的可怕局面，即一切物质的和精神的产品都",
+              "startOffset": 12852,
+              "endOffset": 13303,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 27.81,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 3",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "edea4951460751cb63349829f6c610c94c503784639ff1d91362e63548d5cc79",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "wx-8b0fc5372db05a4479fc42e4a1df0146042e7132",
+              "chunkId": "wx-8b0fc5372db05a4479fc42e4a1df0146042e7132:fts:8514c764e39411a6:0",
+              "title": "朋辈成长营（十一）：踩准节奏，双线通关：名企实习与雅思备考复盘",
+              "sourceId": "GDUFS-SRC-0199",
+              "sourceName": "广外图书馆",
+              "originalUrl": "https://mp.weixin.qq.com/s/DeYqEM8Ig4pyhPWqGe-vbw",
+              "publishedAt": "2026-11-06T04:12:00.000Z",
+              "contentSnippet": "。四大是滚动录取，岗位招满即止，晚投很容易石沉大海。\n[2] 八大寒假审计实习（官网投递）：要提前留意事务所的招聘节点。如果没有踩对时间，很容易投出去没有任何反馈。\n[3] 招聘软件投递：写好招呼语，抓住窗口期。广撒网，及时回复，往往会有回音～\n4.简历是敲门砖，用数据说话\n简历上，尽量把每段经历写得具体充实，多用数字和专业动作，比如“认真负责”“学习能力强”这类形容词，远不如一个具体的数据有说服力。除此之外，GPA、英语成绩，以及Excel、SQL、Power BI等数字化技能，也是会计与审计岗位比较看重的指标。\n5.学习与雅思，怎么平衡？",
+              "startOffset": 536,
+              "endOffset": 810,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 20.84,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 1.5",
+                "查询主题与限定复核：lexical_query"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "education_career",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "bfc462e8f2b6cc7b2f242dc2b13e7983cb5c5bd3d5cfb0c6fdede53169e751f5",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": [
+                {
+                  "documentId": "wx-3c52635a0d80074823250bc50d8d4a80d761a703",
+                  "sourceName": "悦读广外",
+                  "url": "https://mp.weixin.qq.com/s/9AGr3P9tB8lT1D6Kyg4HVA"
+                }
+              ]
+            },
+            {
+              "documentId": "wx-f4be57a221f3d9c25492b56fb51cf51270bdc3ae",
+              "chunkId": "wx-f4be57a221f3d9c25492b56fb51cf51270bdc3ae:fts:373d5a78038754f1:4",
+              "title": "玛丽-劳尔·瑞安、唐伟胜｜多宇宙与元宇宙：建构多世界叙事分类学",
+              "sourceId": "GDUFS-WX-3886121960",
+              "sourceName": "广东外语外贸大学学报",
+              "originalUrl": "https://mp.weixin.qq.com/s/r9Bd7ekZzU-beypGom-6OA",
+              "publishedAt": "2026-09-09T11:00:00.000Z",
+              "contentSnippet": "按照这种结构，所有世界都诞生于大爆炸或其他宇宙事件，彼此独立生成，随后沿着各自的轨迹演化。但要推动情节展开，这些世界必须可以互通。宇宙学理论本身并没有预设这种互通机制，但是如果没有这种关联，多世界叙事就只会变成独立故事的松散合集，类似薄伽丘的《十日谈》(Decameron)或吴敬梓的《儒林外史》和李汝珍的《镜花缘》。\n第一类叙事主要体现为经典的跨世界旅行叙事。这类叙事的故事世界里只有一个宇宙，但容纳了众多世界或行星，其中每个世界或行星都是独一无二的：地球、月球、火星、太阳都仅有一个。即使在《星球大战》(Star Wars)这类幻想宇宙观的故事世界里，也只有一个塔图因星(Tatooine)、一个科洛桑星(Coruscant)和一个达戈巴星(Dagobah)。同样，这些世界中的个体也都只有一个唯一的存在。主角们所造访的这些行星，共享同一个包罗万象的宇宙空间。人们必须借助某种科技发明，或是利用自然现象（比如伏尔泰《米克罗梅加斯》(“Micromegas”)中人物搭乘彗星尾迹），才能在空间中航行抵达另一个世界。这类叙事的代表作品包括《米克罗梅加斯》、乔纳森·斯威夫特(Jonathan Swift)的《格列佛游记》(Gulliver’s Travels)（只不过这部作品里主角造访的“世界”是地球上尚未被发现的区域，而非外星行星）以及源远流长的月球旅行叙事传统——从阿里奥斯托(Ariosto)的《疯狂的奥兰多》(Orlando Furioso)到埃尔热(",
+              "startOffset": 2935,
+              "endOffset": 3566,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 19.31,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 1.5",
+                "查询主题与限定复核：lexical_query"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "2150235b5549fece732a43d47c7746dd4d142db7c605ee9328ba2f4fcf98fb63",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-d5cf3e62-0be0-4ff2-b165-6d47c9bb4234",
+              "chunkId": "content-d5cf3e62-0be0-4ff2-b165-6d47c9bb4234:fts:b0ab43225d0e8cce:2",
+              "title": "《光明日报》“光明学人”整版报道——《傅修延：讲故事的学人》",
+              "sourceId": "GDUFS-SRC-0059",
+              "sourceName": "外国文学文化研究院",
+              "originalUrl": "https://cflc.gdufs.edu.cn/info/1066/2586.htm",
+              "publishedAt": "2026-01-26",
+              "contentSnippet": "者，到今天依然保持着旺盛的创造力，无论是为人还是为学，都有一种难得的敞亮的“少年气”，这不仅令人羡慕，更令人深思。\n二\n按照傅修延自己的说法，如果没有走上治学的道路，那么他在今天很有可能成为一个“讲故事的人”（莫言演讲和本雅明著作都用过此名）。根据我的理解，这不是随便说说的戏言。有人看到他分析刀郎歌词艺术的随笔，感叹说此人在文学创作上有极高的天赋和才能，如果不是被学问“耽误”了，他该会创作出多么了不起的文学作品啊！可能他自己内心深处有时候也会有某种遗憾吧，毕竟一个人的时间和精力都很有限，你选择了一条道路，就会错过另一条道路上的诸多美景。\n这样来看待他的学术研究，就能够理解为什么其中既有思想的真知，又有情感的温度。他是一位特别有“现实感”的学者。对于书斋中工作的学者来说，如果缺乏“现实感”，他的所有研究就可能变成一种从概念到概念的思想空转，无法与这个世界及他人生活发生有意义的关联。傅修延与历史上那些富于现实关怀的赣地先贤一样，对自己的生身立命之地怀有深厚的情感，著文发声更接地气更有担当，这是他特别令人敬重和佩服的地方。\n他本科就读的是外语系，只读了不到两年，便被破格录取为中文系的外国文学专业研究生（当时允许这样做）。虽然学的是外国文学，但他首先是一位脚踏华夏大地的学者，外国文学研究在他那里一直被定位为“中国的外国文学研究”，也就是中国人对外国文学的研究不能简单重复外国人自己的研究——他的原话是“如果我们这边说出来的话，和人家那边说出来的话一模一样，那就不是中国的或者说不是中国人的外国文学研究”。具体到叙事学领域，他之所以举起“中国叙事学”这面旗帜，是因为看到一些西方学者罔顾华夏为故事大国、中华民族有数千年叙事经验之事实，试图在不了解也不想了解中国的情况下总结出放之四海而皆准的叙事理论。结构主义叙事学当年在归纳“叙事语法”上陷于困境，视野",
+              "startOffset": 1365,
+              "endOffset": 2145,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 18.97,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 1.5",
+                "查询主题与限定复核：lexical_query"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 2,
+              "inputHash": "d9ae2da65f7f2d26728d090f8be9f6f0fab746a78fb82f0f90b264e5ab8cd658",
+              "documentVersion": 6,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 25748,
+            "rowsWritten": 0,
+            "queries": 11,
+            "durationMs": 2122,
+            "stagesMs": {
+              "lexical": 133,
+              "supplement": 733,
+              "revalidationAndRanking": 1256
+            },
+            "candidateChunks": 74,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 19
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 23
+              },
+              {
+                "name": "document_passages",
+                "limit": 512,
+                "candidates": 65
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "广外2028年 校历已经公布了吗 如果没有 请不要猜测",
+          "now": "2026-11-17T07:46:21.957Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [],
+          "knowledge": [
+            {
+              "documentId": "wx-6cb6d946c711ae50992e196f3648da24160c94be",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "又譬如广东外语外贸大学聂珍钊教授，他率先开启的文学伦理学批评以我国传统学术之大宗为背景，对当代西方相对偏狭、不知凡几的批评理论和方法进行了正面回应。聂教授在《文学伦理学批评导论》（2014年首版，后有英文、俄文版等相继出版）中从目的论和方法论双重维度进行了体系性辨析，提出了伦理环境、伦理身份、伦理选择等标识性概念。值得注意的是，聂教授在这部标志性著作中提出了一系列问题，且将其置于伦理价值与审美价值的双重或多重维度，如关于“脑文本”与“物质文本”，乃至文学与文艺、思辨与实证的关系是否存在谬见。这不能不说聂教授抽丝剥茧式的论证方式是有理有节、有根有据的，尽管如他所说，文学的定义具有一定的相对性，而"
+              ]
+            },
+            {
+              "documentId": "wx-8b0fc5372db05a4479fc42e4a1df0146042e7132",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "wx-f4be57a221f3d9c25492b56fb51cf51270bdc3ae",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "content-d5cf3e62-0be0-4ff2-b165-6d47c9bb4234",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            }
+          ]
+        },
+        "durationMs": 2122
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "running",
+      "at": "2026-11-17T07:46:24.137Z",
+      "elapsedMs": 10870,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答生成",
+        "tools": []
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "success",
+      "at": "2026-11-17T07:46:29.452Z",
+      "elapsedMs": 16185,
+      "durationMs": 5315,
+      "data": {
+        "finishReason": "stop",
+        "toolCalls": [],
+        "characters": 102,
+        "usage": {
+          "promptTokens": 3366,
+          "completionTokens": 338,
+          "totalTokens": 3704
+        }
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "phase": "evidence_check",
+      "state": "running",
+      "at": "2026-11-17T07:46:29.512Z",
+      "elapsedMs": 16245,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "tool": "report_evidence_verdict",
+        "timeoutMs": 10000
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "phase": "evidence_check",
+      "state": "success",
+      "at": "2026-11-17T07:46:35.353Z",
+      "elapsedMs": 22086,
+      "durationMs": 5841,
+      "data": {
+        "supported": true,
+        "relevant": true,
+        "coverage": "covered",
+        "issueCount": 0
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "running",
+      "at": "2026-11-17T07:46:35.413Z",
+      "elapsedMs": 22146,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "success",
+      "at": "2026-11-17T07:46:35.481Z",
+      "elapsedMs": 22214,
+      "durationMs": 68,
+      "data": {
+        "characters": 102,
+        "cards": 0
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "running",
+      "at": "2026-11-17T07:46:35.481Z",
+      "elapsedMs": 22214,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "success",
+      "at": "2026-11-17T07:46:35.481Z",
+      "elapsedMs": 22214,
+      "durationMs": 0,
+      "data": {
+        "characters": 102,
+        "cards": 0
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T07:46:21.957Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T07:46:21.957Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T07:46:24.079Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 2122,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T07:46:35.665Z",
+      "data": {
+        "cards": [],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T07:46:35.665Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": true,
+            "code": "NON_LITERAL_PLAN",
+            "effectiveQuery": "广外2028年 校历已经公布了吗 如果没有 请不要猜测",
+            "fallbackReason": "NON_LITERAL_PLAN",
+            "durationMs": 7385,
+            "usage": {
+              "promptTokens": 533,
+              "completionTokens": 629,
+              "totalTokens": 1162
+            }
+          },
+          "executionStatus": "completed",
+          "taskStatus": "completed",
+          "retrievalStatus": "matched",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "wx-6cb6d946c711ae50992e196f3648da24160c94be",
+              "wx-8b0fc5372db05a4479fc42e4a1df0146042e7132",
+              "wx-f4be57a221f3d9c25492b56fb51cf51270bdc3ae",
+              "content-d5cf3e62-0be0-4ff2-b165-6d47c9bb4234"
+            ],
+            "missing": [],
+            "activities": [],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 3,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 1,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [
+            {
+              "supported": true,
+              "relevant": true,
+              "coverage": "covered",
+              "issues": []
+            }
+          ],
+          "upstreamTimings": [
+            {
+              "durationMs": 5315,
+              "firstTextMs": 4867,
+              "finishReason": "stop",
+              "contentChars": 102
+            },
+            {
+              "durationMs": 5841,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 7024,
+          "completionTokens": 1394,
+          "cachedPromptTokens": 0,
+          "totalTokens": 8418,
+          "usageComplete": true,
+          "chargedTokens": 8418,
+          "durationMs": 13456,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 8418,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 8690,
+            "serverElapsedMs": 22146,
+            "firstTextMs": 22086,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 2122,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 31,
+              "writeQueries": 12,
+              "calls": 35,
+              "failures": 0,
+              "durationMs": 3226,
+              "maxCallMs": 356,
+              "rowsRead": 26317,
+              "rowsWritten": 26,
+              "rowUsageStatements": 24,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 25748,
+                "rowsWritten": 0,
+                "queries": 11,
+                "durationMs": 2122,
+                "stagesMs": {
+                  "lexical": 133,
+                  "supplement": 733,
+                  "revalidationAndRanking": 1256
+                },
+                "candidateChunks": 74,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 19
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 23
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 512,
+                    "candidates": 65
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": true,
+      "code": "NON_LITERAL_PLAN",
+      "effectiveQuery": "广外2028年 校历已经公布了吗 如果没有 请不要猜测",
+      "fallbackReason": "NON_LITERAL_PLAN",
+      "durationMs": 7385,
+      "usage": {
+        "promptTokens": 533,
+        "completionTokens": 629,
+        "totalTokens": 1162
+      }
+    },
+    "executionStatus": "completed",
+    "taskStatus": "completed",
+    "retrievalStatus": "matched",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "wx-6cb6d946c711ae50992e196f3648da24160c94be",
+        "wx-8b0fc5372db05a4479fc42e4a1df0146042e7132",
+        "wx-f4be57a221f3d9c25492b56fb51cf51270bdc3ae",
+        "content-d5cf3e62-0be0-4ff2-b165-6d47c9bb4234"
+      ],
+      "missing": [],
+      "activities": [],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 3,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [
+      {
+        "supported": true,
+        "relevant": true,
+        "coverage": "covered",
+        "issues": []
+      }
+    ],
+    "upstreamTimings": [
+      {
+        "durationMs": 5315,
+        "firstTextMs": 4867,
+        "finishReason": "stop",
+        "contentChars": 102
+      },
+      {
+        "durationMs": 5841,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 7024,
+    "completionTokens": 1394,
+    "cachedPromptTokens": 0,
+    "totalTokens": 8418,
+    "usageComplete": true,
+    "chargedTokens": 8418,
+    "durationMs": 13456,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 8418,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 8690,
+      "serverElapsedMs": 22146,
+      "firstTextMs": 22086,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 2122,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 31,
+        "writeQueries": 12,
+        "calls": 35,
+        "failures": 0,
+        "durationMs": 3226,
+        "maxCallMs": 356,
+        "rowsRead": 26317,
+        "rowsWritten": 26,
+        "rowUsageStatements": 24,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 25748,
+          "rowsWritten": 0,
+          "queries": 11,
+          "durationMs": 2122,
+          "stagesMs": {
+            "lexical": 133,
+            "supplement": 733,
+            "revalidationAndRanking": 1256
+          },
+          "candidateChunks": 74,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 19
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 23
+            },
+            {
+              "name": "document_passages",
+              "limit": 512,
+              "candidates": 65
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

@@ -138,23 +138,34 @@ export function buildQueryPlan(
     topics = topics.filter((t) => t.id !== "recruitment");
   if (topics.some((t) => t.id === "network" || t.id === "utilities"))
     topics = topics.filter((t) => t.id !== "housing");
-  const goal: QueryGoal = /报名|可报|能报|申请.*截止/.test(positive)
-    ? "registration"
-    : participationQuery(positive)
-      ? "participation"
-      : asksPaymentProcedure(positive) ||
-          /怎么办|如何办理|办理流程|手续|操作|怎么借|怎么选/.test(positive)
-        ? "procedure"
-        : /条件|资格|材料|要求/.test(positive)
-          ? "requirements"
-          : /政策|管理办法|制度|规则|规定/.test(positive)
-            ? "policy"
-            : /好吃|口味|怎么样|体验|推荐|踩雷/.test(positive)
-              ? "experience"
-              : /哪些|有什么|活动|赛事|讲座|比赛/.test(positive) ||
-                  activityNounQuery(positive)
-                ? "discovery"
-                : "facts";
+  const goal: QueryGoal =
+    /哪些.*需要|需要提前|是否需要|要不要/.test(positive) &&
+    /报名/.test(positive)
+      ? "discovery"
+      : /报名|可报|能报|申请.*截止/.test(positive)
+        ? "registration"
+        : /申请|准备/.test(positive) &&
+            topics.some((t) => t.id === "study_abroad")
+          ? "procedure"
+          : participationQuery(positive)
+            ? "participation"
+            : asksPaymentProcedure(positive) ||
+                /怎么办|如何办理|办理流程|手续|操作|怎么借|怎么选/.test(
+                  positive,
+                )
+              ? "procedure"
+              : /条件|资格|材料|要求|(?:准备|提供).{0,8}(?:什么|哪些|信息)/.test(
+                    positive,
+                  )
+                ? "requirements"
+                : /政策|管理办法|制度|规则|规定/.test(positive)
+                  ? "policy"
+                  : /好吃|口味|怎么样|体验|推荐|踩雷/.test(positive)
+                    ? "experience"
+                    : /哪些|有什么|活动|赛事|讲座|比赛/.test(positive) ||
+                        activityNounQuery(positive)
+                      ? "discovery"
+                      : "facts";
   const goalTerms: Record<QueryGoal, string[]> = {
     registration: ["报名", "申请", "截止"],
     participation: ["报名", "参赛", "参加", "通知"],
@@ -352,6 +363,7 @@ type QueryEvidence = {
   title?: string;
   sourceName?: string;
   contentSnippet?: string;
+  supportingPassages?: { text: string }[];
   snippet?: string;
 };
 export function entityTerms(entity: string) {
@@ -397,7 +409,11 @@ export function headOfSubject(plan: QueryPlan): QueryPlan {
 }
 export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const title = (hit.title || "").normalize("NFKC").toLowerCase(),
-    body = (hit.contentSnippet ?? hit.snippet ?? "")
+    body = [
+      hit.contentSnippet ?? hit.snippet ?? "",
+      ...(hit.supportingPassages ?? []).map((passage) => passage.text),
+    ]
+      .join("\n")
       .normalize("NFKC")
       .toLowerCase(),
     text = title + " " + body;

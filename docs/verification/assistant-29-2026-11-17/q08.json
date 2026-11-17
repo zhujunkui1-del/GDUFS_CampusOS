@@ -1,0 +1,1401 @@
+{
+  "question": "广外最近有哪些讲座？哪些需要提前报名？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "- 词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 纸质词典展：报名要求未核实。 [1]\n- （南校区专场）国际组织与国际治理沙龙 | 人工智能治理（第16期）：报名要求未核实。 [2]",
+  "cards": [
+    {
+      "kind": "source",
+      "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+      "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+      "sourceName": "广外青年",
+      "originalUrl": "https://mp.weixin.qq.com/s/2HdigxTYTLkhVlsgyIwD2A",
+      "publishedAt": "2026-11-15T11:41:43.000Z",
+      "snippet": "第二场：11月17日（周二）15:00",
+      "evidenceType": "excerpt",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": [
+        {
+          "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 纸质词典展",
+          "href": "/calendar?date=2026-11-17&event=event-ebf2de3d74252d4f9e735530f96c94dc9675909c"
+        },
+        {
+          "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 电子词典展",
+          "href": "/calendar?date=2026-11-17&event=event-aca2a6048bc48c757afebcd569e557a4c03b64f9"
+        },
+        {
+          "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+          "href": "/calendar?date=2026-11-17&event=event-7650ca3d429c6cbc47dc8f5a9ba809f49ef7b1e4"
+        },
+        {
+          "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+          "href": "/calendar?date=2026-11-18&event=event-775cf13e6e990faed6a28e75f3d54de097d38566"
+        }
+      ]
+    },
+    {
+      "kind": "source",
+      "documentId": "wx-ac794a9899cc53693bd501ff2763ac58f8b191b4",
+      "title": "（南校区专场）国际组织与国际治理沙龙 | 人工智能治理（第16期）",
+      "sourceName": "国际治理创新学院",
+      "originalUrl": "https://mp.weixin.qq.com/s/Dew4TQQDjrI-RB8DezVSgA",
+      "publishedAt": "2026-11-13T06:01:38.000Z",
+      "snippet": "2026年11月17日（周二）\n19：30-21：30",
+      "evidenceType": "excerpt",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": [
+        {
+          "title": "（南校区专场）国际组织与国际治理沙龙 | 人工智能治理（第16期）",
+          "href": "/calendar?date=2026-11-17&event=event-d566d684fa5f8a726babb3fc9c6c06441e17913c"
+        }
+      ]
+    }
+  ],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T08:12:32.358Z",
+      "elapsedMs": 202,
+      "data": {
+        "question": "广外最近有哪些讲座？哪些需要提前报名？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T08:12:32.358Z",
+      "elapsedMs": 202,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T08:12:33.535Z",
+      "elapsedMs": 1379,
+      "data": {
+        "question": "广外最近有哪些讲座？哪些需要提前报名？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T08:12:33.535Z",
+      "elapsedMs": 1379,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T08:12:33.535Z",
+      "elapsedMs": 1379,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T08:12:33.535Z",
+      "elapsedMs": 1379,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T08:12:33.535Z",
+      "elapsedMs": 1379,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T08:12:33.535Z",
+      "elapsedMs": 1379,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "discovery",
+        "campus": null,
+        "topics": [
+          "lecture"
+        ],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_events"
+        ]
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "running",
+      "at": "2026-11-17T08:12:33.707Z",
+      "elapsedMs": 1551,
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan",
+        "input": {
+          "query": "讲座",
+          "limit": 5,
+          "nearestIfEmpty": true,
+          "category": "lecture"
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "success",
+      "at": "2026-11-17T08:12:34.176Z",
+      "elapsedMs": 2020,
+      "durationMs": 469,
+      "data": {
+        "name": "search_campus_events",
+        "result": {
+          "hits": [
+            {
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "chunkId": "event-ebf2de3d74252d4f9e735530f96c94dc9675909c",
+              "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+              "sourceId": "GDUFS-SRC-0117",
+              "sourceName": "广外青年",
+              "originalUrl": "https://mp.weixin.qq.com/s/2HdigxTYTLkhVlsgyIwD2A",
+              "publishedAt": "2026-11-15T11:41:43.000Z",
+              "contentSnippet": "第二场：11月17日（周二）15:00",
+              "startOffset": 661,
+              "endOffset": 680,
+              "evidenceBasis": "activity_projection",
+              "evidenceType": "excerpt",
+              "bodyAvailable": true,
+              "bodyPartial": true,
+              "relevanceScore": 1,
+              "rankingReasons": [
+                "按实际举办日期查询共享活动索引"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "lecture",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "86085e39570289409e50e042e9120e56d0c23f033199b3e71b15fbea8e248a54",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": [],
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-ebf2de3d74252d4f9e735530f96c94dc9675909c"
+            },
+            {
+              "documentId": "wx-ac794a9899cc53693bd501ff2763ac58f8b191b4",
+              "chunkId": "event-d566d684fa5f8a726babb3fc9c6c06441e17913c",
+              "title": "（南校区专场）国际组织与国际治理沙龙 | 人工智能治理（第16期）",
+              "sourceId": "GDUFS-SRC-0173",
+              "sourceName": "国际治理创新学院",
+              "originalUrl": "https://mp.weixin.qq.com/s/Dew4TQQDjrI-RB8DezVSgA",
+              "publishedAt": "2026-11-13T06:01:38.000Z",
+              "contentSnippet": "2026年11月17日（周二）\n19：30-21：30",
+              "startOffset": 96,
+              "endOffset": 123,
+              "evidenceBasis": "activity_projection",
+              "evidenceType": "excerpt",
+              "bodyAvailable": true,
+              "bodyPartial": true,
+              "relevanceScore": 1,
+              "rankingReasons": [
+                "按实际举办日期查询共享活动索引"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "f6b04df043972c52b13064cda66b5915d7ee6af9498d1931143357c618e48660",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": [],
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-d566d684fa5f8a726babb3fc9c6c06441e17913c"
+            }
+          ],
+          "metrics": {
+            "rowsRead": 329,
+            "rowsWritten": 0,
+            "queries": 3,
+            "durationMs": 235,
+            "candidateChunks": 0,
+            "candidateActivities": 7,
+            "usageAvailable": true
+          },
+          "indexVersion": "calendar-v2",
+          "method": "calendar_index",
+          "warnings": [
+            "所问时间范围内没有符合条件的活动，以下是之后最近的安排，日期不在所问范围内。"
+          ],
+          "purpose": "events",
+          "query": "讲座",
+          "now": "2026-11-17T08:12:33.707Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "eventId": "event-ebf2de3d74252d4f9e735530f96c94dc9675909c",
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "activityKey": "activity-6",
+              "name": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 纸质词典展",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "11月17日（周二）15:00",
+                "date": "2026-11-17",
+                "at": "2026-11-17T15:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月17日（周二）15:00"
+              },
+              "endsAt": null,
+              "placeRaw": "白云山校区七教一楼大厅",
+              "organizer": null,
+              "eventStatus": "scheduled",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "第二场：11月17日（周二）15:00",
+                "白云山校区七教一楼大厅"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-ebf2de3d74252d4f9e735530f96c94dc9675909c"
+            },
+            {
+              "eventId": "event-aca2a6048bc48c757afebcd569e557a4c03b64f9",
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "activityKey": "activity-8",
+              "name": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 电子词典展",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "11月17日（周二）15:30",
+                "date": "2026-11-17",
+                "at": "2026-11-17T15:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月17日（周二）15:30"
+              },
+              "endsAt": {
+                "raw": "17:00",
+                "date": "2026-11-17",
+                "at": "2026-11-17T17:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "同一明确时间区间的起始日期",
+                "evidence": "17:00"
+              },
+              "placeRaw": "白云山校区八教306室",
+              "organizer": null,
+              "eventStatus": "scheduled",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "第二场：11月17日（周二）15:30—17:00",
+                "白云山校区八教306室"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-aca2a6048bc48c757afebcd569e557a4c03b64f9"
+            },
+            {
+              "eventId": "event-7650ca3d429c6cbc47dc8f5a9ba809f49ef7b1e4",
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "activityKey": "activity-9",
+              "name": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "11月17日（周二）18:30",
+                "date": "2026-11-17",
+                "at": "2026-11-17T18:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月17日（周二）18:30"
+              },
+              "endsAt": {
+                "raw": "19:30",
+                "date": "2026-11-17",
+                "at": "2026-11-17T19:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "同一明确时间区间的起始日期",
+                "evidence": "19:30"
+              },
+              "placeRaw": "北七教314",
+              "organizer": null,
+              "eventStatus": "scheduled",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": {
+                    "raw": "11月16日",
+                    "date": "2026-11-16",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "11月16日"
+                  },
+                  "deadlineSemantics": "inclusive",
+                  "capacityLimited": false,
+                  "state": "closed",
+                  "evidence": [
+                    "🚫 报名截止时间：11月16日"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "📲 扫码报名，锁定参赛席位！\n05\n演讲比赛\n以词为媒，让思想发声\n以词为桥"
+                  ]
+                }
+              ],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "⏰ 比赛时间：11月17日（周二）18:30-19:30",
+                "北七教314",
+                "🚫 报名截止时间：11月16日"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-7650ca3d429c6cbc47dc8f5a9ba809f49ef7b1e4"
+            },
+            {
+              "eventId": "event-d566d684fa5f8a726babb3fc9c6c06441e17913c",
+              "documentId": "wx-ac794a9899cc53693bd501ff2763ac58f8b191b4",
+              "activityKey": "activity-1",
+              "name": "（南校区专场）国际组织与国际治理沙龙 | 人工智能治理（第16期）",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "2026年11月17日（周二）\n19：30",
+                "date": "2026-11-17",
+                "at": "2026-11-17T19:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": "2026年11月17日（周二）\n19：30"
+              },
+              "endsAt": {
+                "raw": "21：30",
+                "date": "2026-11-17",
+                "at": "2026-11-17T21:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "同一明确时间区间的起始日期",
+                "evidence": "21：30"
+              },
+              "placeRaw": "广东外语外贸大学南校区\nF310",
+              "organizer": null,
+              "eventStatus": "scheduled",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "2026年11月17日（周二）\n19：30-21：30",
+                "广东外语外贸大学南校区\nF310"
+              ],
+              "mapPlace": {
+                "placeId": "osm-node-3125704391",
+                "name": "教学楼F栋",
+                "precision": "building"
+              },
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-d566d684fa5f8a726babb3fc9c6c06441e17913c"
+            },
+            {
+              "eventId": "event-775cf13e6e990faed6a28e75f3d54de097d38566",
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "activityKey": "activity-3",
+              "name": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "11月18日（周三）15:30",
+                "date": "2026-11-18",
+                "at": "2026-11-18T15:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月18日（周三）15:30"
+              },
+              "endsAt": {
+                "raw": "17:00",
+                "date": "2026-11-18",
+                "at": "2026-11-18T17:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "同一明确时间区间的起始日期",
+                "evidence": "17:00"
+              },
+              "placeRaw": "白云山校区一教南楼117",
+              "organizer": null,
+              "eventStatus": "scheduled",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": {
+                    "raw": "11月16日",
+                    "date": "2026-11-16",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "11月16日"
+                  },
+                  "deadlineSemantics": "inclusive",
+                  "capacityLimited": false,
+                  "state": "closed",
+                  "evidence": [
+                    "🚫 报名截止时间：11月16日"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "📲 扫码报名，锁定参赛席位！\n05\n演讲比赛\n以词为媒，让思想发声\n以词为桥"
+                  ]
+                }
+              ],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "📅 时间：11月18日（周三）15:30—17:00",
+                "白云山校区一教南楼117",
+                "🚫 报名截止时间：11月16日"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-18&event=event-775cf13e6e990faed6a28e75f3d54de097d38566"
+            }
+          ],
+          "knowledge": []
+        },
+        "durationMs": 469
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:6",
+      "state": "running",
+      "at": "2026-11-17T08:12:34.176Z",
+      "elapsedMs": 2020,
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外最近有哪些讲座 哪些需 提前报名",
+          "limit": 5,
+          "nearestIfEmpty": true,
+          "category": "lecture"
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:6",
+      "state": "success",
+      "at": "2026-11-17T08:12:34.641Z",
+      "elapsedMs": 2485,
+      "durationMs": 465,
+      "data": {
+        "name": "search_campus_events",
+        "result": {
+          "hits": [
+            {
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "chunkId": "event-ebf2de3d74252d4f9e735530f96c94dc9675909c",
+              "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+              "sourceId": "GDUFS-SRC-0117",
+              "sourceName": "广外青年",
+              "originalUrl": "https://mp.weixin.qq.com/s/2HdigxTYTLkhVlsgyIwD2A",
+              "publishedAt": "2026-11-15T11:41:43.000Z",
+              "contentSnippet": "第二场：11月17日（周二）15:00",
+              "startOffset": 661,
+              "endOffset": 680,
+              "evidenceBasis": "activity_projection",
+              "evidenceType": "excerpt",
+              "bodyAvailable": true,
+              "bodyPartial": true,
+              "relevanceScore": 1,
+              "rankingReasons": [
+                "按实际举办日期查询共享活动索引"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "lecture",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "86085e39570289409e50e042e9120e56d0c23f033199b3e71b15fbea8e248a54",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": [],
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-ebf2de3d74252d4f9e735530f96c94dc9675909c"
+            },
+            {
+              "documentId": "wx-ac794a9899cc53693bd501ff2763ac58f8b191b4",
+              "chunkId": "event-d566d684fa5f8a726babb3fc9c6c06441e17913c",
+              "title": "（南校区专场）国际组织与国际治理沙龙 | 人工智能治理（第16期）",
+              "sourceId": "GDUFS-SRC-0173",
+              "sourceName": "国际治理创新学院",
+              "originalUrl": "https://mp.weixin.qq.com/s/Dew4TQQDjrI-RB8DezVSgA",
+              "publishedAt": "2026-11-13T06:01:38.000Z",
+              "contentSnippet": "2026年11月17日（周二）\n19：30-21：30",
+              "startOffset": 96,
+              "endOffset": 123,
+              "evidenceBasis": "activity_projection",
+              "evidenceType": "excerpt",
+              "bodyAvailable": true,
+              "bodyPartial": true,
+              "relevanceScore": 1,
+              "rankingReasons": [
+                "按实际举办日期查询共享活动索引"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "f6b04df043972c52b13064cda66b5915d7ee6af9498d1931143357c618e48660",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": [],
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-d566d684fa5f8a726babb3fc9c6c06441e17913c"
+            }
+          ],
+          "metrics": {
+            "rowsRead": 329,
+            "rowsWritten": 0,
+            "queries": 3,
+            "durationMs": 226,
+            "candidateChunks": 0,
+            "candidateActivities": 7,
+            "usageAvailable": true
+          },
+          "indexVersion": "calendar-v2",
+          "method": "calendar_index",
+          "warnings": [
+            "所问时间范围内没有符合条件的活动，以下是之后最近的安排，日期不在所问范围内。"
+          ],
+          "purpose": "events",
+          "query": "广外最近有哪些讲座 哪些需 提前报名",
+          "now": "2026-11-17T08:12:34.176Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "eventId": "event-ebf2de3d74252d4f9e735530f96c94dc9675909c",
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "activityKey": "activity-6",
+              "name": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 纸质词典展",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "11月17日（周二）15:00",
+                "date": "2026-11-17",
+                "at": "2026-11-17T15:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月17日（周二）15:00"
+              },
+              "endsAt": null,
+              "placeRaw": "白云山校区七教一楼大厅",
+              "organizer": null,
+              "eventStatus": "scheduled",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "第二场：11月17日（周二）15:00",
+                "白云山校区七教一楼大厅"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-ebf2de3d74252d4f9e735530f96c94dc9675909c"
+            },
+            {
+              "eventId": "event-aca2a6048bc48c757afebcd569e557a4c03b64f9",
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "activityKey": "activity-8",
+              "name": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 电子词典展",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "11月17日（周二）15:30",
+                "date": "2026-11-17",
+                "at": "2026-11-17T15:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月17日（周二）15:30"
+              },
+              "endsAt": {
+                "raw": "17:00",
+                "date": "2026-11-17",
+                "at": "2026-11-17T17:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "同一明确时间区间的起始日期",
+                "evidence": "17:00"
+              },
+              "placeRaw": "白云山校区八教306室",
+              "organizer": null,
+              "eventStatus": "scheduled",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "第二场：11月17日（周二）15:30—17:00",
+                "白云山校区八教306室"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-aca2a6048bc48c757afebcd569e557a4c03b64f9"
+            },
+            {
+              "eventId": "event-7650ca3d429c6cbc47dc8f5a9ba809f49ef7b1e4",
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "activityKey": "activity-9",
+              "name": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "11月17日（周二）18:30",
+                "date": "2026-11-17",
+                "at": "2026-11-17T18:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月17日（周二）18:30"
+              },
+              "endsAt": {
+                "raw": "19:30",
+                "date": "2026-11-17",
+                "at": "2026-11-17T19:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "同一明确时间区间的起始日期",
+                "evidence": "19:30"
+              },
+              "placeRaw": "北七教314",
+              "organizer": null,
+              "eventStatus": "scheduled",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": {
+                    "raw": "11月16日",
+                    "date": "2026-11-16",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "11月16日"
+                  },
+                  "deadlineSemantics": "inclusive",
+                  "capacityLimited": false,
+                  "state": "closed",
+                  "evidence": [
+                    "🚫 报名截止时间：11月16日"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "📲 扫码报名，锁定参赛席位！\n05\n演讲比赛\n以词为媒，让思想发声\n以词为桥"
+                  ]
+                }
+              ],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "⏰ 比赛时间：11月17日（周二）18:30-19:30",
+                "北七教314",
+                "🚫 报名截止时间：11月16日"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-7650ca3d429c6cbc47dc8f5a9ba809f49ef7b1e4"
+            },
+            {
+              "eventId": "event-d566d684fa5f8a726babb3fc9c6c06441e17913c",
+              "documentId": "wx-ac794a9899cc53693bd501ff2763ac58f8b191b4",
+              "activityKey": "activity-1",
+              "name": "（南校区专场）国际组织与国际治理沙龙 | 人工智能治理（第16期）",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "2026年11月17日（周二）\n19：30",
+                "date": "2026-11-17",
+                "at": "2026-11-17T19:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": "2026年11月17日（周二）\n19：30"
+              },
+              "endsAt": {
+                "raw": "21：30",
+                "date": "2026-11-17",
+                "at": "2026-11-17T21:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "同一明确时间区间的起始日期",
+                "evidence": "21：30"
+              },
+              "placeRaw": "广东外语外贸大学南校区\nF310",
+              "organizer": null,
+              "eventStatus": "scheduled",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "2026年11月17日（周二）\n19：30-21：30",
+                "广东外语外贸大学南校区\nF310"
+              ],
+              "mapPlace": {
+                "placeId": "osm-node-3125704391",
+                "name": "教学楼F栋",
+                "precision": "building"
+              },
+              "calendarUrl": "/calendar?date=2026-11-17&event=event-d566d684fa5f8a726babb3fc9c6c06441e17913c"
+            },
+            {
+              "eventId": "event-775cf13e6e990faed6a28e75f3d54de097d38566",
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "activityKey": "activity-3",
+              "name": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "11月18日（周三）15:30",
+                "date": "2026-11-18",
+                "at": "2026-11-18T15:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月18日（周三）15:30"
+              },
+              "endsAt": {
+                "raw": "17:00",
+                "date": "2026-11-18",
+                "at": "2026-11-18T17:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "同一明确时间区间的起始日期",
+                "evidence": "17:00"
+              },
+              "placeRaw": "白云山校区一教南楼117",
+              "organizer": null,
+              "eventStatus": "scheduled",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": {
+                    "raw": "11月16日",
+                    "date": "2026-11-16",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "11月16日"
+                  },
+                  "deadlineSemantics": "inclusive",
+                  "capacityLimited": false,
+                  "state": "closed",
+                  "evidence": [
+                    "🚫 报名截止时间：11月16日"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "📲 扫码报名，锁定参赛席位！\n05\n演讲比赛\n以词为媒，让思想发声\n以词为桥"
+                  ]
+                }
+              ],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "📅 时间：11月18日（周三）15:30—17:00",
+                "白云山校区一教南楼117",
+                "🚫 报名截止时间：11月16日"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-18&event=event-775cf13e6e990faed6a28e75f3d54de097d38566"
+            }
+          ],
+          "knowledge": []
+        },
+        "durationMs": 465
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "running",
+      "at": "2026-11-17T08:12:34.641Z",
+      "elapsedMs": 2485,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "success",
+      "at": "2026-11-17T08:12:35.087Z",
+      "elapsedMs": 2931,
+      "durationMs": 446,
+      "data": {
+        "characters": 99,
+        "cards": 2
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "running",
+      "at": "2026-11-17T08:12:35.087Z",
+      "elapsedMs": 2931,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "success",
+      "at": "2026-11-17T08:12:35.087Z",
+      "elapsedMs": 2931,
+      "durationMs": 0,
+      "data": {
+        "characters": 99,
+        "cards": 2
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T08:12:33.707Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T08:12:33.707Z",
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T08:12:34.176Z",
+      "data": {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 469,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T08:12:34.176Z",
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T08:12:34.641Z",
+      "data": {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 465,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T08:12:35.309Z",
+      "data": {
+        "cards": [
+          {
+            "kind": "source",
+            "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+            "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+            "sourceName": "广外青年",
+            "originalUrl": "https://mp.weixin.qq.com/s/2HdigxTYTLkhVlsgyIwD2A",
+            "publishedAt": "2026-11-15T11:41:43.000Z",
+            "snippet": "第二场：11月17日（周二）15:00",
+            "evidenceType": "excerpt",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": [
+              {
+                "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 纸质词典展",
+                "href": "/calendar?date=2026-11-17&event=event-ebf2de3d74252d4f9e735530f96c94dc9675909c"
+              },
+              {
+                "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 电子词典展",
+                "href": "/calendar?date=2026-11-17&event=event-aca2a6048bc48c757afebcd569e557a4c03b64f9"
+              },
+              {
+                "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+                "href": "/calendar?date=2026-11-17&event=event-7650ca3d429c6cbc47dc8f5a9ba809f49ef7b1e4"
+              },
+              {
+                "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+                "href": "/calendar?date=2026-11-18&event=event-775cf13e6e990faed6a28e75f3d54de097d38566"
+              }
+            ]
+          },
+          {
+            "kind": "source",
+            "documentId": "wx-ac794a9899cc53693bd501ff2763ac58f8b191b4",
+            "title": "（南校区专场）国际组织与国际治理沙龙 | 人工智能治理（第16期）",
+            "sourceName": "国际治理创新学院",
+            "originalUrl": "https://mp.weixin.qq.com/s/Dew4TQQDjrI-RB8DezVSgA",
+            "publishedAt": "2026-11-13T06:01:38.000Z",
+            "snippet": "2026年11月17日（周二）\n19：30-21：30",
+            "evidenceType": "excerpt",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": [
+              {
+                "title": "（南校区专场）国际组织与国际治理沙龙 | 人工智能治理（第16期）",
+                "href": "/calendar?date=2026-11-17&event=event-d566d684fa5f8a726babb3fc9c6c06441e17913c"
+              }
+            ]
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T08:12:35.309Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "registration_requirement_evidence",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "off_topic",
+            "relatedDocuments": [],
+            "missing": [
+              "relevant_readable_evidence"
+            ],
+            "activities": [],
+            "needsSupplement": true,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 0,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [],
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "cachedPromptTokens": 0,
+          "totalTokens": 0,
+          "usageComplete": true,
+          "chargedTokens": 0,
+          "durationMs": 934,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 0,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1551,
+            "serverElapsedMs": 2485,
+            "firstTextMs": 2485,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_events",
+                "durationMs": 469,
+                "ok": true
+              },
+              {
+                "name": "search_campus_events",
+                "durationMs": 465,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 28,
+              "writeQueries": 12,
+              "calls": 32,
+              "failures": 0,
+              "durationMs": 2352,
+              "maxCallMs": 93,
+              "rowsRead": 1855,
+              "rowsWritten": 26,
+              "rowUsageStatements": 25,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_events",
+                "rowsRead": 329,
+                "rowsWritten": 0,
+                "queries": 3,
+                "durationMs": 235,
+                "candidateChunks": 0,
+                "candidateActivities": 7,
+                "usageAvailable": true
+              },
+              {
+                "skill": "search_campus_events",
+                "rowsRead": 329,
+                "rowsWritten": 0,
+                "queries": 3,
+                "durationMs": 226,
+                "candidateChunks": 0,
+                "candidateActivities": 7,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "registration_requirement_evidence",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "off_topic",
+      "relatedDocuments": [],
+      "missing": [
+        "relevant_readable_evidence"
+      ],
+      "activities": [],
+      "needsSupplement": true,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 934,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 0,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1551,
+      "serverElapsedMs": 2485,
+      "firstTextMs": 2485,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_events",
+          "durationMs": 469,
+          "ok": true
+        },
+        {
+          "name": "search_campus_events",
+          "durationMs": 465,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 28,
+        "writeQueries": 12,
+        "calls": 32,
+        "failures": 0,
+        "durationMs": 2352,
+        "maxCallMs": 93,
+        "rowsRead": 1855,
+        "rowsWritten": 26,
+        "rowUsageStatements": 25,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 329,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 235,
+          "candidateChunks": 0,
+          "candidateActivities": 7,
+          "usageAvailable": true
+        },
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 329,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 226,
+          "candidateChunks": 0,
+          "candidateActivities": 7,
+          "usageAvailable": true
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

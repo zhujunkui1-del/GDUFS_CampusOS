@@ -34,6 +34,6 @@ export function articleTitleKey(title: string) {
     .reduce((text, separator) => text.split(separator).join(""), title)
     .toLowerCase();
 }
-export function articleTitleSql(column: "d.title") {
+export function articleTitleSql(column: "d.title" | "a.title") {
   return `lower(${titleSeparators.reduce((sql, separator) => `replace(${sql},'${separator}','')`, column as string)})`;
 }

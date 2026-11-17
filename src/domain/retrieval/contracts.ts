@@ -42,6 +42,7 @@ export const RetrievalMetricsSchema = z.object({
   rowsWritten: z.number().nonnegative(),
   queries: z.number().int().nonnegative(),
   durationMs: z.number().nonnegative(),
+  stagesMs: z.record(z.string(), z.number().nonnegative()).optional(),
   candidateChunks: z.number().int().nonnegative(),
   candidateActivities: z.number().int().nonnegative().optional(),
   usageAvailable: z.boolean(),
@@ -50,7 +51,7 @@ export const RetrievalMetricsSchema = z.object({
     .array(
       z.object({ name: z.string(), limit: z.number(), candidates: z.number() }),
     )
-    .max(5)
+    .max(6)
     .optional(),
 });
 export const EvidenceHitSchema = z
@@ -63,6 +64,16 @@ export const EvidenceHitSchema = z
     originalUrl: z.url(),
     publishedAt: z.string().nullable(),
     contentSnippet: z.string().max(800),
+    supportingPassages: z
+      .array(
+        z.object({
+          text: z.string().max(700),
+          startOffset: z.number().int().nonnegative(),
+          endOffset: z.number().int().nonnegative(),
+        }),
+      )
+      .max(3)
+      .optional(),
     startOffset: z.number().int().nonnegative(),
     endOffset: z.number().int().nonnegative(),
     evidenceBasis: z.enum(["normalized_text", "title", "activity_projection"]),
@@ -93,7 +104,9 @@ export const EvidenceHitSchema = z
       .max(4),
     calendarUrl: z
       .string()
-      .regex(/^\/calendar\?date=\d{4}-\d{2}-\d{2}&event=event-[a-f0-9]{40}$/)
+      .regex(
+        /^\/calendar\?date=\d{4}-\d{2}-\d{2}&event=event-[a-f0-9]{40}(?:&article=[A-Za-z0-9._%:-]+)?$/,
+      )
       .optional(),
   })
   .strict();

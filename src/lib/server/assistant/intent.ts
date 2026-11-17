@@ -78,19 +78,29 @@ export function isContentStatement(message: string) {
   if (/最近|近期|最新|有哪些|有什么|情况|信息|新闻|资讯|动态/.test(text))
     return false;
   if (!text || /[?？]|(?:吗|呢)\s*$/u.test(text)) return false;
-  if (/^(?:你|您|本鱼|大肥鱼)|我是|我喜欢|我爱你|谢谢你?|晚安|早安|你好/.test(text))
-    return false;
-  return (
-    text.length >= 6 &&
-    /广外|学校|校园|学院|大学|图书馆|老师|教授|院长|学生|通知|公告|公报|讲座|论坛|会议|比赛|竞赛|活动|政策|名单|公示|奖学金|宿舍|食堂|社团|报名|考试|课程/.test(
+  if (
+    /^(?:你|您|本鱼|大肥鱼)|我是|我喜欢|我爱你|谢谢你?|晚安|早安|你好/.test(
       text,
     )
-  ) ||
-    titleLike(text);
+  )
+    return false;
+  return (
+    (text.length >= 6 &&
+      /广外|学校|校园|学院|大学|图书馆|老师|教授|院长|学生|通知|公告|公报|讲座|论坛|会议|比赛|竞赛|活动|政策|名单|公示|奖学金|宿舍|食堂|社团|报名|考试|课程/.test(
+        text,
+      )) ||
+    titleLike(text)
+  );
 }
 /** A request for a specific article, not a place. */
 export function wantsArticle(message: string) {
   const text = message.normalize("NFKC");
+  if (
+    /区分|哪些|有哪些/.test(text) &&
+    /新闻报道|新闻|报道/.test(text) &&
+    !/这篇|那篇|原文|全文|标题|《/.test(text)
+  )
+    return false;
   return (
     /(?:文章|这篇|原文|报道|新闻稿|全文|标题)/.test(text) ||
     /[《「『“"][^》」』”"]{4,200}[》」』”"]/.test(text) ||
@@ -116,7 +126,10 @@ export function articleTitle(message: string) {
         /^(?:请|帮我|麻烦|我想|想|要|在校园雷达里|在校园知识库里|在雷达里|在知识库里|查找|查|搜索|搜|找|看看|看下|了解一下|了解)\s*/g,
         "",
       )
-      .replace(/(?:这篇文章|这篇报道|文章|原文|报道|新闻稿|全文)[。！？!?]*$/g, "")
+      .replace(
+        /(?:这篇文章|这篇报道|文章|原文|报道|新闻稿|全文)[。！？!?]*$/g,
+        "",
+      )
       .trim();
     if (remainder.length > 4) title = undefined;
     else title = outer[1];
@@ -128,13 +141,14 @@ export function articleTitle(message: string) {
         "",
       )
       .replace(/^(?:有没有|是否有)\s*/g, "")
-      .replace(/(?:这篇文章|这篇报道|文章|原文|报道|新闻稿|全文)[。！？!?]*$/g, "")
+      .replace(
+        /(?:这篇文章|这篇报道|文章|原文|报道|新闻稿|全文)[。！？!?]*$/g,
+        "",
+      )
       .trim();
     title = cleaned;
   }
-  const normalized = title
-    .replace(/^(?:那篇|这篇|一篇)\s*/, "")
-    .trim();
+  const normalized = title.replace(/^(?:那篇|这篇|一篇)\s*/, "").trim();
   return normalized.length >= 4 ? normalized.slice(0, 300) : undefined;
 }
 /** Keywords for the second pass after the exact title misses. */

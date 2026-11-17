@@ -25,7 +25,7 @@ import { universityScope } from "../assistant/grounding";
 import { completeSnippetTimes } from "@/lib/retrieval/snippet-time";
 import { calendarContentSearch } from "../calendar/search";
 import { collegeRoundupIds } from "./college-roundup";
-import { calendarIdentity } from "@/lib/ingestion/calendar-identity";
+import { readCalendar } from "../calendar/query";
 
 const time = (t: ArticleTimePoint | null) =>
   t
@@ -77,6 +77,22 @@ export async function searchContent(
             timeRole: inferredWindow.role,
           }),
     });
+    q = event;
+  }
+  if (event?.eventState === "upcoming") {
+    const today = new Date(Date.parse(now) + 28800000)
+      .toISOString()
+      .slice(0, 10);
+    event = {
+      ...event,
+      after: event.after ?? today,
+      before:
+        event.before ??
+        new Date(Date.parse(now) + 30 * 86400000 + 28800000)
+          .toISOString()
+          .slice(0, 10),
+      timeRole: "event",
+    };
     q = event;
   }
   if (event?.after && event.before && event.after > event.before)
@@ -157,6 +173,8 @@ export async function searchContent(
     registrationState: _reg,
     excludeDocumentIds: _exclude,
     nearestIfEmpty: _nearest,
+    campus: _campus,
+    eventState: _eventState,
     ...base
   } = event || {
     ...q,
@@ -166,6 +184,8 @@ export async function searchContent(
     registrationState: undefined,
     excludeDocumentIds: undefined,
     nearestIfEmpty: undefined,
+    campus: undefined,
+    eventState: undefined,
   };
   void _after;
   void _before;
@@ -173,6 +193,8 @@ export async function searchContent(
   void _reg;
   void _exclude;
   void _nearest;
+  void _campus;
+  void _eventState;
   const search = await new D1KeywordRetriever(
     db,
     asksUtilityPayment(q.query) ? undefined : requestSemanticRetriever(),
@@ -180,6 +202,9 @@ export async function searchContent(
     {
       ...base,
       purpose,
+      ...(event?.registrationState === "open" && documentIds
+        ? { documentIds }
+        : {}),
       limit:
         event && (event.registrationState || event.after || event.before)
           ? Math.min(6, q.limit * 2)
@@ -208,6 +233,7 @@ export async function searchContent(
   const groups = new Set<string>();
   const uncertainDates = new Set<string>();
   for (const { hit, analysis: storedAnalysis } of search.articles) {
+    const calendarVerified = storedAnalysis?.calendar?.status === "accepted";
     const analysis =
       storedAnalysis?.calendar?.status === "accepted"
         ? storedAnalysis
@@ -228,6 +254,13 @@ export async function searchContent(
       materials: k.materials.slice(0, 3).map((e) => e.text.slice(0, 300)),
       steps: k.steps.slice(0, 3).map((e) => e.text.slice(0, 300)),
     });
+    if (!calendarVerified) continue;
+    const indexedEvents = analysis.activities.some(
+      (activity) => activity.calendar?.eligible,
+    )
+      ? (await readCalendar(db, { articleId: hit.documentId, limit: 50 }, now))
+          .items
+      : [];
     for (const a of analysis.activities.slice(0, 3)) {
       if (event?.category && a.category !== event.category) continue;
       if (event?.after || event?.before) {
@@ -248,11 +281,17 @@ export async function searchContent(
       }
       const current = { ...a, status: activityStatus(a, now) },
         state = registrationState(current, now);
+      if (analysis.calendar?.status !== "accepted") continue;
       if (event?.registrationState && state !== event.registrationState)
         continue;
       // Only exact start + explicit location can deduplicate sessions across articles.
-      const group = a.calendar?.eligible
-        ? await calendarIdentity(a, hit.documentId, hit.sourceName)
+      const indexedEvent = indexedEvents.find(
+        (item) =>
+          item.activity.key === a.key &&
+          item.sources.some((source) => source.documentId === hit.documentId),
+      );
+      const group = indexedEvent
+        ? indexedEvent.eventId
         : a.startsAt?.at && a.placeRaw
           ? `${a.title}|${a.startsAt.at}|${a.placeRaw}`
           : hit.documentId + "/" + a.key;
@@ -294,13 +333,13 @@ export async function searchContent(
         evidence: a.evidence.slice(0, 3).map((e) => e.text.slice(0, 240)),
         mapPlace: articleMapPlace(a.placeRaw),
         calendarUrl:
-          a.calendar?.eligible && a.startsAt?.date
-            ? `/calendar?date=${a.startsAt.date}&event=${group}`
+          indexedEvent && a.startsAt?.date
+            ? `/calendar?date=${a.startsAt.date}&event=${group}&article=${encodeURIComponent(hit.documentId)}`
             : undefined,
       });
     }
   }
-  if (event && (event.registrationState || event.after || event.before)) {
+  if (event) {
     const ids = new Set(result.activities.map((a) => a.documentId));
     result.hits = result.hits.filter(
       (h) =>

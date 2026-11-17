@@ -1,0 +1,986 @@
+{
+  "question": "我准备申请奖学金，但有一门课程不及格，会影响申请吗？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息（查过：我准备申请奖学金 但有一门课程不及格 会影响申请吗）。这不代表学校没有相关规定，只是本站还没收录到——建议通过广外官网、院系公示或校园地图APP核实。",
+  "cards": [],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T07:43:39.752Z",
+      "elapsedMs": 180,
+      "data": {
+        "question": "我准备申请奖学金，但有一门课程不及格，会影响申请吗？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T07:43:39.752Z",
+      "elapsedMs": 180,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T07:43:40.733Z",
+      "elapsedMs": 1161,
+      "data": {
+        "question": "我准备申请奖学金，但有一门课程不及格，会影响申请吗？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T07:43:40.733Z",
+      "elapsedMs": 1161,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T07:43:40.733Z",
+      "elapsedMs": 1161,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T07:43:40.733Z",
+      "elapsedMs": 1161,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T07:43:40.733Z",
+      "elapsedMs": 1161,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T07:43:40.733Z",
+      "elapsedMs": 1161,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "facts",
+        "campus": null,
+        "topics": [
+          "scholarship",
+          "course_failure"
+        ],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:5",
+      "state": "running",
+      "at": "2026-11-17T07:43:40.869Z",
+      "elapsedMs": 1297,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "我准备申请奖学金 但有一门课程不及格 会影响申请吗",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:5",
+      "state": "success",
+      "at": "2026-11-17T07:43:43.319Z",
+      "elapsedMs": 3747,
+      "durationMs": 2450,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "chunkId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285:fts:bc4c3d7651c7c2fc:191",
+              "title": "2026版本科生学生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+              "publishedAt": "2026-09-20T11:16:00.000Z",
+              "contentSnippet": " （五）按期缴清本校学宿费等应缴费用。\n本科学生手册\n192\n第六条已通过其他途径获得出国（境）奖励或资助的学生不能同时申请本奖学金。 学生应在出国（境）前申请奖学金。学生在校期间，本奖学金只能申请一次。 第七条奖学金奖励等级及标准如下： （一）一等奖学金。上一学年综合测评获一等奖学金或校长奖章者可提出申请。赴国（境）外学习1 年以上者，给予30000 元奖励；赴国（境） 外学习3 个月以上、1 年以内者，给予15000 元奖励。 （二）二等奖学金。上一学年综合测评获二等以上奖学金者可提出申请，赴国（境）外学习1 年以上者，给予20000 元奖励；赴国（境）外学习3 个月以上、1 年以内者，给予10000 元奖励。 （三）三等奖学金。上一学年综合测评获三等以上奖学金者可提出申请。赴国（境）外学习1 年以上者，给予10000 元奖励；赴国（境）外学习3 个月以上、1 年以内者，给予8000 元奖励。 （四）短期出国（境）奖学金。适用于赴国（境）外学习3 个月以内学生，上一学年综合测评获一二三等奖学金或校长奖章者可提出申请， 给予5000 元奖励。\n第三章申请、评审程序及发放\n第八条奖学金申请及评审程序如下： （一）信息发布。学生工作部（处）于每学期第15-18 周发布奖学金申请信息。 （二）学生申请。符合条件的学生在规定时间向学院提出申请。 （三）学院初审与公示。各学院组织初审与公示，公示时间为3 个工作日。学院需在公示结束后5 个工作日内将公示无异议的初审结果报送学生工作部（处）。 （四）复审与公示。按照公平、公正、公开的原则，学生工作部（处） 会同国际合作与交流处对初审结果进行复审，并将复审合格名单在全校范围内公示5 个工作日。 （五）学校审批。对公示无异议的名单，由学生工作部（处）报分管校领导审批。 第九条奖学金分两次发放。学生获",
+              "startOffset": 135683,
+              "endOffset": 136463,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 50.57,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 7.5",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "f72fdd02d8506d6c8bec1326ecc47e069aa5eb71309bc2f952db35c853fe5e2e",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "chunkId": "content-16300be2-facb-4406-b157-ab5ace0d0c28:fts:9fa888bfac25bd0c:184",
+              "title": "2026年研究生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+              "publishedAt": "2026-09-20T11:27:05.000Z",
+              "contentSnippet": "第二十一条其他国家、地方政府资助项目。根据国家、地方政府\n相关文件组织实施。\n第五章学校资助项目\n第二十二条学校奖助学金。学校设立优秀学生奖学金、校长奖学\n金、出国（境）奖助学金、民族学生奖学金、全日制非定向就业博士研\n究生助学金、创新奖和创新育苗奖等，奖助全日制在校品学兼优的学\n生。\n第二十三条勤工助学。组织家庭经济困难学生，利用课余时间开\n展校内勤工助学活动，解决生活费问题。\n第二十四条困难补助。主要用于帮助学生解决学习、生活中遇到\n的突发、临时、特定的经济困难，保障他们顺利完成学业。困难补助包\n括临时困难补助、特殊困难补助、特殊情况补助三种形式。\n第二十五条减免学费。根据上级相关规定，对符合条件的家庭经\n济困难学生减免学费。\n研究生思想政治教育\n221\n第二十六条绿色通道。为家庭经济困难新生开通绿色通道，符合\n条件的学生可以向学校申请缓缴学费，再办理入学手续，保证家庭经济\n困难新生顺利入学。\n第二十七条其他校内资助项目。根据学校相关文件组织实施。\n第六章社会奖助学项目\n第二十八条学校教育发展基金会秘书处负责开拓社会奖助学项\n目，与出资人确定奖助学项目的标准、申请条件等。",
+              "startOffset": 144813,
+              "endOffset": 145308,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 44.46,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 3",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "15816f34ff6010f90ebf4af7102f7ce64406cb2e541bc7ef87fbc01190cdc7e6",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 12736,
+            "rowsWritten": 0,
+            "queries": 9,
+            "durationMs": 2450,
+            "stagesMs": {
+              "lexical": 331,
+              "supplement": 903,
+              "revalidationAndRanking": 1216
+            },
+            "candidateChunks": 96,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "scholarship_policy",
+                "limit": 16,
+                "candidates": 16
+              },
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 15
+              },
+              {
+                "name": "document_passages",
+                "limit": 480,
+                "candidates": 36
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "我准备申请奖学金 但有一门课程不及格 会影响申请吗",
+          "now": "2026-11-17T07:43:40.869Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [],
+          "knowledge": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "符合申请条件的学生可在当年暑假前后向拟报读的接收单位或学科点进行初步联系",
+                "除需满足本规定第九条、第十条的条件外",
+                "第二章奖励标准与申请条件"
+              ],
+              "materials": [
+                "可申请转学： （一）患病学生需提供我校及拟转入学校指定医院的检查证明（需盖疾病诊断证明专用章）",
+                "有特殊困难和特别需要的学生需提供相关证明材料"
+              ],
+              "steps": [
+                "国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续 3 年上榜“US News”世界大学排名；入选软科中国文科实力A 类大学，稳居全国前50 强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI 全球前5‰，工程学、环境 /生态学、经济学与商学进入ESI 前1%；12 个学科上榜软科中国最好学科；外国语言文学学科连续多年上榜软科“中国顶尖学科”， 稳居全国前3；应用经济学、法学连续多年上榜软科“中国一流学科”。 科学研究学校深入推进有组织科研，构建服务共建“一带一路”倡议、 高水平对外开放与粤港澳大湾区建设、法治中国与涉外法治建设、 国际传播建设等四大科研平台体系",
+                "学校各单位： 为深入贯彻落实党的十八届三中全会关于深化教育领域综合改革的精神，积极适应经济社会发展新常态对高等教育人才培养的需求，根据《中华人民共和国教育法》《普通高等学校学生管理规定》（教育部令第21 号）等法律法规和《教育部关于全面提高高等教育质量的若干意见》（教高〔2012〕4 号）、《广东省人民政府办公厅转发教育厅关于进一步扩大和落实高校办学自主权促进高校加快发展若干意见的通知》（粤府办 〔2013〕26 号）等文件要求，学校结合实际，研究制定了本科教学实施学分制管理的若干意见，经2015 年1 月12 日校党委常委会审议并原则通过，具体如下。 一、指导思想坚持育人为本，立德树人，全面",
+                "3．选课制。学生根据专业培养方案自主安排学习进程，对于必修课， 可选择任课教师；对于选修课，可选择课程和任课教师；每学期前两周， 学生试听课程，试听结束后作出选课确认。 4．主辅修制。学生在达到主修专业学习要求的前提下，可以辅修其他专业；在主修专业达到毕业要求的前提下，其修读的辅修专业如达到要求，可向其发放辅修专业证书；学生在主修专业具备学位授予资格的前提下，如其辅修专业达到学位授予条件，可获得相应专业学位证书。 5．学分互认制。学生在与我校签订了学分互认协议的境内外高校或在我校认可的境内外高校或MOOC 等网络学习平台修读课程获得的成绩和学分，可以转换为本校课程成绩和学分；学生修读校外课程，"
+              ]
+            },
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "(四)符合国(境)外合作院校规定的申请条件及语言要求",
+                "(三)申请条件",
+                "(三)申请条件"
+              ],
+              "materials": [
+                "需提供随时可以联系的通讯方式"
+              ],
+              "steps": [
+                "学校形成了外语学科与多学科交叉融合、协同发展的学科格局，现有外国语言文学、应用经济学、法学3个一级学科博士点，翻译、法律2 个专业学位博士点和27个二级学科博士点，13个一级学科硕士点和60个二级学科硕士点（含3个交叉学科），21个专业学位硕士点。学校着力推进涉外法治、区域国别学、中华文化国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续3年上榜“US News”世界大学排名；入选软科中国文科实力A类大学，稳居全国前50强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI全球前5‰，工程学、环境/生态学、经济学与商学进入ESI前1%；12个学科上榜软科中国最好学科",
+                "办理入学手续。审查不合格的，取消入学资格；逾期不办理入学手续且",
+                "学位等五个学业出口中选择一个进行申请，并按期办理离校手续。"
+              ]
+            }
+          ]
+        },
+        "durationMs": 2450
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "running",
+      "at": "2026-11-17T07:43:43.319Z",
+      "elapsedMs": 3747,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "奖学金 不及格",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "success",
+      "at": "2026-11-17T07:43:45.082Z",
+      "elapsedMs": 5510,
+      "durationMs": 1763,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "chunkId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285:fts:bc4c3d7651c7c2fc:190",
+              "title": "2026版本科生学生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+              "publishedAt": "2026-09-20T11:16:00.000Z",
+              "contentSnippet": "条本办法所称本科学生是指取得我校学籍，在我校注册的接受普通高等学历教育的本科生。 第三条学校拨款设立本科学生出国（境）学习奖助学金专项资金， 用于对出国（境）的学生进行奖励或资助。\n第二章奖励范围、申请条件及奖励标准\n第四条奖学金奖励对象： （一）《广东外语外贸大学国际交换生管理规定》（广外校〔2011〕 27 号）和《广东外语外贸大学国际联合培养学生管理办法》（广外校〔2009〕 81 号）中规定的，参加国际交换生项目和国际联合培养项目的学生。 （二）经学校同意派出参加上级行政管理部门或学校组织的赴国 （境）外实习的学生。 （三）经学校同意派出到国（境）外参加各类国际大赛的学生。 （四）经学校同意派出到国（境）外参加各种学术交流活动的学生。 第五条奖学金申请者应符合以下基本条件： （一）热爱社会主义祖国，拥护中国共产党的领导。 （二）自觉遵守宪法和法律，遵守学校各项规章制度。 （三）诚实守信，道德品质优良。 （四）上一学年度校内必修或限选等纳入综合测评科目成绩无不及格记录，无违规违纪行为。 （五）按期缴清本校学宿费等应缴费用。\n本科学生手册\n192",
+              "supportingPassages": [
+                {
+                  "text": "，在我校注册的接受普通高等学历教育的本科生。 第三条学校拨款设立本科学生出国（境）学习奖助学金专项资金， 用于对出国（境）的学生进行奖励或资助。\n第二章资助范围、申请条件及资助标准\n第四条助学金资助对象包括： （一）《广东外语外贸大学国际交换生管理规定》（广外校〔2011〕 27 号）和《广东外语外贸大学国际联合培养学生管理办法》（广外校〔2009〕 81 号）中规定的，参加国际交换和国际联合培养项目的学生。 （二）经学校同意派出参加上级行政管理部门或学校组织的赴国 （境）外实习的学生。 （三）经学校同意派出到国（境）外参加各类国际大赛的学生。 （四）经学校同意派出到国（境）外参加培训或学术交流活动的学生。 第五条助学金申请者应符合以下基本条件： （一）热爱社会主义祖国，拥护中国共产党的领导。 （二）自觉遵守宪法和法律，遵守学校各项规章制度。 （三）诚实守信，道德品质优良。 （四）生活朴实，不铺张浪费。 （五）上一学年校内必修或限选等纳入综合测评科目成绩无不及格\n学生工作管理\n189\n记录，无违规违纪行为。 （六）按期缴清本校学宿费等应缴费用。 （七）根据《广东外语外贸大学家庭经济困难学生认定工作实施办法》（广外校〔2017〕5 号）认定为提出申请当年度学年度家庭经济困难的学生，或经学校同意派出到国（境）外学习并需同时缴纳对方学校及本校学费的学生。 第六条已通过其它途径获得出国（境）资助或奖励的学生不能同时申请本助学金。 学生应在出国（境）前申请助学金。学生在校期间，本助学金只能",
+                  "startOffset": 133224,
+                  "endOffset": 133874
+                },
+                {
+                  "text": "开设课程的考试进行巡视，并处理考试中的突发、异常事件。\n第七章成绩评定、绩点计算与课程考核档案管理\n第二十二条课程考核成绩采用百分制记分方式，60 分以下为不及格。\n教学管理\n73\n第二十三条课程成绩由期末考试（查）成绩和平时成绩两部分构成。原则上平时成绩在总评成绩中的占比不低于60%。课程平时考核要素包括：考勤、个人作业、团队作业、随堂测验、课堂讨论、课外阅读报告、 课程设计、实践实验、调查报告、期中考试等。 第二十四条课程主讲教师须在开课初向全体学生公布该门课程成绩的构成、要求和评分办法。 第二十五条严格和规范平时成绩的管理。任课教师须根据平时考核资料公平公正地评定学生平时成绩，并在《平时成绩记录表》中详实记载学生平时考核结果。 第二十六条期末考试（查）成绩不及格，该门课程的课程成绩即为期末考试（查）成绩。学校体育运动队学生、高水平运动员和新疆民考汉学生另行规定。 第二十七条课程考核不及格的，不能取得该课程学分。学生因课程考核违纪的，该课程成绩记以0 分。 第二十八条学校采用平均学分绩点（GPA）指标评价学生的学习质量。平均学分绩点作为学生获得学士学位的重要依据，并作为评定奖学金、 出国留学、辅修、推免生、国（境）内外交流生等相关选拔的重要参考条件。 课程成绩与绩点换算关系表绩点\n4. 0 3.7 3.3 3.0 2.7 2.3 2.0 1.7 1.3 1.0 0\n百分制 ≥ 95 ≥90 <95 ≥85 <90 ≥82 <85 ≥78 <82 ≥75 <78 ≥71 <75",
+                  "startOffset": 57535,
+                  "endOffset": 58185
+                }
+              ],
+              "startOffset": 135231,
+              "endOffset": 135713,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 40.77,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 4.5",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "f72fdd02d8506d6c8bec1326ecc47e069aa5eb71309bc2f952db35c853fe5e2e",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 6282,
+            "rowsWritten": 0,
+            "queries": 9,
+            "durationMs": 1763,
+            "stagesMs": {
+              "lexical": 333,
+              "supplement": 714,
+              "revalidationAndRanking": 716
+            },
+            "candidateChunks": 96,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "scholarship_policy",
+                "limit": 16,
+                "candidates": 16
+              },
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 19
+              },
+              {
+                "name": "document_passages",
+                "limit": 496,
+                "candidates": 33
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "奖学金 不及格",
+          "now": "2026-11-17T07:43:43.319Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [],
+          "knowledge": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "符合申请条件的学生可在当年暑假前后向拟报读的接收单位或学科点进行初步联系",
+                "除需满足本规定第九条、第十条的条件外",
+                "第二章奖励标准与申请条件"
+              ],
+              "materials": [
+                "可申请转学： （一）患病学生需提供我校及拟转入学校指定医院的检查证明（需盖疾病诊断证明专用章）",
+                "有特殊困难和特别需要的学生需提供相关证明材料"
+              ],
+              "steps": [
+                "国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续 3 年上榜“US News”世界大学排名；入选软科中国文科实力A 类大学，稳居全国前50 强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI 全球前5‰，工程学、环境 /生态学、经济学与商学进入ESI 前1%；12 个学科上榜软科中国最好学科；外国语言文学学科连续多年上榜软科“中国顶尖学科”， 稳居全国前3；应用经济学、法学连续多年上榜软科“中国一流学科”。 科学研究学校深入推进有组织科研，构建服务共建“一带一路”倡议、 高水平对外开放与粤港澳大湾区建设、法治中国与涉外法治建设、 国际传播建设等四大科研平台体系",
+                "学校各单位： 为深入贯彻落实党的十八届三中全会关于深化教育领域综合改革的精神，积极适应经济社会发展新常态对高等教育人才培养的需求，根据《中华人民共和国教育法》《普通高等学校学生管理规定》（教育部令第21 号）等法律法规和《教育部关于全面提高高等教育质量的若干意见》（教高〔2012〕4 号）、《广东省人民政府办公厅转发教育厅关于进一步扩大和落实高校办学自主权促进高校加快发展若干意见的通知》（粤府办 〔2013〕26 号）等文件要求，学校结合实际，研究制定了本科教学实施学分制管理的若干意见，经2015 年1 月12 日校党委常委会审议并原则通过，具体如下。 一、指导思想坚持育人为本，立德树人，全面",
+                "3．选课制。学生根据专业培养方案自主安排学习进程，对于必修课， 可选择任课教师；对于选修课，可选择课程和任课教师；每学期前两周， 学生试听课程，试听结束后作出选课确认。 4．主辅修制。学生在达到主修专业学习要求的前提下，可以辅修其他专业；在主修专业达到毕业要求的前提下，其修读的辅修专业如达到要求，可向其发放辅修专业证书；学生在主修专业具备学位授予资格的前提下，如其辅修专业达到学位授予条件，可获得相应专业学位证书。 5．学分互认制。学生在与我校签订了学分互认协议的境内外高校或在我校认可的境内外高校或MOOC 等网络学习平台修读课程获得的成绩和学分，可以转换为本校课程成绩和学分；学生修读校外课程，"
+              ]
+            }
+          ]
+        },
+        "durationMs": 1763
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "running",
+      "at": "2026-11-17T07:43:45.082Z",
+      "elapsedMs": 5510,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "success",
+      "at": "2026-11-17T07:43:45.082Z",
+      "elapsedMs": 5510,
+      "durationMs": 0,
+      "data": {
+        "characters": 108,
+        "cards": 0
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "running",
+      "at": "2026-11-17T07:43:45.082Z",
+      "elapsedMs": 5510,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "success",
+      "at": "2026-11-17T07:43:45.082Z",
+      "elapsedMs": 5510,
+      "durationMs": 0,
+      "data": {
+        "characters": 108,
+        "cards": 0
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T07:43:40.869Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T07:43:40.869Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T07:43:43.319Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 2450,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T07:43:43.319Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T07:43:45.082Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 1763,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T07:43:45.279Z",
+      "data": {
+        "cards": [],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T07:43:45.279Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "no_evidence",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": true,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "off_topic",
+            "relatedDocuments": [],
+            "missing": [
+              "relevant_readable_evidence",
+              "official_authority_unconfirmed"
+            ],
+            "activities": [],
+            "needsSupplement": true,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 0,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [],
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "cachedPromptTokens": 0,
+          "totalTokens": 0,
+          "usageComplete": true,
+          "chargedTokens": 0,
+          "durationMs": 4213,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 0,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1297,
+            "serverElapsedMs": 5510,
+            "firstTextMs": 5510,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 2450,
+                "ok": true
+              },
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 1763,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 34,
+              "writeQueries": 12,
+              "calls": 38,
+              "failures": 0,
+              "durationMs": 4764,
+              "maxCallMs": 479,
+              "rowsRead": 19567,
+              "rowsWritten": 26,
+              "rowUsageStatements": 31,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 12736,
+                "rowsWritten": 0,
+                "queries": 9,
+                "durationMs": 2450,
+                "stagesMs": {
+                  "lexical": 331,
+                  "supplement": 903,
+                  "revalidationAndRanking": 1216
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "scholarship_policy",
+                    "limit": 16,
+                    "candidates": 16
+                  },
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 64
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 15
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 480,
+                    "candidates": 36
+                  }
+                ]
+              },
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 6282,
+                "rowsWritten": 0,
+                "queries": 9,
+                "durationMs": 1763,
+                "stagesMs": {
+                  "lexical": 333,
+                  "supplement": 714,
+                  "revalidationAndRanking": 716
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "scholarship_policy",
+                    "limit": 16,
+                    "candidates": 16
+                  },
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 64
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 19
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 496,
+                    "candidates": 33
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "no_evidence",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": true,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "off_topic",
+      "relatedDocuments": [],
+      "missing": [
+        "relevant_readable_evidence",
+        "official_authority_unconfirmed"
+      ],
+      "activities": [],
+      "needsSupplement": true,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 4213,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 0,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1297,
+      "serverElapsedMs": 5510,
+      "firstTextMs": 5510,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 2450,
+          "ok": true
+        },
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1763,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 34,
+        "writeQueries": 12,
+        "calls": 38,
+        "failures": 0,
+        "durationMs": 4764,
+        "maxCallMs": 479,
+        "rowsRead": 19567,
+        "rowsWritten": 26,
+        "rowUsageStatements": 31,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 12736,
+          "rowsWritten": 0,
+          "queries": 9,
+          "durationMs": 2450,
+          "stagesMs": {
+            "lexical": 331,
+            "supplement": 903,
+            "revalidationAndRanking": 1216
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "scholarship_policy",
+              "limit": 16,
+              "candidates": 16
+            },
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 15
+            },
+            {
+              "name": "document_passages",
+              "limit": 480,
+              "candidates": 36
+            }
+          ]
+        },
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 6282,
+          "rowsWritten": 0,
+          "queries": 9,
+          "durationMs": 1763,
+          "stagesMs": {
+            "lexical": 333,
+            "supplement": 714,
+            "revalidationAndRanking": 716
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "scholarship_policy",
+              "limit": 16,
+              "candidates": 16
+            },
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 19
+            },
+            {
+              "name": "document_passages",
+              "limit": 496,
+              "candidates": 33
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

@@ -1,0 +1,324 @@
+{
+  "question": "其中哪个离图书馆最近？",
+  "status": "error",
+  "entry": "campus-assistant-map",
+  "answer": "这次查询未完成，请重新提问。",
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "failed",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": true,
+      "concise": false
+    },
+    "requests": 4,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 2166,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      },
+      {
+        "durationMs": 2039,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      },
+      {
+        "durationMs": 2279,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      },
+      {
+        "durationMs": 2078,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      }
+    ],
+    "promptTokens": 10094,
+    "completionTokens": 564,
+    "cachedPromptTokens": 0,
+    "totalTokens": 10658,
+    "usageComplete": true,
+    "chargedTokens": 10658,
+    "durationMs": 8914,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 10658,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 853,
+      "serverElapsedMs": 9767,
+      "firstTextMs": null,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_places",
+          "durationMs": 0,
+          "ok": true
+        },
+        {
+          "name": "find_nearby_places",
+          "durationMs": 0,
+          "ok": false
+        },
+        {
+          "name": "find_nearby_places",
+          "durationMs": 0,
+          "ok": false
+        },
+        {
+          "name": "find_nearby_places",
+          "durationMs": 0,
+          "ok": false
+        }
+      ],
+      "database": {
+        "readQueries": 24,
+        "writeQueries": 11,
+        "calls": 27,
+        "failures": 0,
+        "durationMs": 1205,
+        "maxCallMs": 58,
+        "rowsRead": 29,
+        "rowsWritten": 20,
+        "rowUsageStatements": 12,
+        "rowUsageComplete": false
+      },
+      "retrieval": [],
+      "externalSearch": []
+    }
+  },
+  "cards": [],
+  "events": [
+    {
+      "timestamp": "2026-11-17T02:58:54.530Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:56.784Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "search_places",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:56.784Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "search_places",
+        "ok": true,
+        "durationMs": 0,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:58.907Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "find_nearby_places",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:58.907Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "find_nearby_places",
+        "ok": false,
+        "durationMs": 0,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:59:01.275Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "find_nearby_places",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:59:01.275Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "find_nearby_places",
+        "ok": false,
+        "durationMs": 0,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:59:03.444Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "find_nearby_places",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:59:03.444Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "find_nearby_places",
+        "ok": false,
+        "durationMs": 0,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:59:03.595Z",
+      "type": "run.failed",
+      "payload": {
+        "error": {
+          "code": "INVALID_ARGUMENT",
+          "message": "这次查询未完成，请重新提问。"
+        },
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "failed",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": true,
+            "concise": false
+          },
+          "requests": 4,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 2166,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 2039,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 2279,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 2078,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            }
+          ],
+          "promptTokens": 10094,
+          "completionTokens": 564,
+          "cachedPromptTokens": 0,
+          "totalTokens": 10658,
+          "usageComplete": true,
+          "chargedTokens": 10658,
+          "durationMs": 8914,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 10658,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 853,
+            "serverElapsedMs": 9767,
+            "firstTextMs": null,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_places",
+                "durationMs": 0,
+                "ok": true
+              },
+              {
+                "name": "find_nearby_places",
+                "durationMs": 0,
+                "ok": false
+              },
+              {
+                "name": "find_nearby_places",
+                "durationMs": 0,
+                "ok": false
+              },
+              {
+                "name": "find_nearby_places",
+                "durationMs": 0,
+                "ok": false
+              }
+            ],
+            "database": {
+              "readQueries": 24,
+              "writeQueries": 11,
+              "calls": 27,
+              "failures": 0,
+              "durationMs": 1205,
+              "maxCallMs": 58,
+              "rowsRead": 29,
+              "rowsWritten": 20,
+              "rowUsageStatements": 12,
+              "rowUsageComplete": false
+            },
+            "retrieval": [],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

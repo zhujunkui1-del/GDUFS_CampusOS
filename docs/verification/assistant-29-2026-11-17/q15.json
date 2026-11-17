@@ -1,0 +1,185 @@
+{
+  "question": "从南校区正门到学生宿舍 7 栋，步行应该怎么走？",
+  "status": "success",
+  "entry": "campus-assistant-map",
+  "answer": "😯 你说的南校区正门是指哪个具体入口呀？可以告诉我你出发的具体位置，本鱼给你规划步行路线～",
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "open",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 1,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 6397,
+        "firstTextMs": 6259,
+        "finishReason": "stop",
+        "contentChars": 46
+      }
+    ],
+    "promptTokens": 451,
+    "completionTokens": 437,
+    "cachedPromptTokens": 0,
+    "totalTokens": 888,
+    "usageComplete": true,
+    "chargedTokens": 888,
+    "durationMs": 6514,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 888,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1183,
+      "serverElapsedMs": 7697,
+      "firstTextMs": 7642,
+      "mapActionMs": null,
+      "skills": [],
+      "database": {
+        "readQueries": 18,
+        "writeQueries": 12,
+        "calls": 22,
+        "failures": 0,
+        "durationMs": 1300,
+        "maxCallMs": 70,
+        "rowsRead": 555,
+        "rowsWritten": 26,
+        "rowUsageStatements": 13,
+        "rowUsageComplete": false
+      },
+      "retrieval": [],
+      "externalSearch": []
+    }
+  },
+  "cards": [],
+  "events": [
+    {
+      "timestamp": "2026-11-17T08:20:47.372Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:20:53.886Z",
+      "type": "message.delta",
+      "payload": {
+        "text": "😯 你说的南校区正门是指哪个具体入口呀？可以告诉我你出发的具体位置，本鱼给你规划步行路线～"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:20:54.084Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [],
+        "routes": []
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:20:54.084Z",
+      "type": "run.completed",
+      "payload": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "open",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 1,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 6397,
+              "firstTextMs": 6259,
+              "finishReason": "stop",
+              "contentChars": 46
+            }
+          ],
+          "promptTokens": 451,
+          "completionTokens": 437,
+          "cachedPromptTokens": 0,
+          "totalTokens": 888,
+          "usageComplete": true,
+          "chargedTokens": 888,
+          "durationMs": 6514,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 888,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1183,
+            "serverElapsedMs": 7697,
+            "firstTextMs": 7642,
+            "mapActionMs": null,
+            "skills": [],
+            "database": {
+              "readQueries": 18,
+              "writeQueries": 12,
+              "calls": 22,
+              "failures": 0,
+              "durationMs": 1300,
+              "maxCallMs": 70,
+              "rowsRead": 555,
+              "rowsWritten": 26,
+              "rowUsageStatements": 13,
+              "rowUsageComplete": false
+            },
+            "retrieval": [],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

@@ -1,11 +1,32 @@
 import type { ContentSearchResult } from "@/domain/retrieval/skills";
 import { buildQueryPlan, queryRelevance } from "./query-plan";
 import { evidenceWindow } from "./evidence-window";
+import { chinaDate } from "@/lib/retrieval/calendar-dates";
 import {
   asksPaymentProcedure,
   paymentChannelEvidence,
   paymentSubjects,
 } from "./payment-evidence";
+
+export function answersPreviousTopic(
+  answer: string,
+  current: string,
+  previous: string,
+) {
+  const currentTopics = buildQueryPlan(current).topics;
+  if (
+    !currentTopics.length ||
+    currentTopics.some(({ alternatives }) =>
+      alternatives.some((term) => answer.includes(term)),
+    )
+  )
+    return false;
+  const currentIds = new Set(currentTopics.map(({ id }) => id));
+  return buildQueryPlan(previous).topics.some(
+    ({ id, alternatives }) =>
+      !currentIds.has(id) && alternatives.some((term) => answer.includes(term)),
+  );
+}
 
 function hasPaymentChannel(
   query: string,
@@ -23,6 +44,23 @@ function hasPaymentChannel(
         plan.campus,
         subjects,
       ).score >= (plan.campus ? 2 : 1),
+  );
+}
+
+export function isDirectPaymentEvidence(
+  query: string,
+  hit: {
+    bodyAvailable?: boolean;
+    official?: boolean;
+    contentSnippet?: string;
+    snippet?: string;
+  },
+) {
+  return (
+    !!hit.official &&
+    !!hit.bodyAvailable &&
+    asksPaymentProcedure(query) &&
+    hasPaymentChannel(query, [hit])
   );
 }
 
@@ -44,6 +82,26 @@ export function supportsAnswerPurpose(
 }
 
 type Activity = ContentSearchResult["activities"][number];
+export function openParticipation(
+  a: Activity,
+  title: string,
+  now = Date.now(),
+) {
+  if (
+    a.historical ||
+    ["cancelled", "postponed", "ended", "historical"].includes(a.eventStatus) ||
+    /颁奖典礼|晋级名单|赛事回顾|获奖喜报|人物事迹/.test(title)
+  )
+    return false;
+  if (a.endsAt?.at && Date.parse(a.endsAt.at) <= now) return false;
+  if (a.startsAt?.at && Date.parse(a.startsAt.at) <= now) return false;
+  if (a.registrationState === "not_required")
+    return !!a.startsAt?.date && a.startsAt.date > chinaDate(now);
+  return (
+    a.registrationState === "open" &&
+    a.registrationWindows.some((window) => window.state === "open")
+  );
+}
 export function activityAvailability(a: Activity, now = Date.now()) {
   const today = new Date(now + 28800000).toISOString().slice(0, 10);
   const before = (t: Activity["startsAt"]) =>
@@ -92,7 +150,10 @@ export function assessEvidence(
 ) {
   const plan = buildQueryPlan(query),
     hits = results.flatMap((r) => r.hits),
-    related = hits.filter((h) => queryRelevance(plan, h).relevant),
+    related = hits.filter(
+      (h) =>
+        queryRelevance(plan, h).relevant || isDirectPaymentEvidence(query, h),
+    ),
     bodies = related.filter((h) => h.bodyAvailable),
     ids = new Set(bodies.map((h) => h.documentId));
   const activities = results
@@ -101,6 +162,11 @@ export function assessEvidence(
     .map((a) => ({
       documentId: a.documentId,
       ...activityAvailability(a, options.now),
+      openParticipation: openParticipation(
+        a,
+        bodies.find((hit) => hit.documentId === a.documentId)?.title ?? a.name,
+        options.now,
+      ),
     }));
   const missing: string[] = [];
   if (!bodies.length) missing.push("relevant_readable_evidence");
@@ -152,11 +218,11 @@ export function assessEvidence(
     missing.push("current_event_evidence");
   if (
     (plan.goal === "participation" || plan.goal === "registration") &&
-    !activities.some((a) =>
-      [
-        "registration_open_eligibility_unknown",
-        "no_registration_eligibility_unknown",
-      ].includes(a.participation),
+    !activities.some(
+      (a) =>
+        a.openParticipation ||
+        (plan.goal === "participation" &&
+          a.participation === "no_registration_eligibility_unknown"),
     )
   )
     missing.push("participation_or_registration_evidence");

@@ -22,6 +22,7 @@ import {
 import { articleThemeStyle } from "@/features/content/article-theme";
 import { PublicArticleDialog } from "@/features/content/public-article-dialog";
 import { FavoriteButton } from "@/features/content/favorite-button";
+import { AddTaskButton } from "@/features/account/personal-tasks";
 import { useFavoriteTracking } from "@/features/content/favorites-context";
 import type { PublicArticleSummary } from "@/features/content/public-feed";
 import { calendarArticleSummary as articleSummary } from "./activity-summary";
@@ -31,8 +32,6 @@ type Result = {
   dailyCounts: Record<string, number>;
   nextEventDay: string | null;
   total: number;
-  hasMore: boolean;
-  nextCursor: string | null;
 };
 const labels: Record<string, string> = {
   open: "报名中",
@@ -66,10 +65,12 @@ export function ActivityCalendar() {
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [refresh, setRefresh] = useState(0),
-    [cursor, setCursor] = useState<string | null>(null),
     [detailId, setDetailId] = useState(""),
     [detailSourceId, setDetailSourceId] = useState(""),
-    [article, setArticle] = useState<PublicArticleSummary | null>(null);
+    [article, setArticle] = useState<{
+      summary: PublicArticleSummary;
+      event?: CalendarItem;
+    } | null>(null);
   useFavoriteTracking(
     (data?.items || []).flatMap((item) =>
       item.sources.map((source) => source.documentId),
@@ -84,9 +85,8 @@ export function ActivityCalendar() {
         d = q.get("date");
       setDate(d && CalendarDateSchema.safeParse(d).success ? d : chinaDate());
       setDetailId(q.get("event") || "");
-      setCursor(null);
       setDetailSourceId(q.get("article") || "");
-      if (!q.get("event")) setArticle(null);
+      if (!q.get("event") && !q.get("article")) setArticle(null);
     };
     load();
     window.addEventListener("popstate", load);
@@ -94,7 +94,6 @@ export function ActivityCalendar() {
   }, [queryString]);
   function choose(d: string) {
     setDate(d);
-    setCursor(null);
     setArticle(null);
     setDetailId("");
     const u = new URL(window.location.href);
@@ -110,8 +109,7 @@ export function ActivityCalendar() {
       after: first,
       before: last,
       day: date,
-      limit: "20",
-      ...(cursor ? { cursor } : {}),
+      all: "1",
     });
     // Each response carries full weekly counts; no per-day model or index rebuild.
     Promise.resolve()
@@ -119,7 +117,7 @@ export function ActivityCalendar() {
         if (abort.signal.aborted) throw Error("ABORTED");
         setBusy(true);
         setError("");
-        if (!cursor) setData(undefined);
+        setData(undefined);
         return fetch("/api/public/activities?" + q, {
           signal: abort.signal,
           cache: "no-store",
@@ -132,19 +130,7 @@ export function ActivityCalendar() {
         return j.data as Result;
       })
       .then((r) => {
-        if (!abort.signal.aborted)
-          setData((old) =>
-            cursor && old
-              ? {
-                  ...r,
-                  items: [
-                    ...new Map(
-                      [...old.items, ...r.items].map((x) => [x.eventId, x]),
-                    ).values(),
-                  ],
-                }
-              : r,
-          );
+        if (!abort.signal.aborted) setData(r);
       })
       .catch((e) => {
         if (!abort.signal.aborted)
@@ -154,36 +140,91 @@ export function ActivityCalendar() {
         if (!abort.signal.aborted) setBusy(false);
       });
     return () => abort.abort();
-  }, [date, first, last, cursor, refresh]);
+  }, [date, first, last, refresh]);
   useEffect(() => {
-    if (!detailId) return;
+    if ((!detailId && !detailSourceId) || !date) return;
     const abort = new AbortController();
-    fetch("/api/public/activities?event=" + encodeURIComponent(detailId), {
-      signal: abort.signal,
-      cache: "no-store",
-    })
-      .then(async (r) => {
-        const j = await r.json();
-        if (!r.ok || !j.ok || !j.data.items[0])
-          throw Error("活动已更新或不再公开。");
-        return j.data.items[0] as CalendarItem;
-      })
-      .then((item) =>
-        setArticle(
-          articleSummary(
-            item,
-            item.sources.find((s) => s.documentId === detailSourceId) ||
-              item.sources[0],
-          ),
-        ),
+    const read = async (params: URLSearchParams) => {
+      const response = await fetch("/api/public/activities?" + params, {
+        signal: abort.signal,
+        cache: "no-store",
+      });
+      const body = await response.json();
+      if (!response.ok || !body.ok)
+        throw Error(body.error?.message || "活动详情暂时无法加载。");
+      return body.data.items as CalendarItem[];
+    };
+    const load = async () => {
+      let items: CalendarItem[] = [];
+      if (detailId) {
+        try {
+          items = await read(new URLSearchParams({ event: detailId }));
+        } catch (error) {
+          // An old event id can expire while its source article remains public.
+          // In that case the article id below is the stable recovery path.
+          if (!detailSourceId) throw error;
+        }
+      }
+      if (
+        detailSourceId &&
+        !items.some((item) =>
+          item.sources.some((source) => source.documentId === detailSourceId),
+        )
       )
-      .catch((e) => {
-        if (!abort.signal.aborted) setError(e.message);
+        items = await read(
+          new URLSearchParams({ articleId: detailSourceId, day: date }),
+        );
+      const item = items[0];
+      if (!item && detailSourceId) {
+        const response = await fetch(
+          "/api/public/article?id=" + encodeURIComponent(detailSourceId),
+          { signal: abort.signal, cache: "no-store" },
+        );
+        const body = await response.json();
+        if (!response.ok || !body.ok) throw Error("ARTICLE_UNAVAILABLE");
+        const source = body.data;
+        return {
+          summary: {
+            id: source.id,
+            version: source.version,
+            title: source.title,
+            url: source.url,
+            publishedAt: source.publishedAt,
+            readable: true,
+            contentType: source.contentType,
+            knowledgeCategory: source.knowledgeCategory,
+            radarCategory: source.radarCategory,
+            hasRegistration: source.hasRegistration,
+            source: { name: source.sourceName, official: source.official },
+          } satisfies PublicArticleSummary,
+          event: undefined,
+        };
+      }
+      if (!item) throw Error("ARTICLE_UNAVAILABLE");
+      const source =
+        item.sources.find((source) => source.documentId === detailSourceId) ??
+        item.sources[0];
+      return {
+        summary: articleSummary(item, source),
+        event: items.length === 1 ? item : undefined,
+      };
+    };
+    load()
+      .then((item) => !abort.signal.aborted && setArticle(item))
+      .catch(() => {
+        if (abort.signal.aborted) return;
+        setArticle(null);
+        setDetailId("");
+        setDetailSourceId("");
+        const url = new URL(window.location.href);
+        url.searchParams.delete("event");
+        url.searchParams.delete("article");
+        history.replaceState(null, "", url);
       });
     return () => abort.abort();
-  }, [detailId, detailSourceId]);
+  }, [detailId, detailSourceId, date]);
   function open(item: CalendarItem, source: CalendarItem["sources"][number]) {
-    setArticle(articleSummary(item, source));
+    setArticle({ summary: articleSummary(item, source), event: item });
     const u = new URL(window.location.href);
     u.searchParams.set("date", date);
     u.searchParams.set("event", item.eventId);
@@ -246,11 +287,17 @@ export function ActivityCalendar() {
             在校园地图查看
           </Link>
         )}
-        <FavoriteButton
-          articleId={source.documentId}
-          surface="calendar"
-          className="calendar-event-favorite"
-        />
+        <div className="calendar-event-favorite">
+          <FavoriteButton articleId={source.documentId} surface="calendar" />
+          <AddTaskButton
+            article={{
+              articleId: source.documentId,
+              title: source.title,
+              event: item,
+              day: date,
+            }}
+          />
+        </div>
       </article>
     );
   }
@@ -308,7 +355,6 @@ export function ActivityCalendar() {
             aria-label="刷新活动"
             disabled={busy}
             onClick={() => {
-              setCursor(null);
               setRefresh((n) => n + 1);
             }}
           >
@@ -339,7 +385,6 @@ export function ActivityCalendar() {
             <button
               type="button"
               onClick={() => {
-                setCursor(null);
                 setRefresh((n) => n + 1);
               }}
             >
@@ -381,19 +426,19 @@ export function ActivityCalendar() {
           </section>
         )}
       </div>
-      {data?.hasMore && (
-        <button
-          type="button"
-          className="calendar-more"
-          disabled={busy}
-          onClick={() => setCursor(data.nextCursor)}
-        >
-          {busy ? "正在加载…" : "加载更多"}
-        </button>
-      )}
       {article && (
         <PublicArticleDialog
-          article={article}
+          article={article.summary}
+          taskButton={
+            <AddTaskButton
+              article={{
+                articleId: article.summary.id,
+                title: article.summary.title,
+                event: article.event,
+                day: article.event?.dates.includes(date) ? date : undefined,
+              }}
+            />
+          }
           categoryLabel="活动原文"
           surface="calendar"
           onClose={() => {

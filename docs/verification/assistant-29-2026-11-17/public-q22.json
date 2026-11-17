@@ -1,0 +1,419 @@
+{
+  "question": "那国家奖学金具体需要什么条件？",
+  "status": "success",
+  "entry": "campus-assistant-map",
+  "answer": "广外本科生国家奖学金的评审范围为全日制本科学生，具体条件需符合《广东外语外贸大学本科学生国家奖学金评选实施办法》（广外校〔2020〕28号）第五、六条的规定 [1]，但当前检索到的官方通知未附上该实施办法的具体条款内容，暂无法提供完整的条件清单。\n\n当前检索结果中未包含研究生国家奖学金的相关评审条件信息，若你需要了解研究生国奖要求可向研究生院咨询。\n\n1 个来源",
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-7b63772a-3c41-4add-a14d-bf19c6087c2f",
+        "content-8fda31ef-a8f2-496c-a609-233c48c5cbbd",
+        "content-a6b860d4-be40-437c-865a-64591983c4d9"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "content-7b63772a-3c41-4add-a14d-bf19c6087c2f",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-8fda31ef-a8f2-496c-a609-233c48c5cbbd",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-a6b860d4-be40-437c-865a-64591983c4d9",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 2,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 1,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 4930,
+        "firstTextMs": 4412,
+        "finishReason": "stop",
+        "contentChars": 175
+      },
+      {
+        "durationMs": 10000,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 2508,
+    "completionTokens": 471,
+    "cachedPromptTokens": 0,
+    "totalTokens": 2979,
+    "usageComplete": false,
+    "chargedTokens": 2979,
+    "durationMs": 17505,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 250000,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 881,
+      "serverElapsedMs": 18386,
+      "firstTextMs": 18344,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 2444,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 27,
+        "writeQueries": 11,
+        "calls": 30,
+        "failures": 0,
+        "durationMs": 3124,
+        "maxCallMs": 525,
+        "rowsRead": 18013,
+        "rowsWritten": 20,
+        "rowUsageStatements": 20,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 17990,
+          "rowsWritten": 0,
+          "queries": 8,
+          "durationMs": 2444,
+          "stagesMs": {
+            "lexical": 227,
+            "supplement": 808,
+            "revalidationAndRanking": 1409
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 21
+            },
+            {
+              "name": "document_passages",
+              "limit": 512,
+              "candidates": 45
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "cards": [
+    {
+      "kind": "source",
+      "documentId": "content-7b63772a-3c41-4add-a14d-bf19c6087c2f",
+      "title": "关于开展2024-2025学年度本科生国家奖学金、国家励志奖学金申报评审工作的通知",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/info/1056/10556.htm",
+      "publishedAt": "2025-09-17T08:14:30.000Z",
+      "snippet": "各学院：\n根据广东省财政厅、广东省教育厅文件通知，结合我校实际情况，现将我校2024-2025学年度本科生国家奖学金、国家励志奖学金的申报评审工作通知如下：\n一、奖项介绍\n国家奖助学金由国家出资设立。其中，国家奖学金用于奖励高校全日制本专科学生中特别优秀的学生；国家励志奖学金用于奖励资助高校全日制本专科学生中品学兼优的家庭经济困难学生。国家励志奖学金充分体现党和国家对经济困难学生的关怀和重视。\n二、评审范围和条件\n（一）国家奖学金\n1．评审范围：全日制本科学生。\n2．条件：\n满足《广东外语外贸大学本科学生国家奖学金评选实施办法》（广外校〔2020〕28号，见附件1）第五、六条的条件。\n（二）国家励志奖学金\n1．评审范围：全日制本科学生。\n2．条件：\n满足《广东外语外贸大学本科学生国家励志奖学金管理",
+      "evidenceType": "full_text",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-11-17T02:58:12.065Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:12.065Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:14.509Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 2444,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:29.620Z",
+      "type": "message.delta",
+      "payload": {
+        "text": "广外本科生国家奖学金的评审范围为全日制本科学生，具体条件需符合《广东外语外贸大学本科学生国家奖学金评选实施办法》（广外校〔2020〕28号）第五、六条的规定 [1]，但当前检索到的官方通知未附上该实施办法的具体条款内容，暂无法提供完整的条件清单。\n\n当前检索结果中未包含研究生国家奖学金的相关评审条件信息，若你需要了解研究生国奖要求可向研究生院咨询。"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:29.767Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "source",
+            "documentId": "content-7b63772a-3c41-4add-a14d-bf19c6087c2f",
+            "title": "关于开展2024-2025学年度本科生国家奖学金、国家励志奖学金申报评审工作的通知",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/info/1056/10556.htm",
+            "publishedAt": "2025-09-17T08:14:30.000Z",
+            "snippet": "各学院：\n根据广东省财政厅、广东省教育厅文件通知，结合我校实际情况，现将我校2024-2025学年度本科生国家奖学金、国家励志奖学金的申报评审工作通知如下：\n一、奖项介绍\n国家奖助学金由国家出资设立。其中，国家奖学金用于奖励高校全日制本专科学生中特别优秀的学生；国家励志奖学金用于奖励资助高校全日制本专科学生中品学兼优的家庭经济困难学生。国家励志奖学金充分体现党和国家对经济困难学生的关怀和重视。\n二、评审范围和条件\n（一）国家奖学金\n1．评审范围：全日制本科学生。\n2．条件：\n满足《广东外语外贸大学本科学生国家奖学金评选实施办法》（广外校〔2020〕28号，见附件1）第五、六条的条件。\n（二）国家励志奖学金\n1．评审范围：全日制本科学生。\n2．条件：\n满足《广东外语外贸大学本科学生国家励志奖学金管理",
+            "evidenceType": "full_text",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:29.767Z",
+      "type": "run.completed",
+      "payload": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-7b63772a-3c41-4add-a14d-bf19c6087c2f",
+              "content-8fda31ef-a8f2-496c-a609-233c48c5cbbd",
+              "content-a6b860d4-be40-437c-865a-64591983c4d9"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "content-7b63772a-3c41-4add-a14d-bf19c6087c2f",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-8fda31ef-a8f2-496c-a609-233c48c5cbbd",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-a6b860d4-be40-437c-865a-64591983c4d9",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 2,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 1,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 1,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 4930,
+              "firstTextMs": 4412,
+              "finishReason": "stop",
+              "contentChars": 175
+            },
+            {
+              "durationMs": 10000,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 2508,
+          "completionTokens": 471,
+          "cachedPromptTokens": 0,
+          "totalTokens": 2979,
+          "usageComplete": false,
+          "chargedTokens": 2979,
+          "durationMs": 17505,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 250000,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 881,
+            "serverElapsedMs": 18386,
+            "firstTextMs": 18344,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 2444,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 27,
+              "writeQueries": 11,
+              "calls": 30,
+              "failures": 0,
+              "durationMs": 3124,
+              "maxCallMs": 525,
+              "rowsRead": 18013,
+              "rowsWritten": 20,
+              "rowUsageStatements": 20,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 17990,
+                "rowsWritten": 0,
+                "queries": 8,
+                "durationMs": 2444,
+                "stagesMs": {
+                  "lexical": 227,
+                  "supplement": 808,
+                  "revalidationAndRanking": 1409
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 64
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 21
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 512,
+                    "candidates": 45
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

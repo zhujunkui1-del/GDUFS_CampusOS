@@ -136,6 +136,9 @@
   cursor: pointer;
 }
 .calendar-event-favorite {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   position: absolute;
   top: 14px;
   right: 14px;
@@ -201,14 +204,9 @@
 .calendar-empty p {
   margin: 0;
 }
-.calendar-empty button,
-.calendar-more {
+.calendar-empty button {
   padding: 10px 20px;
   cursor: pointer;
-}
-.calendar-more {
-  display: block;
-  margin: 24px auto;
 }
 .public-calendar .calendar-event-open {
   display: flex;
@@ -216,6 +214,7 @@
   text-align: left;
   gap: 10px;
   width: 100%;
+  min-height: 76px;
   padding: 0 44px 0 0;
   background: transparent;
   border: 0;

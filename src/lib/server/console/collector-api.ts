@@ -400,6 +400,8 @@ async function ingest(db: SqlDatabase, c: Credential, raw: unknown) {
       analysisInput,
       analysis,
       "licensed_full_text",
+      undefined,
+      true,
     )),
   );
   if (!old || changed || (!held && old.publication_status !== "published")) {

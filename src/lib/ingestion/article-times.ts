@@ -7,6 +7,7 @@ import type {
 } from "@/domain/console/article-analysis";
 import { articleText, evidence, type ArticleText } from "./article-text";
 import { detectCollege, detectEventType } from "./article-college";
+import { referenceChapterOffsets } from "./reference-sections";
 
 type Span = { text: string; start: number; end: number };
 const datePattern =
@@ -45,8 +46,7 @@ const titleInvites =
  * A warning or a round-up about recruitment describes what others do to
  * applicants; it does not invite this reader to apply.
  */
-const advisoryTitle =
-  /(?:预警|提示|防骗|风险提示|资讯速览|提醒)/;
+const advisoryTitle = /(?:预警|提示|防骗|风险提示|资讯速览|提醒)/;
 /**
  * A badge promises a reader can still act on this article, so the activity
  * needs a usable window, a channel they can reach, or an explicit invitation.
@@ -54,7 +54,10 @@ const advisoryTitle =
  * them, and neither does a result list that only reports who already applied.
  */
 function hasActionableOffer(
-  activity: { registrationWindows: { start: unknown; end: unknown }[]; registrationUrl: string | null },
+  activity: {
+    registrationWindows: { start: unknown; end: unknown }[];
+    registrationUrl: string | null;
+  },
   blockText: string,
 ): boolean {
   if (activity.registrationWindows.some((w) => w.start || w.end)) return true;
@@ -289,6 +292,8 @@ export function extractArticleStructure(
 ): ArticleAnalysis {
   const text = articleText(input),
     publishedAt = input.publishedAt || null;
+  if (referenceChapterOffsets(text.title, text.text).length)
+    return { ...analysis, activities: [], eventType: null };
   // Facets are derived from the title alone when there is no body, so they are
   // computed before the early return that skips activity extraction.
   if (!text.bodyAvailable) {
@@ -518,9 +523,11 @@ export function extractArticleStructure(
   }
   for (const a of activities)
     if (a.registrationStatus === "required") {
-      const block =
-        blocks.find((b) => b.title === a.title) ?? blocks[0];
-      const hasOffer = hasActionableOffer(a, text.text.slice(block.start, block.end));
+      const block = blocks.find((b) => b.title === a.title) ?? blocks[0];
+      const hasOffer = hasActionableOffer(
+        a,
+        text.text.slice(block.start, block.end),
+      );
       if (
         !hasOffer &&
         !(titleInvites.test(text.title) && !advisoryTitle.test(text.title))
@@ -569,7 +576,10 @@ export function extractArticleStructure(
       ? points(expires, text, publishedAt)[0] || null
       : null,
   };
-  const college = detectCollege(text, activities.map((a) => a.organizer));
+  const college = detectCollege(
+    text,
+    activities.map((a) => a.organizer),
+  );
   const firstStart = activities.find((a) => a.startsAt?.date)?.startsAt?.date;
   const lastEnd = [...activities]
     .reverse()

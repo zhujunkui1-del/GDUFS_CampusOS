@@ -1,0 +1,1076 @@
+{
+  "question": "我忘记了校园统一身份认证密码，你能直接帮我重置吗？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "抱歉呀，我没法直接帮你重置校园统一身份认证密码哦😣 目前检索到的校园资料里没有覆盖密码重置的相关流程，你可以联系学校信息化中心或者通过官方渠道咨询重置方法~",
+  "cards": [],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T02:12:18.618Z",
+      "elapsedMs": 183,
+      "data": {
+        "question": "我忘记了校园统一身份认证密码，你能直接帮我重置吗？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T02:12:18.618Z",
+      "elapsedMs": 183,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T02:12:19.589Z",
+      "elapsedMs": 1154,
+      "data": {
+        "question": "我忘记了校园统一身份认证密码，你能直接帮我重置吗？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T02:12:19.589Z",
+      "elapsedMs": 1154,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T02:12:19.589Z",
+      "elapsedMs": 1154,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T02:12:19.589Z",
+      "elapsedMs": 1154,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T02:12:19.589Z",
+      "elapsedMs": 1154,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T02:12:19.589Z",
+      "elapsedMs": 1154,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "facts",
+        "campus": null,
+        "topics": [],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "running",
+      "at": "2026-11-17T02:12:19.660Z",
+      "elapsedMs": 1225,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答或工具选择",
+        "tools": [
+          "plan_campus_query"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "success",
+      "at": "2026-11-17T02:12:22.985Z",
+      "elapsedMs": 4550,
+      "durationMs": 3325,
+      "data": {
+        "finishReason": "tool_calls",
+        "toolCalls": [
+          "plan_campus_query"
+        ],
+        "characters": 0,
+        "usage": {
+          "promptTokens": 532,
+          "completionTokens": 397,
+          "totalTokens": 929
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "running",
+      "at": "2026-11-17T02:12:23.059Z",
+      "elapsedMs": 4624,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "“校园统一身份认证密码” “重置”",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "success",
+      "at": "2026-11-17T02:12:24.515Z",
+      "elapsedMs": 6080,
+      "durationMs": 1456,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "wx-30cce44b0d4d5f6652d41957a0de55603fa2a0ec",
+              "chunkId": "wx-30cce44b0d4d5f6652d41957a0de55603fa2a0ec:fts:0294cef7a8c09947:0",
+              "title": "使用指南 | 广外校园卡充值全攻略",
+              "sourceId": "GDUFS-SRC-0200",
+              "sourceName": "数智广外",
+              "originalUrl": "https://mp.weixin.qq.com/s/jAZLj0S6cgFS8YXhVLYwXQ",
+              "publishedAt": "2026-08-31T08:20:56.000Z",
+              "contentSnippet": "校园卡不能透支，需要充值后才可以消费，本篇整理全部充值渠道，手机、电脑、线下设备都能操作，新手也能快速上手！\n01\n数智广外公众号充值\n微信关注 “数智广外” 服务号。\n2.底部菜单栏选择【日常服务】→【校园卡】\n使用学号 + 统一身份认证密码登录校园卡服务平台。\n3.点击功能区【充值】。\n4.核对学工号，输入充值金额，点击【立即充值】\n5.选择微信支付，输入支付密码完成充值。\n02\n广外一卡通小程序充值\n微信搜索小程序：广外一卡通\n输入学号、统一身份认证密码完成登录\n3.点击【充值】，确认学工号无误，填写充值金额\n4.选择支付渠道：支持微信、中国银行卡、数字人民币\n5.确认付款，完成充值操作。\n03\n圈存机自助转账充值\n需要携带校园卡 + 学校中国银行缴费借记卡，校园各处均布设圈存机。\n饭卡钱包充值步骤\n在圈存机首页点击【转账业务】→【银校转账】\n插入校园卡，输入校园卡查询密码\n刷中国银行借记卡，输入充值金额\n点击确定，提示操作成功即完成。\n热水钱包充值（大学城）\n圈存机页面点击【南校热水】→【南校热水充值】\n输入校园卡查询密码\n输入充值金额，确认完成。\n圈存机分布地点\n白云山校区：清雅园、学一饭堂、第六教学楼一楼架空层、第二教学楼一楼大厅。\n大学城校区：文采园饭堂门外、实验楼 C 栋一楼、教学楼 A 座师生服务大厅外、图书馆一楼、教学楼 F 座、学生宿舍 11 栋架空层等。\n注意：\n圈存机充值热水 / 网费可用时间：03:00‑23:00；\n银校转账充值时间：05:00‑21:00\n04\nPC 端智慧广外网页充值\n网页登录智慧广外。\n在首页找到【校园一卡通】入口进入校园卡系统。\n点击【校园卡充值】。\n选择支付银行卡，填写充值金额、查询密码。\n确认充值完成操作。\n05\n人工充值\n用户需持校园卡到用户服务部进行充值（支持银行卡刷卡、微",
+              "startOffset": 86,
+              "endOffset": 866,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 57.13,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 8",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "campus_life",
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "ee368ed21471993bbcb7b5eff0258c9adbd757eb76e5fcb19b52163e1ce81a2b",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "wx-8cdb4cbcd0e98c121b8f4ed149c736f8bb533123",
+              "chunkId": "wx-8cdb4cbcd0e98c121b8f4ed149c736f8bb533123:fts:bea7fb9796e77270:0",
+              "title": "使用指南 | 校园网上网",
+              "sourceId": "GDUFS-SRC-0200",
+              "sourceName": "数智广外",
+              "originalUrl": "https://mp.weixin.qq.com/s/BmuzTaqZhx4dPEyqDPXflQ",
+              "publishedAt": "2026-08-31T08:20:56.000Z",
+              "contentSnippet": "系统提供两种身份认证方式，请根据自身情况选择：\n1. 统一身份认证登录\n适用对象：可正常登录\"智慧广外\"的在校教职工及学生。\n点击\"统一身份认证登录\"\n输入学工号及统一身份认证密码\n完成图形验证后登录\n上网账号：学工号\n2. 学号/手机号登录\n适用对象：无法登录\"智慧广外\"的用户，或上网账号非学工号的用户（如公开学院、国际学院学生，及账号格式为\"gw******\"的教职工）\n①点击\"学号手机号\"\n②输入上网账号（学号或gw******）\n③输入手机号，点击\"发送验证码\"\n④输入验证码完成登录\n提示：如手机号提示错误，可能是未登记或号码已变更，请联系用户服务部处理，电话：020-86312111。\n在线充值流程\nCampus Network\n02\n登录后点击\"在线充值\"。\n2.选择套餐类型及套餐数量。\n3.勾选阅读协议内容。\n4.点击\"提交\"。\n5.核对账号、套餐、数量及金额，输入验证码。\n6.点击\"立即支付\"，选择支付方式完成缴费。\n技术支持\nCampus Network\n03\n登录交费过程中如遇任何问题（如密码不正确、登录不上、手机号码不对等问题），请联系：\n现代教育技术中心用户服务部\n白云山校区：020-86312111，第二教学楼103\n大学城校区：020-39328051，实验楼C302\n办公时间：周一至周五8:30 - 17:10\n联系人：阮老师",
+              "startOffset": 309,
+              "endOffset": 896,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 55.84,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 4",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "campus_life",
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "faf3b9d0f59cde42483129599688466ea051d4ef128637af9e10a34d0fb97bd5",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "chunkId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285:fts:bc4c3d7651c7c2fc:292",
+              "title": "2026版本科生学生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+              "publishedAt": "2026-09-20T11:16:00.000Z",
+              "contentSnippet": "一楼 2 教学楼F 座右6 教学楼A 座师生服务大厅外 3 教学楼F 座左7 学生就业指导中心架空层 4 学生宿舍11 栋架空层8 图书馆一楼九、其他自助充值\n1. 大学城校区热水\n圈存机热水充值：在校内通过圈存机将校园卡饭卡钱包的金额转入热水钱包。把校园卡放进圈存机卡槽内， 在圈存机主页面，点击“南校热水”，点击“南校热水充值”，输入校园卡查询密码，点击“确定”，输入金额，点击“确定”，提示操作结果； 广外一卡通小程序热水充值：微信搜索“广外一卡通”小程序，输入学号和统一身份认证登录密码，进入校园卡页面，点击“南校热水小钱包充值”，输入金额，点击“立即缴费”，在弹出窗口输入微信支付密码即可完成热水充值； 微信公众号热水充值：关注“数智广外”公众号，点击“日常服务- 校园卡”，输入学号和统一身份认证登录密码，进入校园卡页面，点击“南校热水小钱包充值”，输入金额，点击“立即缴费”，在弹出窗口输入微信支付密码即可完成热水充值。 十、自助充值款领取校园卡已完成的网上银行、微信等自助充值和自动转账的钱包金额， 需自行到补助机领取，补助机安装于每栋宿舍楼一楼大厅。当机器屏幕串 0 或者手动按0 键后，贴卡，领取已充值校园卡钱包金额；当屏幕串1 或者手动按1 键后，贴卡，领取已充值大学城校区热水钱包金额。 十一、校园卡退费热水退费：（大学城校区）持卡人离校前持校园卡到大学城校区用户服务部将卡内热水钱转到饭卡钱包。 饭卡退费：\n其他管理\n299",
+              "startOffset": 209151,
+              "endOffset": 209776,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 40.8,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "f72fdd02d8506d6c8bec1326ecc47e069aa5eb71309bc2f952db35c853fe5e2e",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-56b62412-a34c-4530-ba4d-3b9a6b1fe67e",
+              "chunkId": "content-56b62412-a34c-4530-ba4d-3b9a6b1fe67e:fts:74fe2238a6eeee3e:0",
+              "title": "个人数据中心上线试运行通知",
+              "sourceId": "GDUFS-SRC-0026",
+              "sourceName": "现代教育技术中心、信息化建设与管理办公室",
+              "originalUrl": "https://etr.gdufs.edu.cn/info/1033/5526.htm",
+              "publishedAt": "2024-12-05",
+              "contentSnippet": "待通过审核后，正确信息将在个人数据中心页面显示。\n3.个人数据中心经统一身份认证登录后，在统一门户平台中可直接进行查看。因包含个人身份、财务等敏感信息，请妥善保管好个人的统一身份认证账号和密码，勿借给他人使用。\n三、联系方式\n1. 个人数据中心的数据来自人事系统、教务系统、研究生综合服务平台、教评系统、学工系统、科研系统、财务系统、资产系统、图书系统等系统，对相关信息和数据有疑问的，可咨询相关业务单位。\n个人基本信息请咨询人力资源部：人事科36207072，师资科36207069，劳动管理科36207909；\n本科教学、教研项目请咨询教务部：教务科36207053，教研科36204220；\n研究生教学请咨询研究生院：培养办公室36317190，学位办公室36317163；\n科研项目及成果请咨询科研部：项目科36207045，成果科86318201；\n指导学生、辅导员经历请咨询学生工作部：思想政治教育科36207022；\n财务资产请咨询财务与资产管理部：财务信息科36207034，资产管理科36204202；",
+              "startOffset": 429,
+              "endOffset": 889,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 37.16,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "academic_research",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "061403e1f0fde600b3d532045a6b1371ddfc5fdf9761d4340aadee1e3dd2c3e9",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 12603,
+            "rowsWritten": 0,
+            "queries": 9,
+            "durationMs": 1456,
+            "stagesMs": {
+              "lexical": 287,
+              "supplement": 542,
+              "revalidationAndRanking": 627
+            },
+            "candidateChunks": 54,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 2
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 20
+              },
+              {
+                "name": "document_passages",
+                "limit": 512,
+                "candidates": 38
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "“校园统一身份认证密码” “重置”",
+          "now": "2026-11-17T02:12:23.059Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "activityKey": "activity-1",
+              "name": "2026版本科生学生手册（全文）",
+              "kind": "event",
+              "category": null,
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": "学生第二饭堂对面小木屋）",
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "是指每年研究生报名开始时已进入毕业学年学习的本科生（不含辅修学位、专升本、 第二学士学位学生、本硕项目的国际班学生和独立学院学生）"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "具体申报时间以教育部规定及学校相关通知为准。申请者应列明本人已具备的推荐免试条件、报读的研究生专业和专业方向"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "1. 申请时间：学校一般于每年9 月集中受理创新创业学分认定申请；\n2. 申请材料：学生本人填写《广东外语外贸大学本科生创新创业学分"
+                  ]
+                }
+              ],
+              "otherDeadlines": [
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                }
+              ],
+              "registrationUrl": null,
+              "evidence": [
+                "是指每年研究生报名开始时已进入毕业学年学习的本科生（不含辅修学位、专升本、 第二学士学位学生、本硕项目的国际班学生和独立学院学生）",
+                "具体申报时间以教育部规定及学校相关通知为准。申请者应列明本人已具备的推荐免试条件、报读的研究生专业和专业方向",
+                "1. 申请时间：学校一般于每年9 月集中受理创新创业学分认定申请；\n2. 申请材料：学生本人填写《广东外语外贸大学本科生创新创业学分"
+              ],
+              "mapPlace": null
+            },
+            {
+              "documentId": "content-56b62412-a34c-4530-ba4d-3b9a6b1fe67e",
+              "activityKey": "activity-1",
+              "name": "个人数据中心上线试运行通知",
+              "kind": "notice",
+              "category": "academic_research",
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [],
+              "mapPlace": null
+            }
+          ],
+          "knowledge": [
+            {
+              "documentId": "wx-30cce44b0d4d5f6652d41957a0de55603fa2a0ec",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "4.核对学工号，输入充值金额，点击【立即充值】",
+                "3.点击【充值】，确认学工号无误，填写充值金额",
+                "选择支付银行卡，填写充值金额、查询密码。"
+              ]
+            },
+            {
+              "documentId": "wx-8cdb4cbcd0e98c121b8f4ed149c736f8bb533123",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "方式一：电脑端登录\"智慧广外\" → 进入\"应用中心\" → 选择\"校园网缴费\"",
+                "点击\"统一身份认证登录\"",
+                "登录后点击\"在线充值\"。"
+              ]
+            },
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "符合申请条件的学生可在当年暑假前后向拟报读的接收单位或学科点进行初步联系",
+                "除需满足本规定第九条、第十条的条件外",
+                "第二章奖励标准与申请条件"
+              ],
+              "materials": [
+                "可申请转学： （一）患病学生需提供我校及拟转入学校指定医院的检查证明（需盖疾病诊断证明专用章）",
+                "有特殊困难和特别需要的学生需提供相关证明材料"
+              ],
+              "steps": [
+                "国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续 3 年上榜“US News”世界大学排名；入选软科中国文科实力A 类大学，稳居全国前50 强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI 全球前5‰，工程学、环境 /生态学、经济学与商学进入ESI 前1%；12 个学科上榜软科中国最好学科；外国语言文学学科连续多年上榜软科“中国顶尖学科”， 稳居全国前3；应用经济学、法学连续多年上榜软科“中国一流学科”。 科学研究学校深入推进有组织科研，构建服务共建“一带一路”倡议、 高水平对外开放与粤港澳大湾区建设、法治中国与涉外法治建设、 国际传播建设等四大科研平台体系",
+                "学校各单位： 为深入贯彻落实党的十八届三中全会关于深化教育领域综合改革的精神，积极适应经济社会发展新常态对高等教育人才培养的需求，根据《中华人民共和国教育法》《普通高等学校学生管理规定》（教育部令第21 号）等法律法规和《教育部关于全面提高高等教育质量的若干意见》（教高〔2012〕4 号）、《广东省人民政府办公厅转发教育厅关于进一步扩大和落实高校办学自主权促进高校加快发展若干意见的通知》（粤府办 〔2013〕26 号）等文件要求，学校结合实际，研究制定了本科教学实施学分制管理的若干意见，经2015 年1 月12 日校党委常委会审议并原则通过，具体如下。 一、指导思想坚持育人为本，立德树人，全面",
+                "3．选课制。学生根据专业培养方案自主安排学习进程，对于必修课， 可选择任课教师；对于选修课，可选择课程和任课教师；每学期前两周， 学生试听课程，试听结束后作出选课确认。 4．主辅修制。学生在达到主修专业学习要求的前提下，可以辅修其他专业；在主修专业达到毕业要求的前提下，其修读的辅修专业如达到要求，可向其发放辅修专业证书；学生在主修专业具备学位授予资格的前提下，如其辅修专业达到学位授予条件，可获得相应专业学位证书。 5．学分互认制。学生在与我校签订了学分互认协议的境内外高校或在我校认可的境内外高校或MOOC 等网络学习平台修读课程获得的成绩和学分，可以转换为本校课程成绩和学分；学生修读校外课程，"
+              ]
+            },
+            {
+              "documentId": "content-56b62412-a34c-4530-ba4d-3b9a6b1fe67e",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "2.师生可通过“智慧广外”登录学校信息门户，在个人业务板块点击“个人数据中心”查看。"
+              ]
+            }
+          ]
+        },
+        "durationMs": 1456
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "running",
+      "at": "2026-11-17T02:12:24.573Z",
+      "elapsedMs": 6138,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答生成",
+        "tools": []
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "success",
+      "at": "2026-11-17T02:12:28.478Z",
+      "elapsedMs": 10043,
+      "durationMs": 3905,
+      "data": {
+        "finishReason": "stop",
+        "toolCalls": [],
+        "characters": 79,
+        "usage": {
+          "promptTokens": 3117,
+          "completionTokens": 384,
+          "totalTokens": 3501
+        }
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "phase": "evidence_check",
+      "state": "running",
+      "at": "2026-11-17T02:12:28.532Z",
+      "elapsedMs": 10097,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "tool": "report_evidence_verdict",
+        "timeoutMs": 10000
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "phase": "evidence_check",
+      "state": "success",
+      "at": "2026-11-17T02:12:34.818Z",
+      "elapsedMs": 16383,
+      "durationMs": 6286,
+      "data": {
+        "supported": true,
+        "relevant": true,
+        "coverage": "covered",
+        "issueCount": 0
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "running",
+      "at": "2026-11-17T02:12:34.876Z",
+      "elapsedMs": 16441,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "success",
+      "at": "2026-11-17T02:12:34.938Z",
+      "elapsedMs": 16503,
+      "durationMs": 62,
+      "data": {
+        "characters": 79,
+        "cards": 0
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "running",
+      "at": "2026-11-17T02:12:34.938Z",
+      "elapsedMs": 16503,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "success",
+      "at": "2026-11-17T02:12:34.938Z",
+      "elapsedMs": 16503,
+      "durationMs": 0,
+      "data": {
+        "characters": 79,
+        "cards": 0
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:12:23.059Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T02:12:23.059Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T02:12:24.515Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 1456,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:12:35.157Z",
+      "data": {
+        "cards": [],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T02:12:35.157Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "plan": {
+              "subject": "校园统一身份认证密码重置",
+              "entities": [],
+              "constraints": [],
+              "goal": "procedure",
+              "query": "“校园统一身份认证密码” “重置”"
+            },
+            "durationMs": 3325,
+            "usage": {
+              "promptTokens": 532,
+              "completionTokens": 397,
+              "totalTokens": 929
+            }
+          },
+          "executionStatus": "completed",
+          "taskStatus": "completed",
+          "retrievalStatus": "matched",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "wx-30cce44b0d4d5f6652d41957a0de55603fa2a0ec",
+              "wx-8cdb4cbcd0e98c121b8f4ed149c736f8bb533123",
+              "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 3,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 1,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [
+            {
+              "supported": true,
+              "relevant": true,
+              "coverage": "covered",
+              "issues": []
+            }
+          ],
+          "upstreamTimings": [
+            {
+              "durationMs": 3905,
+              "firstTextMs": 3753,
+              "finishReason": "stop",
+              "contentChars": 79
+            },
+            {
+              "durationMs": 6286,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 7097,
+          "completionTokens": 1515,
+          "cachedPromptTokens": 0,
+          "totalTokens": 8612,
+          "usageComplete": true,
+          "chargedTokens": 8612,
+          "durationMs": 11817,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 8612,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 4624,
+            "serverElapsedMs": 16441,
+            "firstTextMs": 16383,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 1456,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 29,
+              "writeQueries": 12,
+              "calls": 33,
+              "failures": 0,
+              "durationMs": 2531,
+              "maxCallMs": 165,
+              "rowsRead": 13098,
+              "rowsWritten": 26,
+              "rowUsageStatements": 22,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 12603,
+                "rowsWritten": 0,
+                "queries": 9,
+                "durationMs": 1456,
+                "stagesMs": {
+                  "lexical": 287,
+                  "supplement": 542,
+                  "revalidationAndRanking": 627
+                },
+                "candidateChunks": 54,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 2
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 20
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 512,
+                    "candidates": 38
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "plan": {
+        "subject": "校园统一身份认证密码重置",
+        "entities": [],
+        "constraints": [],
+        "goal": "procedure",
+        "query": "“校园统一身份认证密码” “重置”"
+      },
+      "durationMs": 3325,
+      "usage": {
+        "promptTokens": 532,
+        "completionTokens": 397,
+        "totalTokens": 929
+      }
+    },
+    "executionStatus": "completed",
+    "taskStatus": "completed",
+    "retrievalStatus": "matched",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "wx-30cce44b0d4d5f6652d41957a0de55603fa2a0ec",
+        "wx-8cdb4cbcd0e98c121b8f4ed149c736f8bb533123",
+        "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 3,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [
+      {
+        "supported": true,
+        "relevant": true,
+        "coverage": "covered",
+        "issues": []
+      }
+    ],
+    "upstreamTimings": [
+      {
+        "durationMs": 3905,
+        "firstTextMs": 3753,
+        "finishReason": "stop",
+        "contentChars": 79
+      },
+      {
+        "durationMs": 6286,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 7097,
+    "completionTokens": 1515,
+    "cachedPromptTokens": 0,
+    "totalTokens": 8612,
+    "usageComplete": true,
+    "chargedTokens": 8612,
+    "durationMs": 11817,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 8612,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 4624,
+      "serverElapsedMs": 16441,
+      "firstTextMs": 16383,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1456,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 29,
+        "writeQueries": 12,
+        "calls": 33,
+        "failures": 0,
+        "durationMs": 2531,
+        "maxCallMs": 165,
+        "rowsRead": 13098,
+        "rowsWritten": 26,
+        "rowUsageStatements": 22,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 12603,
+          "rowsWritten": 0,
+          "queries": 9,
+          "durationMs": 1456,
+          "stagesMs": {
+            "lexical": 287,
+            "supplement": 542,
+            "revalidationAndRanking": 627
+          },
+          "candidateChunks": 54,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 2
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 20
+            },
+            {
+              "name": "document_passages",
+              "limit": 512,
+              "candidates": 38
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

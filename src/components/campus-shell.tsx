@@ -30,7 +30,7 @@ const navigation = [
   { href: "/radar", label: "校园雷达", short: "雷达", icon: Radar },
   { href: "/knowledge", label: "校园知识", short: "知识", icon: BookOpen },
   { href: "/calendar", label: "活动日历", short: "日历", icon: CalendarDays },
-  { href: "/account/favorites", label: "我的收藏", short: "收藏", icon: Bookmark },
+  { href: "/account/favorites", label: "收藏与待办", short: "收藏", icon: Bookmark },
   { href: "/account", label: "我的账号", short: "我的", icon: UserRound },
 ];
 

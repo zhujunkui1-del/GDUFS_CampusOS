@@ -38,7 +38,7 @@ export const AssistantCardSchema = z.discriminatedUnion("kind", [
             href: z
               .string()
               .regex(
-                /^\/calendar\?date=\d{4}-\d{2}-\d{2}&event=event-[a-f0-9]{40}$/,
+                /^\/calendar\?date=\d{4}-\d{2}-\d{2}&event=event-[a-f0-9]{40}(?:&article=[A-Za-z0-9._%:-]+)?$/,
               ),
           }),
         )

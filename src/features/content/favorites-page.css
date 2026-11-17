@@ -94,6 +94,16 @@
   font-size: 12px;
 }
 
+.favorites-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  gap: 5px;
+  flex: none;
+  margin-inline-end: 4px;
+}
+
 .favorites-card-remove {
   display: grid;
   place-items: center;

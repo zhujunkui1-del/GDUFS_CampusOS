@@ -1,0 +1,515 @@
+{
+  "question": "广外有哪些奖学金？",
+  "status": "success",
+  "entry": "campus-assistant-map",
+  "answer": "广外本科生奖学金主要类别\n一、国家级奖学金\n国家奖学金：由上级拨款，面向品学兼优的全日制本科在校生，具体金额及评选要求按上级部门及学校当年通知执行 [4]\n国家励志奖学金：由上级拨款，面向品学兼优的家庭经济困难全日制本科在校生，具体规则同上 [4]\n国家助学金：已通过家庭经济困难认定的在校生（含预科生、退役士兵学生），资助标准为2500-5000元/学年，每学年10-11月评定，按月发放 [3]\n二、校级奖学金\n校内奖学金：学校出资，面向品学兼优的全日制本科在校生，资助标准1000-15000元/学年，每学年9月评定，10-12月发放，包含校长奖学金、优秀奖学金、民族奖学金、云山励志奖学金等多个子项 [3]\n优秀学生奖学金：对应综合素质测评排名靠前的学生，获该奖学金可参评三好学生、三好学生标兵、毕业班三好学生等荣誉 [1]\n优秀大学生奖章：每年评选10-20名，要求在校期间3次被评为三好学生或三好学生标兵，且在社会实践、学术科研等方面表现突出 [1]\n校长奖章：表彰在价值引领、社会实践、学术科研、创新创业、自强不息等方面表现特别突出的个人或团体，评选按学校相关规定执行 [1]\n三、专项奖学金\n台湾学生奖学金：面向我校品学兼优的台湾学生，资助标准4000-8000元/学年，按上级通知评定，每年10-12月发放 [3]\n港澳及华侨学生奖学金：面向我校品学兼优的港澳及华侨学生，资助标准、评定及发放规则同上 [3]\n出国（境）学习奖助学金：面向出国交流的优秀学生，最高资助30000元，每学期期末（6月、12月）申报，分两次发放：办完出国（境）手续后发放总额50%，回国后提交第二期申请发放剩余50% [2][3]\n四、社会奖学金\n\n由学校校友、企事业单位或个人出资设立，面向品学兼优的全日制本科在校生，资助标准2500-10000元/学年，每学年9月评定，按资金到账进度发放 [3]\n\n以上为当前检索到的广外本科生奖学金相关信息，具体评选条件、金额、流程以当年学校官方发布的正式通知为准，如有疑问可联系学生工作部（处）学生资助管理中心咨询。\n\n4 个来源",
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-f08e8108-5502-40a9-b783-6a2e934b5009",
+        "content-4dbeb137-d689-4ab9-be9a-d1b3f818c4d3",
+        "content-fed4907a-160a-4494-8319-450628fb4b53",
+        "content-8fda31ef-a8f2-496c-a609-233c48c5cbbd"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "content-4dbeb137-d689-4ab9-be9a-d1b3f818c4d3",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-fed4907a-160a-4494-8319-450628fb4b53",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-8fda31ef-a8f2-496c-a609-233c48c5cbbd",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 2,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 1,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 19235,
+        "firstTextMs": 15964,
+        "finishReason": "stop",
+        "contentChars": 935
+      },
+      {
+        "durationMs": 10000,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 3495,
+    "completionTokens": 2525,
+    "cachedPromptTokens": 0,
+    "totalTokens": 6020,
+    "usageComplete": false,
+    "chargedTokens": 6020,
+    "durationMs": 31312,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 250000,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 909,
+      "serverElapsedMs": 32221,
+      "firstTextMs": 32183,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1953,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 28,
+        "writeQueries": 12,
+        "calls": 32,
+        "failures": 0,
+        "durationMs": 2344,
+        "maxCallMs": 326,
+        "rowsRead": 6586,
+        "rowsWritten": 26,
+        "rowUsageStatements": 22,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 5990,
+          "rowsWritten": 0,
+          "queries": 9,
+          "durationMs": 1953,
+          "stagesMs": {
+            "lexical": 453,
+            "supplement": 924,
+            "revalidationAndRanking": 576
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "scholarship_policy",
+              "limit": 16,
+              "candidates": 16
+            },
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 22
+            },
+            {
+              "name": "document_passages",
+              "limit": 480,
+              "candidates": 33
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "cards": [
+    {
+      "kind": "source",
+      "documentId": "content-f08e8108-5502-40a9-b783-6a2e934b5009",
+      "title": "广东外语外贸大学先进班集体与优秀大学生评选办法",
+      "sourceName": "信息公开网站",
+      "originalUrl": "https://xxgk.gdufs.edu.cn/info/1203/3021.htm",
+      "publishedAt": "2022-05-23",
+      "snippet": "践、创新能力、综合素质等方面表现突出的本科学生。\n第十条 在满足基本条件的基础上，符合以下条件的，可以评为优秀大学生：\n（一）凡获当学年优秀学生一等奖学金，在综合素质测评中基础性素质测评一项评分为90分以上者，且体测成绩达到75分以上，可评为三好学生标兵。\n（二）凡获当学年优秀学生三等奖学金以上，在综合素质测评中基础性素质测评一项评分为90分以上者，且体测成绩达到75分以上，可评为三好学生。获评三好学生标兵荣誉称号的学生，不再重复获三好学生荣誉称号。\n（三）获毕业班优秀学生奖学金，在综合素质测评中基础性素质测评一项评分为90分以上者，可评为毕业班三好学生。\n第十一条 综合毕业班学生在校期间的表现，每年评选10- 20名“优秀大学生奖章”获得者。在满足第九条基本条件的基础上，符合以下条件的，可以参评“优秀大学生奖章”：\n（一）德智体美劳全面发展，起到模范带头作用，得到师生的公认和好评，3次被学校评为三好学生或三好学生标兵；\n（二）在社会实践、学术研究、科技创新、文体活动、学生工作和品德修养等方面至少一项表现突出，为学校赢得荣誉或产生积极的社会影响。\n第十二条 “校长奖章”用于表彰在价值引领、社会实践、学术科研、创新创业、自强不息、助人为乐、孝老爱亲、才艺兼备等方面表现特别突出的个人或团体。\n申请“校长奖章”的条件，按照学校“校长奖章”评选相关规定执行。\n第十三条 优秀大学生按照以下程序进行评选：\n（一）三好学生标兵、三好学生的评选，根据学校本科学生综合素质测评方案评分，结合学生获评奖学金的情况，由学院评审、公示、推荐，学生工作部（处）审核，学校审定。\n（二）“优秀大学生奖章”评选程序：\n1.学院推荐。各学院根据应届毕业班人数，按照400人以内推报1人，401-700人推报2人，700人以上推报3人的标准推荐人选，组织相关材料报送学生工作",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    },
+    {
+      "kind": "source",
+      "documentId": "content-4dbeb137-d689-4ab9-be9a-d1b3f818c4d3",
+      "title": "关于查收2025-2026学年第二学期第二批出国（境）学习奖助学金的通知",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/info/1056/67691.htm",
+      "publishedAt": "2026-07-08T04:26:00.000Z",
+      "snippet": "各位同学：\n2025-2026学年第二学期第二批出国（境）学习奖助学金已于2026年7月8日划转入同学们个人中行卡，请同学们及时查收，如钱款未到账，请先至中国银行柜台核实个人信息，确认无误后，将银行账户加盖公章的最新流水账明细单（或银行出具的相关证明）扫描件和学生证扫描件于2026年7月21日前发送到gdufsxszz@163.com咨询。\n根据出国（境）奖学金管理办法相关规定，奖学金分两次发放，获奖学金学生在办理出国（境）手续后发放奖学金总额的50%，待回国后提交第二期奖学金申请，再予以发放剩余50%奖学金。\n学生工作部\n学生资助管理中心\n2026年7月8日",
+      "evidenceType": "full_text",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    },
+    {
+      "kind": "source",
+      "documentId": "content-fed4907a-160a-4494-8319-450628fb4b53",
+      "title": "助学圆梦，励志成才 ——广东外语外贸大学本科生资助政策简介",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/info/1093/10632.htm",
+      "publishedAt": "2026-05-20T01:59:24.000Z",
+      "snippet": "全日制本科在校生，大二及以上，品学兼优的家庭经济困难生\n6000元/学年\n▶评定：每学年9月；\n▶发放：上级资金下达后发放；\n▶补充：优先给经济困难且成绩优秀的学生。\n台湾学生奖学金\n我校台湾学生，品学兼优\n4000-8000元/学年\n▶评定：根据上级通知；\n▶发放：每年 10~12 月；\n▶补充：具体名额和评选标准根据上级部门有关规定执行。\n港澳及华侨学生奖学金\n我校港澳/华侨学生，品学兼优\n4000-8000元/学年\n▶评定：根据上级通知；\n▶发放：每年 10~12 月；\n▶补充：具体名额和评选标准根据上级部门有关规定执行。\n校内奖学金（含多类型）\n全日制本科在校生，品学兼优\n1000-15000元/学年\n▶评定：每学年9月；\n▶发放：每年10~12月；\n▶补充：学校出资，覆盖多种类型（含校长奖学金、优秀奖学金、民族奖学金、云山励志奖学金等子项）。\n出国（境）奖学金\n出国交流的优秀学生\n最高30000元\n▶评定：每学期期末（6月、12月）申报；\n▶发放：次年3~5月或10~12月\n▶补充：奖励优秀学生出国交流学习，根据学生出国（境）往返旅费和生活费给予资助。\n社会奖学金\n全日制本科在校生，品学兼优（校友 / 企业出资）\n2500-10000元/学年\n▶评定：每学年9月；\n▶发放：根据资金到账进度\n发放；\n▶补充： 由学校校友、企事业单位或个人等出资。\n二、助学金\n家庭经济困难认定\n全日制本科在校生，家庭经济困难\n无（仅认定资格）\n▶评定：每学期开学初（9月、3 月）申报；\n▶发放：无（只是认定“困难生”身份，用于申请其他奖助）；\n▶补充：为申请资助提供依据。\n国家助学金\n已通过“家庭经济困难认定” 的在校生（含预科生、退役士兵学生）\n2500-5000元/学年\n▶评定：每学年10~11月；\n▶发放：按月发放资助金；",
+      "evidenceType": "full_text",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    },
+    {
+      "kind": "source",
+      "documentId": "content-8fda31ef-a8f2-496c-a609-233c48c5cbbd",
+      "title": "关于预发2021-2022学年度本科生国家奖学金、国家励志奖学金的通知",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/info/1056/8548.htm",
+      "publishedAt": "2022-09-28T09:00:00.000Z",
+      "snippet": "各位同学：\n经过学院初评、学生工作部核查、学校范围内公示，2021-2022学年度本科生国家奖学金、国家励志奖学金候选人建议名单已经初步确认，现将2021-2022学年度本科生国家奖学金、国家励志奖学金预发给大家，请各位获奖同学及时查收。如钱款未到账，请先至中国银行柜台核实个人信息，确认无误后，携带存折本最新流水账明细单（或银行出具的相关证明）、学生证于10月15日前到学生处办公室咨询。\n国家奖学金、国家励志奖学金为上级拨款，学校初审名单需上报省教育厅、国家教育部多重审核，如在此过程中发现学生材料弄虚作假，或获奖学生不符合上级部门评审条件被驳回的，学校享有收回该生所获奖学金并重新配置的权利。\n咨询联系方式：\n办公室地址及电话：白云山校区行政楼101，36204409\n邮箱地址：gwxscxsk@163.com\n特此通知\n学生工作部、财务处\n2022年9月28日",
+      "evidenceType": "full_text",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-11-17T02:57:39.556Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:57:39.556Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:57:41.509Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 1953,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:10.921Z",
+      "type": "message.delta",
+      "payload": {
+        "text": "### 广外本科生奖学金主要类别\n#### 一、国家级奖学金\n1. 国家奖学金：由上级拨款，面向品学兼优的全日制本科在校生，具体金额及评选要求按上级部门及学校当年通知执行 [4]\n2. 国家励志奖学金：由上级拨款，面向品学兼优的家庭经济困难全日制本科在校生，具体规则同上 [4]\n3. 国家助学金：已通过家庭经济困难认定的在校生（含预科生、退役士兵学生），资助标准为2500-5000元/学年，每学年10-11月评定，按月发放 [3]\n\n#### 二、校级奖学金\n1. 校内奖学金：学校出资，面向品学兼优的全日制本科在校生，资助标准1000-15000元/学年，每学年9月评定，10-12月发放，包含校长奖学金、优秀奖学金、民族奖学金、云山励志奖学金等多个子项 [3]\n2. 优秀学生奖学金：对应综合素质测评排名靠前的学生，获该奖学金可参评三好学生、三好学生标兵、毕业班三好学生等荣誉 [1]\n3. 优秀大学生奖章：每年评选10-20名，要求在校期间3次被评为三好学生或三好学生标兵，且在社会实践、学术科研等方面表现突出 [1]\n4. 校长奖章：表彰在价值引领、社会实践、学术科研、创新创业、自强不息等方面表现特别突出的个人或团体，评选按学校相关规定执行 [1]\n\n#### 三、专项奖学金\n1. 台湾学生奖学金：面向我校品学兼优的台湾学生，资助标准4000-8000元/学年，按上级通知评定，每年10-12月发放 [3]\n2. 港澳及华侨学生奖学金：面向我校品学兼优的港澳及华侨学生，资助标准、评定及发放规则同上 [3]\n3. 出国（境）学习奖助学金：面向出国交流的优秀学生，最高资助30000元，每学期期末（6月、12月）申报，分两次发放：办完出国（境）手续后发放总额50%，回国后提交第二期申请发放剩余50% [2][3]\n\n#### 四、社会奖学金\n由学校校友、企事业单位或个人出资设立，面向品学兼优的全日制本科在校生，资助标准2500-10000元/学年，每学年9月评定，按资金到账进度发放 [3]\n\n> 以上为当前检索到的广外本科生奖学金相关信息，具体评选条件、金额、流程以当年学校官方发布的正式通知为准，如有疑问可联系学生工作部（处）学生资助管理中心咨询。"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:11.070Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "source",
+            "documentId": "content-f08e8108-5502-40a9-b783-6a2e934b5009",
+            "title": "广东外语外贸大学先进班集体与优秀大学生评选办法",
+            "sourceName": "信息公开网站",
+            "originalUrl": "https://xxgk.gdufs.edu.cn/info/1203/3021.htm",
+            "publishedAt": "2022-05-23",
+            "snippet": "践、创新能力、综合素质等方面表现突出的本科学生。\n第十条 在满足基本条件的基础上，符合以下条件的，可以评为优秀大学生：\n（一）凡获当学年优秀学生一等奖学金，在综合素质测评中基础性素质测评一项评分为90分以上者，且体测成绩达到75分以上，可评为三好学生标兵。\n（二）凡获当学年优秀学生三等奖学金以上，在综合素质测评中基础性素质测评一项评分为90分以上者，且体测成绩达到75分以上，可评为三好学生。获评三好学生标兵荣誉称号的学生，不再重复获三好学生荣誉称号。\n（三）获毕业班优秀学生奖学金，在综合素质测评中基础性素质测评一项评分为90分以上者，可评为毕业班三好学生。\n第十一条 综合毕业班学生在校期间的表现，每年评选10- 20名“优秀大学生奖章”获得者。在满足第九条基本条件的基础上，符合以下条件的，可以参评“优秀大学生奖章”：\n（一）德智体美劳全面发展，起到模范带头作用，得到师生的公认和好评，3次被学校评为三好学生或三好学生标兵；\n（二）在社会实践、学术研究、科技创新、文体活动、学生工作和品德修养等方面至少一项表现突出，为学校赢得荣誉或产生积极的社会影响。\n第十二条 “校长奖章”用于表彰在价值引领、社会实践、学术科研、创新创业、自强不息、助人为乐、孝老爱亲、才艺兼备等方面表现特别突出的个人或团体。\n申请“校长奖章”的条件，按照学校“校长奖章”评选相关规定执行。\n第十三条 优秀大学生按照以下程序进行评选：\n（一）三好学生标兵、三好学生的评选，根据学校本科学生综合素质测评方案评分，结合学生获评奖学金的情况，由学院评审、公示、推荐，学生工作部（处）审核，学校审定。\n（二）“优秀大学生奖章”评选程序：\n1.学院推荐。各学院根据应届毕业班人数，按照400人以内推报1人，401-700人推报2人，700人以上推报3人的标准推荐人选，组织相关材料报送学生工作",
+            "evidenceType": "full_text",
+            "classificationState": "knowledge",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          },
+          {
+            "kind": "source",
+            "documentId": "content-4dbeb137-d689-4ab9-be9a-d1b3f818c4d3",
+            "title": "关于查收2025-2026学年第二学期第二批出国（境）学习奖助学金的通知",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/info/1056/67691.htm",
+            "publishedAt": "2026-07-08T04:26:00.000Z",
+            "snippet": "各位同学：\n2025-2026学年第二学期第二批出国（境）学习奖助学金已于2026年7月8日划转入同学们个人中行卡，请同学们及时查收，如钱款未到账，请先至中国银行柜台核实个人信息，确认无误后，将银行账户加盖公章的最新流水账明细单（或银行出具的相关证明）扫描件和学生证扫描件于2026年7月21日前发送到gdufsxszz@163.com咨询。\n根据出国（境）奖学金管理办法相关规定，奖学金分两次发放，获奖学金学生在办理出国（境）手续后发放奖学金总额的50%，待回国后提交第二期奖学金申请，再予以发放剩余50%奖学金。\n学生工作部\n学生资助管理中心\n2026年7月8日",
+            "evidenceType": "full_text",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          },
+          {
+            "kind": "source",
+            "documentId": "content-fed4907a-160a-4494-8319-450628fb4b53",
+            "title": "助学圆梦，励志成才 ——广东外语外贸大学本科生资助政策简介",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/info/1093/10632.htm",
+            "publishedAt": "2026-05-20T01:59:24.000Z",
+            "snippet": "全日制本科在校生，大二及以上，品学兼优的家庭经济困难生\n6000元/学年\n▶评定：每学年9月；\n▶发放：上级资金下达后发放；\n▶补充：优先给经济困难且成绩优秀的学生。\n台湾学生奖学金\n我校台湾学生，品学兼优\n4000-8000元/学年\n▶评定：根据上级通知；\n▶发放：每年 10~12 月；\n▶补充：具体名额和评选标准根据上级部门有关规定执行。\n港澳及华侨学生奖学金\n我校港澳/华侨学生，品学兼优\n4000-8000元/学年\n▶评定：根据上级通知；\n▶发放：每年 10~12 月；\n▶补充：具体名额和评选标准根据上级部门有关规定执行。\n校内奖学金（含多类型）\n全日制本科在校生，品学兼优\n1000-15000元/学年\n▶评定：每学年9月；\n▶发放：每年10~12月；\n▶补充：学校出资，覆盖多种类型（含校长奖学金、优秀奖学金、民族奖学金、云山励志奖学金等子项）。\n出国（境）奖学金\n出国交流的优秀学生\n最高30000元\n▶评定：每学期期末（6月、12月）申报；\n▶发放：次年3~5月或10~12月\n▶补充：奖励优秀学生出国交流学习，根据学生出国（境）往返旅费和生活费给予资助。\n社会奖学金\n全日制本科在校生，品学兼优（校友 / 企业出资）\n2500-10000元/学年\n▶评定：每学年9月；\n▶发放：根据资金到账进度\n发放；\n▶补充： 由学校校友、企事业单位或个人等出资。\n二、助学金\n家庭经济困难认定\n全日制本科在校生，家庭经济困难\n无（仅认定资格）\n▶评定：每学期开学初（9月、3 月）申报；\n▶发放：无（只是认定“困难生”身份，用于申请其他奖助）；\n▶补充：为申请资助提供依据。\n国家助学金\n已通过“家庭经济困难认定” 的在校生（含预科生、退役士兵学生）\n2500-5000元/学年\n▶评定：每学年10~11月；\n▶发放：按月发放资助金；",
+            "evidenceType": "full_text",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          },
+          {
+            "kind": "source",
+            "documentId": "content-8fda31ef-a8f2-496c-a609-233c48c5cbbd",
+            "title": "关于预发2021-2022学年度本科生国家奖学金、国家励志奖学金的通知",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/info/1056/8548.htm",
+            "publishedAt": "2022-09-28T09:00:00.000Z",
+            "snippet": "各位同学：\n经过学院初评、学生工作部核查、学校范围内公示，2021-2022学年度本科生国家奖学金、国家励志奖学金候选人建议名单已经初步确认，现将2021-2022学年度本科生国家奖学金、国家励志奖学金预发给大家，请各位获奖同学及时查收。如钱款未到账，请先至中国银行柜台核实个人信息，确认无误后，携带存折本最新流水账明细单（或银行出具的相关证明）、学生证于10月15日前到学生处办公室咨询。\n国家奖学金、国家励志奖学金为上级拨款，学校初审名单需上报省教育厅、国家教育部多重审核，如在此过程中发现学生材料弄虚作假，或获奖学生不符合上级部门评审条件被驳回的，学校享有收回该生所获奖学金并重新配置的权利。\n咨询联系方式：\n办公室地址及电话：白云山校区行政楼101，36204409\n邮箱地址：gwxscxsk@163.com\n特此通知\n学生工作部、财务处\n2022年9月28日",
+            "evidenceType": "full_text",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:11.070Z",
+      "type": "run.completed",
+      "payload": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-f08e8108-5502-40a9-b783-6a2e934b5009",
+              "content-4dbeb137-d689-4ab9-be9a-d1b3f818c4d3",
+              "content-fed4907a-160a-4494-8319-450628fb4b53",
+              "content-8fda31ef-a8f2-496c-a609-233c48c5cbbd"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "content-4dbeb137-d689-4ab9-be9a-d1b3f818c4d3",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-fed4907a-160a-4494-8319-450628fb4b53",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-8fda31ef-a8f2-496c-a609-233c48c5cbbd",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 2,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 1,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 1,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 19235,
+              "firstTextMs": 15964,
+              "finishReason": "stop",
+              "contentChars": 935
+            },
+            {
+              "durationMs": 10000,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 3495,
+          "completionTokens": 2525,
+          "cachedPromptTokens": 0,
+          "totalTokens": 6020,
+          "usageComplete": false,
+          "chargedTokens": 6020,
+          "durationMs": 31312,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 250000,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 909,
+            "serverElapsedMs": 32221,
+            "firstTextMs": 32183,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 1953,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 28,
+              "writeQueries": 12,
+              "calls": 32,
+              "failures": 0,
+              "durationMs": 2344,
+              "maxCallMs": 326,
+              "rowsRead": 6586,
+              "rowsWritten": 26,
+              "rowUsageStatements": 22,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 5990,
+                "rowsWritten": 0,
+                "queries": 9,
+                "durationMs": 1953,
+                "stagesMs": {
+                  "lexical": 453,
+                  "supplement": 924,
+                  "revalidationAndRanking": 576
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "scholarship_policy",
+                    "limit": 16,
+                    "candidates": 16
+                  },
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 64
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 22
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 480,
+                    "candidates": 33
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

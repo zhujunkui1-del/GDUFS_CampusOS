@@ -119,13 +119,29 @@ export async function understandQuery(
     reply.toolCalls.length !== 1 ||
     call?.function.name !== "plan_campus_query"
   )
-    throw new Error("Invalid query plan");
-  return {
-    plan: verifiedQueryUnderstanding(
-      JSON.parse(call.function.arguments),
-      question,
-    ),
-    usage: reply.usage,
-    durationMs: Math.round(performance.now() - started),
-  };
+    return {
+      error: "INVALID_PLAN" as const,
+      usage: reply.usage,
+      durationMs: Math.round(performance.now() - started),
+    };
+  try {
+    return {
+      plan: verifiedQueryUnderstanding(
+        JSON.parse(call.function.arguments),
+        question,
+      ),
+      usage: reply.usage,
+      durationMs: Math.round(performance.now() - started),
+    };
+  } catch (error) {
+    return {
+      error:
+        error instanceof Error &&
+        error.message === "Planner introduced a term absent from the question"
+          ? ("NON_LITERAL_PLAN" as const)
+          : ("INVALID_PLAN" as const),
+      usage: reply.usage,
+      durationMs: Math.round(performance.now() - started),
+    };
+  }
 }

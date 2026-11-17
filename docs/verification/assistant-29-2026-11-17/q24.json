@@ -1,0 +1,229 @@
+{
+  "question": "南校区有哪些食堂？",
+  "status": "success",
+  "entry": "campus-assistant-map",
+  "answer": "南校区地图中已核实的食堂有3处\n\n文采园（一饭），位于生活区\n风采园（三饭），位于生活区\n博雅园（二饭），位于生活区\n\n地点卡片可打开对应地图位置。\n\n文采园（一饭）\n风采园（三饭）\n博雅园（二饭）",
+  "metrics": {
+    "requests": 0,
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "chargedTokens": 0,
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "execution": "spatial_read",
+    "answerMode": "spatial_read",
+    "executionStatus": "completed",
+    "retrievalStatus": "matched",
+    "taskStatus": "completed",
+    "resolvedIntent": "canteen_list",
+    "dataSource": "campus_map",
+    "serverElapsedMs": 909
+  },
+  "cards": [
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039048",
+        "name": "文采园（一饭）",
+        "category": "canteen",
+        "zone": "living",
+        "location": [
+          113.39131745,
+          23.064490550000002
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "文采园",
+          "一饭",
+          "一饭堂",
+          "第一饭堂",
+          "第一食堂",
+          "一食堂"
+        ],
+        "labelPlaceId": "osm-way-313039048",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039057",
+        "name": "风采园（三饭）",
+        "category": "canteen",
+        "zone": "living",
+        "location": [
+          113.38962265,
+          23.060230500000003
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "风采园",
+          "三饭",
+          "三饭堂",
+          "第三饭堂",
+          "第三食堂",
+          "三食堂"
+        ],
+        "labelPlaceId": "osm-way-313039057",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039061",
+        "name": "博雅园（二饭）",
+        "category": "canteen",
+        "zone": "living",
+        "location": [
+          113.39209575000001,
+          23.063546799999997
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "博雅园",
+          "二饭",
+          "二饭堂",
+          "第二饭堂",
+          "第二食堂",
+          "二食堂"
+        ],
+        "labelPlaceId": "osm-way-313039061",
+        "verificationStatus": "source_mapped"
+      }
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-11-17T08:13:04.592Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:13:04.592Z",
+      "type": "message.delta",
+      "payload": {
+        "text": "南校区地图中已核实的食堂有3处\n\n- 文采园（一饭），位于生活区\n- 风采园（三饭），位于生活区\n- 博雅园（二饭），位于生活区\n\n地点卡片可打开对应地图位置。"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:13:04.592Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039048",
+              "name": "文采园（一饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.39131745,
+                23.064490550000002
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "文采园",
+                "一饭",
+                "一饭堂",
+                "第一饭堂",
+                "第一食堂",
+                "一食堂"
+              ],
+              "labelPlaceId": "osm-way-313039048",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039057",
+              "name": "风采园（三饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.38962265,
+                23.060230500000003
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "风采园",
+                "三饭",
+                "三饭堂",
+                "第三饭堂",
+                "第三食堂",
+                "三食堂"
+              ],
+              "labelPlaceId": "osm-way-313039057",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039061",
+              "name": "博雅园（二饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.39209575000001,
+                23.063546799999997
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "博雅园",
+                "二饭",
+                "二饭堂",
+                "第二饭堂",
+                "第二食堂",
+                "二食堂"
+              ],
+              "labelPlaceId": "osm-way-313039061",
+              "verificationStatus": "source_mapped"
+            }
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:13:04.592Z",
+      "type": "run.completed",
+      "payload": {
+        "metrics": {
+          "requests": 0,
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "chargedTokens": 0,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "execution": "spatial_read",
+          "answerMode": "spatial_read",
+          "executionStatus": "completed",
+          "retrievalStatus": "matched",
+          "taskStatus": "completed",
+          "resolvedIntent": "canteen_list",
+          "dataSource": "campus_map",
+          "serverElapsedMs": 909
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

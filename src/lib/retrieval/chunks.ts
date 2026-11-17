@@ -1,6 +1,7 @@
 import { articleText } from "@/lib/ingestion/article-text";
 import type { ArticleAnalysisInput } from "@/domain/console/article-analysis";
 import { lexicalTokens } from "./terms";
+import { referenceChapterOffsets } from "@/lib/ingestion/reference-sections";
 export function chunkArticle(input: ArticleAnalysisInput, rights: string) {
   const projection = articleText(input);
   const evidenceType =
@@ -29,11 +30,15 @@ export function chunkArticle(input: ArticleAnalysisInput, rights: string) {
     terms: string;
   }[] = [];
   let start = 0;
+  const chapters = referenceChapterOffsets(projection.title, text);
   // A converted student handbook is one document of ~200k characters; the old
   // ceiling of 160 would silently drop the tail of every long reference file.
   while (start < text.length && chunks.length < 480) {
     let end = Math.min(start + 900, text.length);
-    if (end < text.length) {
+    const chapter = chapters.find((offset) => offset > start);
+    const atBoundary = chapter !== undefined && chapter <= end;
+    if (atBoundary) end = chapter;
+    else if (end < text.length) {
       const newline = text.lastIndexOf("\n", end);
       if (newline > start + 450) end = newline;
     }
@@ -46,7 +51,7 @@ export function chunkArticle(input: ArticleAnalysisInput, rights: string) {
       terms: lexicalTokens(value).join(" "),
     });
     if (end === text.length) break;
-    start = Math.max(start + 1, end - 90);
+    start = atBoundary ? end : Math.max(start + 1, end - 90);
   }
   return {
     text,

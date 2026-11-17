@@ -1,0 +1,1051 @@
+{
+  "question": "广外最近有哪些讲座？哪些需要提前报名？",
+  "smartSearch": false,
+  "status": "error",
+  "answer": "目前暂未检索到2026年11月17日至12月17日期间广外的在办或待办讲座，过往可查的相关讲座及提前报名要求如下：\n1. **“信息素养教育系列”讲座 第四十二讲** [1]\n   - 举办时间：2026年4月17日14:15-15:15，已结束\n   - 举办地点：大学城校区图书馆二楼悦读沙龙室（线下），腾讯会议462-383-307（线上）\n   - 报名要求：无提前报名限制，活动已结束\n2. **国际商务大讲坛：从实地调研到案例入库——魏小军教授深度解析飞鹤加拿大投资案例的创作历程** [2]\n   - 举办时间：2026年3月23日，已结束\n   - 举办地点：大学城校区教学楼A201\n   - 报名要求：未提及提前报名要求，活动已结束\n3. **2026年新生生涯启蒙活动** [3]\n   - 举办时间：2026年10月22日19:00，已结束\n   - 举办地点：白云山校区图书馆报告厅\n   - 报名要求：南校跟车需提前填写报名问卷，活动已结束\n4. **广东外语外贸大学亚非语言文化学院2026年优秀大学生线上开放日** [4]\n   - 举办时间：2026年7月20日-21日，已结束\n   - 举办形式：线上腾讯会议\n   - 报名要求：需提前报名，活动已结束\n\n你可以关注广外各学院官网、图书馆官方通知栏获取最新讲座资讯。",
+  "cards": [],
+  "error": "AI 暂不可用，请重试。",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T02:07:37.356Z",
+      "elapsedMs": 181,
+      "data": {
+        "question": "广外最近有哪些讲座？哪些需要提前报名？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T02:07:37.356Z",
+      "elapsedMs": 181,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T02:07:38.384Z",
+      "elapsedMs": 1209,
+      "data": {
+        "question": "广外最近有哪些讲座？哪些需要提前报名？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T02:07:38.384Z",
+      "elapsedMs": 1209,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T02:07:38.384Z",
+      "elapsedMs": 1209,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T02:07:38.384Z",
+      "elapsedMs": 1209,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T02:07:38.384Z",
+      "elapsedMs": 1209,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T02:07:38.384Z",
+      "elapsedMs": 1209,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "registration",
+        "campus": null,
+        "topics": [
+          "lecture"
+        ],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_events"
+        ]
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "running",
+      "at": "2026-11-17T02:07:38.521Z",
+      "elapsedMs": 1346,
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外讲座需要提前",
+          "limit": 5,
+          "nearestIfEmpty": true,
+          "category": "lecture"
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "success",
+      "at": "2026-11-17T02:07:40.154Z",
+      "elapsedMs": 2979,
+      "durationMs": 1633,
+      "data": {
+        "name": "search_campus_events",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-5d6565bd-364e-4f19-834a-2d1338e19d2f",
+              "chunkId": "content-5d6565bd-364e-4f19-834a-2d1338e19d2f:fts:f08fa3daa6e51c36:0",
+              "title": "“信息素养教育系列”讲座 第四十二讲",
+              "sourceId": "GDUFS-SRC-0008",
+              "sourceName": "图书馆",
+              "originalUrl": "https://lib.gdufs.edu.cn/info/1087/8788.htm",
+              "publishedAt": "2026-04-13",
+              "contentSnippet": "线下：大学城校区图书馆二楼悦读沙龙室\n线上：腾讯会议号：462-383-307\n温馨提示：\n1. 建议携带电脑同步实操，提前安装常用AI生图工具、PS软件；\n2. 两场讲座循序渐进，可单独参与，连续学习效果更佳。",
+              "startOffset": 0,
+              "endOffset": 106,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 35.34,
+              "rankingReasons": [
+                "标题词组匹配 1",
+                "片段词组匹配 3",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权",
+                "业务类别匹配"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "lecture",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "679e1740dbc6a817426cea54049cce6d5cd14d31caa3472aeda6e13f641bdc8e",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-c265dd6c-f7d9-4a4f-95a9-018d72eea4e5",
+              "chunkId": "content-c265dd6c-f7d9-4a4f-95a9-018d72eea4e5:fts:271647db3ef52efd:1",
+              "title": "国际商务大讲坛：从实地调研到案例入库——魏小军教授深度解析飞鹤加拿大投资案例的创作历程-经济贸易学院",
+              "sourceId": "GDUFS-SRC-0029",
+              "sourceName": "经济贸易学院",
+              "originalUrl": "https://jingmao.gdufs.edu.cn/info/1033/20459.htm",
+              "publishedAt": "2026-03-24",
+              "contentSnippet": "班一位同学询问：在访谈企业高管时，如何让对方愿意敞开心扉分享失败或冲突的经历？魏教授回答称，建立信任至关重要，研究者需要提前做足功课，展示专业素养，同时承诺对敏感信息进行脱敏处理。另一位同学关注案例的时效性问题，提问一篇2019年发表的案例在2026年的课堂上是否仍然适用。魏教授指出，经典的制度背景和战略逻辑具有长期价值，但同时教师应当补充“活案”元素——例如飞鹤在金斯顿工厂的最新进展、疫情后中加关系变化对项目的影响等，他鼓励同学们自己动手追踪案例企业的后续动态。现场讨论气氛热烈。\n本次讲座在同学们长时间的热烈掌声中圆满结束。本场讲座以“解剖一只麻雀”的方式，让同学们近距离感受了顶级案例创作的艰辛与魅力，进一步激发了大家关注中国企业全球化实践、投身案例研究的学术热情。\n初审：林家庄\n复审：陈 琳\n终审：许月丽",
+              "startOffset": 605,
+              "endOffset": 964,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 31.2,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 3",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权",
+                "业务类别匹配"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "lecture",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "c7a49cb1fb8ec329062873f2995a43150dd12a55bffb06848016fbba86795461",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "wx-ee29cde4423693ceee5305f673f1aa78a57d4d3a",
+              "chunkId": "wx-ee29cde4423693ceee5305f673f1aa78a57d4d3a:fts:ef3160d63ae476fe:1",
+              "title": "【讲座】2026年新生生涯启蒙活动",
+              "sourceId": "GDUFS-SRC-0114",
+              "sourceName": "广外就业",
+              "originalUrl": "https://mp.weixin.qq.com/s/35JgvcZ3MXvhzCII8ez2bQ",
+              "publishedAt": "2026-10-17T03:17:10.000Z",
+              "contentSnippet": "，少走弯路。借鉴前人真实的求学与求职经历，获取实用经验，让大学的目标更加清晰明确。\n5\n活动小贴士\n1\n注意事项\n①建议提前抵达，以免错过精彩内容。\n②入场后保持场内安静，请勿喧哗。\n③现场请将手机调至静音状态，避免干扰。\n2\n南校跟车收集表\n①南校乘车报名问卷\nhttps://v.wjx.cn/vm/Qgdhwdy.aspx\n②10月22日生涯讲座跟车群\n编辑| 杨子涵 郑韵妍 黄思懿 彭辰语\n初审| 李鑫 曹婷婷\n复审| 苗磊\n终审| 徐昶斌",
+              "startOffset": 751,
+              "endOffset": 976,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 30.97,
+              "rankingReasons": [
+                "标题词组匹配 1",
+                "片段词组匹配 2",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权",
+                "业务类别匹配"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "lecture",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 3,
+              "inputHash": "054a9d49d341d86e1fff12763b161db9b487d5ea0e577129fa064877813bf285",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-d3a7d429-60ae-4f53-aa42-53c2d863b1e5",
+              "chunkId": "content-d3a7d429-60ae-4f53-aa42-53c2d863b1e5:fts:aeb50407ddcc9d1a:0",
+              "title": "广东外语外贸大学亚非语言文化学院2026年优秀大学生线上开放日",
+              "sourceId": "GDUFS-SRC-0039",
+              "sourceName": "亚非语言文化学院",
+              "originalUrl": "https://faas.gdufs.edu.cn/info/1127/3599.htm",
+              "publishedAt": "2026-07-07",
+              "contentSnippet": "韩国、阿拉伯等区域的语言文化前沿内容，同时可在线咨询学院招生、专业报考相关问题。\n二、详细活动安排\n三、参与方式\n1.请提前下载腾讯会议客户端，注册并登录账号；\n2.对应讲座时间，输入对应腾讯会议号即可进入直播间参与活动；\n3.直播过程中，您可通过会议聊天区、举手提问功能与主讲人、学院招生老师进行实时互动交流。\n四、注意事项\n1.请提前10分钟进入会议，确保网络稳定，有序参与活动；\n2.进入直播间后，请遵守会议秩序，将麦克风设为静音状态，文明发言；\n3.本次活动全程免费，无任何收费环节，请勿轻信任何虚假报名、收费信息。\n五、咨询联系方式\n如您有学院专业设置、招生报考、活动参与相关的疑问，可通过以下方式咨询：\n联系人：王老师\n咨询电话：020-36209834/13480235256（工作日 9:00-17:00",
+              "startOffset": 0,
+              "endOffset": 360,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 24.8,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 5",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权",
+                "业务类别匹配"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "lecture",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "3e3532a78df26d07a33cd0a6662cec125afea0c0ea09bca8180559628bfc9f98",
+              "documentVersion": 4,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 7636,
+            "rowsWritten": 0,
+            "queries": 5,
+            "durationMs": 442,
+            "stagesMs": {
+              "lexical": 308,
+              "supplement": 0,
+              "revalidationAndRanking": 134
+            },
+            "candidateChunks": 48,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "structured_date",
+                "limit": 48,
+                "candidates": 0
+              },
+              {
+                "name": "lexical_date_completion",
+                "limit": 48,
+                "candidates": 48
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [
+            "部分相关原文尚无可靠的对应日期，作为待核对资料返回；不能声称符合所问日期范围或没有活动，需继续官方补查。"
+          ],
+          "purpose": "events",
+          "query": "广外讲座需要提前",
+          "now": "2026-11-17T02:07:38.521Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "eventId": "event-beeacb06ea2461236db3982132bed94ab74e717a",
+              "documentId": "content-5d6565bd-364e-4f19-834a-2d1338e19d2f",
+              "activityKey": "activity-1",
+              "name": "“信息素养教育系列”讲座 第四十二讲",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "2026年4月17日（周五） 14:15",
+                "date": "2026-04-17",
+                "at": "2026-04-17T14:15:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": "2026年4月17日（周五） 14:15"
+              },
+              "endsAt": {
+                "raw": "15:15",
+                "date": "2026-04-17",
+                "at": "2026-04-17T15:15:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "同一明确时间区间的起始日期",
+                "evidence": "15:15"
+              },
+              "placeRaw": "线下：大学城校区图书馆二楼悦读沙龙室",
+              "organizer": null,
+              "eventStatus": "ended",
+              "historical": true,
+              "registrationRequirement": "unknown",
+              "registrationState": "closed",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "时间：2026年4月17日（周五） 14:15-15:15",
+                "线下：大学城校区图书馆二楼悦读沙龙室"
+              ],
+              "mapPlace": {
+                "placeId": "osm-way-307250998",
+                "name": "图书馆",
+                "precision": "building"
+              },
+              "calendarUrl": "/calendar?date=2026-04-17&event=event-beeacb06ea2461236db3982132bed94ab74e717a&article=content-5d6565bd-364e-4f19-834a-2d1338e19d2f"
+            },
+            {
+              "eventId": "event-262e1e5373ece73d1ab4f3231bed3132f22a0e01",
+              "documentId": "content-c265dd6c-f7d9-4a4f-95a9-018d72eea4e5",
+              "activityKey": "activity-1",
+              "name": "国际商务大讲坛：从实地调研到案例入库——魏小军教授深度解析飞鹤加拿大投资案例的创作历程-经济贸易学院",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "2026年3月23日",
+                "date": "2026-03-23",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": "2026年3月23日"
+              },
+              "endsAt": null,
+              "placeRaw": "大学城校区教学楼A201",
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": true,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "2026年3月23日上午，经济贸易学院在大学城校区教学楼A201成功举办国际商务大讲坛",
+                "大学城校区教学楼A201成功举办国际商务大讲坛"
+              ],
+              "mapPlace": {
+                "placeId": "osm-way-1410412694",
+                "name": "教学楼A栋",
+                "precision": "building"
+              },
+              "calendarUrl": "/calendar?date=2026-03-23&event=event-262e1e5373ece73d1ab4f3231bed3132f22a0e01&article=content-c265dd6c-f7d9-4a4f-95a9-018d72eea4e5"
+            },
+            {
+              "eventId": "event-9728d2a10348e0d5f80bcaa8f3ca141e4674c6de",
+              "documentId": "wx-ee29cde4423693ceee5305f673f1aa78a57d4d3a",
+              "activityKey": "activity-1",
+              "name": "【讲座】2026年新生生涯启蒙活动",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "2026年10月22日19：00",
+                "date": "2026-10-22",
+                "at": "2026-10-22T19:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": "2026年10月22日19：00"
+              },
+              "endsAt": null,
+              "placeRaw": "白云山校区图书馆报告厅",
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": true,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "活动时间：2026年10月22日19：00",
+                "白云山校区图书馆报告厅"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-10-22&event=event-9728d2a10348e0d5f80bcaa8f3ca141e4674c6de&article=wx-ee29cde4423693ceee5305f673f1aa78a57d4d3a"
+            },
+            {
+              "eventId": "event-53eda5c271947eab1f83ea198043661aa7f890ae",
+              "documentId": "content-d3a7d429-60ae-4f53-aa42-53c2d863b1e5",
+              "activityKey": "activity-1",
+              "name": "广东外语外贸大学亚非语言文化学院2026年优秀大学生线上开放日",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "2026年7月20日",
+                "date": "2026-07-20",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": "2026年7月20日"
+              },
+              "endsAt": {
+                "raw": "7月21日",
+                "date": "2026-07-21",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": true,
+                "inferenceBasis": "同一区间起始年份，跨月/跨年顺序",
+                "evidence": "7月21日"
+              },
+              "placeRaw": null,
+              "organizer": "广东外语外贸大学亚非语言文化学院",
+              "eventStatus": "ended",
+              "historical": true,
+              "registrationRequirement": "required",
+              "registrationState": "closed",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "请勿轻信任何虚假报名、收费信息。\n五、咨询联系方式\n如您有学院专业设置、招生报考、活动参与相关的疑问"
+                  ]
+                }
+              ],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "2.活动时间：2026年7月20日-7月21日",
+                "广东外语外贸大学亚非语言文化学院",
+                "请勿轻信任何虚假报名、收费信息。\n五、咨询联系方式\n如您有学院专业设置、招生报考、活动参与相关的疑问"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-07-20&event=event-53eda5c271947eab1f83ea198043661aa7f890ae&article=content-d3a7d429-60ae-4f53-aa42-53c2d863b1e5"
+            }
+          ],
+          "knowledge": [
+            {
+              "documentId": "content-5d6565bd-364e-4f19-834a-2d1338e19d2f",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "content-c265dd6c-f7d9-4a4f-95a9-018d72eea4e5",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "wx-ee29cde4423693ceee5305f673f1aa78a57d4d3a",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "content-d3a7d429-60ae-4f53-aa42-53c2d863b1e5",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            }
+          ]
+        },
+        "durationMs": 1633
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:6",
+      "state": "running",
+      "at": "2026-11-17T02:07:40.211Z",
+      "elapsedMs": 3036,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答生成",
+        "tools": []
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:6",
+      "state": "success",
+      "at": "2026-11-17T02:07:52.012Z",
+      "elapsedMs": 14837,
+      "durationMs": 11801,
+      "data": {
+        "finishReason": "stop",
+        "toolCalls": [],
+        "characters": 577,
+        "usage": {
+          "promptTokens": 4281,
+          "completionTokens": 1769,
+          "totalTokens": 6050
+        }
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "phase": "evidence_check",
+      "state": "running",
+      "at": "2026-11-17T02:07:52.066Z",
+      "elapsedMs": 14891,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "tool": "report_evidence_verdict",
+        "timeoutMs": 10000
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "phase": "evidence_check",
+      "state": "error",
+      "at": "2026-11-17T02:08:02.066Z",
+      "elapsedMs": 24891,
+      "durationMs": 10000,
+      "data": {
+        "status": "超时"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:8",
+      "state": "running",
+      "at": "2026-11-17T02:08:02.120Z",
+      "elapsedMs": 24945,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:8",
+      "state": "success",
+      "at": "2026-11-17T02:08:02.182Z",
+      "elapsedMs": 25007,
+      "durationMs": 62,
+      "data": {
+        "characters": 577,
+        "cards": 4
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:9",
+      "state": "running",
+      "at": "2026-11-17T02:08:02.182Z",
+      "elapsedMs": 25007,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:9",
+      "state": "success",
+      "at": "2026-11-17T02:08:02.182Z",
+      "elapsedMs": 25007,
+      "durationMs": 0,
+      "data": {
+        "characters": 577,
+        "cards": 4
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:07:38.521Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T02:07:38.521Z",
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T02:07:40.154Z",
+      "data": {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 1633,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "run.failed",
+      "at": "2026-11-17T02:08:02.356Z",
+      "data": {
+        "error": {
+          "code": "SERVICE_UNAVAILABLE",
+          "message": "AI 暂不可用，请重试。"
+        },
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "failed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-5d6565bd-364e-4f19-834a-2d1338e19d2f",
+              "content-c265dd6c-f7d9-4a4f-95a9-018d72eea4e5",
+              "wx-ee29cde4423693ceee5305f673f1aa78a57d4d3a",
+              "content-d3a7d429-60ae-4f53-aa42-53c2d863b1e5"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "content-5d6565bd-364e-4f19-834a-2d1338e19d2f",
+                "existence": "documented",
+                "eventState": "ended",
+                "registrationState": "closed",
+                "participation": "closed",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-c265dd6c-f7d9-4a4f-95a9-018d72eea4e5",
+                "existence": "documented",
+                "eventState": "started_end_unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "wx-ee29cde4423693ceee5305f673f1aa78a57d4d3a",
+                "existence": "documented",
+                "eventState": "started_end_unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-d3a7d429-60ae-4f53-aa42-53c2d863b1e5",
+                "existence": "documented",
+                "eventState": "ended",
+                "registrationState": "closed",
+                "participation": "closed",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 2,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 1,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 1,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 11801,
+              "firstTextMs": 10319,
+              "finishReason": "stop",
+              "contentChars": 577
+            },
+            {
+              "durationMs": 10000,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 4281,
+          "completionTokens": 1769,
+          "cachedPromptTokens": 0,
+          "totalTokens": 6050,
+          "usageComplete": false,
+          "chargedTokens": 6050,
+          "durationMs": 23782,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 250000,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1346,
+            "serverElapsedMs": 25128,
+            "firstTextMs": 24891,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_events",
+                "durationMs": 1633,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 43,
+              "writeQueries": 14,
+              "calls": 49,
+              "failures": 0,
+              "durationMs": 3204,
+              "maxCallMs": 134,
+              "rowsRead": 8430,
+              "rowsWritten": 31,
+              "rowUsageStatements": 39,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_events",
+                "rowsRead": 7636,
+                "rowsWritten": 0,
+                "queries": 5,
+                "durationMs": 442,
+                "stagesMs": {
+                  "lexical": 308,
+                  "supplement": 0,
+                  "revalidationAndRanking": 134
+                },
+                "candidateChunks": 48,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "structured_date",
+                    "limit": 48,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "lexical_date_completion",
+                    "limit": 48,
+                    "candidates": 48
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "failed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-5d6565bd-364e-4f19-834a-2d1338e19d2f",
+        "content-c265dd6c-f7d9-4a4f-95a9-018d72eea4e5",
+        "wx-ee29cde4423693ceee5305f673f1aa78a57d4d3a",
+        "content-d3a7d429-60ae-4f53-aa42-53c2d863b1e5"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "content-5d6565bd-364e-4f19-834a-2d1338e19d2f",
+          "existence": "documented",
+          "eventState": "ended",
+          "registrationState": "closed",
+          "participation": "closed",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-c265dd6c-f7d9-4a4f-95a9-018d72eea4e5",
+          "existence": "documented",
+          "eventState": "started_end_unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "wx-ee29cde4423693ceee5305f673f1aa78a57d4d3a",
+          "existence": "documented",
+          "eventState": "started_end_unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-d3a7d429-60ae-4f53-aa42-53c2d863b1e5",
+          "existence": "documented",
+          "eventState": "ended",
+          "registrationState": "closed",
+          "participation": "closed",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 2,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 1,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 11801,
+        "firstTextMs": 10319,
+        "finishReason": "stop",
+        "contentChars": 577
+      },
+      {
+        "durationMs": 10000,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 4281,
+    "completionTokens": 1769,
+    "cachedPromptTokens": 0,
+    "totalTokens": 6050,
+    "usageComplete": false,
+    "chargedTokens": 6050,
+    "durationMs": 23782,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 250000,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1346,
+      "serverElapsedMs": 25128,
+      "firstTextMs": 24891,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_events",
+          "durationMs": 1633,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 43,
+        "writeQueries": 14,
+        "calls": 49,
+        "failures": 0,
+        "durationMs": 3204,
+        "maxCallMs": 134,
+        "rowsRead": 8430,
+        "rowsWritten": 31,
+        "rowUsageStatements": 39,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 7636,
+          "rowsWritten": 0,
+          "queries": 5,
+          "durationMs": 442,
+          "stagesMs": {
+            "lexical": 308,
+            "supplement": 0,
+            "revalidationAndRanking": 134
+          },
+          "candidateChunks": 48,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "structured_date",
+              "limit": 48,
+              "candidates": 0
+            },
+            {
+              "name": "lexical_date_completion",
+              "limit": 48,
+              "candidates": 48
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

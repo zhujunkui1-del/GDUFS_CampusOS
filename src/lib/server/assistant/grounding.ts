@@ -70,7 +70,10 @@ export function evidenceFallback(
   const plan = buildQueryPlan(policy.relevanceQuery || "");
   const usable = internal
     .flatMap((r) => r.hits)
-    .filter((h) => h.bodyAvailable && (trustAllBodies || queryRelevance(plan, h).relevant));
+    .filter(
+      (h) =>
+        h.bodyAvailable && (trustAllBodies || queryRelevance(plan, h).relevant),
+    );
   const outside = (external?.items || []).filter(
     (i) =>
       i.evidenceKind !== "title_only" &&
@@ -94,6 +97,7 @@ export function evidenceFallback(
         (k) =>
           k &&
           k.replace(/\s+/g, "") !== questionKey &&
+          !questionKey.includes(k.replace(/\s+/g, "")) &&
           !k.replace(/\s+/g, "").includes(questionKey),
       )
       .join("、");

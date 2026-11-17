@@ -37,7 +37,14 @@ export function AssistantSources({
     ...new Map(
       sources
         .flatMap(({ card }) =>
-          card.kind === "source" ? card.calendarLinks || [] : [],
+          card.kind === "source"
+            ? (card.calendarLinks || []).map((link) => {
+                const [path, search = ""] = link.href.split("?");
+                const params = new URLSearchParams(search);
+                params.set("article", card.documentId);
+                return { ...link, href: path + "?" + params.toString() };
+              })
+            : [],
         )
         .map((link) => [link.href, link]),
     ).values(),

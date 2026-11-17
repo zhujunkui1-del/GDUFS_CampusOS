@@ -1,6 +1,7 @@
 import { expect, it } from "vitest";
 import { dateGateFixture } from "../fixtures/date-gate";
 import { ensureRetrievalIndex } from "@/lib/server/retrieval/indexer";
+import { ensureArticleAnalysis } from "@/lib/server/console/article-analysis";
 import { searchContent } from "@/lib/server/retrieval/skills";
 import { contentIntent } from "@/lib/server/assistant/content-intent";
 import { publicQuery } from "@/lib/server/assistant/read-plan";
@@ -29,6 +30,12 @@ it("the exact sports question retrieves sports notices rather than academic cont
           "c".repeat(64),
         );
       await f.store.publishCollectedWebArticle(id);
+      await ensureArticleAnalysis(f.db,id);
+      f.sqlite
+        .prepare(
+          "UPDATE document_article_analysis SET calendar_status='accepted' WHERE document_id=?",
+        )
+        .run(id);
       f.sqlite
         .prepare("DELETE FROM knowledge_chunks WHERE document_id=?")
         .run(id);

@@ -1,0 +1,436 @@
+{
+  "question": "我的代办事项中有什么冲突的活动吗",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "在你的待办中发现 1 组时间冲突（北京时间）\n\n- [#志愿者招募#法通中外，三十启新——\"守护天使\"关爱障碍人士志愿活动2.0](<https://mp.weixin.qq.com/s/os_V5P1IJOFOdyMnyRQQ9w>)\n  2026/11/20 14:00 至 16:00\n  与 [词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！](<https://mp.weixin.qq.com/s/2HdigxTYTLkhVlsgyIwD2A>)\n  2026/11/20 15:30 至 17:00\n  重叠 30 分钟。\n\n以下事项尚无法判断\n- 隔离验收待确认事项：只有逾期时间，未关联活动场次。",
+  "cards": [],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T01:55:10.798Z",
+      "elapsedMs": 287,
+      "data": {
+        "question": "我的代办事项中有什么冲突的活动吗",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T01:55:10.798Z",
+      "elapsedMs": 287,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T01:55:11.580Z",
+      "elapsedMs": 1069,
+      "data": {
+        "question": "我的代办事项中有什么冲突的活动吗"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T01:55:11.580Z",
+      "elapsedMs": 1069,
+      "data": {
+        "session": "已登录"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T01:55:11.580Z",
+      "elapsedMs": 1069,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "personal",
+      "span": "personal:4",
+      "state": "running",
+      "at": "2026-11-17T01:55:11.580Z",
+      "elapsedMs": 1069,
+      "data": {
+        "scope": "tasks",
+        "signedIn": true,
+        "activeTask": {
+          "intent": "detect_schedule_conflicts",
+          "dataSource": "personal_todos",
+          "scope": "all",
+          "status": "ready"
+        },
+        "resolvedIntent": "detect_schedule_conflicts",
+        "dataSource": "personal_todos"
+      }
+    },
+    {
+      "node": "personal",
+      "span": "personal:4",
+      "state": "success",
+      "at": "2026-11-17T01:55:11.929Z",
+      "elapsedMs": 1418,
+      "durationMs": 349,
+      "data": {
+        "sources": 2,
+        "resolvedIntent": "detect_schedule_conflicts",
+        "dataSource": "personal_todos",
+        "readStatus": "completed",
+        "retrievalStatus": "matched",
+        "taskStatus": "partial",
+        "completionReason": "missing_event_intervals",
+        "totalTasks": 3,
+        "selectedTasks": 3,
+        "verifiedEvents": 2,
+        "sourceCount": 2,
+        "conflictCount": 1,
+        "unresolved": [
+          "只有逾期时间，未关联活动场次"
+        ],
+        "timeModel": {
+          "taskDueAt": "deadline_only",
+          "eventInterval": "source_activity",
+          "timezone": "Asia/Shanghai",
+          "allDay": "date_only_is_insufficient",
+          "recurrence": "not_stored"
+        },
+        "matchedEvents": [
+          {
+            "eventId": "event-a52760a66ed0d2a96e7797c4db3cf262c6a616e1",
+            "title": "#志愿者招募#法通中外，三十启新——\"守护天使\"关爱障碍人士志愿活动2.0",
+            "start": "2026-11-20T06:00:00.000Z",
+            "end": "2026-11-20T08:00:00.000Z"
+          },
+          {
+            "eventId": "event-b37fd9b47bca90002b89d17fa3f9aa6f3a4e9d38",
+            "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+            "start": "2026-11-20T07:30:00.000Z",
+            "end": "2026-11-20T09:00:00.000Z"
+          }
+        ],
+        "activeTask": {
+          "intent": "detect_schedule_conflicts",
+          "dataSource": "personal_todos",
+          "scope": "all",
+          "status": "partial"
+        }
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:5",
+      "state": "running",
+      "at": "2026-11-17T01:55:11.929Z",
+      "elapsedMs": 1418,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:5",
+      "state": "skipped",
+      "at": "2026-11-17T01:55:11.929Z",
+      "elapsedMs": 1418,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T01:55:11.929Z",
+      "elapsedMs": 1418,
+      "durationMs": 349,
+      "data": {
+        "act": "campus",
+        "goal": "discovery",
+        "campus": null,
+        "topics": [],
+        "path": "personal_read",
+        "plannedTools": [
+          "personal_todos",
+          "detect_schedule_conflicts"
+        ],
+        "activeTask": {
+          "intent": "detect_schedule_conflicts",
+          "dataSource": "personal_todos",
+          "scope": "all",
+          "status": "partial"
+        },
+        "resolvedIntent": "detect_schedule_conflicts",
+        "dataSource": "personal_todos",
+        "completionReason": "missing_event_intervals"
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:6",
+      "state": "running",
+      "at": "2026-11-17T01:55:12.158Z",
+      "elapsedMs": 1647,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:6",
+      "state": "success",
+      "at": "2026-11-17T01:55:12.158Z",
+      "elapsedMs": 1647,
+      "durationMs": 0,
+      "data": {
+        "characters": 310,
+        "sources": 0,
+        "resolvedIntent": "detect_schedule_conflicts",
+        "dataSource": "personal_todos",
+        "readStatus": "completed",
+        "retrievalStatus": "matched",
+        "taskStatus": "partial",
+        "completionReason": "missing_event_intervals",
+        "totalTasks": 3,
+        "selectedTasks": 3,
+        "verifiedEvents": 2,
+        "sourceCount": 2,
+        "conflictCount": 1,
+        "unresolved": [
+          "只有逾期时间，未关联活动场次"
+        ],
+        "timeModel": {
+          "taskDueAt": "deadline_only",
+          "eventInterval": "source_activity",
+          "timezone": "Asia/Shanghai",
+          "allDay": "date_only_is_insufficient",
+          "recurrence": "not_stored"
+        },
+        "matchedEvents": [
+          {
+            "eventId": "event-a52760a66ed0d2a96e7797c4db3cf262c6a616e1",
+            "title": "#志愿者招募#法通中外，三十启新——\"守护天使\"关爱障碍人士志愿活动2.0",
+            "start": "2026-11-20T06:00:00.000Z",
+            "end": "2026-11-20T08:00:00.000Z"
+          },
+          {
+            "eventId": "event-b37fd9b47bca90002b89d17fa3f9aa6f3a4e9d38",
+            "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+            "start": "2026-11-20T07:30:00.000Z",
+            "end": "2026-11-20T09:00:00.000Z"
+          }
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T01:55:12.158Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T01:55:12.158Z",
+      "data": {
+        "cards": [],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T01:55:12.158Z",
+      "data": {
+        "metrics": {
+          "requests": 0,
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "chargedTokens": 0,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "execution": "personal_read",
+          "executionStatus": "completed",
+          "resolvedIntent": "detect_schedule_conflicts",
+          "dataSource": "personal_todos",
+          "readStatus": "completed",
+          "retrievalStatus": "matched",
+          "taskStatus": "partial",
+          "completionReason": "missing_event_intervals",
+          "totalTasks": 3,
+          "selectedTasks": 3,
+          "verifiedEvents": 2,
+          "sourceCount": 2,
+          "conflictCount": 1,
+          "unresolved": [
+            "只有逾期时间，未关联活动场次"
+          ],
+          "timeModel": {
+            "taskDueAt": "deadline_only",
+            "eventInterval": "source_activity",
+            "timezone": "Asia/Shanghai",
+            "allDay": "date_only_is_insufficient",
+            "recurrence": "not_stored"
+          },
+          "matchedEvents": [
+            {
+              "eventId": "event-a52760a66ed0d2a96e7797c4db3cf262c6a616e1",
+              "title": "#志愿者招募#法通中外，三十启新——\"守护天使\"关爱障碍人士志愿活动2.0",
+              "start": "2026-11-20T06:00:00.000Z",
+              "end": "2026-11-20T08:00:00.000Z"
+            },
+            {
+              "eventId": "event-b37fd9b47bca90002b89d17fa3f9aa6f3a4e9d38",
+              "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+              "start": "2026-11-20T07:30:00.000Z",
+              "end": "2026-11-20T09:00:00.000Z"
+            }
+          ],
+          "activeTask": {
+            "intent": "detect_schedule_conflicts",
+            "dataSource": "personal_todos",
+            "scope": "all",
+            "status": "partial"
+          },
+          "serverElapsedMs": 1473
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "requests": 0,
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "chargedTokens": 0,
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "execution": "personal_read",
+    "executionStatus": "completed",
+    "resolvedIntent": "detect_schedule_conflicts",
+    "dataSource": "personal_todos",
+    "readStatus": "completed",
+    "retrievalStatus": "matched",
+    "taskStatus": "partial",
+    "completionReason": "missing_event_intervals",
+    "totalTasks": 3,
+    "selectedTasks": 3,
+    "verifiedEvents": 2,
+    "sourceCount": 2,
+    "conflictCount": 1,
+    "unresolved": [
+      "只有逾期时间，未关联活动场次"
+    ],
+    "timeModel": {
+      "taskDueAt": "deadline_only",
+      "eventInterval": "source_activity",
+      "timezone": "Asia/Shanghai",
+      "allDay": "date_only_is_insufficient",
+      "recurrence": "not_stored"
+    },
+    "matchedEvents": [
+      {
+        "eventId": "event-a52760a66ed0d2a96e7797c4db3cf262c6a616e1",
+        "title": "#志愿者招募#法通中外，三十启新——\"守护天使\"关爱障碍人士志愿活动2.0",
+        "start": "2026-11-20T06:00:00.000Z",
+        "end": "2026-11-20T08:00:00.000Z"
+      },
+      {
+        "eventId": "event-b37fd9b47bca90002b89d17fa3f9aa6f3a4e9d38",
+        "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+        "start": "2026-11-20T07:30:00.000Z",
+        "end": "2026-11-20T09:00:00.000Z"
+      }
+    ],
+    "activeTask": {
+      "intent": "detect_schedule_conflicts",
+      "dataSource": "personal_todos",
+      "scope": "all",
+      "status": "partial"
+    },
+    "serverElapsedMs": 1473
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  }
+}

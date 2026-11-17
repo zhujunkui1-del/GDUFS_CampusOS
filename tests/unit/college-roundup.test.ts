@@ -30,6 +30,11 @@ async function add(
   // Publication does not derive the facets; the analysis pass does, and the
   // roundup reads the facets, so the fixture has to run it.
   await ensureArticleAnalysis(f.db, id);
+  f.sqlite
+    .prepare(
+      "UPDATE document_article_analysis SET calendar_status='accepted' WHERE document_id=?",
+    )
+    .run(id);
   f.sqlite.prepare("DELETE FROM knowledge_chunks WHERE document_id=?").run(id);
   f.sqlite
     .prepare("DELETE FROM article_search_documents WHERE document_id=?")

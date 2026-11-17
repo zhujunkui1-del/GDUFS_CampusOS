@@ -1,0 +1,6 @@
+{
+  "question": "从南校区图书馆到教学楼 F 栋怎么走？",
+  "status": "harness_error",
+  "answer": "",
+  "error": "Error: response.text: Protocol error (Network.getResponseBody): No data found for resource with given identifier\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation."
+}

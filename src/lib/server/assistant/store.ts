@@ -10,12 +10,43 @@ import {
 } from "@/domain/agent/assistant-contracts";
 import { MapActionSchema, type MapAction } from "@/domain/maps/contracts";
 import type { AgentChatRequest } from "@/domain/agent/contracts";
+import { CalendarDateSchema } from "@/lib/retrieval/calendar-dates";
+import type { CalendarComparisonState } from "../calendar/compare";
+import {
+  PersonalConflictTaskSchema,
+  type PersonalConflictTask,
+} from "@/domain/agent/personal-task";
 import {
   PersonaPreferenceSchema,
   defaultPersona,
   type PersonaPreference,
 } from "./persona";
 const storedCardsSchema = z.array(AssistantCardSchema).max(30);
+const comparisonStateSchema = z.object({
+  pair: z.tuple([z.string(), z.string()]),
+  dates: z.tuple([
+    CalendarDateSchema.nullable(),
+    CalendarDateSchema.nullable(),
+  ]),
+  pending: z.array(z.number().int().min(0).max(1)).max(2),
+});
+function readArtifacts(raw: string) {
+  const stored = JSON.parse(raw);
+  return Array.isArray(stored)
+    ? {
+        cards: storedCardsSchema.parse(stored),
+        calendarComparison: undefined,
+        activeTask: undefined,
+      }
+    : {
+        cards: storedCardsSchema.parse(stored.cards),
+        calendarComparison: comparisonStateSchema.safeParse(
+          stored.calendarComparison,
+        ).data,
+        activeTask: PersonalConflictTaskSchema.safeParse(stored.activeTask)
+          .data,
+      };
+}
 const storedActionsSchema = z.array(MapActionSchema).max(8);
 const storedReceiptSchema = z
   .object({
@@ -268,7 +299,7 @@ export class AssistantStore {
       id: row.id,
       role: row.role,
       text: row.content,
-      cards: storedCardsSchema.parse(JSON.parse(row.artifacts_json)),
+      cards: readArtifacts(row.artifacts_json).cards,
       sequence: row.sequence,
     }));
     await this.conversation(identity, id);
@@ -277,6 +308,13 @@ export class AssistantStore {
       ...(await this.searchPreference(identity, id)),
       ...(await this.deepThinkingPreference(identity, id)),
       messages,
+      ...(page.context && slice.at(-1)?.role === "assistant"
+        ? {
+            calendarComparison: readArtifacts(slice.at(-1)!.artifacts_json)
+              .calendarComparison,
+            activeTask: readArtifacts(slice.at(-1)!.artifacts_json).activeTask,
+          }
+        : {}),
       selectedPlaceId: conversation.selected_place_id,
       activeRouteId: conversation.active_route_id,
       title: conversation.title,
@@ -474,7 +512,7 @@ export class AssistantStore {
       message: message
         ? {
             text: message.content,
-            cards: storedCardsSchema.parse(JSON.parse(message.artifacts_json)),
+            cards: readArtifacts(message.artifacts_json).cards,
           }
         : null,
     };
@@ -707,6 +745,8 @@ export class AssistantStore {
     text: string,
     cards: AssistantCard[] = [],
     requestId?: string,
+    calendarComparison?: CalendarComparisonState,
+    activeTask?: PersonalConflictTask,
   ) {
     const safeText = text
       .slice(0, 200000)
@@ -723,7 +763,11 @@ export class AssistantStore {
           conversation.id,
           role,
           safeText,
-          JSON.stringify(cards),
+          JSON.stringify(
+            calendarComparison || activeTask
+              ? { cards, calendarComparison, activeTask }
+              : cards,
+          ),
           conversation.id,
           conversation.owner_key,
           this.now(),

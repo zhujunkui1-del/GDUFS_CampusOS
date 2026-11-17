@@ -1,0 +1,772 @@
+{
+  "question": "广外南校区宿舍水电费怎么缴纳？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "**大学城校区**\n\n④水、电、冷IC 卡充值服务时间工作日9:00-13:00 15:00-17:30（周四下午暂停充值，进行系统维护），周六9:00-13:00。充值服务地址： 学生宿舍1 栋，联系电话：020-39337011。 [1]\n\n你所在楼栋是否适用、目前是否仍按此方式办理，可向宿管核实。",
+  "cards": [
+    {
+      "kind": "source",
+      "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+      "title": "2026年研究生手册（全文）",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+      "publishedAt": "2026-09-20T11:27:05.000Z",
+      "snippet": "\n2. 大学城校区\n①宿舍楼栋清洁、饮用水订购可向各栋一楼值班人员反映， 24 小时值班电话张贴在各楼栋一楼。 ②线上饮用水订购渠道：\n③宿舍维修线上报修渠道：“数智广外”微信公众号→日常服务→ 故障报修。\n研究生手册\n334\n④水、电、冷IC 卡充值服务时间工作日9:00-13:00 15:00-17:30（周四下午暂停充值，进行系统维护），周六9:00-13:00。充值服务地址： 学生宿舍1 栋，联系电话：020-39337011。",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    }
+  ],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T02:06:49.618Z",
+      "elapsedMs": 180,
+      "data": {
+        "question": "广外南校区宿舍水电费怎么缴纳？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T02:06:49.618Z",
+      "elapsedMs": 180,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T02:06:50.610Z",
+      "elapsedMs": 1172,
+      "data": {
+        "question": "广外南校区宿舍水电费怎么缴纳？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T02:06:50.610Z",
+      "elapsedMs": 1172,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T02:06:50.610Z",
+      "elapsedMs": 1172,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T02:06:50.610Z",
+      "elapsedMs": 1172,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T02:06:50.610Z",
+      "elapsedMs": 1172,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T02:06:50.610Z",
+      "elapsedMs": 1172,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "procedure",
+        "campus": "south",
+        "topics": [
+          "utilities"
+        ],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:5",
+      "state": "running",
+      "at": "2026-11-17T02:06:50.757Z",
+      "elapsedMs": 1319,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外南校区宿舍水电费怎么缴纳",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:5",
+      "state": "success",
+      "at": "2026-11-17T02:06:52.200Z",
+      "elapsedMs": 2762,
+      "durationMs": 1443,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "chunkId": "content-16300be2-facb-4406-b157-ab5ace0d0c28:fts:9fa888bfac25bd0c:272",
+              "title": "2026年研究生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+              "publishedAt": "2026-09-20T11:27:05.000Z",
+              "contentSnippet": "\n2. 大学城校区\n①宿舍楼栋清洁、饮用水订购可向各栋一楼值班人员反映， 24 小时值班电话张贴在各楼栋一楼。 ②线上饮用水订购渠道：\n③宿舍维修线上报修渠道：“数智广外”微信公众号→日常服务→ 故障报修。\n研究生手册\n334\n④水、电、冷IC 卡充值服务时间工作日9:00-13:00 15:00-17:30（周四下午暂停充值，进行系统维护），周六9:00-13:00。充值服务地址： 学生宿舍1 栋，联系电话：020-39337011。",
+              "startOffset": 213010,
+              "endOffset": 213230,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 44.52,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "15816f34ff6010f90ebf4af7102f7ce64406cb2e541bc7ef87fbc01190cdc7e6",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 13729,
+            "rowsWritten": 0,
+            "queries": 8,
+            "durationMs": 1443,
+            "stagesMs": {
+              "lexical": 135,
+              "supplement": 220,
+              "revalidationAndRanking": 1088
+            },
+            "candidateChunks": 44,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 12
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "document_passages",
+                "limit": 448,
+                "candidates": 46
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "广外南校区宿舍水电费怎么缴纳",
+          "now": "2026-11-17T02:06:50.757Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "activityKey": "activity-1",
+              "name": "2026年研究生手册（全文）",
+              "kind": "event",
+              "category": null,
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": "学生第二饭堂对面小木屋）",
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "（二）在规定的复核申请期限内提出申请的；\n（三）有明确、充分的复核申请事实、依据和理由"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "inclusive",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "第七条申请交换生项目的非成建制本科生在项目报名截止前应无\n学籍所在专业主修成绩不及格记录"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "inclusive",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "第十五条在上一年项目申报截止之日起至上一年12 月31 日期间\n派出但未申请该年度项目的"
+                  ]
+                }
+              ],
+              "otherDeadlines": [
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                }
+              ],
+              "registrationUrl": null,
+              "evidence": [
+                "（二）在规定的复核申请期限内提出申请的；\n（三）有明确、充分的复核申请事实、依据和理由",
+                "第七条申请交换生项目的非成建制本科生在项目报名截止前应无\n学籍所在专业主修成绩不及格记录",
+                "第十五条在上一年项目申报截止之日起至上一年12 月31 日期间\n派出但未申请该年度项目的"
+              ],
+              "mapPlace": null
+            }
+          ],
+          "knowledge": [
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "(四)符合国(境)外合作院校规定的申请条件及语言要求",
+                "(三)申请条件",
+                "(三)申请条件"
+              ],
+              "materials": [
+                "需提供随时可以联系的通讯方式"
+              ],
+              "steps": [
+                "学校形成了外语学科与多学科交叉融合、协同发展的学科格局，现有外国语言文学、应用经济学、法学3个一级学科博士点，翻译、法律2 个专业学位博士点和27个二级学科博士点，13个一级学科硕士点和60个二级学科硕士点（含3个交叉学科），21个专业学位硕士点。学校着力推进涉外法治、区域国别学、中华文化国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续3年上榜“US News”世界大学排名；入选软科中国文科实力A类大学，稳居全国前50强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI全球前5‰，工程学、环境/生态学、经济学与商学进入ESI前1%；12个学科上榜软科中国最好学科",
+                "办理入学手续。审查不合格的，取消入学资格；逾期不办理入学手续且",
+                "学位等五个学业出口中选择一个进行申请，并按期办理离校手续。"
+              ]
+            }
+          ]
+        },
+        "durationMs": 1443
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:6",
+      "state": "running",
+      "at": "2026-11-17T02:06:52.200Z",
+      "elapsedMs": 2762,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:6",
+      "state": "success",
+      "at": "2026-11-17T02:06:52.275Z",
+      "elapsedMs": 2837,
+      "durationMs": 75,
+      "data": {
+        "characters": 152,
+        "cards": 1
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:7",
+      "state": "running",
+      "at": "2026-11-17T02:06:52.275Z",
+      "elapsedMs": 2837,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:7",
+      "state": "success",
+      "at": "2026-11-17T02:06:52.275Z",
+      "elapsedMs": 2837,
+      "durationMs": 0,
+      "data": {
+        "characters": 152,
+        "cards": 1
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:06:50.757Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T02:06:50.757Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T02:06:52.200Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 1443,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:06:52.479Z",
+      "data": {
+        "cards": [
+          {
+            "kind": "source",
+            "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+            "title": "2026年研究生手册（全文）",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+            "publishedAt": "2026-09-20T11:27:05.000Z",
+            "snippet": "\n2. 大学城校区\n①宿舍楼栋清洁、饮用水订购可向各栋一楼值班人员反映， 24 小时值班电话张贴在各楼栋一楼。 ②线上饮用水订购渠道：\n③宿舍维修线上报修渠道：“数智广外”微信公众号→日常服务→ 故障报修。\n研究生手册\n334\n④水、电、冷IC 卡充值服务时间工作日9:00-13:00 15:00-17:30（周四下午暂停充值，进行系统维护），周六9:00-13:00。充值服务地址： 学生宿舍1 栋，联系电话：020-39337011。",
+            "evidenceType": "full_text",
+            "classificationState": "knowledge",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T02:06:52.479Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "payment_evidence",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-16300be2-facb-4406-b157-ab5ace0d0c28"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 0,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [],
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "cachedPromptTokens": 0,
+          "totalTokens": 0,
+          "usageComplete": true,
+          "chargedTokens": 0,
+          "durationMs": 1443,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 0,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1319,
+            "serverElapsedMs": 2762,
+            "firstTextMs": 2762,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 1443,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 24,
+              "writeQueries": 12,
+              "calls": 28,
+              "failures": 0,
+              "durationMs": 2643,
+              "maxCallMs": 327,
+              "rowsRead": 14154,
+              "rowsWritten": 26,
+              "rowUsageStatements": 21,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 13729,
+                "rowsWritten": 0,
+                "queries": 8,
+                "durationMs": 1443,
+                "stagesMs": {
+                  "lexical": 135,
+                  "supplement": 220,
+                  "revalidationAndRanking": 1088
+                },
+                "candidateChunks": 44,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 12
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 448,
+                    "candidates": 46
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "payment_evidence",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-16300be2-facb-4406-b157-ab5ace0d0c28"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 1443,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 0,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1319,
+      "serverElapsedMs": 2762,
+      "firstTextMs": 2762,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1443,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 24,
+        "writeQueries": 12,
+        "calls": 28,
+        "failures": 0,
+        "durationMs": 2643,
+        "maxCallMs": 327,
+        "rowsRead": 14154,
+        "rowsWritten": 26,
+        "rowUsageStatements": 21,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 13729,
+          "rowsWritten": 0,
+          "queries": 8,
+          "durationMs": 1443,
+          "stagesMs": {
+            "lexical": 135,
+            "supplement": 220,
+            "revalidationAndRanking": 1088
+          },
+          "candidateChunks": 44,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 12
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "document_passages",
+              "limit": 448,
+              "candidates": 46
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

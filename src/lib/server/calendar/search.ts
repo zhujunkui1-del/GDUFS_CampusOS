@@ -69,6 +69,7 @@ export async function calendarContentSearch(
       sourceId: event.sourceId,
       sourceTypes: event.sourceTypes,
       registration: event.registrationState,
+      campus: event.campus,
       timeRole: event.timeRole,
       limit: 50,
     },
@@ -85,6 +86,15 @@ export async function calendarContentSearch(
   // same five entries come back forever.
   const excluded = new Set(event.excludeDocumentIds ?? []);
   let items = query.items
+    .filter(
+      (item) =>
+        event.eventState !== "upcoming" ||
+        (!item.historical &&
+          !!item.activity.startsAt?.date &&
+          (item.activity.startsAt.at
+            ? Date.parse(item.activity.startsAt.at) > Date.parse(now)
+            : item.activity.startsAt.date > chinaDate(Date.parse(now)))),
+    )
     .filter((g) => !excluded.has(g.sources[0]?.documentId))
     .filter(
       (g) =>
@@ -115,6 +125,7 @@ export async function calendarContentSearch(
           sourceId: event.sourceId,
           sourceTypes: event.sourceTypes,
           registration: event.registrationState,
+          campus: event.campus,
           timeRole: event.timeRole,
           limit: 50,
         },
@@ -132,7 +143,9 @@ export async function calendarContentSearch(
               !!event.category ||
               queryRelevance(plan, {
                 title: g.activity.title,
-                contentSnippet: g.activity.evidence.map((e) => e.text).join(" "),
+                contentSnippet: g.activity.evidence
+                  .map((e) => e.text)
+                  .join(" "),
               }).relevant) &&
             (g.activity.startsAt?.date ?? "") >= today,
         )

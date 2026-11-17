@@ -37,7 +37,8 @@ function define<I, O>(
       ? 5000
       : undefined,
     requiresConfirmation: false,
-    timeoutMs: name === "plan_route" ? 8000 : 2000,
+    timeoutMs:
+      name === "plan_route" ? 8000 : name === "get_place_details" ? 6000 : 2000,
     execute: async (input, context) => ({
       ok: true,
       data: await execute(input, context),
@@ -50,6 +51,7 @@ function define<I, O>(
 export function createMapSkillRegistry(
   service = new CampusMapService(),
   db?: SqlDatabase,
+  selectedPlace?: () => string | undefined,
 ) {
   return new SkillRegistry()
     .register(
@@ -84,7 +86,15 @@ export function createMapSkillRegistry(
         "查明确建筑、当前选中地点或已获浏览器授权位置附近的真实设施。origin.type=place需要placeId；selected_place来自已验证上下文；device_location仅引用当次授权，参数不可提交坐标。未知起点应询问用户。返回WGS84地表直线距离，不是步行距离。",
         NearbyPlacesInputSchema,
         NearbyPlacesOutputSchema,
-        (input, context) => service.nearby(input, context),
+        (input, context) =>
+          service.nearby(input, {
+            ...context,
+            map: {
+              ...context.map,
+              selectedPlaceId:
+                selectedPlace?.() ?? context.map?.selectedPlaceId,
+            },
+          }),
       ),
     )
     .register(

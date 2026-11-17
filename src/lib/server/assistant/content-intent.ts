@@ -7,7 +7,11 @@ import {
   stripTimeRange,
 } from "./time-window";
 import { dialogueReply } from "./dialogue";
-import { campusFoodQuery, queryFocus } from "@/lib/retrieval/query-focus";
+import {
+  campusFoodQuery,
+  participationQuery,
+  queryFocus,
+} from "@/lib/retrieval/query-focus";
 import {
   articleTitle,
   isContentStatement,
@@ -182,7 +186,9 @@ export function contentIntent(
         : previous
           ? isResultFollowup(message)
             ? previous + "；再查更多；"
-            : previous + "；追问：" + message
+            : buildQueryPlan(message).topics.length
+              ? `${/广外/.test(previous) && !/广外/.test(message) ? "广外 " : ""}${message}`
+              : previous + "；追问：" + message
           : message,
   );
   // A new explicit time constraint wins over a relative date in previous turns.
@@ -245,6 +251,11 @@ export function contentIntent(
   const map =
     !articleLookup &&
     (facilityListing ||
+      ((navigationIntent(message).namedPlaces.length > 0 ||
+        /食堂|饭堂|体育场地|运动场地|体育设施/.test(message) ||
+        (history.at(-1)?.cards.some((card) => card.kind === "place") &&
+          /其中|哪个/.test(message))) &&
+        /最近|距离|多远|有哪些|分别在哪里|其中.*近/.test(message)) ||
       navigationIntent(message).routeQuestion ||
       explicitMapCommand(message) !== null ||
       /^(?:这里|那里|这栋|那栋)[。？?]*$/.test(message) ||
@@ -263,25 +274,26 @@ export function contentIntent(
         )));
   // Radar tags are the product's own business categories. Lock the event search
   // to the category the user actually named instead of relying on FTS words.
-  const radarCategory = multiTopic
-    ? undefined
-    : /比赛|竞赛|大赛|挑战杯|数学建模/.test(query)
-      ? "competition"
-      : /就业|招聘|宣讲|校招|求职|实习/.test(query)
-        ? "education_career"
-        : /讲座|讲坛|论坛|沙龙|学术报告/.test(query)
-          ? "lecture"
-          : /文体|文化|体育|演出|晚会|音乐会|书展|展览|艺术|运动会|校运会|社团|招新/.test(
-                query,
-              )
-            ? "culture_sports"
-            : /奖学金|助学金|奖助|资助/.test(query)
-              ? "scholarship_opportunity"
-              : /科研|课题|项目申报|论文/.test(query)
-                ? "academic_research"
-                : /通知|公告|停水|停电|闭馆/.test(query)
-                  ? "campus_notice"
-                  : undefined;
+  const radarCategory =
+    multiTopic || (/讲座|论坛/.test(query) && /竞赛|比赛|大赛/.test(query))
+      ? undefined
+      : /比赛|竞赛|大赛|挑战杯|数学建模/.test(query)
+        ? "competition"
+        : /就业|招聘|宣讲|校招|求职|实习/.test(query)
+          ? "education_career"
+          : /讲座|讲坛|论坛|沙龙|学术报告/.test(query)
+            ? "lecture"
+            : /文体|文化|体育|演出|晚会|音乐会|书展|展览|艺术|运动会|校运会|社团|招新/.test(
+                  query,
+                )
+              ? "culture_sports"
+              : /奖学金|助学金|奖助|资助/.test(query)
+                ? "scholarship_opportunity"
+                : /科研|课题|项目申报|论文/.test(query)
+                  ? "academic_research"
+                  : /通知|公告|停水|停电|闭馆/.test(query)
+                    ? "campus_notice"
+                    : undefined;
   // "最近/近期" on a radar category is a recency request: newest publications
   // in that tag, not the best lexical match. The retriever orders these by
   // published_at DESC; older items only appear when more are requested.
@@ -290,7 +302,8 @@ export function contentIntent(
     // A time-boxed browse ("最近两周有什么讲座") is an event-date query, not
     // "newest articles in this category". Letting the recency lane win hid the
     // whole window and produced a publication list instead of upcoming events.
-    (timeWindow?.role !== "event" &&
+    (!participationQuery(query) &&
+      timeWindow?.role !== "event" &&
       /最近|近期|最新/.test(query) &&
       (!!radarCategory || /资讯|新闻|动态|消息|资料|文章/.test(query)));
   // Feedback about the previous answer must not become a new search keyword;
@@ -355,7 +368,7 @@ export function contentIntent(
   // sentence turned every practical question into a refusal, because the
   // campus corpus has no article titled after the user's problem.
   const advice =
-    /(?:有什么|有啥|哪些|什么).{0,8}(?:办法|方法|建议|技巧|注意)|怎么(?:安排|准备|选|避免|缓解|解决|处理|改善|调节|应对|除|防)|怎么办|要不要|该不该|值不值得|合适吗|推荐(?:一下|点)|注意些什么/.test(
+    /帮我安排|学习计划|行程计划|(?:有什么|有啥|哪些|什么).{0,8}(?:办法|方法|建议|技巧|注意)|怎么(?:安排|准备|选|避免|缓解|解决|处理|改善|调节|应对|除|防)|怎么办|要不要|该不该|值不值得|合适吗|推荐(?:一下|点)|注意些什么/.test(
       query,
     );
   // “怎么安排时间” is advice, but “选课系统什么时候开放，没抢到课怎么办” also
@@ -369,20 +382,22 @@ export function contentIntent(
     // A safety question is answered from general knowledge: the campus corpus
     // cannot hold the answer to "someone is following me", and a strict gate
     // would refuse to say anything at all.
-    urgent
-      ? "open"
-      : articleLookup ||
-          entityLookup ||
-          policy.officialOnly ||
-          policy.needsOfficialVerification
-        ? "strict"
-        : advice && !factualAsk
-          ? "advisory"
-          : strictFact
-            ? "strict"
-            : search
+    /保证|一定|必定/.test(query) && /获奖|获胜|录取|通过|成功/.test(query)
+      ? "advisory"
+      : urgent
+        ? "open"
+        : articleLookup ||
+            entityLookup ||
+            policy.officialOnly ||
+            policy.needsOfficialVerification
+          ? "strict"
+          : advice && !factualAsk
+            ? "advisory"
+            : strictFact
               ? "strict"
-              : "open";
+              : search
+                ? "strict"
+                : "open";
   const discovery =
     /有哪些|有什么|举几|举\d|名单|曾经|哪些|谁|几个|几场|几篇|情况|信息|方面|内容/.test(
       query,
@@ -393,6 +408,7 @@ export function contentIntent(
     /^(?:请|帮我|我想|想|要|了解一下|了解下|了解|介绍一下|介绍下|介绍|说说|讲讲|查询|查一下|查下|查查|搜一下|搜下|搜搜|看看|看下|找一下|找找|推荐一下)\s*/;
   const coreQuery =
     stripTimeRange(stripSearchControls(query))
+      .replace(/(?:帮我)?区分哪些.*$/, "")
       .replace(RETRIEVAL_LEAD, "")
       .replace(/^广外(?=法学院|学院|大学|校区)/, " ")
       .replace(/广东外语外贸大学/g, " ")
@@ -462,6 +478,11 @@ export function contentIntent(
       ? core
       : "校园资讯";
   }
+  if (/讲座|论坛/.test(query) && /竞赛|比赛|大赛/.test(query))
+    retrievalQuery = retrievalQuery
+      .replace(/讲座|论坛|竞赛|比赛|大赛|相关/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
   // “最近两周有什么可以参加的活动” is a time-boxed browse, not a keyword
   // search. Once the time words and the verbs are gone nothing is left to
   // filter on, and the event index must be read by date instead of requiring
@@ -469,7 +490,18 @@ export function contentIntent(
   if (timeWindow && !articleLookup && !recentDiscovery) {
     const subject = stripTimeRange(retrievalQuery)
       .replace(
+        /重要|按时间顺序|按时间排序|列出来|列出|分别|帮我|有哪些|有什么/g,
+        " ",
+      )
+      .replace(
         /可以去|能够去|能去|可以|能够|想|参加|参与|报名|活动|事情|校园|学校|的/g,
+        " ",
+      )
+      // Campus words are already carried as structured constraints. Leaving
+      // them in the lexical query makes calendar relevance reject valid
+      // events whose article names a building but not the campus nickname.
+      .replace(
+        /广东外语外贸大学|广外|大学城校区|大学城|南校区|南校|白云山校区|白云校区|白云山|白云|北校区|北校/g,
         " ",
       )
       .replace(/[\s，,。！!？?；;]/g, "")

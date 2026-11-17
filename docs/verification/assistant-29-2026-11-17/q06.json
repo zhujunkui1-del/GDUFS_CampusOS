@@ -1,0 +1,945 @@
+{
+  "question": "广外最近一个月有哪些还可以报名参加的比赛？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "找到以下相关活动，但目前不能确认可报名\n\n- 2026年新生语音语调大赛。报名状态尚未核实。适用对象请核对原文。 [1]",
+  "cards": [
+    {
+      "kind": "source",
+      "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+      "title": "活动预告｜2026年新生语音语调大赛",
+      "sourceName": "广外西语团委学生会",
+      "originalUrl": "https://mp.weixin.qq.com/s/psPaYF0bMc7aNIQAgsF_xQ",
+      "publishedAt": "2026-11-04T03:30:00.000Z",
+      "snippet": "2026年\n新生语音语调大赛\n西方语言文化学院\n序言\n叶落知秋\n六月埋下的伏笔\n终于在十一月收束\n秋风敲开西语学院的大门\n即将见证\n又一年的语音语调大赛\n从五湖四海汇聚到岭南的学子\n将在这里检验两月以来的学习成果\n在这里写下\n与西语邂逅的序言\n比赛意义\n新生语音语调大赛\n是面向西语学院全体大一新生的比赛\n每年举办一次\n大赛旨在激发大一新生学习语言的热情\n不仅能够检验新生语音语调的准确性\n锻炼其口语表达能力\n还为同学们提供了展示自我风采的平台\n让同学们在朗读的过程中\n感受语言的深刻内涵\n01\n大赛事项\n比赛环节\n法、德、西、俄、葡语系\n分初赛和决赛\n比赛形式\n初赛以朗读的形式为主\n决赛则根据语系情况而定\n比如朗诵、配音、唱歌等\n充分展现新生们的语音知识运用能力\n初赛时间\n法语 11.19 13:50-15:10\n德语 11.5 17:20-18:20\n西单 11.26 14:00-15:10\n西双 11.26 15:40-17:10\n俄语 11.13 20:00-21:20\n葡语 11.12 14:00-15:30\n02\n往期回顾\n法语\nFrançais\n德语\nDeutsch\n西班牙语\nEspañol\n俄语\nРусский\n葡萄牙语\nPortuguês\n寄语\n愿各位饼饼在这次比赛中稳定发挥\n将自己在语音阶段所收获的知识\n外化为一个个悦耳的音标\n我们期待着你们的精彩表现！\nAllez!\nLos!\n¡Vamos!\nДавай!\nForça!\nEND\n海报｜宣传部 / 李若彤\n编辑｜新闻部 / 谭锦骐\n责任编辑｜唐芮 李乐仪 曾心悦\n初审｜张琦 王予含 贾美玉 汤梦鑫城\n复审｜王斌龙 潘泽俊\n终审｜魏少娟",
+      "evidenceType": "full_text",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": [
+        {
+          "title": "2026年新生语音语调大赛",
+          "href": "/calendar?date=2026-11-19&event=event-0a662aa06185be5920de1fee38184fcfa68049e0&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+        },
+        {
+          "title": "2026年新生语音语调大赛",
+          "href": "/calendar?date=2026-11-05&event=event-d4ac6ee23f6fdc880f60ea9195fce953afe3ca03&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+        },
+        {
+          "title": "2026年新生语音语调大赛",
+          "href": "/calendar?date=2026-11-26&event=event-918b6a9aae4336a6926901bc4675c866225af748&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+        }
+      ]
+    }
+  ],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T08:13:35.809Z",
+      "elapsedMs": 538,
+      "data": {
+        "question": "广外最近一个月有哪些还可以报名参加的比赛？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T08:13:35.809Z",
+      "elapsedMs": 538,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T08:13:36.880Z",
+      "elapsedMs": 1609,
+      "data": {
+        "question": "广外最近一个月有哪些还可以报名参加的比赛？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T08:13:36.880Z",
+      "elapsedMs": 1609,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T08:13:36.880Z",
+      "elapsedMs": 1609,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T08:13:36.880Z",
+      "elapsedMs": 1609,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T08:13:36.880Z",
+      "elapsedMs": 1609,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T08:13:36.880Z",
+      "elapsedMs": 1609,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "registration",
+        "campus": null,
+        "topics": [
+          "competition"
+        ],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_events"
+        ]
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "running",
+      "at": "2026-11-17T08:13:37.021Z",
+      "elapsedMs": 1750,
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan",
+        "input": {
+          "query": "还比赛",
+          "limit": 5,
+          "registrationState": "open",
+          "category": "competition"
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "success",
+      "at": "2026-11-17T08:13:37.783Z",
+      "elapsedMs": 2512,
+      "durationMs": 762,
+      "data": {
+        "name": "search_campus_events",
+        "result": {
+          "hits": [],
+          "metrics": {
+            "rowsRead": 4200,
+            "rowsWritten": 0,
+            "queries": 4,
+            "durationMs": 281,
+            "stagesMs": {
+              "lexical": 209,
+              "supplement": 0,
+              "revalidationAndRanking": 72
+            },
+            "candidateChunks": 6,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "structured_date",
+                "limit": 48,
+                "candidates": 3
+              },
+              {
+                "name": "lexical_date_completion",
+                "limit": 48,
+                "candidates": 3
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "events",
+          "query": "还比赛",
+          "now": "2026-11-17T08:13:37.021Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [],
+          "knowledge": []
+        },
+        "durationMs": 762
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:6",
+      "state": "running",
+      "at": "2026-11-17T08:13:37.783Z",
+      "elapsedMs": 2512,
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan",
+        "input": {
+          "query": "还比赛",
+          "limit": 5,
+          "registrationState": "unknown",
+          "category": "competition"
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:6",
+      "state": "success",
+      "at": "2026-11-17T08:13:38.999Z",
+      "elapsedMs": 3728,
+      "durationMs": 1216,
+      "data": {
+        "name": "search_campus_events",
+        "result": {
+          "hits": [
+            {
+              "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+              "chunkId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c:fts:e43ce1f00f62cf2a:0",
+              "title": "活动预告｜2026年新生语音语调大赛",
+              "sourceId": "GDUFS-SRC-0193",
+              "sourceName": "广外西语团委学生会",
+              "originalUrl": "https://mp.weixin.qq.com/s/psPaYF0bMc7aNIQAgsF_xQ",
+              "publishedAt": "2026-11-04T03:30:00.000Z",
+              "contentSnippet": "2026年\n新生语音语调大赛\n西方语言文化学院\n序言\n叶落知秋\n六月埋下的伏笔\n终于在十一月收束\n秋风敲开西语学院的大门\n即将见证\n又一年的语音语调大赛\n从五湖四海汇聚到岭南的学子\n将在这里检验两月以来的学习成果\n在这里写下\n与西语邂逅的序言\n比赛意义\n新生语音语调大赛\n是面向西语学院全体大一新生的比赛\n每年举办一次\n大赛旨在激发大一新生学习语言的热情\n不仅能够检验新生语音语调的准确性\n锻炼其口语表达能力\n还为同学们提供了展示自我风采的平台\n让同学们在朗读的过程中\n感受语言的深刻内涵\n01\n大赛事项\n比赛环节\n法、德、西、俄、葡语系\n分初赛和决赛\n比赛形式\n初赛以朗读的形式为主\n决赛则根据语系情况而定\n比如朗诵、配音、唱歌等\n充分展现新生们的语音知识运用能力\n初赛时间\n法语 11.19 13:50-15:10\n德语 11.5 17:20-18:20\n西单 11.26 14:00-15:10\n西双 11.26 15:40-17:10\n俄语 11.13 20:00-21:20\n葡语 11.12 14:00-15:30\n02\n往期回顾\n法语\nFrançais\n德语\nDeutsch\n西班牙语\nEspañol\n俄语\nРусский\n葡萄牙语\nPortuguês\n寄语\n愿各位饼饼在这次比赛中稳定发挥\n将自己在语音阶段所收获的知识\n外化为一个个悦耳的音标\n我们期待着你们的精彩表现！\nAllez!\nLos!\n¡Vamos!\nДавай!\nForça!\nEND\n海报｜宣传部 / 李若彤\n编辑｜新闻部 / 谭锦骐\n责任编辑｜唐芮 李乐仪 曾心悦\n初审｜张琦 王予含 贾美玉 汤梦鑫城\n复审｜王斌龙 潘泽俊\n终审｜魏少娟",
+              "startOffset": 0,
+              "endOffset": 710,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 24.52,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权",
+                "业务类别匹配"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "competition",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "9679df3c33c416599ac519d6957093dee949a1273cdcfecad4b54959901a17f1",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 3025,
+            "rowsWritten": 0,
+            "queries": 4,
+            "durationMs": 480,
+            "stagesMs": {
+              "lexical": 308,
+              "supplement": 0,
+              "revalidationAndRanking": 172
+            },
+            "candidateChunks": 53,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "structured_date",
+                "limit": 48,
+                "candidates": 5
+              },
+              {
+                "name": "lexical_date_completion",
+                "limit": 48,
+                "candidates": 48
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [
+            "部分相关原文尚无可靠的对应日期，作为待核对资料返回；不能声称符合所问日期范围或没有活动，需继续官方补查。"
+          ],
+          "purpose": "events",
+          "query": "还比赛",
+          "now": "2026-11-17T08:13:37.783Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "eventId": "event-0a662aa06185be5920de1fee38184fcfa68049e0",
+              "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+              "activityKey": "activity-1",
+              "name": "2026年新生语音语调大赛",
+              "kind": "event",
+              "category": "competition",
+              "startsAt": {
+                "raw": "11.19 13:50",
+                "date": "2026-11-19",
+                "at": "2026-11-19T13:50:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11.19 13:50"
+              },
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "upcoming",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "法语 11.19 13:50-15:10"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-19&event=event-0a662aa06185be5920de1fee38184fcfa68049e0&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+            },
+            {
+              "eventId": "event-d4ac6ee23f6fdc880f60ea9195fce953afe3ca03",
+              "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+              "activityKey": "activity-2",
+              "name": "2026年新生语音语调大赛",
+              "kind": "event",
+              "category": "competition",
+              "startsAt": {
+                "raw": "11.5 17:20",
+                "date": "2026-11-05",
+                "at": "2026-11-05T17:20:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11.5 17:20"
+              },
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": true,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "德语 11.5 17:20-18:20"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-05&event=event-d4ac6ee23f6fdc880f60ea9195fce953afe3ca03&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+            },
+            {
+              "eventId": "event-918b6a9aae4336a6926901bc4675c866225af748",
+              "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+              "activityKey": "activity-3",
+              "name": "2026年新生语音语调大赛",
+              "kind": "event",
+              "category": "competition",
+              "startsAt": {
+                "raw": "11.26 14:00",
+                "date": "2026-11-26",
+                "at": "2026-11-26T14:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11.26 14:00"
+              },
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "upcoming",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "西单 11.26 14:00-15:10"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-26&event=event-918b6a9aae4336a6926901bc4675c866225af748&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+            }
+          ],
+          "knowledge": [
+            {
+              "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            }
+          ]
+        },
+        "durationMs": 1216
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "running",
+      "at": "2026-11-17T08:13:38.999Z",
+      "elapsedMs": 3728,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "success",
+      "at": "2026-11-17T08:13:39.086Z",
+      "elapsedMs": 3815,
+      "durationMs": 87,
+      "data": {
+        "characters": 60,
+        "cards": 1
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "running",
+      "at": "2026-11-17T08:13:39.086Z",
+      "elapsedMs": 3815,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "success",
+      "at": "2026-11-17T08:13:39.086Z",
+      "elapsedMs": 3815,
+      "durationMs": 0,
+      "data": {
+        "characters": 60,
+        "cards": 1
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T08:13:37.021Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T08:13:37.021Z",
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T08:13:37.783Z",
+      "data": {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 762,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T08:13:37.783Z",
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T08:13:38.999Z",
+      "data": {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 1216,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T08:13:39.321Z",
+      "data": {
+        "cards": [
+          {
+            "kind": "source",
+            "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+            "title": "活动预告｜2026年新生语音语调大赛",
+            "sourceName": "广外西语团委学生会",
+            "originalUrl": "https://mp.weixin.qq.com/s/psPaYF0bMc7aNIQAgsF_xQ",
+            "publishedAt": "2026-11-04T03:30:00.000Z",
+            "snippet": "2026年\n新生语音语调大赛\n西方语言文化学院\n序言\n叶落知秋\n六月埋下的伏笔\n终于在十一月收束\n秋风敲开西语学院的大门\n即将见证\n又一年的语音语调大赛\n从五湖四海汇聚到岭南的学子\n将在这里检验两月以来的学习成果\n在这里写下\n与西语邂逅的序言\n比赛意义\n新生语音语调大赛\n是面向西语学院全体大一新生的比赛\n每年举办一次\n大赛旨在激发大一新生学习语言的热情\n不仅能够检验新生语音语调的准确性\n锻炼其口语表达能力\n还为同学们提供了展示自我风采的平台\n让同学们在朗读的过程中\n感受语言的深刻内涵\n01\n大赛事项\n比赛环节\n法、德、西、俄、葡语系\n分初赛和决赛\n比赛形式\n初赛以朗读的形式为主\n决赛则根据语系情况而定\n比如朗诵、配音、唱歌等\n充分展现新生们的语音知识运用能力\n初赛时间\n法语 11.19 13:50-15:10\n德语 11.5 17:20-18:20\n西单 11.26 14:00-15:10\n西双 11.26 15:40-17:10\n俄语 11.13 20:00-21:20\n葡语 11.12 14:00-15:30\n02\n往期回顾\n法语\nFrançais\n德语\nDeutsch\n西班牙语\nEspañol\n俄语\nРусский\n葡萄牙语\nPortuguês\n寄语\n愿各位饼饼在这次比赛中稳定发挥\n将自己在语音阶段所收获的知识\n外化为一个个悦耳的音标\n我们期待着你们的精彩表现！\nAllez!\nLos!\n¡Vamos!\nДавай!\nForça!\nEND\n海报｜宣传部 / 李若彤\n编辑｜新闻部 / 谭锦骐\n责任编辑｜唐芮 李乐仪 曾心悦\n初审｜张琦 王予含 贾美玉 汤梦鑫城\n复审｜王斌龙 潘泽俊\n终审｜魏少娟",
+            "evidenceType": "full_text",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": [
+              {
+                "title": "2026年新生语音语调大赛",
+                "href": "/calendar?date=2026-11-19&event=event-0a662aa06185be5920de1fee38184fcfa68049e0&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+              },
+              {
+                "title": "2026年新生语音语调大赛",
+                "href": "/calendar?date=2026-11-05&event=event-d4ac6ee23f6fdc880f60ea9195fce953afe3ca03&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+              },
+              {
+                "title": "2026年新生语音语调大赛",
+                "href": "/calendar?date=2026-11-26&event=event-918b6a9aae4336a6926901bc4675c866225af748&article=wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+              }
+            ]
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T08:13:39.321Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "participation_evidence",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+                "existence": "documented",
+                "eventState": "upcoming",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+                "existence": "documented",
+                "eventState": "started_end_unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+                "existence": "documented",
+                "eventState": "upcoming",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 0,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [],
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "cachedPromptTokens": 0,
+          "totalTokens": 0,
+          "usageComplete": true,
+          "chargedTokens": 0,
+          "durationMs": 1978,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 0,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1750,
+            "serverElapsedMs": 3728,
+            "firstTextMs": 3728,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_events",
+                "durationMs": 762,
+                "ok": true
+              },
+              {
+                "name": "search_campus_events",
+                "durationMs": 1216,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 39,
+              "writeQueries": 21,
+              "calls": 45,
+              "failures": 0,
+              "durationMs": 3386,
+              "maxCallMs": 175,
+              "rowsRead": 8354,
+              "rowsWritten": 29,
+              "rowUsageStatements": 45,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_events",
+                "rowsRead": 4200,
+                "rowsWritten": 0,
+                "queries": 4,
+                "durationMs": 281,
+                "stagesMs": {
+                  "lexical": 209,
+                  "supplement": 0,
+                  "revalidationAndRanking": 72
+                },
+                "candidateChunks": 6,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "structured_date",
+                    "limit": 48,
+                    "candidates": 3
+                  },
+                  {
+                    "name": "lexical_date_completion",
+                    "limit": 48,
+                    "candidates": 3
+                  }
+                ]
+              },
+              {
+                "skill": "search_campus_events",
+                "rowsRead": 3025,
+                "rowsWritten": 0,
+                "queries": 4,
+                "durationMs": 480,
+                "stagesMs": {
+                  "lexical": 308,
+                  "supplement": 0,
+                  "revalidationAndRanking": 172
+                },
+                "candidateChunks": 53,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "structured_date",
+                    "limit": 48,
+                    "candidates": 5
+                  },
+                  {
+                    "name": "lexical_date_completion",
+                    "limit": 48,
+                    "candidates": 48
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "participation_evidence",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+          "existence": "documented",
+          "eventState": "upcoming",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+          "existence": "documented",
+          "eventState": "started_end_unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "wx-841fe1f9767cdbd10f2051ea16891ced3a5fec9c",
+          "existence": "documented",
+          "eventState": "upcoming",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 1978,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 0,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1750,
+      "serverElapsedMs": 3728,
+      "firstTextMs": 3728,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_events",
+          "durationMs": 762,
+          "ok": true
+        },
+        {
+          "name": "search_campus_events",
+          "durationMs": 1216,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 39,
+        "writeQueries": 21,
+        "calls": 45,
+        "failures": 0,
+        "durationMs": 3386,
+        "maxCallMs": 175,
+        "rowsRead": 8354,
+        "rowsWritten": 29,
+        "rowUsageStatements": 45,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 4200,
+          "rowsWritten": 0,
+          "queries": 4,
+          "durationMs": 281,
+          "stagesMs": {
+            "lexical": 209,
+            "supplement": 0,
+            "revalidationAndRanking": 72
+          },
+          "candidateChunks": 6,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "structured_date",
+              "limit": 48,
+              "candidates": 3
+            },
+            {
+              "name": "lexical_date_completion",
+              "limit": 48,
+              "candidates": 3
+            }
+          ]
+        },
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 3025,
+          "rowsWritten": 0,
+          "queries": 4,
+          "durationMs": 480,
+          "stagesMs": {
+            "lexical": 308,
+            "supplement": 0,
+            "revalidationAndRanking": 172
+          },
+          "candidateChunks": 53,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "structured_date",
+              "limit": 48,
+              "candidates": 5
+            },
+            {
+              "name": "lexical_date_completion",
+              "limit": 48,
+              "candidates": 48
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

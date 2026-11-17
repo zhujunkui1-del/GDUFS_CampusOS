@@ -24,6 +24,7 @@ import {
 type RequiredTool =
   | "control_map"
   | "search_places"
+  | "find_nearby_places"
   | "plan_route"
   | "search_external_campus_info"
   | ContentTool;
@@ -31,7 +32,7 @@ type RequiredTool =
 // The evidence judge is a second full model call. Its own latency was the
 // dominant term in the slowest turns, so it gets a budget of its own
 // instead of consuming the whole run's deadline.
-const JUDGE_TIMEOUT_MS = 24000;
+const JUDGE_TIMEOUT_MS = 10000;
 
 export function meteredClient(
   client: ModelClient,
@@ -185,8 +186,23 @@ export function meteredClient(
       await store.running(owner, runId);
       finishCheck?.({
         supported: verdict.supported,
+        relevant: verdict.relevant,
+        coverage: verdict.coverage,
         issueCount: verdict.issues.length,
       });
+      if (verdict.relevant === false || verdict.coverage === "partial") {
+        const unrelated = verdict.relevant === false;
+        lastGroundingIssue = {
+          message: unrelated
+            ? "答案没有回答本轮问题。请使用本轮检索结果，直接回答当前任务。"
+            : "答案遗漏了本轮资料里能直接回答问题的要点，请补充并给出处；保留尚未核实的边界。",
+          hard:
+            unrelated ||
+            (!verdict.supported &&
+              verdictSeverity(verdict) === "contradiction"),
+        };
+        return lastGroundingIssue;
+      }
       if (!verdict.supported) {
         groundingFailures++;
         // Only a proven contradiction is a factual defect. "The source does not
@@ -274,11 +290,13 @@ export function meteredClient(
             ? [
                 { role: "system", content: options.finalSystem() },
                 ...request.messages.filter(
-                  (message) =>
+                  (message, index) =>
                     message.role !== "system" &&
                     (!options.isolateFinalEvidence ||
-                      message.role !== "assistant" ||
-                      !!message.tool_calls?.length),
+                      index >=
+                        request.messages.findLastIndex(
+                          (m) => m.role === "user",
+                        )),
                 ),
               ]
             : request.messages;

@@ -1,0 +1,1012 @@
+{
+  "question": "这周末南校区有什么活动可以参加？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "1. **【宣讲】广外第十一周2027校招宣讲会汇总表** [1]\n   举办：2026-11-16 10:00\n\n2. **【11月16日宣讲】中山大洋电机股份有限公司** [2]\n   举办：2026-11-16 14:30 · 地点：白云山校区一教南404\n\n3. **词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！** [3]\n   举办：2026-11-16 15:00 · 地点：白云山校区七教一楼大厅\n\n4. **广外话语论坛第36期预告：语境化理论与中国古代司法话语研究** [4]\n   举办：2026-11-16 15:00—17:00 · 地点：白云山校区两号行二级楼（九教学）103丝研讲堂",
+  "cards": [
+    {
+      "kind": "source",
+      "documentId": "wx-e378a437ab4ec14afab11915646e83edc116a4db",
+      "title": "【宣讲】广外第十一周2027校招宣讲会汇总表",
+      "sourceName": "广外就业",
+      "originalUrl": "https://mp.weixin.qq.com/s/45m6Hb1weKQ4iBJtTtckNw",
+      "publishedAt": "2026-11-14T04:33:39.000Z",
+      "snippet": "1 | 11月16日（星期一） | 10:00 | 北京昕途信息咨询有限公司 | E403 | 宣讲会 | 是",
+      "evidenceType": "excerpt",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": [
+        {
+          "title": "北京昕途信息咨询有限公司",
+          "href": "/calendar?date=2026-11-16&event=event-dde89beae6d60b7a036983bd433eb58e6b237fc9"
+        },
+        {
+          "title": "中山大洋电机股份有限公司",
+          "href": "/calendar?date=2026-11-16&event=event-81001834bbdf7e97079750e801a6401cc3d05178"
+        }
+      ]
+    },
+    {
+      "kind": "source",
+      "documentId": "wx-360ba1a3fa04d53d5247ce7a69e39d8d11523dfe",
+      "title": "【11月16日宣讲】中山大洋电机股份有限公司",
+      "sourceName": "广外就业",
+      "originalUrl": "https://mp.weixin.qq.com/s/YQI-3ye8nTp-QmU1RTnRTA",
+      "publishedAt": "2026-11-15T11:16:13.000Z",
+      "snippet": "【11月16日宣讲】中山大洋电机股份有限公司",
+      "evidenceType": "metadata",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": [
+        {
+          "title": "【11月16日宣讲】中山大洋电机股份有限公司",
+          "href": "/calendar?date=2026-11-16&event=event-ff4db4dfb5d611c0a5425444dd1d6173fdd912c3"
+        }
+      ]
+    },
+    {
+      "kind": "source",
+      "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+      "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+      "sourceName": "广外青年",
+      "originalUrl": "https://mp.weixin.qq.com/s/2HdigxTYTLkhVlsgyIwD2A",
+      "publishedAt": "2026-11-15T11:41:43.000Z",
+      "snippet": "第一场：11月16日（周一）15:00",
+      "evidenceType": "excerpt",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": [
+        {
+          "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 纸质词典展",
+          "href": "/calendar?date=2026-11-16&event=event-b58b3b180491cad5e3194aa7f7f7c89656cfeaec"
+        }
+      ]
+    },
+    {
+      "kind": "source",
+      "documentId": "content-34b5e4e0-c486-4f6a-b81b-88ff2e9767fa",
+      "title": "广外话语论坛第36期预告：语境化理论与中国古代司法话语研究",
+      "sourceName": "外国语言学及应用语言学研究中心",
+      "originalUrl": "https://clal.gdufs.edu.cn/info/1036/8215.htm",
+      "publishedAt": "2026-11-12",
+      "snippet": "广外话语论坛第36期  举办时间：2026年11月16日（周一） 15:00-17:00  地点：白云山校区两号行二级楼（九教学）103丝研讲堂",
+      "evidenceType": "excerpt",
+      "classificationState": "unknown",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": [
+        {
+          "title": "广外话语论坛第36期预告：语境化理论与中国古代司法话语研究",
+          "href": "/calendar?date=2026-11-16&event=event-d0c5be3f21fb28cec29c6f8edc7ff77ff989c2aa"
+        }
+      ]
+    }
+  ],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T02:07:34.363Z",
+      "elapsedMs": 175,
+      "data": {
+        "question": "这周末南校区有什么活动可以参加？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T02:07:34.363Z",
+      "elapsedMs": 175,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T02:07:35.331Z",
+      "elapsedMs": 1143,
+      "data": {
+        "question": "这周末南校区有什么活动可以参加？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T02:07:35.331Z",
+      "elapsedMs": 1143,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T02:07:35.331Z",
+      "elapsedMs": 1143,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T02:07:35.331Z",
+      "elapsedMs": 1143,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T02:07:35.331Z",
+      "elapsedMs": 1143,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T02:07:35.331Z",
+      "elapsedMs": 1143,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "participation",
+        "campus": "south",
+        "topics": [],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_events"
+        ]
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "running",
+      "at": "2026-11-17T02:07:35.472Z",
+      "elapsedMs": 1284,
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan",
+        "input": {
+          "query": "末南校区",
+          "limit": 5,
+          "nearestIfEmpty": true
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "success",
+      "at": "2026-11-17T02:07:35.821Z",
+      "elapsedMs": 1633,
+      "durationMs": 349,
+      "data": {
+        "name": "search_campus_events",
+        "result": {
+          "hits": [
+            {
+              "documentId": "wx-e378a437ab4ec14afab11915646e83edc116a4db",
+              "chunkId": "event-dde89beae6d60b7a036983bd433eb58e6b237fc9",
+              "title": "【宣讲】广外第十一周2027校招宣讲会汇总表",
+              "sourceId": "GDUFS-SRC-0114",
+              "sourceName": "广外就业",
+              "originalUrl": "https://mp.weixin.qq.com/s/45m6Hb1weKQ4iBJtTtckNw",
+              "publishedAt": "2026-11-14T04:33:39.000Z",
+              "contentSnippet": "1 | 11月16日（星期一） | 10:00 | 北京昕途信息咨询有限公司 | E403 | 宣讲会 | 是",
+              "startOffset": 43,
+              "endOffset": 98,
+              "evidenceBasis": "activity_projection",
+              "evidenceType": "excerpt",
+              "bodyAvailable": true,
+              "bodyPartial": true,
+              "relevanceScore": 1,
+              "rankingReasons": [
+                "按实际举办日期查询共享活动索引"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "education_career",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "a1e8535f5cbe8a7ac2dd2151d685d9d53653281c6a2e7287fb0466cd3a5f5eac",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": [],
+              "calendarUrl": "/calendar?date=2026-11-16&event=event-dde89beae6d60b7a036983bd433eb58e6b237fc9"
+            },
+            {
+              "documentId": "wx-360ba1a3fa04d53d5247ce7a69e39d8d11523dfe",
+              "chunkId": "event-ff4db4dfb5d611c0a5425444dd1d6173fdd912c3",
+              "title": "【11月16日宣讲】中山大洋电机股份有限公司",
+              "sourceId": "GDUFS-SRC-0114",
+              "sourceName": "广外就业",
+              "originalUrl": "https://mp.weixin.qq.com/s/YQI-3ye8nTp-QmU1RTnRTA",
+              "publishedAt": "2026-11-15T11:16:13.000Z",
+              "contentSnippet": "【11月16日宣讲】中山大洋电机股份有限公司",
+              "startOffset": 0,
+              "endOffset": 22,
+              "evidenceBasis": "activity_projection",
+              "evidenceType": "metadata",
+              "bodyAvailable": false,
+              "bodyPartial": true,
+              "relevanceScore": 1,
+              "rankingReasons": [
+                "按实际举办日期查询共享活动索引"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "education_career",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "7a130b35f2658cccb018cbd2632005bd7aebba75d3d1b3d0a46dae487b87effa",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": [],
+              "calendarUrl": "/calendar?date=2026-11-16&event=event-ff4db4dfb5d611c0a5425444dd1d6173fdd912c3"
+            },
+            {
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "chunkId": "event-b58b3b180491cad5e3194aa7f7f7c89656cfeaec",
+              "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+              "sourceId": "GDUFS-SRC-0117",
+              "sourceName": "广外青年",
+              "originalUrl": "https://mp.weixin.qq.com/s/2HdigxTYTLkhVlsgyIwD2A",
+              "publishedAt": "2026-11-15T11:41:43.000Z",
+              "contentSnippet": "第一场：11月16日（周一）15:00",
+              "startOffset": 641,
+              "endOffset": 660,
+              "evidenceBasis": "activity_projection",
+              "evidenceType": "excerpt",
+              "bodyAvailable": true,
+              "bodyPartial": true,
+              "relevanceScore": 1,
+              "rankingReasons": [
+                "按实际举办日期查询共享活动索引"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "lecture",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "86085e39570289409e50e042e9120e56d0c23f033199b3e71b15fbea8e248a54",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": [],
+              "calendarUrl": "/calendar?date=2026-11-16&event=event-b58b3b180491cad5e3194aa7f7f7c89656cfeaec"
+            },
+            {
+              "documentId": "content-34b5e4e0-c486-4f6a-b81b-88ff2e9767fa",
+              "chunkId": "event-d0c5be3f21fb28cec29c6f8edc7ff77ff989c2aa",
+              "title": "广外话语论坛第36期预告：语境化理论与中国古代司法话语研究",
+              "sourceId": "GDUFS-SRC-0060",
+              "sourceName": "外国语言学及应用语言学研究中心",
+              "originalUrl": "https://clal.gdufs.edu.cn/info/1036/8215.htm",
+              "publishedAt": "2026-11-12",
+              "contentSnippet": "广外话语论坛第36期  举办时间：2026年11月16日（周一） 15:00-17:00  地点：白云山校区两号行二级楼（九教学）103丝研讲堂",
+              "startOffset": 0,
+              "endOffset": 72,
+              "evidenceBasis": "activity_projection",
+              "evidenceType": "excerpt",
+              "bodyAvailable": true,
+              "bodyPartial": true,
+              "relevanceScore": 1,
+              "rankingReasons": [
+                "按实际举办日期查询共享活动索引"
+              ],
+              "classificationState": "unknown",
+              "radarCategory": null,
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "bdea7add1ae37cb593363dcf7b16040339f0210b062481f9764e88ab9d1cf0c1",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": [],
+              "calendarUrl": "/calendar?date=2026-11-16&event=event-d0c5be3f21fb28cec29c6f8edc7ff77ff989c2aa"
+            }
+          ],
+          "metrics": {
+            "rowsRead": 1573,
+            "rowsWritten": 0,
+            "queries": 3,
+            "durationMs": 349,
+            "candidateChunks": 0,
+            "candidateActivities": 34,
+            "usageAvailable": true
+          },
+          "indexVersion": "calendar-v2",
+          "method": "calendar_index",
+          "warnings": [],
+          "purpose": "events",
+          "query": "末南校区",
+          "now": "2026-11-17T02:07:35.472Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "eventId": "event-dde89beae6d60b7a036983bd433eb58e6b237fc9",
+              "documentId": "wx-e378a437ab4ec14afab11915646e83edc116a4db",
+              "activityKey": "activity-3",
+              "name": "北京昕途信息咨询有限公司",
+              "kind": "event",
+              "category": "education_career",
+              "startsAt": {
+                "raw": "11月16日（星期一）",
+                "date": "2026-11-16",
+                "at": "2026-11-16T10:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月16日（星期一）"
+              },
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "historical",
+              "historical": true,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "1 | 11月16日（星期一） | 10:00 | 北京昕途信息咨询有限公司 | E403 | 宣讲会 | 是"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-16&event=event-dde89beae6d60b7a036983bd433eb58e6b237fc9"
+            },
+            {
+              "eventId": "event-81001834bbdf7e97079750e801a6401cc3d05178",
+              "documentId": "wx-e378a437ab4ec14afab11915646e83edc116a4db",
+              "activityKey": "activity-1",
+              "name": "中山大洋电机股份有限公司",
+              "kind": "event",
+              "category": "education_career",
+              "startsAt": {
+                "raw": "11月16日（星期一）",
+                "date": "2026-11-16",
+                "at": "2026-11-16T14:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月16日（星期一）"
+              },
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "historical",
+              "historical": true,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "1 | 11月16日（星期一） | 14:30 | 中山大洋电机股份有限公司 | 一教南404 | 宣讲会 | 是"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-16&event=event-81001834bbdf7e97079750e801a6401cc3d05178"
+            },
+            {
+              "eventId": "event-ff4db4dfb5d611c0a5425444dd1d6173fdd912c3",
+              "documentId": "wx-360ba1a3fa04d53d5247ce7a69e39d8d11523dfe",
+              "activityKey": "activity-1",
+              "name": "【11月16日宣讲】中山大洋电机股份有限公司",
+              "kind": "event",
+              "category": "education_career",
+              "startsAt": {
+                "raw": "11月16日（星期一）14：30",
+                "date": "2026-11-16",
+                "at": "2026-11-16T14:30:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月16日（星期一）14：30"
+              },
+              "endsAt": null,
+              "placeRaw": "白云山校区一教南404",
+              "organizer": null,
+              "eventStatus": "historical",
+              "historical": true,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "宣讲会（现场接收简历）\n一、企业简介\n中山大洋电机股份有限公司（简称：大洋电机"
+                  ]
+                }
+              ],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "【11月16日宣讲】中山大洋电机股份有限公司",
+                "宣讲会（现场接收简历）\n一、企业简介\n中山大洋电机股份有限公司（简称：大洋电机",
+                "白云山校区一教南404"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-16&event=event-ff4db4dfb5d611c0a5425444dd1d6173fdd912c3"
+            },
+            {
+              "eventId": "event-b58b3b180491cad5e3194aa7f7f7c89656cfeaec",
+              "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "activityKey": "activity-5",
+              "name": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 纸质词典展",
+              "kind": "event",
+              "category": "lecture",
+              "startsAt": {
+                "raw": "11月16日（周一）15:00",
+                "date": "2026-11-16",
+                "at": "2026-11-16T15:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                "evidence": "11月16日（周一）15:00"
+              },
+              "endsAt": null,
+              "placeRaw": "白云山校区七教一楼大厅",
+              "organizer": null,
+              "eventStatus": "historical",
+              "historical": true,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "第一场：11月16日（周一）15:00",
+                "白云山校区七教一楼大厅"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-16&event=event-b58b3b180491cad5e3194aa7f7f7c89656cfeaec"
+            },
+            {
+              "eventId": "event-d0c5be3f21fb28cec29c6f8edc7ff77ff989c2aa",
+              "documentId": "content-34b5e4e0-c486-4f6a-b81b-88ff2e9767fa",
+              "activityKey": "activity-1",
+              "name": "广外话语论坛第36期预告：语境化理论与中国古代司法话语研究",
+              "kind": "event",
+              "category": "academic_research",
+              "startsAt": {
+                "raw": "2026年11月16日（周一） 15:00",
+                "date": "2026-11-16",
+                "at": "2026-11-16T15:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": "2026年11月16日（周一） 15:00"
+              },
+              "endsAt": {
+                "raw": "17:00",
+                "date": "2026-11-16",
+                "at": "2026-11-16T17:00:00+08:00",
+                "timezone": "Asia/Shanghai",
+                "precision": "exact_time",
+                "resolution": "minute",
+                "inferred": true,
+                "inferenceBasis": "同一明确时间区间的起始日期",
+                "evidence": "17:00"
+              },
+              "placeRaw": "白云山校区两号行二级楼（九教学）103丝研讲堂",
+              "organizer": null,
+              "eventStatus": "historical",
+              "historical": true,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "广外话语论坛第36期  举办时间：2026年11月16日（周一） 15:00-17:00  地点：白云山校区两号行二级楼（九教学）103丝研讲堂",
+                "白云山校区两号行二级楼（九教学）103丝研讲堂"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-11-16&event=event-d0c5be3f21fb28cec29c6f8edc7ff77ff989c2aa"
+            }
+          ],
+          "knowledge": []
+        },
+        "durationMs": 349
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:6",
+      "state": "running",
+      "at": "2026-11-17T02:07:35.821Z",
+      "elapsedMs": 1633,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:6",
+      "state": "success",
+      "at": "2026-11-17T02:07:36.577Z",
+      "elapsedMs": 2389,
+      "durationMs": 756,
+      "data": {
+        "characters": 311,
+        "cards": 4
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:7",
+      "state": "running",
+      "at": "2026-11-17T02:07:36.577Z",
+      "elapsedMs": 2389,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:7",
+      "state": "success",
+      "at": "2026-11-17T02:07:36.577Z",
+      "elapsedMs": 2389,
+      "durationMs": 0,
+      "data": {
+        "characters": 311,
+        "cards": 4
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:07:35.472Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T02:07:35.472Z",
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T02:07:35.821Z",
+      "data": {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 349,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:07:36.779Z",
+      "data": {
+        "cards": [
+          {
+            "kind": "source",
+            "documentId": "wx-e378a437ab4ec14afab11915646e83edc116a4db",
+            "title": "【宣讲】广外第十一周2027校招宣讲会汇总表",
+            "sourceName": "广外就业",
+            "originalUrl": "https://mp.weixin.qq.com/s/45m6Hb1weKQ4iBJtTtckNw",
+            "publishedAt": "2026-11-14T04:33:39.000Z",
+            "snippet": "1 | 11月16日（星期一） | 10:00 | 北京昕途信息咨询有限公司 | E403 | 宣讲会 | 是",
+            "evidenceType": "excerpt",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": [
+              {
+                "title": "北京昕途信息咨询有限公司",
+                "href": "/calendar?date=2026-11-16&event=event-dde89beae6d60b7a036983bd433eb58e6b237fc9"
+              },
+              {
+                "title": "中山大洋电机股份有限公司",
+                "href": "/calendar?date=2026-11-16&event=event-81001834bbdf7e97079750e801a6401cc3d05178"
+              }
+            ]
+          },
+          {
+            "kind": "source",
+            "documentId": "wx-360ba1a3fa04d53d5247ce7a69e39d8d11523dfe",
+            "title": "【11月16日宣讲】中山大洋电机股份有限公司",
+            "sourceName": "广外就业",
+            "originalUrl": "https://mp.weixin.qq.com/s/YQI-3ye8nTp-QmU1RTnRTA",
+            "publishedAt": "2026-11-15T11:16:13.000Z",
+            "snippet": "【11月16日宣讲】中山大洋电机股份有限公司",
+            "evidenceType": "metadata",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": [
+              {
+                "title": "【11月16日宣讲】中山大洋电机股份有限公司",
+                "href": "/calendar?date=2026-11-16&event=event-ff4db4dfb5d611c0a5425444dd1d6173fdd912c3"
+              }
+            ]
+          },
+          {
+            "kind": "source",
+            "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+            "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+            "sourceName": "广外青年",
+            "originalUrl": "https://mp.weixin.qq.com/s/2HdigxTYTLkhVlsgyIwD2A",
+            "publishedAt": "2026-11-15T11:41:43.000Z",
+            "snippet": "第一场：11月16日（周一）15:00",
+            "evidenceType": "excerpt",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": [
+              {
+                "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！ · 纸质词典展",
+                "href": "/calendar?date=2026-11-16&event=event-b58b3b180491cad5e3194aa7f7f7c89656cfeaec"
+              }
+            ]
+          },
+          {
+            "kind": "source",
+            "documentId": "content-34b5e4e0-c486-4f6a-b81b-88ff2e9767fa",
+            "title": "广外话语论坛第36期预告：语境化理论与中国古代司法话语研究",
+            "sourceName": "外国语言学及应用语言学研究中心",
+            "originalUrl": "https://clal.gdufs.edu.cn/info/1036/8215.htm",
+            "publishedAt": "2026-11-12",
+            "snippet": "广外话语论坛第36期  举办时间：2026年11月16日（周一） 15:00-17:00  地点：白云山校区两号行二级楼（九教学）103丝研讲堂",
+            "evidenceType": "excerpt",
+            "classificationState": "unknown",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": [
+              {
+                "title": "广外话语论坛第36期预告：语境化理论与中国古代司法话语研究",
+                "href": "/calendar?date=2026-11-16&event=event-d0c5be3f21fb28cec29c6f8edc7ff77ff989c2aa"
+              }
+            ]
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T02:07:36.779Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "completed",
+          "retrievalStatus": "matched",
+          "answerMode": "event_list",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+              "content-34b5e4e0-c486-4f6a-b81b-88ff2e9767fa"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+                "existence": "documented",
+                "eventState": "started_end_unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-34b5e4e0-c486-4f6a-b81b-88ff2e9767fa",
+                "existence": "documented",
+                "eventState": "ended",
+                "registrationState": "unknown",
+                "participation": "closed",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 0,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [],
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "cachedPromptTokens": 0,
+          "totalTokens": 0,
+          "usageComplete": true,
+          "chargedTokens": 0,
+          "durationMs": 349,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 0,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1284,
+            "serverElapsedMs": 1633,
+            "firstTextMs": 1633,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_events",
+                "durationMs": 349,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 19,
+              "writeQueries": 12,
+              "calls": 23,
+              "failures": 0,
+              "durationMs": 1514,
+              "maxCallMs": 206,
+              "rowsRead": 2014,
+              "rowsWritten": 26,
+              "rowUsageStatements": 16,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_events",
+                "rowsRead": 1573,
+                "rowsWritten": 0,
+                "queries": 3,
+                "durationMs": 349,
+                "candidateChunks": 0,
+                "candidateActivities": 34,
+                "usageAvailable": true
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "completed",
+    "retrievalStatus": "matched",
+    "answerMode": "event_list",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+        "content-34b5e4e0-c486-4f6a-b81b-88ff2e9767fa"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "wx-387b0b1023dd369851c9e0f79eb4aa1583c85833",
+          "existence": "documented",
+          "eventState": "started_end_unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-34b5e4e0-c486-4f6a-b81b-88ff2e9767fa",
+          "existence": "documented",
+          "eventState": "ended",
+          "registrationState": "unknown",
+          "participation": "closed",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 349,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 0,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1284,
+      "serverElapsedMs": 1633,
+      "firstTextMs": 1633,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_events",
+          "durationMs": 349,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 19,
+        "writeQueries": 12,
+        "calls": 23,
+        "failures": 0,
+        "durationMs": 1514,
+        "maxCallMs": 206,
+        "rowsRead": 2014,
+        "rowsWritten": 26,
+        "rowUsageStatements": 16,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 1573,
+          "rowsWritten": 0,
+          "queries": 3,
+          "durationMs": 349,
+          "candidateChunks": 0,
+          "candidateActivities": 34,
+          "usageAvailable": true
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

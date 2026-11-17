@@ -12,6 +12,7 @@ import { retrievalIndexStatements } from "../retrieval/indexer";
 import {
   calendarInput,
   calendarizeArticle,
+  normalizeCalendarVenue,
 } from "@/lib/ingestion/calendar-extraction";
 import { calendarIdentity } from "@/lib/ingestion/calendar-identity";
 
@@ -24,6 +25,7 @@ export async function analysisStatements(
   provided?: ArticleAnalysis,
   rights?: string,
   expectedProjectionHash?: string | null,
+  queueCalendarAI = false,
 ) {
   input = calendarInput(input);
   const analysis = validateArticleAnalysis(
@@ -35,6 +37,24 @@ export async function analysisStatements(
         : analyzeArticle(input),
     ),
     canonical = articleText(input);
+  if (
+    queueCalendarAI &&
+    rights === "licensed_full_text" &&
+    canonical.bodyAvailable &&
+    analysis.calendar
+  ) {
+    analysis.calendar = {
+      ...analysis.calendar,
+      status: "needs_enrichment",
+      reason: "ai_review_queued",
+      attempts: 0,
+    };
+  }
+  analysis.activities = analysis.activities.map((activity) =>
+    activity.calendar?.eligible
+      ? { ...activity, placeRaw: normalizeCalendarVenue(activity.placeRaw) }
+      : activity,
+  );
   const inputDigest = await tokenHash(
     JSON.stringify([
       canonical.title,
@@ -172,6 +192,8 @@ export async function ensureArticleAnalysis(db: SqlDatabase, id: string) {
       input,
       undefined,
       String(d.rights_scope),
+      undefined,
+      true,
     ),
   );
   return true;

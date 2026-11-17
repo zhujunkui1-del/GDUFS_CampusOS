@@ -177,7 +177,7 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
   const layoutFile = await layoutDownload;
   expect(layoutFile.suggestedFilename()).toBe("campusos-agent-layout.json");
   const layout = JSON.parse(readFileSync(await layoutFile.path(), "utf8"));
-  expect(Object.keys(layout.positions)).toHaveLength(12);
+  expect(Object.keys(layout.positions)).toHaveLength(13);
   await expect(page.getByTestId("campus-map")).toHaveCount(0);
   await expect(
     page.getByRole("button", { name: "打开校园助理", exact: true }),
@@ -246,7 +246,7 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
     await page.getByRole("button", { name: "保存节点布局" }).click();
     await page.reload();
     await expect(node).toHaveAttribute("style", moved!);
-    await expect(page.locator(".workflow-node")).toHaveCount(12);
+    await expect(page.locator(".workflow-node")).toHaveCount(13);
     await expect(page.locator(".flow-edge")).toHaveCount(count);
     expect(await page.locator(".flow-edge").first().getAttribute("d")).toBe(
       edgesBefore,

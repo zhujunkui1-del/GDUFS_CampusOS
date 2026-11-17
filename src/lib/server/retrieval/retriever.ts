@@ -52,6 +52,7 @@ type DocumentRow = {
   knowledge_category: EvidenceHit["knowledgeCategory"];
   classification_origin: string;
   analysis_json: string | null;
+  calendar_status: string | null;
   text_hash: string;
   text_length: number;
   evidence_type: EvidenceHit["evidenceType"];
@@ -91,7 +92,7 @@ export async function currentPublicArticles(
  CASE WHEN m.document_id IS NOT NULL THEN CASE WHEN m.radar_category IS NOT NULL THEN 'radar' ELSE 'knowledge' END WHEN a.document_id IS NOT NULL THEN a.primary_destination WHEN d.radar_category IS NOT NULL THEN 'radar' WHEN d.knowledge_category IS NOT NULL THEN 'knowledge' ELSE 'unknown' END AS primary_destination,
  CASE WHEN m.document_id IS NOT NULL THEN m.radar_category WHEN a.document_id IS NOT NULL THEN a.radar_category ELSE d.radar_category END AS radar_category,
  CASE WHEN m.document_id IS NOT NULL THEN m.knowledge_category WHEN a.document_id IS NOT NULL THEN a.knowledge_category ELSE d.knowledge_category END AS knowledge_category,
- CASE WHEN m.document_id IS NOT NULL THEN 'manual' WHEN a.document_id IS NOT NULL THEN 'automatic' ELSE 'legacy' END AS classification_origin,a.analysis_json,r.text_hash,r.text_length,r.evidence_type,
+ CASE WHEN m.document_id IS NOT NULL THEN 'manual' WHEN a.document_id IS NOT NULL THEN 'automatic' ELSE 'legacy' END AS classification_origin,a.analysis_json,a.calendar_status,r.text_hash,r.text_length,r.evidence_type,
  (r.evidence_type<>'metadata' AND d.rights_scope IN(${allowed}) AND NOT EXISTS(
  SELECT 1 FROM knowledge_sources sp LEFT JOIN source_collection_policies p ON p.source_id=sp.id WHERE sp.id=d.source_id
  AND ((sp.manual_policy_version>0 AND (sp.manual_rights_scope NOT IN(${allowed}) OR sp.manual_policy_expires_at_ms<=CAST((julianday('now')-2440587.5)*86400000 AS INTEGER)))
@@ -154,6 +155,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
       candidateChunks: 0,
       usageAvailable: true,
       queryPlanVersion: "query-v2" as const,
+      stagesMs: {} as Record<string, number>,
       recallLanes: [] as { name: string; limit: number; candidates: number }[],
     };
     const read = async <T>(sql: string, args: unknown[]) => {
@@ -306,7 +308,8 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
     // The planner is not the only caller: a literal "最近 + 分类" query must
     // read the category itself even when a model omitted the sort hint.
     const sortMode =
-      q.sort === "published_desc" || /最近|近期|最新/.test(q.query)
+      !participationQuery(q.query) &&
+      (q.sort === "published_desc" || /最近|近期|最新/.test(q.query))
         ? "published_desc"
         : q.sort;
     // Category phrases are not subjects. Remove them as whole phrases before
@@ -535,7 +538,11 @@ ${sourceFilterSql}
           candidates: recentChunks.length,
         });
       } else warnings.push("该分类暂无当前公开资料。");
-    } else if (sortMode === "published_desc" && !q.title) {
+    } else if (
+      sortMode === "published_desc" &&
+      !q.title &&
+      !subjectTerms.length
+    ) {
       // "最新的资讯/新闻" has no radar tag: still honor publication order over
       // lexical relevance, otherwise April notices can beat yesterday's news.
       const recentDocs = await read<{
@@ -604,6 +611,8 @@ ${sourceFilterSql}
         });
         candidateLanes.push(found.results);
       }
+    metrics.stagesMs.lexical = Math.round(performance.now() - started);
+    const supplementStarted = performance.now();
     const passageRanks = new Map<string, number>();
     if (
       q.purpose === "knowledge" &&
@@ -678,6 +687,10 @@ ${sourceFilterSql}
       }
     }
     if (semanticLane.length) candidateLanes.push(semanticLane);
+    metrics.stagesMs.supplement = Math.round(
+      performance.now() - supplementStarted,
+    );
+    const rankingStarted = performance.now();
     // Interleave document candidates so one recall lane cannot consume all
     // public revalidation slots. Total raw chunks <=96; current IDs <=32.
     const merged: ChunkRow[] = [];
@@ -710,6 +723,9 @@ ${sourceFilterSql}
           ? ArticleAnalysisSchema.safeParse(JSON.parse(d.analysis_json))
           : null,
         analysis = parsed?.success ? parsed.data : null;
+      if (analysis?.calendar && d.calendar_status)
+        analysis.calendar.status =
+          d.calendar_status as typeof analysis.calendar.status;
       let candidates = rows.results;
       if (
         q.purpose === "knowledge" &&
@@ -1076,6 +1092,49 @@ ${sourceFilterSql}
           d.body_status !== "not_provided",
         linkedSources: [],
       };
+      if (
+        d.text_length > 5400 &&
+        d.evidence_type === "full_text" &&
+        c.text_basis === "normalized_text"
+      ) {
+        const extra = choices
+          .filter(
+            (candidate) =>
+              candidate.id !== c.id &&
+              candidate.text_basis === "normalized_text" &&
+              (relevanceByChunk.get(candidate.id)?.relevant ||
+                queryRelevance(headOfSubject(plan), {
+                  title: d.title,
+                  contentSnippet: candidate.text,
+                }).relevant) &&
+              count(candidate.text) > 0,
+          )
+          .sort((a, b) => windows.get(b.id)!.score - windows.get(a.id)!.score);
+        const passages: NonNullable<EvidenceHit["supportingPassages"]> = [];
+        for (const candidate of extra) {
+          const passage = evidenceWindow(
+            candidate.text,
+            q.query,
+            650,
+            undefined,
+            d.title,
+          );
+          const startOffset = candidate.start_offset + passage.start;
+          const endOffset = startOffset + passage.text.length;
+          if (
+            !passage.text ||
+            (startOffset < hit.endOffset && endOffset > hit.startOffset) ||
+            passages.some(
+              (item) =>
+                startOffset < item.endOffset && endOffset > item.startOffset,
+            )
+          )
+            continue;
+          passages.push({ text: passage.text, startOffset, endOffset });
+          if (passages.length === 3) break;
+        }
+        if (passages.length) hit.supportingPassages = passages;
+      }
       ranked.push({
         hit,
         analysis,
@@ -1162,7 +1221,43 @@ ${sourceFilterSql}
           });
       } else unique.set(item.key, item);
     }
-    const articles = [...unique.values()].slice(0, q.limit);
+    let selected = [...unique.values()];
+    if (
+      q.purpose === "knowledge" &&
+      ["policy", "requirements", "facts", "discovery"].includes(plan.goal) &&
+      plan.topics.some((topic) => topic.id === "scholarship") &&
+      !/国家|励志|学业|专项|捐赠|出国|境外|校级|综合/.test(q.query)
+    ) {
+      const facet = ({ hit }: (typeof ranked)[number]) => {
+        const title = hit.title;
+        if (/出国|境外|海外|交流项目/.test(title)) return "境外学习";
+        if (/国家励志/.test(title)) return "国家励志";
+        if (/国家奖学金/.test(title)) return "国家奖学金";
+        if (/学业|综合|校级/.test(title)) return "校级与学业";
+        if (/专项|社会|捐赠/.test(title)) return "专项";
+        return /奖学金|奖助|资助/.test(title) ? "总体制度" : "其他";
+      };
+      const authority = ({ hit }: (typeof ranked)[number]) =>
+        3 * Number(hit.bodyAvailable && hit.contentSnippet.length > 180) +
+        2 * Number(/办法|规定|实施细则|评审规则|手册/.test(hit.title)) -
+        3 * Number(/发放|到账|名单|拟推荐|公示|结果/.test(hit.title));
+      selected = selected.sort((a, b) => authority(b) - authority(a));
+      const seen = new Set<string>();
+      const first = selected.filter((item) => {
+        const key = facet(item);
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+      selected = [
+        ...first,
+        ...selected.filter((item) => !first.includes(item)),
+      ];
+    }
+    const articles = selected.slice(0, q.limit);
+    metrics.stagesMs.revalidationAndRanking = Math.round(
+      performance.now() - rankingStarted,
+    );
     if (!articles.length)
       warnings.push("未找到当前公开、版本及来源权限均可核验的相关资料。");
     if (articles.some((a) => !a.hit.bodyAvailable))

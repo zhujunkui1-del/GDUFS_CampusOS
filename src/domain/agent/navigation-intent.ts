@@ -168,7 +168,9 @@ export function navigationIntent(
     (place) => !originIds.includes(place.id),
   );
   const originMissing =
-    (needsLocation && !hasLocation) || (routeQuestion && deictic && !selected);
+    (needsLocation && !hasLocation) ||
+    (routeQuestion && deictic && !selected) ||
+    (routeQuestion && explicitOrigin && originIds.length === 0);
   return {
     needsLocation,
     namedPlaces,

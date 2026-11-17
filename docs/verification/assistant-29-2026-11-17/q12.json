@@ -1,0 +1,137 @@
+{
+  "question": "南校区距离图书馆最近的食堂是哪一个？",
+  "status": "success",
+  "entry": "campus-assistant-map",
+  "answer": "从图书馆测得的直线距离最近的是文采园（一饭），约395米，位于生活区。这是地图坐标间的直线距离，不代表步行距离。",
+  "metrics": {
+    "requests": 0,
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "chargedTokens": 0,
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "execution": "spatial_read",
+    "answerMode": "spatial_read",
+    "executionStatus": "completed",
+    "retrievalStatus": "matched",
+    "taskStatus": "completed",
+    "resolvedIntent": "nearest_canteen",
+    "dataSource": "campus_map",
+    "serverElapsedMs": 887
+  },
+  "cards": [
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039048",
+        "name": "文采园（一饭）",
+        "category": "canteen",
+        "zone": "living",
+        "location": [
+          113.39131745,
+          23.064490550000002
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "文采园",
+          "一饭",
+          "一饭堂",
+          "第一饭堂",
+          "第一食堂",
+          "一食堂"
+        ],
+        "labelPlaceId": "osm-way-313039048",
+        "verificationStatus": "source_mapped",
+        "distanceMeters": 395.4042985532634
+      },
+      "distanceMeters": 395.4042985532634
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-11-17T08:12:44.158Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:12:44.158Z",
+      "type": "message.delta",
+      "payload": {
+        "text": "从图书馆测得的直线距离最近的是文采园（一饭），约395米，位于生活区。这是地图坐标间的直线距离，不代表步行距离。"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:12:44.158Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039048",
+              "name": "文采园（一饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.39131745,
+                23.064490550000002
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "文采园",
+                "一饭",
+                "一饭堂",
+                "第一饭堂",
+                "第一食堂",
+                "一食堂"
+              ],
+              "labelPlaceId": "osm-way-313039048",
+              "verificationStatus": "source_mapped",
+              "distanceMeters": 395.4042985532634
+            },
+            "distanceMeters": 395.4042985532634
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:12:44.158Z",
+      "type": "run.completed",
+      "payload": {
+        "metrics": {
+          "requests": 0,
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "chargedTokens": 0,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "execution": "spatial_read",
+          "answerMode": "spatial_read",
+          "executionStatus": "completed",
+          "retrievalStatus": "matched",
+          "taskStatus": "completed",
+          "resolvedIntent": "nearest_canteen",
+          "dataSource": "campus_map",
+          "serverElapsedMs": 887
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

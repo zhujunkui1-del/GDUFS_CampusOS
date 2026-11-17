@@ -1,0 +1,695 @@
+{
+  "question": "广外有没有保证参加就一定获奖的竞赛？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "暂未找到有可靠证据表明当前开放报名的相关活动。",
+  "cards": [],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T02:12:48.360Z",
+      "elapsedMs": 180,
+      "data": {
+        "question": "广外有没有保证参加就一定获奖的竞赛？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T02:12:48.360Z",
+      "elapsedMs": 180,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T02:12:49.310Z",
+      "elapsedMs": 1130,
+      "data": {
+        "question": "广外有没有保证参加就一定获奖的竞赛？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T02:12:49.310Z",
+      "elapsedMs": 1130,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T02:12:49.310Z",
+      "elapsedMs": 1130,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T02:12:49.310Z",
+      "elapsedMs": 1130,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T02:12:49.310Z",
+      "elapsedMs": 1130,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T02:12:49.310Z",
+      "elapsedMs": 1130,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "participation",
+        "campus": null,
+        "topics": [
+          "competition"
+        ],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_events"
+        ]
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "running",
+      "at": "2026-11-17T02:12:49.452Z",
+      "elapsedMs": 1272,
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外有没有保证参加就一定获奖 竞赛",
+          "limit": 5,
+          "registrationState": "open",
+          "category": "competition"
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "success",
+      "at": "2026-11-17T02:12:49.786Z",
+      "elapsedMs": 1606,
+      "durationMs": 334,
+      "data": {
+        "name": "search_campus_events",
+        "result": {
+          "hits": [],
+          "metrics": {
+            "rowsRead": 7188,
+            "rowsWritten": 0,
+            "queries": 4,
+            "durationMs": 275,
+            "stagesMs": {
+              "lexical": 275,
+              "supplement": 0,
+              "revalidationAndRanking": 0
+            },
+            "candidateChunks": 0,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "structured_date",
+                "limit": 48,
+                "candidates": 0
+              },
+              {
+                "name": "lexical_date_completion",
+                "limit": 48,
+                "candidates": 0
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [
+            "未找到当前公开、版本及来源权限均可核验的相关资料。"
+          ],
+          "purpose": "events",
+          "query": "广外有没有保证参加就一定获奖 竞赛",
+          "now": "2026-11-17T02:12:49.452Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [],
+          "knowledge": []
+        },
+        "durationMs": 334
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:6",
+      "state": "running",
+      "at": "2026-11-17T02:12:49.786Z",
+      "elapsedMs": 1606,
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外 保证参加就一定获奖的竞赛",
+          "limit": 5,
+          "registrationState": "open",
+          "category": "competition"
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:6",
+      "state": "success",
+      "at": "2026-11-17T02:12:50.117Z",
+      "elapsedMs": 1937,
+      "durationMs": 331,
+      "data": {
+        "name": "search_campus_events",
+        "result": {
+          "hits": [],
+          "metrics": {
+            "rowsRead": 7188,
+            "rowsWritten": 0,
+            "queries": 4,
+            "durationMs": 269,
+            "stagesMs": {
+              "lexical": 269,
+              "supplement": 0,
+              "revalidationAndRanking": 0
+            },
+            "candidateChunks": 0,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "structured_date",
+                "limit": 48,
+                "candidates": 0
+              },
+              {
+                "name": "lexical_date_completion",
+                "limit": 48,
+                "candidates": 0
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [
+            "未找到当前公开、版本及来源权限均可核验的相关资料。"
+          ],
+          "purpose": "events",
+          "query": "广外 保证参加就一定获奖的竞赛",
+          "now": "2026-11-17T02:12:49.786Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [],
+          "knowledge": []
+        },
+        "durationMs": 331
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "running",
+      "at": "2026-11-17T02:12:50.117Z",
+      "elapsedMs": 1937,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "success",
+      "at": "2026-11-17T02:12:50.117Z",
+      "elapsedMs": 1937,
+      "durationMs": 0,
+      "data": {
+        "characters": 23,
+        "cards": 0
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "running",
+      "at": "2026-11-17T02:12:50.117Z",
+      "elapsedMs": 1937,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "success",
+      "at": "2026-11-17T02:12:50.117Z",
+      "elapsedMs": 1937,
+      "durationMs": 0,
+      "data": {
+        "characters": 23,
+        "cards": 0
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:12:49.452Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T02:12:49.452Z",
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T02:12:49.786Z",
+      "data": {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 334,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T02:12:49.786Z",
+      "data": {
+        "name": "search_campus_events",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T02:12:50.117Z",
+      "data": {
+        "name": "search_campus_events",
+        "ok": true,
+        "durationMs": 331,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:12:50.310Z",
+      "data": {
+        "cards": [],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T02:12:50.310Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "insufficient_evidence",
+          "retrievalStatus": "empty",
+          "answerMode": "participation_evidence",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "no_candidates",
+            "relatedDocuments": [],
+            "missing": [
+              "relevant_readable_evidence",
+              "current_event_evidence",
+              "participation_or_registration_evidence"
+            ],
+            "activities": [],
+            "needsSupplement": true,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 0,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [],
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "cachedPromptTokens": 0,
+          "totalTokens": 0,
+          "usageComplete": true,
+          "chargedTokens": 0,
+          "durationMs": 665,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 0,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1272,
+            "serverElapsedMs": 1937,
+            "firstTextMs": 1937,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_events",
+                "durationMs": 334,
+                "ok": true
+              },
+              {
+                "name": "search_campus_events",
+                "durationMs": 331,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 24,
+              "writeQueries": 12,
+              "calls": 28,
+              "failures": 0,
+              "durationMs": 1815,
+              "maxCallMs": 150,
+              "rowsRead": 14879,
+              "rowsWritten": 26,
+              "rowUsageStatements": 21,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_events",
+                "rowsRead": 7188,
+                "rowsWritten": 0,
+                "queries": 4,
+                "durationMs": 275,
+                "stagesMs": {
+                  "lexical": 275,
+                  "supplement": 0,
+                  "revalidationAndRanking": 0
+                },
+                "candidateChunks": 0,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "structured_date",
+                    "limit": 48,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "lexical_date_completion",
+                    "limit": 48,
+                    "candidates": 0
+                  }
+                ]
+              },
+              {
+                "skill": "search_campus_events",
+                "rowsRead": 7188,
+                "rowsWritten": 0,
+                "queries": 4,
+                "durationMs": 269,
+                "stagesMs": {
+                  "lexical": 269,
+                  "supplement": 0,
+                  "revalidationAndRanking": 0
+                },
+                "candidateChunks": 0,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "structured_date",
+                    "limit": 48,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "lexical_date_completion",
+                    "limit": 48,
+                    "candidates": 0
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "insufficient_evidence",
+    "retrievalStatus": "empty",
+    "answerMode": "participation_evidence",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "no_candidates",
+      "relatedDocuments": [],
+      "missing": [
+        "relevant_readable_evidence",
+        "current_event_evidence",
+        "participation_or_registration_evidence"
+      ],
+      "activities": [],
+      "needsSupplement": true,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 665,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 0,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1272,
+      "serverElapsedMs": 1937,
+      "firstTextMs": 1937,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_events",
+          "durationMs": 334,
+          "ok": true
+        },
+        {
+          "name": "search_campus_events",
+          "durationMs": 331,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 24,
+        "writeQueries": 12,
+        "calls": 28,
+        "failures": 0,
+        "durationMs": 1815,
+        "maxCallMs": 150,
+        "rowsRead": 14879,
+        "rowsWritten": 26,
+        "rowUsageStatements": 21,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 7188,
+          "rowsWritten": 0,
+          "queries": 4,
+          "durationMs": 275,
+          "stagesMs": {
+            "lexical": 275,
+            "supplement": 0,
+            "revalidationAndRanking": 0
+          },
+          "candidateChunks": 0,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "structured_date",
+              "limit": 48,
+              "candidates": 0
+            },
+            {
+              "name": "lexical_date_completion",
+              "limit": 48,
+              "candidates": 0
+            }
+          ]
+        },
+        {
+          "skill": "search_campus_events",
+          "rowsRead": 7188,
+          "rowsWritten": 0,
+          "queries": 4,
+          "durationMs": 269,
+          "stagesMs": {
+            "lexical": 269,
+            "supplement": 0,
+            "revalidationAndRanking": 0
+          },
+          "candidateChunks": 0,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "structured_date",
+              "limit": 48,
+              "candidates": 0
+            },
+            {
+              "name": "lexical_date_completion",
+              "limit": 48,
+              "candidates": 0
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

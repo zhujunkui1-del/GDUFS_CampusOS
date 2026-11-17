@@ -1,0 +1,272 @@
+{
+  "question": "广外南校区有哪些体育场地？分别在哪里？",
+  "status": "error",
+  "entry": "campus-assistant-map",
+  "answer": "工具执行超时。",
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "failed",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "open",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 2,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 1956,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      },
+      {
+        "durationMs": 3924,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      }
+    ],
+    "promptTokens": 6166,
+    "completionTokens": 359,
+    "cachedPromptTokens": 0,
+    "totalTokens": 6525,
+    "usageComplete": true,
+    "chargedTokens": 6525,
+    "durationMs": 9141,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 6525,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1036,
+      "serverElapsedMs": 10177,
+      "firstTextMs": null,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_places",
+          "durationMs": 0,
+          "ok": true
+        },
+        {
+          "name": "get_place_details",
+          "durationMs": 1086,
+          "ok": true
+        },
+        {
+          "name": "get_place_details",
+          "durationMs": 2000,
+          "ok": false
+        }
+      ],
+      "database": {
+        "readQueries": 28,
+        "writeQueries": 12,
+        "calls": 32,
+        "failures": 0,
+        "durationMs": 2971,
+        "maxCallMs": 678,
+        "rowsRead": 11142,
+        "rowsWritten": 26,
+        "rowUsageStatements": 19,
+        "rowUsageComplete": false
+      },
+      "retrieval": [],
+      "externalSearch": []
+    }
+  },
+  "cards": [],
+  "events": [
+    {
+      "timestamp": "2026-11-17T02:56:28.798Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:30.845Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "search_places",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:30.845Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "search_places",
+        "ok": true,
+        "durationMs": 0,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:34.853Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "get_place_details",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:35.939Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "get_place_details",
+        "ok": true,
+        "durationMs": 1086,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:35.939Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "get_place_details",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:37.939Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "get_place_details",
+        "ok": false,
+        "durationMs": 2000,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:38.269Z",
+      "type": "run.failed",
+      "payload": {
+        "error": {
+          "code": "TIMEOUT",
+          "message": "工具执行超时。"
+        },
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "failed",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "open",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 2,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 1956,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 3924,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            }
+          ],
+          "promptTokens": 6166,
+          "completionTokens": 359,
+          "cachedPromptTokens": 0,
+          "totalTokens": 6525,
+          "usageComplete": true,
+          "chargedTokens": 6525,
+          "durationMs": 9141,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 6525,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1036,
+            "serverElapsedMs": 10177,
+            "firstTextMs": null,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_places",
+                "durationMs": 0,
+                "ok": true
+              },
+              {
+                "name": "get_place_details",
+                "durationMs": 1086,
+                "ok": true
+              },
+              {
+                "name": "get_place_details",
+                "durationMs": 2000,
+                "ok": false
+              }
+            ],
+            "database": {
+              "readQueries": 28,
+              "writeQueries": 12,
+              "calls": 32,
+              "failures": 0,
+              "durationMs": 2971,
+              "maxCallMs": 678,
+              "rowsRead": 11142,
+              "rowsWritten": 26,
+              "rowUsageStatements": 19,
+              "rowUsageComplete": false
+            },
+            "retrieval": [],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

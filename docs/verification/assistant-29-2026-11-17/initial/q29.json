@@ -1,0 +1,1057 @@
+{
+  "question": "广外2028年的校历已经公布了吗？如果没有，请不要猜测。",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "现有检索结果里没有找到广外2028年校历公布的相关信息，暂不能确认是否已公布。",
+  "cards": [],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T02:12:36.035Z",
+      "elapsedMs": 231,
+      "data": {
+        "question": "广外2028年的校历已经公布了吗？如果没有，请不要猜测。",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T02:12:36.035Z",
+      "elapsedMs": 231,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T02:12:36.999Z",
+      "elapsedMs": 1195,
+      "data": {
+        "question": "广外2028年的校历已经公布了吗？如果没有，请不要猜测"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T02:12:36.999Z",
+      "elapsedMs": 1195,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T02:12:36.999Z",
+      "elapsedMs": 1195,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T02:12:36.999Z",
+      "elapsedMs": 1195,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T02:12:36.999Z",
+      "elapsedMs": 1195,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T02:12:36.999Z",
+      "elapsedMs": 1195,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "facts",
+        "campus": null,
+        "topics": [],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "running",
+      "at": "2026-11-17T02:12:37.071Z",
+      "elapsedMs": 1267,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答或工具选择",
+        "tools": [
+          "plan_campus_query"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "success",
+      "at": "2026-11-17T02:12:40.474Z",
+      "elapsedMs": 4670,
+      "durationMs": 3403,
+      "data": {
+        "finishReason": "tool_calls",
+        "toolCalls": [
+          "plan_campus_query"
+        ],
+        "characters": 0,
+        "usage": {
+          "promptTokens": 533,
+          "completionTokens": 427,
+          "totalTokens": 960
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "running",
+      "at": "2026-11-17T02:12:40.541Z",
+      "elapsedMs": 4737,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "“广外2028年” “校历” “公布” “广外” “2028年” 2028年 2028",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "success",
+      "at": "2026-11-17T02:12:41.342Z",
+      "elapsedMs": 5538,
+      "durationMs": 801,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-b463ef66-8bc9-45e0-bf13-2b49e9107c53",
+              "chunkId": "content-b463ef66-8bc9-45e0-bf13-2b49e9107c53:fts:839786708f028202:3",
+              "title": "广东外语外贸大学研究生教学管理实施细则",
+              "sourceId": "GDUFS-SRC-0043",
+              "sourceName": "党委办公室（校长办公室）",
+              "originalUrl": "https://dbxb.gdufs.edu.cn/info/1094/3036.htm",
+              "publishedAt": "2026-06-03",
+              "contentSnippet": "考查可采用课程论文、实践报告等方式进行。\n第二十二条 研究生课程成绩由平时成绩和期末成绩组成，具体比例由任课教师根据学科专业和课程特点确定。\n第二十三条 任课教师应在开课初向全体研究生公布该门课程的考核方式和成绩评定方式，并对课程考核的试题命题质量和评分标准负责。\n第二十四条 课程考试应在课程教学安排的时间内完成，考试安排应提前两周公布，一经公布，不得随意变动。确需变动的，应经培养单位分管研究生教学工作负责人同意后，及时通知所有选课的研究生。\n第二十五条 课程考查的任课教师应规定论文或报告等材料的提交截止日期，不按时提交者，按缺考论处，课程成绩记零分。\n第二十六条 课程考试每个考场应至少安排两名监考员，主监考员原则上由任课教师担任。\n第二十七条 考生应按规定时间持学生证或其他有效证件参加课程考试。迟到30分钟不得进入考场，考试30分钟后才可交卷离开考场。\n第二十八条 考生应严格遵守考场纪律，考试违纪或作弊的，按照《广东外语外贸大学学生违纪处分规定》处理，该门课程成绩记零分。\n第二十九条 任课教师和涉题人员应严格遵守试题保密相关规定，不得以任何形式泄露试题内容。\n第八章 免修、免考、缓考和重修\n第三十条 研究生可以申请课程免修或免考，具体要求另行规定。\n第三十一条 因特殊原因不能按时应考的研究生，应提前书面申请缓考，经任课教师、开课单位和所在培养单位审批通过后报研究生院审批。未经申请或申请未获批准而不应考者，以缺考论处，该课程成绩记零分。\n因个人原因申请缓考者，其成绩暂登记为“缓考”，学校原则上不单独组织补考，应随下一年级同一课程安排参加考试。\n因公申请缓考者，由开课单位组织缓考，原则上安排在下一学期校历第一周内完成。缓考的考场条件、试题难度、监考标准应与正式考试相同，缓考成绩按正常成绩评判。\n第三十二条 课程成绩不合格或登记“缺考”的",
+              "startOffset": 2337,
+              "endOffset": 3117,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 17.4,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 4",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "academic_affairs",
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "e34ee6bd9352c73df017a703d6cad39829835b88ba40883cdd16cf54d45f5cec",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-5aff3123-9df5-4bb8-84ff-6e36e81d4fee",
+              "chunkId": "content-5aff3123-9df5-4bb8-84ff-6e36e81d4fee:fts:309dbd1a29336ffc:0",
+              "title": "【26FSXW002】关于2026-2027-1学期赴美国密苏里大学双学位项目（2+2本科）选拔的通知",
+              "sourceId": "GDUFS-SRC-0048",
+              "sourceName": "国际交流合作部（港澳台事务工作部）",
+              "originalUrl": "https://internationaloffice.gdufs.edu.cn/info/1014/12529.htm",
+              "publishedAt": "2026-03-11",
+              "contentSnippet": "根据新闻学院与密苏里大学签订的交流合作协议，我院现与美国密苏里大学新闻学院开展2+2本科生双学位项目。交流时间为2026年8月至2028年6月（以对方课程安排为准），选派学生人数不限。现将有关事项通知如下：\n一、 选拔条件\n1.新闻学院2024级在校在籍全日制本科生\n*拟选读专业需和主修专业对口。\n*在本学期仍在读辅修专业的（含辅修双学位在内），如要报名，需提供辅修专业修读保证书（请使用附件3）。\n本项目只选拔双学位\n综合素质高；道德品质好，未受过纪律处分；身体健康，能圆满完成学习任务。（含选拔学期内）\n2.学习成绩优良，第一学期至今全部课程平均学分绩点达3.4以上（含3.4），没有不及格、补考、零分或重修记录（含选拔学期内）。\n3. 托福100分或雅思7分及以上（单科不低于6.0）或多邻国130分（如报名时尚未取得语言成绩，则以对方规定提交时间内提交为准）。\n4. 报名学生需在选拔学期完成以下公共课修读：\n○大学英语：只剩下5/6学期专业英语（非英语类专业）；\n○数学类公共必修课：全部修读完毕（如有）；\n○统计类公共必修课：全部修读完毕（如有）；\n○计算机公共必修课：全部修读完毕；\n○思政类公共必修课： 2015级起只有5学期的社会实践2；\n○体育类公共必修课：全部修读完毕；\n○第二外语：只剩下5学期二外（3）（英语类专业）；\n○通选课：全部修读完毕。\n报名时需按照要求请签署好相关承诺书。（具体看附件2）\n5.只允许选择一个项目一个专业参加，不允许同时报读两个项目。请慎重报名，一旦报名参加，如需参加其他项目，需待本项目选拔结果后方可有机会。选拔结果一旦公布，不允许被录取的学生随意退出。\n6.报名采用系统报名，报名表格从网上填报，材料需扫描上传，具体操作请看附件1.请注意：\n（1）报名不接受纸质报名，同学们需在规定时间内上网报名及上传",
+              "startOffset": 0,
+              "endOffset": 780,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 16.24,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 3",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "395d76b3622f6be2579c8db6ad0345517bce09235f0f8af0f4f07ae53f714574",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-98e43ff3-0d28-44f4-92e7-1b4cd5ea3dbf",
+              "chunkId": "content-98e43ff3-0d28-44f4-92e7-1b4cd5ea3dbf:fts:47c5e2e0af82a41f:0",
+              "title": "数统学院2026-2027学年度上学期本科生创新创业学分申报公示",
+              "sourceId": "GDUFS-SRC-0020",
+              "sourceName": "数学与统计学院",
+              "originalUrl": "https://stxy.gdufs.edu.cn/info/1850/6415.htm",
+              "publishedAt": "2026-09-24",
+              "contentSnippet": "根据教务部《广东外语外贸大学本科生创新创业学分实施细则》（广外校〔2016〕4号） 的通知要求，现对数统学院2026-2027学年度上学期本科生创新创业学分申报名单予以公示，公示期截止时间至2026年9月29日17时，如有疑问，请咨询数统学院教务办刘老师，020-39326982。\n详细汇总名单请见下表：\n2026-2027学年度上学期数统学院创新创业学分申报汇总表\n序号\n所在学院\n专业\n班级\n学号\n学生\n姓名\n申报\n类型\n申报\n学分数\n入学时间\n毕业时间\n1\n数学与统计学院\n数学与应用数学（国际创新班）\n2401\n20222005397\n陈敏霞\n竞赛获奖\n8\n2024年9月\n2028年6月\n2\n数学与统计学院\n数学与应用数学（师范）\n2402\n20242005310\n伍振婷\n竞赛获奖\n4\n2024年9月\n2028年6月\n数学与统计学院\n2026年9月24日",
+              "startOffset": 0,
+              "endOffset": 384,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 15.43,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 4",
+                "查询主题与限定复核：lexical_query"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "24026aad84ce5375dae8559bc1be59cbdb9a4010c454b0542d6ce2ebded7d20b",
+              "documentVersion": 4,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "wx-4d3ad792b5b0bd584d18e3d8be9a8668c604bdd9",
+              "chunkId": "wx-4d3ad792b5b0bd584d18e3d8be9a8668c604bdd9:fts:0b1fede3f22e34dd:0",
+              "title": "澳门中西创新学院本科及硕士课程，现正接受内地生申请！！",
+              "sourceId": "GDUFS-SRC-0151",
+              "sourceName": "广外留学服务中心",
+              "originalUrl": "https://mp.weixin.qq.com/s/wPdrQCBe32mII_bLhNi3dg",
+              "publishedAt": "2026-10-22T09:10:00.000Z",
+              "contentSnippet": "点击蓝字 关注我们\n计划赴澳门读本科或硕士？中西创新学院2027/2028学年招生现已开放，中国内地学生可申请智慧旅游娱乐管理学士学位课程及数智语言服务硕士学位课程。下面，一起来了解一下院校的招生课程、申请条件及申请材料吧~\n1、关于中西创新学院\n中西创新学院成立于2001年，是经澳门特别行政区政府批准设立、获中华人民共和国教育部认可的非营利私立高等教育机构。学院以“数智+”为核心发展方向，聚焦数智科创、数智经济、数智人文及数智社会等领域，现开设数智语言服务、智慧旅游娱乐管理等副学士、学士、硕士和博士课程。\n2、内地生可申请课程\n智慧旅游娱乐管理学士学位：\n• 修读年限：4年\n• 非澳门本地生学费：每学年80,000港元\n数智语言服务硕士学位：\n• 修读年限：2年\n• 非澳门本地生学费：每学年80,000港元\n3、本科报读条件及录取方式\n申请智慧旅游娱乐管理学士学位课程的中国内地学生须：\n• 参加2027年普通高等学校招生全国统一考试；\n• 高考成绩达到本科线；\n• 由学院根据高考成绩择优录取；\n• 申请本课程不占用内地高考志愿。\n须提交的材料：\n• 往来港澳通行证或居民身份证；\n• 1.5寸彩色近照；\n• 高一至高三成绩单；\n• 高中毕业证书，已毕业申请人须提交；\n• 内地高考成绩单及14位考生号，可按要求后期补充提供；\n• 报名费缴费凭证。\n4、硕士申请条件及录取方式\n申请数智语言服务硕士学位课程的中国内地学生须：\n• 应届本科毕业生（可直接报名），或往届毕业生但参加全国硕士研究生招生考试且初试成绩达到国家A类线；(具体年份请查阅以下“应届与往届毕业生认定”)\n• 优先欢迎语言类、教育类、经管类、计算机类或传媒类等相关专业背景的；\n• 由学院根据综合面试（主要考察专业基础、语言能力及研究潜力）择优录取；\n• 入读时，相关学位可在学",
+              "startOffset": 0,
+              "endOffset": 780,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 12.25,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 2",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "7837c128b0f1283798e174661ea450f4e552051b9951391fed2e4dea2317c152",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 8741,
+            "rowsWritten": 0,
+            "queries": 7,
+            "durationMs": 801,
+            "stagesMs": {
+              "lexical": 232,
+              "supplement": 417,
+              "revalidationAndRanking": 152
+            },
+            "candidateChunks": 56,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 0
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 24
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "“广外2028年” “校历” “公布” “广外” “2028年” 2028年 2028",
+          "now": "2026-11-17T02:12:40.541Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "documentId": "content-5aff3123-9df5-4bb8-84ff-6e36e81d4fee",
+              "activityKey": "activity-1",
+              "name": "【26FSXW002】关于2026-2027-1学期赴美国密苏里大学双学位项目（2+2本科）选拔的通知",
+              "kind": "opportunity",
+              "category": "campus_notice",
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "请慎重报名，一旦报名参加，如需参加其他项目，需待本项目选拔结果后方可有机会"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "报名表格从网上填报，材料需扫描上传，具体操作请看附件1.请注意：\n（1）报名不接受纸质报名"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "更改报名信息，逾期将无法报名和更改（请同学们规划好个人时间，尽早报名！）"
+                  ]
+                }
+              ],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "请慎重报名，一旦报名参加，如需参加其他项目，需待本项目选拔结果后方可有机会",
+                "报名表格从网上填报，材料需扫描上传，具体操作请看附件1.请注意：\n（1）报名不接受纸质报名",
+                "更改报名信息，逾期将无法报名和更改（请同学们规划好个人时间，尽早报名！）"
+              ],
+              "mapPlace": null
+            },
+            {
+              "documentId": "content-98e43ff3-0d28-44f4-92e7-1b4cd5ea3dbf",
+              "activityKey": "activity-1",
+              "name": "数统学院2026-2027学年度上学期本科生创新创业学分申报公示",
+              "kind": "notice",
+              "category": "campus_notice",
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [],
+              "mapPlace": null
+            },
+            {
+              "documentId": "wx-4d3ad792b5b0bd584d18e3d8be9a8668c604bdd9",
+              "activityKey": "activity-1",
+              "name": "澳门中西创新学院本科及硕士课程，现正接受内地生申请！！",
+              "kind": "notice",
+              "category": "campus_notice",
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [],
+              "mapPlace": null
+            }
+          ],
+          "knowledge": [
+            {
+              "documentId": "content-b463ef66-8bc9-45e0-bf13-2b49e9107c53",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "第九条 任课教师应按教学计划、教学大纲进行教学，保证正常的教学秩序和教学进度。列入课程安排表的课程应按时开课，不得随意停开或更改上课时间和地点，否则按教学事故处理。任课教师因特殊原因确需调停课的，应提前2天办理书面调停课手续。因突发事件无法提前办理调停课手续的，应及时通知开课单位和上课研究生，并于一周内补办调停课手续。调课1-4小节经开课单位分管研究生教学工作负责人审批后报研究生院，5节以上还需报研究生院审批。任课教师因个人原因每门课程每学期调停课一般不得超过两次。",
+                "第二十五条 课程考查的任课教师应规定论文或报告等材料的提交截止日期，不按时提交者，按缺考论处，课程成绩记零分。",
+                "第三十七条 任课教师应于下学期开学前通过研究生系统提交研究生课程成绩，未在规定时间内提交成绩的，按教学事故处理。"
+              ]
+            },
+            {
+              "documentId": "content-5aff3123-9df5-4bb8-84ff-6e36e81d4fee",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [
+                "需提供辅修专业修读保证书（请使用附件3）",
+                "7. 报读2+2的学生需提供书面说明",
+                "需提供辅修修读保证书（具体请用附件3"
+              ],
+              "steps": [
+                "3. 托福100分或雅思7分及以上（单科不低于6.0）或多邻国130分（如报名时尚未取得语言成绩，则以对方规定提交时间内提交为准）。"
+              ]
+            },
+            {
+              "documentId": "content-98e43ff3-0d28-44f4-92e7-1b4cd5ea3dbf",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "wx-4d3ad792b5b0bd584d18e3d8be9a8668c604bdd9",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "一起来了解一下院校的招生课程、申请条件及申请材料吧~",
+                "4、硕士申请条件及录取方式"
+              ],
+              "materials": [
+                "须提交的材料：",
+                "已毕业申请人须提交",
+                "须提交的材料："
+              ],
+              "steps": []
+            }
+          ]
+        },
+        "durationMs": 801
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "running",
+      "at": "2026-11-17T02:12:41.399Z",
+      "elapsedMs": 5595,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答生成",
+        "tools": []
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "success",
+      "at": "2026-11-17T02:12:43.524Z",
+      "elapsedMs": 7720,
+      "durationMs": 2125,
+      "data": {
+        "finishReason": "stop",
+        "toolCalls": [],
+        "characters": 39,
+        "usage": {
+          "promptTokens": 3340,
+          "completionTokens": 159,
+          "totalTokens": 3499
+        }
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "phase": "evidence_check",
+      "state": "running",
+      "at": "2026-11-17T02:12:43.583Z",
+      "elapsedMs": 7779,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "tool": "report_evidence_verdict",
+        "timeoutMs": 10000
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "phase": "evidence_check",
+      "state": "success",
+      "at": "2026-11-17T02:12:47.346Z",
+      "elapsedMs": 11542,
+      "durationMs": 3763,
+      "data": {
+        "supported": true,
+        "relevant": true,
+        "coverage": "covered",
+        "issueCount": 0
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "running",
+      "at": "2026-11-17T02:12:47.399Z",
+      "elapsedMs": 11595,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "success",
+      "at": "2026-11-17T02:12:47.460Z",
+      "elapsedMs": 11656,
+      "durationMs": 61,
+      "data": {
+        "characters": 39,
+        "cards": 0
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "running",
+      "at": "2026-11-17T02:12:47.460Z",
+      "elapsedMs": 11656,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "success",
+      "at": "2026-11-17T02:12:47.460Z",
+      "elapsedMs": 11656,
+      "durationMs": 0,
+      "data": {
+        "characters": 39,
+        "cards": 0
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:12:40.541Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T02:12:40.541Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T02:12:41.342Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 801,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:12:47.650Z",
+      "data": {
+        "cards": [],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T02:12:47.650Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "plan": {
+              "subject": "广外2028年校历公布",
+              "entities": [
+                "广外"
+              ],
+              "constraints": [
+                "2028年"
+              ],
+              "goal": "discovery",
+              "query": "“广外2028年” “校历” “公布” “广外” “2028年” 2028年 2028"
+            },
+            "durationMs": 3403,
+            "usage": {
+              "promptTokens": 533,
+              "completionTokens": 427,
+              "totalTokens": 960
+            }
+          },
+          "executionStatus": "completed",
+          "taskStatus": "completed",
+          "retrievalStatus": "matched",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-b463ef66-8bc9-45e0-bf13-2b49e9107c53",
+              "content-5aff3123-9df5-4bb8-84ff-6e36e81d4fee",
+              "content-98e43ff3-0d28-44f4-92e7-1b4cd5ea3dbf"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "content-5aff3123-9df5-4bb8-84ff-6e36e81d4fee",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-98e43ff3-0d28-44f4-92e7-1b4cd5ea3dbf",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 3,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 1,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [
+            {
+              "supported": true,
+              "relevant": true,
+              "coverage": "covered",
+              "issues": []
+            }
+          ],
+          "upstreamTimings": [
+            {
+              "durationMs": 2125,
+              "firstTextMs": 2040,
+              "finishReason": "stop",
+              "contentChars": 39
+            },
+            {
+              "durationMs": 3763,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 7253,
+          "completionTokens": 959,
+          "cachedPromptTokens": 0,
+          "totalTokens": 8212,
+          "usageComplete": true,
+          "chargedTokens": 8212,
+          "durationMs": 6858,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 8212,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 4737,
+            "serverElapsedMs": 11595,
+            "firstTextMs": 11542,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 801,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 27,
+              "writeQueries": 12,
+              "calls": 31,
+              "failures": 0,
+              "durationMs": 1927,
+              "maxCallMs": 114,
+              "rowsRead": 9240,
+              "rowsWritten": 26,
+              "rowUsageStatements": 20,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 8741,
+                "rowsWritten": 0,
+                "queries": 7,
+                "durationMs": 801,
+                "stagesMs": {
+                  "lexical": 232,
+                  "supplement": 417,
+                  "revalidationAndRanking": 152
+                },
+                "candidateChunks": 56,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 24
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "plan": {
+        "subject": "广外2028年校历公布",
+        "entities": [
+          "广外"
+        ],
+        "constraints": [
+          "2028年"
+        ],
+        "goal": "discovery",
+        "query": "“广外2028年” “校历” “公布” “广外” “2028年” 2028年 2028"
+      },
+      "durationMs": 3403,
+      "usage": {
+        "promptTokens": 533,
+        "completionTokens": 427,
+        "totalTokens": 960
+      }
+    },
+    "executionStatus": "completed",
+    "taskStatus": "completed",
+    "retrievalStatus": "matched",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-b463ef66-8bc9-45e0-bf13-2b49e9107c53",
+        "content-5aff3123-9df5-4bb8-84ff-6e36e81d4fee",
+        "content-98e43ff3-0d28-44f4-92e7-1b4cd5ea3dbf"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "content-5aff3123-9df5-4bb8-84ff-6e36e81d4fee",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-98e43ff3-0d28-44f4-92e7-1b4cd5ea3dbf",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 3,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [
+      {
+        "supported": true,
+        "relevant": true,
+        "coverage": "covered",
+        "issues": []
+      }
+    ],
+    "upstreamTimings": [
+      {
+        "durationMs": 2125,
+        "firstTextMs": 2040,
+        "finishReason": "stop",
+        "contentChars": 39
+      },
+      {
+        "durationMs": 3763,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 7253,
+    "completionTokens": 959,
+    "cachedPromptTokens": 0,
+    "totalTokens": 8212,
+    "usageComplete": true,
+    "chargedTokens": 8212,
+    "durationMs": 6858,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 8212,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 4737,
+      "serverElapsedMs": 11595,
+      "firstTextMs": 11542,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 801,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 27,
+        "writeQueries": 12,
+        "calls": 31,
+        "failures": 0,
+        "durationMs": 1927,
+        "maxCallMs": 114,
+        "rowsRead": 9240,
+        "rowsWritten": 26,
+        "rowUsageStatements": 20,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 8741,
+          "rowsWritten": 0,
+          "queries": 7,
+          "durationMs": 801,
+          "stagesMs": {
+            "lexical": 232,
+            "supplement": 417,
+            "revalidationAndRanking": 152
+          },
+          "candidateChunks": 56,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 0
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 24
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

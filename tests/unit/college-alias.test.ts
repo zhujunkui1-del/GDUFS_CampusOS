@@ -3,6 +3,7 @@ import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
 import { ftsExpression } from "@/lib/retrieval/terms";
 import { dateGateFixture } from "../fixtures/date-gate";
 import { ensureRetrievalIndex } from "@/lib/server/retrieval/indexer";
+import { ensureArticleAnalysis } from "@/lib/server/console/article-analysis";
 import { searchContent } from "@/lib/server/retrieval/skills";
 
 // The same college is written by its full name in one notice and by its short
@@ -70,6 +71,12 @@ it("the short name retrieves the notice that spells it out", async () => {
         "c".repeat(64),
       );
     await f.store.publishCollectedWebArticle("informatics");
+    await ensureArticleAnalysis(f.db, "informatics");
+    f.sqlite
+      .prepare(
+        "UPDATE document_article_analysis SET calendar_status='accepted' WHERE document_id=?",
+      )
+      .run("informatics");
     await ensureRetrievalIndex(f.db, "informatics");
     for (const query of ["信息学院院运会", "信息科学与技术学院院运会"]) {
       const r = await searchContent(

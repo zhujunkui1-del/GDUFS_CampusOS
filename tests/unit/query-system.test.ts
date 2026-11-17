@@ -59,6 +59,11 @@ it("evaluates a shared cross-topic corpus and preserves qualification under dist
           publishedAt: "2026-10-10",
         }),
       );
+      f.sqlite
+        .prepare(
+          "UPDATE document_article_analysis SET calendar_status='accepted' WHERE document_id=?",
+        )
+        .run(id);
     }
     const day = await searchContent(
       f.db,
@@ -438,9 +443,9 @@ it("distinguishes failed recall, irrelevant candidates, metadata, and missing de
       [found],
     ),
   ).toBe(false);
-  expect(
-    falseNegativeAnswer("没有相关文章或通知。", "体育比赛", [found]),
-  ).toBe(true);
+  expect(falseNegativeAnswer("没有相关文章或通知。", "体育比赛", [found])).toBe(
+    true,
+  );
   // A fact question that fetched same-topic articles without the answer slot is
   // exactly the honest-refusal case. Treating it as a recall failure made the
   // model rewrite until the run died as MODEL_SERVICE_UNAVAILABLE.

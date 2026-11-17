@@ -23,7 +23,19 @@ function citationNodes() {
       )
         return;
       const children: RootContent[] = [];
+      let taskNote = false;
       for (const child of node.children) {
+        if (child.type === "break") taskNote = false;
+        if (child.type === "text" && /^\s*📝备注：/.test(child.value))
+          taskNote = true;
+        if (taskNote && child.type === "link") {
+          children.push(...child.children);
+          continue;
+        }
+        if (taskNote) {
+          children.push(child);
+          continue;
+        }
         if (child.type !== "text") {
           walk(child);
           children.push(child);
@@ -62,6 +74,12 @@ export function AssistantMessageText({
   question?: string;
 }) {
   if (containsToolProtocol(text)) return <p>{assistantDisplayText(text)}</p>;
+  const display = text
+    .replace(
+      /^(?:\[打开我的收藏与待办\]\(\/account\/favorites\)|打开我的收藏与待办)[ \t]*$/gm,
+      "",
+    )
+    .trim();
   return (
     <div className="assistant-markdown">
       <Markdown
@@ -118,7 +136,7 @@ export function AssistantMessageText({
           ),
         }}
       >
-        {text}
+        {display}
       </Markdown>
     </div>
   );

@@ -10,6 +10,289 @@ import {
 import { alignWindowEnd } from "@/lib/retrieval/evidence-window";
 import { dateConflictNote } from "@/lib/retrieval/dates";
 import type { ContentSearchResult } from "@/domain/retrieval/skills";
+import {
+  openParticipation,
+  activityAvailability,
+} from "@/lib/retrieval/evidence-assessment";
+
+export function classifiedActivityEvidenceAnswer(
+  cards: AssistantCard[],
+  results: ContentSearchResult[],
+) {
+  const rows = cards.flatMap((card, index) => {
+    if (card.kind !== "source") return [];
+    const activities = results
+      .flatMap((result) => result.activities)
+      .filter((activity) => activity.documentId === card.documentId);
+    const available = activities.find((activity) =>
+      openParticipation(activity, card.title),
+    );
+    const activity =
+      available ?? activities.find((activity) => activity.startsAt?.date);
+    const label = available
+      ? "当前有开放报名依据，资格请核对原文"
+      : activity && activityAvailability(activity).eventState === "ended"
+        ? "历史活动或赛后资料"
+        : activity?.registrationState === "closed"
+          ? "报名已截止"
+          : activity?.startsAt?.date
+            ? "有活动时间，报名状态未核实"
+            : "相关报道或通知，尚无可报名依据";
+    return [
+      `- **${card.title}**：${label}。${activity?.startsAt?.date ? `活动日期：${activity.startsAt.date}。` : ""} [${index + 1}]`,
+    ];
+  });
+  return rows.length
+    ? rows.slice(0, 5).join("\n\n")
+    : "暂未找到可据以区分活动报名状态的相关资料。";
+}
+import {
+  asksUtilityPayment,
+  campusUtilityQueries,
+  paymentChannelEvidence,
+  paymentSubjects,
+} from "@/lib/retrieval/payment-evidence";
+
+export function attachmentPolicyEvidenceAnswer(
+  cards: AssistantCard[],
+  query: string,
+) {
+  if (buildQueryPlan(query).goal !== "policy") return;
+  const sources = cards.flatMap((card, index) =>
+    card.kind === "source" ? [{ card, index }] : [],
+  );
+  if (
+    !sources.length ||
+    !sources.every(({ card }) => {
+      const text = card.snippet.trim();
+      return (
+        text.length > 0 &&
+        text.length < 180 &&
+        text
+          .split(/\n+/)
+          .every((line) =>
+            /^(?:正文以\s*PDF\s*附件提供[。.]?|打开\s*PDF\s*附件)$|\.pdf$/i.test(
+              line.trim(),
+            ),
+          )
+      );
+    })
+  )
+    return;
+  return `找到以下制度文件\n\n${sources
+    .map(({ card, index }) => `- ${card.title} [${index + 1}]`)
+    .join("\n")}\n\n当前可读取的是附件入口，具体条款和适用范围需查看原 PDF。`;
+}
+
+export function participationEvidenceAnswer(
+  cards: AssistantCard[],
+  results: ContentSearchResult[],
+  now: number,
+  query = "",
+): {
+  confirmed: number;
+  taskStatus: "completed" | "partial" | "insufficient_evidence";
+  text: string;
+} {
+  const activities = results.flatMap((r) => r.activities);
+  const requiresOpenRegistration = /报名|招募/.test(query);
+  const rows = cards.flatMap((card, index) => {
+    if (card.kind !== "source") return [];
+    const activity = activities.find(
+      (item) => item.documentId === card.documentId,
+    );
+    if (
+      !activity ||
+      activity.category === "campus_notice" ||
+      ["cancelled", "postponed", "ended"].includes(activity.eventStatus)
+    )
+      return [];
+    if (
+      !requiresOpenRegistration &&
+      activity.registrationState === "closed"
+    )
+      return [];
+    const confirmed = openParticipation(activity, card.title, now);
+    const deadline = activity.registrationWindows.find(
+      (window) => window.state === "open",
+    )?.end;
+    const eligibility = card.snippet.match(
+      /(?:参赛|报名|招募|参加)(?:对象|资格|条件)\s*[:：]\s*[^。\n]{2,100}/,
+    )?.[0];
+    const state =
+      activity.registrationState === "not_required"
+        ? "无需报名。"
+        : confirmed
+          ? "当前有开放报名窗口，截止：" +
+            (deadline?.at?.slice(0, 16).replace("T", " ") ??
+              deadline?.date ??
+              "原文未给出确切时刻") +
+            "。"
+          : "报名状态尚未核实。";
+    return [
+      {
+        confirmed,
+        text:
+          "- " +
+          activity.name +
+          "。" +
+          state +
+          (eligibility ? " " + eligibility + "。" : "适用对象请核对原文。") +
+          " [" +
+          (index + 1) +
+          "]",
+      },
+    ];
+  });
+  const confirmed = rows.filter((row) => row.confirmed);
+  const unverified = rows.filter((row) => !row.confirmed);
+  if (!requiresOpenRegistration && rows.length) {
+    const result = rows
+      .slice(0, 5)
+      .map((row) => row.text)
+      .join("\n");
+    return {
+      confirmed: rows.filter((row) => row.confirmed).length,
+      taskStatus: rows.some((row) => /报名状态尚未核实/.test(row.text))
+        ? "partial"
+        : "completed",
+      text: "这段时间内找到以下已排期活动，报名要求未确认的请查看原文\n\n" + result,
+    };
+  }
+  const taskStatus: "completed" | "partial" | "insufficient_evidence" =
+    confirmed.length
+      ? "completed"
+      : unverified.length
+        ? "partial"
+        : "insufficient_evidence";
+  return {
+    confirmed: confirmed.length,
+    taskStatus,
+    text: confirmed.length
+      ? "已核实以下活动当前有参与依据\n\n" +
+        confirmed
+          .slice(0, 5)
+          .map((row) => row.text)
+          .join("\n") +
+        (unverified.length
+          ? "\n\n另有活动报名状态未核实\n" +
+            unverified
+              .slice(0, 3)
+              .map((row) => row.text)
+              .join("\n")
+          : "")
+      : unverified.length
+        ? "找到以下相关活动，但目前不能确认可报名\n\n" +
+          unverified
+            .slice(0, 5)
+            .map((row) => row.text)
+            .join("\n")
+        : "暂未找到有可靠证据表明当前开放报名的相关活动。",
+  };
+}
+
+export function registrationRequirementEvidenceAnswer(
+  cards: AssistantCard[],
+  results: ContentSearchResult[],
+) {
+  const rows = cards.flatMap((card, index) => {
+    if (card.kind !== "source") return [];
+    const activities = results
+      .flatMap((result) => result.activities)
+      .filter(
+        (activity) =>
+          activity.documentId === card.documentId && activity.startsAt?.date,
+      );
+    if (!activities.length) return [];
+    const activity = activities[0];
+    const requirement =
+      activity.registrationRequirement === "required"
+        ? "原文要求报名"
+        : activity.registrationRequirement === "not_required"
+          ? "原文说明无需报名"
+          : "报名要求未核实";
+    const end = activity.registrationWindows.find((window) => window.end)?.end;
+    const deadline = end
+      ? "，报名截止：" + (end.at?.slice(0, 16).replace("T", " ") ?? end.date)
+      : "";
+    return [
+      "- " +
+        activity.name +
+        "：" +
+        requirement +
+        deadline +
+        "。 [" +
+        (index + 1) +
+        "]",
+    ];
+  });
+  return rows.length
+    ? rows.slice(0, 5).join("\n")
+    : "目前找到的近期讲座没有可核实的报名要求信息。";
+}
+
+export function utilityPaymentEvidenceAnswer(
+  query: string,
+  cards: AssistantCard[],
+  results: ContentSearchResult[],
+) {
+  if (!asksUtilityPayment(query)) return;
+  const scopes = campusUtilityQueries(query) ?? [query];
+  const hits = results.flatMap((result) => result.hits);
+  const selected = scopes.map((scope) => {
+    const plan = buildQueryPlan(scope);
+    const terms = paymentSubjects(
+      scope,
+      plan.topics.flatMap((topic) => topic.alternatives),
+    );
+    const options = hits
+      .flatMap((hit) => {
+        if (!hit.official || !hit.bodyAvailable) return [];
+        const index = cards.findIndex(
+          (card) =>
+            card.kind === "source" && card.documentId === hit.documentId,
+        );
+        const proof = paymentChannelEvidence(
+          hit.contentSnippet,
+          plan.campus,
+          terms,
+        );
+        return index >= 0 &&
+          (proof.score === 2 || (scopes.length === 1 && proof.score > 0))
+          ? [{ index, hit, proof }]
+          : [];
+      })
+      .sort((a, b) => b.proof.score - a.proof.score);
+    return { campus: plan.campus, evidence: options[0] };
+  });
+  if (!selected.some(({ evidence }) => evidence)) return;
+  return selected
+    .map(({ campus, evidence }) => {
+      const label =
+        campus === "south"
+          ? "大学城校区"
+          : campus === "north"
+            ? "白云山校区"
+            : "水电充值";
+      if (!evidence) return `**${label}**：暂未核实该校区的水电缴费方式。`;
+      const { hit, proof, index } = evidence;
+      const before = hit.contentSnippet.slice(
+        Math.max(0, proof.at - 190),
+        proof.at,
+      );
+      const lastBreak = Math.max(
+        before.lastIndexOf("\n"),
+        before.lastIndexOf("。", before.trimEnd().length - 2),
+      );
+      const start = proof.at - before.length + lastBreak + 1;
+      const passage = hit.contentSnippet
+        .slice(start, proof.end + 1)
+        .trim()
+        .replace(/[\[\]<>]/g, "\\$&");
+      return `**${label}**\n\n${passage} [${index + 1}]\n\n${proof.score < 2 ? "这条资料没有明确标注适用校区。" : ""}你所在楼栋是否适用、目前是否仍按此方式办理，可向宿管核实。`;
+    })
+    .join("\n\n");
+}
 
 /** Listing asks for known items, not an invented narrative or inferred availability. */
 export function eventEvidenceAnswer(
@@ -17,7 +300,18 @@ export function eventEvidenceAnswer(
   results: ContentSearchResult[],
 ) {
   const sources = cards.flatMap((card, index) =>
-    card.kind === "source" ? [{ card, citation: index + 1 }] : [],
+    card.kind === "source" &&
+    results.some((result) =>
+      result.activities.some(
+        (activity) =>
+          activity.documentId === card.documentId &&
+          activity.kind !== "notice" &&
+          !!activity.startsAt?.date &&
+          !["cancelled", "postponed"].includes(activity.eventStatus),
+      ),
+    )
+      ? [{ card, citation: index + 1 }]
+      : [],
   );
   if (!sources.length) return undefined;
   return sources
@@ -51,11 +345,30 @@ export function eventEvidenceAnswer(
         unknown: "",
       }[activity?.registrationState || "unknown"];
       if (registration) details.push(registration);
+      else if (activity) details.push("报名要求未核实");
+      const deadline = activity?.registrationWindows.find(
+        (window) => window.end,
+      )?.end;
+      if (deadline)
+        details.push(
+          `报名截止：${deadline.at?.slice(0, 16).replace("T", " ") ?? deadline.date}`,
+        );
       if (!details.length && card.publishedAt)
         details.push(`发布：${chinaDay(card.publishedAt)}`);
       return `${index + 1}. **${card.title}** [${citation}]${details.length ? "\n   " + details.join(" · ") : ""}`;
     })
     .join("\n\n");
+}
+
+export function emptyEventWindowAnswer(
+  window: { after: string; before: string },
+  label: string,
+  requirements: string[] = [],
+) {
+  const detail = requirements.length
+    ? `筛选条件为${requirements.join("、")}。`
+    : "";
+  return `在${window.after}至${window.before}的校园活动日历索引中，没有检索到符合条件的${label}记录。${detail}这只表示本次索引没有匹配结果，不能据此断定没有这类活动。`;
 }
 
 /** A provider failure does not erase already-retrieved public evidence. No invented summary. */

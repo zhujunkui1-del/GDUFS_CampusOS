@@ -1,0 +1,1245 @@
+{
+  "question": "广外图书馆的借阅规则是什么？图书逾期怎么办？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "### 广外图书馆借阅规则\n1. **馆内阅览规则**\n   图书馆实行藏、借、阅、研一体化开放服务，读者持借阅证可进入图书借阅区自行查阅图书，阅毕需将图书平放于书架空位或阅览桌上 [2]。报刊阅览区、外国语言学及应用语言学研究中心图书室（基地）、广外文库的文献仅限区内阅览，不外借，离开前需检查未夹带相关文献，违规带出按违章处理 [2]。\n\n2. **图书外借规则**\n   - 可外借的中外文图书（含开架、闭架）需办理外借/归还手续：白云山校区在一楼总服务台或一楼自助借还机办理，大学城校区在一楼总服务台或一、四楼自助借还机办理 [2]。\n   - 仅限本人持借阅证办理，不得转让或代借，未办手续将图书带出图书馆按违章处理 [2]。\n   - 借书可通过自助借还机或人工柜台办理，自助遇问题可持证向服务台工作人员咨询处理 [2]。\n   - 办理外借前需检查图书是否有圈点批注、污损、破损等情况，发现问题应立即声明并请工作人员盖章，归还时发现未盖章的污损由读者承担责任 [2]。\n   - 不同类型读者的可借图书量、借阅期限参照《广东外语外贸大学图书馆读者权限表》，具体额度可查询图书馆官方说明 [2]。\n\n3. **续借规则**\n   图书到期前如需继续使用，且无其他读者预约的，可通过广外图书馆微信公众号或图书馆官网自行办理续借，续借后借期从应还日期起算；有预约记录或已逾期的图书不可续借；学期末外借、寒暑假期间到期的图书可延期至下学期开学后14天归还，具体规则以图书馆官方说明为准 [2]。\n\n4. **借阅证使用规则**\n   借阅证（含实体卡、电子虚拟卡）实行“一人一卡、实名专用”制度，仅限本人使用，严禁转借、冒用、复制（手机NFC模拟）或伪造 [1]。校内人员违规使用借阅证的，暂停双方入馆、借阅及数字资源访问权限3个月，并视情节通报所在培养单位及相关部门；校外人员违规使用的，一律报保卫部处理 [1]。若因借阅证遗失未及时挂失被他人冒用，导致图书丢失、欠费及违规记录的，由持证人承担相应责任 [1]。\n\n---\n\n### 图书逾期处理办法\n所借图书需按期归还，逾期未还的，自逾期之日起暂停借阅权限，归还逾期图书后方可恢复借阅权限 [2]。\n\n---\n关键依据：\n[1] 《2026年研究生手册（全文）》，学生工作部，2026-09-20发布\n[2] 《2026版本科生学生手册（全文）》，学生工作部，2026-09-20发布",
+  "cards": [
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-307250998",
+        "name": "图书馆",
+        "category": "library",
+        "zone": "teaching",
+        "location": [
+          113.39131405,
+          23.0680465
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "大学城校区图书馆"
+        ],
+        "labelPlaceId": "osm-way-307250998",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "source",
+      "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+      "title": "2026年研究生手册（全文）",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+      "publishedAt": "2026-09-20T11:27:05.000Z",
+      "snippet": "子图书、电子期刊的部分信息复制。\n四、图书馆学习空间预约使用规则\n详见广外图书馆网站首页-服务指南-空间预约\n五、读者违章处理办法\n读者进入图书馆，请严格遵守本馆的各项规章制度。如有违章行为按\n下列各条处理：\n（一）违规使用借阅证\n借阅证（含实体卡、电子虚拟卡等）是师生在图书馆内身份识别、图\n书借阅、门禁通行的重要凭证，实行“一人一卡、实名专用”制度，仅限\n本人使用。严禁转借、冒用、复制（手机NFC 模拟）或伪造校园卡等各类\n违规使用借阅证行为。\n校内人员违规使用借阅证的，暂停双方入馆权限、借阅权限及数字资\n源访问权限3 个月，并视情节轻重，通报所在培养单位及相关部门。校外\n人员违规使用借阅证的，一律报告保卫部处理。\n因违规使用借阅证，或借阅证遗失、未及时挂失遭他人冒用，造成图\n书丢失、欠费及违规记录，均由持证人承担赔偿等相关责任。\n（二）所借图书资料逾期不还",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    }
+  ],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T02:07:00.843Z",
+      "elapsedMs": 180,
+      "data": {
+        "question": "广外图书馆的借阅规则是什么？图书逾期怎么办？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T02:07:00.843Z",
+      "elapsedMs": 180,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T02:07:01.873Z",
+      "elapsedMs": 1210,
+      "data": {
+        "question": "广外图书馆的借阅规则是什么？图书逾期怎么办？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T02:07:01.873Z",
+      "elapsedMs": 1210,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T02:07:01.873Z",
+      "elapsedMs": 1210,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T02:07:01.873Z",
+      "elapsedMs": 1210,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "running",
+      "at": "2026-11-17T02:07:01.934Z",
+      "elapsedMs": 1271,
+      "data": {
+        "placeId": "osm-way-307250998",
+        "origin": "建筑活动索引"
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "success",
+      "at": "2026-11-17T02:07:02.410Z",
+      "elapsedMs": 1747,
+      "durationMs": 476,
+      "data": {
+        "placeId": "osm-way-307250998",
+        "after": "2026-11-03",
+        "total": 2,
+        "items": [
+          {
+            "title": "会计学院与图书馆联合开展红色财经读书会",
+            "date": "2026-11-05",
+            "place": "大学城校区图书馆",
+            "calendarUrl": "/calendar?date=2026-11-05&event=event-aa2ec34dbb87e04fb22e0cdd82bf49f4123829ec"
+          },
+          {
+            "title": "乒乓球赛预热 | 以球会友 快乐乒乓",
+            "date": "2026-11-07",
+            "place": "大学城校区图书馆负一楼乒乓球场",
+            "calendarUrl": "/calendar?date=2026-11-07&event=event-490f4045902052c5942a510c4a68ab7049f91f0f"
+          }
+        ],
+        "metrics": {
+          "rowsRead": 5275,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 476,
+          "usageAvailable": true
+        }
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T02:07:02.559Z",
+      "elapsedMs": 1896,
+      "durationMs": 686,
+      "data": {
+        "matches": [
+          {
+            "id": "osm-way-307250998",
+            "name": "图书馆",
+            "description": "图书馆有五层楼，内有空调和自习室，可刷脸和刷卡进入。\n一、二、三层开放时间为7:00-24:00，四、五层开放时间为8:30-22:00。\n图书馆也是广外学子们常去的地方，期末更是座无虚席。因此如果期末想去图书馆学习，要趁早。\n🌟图书馆也有会议厅，主要用于举办悦读课堂、阅读沙龙观影会、英语角、读书分享会图书漂流和各种比赛赛事。",
+            "activities": 2
+          }
+        ]
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T02:07:02.559Z",
+      "elapsedMs": 1896,
+      "durationMs": 686,
+      "data": {
+        "act": "campus",
+        "goal": "procedure",
+        "campus": null,
+        "topics": [
+          "borrowing"
+        ],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "running",
+      "at": "2026-11-17T02:07:02.735Z",
+      "elapsedMs": 2072,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外图书馆 借阅规则是什么 图书逾期怎么办",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "success",
+      "at": "2026-11-17T02:07:04.292Z",
+      "elapsedMs": 3629,
+      "durationMs": 1557,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "chunkId": "content-16300be2-facb-4406-b157-ab5ace0d0c28:fts:9fa888bfac25bd0c:256",
+              "title": "2026年研究生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+              "publishedAt": "2026-09-20T11:27:05.000Z",
+              "contentSnippet": "子图书、电子期刊的部分信息复制。\n四、图书馆学习空间预约使用规则\n详见广外图书馆网站首页-服务指南-空间预约\n五、读者违章处理办法\n读者进入图书馆，请严格遵守本馆的各项规章制度。如有违章行为按\n下列各条处理：\n（一）违规使用借阅证\n借阅证（含实体卡、电子虚拟卡等）是师生在图书馆内身份识别、图\n书借阅、门禁通行的重要凭证，实行“一人一卡、实名专用”制度，仅限\n本人使用。严禁转借、冒用、复制（手机NFC 模拟）或伪造校园卡等各类\n违规使用借阅证行为。\n校内人员违规使用借阅证的，暂停双方入馆权限、借阅权限及数字资\n源访问权限3 个月，并视情节轻重，通报所在培养单位及相关部门。校外\n人员违规使用借阅证的，一律报告保卫部处理。\n因违规使用借阅证，或借阅证遗失、未及时挂失遭他人冒用，造成图\n书丢失、欠费及违规记录，均由持证人承担赔偿等相关责任。\n（二）所借图书资料逾期不还",
+              "startOffset": 200642,
+              "endOffset": 201027,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 96.69,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 6",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "15816f34ff6010f90ebf4af7102f7ce64406cb2e541bc7ef87fbc01190cdc7e6",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "chunkId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285:fts:bc4c3d7651c7c2fc:274",
+              "title": "2026版本科生学生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+              "publishedAt": "2026-09-20T11:16:00.000Z",
+              "contentSnippet": "保安处核验本人身份信息、登记个人信息后入馆参观及阅览。 （五）图书借阅规则\n1. 馆内阅览\n本馆实行藏、借、阅、研一体化的开放服务管理模式。读者凭证进入图书借阅区后，可自行查阅图书资料，图书阅毕，请将图书“平放”于书架空位或阅览桌上。 报刊阅览区、外国语言学及应用语言学研究中心图书室（基地）和广外文库文献均不提供外借，仅供室/区内阅览，离开阅览室/区之前请检查随身携带物品中是否夹带有本区文献，凡带出者按《读者违章处理办法》 中有关条款处理。\n2. 图书外借\n（1）可外借的中外文图书（包括开架借阅和闭架借阅）需办理外借和归还手续。白云山校区图书馆借还书在一楼总服务台或一楼自助借还书机办理，大学城校区图书馆借还书在一楼总服务台或一、四楼自助借还书机办理。读者一律凭本人借阅证借阅图书，不得转让或代借。 （2）读者借书，可通过自助借还机办理，也可以通过人工办理。自助办理若遇到问题，可持本人借阅证向服务台工作人员查询处理。凡未办理外借手续，将未借图书带出图书馆者，按《读者违章处理办法》中有关条款处理。 （3）不同类型读者的借书量及借阅期限见《广东外语外贸大学图书馆读者权限表》。所借图书资料必须按期归还，逾期未还者，从逾期之日起暂停其借阅权限，归还逾期图书后方可恢复其借阅权限。 （4）办理外借手续之前，应仔细检查图书是否有圈点批注、浸水污损、烂页破裂等情况，如发现应立即声明并请工作人员盖章。归还时如发现未经工作人员盖章的污损情况， 由读者本人负责，按《读者违章处理办法》 中有关条款处理。 （5）读者所借图书即将到期，若仍需继续使用，在无读者预约的情况下，可自行在广外图书馆微信公众号、图书馆官网办理续借手续。续借必须在图书到期前进行，借期从应还日期算起。有预约记录的图书和过期图书不能办理续借。学期末外借的寒暑假期间到期的图书，将延迟到下学期开学14",
+              "startOffset": 195423,
+              "endOffset": 196203,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 89.69,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 2",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "f72fdd02d8506d6c8bec1326ecc47e069aa5eb71309bc2f952db35c853fe5e2e",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "wx-e65f3688d0c219ed305ca5c944f2751660067122",
+              "chunkId": "wx-e65f3688d0c219ed305ca5c944f2751660067122:fts:1e319c84bf750df9:3",
+              "title": "新生入馆指南｜2026级广外人，图书馆通关手册请收好",
+              "sourceId": "GDUFS-SRC-0199",
+              "sourceName": "广外图书馆",
+              "originalUrl": "https://mp.weixin.qq.com/s/Z8GsLRQptG8Pa3lQFbpTEw",
+              "publishedAt": "2026-09-06T04:12:00.000Z",
+              "contentSnippet": "书\n自助借还机：白云山校区在一楼，大学城校区在一楼和四楼。刷校园卡，将图书条码页（翻开第一页）对准扫描区，确认借阅即可。\n人工办理：前往一楼总服务台，服务时间8:30—22:00。\n借书前请仔细检查图书是否有圈点批注、浸水污损、烂页破裂等情况，如发现应立即声明并请工作人员盖章。借完书后，可通过\"我的借阅\"确认所借图书的册数和应还日期。\n续借与预约\n图书即将到期仍需使用，可在公众号或图书馆官网自行办理续借。每本只可续借一次，续借期15天。有他人预约的图书和已过期图书不能续借。\n所需图书已全部借出时，可办理预约。收到取书通知后，请在7日内到相应校区总服务台取书。累计未按时取书5册者，将取消三个月预约借书权限。\n跨校区图书、密集书库图书、已外借图书，可使用\"帮你找书\"",
+              "startOffset": 2720,
+              "endOffset": 3055,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 85.24,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 4",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "campus_life",
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "8f435b613623e7ee1c36ae78ce363d468acdced8196c17b2afaef22145061523",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-ba16c7c3-5a95-4012-99bc-1981305bb925",
+              "chunkId": "content-ba16c7c3-5a95-4012-99bc-1981305bb925:fts:be9c7ee93efee8bd:0",
+              "title": "2024级本科新生入馆教育培训圆满落幕，共创知识探索新篇章",
+              "sourceId": "GDUFS-SRC-0008",
+              "sourceName": "图书馆",
+              "originalUrl": "https://lib.gdufs.edu.cn/info/1133/7772.htm",
+              "publishedAt": "2024-09-23",
+              "contentSnippet": "近日，图书馆圆满完成了2024级本科新生的入馆教育培训活动。此次培训活动在白云山校区和大学城校区同步进行，由白云山校区学科服务部的培训讲师与大学城校区学科服务团队成员携手合作，共同为新生们提供了详尽的指导。活动共计覆盖了17个学院，惠及约4400名新生，新生参与率高达80%。这一数字不仅刷新了近年来的记录，也充分展示了新生们对图书馆资源的浓厚兴趣与迫切需求。\n入馆教育活动旨在全方位赋能，助力新生迅速解锁图书馆这座知识宝库，充分发挥图书馆空间、资源和服务在个人成长与学术追求中的支撑作用。图书馆主讲团队的老师们，以饱满的热情和专业的态度，精心设计了培训内容，从图书馆概况到纸质资源的精准检索与借阅流程，再",
+              "startOffset": 0,
+              "endOffset": 303,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 58.82,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：subject_and_constraints"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "e7b6458f7fbda686607f978e7ddeff21864f2fcb0e8019d7a5f9f15e6a895ca9",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 3226,
+            "rowsWritten": 0,
+            "queries": 7,
+            "durationMs": 1557,
+            "stagesMs": {
+              "lexical": 263,
+              "supplement": 713,
+              "revalidationAndRanking": 581
+            },
+            "candidateChunks": 96,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 3
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 13
+              },
+              {
+                "name": "document_passages",
+                "limit": 496,
+                "candidates": 32
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "广外图书馆 借阅规则是什么 图书逾期怎么办",
+          "now": "2026-11-17T02:07:02.735Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "activityKey": "activity-1",
+              "name": "2026年研究生手册（全文）",
+              "kind": "event",
+              "category": null,
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": "学生第二饭堂对面小木屋）",
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "（二）在规定的复核申请期限内提出申请的；\n（三）有明确、充分的复核申请事实、依据和理由"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "inclusive",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "第七条申请交换生项目的非成建制本科生在项目报名截止前应无\n学籍所在专业主修成绩不及格记录"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "inclusive",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "第十五条在上一年项目申报截止之日起至上一年12 月31 日期间\n派出但未申请该年度项目的"
+                  ]
+                }
+              ],
+              "otherDeadlines": [
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                }
+              ],
+              "registrationUrl": null,
+              "evidence": [
+                "（二）在规定的复核申请期限内提出申请的；\n（三）有明确、充分的复核申请事实、依据和理由",
+                "第七条申请交换生项目的非成建制本科生在项目报名截止前应无\n学籍所在专业主修成绩不及格记录",
+                "第十五条在上一年项目申报截止之日起至上一年12 月31 日期间\n派出但未申请该年度项目的"
+              ],
+              "mapPlace": null
+            },
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "activityKey": "activity-1",
+              "name": "2026版本科生学生手册（全文）",
+              "kind": "event",
+              "category": null,
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": "学生第二饭堂对面小木屋）",
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "是指每年研究生报名开始时已进入毕业学年学习的本科生（不含辅修学位、专升本、 第二学士学位学生、本硕项目的国际班学生和独立学院学生）"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "具体申报时间以教育部规定及学校相关通知为准。申请者应列明本人已具备的推荐免试条件、报读的研究生专业和专业方向"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "1. 申请时间：学校一般于每年9 月集中受理创新创业学分认定申请；\n2. 申请材料：学生本人填写《广东外语外贸大学本科生创新创业学分"
+                  ]
+                }
+              ],
+              "otherDeadlines": [
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                }
+              ],
+              "registrationUrl": null,
+              "evidence": [
+                "是指每年研究生报名开始时已进入毕业学年学习的本科生（不含辅修学位、专升本、 第二学士学位学生、本硕项目的国际班学生和独立学院学生）",
+                "具体申报时间以教育部规定及学校相关通知为准。申请者应列明本人已具备的推荐免试条件、报读的研究生专业和专业方向",
+                "1. 申请时间：学校一般于每年9 月集中受理创新创业学分认定申请；\n2. 申请材料：学生本人填写《广东外语外贸大学本科生创新创业学分"
+              ],
+              "mapPlace": null
+            },
+            {
+              "documentId": "content-ba16c7c3-5a95-4012-99bc-1981305bb925",
+              "activityKey": "activity-1",
+              "name": "2024级本科新生入馆教育培训圆满落幕，共创知识探索新篇章",
+              "kind": "notice",
+              "category": "campus_notice",
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": null,
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [],
+              "mapPlace": null
+            }
+          ],
+          "knowledge": [
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "(四)符合国(境)外合作院校规定的申请条件及语言要求",
+                "(三)申请条件",
+                "(三)申请条件"
+              ],
+              "materials": [
+                "需提供随时可以联系的通讯方式"
+              ],
+              "steps": [
+                "学校形成了外语学科与多学科交叉融合、协同发展的学科格局，现有外国语言文学、应用经济学、法学3个一级学科博士点，翻译、法律2 个专业学位博士点和27个二级学科博士点，13个一级学科硕士点和60个二级学科硕士点（含3个交叉学科），21个专业学位硕士点。学校着力推进涉外法治、区域国别学、中华文化国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续3年上榜“US News”世界大学排名；入选软科中国文科实力A类大学，稳居全国前50强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI全球前5‰，工程学、环境/生态学、经济学与商学进入ESI前1%；12个学科上榜软科中国最好学科",
+                "办理入学手续。审查不合格的，取消入学资格；逾期不办理入学手续且",
+                "学位等五个学业出口中选择一个进行申请，并按期办理离校手续。"
+              ]
+            },
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "符合申请条件的学生可在当年暑假前后向拟报读的接收单位或学科点进行初步联系",
+                "除需满足本规定第九条、第十条的条件外",
+                "第二章奖励标准与申请条件"
+              ],
+              "materials": [
+                "可申请转学： （一）患病学生需提供我校及拟转入学校指定医院的检查证明（需盖疾病诊断证明专用章）",
+                "有特殊困难和特别需要的学生需提供相关证明材料"
+              ],
+              "steps": [
+                "国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续 3 年上榜“US News”世界大学排名；入选软科中国文科实力A 类大学，稳居全国前50 强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI 全球前5‰，工程学、环境 /生态学、经济学与商学进入ESI 前1%；12 个学科上榜软科中国最好学科；外国语言文学学科连续多年上榜软科“中国顶尖学科”， 稳居全国前3；应用经济学、法学连续多年上榜软科“中国一流学科”。 科学研究学校深入推进有组织科研，构建服务共建“一带一路”倡议、 高水平对外开放与粤港澳大湾区建设、法治中国与涉外法治建设、 国际传播建设等四大科研平台体系",
+                "学校各单位： 为深入贯彻落实党的十八届三中全会关于深化教育领域综合改革的精神，积极适应经济社会发展新常态对高等教育人才培养的需求，根据《中华人民共和国教育法》《普通高等学校学生管理规定》（教育部令第21 号）等法律法规和《教育部关于全面提高高等教育质量的若干意见》（教高〔2012〕4 号）、《广东省人民政府办公厅转发教育厅关于进一步扩大和落实高校办学自主权促进高校加快发展若干意见的通知》（粤府办 〔2013〕26 号）等文件要求，学校结合实际，研究制定了本科教学实施学分制管理的若干意见，经2015 年1 月12 日校党委常委会审议并原则通过，具体如下。 一、指导思想坚持育人为本，立德树人，全面",
+                "3．选课制。学生根据专业培养方案自主安排学习进程，对于必修课， 可选择任课教师；对于选修课，可选择课程和任课教师；每学期前两周， 学生试听课程，试听结束后作出选课确认。 4．主辅修制。学生在达到主修专业学习要求的前提下，可以辅修其他专业；在主修专业达到毕业要求的前提下，其修读的辅修专业如达到要求，可向其发放辅修专业证书；学生在主修专业具备学位授予资格的前提下，如其辅修专业达到学位授予条件，可获得相应专业学位证书。 5．学分互认制。学生在与我校签订了学分互认协议的境内外高校或在我校认可的境内外高校或MOOC 等网络学习平台修读课程获得的成绩和学分，可以转换为本校课程成绩和学分；学生修读校外课程，"
+              ]
+            },
+            {
+              "documentId": "wx-e65f3688d0c219ed305ca5c944f2751660067122",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "在公众号菜单栏点击\"资源—新生闯馆\"，或进入\"服务—服务大厅—新生闯馆\"。输入学号及密码登录后，至少完成前四步学习，答题成绩在60分以上，方可解锁图书借阅、空间预约等各项权限。",
+                "图书馆支持刷脸入馆。在公众号菜单点击\"服务—人脸识别注册\"，识别回复的二维码，按提示上传照片即可。新生注册时若学校系统已开通人脸识别权限，则无需重复操作。",
+                "1、读者登录数字广外点击“图书荐购”进入，或使用自己的数字广外账号从图书馆主页右上方的“图书荐购”进入，登录“芸台购”图书平台进行荐购，将自己检索到的喜爱的图书进行提交，工作人员会及时对读者荐购意见进行回复处理，同意购买的图书我馆将会尽快采购。"
+              ]
+            },
+            {
+              "documentId": "content-ba16c7c3-5a95-4012-99bc-1981305bb925",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            }
+          ]
+        },
+        "durationMs": 1557
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "running",
+      "at": "2026-11-17T02:07:04.359Z",
+      "elapsedMs": 3696,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答生成",
+        "tools": []
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "success",
+      "at": "2026-11-17T02:07:19.630Z",
+      "elapsedMs": 18967,
+      "durationMs": 15271,
+      "data": {
+        "finishReason": "stop",
+        "toolCalls": [],
+        "characters": 1022,
+        "usage": {
+          "promptTokens": 3246,
+          "completionTokens": 2180,
+          "totalTokens": 5426
+        }
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "phase": "evidence_check",
+      "state": "running",
+      "at": "2026-11-17T02:07:19.693Z",
+      "elapsedMs": 19030,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "tool": "report_evidence_verdict",
+        "timeoutMs": 10000
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "phase": "evidence_check",
+      "state": "error",
+      "at": "2026-11-17T02:07:29.693Z",
+      "elapsedMs": 29030,
+      "durationMs": 10000,
+      "data": {
+        "status": "超时"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "running",
+      "at": "2026-11-17T02:07:29.751Z",
+      "elapsedMs": 29088,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "success",
+      "at": "2026-11-17T02:07:29.831Z",
+      "elapsedMs": 29168,
+      "durationMs": 80,
+      "data": {
+        "characters": 1022,
+        "cards": 2
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "running",
+      "at": "2026-11-17T02:07:29.831Z",
+      "elapsedMs": 29168,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "success",
+      "at": "2026-11-17T02:07:29.831Z",
+      "elapsedMs": 29168,
+      "durationMs": 0,
+      "data": {
+        "characters": 1022,
+        "cards": 2
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:07:02.735Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T02:07:02.735Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T02:07:04.292Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 1557,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:07:30.024Z",
+      "data": {
+        "cards": [
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-307250998",
+              "name": "图书馆",
+              "category": "library",
+              "zone": "teaching",
+              "location": [
+                113.39131405,
+                23.0680465
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "大学城校区图书馆"
+              ],
+              "labelPlaceId": "osm-way-307250998",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "source",
+            "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+            "title": "2026年研究生手册（全文）",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+            "publishedAt": "2026-09-20T11:27:05.000Z",
+            "snippet": "子图书、电子期刊的部分信息复制。\n四、图书馆学习空间预约使用规则\n详见广外图书馆网站首页-服务指南-空间预约\n五、读者违章处理办法\n读者进入图书馆，请严格遵守本馆的各项规章制度。如有违章行为按\n下列各条处理：\n（一）违规使用借阅证\n借阅证（含实体卡、电子虚拟卡等）是师生在图书馆内身份识别、图\n书借阅、门禁通行的重要凭证，实行“一人一卡、实名专用”制度，仅限\n本人使用。严禁转借、冒用、复制（手机NFC 模拟）或伪造校园卡等各类\n违规使用借阅证行为。\n校内人员违规使用借阅证的，暂停双方入馆权限、借阅权限及数字资\n源访问权限3 个月，并视情节轻重，通报所在培养单位及相关部门。校外\n人员违规使用借阅证的，一律报告保卫部处理。\n因违规使用借阅证，或借阅证遗失、未及时挂失遭他人冒用，造成图\n书丢失、欠费及违规记录，均由持证人承担赔偿等相关责任。\n（二）所借图书资料逾期不还",
+            "evidenceType": "full_text",
+            "classificationState": "knowledge",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T02:07:30.024Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "model",
+          "buildingProfiles": [
+            "osm-way-307250998"
+          ],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 2,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 1,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 1,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 15271,
+              "firstTextMs": 11735,
+              "finishReason": "stop",
+              "contentChars": 1022
+            },
+            {
+              "durationMs": 10000,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 3246,
+          "completionTokens": 2180,
+          "cachedPromptTokens": 0,
+          "totalTokens": 5426,
+          "usageComplete": false,
+          "chargedTokens": 5426,
+          "durationMs": 27016,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 250000,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 2072,
+            "serverElapsedMs": 29088,
+            "firstTextMs": 29030,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 1557,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 30,
+              "writeQueries": 12,
+              "calls": 34,
+              "failures": 0,
+              "durationMs": 3284,
+              "maxCallMs": 420,
+              "rowsRead": 8935,
+              "rowsWritten": 26,
+              "rowUsageStatements": 23,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 3226,
+                "rowsWritten": 0,
+                "queries": 7,
+                "durationMs": 1557,
+                "stagesMs": {
+                  "lexical": 263,
+                  "supplement": 713,
+                  "revalidationAndRanking": 581
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 3
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 64
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 13
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 496,
+                    "candidates": 32
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "model",
+    "buildingProfiles": [
+      "osm-way-307250998"
+    ],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+        "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 2,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 1,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 15271,
+        "firstTextMs": 11735,
+        "finishReason": "stop",
+        "contentChars": 1022
+      },
+      {
+        "durationMs": 10000,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 3246,
+    "completionTokens": 2180,
+    "cachedPromptTokens": 0,
+    "totalTokens": 5426,
+    "usageComplete": false,
+    "chargedTokens": 5426,
+    "durationMs": 27016,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 250000,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 2072,
+      "serverElapsedMs": 29088,
+      "firstTextMs": 29030,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1557,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 30,
+        "writeQueries": 12,
+        "calls": 34,
+        "failures": 0,
+        "durationMs": 3284,
+        "maxCallMs": 420,
+        "rowsRead": 8935,
+        "rowsWritten": 26,
+        "rowUsageStatements": 23,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 3226,
+          "rowsWritten": 0,
+          "queries": 7,
+          "durationMs": 1557,
+          "stagesMs": {
+            "lexical": 263,
+            "supplement": 713,
+            "revalidationAndRanking": 581
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 3
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 13
+            },
+            {
+              "name": "document_passages",
+              "limit": 496,
+              "candidates": 32
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

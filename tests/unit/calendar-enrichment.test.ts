@@ -6,6 +6,7 @@ import {
 } from "@/lib/server/calendar/enrichment";
 import { dateGateFixture } from "../fixtures/date-gate";
 import { analysisStatements } from "@/lib/server/console/article-analysis";
+import { readCalendar } from "@/lib/server/calendar/query";
 import {
   runCalendarBatch,
   reserveCalendarModel,
@@ -38,7 +39,7 @@ it("supplements real source spans through a schema, without accepting invented y
         {
           title: input.title,
           sourceId: "body",
-          occurrenceQuote: "2026年11月5日14:30",
+          occurrenceQuote: "2026年11月5日14:30\n大学城校区报告厅",
           dates: ["2026年11月5日14:30"],
           place: "大学城校区报告厅",
           organizer: null,
@@ -259,10 +260,109 @@ it("honours the operator cap instead of a hard-coded 40", async () => {
     f.close();
   }
 });
+
+it("uses 200 as the fresh-install calendar review cap", async () => {
+  const f = await dateGateFixture();
+  try {
+    expect(
+      await f.db
+        .prepare(
+          "SELECT calendar_ai_cap AS cap FROM console_engine_settings WHERE id='console-v2-settings'",
+        )
+        .first(),
+    ).toEqual({ cap: 200 });
+    expect(
+      await f.db
+        .prepare(
+          "SELECT calendar_ai_cap AS cap FROM console_engine_settings WHERE id='console-v2-settings'",
+        )
+        .first(),
+    ).toEqual({ cap: 200 });
+    f.sqlite
+      .prepare(
+        "UPDATE console_engine_settings SET calendar_ai_cap=200,calendar_ai_calls=0,calendar_ai_day='2026-11-10'",
+      )
+      .run();
+    for (let call = 0; call < 200; call++)
+      expect(await reserveCalendarModel(f.db, "2026-11-10T00:00:00.000Z")).toBe(
+        true,
+      );
+    expect(await reserveCalendarModel(f.db, "2026-11-10T00:00:00.000Z")).toBe(
+      false,
+    );
+  } finally {
+    f.close();
+  }
+});
+
+it("queues each new full text article for one AI review even when regex already found an event", async () => {
+  const f = await dateGateFixture();
+  try {
+    await f.article(
+      "ai-review-queued",
+      "2026-11-15",
+      "2026年宣讲会",
+      "<p>活动时间：2026年11月20日14:00。地点：大学城校区一教109。</p>",
+    );
+    const d = await f.store.document("ai-review-queued");
+    await f.db.batch(
+      await analysisStatements(
+        f.db,
+        d.id,
+        d.contentRevision,
+        d.inputHash!,
+        {
+          title: "2026年宣讲会",
+          body: "<p>活动时间：2026年11月20日14:00。地点：大学城校区一教109。</p>",
+          bodyFormat: "reading_html",
+          bodyStatus: "complete",
+        },
+        undefined,
+        "licensed_full_text",
+        undefined,
+        true,
+      ),
+    );
+    expect(
+      f.sqlite
+        .prepare(
+          "SELECT calendar_status FROM document_article_analysis WHERE document_id=?",
+        )
+        .get(d.id),
+    ).toEqual({ calendar_status: "needs_enrichment" });
+    expect(
+      (await readCalendar(f.db, { articleId: d.id, day: "2026-11-20" })).items,
+    ).toHaveLength(0);
+    const run = vi.fn(async () => ({
+      response: { events: [] },
+      usage: { prompt_tokens: 10, completion_tokens: 3 },
+    }));
+    const batch = await runCalendarBatch(f.db, { run });
+    expect(run, JSON.stringify(batch)).toHaveBeenCalledOnce();
+    expect(
+      f.sqlite
+        .prepare(
+          "SELECT calendar_status,calendar_ai_calls FROM document_article_analysis JOIN console_engine_settings ON console_engine_settings.id='console-v2-settings' WHERE document_id=?",
+        )
+        .get(d.id),
+    ).toMatchObject({ calendar_status: "accepted", calendar_ai_calls: 1 });
+    expect(
+      (await readCalendar(f.db, { articleId: d.id, day: "2026-11-20" })).items,
+    ).toHaveLength(1);
+  } finally {
+    f.close();
+  }
+});
 it("reports the backlog instead of going silent when the budget is spent", async () => {
   const f = await dateGateFixture();
   try {
-    const d = await f.store.document("autumn");
+    await f.article(
+      "ai-review-accepted",
+      "2026-11-15",
+      "2026年校园讲座预告",
+      "<p>活动时间：2026年11月20日14:00至16:00。地点：大学城校区一教109。</p>",
+    );
+    const d = await f.store.document("ai-review-accepted");
     await f.db.batch(
       await analysisStatements(f.db, d.id, d.contentRevision, d.inputHash!, {
         title: "2026年讲座预告",
@@ -278,7 +378,7 @@ it("reports the backlog instead of going silent when the budget is spent", async
     // stay queued and countable rather than being dropped on the floor.
     f.sqlite
       .prepare(
-        "UPDATE console_engine_settings SET calendar_ai_day=?,calendar_ai_calls=100,calendar_ai_cap=100",
+        "UPDATE console_engine_settings SET calendar_ai_day=?,calendar_ai_calls=200,calendar_ai_cap=200",
       )
       .run(new Date().toISOString().slice(0, 10));
     const run = vi.fn(async () => ({ response: { events: [] } }));

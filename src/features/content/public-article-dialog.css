@@ -213,6 +213,9 @@
 }
 
 @media (max-width: 560px) {
+  .public-article-dialog-toolbar:has(.task-add-button) {
+    flex-wrap: wrap;
+  }
   .public-article-dialog-toolbar {
     gap: 8px;
   }

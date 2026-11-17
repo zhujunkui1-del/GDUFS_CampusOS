@@ -1,0 +1,467 @@
+{
+  "question": "从南校区图书馆到教学楼 F 栋怎么走？",
+  "status": "success",
+  "entry": "campus-assistant-map",
+  "answer": "从图书馆到F栋超近的！沿校内步道走36米，再穿过教学实验楼可通行区域72米就到了，总共约108米，2分钟搞定~ 🐟\n\n图书馆 → 教学楼F栋\n109 米 · 约 2 分钟\n清除路线\n开始导航",
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "open",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 3,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 2355,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      },
+      {
+        "durationMs": 1140,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      },
+      {
+        "durationMs": 2799,
+        "firstTextMs": 2617,
+        "finishReason": "stop",
+        "contentChars": 58
+      }
+    ],
+    "promptTokens": 3464,
+    "completionTokens": 514,
+    "cachedPromptTokens": 0,
+    "totalTokens": 3978,
+    "usageComplete": true,
+    "chargedTokens": 3978,
+    "durationMs": 9920,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 3978,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 3915,
+      "serverElapsedMs": 13835,
+      "firstTextMs": 13790,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "plan_route",
+          "durationMs": 180,
+          "ok": true
+        },
+        {
+          "name": "control_map",
+          "durationMs": 41,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 26,
+        "writeQueries": 16,
+        "calls": 33,
+        "failures": 0,
+        "durationMs": 6041,
+        "maxCallMs": 1657,
+        "rowsRead": 584,
+        "rowsWritten": 34,
+        "rowUsageStatements": 17,
+        "rowUsageComplete": false
+      },
+      "retrieval": [],
+      "externalSearch": []
+    }
+  },
+  "cards": [
+    {
+      "kind": "route",
+      "routeId": "0f689cad-489a-4b3f-aaf2-669f395c0b15",
+      "startName": "图书馆",
+      "endName": "教学楼F栋",
+      "distanceMeters": 108.57550636081828,
+      "estimatedMinutes": 2,
+      "expiresAt": "2026-11-17T03:05:40.226Z",
+      "device": false
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-11-17T02:55:36.894Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:55:40.226Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "plan_route",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:55:40.406Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "plan_route",
+        "ok": true,
+        "durationMs": 180,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:55:41.887Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "control_map",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:55:41.928Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "control_map",
+        "ok": true,
+        "durationMs": 41,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:55:41.981Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "route",
+            "routeId": "0f689cad-489a-4b3f-aaf2-669f395c0b15",
+            "startName": "图书馆",
+            "endName": "教学楼F栋",
+            "distanceMeters": 108.57550636081828,
+            "estimatedMinutes": 2,
+            "expiresAt": "2026-11-17T03:05:40.226Z",
+            "device": false
+          }
+        ],
+        "packet": {
+          "id": "e71a816b-c7da-4781-9ab4-531135c00024",
+          "actions": [
+            {
+              "type": "SHOW_ROUTE",
+              "routeId": "0f689cad-489a-4b3f-aaf2-669f395c0b15"
+            }
+          ]
+        },
+        "routes": [
+          {
+            "route": {
+              "routeId": "0f689cad-489a-4b3f-aaf2-669f395c0b15",
+              "start": {
+                "source": "place",
+                "placeId": "osm-way-307250998",
+                "name": "图书馆",
+                "coordinate": [
+                  113.39131405,
+                  23.0680465
+                ],
+                "crs": "WGS84"
+              },
+              "end": {
+                "source": "place",
+                "placeId": "osm-node-3125704391",
+                "name": "教学楼F栋",
+                "coordinate": [
+                  113.392906,
+                  23.0668696
+                ],
+                "crs": "WGS84"
+              },
+              "mode": "walking",
+              "crs": "WGS84",
+              "source": "CampusOS.OSM",
+              "path": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    113.3918016005285,
+                    23.067670900868166
+                  ],
+                  [
+                    113.39189436341464,
+                    23.067690518891013
+                  ],
+                  [
+                    113.39192190050792,
+                    23.067580300836482
+                  ],
+                  [
+                    113.39204970048644,
+                    23.067532400803138
+                  ],
+                  [
+                    113.39262610039405,
+                    23.067158600656665
+                  ]
+                ]
+              },
+              "approachPath": null,
+              "undergroundPaths": [],
+              "distanceMeters": 108.57550636081828,
+              "estimatedSeconds": 86.86040508865463,
+              "estimatedMinutes": 2,
+              "steps": [
+                {
+                  "instruction": "沿校内步道步行",
+                  "distanceMeters": 36
+                },
+                {
+                  "instruction": "穿过教学实验楼可通行区域",
+                  "distanceMeters": 72
+                }
+              ],
+              "networkVersion": "s1-campus-2026-10-14.2",
+              "mapVersion": "s1-2026-10-14.2",
+              "crossesZones": false,
+              "usesTunnel": false,
+              "expiresAt": "2026-11-17T03:05:40.226Z"
+            },
+            "ticket": "eyJvd25lciI6Imc6YWZiM2NkNDFjYzhmZTE5YTNhYjk3ZGJmZDY3N2ZhZTYyNzdiOTdhZTZhNjhlMjdiN2VjYmVlMDMzZTIzN2Y0YiIsInJvdXRlIjp7InJvdXRlSWQiOiIwZjY4OWNhZC00ODlhLTRiM2YtYWFmMi02NjlmMzk1YzBiMTUiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJlbmQiOnsic291cmNlIjoicGxhY2UiLCJwbGFjZUlkIjoib3NtLW5vZGUtMzEyNTcwNDM5MSIsIm5hbWUiOiLmlZnlrabmpbxG5qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTI5MDYsMjMuMDY2ODY5Nl0sImNycyI6IldHUzg0In0sIm1vZGUiOiJ3YWxraW5nIiwiY3JzIjoiV0dTODQiLCJzb3VyY2UiOiJDYW1wdXNPUy5PU00iLCJwYXRoIjp7InR5cGUiOiJMaW5lU3RyaW5nIiwiY29vcmRpbmF0ZXMiOltbMTEzLjM5MTgwMTYwMDUyODUsMjMuMDY3NjcwOTAwODY4MTY2XSxbMTEzLjM5MTg5NDM2MzQxNDY0LDIzLjA2NzY5MDUxODg5MTAxM10sWzExMy4zOTE5MjE5MDA1MDc5MiwyMy4wNjc1ODAzMDA4MzY0ODJdLFsxMTMuMzkyMDQ5NzAwNDg2NDQsMjMuMDY3NTMyNDAwODAzMTM4XSxbMTEzLjM5MjYyNjEwMDM5NDA1LDIzLjA2NzE1ODYwMDY1NjY2NV1dfSwiYXBwcm9hY2hQYXRoIjpudWxsLCJ1bmRlcmdyb3VuZFBhdGhzIjpbXSwiZGlzdGFuY2VNZXRlcnMiOjEwOC41NzU1MDYzNjA4MTgyOCwiZXN0aW1hdGVkU2Vjb25kcyI6ODYuODYwNDA1MDg4NjU0NjMsImVzdGltYXRlZE1pbnV0ZXMiOjIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNn0seyJpbnN0cnVjdGlvbiI6Iuepv-i_h-aVmeWtpuWunumqjOalvOWPr-mAmuihjOWMuuWfnyIsImRpc3RhbmNlTWV0ZXJzIjo3Mn1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjpmYWxzZSwidXNlc1R1bm5lbCI6ZmFsc2UsImV4cGlyZXNBdCI6IjIwMjYtMTEtMTdUMDM6MDU6NDAuMjI2WiJ9fQ.8kOLfcAdPAdQxvk6Es0wlxyuHDSElQNbVfkAH0zMPWg"
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:55:46.814Z",
+      "type": "message.delta",
+      "payload": {
+        "text": "从图书馆到F栋超近的！沿校内步道走36米，再穿过教学实验楼可通行区域72米就到了，总共约108米，2分钟搞定~ 🐟"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:55:46.991Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "route",
+            "routeId": "0f689cad-489a-4b3f-aaf2-669f395c0b15",
+            "startName": "图书馆",
+            "endName": "教学楼F栋",
+            "distanceMeters": 108.57550636081828,
+            "estimatedMinutes": 2,
+            "expiresAt": "2026-11-17T03:05:40.226Z",
+            "device": false
+          }
+        ],
+        "routes": [
+          {
+            "route": {
+              "routeId": "0f689cad-489a-4b3f-aaf2-669f395c0b15",
+              "start": {
+                "source": "place",
+                "placeId": "osm-way-307250998",
+                "name": "图书馆",
+                "coordinate": [
+                  113.39131405,
+                  23.0680465
+                ],
+                "crs": "WGS84"
+              },
+              "end": {
+                "source": "place",
+                "placeId": "osm-node-3125704391",
+                "name": "教学楼F栋",
+                "coordinate": [
+                  113.392906,
+                  23.0668696
+                ],
+                "crs": "WGS84"
+              },
+              "mode": "walking",
+              "crs": "WGS84",
+              "source": "CampusOS.OSM",
+              "path": {
+                "type": "LineString",
+                "coordinates": [
+                  [
+                    113.3918016005285,
+                    23.067670900868166
+                  ],
+                  [
+                    113.39189436341464,
+                    23.067690518891013
+                  ],
+                  [
+                    113.39192190050792,
+                    23.067580300836482
+                  ],
+                  [
+                    113.39204970048644,
+                    23.067532400803138
+                  ],
+                  [
+                    113.39262610039405,
+                    23.067158600656665
+                  ]
+                ]
+              },
+              "approachPath": null,
+              "undergroundPaths": [],
+              "distanceMeters": 108.57550636081828,
+              "estimatedSeconds": 86.86040508865463,
+              "estimatedMinutes": 2,
+              "steps": [
+                {
+                  "instruction": "沿校内步道步行",
+                  "distanceMeters": 36
+                },
+                {
+                  "instruction": "穿过教学实验楼可通行区域",
+                  "distanceMeters": 72
+                }
+              ],
+              "networkVersion": "s1-campus-2026-10-14.2",
+              "mapVersion": "s1-2026-10-14.2",
+              "crossesZones": false,
+              "usesTunnel": false,
+              "expiresAt": "2026-11-17T03:05:40.226Z"
+            },
+            "ticket": "eyJvd25lciI6Imc6YWZiM2NkNDFjYzhmZTE5YTNhYjk3ZGJmZDY3N2ZhZTYyNzdiOTdhZTZhNjhlMjdiN2VjYmVlMDMzZTIzN2Y0YiIsInJvdXRlIjp7InJvdXRlSWQiOiIwZjY4OWNhZC00ODlhLTRiM2YtYWFmMi02NjlmMzk1YzBiMTUiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJlbmQiOnsic291cmNlIjoicGxhY2UiLCJwbGFjZUlkIjoib3NtLW5vZGUtMzEyNTcwNDM5MSIsIm5hbWUiOiLmlZnlrabmpbxG5qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTI5MDYsMjMuMDY2ODY5Nl0sImNycyI6IldHUzg0In0sIm1vZGUiOiJ3YWxraW5nIiwiY3JzIjoiV0dTODQiLCJzb3VyY2UiOiJDYW1wdXNPUy5PU00iLCJwYXRoIjp7InR5cGUiOiJMaW5lU3RyaW5nIiwiY29vcmRpbmF0ZXMiOltbMTEzLjM5MTgwMTYwMDUyODUsMjMuMDY3NjcwOTAwODY4MTY2XSxbMTEzLjM5MTg5NDM2MzQxNDY0LDIzLjA2NzY5MDUxODg5MTAxM10sWzExMy4zOTE5MjE5MDA1MDc5MiwyMy4wNjc1ODAzMDA4MzY0ODJdLFsxMTMuMzkyMDQ5NzAwNDg2NDQsMjMuMDY3NTMyNDAwODAzMTM4XSxbMTEzLjM5MjYyNjEwMDM5NDA1LDIzLjA2NzE1ODYwMDY1NjY2NV1dfSwiYXBwcm9hY2hQYXRoIjpudWxsLCJ1bmRlcmdyb3VuZFBhdGhzIjpbXSwiZGlzdGFuY2VNZXRlcnMiOjEwOC41NzU1MDYzNjA4MTgyOCwiZXN0aW1hdGVkU2Vjb25kcyI6ODYuODYwNDA1MDg4NjU0NjMsImVzdGltYXRlZE1pbnV0ZXMiOjIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNn0seyJpbnN0cnVjdGlvbiI6Iuepv-i_h-aVmeWtpuWunumqjOalvOWPr-mAmuihjOWMuuWfnyIsImRpc3RhbmNlTWV0ZXJzIjo3Mn1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjpmYWxzZSwidXNlc1R1bm5lbCI6ZmFsc2UsImV4cGlyZXNBdCI6IjIwMjYtMTEtMTdUMDM6MDU6NDAuMjI2WiJ9fQ.8kOLfcAdPAdQxvk6Es0wlxyuHDSElQNbVfkAH0zMPWg"
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:55:46.991Z",
+      "type": "run.completed",
+      "payload": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "open",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 3,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 2355,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 1140,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 2799,
+              "firstTextMs": 2617,
+              "finishReason": "stop",
+              "contentChars": 58
+            }
+          ],
+          "promptTokens": 3464,
+          "completionTokens": 514,
+          "cachedPromptTokens": 0,
+          "totalTokens": 3978,
+          "usageComplete": true,
+          "chargedTokens": 3978,
+          "durationMs": 9920,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 3978,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 3915,
+            "serverElapsedMs": 13835,
+            "firstTextMs": 13790,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "plan_route",
+                "durationMs": 180,
+                "ok": true
+              },
+              {
+                "name": "control_map",
+                "durationMs": 41,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 26,
+              "writeQueries": 16,
+              "calls": 33,
+              "failures": 0,
+              "durationMs": 6041,
+              "maxCallMs": 1657,
+              "rowsRead": 584,
+              "rowsWritten": 34,
+              "rowUsageStatements": 17,
+              "rowUsageComplete": false
+            },
+            "retrieval": [],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": "[411.30210995144313,402.22609288957386,718.6978895187378,617.7739063051011]",
+    "cameraMoving": "false"
+  }
+}

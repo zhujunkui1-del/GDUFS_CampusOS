@@ -128,7 +128,13 @@ export const PlaceDetailsOutputSchema = z
   .strict();
 export const NearbyPlacesInputSchema = z
   .object({
-    origin: OriginSchema.optional(),
+    origin: z.preprocess(
+      (value) => {
+        if (typeof value !== "string") return value;
+        try { return JSON.parse(value); } catch { return value; }
+      },
+      OriginSchema,
+    ).optional(),
     category: CategorySchema.optional(),
     radiusMeters: z.number().min(1).max(2000).optional(),
     limit: z.number().int().min(1).max(20).optional(),

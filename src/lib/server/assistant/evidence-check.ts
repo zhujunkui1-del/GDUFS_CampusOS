@@ -11,6 +11,16 @@ export const EVIDENCE_VERDICT_TOOL: ModelTool = {
       required: ["supported", "issues"],
       properties: {
         supported: { type: "boolean" },
+        relevant: {
+          type: "boolean",
+          description: "是否回答本轮问题所问对象和任务。",
+        },
+        coverage: {
+          type: "string",
+          enum: ["covered", "partial", "uncertain"],
+          description:
+            "是否覆盖本轮证据中足以直接回答问题的关键内容。材料本身缺失的内容不算错误。",
+        },
         // A contradiction is a factual error; "unverified" is a detail the
         // sources simply do not state. Only a contradiction should discard an
         // otherwise good answer.
@@ -32,6 +42,8 @@ export const EVIDENCE_VERDICT_TOOL: ModelTool = {
 const Verdict = z
   .object({
     supported: z.boolean(),
+    relevant: z.boolean().optional(),
+    coverage: z.enum(["covered", "partial", "uncertain"]).optional(),
     severity: z.enum(["contradiction", "unverified"]).optional(),
     issues: z.array(z.string().max(180)).max(3),
   })
@@ -50,7 +62,7 @@ export function evidenceCheckMessages(
     {
       role: "system",
       content:
-        "语义抽取字段为空只表示未抽取；给出的原文已明确提供时可按原文核对。reviewFocus仅是待核对线索，不是错误判决。不得据此绕过元数据/正文范围及来源权限限制。",
+        "分别检查 supported（事实是否有据）、relevant（有没有回答本轮问题）和 coverage（是否遗漏已提供的关键证据）。答的是另一主题时标 relevant=false；只有关键内容已经有可靠证据却没答时标 coverage=partial。语义字段为空仅表示未抽取，原文明确给出即可核对。reviewFocus仅是待核对线索。",
     },
     {
       role: "system",

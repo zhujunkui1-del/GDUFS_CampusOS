@@ -2,6 +2,7 @@ import { z } from "zod";
 import {
   campusData,
   searchCampusPlaces,
+  placeLayer,
   type CampusPlace,
 } from "@/features/campus-map/data/campus";
 import { normalizePlaceText } from "@/features/campus-map/data/campus-text";
@@ -191,8 +192,12 @@ export class CampusMapService {
       ? "canteen"
       : undefined;
     const category = checked.category || categoryTerm;
-    const pool = visiblePlaces.filter(
-      (p) => !category || p.category === category,
+    const sportsListing =
+      /^(?:体育场地|体育场馆|体育设施|运动场地|运动场馆)$/.test(query);
+    const pool = visiblePlaces.filter((p) =>
+      sportsListing
+        ? placeLayer(p) === "sports"
+        : !category || p.category === category,
     );
     const exact = pool.filter((p) =>
       [p.name, ...(p.aliases || [])].some((name) => normalize(name) === query),
@@ -200,7 +205,7 @@ export class CampusMapService {
     const reused = new Set(searchCampusPlaces(query).map((p) => p.id));
     let matches = exact.length
       ? exact
-      : categoryTerm
+      : categoryTerm || sportsListing
         ? pool
         : pool.filter(
             (p) =>
@@ -211,7 +216,7 @@ export class CampusMapService {
           );
     let matchType: "exact" | "partial" | "fuzzy" | "category" = exact.length
       ? "exact"
-      : categoryTerm
+      : categoryTerm || sportsListing
         ? "category"
         : "partial";
     if (!matches.length && query.length >= 3) {
@@ -230,7 +235,9 @@ export class CampusMapService {
     if (!matches.length)
       throw new ApiError("NOT_FOUND", "未找到该地点，请换个名称。");
     return SearchPlacesOutputSchema.parse({
-      matches: matches.slice(0, checked.limit || 10).map(summary),
+      matches: matches
+        .slice(0, checked.limit || (sportsListing ? 20 : 10))
+        .map(summary),
       ambiguous: matches.length > 1 || matchType === "fuzzy",
       matchType,
       requiresOriginForNearest: nearest,

@@ -1,0 +1,993 @@
+{
+  "question": "广外本科生申请转专业需要满足什么条件？具体流程是什么？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "### 广外本科生转专业申请条件\n1. 基本身份要求：仅限一年级或二年级全日制在校本科生可提交申请 [1]\n2. 在校表现要求：申请人在校期间无违纪处分记录 [1]\n3. 专业匹配要求：对其他专业有兴趣和专长 [1]\n4. 次数限制：每名学生每次只能申请转入1个专业，在校期间原则上只能成功转1次专业；各专业转出学生人数不设限制，转入学生人数由各学院根据实际情况确定 [2]\n*注：学校转专业分为教学改革班选拔、申请转专业、特殊情况转专业三类 [2]*\n\n### 申请时间要求\n一年级学生可在第一学期、第二学期申请，二年级学生可在第四学期申请，均需在学期结束前完成 [1]\n\n### 申请流程\n1. 初步咨询：符合申请条件的学生可在当年暑假前后向拟报读的接收学院或学科点进行初步联系 [1]\n2. 方案公布：各学院根据各专业实际情况制定转专业工作方案并对外公布 [1]\n3. 手续办理：教学改革班选拔类转专业，经公示无异议后由转入学院报教务部办理转专业手续 [2]\n\n---\n### 依据\n[1] 《2026版本科生学生手册》（学生工作部）\n[2] 《广东外语外贸大学本科生转专业实施办法》（广外校〔2025〕37号，党委办公室/校长办公室）",
+  "cards": [
+    {
+      "kind": "source",
+      "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+      "title": "2026版本科生学生手册（全文）",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+      "publishedAt": "2026-09-20T11:16:00.000Z",
+      "snippet": "第七条一年级学生可在第一学期、第二学期申请转专业，二年级学\n生可在第四学期申请转专业，均应在学期结束前完成。每名学生每次只能\n申请转入1 个专业。申请转专业的学生应符合以下条件：\n（一）一年级或二年级在校学生；\n（二）在校期间无违纪处分记录；\n（三）对其他专业有兴趣和专长。 第八条申请转专业的程序如下： （一）公布方案。各学院根据各专业的实际情况，制定学院转专业工\n教学管理\n55",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    },
+    {
+      "kind": "source",
+      "documentId": "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+      "title": "广东外语外贸大学本科生转专业实施办法",
+      "sourceName": "党委办公室（校长办公室）",
+      "originalUrl": "https://dbxb.gdufs.edu.cn/info/1094/2604.htm",
+      "publishedAt": "2025-12-11",
+      "snippet": "（广外校〔2025〕37号 2025年12月11日印发）\n第一章 总则\n第一条 为规范我校本科生转专业管理，调动学生学习的主动性与积极性，促进学生自主学习和个性化发展，根据《普通高等学校学生管理规定》，结合学校实际，制定本办法。\n第二条 本办法适用于我校普通本科学历教育的全日制学生。\n第三条 转专业工作坚持公开、公平、公正的原则。\n第四条 学校允许符合条件的本科生转专业。各专业转出学生人数不设限制，转入学生人数由各学院根据实际情况确定。\n第二章 转专业的分类、条件和程序\n第五条 学校转专业分为三种情况：\n（一）教学改革班选拔；\n（二）申请转专业；\n（三）特殊情况转专业。\n每个学生在校期间原则上只能成功转1次专业。\n第六条 新生入学阶段，学校按照当年情况选拔进入各类教学改革班的学生，",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    }
+  ],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T02:06:18.514Z",
+      "elapsedMs": 172,
+      "data": {
+        "question": "广外本科生申请转专业需要满足什么条件？具体流程是什么？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T02:06:18.514Z",
+      "elapsedMs": 172,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T02:06:19.473Z",
+      "elapsedMs": 1131,
+      "data": {
+        "question": "广外本科生申请转专业需要满足什么条件？具体流程是什么？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T02:06:19.473Z",
+      "elapsedMs": 1131,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T02:06:19.473Z",
+      "elapsedMs": 1131,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T02:06:19.473Z",
+      "elapsedMs": 1131,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T02:06:19.473Z",
+      "elapsedMs": 1131,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T02:06:19.473Z",
+      "elapsedMs": 1131,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "requirements",
+        "campus": null,
+        "topics": [],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "running",
+      "at": "2026-11-17T02:06:19.540Z",
+      "elapsedMs": 1198,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答或工具选择",
+        "tools": [
+          "plan_campus_query"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "success",
+      "at": "2026-11-17T02:06:25.786Z",
+      "elapsedMs": 7444,
+      "durationMs": 6246,
+      "data": {
+        "finishReason": "tool_calls",
+        "toolCalls": [
+          "plan_campus_query"
+        ],
+        "characters": 0,
+        "usage": {
+          "promptTokens": 533,
+          "completionTokens": 799,
+          "totalTokens": 1332
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "running",
+      "at": "2026-11-17T02:06:25.854Z",
+      "elapsedMs": 7512,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外本科生申请转专业需要满足什么条件 具体流程是什么",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "success",
+      "at": "2026-11-17T02:06:27.381Z",
+      "elapsedMs": 9039,
+      "durationMs": 1527,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "chunkId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285:fts:bc4c3d7651c7c2fc:64",
+              "title": "2026版本科生学生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+              "publishedAt": "2026-09-20T11:16:00.000Z",
+              "contentSnippet": "第七条一年级学生可在第一学期、第二学期申请转专业，二年级学\n生可在第四学期申请转专业，均应在学期结束前完成。每名学生每次只能\n申请转入1 个专业。申请转专业的学生应符合以下条件：\n（一）一年级或二年级在校学生；\n（二）在校期间无违纪处分记录；\n（三）对其他专业有兴趣和专长。 第八条申请转专业的程序如下： （一）公布方案。各学院根据各专业的实际情况，制定学院转专业工\n教学管理\n55",
+              "startOffset": 46537,
+              "endOffset": 46728,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 80.07,
+              "rankingReasons": [
+                "标题词组匹配 1.5",
+                "片段词组匹配 10.5",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "f72fdd02d8506d6c8bec1326ecc47e069aa5eb71309bc2f952db35c853fe5e2e",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+              "chunkId": "content-3da188fb-d19a-4b8a-9124-30ffe840525a:fts:52bf71bd53b6f1d3:0",
+              "title": "广东外语外贸大学本科生转专业实施办法",
+              "sourceId": "GDUFS-SRC-0043",
+              "sourceName": "党委办公室（校长办公室）",
+              "originalUrl": "https://dbxb.gdufs.edu.cn/info/1094/2604.htm",
+              "publishedAt": "2025-12-11",
+              "contentSnippet": "（广外校〔2025〕37号 2025年12月11日印发）\n第一章 总则\n第一条 为规范我校本科生转专业管理，调动学生学习的主动性与积极性，促进学生自主学习和个性化发展，根据《普通高等学校学生管理规定》，结合学校实际，制定本办法。\n第二条 本办法适用于我校普通本科学历教育的全日制学生。\n第三条 转专业工作坚持公开、公平、公正的原则。\n第四条 学校允许符合条件的本科生转专业。各专业转出学生人数不设限制，转入学生人数由各学院根据实际情况确定。\n第二章 转专业的分类、条件和程序\n第五条 学校转专业分为三种情况：\n（一）教学改革班选拔；\n（二）申请转专业；\n（三）特殊情况转专业。\n每个学生在校期间原则上只能成功转1次专业。\n第六条 新生入学阶段，学校按照当年情况选拔进入各类教学改革班的学生，",
+              "startOffset": 601,
+              "endOffset": 946,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 69.48,
+              "rankingReasons": [
+                "标题词组匹配 3",
+                "片段词组匹配 9",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "academic_affairs",
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "c96b126ca3035d85ff0da2050eb1d0aeebe357b194ded2c124ed26bc827f9e5e",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 1499,
+            "rowsWritten": 0,
+            "queries": 6,
+            "durationMs": 1527,
+            "stagesMs": {
+              "lexical": 293,
+              "supplement": 818,
+              "revalidationAndRanking": 416
+            },
+            "candidateChunks": 96,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 20
+              },
+              {
+                "name": "document_passages",
+                "limit": 432,
+                "candidates": 16
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "广外本科生申请转专业需要满足什么条件 具体流程是什么",
+          "now": "2026-11-17T02:06:25.854Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "activityKey": "activity-1",
+              "name": "2026版本科生学生手册（全文）",
+              "kind": "event",
+              "category": null,
+              "startsAt": null,
+              "endsAt": null,
+              "placeRaw": "学生第二饭堂对面小木屋）",
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": false,
+              "registrationRequirement": "required",
+              "registrationState": "unknown",
+              "registrationWindows": [
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "是指每年研究生报名开始时已进入毕业学年学习的本科生（不含辅修学位、专升本、 第二学士学位学生、本硕项目的国际班学生和独立学院学生）"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "具体申报时间以教育部规定及学校相关通知为准。申请者应列明本人已具备的推荐免试条件、报读的研究生专业和专业方向"
+                  ]
+                },
+                {
+                  "roundLabel": null,
+                  "start": null,
+                  "end": null,
+                  "deadlineSemantics": "unspecified",
+                  "capacityLimited": false,
+                  "state": "unknown",
+                  "evidence": [
+                    "1. 申请时间：学校一般于每年9 月集中受理创新创业学分认定申请；\n2. 申请材料：学生本人填写《广东外语外贸大学本科生创新创业学分"
+                  ]
+                }
+              ],
+              "otherDeadlines": [
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                },
+                {
+                  "role": "publicity",
+                  "time": {
+                    "raw": "4-7",
+                    "date": "2026-04-07",
+                    "at": null,
+                    "timezone": "Asia/Shanghai",
+                    "precision": "date",
+                    "resolution": "day",
+                    "inferred": true,
+                    "inferenceBasis": "原文明确发布日期的相邻年度；不是系统当前日期",
+                    "evidence": "4-7"
+                  }
+                }
+              ],
+              "registrationUrl": null,
+              "evidence": [
+                "是指每年研究生报名开始时已进入毕业学年学习的本科生（不含辅修学位、专升本、 第二学士学位学生、本硕项目的国际班学生和独立学院学生）",
+                "具体申报时间以教育部规定及学校相关通知为准。申请者应列明本人已具备的推荐免试条件、报读的研究生专业和专业方向",
+                "1. 申请时间：学校一般于每年9 月集中受理创新创业学分认定申请；\n2. 申请材料：学生本人填写《广东外语外贸大学本科生创新创业学分"
+              ],
+              "mapPlace": null
+            }
+          ],
+          "knowledge": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "符合申请条件的学生可在当年暑假前后向拟报读的接收单位或学科点进行初步联系",
+                "除需满足本规定第九条、第十条的条件外",
+                "第二章奖励标准与申请条件"
+              ],
+              "materials": [
+                "可申请转学： （一）患病学生需提供我校及拟转入学校指定医院的检查证明（需盖疾病诊断证明专用章）",
+                "有特殊困难和特别需要的学生需提供相关证明材料"
+              ],
+              "steps": [
+                "国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续 3 年上榜“US News”世界大学排名；入选软科中国文科实力A 类大学，稳居全国前50 强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI 全球前5‰，工程学、环境 /生态学、经济学与商学进入ESI 前1%；12 个学科上榜软科中国最好学科；外国语言文学学科连续多年上榜软科“中国顶尖学科”， 稳居全国前3；应用经济学、法学连续多年上榜软科“中国一流学科”。 科学研究学校深入推进有组织科研，构建服务共建“一带一路”倡议、 高水平对外开放与粤港澳大湾区建设、法治中国与涉外法治建设、 国际传播建设等四大科研平台体系",
+                "学校各单位： 为深入贯彻落实党的十八届三中全会关于深化教育领域综合改革的精神，积极适应经济社会发展新常态对高等教育人才培养的需求，根据《中华人民共和国教育法》《普通高等学校学生管理规定》（教育部令第21 号）等法律法规和《教育部关于全面提高高等教育质量的若干意见》（教高〔2012〕4 号）、《广东省人民政府办公厅转发教育厅关于进一步扩大和落实高校办学自主权促进高校加快发展若干意见的通知》（粤府办 〔2013〕26 号）等文件要求，学校结合实际，研究制定了本科教学实施学分制管理的若干意见，经2015 年1 月12 日校党委常委会审议并原则通过，具体如下。 一、指导思想坚持育人为本，立德树人，全面",
+                "3．选课制。学生根据专业培养方案自主安排学习进程，对于必修课， 可选择任课教师；对于选修课，可选择课程和任课教师；每学期前两周， 学生试听课程，试听结束后作出选课确认。 4．主辅修制。学生在达到主修专业学习要求的前提下，可以辅修其他专业；在主修专业达到毕业要求的前提下，其修读的辅修专业如达到要求，可向其发放辅修专业证书；学生在主修专业具备学位授予资格的前提下，如其辅修专业达到学位授予条件，可获得相应专业学位证书。 5．学分互认制。学生在与我校签订了学分互认协议的境内外高校或在我校认可的境内外高校或MOOC 等网络学习平台修读课程获得的成绩和学分，可以转换为本校课程成绩和学分；学生修读校外课程，"
+              ]
+            },
+            {
+              "documentId": "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "第六条 新生入学阶段，学校按照当年情况选拔进入各类教学改革班的学生，经公示无异议后，由转入学院报教务部办理转专业手续。"
+              ]
+            }
+          ]
+        },
+        "durationMs": 1527
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "running",
+      "at": "2026-11-17T02:06:27.441Z",
+      "elapsedMs": 9099,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答生成",
+        "tools": []
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:7",
+      "state": "success",
+      "at": "2026-11-17T02:06:38.285Z",
+      "elapsedMs": 19943,
+      "durationMs": 10844,
+      "data": {
+        "finishReason": "stop",
+        "toolCalls": [],
+        "characters": 521,
+        "usage": {
+          "promptTokens": 2480,
+          "completionTokens": 1385,
+          "totalTokens": 3865
+        }
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "phase": "evidence_check",
+      "state": "running",
+      "at": "2026-11-17T02:06:38.338Z",
+      "elapsedMs": 19996,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "tool": "report_evidence_verdict",
+        "timeoutMs": 10000
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:8",
+      "phase": "evidence_check",
+      "state": "error",
+      "at": "2026-11-17T02:06:48.338Z",
+      "elapsedMs": 29996,
+      "durationMs": 10000,
+      "data": {
+        "status": "超时"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "running",
+      "at": "2026-11-17T02:06:48.393Z",
+      "elapsedMs": 30051,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:9",
+      "state": "success",
+      "at": "2026-11-17T02:06:48.456Z",
+      "elapsedMs": 30114,
+      "durationMs": 63,
+      "data": {
+        "characters": 521,
+        "cards": 2
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "running",
+      "at": "2026-11-17T02:06:48.456Z",
+      "elapsedMs": 30114,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:10",
+      "state": "success",
+      "at": "2026-11-17T02:06:48.456Z",
+      "elapsedMs": 30114,
+      "durationMs": 0,
+      "data": {
+        "characters": 521,
+        "cards": 2
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:06:25.854Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T02:06:25.854Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T02:06:27.381Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 1527,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T02:06:48.643Z",
+      "data": {
+        "cards": [
+          {
+            "kind": "source",
+            "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+            "title": "2026版本科生学生手册（全文）",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+            "publishedAt": "2026-09-20T11:16:00.000Z",
+            "snippet": "第七条一年级学生可在第一学期、第二学期申请转专业，二年级学\n生可在第四学期申请转专业，均应在学期结束前完成。每名学生每次只能\n申请转入1 个专业。申请转专业的学生应符合以下条件：\n（一）一年级或二年级在校学生；\n（二）在校期间无违纪处分记录；\n（三）对其他专业有兴趣和专长。 第八条申请转专业的程序如下： （一）公布方案。各学院根据各专业的实际情况，制定学院转专业工\n教学管理\n55",
+            "evidenceType": "full_text",
+            "classificationState": "knowledge",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          },
+          {
+            "kind": "source",
+            "documentId": "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+            "title": "广东外语外贸大学本科生转专业实施办法",
+            "sourceName": "党委办公室（校长办公室）",
+            "originalUrl": "https://dbxb.gdufs.edu.cn/info/1094/2604.htm",
+            "publishedAt": "2025-12-11",
+            "snippet": "（广外校〔2025〕37号 2025年12月11日印发）\n第一章 总则\n第一条 为规范我校本科生转专业管理，调动学生学习的主动性与积极性，促进学生自主学习和个性化发展，根据《普通高等学校学生管理规定》，结合学校实际，制定本办法。\n第二条 本办法适用于我校普通本科学历教育的全日制学生。\n第三条 转专业工作坚持公开、公平、公正的原则。\n第四条 学校允许符合条件的本科生转专业。各专业转出学生人数不设限制，转入学生人数由各学院根据实际情况确定。\n第二章 转专业的分类、条件和程序\n第五条 学校转专业分为三种情况：\n（一）教学改革班选拔；\n（二）申请转专业；\n（三）特殊情况转专业。\n每个学生在校期间原则上只能成功转1次专业。\n第六条 新生入学阶段，学校按照当年情况选拔进入各类教学改革班的学生，",
+            "evidenceType": "full_text",
+            "classificationState": "knowledge",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T02:06:48.643Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": true,
+            "code": "INVALID_PLAN",
+            "effectiveQuery": "广外本科生申请转专业需要满足什么条件 具体流程是什么",
+            "fallbackReason": "INVALID_PLAN",
+            "durationMs": 6246,
+            "usage": {
+              "promptTokens": 533,
+              "completionTokens": 799,
+              "totalTokens": 1332
+            }
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "content-3da188fb-d19a-4b8a-9124-30ffe840525a"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 3,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 1,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 1,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 10844,
+              "firstTextMs": 9265,
+              "finishReason": "stop",
+              "contentChars": 521
+            },
+            {
+              "durationMs": 10000,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 3013,
+          "completionTokens": 2184,
+          "cachedPromptTokens": 0,
+          "totalTokens": 5197,
+          "usageComplete": false,
+          "chargedTokens": 5197,
+          "durationMs": 22539,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 250000,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 7512,
+            "serverElapsedMs": 30051,
+            "firstTextMs": 29996,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 1527,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 25,
+              "writeQueries": 12,
+              "calls": 29,
+              "failures": 0,
+              "durationMs": 2429,
+              "maxCallMs": 345,
+              "rowsRead": 1920,
+              "rowsWritten": 26,
+              "rowUsageStatements": 19,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 1499,
+                "rowsWritten": 0,
+                "queries": 6,
+                "durationMs": 1527,
+                "stagesMs": {
+                  "lexical": 293,
+                  "supplement": 818,
+                  "revalidationAndRanking": 416
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 64
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 20
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 432,
+                    "candidates": 16
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": true,
+      "code": "INVALID_PLAN",
+      "effectiveQuery": "广外本科生申请转专业需要满足什么条件 具体流程是什么",
+      "fallbackReason": "INVALID_PLAN",
+      "durationMs": 6246,
+      "usage": {
+        "promptTokens": 533,
+        "completionTokens": 799,
+        "totalTokens": 1332
+      }
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+        "content-3da188fb-d19a-4b8a-9124-30ffe840525a"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 3,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 1,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 10844,
+        "firstTextMs": 9265,
+        "finishReason": "stop",
+        "contentChars": 521
+      },
+      {
+        "durationMs": 10000,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 3013,
+    "completionTokens": 2184,
+    "cachedPromptTokens": 0,
+    "totalTokens": 5197,
+    "usageComplete": false,
+    "chargedTokens": 5197,
+    "durationMs": 22539,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 250000,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 7512,
+      "serverElapsedMs": 30051,
+      "firstTextMs": 29996,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1527,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 25,
+        "writeQueries": 12,
+        "calls": 29,
+        "failures": 0,
+        "durationMs": 2429,
+        "maxCallMs": 345,
+        "rowsRead": 1920,
+        "rowsWritten": 26,
+        "rowUsageStatements": 19,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 1499,
+          "rowsWritten": 0,
+          "queries": 6,
+          "durationMs": 1527,
+          "stagesMs": {
+            "lexical": 293,
+            "supplement": 818,
+            "revalidationAndRanking": 416
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 20
+            },
+            {
+              "name": "document_passages",
+              "limit": 432,
+              "candidates": 16
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

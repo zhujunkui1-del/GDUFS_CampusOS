@@ -32,6 +32,8 @@ export const EventSearchInputSchema = KnowledgeSearchInputSchema.extend({
       "capacity_unknown",
     ])
     .optional(),
+  campus: z.enum(["university_town", "baiyun", "online"]).optional(),
+  eventState: z.literal("upcoming").optional(),
 }).strict();
 export const RetrievalTimeSchema = ArticleTimePointSchema.pick({
   raw: true,

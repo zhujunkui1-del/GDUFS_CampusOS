@@ -18,6 +18,18 @@ const cards: AssistantCard[] = [
     readable: true,
   },
 ];
+it("links only the task title and removes the obsolete footer from past messages", () => {
+  const html = renderToStaticMarkup(
+    createElement(AssistantMessageText, {
+      cards: [],
+      text: "- 参加：[校园宣讲](<https://example.org/article>)  \n  ⏱️逾期时间:11/19 13:50  \n  📝备注：带学生证，参考 https://example.org/notes\n\n[打开我的收藏与待办](/account/favorites)",
+    }),
+  );
+  expect(html.match(/<a /g)).toHaveLength(1);
+  expect(html).toMatch(/参加：<a [^>]+>校园宣讲<\/a><br\/>/);
+  expect(html).toMatch(/⏱️逾期时间:11\/19 13:50<br\/>\s*📝备注：带学生证/);
+  expect(html).not.toContain("打开我的收藏与待办");
+});
 it("renders semantic blocks and exact evidence citations", () => {
   const html = renderToStaticMarkup(
     createElement(AssistantMessageText, {

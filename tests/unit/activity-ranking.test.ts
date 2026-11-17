@@ -1,6 +1,7 @@
 import { expect, it } from "vitest";
 import { dateGateFixture } from "../fixtures/date-gate";
 import { ensureRetrievalIndex } from "@/lib/server/retrieval/indexer";
+import { ensureArticleAnalysis } from "@/lib/server/console/article-analysis";
 import { searchContent } from "@/lib/server/retrieval/skills";
 import { evidenceWindow } from "@/lib/retrieval/evidence-window";
 
@@ -26,6 +27,8 @@ async function add(
       "c".repeat(64),
     );
   await f.store.publishCollectedWebArticle(id);
+    await ensureArticleAnalysis(f.db,id);
+    f.sqlite.prepare("UPDATE document_article_analysis SET calendar_status='accepted' WHERE document_id=?").run(id);
   f.sqlite.prepare("DELETE FROM knowledge_chunks WHERE document_id=?").run(id);
   f.sqlite
     .prepare("DELETE FROM article_search_documents WHERE document_id=?")

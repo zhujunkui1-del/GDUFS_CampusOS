@@ -13,6 +13,7 @@ import { ModelConfigStore } from "../models/model-config-store";
 import { testPersonalConnection } from "../models/personal-client";
 import { MODEL_PROVIDER_IDS } from "@/domain/models/providers";
 import { ArticleFavoriteStore } from "./favorites";
+import { PersonalTaskStore } from "./tasks";
 import { trustedClientIp } from "../request-ip";
 
 export const accountMethods: Record<string, readonly string[]> = {
@@ -31,6 +32,7 @@ export const accountMethods: Record<string, readonly string[]> = {
   "/api/auth/email/unbind": ["POST"],
   "/api/auth/email/unbind/request": ["POST"],
   "/api/me": ["GET", "PATCH"],
+  "/api/me/tasks": ["GET", "POST", "PATCH"],
   "/api/me/model-settings": ["GET", "PATCH", "DELETE"],
   "/api/me/model-configs": ["GET", "POST", "PATCH", "DELETE"],
 };
@@ -148,6 +150,12 @@ export function createAccountApi(options: {
       }
       if (path === "/api/me" && request.method === "GET")
         return { user: store.profile((await store.require(request)).row) };
+      if (path === "/api/me/tasks") {
+        const { row } = await store.require(request);
+        const tasks = new PersonalTaskStore(store.db);
+        if (request.method === "GET") return { items: await tasks.list(row.user_id) };
+        return request.method === "POST" ? tasks.create(row.user_id, body) : tasks.change(row.user_id, body);
+      }
       if (path === "/api/me/model-configs") {
         const session = await store.require(request);
         const configs = new ModelConfigStore(

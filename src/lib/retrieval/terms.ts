@@ -167,7 +167,20 @@ export function ftsRecallLanes(query: string) {
   if (!expanded) return [];
   if (!plan.topics.length && !plan.entities.length && !plan.modifiers.length)
     return [{ name: "lexical", expression: expanded, limit: 96 }];
+  const scholarshipPolicy =
+    ["policy", "requirements", "facts", "discovery"].includes(plan.goal) &&
+    plan.topics.some(({ id }) => id === "scholarship") &&
+    !/国家|励志|学业|专项|捐赠|出国|境外|校级|综合/.test(query);
   return [
+    ...(scholarshipPolicy
+      ? [
+          {
+            name: "scholarship_policy",
+            expression: `title_terms : (${phraseExpression(["奖学金", "学生资助"])} AND ${phraseExpression(["管理办法", "评审办法", "实施细则", "管理规定", "评选办法"])})`,
+            limit: 16,
+          },
+        ]
+      : []),
     {
       name: "title_subject",
       expression: "title_terms : (" + planExpression(plan, true) + ")",

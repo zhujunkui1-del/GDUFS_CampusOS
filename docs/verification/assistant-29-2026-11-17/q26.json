@@ -1,0 +1,907 @@
+{
+  "question": "广外明年一定会取消早八课程吗？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "本鱼翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息（查过：“广外” “取消早八课程” “明年” “早八课程” 明年 早八课程）。这不代表学校没有相关规定，只是本站还没收录到——建议通过广外官网、院系公示或校园地图APP核实。",
+  "cards": [],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T07:45:30.142Z",
+      "elapsedMs": 179,
+      "data": {
+        "question": "广外明年一定会取消早八课程吗？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T07:45:30.142Z",
+      "elapsedMs": 179,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T07:45:31.134Z",
+      "elapsedMs": 1171,
+      "data": {
+        "question": "广外明年一定会取消早八课程吗？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T07:45:31.134Z",
+      "elapsedMs": 1171,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T07:45:31.134Z",
+      "elapsedMs": 1171,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T07:45:31.134Z",
+      "elapsedMs": 1171,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T07:45:31.134Z",
+      "elapsedMs": 1171,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T07:45:31.134Z",
+      "elapsedMs": 1171,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "facts",
+        "campus": null,
+        "topics": [],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "running",
+      "at": "2026-11-17T07:45:31.203Z",
+      "elapsedMs": 1240,
+      "data": {
+        "model": "step-3.5-flash-2603",
+        "phase": "回答或工具选择",
+        "tools": [
+          "plan_campus_query"
+        ]
+      }
+    },
+    {
+      "node": "model",
+      "span": "model:5",
+      "state": "success",
+      "at": "2026-11-17T07:45:36.460Z",
+      "elapsedMs": 6497,
+      "durationMs": 5257,
+      "data": {
+        "finishReason": "tool_calls",
+        "toolCalls": [
+          "plan_campus_query"
+        ],
+        "characters": 0,
+        "usage": {
+          "promptTokens": 528,
+          "completionTokens": 353,
+          "totalTokens": 881
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "running",
+      "at": "2026-11-17T07:45:36.530Z",
+      "elapsedMs": 6567,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "“广外” “取消早八课程” “明年” “早八课程” 明年 早八课程",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "success",
+      "at": "2026-11-17T07:45:38.247Z",
+      "elapsedMs": 8284,
+      "durationMs": 1717,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "chunkId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285:fts:bc4c3d7651c7c2fc:80",
+              "title": "2026版本科生学生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+              "publishedAt": "2026-09-20T11:16:00.000Z",
+              "contentSnippet": "如发生泄漏或变相泄漏试题情况，要迅速采取补救措施，更换试卷或试题内容，保证考试的公平性。\n第五章学生课程考核资格的审查\n第十三条学生在一学期内累计缺课超过某门课程教学时数三分之一或缺交作业超过作业总次数三分之一者，取消学生该门课程的考试资格。 第十四条未取得课程修读资格或在课程修读过程中被取消修读资格的学生不得参加该课程考核。 第十五条各课程的任课教师须于考试前一周做好学生考试资格的审查，把应取消考试资格的学生名单和考勤登记表或作业成绩登记表等相关材料报开课单位，审核确认后于考试前通知学生。对取消考试资格的学生，该门课程成绩计为0 分，并备注“取消资格”。 第十六条学生须持学生证或其他有效学生身份证件进入指定试室座位应考，否则不准参加考试。 第十七条考生迟到15 分钟则取消其考试资格，开考15 分钟后方可交卷离开考场（面试除外）。\n第六章考试的实施\n第十八条时间安排考试一般安排在每学期的最后两周进行，非完整学期排课的课程可在授课学时完成后安排考试。通识选修课和体育课可在教学周最后一次课安排随堂考试。因特殊情况确需提前考试的，由任课教师提出书面申请， 经开课单位审核同意后报教务处审批。 考试可安排在上午、下午、晚上三个时段。专业课程笔试时间一般\n本科学生手册\n72",
+              "startOffset": 56348,
+              "endOffset": 56887,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 14.12,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "f72fdd02d8506d6c8bec1326ecc47e069aa5eb71309bc2f952db35c853fe5e2e",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "wx-80d0f9e0d19045f2257cfc0940b0a1ae030ce198",
+              "chunkId": "wx-80d0f9e0d19045f2257cfc0940b0a1ae030ce198:fts:697b89bbda7ffaf7:27",
+              "title": "会议报道｜《中外法律评论》2026年法学前沿论坛：人工智能立法研究",
+              "sourceId": "GDUFS-SRC-0149",
+              "sourceName": "广外法学",
+              "originalUrl": "https://mp.weixin.qq.com/s/LqcICVhE0XB8SzzmbR4LsA",
+              "publishedAt": "2026-11-04T09:16:50.000Z",
+              "contentSnippet": "举办法学前沿论坛。周新主编对各位专家百忙之中赴会、精心准备研讨内容表示由衷感谢。本次论坛聚焦学术交流，各位专家的发言产出诸多高质量思想观点，期待明年论坛继续得到学界同仁的大力支持。\n本次论坛议题前沿、研讨充分，与会专家围绕人工智能立法的重难点问题展开多维度、深层次对话，在制度建构、权益保障、算法监管与责任机制等方面凝聚有益共识。论坛搭建高水平的学术交流平台，推动不同研究视角、理论立场之间的互鉴融通，助力统筹人工智能创新发展与安全规范，为我国人工智能立法的理论储备、方案打磨与风险治理提供智力支持。\n撰稿：王欣 智嘉译\n编辑：洪霏\n初审：郑礼周 赫思瑶\n复审：任颖 陈可翔\n终审：周新",
+              "startOffset": 13922,
+              "endOffset": 14215,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 13.65,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 1",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "lecture",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "ffed25cd71eeb0907cb1b2b17881a048e757903e2d1b3c1c1d76612754579de1",
+              "documentVersion": 1,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": false,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "chunkId": "content-16300be2-facb-4406-b157-ab5ace0d0c28:fts:9fa888bfac25bd0c:52",
+              "title": "2026年研究生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+              "publishedAt": "2026-09-20T11:27:05.000Z",
+              "contentSnippet": "的，取消入学资格；逾期不办理入学手续且\n未有因不可抗力延迟等正当理由的，视为放弃入学资格。\n第六条新生入学后，学校在3 个月内按照国家招生规定进行复查。\n复查内容主要包括以下方面：\n（一）录取手续及程序等是否合乎国家招生规定；\n（二）所获得的录取资格是否真实、合乎相关规定；\n研究生培养\n47\n（三）本人及身份证明与录取通知、考生档案等是否一致；\n（四）身心健康状况是否符合报考专业或者专业类别体检要求，能\n否保证在校正常学习、生活；\n（五）艺术、体育等特殊类型录取学生的专业水平是否符合录取要\n求。\n复查中发现研究生存在弄虚作假、徇私舞弊等情形的，确定为复查\n不合格，取消学籍；情节严重的，移交有关部门调查处理。\n复查中发现研究生身心状况不适宜在校学习，经学校指定的二级甲\n等以上医院诊断，需要在家休养的，可以按照第五条的规定保留入学资\n格。\n第七条每学期开学时，研究生应当按照学校规定的期限注册。不能\n如期注册者，应当办理请假手续，经学校批准后可暂缓注册。\n研究生应按学校规定缴交学费。未按学校规定缴交学费或者其他不\n符合注册条件的，不予注册。\n学校按照国家有关规定为家庭经济困难研究生提供教育救助，完善\n研究生资助体系，保证研究生不因家庭经济困难而放弃学业。\n第三章考核与成绩记载\n第八条研究生应当参加学校教育教学计划规定的课程和各种教育教\n学环节（以下统称“课程”）的考核，考核成绩记入成绩册，并归入学\n籍档案。\n课程考核方式分为考试和考查两种。公共课程与学位必修课程考核\n不及格者必须重修，学位选修课程不及格可重修或选修其他课程。\n第九条研究生根据学校有关规定，可以申请跨校修读课程。研究生\n修读的课程成绩（学分），学校审核同意后，予以承认。\n第十条学校真实、完整地记载、出具研究生学业成绩，对通过重修\n获得的成绩，予以标注。\n研究生手册\n48\n研究",
+              "startOffset": 39600,
+              "endOffset": 40380,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 12.16,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：lexical_query",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "15816f34ff6010f90ebf4af7102f7ce64406cb2e541bc7ef87fbc01190cdc7e6",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-11b3d2d4-d409-49d4-979b-39b987208671",
+              "chunkId": "content-11b3d2d4-d409-49d4-979b-39b987208671:fts:f0d00b08de44953a:0",
+              "title": "信息学院2025-2026-2学期期末考试取消资格名单公示第二批",
+              "sourceId": "GDUFS-SRC-0004",
+              "sourceName": "信息科学与技术学院（网络空间安全学院）",
+              "originalUrl": "https://sist.gdufs.edu.cn/info/1701/12302.htm",
+              "publishedAt": "2026-06-18",
+              "contentSnippet": "根据《广东外语外贸大学本科生考核管理规定》（广外校[2019]22号）第十三条规定“学生在一学期内累计缺课超过某门课程教学时数三分之一或缺交作业超过作业总次数三分之一者，取消学生该门课程的考试资格”，经任课教师审核所在教学班学生出勤和作业记录，并上报学院审批，确定以下学生在本学期内累计缺课超过课程教学时数三分之一或缺交作业超过作业总次数三分之一，取消期末考试资格。取消考试资格的学生将不能参加本学期（2025-2026-2学期）期末考试。\n现将具体名单予以公示。\n公示期为2026年6月18日-22日，如有异议请向信息学院反映。电话：39328572，超过公示期的反映材料，一律不再受理。\n谢谢！\n信息学院教务办\n陈建生\n2026年6月18日",
+              "startOffset": 0,
+              "endOffset": 322,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 11.18,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：lexical_query"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "852548471c7c65c830c9a75ecd936893ec5ef4073ec8f2355d9d1f625bb30db3",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 17577,
+            "rowsWritten": 0,
+            "queries": 10,
+            "durationMs": 1532,
+            "stagesMs": {
+              "lexical": 260,
+              "supplement": 467,
+              "revalidationAndRanking": 805
+            },
+            "candidateChunks": 55,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 0
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 23
+              },
+              {
+                "name": "document_passages",
+                "limit": 496,
+                "candidates": 37
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "“广外” “取消早八课程” “明年” “早八课程” 明年 早八课程",
+          "now": "2026-11-17T07:45:36.530Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [
+            {
+              "eventId": "event-0e2a8ed4dde4858d4aeeb05331f6f342a817a0df",
+              "documentId": "wx-80d0f9e0d19045f2257cfc0940b0a1ae030ce198",
+              "activityKey": "activity-1",
+              "name": "会议报道｜《中外法律评论》2026年法学前沿论坛：人工智能立法研究",
+              "kind": "event",
+              "category": "academic_research",
+              "startsAt": {
+                "raw": "2026年10月30日",
+                "date": "2026-10-30",
+                "at": null,
+                "timezone": "Asia/Shanghai",
+                "precision": "date",
+                "resolution": "day",
+                "inferred": false,
+                "inferenceBasis": null,
+                "evidence": "2026年10月30日"
+              },
+              "endsAt": null,
+              "placeRaw": "北京唯实国际文化交流中心酒店启航厅",
+              "organizer": null,
+              "eventStatus": "unknown",
+              "historical": true,
+              "registrationRequirement": "unknown",
+              "registrationState": "unknown",
+              "registrationWindows": [],
+              "otherDeadlines": [],
+              "registrationUrl": null,
+              "evidence": [
+                "2026年10月30日，《中外法律评论》2026年法学前沿论坛在北京唯实国际文化交流中心酒店启航厅顺利举办",
+                "北京唯实国际文化交流中心酒店启航厅"
+              ],
+              "mapPlace": null,
+              "calendarUrl": "/calendar?date=2026-10-30&event=event-0e2a8ed4dde4858d4aeeb05331f6f342a817a0df&article=wx-80d0f9e0d19045f2257cfc0940b0a1ae030ce198"
+            }
+          ],
+          "knowledge": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "符合申请条件的学生可在当年暑假前后向拟报读的接收单位或学科点进行初步联系",
+                "除需满足本规定第九条、第十条的条件外",
+                "第二章奖励标准与申请条件"
+              ],
+              "materials": [
+                "可申请转学： （一）患病学生需提供我校及拟转入学校指定医院的检查证明（需盖疾病诊断证明专用章）",
+                "有特殊困难和特别需要的学生需提供相关证明材料"
+              ],
+              "steps": [
+                "国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续 3 年上榜“US News”世界大学排名；入选软科中国文科实力A 类大学，稳居全国前50 强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI 全球前5‰，工程学、环境 /生态学、经济学与商学进入ESI 前1%；12 个学科上榜软科中国最好学科；外国语言文学学科连续多年上榜软科“中国顶尖学科”， 稳居全国前3；应用经济学、法学连续多年上榜软科“中国一流学科”。 科学研究学校深入推进有组织科研，构建服务共建“一带一路”倡议、 高水平对外开放与粤港澳大湾区建设、法治中国与涉外法治建设、 国际传播建设等四大科研平台体系",
+                "学校各单位： 为深入贯彻落实党的十八届三中全会关于深化教育领域综合改革的精神，积极适应经济社会发展新常态对高等教育人才培养的需求，根据《中华人民共和国教育法》《普通高等学校学生管理规定》（教育部令第21 号）等法律法规和《教育部关于全面提高高等教育质量的若干意见》（教高〔2012〕4 号）、《广东省人民政府办公厅转发教育厅关于进一步扩大和落实高校办学自主权促进高校加快发展若干意见的通知》（粤府办 〔2013〕26 号）等文件要求，学校结合实际，研究制定了本科教学实施学分制管理的若干意见，经2015 年1 月12 日校党委常委会审议并原则通过，具体如下。 一、指导思想坚持育人为本，立德树人，全面",
+                "3．选课制。学生根据专业培养方案自主安排学习进程，对于必修课， 可选择任课教师；对于选修课，可选择课程和任课教师；每学期前两周， 学生试听课程，试听结束后作出选课确认。 4．主辅修制。学生在达到主修专业学习要求的前提下，可以辅修其他专业；在主修专业达到毕业要求的前提下，其修读的辅修专业如达到要求，可向其发放辅修专业证书；学生在主修专业具备学位授予资格的前提下，如其辅修专业达到学位授予条件，可获得相应专业学位证书。 5．学分互认制。学生在与我校签订了学分互认协议的境内外高校或在我校认可的境内外高校或MOOC 等网络学习平台修读课程获得的成绩和学分，可以转换为本校课程成绩和学分；学生修读校外课程，"
+              ]
+            },
+            {
+              "documentId": "wx-80d0f9e0d19045f2257cfc0940b0a1ae030ce198",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "第四位与谈人是北京科技大学文法学院副教授陶朗逍。她的发言题目是《人工智能时代刑事司法中算法辩护权的构建》。陶朗逍副教授指出，人工智能的出现使法权结构中公权力维度的力量显著增强，立法的要旨在于恢复权力、私主体权益、义务、责任四要素的平衡。当前，法院、检察院普遍开发人工智能司法助手，其功能已从文书生成、类案检索等效率工具延伸至量刑建议、证据链审查等司法决策环节。但在实践中，司法助手使用混乱，部分地方检察院与法院甚至共用同一套智能系统，审判对起诉的制衡审查功能逐渐消弭，存在沦为“算法审判”的风险。陶朗逍副教授主张，应通过加强私权利以制衡公权力，凝练提出“算法辩护权”概念，其内容包括知情权、选择权、质"
+              ]
+            },
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "(四)符合国(境)外合作院校规定的申请条件及语言要求",
+                "(三)申请条件",
+                "(三)申请条件"
+              ],
+              "materials": [
+                "需提供随时可以联系的通讯方式"
+              ],
+              "steps": [
+                "学校形成了外语学科与多学科交叉融合、协同发展的学科格局，现有外国语言文学、应用经济学、法学3个一级学科博士点，翻译、法律2 个专业学位博士点和27个二级学科博士点，13个一级学科硕士点和60个二级学科硕士点（含3个交叉学科），21个专业学位硕士点。学校着力推进涉外法治、区域国别学、中华文化国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续3年上榜“US News”世界大学排名；入选软科中国文科实力A类大学，稳居全国前50强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI全球前5‰，工程学、环境/生态学、经济学与商学进入ESI前1%；12个学科上榜软科中国最好学科",
+                "办理入学手续。审查不合格的，取消入学资格；逾期不办理入学手续且",
+                "学位等五个学业出口中选择一个进行申请，并按期办理离校手续。"
+              ]
+            },
+            {
+              "documentId": "content-11b3d2d4-d409-49d4-979b-39b987208671",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            }
+          ]
+        },
+        "durationMs": 1717
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "running",
+      "at": "2026-11-17T07:45:38.247Z",
+      "elapsedMs": 8284,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "success",
+      "at": "2026-11-17T07:45:38.247Z",
+      "elapsedMs": 8284,
+      "durationMs": 0,
+      "data": {
+        "characters": 118,
+        "cards": 0
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "running",
+      "at": "2026-11-17T07:45:38.247Z",
+      "elapsedMs": 8284,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "success",
+      "at": "2026-11-17T07:45:38.247Z",
+      "elapsedMs": 8284,
+      "durationMs": 0,
+      "data": {
+        "characters": 118,
+        "cards": 0
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T07:45:36.530Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T07:45:36.530Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T07:45:38.247Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 1717,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T07:45:38.475Z",
+      "data": {
+        "cards": [],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T07:45:38.475Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "plan": {
+              "subject": "广外取消早八课程",
+              "entities": [
+                "广外"
+              ],
+              "constraints": [
+                "明年",
+                "早八课程"
+              ],
+              "goal": "facts",
+              "query": "“广外” “取消早八课程” “明年” “早八课程” 明年 早八课程"
+            },
+            "durationMs": 5257,
+            "usage": {
+              "promptTokens": 528,
+              "completionTokens": 353,
+              "totalTokens": 881
+            }
+          },
+          "executionStatus": "completed",
+          "taskStatus": "completed",
+          "retrievalStatus": "matched",
+          "answerMode": "no_evidence",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": true,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "wx-80d0f9e0d19045f2257cfc0940b0a1ae030ce198",
+              "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "content-11b3d2d4-d409-49d4-979b-39b987208671"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "wx-80d0f9e0d19045f2257cfc0940b0a1ae030ce198",
+                "existence": "documented",
+                "eventState": "started_end_unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 1,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [],
+          "promptTokens": 528,
+          "completionTokens": 353,
+          "cachedPromptTokens": 0,
+          "totalTokens": 881,
+          "usageComplete": true,
+          "chargedTokens": 881,
+          "durationMs": 1717,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 881,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 6567,
+            "serverElapsedMs": 8284,
+            "firstTextMs": 8284,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 1717,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 29,
+              "writeQueries": 12,
+              "calls": 33,
+              "failures": 0,
+              "durationMs": 2651,
+              "maxCallMs": 201,
+              "rowsRead": 18178,
+              "rowsWritten": 26,
+              "rowUsageStatements": 26,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 17577,
+                "rowsWritten": 0,
+                "queries": 10,
+                "durationMs": 1532,
+                "stagesMs": {
+                  "lexical": 260,
+                  "supplement": 467,
+                  "revalidationAndRanking": 805
+                },
+                "candidateChunks": 55,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 23
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 496,
+                    "candidates": 37
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "plan": {
+        "subject": "广外取消早八课程",
+        "entities": [
+          "广外"
+        ],
+        "constraints": [
+          "明年",
+          "早八课程"
+        ],
+        "goal": "facts",
+        "query": "“广外” “取消早八课程” “明年” “早八课程” 明年 早八课程"
+      },
+      "durationMs": 5257,
+      "usage": {
+        "promptTokens": 528,
+        "completionTokens": 353,
+        "totalTokens": 881
+      }
+    },
+    "executionStatus": "completed",
+    "taskStatus": "completed",
+    "retrievalStatus": "matched",
+    "answerMode": "no_evidence",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": true,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+        "wx-80d0f9e0d19045f2257cfc0940b0a1ae030ce198",
+        "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+        "content-11b3d2d4-d409-49d4-979b-39b987208671"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "wx-80d0f9e0d19045f2257cfc0940b0a1ae030ce198",
+          "existence": "documented",
+          "eventState": "started_end_unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 1,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 528,
+    "completionTokens": 353,
+    "cachedPromptTokens": 0,
+    "totalTokens": 881,
+    "usageComplete": true,
+    "chargedTokens": 881,
+    "durationMs": 1717,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 881,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 6567,
+      "serverElapsedMs": 8284,
+      "firstTextMs": 8284,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1717,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 29,
+        "writeQueries": 12,
+        "calls": 33,
+        "failures": 0,
+        "durationMs": 2651,
+        "maxCallMs": 201,
+        "rowsRead": 18178,
+        "rowsWritten": 26,
+        "rowUsageStatements": 26,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 17577,
+          "rowsWritten": 0,
+          "queries": 10,
+          "durationMs": 1532,
+          "stagesMs": {
+            "lexical": 260,
+            "supplement": 467,
+            "revalidationAndRanking": 805
+          },
+          "candidateChunks": 55,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 0
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 23
+            },
+            {
+              "name": "document_passages",
+              "limit": 496,
+              "candidates": 37
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

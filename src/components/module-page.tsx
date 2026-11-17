@@ -27,7 +27,7 @@ const pages = {
   },
   favorites: {
     eyebrow: "我的校园",
-    title: "我的收藏",
+    title: "收藏与待办",
     text: "常去地点、关注活动与常用办事入口。",
     empty: "收藏同步尚未开放",
     detail: "个人收藏将在后续阶段接入，公共校园功能仍可正常使用。",
@@ -78,7 +78,7 @@ export function ModulePage({ page }: { page: keyof typeof pages }) {
       {page === "account" && (
         <Link className="account-favorites" href="/favorites">
           <Bookmark size={20} />
-          <span>我的收藏</span>
+          <span>收藏与待办</span>
           <ChevronDown size={17} />
         </Link>
       )}

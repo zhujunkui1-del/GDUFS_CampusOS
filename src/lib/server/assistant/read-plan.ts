@@ -119,7 +119,28 @@ export function contentReadPlan(
     search_campus_events: 6,
   };
   const inputFor = (name: ContentTool, text: string, exactTitle = true) => ({
-    query: text,
+    query:
+      name === "search_campus_events"
+        ? text
+            .replace(
+              /(?:哪些)?需要提前|是否需要|需要报名|已(?:经)?截止(?:报名)?|已(?:经)?结束(?:报名)?|报名(?:已截止|已结束)|但?还(?:没|没有)(?:正式)?开始|尚未(?:正式)?开始/g,
+              " ",
+            )
+            .replace(/\s+/g, " ")
+            .trim()
+        : text,
+    ...(name === "search_campus_events" && buildQueryPlan(query).campus
+      ? {
+          campus:
+            buildQueryPlan(query).campus === "south"
+              ? ("university_town" as const)
+              : ("baiyun" as const),
+        }
+      : {}),
+    ...(name === "search_campus_events" &&
+    /尚未|还没|还没有|未正式开始/.test(query)
+      ? { eventState: "upcoming" as const }
+      : {}),
     ...(/官网|官方网页|官方网站/.test(query)
       ? { sourceTypes: ["official_web"] }
       : {}),
@@ -134,6 +155,17 @@ export function contentReadPlan(
             // then claims the corpus says nothing.
             Math.min(5, PAGE_SIZE[name]),
     ...(recentDiscovery ? { sort: "published_desc" as const } : {}),
+    ...(name === "search_campus_events" &&
+    /已(?:经)?(?:截止|结束)|报名(?:截止|结束)了/.test(query)
+      ? { registrationState: "closed" as const }
+      : name === "search_campus_events" &&
+          policy.needsParticipation &&
+          !articleTitle &&
+          !/哪些.{0,8}需要.{0,4}报名|需要提前报名|是否需要报名|哪些要报名/.test(
+            query,
+          )
+        ? { registrationState: "open" as const }
+        : {}),
     ...(recentDiscovery && publishedCursor ? { publishedCursor } : {}),
     ...(recentDiscovery && recentBefore
       ? { publishedBefore: recentBefore }
@@ -141,7 +173,9 @@ export function contentReadPlan(
     ...(name === "search_campus_events" && excludeDocumentIds?.length
       ? { excludeDocumentIds: excludeDocumentIds.slice(0, 40) }
       : {}),
-    ...(name === "search_campus_events" && nearestIfEmpty
+    ...(name === "search_campus_events" &&
+    nearestIfEmpty &&
+    !policy.needsParticipation
       ? { nearestIfEmpty: true }
       : {}),
     ...(name === "search_campus_events" &&
@@ -159,6 +193,57 @@ export function contentReadPlan(
       : [retrievalQuery]
     ).map((text) => ({ name, input: inputFor(name, text) })),
   );
+  if (
+    tools.includes("search_campus_events") &&
+    policy.needsParticipation &&
+    !/报名|报名中|可报名|能报名/.test(query)
+  ) {
+    primary.push({
+      name: "search_campus_events",
+      input: {
+        ...inputFor("search_campus_events", retrievalQuery),
+        registrationState: "not_required",
+      },
+    });
+  }
+  if (
+    tools.includes("search_campus_events") &&
+    policy.needsParticipation &&
+    !/已(?:经)?(?:截止|结束)|报名(?:截止|结束)了/.test(query)
+  ) {
+    primary.push({
+      name: "search_campus_events",
+      input: {
+        ...inputFor("search_campus_events", retrievalQuery),
+        registrationState: "unknown",
+      },
+    });
+  }
+  const topicPlan = buildQueryPlan(query);
+  const topicQuery =
+    topicPlan.topics.length && topicPlan.modifiers.length
+      ? [
+          ...new Set(topicPlan.topics.flatMap((topic) => topic.originalTerms)),
+          ...(topicPlan.goal === "procedure"
+            ? ["办理流程"]
+            : topicPlan.goal === "requirements"
+              ? ["申请条件"]
+              : topicPlan.goal === "policy"
+                ? ["制度"]
+                : []),
+        ].join(" ")
+      : "";
+  if (
+    tools.includes("search_campus_knowledge") &&
+    !articleTitle &&
+    topicQuery &&
+    topicQuery !== retrievalQuery
+  )
+    primary.push({
+      name: "search_campus_knowledge",
+      input: inputFor("search_campus_knowledge", topicQuery),
+      when: () => !hasUsableEvidence(),
+    });
   // Same entity, different wording: read the official alias before concluding
   // that no body exists. Each variant is skipped once a usable body is found.
   const retries: PlannedRead[] = entityQueryVariants(retrievalQuery).flatMap(

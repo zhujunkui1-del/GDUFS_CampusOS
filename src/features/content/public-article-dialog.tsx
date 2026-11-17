@@ -24,11 +24,13 @@ export function PublicArticleDialog({
   categoryLabel,
   surface,
   onClose,
+  taskButton,
 }: {
   article: PublicArticleSummary;
   categoryLabel: string;
   surface: FavoriteSurface;
   onClose: () => void;
+  taskButton?: React.ReactNode;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [state, setState] = useState<{
@@ -94,6 +96,7 @@ export function PublicArticleDialog({
           <span className="public-article-category">{categoryLabel}</span>
           <div className="public-article-dialog-actions">
             <FavoriteButton articleId={article.id} surface={surface} />
+            {taskButton}
             <a
               className="public-article-original"
               href={article.url}

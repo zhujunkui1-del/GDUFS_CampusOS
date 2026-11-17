@@ -3,6 +3,11 @@ import type { z } from "zod";
 
 type Route = z.infer<typeof RouteOutputSchema>;
 
+/** Route answers use only the totals from the deterministic campus planner. */
+export function routeSummaryText(route: Route): string {
+  return `从${route.start.name}到${route.end.name}的路线已按校园步行路网计算：约${Math.round(route.distanceMeters)}米，步行约${route.estimatedMinutes}分钟。具体路径见路线卡片。`;
+}
+
 /**
  * The map renders a route by drawing it. When the browser never acknowledges the
  * draw — offline tab, throttled background page, a client that dropped the

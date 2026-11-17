@@ -1,0 +1,1235 @@
+{
+  "question": "广外学生证丢失了应该怎么办？在哪里补办？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "本鱼翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息（查过：广外学生证丢失了应该怎么办 在哪里补办）。这不代表学校没有相关规定，只是本站还没收录到——建议通过广外官网、院系公示或校园地图APP核实。",
+  "cards": [],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T08:04:05.040Z",
+      "elapsedMs": 183,
+      "data": {
+        "question": "广外学生证丢失了应该怎么办？在哪里补办？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T08:04:05.040Z",
+      "elapsedMs": 183,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T08:04:06.896Z",
+      "elapsedMs": 2039,
+      "data": {
+        "question": "广外学生证丢失了应该怎么办？在哪里补办？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T08:04:06.896Z",
+      "elapsedMs": 2039,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T08:04:06.896Z",
+      "elapsedMs": 2039,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T08:04:06.896Z",
+      "elapsedMs": 2039,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "running",
+      "at": "2026-11-17T08:04:07.020Z",
+      "elapsedMs": 2163,
+      "data": {
+        "placeId": "osm-way-307437431",
+        "origin": "建筑活动索引"
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:6",
+      "state": "running",
+      "at": "2026-11-17T08:04:07.021Z",
+      "elapsedMs": 2164,
+      "data": {
+        "placeId": "osm-way-1389859438",
+        "origin": "建筑活动索引"
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:7",
+      "state": "running",
+      "at": "2026-11-17T08:04:07.021Z",
+      "elapsedMs": 2164,
+      "data": {
+        "placeId": "osm-way-307250998",
+        "origin": "建筑活动索引"
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:7",
+      "state": "success",
+      "at": "2026-11-17T08:04:07.627Z",
+      "elapsedMs": 2770,
+      "durationMs": 606,
+      "data": {
+        "placeId": "osm-way-307250998",
+        "after": "2026-11-03",
+        "total": 2,
+        "items": [
+          {
+            "title": "会计学院与图书馆联合开展红色财经读书会",
+            "date": "2026-11-05",
+            "place": "大学城校区图书馆",
+            "calendarUrl": "/calendar?date=2026-11-05&event=event-aa2ec34dbb87e04fb22e0cdd82bf49f4123829ec"
+          },
+          {
+            "title": "乒乓球赛预热 | 以球会友 快乐乒乓",
+            "date": "2026-11-07",
+            "place": "大学城校区图书馆负一楼乒乓球场",
+            "calendarUrl": "/calendar?date=2026-11-07&event=event-490f4045902052c5942a510c4a68ab7049f91f0f"
+          }
+        ],
+        "metrics": {
+          "rowsRead": 5334,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 606,
+          "usageAvailable": true
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:5",
+      "state": "success",
+      "at": "2026-11-17T08:04:07.745Z",
+      "elapsedMs": 2888,
+      "durationMs": 725,
+      "data": {
+        "placeId": "osm-way-307437431",
+        "after": "2026-11-03",
+        "total": 4,
+        "items": [
+          {
+            "title": "商学院举办高层次社会科学基金项目申报经验交流会",
+            "date": "2026-11-05",
+            "place": "大学城校区院系楼360会议室",
+            "calendarUrl": "/calendar?date=2026-11-05&event=event-33888355fac14b524c7b254d59db1366665cf584"
+          },
+          {
+            "title": "商学院举办高层次社会科学基金项目申报经验交流会",
+            "date": "2026-11-05",
+            "place": "大学城校区院系楼360会议室",
+            "calendarUrl": "/calendar?date=2026-11-05&event=event-33888355fac14b524c7b254d59db1366665cf584"
+          },
+          {
+            "title": "讲座预告 | 数学与统计学院“前沿学术论坛”第51讲",
+            "date": "2026-11-06",
+            "place": "大学城校区院系楼152会议室",
+            "calendarUrl": "/calendar?date=2026-11-06&event=event-d953b2892ce81a7967b5a40be3bf4fdca9a85aaf"
+          },
+          {
+            "title": "讲座预告丨广外金融论坛第138讲",
+            "date": "2026-11-14",
+            "place": "大学城校区院系楼401会议室",
+            "calendarUrl": "/calendar?date=2026-11-14&event=event-e08da4632f90e6f839fde319315bf0fef14e30f1"
+          }
+        ],
+        "metrics": {
+          "rowsRead": 5334,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 725,
+          "usageAvailable": true
+        }
+      }
+    },
+    {
+      "node": "events",
+      "span": "events:6",
+      "state": "success",
+      "at": "2026-11-17T08:04:07.745Z",
+      "elapsedMs": 2888,
+      "durationMs": 724,
+      "data": {
+        "placeId": "osm-way-1389859438",
+        "after": "2026-11-03",
+        "total": 0,
+        "items": [],
+        "metrics": {
+          "rowsRead": 5334,
+          "rowsWritten": 0,
+          "queries": 2,
+          "durationMs": 724,
+          "usageAvailable": true
+        }
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T08:04:08.166Z",
+      "elapsedMs": 3309,
+      "durationMs": 1270,
+      "data": {
+        "matches": [
+          {
+            "id": "osm-way-1389859438",
+            "name": "游泳馆",
+            "description": "🏊 基本信息\n位置：教学区，假草操场旁边\n水深：1.3-1.5m 左右\n泳道：50米\n价格：3元/次\n\n⏰ 学期开放时间\n周一至周五：17:10-18:40\n周日：16:30-18:00\n周六不开放，法定节假日不开放\n\n🪪 游泳证怎么办\n地点：体育馆场馆中心办公室 ​​138室​​\n时间：每周二、周四 9:00-12:00、14:00-17:00\n材料：小一寸照片 + 校园卡\n工本费：5元\n流程：签一份游泳健康承诺书",
+            "activities": 0
+          },
+          {
+            "id": "osm-way-307250998",
+            "name": "图书馆",
+            "description": "图书馆有五层楼，内有空调和自习室，可刷脸和刷卡进入。\n一、二、三层开放时间为7:00-24:00，四、五层开放时间为8:30-22:00。\n图书馆也是广外学子们常去的地方，期末更是座无虚席。因此如果期末想去图书馆学习，要趁早。\n🌟图书馆也有会议厅，主要用于举办悦读课堂、阅读沙龙观影会、英语角、读书分享会图书漂流和各种比赛赛事。",
+            "activities": 2
+          },
+          {
+            "id": "osm-way-307437431",
+            "name": "院系办公楼",
+            "description": "院系办公楼是南校教学区的一栋行政建筑，集中了六个学院的教务办公室、辅导员办公室和资助办公室。日常找辅导员、办资助手续基本都来这。\n\n📍 位置\n在教学区偏北的后山区域，紧挨着校办公楼和八角楼。从校名石门（面向广外东路那个门）进来，院系办公楼就在右手边不远处。\n\n🏢 入驻学院\n这栋楼集中了六个学院：\n经济贸易学院\n商学院\n会计学院\n金融学院\n英语教育学院\n数学与统计学院\n除了学院办公室，辅导员办公室和资助办公室也在这里。\n\n🗺️ 其他学院办公室在哪\n不是所有学院都挤在院系楼，还有几个分散在教学楼里：\n​​B 栋​​：新闻与传播学院\n​​D 栋​​：法学院、国际关系学院、社会与公共管理学院\n​​实验楼​​：信息科学与技术学院\n​​艺术楼​​：艺术学院",
+            "activities": 4
+          }
+        ]
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T08:04:08.166Z",
+      "elapsedMs": 3309,
+      "durationMs": 1270,
+      "data": {
+        "act": "campus",
+        "goal": "procedure",
+        "campus": null,
+        "topics": [
+          "student_id"
+        ],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:8",
+      "state": "running",
+      "at": "2026-11-17T08:04:08.401Z",
+      "elapsedMs": 3544,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外学生证丢失了应该怎么办 在哪里补办",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:8",
+      "state": "success",
+      "at": "2026-11-17T08:04:11.798Z",
+      "elapsedMs": 6941,
+      "durationMs": 3397,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "chunkId": "content-16300be2-facb-4406-b157-ab5ace0d0c28:fts:9fa888bfac25bd0c:120",
+              "title": "2026年研究生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+              "publishedAt": "2026-09-20T11:27:05.000Z",
+              "contentSnippet": "故意损坏或涂改的研究生证，不予更换或补发。\n研究生培养\n133\n四、补发\n研究生证如确认遗失，应立即办理有关手续，具体如下：\n（一）从研究生院主页下载《研究生证补办申请表》，如实写明研\n究生证丢失的时间、地点、原因，经培养单位证明后，到研究生院培养\n办登记挂失。\n（二）挂失期一个月，期间如有需要证明研究生身份者，由培养单\n位开具证明，研究生院培养办加盖公章。\n挂失一个月后确属无法寻回者，带身份证和一张本人一寸免冠照片\n到研究生院培养办办理补发手续。\n（三）受理时间为每学期第三周或第十三周，其他时间一概不予办\n理。补办时需交纳补办费。\n（四）补办研究生证是一项严肃的工作，如弄虚作假，学校将予以\n行政处理。\n五、注销\n研究生因毕业、退学、转学、出国留学需离校时，应将研究生证交\n回研究生院培养办注销，方能办理离校手续。\n研究生手册\n134\n# 广东外语外贸大学研究生院关于研究生\n# 课程学分认定及免修免考试行管理办法\n第一章总则\n第一条为加强我校研究生课程成绩管理，更好地服务师生，进一步\n规范研究生课程学分认定和成绩转换以及免修免考等工作，结合我校实\n际情况，特制定本办法。\n第二条本办法适用于我校注册在籍在读的研究生。\n第二章学分认定和成绩转换的要求\n第三条本办法所指研究生课程是指国家公派项目，校（院）际联合\n培养、双学位生等访学项目所涉及的课程。\n第四条研究生国（境）外访学单位应为我校认可的高校或科研机\n构，所学课程应与我校专业培养方案规定的课程相近或相同；所修课程",
+              "startOffset": 93923,
+              "endOffset": 94564,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 63.71,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "15816f34ff6010f90ebf4af7102f7ce64406cb2e541bc7ef87fbc01190cdc7e6",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "chunkId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285:fts:bc4c3d7651c7c2fc:276",
+              "title": "2026版本科生学生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+              "publishedAt": "2026-09-20T11:16:00.000Z",
+              "contentSnippet": " 校内人员违规使用借阅证的，暂停双方入馆权限、借阅权限及数字资源访问权限3 个月，并视情节轻重，通报所在培养单位及相关部门。校外人员违规使用借阅证的，一律报告保卫部处理。 因违规使用借阅证，或借阅证遗失、未及时挂失遭他人冒用，造成图书丢失、欠费及违规记录，均由持证人承担赔偿等相关责任。\n本科学生手册\n280\n（二）所借图书资料逾期不还\n1. 读者所借本馆图书资料，应按规定期限（详见《广东外语外贸大学\n图书馆读者权限表》 ）归还。\n2. 图书资料逾期未还者，从逾期之日起暂停其借阅权限，归还逾期图\n书后，方可恢复其借阅权限。\n3. 所借图书资料遗失，应在规定的借阅期限内来图书馆办理赔偿手\n续。\n4. 读者办理毕业、休学、退学等离校等手续时，必须将所借图书还清，\n如有违反，图书馆将保留追缴的权利。 （三）污损及损坏文献资料图书馆馆藏文献资料为国家财产，是学校教学和科研的重要物质基础，读者应自觉爱护。在使用期间如发生损坏，应按规定赔偿。\n1. 在借阅的图书资料上划线、圈点、批注、涂画等，但不影响图书内\n容完整者，令其擦除或修补。若无法擦除或本人无法修补，则按每页1 元收取污损费。\n2. 撕毁、遗失图书资料上的条形码、书标，每个需缴纳工本费和加工\n费合计5 元。\n3. 图书资料被水浸泡，如浸泡范围不足10 页，按每页1 元收取污损\n费；超过10 页且面积较大者按赔书处理。",
+              "supportingPassages": [
+                {
+                  "text": " 若卡片挂失后，持卡人找回已挂失的校园卡，则需使用微信公众号、 广外一卡通小程序或圈存机自行解除挂失后方可正常使用。解挂与挂失操作方式一致，参照挂失操作步骤即可解挂。 六、校园卡补办\n1. 持卡人可持本人身份证，前往补卡机自行补办新卡。\n补卡机所在位置如下： 校区地点白云山校区第二教学楼一楼大厅\n其他管理\n297\n校区地点大学城校区教学楼A 座师生服务大厅门口\n2. 持卡人可持有效身份证件（学生证、身份证、工作证等）到用户服\n务部人工办理。\n3. 校园卡制卡工本费15 元/张，补办新卡时收取工本费。补办新卡后，\n原卡立即失效，原校园卡饭卡余额转入新卡，新卡消费功能立即生效。新卡图书馆门禁第二天生效；新卡宿舍门禁的功能，视更新数据时间而定， 一般需要2-3 天左右。",
+                  "startOffset": 208123,
+                  "endOffset": 208459
+                },
+                {
+                  "text": "工卡、学生卡、附属中小学生卡首次办理实体卡时免收工本费，因实体卡丢失或损坏而补办新卡时，需缴纳工本费。临时卡的实体卡无论首次办理或补办新卡均收取工本费。 第十六条实体卡制卡工本费在学校一卡通账上进行归集、核算， 专款专用。\n其他管理\n293\n第四章警示性条款\n第十七条因校园卡具有身份识别功能，仅限用户本人使用，转让和转借给他人使用的，经查实后，用户服务部可以注销该校园卡。 第十八条校园卡系统及设备为学校财产，各使用单位和个人应自觉爱护，按照要求加强管理和保养，出现以下行为的，报告学校保卫处或司法机关处理： 故意损坏校园卡系统及设备，影响系统安全运行的； 仿冒、伪造校园卡的； 窃取、篡改、破解卡内数据或密码的。 第十九条用户服务部应当为校园卡商户的电子账务保密，但可以根据学校要求依法提交商户有关信息和数据。\n第五章附则\n第二十条用户服务部可以根据本办法，结合学校实际情况，制定校园卡相关的补充规定。 第二十一条本办法由现代教育技术中心负责解释。 第二十二条本办法自公布之日起施行。《广东外语外贸大学校园卡管理办法（试行）》（广外校〔2011〕11 号）同时废止。\n本科学生手册\n294\n# 校园学生卡（简称校园卡）服务指南\n（2026 年6 月修订）\n一、校园卡介绍校园卡分为实体卡和虚拟卡，入校的新生免费发放一张实体卡，同时可自行绑定一张虚拟卡（微校卡）。虚拟卡对应实体卡的信息，一个微信号只能领取一张微校卡。\n二、校园卡功能\n1. 具有校内身份认证功能——校园卡是校内师生的身份证件，同时",
+                  "startOffset": 205945,
+                  "endOffset": 206595
+                }
+              ],
+              "startOffset": 196957,
+              "endOffset": 197547,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 43.32,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "f72fdd02d8506d6c8bec1326ecc47e069aa5eb71309bc2f952db35c853fe5e2e",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 38019,
+            "rowsWritten": 0,
+            "queries": 11,
+            "durationMs": 3397,
+            "stagesMs": {
+              "lexical": 252,
+              "supplement": 1219,
+              "revalidationAndRanking": 1926
+            },
+            "candidateChunks": 96,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 45
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 19
+              },
+              {
+                "name": "document_passages",
+                "limit": 512,
+                "candidates": 49
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "广外学生证丢失了应该怎么办 在哪里补办",
+          "now": "2026-11-17T08:04:08.401Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [],
+          "knowledge": [
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "(四)符合国(境)外合作院校规定的申请条件及语言要求",
+                "(三)申请条件",
+                "(三)申请条件"
+              ],
+              "materials": [
+                "需提供随时可以联系的通讯方式"
+              ],
+              "steps": [
+                "学校形成了外语学科与多学科交叉融合、协同发展的学科格局，现有外国语言文学、应用经济学、法学3个一级学科博士点，翻译、法律2 个专业学位博士点和27个二级学科博士点，13个一级学科硕士点和60个二级学科硕士点（含3个交叉学科），21个专业学位硕士点。学校着力推进涉外法治、区域国别学、中华文化国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续3年上榜“US News”世界大学排名；入选软科中国文科实力A类大学，稳居全国前50强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI全球前5‰，工程学、环境/生态学、经济学与商学进入ESI前1%；12个学科上榜软科中国最好学科",
+                "办理入学手续。审查不合格的，取消入学资格；逾期不办理入学手续且",
+                "学位等五个学业出口中选择一个进行申请，并按期办理离校手续。"
+              ]
+            },
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "符合申请条件的学生可在当年暑假前后向拟报读的接收单位或学科点进行初步联系",
+                "除需满足本规定第九条、第十条的条件外",
+                "第二章奖励标准与申请条件"
+              ],
+              "materials": [
+                "可申请转学： （一）患病学生需提供我校及拟转入学校指定医院的检查证明（需盖疾病诊断证明专用章）",
+                "有特殊困难和特别需要的学生需提供相关证明材料"
+              ],
+              "steps": [
+                "国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续 3 年上榜“US News”世界大学排名；入选软科中国文科实力A 类大学，稳居全国前50 强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI 全球前5‰，工程学、环境 /生态学、经济学与商学进入ESI 前1%；12 个学科上榜软科中国最好学科；外国语言文学学科连续多年上榜软科“中国顶尖学科”， 稳居全国前3；应用经济学、法学连续多年上榜软科“中国一流学科”。 科学研究学校深入推进有组织科研，构建服务共建“一带一路”倡议、 高水平对外开放与粤港澳大湾区建设、法治中国与涉外法治建设、 国际传播建设等四大科研平台体系",
+                "学校各单位： 为深入贯彻落实党的十八届三中全会关于深化教育领域综合改革的精神，积极适应经济社会发展新常态对高等教育人才培养的需求，根据《中华人民共和国教育法》《普通高等学校学生管理规定》（教育部令第21 号）等法律法规和《教育部关于全面提高高等教育质量的若干意见》（教高〔2012〕4 号）、《广东省人民政府办公厅转发教育厅关于进一步扩大和落实高校办学自主权促进高校加快发展若干意见的通知》（粤府办 〔2013〕26 号）等文件要求，学校结合实际，研究制定了本科教学实施学分制管理的若干意见，经2015 年1 月12 日校党委常委会审议并原则通过，具体如下。 一、指导思想坚持育人为本，立德树人，全面",
+                "3．选课制。学生根据专业培养方案自主安排学习进程，对于必修课， 可选择任课教师；对于选修课，可选择课程和任课教师；每学期前两周， 学生试听课程，试听结束后作出选课确认。 4．主辅修制。学生在达到主修专业学习要求的前提下，可以辅修其他专业；在主修专业达到毕业要求的前提下，其修读的辅修专业如达到要求，可向其发放辅修专业证书；学生在主修专业具备学位授予资格的前提下，如其辅修专业达到学位授予条件，可获得相应专业学位证书。 5．学分互认制。学生在与我校签订了学分互认协议的境内外高校或在我校认可的境内外高校或MOOC 等网络学习平台修读课程获得的成绩和学分，可以转换为本校课程成绩和学分；学生修读校外课程，"
+              ]
+            }
+          ]
+        },
+        "durationMs": 3397
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:9",
+      "state": "running",
+      "at": "2026-11-17T08:04:11.798Z",
+      "elapsedMs": 6941,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "学生证 办理流程",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:9",
+      "state": "success",
+      "at": "2026-11-17T08:04:14.495Z",
+      "elapsedMs": 9638,
+      "durationMs": 2697,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "chunkId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285:fts:bc4c3d7651c7c2fc:290",
+              "title": "2026版本科生学生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=22029EB37B8C8CF43D60A3BA047505B0",
+              "publishedAt": "2026-09-20T11:16:00.000Z",
+              "contentSnippet": " 若卡片挂失后，持卡人找回已挂失的校园卡，则需使用微信公众号、 广外一卡通小程序或圈存机自行解除挂失后方可正常使用。解挂与挂失操作方式一致，参照挂失操作步骤即可解挂。 六、校园卡补办\n1. 持卡人可持本人身份证，前往补卡机自行补办新卡。\n补卡机所在位置如下： 校区地点白云山校区第二教学楼一楼大厅\n其他管理\n297\n校区地点大学城校区教学楼A 座师生服务大厅门口\n2. 持卡人可持有效身份证件（学生证、身份证、工作证等）到用户服\n务部人工办理。\n3. 校园卡制卡工本费15 元/张，补办新卡时收取工本费。补办新卡后，\n原卡立即失效，原校园卡饭卡余额转入新卡，新卡消费功能立即生效。新卡图书馆门禁第二天生效；新卡宿舍门禁的功能，视更新数据时间而定， 一般需要2-3 天左右。",
+              "supportingPassages": [
+                {
+                  "text": "开发银行高校助学贷款申请表； （三）贷款学生家长承诺书；\n本科学生手册\n168\n（四）本人有效的身份证明和学生证复印件。 其中，申请生源地国家助学贷款需提交材料（一），申请高校国家助学贷款需提交材料（二）至（四）。 第十二条申请国家助学贷款的学生在每学年第一学期开学后两周内，将本办法第十一条中的材料提交至学校资助中心。如有变动，以学校最新通知为准。 第十三条生源地国家助学贷款审批程序为：学校资助中心根据生源地国家助学贷款受理证明，审核学生贷款资格，审核通过后提交至生源地资助中心进行后续审批。 第十四条高校国家助学贷款审批程序为：学院根据高校国家助学贷款学生申请材料，审核学生贷款资格，将贷款规模及名单提交学校资助中心，学校资助中心复审通过后提交至广东省教育厅学生助学工作管理办公室进行后续审批。\n第五章贷款合同签订与发放\n第十五条申请生源地国家助学贷款的学生，在生源地资助中心的组织下与国家开发银行签订国家助学贷款借款合同；申请高校国家助学贷款的学生，在学校资助中心的组织下与国家开发银行签订国家助学贷款借款合同。 第十六条借款学生在校期间发生退学、出国、转学、被开除学籍等情况的，学院应当将上述情况一个月内报告学校资助中心，学校资助中心将情况告知国家开发银行。 第十七条国家助学贷款按学年度申请、审批和发放。 第十八条贷款经办方按学年将国家助学贷款拨付至学校指定账户，学校资助中心核实到账情况后，将贷款学生明细签字盖章后报财务处， 财务处负责贷款抵扣学宿费及发放结余。\n第六章贷款回收与合同变",
+                  "startOffset": 120353,
+                  "endOffset": 121003
+                },
+                {
+                  "text": "工卡、学生卡、附属中小学生卡首次办理实体卡时免收工本费，因实体卡丢失或损坏而补办新卡时，需缴纳工本费。临时卡的实体卡无论首次办理或补办新卡均收取工本费。 第十六条实体卡制卡工本费在学校一卡通账上进行归集、核算， 专款专用。\n其他管理\n293\n第四章警示性条款\n第十七条因校园卡具有身份识别功能，仅限用户本人使用，转让和转借给他人使用的，经查实后，用户服务部可以注销该校园卡。 第十八条校园卡系统及设备为学校财产，各使用单位和个人应自觉爱护，按照要求加强管理和保养，出现以下行为的，报告学校保卫处或司法机关处理： 故意损坏校园卡系统及设备，影响系统安全运行的； 仿冒、伪造校园卡的； 窃取、篡改、破解卡内数据或密码的。 第十九条用户服务部应当为校园卡商户的电子账务保密，但可以根据学校要求依法提交商户有关信息和数据。\n第五章附则\n第二十条用户服务部可以根据本办法，结合学校实际情况，制定校园卡相关的补充规定。 第二十一条本办法由现代教育技术中心负责解释。 第二十二条本办法自公布之日起施行。《广东外语外贸大学校园卡管理办法（试行）》（广外校〔2011〕11 号）同时废止。\n本科学生手册\n294\n# 校园学生卡（简称校园卡）服务指南\n（2026 年6 月修订）\n一、校园卡介绍校园卡分为实体卡和虚拟卡，入校的新生免费发放一张实体卡，同时可自行绑定一张虚拟卡（微校卡）。虚拟卡对应实体卡的信息，一个微信号只能领取一张微校卡。\n二、校园卡功能\n1. 具有校内身份认证功能——校园卡是校内师生的身份证件，同时",
+                  "startOffset": 205945,
+                  "endOffset": 206595
+                }
+              ],
+              "startOffset": 208123,
+              "endOffset": 208459,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 39.14,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 3",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "f72fdd02d8506d6c8bec1326ecc47e069aa5eb71309bc2f952db35c853fe5e2e",
+              "documentVersion": 3,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "chunkId": "content-16300be2-facb-4406-b157-ab5ace0d0c28:fts:9fa888bfac25bd0c:119",
+              "title": "2026年研究生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+              "publishedAt": "2026-09-20T11:27:05.000Z",
+              "contentSnippet": "续。在因公出差或赴外地调研和作学位论文遇特殊情况要延期返校，\n可用传真或书信请求续假，回校后须补办手续，并提交必要的证明。\n第五条研究生因病请假者必须有本校医院或县级以上医院证明，\n如一学期内病假连续或累计超过八周者须办理休学手续。研究生在患病\n住院期间，可委托他人代为办理请假手续。传染性疾病患者（如肝炎、\n肺结核等）必须休学。\n第六条研究生—般不得请事假。如确需请假，必须有书面报告，\n说明事由、时间、天数，并附相关证明材料。\n第七条研究生请假须书面申请，请假3 天由导师审批，报所在培\n养单位备案；请假4 天以上，经导师同意，由学院主管研究生的领导审\n批，报研究生院备案。\n第八条研究生请假期间，需提供随时可以联系的通讯方式。对于\n因外出联系不上从而造成不良后果的，责任自负。\n第九条研究生请假期满必须及时到批准假期的单位销假。如不及\n时办理销假手续，逾期作旷学处理。\n研究生培养\n131\n第十条研究生请假理由必须真实。如发现伪造者，视情节轻重给\n予批评教育直至纪律处分。\n第十一条本规定由研究生院负责解释，凡与本规定不符的以本规\n定为准。\n研究生手册\n132\n# 广东外语外贸大学\n# 关于加强研究生证管理的规定\n为规范研究生证管理工作，根据《教育部办公厅关于加强高等学校\n学生证管理的通知》（教学厅［2001］8 号）的文件要求，制定本规\n定。\n一、领取与审核\n研究生新生入学报到时领取研究生证。研究生本人要如实填写，由\n班长统一交研究生院培养办审核。研究生证经审核并加盖学校印章，方\n可生效。\n二、注册\n每学期开学第一周，研究生需以班为单位持研究生证到培养单位\n（每学年开学注册须凭交费证明），加盖注册章。开学两周不到校注册\n者，按自动退学处理。\n三、使用与保管\n（一）研究生证是在读研究生身份证明的重要证件，只限本人使\n用，不得私自涂改、转借他人",
+              "supportingPassages": [
+                {
+                  "text": "其他有关管理规定\n283\n第四十三条住宿学生有维护集体环境文明、健康的责任和义务。应遵纪守法，共同营造良好的学习和生活环境。 （一）学生应凭校园卡或人脸识别验证通过宿舍通道机进入学生宿舍，严格实行一人一卡，不得翻越通道机；临时未带校园卡时，可凭身份证、学生证等有效证件，经宿管员查验后进入。外来人员进入宿舍楼应主动出示身份证件，经管理人员登记查验同意后方可进入，并服从管理人员的管理，按时离开。 （二）大件物品进出宿舍应办理登记手续。 （三）遵守作息时间，不影响他人休息。宿舍休息时间周日 至 周 四 为12:30-13:50、23:00-06:30； 周 五 、 六 及 节 假 日为 12:30-13:50、00:30-6:30。 （四）本科学生宿舍熄灯时间：周日至周四每天23:00，周五、周六及节假日00:30。经学生宿舍工作委员会批准，宿舍管理执行机构可对熄灯时间进行临时调整。 （五）白云山校区和大学城校区晚归时间为0:30。超过晚归时间后回宿舍的，应登记说明原因。 第四十四条学生及来访者原则上不得进入异性宿舍，如确有需要，须说明事由，出示有效证件（身份证、学生证等）或有关证明并进行登记，经宿舍管理人员同意后方可进入。 第四十五条学生应遵守公共道德，举止文明，自觉维护公共秩序。不得在宿舍区域内打球、踢球、溜冰以及赌博、酗酒、大声喧哗、起哄闹事、摔爆响物、从高层向宿舍楼外抛洒物品等，不得张贴不雅图画。不得在宿舍内进行经营、推销活动。 不得收听、收看和传播具有不良影响的音视频资料；不",
+                  "startOffset": 183700,
+                  "endOffset": 184350
+                }
+              ],
+              "startOffset": 92870,
+              "endOffset": 93650,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 32.59,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 1.5",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "15816f34ff6010f90ebf4af7102f7ce64406cb2e541bc7ef87fbc01190cdc7e6",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-7017ef03-3727-4bfb-878a-413e780b6cb3",
+              "chunkId": "content-7017ef03-3727-4bfb-878a-413e780b6cb3:fts:04c57e885a20f45b:0",
+              "title": "《2025-2026学年度下学期《人工智能应用基础》期末考试安排",
+              "sourceId": "GDUFS-SRC-0004",
+              "sourceName": "信息科学与技术学院（网络空间安全学院）",
+              "originalUrl": "https://sist.gdufs.edu.cn/info/1701/12212.htm",
+              "publishedAt": "2026-06-09",
+              "contentSnippet": "2、考试安排表的班级是按学生选课时的上课班级，为确保无误，我加了 “上课时间”和“任课教师”两项目。学生可以对照 “上课班级”、 “任课教师”和“上课时间”参加考试。\n3、考试安排已全部录入系统，学生可自行进入系统查看考试安排。因系统为初始阶段，若学生的课表系统所显示的考试时间地点与此表不一致的，请以附件：《2025-2026学年度下学期《人工智能应用基础》期末考试安排表（学生用表）（终稿）（2026-6-9）》为准，如还有疑问，敬请打电话咨询确认。\n4、请提醒参加考试的学生带学生证等有效证件按时到指定的考场参加考试，跑错课室将按缺考处理。缺席考试的学生当“缺考”处理，成绩记为“0”分。\n4、请重修、补报的同学根据个人课表到所选课程班级的对应考场按时考试，特别注意认真确认自己重修或补报所跟的班级，切勿进错考场，否则按缺考处理。\n5、本学期未办理课程重修、补报手续，不在教务系统名单内的学生，被取消考试资格的学生，不具备考试资格。\n6、本次考试有2场是有2个班安排在同一个机房考试：它们是：\n①吕会红老师的“汉语言文学（师范）2501”和 “商务英语（商务英语+数字经济双学士学位）2501”共2个班安排在10:30--12:00的北二教406考场，对应序号“8”和“9”。请涉及的上课班级的学生务必按照考试安排参加考试。\n7、关于本科生线上办理缓考申请业务。具体事宜如下：\n①学生因患病、公假以及课程考试时间冲突等原因不能正常参加考试的，须由本人在线填写《本科生课程缓考申请表》（线上办事大厅），上传相关证明材料，于考试前一周在线申请，经所在学院及开课部门审核同意、教务部审核同意，方可取得缓考资格，否则按缺考处理。\n因急病未能事先提出申请的，须在课程考试结束后一周内凭医院证明补办缓考手续（可委托办理）。在校外看病的还须附上病历复印件。逾期者，作缺",
+              "startOffset": 99,
+              "endOffset": 879,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 24.51,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 1.5",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "985a24dd384f2540ed1bb1c2ecdbd8fbd058502f677e4cc5a7e7f9a2a43b74b1",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 16577,
+            "rowsWritten": 0,
+            "queries": 9,
+            "durationMs": 2697,
+            "stagesMs": {
+              "lexical": 581,
+              "supplement": 873,
+              "revalidationAndRanking": 1243
+            },
+            "candidateChunks": 96,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 19
+              },
+              {
+                "name": "document_passages",
+                "limit": 512,
+                "candidates": 48
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "学生证 办理流程",
+          "now": "2026-11-17T08:04:11.798Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [],
+          "knowledge": [
+            {
+              "documentId": "content-48eb06ee-83e0-4ae7-a2ad-4c80a90b8285",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "符合申请条件的学生可在当年暑假前后向拟报读的接收单位或学科点进行初步联系",
+                "除需满足本规定第九条、第十条的条件外",
+                "第二章奖励标准与申请条件"
+              ],
+              "materials": [
+                "可申请转学： （一）患病学生需提供我校及拟转入学校指定医院的检查证明（需盖疾病诊断证明专用章）",
+                "有特殊困难和特别需要的学生需提供相关证明材料"
+              ],
+              "steps": [
+                "国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续 3 年上榜“US News”世界大学排名；入选软科中国文科实力A 类大学，稳居全国前50 强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI 全球前5‰，工程学、环境 /生态学、经济学与商学进入ESI 前1%；12 个学科上榜软科中国最好学科；外国语言文学学科连续多年上榜软科“中国顶尖学科”， 稳居全国前3；应用经济学、法学连续多年上榜软科“中国一流学科”。 科学研究学校深入推进有组织科研，构建服务共建“一带一路”倡议、 高水平对外开放与粤港澳大湾区建设、法治中国与涉外法治建设、 国际传播建设等四大科研平台体系",
+                "学校各单位： 为深入贯彻落实党的十八届三中全会关于深化教育领域综合改革的精神，积极适应经济社会发展新常态对高等教育人才培养的需求，根据《中华人民共和国教育法》《普通高等学校学生管理规定》（教育部令第21 号）等法律法规和《教育部关于全面提高高等教育质量的若干意见》（教高〔2012〕4 号）、《广东省人民政府办公厅转发教育厅关于进一步扩大和落实高校办学自主权促进高校加快发展若干意见的通知》（粤府办 〔2013〕26 号）等文件要求，学校结合实际，研究制定了本科教学实施学分制管理的若干意见，经2015 年1 月12 日校党委常委会审议并原则通过，具体如下。 一、指导思想坚持育人为本，立德树人，全面",
+                "3．选课制。学生根据专业培养方案自主安排学习进程，对于必修课， 可选择任课教师；对于选修课，可选择课程和任课教师；每学期前两周， 学生试听课程，试听结束后作出选课确认。 4．主辅修制。学生在达到主修专业学习要求的前提下，可以辅修其他专业；在主修专业达到毕业要求的前提下，其修读的辅修专业如达到要求，可向其发放辅修专业证书；学生在主修专业具备学位授予资格的前提下，如其辅修专业达到学位授予条件，可获得相应专业学位证书。 5．学分互认制。学生在与我校签订了学分互认协议的境内外高校或在我校认可的境内外高校或MOOC 等网络学习平台修读课程获得的成绩和学分，可以转换为本校课程成绩和学分；学生修读校外课程，"
+              ]
+            },
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "(四)符合国(境)外合作院校规定的申请条件及语言要求",
+                "(三)申请条件",
+                "(三)申请条件"
+              ],
+              "materials": [
+                "需提供随时可以联系的通讯方式"
+              ],
+              "steps": [
+                "学校形成了外语学科与多学科交叉融合、协同发展的学科格局，现有外国语言文学、应用经济学、法学3个一级学科博士点，翻译、法律2 个专业学位博士点和27个二级学科博士点，13个一级学科硕士点和60个二级学科硕士点（含3个交叉学科），21个专业学位硕士点。学校着力推进涉外法治、区域国别学、中华文化国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续3年上榜“US News”世界大学排名；入选软科中国文科实力A类大学，稳居全国前50强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI全球前5‰，工程学、环境/生态学、经济学与商学进入ESI前1%；12个学科上榜软科中国最好学科",
+                "办理入学手续。审查不合格的，取消入学资格；逾期不办理入学手续且",
+                "学位等五个学业出口中选择一个进行申请，并按期办理离校手续。"
+              ]
+            },
+            {
+              "documentId": "content-7017ef03-3727-4bfb-878a-413e780b6cb3",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "①学生因患病、公假以及课程考试时间冲突等原因不能正常参加考试的，须由本人在线填写《本科生课程缓考申请表》（线上办事大厅），上传相关证明材料，于考试前一周在线申请，经所在学院及开课部门审核同意、教务部审核同意，方可取得缓考资格，否则按缺考处理。"
+              ]
+            }
+          ]
+        },
+        "durationMs": 2697
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:10",
+      "state": "running",
+      "at": "2026-11-17T08:04:14.495Z",
+      "elapsedMs": 9638,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:10",
+      "state": "success",
+      "at": "2026-11-17T08:04:14.495Z",
+      "elapsedMs": 9638,
+      "durationMs": 0,
+      "data": {
+        "characters": 104,
+        "cards": 0
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:11",
+      "state": "running",
+      "at": "2026-11-17T08:04:14.495Z",
+      "elapsedMs": 9638,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:11",
+      "state": "success",
+      "at": "2026-11-17T08:04:14.495Z",
+      "elapsedMs": 9638,
+      "durationMs": 0,
+      "data": {
+        "characters": 104,
+        "cards": 0
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T08:04:08.401Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T08:04:08.401Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T08:04:11.798Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 3397,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T08:04:11.798Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T08:04:14.495Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 2697,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T08:04:14.699Z",
+      "data": {
+        "cards": [],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T08:04:14.699Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "no_evidence",
+          "buildingProfiles": [
+            "osm-way-1389859438",
+            "osm-way-307250998",
+            "osm-way-307437431"
+          ],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": true,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "off_topic",
+            "relatedDocuments": [],
+            "missing": [
+              "relevant_readable_evidence",
+              "procedure_evidence"
+            ],
+            "activities": [],
+            "needsSupplement": true,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 0,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [],
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "cachedPromptTokens": 0,
+          "totalTokens": 0,
+          "usageComplete": true,
+          "chargedTokens": 0,
+          "durationMs": 6094,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 0,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 3544,
+            "serverElapsedMs": 9638,
+            "firstTextMs": 9638,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 3397,
+                "ok": true
+              },
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 2697,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 49,
+              "writeQueries": 12,
+              "calls": 53,
+              "failures": 0,
+              "durationMs": 10571,
+              "maxCallMs": 880,
+              "rowsRead": 71186,
+              "rowsWritten": 26,
+              "rowUsageStatements": 43,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 38019,
+                "rowsWritten": 0,
+                "queries": 11,
+                "durationMs": 3397,
+                "stagesMs": {
+                  "lexical": 252,
+                  "supplement": 1219,
+                  "revalidationAndRanking": 1926
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 45
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 19
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 512,
+                    "candidates": 49
+                  }
+                ]
+              },
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 16577,
+                "rowsWritten": 0,
+                "queries": 9,
+                "durationMs": 2697,
+                "stagesMs": {
+                  "lexical": 581,
+                  "supplement": 873,
+                  "revalidationAndRanking": 1243
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 64
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 19
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 512,
+                    "candidates": 48
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "no_evidence",
+    "buildingProfiles": [
+      "osm-way-1389859438",
+      "osm-way-307250998",
+      "osm-way-307437431"
+    ],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": true,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "off_topic",
+      "relatedDocuments": [],
+      "missing": [
+        "relevant_readable_evidence",
+        "procedure_evidence"
+      ],
+      "activities": [],
+      "needsSupplement": true,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 6094,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 0,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 3544,
+      "serverElapsedMs": 9638,
+      "firstTextMs": 9638,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 3397,
+          "ok": true
+        },
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 2697,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 49,
+        "writeQueries": 12,
+        "calls": 53,
+        "failures": 0,
+        "durationMs": 10571,
+        "maxCallMs": 880,
+        "rowsRead": 71186,
+        "rowsWritten": 26,
+        "rowUsageStatements": 43,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 38019,
+          "rowsWritten": 0,
+          "queries": 11,
+          "durationMs": 3397,
+          "stagesMs": {
+            "lexical": 252,
+            "supplement": 1219,
+            "revalidationAndRanking": 1926
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 45
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 19
+            },
+            {
+              "name": "document_passages",
+              "limit": 512,
+              "candidates": 49
+            }
+          ]
+        },
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 16577,
+          "rowsWritten": 0,
+          "queries": 9,
+          "durationMs": 2697,
+          "stagesMs": {
+            "lexical": 581,
+            "supplement": 873,
+            "revalidationAndRanking": 1243
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 19
+            },
+            {
+              "name": "document_passages",
+              "limit": 512,
+              "candidates": 48
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

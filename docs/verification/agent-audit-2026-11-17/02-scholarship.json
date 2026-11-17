@@ -1,0 +1,891 @@
+{
+  "question": "我想了解奖学金制度",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "找到以下制度文件\n\n- 广外校〔2026〕11号 关于印发《广东外语外贸大学研究生学业奖学金评选办法》的通知 [1]\n- 广外校〔2026〕10号 关于印发《广东外语外贸大学研究生国家奖学金评选办法》的通知 [2]\n- 广外校〔2026〕27号 关于印发《广东外语外贸大学本科学生国家励志奖学金管理办法》的通知 [3]\n- 广外校〔2022〕35号关于印发《广东外语外贸大学本科学生奖学金管理规定》的通知 [4]\n\n当前可读取的是附件入口，具体条款和适用范围需查看原 PDF。",
+  "cards": [
+    {
+      "kind": "source",
+      "documentId": "content-4516603a-cda7-4e0d-bcfb-83569e7cc260",
+      "title": "广外校〔2026〕11号 关于印发《广东外语外贸大学研究生学业奖学金评选办法》的通知",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/info/1721/66341.htm",
+      "publishedAt": "2026-03-25T02:50:45.000Z",
+      "snippet": "正文以 PDF 附件提供。\n打开 PDF 附件",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    },
+    {
+      "kind": "source",
+      "documentId": "content-179eeb79-873d-4861-8a1b-770a2d471cd0",
+      "title": "广外校〔2026〕10号 关于印发《广东外语外贸大学研究生国家奖学金评选办法》的通知",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/info/1721/66351.htm",
+      "publishedAt": "2026-03-25T02:48:27.000Z",
+      "snippet": "正文以 PDF 附件提供。\n打开 PDF 附件",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    },
+    {
+      "kind": "source",
+      "documentId": "content-d7007f12-2767-461b-95ab-28f94d665924",
+      "title": "广外校〔2026〕27号 关于印发《广东外语外贸大学本科学生国家励志奖学金管理办法》的通知",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/info/1711/68351.htm",
+      "publishedAt": "2026-09-14T04:22:41.000Z",
+      "snippet": "广外校〔2026〕27号 关于印发《广东外语外贸大学本科学生国家励志奖学金管理办法》的通知.pdf",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    },
+    {
+      "kind": "source",
+      "documentId": "content-dd2e04a4-9816-4be8-ab18-7b78a0e34e76",
+      "title": "广外校〔2022〕35号关于印发《广东外语外贸大学本科学生奖学金管理规定》的通知",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/info/1711/66271.htm",
+      "publishedAt": "2022-05-25T07:00:05.000Z",
+      "snippet": "广外校〔2022〕35号关于印发《广东外语外贸大学本科学生奖学金管理规定》的通知.pdf",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    }
+  ],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T01:33:13.443Z",
+      "elapsedMs": 135,
+      "data": {
+        "question": "我想了解奖学金制度",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T01:33:13.443Z",
+      "elapsedMs": 135,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T01:33:14.160Z",
+      "elapsedMs": 852,
+      "data": {
+        "question": "我想了解奖学金制度"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T01:33:14.160Z",
+      "elapsedMs": 852,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T01:33:14.160Z",
+      "elapsedMs": 852,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 2
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T01:33:14.160Z",
+      "elapsedMs": 852,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T01:33:14.160Z",
+      "elapsedMs": 852,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T01:33:14.160Z",
+      "elapsedMs": 852,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "policy",
+        "campus": null,
+        "topics": [
+          "scholarship"
+        ],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:5",
+      "state": "running",
+      "at": "2026-11-17T01:33:14.270Z",
+      "elapsedMs": 962,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "了解奖学金制度",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:5",
+      "state": "success",
+      "at": "2026-11-17T01:33:16.321Z",
+      "elapsedMs": 3013,
+      "durationMs": 2051,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-4516603a-cda7-4e0d-bcfb-83569e7cc260",
+              "chunkId": "content-4516603a-cda7-4e0d-bcfb-83569e7cc260:fts:ff0c8622630f6f1d:0",
+              "title": "广外校〔2026〕11号 关于印发《广东外语外贸大学研究生学业奖学金评选办法》的通知",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/info/1721/66341.htm",
+              "publishedAt": "2026-03-25T02:50:45.000Z",
+              "contentSnippet": "正文以 PDF 附件提供。\n打开 PDF 附件",
+              "startOffset": 0,
+              "endOffset": 23,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 107.57,
+              "rankingReasons": [
+                "标题词组匹配 1.5",
+                "片段词组匹配 0",
+                "查询主题与限定复核：subject_and_constraints"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "scholarship_policy",
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "32bd6dd59e7bf97cd6c8f8631d87269f35cc6c7f9f33e123281183fdd23e5755",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-179eeb79-873d-4861-8a1b-770a2d471cd0",
+              "chunkId": "content-179eeb79-873d-4861-8a1b-770a2d471cd0:fts:ff0c8622630f6f1d:0",
+              "title": "广外校〔2026〕10号 关于印发《广东外语外贸大学研究生国家奖学金评选办法》的通知",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/info/1721/66351.htm",
+              "publishedAt": "2026-03-25T02:48:27.000Z",
+              "contentSnippet": "正文以 PDF 附件提供。\n打开 PDF 附件",
+              "startOffset": 0,
+              "endOffset": 23,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 107.53,
+              "rankingReasons": [
+                "标题词组匹配 1.5",
+                "片段词组匹配 0",
+                "查询主题与限定复核：subject_and_constraints"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "scholarship_policy",
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "fb3812d83e66c229fa89cde0ad8847c4ae9952f97021811304e5e60187145f20",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-d7007f12-2767-461b-95ab-28f94d665924",
+              "chunkId": "content-d7007f12-2767-461b-95ab-28f94d665924:fts:621af95483382599:0",
+              "title": "广外校〔2026〕27号 关于印发《广东外语外贸大学本科学生国家励志奖学金管理办法》的通知",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/info/1711/68351.htm",
+              "publishedAt": "2026-09-14T04:22:41.000Z",
+              "contentSnippet": "广外校〔2026〕27号 关于印发《广东外语外贸大学本科学生国家励志奖学金管理办法》的通知.pdf",
+              "startOffset": 0,
+              "endOffset": 49,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 44.04,
+              "rankingReasons": [
+                "标题词组匹配 1.5",
+                "片段词组匹配 1.5",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "scholarship_policy",
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "3943cfe8e92f479c01678d1c32507463e58d9b32420ef736258762a83cf80d7f",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-dd2e04a4-9816-4be8-ab18-7b78a0e34e76",
+              "chunkId": "content-dd2e04a4-9816-4be8-ab18-7b78a0e34e76:fts:9ef34fb9f1a369b6:0",
+              "title": "广外校〔2022〕35号关于印发《广东外语外贸大学本科学生奖学金管理规定》的通知",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/info/1711/66271.htm",
+              "publishedAt": "2022-05-25T07:00:05.000Z",
+              "contentSnippet": "广外校〔2022〕35号关于印发《广东外语外贸大学本科学生奖学金管理规定》的通知.pdf",
+              "startOffset": 0,
+              "endOffset": 44,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 44.04,
+              "rankingReasons": [
+                "标题词组匹配 1.5",
+                "片段词组匹配 1.5",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "scholarship_policy",
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "2b588817b4a36e63241b7ae92d1208776d01703360a7bac9813980699173bdb2",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 9360,
+            "rowsWritten": 0,
+            "queries": 9,
+            "durationMs": 2051,
+            "stagesMs": {
+              "lexical": 409,
+              "supplement": 886,
+              "revalidationAndRanking": 756
+            },
+            "candidateChunks": 96,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "scholarship_policy",
+                "limit": 16,
+                "candidates": 16
+              },
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 17
+              },
+              {
+                "name": "document_passages",
+                "limit": 480,
+                "candidates": 40
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "了解奖学金制度",
+          "now": "2026-11-17T01:33:14.270Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [],
+          "knowledge": [
+            {
+              "documentId": "content-4516603a-cda7-4e0d-bcfb-83569e7cc260",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "content-179eeb79-873d-4861-8a1b-770a2d471cd0",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "content-d7007f12-2767-461b-95ab-28f94d665924",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            },
+            {
+              "documentId": "content-dd2e04a4-9816-4be8-ab18-7b78a0e34e76",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": []
+            }
+          ]
+        },
+        "durationMs": 2051
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:6",
+      "state": "running",
+      "at": "2026-11-17T01:33:16.321Z",
+      "elapsedMs": 3013,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:6",
+      "state": "success",
+      "at": "2026-11-17T01:33:16.374Z",
+      "elapsedMs": 3066,
+      "durationMs": 53,
+      "data": {
+        "characters": 238,
+        "cards": 4
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:7",
+      "state": "running",
+      "at": "2026-11-17T01:33:16.374Z",
+      "elapsedMs": 3066,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:7",
+      "state": "success",
+      "at": "2026-11-17T01:33:16.374Z",
+      "elapsedMs": 3066,
+      "durationMs": 0,
+      "data": {
+        "characters": 238,
+        "cards": 4
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T01:33:14.270Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T01:33:14.270Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T01:33:16.321Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 2051,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T01:33:16.526Z",
+      "data": {
+        "cards": [
+          {
+            "kind": "source",
+            "documentId": "content-4516603a-cda7-4e0d-bcfb-83569e7cc260",
+            "title": "广外校〔2026〕11号 关于印发《广东外语外贸大学研究生学业奖学金评选办法》的通知",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/info/1721/66341.htm",
+            "publishedAt": "2026-03-25T02:50:45.000Z",
+            "snippet": "正文以 PDF 附件提供。\n打开 PDF 附件",
+            "evidenceType": "full_text",
+            "classificationState": "knowledge",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          },
+          {
+            "kind": "source",
+            "documentId": "content-179eeb79-873d-4861-8a1b-770a2d471cd0",
+            "title": "广外校〔2026〕10号 关于印发《广东外语外贸大学研究生国家奖学金评选办法》的通知",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/info/1721/66351.htm",
+            "publishedAt": "2026-03-25T02:48:27.000Z",
+            "snippet": "正文以 PDF 附件提供。\n打开 PDF 附件",
+            "evidenceType": "full_text",
+            "classificationState": "knowledge",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          },
+          {
+            "kind": "source",
+            "documentId": "content-d7007f12-2767-461b-95ab-28f94d665924",
+            "title": "广外校〔2026〕27号 关于印发《广东外语外贸大学本科学生国家励志奖学金管理办法》的通知",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/info/1711/68351.htm",
+            "publishedAt": "2026-09-14T04:22:41.000Z",
+            "snippet": "广外校〔2026〕27号 关于印发《广东外语外贸大学本科学生国家励志奖学金管理办法》的通知.pdf",
+            "evidenceType": "full_text",
+            "classificationState": "knowledge",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          },
+          {
+            "kind": "source",
+            "documentId": "content-dd2e04a4-9816-4be8-ab18-7b78a0e34e76",
+            "title": "广外校〔2022〕35号关于印发《广东外语外贸大学本科学生奖学金管理规定》的通知",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/info/1711/66271.htm",
+            "publishedAt": "2022-05-25T07:00:05.000Z",
+            "snippet": "广外校〔2022〕35号关于印发《广东外语外贸大学本科学生奖学金管理规定》的通知.pdf",
+            "evidenceType": "full_text",
+            "classificationState": "knowledge",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T01:33:16.526Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "policy_attachments",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-4516603a-cda7-4e0d-bcfb-83569e7cc260",
+              "content-179eeb79-873d-4861-8a1b-770a2d471cd0",
+              "content-d7007f12-2767-461b-95ab-28f94d665924",
+              "content-dd2e04a4-9816-4be8-ab18-7b78a0e34e76"
+            ],
+            "missing": [],
+            "activities": [],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "professional",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 0,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [],
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "cachedPromptTokens": 0,
+          "totalTokens": 0,
+          "usageComplete": true,
+          "chargedTokens": 0,
+          "durationMs": 2051,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 0,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 962,
+            "serverElapsedMs": 3013,
+            "firstTextMs": 3013,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 2051,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 25,
+              "writeQueries": 11,
+              "calls": 28,
+              "failures": 0,
+              "durationMs": 2397,
+              "maxCallMs": 312,
+              "rowsRead": 9382,
+              "rowsWritten": 20,
+              "rowUsageStatements": 21,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 9360,
+                "rowsWritten": 0,
+                "queries": 9,
+                "durationMs": 2051,
+                "stagesMs": {
+                  "lexical": 409,
+                  "supplement": 886,
+                  "revalidationAndRanking": 756
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "scholarship_policy",
+                    "limit": 16,
+                    "candidates": 16
+                  },
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 64
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 17
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 480,
+                    "candidates": 40
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "policy_attachments",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-4516603a-cda7-4e0d-bcfb-83569e7cc260",
+        "content-179eeb79-873d-4861-8a1b-770a2d471cd0",
+        "content-d7007f12-2767-461b-95ab-28f94d665924",
+        "content-dd2e04a4-9816-4be8-ab18-7b78a0e34e76"
+      ],
+      "missing": [],
+      "activities": [],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "professional",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 2051,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 0,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 962,
+      "serverElapsedMs": 3013,
+      "firstTextMs": 3013,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 2051,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 25,
+        "writeQueries": 11,
+        "calls": 28,
+        "failures": 0,
+        "durationMs": 2397,
+        "maxCallMs": 312,
+        "rowsRead": 9382,
+        "rowsWritten": 20,
+        "rowUsageStatements": 21,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 9360,
+          "rowsWritten": 0,
+          "queries": 9,
+          "durationMs": 2051,
+          "stagesMs": {
+            "lexical": 409,
+            "supplement": 886,
+            "revalidationAndRanking": 756
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "scholarship_policy",
+              "limit": 16,
+              "candidates": 16
+            },
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 17
+            },
+            {
+              "name": "document_passages",
+              "limit": 480,
+              "candidates": 40
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  }
+}

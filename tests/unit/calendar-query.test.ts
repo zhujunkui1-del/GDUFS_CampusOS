@@ -218,6 +218,14 @@ it("stable cursors page over canonical activities and reject a changed visibilit
     const a = await readCalendar(f.db, q);
     expect(a.total).toBe(3);
     expect(a.hasMore).toBe(true);
+    const wholeDay = await readCalendar(f.db, {
+      ...q,
+      day: "2026-11-05",
+      all: "1",
+    });
+    expect(wholeDay.items).toHaveLength(3);
+    expect(wholeDay.hasMore).toBe(false);
+    expect(wholeDay.nextCursor).toBeNull();
     const b = await readCalendar(f.db, { ...q, cursor: a.nextCursor! });
     expect(b.items[0].eventId).not.toBe(a.items[0].eventId);
     f.sqlite
@@ -233,10 +241,55 @@ it("stable cursors page over canonical activities and reject a changed visibilit
   }
 });
 
+it("stores only the venue even when calendar extraction supplied a full sentence", async () => {
+  const f = await dateGateFixture();
+  try {
+    const d = await f.store.document("spring");
+    const input = {
+      title: "2026年校园讲座通知",
+      body: "讲座时间：2026年11月5日14:00。\n地点：大学城校区院系楼360会议室举办学术交流会。",
+    };
+    const fromSource = analyzeArticle(input);
+    expect(fromSource.activities[0].placeRaw).toBe("大学城校区院系楼360会议室");
+    fromSource.activities[0].placeRaw =
+      "白云山校区第三教学楼318室顺利举行&#x20;";
+    await f.db.batch(
+      await analysisStatements(
+        f.db,
+        d.id,
+        d.contentRevision,
+        d.inputHash!,
+        input,
+        fromSource,
+      ),
+    );
+    const row = f.sqlite
+      .prepare(
+        "SELECT place_raw,json_extract(activity_json,'$.placeRaw') AS place FROM article_activity_index WHERE document_id=?",
+      )
+      .get(d.id);
+    expect(row).toMatchObject({
+      place: "白云山校区第三教学楼318室",
+      place_raw: "白云山校区第三教学楼318室",
+    });
+    const analysis = f.sqlite
+      .prepare(
+        "SELECT json_extract(analysis_json,'$.activities[0].placeRaw') AS place FROM document_article_analysis WHERE document_id=?",
+      )
+      .get(d.id);
+    expect(analysis?.place).toBe("白云山校区第三教学楼318室");
+  } finally {
+    f.close();
+  }
+});
+
 it("shows a notice without hours once per day, and keeps stated sessions apart", async () => {
   const f = await dateGateFixture();
   try {
-    const [a, b] = [await f.store.document("spring"), await f.store.document("autumn")];
+    const [a, b] = [
+      await f.store.document("spring"),
+      await f.store.document("autumn"),
+    ];
     await f.db.batch(
       await analysisStatements(f.db, a.id, a.contentRevision, a.inputHash!, {
         title: "2026年运动会安排",
@@ -250,8 +303,7 @@ it("shows a notice without hours once per day, and keeps stated sessions apart",
             locator: "table[1]",
             digest: "isolated",
             method: "html-table",
-            text:
-              "日期 | 地点 | 项目名称\n2026年11月5日 | 田径场 | 男子百米\n2026年11月5日 | 体育馆 | 女子篮球\n2026年11月6日 | 田径场 | 决赛",
+            text: "日期 | 地点 | 项目名称\n2026年11月5日 | 田径场 | 男子百米\n2026年11月5日 | 体育馆 | 女子篮球\n2026年11月6日 | 田径场 | 决赛",
           },
         ],
       }),
@@ -269,8 +321,7 @@ it("shows a notice without hours once per day, and keeps stated sessions apart",
             locator: "table[1]",
             digest: "isolated",
             method: "html-table",
-            text:
-              "序号 | 日期 | 开始时间 | 单位名称 | 地点 | 形式\n1 | 2026年11月5日 | 15:30 | 甲公司 | 一教109 | 宣讲\n2 | 2026年11月5日 | 19:00 | 乙公司 | 一教109 | 宣讲",
+            text: "序号 | 日期 | 开始时间 | 单位名称 | 地点 | 形式\n1 | 2026年11月5日 | 15:30 | 甲公司 | 一教109 | 宣讲\n2 | 2026年11月5日 | 19:00 | 乙公司 | 一教109 | 宣讲",
           },
         ],
       }),
@@ -288,6 +339,50 @@ it("shows a notice without hours once per day, and keeps stated sessions apart",
     ).toEqual(["2026-11-05T15:30:00+08:00", "2026-11-05T19:00:00+08:00"]);
     // The two-hourless table is one card for the day, so the day holds three.
     expect(r.dailyCounts["2026-11-05"]).toBe(3);
+  } finally {
+    f.close();
+  }
+});
+
+it("uses the published calendar index identity in assistant links instead of recomputing it", async () => {
+  const { searchContent } = await import("@/lib/server/retrieval/skills");
+  const f = await dateGateFixture();
+  try {
+    const title = "校园电机企业宣讲会";
+    const body =
+      "宣讲时间：2026年11月16日14:30至16:00。地点：白云山校区一教南404。";
+    await f.article("link-event", "2026-11-15", title, body);
+    const d = await f.store.document("link-event");
+    await f.db.batch(
+      await analysisStatements(
+        f.db,
+        d.id,
+        d.contentRevision,
+        d.inputHash!,
+        { title, body, publishedAt: "2026-11-15" },
+        undefined,
+        "licensed_full_text",
+      ),
+    );
+    const currentId = "event-" + "c".repeat(40);
+    f.sqlite
+      .prepare(
+        "UPDATE article_activity_index SET group_key=? WHERE document_id=?",
+      )
+      .run(currentId, d.id);
+    const result = await searchContent(
+      f.db,
+      "events",
+      { query: title, limit: 3 },
+      "2026-11-17T09:00:00+08:00",
+    );
+    const activity = result.activities.find((a) => a.documentId === d.id)!;
+    expect(activity.eventId).toBe(currentId);
+    expect(activity.calendarUrl).toContain("event=" + currentId);
+    expect(activity.calendarUrl).toContain("article=link-event");
+    expect(
+      (await readCalendar(f.db, { event: activity.eventId })).items,
+    ).toHaveLength(1);
   } finally {
     f.close();
   }

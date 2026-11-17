@@ -16,7 +16,12 @@ export async function dateGateFixture(
   const source = await store.createGovernedSource(
     sourceInput({ governance: confirmed }),
   );
-  async function article(id: string, date: string) {
+  async function article(
+    id: string,
+    date: string,
+    title = id,
+    body = fixtureBody,
+  ) {
     f.sqlite
       .prepare(
         "INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,body_status,content_hash,fetched_at,campus_scope,data_domain,published_at,content_revision,input_hash,rights_scope,content_type,knowledge_category) VALUES(?,?,?,?,?,'reading_html','complete',?,'2026-10-25','all','campus_announcements',?,1,?,'licensed_full_text','notice','campus_life')",
@@ -24,9 +29,9 @@ export async function dateGateFixture(
       .run(
         id,
         source.id,
-        id,
+        title,
         "https://example.invalid/" + id,
-        fixtureBody,
+        body,
         id,
         date,
         "a".repeat(64),

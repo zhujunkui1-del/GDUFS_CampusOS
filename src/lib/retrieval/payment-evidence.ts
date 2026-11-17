@@ -13,7 +13,12 @@ export function asksPaymentProcedure(query: string) {
 }
 
 export function paymentSubjects(query: string, topics: readonly string[]) {
-  if (!topics.includes("水电费")) return topics;
+  if (!topics.includes("水电费")) {
+    if (/住宿费/.test(query) && !/学费/.test(query)) return ["住宿费"];
+    if (/学费/.test(query) && !/住宿费/.test(query)) return ["学费"];
+    if (/校园卡|一卡通/.test(query)) return ["校园卡", "一卡通"];
+    return topics;
+  }
   if (/热水/.test(query)) return ["热水"];
   if (/水[、和与及]?电|电[、和与及]?水/.test(query)) return ["水电", "电水"];
   if (/电费|购电/.test(query)) return ["电费", "购电", "水电"];
@@ -60,7 +65,7 @@ export function paymentChannelEvidence(
   campus: "south" | "north" | null,
   subjects: readonly string[] = [],
 ) {
-  let best = { score: 0, at: 0 };
+  let best = { score: 0, at: 0, end: 0 };
   for (const match of text.matchAll(channel)) {
     const at = match.index;
     const nearby = text
@@ -79,7 +84,7 @@ export function paymentChannelEvidence(
     const scope = name ? (/大学城|南校/.test(name) ? "south" : "north") : null;
     if (campus && scope && campus !== scope) continue;
     const score = scope && scope === campus ? 2 : 1;
-    if (score > best.score) best = { score, at };
+    if (score > best.score) best = { score, at, end: at + match[0].length };
   }
   return best;
 }

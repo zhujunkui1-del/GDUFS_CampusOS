@@ -1,0 +1,445 @@
+{
+  "question": "换个话题，我想了解海外留学。",
+  "status": "success",
+  "entry": "campus-assistant-map",
+  "answer": "目前检索到广外海外留学/国际教育合作相关的官方动态有这些👇\n\n2024年10月新加坡苏澜士集团来访广外，双方围绕师生交流交换项目、中外合作办学、国际化人才定向培养、海外产学研与实习基地建设等方向探讨了合作契机 [1]\n2024年10月大连理工大学一行来广外调研，双方交流了东南亚国家合作办学的发展历程、中外合作办学项目特色、留学生生源占比等相关内容 [2]\n\n目前检索到的资料暂没有更具体的海外留学项目详情、申请要求、交换项目报名通道这类信息，如果需要的话可以再帮你定向查~\n\n2 个来源",
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "completed",
+    "retrievalStatus": "matched",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "general",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-e92d0c85-d653-4176-ab25-c51d1c065379",
+        "content-b120e681-7b69-475c-9559-5ec360d9fce2"
+      ],
+      "missing": [],
+      "activities": [
+        {
+          "documentId": "content-e92d0c85-d653-4176-ab25-c51d1c065379",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        },
+        {
+          "documentId": "content-b120e681-7b69-475c-9559-5ec360d9fce2",
+          "existence": "documented",
+          "eventState": "unknown",
+          "registrationState": "unknown",
+          "participation": "unknown",
+          "openParticipation": false
+        }
+      ],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 2,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 1,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [
+      {
+        "supported": true,
+        "relevant": true,
+        "coverage": "covered",
+        "severity": "unverified",
+        "issues": []
+      }
+    ],
+    "upstreamTimings": [
+      {
+        "durationMs": 5276,
+        "firstTextMs": 4533,
+        "finishReason": "stop",
+        "contentChars": 243
+      },
+      {
+        "durationMs": 4985,
+        "firstTextMs": null,
+        "stage": "evidence_check"
+      }
+    ],
+    "promptTokens": 3224,
+    "completionTokens": 1213,
+    "cachedPromptTokens": 0,
+    "totalTokens": 4437,
+    "usageComplete": true,
+    "chargedTokens": 4437,
+    "durationMs": 12456,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 4437,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 857,
+      "serverElapsedMs": 13313,
+      "firstTextMs": 13272,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 2054,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 27,
+        "writeQueries": 11,
+        "calls": 30,
+        "failures": 0,
+        "durationMs": 2775,
+        "maxCallMs": 569,
+        "rowsRead": 25657,
+        "rowsWritten": 20,
+        "rowUsageStatements": 19,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 25632,
+          "rowsWritten": 0,
+          "queries": 7,
+          "durationMs": 2054,
+          "stagesMs": {
+            "lexical": 497,
+            "supplement": 899,
+            "revalidationAndRanking": 658
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 24
+            },
+            {
+              "name": "document_passages",
+              "limit": 480,
+              "candidates": 15
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "cards": [
+    {
+      "kind": "source",
+      "documentId": "content-e92d0c85-d653-4176-ab25-c51d1c065379",
+      "title": "新加坡苏澜士集团一行来访我校",
+      "sourceName": "国际交流合作部（港澳台事务工作部）",
+      "originalUrl": "https://internationaloffice.gdufs.edu.cn/info/1029/10949.htm",
+      "publishedAt": "2024-10-18",
+      "snippet": "培养情况等进行了介绍。双方就师生交流交换项目、中外合作办学、国际化人才定向培养、品牌建设合作、海外产学研与实习基地建设等话题进行了深入交流，探讨合作契机。",
+      "evidenceType": "full_text",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    },
+    {
+      "kind": "source",
+      "documentId": "content-b120e681-7b69-475c-9559-5ec360d9fce2",
+      "title": "大连理工大学一行来我校调研",
+      "sourceName": "国际交流合作部（港澳台事务工作部）",
+      "originalUrl": "https://internationaloffice.gdufs.edu.cn/info/1029/10927.htm",
+      "publishedAt": "2024-10-11",
+      "snippet": "新策略和成功实践、与东南亚国家合作办学的发展历程、中外合作办学项目特色、以及留学生生源占比与东南亚国家合作办学的重要性等话题进行了介绍。双方团队就多层面话题进行了深入交流，探讨合作契机。\n合影",
+      "evidenceType": "full_text",
+      "classificationState": "radar",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-11-17T02:58:30.748Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:30.748Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:32.802Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 2054,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:43.248Z",
+      "type": "message.delta",
+      "payload": {
+        "text": "目前检索到广外海外留学/国际教育合作相关的官方动态有这些👇\n1. 2024年10月新加坡苏澜士集团来访广外，双方围绕师生交流交换项目、中外合作办学、国际化人才定向培养、海外产学研与实习基地建设等方向探讨了合作契机 [1]\n2. 2024年10月大连理工大学一行来广外调研，双方交流了东南亚国家合作办学的发展历程、中外合作办学项目特色、留学生生源占比等相关内容 [2]\n\n目前检索到的资料暂没有更具体的海外留学项目详情、申请要求、交换项目报名通道这类信息，如果需要的话可以再帮你定向查~"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:43.398Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "source",
+            "documentId": "content-e92d0c85-d653-4176-ab25-c51d1c065379",
+            "title": "新加坡苏澜士集团一行来访我校",
+            "sourceName": "国际交流合作部（港澳台事务工作部）",
+            "originalUrl": "https://internationaloffice.gdufs.edu.cn/info/1029/10949.htm",
+            "publishedAt": "2024-10-18",
+            "snippet": "培养情况等进行了介绍。双方就师生交流交换项目、中外合作办学、国际化人才定向培养、品牌建设合作、海外产学研与实习基地建设等话题进行了深入交流，探讨合作契机。",
+            "evidenceType": "full_text",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          },
+          {
+            "kind": "source",
+            "documentId": "content-b120e681-7b69-475c-9559-5ec360d9fce2",
+            "title": "大连理工大学一行来我校调研",
+            "sourceName": "国际交流合作部（港澳台事务工作部）",
+            "originalUrl": "https://internationaloffice.gdufs.edu.cn/info/1029/10927.htm",
+            "publishedAt": "2024-10-11",
+            "snippet": "新策略和成功实践、与东南亚国家合作办学的发展历程、中外合作办学项目特色、以及留学生生源占比与东南亚国家合作办学的重要性等话题进行了介绍。双方团队就多层面话题进行了深入交流，探讨合作契机。\n合影",
+            "evidenceType": "full_text",
+            "classificationState": "radar",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:43.398Z",
+      "type": "run.completed",
+      "payload": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "completed",
+          "retrievalStatus": "matched",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "general",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-e92d0c85-d653-4176-ab25-c51d1c065379",
+              "content-b120e681-7b69-475c-9559-5ec360d9fce2"
+            ],
+            "missing": [],
+            "activities": [
+              {
+                "documentId": "content-e92d0c85-d653-4176-ab25-c51d1c065379",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              },
+              {
+                "documentId": "content-b120e681-7b69-475c-9559-5ec360d9fce2",
+                "existence": "documented",
+                "eventState": "unknown",
+                "registrationState": "unknown",
+                "participation": "unknown",
+                "openParticipation": false
+              }
+            ],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 2,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 1,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [
+            {
+              "supported": true,
+              "relevant": true,
+              "coverage": "covered",
+              "severity": "unverified",
+              "issues": []
+            }
+          ],
+          "upstreamTimings": [
+            {
+              "durationMs": 5276,
+              "firstTextMs": 4533,
+              "finishReason": "stop",
+              "contentChars": 243
+            },
+            {
+              "durationMs": 4985,
+              "firstTextMs": null,
+              "stage": "evidence_check"
+            }
+          ],
+          "promptTokens": 3224,
+          "completionTokens": 1213,
+          "cachedPromptTokens": 0,
+          "totalTokens": 4437,
+          "usageComplete": true,
+          "chargedTokens": 4437,
+          "durationMs": 12456,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 4437,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 857,
+            "serverElapsedMs": 13313,
+            "firstTextMs": 13272,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 2054,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 27,
+              "writeQueries": 11,
+              "calls": 30,
+              "failures": 0,
+              "durationMs": 2775,
+              "maxCallMs": 569,
+              "rowsRead": 25657,
+              "rowsWritten": 20,
+              "rowUsageStatements": 19,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 25632,
+                "rowsWritten": 0,
+                "queries": 7,
+                "durationMs": 2054,
+                "stagesMs": {
+                  "lexical": 497,
+                  "supplement": 899,
+                  "revalidationAndRanking": 658
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 64
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 24
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 480,
+                    "candidates": 15
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

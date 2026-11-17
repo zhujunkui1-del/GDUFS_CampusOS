@@ -14,6 +14,7 @@ import type {
 import type { z } from "zod";
 import { articleText, evidence, type ArticleText } from "./article-text";
 import { normalizeArticleTime } from "./article-times";
+import { referenceChapterOffsets } from "./reference-sections";
 type Activity = z.infer<typeof ArticleActivitySchema>;
 type Source = {
   id: string;
@@ -38,7 +39,7 @@ const confirmedValue = (v: string | null) =>
     ? null
     : v;
 const eventTimeLabel =
-  /(?:讲座|讲坛|讲堂|沙龙|活动|比赛|竞赛|会议|演出|论坛|考试|复赛|决赛|开幕|报告会|报告)(?:举办)?(?:时\s*间|日期)|举办时间/;
+  /(?:讲座|讲坛|讲堂|沙龙|活动|比赛|竞赛|会议|演出|论坛|考试|复赛|决赛|开幕|报告会|报告|展览|宣讲)(?:举办)?(?:时\s*间|日期)|举办时间/;
 const eventRole = new RegExp(
   eventTimeLabel.source +
     /|开始时间|结束时间|定于|将于|将在|举行|举办|开讲|开幕|(?:^|\n|[\s，。；])\s*(?:[一二三四五六七八九十]+[、.．]|\d+[、.．])?\s*时\s*间\s*[：:]/
@@ -53,7 +54,7 @@ const metaTimeLabel =
 const otherRole =
   /报名|申请截止|申报截止|提交截止|材料提交|作品提交|缴费|公示|获奖|发布时间|发布日期|发布于|稿件|成绩公布/g;
 const dateRe =
-  /(?:20\d{2}[年./-]\s*)?\d{1,2}(?:月|[./-])\s*\d{1,2}[日号]?(?:\s*[（(](?:周|星期)[一二三四五六日天][）)]?)?(?:\s*(?:上午|下午|晚上|晚|中午|凌晨)?\s*(?:\d{1,2}[:：]\d{2}(?:[:：]\d{2})?|[一二两三四五六七八九十\d]{1,3}点(?:半|[一二三四五六七八九十\d]{1,3}分)?))?|(?<=[至到—–~～、或-])\s*\d{1,2}日(?:\s*\d{1,2}[:：]\d{2})?|(?<=[至到—–~～-])\s*\d{1,2}[:：]\d{2}/g;
+  /(?:20\d{2}[年./-]\s*)?\d{1,2}(?:月|[./-])\s*\d{1,2}[日号]?(?:\s*[（(](?:周|星期)[一二三四五六日天][）)]?)?(?:\s*(?:上午|下午|晚上|晚|中午|凌晨)?\s*(?:\d{1,2}[ \t]*[:：][ \t]*\d{2}(?:[:：]\d{2})?|[一二两三四五六七八九十\d]{1,3}点(?:半|[一二三四五六七八九十\d]{1,3}分)?))?|(?<=[至到—–~～、或-])\s*\d{1,2}日(?:\s*\d{1,2}[ \t]*[:：][ \t]*\d{2})?|(?<=[至到—–~～-])\s*\d{1,2}[ \t]*[:：][ \t]*\d{2}/g;
 export const calendarDates = (text: string) => [
   ...text.matchAll(new RegExp(dateRe.source, "g")),
 ];
@@ -80,6 +81,7 @@ function chineseNumber(s: string) {
 }
 function clock(raw: string) {
   return raw
+    .replace(/(\d)[ \t]*[:：][ \t]*(?=\d{2})/g, "$1:")
     .replace(/[（(](?:周|星期)[一二三四五六日天][）)]?/g, "")
     .replace(
       /([一二两三四五六七八九十\d]{1,3})点(半|[一二三四五六七八九十\d]{1,3}分)?/g,
@@ -266,10 +268,9 @@ export function calendarInput(
     ].slice(0, 4),
   };
 }
-function blocks(
-  s: Source,
-  title: string,
-): { title: string; start: number; end: number; root?: boolean }[] {
+function blocks(s: Source, title: string): ScheduleBlock[] {
+  const scoped = s.kind === "body" ? scopedSchedule(s.text, title) : [];
+  if (scoped.length >= 2 && scoped.some((slot) => slot.venue)) return scoped;
   const h = [
     ...s.text.matchAll(
       /(?:^|\n)(?:活动名称|讲座题目|活动主题|(?:\d+[.、]|[一二三四五六七八九十]、)\s*(?:讲座|活动|比赛))[：:]\s*([^\n]{1,120})/g,
@@ -313,6 +314,62 @@ function blocks(
       }))
     : [{ title, start: 0, end: s.text.length }];
 }
+type ScheduleBlock = {
+  title: string;
+  start: number;
+  end: number;
+  root?: boolean;
+  venue?: string | null;
+};
+const dayClock = (line: string) =>
+  calendarDates(line).some((part) =>
+    /\d[ \t]*[:：][ \t]*\d{2}|[一二两三四五六七八九十\d]点/.test(part[0]),
+  );
+const localTimeLabel =
+  /^[^\p{L}\p{N}\n]*(?:活动|讲座|比赛|竞赛|展览|宣讲|会议|论坛|沙龙|举办)?(?:时间|日期)\s*[：:]/u;
+const numberedSlot = /^第[一二三四五六七八九十\d]+场\s*[：:]/;
+
+function scopedSchedule(text: string, title: string): ScheduleBlock[] {
+  const lines = [...text.matchAll(/[^\n]+/g)];
+  const result: ScheduleBlock[] = [];
+  let sharedPlace: string | null = null;
+  let underTimeHeader = false;
+  let sharedHeading = "";
+  for (const [index, line] of lines.entries()) {
+    const current = line[0];
+    const previous = lines[index - 1]?.[0] ?? "";
+    if (localTimeLabel.test(current) && !calendarDates(current).length) {
+      underTimeHeader = true;
+      sharedPlace = labelledPlace(previous);
+      sharedHeading = lines[index - 2]?.[0]?.trim() ?? "";
+      continue;
+    }
+    const numbered = numberedSlot.test(current);
+    if (!numbered) {
+      sharedPlace = null;
+      underTimeHeader = false;
+    }
+    if ((!numbered && !localTimeLabel.test(current)) || !dayClock(current))
+      continue;
+    const venue =
+      labelledPlace(current) ||
+      labelledPlace(lines[index + 1]?.[0] ?? "") ||
+      (numbered ? sharedPlace : null);
+    if (numbered && !venue && !underTimeHeader) continue;
+    const caption =
+      numbered && sharedPlace && sharedHeading.length <= 24
+        ? sharedHeading
+        : "";
+    result.push({
+      title: caption ? `${title} · ${caption}`.slice(0, 250) : title,
+      start: line.index!,
+      end: line.index! + current.length,
+      venue,
+    });
+  }
+  return result;
+}
+
 type Candidate = {
   scope?: string;
   specificity?: number;
@@ -336,7 +393,11 @@ function candidates(
   const sections = blocks(s, title);
   for (const b of sections) {
     const body = s.text.slice(b.start, b.end),
-      type = nature(b.title, body),
+      detected = nature(b.title, body),
+      type =
+        b.venue !== undefined && detected === "uncertain"
+          ? "announcement"
+          : detected,
       // A retrospective describes something that already happened; its bare
       // dates are the least trustworthy of all, so they never borrow the year
       // from the publication date.
@@ -346,6 +407,7 @@ function candidates(
       type === "uncertain" ||
       (!eventWords.test(b.title) &&
         !eventWords.test(body) &&
+        b.venue === undefined &&
         !eventTimeLabel.test(body)) ||
       /每周|每月|每逢/.test(body)
     )
@@ -362,6 +424,11 @@ function candidates(
       if (!hasDate) continue;
       if (/暂定|待定|预计|另行通知/.test(p)) continue;
       const combined = previous + " " + p;
+      const adjacent = body.slice(m.index! + p.length).split("\n")[1] ?? "";
+      const openingVenue =
+        s.kind === "body" && b.start === 0 && m.index === 0 && dayClock(p)
+          ? standaloneVenue(adjacent)
+          : null;
       if (/原定/.test(p) && !/改为|调整至|延期至/.test(p)) continue;
       let pp: ArticleTimePoint | undefined;
       const valid: { p: ArticleTimePoint; at: number; end: number }[] = [];
@@ -394,6 +461,8 @@ function candidates(
         if (/原定/.test(prefix) && !rescheduled) continue;
         const eventContext =
           s.kind === "title" ||
+          b.venue !== undefined ||
+          !!openingVenue ||
           (s.kind === "image" &&
             calendarDates(s.text).length === 1 &&
             eventWords.test(title + s.text) &&
@@ -432,12 +501,13 @@ function candidates(
           valid.push({ p: t, at: d.index!, end: d.index! + d[0].length });
       }
       if (!valid.length) continue;
-      // The paragraph may hold a truncated label ("会议地点：广外") while
-      // the full venue sits in the body, so keep whichever is longer.
       const place =
-        [placeOf(p), placeOf(body)]
-          .filter((v): v is string => !!v)
-          .sort((a, b) => b.length - a.length)[0] ?? null;
+        b.venue === undefined
+          ? placeOf(p) ||
+            labelledPlace(adjacent) ||
+            openingVenue ||
+            placeOf(body)
+          : b.venue;
       const organizer =
         body.match(/(?:主办单位|主办方)[：:]\s*([^，。；\n]{1,100})/)?.[1] ||
         body.match(/由([^，。；\n]{2,80})主办/)?.[1] ||
@@ -524,6 +594,10 @@ function proposalCandidates(
       end = at + e.occurrenceQuote.length;
     let spansValid = true;
     for (const raw of e.dates) {
+      if (!e.occurrenceQuote.includes(raw)) {
+        spansValid = false;
+        break;
+      }
       const matches = [
         ...s.text.matchAll(
           new RegExp(raw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g"),
@@ -590,6 +664,7 @@ function proposalCandidates(
     }
     if (
       (e.place && !s.text.includes(e.place)) ||
+      (e.place && !e.occurrenceQuote.includes(e.place)) ||
       (e.organizer && !s.text.includes(e.organizer))
     )
       continue;
@@ -635,7 +710,7 @@ function proposalCandidates(
           at + e.occurrenceQuote.length,
           "event_time",
         ),
-        place: confirmedValue(verifiedPlace),
+        place: normalizeCalendarVenue(verifiedPlace),
         organizer: confirmedValue(verifiedOrganizer),
         nature: e.nature,
         clock: e.clock,
@@ -654,8 +729,11 @@ function proposalCandidates(
  * The old patterns only knew 在+举行 and dropped roughly a third of places.
  */
 const PLACE_LABEL =
-  /(?:地点为|地点)[ \t]*(?:[：:][ \t]*\n?|\n)[ \t]*([^，。；\n]{1,130}(?:\n[A-Za-z][ \t]*\d{2,4}(?:课室|教室)?(?=\n|$))?)/;
-const PLACE_HINT = /(?:校区|楼|厅|室|馆|场|中心|平台|大学|学院|广场|线上|会议)/;
+  /(?:^|[\n。；])[^\p{L}\p{N}\n]*(?:(?:\d+|[一二三四五六七八九十]+)[.、．]\s*)?(?:活动|讲座|比赛|竞赛|展览|宣讲|会议|论坛|沙龙|举办|会场|现场|详情|具体)?(?:地点|地址)[ \t]*(?:[：:为][ \t]*\n?|\n)[ \t]*([^，。；\n]{1,130}(?:\n[A-Za-z][ \t]*\d{2,4}(?:课室|教室)?(?=\n|$))?)/u;
+const UNCONFIRMED_VENUE =
+  /(?:地点|地址)[^\n。；]{0,24}(?:待定|另行通知|后续.*通知|等待.*通知|群内通知)|^(?:待定|未知|暂无|未定|另行通知|详见后续|待通知|TBD|to be announced)/i;
+const PLACE_HINT =
+  /校区|校园|园区|公园|小区|社区|广场|篮球场|足球场|运动场|操场|体育场|草场|[路街巷道][东南西北]?\s*\d+号|楼|礼堂|报告厅|会堂|会议厅|会议室|教室|课室|活动室|实验室|展厅|馆|中心|球场|大学[\p{Script=Han}]+学院$|(?:北|南)?[一二三四五六七八九十\d]+教|\b[A-Za-z][ \t]*\d{2,4}\b|^[A-Za-z][座栋]|腾讯会议|钉钉会议|飞书会议|\bZoom\b|线上(?:会议|直播|讲座|平台)|^(?:线上|直播间)$/iu;
 // A verb phrase such as "在X举行" also matches prose ("在双方合作领域"),
 // so anything carrying enumeration punctuation, a relative-time word or a
 // trailing 及/等 is treated as prose rather than a venue.
@@ -664,28 +742,78 @@ const PLACE_REJECT =
 // A date range ("7月5日至11日", "11月14日晚上21:00") is not a venue, and the
 // verb phrase "……于7月5日至11日举行" is common in recap posts.
 const PLACE_DATE =
-  /^(?:\d{1,2}\s*月|\d{1,2}\s*日|\d{4}\s*[-/年])|\d{1,2}\s*[:：]\s*\d{2}/;
+  /^(?:(?:活动|会议|比赛|讲座)?(?:时间|日期)\s*[:：]?|\d{1,2}\s*[月日]|\d{4}\s*[.\-/年])|\d{1,2}\s*[:：]\s*\d{2}/;
+const EVENT_VERB =
+  /(?:顺利|成功|隆重|正式|如期|圆满|联合|共同)?\s*(?:举行|举办|召开|开展|开讲|开幕|落幕)/g;
 
-function cleanPlace(raw: string | undefined): string | null {
+export function normalizeCalendarVenue(
+  raw: string | null | undefined,
+): string | null {
   if (!raw) return null;
   let value = raw
+    .replace(/&(?:amp;)?(?:nbsp|#0*32|#x0*20|#0*160|#x0*a0);/gi, " ")
+    .replace(/^[\s、，,]+/, "")
+    .trim();
+  for (const boundary of value.matchAll(EVENT_VERB)) {
+    const venue = value.slice(0, boundary.index).trimEnd();
+    if (PLACE_HINT.test(venue)) {
+      value = venue;
+      break;
+    }
+  }
+  value = value
     .replace(/(?:顺利|成功|隆重|正式|联合|共同)$/, "")
     .replace(/^[\s、，,]+/, "")
     .trim();
-  // A date clause can sit between the preposition and the venue
-  // ("9月22日至23日在深圳举行"), so drop everything up to the last 在/于.
-  value = value.replace(/^.*[在于]/, "").trim();
   if (!value || value.length < 2 || value.length > 60) return null;
-  if (/^\d{4}\s*年/.test(value) || /^\d{1,2}[:：]\d{2}/.test(value))
+  if (
+    /^(?:公司)?(?:总部|招聘|工作|岗位|办公|联系)(?:地址|地点)?\s*[:：]|(?:后续|待定|另行通知)/.test(
+      value,
+    )
+  )
     return null;
-  if (PLACE_REJECT.test(value) || PLACE_DATE.test(value)) return null;
+  if (
+    UNCONFIRMED_VENUE.test(value) ||
+    /(?:市中心|市区|城区|城市|县城|省内|市内|区内|各地)$/.test(value) ||
+    PLACE_REJECT.test(value) ||
+    PLACE_DATE.test(value) ||
+    !PLACE_HINT.test(value)
+  )
+    return null;
   return value;
+}
+
+function labelledPlace(text: string) {
+  return normalizeCalendarVenue(text.match(PLACE_LABEL)?.[1]);
+}
+
+function standaloneVenue(text: string) {
+  const line = text.trim();
+  return /^[\p{L}\p{N} \t（）()·-]+$/u.test(line) &&
+    !/(?:位于|坐落|欢迎|请|届|毕业|招聘|团队|校园生活|总部)/.test(line)
+    ? normalizeCalendarVenue(line)
+    : null;
 }
 
 /** A labelled place is trusted more than a verb phrase; both are cleaned. */
 export function placeOf(text: string): string | null {
-  const labelled = cleanPlace(text.match(PLACE_LABEL)?.[1]);
-  if (labelled) return labelled;
+  if (UNCONFIRMED_VENUE.test(text)) return null;
+  const labelled = [
+    ...new Set(
+      [...text.matchAll(new RegExp(PLACE_LABEL.source, "gu"))].flatMap(
+        (match) => {
+          const value = normalizeCalendarVenue(match[1]);
+          return value ? [value] : [];
+        },
+      ),
+    ),
+  ];
+  if (labelled.length)
+    return (
+      labelled.find((venue) =>
+        labelled.every((other) => venue.includes(other)),
+      ) ?? null
+    );
   const addressLines = [
     ...new Set(
       text
@@ -695,12 +823,12 @@ export function placeOf(text: string): string | null {
           (line) =>
             line.length <= 130 &&
             /校区/.test(line) &&
-            /(?:[A-Za-z]\s*\d{2,4}|[楼馆厅室场中心])/.test(line) &&
+            /(?:\d{2,4}|[楼馆厅室场中心])/.test(line) &&
             !/[。；！？]|(?:位于|坐落|欢迎|请|届|毕业|招聘对象)/.test(line),
         ),
     ),
   ];
-  if (addressLines.length === 1) return cleanPlace(addressLines[0]);
+  if (addressLines.length === 1) return standaloneVenue(addressLines[0]);
   // Scan from the last preposition: "定于2026年11月20日—22日在北京举行"
   // would otherwise drag the date range into the match.
   for (let i = text.length - 1; i >= 0; i--) {
@@ -712,9 +840,8 @@ export function placeOf(text: string): string | null {
           "^[在于]\\s*([^，。；\\n]{2,100}?)(?:顺利|成功|隆重|正式)?(?:举行|举办|召开|开展|开讲|开幕)",
         ),
       );
-    const value = cleanPlace(m?.[1]);
+    const value = normalizeCalendarVenue(m?.[1]);
     if (!value) continue;
-    if (!PLACE_HINT.test(value) && value.length < 4) continue;
     return value;
   }
   return null;
@@ -725,28 +852,40 @@ export function calendarizeArticle(
   base: ArticleAnalysis,
   proposal?: CalendarProposal,
 ): ArticleAnalysis {
-  const canonical = articleText(input),
-    sources: Source[] = [
-      {
-        id: "body",
-        kind: "body",
-        text: canonical.text,
-        url: input.originalUrl || "",
-        locator: "article",
-        digest: "current-body",
-        method: "articleText",
+  const canonical = articleText(input);
+  if (referenceChapterOffsets(canonical.title, canonical.text).length)
+    return {
+      ...base,
+      activities: [],
+      calendar: {
+        version: CALENDAR_VERSION,
+        status: "excluded",
+        reason: "reference_document",
+        sources: [],
+        attempts: 0,
       },
-      {
-        id: "title",
-        kind: "title",
-        text: canonical.title,
-        url: input.originalUrl || "",
-        locator: "title",
-        digest: "current-title",
-        method: "title",
-      },
-      ...(input.calendarSources || []),
-    ];
+    };
+  const sources: Source[] = [
+    {
+      id: "body",
+      kind: "body",
+      text: canonical.text,
+      url: input.originalUrl || "",
+      locator: "article",
+      digest: "current-body",
+      method: "articleText",
+    },
+    {
+      id: "title",
+      kind: "title",
+      text: canonical.title,
+      url: input.originalUrl || "",
+      locator: "title",
+      digest: "current-title",
+      method: "title",
+    },
+    ...(input.calendarSources || []),
+  ];
   const tableEvents: CalendarProposal["events"] = [];
   for (const s of sources.filter(
     (s) => s.kind === "table" || s.kind === "attachment",
@@ -920,7 +1059,7 @@ export function calendarizeArticle(
       category: category(c.title, base),
       startsAt: c.start,
       endsAt: c.end,
-      placeRaw: c.place,
+      placeRaw: normalizeCalendarVenue(c.place),
       organizer: c.organizer,
       registrationStatus: old?.registrationStatus || "unknown",
       registrationWindows: old?.registrationWindows || [],

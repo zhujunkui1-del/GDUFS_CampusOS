@@ -142,7 +142,7 @@ function AccountContent({ user, view }: { user: AccountProfile; view: View }) {
           <div className="account-card account-group">
             <Row
               icon={Bookmark}
-              label="收藏"
+              label="收藏与待办"
               href="/account/favorites"
             />
             <Row

@@ -12,6 +12,10 @@ import { PublicArticleDialog } from "./public-article-dialog";
 import type { PublicArticleSummary } from "./public-feed";
 import { useFavorites } from "./favorites-context";
 import "./favorites-page.css";
+import {
+  AddTaskButton,
+  PersonalTasks,
+} from "@/features/account/personal-tasks";
 
 const filters: { value: "all" | FavoriteSurface; label: string }[] = [
   { value: "all", label: "全部" },
@@ -38,6 +42,7 @@ export function FavoritesPage() {
   const userId = user?.id || "";
   const favorites = useFavorites();
   const [filter, setFilter] = useState<"all" | FavoriteSurface>("all");
+  const [showTasks, setShowTasks] = useState(false);
   const [page, setPage] = useState(1);
   const [result, setResult] = useState<FavoriteResult>();
   const [error, setError] = useState("");
@@ -196,19 +201,29 @@ export function FavoritesPage() {
                       </span>
                     )}
                   </button>
-                  <button
-                    type="button"
-                    className="favorites-card-remove"
-                    aria-label={`取消收藏：${item.title}`}
-                    title="取消收藏"
-                    disabled={removing === item.articleId}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      void remove(item);
-                    }}
-                  >
-                    <Trash2 size={17} aria-hidden="true" />
-                  </button>
+                  <div className="favorites-card-actions">
+                    {item.available && (
+                      <AddTaskButton
+                        article={{
+                          articleId: item.articleId,
+                          title: item.title,
+                        }}
+                      />
+                    )}
+                    <button
+                      type="button"
+                      className="favorites-card-remove"
+                      aria-label={`取消收藏：${item.title}`}
+                      title="取消收藏"
+                      disabled={removing === item.articleId}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        void remove(item);
+                      }}
+                    >
+                      <Trash2 size={17} aria-hidden="true" />
+                    </button>
+                  </div>
                 </article>
               );
             })}
@@ -244,9 +259,42 @@ export function FavoritesPage() {
   );
 
   return (
-    <AccountFrame title="我的收藏" backHref="/account">
-      {content}
-      {selected && (
+    <AccountFrame
+      title="我的收藏与待办"
+      backHref="/account"
+      heading={
+        <div
+          className="task-switch"
+          role="group"
+          aria-label="收藏与待办"
+          data-tasks={showTasks}
+        >
+          <button
+            type="button"
+            aria-pressed={!showTasks}
+            onClick={() => setShowTasks(false)}
+          >
+            收藏
+          </button>
+          <button
+            type="button"
+            aria-pressed={showTasks}
+            onClick={() => {
+              setShowTasks(true);
+              setSelected(null);
+            }}
+          >
+            待办
+          </button>
+        </div>
+      }
+    >
+      {showTasks && user ? (
+        <PersonalTasks key={user.id} userId={user.id} />
+      ) : (
+        content
+      )}
+      {selected && !showTasks && (
         <PublicArticleDialog
           article={selected.article}
           categoryLabel="收藏文章"

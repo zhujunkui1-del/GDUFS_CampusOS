@@ -1,0 +1,1036 @@
+{
+  "question": "广外南校区宿舍水电费怎么缴纳？",
+  "smartSearch": false,
+  "status": "success",
+  "answer": "**大学城校区**\n\n④水、电、冷IC 卡充值服务时间工作日9:00-13:00 15:00-17:30（周四下午暂停充值，进行系统维护），周六9:00-13:00。充值服务地址： 学生宿舍1 栋，联系电话：020-39337011。 [1]\n\n你所在楼栋是否适用、目前是否仍按此方式办理，可向宿管核实。",
+  "cards": [
+    {
+      "kind": "source",
+      "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+      "title": "2026年研究生手册（全文）",
+      "sourceName": "学生工作部",
+      "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+      "publishedAt": "2026-09-20T11:27:05.000Z",
+      "snippet": "\n2. 大学城校区\n①宿舍楼栋清洁、饮用水订购可向各栋一楼值班人员反映， 24 小时值班电话张贴在各楼栋一楼。 ②线上饮用水订购渠道：\n③宿舍维修线上报修渠道：“数智广外”微信公众号→日常服务→ 故障报修。\n研究生手册\n334\n④水、电、冷IC 卡充值服务时间工作日9:00-13:00 15:00-17:30（周四下午暂停充值，进行系统维护），周六9:00-13:00。充值服务地址： 学生宿舍1 栋，联系电话：020-39337011。",
+      "evidenceType": "full_text",
+      "classificationState": "knowledge",
+      "validity": "unknown",
+      "readable": true,
+      "calendarLinks": []
+    }
+  ],
+  "error": "",
+  "records": [
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "running",
+      "at": "2026-11-17T08:03:57.012Z",
+      "elapsedMs": 182,
+      "data": {
+        "question": "广外南校区宿舍水电费怎么缴纳？",
+        "smartSearch": false
+      }
+    },
+    {
+      "node": "input",
+      "span": "input:1",
+      "state": "success",
+      "at": "2026-11-17T08:03:57.012Z",
+      "elapsedMs": 182,
+      "durationMs": 0,
+      "data": {
+        "accepted": true
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "running",
+      "at": "2026-11-17T08:03:58.016Z",
+      "elapsedMs": 1186,
+      "data": {
+        "question": "广外南校区宿舍水电费怎么缴纳？"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "running",
+      "at": "2026-11-17T08:03:58.016Z",
+      "elapsedMs": 1186,
+      "data": {
+        "session": "游客"
+      }
+    },
+    {
+      "node": "gate",
+      "span": "gate:3",
+      "state": "success",
+      "at": "2026-11-17T08:03:58.016Z",
+      "elapsedMs": 1186,
+      "durationMs": 0,
+      "data": {
+        "decision": "campus",
+        "historyMessages": 0
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "running",
+      "at": "2026-11-17T08:03:58.016Z",
+      "elapsedMs": 1186,
+      "data": {
+        "selectedPlaceId": null
+      }
+    },
+    {
+      "node": "building",
+      "span": "building:4",
+      "state": "success",
+      "at": "2026-11-17T08:03:58.016Z",
+      "elapsedMs": 1186,
+      "durationMs": 0,
+      "data": {
+        "matches": []
+      }
+    },
+    {
+      "node": "route",
+      "span": "route:2",
+      "state": "success",
+      "at": "2026-11-17T08:03:58.016Z",
+      "elapsedMs": 1186,
+      "durationMs": 0,
+      "data": {
+        "act": "campus",
+        "goal": "procedure",
+        "campus": "south",
+        "topics": [
+          "utilities"
+        ],
+        "path": "content_retrieval",
+        "plannedTools": [
+          "search_campus_knowledge"
+        ]
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:5",
+      "state": "running",
+      "at": "2026-11-17T08:03:58.156Z",
+      "elapsedMs": 1326,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "广外南校区宿舍水电费怎么缴纳",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:5",
+      "state": "success",
+      "at": "2026-11-17T08:03:59.573Z",
+      "elapsedMs": 2743,
+      "durationMs": 1417,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "chunkId": "content-16300be2-facb-4406-b157-ab5ace0d0c28:fts:9fa888bfac25bd0c:272",
+              "title": "2026年研究生手册（全文）",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+              "publishedAt": "2026-09-20T11:27:05.000Z",
+              "contentSnippet": "\n2. 大学城校区\n①宿舍楼栋清洁、饮用水订购可向各栋一楼值班人员反映， 24 小时值班电话张贴在各楼栋一楼。 ②线上饮用水订购渠道：\n③宿舍维修线上报修渠道：“数智广外”微信公众号→日常服务→ 故障报修。\n研究生手册\n334\n④水、电、冷IC 卡充值服务时间工作日9:00-13:00 15:00-17:30（周四下午暂停充值，进行系统维护），周六9:00-13:00。充值服务地址： 学生宿舍1 栋，联系电话：020-39337011。",
+              "startOffset": 213010,
+              "endOffset": 213230,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 44.52,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 0",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "knowledge",
+              "radarCategory": null,
+              "knowledgeCategory": "administrative_services",
+              "classificationOrigin": "manual",
+              "contentRevision": 1,
+              "inputHash": "15816f34ff6010f90ebf4af7102f7ce64406cb2e541bc7ef87fbc01190cdc7e6",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 13737,
+            "rowsWritten": 0,
+            "queries": 8,
+            "durationMs": 1417,
+            "stagesMs": {
+              "lexical": 130,
+              "supplement": 213,
+              "revalidationAndRanking": 1074
+            },
+            "candidateChunks": 44,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 12
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "document_passages",
+                "limit": 448,
+                "candidates": 46
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "广外南校区宿舍水电费怎么缴纳",
+          "now": "2026-11-17T08:03:58.156Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [],
+          "knowledge": [
+            {
+              "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [
+                "(四)符合国(境)外合作院校规定的申请条件及语言要求",
+                "(三)申请条件",
+                "(三)申请条件"
+              ],
+              "materials": [
+                "需提供随时可以联系的通讯方式"
+              ],
+              "steps": [
+                "学校形成了外语学科与多学科交叉融合、协同发展的学科格局，现有外国语言文学、应用经济学、法学3个一级学科博士点，翻译、法律2 个专业学位博士点和27个二级学科博士点，13个一级学科硕士点和60个二级学科硕士点（含3个交叉学科），21个专业学位硕士点。学校着力推进涉外法治、区域国别学、中华文化国际传播等学科建设。近年来，学科综合实力稳步提升，学校连续3年上榜“US News”世界大学排名；入选软科中国文科实力A类大学，稳居全国前50强；金融学、教育学、经济学上榜软科世界一流学科排名；社会科学总论进入ESI全球前5‰，工程学、环境/生态学、经济学与商学进入ESI前1%；12个学科上榜软科中国最好学科",
+                "办理入学手续。审查不合格的，取消入学资格；逾期不办理入学手续且",
+                "学位等五个学业出口中选择一个进行申请，并按期办理离校手续。"
+              ]
+            }
+          ]
+        },
+        "durationMs": 1417
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "running",
+      "at": "2026-11-17T08:03:59.573Z",
+      "elapsedMs": 2743,
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan",
+        "input": {
+          "query": "水电费 水电 电费 办理流程",
+          "limit": 4
+        }
+      }
+    },
+    {
+      "node": "rag",
+      "span": "rag:6",
+      "state": "success",
+      "at": "2026-11-17T08:04:01.972Z",
+      "elapsedMs": 5142,
+      "durationMs": 2399,
+      "data": {
+        "name": "search_campus_knowledge",
+        "result": {
+          "hits": [
+            {
+              "documentId": "content-67d44b2f-678e-4a75-82a8-e150f7864bdb",
+              "chunkId": "content-67d44b2f-678e-4a75-82a8-e150f7864bdb:fts:beef6792c75bc307:1",
+              "title": "2023年云山勤工实体招标方案",
+              "sourceId": "GDUFS-SRC-0010",
+              "sourceName": "学生工作部",
+              "originalUrl": "https://nstu.gdufs.edu.cn/info/1056/8852.htm",
+              "publishedAt": "2023-03-07T06:00:00.000Z",
+              "contentSnippet": "实操结束后，由终审评审团评分确定中标者，未中标的竞聘者可以选择调剂。\n（竞投得分计算公式为：总分=初审30%+复审40%+实操30%）\n四、运营要求\n（一）效益类实体\n1.效益类实体兼顾经济效益和社会效益，须在协议期内按时向大学缴纳相应的创新创业发展资金、固定资产折旧费用与水电费用。\n2.创新创业发展资金根据面积、地理位置等因素设置，每年按照8个月收取，用于补充大学奖助学金、维护勤工实体场地与设备、开展云山勤工活动等用途。\n3.固定资产折旧费按5年折算；水电费用按实际开销计算。\n4.云山勤工按照每学期实体实际经营状况调整发展资金额度。\n（二）公益类实体\n公益类实体以追求社会效益为主，无须缴纳费用。\n五、管理方案\n（一）人事管理\n1.各勤工实体可选择通过云山勤工统一组织或自行招聘面试。\n2.各勤工实体须录用在校全日制本科生作为实体员工。\n3.各勤工实体根据实际营业情况自行制定经营管理方案。\n4.各勤工实体的工资发放按云山勤工薪酬制度执行；如申请调整，需报云山勤工审核通过后，方可执行。",
+              "startOffset": 1172,
+              "endOffset": 1619,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 39.16,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 3",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "campus_notice",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "d9c0c013ad6d16c46e03b250a2fb5aecaecc1a1636462b65716de92df25e0817",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-54cdfa4d-2b2d-494e-a18c-e5a4af829c08",
+              "chunkId": "content-54cdfa4d-2b2d-494e-a18c-e5a4af829c08:fts:c370ca9e6e429a85:1",
+              "title": "关于2026年春季日本千叶大学硕士生访学项目选拔的通知",
+              "sourceId": "GDUFS-SRC-0081",
+              "sourceName": "研究生院",
+              "originalUrl": "https://gwyjs.gdufs.edu.cn/info/1035/13796.htm",
+              "publishedAt": "2025-10-30",
+              "contentSnippet": "五、选拔程序和办法\n遵循“公开、公平、公正”的原则，采取“个人申请、导师推荐、专家评审、择优录取”的方式进行选拔。\n（一）申报时间\n申报人于2025年10月30日—11月2日登录研究生综合服务平台系统（https://yjsxt.gdufs.edu.cn/gsapp/sys/yjsemaphome/portal/index.do）完成以下申请流程：\n1. 在线填写“短期国（境）外访学”申请表，选择“短期国（境）外访学”栏目。本人填写过程中，可选择“暂存”按钮。填写完整确认无误后，方可提交，一旦提交，不再修改。请打印系统生成的最终版项目申请表（一式三份），签名确认后提交所在研究生培养单位汇总。\n2. 在线提交相关附件材料：\n（1）研修计划，内容应包含研究背景、目标、研究准备、研究方法、预期安排、回国后续学习计划等，须由导师签署意见并签字确认；\n（2）研究生国内在读期间最新成绩单；",
+              "startOffset": 1199,
+              "endOffset": 1593,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 33.09,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 1.5",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "education_career",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "eeaf8a84e4a72f113c46135903066fe3fe05f791a189f72e196394563a3e9feb",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-250b6fe1-c965-4f11-9692-cfb806c84836",
+              "chunkId": "content-250b6fe1-c965-4f11-9692-cfb806c84836:fts:4bc0a2c611320aa1:1",
+              "title": "关于2026年春季德国海德堡大学研究生访学项目选拔的通知",
+              "sourceId": "GDUFS-SRC-0081",
+              "sourceName": "研究生院",
+              "originalUrl": "https://gwyjs.gdufs.edu.cn/info/1035/13916.htm",
+              "publishedAt": "2025-12-03",
+              "contentSnippet": "五、选拔程序和办法\n遵循“公开、公平、公正”的原则，采取“个人申请、导师推荐、专家评审、择优录取”的方式进行选拔。\n（一）申报时间\n申报人于2025年12月3日—12月15日登录研究生综合服务平台系统（https://yjsxt.gdufs.edu.cn/gsapp/sys/yjsemaphome/portal/index.do）完成以下申请流程：\n1. 在线填写“短期国（境）外访学”申请表，选择“短期国（境）外访学”栏目。本人填写过程中，可选择“暂存”按钮。填写完整确认无误后，方可提交，一旦提交，不再修改。请打印系统生成的最终版项目申请表（一式三份），签名确认后提交所在研究生培养单位汇总。\n2. 在线提交相关附件材料：\n（1）研修计划，内容应包含研究背景、目标、研究准备、研究方法、预期安排、回国后续学习计划等，须由导师签署意见并签字确认；\n（2）研究生国内在读期间最新成绩单；",
+              "startOffset": 1228,
+              "endOffset": 1622,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 33.06,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 1.5",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "education_career",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "b532b8b515df1776a76485006c1007d8f36e518084e5a681f4644ea90434a984",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            },
+            {
+              "documentId": "content-1ac22a43-1a76-4918-af2c-302e4270c539",
+              "chunkId": "content-1ac22a43-1a76-4918-af2c-302e4270c539:fts:32799a94613f6689:1",
+              "title": "关于2026年春季美国密苏里大学研究生访学项目选拔的通知",
+              "sourceId": "GDUFS-SRC-0081",
+              "sourceName": "研究生院",
+              "originalUrl": "https://gwyjs.gdufs.edu.cn/info/1035/13912.htm",
+              "publishedAt": "2025-12-03",
+              "contentSnippet": "五、选拔程序和办法\n遵循“公开、公平、公正”的原则，采取“个人申请、导师推荐、专家评审、择优录取”的方式进行选拔。\n（一）申报时间\n申报人于2025年12月3日—12月15日登录研究生综合服务平台系统（https://yjsxt.gdufs.edu.cn/gsapp/sys/yjsemaphome/portal/index.do）完成以下申请流程：\n1. 在线填写“短期国（境）外访学”申请表，选择“短期国（境）外访学”栏目。本人填写过程中，可选择“暂存”按钮。填写完整确认无误后，方可提交，一旦提交，不再修改。请打印系统生成的最终版项目申请表（一式三份），签名确认后提交所在研究生培养单位汇总。\n2. 在线提交相关附件材料\n（1）研修计划，内容应包含研究背景、目标、研究准备、研究方法、预期安排、回国后续学习计划等，须由导师签署意见并签字确认；\n（2）研究生国内在读期间最新成绩单；",
+              "startOffset": 1260,
+              "endOffset": 1653,
+              "evidenceBasis": "normalized_text",
+              "evidenceType": "full_text",
+              "bodyAvailable": true,
+              "bodyPartial": false,
+              "relevanceScore": 33.04,
+              "rankingReasons": [
+                "标题词组匹配 0",
+                "片段词组匹配 1.5",
+                "查询主题与限定复核：subject_and_constraints",
+                "正文用途特征加权"
+              ],
+              "classificationState": "radar",
+              "radarCategory": "education_career",
+              "knowledgeCategory": null,
+              "classificationOrigin": "automatic",
+              "contentRevision": 1,
+              "inputHash": "df82439c6148e1c96d55580647f244546cdcd9a86712c07f1cc15f4bc0e63a47",
+              "documentVersion": 2,
+              "publicAvailable": true,
+              "validity": "unknown",
+              "official": true,
+              "readable": true,
+              "linkedSources": []
+            }
+          ],
+          "metrics": {
+            "rowsRead": 24850,
+            "rowsWritten": 0,
+            "queries": 11,
+            "durationMs": 2399,
+            "stagesMs": {
+              "lexical": 370,
+              "supplement": 784,
+              "revalidationAndRanking": 1245
+            },
+            "candidateChunks": 96,
+            "usageAvailable": true,
+            "queryPlanVersion": "query-v2",
+            "recallLanes": [
+              {
+                "name": "title_subject",
+                "limit": 32,
+                "candidates": 0
+              },
+              {
+                "name": "expanded_subject",
+                "limit": 64,
+                "candidates": 64
+              },
+              {
+                "name": "body_passages",
+                "limit": 32,
+                "candidates": 32
+              },
+              {
+                "name": "semantic",
+                "limit": 24,
+                "candidates": 19
+              },
+              {
+                "name": "document_passages",
+                "limit": 512,
+                "candidates": 48
+              }
+            ]
+          },
+          "indexVersion": "campus-fts-v1",
+          "method": "fts5_keywords_and_domain_expansion",
+          "warnings": [],
+          "purpose": "knowledge",
+          "query": "水电费 水电 电费 办理流程",
+          "now": "2026-11-17T08:03:59.573Z",
+          "timeZone": "Asia/Shanghai",
+          "activities": [],
+          "knowledge": [
+            {
+              "documentId": "content-67d44b2f-678e-4a75-82a8-e150f7864bdb",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "通过初审的竞聘者将进入复审环节，需于4月9日之前撰写并提交规划书（规划书撰写阶段：2023年3月24日至4月9日），由评审团评分并提问。确定进入实操环节的竞聘者。"
+              ]
+            },
+            {
+              "documentId": "content-54cdfa4d-2b2d-494e-a18c-e5a4af829c08",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "1. 在线填写“短期国（境）外访学”申请表，选择“短期国（境）外访学”栏目。本人填写过程中，可选择“暂存”按钮。填写完整确认无误后，方可提交，一旦提交，不再修改。请打印系统生成的最终版项目申请表（一式三份），签名确认后提交所在研究生培养单位汇总。",
+                "（8）平台要求上传的邀请函和导师简历由国外访学单位统一提供，可提交一份PDF说明（如：邀请函和导师简历由国外访学单位统一提供）替代。",
+                "各研究生培养单位严格对照申报条件，于11月5日前完成系统在线审核，于11月10日前对拟推荐名单公示5天，并将研究生提交的纸质申请表（一式三份）和系统导出的汇总表签字盖章后，统一提交至研究生院国际项目办。"
+              ]
+            },
+            {
+              "documentId": "content-250b6fe1-c965-4f11-9692-cfb806c84836",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "1. 在线填写“短期国（境）外访学”申请表，选择“短期国（境）外访学”栏目。本人填写过程中，可选择“暂存”按钮。填写完整确认无误后，方可提交，一旦提交，不再修改。请打印系统生成的最终版项目申请表（一式三份），签名确认后提交所在研究生培养单位汇总。",
+                "（8）平台要求上传的邀请函和导师简历由国外访学单位统一提供，可提交一份pdf说明（如：邀请函和导师简历由国外访学单位统一提供）替代。",
+                "各研究生培养单位严格对照申报条件，于12月22日前完成系统在线审核、拟推荐名单公示5天并将研究生提交的纸质申请表（一式三份）和系统导出的汇总表签字盖章后，统一提交至研究生院国际项目办，逾期不再受理。"
+              ]
+            },
+            {
+              "documentId": "content-1ac22a43-1a76-4918-af2c-302e4270c539",
+              "validity": "unknown",
+              "effectiveFrom": null,
+              "effectiveUntil": null,
+              "conditions": [],
+              "materials": [],
+              "steps": [
+                "1. 在线填写“短期国（境）外访学”申请表，选择“短期国（境）外访学”栏目。本人填写过程中，可选择“暂存”按钮。填写完整确认无误后，方可提交，一旦提交，不再修改。请打印系统生成的最终版项目申请表（一式三份），签名确认后提交所在研究生培养单位汇总。",
+                "（8）平台要求上传的邀请函和导师简历由国外访学单位统一提供，可提交一份pdf说明（如：邀请函和导师简历由国外访学单位统一提供）替代。",
+                "各研究生培养单位严格对照申报条件，于12月22日前完成系统在线审核、拟推荐名单公示5天并将研究生提交的纸质申请表（一式三份）和系统导出的汇总表签字盖章后，统一提交至研究生院国际项目办，逾期不再受理。"
+              ]
+            }
+          ]
+        },
+        "durationMs": 2399
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "running",
+      "at": "2026-11-17T08:04:01.972Z",
+      "elapsedMs": 5142,
+      "data": {
+        "mode": "引用与表达校验"
+      }
+    },
+    {
+      "node": "expression",
+      "span": "expression:7",
+      "state": "success",
+      "at": "2026-11-17T08:04:02.047Z",
+      "elapsedMs": 5217,
+      "durationMs": 75,
+      "data": {
+        "characters": 152,
+        "cards": 1
+      }
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "running",
+      "at": "2026-11-17T08:04:02.047Z",
+      "elapsedMs": 5217,
+      "data": {}
+    },
+    {
+      "node": "output",
+      "span": "output:8",
+      "state": "success",
+      "at": "2026-11-17T08:04:02.047Z",
+      "elapsedMs": 5217,
+      "durationMs": 0,
+      "data": {
+        "characters": 152,
+        "cards": 1
+      }
+    }
+  ],
+  "events": [
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T08:03:58.156Z",
+      "data": {
+        "started": true
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T08:03:58.156Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T08:03:59.573Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 1417,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.started",
+      "at": "2026-11-17T08:03:59.573Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "tool.finished",
+      "at": "2026-11-17T08:04:01.972Z",
+      "data": {
+        "name": "search_campus_knowledge",
+        "ok": true,
+        "durationMs": 2399,
+        "origin": "server_plan"
+      }
+    },
+    {
+      "type": "artifact.ready",
+      "at": "2026-11-17T08:04:02.254Z",
+      "data": {
+        "cards": [
+          {
+            "kind": "source",
+            "documentId": "content-16300be2-facb-4406-b157-ab5ace0d0c28",
+            "title": "2026年研究生手册（全文）",
+            "sourceName": "学生工作部",
+            "originalUrl": "https://nstu.gdufs.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1472413915&wbfileid=D2702DE3C293D176BBF49F1860A3DD58",
+            "publishedAt": "2026-09-20T11:27:05.000Z",
+            "snippet": "\n2. 大学城校区\n①宿舍楼栋清洁、饮用水订购可向各栋一楼值班人员反映， 24 小时值班电话张贴在各楼栋一楼。 ②线上饮用水订购渠道：\n③宿舍维修线上报修渠道：“数智广外”微信公众号→日常服务→ 故障报修。\n研究生手册\n334\n④水、电、冷IC 卡充值服务时间工作日9:00-13:00 15:00-17:30（周四下午暂停充值，进行系统维护），周六9:00-13:00。充值服务地址： 学生宿舍1 栋，联系电话：020-39337011。",
+            "evidenceType": "full_text",
+            "classificationState": "knowledge",
+            "validity": "unknown",
+            "readable": true,
+            "calendarLinks": []
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "type": "run.completed",
+      "at": "2026-11-17T08:04:02.254Z",
+      "data": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "taskStatus": "partial",
+          "retrievalStatus": "matched",
+          "answerMode": "payment_evidence",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "evidenceAssessment": {
+            "state": "supported",
+            "relatedDocuments": [
+              "content-16300be2-facb-4406-b157-ab5ace0d0c28"
+            ],
+            "missing": [],
+            "activities": [],
+            "needsSupplement": false,
+            "negativeExistenceProven": false
+          },
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 0,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [],
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "cachedPromptTokens": 0,
+          "totalTokens": 0,
+          "usageComplete": true,
+          "chargedTokens": 0,
+          "durationMs": 3816,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 0,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 1326,
+            "serverElapsedMs": 5142,
+            "firstTextMs": 5142,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 1417,
+                "ok": true
+              },
+              {
+                "name": "search_campus_knowledge",
+                "durationMs": 2399,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 35,
+              "writeQueries": 12,
+              "calls": 39,
+              "failures": 0,
+              "durationMs": 4518,
+              "maxCallMs": 315,
+              "rowsRead": 39112,
+              "rowsWritten": 26,
+              "rowUsageStatements": 32,
+              "rowUsageComplete": false
+            },
+            "retrieval": [
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 13737,
+                "rowsWritten": 0,
+                "queries": 8,
+                "durationMs": 1417,
+                "stagesMs": {
+                  "lexical": 130,
+                  "supplement": 213,
+                  "revalidationAndRanking": 1074
+                },
+                "candidateChunks": 44,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 12
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 448,
+                    "candidates": 46
+                  }
+                ]
+              },
+              {
+                "skill": "search_campus_knowledge",
+                "rowsRead": 24850,
+                "rowsWritten": 0,
+                "queries": 11,
+                "durationMs": 2399,
+                "stagesMs": {
+                  "lexical": 370,
+                  "supplement": 784,
+                  "revalidationAndRanking": 1245
+                },
+                "candidateChunks": 96,
+                "usageAvailable": true,
+                "queryPlanVersion": "query-v2",
+                "recallLanes": [
+                  {
+                    "name": "title_subject",
+                    "limit": 32,
+                    "candidates": 0
+                  },
+                  {
+                    "name": "expanded_subject",
+                    "limit": 64,
+                    "candidates": 64
+                  },
+                  {
+                    "name": "body_passages",
+                    "limit": 32,
+                    "candidates": 32
+                  },
+                  {
+                    "name": "semantic",
+                    "limit": 24,
+                    "candidates": 19
+                  },
+                  {
+                    "name": "document_passages",
+                    "limit": 512,
+                    "candidates": 48
+                  }
+                ]
+              }
+            ],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "taskStatus": "partial",
+    "retrievalStatus": "matched",
+    "answerMode": "payment_evidence",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "evidenceAssessment": {
+      "state": "supported",
+      "relatedDocuments": [
+        "content-16300be2-facb-4406-b157-ab5ace0d0c28"
+      ],
+      "missing": [],
+      "activities": [],
+      "needsSupplement": false,
+      "negativeExistenceProven": false
+    },
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 0,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [],
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "cachedPromptTokens": 0,
+    "totalTokens": 0,
+    "usageComplete": true,
+    "chargedTokens": 0,
+    "durationMs": 3816,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 0,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 1326,
+      "serverElapsedMs": 5142,
+      "firstTextMs": 5142,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 1417,
+          "ok": true
+        },
+        {
+          "name": "search_campus_knowledge",
+          "durationMs": 2399,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 35,
+        "writeQueries": 12,
+        "calls": 39,
+        "failures": 0,
+        "durationMs": 4518,
+        "maxCallMs": 315,
+        "rowsRead": 39112,
+        "rowsWritten": 26,
+        "rowUsageStatements": 32,
+        "rowUsageComplete": false
+      },
+      "retrieval": [
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 13737,
+          "rowsWritten": 0,
+          "queries": 8,
+          "durationMs": 1417,
+          "stagesMs": {
+            "lexical": 130,
+            "supplement": 213,
+            "revalidationAndRanking": 1074
+          },
+          "candidateChunks": 44,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 12
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "document_passages",
+              "limit": 448,
+              "candidates": 46
+            }
+          ]
+        },
+        {
+          "skill": "search_campus_knowledge",
+          "rowsRead": 24850,
+          "rowsWritten": 0,
+          "queries": 11,
+          "durationMs": 2399,
+          "stagesMs": {
+            "lexical": 370,
+            "supplement": 784,
+            "revalidationAndRanking": 1245
+          },
+          "candidateChunks": 96,
+          "usageAvailable": true,
+          "queryPlanVersion": "query-v2",
+          "recallLanes": [
+            {
+              "name": "title_subject",
+              "limit": 32,
+              "candidates": 0
+            },
+            {
+              "name": "expanded_subject",
+              "limit": 64,
+              "candidates": 64
+            },
+            {
+              "name": "body_passages",
+              "limit": 32,
+              "candidates": 32
+            },
+            {
+              "name": "semantic",
+              "limit": 24,
+              "candidates": 19
+            },
+            {
+              "name": "document_passages",
+              "limit": 512,
+              "candidates": 48
+            }
+          ]
+        }
+      ],
+      "externalSearch": []
+    }
+  },
+  "layout": {
+    "positions": {
+      "receipt": {
+        "x": 1509,
+        "y": 573
+      },
+      "input": {
+        "x": 30,
+        "y": 267
+      },
+      "gate": {
+        "x": 273,
+        "y": 267
+      },
+      "route": {
+        "x": 548,
+        "y": 358
+      },
+      "building": {
+        "x": 780,
+        "y": 34
+      },
+      "personal": {
+        "x": 780,
+        "y": 573
+      },
+      "model": {
+        "x": 1001,
+        "y": 368
+      },
+      "expression": {
+        "x": 1499,
+        "y": 375
+      },
+      "output": {
+        "x": 1747,
+        "y": 266
+      },
+      "rag": {
+        "x": 1253,
+        "y": 179
+      },
+      "events": {
+        "x": 1261,
+        "y": 30
+      },
+      "map": {
+        "x": 1292,
+        "y": 573
+      },
+      "external": {
+        "x": 1294,
+        "y": 711
+      }
+    },
+    "zoom": 0.4426919032597266,
+    "offset": {
+      "x": 10.719242902208201,
+      "y": 10.719242902208201
+    },
+    "inspectorWidth": 390
+  },
+  "entry": "shared-agent-workflow"
+}

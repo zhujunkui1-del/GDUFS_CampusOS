@@ -1,0 +1,373 @@
+{
+  "question": "南校区有哪些食堂？",
+  "status": "success",
+  "entry": "campus-assistant-map",
+  "answer": "广外南校区共有3个食堂：\n\n文采园（一饭）：别名一饭、一饭堂、第一饭堂、第一食堂、一食堂\n博雅园（二饭）：别名二饭、二饭堂、第二饭堂、第二食堂、二食堂\n风采园（三饭）：别名三饭、三饭堂、第三饭堂、第三食堂、三食堂\n\n需要查看某个食堂的具体位置或详情吗？\n\n文采园（一饭）\n风采园（三饭）\n博雅园（二饭）",
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "open",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 2,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 1698,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      },
+      {
+        "durationMs": 7040,
+        "firstTextMs": null,
+        "finishReason": "stop",
+        "contentChars": 149
+      }
+    ],
+    "promptTokens": 7465,
+    "completionTokens": 745,
+    "cachedPromptTokens": 0,
+    "totalTokens": 8210,
+    "usageComplete": true,
+    "chargedTokens": 8210,
+    "durationMs": 8928,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 8210,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 909,
+      "serverElapsedMs": 9837,
+      "firstTextMs": 9789,
+      "mapActionMs": null,
+      "skills": [
+        {
+          "name": "search_places",
+          "durationMs": 0,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 20,
+        "writeQueries": 11,
+        "calls": 23,
+        "failures": 0,
+        "durationMs": 1099,
+        "maxCallMs": 67,
+        "rowsRead": 27,
+        "rowsWritten": 20,
+        "rowUsageStatements": 12,
+        "rowUsageComplete": false
+      },
+      "retrieval": [],
+      "externalSearch": []
+    }
+  },
+  "cards": [
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039048",
+        "name": "文采园（一饭）",
+        "category": "canteen",
+        "zone": "living",
+        "location": [
+          113.39131745,
+          23.064490550000002
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "文采园",
+          "一饭",
+          "一饭堂",
+          "第一饭堂",
+          "第一食堂",
+          "一食堂"
+        ],
+        "labelPlaceId": "osm-way-313039048",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039057",
+        "name": "风采园（三饭）",
+        "category": "canteen",
+        "zone": "living",
+        "location": [
+          113.38962265,
+          23.060230500000003
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "风采园",
+          "三饭",
+          "三饭堂",
+          "第三饭堂",
+          "第三食堂",
+          "三食堂"
+        ],
+        "labelPlaceId": "osm-way-313039057",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039061",
+        "name": "博雅园（二饭）",
+        "category": "canteen",
+        "zone": "living",
+        "location": [
+          113.39209575000001,
+          23.063546799999997
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "博雅园",
+          "二饭",
+          "二饭堂",
+          "第二饭堂",
+          "第二食堂",
+          "二食堂"
+        ],
+        "labelPlaceId": "osm-way-313039061",
+        "verificationStatus": "source_mapped"
+      }
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-11-17T02:58:44.457Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:46.248Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "search_places",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:46.248Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "search_places",
+        "ok": true,
+        "durationMs": 0,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:53.385Z",
+      "type": "message.delta",
+      "payload": {
+        "text": "广外南校区共有3个食堂：\n\n1. **文采园（一饭）**：别名一饭、一饭堂、第一饭堂、第一食堂、一食堂\n2. **博雅园（二饭）**：别名二饭、二饭堂、第二饭堂、第二食堂、二食堂  \n3. **风采园（三饭）**：别名三饭、三饭堂、第三饭堂、第三食堂、三食堂\n\n需要查看某个食堂的具体位置或详情吗？"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:53.550Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039048",
+              "name": "文采园（一饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.39131745,
+                23.064490550000002
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "文采园",
+                "一饭",
+                "一饭堂",
+                "第一饭堂",
+                "第一食堂",
+                "一食堂"
+              ],
+              "labelPlaceId": "osm-way-313039048",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039057",
+              "name": "风采园（三饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.38962265,
+                23.060230500000003
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "风采园",
+                "三饭",
+                "三饭堂",
+                "第三饭堂",
+                "第三食堂",
+                "三食堂"
+              ],
+              "labelPlaceId": "osm-way-313039057",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039061",
+              "name": "博雅园（二饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.39209575000001,
+                23.063546799999997
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "博雅园",
+                "二饭",
+                "二饭堂",
+                "第二饭堂",
+                "第二食堂",
+                "二食堂"
+              ],
+              "labelPlaceId": "osm-way-313039061",
+              "verificationStatus": "source_mapped"
+            }
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:58:53.550Z",
+      "type": "run.completed",
+      "payload": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "open",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 2,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 1698,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 7040,
+              "firstTextMs": null,
+              "finishReason": "stop",
+              "contentChars": 149
+            }
+          ],
+          "promptTokens": 7465,
+          "completionTokens": 745,
+          "cachedPromptTokens": 0,
+          "totalTokens": 8210,
+          "usageComplete": true,
+          "chargedTokens": 8210,
+          "durationMs": 8928,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 8210,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 909,
+            "serverElapsedMs": 9837,
+            "firstTextMs": 9789,
+            "mapActionMs": null,
+            "skills": [
+              {
+                "name": "search_places",
+                "durationMs": 0,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 20,
+              "writeQueries": 11,
+              "calls": 23,
+              "failures": 0,
+              "durationMs": 1099,
+              "maxCallMs": 67,
+              "rowsRead": 27,
+              "rowsWritten": 20,
+              "rowUsageStatements": 12,
+              "rowUsageComplete": false
+            },
+            "retrieval": [],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

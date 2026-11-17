@@ -40,9 +40,14 @@ export function activityTitleTier(title: string) {
   return 1;
 }
 export function participationQuery(query: string) {
+  if (/哪些.*需要|需要提前|是否需要|要不要/.test(query) && /报名/.test(query))
+    return false;
+  if (/保证|一定|必定/.test(query) && /获奖|获胜|录取|通过|成功/.test(query))
+    return false;
+  if (/区分/.test(query) && /新闻|报道/.test(query)) return false;
   return (
     /参加|参与|参赛|报名|可报|能报|可参加|能参加/.test(query) &&
-    /比赛|竞赛|赛事|活动|运动会|讲座|招聘|奖助|申请/.test(query)
+    /比赛|竞赛|赛事|活动|运动会|讲座|招聘|奖助|申请|志愿|社团|招募/.test(query)
   );
 }
 type Evidence = {

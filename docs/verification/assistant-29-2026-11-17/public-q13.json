@@ -1,0 +1,947 @@
+{
+  "question": "我现在在南校区生活区，想去最近的校医院，怎么走？",
+  "status": "success",
+  "entry": "campus-assistant-map",
+  "answer": "校医院（门诊部）就在南校区生活区内哦～从生活区中心（比如下沉广场那边）往西北方向走，经过后勤楼附近就能看到啦，距离很近的，步行几分钟就到 🐟\n\n地图已经帮你定位好校医院的位置了，你可以看着地图往那边走～\n\n门诊部\n文采园（一饭）\n风采园（三饭）\n博雅园（二饭）\n下沉广场\n后勤楼\n师苑3栋\n师苑1栋\n师苑4栋\n南苑9栋",
+  "metrics": {
+    "smartSearch": false,
+    "queryUnderstanding": {
+      "failed": false
+    },
+    "executionStatus": "completed",
+    "answerMode": "model",
+    "buildingProfiles": [],
+    "conversationAct": "campus",
+    "answerRequirement": "strict",
+    "modelFailureCode": null,
+    "evidenceGateUsed": false,
+    "publicationFallbackUsed": false,
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "requests": 4,
+    "correctionRetries": 0,
+    "emptyAnswerRetries": 0,
+    "answerRepairRetries": 0,
+    "softAcceptances": 0,
+    "groundingChecks": 0,
+    "groundingFailures": 0,
+    "groundingCheckFailures": 0,
+    "groundingResults": [],
+    "upstreamTimings": [
+      {
+        "durationMs": 1090,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      },
+      {
+        "durationMs": 2544,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      },
+      {
+        "durationMs": 3340,
+        "firstTextMs": null,
+        "finishReason": "tool_calls",
+        "contentChars": 0
+      },
+      {
+        "durationMs": 3973,
+        "firstTextMs": 3542,
+        "finishReason": "stop",
+        "contentChars": 102
+      }
+    ],
+    "promptTokens": 13191,
+    "completionTokens": 952,
+    "cachedPromptTokens": 0,
+    "totalTokens": 14143,
+    "usageComplete": true,
+    "chargedTokens": 14143,
+    "durationMs": 13020,
+    "estimatedUsdRange": null,
+    "priceSource": null,
+    "priceCheckedAt": null,
+    "model": "step-3.5-flash-2603",
+    "quotaAccountedTokens": 14143,
+    "timings": {
+      "version": "camera-settled-v2",
+      "preparationMs": 894,
+      "serverElapsedMs": 13914,
+      "firstTextMs": 13866,
+      "mapActionMs": 1719,
+      "skills": [
+        {
+          "name": "search_places",
+          "durationMs": 0,
+          "ok": true
+        },
+        {
+          "name": "search_places",
+          "durationMs": 0,
+          "ok": true
+        },
+        {
+          "name": "control_map",
+          "durationMs": 0,
+          "ok": true
+        }
+      ],
+      "database": {
+        "readQueries": 28,
+        "writeQueries": 13,
+        "calls": 33,
+        "failures": 0,
+        "durationMs": 1467,
+        "maxCallMs": 60,
+        "rowsRead": 588,
+        "rowsWritten": 28,
+        "rowUsageStatements": 14,
+        "rowUsageComplete": false
+      },
+      "retrieval": [],
+      "externalSearch": []
+    }
+  },
+  "cards": [
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039046",
+        "name": "门诊部",
+        "category": "service",
+        "zone": "living",
+        "location": [
+          113.390075,
+          23.06582195
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "大学城校区门诊部",
+          "校医院",
+          "校医院门诊部",
+          "门诊楼",
+          "门诊室"
+        ],
+        "labelPlaceId": "osm-way-313039046",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039048",
+        "name": "文采园（一饭）",
+        "category": "canteen",
+        "zone": "living",
+        "location": [
+          113.39131745,
+          23.064490550000002
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "文采园",
+          "一饭",
+          "一饭堂",
+          "第一饭堂",
+          "第一食堂",
+          "一食堂"
+        ],
+        "labelPlaceId": "osm-way-313039048",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039057",
+        "name": "风采园（三饭）",
+        "category": "canteen",
+        "zone": "living",
+        "location": [
+          113.38962265,
+          23.060230500000003
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "风采园",
+          "三饭",
+          "三饭堂",
+          "第三饭堂",
+          "第三食堂",
+          "三食堂"
+        ],
+        "labelPlaceId": "osm-way-313039057",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039061",
+        "name": "博雅园（二饭）",
+        "category": "canteen",
+        "zone": "living",
+        "location": [
+          113.39209575000001,
+          23.063546799999997
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "博雅园",
+          "二饭",
+          "二饭堂",
+          "第二饭堂",
+          "第二食堂",
+          "二食堂"
+        ],
+        "labelPlaceId": "osm-way-313039061",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-1410275259",
+        "name": "下沉广场",
+        "category": "plaza",
+        "zone": "living",
+        "location": [
+          113.39182205,
+          23.06384585
+        ],
+        "crs": "WGS84",
+        "aliases": [],
+        "labelPlaceId": "osm-way-1410275259",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039029",
+        "name": "后勤楼",
+        "category": "building",
+        "zone": "living",
+        "location": [
+          113.3902525,
+          23.065219499999998
+        ],
+        "crs": "WGS84",
+        "aliases": [],
+        "labelPlaceId": "osm-way-313039029",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039033",
+        "name": "师苑3栋",
+        "category": "dormitory",
+        "zone": "living",
+        "location": [
+          113.39249004999999,
+          23.0631846
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "2栋"
+        ],
+        "labelPlaceId": "osm-way-313039033",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039037",
+        "name": "师苑1栋",
+        "category": "dormitory",
+        "zone": "living",
+        "location": [
+          113.39181165,
+          23.063056850000002
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "1栋"
+        ],
+        "labelPlaceId": "osm-way-313039037",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-313039056",
+        "name": "师苑4栋",
+        "category": "dormitory",
+        "zone": "living",
+        "location": [
+          113.39262215,
+          23.06284655
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "3栋"
+        ],
+        "labelPlaceId": "osm-way-313039056",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-312536950",
+        "name": "南苑9栋",
+        "category": "dormitory",
+        "zone": "living",
+        "location": [
+          113.39107005,
+          23.0609837
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "9栋"
+        ],
+        "labelPlaceId": "osm-way-312536950",
+        "verificationStatus": "source_mapped"
+      }
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-11-17T02:56:08.931Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:10.105Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "search_places",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:10.105Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "search_places",
+        "ok": true,
+        "durationMs": 0,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:12.752Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "search_places",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:12.752Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "search_places",
+        "ok": true,
+        "durationMs": 0,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:16.171Z",
+      "type": "tool.started",
+      "payload": {
+        "name": "control_map",
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:16.171Z",
+      "type": "tool.finished",
+      "payload": {
+        "name": "control_map",
+        "ok": true,
+        "durationMs": 0,
+        "origin": "model"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:16.222Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039046",
+              "name": "门诊部",
+              "category": "service",
+              "zone": "living",
+              "location": [
+                113.390075,
+                23.06582195
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "大学城校区门诊部",
+                "校医院",
+                "校医院门诊部",
+                "门诊楼",
+                "门诊室"
+              ],
+              "labelPlaceId": "osm-way-313039046",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039048",
+              "name": "文采园（一饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.39131745,
+                23.064490550000002
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "文采园",
+                "一饭",
+                "一饭堂",
+                "第一饭堂",
+                "第一食堂",
+                "一食堂"
+              ],
+              "labelPlaceId": "osm-way-313039048",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039057",
+              "name": "风采园（三饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.38962265,
+                23.060230500000003
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "风采园",
+                "三饭",
+                "三饭堂",
+                "第三饭堂",
+                "第三食堂",
+                "三食堂"
+              ],
+              "labelPlaceId": "osm-way-313039057",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039061",
+              "name": "博雅园（二饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.39209575000001,
+                23.063546799999997
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "博雅园",
+                "二饭",
+                "二饭堂",
+                "第二饭堂",
+                "第二食堂",
+                "二食堂"
+              ],
+              "labelPlaceId": "osm-way-313039061",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-1410275259",
+              "name": "下沉广场",
+              "category": "plaza",
+              "zone": "living",
+              "location": [
+                113.39182205,
+                23.06384585
+              ],
+              "crs": "WGS84",
+              "aliases": [],
+              "labelPlaceId": "osm-way-1410275259",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039029",
+              "name": "后勤楼",
+              "category": "building",
+              "zone": "living",
+              "location": [
+                113.3902525,
+                23.065219499999998
+              ],
+              "crs": "WGS84",
+              "aliases": [],
+              "labelPlaceId": "osm-way-313039029",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039033",
+              "name": "师苑3栋",
+              "category": "dormitory",
+              "zone": "living",
+              "location": [
+                113.39249004999999,
+                23.0631846
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "2栋"
+              ],
+              "labelPlaceId": "osm-way-313039033",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039037",
+              "name": "师苑1栋",
+              "category": "dormitory",
+              "zone": "living",
+              "location": [
+                113.39181165,
+                23.063056850000002
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "1栋"
+              ],
+              "labelPlaceId": "osm-way-313039037",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039056",
+              "name": "师苑4栋",
+              "category": "dormitory",
+              "zone": "living",
+              "location": [
+                113.39262215,
+                23.06284655
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "3栋"
+              ],
+              "labelPlaceId": "osm-way-313039056",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-312536950",
+              "name": "南苑9栋",
+              "category": "dormitory",
+              "zone": "living",
+              "location": [
+                113.39107005,
+                23.0609837
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "9栋"
+              ],
+              "labelPlaceId": "osm-way-312536950",
+              "verificationStatus": "source_mapped"
+            }
+          }
+        ],
+        "packet": {
+          "id": "beef9c8d-aec0-4a2d-b77f-848805dbe503",
+          "actions": [
+            {
+              "type": "FOCUS_PLACE",
+              "placeId": "osm-way-313039046",
+              "zoom": 17
+            },
+            {
+              "type": "SHOW_PLACE_DETAILS",
+              "placeId": "osm-way-313039046"
+            }
+          ]
+        },
+        "routes": []
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:21.951Z",
+      "type": "message.delta",
+      "payload": {
+        "text": "校医院（门诊部）就在南校区生活区内哦～从生活区中心（比如下沉广场那边）往西北方向走，经过后勤楼附近就能看到啦，距离很近的，步行几分钟就到 🐟\n\n地图已经帮你定位好校医院的位置了，你可以看着地图往那边走～"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:22.119Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039046",
+              "name": "门诊部",
+              "category": "service",
+              "zone": "living",
+              "location": [
+                113.390075,
+                23.06582195
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "大学城校区门诊部",
+                "校医院",
+                "校医院门诊部",
+                "门诊楼",
+                "门诊室"
+              ],
+              "labelPlaceId": "osm-way-313039046",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039048",
+              "name": "文采园（一饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.39131745,
+                23.064490550000002
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "文采园",
+                "一饭",
+                "一饭堂",
+                "第一饭堂",
+                "第一食堂",
+                "一食堂"
+              ],
+              "labelPlaceId": "osm-way-313039048",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039057",
+              "name": "风采园（三饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.38962265,
+                23.060230500000003
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "风采园",
+                "三饭",
+                "三饭堂",
+                "第三饭堂",
+                "第三食堂",
+                "三食堂"
+              ],
+              "labelPlaceId": "osm-way-313039057",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039061",
+              "name": "博雅园（二饭）",
+              "category": "canteen",
+              "zone": "living",
+              "location": [
+                113.39209575000001,
+                23.063546799999997
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "博雅园",
+                "二饭",
+                "二饭堂",
+                "第二饭堂",
+                "第二食堂",
+                "二食堂"
+              ],
+              "labelPlaceId": "osm-way-313039061",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-1410275259",
+              "name": "下沉广场",
+              "category": "plaza",
+              "zone": "living",
+              "location": [
+                113.39182205,
+                23.06384585
+              ],
+              "crs": "WGS84",
+              "aliases": [],
+              "labelPlaceId": "osm-way-1410275259",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039029",
+              "name": "后勤楼",
+              "category": "building",
+              "zone": "living",
+              "location": [
+                113.3902525,
+                23.065219499999998
+              ],
+              "crs": "WGS84",
+              "aliases": [],
+              "labelPlaceId": "osm-way-313039029",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039033",
+              "name": "师苑3栋",
+              "category": "dormitory",
+              "zone": "living",
+              "location": [
+                113.39249004999999,
+                23.0631846
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "2栋"
+              ],
+              "labelPlaceId": "osm-way-313039033",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039037",
+              "name": "师苑1栋",
+              "category": "dormitory",
+              "zone": "living",
+              "location": [
+                113.39181165,
+                23.063056850000002
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "1栋"
+              ],
+              "labelPlaceId": "osm-way-313039037",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-313039056",
+              "name": "师苑4栋",
+              "category": "dormitory",
+              "zone": "living",
+              "location": [
+                113.39262215,
+                23.06284655
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "3栋"
+              ],
+              "labelPlaceId": "osm-way-313039056",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-312536950",
+              "name": "南苑9栋",
+              "category": "dormitory",
+              "zone": "living",
+              "location": [
+                113.39107005,
+                23.0609837
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "9栋"
+              ],
+              "labelPlaceId": "osm-way-312536950",
+              "verificationStatus": "source_mapped"
+            }
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "timestamp": "2026-11-17T02:56:22.119Z",
+      "type": "run.completed",
+      "payload": {
+        "metrics": {
+          "smartSearch": false,
+          "queryUnderstanding": {
+            "failed": false
+          },
+          "executionStatus": "completed",
+          "answerMode": "model",
+          "buildingProfiles": [],
+          "conversationAct": "campus",
+          "answerRequirement": "strict",
+          "modelFailureCode": null,
+          "evidenceGateUsed": false,
+          "publicationFallbackUsed": false,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "requests": 4,
+          "correctionRetries": 0,
+          "emptyAnswerRetries": 0,
+          "answerRepairRetries": 0,
+          "softAcceptances": 0,
+          "groundingChecks": 0,
+          "groundingFailures": 0,
+          "groundingCheckFailures": 0,
+          "groundingResults": [],
+          "upstreamTimings": [
+            {
+              "durationMs": 1090,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 2544,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 3340,
+              "firstTextMs": null,
+              "finishReason": "tool_calls",
+              "contentChars": 0
+            },
+            {
+              "durationMs": 3973,
+              "firstTextMs": 3542,
+              "finishReason": "stop",
+              "contentChars": 102
+            }
+          ],
+          "promptTokens": 13191,
+          "completionTokens": 952,
+          "cachedPromptTokens": 0,
+          "totalTokens": 14143,
+          "usageComplete": true,
+          "chargedTokens": 14143,
+          "durationMs": 13020,
+          "estimatedUsdRange": null,
+          "priceSource": null,
+          "priceCheckedAt": null,
+          "model": "step-3.5-flash-2603",
+          "quotaAccountedTokens": 14143,
+          "timings": {
+            "version": "camera-settled-v2",
+            "preparationMs": 894,
+            "serverElapsedMs": 13914,
+            "firstTextMs": 13866,
+            "mapActionMs": 1719,
+            "skills": [
+              {
+                "name": "search_places",
+                "durationMs": 0,
+                "ok": true
+              },
+              {
+                "name": "search_places",
+                "durationMs": 0,
+                "ok": true
+              },
+              {
+                "name": "control_map",
+                "durationMs": 0,
+                "ok": true
+              }
+            ],
+            "database": {
+              "readQueries": 28,
+              "writeQueries": 13,
+              "calls": 33,
+              "failures": 0,
+              "durationMs": 1467,
+              "maxCallMs": 60,
+              "rowsRead": 588,
+              "rowsWritten": 28,
+              "rowUsageStatements": 14,
+              "rowUsageComplete": false
+            },
+            "retrieval": [],
+            "externalSearch": []
+          }
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

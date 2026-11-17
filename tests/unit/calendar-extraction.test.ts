@@ -3,11 +3,62 @@ import { analyzeArticle } from "@/lib/ingestion/article-analysis";
 import {
   calendarInput,
   calendarizeArticle,
+  normalizeCalendarVenue,
 } from "@/lib/ingestion/calendar-extraction";
 const get = (title: string, body: string) =>
   analyzeArticle({ title, body, publishedAt: "2026-10-30" });
 const accepted = (title: string, body: string) =>
   get(title, body).activities.filter((a) => a.calendar?.eligible);
+it.each(["广东省", "杭州", "海珠区", "广州市中心", "总部：杭州", "活动时间：2026.11.19", "工作地点：广州市天河区某大楼", "活动地点待定"])("does not treat %s as an event venue", (value) => {
+  expect(normalizeCalendarVenue(value)).toBeNull();
+});
+it.each(["白云山校区", "越秀公园", "松柏小区", "白云大道北2号", "北七教314", "腾讯会议"])("keeps the specific venue %s", (value) => {
+  expect(normalizeCalendarVenue(value)).toBe(value);
+});
+it("uses the opening date and campus classroom in icon-led recruitment notices", () => {
+  const [event] = accepted(
+    "【11月17日宣讲】校园招聘单位",
+    "11月17日（星期二）14： 00\n白云山校区二教201\n形式\n宣讲会\n四、工作地点\n总部：杭州\n公司总部地址：浙江省杭州市滨江区滨兴路1399号",
+  );
+  expect(event?.startsAt?.at).toBe("2026-11-17T14:00:00+08:00");
+  expect(event?.placeRaw).toBe("白云山校区二教201");
+});
+it("leaves an unpublished venue blank and never reads the adjacent date as a venue", () => {
+  const [event] = accepted(
+    "校园比赛通知",
+    "📌 活动时间及地点\n活动时间：2026.11.19\n活动地点后续等待咨询群通知",
+  );
+  expect(event?.startsAt?.date).toBe("2026-11-19");
+  expect(event?.placeRaw).toBeNull();
+});
+it("associates each time with its own venue in a notice containing numbered exhibitions and lectures", () => {
+  const items = accepted(
+    "校园文化周活动安排",
+    "📅 活动时间：2026年11月15日—11月20日\n📍 活动地点：广东外语外贸大学白云山校区\n学术讲座\n📅 时间：11月15日（周日）15:30—17:00\n📍 地点：白云山校区七教314\n电子词典展\n📍 展览地点：白云山校区八教306室\n📅 展览时间：\n第一场：11月16日（周一）15:30—17:00\n第二场：11月17日（周二）15:30—17:00\n演讲比赛\n📅 活动时间：11月16日（周一）18:30—20:00\n📍 活动地点：白云山校区七教314",
+  );
+  expect(items.map((a) => [a.startsAt?.at, a.endsAt?.at, a.placeRaw])).toEqual([
+    [
+      "2026-11-15T15:30:00+08:00",
+      "2026-11-15T17:00:00+08:00",
+      "白云山校区七教314",
+    ],
+    [
+      "2026-11-16T15:30:00+08:00",
+      "2026-11-16T17:00:00+08:00",
+      "白云山校区八教306室",
+    ],
+    [
+      "2026-11-17T15:30:00+08:00",
+      "2026-11-17T17:00:00+08:00",
+      "白云山校区八教306室",
+    ],
+    [
+      "2026-11-16T18:30:00+08:00",
+      "2026-11-16T20:00:00+08:00",
+      "白云山校区七教314",
+    ],
+  ]);
+});
 it("binds a labelled date and adjacent time and venue in a notice", () => {
   const activities = accepted(
     "（南校区专场）国际组织与国际治理沙龙 | 人工智能治理（第16期）",

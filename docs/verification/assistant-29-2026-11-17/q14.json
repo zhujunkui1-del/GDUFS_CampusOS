@@ -1,0 +1,417 @@
+{
+  "question": "广外南校区有哪些体育场地？分别在哪里？",
+  "status": "success",
+  "entry": "campus-assistant-map",
+  "answer": "南校区地图中已核实的体育场地有9处\n\n体育场（真草场），位于教学区\n体育馆（羽毛球场），位于教学区\n假草场，位于教学区\n排球场，位于教学区\n篮球场，位于教学区\n游泳馆，位于教学区\n羽毛球场，位于教学区\n篮球场，位于教学区\n网球场，位于教学区\n\n地点卡片可打开对应地图位置。\n\n体育场（真草场）\n体育馆（羽毛球场）\n假草场\n排球场\n篮球场\n游泳馆\n羽毛球场\n篮球场\n网球场",
+  "metrics": {
+    "requests": 0,
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "chargedTokens": 0,
+    "persona": {
+      "version": "campus-dafeiyu-v1",
+      "tone": "daily",
+      "aside": false,
+      "concise": false
+    },
+    "execution": "spatial_read",
+    "answerMode": "spatial_read",
+    "executionStatus": "completed",
+    "retrievalStatus": "matched",
+    "taskStatus": "completed",
+    "resolvedIntent": "sports_list",
+    "dataSource": "campus_map",
+    "serverElapsedMs": 1163
+  },
+  "cards": [
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-1389756837",
+        "name": "体育场（真草场）",
+        "category": "football",
+        "zone": "teaching",
+        "location": [
+          113.3926224,
+          23.071347799999998
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "足球场",
+          "真草场",
+          "真草地",
+          "田径场"
+        ],
+        "labelPlaceId": "osm-way-1389756837",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-1389756844",
+        "name": "体育馆（羽毛球场）",
+        "category": "sports_hall",
+        "zone": "teaching",
+        "location": [
+          113.39123445,
+          23.072108749999998
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "体育馆"
+        ],
+        "labelPlaceId": "osm-way-1389756844",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-1389859437",
+        "name": "假草场",
+        "category": "football",
+        "zone": "teaching",
+        "location": [
+          113.38978230000001,
+          23.0686679
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "足球场",
+          "广外假草场",
+          "人工草场"
+        ],
+        "labelPlaceId": "osm-way-1389859437",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-1389859420",
+        "name": "排球场",
+        "category": "volleyball",
+        "zone": "teaching",
+        "location": [
+          113.39022045,
+          23.0674028
+        ],
+        "crs": "WGS84",
+        "aliases": [],
+        "labelPlaceId": "osm-way-1389859420",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-1389859426",
+        "name": "篮球场",
+        "category": "basketball",
+        "zone": "teaching",
+        "location": [
+          113.38956605,
+          23.0673985
+        ],
+        "crs": "WGS84",
+        "aliases": [],
+        "labelPlaceId": "osm-way-1389859426",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-1389859438",
+        "name": "游泳馆",
+        "category": "swimming",
+        "zone": "teaching",
+        "location": [
+          113.39048134999999,
+          23.06980885
+        ],
+        "crs": "WGS84",
+        "aliases": [
+          "游泳场地"
+        ],
+        "labelPlaceId": "osm-way-1389859438",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-1389859440",
+        "name": "羽毛球场",
+        "category": "badminton",
+        "zone": "teaching",
+        "location": [
+          113.38962975,
+          23.0696849
+        ],
+        "crs": "WGS84",
+        "aliases": [],
+        "labelPlaceId": "osm-way-1389859440",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-1389859443",
+        "name": "篮球场",
+        "category": "basketball",
+        "zone": "teaching",
+        "location": [
+          113.38982555,
+          23.0699773
+        ],
+        "crs": "WGS84",
+        "aliases": [],
+        "labelPlaceId": "osm-way-1389859443",
+        "verificationStatus": "source_mapped"
+      }
+    },
+    {
+      "kind": "place",
+      "place": {
+        "placeId": "osm-way-1389859447",
+        "name": "网球场",
+        "category": "tennis",
+        "zone": "teaching",
+        "location": [
+          113.39038719999999,
+          23.0702664
+        ],
+        "crs": "WGS84",
+        "aliases": [],
+        "labelPlaceId": "osm-way-1389859447",
+        "verificationStatus": "source_mapped"
+      }
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-11-17T08:12:54.696Z",
+      "type": "artifact.ready",
+      "payload": {
+        "started": true
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:12:54.696Z",
+      "type": "message.delta",
+      "payload": {
+        "text": "南校区地图中已核实的体育场地有9处\n\n- 体育场（真草场），位于教学区\n- 体育馆（羽毛球场），位于教学区\n- 假草场，位于教学区\n- 排球场，位于教学区\n- 篮球场，位于教学区\n- 游泳馆，位于教学区\n- 羽毛球场，位于教学区\n- 篮球场，位于教学区\n- 网球场，位于教学区\n\n地点卡片可打开对应地图位置。"
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:12:54.696Z",
+      "type": "artifact.ready",
+      "payload": {
+        "cards": [
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-1389756837",
+              "name": "体育场（真草场）",
+              "category": "football",
+              "zone": "teaching",
+              "location": [
+                113.3926224,
+                23.071347799999998
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "足球场",
+                "真草场",
+                "真草地",
+                "田径场"
+              ],
+              "labelPlaceId": "osm-way-1389756837",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-1389756844",
+              "name": "体育馆（羽毛球场）",
+              "category": "sports_hall",
+              "zone": "teaching",
+              "location": [
+                113.39123445,
+                23.072108749999998
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "体育馆"
+              ],
+              "labelPlaceId": "osm-way-1389756844",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-1389859437",
+              "name": "假草场",
+              "category": "football",
+              "zone": "teaching",
+              "location": [
+                113.38978230000001,
+                23.0686679
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "足球场",
+                "广外假草场",
+                "人工草场"
+              ],
+              "labelPlaceId": "osm-way-1389859437",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-1389859420",
+              "name": "排球场",
+              "category": "volleyball",
+              "zone": "teaching",
+              "location": [
+                113.39022045,
+                23.0674028
+              ],
+              "crs": "WGS84",
+              "aliases": [],
+              "labelPlaceId": "osm-way-1389859420",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-1389859426",
+              "name": "篮球场",
+              "category": "basketball",
+              "zone": "teaching",
+              "location": [
+                113.38956605,
+                23.0673985
+              ],
+              "crs": "WGS84",
+              "aliases": [],
+              "labelPlaceId": "osm-way-1389859426",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-1389859438",
+              "name": "游泳馆",
+              "category": "swimming",
+              "zone": "teaching",
+              "location": [
+                113.39048134999999,
+                23.06980885
+              ],
+              "crs": "WGS84",
+              "aliases": [
+                "游泳场地"
+              ],
+              "labelPlaceId": "osm-way-1389859438",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-1389859440",
+              "name": "羽毛球场",
+              "category": "badminton",
+              "zone": "teaching",
+              "location": [
+                113.38962975,
+                23.0696849
+              ],
+              "crs": "WGS84",
+              "aliases": [],
+              "labelPlaceId": "osm-way-1389859440",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-1389859443",
+              "name": "篮球场",
+              "category": "basketball",
+              "zone": "teaching",
+              "location": [
+                113.38982555,
+                23.0699773
+              ],
+              "crs": "WGS84",
+              "aliases": [],
+              "labelPlaceId": "osm-way-1389859443",
+              "verificationStatus": "source_mapped"
+            }
+          },
+          {
+            "kind": "place",
+            "place": {
+              "placeId": "osm-way-1389859447",
+              "name": "网球场",
+              "category": "tennis",
+              "zone": "teaching",
+              "location": [
+                113.39038719999999,
+                23.0702664
+              ],
+              "crs": "WGS84",
+              "aliases": [],
+              "labelPlaceId": "osm-way-1389859447",
+              "verificationStatus": "source_mapped"
+            }
+          }
+        ],
+        "routes": []
+      }
+    },
+    {
+      "timestamp": "2026-11-17T08:12:54.696Z",
+      "type": "run.completed",
+      "payload": {
+        "metrics": {
+          "requests": 0,
+          "promptTokens": 0,
+          "completionTokens": 0,
+          "chargedTokens": 0,
+          "persona": {
+            "version": "campus-dafeiyu-v1",
+            "tone": "daily",
+            "aside": false,
+            "concise": false
+          },
+          "execution": "spatial_read",
+          "answerMode": "spatial_read",
+          "executionStatus": "completed",
+          "retrievalStatus": "matched",
+          "taskStatus": "completed",
+          "resolvedIntent": "sports_list",
+          "dataSource": "campus_map",
+          "serverElapsedMs": 1163
+        }
+      }
+    }
+  ],
+  "records": [],
+  "map": {
+    "mode": "2d",
+    "routeExtent": null,
+    "cameraMoving": "false"
+  }
+}

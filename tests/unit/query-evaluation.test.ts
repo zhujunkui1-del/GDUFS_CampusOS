@@ -7,6 +7,7 @@ import {
   retrievalQuestions,
 } from "../fixtures/retrieval-evaluation";
 import { ensureRetrievalIndex } from "@/lib/server/retrieval/indexer";
+import { ensureArticleAnalysis } from "@/lib/server/console/article-analysis";
 import { searchContent } from "@/lib/server/retrieval/skills";
 
 it("measures independently labelled cross-topic recall and precision (isolated data, no cloud claims)", async () => {
@@ -27,6 +28,12 @@ it("measures independently labelled cross-topic recall and precision (isolated d
           "c".repeat(64),
         );
       await f.store.publishCollectedWebArticle(id);
+      await ensureArticleAnalysis(f.db, id);
+      f.sqlite
+        .prepare(
+          "UPDATE document_article_analysis SET calendar_status='accepted' WHERE document_id=?",
+        )
+        .run(id);
       f.sqlite
         .prepare("DELETE FROM knowledge_chunks WHERE document_id=?")
         .run(id);

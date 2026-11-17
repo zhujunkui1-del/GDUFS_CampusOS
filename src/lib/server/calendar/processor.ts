@@ -10,10 +10,11 @@ import {
 } from "@/lib/ingestion/calendar-extraction";
 import { analysisStatements } from "../console/article-analysis";
 import { enrichCalendar, type CalendarAI } from "./enrichment";
+import { ApiError } from "../errors";
 /** How long after publication an article is still worth enriching. */
 export const RECENT_PUBLISH_DAYS = 90;
 /** The daily budget is an operator setting; the default keeps the cost bounded. */
-export const DEFAULT_CALENDAR_AI_CAP = 100;
+export const DEFAULT_CALENDAR_AI_CAP = 200;
 async function calendarAiCap(db: SqlDatabase) {
   const r = await db
     .prepare(
@@ -43,6 +44,7 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
     modelCalls: 0,
     ocrCalls: 0,
     failures: 0,
+    failureCodes: [] as string[],
     deferred: 0,
   };
   const budget = await db
@@ -68,16 +70,14 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
     result.deferred = backlog?.n || 0;
     return result;
   }
-  // Oldest-first is the wrong order for a queue that feeds a calendar: an
-  // article from two years ago is a review of something that already happened,
-  // and enriching it produces nothing anyone can attend. A recent publication
-  // is the only cheap signal that the dates inside it may still be ahead.
+  // Newly collected articles are reviewed before their event projection becomes
+  // visible to public calendar and event searches.
   const recent = new Date(Date.now() - RECENT_PUBLISH_DAYS * 86400000)
     .toISOString()
     .slice(0, 10);
   const candidates = await db
     .prepare(
-      `SELECT x.document_id,x.content_revision,x.input_hash,x.calendar_status FROM document_article_analysis x JOIN knowledge_documents d ON d.id=x.document_id WHERE x.calendar_status IN('pending','needs_enrichment') AND x.calendar_attempts IN(0,1,2) AND x.calendar_lease_until_ms<? ORDER BY CASE WHEN d.published_at>=? THEN 0 ELSE 1 END,x.calendar_status,x.calendar_attempts,d.published_at DESC,x.document_id LIMIT 2`,
+      `SELECT x.document_id,x.content_revision,x.input_hash,x.calendar_status FROM document_article_analysis x JOIN knowledge_documents d ON d.id=x.document_id WHERE x.calendar_status='needs_enrichment' AND x.calendar_attempts IN(0,1,2) AND x.calendar_lease_until_ms<? ORDER BY CASE WHEN d.published_at>=? THEN 0 ELSE 1 END,x.calendar_attempts,d.published_at DESC,x.document_id LIMIT 2`,
     )
     .bind(Date.now(), recent)
     .all<{
@@ -135,7 +135,7 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
         calendarSources: base.calendar?.sources || [],
       });
       let a = calendarizeArticle(input, base);
-      if (c.calendar_status === "needs_enrichment" && ai) {
+      if (ai) {
         const enriched = await enrichCalendar(input, base, ai, () =>
           reserveCalendarModel(db),
         );
@@ -151,6 +151,9 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
           result.deferred++;
           budgetLeft = false;
         }
+      } else {
+        result.deferred++;
+        budgetLeft = false;
       }
       await db.batch(
         await analysisStatements(
@@ -165,8 +168,11 @@ export async function runCalendarBatch(db: SqlDatabase, ai?: CalendarAI) {
       result.processed++;
       if (a.calendar?.status === "accepted") result.accepted++;
       if (!budgetLeft) break;
-    } catch {
+    } catch (error) {
       result.failures++;
+      result.failureCodes.push(
+        error instanceof ApiError ? error.code : "CALENDAR_PROCESSING_FAILED",
+      );
       // A thrown step is usually a transient fault (a lost lease, a D1
       // hiccup), not a verdict about the article. Parking the row on the
       // second failure made one bad minute permanent, so it takes three
