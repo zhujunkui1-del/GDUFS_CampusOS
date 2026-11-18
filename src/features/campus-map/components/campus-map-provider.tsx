@@ -180,7 +180,9 @@ export function CampusMapProvider({
   const locationFeedback =
     location.busy && !navigationActive
       ? "正在请求设备定位…"
-      : location.error || locationMessage;
+      : location.error
+        ? ""
+        : locationMessage;
   const locationNoticeId = locationRequest + ":" + locationFeedback;
   const [navigationProgress, setNavigationProgress] =
     useState<MapContextValue["navigationProgress"]>(null);
@@ -655,7 +657,11 @@ export function CampusMapProvider({
         onNavigationStart?.();
         setLocationRequest((n) => n + 1);
         setNavigationProgress(null);
-        location.request(true);
+        if (start?.source === "device_location") location.request(true);
+        else {
+          liveLocate.current = false;
+          location.stop();
+        }
       }
     },
     stopNavigation: () => {

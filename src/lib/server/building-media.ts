@@ -1,10 +1,10 @@
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { z } from "zod";
-import { campusData } from "@/features/campus-map/data/campus";
 import {
   buildingProfileId,
   buildingProfileMembers,
   managedBuildings,
+  buildingPlaces,
 } from "@/features/campus-map/data/building-groups";
 import seed from "@/features/campus-map/data/building-profiles.json";
 import { primaryDatabase, type SqlDatabase } from "./assistant/database";
@@ -50,7 +50,7 @@ export async function imageStatement(
   };
 }
 function place(id: string) {
-  const p = campusData.places.find((p) => p.id === id);
+  const p = buildingPlaces.find((p) => p.id === id);
   if (!p) throw new ApiError("NOT_FOUND", "建筑不存在。");
   return p;
 }
@@ -77,6 +77,7 @@ function groupedProfile(id: string, rows: Map<string, ProfileRow>) {
   return {
     id: key,
     name: p.name,
+    campus: p.campus,
     description: descriptions.length
       ? descriptions.join("\n\n")
       : defaults[key]?.description || "",

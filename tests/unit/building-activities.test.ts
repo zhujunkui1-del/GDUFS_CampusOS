@@ -3,6 +3,46 @@ import { dateGateFixture, command } from "../fixtures/date-gate";
 import { analysisStatements } from "@/lib/server/console/article-analysis";
 import { readCalendar } from "@/lib/server/calendar/query";
 
+it("links recent and future Baiyun aliases to their building while separating University Town", async () => {
+  const f = await dateGateFixture();
+  try {
+    for (const [id, body] of [
+      [
+        "spring",
+        "讲座时间：2026年11月18日15:30至17:00。地点：白云山校区一教南楼117。",
+      ],
+      [
+        "autumn",
+        "讲座时间：2027年2月3日15:00至16:00。地点：白云山校区第一教学楼101。",
+      ],
+      [
+        "white",
+        "讲座时间：2026年11月19日15:00至16:00。地点：大学城校区教学楼A栋101。",
+      ],
+    ]) {
+      const d = await f.store.document(id);
+      await f.db.batch(
+        await analysisStatements(f.db, d.id, d.contentRevision, d.inputHash!, {
+          title: "讲座预告",
+          body,
+          publishedAt: "2026-11-01",
+        }),
+      );
+    }
+    const result = await readCalendar(
+      f.db,
+      { placeId: "osm-way-338028591", limit: 50 },
+      "2026-11-18T12:00:00+08:00",
+    );
+    expect(result.total).toBe(2);
+    expect(
+      result.items.every((item) => item.mapPlace?.campus === "baiyun"),
+    ).toBe(true);
+  } finally {
+    f.close();
+  }
+});
+
 it("uses the rolling fourteen-day lower bound, retains its boundary, and includes dates beyond a month", async () => {
   const f = await dateGateFixture();
   const now = "2026-11-14T21:00:00+08:00";

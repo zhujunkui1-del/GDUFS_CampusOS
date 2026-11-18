@@ -133,6 +133,46 @@ it("stores building uploads and serves the exact bytes with their verified MIME"
   expect(response.headers.get("Cache-Control")).toContain("immutable");
 });
 
+it("lists Baiyun separately and persists its public building profile without changing the University Town profile", async () => {
+  const session = await login();
+  const result = await (await admin("", session)).json();
+  const baiyun = result.data.items.find(
+    (p: { id: string }) => p.id === "osm-relation-13030162",
+  );
+  expect(baiyun).toMatchObject({
+    name: "第二教学楼",
+    campus: "baiyun",
+    description: "",
+    photos: [],
+  });
+  expect(
+    result.data.items.find((p: { id: string }) => p.id === library).campus,
+  ).toBe("university");
+  expect(
+    (
+      await admin("/" + baiyun.id, session, {
+        description: "白云山第二教学楼简介",
+        photos: [],
+      })
+    ).status,
+  ).toBe(200);
+  const profile = await (
+    await publicBuilding(
+      new Request(origin + "/api/public/building?id=" + baiyun.id),
+    )
+  ).json();
+  expect(profile.data).toMatchObject({
+    description: "白云山第二教学楼简介",
+    campus: "baiyun",
+  });
+  const university = await (
+    await publicBuilding(
+      new Request(origin + "/api/public/building?id=" + library),
+    )
+  ).json();
+  expect(university.data.description).toBe(seed[library].description);
+});
+
 it("accepts guest attachments atomically, permits authenticated download, and never exposes them as building images", async () => {
   const input = form("images");
   input.set("content", "私密留言");
@@ -212,7 +252,10 @@ it("lists one entry per sports group and bridge, preserves existing member edits
     "语心桥",
   ])
     expect(
-      result.data.items.filter((item: { name: string }) => item.name === name),
+      result.data.items.filter(
+        (item: { name: string; campus: string }) =>
+          item.campus === "university" && item.name === name,
+      ),
     ).toHaveLength(1);
   expect(
     result.data.items.some((item: { name: string }) =>

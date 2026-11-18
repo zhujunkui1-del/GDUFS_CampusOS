@@ -836,3 +836,13 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 负责人提供 `assets/source_maps/广外白云山校区地图/白云山校区.osm`，来源 https://www.openstreetmap.org/way/338027672 ，SHA256 `016d93908782217f75ffb1490c23f3a2dd0b3197d2b3e37c28e2b0d425cf3a0c`。补充手机视野所需同一官方API范围 https://api.openstreetmap.org/api/0.6/map?bbox=113.272,23.185,113.303,23.224 ，本轮手动获取保存 `白云山校区_周边补充.osm`，5,314,615字节，SHA256 `9b9371f5bca858dc97b7371af13a39c1ebd9cd6f52730ad2b8523156bff7a8b3`。原校内对象优先，外围缓冲不扩校界。许可OSM/ODbL-1.0，页面保留贡献者署名；公开产物是剥离贡献者身份的GeoJSON，参考图/原XML不作为网站资产。
 
 转换脚本 `scripts/prepare-baiyun-map.py`；清单/来源/跳过关系在 `src/features/campus-map/data/baiyun-map.json`，1,954地物/104具名地点/890,215字节，公开路径 `/maps/baiyun-1e2e6d7ca991.geojson`。三个线上域名实际下载均200/SHA匹配。资料只支持OSM来源展示，不视为楼名、商铺或通行现状的独立现场核验；白云山路线未启用。
+
+## 2026-11-18｜白云山建筑管理与步道图来源
+
+沿用D-202原OSM和官方周边固定快照，未新增下载或参考图发布。`scripts/prepare-baiyun-walking.py` 按原节点生成 `baiyun-walking-2026-11-18.1`：699节点、744段、123源way，禁止步行/private/locked/缺连接部分不用于路由。结果逐段与源边单测核对；地点到路网接入距离不画成已核验直线路段，source_mapped不视为现场确认。原白云山104具名地点进入后台目录，同名跨校区按原ID分离；暂无白云山照片/简介时保持空状态，不使用未审核参考图或生成描述。D1建筑/活动关联仍是网页展示资料来源，UI补齐不伪造活动。验收与定位模拟/公网验证边界见 `BAIYUN_UI_BUILDINGS_PARITY_2026_11_18.md`。
+
+## 2026-11-18｜白云山建筑资料/活动别名与历史照片来源
+
+37条审核记录逐ID保存于 `docs/research/baiyun/building-profiles-reviewed.json`，包含校方考试中心、图书馆、总务后勤部、基建部门和已提供OSM用途。明德报告厅→第六教学楼的原称由D1公共原文 https://mp.weixin.qq.com/s/dPyuQ17C7soyzd47Bq2j0g 明确证明。所有近期/未来活动仍读D1公开当前版本，初始177条审计与线上11栋/37条结果是验证快照，不作为另一个运行事实源。
+
+照片 https://commons.wikimedia.org/wiki/File:%E5%B9%BF%E5%A4%96%E5%9B%BE%E4%B9%A6%E9%A6%86.jpg ，作者lovelybaby，CC BY-SA 4.0，960px缩放版本，231584字节，SHA256 2ce951e6b5656fc65727e2b265a12778d9d861e6f0fef37cd5ddab124acd2a82。图书馆历史外观；按Commons校区分类与内容核对，未承诺当前实拍。页面保留作者/原图/许可与缩放标识，许可 https://creativecommons.org/licenses/by-sa/4.0/ 。未发布版权不明图片。第六教学楼源relation4738438外环335167526已有名称，本轮继承名称而非猜坐标，白云山快照版本.2，105具名地点。

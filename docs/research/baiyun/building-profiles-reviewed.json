@@ -1,0 +1,340 @@
+{
+  "reviewedAt": "2026-11-18",
+  "records": [
+    {
+      "id": "osm-relation-13030163",
+      "name": "云山学1栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/relation/13030163"
+      ]
+    },
+    {
+      "id": "osm-relation-13030164",
+      "name": "云山学12栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/relation/13030164"
+      ]
+    },
+    {
+      "id": "osm-way-962936652",
+      "name": "云山学15栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962936652"
+      ]
+    },
+    {
+      "id": "osm-way-962936653",
+      "name": "云山学16栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962936653"
+      ]
+    },
+    {
+      "id": "osm-way-962945634",
+      "name": "云山学17栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962945634"
+      ]
+    },
+    {
+      "id": "osm-way-962945635",
+      "name": "云山学13栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962945635"
+      ]
+    },
+    {
+      "id": "osm-way-962945636",
+      "name": "云山学14栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962945636"
+      ]
+    },
+    {
+      "id": "osm-way-962945639",
+      "name": "云山学6栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962945639"
+      ]
+    },
+    {
+      "id": "osm-way-962945642",
+      "name": "云山学5栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962945642"
+      ]
+    },
+    {
+      "id": "osm-way-962945643",
+      "name": "云山学4栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962945643"
+      ]
+    },
+    {
+      "id": "osm-way-962945644",
+      "name": "云山学2栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962945644"
+      ]
+    },
+    {
+      "id": "osm-way-962945646",
+      "name": "云山学11栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962945646"
+      ]
+    },
+    {
+      "id": "osm-way-962945647",
+      "name": "云山学10栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962945647"
+      ]
+    },
+    {
+      "id": "osm-way-962945648",
+      "name": "云山学9栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/962945648"
+      ]
+    },
+    {
+      "id": "osm-way-963435056",
+      "name": "云山学8栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/963435056"
+      ]
+    },
+    {
+      "id": "osm-way-963435057",
+      "name": "云山学7栋",
+      "description": "白云山校区学生宿舍楼，供在校学生住宿使用。",
+      "photos": [],
+      "sources": [
+        "https://www.openstreetmap.org/way/963435057"
+      ]
+    },
+    {
+      "id": "osm-way-338028591",
+      "name": "第一教学楼",
+      "description": "白云山校区第一教学楼，简称“一教”。新楼于2021年投入使用，楼内设有学校校史馆。",
+      "photos": [],
+      "sources": [
+        "https://history.gdufs.edu.cn/info/1118/2881.htm",
+        "https://lib.gdufs.edu.cn/xwzx/twxw/7.htm"
+      ]
+    },
+    {
+      "id": "osm-relation-13030162",
+      "name": "第二教学楼",
+      "description": "白云山校区教学楼，简称“二教”，承担课堂教学等功能，也是学校考试中心交通指南列出的白云山考点建筑之一。",
+      "photos": [],
+      "sources": [
+        "https://gwkszx.gdufs.edu.cn/jtzy/jtzn.htm"
+      ]
+    },
+    {
+      "id": "osm-way-596147536",
+      "name": "第三教学楼",
+      "description": "白云山校区第三教学楼，简称“三教”。国际商务英语学院的官方联系地址设于该楼三楼。",
+      "photos": [],
+      "sources": [
+        "https://syxy.gdufs.edu.cn/"
+      ]
+    },
+    {
+      "id": "osm-way-596147537",
+      "name": "第四教学楼",
+      "description": "白云山校区教学建筑，课程及活动通知中常简称“四教”。",
+      "photos": [],
+      "sources": [
+        "https://gw-alumni.gdufs.edu.cn/article/7427"
+      ]
+    },
+    {
+      "id": "osm-way-963741026",
+      "name": "第五教学楼",
+      "description": "白云山校区第五教学楼，简称“五教”。校方资料记载，其一楼设有“佳乐庵”茶室。",
+      "photos": [],
+      "sources": [
+        "https://lib.gdufs.edu.cn/xwzx/twxw/7.htm"
+      ]
+    },
+    {
+      "id": "osm-relation-4738438",
+      "name": "第六教学楼",
+      "description": "白云山校区第六教学楼，简称“六教”。楼内明德报告厅原称第六教学楼报告厅，是讲座、会议等活动举办场所。",
+      "photos": [],
+      "sources": [
+        "https://mp.weixin.qq.com/s/dPyuQ17C7soyzd47Bq2j0g",
+        "https://gwkszx.gdufs.edu.cn/jtzy/jtzn.htm"
+      ]
+    },
+    {
+      "id": "osm-way-962936632",
+      "name": "第七教学楼",
+      "description": "白云山校区教学建筑，课程及活动通知中常简称“七教”。",
+      "photos": [],
+      "sources": [
+        "https://gw-alumni.gdufs.edu.cn/article/7427"
+      ]
+    },
+    {
+      "id": "osm-way-962936633",
+      "name": "第八教学楼",
+      "description": "白云山校区教学建筑，课程及活动通知中常简称“八教”。",
+      "photos": [],
+      "sources": [
+        "https://gw-alumni.gdufs.edu.cn/article/7427"
+      ]
+    },
+    {
+      "id": "osm-way-962936634",
+      "name": "第九教学楼",
+      "description": "白云山校区教学建筑，课程及活动通知中常简称“九教”。",
+      "photos": [],
+      "sources": [
+        "https://gw-alumni.gdufs.edu.cn/article/7427"
+      ]
+    },
+    {
+      "id": "osm-way-962936641",
+      "name": "北校区图书馆",
+      "description": "白云山校区图书馆，位于广州市白云区白云大道北2号校内，提供图书借阅、阅览与学习服务。",
+      "photos": [],
+      "sources": [
+        "https://lib.gdufs.edu.cn/gybg/gswz.htm"
+      ]
+    },
+    {
+      "id": "osm-way-963741022",
+      "name": "云山会堂",
+      "description": "白云山校区会议及演出场所，设有1362个座位，并配置舞台灯光、音响、LED显示屏、展厅及贵宾室。",
+      "photos": [],
+      "sources": [
+        "https://hqc.gdufs.edu.cn/info/1002/1438.htm"
+      ]
+    },
+    {
+      "id": "osm-way-962936637",
+      "name": "云雅园",
+      "description": "白云山校区校园饭堂，为师生提供日常餐饮服务。",
+      "photos": [],
+      "sources": [
+        "https://fsas.gdufs.edu.cn/info/1059/2160.htm"
+      ]
+    },
+    {
+      "id": "osm-way-962936638",
+      "name": "芳雅园",
+      "description": "白云山校区校园饭堂，为师生提供日常餐饮服务。",
+      "photos": [],
+      "sources": [
+        "https://fsas.gdufs.edu.cn/info/1059/2160.htm"
+      ]
+    },
+    {
+      "id": "osm-way-962945651",
+      "name": "清雅园",
+      "description": "白云山校区校园饭堂，为师生提供日常餐饮服务。",
+      "photos": [],
+      "sources": [
+        "https://fsas.gdufs.edu.cn/info/1059/2160.htm"
+      ]
+    },
+    {
+      "id": "osm-way-962945649",
+      "name": "校门诊部",
+      "description": "白云山校区校园医疗服务建筑，位于校园南部、图书馆附近，承担师生日常门诊和卫生保健服务。",
+      "photos": [],
+      "sources": [
+        "https://hqc.gdufs.edu.cn/info/1002/1442.htm"
+      ]
+    },
+    {
+      "id": "osm-way-325878656",
+      "name": "体育馆",
+      "description": "白云山校区室内体育教学与活动场所，2025年暑期对大堂、过道、卫生间等区域进行了翻新升级。",
+      "photos": [],
+      "sources": [
+        "https://www.gdufs.edu.cn/info/1106/65329.htm"
+      ]
+    },
+    {
+      "id": "osm-way-139932246",
+      "name": "游泳馆",
+      "description": "白云山校区游泳运动场所，用于游泳教学与体育锻炼。",
+      "photos": [],
+      "sources": [
+        "https://tyb.gdufs.edu.cn/info/1057/1827.htm"
+      ]
+    },
+    {
+      "id": "osm-way-596147525",
+      "name": "广外国际学院",
+      "description": "白云山校区国际学院教学及办公场所，设有招生大厅。2025年对大厅、教学楼走廊及雨棚等进行了升级改造。",
+      "photos": [],
+      "sources": [
+        "https://jbjszx.gdufs.edu.cn/info/1012/1282.htm"
+      ]
+    },
+    {
+      "id": "osm-relation-11509155",
+      "name": "广外国际学术交流中心（逸林假日酒店）",
+      "description": "位于白云山校区国际学院旁的学术交流及会议接待场所，亦称逸林假日酒店，可服务学校学术会议及来访人员住宿。",
+      "photos": [],
+      "sources": [
+        "https://giis.gdufs.edu.cn/info/1607/16130.htm"
+      ]
+    },
+    {
+      "id": "osm-way-338027673",
+      "name": "云山公寓",
+      "description": "白云山校区公寓建筑群。学校考试中心交通指南将云山公寓A区列为白云山校区相关考点位置。",
+      "photos": [],
+      "sources": [
+        "https://gwkszx.gdufs.edu.cn/jtzy/jtzn.htm"
+      ]
+    },
+    {
+      "id": "osm-way-962963599",
+      "name": "后勤综合楼",
+      "description": "白云山校区后勤相关部门办公建筑，学校后勤业务通知列有该楼办公室作为业务联系地点。",
+      "photos": [],
+      "sources": [
+        "https://hqc.gdufs.edu.cn/info/1006/3028.htm"
+      ]
+    }
+  ]
+}

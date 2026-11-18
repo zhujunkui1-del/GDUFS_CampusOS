@@ -132,3 +132,12 @@
   line-height: 1.7;
   margin: 0 0 16px;
 }
+.building-photo-credits p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0;
+  color: #626a76;
+}
+.building-photo-credits a {
+  color: #1261bb;
+}

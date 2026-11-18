@@ -3,6 +3,39 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { BuildingActivities } from "./building-activities";
 import seed from "../data/building-profiles.json";
+import credits from "../data/building-photo-credits.json";
+function PhotoCredits({ photos }: { photos: string[] }) {
+  return (
+    <div className="building-photo-credits">
+      {photos.map((url) => {
+        const credit = (
+          credits as Record<
+            string,
+            {
+              author: string;
+              sourceUrl: string;
+              license: string;
+              licenseUrl: string;
+              caption: string;
+            }
+          >
+        )[url];
+        return credit ? (
+          <p key={url}>
+            {credit.caption} · 摄影：{credit.author} ·{" "}
+            <a href={credit.sourceUrl} target="_blank" rel="noreferrer">
+              原图
+            </a>{" "}
+            ·{" "}
+            <a href={credit.licenseUrl} target="_blank" rel="noreferrer">
+              {credit.license}
+            </a>
+          </p>
+        ) : null;
+      })}
+    </div>
+  );
+}
 import "./building-info.css";
 export function BuildingInfo({ id }: { id: string }) {
   const [profile, setProfile] = useState<{
@@ -48,6 +81,7 @@ export function BuildingInfo({ id }: { id: string }) {
             <img key={url} src={url} alt="建筑照片" loading="lazy" />
           ))}
         </div>
+        <PhotoCredits photos={profile.photos} />
       </section>
     );
   return (
@@ -81,6 +115,7 @@ export function BuildingInfo({ id }: { id: string }) {
             </button>
           )}
           {!profile.photos.length && <p className="building-empty">暂无图片</p>}
+          <PhotoCredits photos={profile.photos} />
         </>
       )}
       <BuildingActivities

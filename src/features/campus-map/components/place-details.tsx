@@ -20,12 +20,16 @@ function subscribe(listener: () => void) {
 export function PlaceDetails({
   finalFocus,
   onNavigate,
+  place: suppliedPlace,
+  onClose,
 }: {
   finalFocus: RefObject<HTMLInputElement | null>;
   onNavigate(): void;
+  place?: { id: string; name: string; subtitle: string } | null;
+  onClose?(): void;
 }) {
   const map = useCampusMap(),
-    place = map.selected;
+    place = suppliedPlace === undefined ? map.selected : suppliedPlace;
   const compact = useSyncExternalStore(subscribe, compactSnapshot, () => false);
   const [snapPoint, setSnapPoint] = useState<Drawer.Root.SnapPoint | null>(
     0.62,
@@ -37,7 +41,7 @@ export function PlaceDetails({
       key={compact ? "compact" : "regular"}
       open={!!place}
       onOpenChange={(open) => {
-        if (!open) map.closeDetails();
+        if (!open) (onClose || map.closeDetails)();
       }}
       modal={false}
       disablePointerDismissal
@@ -91,9 +95,11 @@ export function PlaceDetails({
               </div>
               <div className="place-details-topline">
                 <p>
-                  {place
-                    ? `${zoneName(place.zone)} · ${categoryNames[place.category]}`
-                    : ""}
+                  {suppliedPlace !== undefined
+                    ? suppliedPlace?.subtitle || ""
+                    : map.selected
+                      ? `${zoneName(map.selected.zone)} · ${categoryNames[map.selected.category]}`
+                      : ""}
                 </p>
                 {compact && (
                   <button

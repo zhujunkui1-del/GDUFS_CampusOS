@@ -5,12 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowUp, ImagePlus, X } from "lucide-react";
 import { uploadImage } from "../feedback/image-upload";
 import "./buildings-workspace.css";
+import { CampusSegments } from "@/features/campus-map/components/campus-segments";
 
 type Building = {
   id: string;
   name: string;
   description: string;
   photos: string[];
+  campus: "university" | "baiyun";
 };
 type Client = <T>(path: string, method?: string, body?: unknown) => Promise<T>;
 
@@ -18,6 +20,7 @@ export function BuildingsWorkspace({ request }: { request: Client }) {
   const [items, setItems] = useState<Building[]>([]);
   const [selected, setSelected] = useState("");
   const [search, setSearch] = useState("");
+  const [campus, setCampus] = useState<"university" | "baiyun">("university");
   const [error, setError] = useState("");
   useEffect(() => {
     request<{ items: Building[] }>("v2/buildings")
@@ -32,6 +35,18 @@ export function BuildingsWorkspace({ request }: { request: Client }) {
     <>
       <div className="console-heading">
         <h1>建筑管理</h1>
+        <CampusSegments
+          label="建筑校区"
+          value={campus}
+          onChange={(value) => {
+            setCampus(value);
+            setSearch("");
+            setSelected(
+              items.find((item) => (item.campus || "university") === value)
+                ?.id || "",
+            );
+          }}
+        />
       </div>
       {error && (
         <p className="console-error" role="alert">
@@ -56,7 +71,9 @@ export function BuildingsWorkspace({ request }: { request: Client }) {
           >
             {items
               .filter(
-                (item) => item.id === selected || item.name.includes(search),
+                (item) =>
+                  (item.campus || "university") === campus &&
+                  (item.id === selected || item.name.includes(search)),
               )
               .map((item) => (
                 <option key={item.id} value={item.id}>

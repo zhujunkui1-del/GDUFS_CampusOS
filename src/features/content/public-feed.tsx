@@ -15,6 +15,7 @@ import {
 } from "@/domain/console/taxonomy";
 import { PublicArticleDialog } from "./public-article-dialog";
 import { FavoriteButton } from "./favorite-button";
+import { AddTaskButton } from "@/features/account/personal-tasks";
 import { useFavoriteTracking } from "./favorites-context";
 import { FeedPageJump } from "./feed-page-jump";
 import "./public-feed.css";
@@ -291,6 +292,7 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
     event: KeyboardEvent<HTMLElement>,
     item: PublicArticleSummary,
   ) {
+    if (event.target !== event.currentTarget) return;
     if (event.key !== "Enter" && event.key !== " ") return;
     event.preventDefault();
     setSelectedArticle(item);
@@ -304,7 +306,10 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
         tabIndex={0}
         aria-haspopup="dialog"
         aria-label={`打开文章详情：${item.title}`}
-        onClick={() => setSelectedArticle(item)}
+        onClick={(event) => {
+          if ((event.target as Element).closest(".public-feed-actions")) return;
+          setSelectedArticle(item);
+        }}
         onKeyDown={(event) => openCard(event, item)}
       >
         <span className="public-feed-card-title">
@@ -322,7 +327,10 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
             {item.source.name}
           </span>
         </footer>
-        <FavoriteButton articleId={item.id} surface={surface} />
+        <div className="public-feed-actions">
+          <FavoriteButton articleId={item.id} surface={surface} />
+          <AddTaskButton article={{ articleId: item.id, title: item.title }} />
+        </div>
       </article>
     );
   }

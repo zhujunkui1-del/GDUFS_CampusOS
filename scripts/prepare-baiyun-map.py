@@ -80,6 +80,9 @@ for relation in root.findall('relation'):
         inner = rings([refs(ways[m.get('ref')]) for m in ms if m.get('role') == 'inner'])
         if len(outer) != 1 and inner: raise ValueError('ambiguous inner assignment')
         if len(outer) == 1:
+            parent_way = next((ways[m.get('ref')] for m in ms if m.get('role') in ('outer','')),None)
+            if parent_way is not None:
+                t = {**tags(parent_way), **t}
             emit('osm-relation-'+relation.get('id'),{'type':'Polygon','coordinates':outer+inner},t)
         else:
             # Complete disjoint outer rings remain one geographic source feature.
@@ -104,6 +107,6 @@ geo = json.dumps({'type':'FeatureCollection','features':features},ensure_ascii=F
 sha = hashlib.sha256(geo).hexdigest()
 url = '/maps/baiyun-'+sha[:12]+'.geojson'
 pathlib.Path('public'+url).write_bytes(geo)
-data = {'version':'baiyun-2026-11-18.1','crs':'WGS84','url':url,'sha256':sha,'bytes':len(geo),'bounds':bounds,'campusBounds':[min(p[0] for p in campus),min(p[1] for p in campus),max(p[0] for p in campus),max(p[1] for p in campus)],'boundary':campus,'places':places,'features':len(features),'sourceUrl':'https://www.openstreetmap.org/way/338027672','license':'ODbL-1.0','sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest(),'contextSourceUrl':'https://api.openstreetmap.org/api/0.6/map?bbox=113.272,23.185,113.303,23.224','contextSha256':hashlib.sha256(context_source.read_bytes()).hexdigest(),'excluded':excluded,'skippedRelations':skipped,'updates':'manual only'}
+data = {'version':'baiyun-2026-11-18.2','crs':'WGS84','url':url,'sha256':sha,'bytes':len(geo),'bounds':bounds,'campusBounds':[min(p[0] for p in campus),min(p[1] for p in campus),max(p[0] for p in campus),max(p[1] for p in campus)],'boundary':campus,'places':places,'features':len(features),'sourceUrl':'https://www.openstreetmap.org/way/338027672','license':'ODbL-1.0','sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest(),'contextSourceUrl':'https://api.openstreetmap.org/api/0.6/map?bbox=113.272,23.185,113.303,23.224','contextSha256':hashlib.sha256(context_source.read_bytes()).hexdigest(),'excluded':excluded,'skippedRelations':skipped,'updates':'manual only'}
 pathlib.Path('src/features/campus-map/data/baiyun-map.json').write_text(json.dumps(data,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
 print(json.dumps({'features':len(features),'places':len(places),'bytes':len(geo),'excluded':excluded,'skippedRelations':skipped}))

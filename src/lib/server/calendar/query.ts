@@ -19,7 +19,7 @@ import {
   registrationState,
   type RegistrationNow,
 } from "@/lib/retrieval/registration-state";
-import { campusData } from "@/features/campus-map/data/campus";
+import { buildingPlaces } from "@/features/campus-map/data/building-groups";
 import { buildingActivityPlaceIds } from "@/lib/retrieval/activity-place";
 import { articleMapPlace } from "@/lib/retrieval/activity-place";
 import type { SqlDatabase } from "../assistant/database";
@@ -127,7 +127,7 @@ export async function readCalendar(
     before = q.placeId ? "9999-12-31" : q.before || days[6];
   if (q.all && (!q.day || q.cursor || q.event || q.placeId || q.articleId))
     throw new ApiError("INVALID_ARGUMENT", "只支持一次加载某天的活动。");
-  if (q.placeId && !campusData.places.some((place) => place.id === q.placeId))
+  if (q.placeId && !buildingPlaces.some((place) => place.id === q.placeId))
     throw new ApiError("NOT_FOUND", "建筑不存在。");
   const placeIds = q.placeId ? buildingActivityPlaceIds(q.placeId) : null;
   if (

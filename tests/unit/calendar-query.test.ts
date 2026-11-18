@@ -167,7 +167,10 @@ it("filters by campus and never maps a Baiyun or unknown place to University Tow
       campus: "baiyun",
     });
     expect(r.items).toHaveLength(1);
-    expect(r.items[0].mapPlace).toBeNull();
+    expect(r.items[0].mapPlace).toMatchObject({
+      placeId: "osm-way-962936641",
+      campus: "baiyun",
+    });
   } finally {
     f.close();
   }

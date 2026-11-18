@@ -172,3 +172,7 @@ POST /api/agent/location/challenge除challenge/expiresInSeconds外返回服务�
 0006扩展既有knowledge_sources/documents/ingestion_jobs，增加独立console_admins/sessions/revoked_tokens/limits/commands/content_versions/content_reviews/import_batches/audit_logs和content_index_invalidations，45业务表。Console只管理console_managed公开来源和owner为空、非user_private的正文，不能查询学生私人业务。全部/api/admin固定管理路由服务端鉴权、参数化SQL、no-store，写入同源/CSRF/实时角色和会话检查；业务+版本+审核+审计使用原子batch。
 
 来源10类载体/三种独立状态（官方、核验、许可）及原始出处；不同载体同名不合并。新增精简运营契约与实际迁移，没有S3-0已完成的假定。发布/撤回/暂停统一经过公开新鲜视图与ID+版本验证，outbox供未来索引失效；尚无RAG/采集消费者。详细结构、原始220条导入和测试见docs/S3_A_CONSOLE_ACCEPTANCE.md。
+
+## 2026-11-18 双校区建筑资料
+
+建筑资料仍用现有building_profiles/project_images和管理员鉴权、CSRF、MIME校验、审计事务。目录由两个已审阅的静态校园地点集构成，返回campus字段，保存以稳定OSM ID为键；同名跨校区不混写，无需为campus复制资料行或新增表。公共building接口可回读白云山资料，活动详情保留已关联事实和真实空状态，不因UI补齐伪造知识/活动。白云山步道计算在客户端固定图内完成，精确设备位置不写D1或日志。本轮不修改原大学城路网、地图Agent参数白名单或跨校区活动索引边界。

@@ -12,7 +12,11 @@ export function LocationNotice() {
     const t = setTimeout(() => dismiss(id), 6000);
     return () => clearTimeout(t);
   }, [id, visible, dismiss]);
-  if (!map.locationNoticeVisible) return null;
+  if (
+    !map.locationNoticeVisible ||
+    /失败|权限|拒绝|不支持|超时|未获|无法/.test(map.locationMessage)
+  )
+    return null;
   return (
     <div className="map-location-notice" role="status">
       <span>{map.locationMessage}</span>

@@ -27,9 +27,9 @@ test("campus switch opens Baiyun 2D, searches its places and returns to Universi
   ).toBeDisabled();
   await page.getByLabel("搜索校园地点", { exact: true }).fill("第二教学楼");
   await page.locator(".place-result").filter({ hasText: "第二教学楼" }).click();
-  await expect(
-    page.getByRole("complementary", { name: "地点详情" }),
-  ).toContainText("第二教学楼");
+  await expect(page.locator(".place-details-panel")).toContainText(
+    "第二教学楼",
+  );
   await page.getByRole("button", { name: "关闭地点详情" }).click();
   await page.getByRole("button", { name: "放大地图", exact: true }).click();
   await page.getByRole("button", { name: "地图图层", exact: true }).click();

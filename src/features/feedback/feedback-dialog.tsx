@@ -99,7 +99,7 @@ function FeedbackDialog({ onClose }: { onClose: () => void }) {
             <textarea
               value={content}
               onChange={(event) => setContent(event.target.value)}
-              placeholder="写下你的问题、建议或补充的信息源"
+              placeholder="写下你的问题、建议或想补充的官网、公众号、图片。补充官网、公众号时，请附名称和一篇推文链接。"
               required
               rows={5}
             />

@@ -1,21 +1,24 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import {
   Compass,
   Layers,
   LocateFixed,
   Minus,
+  Navigation,
   Plus,
   RotateCw,
   Search,
-  UserRound,
   X,
 } from "lucide-react";
-import type { Map as LibreMap, Marker } from "maplibre-gl";
+import type { Map as LibreMap, Marker, GeoJSONSource } from "maplibre-gl";
 import data from "../data/baiyun-map.json";
 import { createLocalMapStyle } from "../adapters/local-map-style";
 import { CampusSwitcher } from "./campus-switcher";
+import { MapUtilities } from "./map-utilities";
+import { PlaceDetails } from "./place-details";
+import { BaiyunNavigation } from "./baiyun-navigation";
+import type { BaiyunRoute, BaiyunCoordinate } from "../data/baiyun-routing";
 
 type Place = (typeof data.places)[number];
 const categories = {
@@ -26,6 +29,7 @@ const categories = {
 };
 export default function BaiyunMapWorkspace() {
   const container = useRef<HTMLDivElement>(null);
+  const searchInput = useRef<HTMLInputElement>(null);
   const native = useRef<LibreMap | null>(null);
   const selectRef = useRef<(place: Place, focus: boolean) => void>(() => {});
   const markers = useRef<
@@ -39,6 +43,16 @@ export default function BaiyunMapWorkspace() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [selected, setSelected] = useState<Place | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
+  const [routeOpen, setRouteOpen] = useState(false);
+  const [routeEnd, setRouteEnd] = useState<Place | null>(null);
+  const [picking, setPicking] = useState<{
+    which: "start" | "end";
+    selected: (p: Place) => void;
+  } | null>(null);
+  const pickingRef = useRef(picking);
+  useEffect(() => {
+    pickingRef.current = picking;
+  }, [picking]);
   const [notice, setNotice] = useState("");
   const [layers, setLayers] = useState<Record<string, boolean>>({
     buildings: true,
@@ -51,6 +65,11 @@ export default function BaiyunMapWorkspace() {
     .filter((p) => p.name.toLowerCase().includes(query.trim().toLowerCase()))
     .slice(0, 12);
   function select(place: Place, focus = true) {
+    if (pickingRef.current) {
+      pickingRef.current.selected(place);
+      setPicking(null);
+      return;
+    }
     setSelected(place);
     setSearchOpen(false);
     native.current?.setFilter("selected", [
@@ -67,6 +86,86 @@ export default function BaiyunMapWorkspace() {
           : 600,
         padding: { top: 150, bottom: 130, left: 30, right: 50 },
       });
+  }
+  function showRoute(route: BaiyunRoute | null) {
+    const map = native.current;
+    if (!map) return;
+    const source = map.getSource("baiyun-route") as GeoJSONSource | undefined;
+    const geometry: GeoJSON.FeatureCollection = {
+      type: "FeatureCollection",
+      features: route
+        ? [
+            {
+              type: "Feature",
+              properties: {},
+              geometry: { type: "LineString", coordinates: route.path },
+            },
+            ...[route.path[0], route.path.at(-1)!].map((coordinate) => ({
+              type: "Feature" as const,
+              properties: {},
+              geometry: { type: "Point" as const, coordinates: coordinate },
+            })),
+          ]
+        : [],
+    };
+    if (source) source.setData(geometry);
+    else {
+      map.addSource("baiyun-route", { type: "geojson", data: geometry });
+      map.addLayer({
+        id: "baiyun-route-line",
+        type: "line",
+        source: "baiyun-route",
+        filter: ["==", ["geometry-type"], "LineString"],
+        paint: { "line-color": "#1261bb", "line-width": 6 },
+        layout: { "line-cap": "round", "line-join": "round" },
+      });
+      map.addLayer({
+        id: "baiyun-route-points",
+        type: "circle",
+        source: "baiyun-route",
+        filter: ["==", ["geometry-type"], "Point"],
+        paint: {
+          "circle-color": "#1261bb",
+          "circle-radius": 6,
+          "circle-stroke-color": "#fff",
+          "circle-stroke-width": 2,
+        },
+      });
+    }
+    if (route) {
+      const xs = route.path.map((p) => p[0]),
+        ys = route.path.map((p) => p[1]);
+      map.fitBounds(
+        [
+          [Math.min(...xs), Math.min(...ys)],
+          [Math.max(...xs), Math.max(...ys)],
+        ],
+        {
+          padding: {
+            top: 155,
+            bottom: innerWidth <= 760 ? Math.min(innerHeight * 0.5, 420) : 80,
+            left: innerWidth <= 760 ? 30 : 440,
+            right: 80,
+          },
+          maxZoom: 18,
+          duration: 600,
+        },
+      );
+    }
+    if (container.current) {
+      container.current.dataset.routeSource = route ? "baiyun-osm" : "";
+      container.current.dataset.routePoints = String(route?.path.length || 0);
+    }
+  }
+  async function showPosition(coordinate: BaiyunCoordinate) {
+    const generation = locateRevision.current.value;
+    const { Marker } = await import("maplibre-gl");
+    if (!native.current || generation !== locateRevision.current.value) return;
+    if (location.current) location.current.setLngLat(coordinate);
+    else
+      location.current = new Marker({ color: "#1261bb" })
+        .setLngLat(coordinate)
+        .addTo(native.current);
   }
   useEffect(() => {
     selectRef.current = select;
@@ -152,6 +251,11 @@ export default function BaiyunMapWorkspace() {
             markers.current.push({ place, marker, button });
           }
           setStatus("ready");
+          const target = data.places.find(
+            (p) =>
+              p.id === new URLSearchParams(window.location.search).get("place"),
+          );
+          if (target) selectRef.current(target, true);
         });
         map.on("error", (e) => {
           if (
@@ -296,42 +400,46 @@ export default function BaiyunMapWorkspace() {
       />
       <div className="map-top">
         <CampusSwitcher />
-        <form
-          className="map-search glass-surface"
-          onSubmit={(e) => {
-            e.preventDefault();
-            setSearchOpen(true);
-          }}
-        >
-          <Search size={19} />
-          <label className="sr-only" htmlFor="baiyun-search">
-            搜索校园地点
-          </label>
-          <input
-            id="baiyun-search"
-            placeholder="搜索地点、宿舍、体育设施"
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
+        <div className="map-toolbar">
+          <form
+            className="map-search glass-surface"
+            onSubmit={(e) => {
+              e.preventDefault();
               setSearchOpen(true);
             }}
-            onKeyDown={(e) => {
-              if (e.key === "Escape") setSearchOpen(false);
-            }}
-          />
-          {query && (
-            <button
-              aria-label="清空地点搜索"
-              type="button"
-              onClick={() => {
-                setQuery("");
-                setSearchOpen(false);
+          >
+            <Search size={19} />
+            <label className="sr-only" htmlFor="baiyun-search">
+              搜索校园地点
+            </label>
+            <input
+              ref={searchInput}
+              id="baiyun-search"
+              placeholder="搜索地点、宿舍、体育设施"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setSearchOpen(true);
               }}
-            >
-              <X size={16} />
-            </button>
-          )}
-        </form>
+              onKeyDown={(e) => {
+                if (e.key === "Escape") setSearchOpen(false);
+              }}
+            />
+            {query && (
+              <button
+                className="search-clear"
+                aria-label="清空地点搜索"
+                type="button"
+                onClick={() => {
+                  setQuery("");
+                  setSearchOpen(false);
+                }}
+              >
+                <X size={16} />
+              </button>
+            )}
+          </form>
+        </div>
         {searchOpen && query.trim() && (
           <div className="map-search-results" aria-label="校园地点搜索结果">
             {results.length ? (
@@ -350,13 +458,7 @@ export default function BaiyunMapWorkspace() {
           </div>
         )}
       </div>
-      <Link
-        className="mobile-account glass-surface map-account-fixed"
-        href="/account"
-        aria-label="我的账号"
-      >
-        <UserRound size={20} />
-      </Link>
+      <MapUtilities />
       {!ready && (
         <div className="map-loading-card" role="status">
           <h2>
@@ -426,6 +528,23 @@ export default function BaiyunMapWorkspace() {
         >
           <Layers size={20} />
         </button>
+        <button
+          disabled={!ready}
+          aria-label="校园步行导航"
+          aria-expanded={routeOpen}
+          onClick={() => {
+            setSearchOpen(false);
+            setLayersOpen(false);
+            if (routeOpen) {
+              setPicking(null);
+              showRoute(null);
+              setRouteEnd(null);
+            }
+            setRouteOpen((v) => !v);
+          }}
+        >
+          <Navigation size={20} />
+        </button>
         <span className="tool-divider" />
         <button
           disabled={!ready}
@@ -463,28 +582,63 @@ export default function BaiyunMapWorkspace() {
           ))}
         </div>
       )}
-      {selected && (
-        <aside
-          className="baiyun-place-card glass-surface"
-          aria-label="地点详情"
-        >
-          <h2>{selected.name}</h2>
-          <button
-            aria-label="关闭地点详情"
-            onClick={() => {
-              setSelected(null);
-              native.current?.setFilter("selected", [
-                "==",
-                ["get", "sourceId"],
-                "",
-              ]);
-            }}
-          >
-            <X size={20} />
-          </button>
-        </aside>
+      <PlaceDetails
+        finalFocus={searchInput}
+        place={
+          selected
+            ? {
+                id: selected.id,
+                name: selected.name,
+                subtitle: `白云山校区 · ${categories[selected.category as keyof typeof categories]}`,
+              }
+            : null
+        }
+        onClose={() => {
+          setSelected(null);
+          native.current?.setFilter("selected", [
+            "==",
+            ["get", "sourceId"],
+            "",
+          ]);
+        }}
+        onNavigate={() => {
+          if (selected) {
+            showRoute(null);
+            native.current?.setFilter("selected", [
+              "==",
+              ["get", "sourceId"],
+              "",
+            ]);
+            setRouteEnd(selected);
+            setSelected(null);
+            setRouteOpen(true);
+          }
+        }}
+      />
+      {routeOpen && (
+        <BaiyunNavigation
+          key={routeEnd?.id || "new-route"}
+          end={routeEnd}
+          onRoute={showRoute}
+          onPosition={(p) => void showPosition(p)}
+          onPick={(which, selected) => setPicking({ which, selected })}
+          onClose={() => {
+            setPicking(null);
+            setRouteOpen(false);
+            setRouteEnd(null);
+            showRoute(null);
+          }}
+        />
       )}
-      {notice && (
+      {picking && (
+        <div className="map-pick-notice" role="status">
+          在地图上选择{picking.which === "start" ? "起点" : "终点"}
+          <button className="text-link" onClick={() => setPicking(null)}>
+            取消
+          </button>
+        </div>
+      )}
+      {notice && !/定位|权限/.test(notice) && (
         <div className="baiyun-notice glass-surface" role="status">
           {notice}
           <button aria-label="关闭定位提示" onClick={() => setNotice("")}>

@@ -2,8 +2,6 @@ import { expect, it } from "vitest";
 import { articleMapPlace } from "@/lib/retrieval/activity-place";
 
 it.each([
-  "白云山校区图书馆",
-  "白云校区第六教学楼A310教室",
   "图书馆",
   "大学城校区E203、F207",
   "大学城校区图书馆或院系楼",

@@ -3,6 +3,13 @@
   gap: 20px;
   min-width: 0;
 }
+.console-heading:has([aria-label="建筑校区"]) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
 .building-manager label {
   display: grid;
   gap: 10px;

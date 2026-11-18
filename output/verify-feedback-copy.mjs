@@ -1,0 +1,2 @@
+import {chromium} from 'playwright';
+const b=await chromium.launch({channel:'msedge',headless:true});const p=await b.newPage();await p.goto('https://gdufs.zhiyuapp.site/map');await p.getByRole('button',{name:'留言区',exact:true}).click();const value=await p.locator('.feedback-form textarea').getAttribute('placeholder');if(value!=='写下你的问题、建议或想补充的官网、公众号、图片。补充官网、公众号时，请附名称和一篇推文链接。')throw Error('Placeholder mismatch');console.log('Online placeholder verified');await b.close();

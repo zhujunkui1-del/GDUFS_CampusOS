@@ -93,7 +93,10 @@ it("knowledge, events, mixed and contextual follow-ups route without redefining 
   expect(contentIntent("从南苑7栋去图书馆").active).toBe(false);
 });
 it("ambiguous/out-of-campus article places cannot invent map entities", () => {
-  expect(articleMapPlace("白云山校区图书馆")).toBeNull();
+  expect(articleMapPlace("白云山校区图书馆")).toMatchObject({
+    placeId: "osm-way-962936641",
+    campus: "baiyun",
+  });
   expect(articleMapPlace("图书馆")).toBeNull();
   expect(articleMapPlace("大学城校区图书馆")).toMatchObject({
     name: "图书馆",

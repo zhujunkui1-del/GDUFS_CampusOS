@@ -281,7 +281,7 @@ export function ActivityCalendar() {
         {item.mapPlace && (
           <Link
             className="calendar-map-link"
-            href={`/map?place=${encodeURIComponent(item.mapPlace.placeId)}`}
+            href={`/map?place=${encodeURIComponent(item.mapPlace.placeId)}${item.mapPlace.campus === "baiyun" ? "&campus=baiyun" : ""}`}
           >
             <MapPin size={15} />
             在校园地图查看

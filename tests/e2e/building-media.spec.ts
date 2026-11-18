@@ -56,7 +56,7 @@ test("building photos open in a secondary gallery and feedback accepts private p
   await details.getByRole("button", { name: "关闭地点详情" }).click();
   await page.getByRole("button", { name: "留言区", exact: true }).click();
   await page
-    .getByPlaceholder("写下你的问题、建议或补充的信息源")
+    .getByPlaceholder("写下你的问题、建议或想补充的官网、公众号、图片。补充官网、公众号时，请附名称和一篇推文链接。")
     .fill("本地图片上传验收 " + info.project.name);
   await page.locator(".feedback-form input[type=file]").setInputFiles(photo);
   await expect(page.locator(".feedback-files li")).toHaveCount(1);
