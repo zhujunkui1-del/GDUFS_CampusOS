@@ -34,6 +34,8 @@ import { headingBetween } from "../data/navigation-geometry";
 import { type PilotModelState } from "../data/model-pilot";
 
 type MapContextValue = {
+  campus: "university" | "baiyun";
+  setCampus(campus: "university" | "baiyun"): void;
   status: "loading" | "ready" | "error";
   error: string;
   mode: MapMode;
@@ -114,6 +116,9 @@ export function CampusMapProvider({
   onNavigationStart?(): void;
 }) {
   const pathname = usePathname();
+  const [campus, setCampusState] = useState<"university" | "baiyun">(
+    "university",
+  );
   const [mapRequested, setMapRequested] = useState(pathname === "/map");
   if (pathname === "/map" && !mapRequested) setMapRequested(true);
   const element = useRef<HTMLDivElement>(null);
@@ -577,6 +582,19 @@ export function CampusMapProvider({
     }
   };
   const context: MapContextValue = {
+    campus,
+    setCampus: (next) => {
+      if (next === campus) return;
+      ++interactionVersion.current;
+      context.stopNavigation();
+      stopLocation();
+      setSelected(null);
+      assistantSelection.current = {
+        placeId: null,
+        revision: assistantSelection.current.revision + 1,
+      };
+      setCampusState(next);
+    },
     status,
     error,
     mode,
@@ -742,6 +760,7 @@ export function CampusMapProvider({
     },
     executeAction: (input) => {
       if (!adapter.current) throw new Error("地图尚未就绪。");
+      if (campus === "baiyun") context.setCampus("university");
       executeMapAction(input, {
         hasPlace: (id) => campusData.places.some((p) => p.id === id),
         hasRoute: (id) => currentRoute.current?.id === id,
@@ -768,6 +787,7 @@ export function CampusMapProvider({
     installRoute: (input) => {
       if (!adapter.current) throw new Error("地图尚未就绪。");
       const result = campusRouteFromSnapshot(input);
+      if (campus === "baiyun") context.setCampus("university");
       ++routeGeneration.current;
       if (!liveLocate.current) stopLocation();
       setNavigationActive(false);
@@ -794,7 +814,13 @@ export function CampusMapProvider({
       <div
         ref={element}
         className="campus-map-canvas"
-        style={{ visibility: pathname === "/map" ? "visible" : "hidden" }}
+        style={{
+          visibility:
+            pathname === "/map" && campus === "university"
+              ? "visible"
+              : "hidden",
+        }}
+        aria-hidden={campus !== "university"}
         aria-label="大学城校区本地地图"
         data-testid="campus-map"
         data-status={status}

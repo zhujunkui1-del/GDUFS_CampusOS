@@ -830,3 +830,9 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 - [学生如何开通校园网](https://etr.gdufs.edu.cn/info/1303/5141.htm)
 - [如何使用校园网](https://etr.gdufs.edu.cn/info/1303/5137.htm)
 - [饮食服务](https://hqc.gdufs.edu.cn/info/1002/1444.htm)
+
+## 2026-11-18｜白云山2D OSM固定快照
+
+负责人提供 `assets/source_maps/广外白云山校区地图/白云山校区.osm`，来源 https://www.openstreetmap.org/way/338027672 ，SHA256 `016d93908782217f75ffb1490c23f3a2dd0b3197d2b3e37c28e2b0d425cf3a0c`。补充手机视野所需同一官方API范围 https://api.openstreetmap.org/api/0.6/map?bbox=113.272,23.185,113.303,23.224 ，本轮手动获取保存 `白云山校区_周边补充.osm`，5,314,615字节，SHA256 `9b9371f5bca858dc97b7371af13a39c1ebd9cd6f52730ad2b8523156bff7a8b3`。原校内对象优先，外围缓冲不扩校界。许可OSM/ODbL-1.0，页面保留贡献者署名；公开产物是剥离贡献者身份的GeoJSON，参考图/原XML不作为网站资产。
+
+转换脚本 `scripts/prepare-baiyun-map.py`；清单/来源/跳过关系在 `src/features/campus-map/data/baiyun-map.json`，1,954地物/104具名地点/890,215字节，公开路径 `/maps/baiyun-1e2e6d7ca991.geojson`。三个线上域名实际下载均200/SHA匹配。资料只支持OSM来源展示，不视为楼名、商铺或通行现状的独立现场核验；白云山路线未启用。

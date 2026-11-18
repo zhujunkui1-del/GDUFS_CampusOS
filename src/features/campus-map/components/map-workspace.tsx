@@ -36,6 +36,10 @@ import { MapViewButtons } from "./map-view-buttons";
 import { useAccount } from "@/features/account/account-context";
 import { TrafficPanel } from "@/features/console/dashboard-panels";
 import { FeedbackEntry } from "@/features/feedback/feedback-dialog";
+import { CampusSwitcher } from "./campus-switcher";
+import dynamic from "next/dynamic";
+
+const BaiyunMapWorkspace = dynamic(() => import("./baiyun-map-workspace"));
 
 async function requestPublicTraffic<T>(path: string): Promise<T> {
   const response = await fetch(path, { cache: "no-store" });
@@ -77,6 +81,7 @@ export function MapWorkspace() {
     window.addEventListener("keydown", closeOnEscape);
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, [trafficOpen]);
+  if (map.campus === "baiyun") return <BaiyunMapWorkspace />;
   if (map.navigating && map.route) return <FocusedNavigation />;
   return (
     <section className="map-workspace" aria-labelledby="map-title">
@@ -84,12 +89,7 @@ export function MapWorkspace() {
         广外大学城校园地图
       </h1>
       <div className="map-top">
-        <div className="map-context">
-          <Link className="compact-brand" href="/map">
-            广外通 <span>CampusOS</span>
-          </Link>
-          <span className="campus-location">大学城校区</span>
-        </div>
+        <CampusSwitcher />
         <div className="map-toolbar">
           <form
             className="map-search glass-surface"

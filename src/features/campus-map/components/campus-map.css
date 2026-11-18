@@ -1,6 +1,105 @@
 :root {
   --transition-map: 600ms;
 }
+.map-context.map-context-campuses {
+  max-width: none;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+.campus-switcher {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  isolation: isolate;
+  padding: 3px;
+  border-radius: 10px;
+  background: #eef1f5;
+  margin-left: 2px;
+}
+.campus-switcher button {
+  position: relative;
+  z-index: 1;
+  min-height: 34px;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #626a76;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.campus-switcher button[aria-pressed="true"] {
+  color: #1261bb;
+}
+.campus-switcher-thumb {
+  position: absolute;
+  z-index: 0;
+  left: 3px;
+  top: 3px;
+  bottom: 3px;
+  width: calc((100% - 6px) / 2);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 4px #17324d1a;
+  transition: transform 180ms ease-out;
+}
+.campus-switcher[data-campus="baiyun"] .campus-switcher-thumb {
+  transform: translateX(100%);
+}
+.baiyun-place-card {
+  position: absolute;
+  bottom: 28px;
+  left: 24px;
+  padding: 18px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  max-width: calc(100% - 48px);
+}
+.baiyun-place-card h2 {
+  margin: 0;
+  font-size: 18px;
+}
+.baiyun-place-card button,
+.baiyun-notice button {
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+}
+.baiyun-notice {
+  position: absolute;
+  bottom: 100px;
+  left: 24px;
+  padding: 8px 14px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 760px) {
+  .map-context-campuses .compact-brand span {
+    display: none;
+  }
+  .map-context.map-context-campuses {
+    padding: 5px 8px;
+    gap: 6px;
+  }
+  .campus-switcher button {
+    padding: 5px 7px;
+    font-size: 12px;
+  }
+  .baiyun-place-card {
+    bottom: 110px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .campus-switcher-thumb {
+    transition: none;
+  }
+}
 .campus-map-canvas,
 .campus-map-canvas.maplibregl-map {
   position: fixed;
