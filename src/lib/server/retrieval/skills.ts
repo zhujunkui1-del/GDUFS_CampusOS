@@ -216,6 +216,7 @@ export async function searchContent(
     undefined,
     signal,
     documentIds,
+    event?.campus,
   );
   const result: ContentSearchResult = {
     ...search.result,
@@ -261,7 +262,12 @@ export async function searchContent(
       ? (await readCalendar(db, { articleId: hit.documentId, limit: 50 }, now))
           .items
       : [];
-    for (const a of analysis.activities.slice(0, 3)) {
+    for (const a of analysis.activities
+      .filter(
+        (activity) =>
+          !event?.campus || activity.calendar?.campus === event.campus,
+      )
+      .slice(0, 3)) {
       if (event?.category && a.category !== event.category) continue;
       if (event?.after || event?.before) {
         const days =

@@ -29,7 +29,6 @@ function FeedbackDialog({ onClose }: { onClose: () => void }) {
   const [nickname, setNickname] = useState("");
   const [content, setContent] = useState("");
   const [images, setImages] = useState<File[]>([]);
-  const fileInput = useRef<HTMLInputElement>(null);
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
   useEffect(() => {
@@ -66,13 +65,7 @@ function FeedbackDialog({ onClose }: { onClose: () => void }) {
       ref={dialog}
       className="feedback-dialog"
       aria-labelledby="feedback-title"
-      onCancel={(event) => {
-        event.preventDefault();
-        onClose();
-      }}
-      onClick={(event) => {
-        if (event.target === event.currentTarget) onClose();
-      }}
+      onCancel={(event) => event.preventDefault()}
     >
       <section className="feedback-panel">
         <header className="feedback-heading">
@@ -104,27 +97,22 @@ function FeedbackDialog({ onClose }: { onClose: () => void }) {
               rows={5}
             />
           </label>
-          <input
-            ref={fileInput}
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            multiple
-            hidden
-            onChange={(event) => {
-              const files = Array.from(event.target.files || []);
-              setImages((previous) => [...previous, ...files]);
-              event.target.value = "";
-            }}
-          />
-          <button
-            className="feedback-upload"
-            type="button"
-            disabled={sending}
-            onClick={() => fileInput.current!.click()}
-          >
-            <ImagePlus size={19} />
+          <label className="feedback-upload">
+            <ImagePlus size={19} aria-hidden="true" />
             上传图片
-          </button>
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              disabled={sending}
+              onChange={(event) => {
+                const files = Array.from(event.target.files || []);
+                if (files.length)
+                  setImages((previous) => [...previous, ...files]);
+                event.target.value = "";
+              }}
+            />
+          </label>
           {images.length > 0 && (
             <ul className="feedback-files">
               {images.map((file, index) => (

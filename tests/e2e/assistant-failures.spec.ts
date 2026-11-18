@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { test, expect, type Route } from "@playwright/test";
 import { randomUUID } from "node:crypto";
 
@@ -325,3 +326,111 @@ for (const change of ["tag", "zoom", "drag"])
         "图书馆",
       );
   });
+
+for (const [initialCampus, mode] of [
+  ["university", "place"],
+  ["baiyun", "place"],
+  ["baiyun", "route"],
+] as const)
+  test(
+    "a claimed Baiyun action waits for its camera receipt from " +
+      initialCampus +
+      " " +
+      mode,
+    async ({ page }) => {
+      if (initialCampus === "baiyun") {
+        await page.getByRole("button", { name: "收起校园助理" }).click();
+        await page
+          .getByRole("button", { name: "白云山校区", exact: true })
+          .click();
+        await expect(page.getByTestId("baiyun-map")).toHaveAttribute(
+          "data-status",
+          "ready",
+        );
+        await page.getByRole("button", { name: "打开校园助理" }).click();
+      }
+      const runId = randomUUID(),
+        packetId = randomUUID();
+      const destination = "osm-relation-13030162";
+      const snapshot =
+        mode === "route"
+          ? {
+              ...JSON.parse(
+                readFileSync("tests/fixtures/baiyun-agent-route.json", "utf8"),
+              ),
+              routeId: randomUUID(),
+              expiresAt: new Date(Date.now() + 600000).toISOString(),
+            }
+          : undefined;
+      const action = snapshot
+        ? { type: "SHOW_ROUTE", campus: "baiyun", routeId: snapshot.routeId }
+        : { type: "FOCUS_PLACE", campus: "baiyun", placeId: destination };
+      await page.route("**/api/agent/actions/*/claim", (route) =>
+        route.fulfill({
+          json: {
+            ok: true,
+            data: {
+              id: packetId,
+              actions: [action],
+              routes: snapshot ? [snapshot] : [],
+            },
+          },
+        }),
+      );
+      await page.route("**/api/agent/actions/*/receipt", (route) =>
+        route.fulfill({ json: { ok: true, data: { saved: true } } }),
+      );
+      await page.route("**/api/agent/chat", (route) => {
+        expect(route.request().postDataJSON().mapContext.campus).toBe(
+          initialCampus,
+        );
+        const event = (type: string, payload: unknown, n: number) =>
+          "data: " +
+          JSON.stringify({
+            runId,
+            eventId: runId + ":" + n,
+            timestamp: new Date().toISOString(),
+            type,
+            payload,
+          }) +
+          "\n\n";
+        return route.fulfill({
+          contentType: "text/event-stream",
+          body:
+            event(
+              "artifact.ready",
+              {
+                cards: [],
+                packet: { id: packetId, actions: [action] },
+                routes: [],
+              },
+              1,
+            ) + event("run.completed", {}, 2),
+        });
+      });
+      const receipt = page.waitForRequest("**/api/agent/actions/*/receipt");
+      await page.getByLabel("向校园助理提问").fill("定位白云山第二教学楼");
+      await page.getByLabel("向校园助理提问").press("Enter");
+      expect((await receipt).postDataJSON().ok).toBe(true);
+      await expect(page.getByTestId("baiyun-map")).toHaveAttribute(
+        "data-camera-moving",
+        "false",
+      );
+      if (snapshot) {
+        expect(
+          Number(
+            await page
+              .getByTestId("baiyun-map")
+              .getAttribute("data-route-points"),
+          ),
+        ).toBeGreaterThan(2);
+        await expect(
+          page.getByRole("button", { name: "开始步行导航", exact: true }),
+        ).toBeVisible();
+      } else {
+        await expect(
+          page.getByRole("dialog", { name: "第二教学楼", exact: true }),
+        ).toContainText("第二教学楼");
+      }
+    },
+  );

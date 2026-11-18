@@ -6,7 +6,7 @@ import type { SkillContext } from "@/domain/skills/contracts";
 import { CampusMapService } from "@/lib/server/maps/campus-map-service";
 
 export type SpatialReadKind =
-  "sports_list" | "canteen_list" | "nearest_canteen";
+  "sports_list" | "canteen_list" | "nearest_canteen" | "nearby_canteens";
 export type SpatialReadResult = {
   kind: SpatialReadKind;
   text: string;
@@ -19,17 +19,20 @@ export function spatialReadKind(
   history: StoredMessage[],
 ): SpatialReadKind | undefined {
   if (
-    /南校区|大学城校区|南校|大学城/.test(question) &&
+    /南校区|大学城校区|南校|大学城|白云山|北校区/.test(question) &&
     /(?:有哪些|有什么)/.test(question) &&
     /体育场地|体育场馆|运动场地|体育设施/.test(question)
   )
     return "sports_list";
   if (
-    /南校区|大学城校区|南校|大学城/.test(question) &&
+    /南校区|大学城校区|南校|大学城|白云山|北校区/.test(question) &&
     /(?:有哪些|有什么)/.test(question) &&
+    !/附近/.test(question) &&
     /食堂|饭堂|餐厅/.test(question)
   )
     return "canteen_list";
+  if (/图书馆.*附近.*(?:食堂|饭堂|餐厅)/.test(question))
+    return "nearby_canteens";
   if (
     /(?:图书馆.*最近.*(?:食堂|饭堂)|(?:食堂|饭堂).*离图书馆.*最近|(?:离|距离).{0,12}图书馆.{0,8}最近.{0,8}(?:食堂|饭堂))/.test(
       question,
@@ -61,7 +64,7 @@ export function readSpatialQuery(
 ): SpatialReadResult | undefined {
   const kind = spatialReadKind(question, history);
   if (!kind) return;
-  if (kind === "nearest_canteen") {
+  if (kind === "nearest_canteen" || kind === "nearby_canteens") {
     const library = service.search({ query: "图书馆", limit: 2 }, context);
     if (library.ambiguous || library.matches.length !== 1) return;
     const nearby = service.nearby(
@@ -89,6 +92,34 @@ export function readSpatialQuery(
         !previousIds.size ||
         previousIds.has(place.placeId),
     );
+    if (kind === "nearby_canteens" && candidates.length)
+      return {
+        kind,
+        text:
+          library.matches[0].name +
+          "附近地图收录的食堂包括：" +
+          candidates
+            .map(
+              (place) =>
+                place.name +
+                "（直线约" +
+                Math.round(place.distanceMeters) +
+                "米）",
+            )
+            .join("、") +
+          "。",
+        cards: candidates.map((place) => ({
+          kind: "place",
+          place,
+          distanceMeters: place.distanceMeters,
+        })),
+        trace: {
+          campus: service.campus,
+          origin: library.matches[0].name,
+          distanceType: nearby.distanceType,
+          matches: candidates.map((place) => place.placeId),
+        },
+      };
     const winner = candidates[0];
     if (!winner)
       return {
@@ -132,7 +163,7 @@ export function readSpatialQuery(
   const result =
     kind === "sports_list"
       ? service.search({ query: "体育场地", limit: 20 }, context)
-      : service.search({ query: "南校区食堂", limit: 20 }, context);
+      : service.search({ query: "食堂", limit: 20 }, context);
   const matches = result.matches;
   if (!matches.length)
     return {
@@ -149,7 +180,8 @@ export function readSpatialQuery(
   return {
     kind,
     text:
-      "南校区地图中已核实的" +
+      (service.campus === "baiyun" ? "白云山校区" : "南校区") +
+      "地图中已收录的" +
       label +
       "有" +
       matches.length +

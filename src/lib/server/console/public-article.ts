@@ -3,6 +3,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { ConsoleIdSchema } from "@/domain/console/contracts";
 import { primaryDatabase, type SqlDatabase } from "../assistant/database";
 import { withApi } from "../http";
+import { renderWechatTopicText } from "./reading-html";
 import { ApiError } from "../errors";
 import { isOfficialCampusUrl } from "../external-search/policy";
 
@@ -43,7 +44,7 @@ export const publicArticle = withApi(async (request) => {
     version: Number(row.version),
     title: row.title,
     url: row.url,
-    readingHtml: row.body || "",
+    readingHtml: renderWechatTopicText(row.body || ""),
     partial: row.body_status === "partial",
     publishedAt: row.published_at,
     updatedAt: row.updated_at,

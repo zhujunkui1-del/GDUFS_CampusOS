@@ -18,7 +18,7 @@ export type SkillContext = {
   requestId: string;
   sessionId: string;
   user: { id: string; role: "user" | "admin" } | null;
-  campusId: "gdufs_university_town";
+  campusId: "gdufs_university_town" | "gdufs_baiyun";
   permissions: string[];
   confirmedActionId?: string;
   signal?: AbortSignal;

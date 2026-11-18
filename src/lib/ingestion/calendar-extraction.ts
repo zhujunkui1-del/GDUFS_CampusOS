@@ -451,6 +451,18 @@ function candidates(
           )
         )
           continue;
+        if (
+          /^\s*[，,、：:]?\s*[^，,。；;]{0,30}(?:公布|公示|揭晓)[^，,。；;]{0,12}(?:结果|名单|成绩)/.test(
+            tail,
+          )
+        )
+          continue;
+        if (
+          /^\s*(?:上午|下午|晚上)?\s*\d{1,2}[:：]\s*\d{2}\s*[：:，,]?\s*(?:决赛|比赛|活动|参赛队伍)?\s*(?:签到|报到)/.test(
+            tail,
+          )
+        )
+          continue;
         const last = (re: RegExp) =>
           [...prefix.matchAll(new RegExp(re.source, "g"))].at(-1)?.index ?? -1;
         const role = last(eventRole),
@@ -996,6 +1008,15 @@ export function calendarizeArticle(
         tableCandidates.some((t) => t.start.date === c.start.date)
       ),
   );
+  found = found.filter(({ source, start }) => {
+    const following = source.text.slice(
+      start.evidence.endOffset,
+      start.evidence.endOffset + 40,
+    );
+    return !/^\s*[：:，,]?\s*(?:决赛|比赛|活动|参赛队伍)?\s*(?:签到|报到)/.test(
+      following,
+    );
+  });
   const unresolvedMultiple =
     /活动汇总|多场(?:讲座|活动)|[三四五六七八九十\d]+场(?:讲座|活动)|系列讲座/.test(
       input.title + canonical.text.slice(0, 300),

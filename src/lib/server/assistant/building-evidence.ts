@@ -1,6 +1,6 @@
 import { readBuilding, readBuildingCatalog } from "../building-media";
 import { readCalendar } from "../calendar/query";
-import { campusData } from "@/features/campus-map/data/campus";
+import { buildingPlaces } from "@/features/campus-map/data/building-groups";
 import {
   buildingProfileMembers,
   buildingProfileId,
@@ -13,13 +13,18 @@ const normalize = (text: string) =>
     .normalize("NFKC")
     .replace(/[\s（）()]/g, "")
     .toLowerCase();
-export function mentionedBuildingIds(query: string, selected?: string) {
+export function mentionedBuildingIds(
+  query: string,
+  selected?: string,
+  campus?: "university" | "baiyun",
+) {
   const text = normalize(query);
   const ids = [
     ...new Set(
-      campusData.places
+      buildingPlaces
+        .filter((place) => !campus || place.campus === campus)
         .filter((place) =>
-          [place.name, ...(place.aliases || [])].some(
+          [place.name, ...("aliases" in place ? place.aliases || [] : [])].some(
             (name) =>
               normalize(name).length >= 2 && text.includes(normalize(name)),
           ),
@@ -62,7 +67,12 @@ export async function buildingAssistantProfile(
     ...profile,
     maintained,
     source: "管理员维护的校园建筑资料",
-    mapUrl: "/map?place=" + encodeURIComponent(id),
+    mapUrl:
+      (buildingPlaces.some(
+        (place) => place.id === id && place.campus === "baiyun",
+      )
+        ? "/map?campus=baiyun&place="
+        : "/map?place=") + encodeURIComponent(id),
     asOf: events.now,
     activityWindowStart: events.after,
     activityHasMore: events.hasMore,
@@ -185,8 +195,9 @@ export async function buildingEvidence(
   query: string,
   selected?: string,
   activityTrace?: (id: string) => (data: unknown) => void,
+  campus?: "university" | "baiyun",
 ) {
-  const ids = mentionedBuildingIds(query, selected);
+  const ids = mentionedBuildingIds(query, selected, campus);
   if (ids.length)
     return (
       await Promise.all(
@@ -211,7 +222,13 @@ export async function buildingEvidence(
       ),
     ),
   ];
-  const rows = await readBuildingCatalog(db);
+  const rows = (await readBuildingCatalog(db)).filter(
+    (row) =>
+      !campus ||
+      buildingPlaces.some(
+        (place) => place.id === row.id && place.campus === campus,
+      ),
+  );
   const weights = new Map(
     terms.map((term) => {
       const frequency = rows.filter((row) =>

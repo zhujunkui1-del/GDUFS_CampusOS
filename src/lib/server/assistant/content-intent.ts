@@ -1,3 +1,4 @@
+import { baiyunPlaces } from "@/features/campus-map/data/baiyun-places";
 import type { StoredMessage } from "@/domain/agent/assistant-contracts";
 import { externalPolicy } from "../external-search/policy";
 import {
@@ -59,6 +60,7 @@ export function contentIntent(
   message: string,
   history: StoredMessage[] = [],
   now = Date.now(),
+  campus?: "baiyun" | "university",
 ) {
   message = searchControlBusiness(message);
   const reply = dialogueReply(message);
@@ -248,27 +250,34 @@ export function contentIntent(
     !!serviceKeyword &&
     searchCampusPlaces(serviceKeyword).length > 0 &&
     !/(?:几点|时间|收费|多少钱|费用|怎么办理|怎么申请|怎么挂失)/.test(message);
+  const nav = navigationIntent(
+    message,
+    undefined,
+    false,
+    [],
+    campus === "baiyun" ? baiyunPlaces : undefined,
+  );
   const map =
     !articleLookup &&
     (facilityListing ||
-      ((navigationIntent(message).namedPlaces.length > 0 ||
+      ((nav.namedPlaces.length > 0 ||
         /食堂|饭堂|体育场地|运动场地|体育设施/.test(message) ||
         (history.at(-1)?.cards.some((card) => card.kind === "place") &&
           /其中|哪个/.test(message))) &&
         /最近|距离|多远|有哪些|分别在哪里|其中.*近/.test(message)) ||
-      navigationIntent(message).routeQuestion ||
+      nav.routeQuestion ||
       explicitMapCommand(message) !== null ||
       /^(?:这里|那里|这栋|那栋)[。？?]*$/.test(message) ||
       // “假草场在哪” is a place question, but only when the sentence names a
       // real place. A bare “在哪” used to send “校历在哪看得到” and “期末考试
       // 安排在哪里公布” to the map, where search_places failed and the whole
       // turn ended with NOT_FOUND.
-      (navigationIntent(message).namedPlaces.length > 0 &&
+      (nav.namedPlaces.length > 0 &&
         /在哪|哪里|哪儿|告诉我.*哪里|位置|怎么去/.test(message)) ||
       // The same word without a place is a question about the service, not a
       // path: 「校园里有校车吗，路线怎么走？」 asks where the bus runs, and
       // sending it to the map made search_places answer NOT_FOUND.
-      (navigationIntent(message).namedPlaces.length > 0 &&
+      (nav.namedPlaces.length > 0 &&
         /(?:地图|定位|路线|导航|带我去|带我走|带我过去|导航到|导航去|怎么走|怎么过去|怎么走到|如何去|怎样去|前往|走向|走到|从.+?(?:去|到|至|前往)|(?:帮我找|找一下|找)(?:图书馆|教学楼|饭堂|食堂|超市|宿舍|校门|体育馆|操场|打印店|快递|校医院))/.test(
           message,
         )));
@@ -335,7 +344,7 @@ export function contentIntent(
       // the one campus question that produced no tool call at all. A sentence
       // that names a real campus place stays a map/place question instead.
       (act === "campus" &&
-        !navigationIntent(message).namedPlaces.length &&
+        !nav.namedPlaces.length &&
         /[？?]|吗|呢|怎么|如何|哪|什么|多少|几/.test(query)) ||
       act === "general");
   const tools: ContentTool[] = [];

@@ -125,7 +125,10 @@ export function articleMapPlace(
       )
       .map((entry) => [entry.place.id, entry.place]),
   );
-  const campusKnown = campus === "university_town" || /大学城|南校区/.test(raw);
+  const campusKnown =
+    campus === "university_town" ||
+    /大学城|南校区/.test(raw) ||
+    /^(?:教学楼)?[A-G][1-9]\d{2,3}(?:课室|教室|室)?$/.test(text);
   if (!campusKnown) {
     const specific = [...matches.values()].filter(
       (place) =>

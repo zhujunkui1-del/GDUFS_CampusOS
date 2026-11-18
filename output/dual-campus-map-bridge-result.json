@@ -1,0 +1,14 @@
+[
+  {
+    "id": "place",
+    "status": "fail",
+    "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('campus-map')\nExpected: \"ready\"\nReceived: \"loading\"\nTimeout:  45000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" getByTestId('campus-map') with timeout 45000ms\n  - waiting for getByTestId('campus-map')\n    92 × locator resolved to <div data-mode=\"2d\" data-zoom=\"15.50\" aria-hidden=\"false\" data-bearing=\"0.00\" data-status=\"loading\" data-min-zoom=\"15.00\" aria-label=\"大学城校区本地地图\" data-testid=\"campus-map\" class=\"campus-map-canvas\" data-engine=\"maplibre-local\" data-map-version=\"s1-2026-10-14.2\" data-scope=\"campus-and-visible-context\"></div>\n       - unexpected value \"loading\"\n",
+    "body": ""
+  },
+  {
+    "id": "route",
+    "status": "fail",
+    "error": "Error: expect(locator).toHaveAttribute(expected) failed\n\nLocator:  getByTestId('campus-map')\nExpected: \"ready\"\nReceived: \"loading\"\nTimeout:  45000ms\n\nCall log:\n  - Expect \"toHaveAttribute\" getByTestId('campus-map') with timeout 45000ms\n  - waiting for getByTestId('campus-map')\n    83 × locator resolved to <div data-mode=\"2d\" data-zoom=\"15.50\" aria-hidden=\"false\" data-bearing=\"0.00\" data-status=\"loading\" data-min-zoom=\"15.00\" aria-label=\"大学城校区本地地图\" data-testid=\"campus-map\" class=\"campus-map-canvas\" data-engine=\"maplibre-local\" data-map-version=\"s1-2026-10-14.2\" data-scope=\"campus-and-visible-context\"></div>\n       - unexpected value \"loading\"\n    - waiting for \"http://127.0.0.1:3027/map?verify=dual-campus-1795020586346\" navigation to finish...\n    - navigated to \"http://127.0.0.1:3027/map?verify=dual-campus-1795020586346\"\n    8 × locator resolved to <div data-mode=\"2d\" data-zoom=\"15.50\" aria-hidden=\"false\" data-bearing=\"0.00\" data-status=\"loading\" data-min-zoom=\"15.00\" aria-label=\"大学城校区",
+    "body": ""
+  }
+]

@@ -20,7 +20,7 @@ import {
   type CampusPlace,
   type MapLayer,
 } from "../data/campus";
-import type { MapMode } from "@/domain/maps/contracts";
+import type { MapAction, MapMode } from "@/domain/maps/contracts";
 import { executeMapAction } from "../interactions/map-action-controller";
 import { campusRouteFromSnapshot } from "../interactions/route-snapshot";
 import { type SDKPoi } from "../adapters/amap-types";
@@ -32,7 +32,18 @@ import { projectOnPath } from "../data/route-progress";
 import { headingBetween } from "../data/navigation-geometry";
 import { type PilotModelState } from "../data/model-pilot";
 
+import {
+  RouteOutputSchema,
+  type RouteSnapshot,
+} from "@/domain/maps/skill-contracts";
+
+type BaiyunActionHandler = (
+  action: MapAction,
+  route: RouteSnapshot | null,
+) => void;
 type MapContextValue = {
+  registerBaiyunActions(handler: BaiyunActionHandler): () => void;
+  recordBaiyunSelection(id: string | null): void;
   campus: "university" | "baiyun";
   setCampus(campus: "university" | "baiyun"): void;
   status: "loading" | "ready" | "error";
@@ -121,6 +132,8 @@ export function CampusMapProvider({
   const [mapRequested, setMapRequested] = useState(pathname === "/map");
   if (pathname === "/map" && !mapRequested) setMapRequested(true);
   const element = useRef<HTMLDivElement>(null);
+  const baiyunAction = useRef<BaiyunActionHandler | null>(null);
+  const baiyunRoute = useRef<RouteSnapshot | null>(null);
   const adapter = useRef<CampusRenderer | null>(null);
   const basicOnly = useRef(false);
   const pickRef = useRef<"start" | "end" | null>(null);
@@ -564,9 +577,24 @@ export function CampusMapProvider({
   };
   const context: MapContextValue = {
     campus,
+    registerBaiyunActions: (handler) => {
+      baiyunAction.current = handler;
+      return () => {
+        if (baiyunAction.current === handler) baiyunAction.current = null;
+      };
+    },
+    recordBaiyunSelection: (id) => {
+      if (assistantSelection.current.placeId === id) return;
+      assistantSelection.current = {
+        placeId: id,
+        revision: assistantSelection.current.revision + 1,
+      };
+      ++interactionVersion.current;
+    },
     setCampus: (next) => {
       if (next === campus) return;
       ++interactionVersion.current;
+      baiyunRoute.current = null;
       context.stopNavigation();
       stopLocation();
       setSelected(null);
@@ -744,8 +772,14 @@ export function CampusMapProvider({
       onAskAssistant();
     },
     executeAction: (input) => {
+      if (campus === "baiyun") {
+        if (!baiyunAction.current) throw new Error("白云山地图尚未就绪。");
+        baiyunAction.current(input as MapAction, baiyunRoute.current);
+        if ((input as MapAction).type === "CLEAR_ROUTE")
+          baiyunRoute.current = null;
+        return;
+      }
       if (!adapter.current) throw new Error("地图尚未就绪。");
-      if (campus === "baiyun") context.setCampus("university");
       executeMapAction(input, {
         hasPlace: (id) => campusData.places.some((p) => p.id === id),
         hasRoute: (id) => currentRoute.current?.id === id,
@@ -770,9 +804,15 @@ export function CampusMapProvider({
       });
     },
     installRoute: (input) => {
+      const snapshot = RouteOutputSchema.parse(input);
+      if (snapshot.campus === "baiyun") {
+        if (campus !== "baiyun") throw new Error("路线校区与地图不同。");
+        baiyunRoute.current = snapshot;
+        return;
+      }
       if (!adapter.current) throw new Error("地图尚未就绪。");
       const result = campusRouteFromSnapshot(input);
-      if (campus === "baiyun") context.setCampus("university");
+      if (campus === "baiyun") throw new Error("路线校区与地图不同。");
       ++routeGeneration.current;
       if (!liveLocate.current) stopLocation();
       setNavigationActive(false);

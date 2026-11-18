@@ -1,4 +1,5 @@
 "use client";
+import { baiyunPlaces } from "@/features/campus-map/data/baiyun-places";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { z } from "zod";
@@ -611,13 +612,18 @@ export function useAssistant(
   );
   const toMap = async (signal: AbortSignal) => {
     if (pathRef.current !== "/map") router.push("/map");
-    await waitFor(
-      () =>
-        mapRef.current.status === "ready" &&
-        document.querySelector<HTMLElement>('[data-testid="campus-map"]')?.style
-          .visibility !== "hidden",
-      signal,
-    );
+    await waitFor(() => {
+      const id =
+        mapRef.current.campus === "baiyun" ? "baiyun-map" : "campus-map";
+      const canvas = document.querySelector<HTMLElement>(
+        '[data-testid="' + id + '"]',
+      );
+      return (
+        pathRef.current === "/map" &&
+        canvas?.dataset.status === "ready" &&
+        canvas.style.visibility !== "hidden"
+      );
+    }, signal);
     signal.throwIfAborted();
     await prepareRef.current();
     await frames();
@@ -627,6 +633,20 @@ export function useAssistant(
     return manual.revision > selectionBoundary.current
       ? manual.placeId
       : semanticPlace.current;
+  };
+  const ensureMapCampus = async (
+    campus: "university" | "baiyun",
+    signal: AbortSignal,
+  ) => {
+    const mapId = campus === "baiyun" ? "baiyun-map" : "campus-map";
+    if (mapRef.current.campus !== campus) mapRef.current.setCampus(campus);
+    await waitFor(
+      () =>
+        mapRef.current.campus === campus &&
+        document.querySelector<HTMLElement>('[data-testid="' + mapId + '"]')
+          ?.dataset.status === "ready",
+      signal,
+    );
   };
   const showCard = async (card: AssistantCard, navigate = false) => {
     if (card.kind === "source" || card.kind === "external_source") return;
@@ -651,6 +671,12 @@ export function useAssistant(
       )
         return;
       if (card.kind === "place") {
+        await ensureMapCampus(
+          baiyunPlaces.some((place) => place.id === card.place.placeId)
+            ? "baiyun"
+            : "university",
+          signal,
+        );
         mapRef.current.executeAction({
           type: "FOCUS_PLACE",
           placeId: card.place.placeId,
@@ -678,6 +704,7 @@ export function useAssistant(
           expected !== mapRef.current.getInteractionVersion()
         )
           return;
+        await ensureMapCampus(route.campus ?? "university", signal);
         mapRef.current.installRoute(route);
         displayedRouteOwner.current = {
           routeId: route.routeId,
@@ -788,6 +815,11 @@ export function useAssistant(
         if (mapRef.current.getInteractionVersion() !== expectedMapVersion)
           throw new Error("地图操作已被新的选择中断。");
         await toMap(controller.signal);
+        await ensureMapCampus(
+          claimed.actions[0]?.campus ?? "university",
+          controller.signal,
+        );
+        expectedMapVersion = mapRef.current.getInteractionVersion();
         for (const action of claimed.actions) {
           if (
             revision !== generation.current ||
@@ -823,7 +855,9 @@ export function useAssistant(
             await waitFor(
               () =>
                 document.querySelector<HTMLElement>(
-                  '[data-testid="campus-map"]',
+                  mapRef.current.campus === "baiyun"
+                    ? '[data-testid="baiyun-map"]'
+                    : '[data-testid="campus-map"]',
                 )?.dataset.cameraMoving === "false",
               controller.signal,
             );
@@ -849,7 +883,9 @@ export function useAssistant(
             await waitFor(
               () =>
                 document.querySelector<HTMLElement>(
-                  '[data-testid="campus-map"]',
+                  mapRef.current.campus === "baiyun"
+                    ? '[data-testid="baiyun-map"]'
+                    : '[data-testid="campus-map"]',
                 )?.dataset.cameraMoving === "false",
               controller.signal,
             );
@@ -890,6 +926,10 @@ export function useAssistant(
           selectedContext(),
           false,
           pendingNavigationMessages(messages),
+          /白云山|北校区/.test(text) ||
+            (mapRef.current.campus === "baiyun" && !/大学城|南校区/.test(text))
+            ? baiyunPlaces
+            : undefined,
         ).needsLocation
       ) {
         setStatus("等待定位");
@@ -948,6 +988,8 @@ export function useAssistant(
           smartSearch: searchSnapshot,
           deepThinking: deepThinkingSnapshot,
           mapContext: {
+            campus:
+              pathRef.current === "/map" ? mapRef.current.campus : undefined,
             selectedPlaceId: selectedContext() || undefined,
             activeRouteId: activeRoute?.id || null,
             routeTicket: activeRoute
@@ -1121,7 +1163,8 @@ export function useAssistant(
       }
     },
     setDeepThinking: async (enabled: boolean) => {
-      if (deepThinkingWrite.current || (enabled && !deepThinkingAvailable)) return;
+      if (deepThinkingWrite.current || (enabled && !deepThinkingAvailable))
+        return;
       const id = conversationRef.current,
         revision = generation.current;
       const previous = viewRef.current.deepThinking ?? false;

@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
+import { workflowNodes } from "@/features/agent-workflow/graph";
 test.skip(
   process.env.AGENT_WORKFLOW_E2E !== "1",
   "Isolated workflow interface fixtures",
@@ -37,6 +38,7 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
     for (const node of [
       "input",
       "gate",
+      "campus_resolution",
       "route",
       "building",
       "events",
@@ -177,7 +179,7 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
   const layoutFile = await layoutDownload;
   expect(layoutFile.suggestedFilename()).toBe("campusos-agent-layout.json");
   const layout = JSON.parse(readFileSync(await layoutFile.path(), "utf8"));
-  expect(Object.keys(layout.positions)).toHaveLength(13);
+  expect(Object.keys(layout.positions)).toHaveLength(workflowNodes.length);
   await expect(page.getByTestId("campus-map")).toHaveCount(0);
   await expect(
     page.getByRole("button", { name: "打开校园助理", exact: true }),
@@ -207,6 +209,10 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
   await expect(
     page.locator(".studio-record").filter({ hasText: "证据核验 · 超时" }),
   ).toContainText("12000 ms");
+  await expect(page.locator('[data-node="campus_resolution"]')).toHaveAttribute(
+    "data-state",
+    "success",
+  );
   await page.locator('[data-node="building"]').click();
   await expect(page.locator(".studio-inspector-body")).toContainText(
     "本地隔离建筑资料结果",
@@ -246,7 +252,7 @@ test("runs the stream, distinguishes unused nodes, inspects results, and exports
     await page.getByRole("button", { name: "保存节点布局" }).click();
     await page.reload();
     await expect(node).toHaveAttribute("style", moved!);
-    await expect(page.locator(".workflow-node")).toHaveCount(13);
+    await expect(page.locator('[data-node="campus_resolution"]')).toBeVisible();
     await expect(page.locator(".flow-edge")).toHaveCount(count);
     expect(await page.locator(".flow-edge").first().getAttribute("d")).toBe(
       edgesBefore,

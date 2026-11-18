@@ -52,3 +52,17 @@ describe("content intent, thirteen existing business categories and evidence", (
     ).toBeNull();
   });
 });
+
+it("classifies an exam experience sharing event as radar education and career", async () => {
+  const { classifyArticleContent } =
+    await import("@/lib/ingestion/article-intent");
+  const result = classifyArticleContent({
+    title: "从择校到上岸：外语类考研经验分享会",
+    body: "考研经验分享会。本次分享会邀请同学介绍备考经验、外语类考研择校策略，欢迎参加。",
+  });
+  expect(result).toMatchObject({
+    primaryDestination: "radar",
+    radarCategory: "education_career",
+    knowledgeCategory: null,
+  });
+});

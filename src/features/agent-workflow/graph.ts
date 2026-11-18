@@ -1,5 +1,14 @@
 export const workflowNodes = [
   {
+    id: "campus_resolution",
+    title: "校区判断",
+    subtitle: "显式校区 · 地图选点 · 对话上下文",
+    x: 548,
+    y: 202,
+    tone: "violet",
+    icon: "map",
+  },
+  {
     id: "receipt",
     title: "地图执行回执",
     subtitle: "操作意图 · 浏览器确认",
@@ -119,7 +128,8 @@ export const workflowNodes = [
 ] as const;
 export const workflowEdges = [
   ["input", "gate"],
-  ["gate", "route"],
+  ["gate", "campus_resolution"],
+  ["campus_resolution", "route"],
   ["route", "building"],
   ["building", "model"],
   ["route", "model"],

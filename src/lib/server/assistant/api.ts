@@ -3,7 +3,11 @@ import { withApi } from "../http";
 import { assistantContext, readJson } from "./http-context";
 import { tokenHash } from "./crypto";
 import { defaultModelRuntime } from "../models/runtime";
-import { CampusMapService, MAP_VERSIONS } from "../maps/campus-map-service";
+import {
+  CampusMapService,
+  MAP_VERSIONS,
+  BAIYUN_MAP_VERSIONS,
+} from "../maps/campus-map-service";
 import type { MapAction } from "@/domain/maps/contracts";
 import { mapRuntime } from "../map-env";
 import { ApiError } from "../errors";
@@ -93,8 +97,7 @@ export const sessionGet = api(async (request, context) => {
         )
       : null,
     model: await defaultModelRuntime().status(),
-    deepThinkingAvailable:
-      context.difyChatEnabled && !!context.difyAppApiKey,
+    deepThinkingAvailable: context.difyChatEnabled && !!context.difyAppApiKey,
   };
 });
 export const historyGet = api(async (request, context) => {
@@ -129,9 +132,15 @@ export const conversationsGet = api(async (request, context) => {
 export const conversationPatch = api(async (request, context) => {
   const id = idSchema.parse(new URL(request.url).pathname.split("/").at(-1));
   const body = z
-    .object({ smartSearch: z.boolean().optional(), deepThinking: z.boolean().optional() })
+    .object({
+      smartSearch: z.boolean().optional(),
+      deepThinking: z.boolean().optional(),
+    })
     .strict()
-    .refine((value) => value.smartSearch !== undefined || value.deepThinking !== undefined)
+    .refine(
+      (value) =>
+        value.smartSearch !== undefined || value.deepThinking !== undefined,
+    )
     .parse(await readJson(request));
   if (body.smartSearch !== undefined)
     await context.store.setSmartSearch(context.identity, id, body.smartSearch);
@@ -141,7 +150,11 @@ export const conversationPatch = api(async (request, context) => {
       (!context.difyChatEnabled || !context.difyAppApiKey)
     )
       throw new ApiError("SERVICE_UNAVAILABLE", "深度思考暂未配置。");
-    await context.store.setDeepThinking(context.identity, id, body.deepThinking);
+    await context.store.setDeepThinking(
+      context.identity,
+      id,
+      body.deepThinking,
+    );
   }
   return {
     ...(await context.store.searchPreference(context.identity, id)),
@@ -173,7 +186,16 @@ export const routePost = api(async (request, context) => {
     ? context.routes.forConversation(body.conversationId)
     : context.routes;
   if (body.ticket) await routes.hydrate(context.identity.owner, body.ticket);
-  return routes.get(context.identity.owner, id, MAP_VERSIONS);
+  try {
+    return await routes.get(context.identity.owner, id, MAP_VERSIONS);
+  } catch (error) {
+    if (
+      !(error instanceof ApiError) ||
+      !["ROUTE_UNAVAILABLE", "NOT_FOUND"].includes(error.code)
+    )
+      throw error;
+    return routes.get(context.identity.owner, id, BAIYUN_MAP_VERSIONS);
+  }
 });
 export const claimPost = api(async (request, context) => {
   const id = idSchema.parse(new URL(request.url).pathname.split("/").at(-2));
@@ -189,7 +211,8 @@ export const claimPost = api(async (request, context) => {
   const scopedRoutes = context.routes.forConversation(packet.conversationId);
   for (const ticket of body.tickets || [])
     await scopedRoutes.hydrate(context.identity.owner, ticket);
-  const service = new CampusMapService(scopedRoutes);
+  const campus = packet.actions[0]?.campus ?? "university";
+  const service = new CampusMapService(scopedRoutes, undefined, campus);
   await service.control(
     { actions: packet.actions },
     {
@@ -197,7 +220,7 @@ export const claimPost = api(async (request, context) => {
       sessionId: context.identity.owner,
       user: context.identity.user,
       permissions: [],
-      campusId: "gdufs_university_town",
+      campusId: campus === "baiyun" ? "gdufs_baiyun" : "gdufs_university_town",
     },
   );
   const routes = await Promise.all(
@@ -207,7 +230,11 @@ export const claimPost = api(async (request, context) => {
           action.type === "SHOW_ROUTE",
       )
       .map((action) =>
-        scopedRoutes.get(context.identity.owner, action.routeId, MAP_VERSIONS),
+        scopedRoutes.get(
+          context.identity.owner,
+          action.routeId,
+          service.versions,
+        ),
       ),
   );
   return {

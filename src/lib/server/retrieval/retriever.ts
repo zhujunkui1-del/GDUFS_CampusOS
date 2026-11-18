@@ -139,6 +139,7 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
     limit?: number,
     signal?: AbortSignal,
     preferredIds?: string[],
+    eventCampus?: "university_town" | "baiyun" | "online",
   ) {
     if (scope.kind !== "public")
       throw new ApiError("FORBIDDEN", "仅支持公开资料检索。");
@@ -212,12 +213,16 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
     // title instead of hoping a long FTS query outranks everything else.
     let titleChunks: ChunkRow[] = [];
     let titleIds: Set<string> | undefined;
+    const campusFilter =
+      "EXISTS(SELECT 1 FROM article_activity_index ci JOIN document_article_analysis ca ON ca.document_id=ci.document_id WHERE ci.document_id=d.id AND ci.calendar_eligible=1 AND ci.campus_scope=? AND ca.content_revision=d.content_revision AND ca.input_hash=d.input_hash)";
     const sourceFilterSql =
+      (eventCampus ? " AND " + campusFilter : "") +
       (q.sourceId ? " AND d.source_id=?" : "") +
       (q.sourceTypes?.length
         ? ` AND EXISTS(SELECT 1 FROM knowledge_sources sf WHERE sf.id=d.source_id AND sf.channel_type IN(${q.sourceTypes.map(() => "?").join(",")}))`
         : "");
     const sourceFilterArgs = [
+      ...(eventCampus ? [eventCampus] : []),
       ...(q.sourceId ? [q.sourceId] : []),
       ...(q.sourceTypes || []),
     ];
@@ -269,6 +274,10 @@ export class D1KeywordRetriever implements KnowledgeRetriever {
         "k.index_version=?",
       ],
       params: unknown[] = [RETRIEVAL_INDEX_VERSION];
+    if (eventCampus) {
+      conditions.push(campusFilter);
+      params.push(eventCampus);
+    }
     if (q.documentIds) {
       conditions.push(
         `k.document_id IN(${q.documentIds.map(() => "?").join(",")})`,
@@ -653,6 +662,7 @@ ${sourceFilterSql}
       this.semantic &&
       !q.title &&
       !titleChunks.length &&
+      !eventCampus &&
       !q.documentIds?.length &&
       !q.sourceId &&
       !q.sourceTypes?.length &&

@@ -477,3 +477,52 @@ describe("five production map Skills with real fixed campus data", () => {
     }
   });
 });
+
+it("scopes Baiyun map lookups, routes and actions", async () => {
+  const service = new CampusMapService(undefined, undefined, "baiyun");
+  const context = { ...ctx, campusId: "gdufs_baiyun" as const };
+  const library = service.search({ query: "白云山校区图书馆" }, context)
+    .matches[0];
+  const building = service.search({ query: "第二教学楼" }, context).matches[0];
+  expect(library.name).toBe("北校区图书馆");
+  expect(
+    service.details({ placeId: building.placeId }, context).place.name,
+  ).toBe("第二教学楼");
+  expect(() =>
+    service.details({ placeId: "osm-way-307250998" }, context),
+  ).toThrow();
+  expect(
+    service.nearby(
+      {
+        origin: { type: "place", placeId: library.placeId },
+        category: "canteen",
+        radiusMeters: 2000,
+      },
+      context,
+    ).matches.length,
+  ).toBeGreaterThan(0);
+  const route = await service.plan(
+    {
+      start: { type: "place", placeId: library.placeId },
+      endPlaceId: building.placeId,
+      mode: "walking",
+    },
+    context,
+  );
+  expect(route.campus).toBe("baiyun");
+  expect(route.distanceMeters).toBeGreaterThan(0);
+  expect(
+    (
+      await service.control(
+        { actions: [{ type: "SHOW_ROUTE", routeId: route.routeId }] },
+        context,
+      )
+    ).acceptedActions[0].campus,
+  ).toBe("baiyun");
+  await expect(
+    service.control(
+      { actions: [{ type: "SET_VIEW_MODE", mode: "3d" }] },
+      context,
+    ),
+  ).rejects.toThrow("只支持 2D");
+});

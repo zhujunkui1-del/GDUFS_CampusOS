@@ -13,6 +13,7 @@ export const AgentChatRequestSchema = z
     deepThinking: z.boolean().default(false),
     mapContext: z
       .object({
+        campus: z.enum(["university", "baiyun"]).optional(),
         selectedPlaceId: z.string().min(1).max(128).optional(),
         activeRouteId: z.string().min(1).max(128).nullable().optional(),
         routeTicket: z.string().max(60000).optional(),

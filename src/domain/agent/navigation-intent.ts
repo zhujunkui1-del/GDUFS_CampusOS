@@ -1,4 +1,7 @@
-import { searchCampusPlaces } from "@/features/campus-map/data/campus";
+import {
+  searchCampusPlaces,
+  type CampusPlace,
+} from "@/features/campus-map/data/campus";
 import { normalizePlaceText } from "@/features/campus-map/data/campus-text";
 import { requestsDeviceLocation } from "./location-intent";
 
@@ -49,8 +52,8 @@ export function pendingNavigationMessages(
 
 // Match only names/aliases of real canonical places. Prefer longest mentions,
 // so 北苑7栋 does not match 7栋, and 南苑1 does not match 南苑13.
-function mentions(text: string) {
-  const matches = places
+function mentions(text: string, pool: readonly CampusPlace[]) {
+  const matches = pool
     .flatMap((place) => {
       const names = [place.name, ...(place.aliases || [])];
       if (place.category === "dormitory")
@@ -97,10 +100,11 @@ export function navigationIntent(
   selected?: string | null,
   hasLocation = false,
   previousUserMessages: readonly string[] = [],
+  pool: readonly CampusPlace[] = places,
 ) {
   let question = normalize(message);
   let resolvedMessage = message;
-  const currentPlaces = mentions(question);
+  const currentPlaces = mentions(question, pool);
   const manualOrigin =
     currentPlaces.length === 1 &&
     [
@@ -119,7 +123,7 @@ export function navigationIntent(
         !/(?:到|去|至|前往|走向|走到|→|->).+/.test(normalize(previous))
       )
         continue;
-      const pending = navigationIntent(previous, selected, false);
+      const pending = navigationIntent(previous, selected, false, [], pool);
       if (
         pending.routeQuestion &&
         pending.destinations.length === 1 &&
@@ -131,7 +135,7 @@ export function navigationIntent(
       break;
     }
   }
-  const namedPlaces = mentions(question);
+  const namedPlaces = mentions(question, pool);
   const routeText = question
     .replace(MOVEMENT_COMPOUND, " ")
     .replace(/找到|查到|定位到/g, "找");
@@ -143,7 +147,7 @@ export function navigationIntent(
   const startText = pair?.[1];
   const explicitFrom = /从.+(?:去|到|至|前往|走向|走到)/.test(question);
   const deictic = !!startText && /这里|这儿|此处/.test(startText);
-  const startPlaces = startText ? mentions(startText) : [];
+  const startPlaces = startText ? mentions(startText, pool) : [];
   const explicitOrigin =
     explicitFrom ||
     deictic ||

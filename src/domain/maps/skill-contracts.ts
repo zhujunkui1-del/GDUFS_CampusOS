@@ -128,13 +128,16 @@ export const PlaceDetailsOutputSchema = z
   .strict();
 export const NearbyPlacesInputSchema = z
   .object({
-    origin: z.preprocess(
-      (value) => {
+    origin: z
+      .preprocess((value) => {
         if (typeof value !== "string") return value;
-        try { return JSON.parse(value); } catch { return value; }
-      },
-      OriginSchema,
-    ).optional(),
+        try {
+          return JSON.parse(value);
+        } catch {
+          return value;
+        }
+      }, OriginSchema)
+      .optional(),
     category: CategorySchema.optional(),
     radiusMeters: z.number().min(1).max(2000).optional(),
     limit: z.number().int().min(1).max(20).optional(),
@@ -174,6 +177,9 @@ export const PlanRouteInputSchema = z
   .strict();
 export const RouteOutputSchema = z
   .object({
+    campus: z.enum(["university", "baiyun"]).optional(),
+    guidancePaths: z.array(LineStringSchema).max(4).optional(),
+    solidPath: LineStringSchema.optional(),
     routeId: z.string().uuid(),
     start: ResolvedOriginSchema,
     end: ResolvedOriginSchema,

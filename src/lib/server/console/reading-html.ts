@@ -61,14 +61,26 @@ function css(raw: string) {
     );
 }
 
+// WeChat gallery descriptions sometimes contain topic links serialized as text.
+export function renderWechatTopicText(html: string) {
+  return html.replace(
+    /&lt;a\s+class=(?:&quot;|"|&#34;)wx_topic_link(?:&quot;|"|&#34;)\s+[^<>]*?&gt;(#[^<>&]+)&lt;\/a&gt;/gi,
+    (_match, hashtag: string, offset: number, source: string) =>
+      hashtag +
+      (/^\s*&lt;a\s/i.test(source.slice(offset + _match.length)) ? " " : ""),
+  );
+}
+
 /** Preserve source layout/images inside the reader's static sandbox. */
 export function sanitizeReadingHtml(input: string) {
   if (input.length > 1500000)
     throw new ApiError("INVALID_ARGUMENT", "文章HTML超过大小限制。");
   const { document } = parseHTML(
     /<html[\s>]/i.test(input)
-      ? input
-      : "<!doctype html><html><body>" + input + "</body></html>",
+      ? renderWechatTopicText(input)
+      : "<!doctype html><html><body>" +
+          renderWechatTopicText(input) +
+          "</body></html>",
   );
   const root =
     document.querySelector("#js_content, .rich_media_content") || document.body;

@@ -2,9 +2,12 @@ import { z } from "zod";
 
 const placeId = z.string().min(1).max(128);
 
+const campus = z.enum(["university", "baiyun"]).optional();
+
 export const MapActionSchema = z.discriminatedUnion("type", [
   z
     .object({
+      campus,
       type: z.literal("FOCUS_PLACE"),
       placeId,
       zoom: z.number().min(3).max(20).optional(),
@@ -12,27 +15,31 @@ export const MapActionSchema = z.discriminatedUnion("type", [
     .strict(),
   z
     .object({
+      campus,
       type: z.literal("SHOW_PLACES"),
       placeIds: z.array(placeId).min(1).max(100),
     })
     .strict(),
   z
     .object({
+      campus,
       type: z.literal("SHOW_ROUTE"),
       routeId: z.string().min(1).max(128),
     })
     .strict(),
-  z.object({ type: z.literal("OPEN_PLACE_DETAILS"), placeId }).strict(),
-  z.object({ type: z.literal("SHOW_PLACE_DETAILS"), placeId }).strict(),
-  z.object({ type: z.literal("CLEAR_ROUTE") }).strict(),
+  z.object({ campus, type: z.literal("OPEN_PLACE_DETAILS"), placeId }).strict(),
+  z.object({ campus, type: z.literal("SHOW_PLACE_DETAILS"), placeId }).strict(),
+  z.object({ campus, type: z.literal("CLEAR_ROUTE") }).strict(),
   z
     .object({
+      campus,
       type: z.literal("SET_VIEW_MODE"),
       mode: z.enum(["2d", "2.5d", "3d"]),
     })
     .strict(),
   z
     .object({
+      campus,
       type: z.literal("SET_LAYER"),
       layer: z.enum([
         "buildings",

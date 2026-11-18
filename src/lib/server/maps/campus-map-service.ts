@@ -1,3 +1,7 @@
+import { baiyunPlaces } from "@/features/campus-map/data/baiyun-places";
+import baiyun from "@/features/campus-map/data/baiyun-map.json";
+import baiyunNetwork from "@/features/campus-map/data/baiyun-walking.json";
+import { planBaiyunRoute } from "@/features/campus-map/data/baiyun-routing";
 import { z } from "zod";
 import {
   campusData,
@@ -52,6 +56,10 @@ export const MAP_VERSIONS = {
   networkVersion: tunnelNetwork.version,
 };
 const visiblePlaces = searchCampusPlaces("");
+export const BAIYUN_MAP_VERSIONS = {
+  mapVersion: baiyun.version,
+  networkVersion: baiyunNetwork.version,
+};
 const normalize = normalizePlaceText;
 function oneEdit(a: string, b: string) {
   if (Math.abs(a.length - b.length) > 1 || a === b) return false;
@@ -88,15 +96,28 @@ export class CampusMapService {
   constructor(
     readonly routes: RouteSnapshotStore = new MemoryRouteSnapshotStore(),
     private readonly now = () => Date.now(),
+    readonly campus: "university" | "baiyun" = "university",
   ) {}
+  get versions() {
+    return this.campus === "baiyun" ? BAIYUN_MAP_VERSIONS : MAP_VERSIONS;
+  }
+  get places() {
+    return this.campus === "baiyun" ? baiyunPlaces : visiblePlaces;
+  }
   place(id: string) {
-    const place = campusData.places.find((p) => p.id === id);
+    const place = (
+      this.campus === "baiyun" ? baiyunPlaces : campusData.places
+    ).find((p) => p.id === id);
     if (!place) throw new ApiError("NOT_FOUND", "地点不存在，请重新选择。");
     return place;
   }
   private assertContext(context: SkillContext) {
     context.signal?.throwIfAborted();
-    if (context.campusId !== campusData.campusId || !context.sessionId)
+    if (
+      context.campusId !==
+        (this.campus === "baiyun" ? "gdufs_baiyun" : campusData.campusId) ||
+      !context.sessionId
+    )
       throw new ApiError("FORBIDDEN", "无法使用此地图会话。");
   }
   resolveOrigin(
@@ -156,10 +177,14 @@ export class CampusMapService {
     )
       throw new ApiError("LOCATION_REQUIRED", "请重新授权定位或选择起点。");
     if (
-      !campusData.zones.some((zone) =>
-        pointInPolygon(grant.data.coordinate, zone.polygon),
-      ) &&
-      nearestTunnelDistance(grant.data.coordinate) > 25
+      this.campus === "baiyun"
+        ? !pointInPolygon(
+            grant.data.coordinate,
+            baiyun.boundary as [number, number][],
+          )
+        : !campusData.zones.some((zone) =>
+            pointInPolygon(grant.data.coordinate, zone.polygon),
+          ) && nearestTunnelDistance(grant.data.coordinate) > 25
     )
       throw new ApiError("OUT_OF_CAMPUS", "当前位置在校外，请选择校内起点。");
     return {
@@ -182,7 +207,7 @@ export class CampusMapService {
     const query = normalize(checked.query)
       .replace(/^(?:请)?(?:帮我)?(?:找(?:到)?|查找|搜索|定位(?:到)?)?/, "")
       .replace(
-        /^(?:广外|广东外语外贸大学|大学城校区|南校区|小谷围)?(?:的)?/,
+        /^(?:广外|广东外语外贸大学|大学城(?:校区)?|白云山(?:校区)?|北校区|南校区|小谷围)?(?:的)?/,
         "",
       )
       .replace(/最近(?:的)?|附近(?:的)?|在哪里[？?]?$/g, "");
@@ -194,7 +219,7 @@ export class CampusMapService {
     const category = checked.category || categoryTerm;
     const sportsListing =
       /^(?:体育场地|体育场馆|体育设施|运动场地|运动场馆)$/.test(query);
-    const pool = visiblePlaces.filter((p) =>
+    const pool = this.places.filter((p) =>
       sportsListing
         ? placeLayer(p) === "sports"
         : !category || p.category === category,
@@ -202,7 +227,11 @@ export class CampusMapService {
     const exact = pool.filter((p) =>
       [p.name, ...(p.aliases || [])].some((name) => normalize(name) === query),
     );
-    const reused = new Set(searchCampusPlaces(query).map((p) => p.id));
+    const reused = new Set(
+      (this.campus === "baiyun" ? [] : searchCampusPlaces(query)).map(
+        (p) => p.id,
+      ),
+    );
     let matches = exact.length
       ? exact
       : categoryTerm || sportsListing
@@ -241,7 +270,7 @@ export class CampusMapService {
       ambiguous: matches.length > 1 || matchType === "fuzzy",
       matchType,
       requiresOriginForNearest: nearest,
-      mapVersion: MAP_VERSIONS.mapVersion,
+      mapVersion: this.versions.mapVersion,
     });
   }
   details(
@@ -275,7 +304,7 @@ export class CampusMapService {
         entranceDetails: "unknown",
         openingStatus: "unknown",
       },
-      mapVersion: MAP_VERSIONS.mapVersion,
+      mapVersion: this.versions.mapVersion,
     });
   }
   nearby(
@@ -285,7 +314,7 @@ export class CampusMapService {
     const checked = NearbyPlacesInputSchema.parse(input);
     const origin = this.resolveOrigin(checked.origin, context);
     const radius = checked.radiusMeters || 500;
-    const matches = visiblePlaces
+    const matches = this.places
       .filter(
         (p) =>
           p.id !== origin.placeId &&
@@ -307,7 +336,7 @@ export class CampusMapService {
       distanceType: "geodesic_straight_line",
       radiusMeters: radius,
       matches,
-      mapVersion: MAP_VERSIONS.mapVersion,
+      mapVersion: this.versions.mapVersion,
     });
   }
   async plan(
@@ -331,6 +360,54 @@ export class CampusMapService {
       distanceMeters(start.coordinate, end.coordinate) < 3
     )
       throw new ApiError("INVALID_ARGUMENT", "请选择不同的起点和终点。");
+    if (this.campus === "baiyun") {
+      const path = planBaiyunRoute(
+        {
+          id: start.placeId ?? "device",
+          name: start.name,
+          coordinate: start.coordinate,
+        },
+        { id: end.placeId!, name: end.name, coordinate: end.coordinate },
+      );
+      const line = (coordinates: [number, number][]) => ({
+        type: "LineString",
+        coordinates,
+      });
+      const result = RouteOutputSchema.parse({
+        campus: "baiyun",
+        routeId: crypto.randomUUID(),
+        start,
+        end,
+        mode: "walking",
+        crs: "WGS84",
+        source: "CampusOS.OSM",
+        path: line(path.path),
+        approachPath: null,
+        undergroundPaths: [],
+        solidPath:
+          path.solidPath && path.solidPath.length >= 2
+            ? line(path.solidPath)
+            : undefined,
+        guidancePaths: path.guidance?.map(line),
+        distanceMeters: path.distanceMeters,
+        estimatedSeconds: path.seconds,
+        estimatedMinutes: Math.max(1, Math.ceil(path.seconds / 60)),
+        steps: path.steps
+          .filter((step) => step.distance > 0)
+          .slice(0, 100)
+          .map((step) => ({
+            instruction: step.instruction,
+            distanceMeters: step.distance,
+          })),
+        ...this.versions,
+        crossesZones: false,
+        usesTunnel: false,
+        expiresAt: new Date(this.now() + 600000).toISOString(),
+      });
+      context.signal?.throwIfAborted();
+      await this.routes.save(context.sessionId, result);
+      return result;
+    }
     const point = (origin: ResolvedOrigin): RoutePoint => ({
       name: origin.name,
       placeId: origin.placeId || undefined,
@@ -386,7 +463,7 @@ export class CampusMapService {
         distanceMeters: step.distance,
       })),
       networkVersion: route.networkVersion,
-      mapVersion: MAP_VERSIONS.mapVersion,
+      mapVersion: this.versions.mapVersion,
       crossesZones,
       usesTunnel: !!route.undergroundPathGcj02?.length,
       expiresAt: new Date(this.now() + 600000).toISOString(),
@@ -404,11 +481,19 @@ export class CampusMapService {
     // Atomic validation: one invalid action rejects the entire batch, so no partial map intent escapes.
     for (const raw of checked.actions) {
       const action = MapActionSchema.parse(raw);
+      if (action.campus && action.campus !== this.campus)
+        throw new ApiError("INVALID_ARGUMENT", "地图动作的校区不一致。");
+      if (
+        this.campus === "baiyun" &&
+        action.type === "SET_VIEW_MODE" &&
+        action.mode !== "2d"
+      )
+        throw new ApiError("INVALID_ARGUMENT", "白云山校区地图目前只支持 2D。");
       if ("placeId" in action) this.place(action.placeId);
       if (action.type === "SHOW_PLACES")
         action.placeIds.forEach((id) => this.place(id));
       if (action.type === "SHOW_ROUTE")
-        await this.routes.get(context.sessionId, action.routeId, MAP_VERSIONS);
+        await this.routes.get(context.sessionId, action.routeId, this.versions);
       if (
         action.type === "SET_LAYER" &&
         (action.layer === "events" || action.layer === "moments")
@@ -416,9 +501,15 @@ export class CampusMapService {
         throw new ApiError("INVALID_ARGUMENT", "该图层尚未开放。");
     }
     return ControlMapOutputSchema.parse({
-      acceptedActions: checked.actions,
+      acceptedActions:
+        this.campus === "baiyun"
+          ? checked.actions.map((action) => ({
+              ...action,
+              campus: this.campus,
+            }))
+          : checked.actions,
       execution: "intent_only",
-      mapVersion: MAP_VERSIONS.mapVersion,
+      mapVersion: this.versions.mapVersion,
     });
   }
 }

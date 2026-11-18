@@ -595,6 +595,14 @@ export function PublicFeed({ surface }: { surface: "radar" | "knowledge" }) {
           article={selectedArticle}
           categoryLabel={articleCategory}
           surface={surface}
+          taskButton={
+            <AddTaskButton
+              article={{
+                articleId: selectedArticle.id,
+                title: selectedArticle.title,
+              }}
+            />
+          }
           onClose={() => setSelectedArticle(null)}
         />
       )}

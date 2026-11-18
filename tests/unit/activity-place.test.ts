@@ -36,3 +36,8 @@ it.each([
     expect(articleMapPlace(location)?.placeId).toBe(id);
   },
 );
+
+it("maps a standalone A–G classroom code without guessing across campuses", () => {
+  expect(articleMapPlace("C308")?.name).toBe("教学楼C栋");
+  expect(articleMapPlace("C308", "baiyun")).toBeNull();
+});

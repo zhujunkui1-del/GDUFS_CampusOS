@@ -1,3 +1,4 @@
+import baiyun from "@/features/campus-map/data/baiyun-map.json";
 import type { SqlDatabase } from "../assistant/database";
 import { buildingAssistantProfile } from "../assistant/building-evidence";
 import type { SkillDefinition, SkillContext } from "@/domain/skills/contracts";
@@ -43,7 +44,13 @@ function define<I, O>(
       ok: true,
       data: await execute(input, context),
       sources: [
-        { title: "CampusOS 固定校园OSM数据", url: campusData.sourceUrl },
+        {
+          title: "CampusOS 固定校园OSM数据",
+          url:
+            context.campusId === "gdufs_baiyun"
+              ? baiyun.sourceUrl
+              : campusData.sourceUrl,
+        },
       ],
     }),
   };
@@ -58,7 +65,7 @@ export function createMapSkillRegistry(
       "spatial-domain",
       define(
         "search_places",
-        "搜索大学城真实地点：名称、已确认别名、类别、有限模糊匹配。先查名称取得真实placeId，不能猜ID。ambiguous=true时展示候选并询问用户；最近/附近必须再以明确起点调用find_nearby_places，不能把搜索顺序当距离。",
+        "搜索本轮已解析校区的真实地点：名称、已确认别名、类别、有限模糊匹配。先查名称取得真实placeId，不能猜ID。ambiguous=true时展示候选并询问用户；最近/附近必须再以明确起点调用find_nearby_places，不能把搜索顺序当距离。",
         SearchPlacesInputSchema,
         SearchPlacesOutputSchema,
         (input, context) => service.search(input, context),

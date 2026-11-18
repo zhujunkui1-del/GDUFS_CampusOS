@@ -1,0 +1,65 @@
+[
+  {
+    "id": "clarify",
+    "status": "fail",
+    "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '打开校园助理' })\u001b[22m\n",
+    "body": ""
+  },
+  {
+    "id": "nearby",
+    "status": "fail",
+    "error": "Error: response.text: Protocol error (Network.getResponseBody): No data found for resource with given identifier\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    "body": "白云山图书馆附近有哪些食堂？\n\n校园地点与步行路线助手\n\n白云山图书馆附近有哪些食堂？\n回复格式异常，请重试。\n向校园助理提问\n智能搜索"
+  },
+  {
+    "id": "compare",
+    "status": "pass",
+    "answer": "大学城校区是图书馆，白云山校区是北校区图书馆。点击对应地点卡片可在该校区地图查看。",
+    "cards": [
+      {
+        "kind": "place",
+        "name": "图书馆"
+      },
+      {
+        "kind": "place",
+        "name": "北校区图书馆"
+      }
+    ]
+  },
+  {
+    "id": "cross",
+    "status": "pass",
+    "answer": "目前没有两校区之间的校内步行路线。可以分别规划各校区内的路段。",
+    "cards": []
+  },
+  {
+    "id": "mode",
+    "status": "pass",
+    "answer": "白云山校区地图目前只支持 2D。",
+    "cards": []
+  },
+  {
+    "id": "place",
+    "status": "fail",
+    "error": "Error: response.text: Protocol error (Network.getResponseBody): No data found for resource with given identifier\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    "body": "白云山校区第二教学楼在哪里？请在地图定位。\n\n校园地点与步行路线助手\n\n白云山校区第二教学楼在哪里？请在地图定位。\n\n本鱼翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息（查过：“白云山校区第二教学楼” “白云山校区” “在地图定位” 白云山校区 在地图定位）。这不代表学校没有相关规定，只是本站还没收录到——建议通过广外官网、院系公示或校园地图APP核实。\n\n向校园助理提问\n智能搜索"
+  },
+  {
+    "id": "route",
+    "status": "fail",
+    "error": "Error: response.text: Protocol error (Network.getResponseBody): No data found for resource with given identifier\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    "body": "从白云山校区图书馆到第二教学楼怎么走？请显示步行路线。\n\n校园地点与步行路线助手\n\n从白云山校区图书馆到第二教学楼怎么走？请显示步行路线。\n\n规划步行路线…\n\n这次查询未完成，请重新提问。\n向校园助理提问\n智能搜索"
+  },
+  {
+    "id": "events",
+    "status": "fail",
+    "error": "Error: response.text: Protocol error (Network.getResponseBody): No data found for resource with given identifier\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    "body": "白云山校区这周有什么讲座？\n\n校园地点与步行路线助手\n\n白云山校区这周有什么讲座？\n韩征瑞教授纵谈语境化理论与中国古代司法话语 [1] 举办：2026-11-16 · 报名要求未核实\n活动日历 · 韩征瑞教授纵谈语境化理论与中国古代司法话语\n1 个来源\n向校园助理提问\n智能搜索"
+  },
+  {
+    "id": "here",
+    "status": "fail",
+    "error": "Error: response.text: Protocol error (Network.getResponseBody): No data found for resource with given identifier\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+    "body": "这里有什么活动？\n\n校园地点与步行路线助手\n\n这里有什么活动？\n\n白云校区图书馆的活动分已办和 upcoming 的哦： 11月12日已经办完了首届“全球推荐官”中国文化国际传播大赛广外颁奖典礼[2]； 接下来 upcoming 的： 11月19日14:30-15:30，图书馆407室有外语类考研经验分享会[3]； 11月22日14:30开始，图书馆负一楼报告厅会举办广外第二届AI应用创新大赛决赛，同天也会同步公布决赛流程和评分规则[4][5]。\n\n活动日历 · 以青春视角讲好中国故事——首届“全球推荐官”中国文化国际传播大赛广外颁奖典礼举行\n活动日历 · 从择校到上岸：外语类考研经验分享会\n活动日历 · 十支队伍晋级！广外第二届AI应用创新大赛决赛11月22日开赛\n活动日历 · 关于公布“广东外语外贸大学第二届AI应用创新大赛”决赛流程及评分规则的通知\n4 个来源\n北校区图书馆\n向校园助理提问\n智能搜索"
+  }
+]

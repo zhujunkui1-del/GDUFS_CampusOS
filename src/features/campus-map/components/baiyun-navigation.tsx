@@ -88,6 +88,7 @@ function Endpoint({
 }
 export function BaiyunNavigation({
   end: initialEnd,
+  initialSnapshot,
   onClose,
   onRoute,
   onPosition,
@@ -98,6 +99,8 @@ export function BaiyunNavigation({
   onResumeFollow,
 }: {
   end: BaiyunEndpoint | null;
+  initialSnapshot?:
+    import("@/domain/maps/skill-contracts").RouteSnapshot | null;
   onBearing(value: number): void;
   onResumeFollow(): void;
   onWalking(value: boolean): void;
@@ -107,9 +110,42 @@ export function BaiyunNavigation({
   onEndpoints(start: BaiyunEndpoint | null, end: BaiyunEndpoint | null): void;
   onPick(which: "start" | "end", selected: (p: BaiyunEndpoint) => void): void;
 }) {
-  const [start, setStart] = useState<BaiyunEndpoint | null>(null),
-    [end, setEnd] = useState<BaiyunEndpoint | null>(initialEnd),
-    [route, setRoute] = useState<BaiyunRoute | null>(null),
+  const [start, setStart] = useState<BaiyunEndpoint | null>(() =>
+      initialSnapshot
+        ? {
+            id: initialSnapshot.start.placeId ?? "device",
+            name: initialSnapshot.start.name,
+            coordinate: initialSnapshot.start.coordinate,
+          }
+        : null,
+    ),
+    [end, setEnd] = useState<BaiyunEndpoint | null>(() =>
+      initialSnapshot
+        ? {
+            id: initialSnapshot.end.placeId!,
+            name: initialSnapshot.end.name,
+            coordinate: initialSnapshot.end.coordinate,
+          }
+        : initialEnd,
+    ),
+    [route, setRoute] = useState<BaiyunRoute | null>(() =>
+      initialSnapshot
+        ? {
+            path: initialSnapshot.path.coordinates,
+            solidPath: initialSnapshot.solidPath?.coordinates,
+            guidance: initialSnapshot.guidancePaths?.map(
+              (line) => line.coordinates,
+            ),
+            distanceMeters: initialSnapshot.distanceMeters,
+            seconds: initialSnapshot.estimatedSeconds,
+            sourceWayIds: [],
+            steps: initialSnapshot.steps.map((step) => ({
+              instruction: step.instruction,
+              distance: step.distanceMeters,
+            })),
+          }
+        : null,
+    ),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [walking, setWalking] = useState(false),

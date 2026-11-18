@@ -1,4 +1,5 @@
 "use client";
+import { useCampusMap } from "./campus-map-provider";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import {
   Compass,
@@ -31,6 +32,10 @@ const categories = {
   services: "生活服务",
 };
 export default function BaiyunMapWorkspace() {
+  const { registerBaiyunActions, recordBaiyunSelection } = useCampusMap();
+  const [agentRoute, setAgentRoute] = useState<
+    import("@/domain/maps/skill-contracts").RouteSnapshot | null
+  >(null);
   const container = useRef<HTMLDivElement>(null);
   const searchInput = useRef<HTMLInputElement>(null);
   const native = useRef<LibreMap | null>(null);
@@ -109,6 +114,7 @@ export default function BaiyunMapWorkspace() {
       setPicking(null);
       return;
     }
+    recordBaiyunSelection(place.id);
     setSelected(place);
     setSearchOpen(false);
     native.current?.setFilter("selected", [
@@ -231,6 +237,80 @@ export default function BaiyunMapWorkspace() {
       container.current.dataset.routePoints = String(route?.path.length || 0);
     }
   }
+  const executeAssistantAction = useEffectEvent(
+    (
+      action: import("@/domain/maps/contracts").MapAction,
+      route: import("@/domain/maps/skill-contracts").RouteSnapshot | null,
+    ) => {
+      const map = native.current;
+      if (!ready || !map || action.campus === "university")
+        throw Error("白云山地图尚未就绪。");
+      if ("placeId" in action) {
+        const place = data.places.find((place) => place.id === action.placeId);
+        if (!place) throw Error("白云山地点不存在。");
+        select(place, action.type === "FOCUS_PLACE");
+      } else if (action.type === "SHOW_PLACES") {
+        const places = action.placeIds.map((id) =>
+          data.places.find((place) => place.id === id),
+        );
+        if (places.some((place) => !place)) throw Error("白云山地点不存在。");
+        const points = places.map((place) => place!.coordinate);
+        map.fitBounds(
+          [
+            [
+              Math.min(...points.map((p) => p[0])),
+              Math.min(...points.map((p) => p[1])),
+            ],
+            [
+              Math.max(...points.map((p) => p[0])),
+              Math.max(...points.map((p) => p[1])),
+            ],
+          ],
+          { duration: 600, padding: 75, maxZoom: 18 },
+        );
+      } else if (action.type === "SHOW_ROUTE") {
+        if (
+          !route ||
+          route.routeId !== action.routeId ||
+          route.mapVersion !== data.version
+        )
+          throw Error("白云山路线已失效。");
+        const viewRoute = {
+          path: route.path.coordinates,
+          solidPath: route.solidPath?.coordinates,
+          guidance: route.guidancePaths?.map((line) => line.coordinates),
+          distanceMeters: route.distanceMeters,
+          seconds: route.estimatedSeconds,
+          sourceWayIds: [],
+          steps: route.steps.map((step) => ({
+            instruction: step.instruction,
+            distance: step.distanceMeters,
+          })),
+        };
+        showRoute(viewRoute);
+        setSelected(null);
+        setAgentRoute(route);
+        setRouteOpen(true);
+      } else if (action.type === "CLEAR_ROUTE") {
+        showRoute(null);
+        void showEndpoints(null, null);
+        setAgentRoute(null);
+        setRouteOpen(false);
+      } else if (action.type === "SET_LAYER") {
+        if (!(action.layer in categories)) throw Error("此图层暂不可用。");
+        setLayers((value) => ({ ...value, [action.layer]: action.visible }));
+      } else if (action.type === "SET_VIEW_MODE" && action.mode !== "2d") {
+        throw Error("白云山校区地图目前只支持 2D。");
+      }
+    },
+  );
+  useEffect(
+    () =>
+      registerBaiyunActions((action, route) =>
+        executeAssistantAction(action, route),
+      ),
+    [registerBaiyunActions],
+  );
   const refitRoute = useEffectEvent(() => {
     if (activeRoute.current) fitRoute(activeRoute.current);
   });
@@ -352,6 +432,13 @@ export default function BaiyunMapWorkspace() {
           ),
         });
         native.current = map;
+        const updateCameraState = () => {
+          if (container.current)
+            container.current.dataset.cameraMoving = String(map.isMoving());
+        };
+        map.on("movestart", updateCameraState);
+        map.on("moveend", updateCameraState);
+        updateCameraState();
         map.on("dragstart", () => {
           follow.current = false;
         });
@@ -711,6 +798,7 @@ export default function BaiyunMapWorkspace() {
               setPicking(null);
               showRoute(null);
               setRouteEnd(null);
+              setAgentRoute(null);
             }
             setRouteOpen((v) => !v);
           }}
@@ -789,7 +877,8 @@ export default function BaiyunMapWorkspace() {
       />
       {routeOpen && (
         <BaiyunNavigation
-          key={routeEnd?.id || "new-route"}
+          key={agentRoute?.routeId || routeEnd?.id || "new-route"}
+          initialSnapshot={agentRoute}
           end={routeEnd}
           onWalking={setNavigating}
           onBearing={(value) =>
@@ -811,6 +900,7 @@ export default function BaiyunMapWorkspace() {
             void showEndpoints(null, null);
             setRouteOpen(false);
             setRouteEnd(null);
+            setAgentRoute(null);
             showRoute(null);
           }}
         />

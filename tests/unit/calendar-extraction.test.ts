@@ -9,10 +9,26 @@ const get = (title: string, body: string) =>
   analyzeArticle({ title, body, publishedAt: "2026-10-30" });
 const accepted = (title: string, body: string) =>
   get(title, body).activities.filter((a) => a.calendar?.eligible);
-it.each(["广东省", "杭州", "海珠区", "广州市中心", "总部：杭州", "活动时间：2026.11.19", "工作地点：广州市天河区某大楼", "活动地点待定"])("does not treat %s as an event venue", (value) => {
+it.each([
+  "广东省",
+  "杭州",
+  "海珠区",
+  "广州市中心",
+  "总部：杭州",
+  "活动时间：2026.11.19",
+  "工作地点：广州市天河区某大楼",
+  "活动地点待定",
+])("does not treat %s as an event venue", (value) => {
   expect(normalizeCalendarVenue(value)).toBeNull();
 });
-it.each(["白云山校区", "越秀公园", "松柏小区", "白云大道北2号", "北七教314", "腾讯会议"])("keeps the specific venue %s", (value) => {
+it.each([
+  "白云山校区",
+  "越秀公园",
+  "松柏小区",
+  "白云大道北2号",
+  "北七教314",
+  "腾讯会议",
+])("keeps the specific venue %s", (value) => {
   expect(normalizeCalendarVenue(value)).toBe(value);
 });
 it("uses the opening date and campus classroom in icon-led recruitment notices", () => {
@@ -441,4 +457,13 @@ it("reads the clock that sits in its own column of a timetable", () => {
     ["深圳市英维克科技股份有限公司", "2026-09-14T15:30:00+08:00"],
     ["锦翰网络科技(广州)有限公司", "2026-09-14T19:00:00+08:00"],
   ]);
+});
+
+it("uses the final rather than the preliminary results announcement", () => {
+  const result = accepted(
+    "十支队伍晋级！广外第二届AI应用创新大赛决赛11月22日开赛",
+    "11月12日，大赛组委会公布初赛结果：10支队伍晋级决赛。\n决赛将于11月22日14:30在白云山校区图书馆负一楼报告厅举行。",
+  );
+  expect(result.map((event) => event.startsAt?.date)).toEqual(["2026-11-22"]);
+  expect(result[0]?.startsAt?.at).toBe("2026-11-22T14:30:00+08:00");
 });

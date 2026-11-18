@@ -116,14 +116,15 @@ export function classifyArticleContent(
     if (h) hits.push(h);
     return !!h;
   };
-  const policy = add(
-    hit(
-      text,
-      /(?:办法|条例|规章|管理规定|实施细则|章程|借阅规则|借阅须知|选课规则)(?:说明|解读|[》）)]|$)/,
-      "standing_rule",
-      "title",
-    ),
-  ) &&
+  const policy =
+    add(
+      hit(
+        text,
+        /(?:办法|条例|规章|管理规定|实施细则|章程|借阅规则|借阅须知|选课规则)(?:说明|解读|[》）)]|$)/,
+        "standing_rule",
+        "title",
+      ),
+    ) &&
     !/(?:学习|传达|领会|贯彻|落实|重温)[^。]{0,20}(?:条例|办法|规定|细则|章程)/.test(
       text.title,
     );
@@ -363,7 +364,9 @@ export function classifyArticleContent(
         text.title,
       );
     const docTitle =
-      /招生简章|招生方案|招生简介|实施细则|工作方案|培养方案|考核细则/.test(text.title);
+      /招生简章|招生方案|招生简介|实施细则|工作方案|培养方案|考核细则/.test(
+        text.title,
+      );
     const HEAD =
       /^(?:[一二三四五六七八九十]{1,3}[、.．]|\d{1,2}[、.．])?\s*(?:申请条件|招生对象|报考条件|收费标准|学费标准|办理流程|所需材料|申请材料|报名材料|办理时间|办理地点|服务时间|服务地点|预约方式|开放时间|奖助政策|学制)\s*[:：]?\s*$/;
     const headings = new Set(
@@ -388,8 +391,18 @@ export function classifyArticleContent(
     }
   }
 
+  const careerSharingEvent =
+    /考研|保研|升学|求职|就业/.test(text.title) &&
+    /分享会|经验交流会/.test(text.title) &&
+    !documentTitle;
+  if (careerSharingEvent) destination = "radar";
+
   let radarCategory: ArticleAnalysis["radarCategory"] =
-    destination === "radar" ? category(text, radarSignals) : null;
+    destination === "radar"
+      ? careerSharingEvent
+        ? "education_career"
+        : category(text, radarSignals)
+      : null;
   const knowledgeCategory =
     destination === "knowledge"
       ? category(text, knowledgeSignals) || "administrative_services"
