@@ -1,7 +1,11 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { ArrowUpDown, LocateFixed, Navigation, X, MapPin } from "lucide-react";
 import data from "../data/baiyun-map.json";
+import { FocusedNavigationView } from "./focused-navigation";
+import { toGcj02 } from "../adapters/online-services";
+import { headingBetween } from "../data/navigation-geometry";
+import type { CampusRoute } from "../adapters/amap-adapter";
 import type {
   BaiyunRoute,
   BaiyunEndpoint,
@@ -48,7 +52,10 @@ function Endpoint({
           className="icon-button"
           type="button"
           aria-label={`在地图上选择${label}`}
-          onClick={onPick}
+          onClick={() => {
+            setDraft(null);
+            onPick();
+          }}
         >
           <MapPin size={18} />
         </button>
@@ -85,11 +92,19 @@ export function BaiyunNavigation({
   onRoute,
   onPosition,
   onPick,
+  onWalking,
+  onEndpoints,
+  onBearing,
+  onResumeFollow,
 }: {
   end: BaiyunEndpoint | null;
+  onBearing(value: number): void;
+  onResumeFollow(): void;
+  onWalking(value: boolean): void;
   onClose(): void;
   onRoute(route: BaiyunRoute | null): void;
-  onPosition(p: BaiyunCoordinate): void;
+  onPosition(p: BaiyunCoordinate, accuracy?: number): void;
+  onEndpoints(start: BaiyunEndpoint | null, end: BaiyunEndpoint | null): void;
   onPick(which: "start" | "end", selected: (p: BaiyunEndpoint) => void): void;
 }) {
   const [start, setStart] = useState<BaiyunEndpoint | null>(null),
@@ -99,10 +114,19 @@ export function BaiyunNavigation({
     [busy, setBusy] = useState(false),
     [walking, setWalking] = useState(false),
     [remaining, setRemaining] = useState<number | null>(null);
+  const [locationStatus, setLocationStatus] = useState("");
+  const [trackingRequested, setTrackingRequested] = useState(0),
+    [orientation, setOrientation] = useState<"north" | "route">("north"),
+    [segment, setSegment] = useState(0);
   const active = useRef(true),
     generation = useRef({ value: 0 });
   const positionCallback = useRef(onPosition);
-  const { attach, compact, collapsed, header, toggle } = useRouteSheet();
+  const syncEndpoints = useEffectEvent(() => onEndpoints(start, end));
+  useEffect(() => {
+    syncEndpoints();
+  }, [start, end]);
+  const { attach, compact, collapsed, header, toggle, collapse, expand } =
+    useRouteSheet();
   useEffect(() => {
     positionCallback.current = onPosition;
   }, [onPosition]);
@@ -118,13 +142,16 @@ export function BaiyunNavigation({
     generation.current.value++;
     setBusy(false);
     setWalking(false);
+    setTrackingRequested(0);
     setRoute(null);
     setRemaining(null);
     setError("");
+    setLocationStatus("");
     onRoute(null);
   }
   useEffect(() => {
-    if (!walking || !route || start?.id !== "device") return;
+    if (!walking || !route || (start?.id !== "device" && !trackingRequested))
+      return;
     if (!navigator.geolocation) return;
     const watch = navigator.geolocation.watchPosition(
       (result) => {
@@ -132,28 +159,32 @@ export function BaiyunNavigation({
           result.coords.longitude,
           result.coords.latitude,
         ];
-        if (
-          result.coords.accuracy > 100 ||
-          Date.now() - result.timestamp > 15000
-        ) {
+        positionCallback.current(p, result.coords.accuracy);
+        if (Date.now() - result.timestamp > 15000) {
           setError("定位信号不稳定，请稍后重试。");
           setRemaining(null);
           return;
         }
         const projected = projectOnPath(p, route.path);
-        positionCallback.current(p);
-        if (projected.distance > 60) {
+        if (projected.distance > Math.max(60, result.coords.accuracy)) {
           setError("已偏离路线，请重新规划。");
           setRemaining(null);
           return;
         }
         setError("");
+        setLocationStatus(
+          result.coords.accuracy > 50
+            ? `定位误差约${Math.round(result.coords.accuracy)}米`
+            : "已定位",
+        );
+        setSegment(projected.index);
         setRemaining(
           Math.max(0, Math.round(projected.total - projected.along)),
         );
       },
-      () => {
-        setWalking(false);
+      (error) => {
+        setLocationStatus(error.code === 1 ? "没有授予定位权限" : "定位失败");
+        setRemaining(null);
       },
       { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 },
     );
@@ -165,7 +196,19 @@ export function BaiyunNavigation({
       navigator.geolocation.clearWatch(watch);
       document.removeEventListener("visibilitychange", hide);
     };
-  }, [walking, route, start?.id]);
+  }, [walking, route, start?.id, trackingRequested]);
+  const rotate = useEffectEvent((value: number) => onBearing(value));
+  useEffect(() => {
+    if (walking && route)
+      rotate(
+        orientation === "north"
+          ? 0
+          : headingBetween(
+              route.path[Math.min(segment, route.path.length - 2)],
+              route.path[Math.min(segment + 1, route.path.length - 1)],
+            ),
+      );
+  }, [walking, orientation, route, segment]);
   async function plan() {
     if (!start || !end) return;
     const request = ++generation.current.value;
@@ -186,11 +229,17 @@ export function BaiyunNavigation({
         setBusy(false);
     }
   }
+  useEffect(() => {
+    onWalking(walking);
+    return () => onWalking(false);
+  }, [walking, onWalking]);
   function myPosition() {
     if (!navigator.geolocation) {
+      setLocationStatus("定位失败");
       return;
     }
     reset();
+    setLocationStatus("正在定位…");
     const request = generation.current.value;
     setBusy(true);
     navigator.geolocation.getCurrentPosition(
@@ -200,16 +249,86 @@ export function BaiyunNavigation({
           result.coords.longitude,
           result.coords.latitude,
         ];
+        setLocationStatus(
+          result.coords.accuracy > 50
+            ? `定位误差约${Math.round(result.coords.accuracy)}米`
+            : "已定位",
+        );
         setStart({ id: "device", name: "我的位置", coordinate });
-        positionCallback.current(coordinate);
+        positionCallback.current(coordinate, result.coords.accuracy);
         setBusy(false);
       },
-      () => {
+      (error) => {
         if (active.current && request === generation.current.value) {
+          setLocationStatus(error.code === 1 ? "没有授予定位权限" : "定位失败");
           setBusy(false);
         }
       },
       { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 },
+    );
+  }
+  if (walking && route && start && end) {
+    const walked = route.distanceMeters - (remaining ?? route.distanceMeters);
+    let step = route.steps.findIndex(
+      (_, index) =>
+        route.steps
+          .slice(0, index + 1)
+          .reduce((sum, s) => sum + s.distance, 0) >= walked,
+    );
+    if (step < 0) step = Math.max(0, route.steps.length - 1);
+    const heading = headingBetween(
+      route.path[Math.min(segment, route.path.length - 2)],
+      route.path[Math.min(segment + 1, route.path.length - 1)],
+    );
+    const point = (p: BaiyunEndpoint) => ({
+      name: p.name,
+      coordinateGcj02: toGcj02(p.coordinate as BaiyunCoordinate),
+      zone: "connection" as const,
+      source:
+        p.id === "device"
+          ? ("device_location" as const)
+          : ("campus_place" as const),
+    });
+    const adapted: CampusRoute = {
+      id: "baiyun-current",
+      start: point(start),
+      end: point(end),
+      pathGcj02: route.path.map(toGcj02),
+      distanceMeters: route.distanceMeters,
+      seconds: route.seconds,
+      steps: route.steps,
+      source: "CampusOS.OSM",
+      verification: "reviewed_source_network",
+    };
+    return (
+      <FocusedNavigationView
+        sourceUrl={data.sourceUrl}
+        modeControl={
+          <button disabled className="map-mode-button">
+            2D
+          </button>
+        }
+        map={{
+          route: adapted,
+          navigationProgress:
+            remaining === null ? null : { remaining, step, heading },
+          navigationOrientation: orientation,
+          setNavigationOrientation: (value) => {
+            setOrientation(value);
+          },
+          stopNavigation: () => {
+            reset();
+            onClose();
+          },
+          locate: () => {
+            setLocationStatus("正在定位…");
+            onResumeFollow();
+            setTrackingRequested((v) => v + 1);
+          },
+          locationBusy: locationStatus === "正在定位…",
+          locationMessage: error || locationStatus,
+        }}
+      />
     );
   }
   return (
@@ -247,12 +366,14 @@ export function BaiyunNavigation({
           <div className="endpoint-list">
             <Endpoint
               label="起点"
-              onPick={() =>
+              onPick={() => {
+                if (compact) collapse();
                 onPick("start", (p) => {
                   reset();
                   setStart(p);
-                })
-              }
+                  if (compact) expand();
+                });
+              }}
               point={start}
               onChange={(p) => {
                 reset();
@@ -261,12 +382,14 @@ export function BaiyunNavigation({
             />
             <Endpoint
               label="终点"
-              onPick={() =>
+              onPick={() => {
+                if (compact) collapse();
                 onPick("end", (p) => {
                   reset();
                   setEnd(p);
-                })
-              }
+                  if (compact) expand();
+                });
+              }}
               point={end}
               onChange={(p) => {
                 reset();
@@ -312,6 +435,11 @@ export function BaiyunNavigation({
                 重置路线
               </button>
             </div>
+          )}
+          {locationStatus && (
+            <p className="location-feedback" role="status">
+              {locationStatus}
+            </p>
           )}
           {error && (
             <p className="inline-error" role="alert">

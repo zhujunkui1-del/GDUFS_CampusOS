@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import {
   Compass,
   Layers,
@@ -14,6 +14,9 @@ import {
 import type { Map as LibreMap, Marker, GeoJSONSource } from "maplibre-gl";
 import data from "../data/baiyun-map.json";
 import { createLocalMapStyle } from "../adapters/local-map-style";
+import { locationHalo } from "../data/device-location";
+import type { BaiyunEndpoint } from "../data/baiyun-routing";
+import { routePadding } from "../data/route-padding";
 import { CampusSwitcher } from "./campus-switcher";
 import { MapUtilities } from "./map-utilities";
 import { PlaceDetails } from "./place-details";
@@ -33,9 +36,44 @@ export default function BaiyunMapWorkspace() {
   const native = useRef<LibreMap | null>(null);
   const selectRef = useRef<(place: Place, focus: boolean) => void>(() => {});
   const markers = useRef<
-    Array<{ place: Place; marker: Marker; button: HTMLButtonElement }>
+    Array<{
+      place: Place;
+      marker: Marker;
+      button: HTMLButtonElement;
+      attached: boolean;
+    }>
   >([]);
   const location = useRef<Marker | null>(null);
+  const endpointMarkers = useRef<Marker[]>([]),
+    endpointRevision = useRef({ value: 0 });
+  async function showEndpoints(
+    start: BaiyunEndpoint | null,
+    end: BaiyunEndpoint | null,
+  ) {
+    const revision = ++endpointRevision.current.value;
+    const { Marker } = await import("maplibre-gl");
+    if (revision !== endpointRevision.current.value || !native.current) return;
+    endpointMarkers.current.forEach((marker) => marker.remove());
+    endpointMarkers.current = [];
+    for (const [point, label] of [
+      [start, "起"],
+      [end, "终"],
+    ] as const) {
+      if (!point) continue;
+      const el = document.createElement("span");
+      el.className =
+        "route-endpoint " +
+        (label === "起" ? "route-start-marker" : "route-end-marker");
+      el.textContent = label;
+      el.setAttribute("aria-label", label === "起" ? "已选起点" : "已选终点");
+      endpointMarkers.current.push(
+        new Marker({ element: el, anchor: "center" })
+          .setLngLat(point.coordinate as BaiyunCoordinate)
+          .addTo(native.current),
+      );
+    }
+  }
+  const follow = useRef(true);
   const locateRevision = useRef({ value: 0 });
   const [status, setStatus] = useState("loading");
   const [revision, setRevision] = useState(0);
@@ -44,6 +82,7 @@ export default function BaiyunMapWorkspace() {
   const [selected, setSelected] = useState<Place | null>(null);
   const [layersOpen, setLayersOpen] = useState(false);
   const [routeOpen, setRouteOpen] = useState(false);
+  const [navigating, setNavigating] = useState(false);
   const [routeEnd, setRouteEnd] = useState<Place | null>(null);
   const [picking, setPicking] = useState<{
     which: "start" | "end";
@@ -87,7 +126,38 @@ export default function BaiyunMapWorkspace() {
         padding: { top: 150, bottom: 130, left: 30, right: 50 },
       });
   }
+  const activeRoute = useRef<BaiyunRoute | null>(null);
+  function fitRoute(route: BaiyunRoute) {
+    const map = native.current;
+    if (!map) return;
+    if (route) {
+      map.setMaxBounds(null);
+      map.setMinZoom(0);
+      const xs = route.path.map((p) => p[0]),
+        ys = route.path.map((p) => p[1]);
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          if (native.current === map && activeRoute.current === route)
+            map.fitBounds(
+              [
+                [Math.min(...xs), Math.min(...ys)],
+                [Math.max(...xs), Math.max(...ys)],
+              ],
+              {
+                padding: routePadding(
+                  map.getContainer().clientWidth,
+                  map.getContainer().clientHeight,
+                ),
+                maxZoom: 18,
+                duration: 600,
+              },
+            );
+        }),
+      );
+    }
+  }
   function showRoute(route: BaiyunRoute | null) {
+    activeRoute.current = route;
     const map = native.current;
     if (!map) return;
     const source = map.getSource("baiyun-route") as GeoJSONSource | undefined;
@@ -98,8 +168,16 @@ export default function BaiyunMapWorkspace() {
             {
               type: "Feature",
               properties: {},
-              geometry: { type: "LineString", coordinates: route.path },
+              geometry: {
+                type: "LineString",
+                coordinates: route.solidPath || route.path,
+              },
             },
+            ...(route.guidance || []).map((path) => ({
+              type: "Feature" as const,
+              properties: { guidance: true },
+              geometry: { type: "LineString" as const, coordinates: path },
+            })),
             ...[route.path[0], route.path.at(-1)!].map((coordinate) => ({
               type: "Feature" as const,
               properties: {},
@@ -115,9 +193,24 @@ export default function BaiyunMapWorkspace() {
         id: "baiyun-route-line",
         type: "line",
         source: "baiyun-route",
-        filter: ["==", ["geometry-type"], "LineString"],
+        filter: [
+          "all",
+          ["==", ["geometry-type"], "LineString"],
+          ["!=", ["get", "guidance"], true],
+        ],
         paint: { "line-color": "#1261bb", "line-width": 6 },
         layout: { "line-cap": "round", "line-join": "round" },
+      });
+      map.addLayer({
+        id: "baiyun-route-guidance",
+        type: "line",
+        source: "baiyun-route",
+        filter: ["==", ["get", "guidance"], true],
+        paint: {
+          "line-color": "#1261bb",
+          "line-width": 5,
+          "line-dasharray": [2, 2],
+        },
       });
       map.addLayer({
         id: "baiyun-route-points",
@@ -132,35 +225,74 @@ export default function BaiyunMapWorkspace() {
         },
       });
     }
-    if (route) {
-      const xs = route.path.map((p) => p[0]),
-        ys = route.path.map((p) => p[1]);
-      map.fitBounds(
-        [
-          [Math.min(...xs), Math.min(...ys)],
-          [Math.max(...xs), Math.max(...ys)],
-        ],
-        {
-          padding: {
-            top: 155,
-            bottom: innerWidth <= 760 ? Math.min(innerHeight * 0.5, 420) : 80,
-            left: innerWidth <= 760 ? 30 : 440,
-            right: 80,
-          },
-          maxZoom: 18,
-          duration: 600,
-        },
-      );
-    }
+    if (route) fitRoute(route);
     if (container.current) {
       container.current.dataset.routeSource = route ? "baiyun-osm" : "";
       container.current.dataset.routePoints = String(route?.path.length || 0);
     }
   }
-  async function showPosition(coordinate: BaiyunCoordinate) {
+  const refitRoute = useEffectEvent(() => {
+    if (activeRoute.current) fitRoute(activeRoute.current);
+  });
+  useEffect(() => {
+    if (navigating) follow.current = true;
+    refitRoute();
+  }, [navigating]);
+  useEffect(() => {
+    if (!routeOpen) return;
+    let frame = 0;
+    const resize = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        refitRoute();
+      });
+    };
+    const observer = new ResizeObserver(resize);
+    for (const el of document.querySelectorAll(
+      ".baiyun-workspace .route-planner,.baiyun-workspace .navigation-direction,.baiyun-workspace .navigation-summary",
+    ))
+      observer.observe(el);
+    window.addEventListener("resize", resize);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", resize);
+    };
+  }, [routeOpen, navigating]);
+  async function showPosition(coordinate: BaiyunCoordinate, accuracy = 0) {
     const generation = locateRevision.current.value;
     const { Marker } = await import("maplibre-gl");
     if (!native.current || generation !== locateRevision.current.value) return;
+    if (navigating && follow.current)
+      native.current.easeTo({
+        center: coordinate,
+        zoom: Math.max(17, native.current.getZoom()),
+        padding: routePadding(innerWidth, innerHeight),
+        duration: 600,
+      });
+    const halo: GeoJSON.Feature = {
+      type: "Feature",
+      properties: {},
+      geometry: {
+        type: "Polygon",
+        coordinates: [locationHalo(coordinate, accuracy)],
+      },
+    };
+    const source = native.current.getSource("baiyun-position-accuracy") as
+      GeoJSONSource | undefined;
+    if (source) source.setData(halo);
+    else {
+      native.current.addSource("baiyun-position-accuracy", {
+        type: "geojson",
+        data: halo,
+      });
+      native.current.addLayer({
+        id: "baiyun-position-accuracy",
+        type: "fill",
+        source: "baiyun-position-accuracy",
+        paint: { "fill-color": "#1261bb", "fill-opacity": 0.12 },
+      });
+    }
     if (location.current) location.current.setLngLat(coordinate);
     else
       location.current = new Marker({ color: "#1261bb" })
@@ -174,6 +306,7 @@ export default function BaiyunMapWorkspace() {
     let cancelled = false;
     let observer: ResizeObserver | undefined;
     const locationRequests = locateRevision.current;
+    const endpointRequests = endpointRevision.current;
     void import("maplibre-gl")
       .then(({ Map, Marker, setWorkerUrl }) => {
         if (cancelled || !container.current) return;
@@ -203,7 +336,8 @@ export default function BaiyunMapWorkspace() {
           maxZoom: 20,
           maxPitch: 0,
           pitch: 0,
-          dragRotate: false,
+          dragRotate: true,
+          pitchWithRotate: false,
           touchPitch: false,
           attributionControl: false,
           renderWorldCopies: false,
@@ -212,10 +346,16 @@ export default function BaiyunMapWorkspace() {
             [data.bounds[2], data.bounds[3]],
           ],
           canvasContextAttributes: { antialias: false },
-          pixelRatio: Math.min(devicePixelRatio || 1, 2),
+          pixelRatio: Math.min(
+            devicePixelRatio || 1,
+            innerWidth <= 760 ? 1.5 : 2,
+          ),
         });
         native.current = map;
-        map.touchZoomRotate.disableRotation();
+        map.on("dragstart", () => {
+          follow.current = false;
+        });
+        map.touchPitch.disable();
         const fit = () =>
           map.fitBounds(
             [
@@ -248,7 +388,7 @@ export default function BaiyunMapWorkspace() {
             const marker = new Marker({ element: button })
               .setLngLat(place.coordinate as [number, number])
               .addTo(map);
-            markers.current.push({ place, marker, button });
+            markers.current.push({ place, marker, button, attached: true });
           }
           setStatus("ready");
           const target = data.places.find(
@@ -275,11 +415,24 @@ export default function BaiyunMapWorkspace() {
             (p) => p.id === hit?.properties.sourceId,
           );
           if (place) selectRef.current(place, false);
+          else if (pickingRef.current)
+            selectRef.current(
+              {
+                id: `point-${e.lngLat.lng}-${e.lngLat.lat}`,
+                name: "地图选点",
+                coordinate: [e.lngLat.lng, e.lngLat.lat],
+                category: "services",
+                minZoom: 0,
+                sourceUrl: data.sourceUrl,
+              },
+              false,
+            );
         });
         map.on("move", () => {
           if (container.current) {
             container.current.dataset.zoom = map.getZoom().toFixed(2);
             container.current.dataset.pitch = String(map.getPitch());
+            container.current.dataset.bearing = String(map.getBearing());
           }
         });
         observer = new ResizeObserver(() => map.resize());
@@ -294,6 +447,9 @@ export default function BaiyunMapWorkspace() {
       observer?.disconnect();
       location.current?.remove();
       location.current = null;
+      ++endpointRequests.value;
+      endpointMarkers.current.forEach((marker) => marker.remove());
+      endpointMarkers.current = [];
       markers.current = [];
       native.current?.remove();
       native.current = null;
@@ -304,22 +460,19 @@ export default function BaiyunMapWorkspace() {
     if (!map || !ready) return;
     const refresh = () => {
       const boxes: Array<[number, number, number, number]> = [];
-      for (const { place, button, marker } of [...markers.current].sort(
+      for (const entry of [...markers.current].sort(
         (a, b) =>
           Number(b.place.id === selected?.id) -
             Number(a.place.id === selected?.id) ||
           a.place.minZoom - b.place.minZoom,
       )) {
+        const { place, button, marker } = entry;
         const point = map.project(place.coordinate as [number, number]),
           width = Math.min(180, place.name.length * 12 + 30),
-          labelX = Math.max(
-            innerWidth > 1000 ? 100 + width / 2 : 12 + width / 2,
-            Math.min(point.x, map.getContainer().clientWidth - width / 2 - 12),
-          ),
           box: [number, number, number, number] = [
-            labelX - width / 2,
+            point.x - width / 2,
             point.y - 17,
-            labelX + width / 2,
+            point.x + width / 2,
             point.y + 17,
           ];
         const visible =
@@ -337,16 +490,33 @@ export default function BaiyunMapWorkspace() {
               box[1] < b[3] + 7 &&
               box[3] > b[1] - 7,
           );
-        button.hidden = !visible;
-        marker.setOffset([labelX - point.x, 0]);
-        button.classList.toggle("selected", place.id === selected?.id);
+        if (button.hidden === !!visible) button.hidden = !visible;
+        if (visible && !entry.attached) {
+          marker.addTo(map);
+          entry.attached = true;
+        } else if (!visible && entry.attached) {
+          marker.remove();
+          entry.attached = false;
+        }
+        const highlighted = place.id === selected?.id;
+        if (button.classList.contains("selected") !== highlighted)
+          button.classList.toggle("selected", highlighted);
         if (visible) boxes.push(box);
       }
     };
     refresh();
-    map.on("move", refresh);
+    let frame = 0;
+    const schedule = () => {
+      if (!frame)
+        frame = requestAnimationFrame(() => {
+          frame = 0;
+          refresh();
+        });
+    };
+    map.on("move", schedule);
     return () => {
-      map.off("move", refresh);
+      map.off("move", schedule);
+      cancelAnimationFrame(frame);
     };
   }, [ready, layers, selected]);
   async function locate() {
@@ -386,6 +556,7 @@ export default function BaiyunMapWorkspace() {
   }
   return (
     <section
+      data-navigation={navigating ? "walking" : "planning"}
       className="map-workspace baiyun-workspace"
       aria-label="白云山校区地图"
     >
@@ -536,6 +707,7 @@ export default function BaiyunMapWorkspace() {
             setSearchOpen(false);
             setLayersOpen(false);
             if (routeOpen) {
+              void showEndpoints(null, null);
               setPicking(null);
               showRoute(null);
               setRouteEnd(null);
@@ -619,24 +791,29 @@ export default function BaiyunMapWorkspace() {
         <BaiyunNavigation
           key={routeEnd?.id || "new-route"}
           end={routeEnd}
+          onWalking={setNavigating}
+          onBearing={(value) =>
+            native.current?.rotateTo(value, { duration: 600 })
+          }
+          onResumeFollow={() => {
+            follow.current = true;
+          }}
           onRoute={showRoute}
-          onPosition={(p) => void showPosition(p)}
-          onPick={(which, selected) => setPicking({ which, selected })}
+          onPosition={(p, accuracy) => void showPosition(p, accuracy)}
+          onEndpoints={(start, end) => void showEndpoints(start, end)}
+          onPick={(which, selected) => {
+            native.current?.setMaxBounds(null);
+            native.current?.setMinZoom(0);
+            setPicking({ which, selected });
+          }}
           onClose={() => {
             setPicking(null);
+            void showEndpoints(null, null);
             setRouteOpen(false);
             setRouteEnd(null);
             showRoute(null);
           }}
         />
-      )}
-      {picking && (
-        <div className="map-pick-notice" role="status">
-          在地图上选择{picking.which === "start" ? "起点" : "终点"}
-          <button className="text-link" onClick={() => setPicking(null)}>
-            取消
-          </button>
-        </div>
       )}
       {notice && !/定位|权限/.test(notice) && (
         <div className="baiyun-notice glass-surface" role="status">

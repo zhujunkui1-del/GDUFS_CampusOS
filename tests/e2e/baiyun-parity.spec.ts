@@ -54,7 +54,9 @@ test("Baiyun keeps the signed-in avatar, feedback, traffic and the shared detail
   expect(search!.x + search!.width).toBeLessThanOrEqual(button!.x);
   await feedback.click();
   await expect(
-    page.getByPlaceholder("写下你的问题、建议或想补充的官网、公众号、图片。补充官网、公众号时，请附名称和一篇推文链接。"),
+    page.getByPlaceholder(
+      "写下你的问题、建议或想补充的官网、公众号、图片。补充官网、公众号时，请附名称和一篇推文链接。",
+    ),
   ).toBeVisible();
   await page.getByRole("button", { name: "关闭留言区" }).click();
   await traffic.click();
@@ -138,14 +140,14 @@ test("Baiyun navigation plans a real campus route and closing removes it", async
   ).toBeGreaterThan(2);
   await page.getByRole("button", { name: "开始步行导航", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "结束步行导航", exact: true }),
+    page.getByRole("button", { name: "退出步行导航", exact: true }),
   ).toBeVisible();
   await expect
     .poll(() =>
       page.evaluate(() => Reflect.get(window, "activeNavigationWatches")),
     )
     .toBe(0);
-  await page.getByRole("button", { name: "关闭导航面板", exact: true }).click();
+  await page.getByRole("button", { name: "退出步行导航", exact: true }).click();
   await expect(page.getByTestId("baiyun-map")).toHaveAttribute(
     "data-route-points",
     "0",

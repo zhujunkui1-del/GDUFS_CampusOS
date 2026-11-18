@@ -108,9 +108,7 @@ test("named Baiyun navigation includes map picking and never requests device pos
   await page
     .getByRole("button", { name: "在地图上选择起点", exact: true })
     .click();
-  await expect(page.locator(".map-pick-notice")).toContainText(
-    "在地图上选择起点",
-  );
+  await expect(page.locator(".map-pick-notice")).toHaveCount(0);
   const target = await page.evaluate(() => {
     for (const button of document.querySelectorAll<HTMLButtonElement>(
       ".baiyun-map-canvas .campus-marker:not([hidden])",
@@ -143,7 +141,7 @@ test("named Baiyun navigation includes map picking and never requests device pos
   await expect(page.locator(".route-result")).toBeVisible();
   await page.getByRole("button", { name: "开始步行导航", exact: true }).click();
   await expect(
-    page.getByRole("button", { name: "结束步行导航", exact: true }),
+    page.getByRole("button", { name: "退出步行导航", exact: true }),
   ).toBeVisible();
   expect(
     await page.evaluate(() => Reflect.get(window, "positionRequests")),
@@ -162,8 +160,16 @@ test("calendar links open the matching Baiyun building", async ({ page }) => {
   await expect(page.locator(".place-details-heading")).toContainText(
     "第一教学楼",
   );
-  await page.evaluate(()=>window.history.pushState(null,"","/map?campus=baiyun&place=osm-relation-13030162"));
-  await expect(page.locator(".place-details-heading")).toContainText("第二教学楼");
+  await page.evaluate(() =>
+    window.history.pushState(
+      null,
+      "",
+      "/map?campus=baiyun&place=osm-relation-13030162",
+    ),
+  );
+  await expect(page.locator(".place-details-heading")).toContainText(
+    "第二教学楼",
+  );
 });
 for (const surface of ["radar", "knowledge"] as const)
   test(`${surface} cards open the existing task editor below the favorite`, async ({

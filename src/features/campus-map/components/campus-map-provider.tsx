@@ -28,7 +28,6 @@ import { CAMPUS_MIN_ZOOM, CAMPUS_PITCH } from "../data/viewport";
 import { useMapLocation } from "./use-map-location";
 import { toGcj02, toWgs84 } from "../adapters/online-services";
 import { pointInPolygon } from "../data/geometry";
-import { nearestTunnelDistance } from "../data/local-routing";
 import { projectOnPath } from "../data/route-progress";
 import { headingBetween } from "../data/navigation-geometry";
 import { type PilotModelState } from "../data/model-pilot";
@@ -181,7 +180,7 @@ export function CampusMapProvider({
     location.busy && !navigationActive
       ? "正在请求设备定位…"
       : location.error
-        ? ""
+        ? location.error
         : locationMessage;
   const locationNoticeId = locationRequest + ":" + locationFeedback;
   const [navigationProgress, setNavigationProgress] =
@@ -246,23 +245,6 @@ export function CampusMapProvider({
     }
     const update = () => {
       const { coordinate, accuracy, timestamp } = position;
-      if (
-        !campusData.zones.some((z) => pointInPolygon(coordinate, z.polygon)) &&
-        nearestTunnelDistance(coordinate) > 25
-      ) {
-        adapter.current?.clearLocation();
-        setLocationMessage("当前位置在校外，请选择校内起点。");
-        setNavigationProgress(null);
-        return;
-      }
-      if (accuracy > 100) {
-        adapter.current?.clearLocation();
-        setLocationMessage(
-          `定位误差约${Math.round(accuracy)}米，暂不用于导航，请重新定位。`,
-        );
-        setNavigationProgress(null);
-        return;
-      }
       adapter.current?.showLocation(
         coordinate,
         accuracy,
@@ -281,17 +263,14 @@ export function CampusMapProvider({
           source: "device_location",
         });
       }
-      setLocationMessage("");
+      setLocationMessage(
+        accuracy > 50 ? `定位误差约${Math.round(accuracy)}米` : "",
+      );
       if (!navigationActive || !location.tracking || !currentRoute.current)
         return;
       // Keep the last device fix visible while acquiring the next one. An old
       // fix still cannot advance navigation or authorize a fresh AI location.
       if (Date.now() - timestamp > 30000) {
-        setNavigationProgress(null);
-        return;
-      }
-      if (accuracy > 50) {
-        setLocationMessage("定位精度不足，请重新定位。");
         setNavigationProgress(null);
         return;
       }

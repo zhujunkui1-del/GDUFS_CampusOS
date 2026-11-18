@@ -846,3 +846,11 @@ catalog版本campus-building-models-2026-11-01.2记录负责人渲染纠正与sh
 37条审核记录逐ID保存于 `docs/research/baiyun/building-profiles-reviewed.json`，包含校方考试中心、图书馆、总务后勤部、基建部门和已提供OSM用途。明德报告厅→第六教学楼的原称由D1公共原文 https://mp.weixin.qq.com/s/dPyuQ17C7soyzd47Bq2j0g 明确证明。所有近期/未来活动仍读D1公开当前版本，初始177条审计与线上11栋/37条结果是验证快照，不作为另一个运行事实源。
 
 照片 https://commons.wikimedia.org/wiki/File:%E5%B9%BF%E5%A4%96%E5%9B%BE%E4%B9%A6%E9%A6%86.jpg ，作者lovelybaby，CC BY-SA 4.0，960px缩放版本，231584字节，SHA256 2ce951e6b5656fc65727e2b265a12778d9d861e6f0fef37cd5ddab124acd2a82。图书馆历史外观；按Commons校区分类与内容核对，未承诺当前实拍。页面保留作者/原图/许可与缩放标识，许可 https://creativecommons.org/licenses/by-sa/4.0/ 。未发布版权不明图片。第六教学楼源relation4738438外环335167526已有名称，本轮继承名称而非猜坐标，白云山快照版本.2，105具名地点。
+
+## 2026-11-18｜两校区端点引导来源未扩展
+
+导航继续使用原大学城固定OSM路网及负责人已核实校门、白云山baiyun-walking-2026-11-18.1与baiyun-2026-11-18.2。无新增下载/图片/地理素材。最近线段/门和校外直连是负责人授权的客户端几何引导，虚线不登记为源路段、不作真实通行证明；实线仍绑定固定源路段，OSM署名不变。性能与手机模拟检查边界见 `NAVIGATION_MOBILE_CONNECTORS_2026_11_18.md`。
+
+## 2026-11-18｜校门外围接入的固定OSM来源
+
+使用仓库既有大学城两个OSM、白云山原OSM和周边固定补充，不联网更新主地图。派生university-exterior/baiyun-exterior候选图记录逐源SHA256、ODbL-1.0、source_mapped、节点与way ID；保留禁行过滤、楼体避让、外围优先。负责人所绘西侧绕行以way687762421云溪五路、way443806029地面白云大道南及way963009197校门接入道路作真实源核对；没有从截图复制新GIS坐标。来源/数量/验证与当前开放状态边界见 `NAVIGATION_CORRECTIONS_2026_11_18.md`。

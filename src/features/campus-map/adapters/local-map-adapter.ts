@@ -28,7 +28,6 @@ import {
 import { onlineSearch, toGcj02, toWgs84 } from "./online-services";
 import { sdkCoordinate, type SDKPoi } from "./amap-types";
 import type { CampusRoute, RoutePoint } from "./amap-adapter";
-import { nearestTunnelDistance } from "../data/local-routing";
 import { planCampusRoute } from "../data/plan-campus-route";
 import { cameraDuration, mapEase } from "../data/map-motion";
 import { projectOnPath } from "../data/route-progress";
@@ -340,6 +339,12 @@ export class LocalMapAdapter implements MapAdapter {
     );
   }
   private minimumZoomForPitch(pitch: number) {
+    if (this.interaction === "pick") return 0;
+    if (
+      this.activeRouteId &&
+      this.routes.get(this.activeRouteId)?.guidancePathsGcj02?.length
+    )
+      return 0;
     const a = MercatorCoordinate.fromLngLat([
       manifest.bounds[0],
       manifest.bounds[3],
@@ -372,6 +377,12 @@ export class LocalMapAdapter implements MapAdapter {
       this.pendingPitch ?? this.native.getPitch(),
     ),
   ) {
+    if (this.interaction === "pick") return { center, zoom: proposedZoom };
+    if (
+      this.activeRouteId &&
+      this.routes.get(this.activeRouteId)?.guidancePathsGcj02?.length
+    )
+      return { center, zoom: proposedZoom };
     const zoom = Math.max(
       this.minimumZoomForPitch(pitch),
       Math.min(CAMPUS_MAX_ZOOM, proposedZoom),
@@ -412,6 +423,7 @@ export class LocalMapAdapter implements MapAdapter {
     this.setZone(
       "all",
       this.element.clientWidth < 761 ? [160, 110, 18, 18] : [40, 40, 110, 70],
+      false,
     );
     this.observer = new ResizeObserver(() => {
       if (!this.destroyed) {
@@ -670,6 +682,7 @@ export class LocalMapAdapter implements MapAdapter {
     });
   }
   setInteractionMode(mode: "browse" | "pick" | "navigation") {
+    if (mode === "pick") this.native.setMinZoom(0);
     if (mode === "pick" && this.interaction !== "pick") {
       ++this.cameraRevision;
       this.native.stop();
@@ -958,7 +971,11 @@ export class LocalMapAdapter implements MapAdapter {
       );
     }
   }
-  setZone(zone: "all" | "teaching" | "living", padding = [170, 120, 110, 80]) {
+  setZone(
+    zone: "all" | "teaching" | "living",
+    padding = [170, 120, 110, 80],
+    smooth = true,
+  ) {
     const points = campusData.zones
       .filter((z) => zone === "all" || z.id === zone)
       .flatMap((z) => z.polygon);
@@ -968,6 +985,10 @@ export class LocalMapAdapter implements MapAdapter {
           .filter((p) => p.zone === "living")
           .flatMap((p) => p.geometry || [p.coordinate]),
       );
+    if (smooth) {
+      this.animatePoints(points, this.native.getPitch(), 0, 17.4);
+      return;
+    }
     this.native.fitBounds(boundsOf(points), {
       padding: {
         top: padding[0],
@@ -1209,7 +1230,7 @@ export class LocalMapAdapter implements MapAdapter {
       const zone = campusData.zones.find((z) =>
         pointInPolygon(point, z.polygon),
       );
-      if (zone || nearestTunnelDistance(point) <= 25) {
+      if (Number.isFinite(point[0]) && Number.isFinite(point[1])) {
         let place = campusData.places.find(
           (p) =>
             p.geometry &&
@@ -1363,11 +1384,13 @@ export class LocalMapAdapter implements MapAdapter {
     const route = this.routes.get(id);
     if (!route) throw new Error("路线不存在或已失效。");
     this.activeRouteId = id;
+    if (route.guidancePathsGcj02?.length) this.native.setMinZoom(0);
     this.setDisplayMode("2d", false);
     this.campusModelLayer?.setAppearance(this.selected, true);
-    const path = route.pathGcj02
-      .slice(route.approachPathGcj02 ? 1 : 0)
-      .map(toWgs84);
+    const path = (
+      route.solidPathGcj02 ||
+      route.pathGcj02.slice(route.approachPathGcj02 ? 1 : 0)
+    ).map(toWgs84);
     const data: GeoJSON.Feature<GeoJSON.LineString> = {
       type: "Feature",
       properties: {},
@@ -1387,7 +1410,10 @@ export class LocalMapAdapter implements MapAdapter {
       });
     }
     this.fitRoute(id);
-    if (route.approachPathGcj02 && !this.native.getSource("route-approach")) {
+    if (
+      (route.guidancePathsGcj02?.length || route.approachPathGcj02) &&
+      !this.native.getSource("route-approach")
+    ) {
       this.element.dataset.routeApproach = "dashed";
       this.native.addSource("route-approach", {
         type: "geojson",
@@ -1395,8 +1421,10 @@ export class LocalMapAdapter implements MapAdapter {
           type: "Feature",
           properties: {},
           geometry: {
-            type: "LineString",
-            coordinates: route.approachPathGcj02.map(toWgs84),
+            type: "MultiLineString",
+            coordinates: (
+              route.guidancePathsGcj02 || [route.approachPathGcj02!]
+            ).map((path) => path.map(toWgs84)),
           },
         },
       });

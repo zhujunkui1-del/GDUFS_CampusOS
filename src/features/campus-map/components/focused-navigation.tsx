@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   Compass,
   LocateFixed,
@@ -14,8 +14,30 @@ import { campusData } from "../data/campus";
 import { MapViewButtons } from "./map-view-buttons";
 
 export function FocusedNavigation() {
-  const map = useCampusMap(),
-    route = map.route!;
+  const map = useCampusMap();
+  return <FocusedNavigationView map={map} />;
+}
+type NavigationViewState = Pick<
+  ReturnType<typeof useCampusMap>,
+  | "route"
+  | "stopNavigation"
+  | "navigationProgress"
+  | "navigationOrientation"
+  | "setNavigationOrientation"
+  | "locate"
+  | "locationBusy"
+  | "locationMessage"
+>;
+export function FocusedNavigationView({
+  map,
+  modeControl = <MapViewButtons />,
+  sourceUrl = campusData.sourceUrl,
+}: {
+  map: NavigationViewState;
+  modeControl?: ReactNode;
+  sourceUrl?: string;
+}) {
+  const route = map.route!;
   const stop = map.stopNavigation;
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -67,7 +89,11 @@ export function FocusedNavigation() {
           </p>
           <h2>{route.steps[step]?.instruction || "沿路线步行"}</h2>
           <span className="navigation-position-state">
-            {map.navigationProgress ? "定位已连接" : "等待定位"}
+            {map.navigationProgress
+              ? "定位已连接"
+              : route.start.source === "device_location"
+                ? "等待定位"
+                : "路线引导"}
           </span>
         </div>
       </div>
@@ -102,7 +128,7 @@ export function FocusedNavigation() {
             <Navigation2 size={20} />
           )}
         </button>
-        <MapViewButtons />
+        {modeControl}
         <button
           aria-label="退出步行导航"
           title="退出导航"
@@ -136,7 +162,7 @@ export function FocusedNavigation() {
         )}
         <a
           className="navigation-credit"
-          href={campusData.sourceUrl}
+          href={sourceUrl}
           target="_blank"
           rel="noreferrer"
         >

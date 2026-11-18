@@ -33,6 +33,8 @@ export type RoutePoint = {
   placeId?: string;
 };
 export type CampusRoute = {
+  solidPathGcj02?: Coordinate[];
+  guidancePathsGcj02?: Coordinate[][];
   id: string;
   start: RoutePoint;
   end: RoutePoint;

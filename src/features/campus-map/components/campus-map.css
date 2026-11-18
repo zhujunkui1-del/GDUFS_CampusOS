@@ -1359,3 +1359,31 @@ body:has(.navigation-active) .place-details-viewport {
     transition: none;
   }
 }
+.baiyun-workspace[data-navigation="walking"] > .map-top,
+.baiyun-workspace[data-navigation="walking"] > .map-controls,
+.baiyun-workspace[data-navigation="walking"] > .map-account-fixed,
+.baiyun-workspace[data-navigation="walking"] > .map-traffic-trigger,
+.baiyun-workspace[data-navigation="walking"] > .feedback-trigger {
+  display: none;
+}
+.campus-shell:has(.baiyun-workspace[data-navigation="walking"])
+  :is(
+    .sidebar,
+    .mobile-navigation,
+    .assistant-launcher,
+    .feedback-entry,
+    .map-feedback-trigger
+  ) {
+  display: none;
+}
+
+.baiyun-workspace[data-navigation="walking"] .map-attribution {
+  display: none;
+}
+@media (max-height: 500px) and (min-width: 600px) {
+  .baiyun-workspace .navigation-direction,
+  .baiyun-workspace .navigation-summary {
+    width: 300px;
+    max-width: 300px;
+  }
+}

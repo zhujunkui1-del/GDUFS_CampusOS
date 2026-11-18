@@ -222,9 +222,9 @@ export function MapWorkspace() {
         </button>
         <button
           disabled={!ready}
-          onClick={() => map.rotateBy(30)}
-          aria-label="顺时针旋转地图"
-          title="旋转"
+          onClick={() => map.setZone("all")}
+          aria-label="恢复地图初始视图"
+          title="恢复初始视图"
         >
           <RotateCw size={18} strokeWidth={1.5} />
         </button>
