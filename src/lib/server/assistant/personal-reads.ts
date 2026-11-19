@@ -43,7 +43,9 @@ export function personalReadIntent(question: string) {
       question,
     );
   if (taskQuestion) return "tasks" as const;
-  if (/我(?:的收藏|收藏|已收藏|保存的)|收藏夹|收藏的/.test(question))
+  // 「替我收藏」「自动收藏」 is an instruction about saving, not a request to
+  // read the saved list. Only an owned list counts as a read.
+  if (/(?<!替|帮|给|为)我(?:的)?(?:收藏|已收藏|保存的)|收藏夹|收藏的/.test(question))
     return "favorites" as const;
 }
 

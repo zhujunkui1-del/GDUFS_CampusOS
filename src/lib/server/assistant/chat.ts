@@ -1,5 +1,6 @@
 import { structuredCampusMap } from "./structured-campus-map";
-import { upcomingLectures } from "./upcoming-lectures";
+import { upcomingEvents } from "./upcoming-events";
+import { eventFollowUpReply } from "./event-follow-up";
 import { resolveCampus } from "./campus-resolution";
 import { WorkflowTrace, observeWorkflowModel } from "./workflow-trace";
 import { personalRead, personalReadIntent } from "./personal-reads";
@@ -1018,19 +1019,31 @@ export async function chatResponse(request: Request) {
       !verifiedMap &&
       gate === "campus" &&
       !explicitWebRequest(businessMessage)
-        ? await upcomingLectures(ctx.db, lectureQuery, directScope)
+        ? await upcomingEvents(ctx.db, lectureQuery, directScope)
         : undefined;
     if (verifiedLectures)
-      workflow.start("events", {
-        name: "search_campus_events",
+      workflow.start("events", {        name: "search_campus_events",
         campus: directScope ?? "all",
       })({
         matches: verifiedLectures.cards.length,
         metrics: verifiedLectures.metrics,
       });
+    // A question about an event that the previous answer already listed is
+    // answered from that list, not from an article search: 「第一个讲座在哪
+    // 里举办」 must not surface an unrelated lecture from April.
+    const eventFollowUp =
+      !personal &&
+      !comparison &&
+      gate === "campus" &&
+      !explicitWebRequest(businessMessage)
+        ? eventFollowUpReply(history.messages, businessMessage)
+        : undefined;
     const directReply =
       unsupportedExecution ??
-      (verifiedMap?.route ? "" : verifiedMap?.text) ??
+      eventFollowUp ??
+      (verifiedMap?.route || verifiedMap?.routes?.length
+        ? ""
+        : verifiedMap?.text) ??
       verifiedLectures?.text ??
       campusReply ??
       personal?.text ??
@@ -1047,7 +1060,7 @@ export async function chatResponse(request: Request) {
             : gate === "conversation" || gate === "greeting"
               ? undefined
               : content.dialogueReply);
-    if (directReply || verifiedMap?.route) {
+    if (directReply || verifiedMap?.route || verifiedMap?.routes?.length) {
       const runId = await ctx.store.reserve(
         ctx.identity,
         conversation,
@@ -1055,8 +1068,8 @@ export async function chatResponse(request: Request) {
         ctx.ip,
         workflow.enabled ? "workflow" : "assistant",
       );
-      let routeCard: AssistantCard | undefined;
-      let packets: {
+      const routeCards: AssistantCard[] = [];
+      const packets: {
         route: z.infer<typeof RouteOutputSchema>;
         ticket: string;
       }[] = [];
@@ -1064,78 +1077,94 @@ export async function chatResponse(request: Request) {
       let routeAnswer: string | undefined;
       let routeTool:
         { name: string; ok: boolean; distanceMeters?: number } | undefined;
-      if (verifiedMap?.route) {
-        const target = verifiedMap.route;
+      if (verifiedMap?.route || verifiedMap?.routes?.length) {
+        const targets = verifiedMap.route
+          ? [verifiedMap.route]
+          : verifiedMap.routes!;
         const routes = ctx.routes.forConversation(conversation.id);
         routes.requireRun(runId);
-        const service = new CampusMapService(routes, undefined, target.campus);
-        const routeContext = {
-          ...toolsContext,
-          campusId:
-            target.campus === "baiyun"
-              ? ("gdufs_baiyun" as const)
-              : ("gdufs_university_town" as const),
-        };
-        const finish = workflow.start("map", {
-          name: "plan_route",
-          campus: target.campus,
-        });
-        try {
-          const route = await service.plan(
-            {
-              start: { type: "place", placeId: target.start },
-              endPlaceId: target.end,
-              mode: "walking",
-            },
-            routeContext,
+        const summaries: string[] = [];
+        for (const target of targets) {
+          const service = new CampusMapService(
+            routes,
+            undefined,
+            target.campus,
           );
-          routeAnswer = routeSummaryText(route);
-          routeTool = {
+          const routeContext = {
+            ...toolsContext,
+            campusId:
+              target.campus === "baiyun"
+                ? ("gdufs_baiyun" as const)
+                : ("gdufs_university_town" as const),
+          };
+          const finish = workflow.start("map", {
             name: "plan_route",
-            ok: true,
-            distanceMeters: route.distanceMeters,
-          };
-          routeCard = {
-            kind: "route",
-            routeId: route.routeId,
-            startName: route.start.name,
-            endName: route.end.name,
-            distanceMeters: route.distanceMeters,
-            estimatedMinutes: route.estimatedMinutes,
-            expiresAt: route.expiresAt,
-            device: false,
-          };
-          packets = [
-            { route, ticket: await routes.ticket(ctx.identity.owner, route) },
-          ];
-          if (!workflow.enabled) {
-            const control = await service.control(
-              { actions: [{ type: "SHOW_ROUTE", routeId: route.routeId }] },
+            campus: target.campus,
+          });
+          try {
+            const route = await service.plan(
+              {
+                start: { type: "place", placeId: target.start },
+                endPlaceId: target.end,
+                mode: "walking",
+              },
               routeContext,
             );
-            packet = await ctx.store.action(
-              ctx.identity,
-              conversation,
-              runId,
-              control.acceptedActions,
-            );
+            routeAnswer = routeSummaryText(route);
+            summaries.push(routeAnswer);
+            routeTool = {
+              name: "plan_route",
+              ok: true,
+              distanceMeters: route.distanceMeters,
+            };
+            routeCards.push({
+              kind: "route",
+              routeId: route.routeId,
+              startName: route.start.name,
+              endName: route.end.name,
+              distanceMeters: route.distanceMeters,
+              estimatedMinutes: route.estimatedMinutes,
+              expiresAt: route.expiresAt,
+              device: false,
+            });
+            packets.push({
+              route,
+              ticket: await routes.ticket(ctx.identity.owner, route),
+            });
+            if (!workflow.enabled) {
+              const control = await service.control(
+                { actions: [{ type: "SHOW_ROUTE", routeId: route.routeId }] },
+                routeContext,
+              );
+              packet = await ctx.store.action(
+                ctx.identity,
+                conversation,
+                runId,
+                control.acceptedActions,
+              );
+            }
+            finish({
+              distanceMeters: route.distanceMeters,
+              campus: target.campus,
+              routeId: route.routeId,
+            });
+          } catch (error) {
+            routeTool = { name: "plan_route", ok: false };
+            routeAnswer =
+              error instanceof ApiError
+                ? error.message
+                : "步行路线暂时无法规划，请重试。";
+            finish({ message: routeAnswer }, "error");
           }
-          finish({
-            distanceMeters: route.distanceMeters,
-            campus: target.campus,
-            routeId: route.routeId,
-          });
-        } catch (error) {
-          routeTool = { name: "plan_route", ok: false };
-          routeAnswer =
-            error instanceof ApiError
-              ? error.message
-              : "步行路线暂时无法规划，请重试。";
-          finish({ message: routeAnswer }, "error");
+        }
+        if (targets.length > 1) {
+          // Two campuses in one request: the two trips are compared, not
+          // merged, so the answer states both and names the shorter one.
+          routeAnswer = summaries.join("\n");
         }
       }
-      const directCards = routeCard
-        ? [routeCard]
+      const directCards = routeCards.length
+        ? routeCards
         : (verifiedMap?.cards ??
           verifiedLectures?.cards ??
           personal?.cards ??

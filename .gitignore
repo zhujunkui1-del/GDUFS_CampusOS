@@ -106,6 +106,12 @@ Thumbs.db
 
 # Playwright 原始会话产物（CLI 的 .code.txt / .json / .yml dump）
 /output/playwright/
+/output/*.log
+/output/**/trace.zip
+/output/navigation-*/
+/output/agent50*
+/output/live-accept/
+/output/_live-accept.mjs
 **/.playwright-cli/
 
 # 模型预览包：上线资产在 public/models/，这里只保留可复现的脚本、清单与文案

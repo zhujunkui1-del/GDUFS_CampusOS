@@ -1,5 +1,6 @@
 import { resolveCampus } from "./campus-resolution";
 import {
+  navigationHistory,
   navigationIntent,
   pendingNavigationMessages,
 } from "@/domain/agent/navigation-intent";
@@ -35,9 +36,19 @@ export function structuredCampusMap(
           : ("gdufs_university_town" as const),
     },
   }));
-  const pending = [...pendingNavigationMessages(history)]
+  const pendingMessages = pendingNavigationMessages(history);
+  // A correction rewrites the trip that was just drawn, so it must still see
+  // the turns before that route card; only the start-point question is limited
+  // to the open task.
+  const lookback = navigationHistory(history);
+  const pending = [...pendingMessages]
     .reverse()
-    .find((q) => direction.test(q));
+    .find(
+      (q) =>
+        direction.test(q) ||
+        navigationIntent(q, undefined, false, [], services[0].service.places)
+          .routeQuestion,
+    );
   const slot =
     !!pending &&
     (placeOnly.test(question.trim()) ||
@@ -45,17 +56,95 @@ export function structuredCampusMap(
   const declared = question.match(
     /^(?:我在|起点是)(.+?)[，,。]\s*(?:请|帮我)?(?:带我去|导航到)(.+)$/,
   );
-  let phrase = declared ? `从${declared[1]}到${declared[2]}` : question;
-  if (slot && placeOnly.test(question.trim())) {
-    const end = pending?.match(/(?:带我去|导航到|导航去)([^？?。！]+)/)?.[1];
-    if (end) phrase = `从${question.trim()}到${end}`;
-  }
-  if (direction.test(phrase) || slot) {
-    if (/文章|通知|校车|公交|不要.*导航/.test(phrase)) return;
-    const parsed = services.map((s) => ({
-      ...s,
-      intent: navigationIntent(phrase, selected, false, [], s.service.places),
+  const basePhrase = declared ? `从${declared[1]}到${declared[2]}` : question;
+  // Earlier user turns are part of the request: 「带我去图书馆」→「南校，南苑8栋」
+  // is one trip whose start point arrived a turn later. Reading them here is
+  // what stops that reply from being answered as a dormitory question.
+  const read = (phrase: string) =>
+    services.map((service) => ({
+      campus: service.campus,
+      service: service.service,
+      context: service.context,
+      intent: navigationIntent(
+        phrase,
+        selected,
+        false,
+        lookback,
+        service.service.places,
+      ),
     }));
+  let parsed = read(basePhrase);
+  const carried = parsed.find((entry) =>
+    entry.intent.resolvedMessage.startsWith("从"),
+  )?.intent.resolvedMessage;
+  const phrase = carried && carried !== basePhrase ? carried : basePhrase;
+  if (phrase !== basePhrase) parsed = read(phrase);
+  // A turn that only fills the missing start of an open trip is a route
+  // request even though it never says 导航 by itself. The keyword list is
+  // narrower than the intent reader, so 「我要去图书馆」 reached the model
+  // branch and was refused with a start-point error instead of the question.
+  const routeIntent = parsed.some(
+    (entry) =>
+      entry.intent.routeQuestion &&
+      (entry.intent.needsLocation ||
+        entry.intent.originMissing ||
+        entry.intent.originIds.length === 1),
+  );
+  // Follow-ups to a route that was already drawn: asking how long it takes, or
+  // whether a second phrasing is a different path, must reuse that route
+  // instead of searching articles for the words 「多久」「区别」.
+  const lastRoute = [...history]
+    .reverse()
+    .flatMap((turn) => turn.cards)
+    .find((card) => card.kind === "route");
+  if (lastRoute && lastRoute.kind === "route") {
+    const summary = `从${lastRoute.startName}到${lastRoute.endName}，步行约${Math.round(lastRoute.distanceMeters)}米、约${lastRoute.estimatedMinutes}分钟。`;
+    if (
+      /^(?:那|那么|大概|大约|大约需要|大概需要)?(?:还)?(?:需要|要)?(?:走|步行)?(?:多久|多长时间|多远|多少米|几分钟)/.test(
+        question.trim(),
+      )
+    )
+      return { text: summary, cards: [] };
+    if (
+      /(?:和|与|跟).{0,6}(?:刚才|之前|上一条).{0,12}(?:路线|路).{0,8}(?:区别|不同|差异|一样)/.test(
+        question,
+      )
+    )
+      return {
+        text:
+          summary +
+          "起点和终点都是同一对地点，所以是同一条路线，没有第二条可选路径。",
+        cards: [],
+      };
+  }
+  if (direction.test(phrase) || slot || routeIntent) {
+    if (/文章|通知|校车|公交|不要.*导航/.test(phrase)) return;
+    // 「我在大学城…朋友在白云山…分别规划两条路线」 is two trips inside one
+    // corridor, not one cross-campus trip. Answering it with the cross-campus
+    // refusal would drop both routes.
+    const bothCampuses = /大学城|南校/.test(phrase) && /白云山|北校/.test(phrase);
+    if (bothCampuses && /分别|两条|各自|各自校区/.test(phrase)) {
+      const pairs = parsed
+        .map((entry) => ({
+          campus: entry.campus,
+          intent: entry.intent,
+        }))
+        .filter(
+          (entry) =>
+            entry.intent.originIds.length === 1 &&
+            entry.intent.destinations.length === 1,
+        );
+      if (pairs.length === 2)
+        return {
+          text: "",
+          cards: [],
+          routes: pairs.map((p) => ({
+            campus: p.campus,
+            start: p.intent.originIds[0],
+            end: p.intent.destinations[0].id,
+          })),
+        };
+    }
     const pair = phrase.match(/^从(.+?)到(.+)$/);
     if (pair) {
       const hits = (side: string) => {
@@ -106,6 +195,20 @@ export function structuredCampusMap(
     const candidates = parsed.filter(
       (s) => (!scope || s.campus === scope) && s.intent.routeQuestion,
     );
+    // A start point with no destination is a real answer, not a missing one:
+    // 「我现在在南苑8栋」already told us where to start, so asking for the
+    // start again loses the only fact the user gave.
+    const originOnly = candidates.find(
+      (s) =>
+        s.intent.originIds.length === 1 &&
+        s.intent.destinations.length === 0 &&
+        !s.intent.needsLocation,
+    );
+    if (originOnly && !candidates.some((s) => s.intent.destinations.length))
+      return {
+        text: `好的，从${originOnly.intent.namedPlaces[0]?.name ?? "你给的位置"}出发，你要去哪里？`,
+        cards: [],
+      };
     if ((candidates.length || slot) && !/我的位置|当前位置/.test(phrase))
       return {
         text:
@@ -118,11 +221,16 @@ export function structuredCampusMap(
   }
   if (
     scope &&
-    /^(?:(?:我在|我刚才说错了[，,]?是|是)?(?:白云山|大学城)(?:校区)?)[。！]?$/.test(
+    /(?:换到|换去|改到|到|在|是)(?:白云山|大学城|北校|南校)(?:校区)?(?:了|啦)?[。！]?$/.test(
       question.trim(),
     )
-  )
+  ) {
+    // A campus named while a trip is still open is the answer to the missing
+    // campus, not a request to switch the conversation: 「我要去图书馆」→「北校」
+    // used to be answered from articles.
+    if (pending) return { text: "请告诉我从哪里出发。", cards: [] };
     return { text: "已按" + campusName(scope) + "继续查询。", cards: [] };
+  }
   const floorSubject = question
     .trim()
     .match(/^(.{2,30}?)(?:是|有|共)?(?:几层|多少层)[？?。]?$/)?.[1];

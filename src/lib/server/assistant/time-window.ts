@@ -18,6 +18,28 @@ const MONTH_DAY_RANGE =
 const ISO_RANGE =
   /(\d{4}-\d{2}-\d{2})\s*(?:到|至|~|～|—)\s*(\d{4}-\d{2}-\d{2})/;
 
+const DIGITS: Record<string, number> = {
+  一: 1,
+  二: 2,
+  三: 3,
+  四: 4,
+  五: 5,
+  六: 6,
+  七: 7,
+  八: 8,
+  九: 9,
+  十: 10,
+};
+
+/** 「七天」「十四天」「30天」 all name a day count. */
+function chineseNumber(text: string): number | undefined {
+  if (/^\d+$/.test(text)) return Number(text);
+  const ten = text.match(/^([一二三四五六七八九])?十([一二三四五六七八九])?$/);
+  if (ten) return (DIGITS[ten[1]] ?? 1) * 10 + (DIGITS[ten[2]] ?? 0);
+  const single = text.match(/^[一二三四五六七八九]$/);
+  return single ? DIGITS[single[0]] : undefined;
+}
+
 /** A written date range ("11月10号到11月22号") is a constraint the user gave,
  * never a keyword an article must contain. The year is taken from the source
  * when stated, otherwise the current year; a range that has already passed
@@ -58,6 +80,7 @@ export function dateRangeIn(
 export function stripTimeRange(query: string): string {
   return query
     .replace(ISO_RANGE, " ")
+    .replace(/(?:未来|最近|过去|近|接下来|往后)\s*[一二三四五六七八九十百\d]+\s*天/g, " ")
     .replace(MONTH_DAY_RANGE, " ")
     .replace(
       /最近一个月|近一个月|最近一两周|最近两周|近两周|这两周|未来两周|接下来两周|过去两周|前两周|最近一周|这一周|过去一周|过去7天|最近7天|本周末|这周末|下周末|周末|本周|这周|下周|下个月|今天|今日|明天|明日|后天|近半个月|半个月/g,
@@ -76,8 +99,27 @@ export function requestTimeWindow(
   const at = (offset: number) =>
     new Date(day + offset * 86400000).toISOString().slice(0, 10);
   let range: [string, string] | undefined;
+  // 「未来七天」「最近十四天」 state a span in days. The Chinese numeral is
+  // read as a number so the same rule covers both spellings.
+  const span = /(?:未来|最近|近|接下来|往后|过去)([一二三四五六七八九十百\d]+)\s*天/.exec(
+    query,
+  );
+  if (span) {
+    const days = chineseNumber(span[1]);
+    // 「最近十四天通知」 is a publication window looking back; 「最近七天有什么
+    // 活动」 is an upcoming window looking forward. Reading both as forward made
+    // the publication clamp below shrink the window to a single day.
+    if (days)
+      range =
+        /过去/.test(query) ||
+        /通知|公告|资讯|新闻|动态|消息|发布/.test(query)
+          ? [at(-days), today]
+          : [today, at(days)];
+  }
   const explicit = dateRangeIn(query, today);
-  if (explicit) range = [explicit.after, explicit.before];
+  if (range) {
+    // The explicit span wins over the relative words below.
+  } else if (explicit) range = [explicit.after, explicit.before];
   else if (/本周末|这周末|下周末|周末/.test(query)) {
     const monday =
       -((new Date(day).getUTCDay() + 6) % 7) + (/下周末/.test(query) ? 7 : 0);

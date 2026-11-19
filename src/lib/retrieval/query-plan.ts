@@ -447,6 +447,9 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   // contains. Requiring every modifier rejected all evidence for two thirds of
   // real campus questions. A named college still binds every constraint,
   // because it is what makes “信息学院院运会” different from “院运会”.
+  // 「与人工智能或科研竞赛相关的通知」 names two alternatives, not a single
+  // requirement. Demanding both rejected every article that mentioned only one.
+  const anyOf = /或者|或|以及/.test(plan.original);
   const modifierMatched = plan.modifiers.map((m) =>
     m.alternatives.some((t) => modifierPresent(text, t)),
   );
@@ -467,9 +470,11 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   if (gating.length) {
     const ok = collegeBound
       ? gating.every((x) => x.matched)
-      : gating.some((x) => x.hard)
-        ? gating.every((x) => !x.hard || x.matched)
-        : gating.some((x) => x.matched);
+      : anyOf
+        ? gating.some((x) => x.matched)
+        : gating.some((x) => x.hard)
+          ? gating.every((x) => !x.hard || x.matched)
+          : gating.some((x) => x.matched);
     if (!ok)
       return { relevant: false, score: 0, reason: "subject_modifier_missing" };
   }

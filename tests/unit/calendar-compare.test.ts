@@ -210,3 +210,34 @@ it("extracts published titles independently of punctuation, date wording and old
     f.close();
   }
 });
+
+it("matches a titled lecture by its subject when the question asks whether it can still be attended", async () => {
+  const f = await dateGateFixture();
+  try {
+    const title = "著名教授论坛（复合型教师培养专项）第763讲：新利益法学";
+    const body = "活动时间：2026年10月25日14:30至16:00。";
+    await f.article("eval-legal", "2026-10-29", title, `<p>${body}</p>`);
+    const d = await f.store.document("eval-legal");
+    await f.db.batch(
+      await analysisStatements(f.db, "eval-legal", d.contentRevision, d.inputHash!, {
+        title,
+        body,
+        publishedAt: "2026-10-29",
+      }),
+    );
+    const now = Date.parse("2026-11-19T10:00:00+08:00");
+    const plan = await resolveCalendarIntent(
+      f.db,
+      "2026年10月25日的《新利益法学》讲座现在还能参加吗？",
+      undefined,
+      now,
+    );
+    expect(plan).toMatchObject({ date: "2026-10-25" });
+    if (!plan || !("title" in plan)) throw new Error("date intent missing");
+    const described = await describeCalendarDate(f.db, plan.title, plan.date);
+    expect(described).toContain("新利益法学");
+    expect(described).not.toContain("未能核实");
+  } finally {
+    f.close();
+  }
+});

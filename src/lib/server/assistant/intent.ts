@@ -62,8 +62,15 @@ const TITLE_ENDING =
 // 文章” instead of helping. Titles are also short and declarative.
 const QUESTION_SHAPE =
   /[？?]|(?:吗|呢|么)\s*[。.!！]?$|有什么|怎么(?:办|样|做|用)|如何|为什么|哪里|哪种|哪个|能不能|可不可以|要不要|该不该/;
+// A paragraph that asks for several things at once is a request, not a
+// title: 「…每条包含标题、发布日期…以及原文链接」 used to be read as an
+// exact-article lookup and answered 「未找到这篇文章」.
+function isLongRequest(text: string) {
+  return text.length > 80 || (text.match(/[。；！？]/g)?.length ?? 0) >= 2;
+}
 export function titleLike(message: string) {
   const text = message.normalize("NFKC").trim();
+  if (isLongRequest(text)) return false;
   if (QUESTION_SHAPE.test(text)) return false;
   return (
     /[《「『“"][^》」』”"]{4,300}[》」』”"]/.test(text) ||
@@ -75,6 +82,7 @@ export function titleLike(message: string) {
 }
 export function isContentStatement(message: string) {
   const text = message.normalize("NFKC").trim();
+  if (isLongRequest(text)) return false;
   if (/最近|近期|最新|有哪些|有什么|情况|信息|新闻|资讯|动态/.test(text))
     return false;
   if (!text || /[?？]|(?:吗|呢)\s*$/u.test(text)) return false;
@@ -95,6 +103,7 @@ export function isContentStatement(message: string) {
 /** A request for a specific article, not a place. */
 export function wantsArticle(message: string) {
   const text = message.normalize("NFKC");
+  if (isLongRequest(text)) return false;
   if (
     /区分|哪些|有哪些/.test(text) &&
     /新闻报道|新闻|报道/.test(text) &&

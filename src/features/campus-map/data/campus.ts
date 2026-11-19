@@ -2,6 +2,7 @@ import { z } from "zod";
 import raw from "./campus.json";
 import sportsReview from "./owner-sports-label-review.json";
 import serviceAliases from "./service-aliases.json";
+import { mergePlaceAliases } from "./place-aliases";
 
 export const CoordinateSchema = z.tuple([
   z.number().min(-180).max(180),
@@ -64,7 +65,7 @@ const serviceAliasMap = serviceAliases.aliases as Record<string, string[]>;
 function serviceAlias(id: string): string[] | undefined {
   return serviceAliasMap[id];
 }
-export const campusData = z
+const parsedCampus = z
   .object({
     campusId: z.literal("gdufs_university_town"),
     crs: z.literal("WGS84"),
@@ -136,6 +137,15 @@ export const campusData = z
       };
     }),
   });
+// 「一教」「A栋」are how students write a teaching building. Deriving them here
+// keeps the map, the assistant and route planning on one set of names.
+export const campusData = {
+  ...parsedCampus,
+  places: parsedCampus.places.map((place) => ({
+    ...place,
+    aliases: mergePlaceAliases(place.name, place.aliases ?? []),
+  })),
+};
 export const campusLabelVersion = sportsReview.version;
 export type MapLayer = "buildings" | "sports" | "dormitories" | "services";
 export function buildingLabelParts(parentId: string) {

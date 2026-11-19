@@ -209,9 +209,43 @@ export async function resolveCalendarIntent(
   }
 }
 
+// A question about an event is not the event name: “《新利益法学》讲座现在还
+// 能参加吗” is stored as “著名教授论坛…第763讲：新利益法学”. Strip the asking
+// tail before comparing, or a real session looks unverified.
+const EVENT_SUFFIXES = [
+  /(?:吗|么|呢)$/,
+  /(?:现在)?(?:还能|还可以|可以|能)(?:参加|报名)$/,
+  /(?:参加|报名)(?:吗|么|呢)?$/,
+  /(?:的)?(?:场次)$/,
+  /(?:的)?(?:讲座)$/,
+  /(?:的)?(?:活动)$/,
+  /(?:的)?(?:报告)$/,
+  /(?:的)?(?:比赛)$/,
+  /(?:的)?(?:论坛)$/,
+];
+function eventSubject(name: string) {
+  let text = name;
+  for (let round = 0; round < 4; round += 1) {
+    let next = text;
+    for (const suffix of EVENT_SUFFIXES) {
+      const trimmed = next.replace(suffix, "");
+      if (trimmed && trimmed !== next) next = trimmed;
+    }
+    if (next === text) break;
+    text = next;
+  }
+  return text;
+}
 function score(name: string, title: string) {
   const key = calendarTitleKey(title.replace(/^(?:参加|报名)\s*[:：]\s*/, ""));
-  return key === name ? 2 : key.includes(name) ? 1 : 0;
+  if (key === name) return 2;
+  // `name` arrives as a title key already; the asking tail is what makes a
+  // question stop looking like the stored title.
+  const subject = eventSubject(name);
+  // A very short leftover (“学生”) would match half the calendar; only a
+  // real subject is worth a fuzzy match.
+  if (!subject || subject === name || subject.length < 4) return 0;
+  return key === subject ? 2 : key.includes(subject) ? 1 : 0;
 }
 
 async function publicMatches(db: SqlDatabase, name: string, date?: string) {

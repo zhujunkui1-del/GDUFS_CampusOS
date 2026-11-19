@@ -39,6 +39,18 @@ export type ContentTool = "search_campus_knowledge" | "search_campus_events";
 /** Campus facts need evidence; advice may use general knowledge with a clear gap. */
 export type AnswerRequirement = "strict" | "advisory" | "open";
 const ENTITY_GROUPS = VENUE_GROUPS.map((group) => group.names);
+// How to answer is not what to search. A long paragraph that ends with
+// 「每条包含标题、发布日期、原文链接」 or 「如果样本不足，请说明不足」 turned
+// those instructions into the lexical query, so the search looked for its own
+// wording and found nothing.
+const OUTPUT_CLAUSE =
+  /(?:每条|每篇|每则).{0,8}(?:包含|列出|附上|注明|给出)|(?:如果|若).{0,10}(?:样本不足|不足|没有找到)|请说明|原文链接|但不是所有/;
+function stripOutputClauses(text: string) {
+  return text
+    .split(/[，,。；;]/)
+    .filter((clause) => !OUTPUT_CLAUSE.test(clause))
+    .join("，");
+}
 /** Same entity, different wording: retry with the official alias instead of "no data". */
 export function entityQueryVariants(query: string) {
   const variants: string[] = [];
@@ -244,6 +256,7 @@ export function contentIntent(
   const serviceKeyword =
     /(快递|驿站|打印|图文|超市|便利店|充值点|水电充值)/.exec(message)?.[1];
   const facilityListing =
+    !multiTopic &&
     /(?:有哪些|有没有|哪个|哪几|哪些|在哪|位置|除了|还有别的|还有没有)|(?:有|有没有).{0,12}(?:地方|店|点)/.test(
       message,
     ) &&
@@ -257,14 +270,19 @@ export function contentIntent(
     [],
     campus === "baiyun" ? baiyunPlaces : undefined,
   );
+  // 「最近」 means "newest" in a notice question and "closest" in a distance
+  // question. Only the second sense is a map question: 「最近一条图书馆开放
+  // 时间调整通知」 was sent to the map and answered with a place card.
+  const proximity = /最近/.test(message) && !/最近[一二三四五六七八九十\d]*(?:条|篇|个|份|次|期|则)/.test(message);
   const map =
     !articleLookup &&
     (facilityListing ||
-      ((nav.namedPlaces.length > 0 ||
-        /食堂|饭堂|体育场地|运动场地|体育设施/.test(message) ||
-        (history.at(-1)?.cards.some((card) => card.kind === "place") &&
-          /其中|哪个/.test(message))) &&
-        /最近|距离|多远|有哪些|分别在哪里|其中.*近/.test(message)) ||
+      (!multiTopic &&
+        (nav.namedPlaces.length > 0 ||
+          /食堂|饭堂|体育场地|运动场地|体育设施/.test(message) ||
+          (history.at(-1)?.cards.some((card) => card.kind === "place") &&
+            /其中|哪个/.test(message))) &&
+        (proximity || /距离|多远|有哪些|分别在哪里|其中.*近/.test(message))) ||
       nav.routeQuestion ||
       explicitMapCommand(message) !== null ||
       /^(?:这里|那里|这栋|那栋)[。？?]*$/.test(message) ||
@@ -283,26 +301,35 @@ export function contentIntent(
         )));
   // Radar tags are the product's own business categories. Lock the event search
   // to the category the user actually named instead of relying on FTS words.
-  const radarCategory =
-    multiTopic || (/讲座|论坛/.test(query) && /竞赛|比赛|大赛/.test(query))
-      ? undefined
-      : /比赛|竞赛|大赛|挑战杯|数学建模/.test(query)
+  const categoryOf = (text: string) =>
+    /讲座|讲坛|论坛|沙龙|学术报告/.test(text)
+      ? "lecture"
+      : /比赛|竞赛|大赛|挑战杯|数学建模/.test(text)
         ? "competition"
-        : /就业|招聘|宣讲|校招|求职|实习/.test(query)
+        : /就业|招聘|宣讲|校招|求职|实习/.test(text)
           ? "education_career"
-          : /讲座|讲坛|论坛|沙龙|学术报告/.test(query)
-            ? "lecture"
-            : /文体|文化|体育|演出|晚会|音乐会|书展|展览|艺术|运动会|校运会|社团|招新/.test(
-                  query,
-                )
-              ? "culture_sports"
-              : /奖学金|助学金|奖助|资助/.test(query)
-                ? "scholarship_opportunity"
-                : /科研|课题|项目申报|论文/.test(query)
-                  ? "academic_research"
-                  : /通知|公告|停水|停电|闭馆/.test(query)
-                    ? "campus_notice"
-                    : undefined;
+          : /文体|文化|体育|演出|晚会|音乐会|书展|展览|艺术|运动会|校运会|社团|招新/.test(
+                text,
+              )
+            ? "culture_sports"
+            : /奖学金|助学金|奖助|资助/.test(text)
+              ? "scholarship_opportunity"
+              : /科研|课题|项目申报|论文/.test(text)
+                ? "academic_research"
+                : /通知|公告|停水|停电|闭馆/.test(text)
+                  ? "campus_notice"
+                  : undefined;
+  // 「人工智能或科研竞赛相关的通知」 spans two subjects joined by 或. Locking
+  // one category dropped the AI lectures, and requiring both subjects found
+  // nothing, so an explicit alternation keeps the whole search open.
+  const alternatives = query.split(/或者|以及|或/).filter((part) => part.trim());
+  const alternation =
+    alternatives.length > 1 &&
+    new Set(alternatives.map((part) => categoryOf(part) ?? "")).size > 1;
+  const radarCategory =
+    multiTopic || alternation || (/讲座|论坛/.test(query) && /竞赛|比赛|大赛/.test(query))
+      ? undefined
+      : categoryOf(query);
   // "最近/近期" on a radar category is a recency request: newest publications
   // in that tag, not the best lexical match. The retriever orders these by
   // published_at DESC; older items only appear when more are requested.
@@ -329,6 +356,7 @@ export function contentIntent(
     !urgent &&
     !isFeedbackAct(act) &&
     (articleLookup ||
+      multiTopic ||
       contentStatement ||
       entityLookup ||
       recentDiscovery ||
@@ -416,7 +444,7 @@ export function contentIntent(
   const RETRIEVAL_LEAD =
     /^(?:请|帮我|我想|想|要|了解一下|了解下|了解|介绍一下|介绍下|介绍|说说|讲讲|查询|查一下|查下|查查|搜一下|搜下|搜搜|看看|看下|找一下|找找|推荐一下)\s*/;
   const coreQuery =
-    stripTimeRange(stripSearchControls(query))
+    stripTimeRange(stripSearchControls(stripOutputClauses(query)))
       .replace(/(?:帮我)?区分哪些.*$/, "")
       .replace(RETRIEVAL_LEAD, "")
       .replace(/^广外(?=法学院|学院|大学|校区)/, " ")
@@ -468,9 +496,10 @@ export function contentIntent(
                 : discovery || recentDiscovery
                   ? coreQuery
                       .replace(
-                        /举[几\d]+[个位]?|曾经|最近|近期|大型|重要|有哪些|有什么|有没有|哪些|几个|几场|几篇|可报名|能报名|报名|查询|还有|别的|其他|更多|再找|继续|换一批|后面的|情况|信息|方面|内容|活动|的|时间段|或|与|吗|呢|呀|请|帮我/g,
+                        /举[几\d]+[个位]?|曾经|最近|近期|大型|重要|值得关注|筛选|找一些|一些|排除已经?过期|已过期|过期|发布|有哪些|有什么|有没有|哪些|几个|几场|几篇|可报名|能报名|报名|查询|还有|别的|其他|更多|再找|继续|换一批|后面的|情况|信息|方面|内容|活动|广东外语外贸大学|校园|学校|的|时间段|或|与|吗|呢|呀|请|帮我/g,
                         " ",
                       )
+                      .replace(/[，,、；;]/g, " ")
                       .replace(/[？?。！!，,；;]/g, " ")
                       .replace(/\s+/g, " ")
                       .replace(/^\s*的+/, "")
@@ -479,7 +508,9 @@ export function contentIntent(
                       .trim()
                       .slice(-300) || query.slice(-300)
                   : coreQuery.slice(-300);
-  if (recentDiscovery && !articleLookup) {
+  // A multi-topic browse already has its own query ("最新 校园 通知"); stripping
+  // the recency words from it would drop the only part that says "newest".
+  if (recentDiscovery && !articleLookup && !multiTopic) {
     const core = stripSearchControls(retrievalQuery)
       .replace(/官网|官方(?:网站|网页)?|最新|资料|文章/g, " ")
       .trim();

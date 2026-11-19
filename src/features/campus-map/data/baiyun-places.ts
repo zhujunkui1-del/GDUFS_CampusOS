@@ -1,5 +1,6 @@
 import baiyun from "./baiyun-map.json";
 import type { CampusPlace } from "./campus";
+import { mergePlaceAliases } from "./place-aliases";
 export const baiyunPlaces: CampusPlace[] = baiyun.places.map((place) => ({
   ...place,
   category: /食堂|饭堂|^[云芳清]雅园$/.test(place.name)
@@ -15,7 +16,10 @@ export const baiyunPlaces: CampusPlace[] = baiyun.places.map((place) => ({
             : place.category === "services"
               ? "service"
               : "building",
-  aliases: place.name === "北校区图书馆" ? ["图书馆"] : [],
+  aliases: mergePlaceAliases(
+    place.name,
+    place.name === "北校区图书馆" ? ["图书馆"] : [],
+  ),
   coordinate: [place.coordinate[0], place.coordinate[1]],
   zone: place.category === "dormitories" ? "living" : "teaching",
   crs: "WGS84",
