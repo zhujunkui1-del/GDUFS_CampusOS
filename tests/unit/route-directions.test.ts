@@ -18,6 +18,10 @@ vi.mock("@opennextjs/cloudflare", () => ({
 vi.mock("@/lib/server/models/runtime", () => ({
   defaultModelRuntime: () => ({ resolve: runtime.resolve }),
 }));
+// Exercise the existing model fallback when structured planning cannot take the fast path.
+vi.mock("@/lib/server/assistant/structured-campus-map", () => ({
+  structuredCampusMap: () => undefined,
+}));
 import { chatResponse } from "@/lib/server/assistant/chat";
 
 const dorm = "osm-way-312536955",

@@ -145,6 +145,7 @@ export function meteredClient(
       },
       "evidence_check",
     );
+    let accountedEvidenceCall = false;
     try {
       const checked = await client.generateWithTools({
         messages,
@@ -172,6 +173,7 @@ export function meteredClient(
         outputBudgetUsed += maxTokens;
         budgetUsed += upper + maxTokens;
       }
+      accountedEvidenceCall = true;
       if (
         checked.toolCalls.length > 1 ||
         checked.toolCalls.some(
@@ -234,7 +236,11 @@ export function meteredClient(
         "error",
       );
       groundingCheckFailures++;
-      reliable = false;
+      if (!accountedEvidenceCall) {
+        reliable = false;
+        budgetUsed += upper + maxTokens;
+        outputBudgetUsed += maxTokens;
+      }
       // The judge is a separate model call. Its protocol error or timeout is not
       // evidence that the answer is wrong: keep the generated answer, record the
       // failed verification, and never replace it with an excerpt because the
@@ -459,6 +465,8 @@ export function meteredClient(
           });
         } catch (error) {
           reliable = false;
+          budgetUsed += upper + maxTokens;
+          outputBudgetUsed += maxTokens;
           // A malformed tool-call payload is a model formatting failure, not a
           // reason to surface "query incomplete". Retry once with the contract.
           if (!final && !formatRetries && error instanceof ZodError) {
@@ -668,7 +676,8 @@ export function meteredClient(
         cachedPromptTokens,
         totalTokens: promptTokens + completionTokens,
         usageComplete: reliable,
-        chargedTokens: reliable ? budgetUsed : requests ? 250000 : 0,
+        chargedTokens: promptTokens + completionTokens,
+        quotaAccountedTokens: budgetUsed,
         durationMs: Math.round(performance.now() - started),
         estimatedUsdRange: estimate === null ? null : [estimate / 2, estimate],
         priceSource: peak

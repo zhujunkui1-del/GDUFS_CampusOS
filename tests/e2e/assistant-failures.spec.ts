@@ -434,3 +434,72 @@ for (const [initialCampus, mode] of [
       }
     },
   );
+
+for (const caseId of ["T02", "T03", "T04", "T05", "T08", "T10"])
+  test(`matrix ${caseId} route artifact is drawn and acknowledged by the desktop map`, async ({
+    page,
+  }) => {
+    test.skip(
+      process.env.AGENT_MATRIX_ROUTE_E2E !== "1",
+      "Requires local matrix output",
+    );
+    const rows = JSON.parse(
+      readFileSync(
+        process.env.AGENT_MATRIX_ARTIFACT || "output/agent-50-after.json",
+        "utf8",
+      ),
+    ).rows;
+    const artifact = rows
+      .find((row: { id: string }) => row.id === caseId)
+      .turns.at(-1)
+      .artifacts.find((item: { packet?: unknown }) => item.packet);
+    const route = {
+      ...artifact.routes[0].route,
+      expiresAt: new Date(Date.now() + 600000).toISOString(),
+    };
+    const runId = randomUUID(),
+      packet = artifact.packet;
+    await page.route("**/api/agent/actions/*/claim", (r) =>
+      r.fulfill({
+        json: {
+          ok: true,
+          data: { id: packet.id, actions: packet.actions, routes: [route] },
+        },
+      }),
+    );
+    await page.route("**/api/agent/actions/*/receipt", (r) =>
+      r.fulfill({ json: { ok: true, data: { saved: true } } }),
+    );
+    await page.route("**/api/agent/chat", (r) =>
+      r.fulfill({
+        contentType: "text/event-stream",
+        body: [
+          {
+            type: "artifact.ready",
+            payload: { packet, routes: [], cards: artifact.cards },
+          },
+          { type: "run.completed", payload: {} },
+        ]
+          .map(
+            (event, i) =>
+              "data: " +
+              JSON.stringify({
+                runId,
+                eventId: runId + ":" + i,
+                timestamp: new Date().toISOString(),
+                ...event,
+              }) +
+              "\n\n",
+          )
+          .join(""),
+      }),
+    );
+    const receipt = page.waitForRequest("**/api/agent/actions/*/receipt");
+    await page.getByLabel("向校园助理提问").fill("南校南苑7栋");
+    await page.getByLabel("向校园助理提问").press("Enter");
+    expect((await receipt).postDataJSON().ok).toBe(true);
+    await expect(
+      page.getByTestId(route.campus === "baiyun" ? "baiyun-map" : "campus-map"),
+    ).toHaveAttribute("data-camera-moving", "false");
+    await expect(page.locator(".route-endpoint")).toHaveCount(2);
+  });

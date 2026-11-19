@@ -1,3 +1,5 @@
+import { structuredCampusMap } from "./structured-campus-map";
+import { upcomingLectures } from "./upcoming-lectures";
 import { resolveCampus } from "./campus-resolution";
 import { WorkflowTrace, observeWorkflowModel } from "./workflow-trace";
 import { personalRead, personalReadIntent } from "./personal-reads";
@@ -416,6 +418,7 @@ export async function chatResponse(request: Request) {
                   campusResolution.source !== "both" &&
                   locationQuestion &&
                   !(navigationQuestion && input.locationGrant) &&
+                  !/时间|通知|政策|公告|文章|借阅|开放/.test(businessMessage) &&
                   /图书馆|体育馆/.test(businessMessage)
                 ? "你问的是大学城校区还是白云山校区？"
                 : undefined;
@@ -967,7 +970,68 @@ export async function chatResponse(request: Request) {
       });
       return { started: true };
     }
+    const directScope =
+      campusResolution.source === "map" ? undefined : campusResolution.campus;
+    const toolsContext = {
+      requestId,
+      sessionId: ctx.identity.owner,
+      user: ctx.identity.user,
+      permissions: [],
+      campusId,
+    };
+    const unsupportedExecution =
+      /(?:帮我|替我|直接|代我).{0,8}(?:提交|递交|办理).{0,12}(?:请假|离校|休学|退学|学籍).{0,6}(?:申请|手续)?/.test(
+        businessMessage,
+      )
+        ? "我无法代你向学校提交申请。你可以通过学校的正式办理渠道自行提交。"
+        : /(?:编造|杜撰|捏造|伪造).{0,28}(?:讲座|比赛|竞赛|校园活动|学校公告)/.test(
+              businessMessage,
+            )
+          ? "我不能把虚构的校园活动当成真实通知发布。可以帮你查询活动日历里的实际安排。"
+          : undefined;
+    const verifiedMap =
+      !personal &&
+      !comparison &&
+      !input.locationGrant &&
+      gate === "campus" &&
+      !explicitWebRequest(businessMessage)
+        ? structuredCampusMap(
+            businessMessage,
+            history.messages,
+            directScope,
+            campusResolution.selectedPlaceId,
+            toolsContext,
+          )
+        : undefined;
+    const lectureQuery =
+      /^(?:只看(?:白云山|大学城)(?:校区)?|按举办时间排序)[。？?]?$/.test(
+        businessMessage,
+      )
+        ? [...history.messages]
+            .reverse()
+            .find((turn) => turn.role === "user" && /讲座/.test(turn.text))
+            ?.text || businessMessage
+        : businessMessage;
+    const verifiedLectures =
+      !personal &&
+      !comparison &&
+      !verifiedMap &&
+      gate === "campus" &&
+      !explicitWebRequest(businessMessage)
+        ? await upcomingLectures(ctx.db, lectureQuery, directScope)
+        : undefined;
+    if (verifiedLectures)
+      workflow.start("events", {
+        name: "search_campus_events",
+        campus: directScope ?? "all",
+      })({
+        matches: verifiedLectures.cards.length,
+        metrics: verifiedLectures.metrics,
+      });
     const directReply =
+      unsupportedExecution ??
+      (verifiedMap?.route ? "" : verifiedMap?.text) ??
+      verifiedLectures?.text ??
       campusReply ??
       personal?.text ??
       comparison ??
@@ -983,7 +1047,7 @@ export async function chatResponse(request: Request) {
             : gate === "conversation" || gate === "greeting"
               ? undefined
               : content.dialogueReply);
-    if (directReply) {
+    if (directReply || verifiedMap?.route) {
       const runId = await ctx.store.reserve(
         ctx.identity,
         conversation,
@@ -991,17 +1055,105 @@ export async function chatResponse(request: Request) {
         ctx.ip,
         workflow.enabled ? "workflow" : "assistant",
       );
+      let routeCard: AssistantCard | undefined;
+      let packets: {
+        route: z.infer<typeof RouteOutputSchema>;
+        ticket: string;
+      }[] = [];
+      let packet: { id: string; actions: MapAction[] } | undefined;
+      let routeAnswer: string | undefined;
+      let routeTool:
+        { name: string; ok: boolean; distanceMeters?: number } | undefined;
+      if (verifiedMap?.route) {
+        const target = verifiedMap.route;
+        const routes = ctx.routes.forConversation(conversation.id);
+        routes.requireRun(runId);
+        const service = new CampusMapService(routes, undefined, target.campus);
+        const routeContext = {
+          ...toolsContext,
+          campusId:
+            target.campus === "baiyun"
+              ? ("gdufs_baiyun" as const)
+              : ("gdufs_university_town" as const),
+        };
+        const finish = workflow.start("map", {
+          name: "plan_route",
+          campus: target.campus,
+        });
+        try {
+          const route = await service.plan(
+            {
+              start: { type: "place", placeId: target.start },
+              endPlaceId: target.end,
+              mode: "walking",
+            },
+            routeContext,
+          );
+          routeAnswer = routeSummaryText(route);
+          routeTool = {
+            name: "plan_route",
+            ok: true,
+            distanceMeters: route.distanceMeters,
+          };
+          routeCard = {
+            kind: "route",
+            routeId: route.routeId,
+            startName: route.start.name,
+            endName: route.end.name,
+            distanceMeters: route.distanceMeters,
+            estimatedMinutes: route.estimatedMinutes,
+            expiresAt: route.expiresAt,
+            device: false,
+          };
+          packets = [
+            { route, ticket: await routes.ticket(ctx.identity.owner, route) },
+          ];
+          if (!workflow.enabled) {
+            const control = await service.control(
+              { actions: [{ type: "SHOW_ROUTE", routeId: route.routeId }] },
+              routeContext,
+            );
+            packet = await ctx.store.action(
+              ctx.identity,
+              conversation,
+              runId,
+              control.acceptedActions,
+            );
+          }
+          finish({
+            distanceMeters: route.distanceMeters,
+            campus: target.campus,
+            routeId: route.routeId,
+          });
+        } catch (error) {
+          routeTool = { name: "plan_route", ok: false };
+          routeAnswer =
+            error instanceof ApiError
+              ? error.message
+              : "步行路线暂时无法规划，请重试。";
+          finish({ message: routeAnswer }, "error");
+        }
+      }
+      const directCards = routeCard
+        ? [routeCard]
+        : (verifiedMap?.cards ??
+          verifiedLectures?.cards ??
+          personal?.cards ??
+          libraryComparison ??
+          spatialRead?.cards ??
+          []);
       const daily =
         persona.preference.enabled &&
         !persona.preference.concise &&
         personaContext(personaMessage, persona.preference, history.messages)
           .tone === "daily";
       const text =
-        directReply === "不客气。" && daily
+        routeAnswer ??
+        (directReply === "不客气。" && daily
           ? "不客气，本鱼在呢。"
-          : directReply.startsWith("我在这儿") && daily
+          : directReply?.startsWith("我在这儿") && daily
             ? "本鱼在这儿。小鱼干先收好，陪你聊两句。🐋"
-            : directReply;
+            : (directReply ?? ""));
       const metrics = {
         requests: 0,
         promptTokens: 0,
@@ -1056,20 +1208,23 @@ export async function chatResponse(request: Request) {
         conversation,
         "assistant",
         text,
-        personal?.cards ?? libraryComparison ?? spatialRead?.cards ?? [],
+        directCards,
         requestId,
         comparisonState,
         personal?.activeTask ??
           (!content.active ? history.activeTask : undefined),
       );
       await ctx.store.finish(ctx.identity, runId, "completed", metrics, 0);
-      if (personal || comparison || spatialRead)
+      if (
+        personal ||
+        comparison ||
+        spatialRead ||
+        verifiedMap ||
+        verifiedLectures
+      )
         workflow.start("output")({
           characters: text.length,
-          sources:
-            personal?.cards.length ??
-            spatialRead?.cards.length ??
-            calendarSourceCount,
+          sources: directCards.length || calendarSourceCount,
           ...personal?.diagnostics,
           ...(calendarOutcome
             ? { executionStatus: "completed", ...calendarOutcome }
@@ -1080,14 +1235,27 @@ export async function chatResponse(request: Request) {
           "artifact.ready",
           { conversationId: conversation.id, requestId, started: true },
         ],
+        ...(routeTool ? [["tool.finished", routeTool] as const] : []),
+        ...(verifiedLectures
+          ? [
+              [
+                "tool.finished",
+                {
+                  name: "search_campus_events",
+                  ok: true,
+                  matched: verifiedLectures.cards.length,
+                },
+              ] as const,
+            ]
+          : []),
         ["message.delta", { text }],
         [
           "artifact.ready",
           {
             conversationId: conversation.id,
-            cards:
-              personal?.cards ?? libraryComparison ?? spatialRead?.cards ?? [],
-            routes: [],
+            cards: directCards,
+            routes: packets,
+            ...(packet ? { packet } : {}),
           },
         ],
         [
@@ -1952,16 +2120,18 @@ export async function chatResponse(request: Request) {
             metered.metrics().totalTokens + (plannerUsage?.totalTokens ?? 0),
           chargedTokens:
             metered.metrics().totalTokens + (plannerUsage?.totalTokens ?? 0),
-          quotaAccountedTokens:
+          providerReportedTokens:
+            metered.metrics().totalTokens + (plannerUsage?.totalTokens ?? 0),
+          quotaAccountingBasis:
             !metered.metrics().usageComplete ||
             ((!!queryUnderstanding || queryUnderstandingFailed) &&
               !plannerUsage)
-              ? Math.max(
-                  250000,
-                  metered.metrics().totalTokens +
-                    (plannerUsage?.totalTokens ?? 0),
-                )
-              : metered.metrics().chargedTokens +
+              ? "conservative_reservation"
+              : "provider_reported",
+          quotaAccountedTokens:
+            (!!queryUnderstanding || queryUnderstandingFailed) && !plannerUsage
+              ? Math.max(250000, metered.metrics().quotaAccountedTokens)
+              : metered.metrics().quotaAccountedTokens +
                 (plannerUsage?.totalTokens ?? 0),
           usageComplete:
             metered.metrics().usageComplete &&
