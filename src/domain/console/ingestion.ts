@@ -25,6 +25,7 @@ export const CheckpointSchema = z
     // reach its newest article in each of them.
     entryBodyCount: z.number().int().min(0).default(0),
     revalidate: z.boolean().default(false),
+
     // How many pages in a row came back broken. A run with a handful of
     // unreadable pages out of dozens is normal; only a run of them means the
     // source itself is gone.
@@ -59,6 +60,10 @@ export const CreateJobSchema = z
     sourceId: z.string().regex(/^[\w-]{1,100}$/),
     maxArticles: z.number().int().min(1).max(2).default(2),
     mode: z.enum(["incremental", "revalidate"]).default("incremental"),
+    // Article links the operator named in person. The run fetches these pages
+    // instead of discovering them, so an archive article that no listing page
+    // still links to can still be imported through the normal collection path.
+    urls: z.array(SafeUrlSchema).max(10).default([]),
   })
   .strict();
 export const LeaseSchema = CommandSchema.extend({

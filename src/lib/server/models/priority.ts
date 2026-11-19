@@ -3,10 +3,33 @@ import type {
   ModelReply,
   ModelSnapshot,
 } from "@/domain/models/contracts";
-import { ApiError } from "../errors";
+import { ApiError, type ErrorCode } from "../errors";
 import type { ModelRouter } from "./router";
 
-// The owner explicitly authorized quota-only fallback. Never retry network/auth errors.
+export type ModelTierId = "gdufs" | "stepfun" | "deepseek";
+
+// DeepSeek is the platform primary and StepFun the backup. The owner can flip
+// the order per environment: MODEL_PRIORITY=stepfun restores the previous
+// Step-first chain, MODEL_PRIORITY=gdufs leads with the campus gateway.
+export function modelPriorityOrder(
+  priority: string | undefined,
+): ModelTierId[] {
+  if (priority === "gdufs") return ["gdufs", "deepseek", "stepfun"];
+  if (priority === "stepfun") return ["stepfun", "deepseek"];
+  return ["deepseek", "stepfun"];
+}
+
+// Only availability failures switch tiers: a rejected key or a configuration
+// error stays visible instead of silently pinning every run to the backup
+// provider and spending its credit.
+const FALLBACK_CODES = new Set<ErrorCode>([
+  "MODEL_QUOTA_EXHAUSTED",
+  "MODEL_RATE_LIMITED",
+  "MODEL_SERVICE_UNAVAILABLE",
+  "MODEL_NETWORK_ERROR",
+  "MODEL_TIMEOUT",
+]);
+
 // Each tier may be tried at most once, in order; a tier already reached is never
 // re-entered, so a three-tier chain cannot oscillate.
 export class PriorityModelRouter {
@@ -14,13 +37,19 @@ export class PriorityModelRouter {
     private readonly primary: ModelRouter,
     private readonly fallback: ModelRouter | ModelRouter[],
   ) {
-    this.#tiers = [primary, ...(Array.isArray(fallback) ? fallback : [fallback])];
+    this.#tiers = [
+      primary,
+      ...(Array.isArray(fallback) ? fallback : [fallback]),
+    ];
   }
   readonly #tiers: ModelRouter[];
   // A tier whose configuration was never verified (no receipt yet, or a
   // rotated key) is skipped instead of taking the whole assistant offline:
   // resolving it sends no request and spends no credit.
-  static readonly #CONFIG_CODES = new Set(["MODEL_TEST_REQUIRED", "MODEL_SELECTION_REQUIRED"]);
+  static readonly #CONFIG_CODES = new Set([
+    "MODEL_TEST_REQUIRED",
+    "MODEL_SELECTION_REQUIRED",
+  ]);
   async resolve() {
     let tier = 0;
     while (true) {
@@ -42,11 +71,7 @@ export class PriorityModelRouter {
       }
     }
   }
-  #chain(
-    tier: number,
-    selected: ModelClient,
-    snapshot: ModelSnapshot,
-  ) {
+  #chain(tier: number, selected: ModelClient, snapshot: ModelSnapshot) {
     const call = async <T>(
       run: (client: ModelClient) => Promise<T>,
       partial: () => boolean,
@@ -59,7 +84,7 @@ export class PriorityModelRouter {
             tier + 1 >= this.#tiers.length ||
             partial() ||
             !(error instanceof ApiError) ||
-            error.code !== "MODEL_QUOTA_EXHAUSTED"
+            !FALLBACK_CODES.has(error.code)
           )
             throw error;
           const next = await this.#tiers[++tier].resolve();

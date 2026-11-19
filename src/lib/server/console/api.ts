@@ -271,6 +271,8 @@ export const consoleAdministration = withApi(async (request) => {
         );
       return store.writeContent(id, await read(1800000));
     }
+    if (request.method === "DELETE" && id && !action)
+      return store.deleteContent(id, await read());
     if (request.method === "POST" && id) {
       if (action === "review") return store.review(id, await read());
       if (action === "publish") return store.publish(id, await read());

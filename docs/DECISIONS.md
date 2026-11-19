@@ -1612,3 +1612,27 @@ get_place_details在助理内支持实时profile增量，旧地图几何合约�
 ## D-207｜双校区智能体复用五个地图 Skill（2026-11-19）
 
 负责人授权把白云山地图、建筑和步行路网接入现有 Agent。保留五个 Skill 名称，服务按本轮校区分发。显式校区覆盖当前地图，验证选中点所属校区，指代可以继承最近一轮明确提到的校区。两个图书馆分别返回，双方跨校区步行和白云山 3D 请求在校区判断阶段处理。路线保留会话所有权、有效期和各校区版本校验。白云山使用已有固定 OSM 图，不将引导线写入校内路网。活动关键词检索在召回和活动项目两层校验校区。/agent 添加校区判断节点，普通地图返回真实执行回执。
+
+## D-210｜官网采集可按指定链接定点入库，软删文章重采集后复活（2026-11-20）
+
+背景：负责人 2026-11-20 指定三篇归档文章（教务部 2021-03-15 补办学生证通知、研究生院 2017-09-21 补办研究生证指引与 2020-06-10 证书遗失补办程序）要求按现有官网自动化采集入库。三篇发布日期都早于来源与全局导入起日，且分散在列表深处或栏目无列表页，`discover` 正常分页（`MAX_PAGES_PER_ENTRY=20`）走不到，也无法靠列表页发现。
+
+决定一：`CreateJobSchema` 增加可选 `urls`（≤10，同来源 `approvedUrl(...,"detail")` 校验）。带 `urls` 建任务时 `createJob` 直接把 checkpoint 种成 fetch 阶段（`phase='fetch'`、`checkpoint.urls` 即目标页），runner 仍走 claim/permit/fetch/commit 全链路，审计与租约不变；不带 `urls` 的任务行为完全不变，自动同步与调度不受影响。
+
+决定二：归档起日门禁不改代码。真正的门禁是数据库触发器 `console_v2_import_cutoff_insert`，其豁免口径是来源级 `console_protections`（`history_exempt=1`）白名单，预览库已有 9 个来源在用。因此「负责人点名老文章」沿用白名单，而不是新加“显式链接自动豁免”语义；定点采集与白名单组合即可入库。
+
+决定三：软删文章允许被重新采集复活。`prepareContentWrite` 的 UPDATE 补 `deleted_at=NULL`；读路径拆成 `contentScope`（含已删行）与 `documentScope`（`+ AND d.deleted_at IS NULL`），`document(id, { includeDeleted: true })` 供采集链路沿用同一 document id 与版本号，`v2-automation.ts` 的覆写路径同步。后台列表、详情、总览计数、公开视图与检索仍按 `documentScope`/公开视图过滤，删除语义不变。
+
+取舍：定点链接是运维入口而非批量采集入口，故限制 10 条、仅 detail 页、仍受来源许可有效期与白名单约束；采集器维护文章（`reading_html`）依旧拒绝在后台直接编辑/删除。观测：三篇入库后 `published_at` 分别为 2021-03-15 / 2017-09-21 / 2020-06-10，均进入 `console_public_documents`；研究生院两篇按官网自动发布策略直接发布，教务部那篇因曾被删除而停在 draft，由管理员显式发布。
+
+## D-211｜同一账户可并行多个会话提问（2026-11-20）
+
+背景：负责人 2026-11-20 报告同一账户在多个会话、多台设备上同时提问时收到“上一条回复仍在进行，请等待完成或停止后重试。”。该限制来自 `agent_runs` 的 `assistant_run_limits` 触发器（`migrations/0071_assistant_execution_lanes.sql`）：按 `owner_key`（账户）判断是否已有 running 记录，因此同账户的第二个会话必然被拒。
+
+决定：把并发边界从“账户”收窄到“会话”。`migrations/0080_concurrent_conversations.sql` 重建触发器，`EXISTS` 条件改为 `conversation_id=NEW.conversation_id AND execution_lane=NEW.execution_lane AND status='running' AND lease_until_ms>NEW.started_at_ms`，并补 `agent_runs(conversation_id,execution_lane,status)` 索引；全站并发上限（`AGENT_SITE_BUSY`，普通 4 / 验证 16）保持不变。
+
+取舍：同一会话仍不允许两条并行回复——流式事件、停止按钮与 `agent_runs` 租约都以会话为单位，同会话并行会让消息顺序和“停止”语义失去确定对象；跨会话并行只消耗各自独立的 run 记录，不影响审计、配额与取消路径（取消按 `request_id` 定位）。风险主要是同账户瞬时并发带来的上游模型与额度压力，由全站上限兜底。
+
+验证：`tests/unit/assistant-concurrent-conversations.test.ts` 断言同账户两个会话可同时 reserve（running 计数 2）、同会话第二条仍报“上一条回复仍在进行，请等待完成或停止后重试。”；preview 库已应用 0080，`sqlite_master` 确认触发器条件为 `conversation_id`；线上同一 guest 账户并发两次 `POST /api/agent/chat`（不同会话）均返回 200，runId 分别为 `1cdc1fca-d134-4815-bdd4-b4d90be0d38f` 与 `806589cc-750d-4ddd-9114-6988373f503f`。
+
+部署面：仅数据库迁移，无 Worker 代码改动，客户端与已发布的安装包无需重新打包。

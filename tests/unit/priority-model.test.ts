@@ -4,13 +4,16 @@ import {
   configurationFingerprint,
   type DefaultModelConfig,
 } from "@/lib/server/models/router";
-import { PriorityModelRouter } from "@/lib/server/models/priority";
+import {
+  modelPriorityOrder,
+  PriorityModelRouter,
+} from "@/lib/server/models/priority";
 import {
   DeepseekModelClient,
   MODEL_POLICY_VERSION,
   STEP_POLICY_VERSION,
 } from "@/lib/server/models/deepseek";
-import { ApiError } from "@/lib/server/errors";
+import { ApiError, type ErrorCode } from "@/lib/server/errors";
 import type { ModelClient } from "@/domain/models/contracts";
 const request = {
   messages: [{ role: "user" as const, content: "test" }],
@@ -42,7 +45,19 @@ async function router(provider: "stepfun" | "deepseek", client: ModelClient) {
   });
   return new ModelRouter(config, { create: () => client });
 }
-it("prefers the verified Step model and switches once to DeepSeek only for explicit exhausted quota", async () => {
+async function chain(primary: ModelClient, fallback: ModelClient) {
+  return new PriorityModelRouter(
+    await router("deepseek", primary),
+    await router("stepfun", fallback),
+  ).resolve();
+}
+it("leads with DeepSeek and puts StepFun second unless the operator flips it", () => {
+  expect(modelPriorityOrder(undefined)).toEqual(["deepseek", "stepfun"]);
+  expect(modelPriorityOrder("deepseek")).toEqual(["deepseek", "stepfun"]);
+  expect(modelPriorityOrder("stepfun")).toEqual(["stepfun", "deepseek"]);
+  expect(modelPriorityOrder("gdufs")).toEqual(["gdufs", "deepseek", "stepfun"]);
+});
+it("serves from the verified DeepSeek model and switches once to StepFun when DeepSeek cannot answer", async () => {
   const primary = {
     generateWithTools: vi
       .fn()
@@ -51,25 +66,49 @@ it("prefers the verified Step model and switches once to DeepSeek only for expli
   };
   const fallback = {
     generateWithTools: vi.fn().mockResolvedValue(reply),
-    generateStructured: vi.fn(),
+    generateStructured: vi.fn().mockResolvedValue({ value: 1 }),
   };
-  const value = await new PriorityModelRouter(
-    await router("stepfun", primary),
-    await router("deepseek", fallback),
-  ).resolve();
-  expect(value.snapshot.provider).toBe("stepfun");
-  expect(await value.client.generateWithTools(request)).toEqual(reply);
+  const value = await chain(primary, fallback);
   expect(value.snapshot.provider).toBe("deepseek");
+  expect(await value.client.generateWithTools(request)).toEqual(reply);
+  expect(value.snapshot.provider).toBe("stepfun");
   await value.client.generateWithTools(request);
+  await value.client.generateStructured(request, {} as never);
   expect(primary.generateWithTools).toHaveBeenCalledTimes(1);
   expect(fallback.generateWithTools).toHaveBeenCalledTimes(2);
+  expect(fallback.generateStructured).toHaveBeenCalledTimes(1);
 });
-it("auth, network, and ordinary throttling errors do not spend fallback credits", async () => {
+it("falls back on availability failures of the primary provider", async () => {
+  for (const code of [
+    "MODEL_QUOTA_EXHAUSTED",
+    "MODEL_RATE_LIMITED",
+    "MODEL_SERVICE_UNAVAILABLE",
+    "MODEL_NETWORK_ERROR",
+    "MODEL_TIMEOUT",
+  ] as const) {
+    const primary = {
+      generateWithTools: vi
+        .fn()
+        .mockRejectedValue(new ApiError(code, "fixture")),
+      generateStructured: vi.fn(),
+    };
+    const fallback = {
+      generateWithTools: vi.fn().mockResolvedValue(reply),
+      generateStructured: vi.fn(),
+    };
+    const v = await chain(primary, fallback);
+    expect(await v.client.generateWithTools(request)).toEqual(reply);
+    expect(v.snapshot.provider).toBe("stepfun");
+    expect(fallback.generateWithTools).toHaveBeenCalledTimes(1);
+  }
+});
+it("keeps a rejected DeepSeek key or a configuration error visible instead of spending StepFun credit", async () => {
   for (const code of [
     "MODEL_KEY_INVALID",
-    "MODEL_NETWORK_ERROR",
-    "MODEL_RATE_LIMITED",
-  ] as const) {
+    "MODEL_NOT_FOUND_OR_FORBIDDEN",
+    "MODEL_TOOLS_UNSUPPORTED",
+    "MODEL_JSON_UNSUPPORTED",
+  ] as ErrorCode[]) {
     const primary = {
       generateWithTools: vi
         .fn()
@@ -80,13 +119,11 @@ it("auth, network, and ordinary throttling errors do not spend fallback credits"
       generateWithTools: vi.fn(),
       generateStructured: vi.fn(),
     };
-    const v = await new PriorityModelRouter(
-      await router("stepfun", primary),
-      await router("deepseek", fallback),
-    ).resolve();
+    const v = await chain(primary, fallback);
     await expect(v.client.generateWithTools(request)).rejects.toMatchObject({
       code,
     });
+    expect(v.snapshot.provider).toBe("deepseek");
     expect(fallback.generateWithTools).not.toHaveBeenCalled();
   }
 });
@@ -99,10 +136,7 @@ it("never appends a fallback answer to a partial primary stream", async () => {
     generateStructured: vi.fn(),
   };
   const fallback = { generateWithTools: vi.fn(), generateStructured: vi.fn() };
-  const v = await new PriorityModelRouter(
-    await router("stepfun", primary),
-    await router("deepseek", fallback),
-  ).resolve();
+  const v = await chain(primary, fallback);
   await expect(
     v.client.generateWithTools({ ...request, onText: () => {} }),
   ).rejects.toMatchObject({ code: "MODEL_QUOTA_EXHAUSTED" });

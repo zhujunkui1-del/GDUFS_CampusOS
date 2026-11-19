@@ -132,3 +132,6 @@ docs/model-previews/**/*.glb
 /verification/**/*.png
 /verification/**/*.jpg
 docs/KB_DIFY_PILOT*.md
+
+/.tmp-build/node-compile-cache
+/.tmp-build/temp

@@ -224,7 +224,9 @@ export class ConsoleAutomationStore extends ConsoleGovernanceStore {
         value.knowledgeCategory = String(p.default_knowledge_category);
       }
     }
-    const old = id ? await this.document(id) : null;
+    // A row the collector already imported may have been deleted in the
+    // console; the fetch still owns its identity and writes it again.
+    const old = id ? await this.document(id, { includeDeleted: true }) : null;
     const prepared = await super.prepareContentWrite(
       id,
       value,

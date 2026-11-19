@@ -50,7 +50,9 @@
         "EXTERNAL_SEARCH_TRANSPORT": "cloud",
         "AGENT_VALIDATION_UNLIMITED": "true",
         "MODEL_MAX_OUTPUT_TOKENS": "2048",
-        "MODEL_PRIORITY": "stepfun",
+        // DeepSeek is the primary platform model and StepFun the backup.
+        // MODEL_PRIORITY=stepfun restores the previous Step-first order.
+        "MODEL_PRIORITY": "deepseek",
         // Campus gateway (modelsq.gdufs.edu.cn) is only reachable from the
         // campus network, so it stays out of the default chain. Set
         // MODEL_PRIORITY=gdufs to make it the primary tier; secrets stay out
@@ -92,7 +94,7 @@
     },
     "production": {
       "name": "campusos",
-      "vars": { "APP_ENV": "production" },
+      "vars": { "APP_ENV": "production", "MODEL_PRIORITY": "deepseek" },
       "ratelimits": [
         {
           "name": "MAP_RATE_LIMITER",

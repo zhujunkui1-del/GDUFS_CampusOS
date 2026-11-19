@@ -1323,7 +1323,8 @@ function ExistingContentEditor({
   const [draft, setDraft] = useState<ContentInput | null>(null),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
-    [preview, setPreview] = useState(false);
+    [preview, setPreview] = useState(false),
+    [removing, setRemoving] = useState(false);
   const form =
     draft ||
     (data
@@ -1350,14 +1351,15 @@ function ExistingContentEditor({
       : emptyContent);
   const set = <K extends keyof ContentInput>(name: K, value: ContentInput[K]) =>
     setDraft({ ...form, [name]: value });
-  async function run(work: () => Promise<unknown>) {
+  async function run(work: () => Promise<unknown>, after?: () => void) {
     setBusy(true);
     setMessage("");
     try {
       await work();
       setMessage("已保存");
       setDraft(null);
-      reload();
+      if (after) after();
+      else reload();
     } catch (e) {
       setMessage(e instanceof Error ? e.message : "操作失败。");
     } finally {
@@ -1872,8 +1874,29 @@ function ExistingContentEditor({
               >
                 撤回
               </button>
+              <button
+                className="console-danger-button"
+                disabled={busy || !canPublish}
+                onClick={() => setRemoving(true)}
+              >
+                删除
+              </button>
             </div>
           </section>
+          <Confirm
+            open={removing}
+            onClose={() => setRemoving(false)}
+            title="删除这篇文章？"
+            description="文章将从后台列表、公开页面和检索结果中移除，历史版本与操作记录保留。"
+            action="删除"
+            busy={busy}
+            confirm={() =>
+              void run(
+                () => request("content/" + id, "DELETE", command(data.version)),
+                () => router.push("/admin/articles"),
+              )
+            }
+          />
         </>
       )}
     </>

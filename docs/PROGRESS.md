@@ -3101,3 +3101,17 @@ Worker 版本 edb11a3f-aecb-4521-bdf2-702274ae9347。生产构建及净化扫描
 ## 2026-11-19｜50 题真实模型隔离补验及 GitHub 提交
 
 14 道原阻塞题均用预算闸门、真实配置的 DeepSeek Flash 和隔离 SQLite 复跑。召回规则修复后，校园卡挂失、出国交换、校园网、教务系统、讲座双日期均有可追溯证据。转专业追加真实多轮，仍记录笔试证据遗漏。Edge 补验六条路线与公开日历两条来源。累计 27 PASS、23 PARTIAL，均按各自环境标注，不作线上 Agent 验收。发布资料缺失四篇列入待导入清单，未写远端 D1。全量 181 文件 1249 项、类型、lint、生产构建与 1838 文件净化扫描通过。提交修复分支，Cloudflare 待确认。
+
+## 2026-11-20｜三篇归档文章按指定链接入库
+
+负责人指定三篇归档文章，用现有官网自动化采集链入库。新增 `CreateJobSchema.urls` 与 fetch 阶段 checkpoint 种子（`src/domain/console/ingestion.ts`、`src/lib/server/console/ingestion-store.ts`），软删文章重采集复活（`deleted_at=NULL`、`contentScope`/`documentScope` 拆分、`document(id,{includeDeleted})`、`v2-automation.ts` 覆写路径同步）。来源侧只做运维动作：给 GDUFS-SRC-0019、GDUFS-SRC-0081 加来源白名单（`console_protections` history_exempt=1）；GDUFS-SRC-0081 profile 增加 `/info/1062/` 前缀、`xzzq.htm` 入口与合并日期选择器 `.no-date-label, h6 span`。
+
+实跑（preview，worker `c1ece97e-b12b-4066-a964-1ddeba6d70a3` 之后）：`job-e48dce6e…`（0019）与 `job-a8548168…`（0081）均 phase=complete、errors 0。三篇结果：教务部补办学生证通知 `content-e993a7cc…` 复活（`deleted_at` 清空、`published_at=2021-03-15`、正文 7,945 字节），研究生院补办研究生证指引 `content-70fdbdfe…`（2017-09-21、316 字节），证书遗失补办程序 `content-b3e36e4b…`（2020-06-10、73 字节，正文仅标题，实际内容在原页 `.docx` 附件）。三篇均 `publication_status='published'` 且出现在 `console_public_documents`；研究生院两篇由官网自动发布策略直接发布，教务部那篇经管理员显式发布（version 6）。测试：`tests/unit/console-explicit-url-job.test.ts` 4 项（含“删除后重新采集复活”）、`console-content-delete` 3 项、`ingestion-pipeline` 29 项、`console-store` 10 项全过；`tsc`/`eslint`/`prettier` 干净。
+
+遗留：GDUFS-SRC-0081 的 7224 正文在附件里，当前只入库标题行与附件链接，附件下载解析未做；定点任务在完成目标页后继续按 profile 分页发现，额外带回了 3 篇同栏目新文章（`/info/1028/3918`、`/info/1062/3968`、`/info/1062/14086`）。
+
+## 2026-11-20｜同一账户可并行多个会话
+
+新增 `migrations/0080_concurrent_conversations.sql`：重建 `assistant_run_limits` 触发器，把“同账户只能有一条 running”改为“同一会话只能有一条 running”，保留全站并发上限（普通 4 / 验证 16）与 `agent_runs(conversation_id,execution_lane,status)` 索引。新增 `tests/unit/assistant-concurrent-conversations.test.ts`（2 项：同账户两会话可并行、同会话第二条仍拒绝）。
+
+验证：`npx vitest run` 该文件 2/2 通过；preview 库已应用 0080 并在 `sqlite_master` 确认条件为 `conversation_id`；线上同一账户并发两次 `POST /api/agent/chat`（不同会话）均 200，runId `1cdc1fca-d134-4815-bdd4-b4d90be0d38f` / `806589cc-750d-4ddd-9114-6988373f503f`。无 Worker 代码改动，桌面端与移动端安装包无需重新打包，生产库上线前需 `wrangler d1 migrations apply` 应用 0080。

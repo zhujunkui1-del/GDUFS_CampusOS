@@ -75,7 +75,13 @@ export class IngestionStore extends ConsoleStore {
       .prepare(
         "UPDATE knowledge_sources SET last_checked_at=?,last_success_at=CASE WHEN ? THEN ? ELSE last_success_at END,last_error=? WHERE id=?",
       )
-      .bind(now, Number(completed && !failed), now, failed ? errorCode : null, sourceId);
+      .bind(
+        now,
+        Number(completed && !failed),
+        now,
+        failed ? errorCode : null,
+        sourceId,
+      );
   }
   private async intakeBlock(
     sourceId: string,
@@ -217,8 +223,14 @@ export class IngestionStore extends ConsoleStore {
     // Creating a job only needs a usable entry profile. The collection policy
     // used to be mandatory here, which left every site configured from the
     // console unable to start a single run.
-    if (!source.enabled || !profile || profile.configurationStatus === "discovered")
+    if (
+      !source.enabled ||
+      !profile ||
+      profile.configurationStatus === "discovered"
+    )
       throw new ApiError("INVALID_ARGUMENT", "该官网还没有配置可采集的入口。");
+    const urls = [...new Set(value.urls)];
+    for (const url of urls) approvedUrl(profile, url, "detail");
     return this.mutate(
       { commandId: value.commandId, expectedVersion: 0 },
       "job.create",
@@ -228,7 +240,7 @@ export class IngestionStore extends ConsoleStore {
       [
         this.db
           .prepare(
-            "INSERT INTO ingestion_jobs(id,source_id,status,rule_version,source_version,policy_version,run_key,max_articles,updated_at,checkpoint_json) VALUES(?,?,'queued',?,?,?,?,?,?,?)",
+            "INSERT INTO ingestion_jobs(id,source_id,status,rule_version,source_version,policy_version,run_key,max_articles,updated_at,checkpoint_json,phase) VALUES(?,?,'queued',?,?,?,?,?,?,?,?)",
           )
           .bind(
             id,
@@ -239,7 +251,11 @@ export class IngestionStore extends ConsoleStore {
             value.sourceId + ":" + value.commandId,
             value.maxArticles,
             this.now(),
-            json({ revalidate: value.mode === "revalidate" }),
+            json({
+              revalidate: value.mode === "revalidate",
+              urls,
+            }),
+            urls.length ? "fetch" : "discover",
           ),
       ],
       "write",
@@ -293,7 +309,8 @@ export class IngestionStore extends ConsoleStore {
     // to the first entry and rediscover it forever; clamp it so the run can
     // finish instead of looping.
     const entryCount = profile.entryUrls?.length || 1;
-    if (checkpoint.entryIndex >= entryCount) checkpoint.entryIndex = entryCount - 1;
+    if (checkpoint.entryIndex >= entryCount)
+      checkpoint.entryIndex = entryCount - 1;
     const url =
       claimed.phase === "discover"
         ? checkpoint.page ||
@@ -403,7 +420,8 @@ export class IngestionStore extends ConsoleStore {
       ),
       phase = String(row.phase);
     const entryCount = profile.entryUrls?.length || 1;
-    if (checkpoint.entryIndex >= entryCount) checkpoint.entryIndex = entryCount - 1;
+    if (checkpoint.entryIndex >= entryCount)
+      checkpoint.entryIndex = entryCount - 1;
     const url =
       phase === "discover"
         ? checkpoint.page ||
@@ -437,7 +455,9 @@ export class IngestionStore extends ConsoleStore {
       // An oversize page is a property of that page, not of the source, so it
       // neither counts toward the streak nor breaks it.
       const counts = value.outcome !== "too_large";
-      const streak = counts ? checkpoint.errorStreak + 1 : checkpoint.errorStreak;
+      const streak = counts
+        ? checkpoint.errorStreak + 1
+        : checkpoint.errorStreak;
       if (value.outcome === "blocked" || (counts && streak >= 3)) {
         status = "failed";
         controlState = "paused";
@@ -545,9 +565,7 @@ export class IngestionStore extends ConsoleStore {
       // cannot hold anything newer. This used to look at the *unknown* rows
       // only, which meant a page whose links were all already known never
       // stopped the walk and the job crawled the whole archive forever.
-      const dated = value.discovered.filter((url) =>
-        discoveredDates.has(url),
-      );
+      const dated = value.discovered.filter((url) => discoveredDates.has(url));
       const allDatedArticlesAreBeforeCutoff =
         !!cutoff &&
         dated.length > 0 &&
@@ -603,7 +621,10 @@ export class IngestionStore extends ConsoleStore {
       checkpoint.page = capHit ? null : nextPage;
       if (checkpoint.urls.length) nextPhase = "fetch";
       else if (nextPage) nextPhase = "discover";
-      else if (capHit && checkpoint.entryIndex + 1 < (profile.entryUrls?.length || 1)) {
+      else if (
+        capHit &&
+        checkpoint.entryIndex + 1 < (profile.entryUrls?.length || 1)
+      ) {
         checkpoint.entryIndex++;
         checkpoint.page = null;
         checkpoint.urls = [];
@@ -757,7 +778,9 @@ export class IngestionStore extends ConsoleStore {
             documentId = String(origin.document_id);
           } else {
             const previous = origin
-              ? await this.document(String(origin.document_id))
+              ? await this.document(String(origin.document_id), {
+                  includeDeleted: true,
+                })
               : null;
             const prepared = await this.prepareContentWrite(
               previous?.id,

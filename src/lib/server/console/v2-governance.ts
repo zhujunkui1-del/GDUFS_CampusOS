@@ -39,14 +39,18 @@ async function probeRobots(origin: string) {
       signal: AbortSignal.timeout(5000),
     });
     if (response.status === 200)
-      return { status: 200 as const, hash: await tokenHash(await response.text()) };
+      return {
+        status: 200 as const,
+        hash: await tokenHash(await response.text()),
+      };
   } catch {
     // Unavailable robots.txt means no rule set for this collector.
   }
   return { status: 404 as const, hash: null };
 }
 const visible = "s.console_managed=1 AND s.source_type<>'user_private'";
-const docs = "d.owner_user_id IS NULL AND d.data_domain<>'user_private'";
+const docs =
+  "d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND d.deleted_at IS NULL";
 const active = "s.enabled=1 AND s.archived_at IS NULL";
 const pattern = (s: string) => "%" + s.replace(/[\\%_]/g, "\\$&") + "%";
 const collectorState =
@@ -1010,8 +1014,7 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       } catch {
         profile = null;
       }
-      const policyReady =
-        !!profile && row.policy_rule === profile.ruleVersion;
+      const policyReady = !!profile && row.policy_rule === profile.ruleVersion;
       const collectable =
         !!profile && profile.configurationStatus !== "discovered";
       return {

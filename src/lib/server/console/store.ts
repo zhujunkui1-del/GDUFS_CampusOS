@@ -29,8 +29,11 @@ import { analysisStatements } from "./article-analysis";
 
 type Row = Record<string, string | number | null>;
 const sourceScope = "console_managed=1 AND source_type<>'user_private'";
-const documentScope =
+/** Every console row the administrator owns. A deleted row still matches here:
+ * the collector keeps the identity of a page it is about to write again. */
+const contentScope =
   "d.owner_user_id IS NULL AND d.data_domain<>'user_private' AND s.console_managed=1 AND s.source_type<>'user_private'";
+const documentScope = contentScope + " AND d.deleted_at IS NULL";
 const json = (value: unknown) => JSON.stringify(value);
 const parse = (value: string | number | null | undefined) =>
   JSON.parse(String(value || "null"));
@@ -527,11 +530,14 @@ export class ConsoleStore {
       validUntil: row.valid_until ? String(row.valid_until) : null,
     };
   }
-  async document(id: string): Promise<ContentDetail> {
+  async document(
+    id: string,
+    options: { includeDeleted?: boolean } = {},
+  ): Promise<ContentDetail> {
     consolePermission(this.actor, "read");
     const row = await this.db
       .prepare(
-        `SELECT d.*,c.radar_category AS effective_radar_category,c.knowledge_category AS effective_knowledge_category,s.display_name AS source_name,EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id) AS public_visible FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications c ON c.document_id=d.id WHERE d.id=? AND ${documentScope}`,
+        `SELECT d.*,c.radar_category AS effective_radar_category,c.knowledge_category AS effective_knowledge_category,s.display_name AS source_name,EXISTS(SELECT 1 FROM console_public_documents p WHERE p.id=d.id) AS public_visible FROM knowledge_documents d JOIN knowledge_sources s ON s.id=d.source_id JOIN console_article_classifications c ON c.document_id=d.id WHERE d.id=? AND ${options.includeDeleted ? contentScope : documentScope}`,
       )
       .bind(id)
       .first<Row>();
@@ -680,7 +686,11 @@ export class ConsoleStore {
     const value = ContentWriteSchema.parse(raw),
       source = await this.source(value.sourceId);
     const key = id || "content-" + value.commandId;
-    const previous = id ? await this.document(id) : null;
+    // A row the administrator deleted keeps its identity so a later fetch can
+    // write it again; only the console views treat it as gone.
+    const previous = id
+      ? await this.document(id, { includeDeleted: true })
+      : null;
     if (!id && value.expectedVersion !== 0)
       throw new ApiError("INVALID_ARGUMENT", "新内容版本应从零开始。");
     const data = normalizedContent(
@@ -703,7 +713,7 @@ export class ConsoleStore {
       ? [
           this.db
             .prepare(
-              "UPDATE knowledge_documents SET source_id=?,title=?,url=?,body=?,body_format=?,body_status=?,content_hash=?,candidate_kind=?,campus_scope=?,valid_until=?,published_at=?,extracted_fields_json=?,data_domain=?,version=version+1,review_status='pending',workflow_status='pending',publication_status='draft',lifecycle_status='active',updated_at=?,source_updated_at=?,content_revision=?,input_hash=?,approved_content_revision=NULL,approved_input_hash=NULL,content_type=?,rights_scope=?,radar_category=?,knowledge_category=?,publisher=?,summary=? WHERE id=?",
+              "UPDATE knowledge_documents SET source_id=?,title=?,url=?,body=?,body_format=?,body_status=?,content_hash=?,candidate_kind=?,campus_scope=?,valid_until=?,published_at=?,extracted_fields_json=?,data_domain=?,version=version+1,review_status='pending',workflow_status='pending',publication_status='draft',lifecycle_status='active',deleted_at=NULL,updated_at=?,source_updated_at=?,content_revision=?,input_hash=?,approved_content_revision=NULL,approved_input_hash=NULL,content_type=?,rights_scope=?,radar_category=?,knowledge_category=?,publisher=?,summary=? WHERE id=?",
             )
             .bind(
               data.sourceId,
@@ -976,6 +986,40 @@ export class ConsoleStore {
                 ),
             ]
           : []),
+        this.snapshot(id),
+      ],
+      "publish",
+    );
+  }
+  /** 移除人工导入的文章：撤下、退出列表与检索，版本和审计保留。 */
+  async deleteContent(id: string, raw: unknown) {
+    const value = PublishSchema.parse(raw),
+      document = await this.document(id);
+    if (document.collectionManaged)
+      throw new ApiError(
+        "FORBIDDEN",
+        "此文章由采集程序维护，请在采集设置中停止同步。",
+      );
+    if (!value.note || value.note === "管理员操作") value.note = "管理员删除";
+    consolePermission(this.actor, "publish");
+    const now = this.now();
+    return this.mutate(
+      value,
+      "document.delete",
+      "document",
+      id,
+      value,
+      [
+        this.db
+          .prepare(
+            "UPDATE knowledge_documents SET publication_status='withdrawn',lifecycle_status='withdrawn',workflow_status='pending',review_status='pending',approved_content_revision=NULL,approved_input_hash=NULL,deleted_at=?,version=version+1,updated_at=? WHERE id=?",
+          )
+          .bind(now, now, id),
+        this.db
+          .prepare(
+            "INSERT INTO console_document_controls(document_id,generation,hold_reason,hold_at,last_change_origin) VALUES(?,2,'manual_withdrawal',?,'manual') ON CONFLICT(document_id) DO UPDATE SET generation=console_document_controls.generation+1,hold_reason='manual_withdrawal',hold_at=excluded.hold_at,last_change_origin='manual'",
+          )
+          .bind(id, now),
         this.snapshot(id),
       ],
       "publish",
