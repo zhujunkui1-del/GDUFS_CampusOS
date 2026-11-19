@@ -1510,7 +1510,6 @@ function ExistingContentEditor({
               站内阅读
             </Link>
             <External url={data.url} label="查看原文" />
-            <Link href="/admin/collector">采集设置</Link>
             <button
               type="button"
               className="console-publication-toggle"

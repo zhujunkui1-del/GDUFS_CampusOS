@@ -133,6 +133,9 @@ test("article publication toggle submits versioned commands outside the article 
     ".console-actions .console-publication-toggle",
   );
   await expect(detailToggle).toHaveText("未发布");
+  await expect(
+    page.getByRole("link", { name: "采集设置", exact: true }),
+  ).toHaveCount(0);
   await detailToggle.click();
   await expect(detailToggle).toHaveText("已发布");
   expect(calls).toEqual(["withdraw", "publish", "withdraw", "publish"]);
