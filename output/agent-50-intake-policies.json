@@ -1,0 +1,48 @@
+[
+  {
+    "results": [
+      {
+        "id": "GDUFS-SRC-0021",
+        "website_url": "https://xwxy.gdufs.edu.cn/",
+        "rights_scope": "licensed_full_text",
+        "expires_at_ms": 4947640603641
+      },
+      {
+        "id": "GDUFS-SRC-0026",
+        "website_url": "https://etr.gdufs.edu.cn/",
+        "rights_scope": "licensed_full_text",
+        "expires_at_ms": 4947829028493
+      },
+      {
+        "id": "GDUFS-SRC-0048",
+        "website_url": "https://internationaloffice.gdufs.edu.cn/",
+        "rights_scope": "licensed_full_text",
+        "expires_at_ms": 4947829034964
+      },
+      {
+        "id": "GDUFS-SRC-0097",
+        "website_url": "https://yx.gdufs.edu.cn/",
+        "rights_scope": "licensed_full_text",
+        "expires_at_ms": 4947662881678
+      }
+    ],
+    "success": true,
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "KIX",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.3461
+      },
+      "duration": 0.3461,
+      "changes": 0,
+      "last_row_id": 3833,
+      "changed_db": false,
+      "size_after": 599937024,
+      "rows_read": 12,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  }
+]

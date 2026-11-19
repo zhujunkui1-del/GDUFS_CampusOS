@@ -1,0 +1,403 @@
+{
+  "clock": "2026-11-18T20:06:00.000Z",
+  "environment": "isolated SQLite; real provider with capped test transport",
+  "budget": {
+    "limit": 1800000,
+    "reserved": 43242,
+    "calls": 4,
+    "rejected": 0
+  },
+  "rows": [
+    {
+      "id": "T34",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "区分挂失、补卡与支付安全；依据现行官方来源回答，不把校园卡和学生证混为一谈。",
+      "turns": [
+        {
+          "message": "校园卡丢了怎么办？",
+          "status": 200,
+          "answer": "校园卡丢了先别慌，按“先挂失、再补办”走，能少掉不少风险 🐟\n\n**通用做法（放之各校都适用）**\n1. **立刻挂失**：优先用学校公众号/App 或自助终端挂失，把卡冻结，防止被人捡去刷。\n2. **挂失留痕**：记下挂失时间、渠道，万一有异常消费好核对。\n3. **补办**：带有效身份证件去校园卡管理办公室，或按学校指引用自助补卡终端。\n4. **补办后原卡作废**：旧卡即使找回来也不能再用，别想着“两张一起用”。\n\n**广外这边能确认的**\n- 实体校园卡丢失后，可通过学校公众号、校内圈存机或网站自助挂失，也可带有效证件到校园卡管理办公室挂失 [1]。\n- 挂失后可到卡办公室补办；学生可持有效身份证使用学校自助补卡终端 [1]。\n- 补办会导致原卡失效 [1]。\n\n**还得你自己核实的具体规定**\n- 补卡工本费多少、多久能拿到新卡；\n- 各校区卡办公室的具体位置和办公时间；\n- 挂失后原卡余额怎么转、有没有过渡期。\n\n这些本轮没有可靠依据，本鱼不瞎编。建议先按上面挂失，再打学校卡办公室电话确认补办细节。",
+          "modelRequired": true,
+          "latencyMs": 3248,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 26,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "8b402600-b4b0-5f03-b0f8-4d414896fcef",
+              "requestId": "cc8be9e1-0772-4b20-ab15-5251d99bf489",
+              "started": true
+            },
+            {
+              "conversationId": "8b402600-b4b0-5f03-b0f8-4d414896fcef",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "matrix-source-card",
+                  "title": "校园卡管理办法（节选）",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://etr.gdufs.edu.cn/info/1151/3366.htm",
+                  "publishedAt": "2020-07-17",
+                  "snippet": "实体校园卡丢失后，可通过学校公众号、校内圈存机或网站自助挂失，也可带有效证件到校园卡管理办公室挂失。挂失后可到卡办公室补办；学生可持有效身份证使用学校自助补卡终端。补办导致原卡失效。",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "partial",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "advisory",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "related_but_incomplete",
+              "relatedDocuments": [
+                "matrix-source-card"
+              ],
+              "missing": [
+                "procedure_evidence"
+              ],
+              "activities": [],
+              "needsSupplement": true,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 2,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 1,
+            "groundingResults": [],
+            "upstreamTimings": [
+              {
+                "durationMs": 2309,
+                "firstTextMs": 386,
+                "finishReason": "stop",
+                "contentChars": 464
+              },
+              {
+                "durationMs": 854,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 2688,
+            "completionTokens": 431,
+            "cachedPromptTokens": 1280,
+            "totalTokens": 3119,
+            "usageComplete": true,
+            "chargedTokens": 3119,
+            "quotaAccountedTokens": 3119,
+            "durationMs": 3209,
+            "estimatedUsdRange": [
+              0.00047364,
+              0.00094728
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 3119,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 30,
+              "serverElapsedMs": 3240,
+              "firstTextMs": 3239,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 26,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 23,
+                "writeQueries": 12,
+                "calls": 27,
+                "failures": 0,
+                "durationMs": 6.62,
+                "maxCallMs": 2.17,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 4,
+                  "durationMs": 17,
+                  "stagesMs": {
+                    "lexical": 3,
+                    "supplement": 1,
+                    "revalidationAndRanking": 12
+                  },
+                  "candidateChunks": 12,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 2
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 5
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 5
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T37",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "检索国际交流/学院官方渠道；说明不同项目要求可能不同，提供可核验入口，不编造统一截止日期。",
+      "turns": [
+        {
+          "message": "广外出国交换项目怎么申请？",
+          "status": 200,
+          "answer": "广外本科生申请国（境）外交换项目，基本路径是：**先看具体项目报名通知，再按通知向所在学院及国际处（或教务等适用部门）递交材料，通过选拔后派出** [1]。\n\n需要注意：\n- 各项目的**申请材料、报名期限、受理部门**并不统一，要以该项目通知为准 [1]。\n- 项目信息可查国际处项目栏或学院通知 [1]。\n- 目前只能确认这一通用流程，具体项目何时开放报名、需要哪些材料，暂不能确认 [1]。\n\n**关键依据**\n[1] 《本科生国（境）外访学交流项目常见问题》，广东外语外贸大学国际处，2022-03-31。",
+          "modelRequired": true,
+          "latencyMs": 4528,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 21,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "da174417-a621-5347-bd08-a12a1a8f1f2b",
+              "requestId": "7169fc4a-8fca-49a6-823b-0e2c599af004",
+              "started": true
+            },
+            {
+              "conversationId": "da174417-a621-5347-bd08-a12a1a8f1f2b",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "matrix-source-uppercase-exchange",
+                  "title": "本科生国（境）外访学交流项目常见问题",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://internationaloffice.gdufs.edu.cn/info/1101/9333.htm",
+                  "publishedAt": "2022-03-31",
+                  "snippet": "学校国际交流合作部门的本科交流常见问题包含交换生项目。学生查看具体项目的报名通知，按通知向所在学院及国际处或教务等适用部门递交材料，经过选拔后派出。所需材料、期限及受理方因项目而异，可查国际处项目栏或学院通知。",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "partial",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "related_but_incomplete",
+              "relatedDocuments": [
+                "matrix-source-uppercase-exchange"
+              ],
+              "missing": [
+                "procedure_evidence"
+              ],
+              "activities": [],
+              "needsSupplement": true,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "professional",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 2,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [
+              {
+                "supported": true,
+                "relevant": true,
+                "coverage": "covered",
+                "severity": "unverified",
+                "issues": []
+              }
+            ],
+            "upstreamTimings": [
+              {
+                "durationMs": 1530,
+                "firstTextMs": 538,
+                "finishReason": "stop",
+                "contentChars": 257
+              },
+              {
+                "durationMs": 2966,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 2560,
+            "completionTokens": 258,
+            "cachedPromptTokens": 1280,
+            "totalTokens": 2818,
+            "usageComplete": true,
+            "chargedTokens": 2818,
+            "quotaAccountedTokens": 2818,
+            "durationMs": 4521,
+            "estimatedUsdRange": [
+              0.00035064,
+              0.00070128
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 2818,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 4,
+              "serverElapsedMs": 4525,
+              "firstTextMs": 4525,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 21,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 25,
+                "writeQueries": 12,
+                "calls": 29,
+                "failures": 0,
+                "durationMs": 11.6,
+                "maxCallMs": 4.6,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 5,
+                  "durationMs": 20,
+                  "stagesMs": {
+                    "lexical": 6,
+                    "supplement": 2,
+                    "revalidationAndRanking": 12
+                  },
+                  "candidateChunks": 34,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 1
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 16
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 17
+                    },
+                    {
+                      "name": "document_passages",
+                      "limit": 192,
+                      "candidates": 2
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    }
+  ]
+}

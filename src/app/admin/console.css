@@ -1124,3 +1124,26 @@
     gap: 16px;
   }
 }
+
+.console-v2-select-row,
+.console-list > .console-hotspot-row {
+  gap: 8px;
+}
+.console-list > .console-v2-select-row {
+  padding-inline-end: 18px;
+}
+.console-v2-select-row > .console-publication-toggle,
+.console-actions > .console-publication-toggle {
+  flex-shrink: 0;
+  white-space: nowrap;
+  background: #fff;
+  color: #17191d;
+}
+.console-v2-select-row > .console-publication-toggle[aria-pressed="true"],
+.console-actions > .console-publication-toggle[aria-pressed="true"] {
+  background: var(--brand-primary);
+  color: #fff;
+}
+.console-actions > .console-publication-toggle {
+  margin-inline-start: auto;
+}

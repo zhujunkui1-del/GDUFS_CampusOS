@@ -322,12 +322,14 @@ export function ConsoleV2Articles({
   exceptions = false,
   canReview = false,
   manageHotspots = false,
+  canPublish = false,
 }: {
   request: Client;
   sourceId?: string;
   exceptions?: boolean;
   canReview?: boolean;
   manageHotspots?: boolean;
+  canPublish?: boolean;
 }) {
   const [filters, setFilters] = useState<Record<string, string>>({}),
     [offset, setOffset] = useState(0),
@@ -365,6 +367,26 @@ export function ConsoleV2Articles({
       setHotspotError(e instanceof Error ? e.message : "操作失败。");
     } finally {
       setHotspotBusy(false);
+    }
+  }
+  async function togglePublication(d: Record<string, string | number | null>) {
+    if (!canPublish || busy) return;
+    const action = d.publication_state === "published" ? "withdraw" : "publish";
+    setBusy(true);
+    setMessage("");
+    try {
+      await request(
+        "content/" + encodeURIComponent(String(d.id)) + "/" + action,
+        "POST",
+        cmd(Number(d.version)),
+      );
+      setMessage(action === "publish" ? "已发布" : "已撤回");
+      reload();
+      if (manageHotspots) hotspots.reload();
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "操作失败。");
+    } finally {
+      setBusy(false);
     }
   }
   async function batch(action: "publish" | "withdraw") {
@@ -459,6 +481,7 @@ export function ConsoleV2Articles({
           <p role="status">{message}</p>
         </div>
       )}
+      {message && !(exceptions && canReview) && <p role="status">{message}</p>}
       {!data ? (
         <Loading error={error} />
       ) : (
@@ -499,16 +522,22 @@ export function ConsoleV2Articles({
                         {d.source_name} · {date(d.published_at)}
                       </span>
                     </div>
-                    <span>
-                      {
-                        articlePublicationNames[
-                          d.publication_state === "published"
-                            ? "published"
-                            : "pending"
-                        ]
-                      }
-                    </span>
                   </Link>
+                  <button
+                    type="button"
+                    className="console-publication-toggle"
+                    aria-pressed={d.publication_state === "published"}
+                    disabled={!canPublish || busy}
+                    onClick={() => void togglePublication(d)}
+                  >
+                    {
+                      articlePublicationNames[
+                        d.publication_state === "published"
+                          ? "published"
+                          : "pending"
+                      ]
+                    }
+                  </button>
                   {manageHotspots && (
                     <button
                       type="button"
@@ -1047,7 +1076,11 @@ function SourceWorkspace(props: WorkspaceProps) {
               人工导入
             </Link>
           </div>
-          <ConsoleV2Articles request={props.request} sourceId={id} />
+          <ConsoleV2Articles
+            request={props.request}
+            sourceId={id}
+            canPublish={props.actor.role === "admin"}
+          />
         </>
       ) : tab === "governance" ? (
         <>
@@ -1195,6 +1228,7 @@ export function ConsoleV2Workspace(props: WorkspaceProps) {
         </div>
         <ConsoleV2Articles
           request={props.request}
+          canPublish={props.actor.role === "admin"}
           manageHotspots={
             props.section === "articles" && props.actor.role === "admin"
           }

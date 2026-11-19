@@ -1416,13 +1416,125 @@ function ExistingContentEditor({
             <dt>最近采集</dt>
             <dd>{date(data.fetchedAt)}</dd>
           </dl>
+          <form
+            className="console-form"
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (
+                !canWrite ||
+                busy ||
+                !(form.radarCategory || form.knowledgeCategory)
+              )
+                return;
+              void run(() =>
+                request("v2/classify/" + encodeURIComponent(data.id), "POST", {
+                  radarCategory: form.radarCategory,
+                  knowledgeCategory: form.knowledgeCategory,
+                  ...command(data.version),
+                }),
+              );
+            }}
+          >
+            <label>
+              栏目
+              <select
+                required
+                disabled={!canWrite || busy}
+                value={
+                  form.radarCategory
+                    ? "radar"
+                    : form.knowledgeCategory
+                      ? "knowledge"
+                      : ""
+                }
+                onChange={(event) =>
+                  setDraft({
+                    ...form,
+                    radarCategory:
+                      event.target.value === "radar" ? "campus_notice" : null,
+                    knowledgeCategory:
+                      event.target.value === "knowledge"
+                        ? "administrative_services"
+                        : null,
+                  })
+                }
+              >
+                <option value="" disabled>
+                  请选择栏目
+                </option>
+                <option value="radar">校园雷达</option>
+                <option value="knowledge">校园知识</option>
+              </select>
+            </label>
+            <label>
+              标签
+              <select
+                required
+                disabled={
+                  !canWrite ||
+                  busy ||
+                  !(form.radarCategory || form.knowledgeCategory)
+                }
+                value={form.radarCategory || form.knowledgeCategory || ""}
+                onChange={(event) =>
+                  setDraft({
+                    ...form,
+                    radarCategory: form.radarCategory
+                      ? event.target.value
+                      : null,
+                    knowledgeCategory: form.knowledgeCategory
+                      ? event.target.value
+                      : null,
+                  })
+                }
+              >
+                <option value="" disabled>
+                  请选择标签
+                </option>
+                {(form.radarCategory
+                  ? radarCategories
+                  : knowledgeCategories
+                ).map(({ code, label }) => (
+                  <option key={code} value={code}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button type="submit" disabled={!canWrite || busy || !draft}>
+              保存分类
+            </button>
+          </form>
           <div className="console-actions">
             <Link className="text-link" href={"/articles/" + data.id}>
               站内阅读
             </Link>
             <External url={data.url} label="查看原文" />
             <Link href="/admin/collector">采集设置</Link>
+            <button
+              type="button"
+              className="console-publication-toggle"
+              aria-pressed={data.publicationState === "published"}
+              disabled={busy || !canPublish}
+              onClick={() =>
+                void run(() =>
+                  request(
+                    "content/" +
+                      encodeURIComponent(data.id) +
+                      "/" +
+                      (data.publicationState === "published"
+                        ? "withdraw"
+                        : "publish"),
+                    "POST",
+                    command(data.version),
+                  ),
+                )
+              }
+            >
+              {data.publicationState === "published" ? "已发布" : "未发布"}
+            </button>
           </div>
+          {message && <p role="status">{message}</p>}
         </section>
       </>
     );

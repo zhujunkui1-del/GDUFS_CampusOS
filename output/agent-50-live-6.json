@@ -1,0 +1,409 @@
+{
+  "clock": "2026-11-18T20:06:00.000Z",
+  "environment": "isolated SQLite; real provider with capped test transport",
+  "budget": {
+    "limit": 1800000,
+    "reserved": 44104,
+    "calls": 4,
+    "rejected": 0
+  },
+  "rows": [
+    {
+      "id": "T34",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "区分挂失、补卡与支付安全；依据现行官方来源回答，不把校园卡和学生证混为一谈。",
+      "turns": [
+        {
+          "message": "校园卡丢了怎么办？",
+          "status": 200,
+          "answer": "校园卡丢了，先别慌，按这个顺序来 🐟\n\n**通用做法（各校基本都适用）**\n1. **立刻挂失**：通过学校校园卡服务平台、官方App或自助终端冻结卡片，防止被刷。\n2. **找一找**：回想最后使用地点，问问食堂、图书馆、宿舍楼管或失物招领处。\n3. **补办**：带身份证件到校园卡服务中心办理补卡，通常需交工本费、现场制卡或等几个工作日。\n4. **补卡后**：新卡一般要重新绑定门禁、热水、空调等关联功能，原卡余额按学校流程转入。\n\n**广外这边暂不能确认的**\n- 广外具体的挂失入口、补卡地点、工本费金额和办理时限，本轮没有检索到对应流程资料，别照搬上面的通用步骤当广外规定。\n- 现有资料只涉及2023级新生的热水和中央空调充值方式 [1]，跟丢卡补办不是一回事。\n\n建议直接联系所在校区的校园卡服务窗口或辅导员确认，最稳。",
+          "modelRequired": true,
+          "latencyMs": 3608,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 18,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "8e56a49a-46ad-5e8f-b88d-140079adb73c",
+              "requestId": "bb0ab925-c444-45f4-b369-05b61fce8a0e",
+              "started": true
+            },
+            {
+              "conversationId": "8e56a49a-46ad-5e8f-b88d-140079adb73c",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "matrix-source-campus-utility",
+                  "title": "2023级新生校园卡充值指引",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://yx.gdufs.edu.cn/info/1035/1387.htm",
+                  "publishedAt": "2023-06-21",
+                  "snippet": "2023 迎新指引区分大学城宿舍的热水与中央空调充值。热水可从校园卡服务进入南校区热水充值；中央空调初次需在北苑1栋水电冷充值点开通后，通过校园卡服务中的南校中央空调充值。该指引没有独立说明通用宿舍照明电费。",
+                  "evidenceType": "full_text",
+                  "classificationState": "radar",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "partial",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "advisory",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "related_but_incomplete",
+              "relatedDocuments": [
+                "matrix-source-campus-utility"
+              ],
+              "missing": [
+                "procedure_evidence"
+              ],
+              "activities": [],
+              "needsSupplement": true,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 2,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [
+              {
+                "supported": true,
+                "relevant": true,
+                "coverage": "covered",
+                "severity": "unverified",
+                "issues": []
+              }
+            ],
+            "upstreamTimings": [
+              {
+                "durationMs": 2685,
+                "firstTextMs": 853,
+                "finishReason": "stop",
+                "contentChars": 370
+              },
+              {
+                "durationMs": 861,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 2629,
+            "completionTokens": 343,
+            "cachedPromptTokens": 1024,
+            "totalTokens": 2972,
+            "usageComplete": true,
+            "chargedTokens": 2972,
+            "quotaAccountedTokens": 2972,
+            "durationMs": 3580,
+            "estimatedUsdRange": [
+              0.00044962199999999994,
+              0.0008992439999999999
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 2972,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 23,
+              "serverElapsedMs": 3602,
+              "firstTextMs": 3601,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 18,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 24,
+                "writeQueries": 12,
+                "calls": 28,
+                "failures": 0,
+                "durationMs": 4.89,
+                "maxCallMs": 1.39,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 4,
+                  "durationMs": 11,
+                  "stagesMs": {
+                    "lexical": 3,
+                    "supplement": 1,
+                    "revalidationAndRanking": 8
+                  },
+                  "candidateChunks": 12,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 2
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 5
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 5
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T37",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "检索国际交流/学院官方渠道；说明不同项目要求可能不同，提供可核验入口，不编造统一截止日期。",
+      "turns": [
+        {
+          "message": "广外出国交换项目怎么申请？",
+          "status": 200,
+          "answer": "目前检索到的资料只涉及会计学院转专业，没有广外出国交换项目的申请流程、条件或时间安排，因此暂时无法确认具体怎么申请 [1]。\n\n建议直接查看广外国际交流合作部（或港澳台事务办公室）官网的“学生出国（境）交流”栏目，或咨询所在学院教务办，获取当期的项目通知和申请材料清单。",
+          "modelRequired": true,
+          "latencyMs": 2387,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 19,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "28ae00f9-23db-5d75-ae9d-1a1da77c3b4d",
+              "requestId": "97937dcf-6e35-4326-b1ed-de9de0b09153",
+              "started": true
+            },
+            {
+              "conversationId": "28ae00f9-23db-5d75-ae9d-1a1da77c3b4d",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564",
+                  "title": "会计学院2025-2026-2学期本科生转专业工作方案",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://kjxy.gdufs.edu.cn/info/1107/7797.htm",
+                  "publishedAt": "2026-04-20",
+                  "snippet": "东外语外贸大学本科生转专业实施办法》（广外校〔2025〕37号）文件规定条件的其他学院的2024、2025级在校全日制本科生；\n（2）已入选创新班等教学改革班的，不能再申请转专业；\n（3）尚在休学、保留入学资格或者保留学籍期间的，不得申请转专业。\n（4）上级有关文件明确规定不可转专业的；\n（5）在校期间无违纪处分记录。\n财务管理\n审计学\n考核方案\n转出流程：\n申请者在教务系统填写转专业申请，提出申请理由，由学院转专业工作小组审核通过，方可转出。\n工作小组\n组长：余鹏翼\n成员：黄浩、李海琳、洪 昀、龙文滨、李宏达、邹宇\n联系人：李旭英\n咨询电话：39328956，办公室：会计学院教务办（院系楼103室）\n邮箱：201710074@oamail.gdufs.edu.cn\n备注\n本方案由会计学院转专业工作小组负责解释。\n会计学院\n2026年4月20日",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "completed",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "supported",
+              "relatedDocuments": [
+                "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564"
+              ],
+              "missing": [],
+              "activities": [],
+              "needsSupplement": false,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "professional",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 2,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [
+              {
+                "supported": true,
+                "relevant": true,
+                "coverage": "covered",
+                "severity": "unverified",
+                "issues": []
+              }
+            ],
+            "upstreamTimings": [
+              {
+                "durationMs": 1045,
+                "firstTextMs": 437,
+                "finishReason": "stop",
+                "contentChars": 135
+              },
+              {
+                "durationMs": 1312,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 2905,
+            "completionTokens": 183,
+            "cachedPromptTokens": 1152,
+            "totalTokens": 3088,
+            "usageComplete": true,
+            "chargedTokens": 3088,
+            "quotaAccountedTokens": 3088,
+            "durationMs": 2381,
+            "estimatedUsdRange": [
+              0.000376206,
+              0.000752412
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 3088,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 4,
+              "serverElapsedMs": 2385,
+              "firstTextMs": 2384,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 19,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 25,
+                "writeQueries": 12,
+                "calls": 29,
+                "failures": 0,
+                "durationMs": 11.01,
+                "maxCallMs": 4.34,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 5,
+                  "durationMs": 19,
+                  "stagesMs": {
+                    "lexical": 5,
+                    "supplement": 2,
+                    "revalidationAndRanking": 11
+                  },
+                  "candidateChunks": 34,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 1
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 16
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 17
+                    },
+                    {
+                      "name": "document_passages",
+                      "limit": 192,
+                      "candidates": 2
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    }
+  ]
+}

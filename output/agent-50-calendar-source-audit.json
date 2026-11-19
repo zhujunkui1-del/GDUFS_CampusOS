@@ -1,0 +1,72 @@
+[
+  {
+    "id": "T24",
+    "status": 200,
+    "total": 0,
+    "items": []
+  },
+  {
+    "id": "T25",
+    "status": 200,
+    "total": 0,
+    "items": []
+  },
+  {
+    "id": "T26",
+    "status": 200,
+    "total": 3,
+    "items": [
+      {
+        "title": "校级初赛评审阶段",
+        "startsAt": "2026-11-19",
+        "campus": "unknown",
+        "registration": "unknown",
+        "url": "/calendar?date=2026-11-20&event=event-102497a61095b5216b0dbc062c409d71b5acfe4b",
+        "source": "https://mp.weixin.qq.com/s/3Acouo1b65w9v3ihVJ-peQ"
+      },
+      {
+        "title": "2026-2027广东外语外贸大学数学与统计学院第八届红色演艺大赛",
+        "startsAt": "2026-10-15",
+        "campus": "unknown",
+        "registration": "unknown",
+        "url": "/calendar?date=2026-11-20&event=event-2fd58f331ee85e48070e40e44d308cd880011dbb",
+        "source": "https://mp.weixin.qq.com/s/rzPh1kebAUywcNI8ZE2Jqg"
+      },
+      {
+        "title": "2026-2027学年“挑战杯”广外大学生课外学术科技创新大赛",
+        "startsAt": "2026-11-19",
+        "campus": "unknown",
+        "registration": "unknown",
+        "url": "/calendar?date=2026-11-20&event=event-7325552c68627dad8d8d9cd656022e77cf37e501",
+        "source": "https://mp.weixin.qq.com/s/NRC7XI-sZMqwInJd7Elh-w"
+      }
+    ]
+  },
+  {
+    "id": "T27",
+    "status": 200,
+    "total": 0,
+    "items": []
+  },
+  {
+    "id": "T29",
+    "status": 200,
+    "total": 3,
+    "items": []
+  },
+  {
+    "id": "T47",
+    "status": 200,
+    "total": 1,
+    "items": [
+      {
+        "title": "词海拾贝，典亮文化｜第五届词典文化周邀你共赴语言之约！",
+        "startsAt": "2026-11-20T15:30:00+08:00",
+        "campus": "baiyun",
+        "registration": "unknown",
+        "url": "/calendar?date=2026-11-20&event=event-b37fd9b47bca90002b89d17fa3f9aa6f3a4e9d38",
+        "source": "https://mp.weixin.qq.com/s/2HdigxTYTLkhVlsgyIwD2A"
+      }
+    ]
+  }
+]

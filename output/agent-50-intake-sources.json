@@ -1,0 +1,52 @@
+[
+  {
+    "results": [
+      {
+        "id": "GDUFS-SRC-0021",
+        "display_name": "新闻与传播学院",
+        "website_url": "https://xwxy.gdufs.edu.cn/",
+        "manual_rights_scope": null,
+        "manual_policy_expires_at_ms": null
+      },
+      {
+        "id": "GDUFS-SRC-0026",
+        "display_name": "现代教育技术中心、信息化建设与管理办公室",
+        "website_url": "https://etr.gdufs.edu.cn/",
+        "manual_rights_scope": null,
+        "manual_policy_expires_at_ms": null
+      },
+      {
+        "id": "GDUFS-SRC-0048",
+        "display_name": "国际交流合作部（港澳台事务工作部）",
+        "website_url": "https://internationaloffice.gdufs.edu.cn/",
+        "manual_rights_scope": null,
+        "manual_policy_expires_at_ms": null
+      },
+      {
+        "id": "GDUFS-SRC-0097",
+        "display_name": "迎新网",
+        "website_url": "https://yx.gdufs.edu.cn/",
+        "manual_rights_scope": null,
+        "manual_policy_expires_at_ms": null
+      }
+    ],
+    "success": true,
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "KIX",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 0.7971
+      },
+      "duration": 0.7971,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 599937024,
+      "rows_read": 209,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  }
+]

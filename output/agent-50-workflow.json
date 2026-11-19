@@ -1,0 +1,928 @@
+{
+  "clock": "2026-11-18T20:06:00.000Z",
+  "environment": "isolated SQLite; real chat handler, model and network disabled",
+  "rows": [
+    {
+      "id": "T21",
+      "repeat": 1,
+      "priority": "P0",
+      "expected": "优先展示尚未举办、日期可核验的近期讲座；没有时如实说明，已结束的讲座单列历史参考；不能把文章发布日期当举办日期。",
+      "turns": [
+        {
+          "message": "最近有什么讲座？",
+          "status": 200,
+          "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 [1]",
+          "modelRequired": false,
+          "latencyMs": 31,
+          "tools": [
+            {
+              "workflow": {
+                "node": "input",
+                "span": "input:1",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 7,
+                "data": {
+                  "question": "最近有什么讲座？",
+                  "smartSearch": true
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "input",
+                "span": "input:1",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 7,
+                "durationMs": 0,
+                "data": {
+                  "accepted": true
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "route",
+                "span": "route:2",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 9,
+                "data": {
+                  "question": "最近有什么讲座？"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "gate",
+                "span": "gate:3",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 10,
+                "data": {
+                  "session": "游客"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "gate",
+                "span": "gate:3",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 10,
+                "durationMs": 0,
+                "data": {
+                  "decision": "campus",
+                  "historyMessages": 0
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "campus_resolution",
+                "span": "campus_resolution:4",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 18,
+                "data": {
+                  "explicitContext": null
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "campus_resolution",
+                "span": "campus_resolution:4",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 18,
+                "durationMs": 0,
+                "data": {
+                  "campus": null,
+                  "source": "unspecified",
+                  "selectedPlaceId": null,
+                  "toolCampus": "university"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "building",
+                "span": "building:5",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 19,
+                "data": {
+                  "selectedPlaceId": null
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "building",
+                "span": "building:5",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 19,
+                "durationMs": 0,
+                "data": {
+                  "matches": []
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "route",
+                "span": "route:2",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 19,
+                "durationMs": 10,
+                "data": {
+                  "act": "campus",
+                  "goal": "discovery",
+                  "campus": null,
+                  "topics": [
+                    "lecture"
+                  ],
+                  "path": "content_retrieval",
+                  "plannedTools": [
+                    "search_campus_events"
+                  ]
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "events",
+                "span": "events:6",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 24,
+                "data": {
+                  "name": "search_campus_events",
+                  "campus": "all"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "events",
+                "span": "events:6",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 24,
+                "durationMs": 0,
+                "data": {
+                  "matches": 1,
+                  "metrics": {
+                    "rowsRead": 0,
+                    "rowsWritten": 0,
+                    "queries": 3,
+                    "durationMs": 4,
+                    "usageAvailable": false
+                  }
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "output",
+                "span": "output:7",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 26,
+                "data": {}
+              }
+            },
+            {
+              "workflow": {
+                "node": "output",
+                "span": "output:7",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 26,
+                "durationMs": 0,
+                "data": {
+                  "characters": 47,
+                  "sources": 1
+                }
+              }
+            },
+            {
+              "name": "search_campus_events",
+              "ok": true,
+              "matched": 1
+            }
+          ],
+          "artifacts": [
+            {
+              "workflow": {
+                "node": "input",
+                "span": "input:1",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 7,
+                "data": {
+                  "question": "最近有什么讲座？",
+                  "smartSearch": true
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "input",
+                "span": "input:1",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 7,
+                "durationMs": 0,
+                "data": {
+                  "accepted": true
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "route",
+                "span": "route:2",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 9,
+                "data": {
+                  "question": "最近有什么讲座？"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "gate",
+                "span": "gate:3",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 10,
+                "data": {
+                  "session": "游客"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "gate",
+                "span": "gate:3",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 10,
+                "durationMs": 0,
+                "data": {
+                  "decision": "campus",
+                  "historyMessages": 0
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "campus_resolution",
+                "span": "campus_resolution:4",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 18,
+                "data": {
+                  "explicitContext": null
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "campus_resolution",
+                "span": "campus_resolution:4",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 18,
+                "durationMs": 0,
+                "data": {
+                  "campus": null,
+                  "source": "unspecified",
+                  "selectedPlaceId": null,
+                  "toolCampus": "university"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "building",
+                "span": "building:5",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 19,
+                "data": {
+                  "selectedPlaceId": null
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "building",
+                "span": "building:5",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 19,
+                "durationMs": 0,
+                "data": {
+                  "matches": []
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "route",
+                "span": "route:2",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 19,
+                "durationMs": 10,
+                "data": {
+                  "act": "campus",
+                  "goal": "discovery",
+                  "campus": null,
+                  "topics": [
+                    "lecture"
+                  ],
+                  "path": "content_retrieval",
+                  "plannedTools": [
+                    "search_campus_events"
+                  ]
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "events",
+                "span": "events:6",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 24,
+                "data": {
+                  "name": "search_campus_events",
+                  "campus": "all"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "events",
+                "span": "events:6",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 24,
+                "durationMs": 0,
+                "data": {
+                  "matches": 1,
+                  "metrics": {
+                    "rowsRead": 0,
+                    "rowsWritten": 0,
+                    "queries": 3,
+                    "durationMs": 4,
+                    "usageAvailable": false
+                  }
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "output",
+                "span": "output:7",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 26,
+                "data": {}
+              }
+            },
+            {
+              "workflow": {
+                "node": "output",
+                "span": "output:7",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 26,
+                "durationMs": 0,
+                "data": {
+                  "characters": 47,
+                  "sources": 1
+                }
+              }
+            },
+            {
+              "conversationId": "56d744f4-c6bd-5424-aa89-e271f818716c",
+              "requestId": "abbd8f3c-478f-42b7-b00b-5ac113773e5f",
+              "started": true
+            },
+            {
+              "conversationId": "56d744f4-c6bd-5424-aa89-e271f818716c",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "matrix-future",
+                  "title": "未来人工智能讲座通知",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://example.invalid/matrix-future",
+                  "publishedAt": "2026-11-17",
+                  "snippet": "",
+                  "evidenceType": "metadata",
+                  "classificationState": "radar",
+                  "validity": "current",
+                  "readable": true,
+                  "calendarLinks": [
+                    {
+                      "title": "未来人工智能讲座通知",
+                      "href": "/calendar?date=2026-11-22&event=event-0755340d531080011ed57db2ccb7b191cf8f80d2"
+                    }
+                  ]
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 25
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T22",
+      "repeat": 1,
+      "priority": "P0",
+      "expected": "与 T21 同义，查询范围与排序应基本一致；不得因措辞略变而误判无数据。",
+      "turns": [
+        {
+          "message": "最近时间段有什么讲座？",
+          "status": 200,
+          "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 [1]",
+          "modelRequired": false,
+          "latencyMs": 8,
+          "tools": [
+            {
+              "workflow": {
+                "node": "input",
+                "span": "input:1",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 0,
+                "data": {
+                  "question": "最近时间段有什么讲座？",
+                  "smartSearch": true
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "input",
+                "span": "input:1",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 0,
+                "durationMs": 0,
+                "data": {
+                  "accepted": true
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "route",
+                "span": "route:2",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 1,
+                "data": {
+                  "question": "最近时间段有什么讲座？"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "gate",
+                "span": "gate:3",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 1,
+                "data": {
+                  "session": "游客"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "gate",
+                "span": "gate:3",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 1,
+                "durationMs": 0,
+                "data": {
+                  "decision": "campus",
+                  "historyMessages": 0
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "campus_resolution",
+                "span": "campus_resolution:4",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 3,
+                "data": {
+                  "explicitContext": null
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "campus_resolution",
+                "span": "campus_resolution:4",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 3,
+                "durationMs": 0,
+                "data": {
+                  "campus": null,
+                  "source": "unspecified",
+                  "selectedPlaceId": null,
+                  "toolCampus": "university"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "building",
+                "span": "building:5",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 3,
+                "data": {
+                  "selectedPlaceId": null
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "building",
+                "span": "building:5",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 4,
+                "durationMs": 0,
+                "data": {
+                  "matches": []
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "route",
+                "span": "route:2",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 4,
+                "durationMs": 2,
+                "data": {
+                  "act": "campus",
+                  "goal": "discovery",
+                  "campus": null,
+                  "topics": [
+                    "lecture"
+                  ],
+                  "path": "content_retrieval",
+                  "plannedTools": [
+                    "search_campus_events"
+                  ]
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "events",
+                "span": "events:6",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 6,
+                "data": {
+                  "name": "search_campus_events",
+                  "campus": "all"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "events",
+                "span": "events:6",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 6,
+                "durationMs": 0,
+                "data": {
+                  "matches": 1,
+                  "metrics": {
+                    "rowsRead": 0,
+                    "rowsWritten": 0,
+                    "queries": 3,
+                    "durationMs": 3,
+                    "usageAvailable": false
+                  }
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "output",
+                "span": "output:7",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 7,
+                "data": {}
+              }
+            },
+            {
+              "workflow": {
+                "node": "output",
+                "span": "output:7",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 7,
+                "durationMs": 0,
+                "data": {
+                  "characters": 47,
+                  "sources": 1
+                }
+              }
+            },
+            {
+              "name": "search_campus_events",
+              "ok": true,
+              "matched": 1
+            }
+          ],
+          "artifacts": [
+            {
+              "workflow": {
+                "node": "input",
+                "span": "input:1",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 0,
+                "data": {
+                  "question": "最近时间段有什么讲座？",
+                  "smartSearch": true
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "input",
+                "span": "input:1",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 0,
+                "durationMs": 0,
+                "data": {
+                  "accepted": true
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "route",
+                "span": "route:2",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 1,
+                "data": {
+                  "question": "最近时间段有什么讲座？"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "gate",
+                "span": "gate:3",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 1,
+                "data": {
+                  "session": "游客"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "gate",
+                "span": "gate:3",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 1,
+                "durationMs": 0,
+                "data": {
+                  "decision": "campus",
+                  "historyMessages": 0
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "campus_resolution",
+                "span": "campus_resolution:4",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 3,
+                "data": {
+                  "explicitContext": null
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "campus_resolution",
+                "span": "campus_resolution:4",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 3,
+                "durationMs": 0,
+                "data": {
+                  "campus": null,
+                  "source": "unspecified",
+                  "selectedPlaceId": null,
+                  "toolCampus": "university"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "building",
+                "span": "building:5",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 3,
+                "data": {
+                  "selectedPlaceId": null
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "building",
+                "span": "building:5",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 4,
+                "durationMs": 0,
+                "data": {
+                  "matches": []
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "route",
+                "span": "route:2",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 4,
+                "durationMs": 2,
+                "data": {
+                  "act": "campus",
+                  "goal": "discovery",
+                  "campus": null,
+                  "topics": [
+                    "lecture"
+                  ],
+                  "path": "content_retrieval",
+                  "plannedTools": [
+                    "search_campus_events"
+                  ]
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "events",
+                "span": "events:6",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 6,
+                "data": {
+                  "name": "search_campus_events",
+                  "campus": "all"
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "events",
+                "span": "events:6",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 6,
+                "durationMs": 0,
+                "data": {
+                  "matches": 1,
+                  "metrics": {
+                    "rowsRead": 0,
+                    "rowsWritten": 0,
+                    "queries": 3,
+                    "durationMs": 3,
+                    "usageAvailable": false
+                  }
+                }
+              }
+            },
+            {
+              "workflow": {
+                "node": "output",
+                "span": "output:7",
+                "state": "running",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 7,
+                "data": {}
+              }
+            },
+            {
+              "workflow": {
+                "node": "output",
+                "span": "output:7",
+                "state": "success",
+                "at": "2026-11-18T20:06:00.000Z",
+                "elapsedMs": 7,
+                "durationMs": 0,
+                "data": {
+                  "characters": 47,
+                  "sources": 1
+                }
+              }
+            },
+            {
+              "conversationId": "51c6a4b2-42bc-5f36-9014-2d50acb42bd3",
+              "requestId": "239f7da9-c744-42b4-911c-90f7125cf506",
+              "started": true
+            },
+            {
+              "conversationId": "51c6a4b2-42bc-5f36-9014-2d50acb42bd3",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "matrix-future",
+                  "title": "未来人工智能讲座通知",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://example.invalid/matrix-future",
+                  "publishedAt": "2026-11-17",
+                  "snippet": "",
+                  "evidenceType": "metadata",
+                  "classificationState": "radar",
+                  "validity": "current",
+                  "readable": true,
+                  "calendarLinks": [
+                    {
+                      "title": "未来人工智能讲座通知",
+                      "href": "/calendar?date=2026-11-22&event=event-0755340d531080011ed57db2ccb7b191cf8f80d2"
+                    }
+                  ]
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 7
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    }
+  ]
+}

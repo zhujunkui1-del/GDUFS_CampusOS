@@ -1,0 +1,920 @@
+{
+  "clock": "2026-11-18T20:06:00.000Z",
+  "environment": "isolated SQLite; real provider with capped test transport",
+  "budget": {
+    "limit": 1800000,
+    "reserved": 9960,
+    "calls": 1,
+    "rejected": 0
+  },
+  "rows": [
+    {
+      "id": "T28",
+      "repeat": 1,
+      "priority": "P0",
+      "expected": "区分11月12日“发布日期”和实际举办时间；若仅有首页摘要无法确认时间地点，应继续查详情或明确未核实，不编造。",
+      "turns": [
+        {
+          "message": "2026年11月12日发布的云山卓越讲坛第20讲，具体什么时候、在哪里举办？",
+          "status": 200,
+          "answer": "本鱼翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息（查过：2026年11月12日发布 云山卓越讲坛第20讲 具体什么时候、在哪里举办）。这不代表学校没有相关规定，只是本站还没收录到——建议通过广外官网、院系公示或校园地图APP核实。",
+          "modelRequired": true,
+          "latencyMs": 154,
+          "tools": [
+            {
+              "name": "search_campus_events",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_events",
+              "ok": true,
+              "durationMs": 20,
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_events",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_events",
+              "ok": true,
+              "durationMs": 10,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "3379012a-ed6b-585c-838f-f3dfe3b68b79",
+              "requestId": "5a225b8d-9ff8-401e-b5ed-503671ece002",
+              "started": true
+            },
+            {
+              "conversationId": "3379012a-ed6b-585c-838f-f3dfe3b68b79",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "partial",
+            "retrievalStatus": "empty",
+            "answerMode": "no_evidence",
+            "buildingProfiles": [
+              "osm-node-12959101439"
+            ],
+            "conversationAct": "general",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": true,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "no_candidates",
+              "relatedDocuments": [],
+              "missing": [
+                "relevant_readable_evidence"
+              ],
+              "activities": [],
+              "needsSupplement": true,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 0,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 0,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [],
+            "upstreamTimings": [],
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "cachedPromptTokens": 0,
+            "totalTokens": 0,
+            "usageComplete": true,
+            "chargedTokens": 0,
+            "quotaAccountedTokens": 0,
+            "durationMs": 55,
+            "estimatedUsdRange": [
+              0,
+              0
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 0,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 92,
+              "serverElapsedMs": 147,
+              "firstTextMs": 146,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_events",
+                  "durationMs": 20,
+                  "ok": true
+                },
+                {
+                  "name": "search_campus_events",
+                  "durationMs": 10,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 28,
+                "writeQueries": 12,
+                "calls": 32,
+                "failures": 0,
+                "durationMs": 18.96,
+                "maxCallMs": 3.35,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_events",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 3,
+                  "durationMs": 12,
+                  "stagesMs": {
+                    "lexical": 4,
+                    "supplement": 0,
+                    "revalidationAndRanking": 8
+                  },
+                  "candidateChunks": 5,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 2
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 3
+                    }
+                  ]
+                },
+                {
+                  "skill": "search_campus_events",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 3,
+                  "durationMs": 8,
+                  "stagesMs": {
+                    "lexical": 3,
+                    "supplement": 0,
+                    "revalidationAndRanking": 5
+                  },
+                  "candidateChunks": 5,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 2
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 3
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T31",
+      "repeat": 1,
+      "priority": "P0",
+      "expected": "无校区时分别给出大学城和白云山已核实的缴费方式；避免混用不同校区流程。",
+      "turns": [
+        {
+          "message": "宿舍水电费怎么交？",
+          "status": 200,
+          "answer": "本鱼翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息。这不代表学校没有相关规定，只是本站还没收录到——建议通过学校官网或宿管核实。",
+          "modelRequired": true,
+          "latencyMs": 62,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 26,
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 20,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "c7b6b204-cc64-57eb-aaa6-95417778bf82",
+              "requestId": "87cfc3fd-ce8c-4266-b4c9-a8e7f23302e4",
+              "started": true
+            },
+            {
+              "conversationId": "c7b6b204-cc64-57eb-aaa6-95417778bf82",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "partial",
+            "retrievalStatus": "empty",
+            "answerMode": "no_evidence",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": true,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "no_candidates",
+              "relatedDocuments": [],
+              "missing": [
+                "relevant_readable_evidence",
+                "official_authority_unconfirmed",
+                "payment_channel_evidence"
+              ],
+              "activities": [],
+              "needsSupplement": true,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 0,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 0,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [],
+            "upstreamTimings": [],
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "cachedPromptTokens": 0,
+            "totalTokens": 0,
+            "usageComplete": true,
+            "chargedTokens": 0,
+            "quotaAccountedTokens": 0,
+            "durationMs": 51,
+            "estimatedUsdRange": [
+              0,
+              0
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 0,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 8,
+              "serverElapsedMs": 60,
+              "firstTextMs": 59,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 26,
+                  "ok": true
+                },
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 20,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 26,
+                "writeQueries": 12,
+                "calls": 30,
+                "failures": 0,
+                "durationMs": 16.49,
+                "maxCallMs": 3.25,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 5,
+                  "durationMs": 25,
+                  "stagesMs": {
+                    "lexical": 2,
+                    "supplement": 3,
+                    "revalidationAndRanking": 20
+                  },
+                  "candidateChunks": 17,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 17
+                    },
+                    {
+                      "name": "document_passages",
+                      "limit": 144,
+                      "candidates": 3
+                    }
+                  ]
+                },
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 5,
+                  "durationMs": 19,
+                  "stagesMs": {
+                    "lexical": 2,
+                    "supplement": 2,
+                    "revalidationAndRanking": 15
+                  },
+                  "candidateChunks": 12,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 12
+                    },
+                    {
+                      "name": "document_passages",
+                      "limit": 112,
+                      "candidates": 3
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T32",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "“南校”归一为大学城，使用对应校区权威流程；不混入白云山。",
+      "turns": [
+        {
+          "message": "南校宿舍怎么交电费？",
+          "status": 200,
+          "answer": "本鱼翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息。这不代表学校没有相关规定，只是本站还没收录到——建议通过学校官网或宿管核实。",
+          "modelRequired": true,
+          "latencyMs": 12,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 2,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "3d341386-f227-581d-9fe4-27c49885d589",
+              "requestId": "165ea31c-c3f3-4552-884c-725406a08211",
+              "started": true
+            },
+            {
+              "conversationId": "3d341386-f227-581d-9fe4-27c49885d589",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "partial",
+            "retrievalStatus": "empty",
+            "answerMode": "no_evidence",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": true,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "no_candidates",
+              "relatedDocuments": [],
+              "missing": [
+                "relevant_readable_evidence",
+                "official_authority_unconfirmed",
+                "payment_channel_evidence"
+              ],
+              "activities": [],
+              "needsSupplement": true,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 0,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 0,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [],
+            "upstreamTimings": [],
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "cachedPromptTokens": 0,
+            "totalTokens": 0,
+            "usageComplete": true,
+            "chargedTokens": 0,
+            "quotaAccountedTokens": 0,
+            "durationMs": 5,
+            "estimatedUsdRange": [
+              0,
+              0
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 0,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 6,
+              "serverElapsedMs": 10,
+              "firstTextMs": 10,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 2,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 19,
+                "writeQueries": 12,
+                "calls": 23,
+                "failures": 0,
+                "durationMs": 2.01,
+                "maxCallMs": 0.34,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 3,
+                  "durationMs": 2,
+                  "stagesMs": {
+                    "lexical": 1,
+                    "supplement": 0,
+                    "revalidationAndRanking": 0
+                  },
+                  "candidateChunks": 0,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 0
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T33",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "优先现行官方补办流程、办理入口与来源；找不到时明确未知，不编造窗口、费用或电话。",
+      "turns": [
+        {
+          "message": "学生证丢了怎么补办？",
+          "status": 200,
+          "answer": "本鱼翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息。这不代表学校没有相关规定，只是本站还没收录到——建议通过广外官网、院系公示或校园地图APP核实。",
+          "modelRequired": true,
+          "latencyMs": 17,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 10,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "ce8eb0e7-b719-5a8a-9457-074f1eb2fd20",
+              "requestId": "0a667e31-6968-4c93-aca0-25a5c34bea8e",
+              "started": true
+            },
+            {
+              "conversationId": "ce8eb0e7-b719-5a8a-9457-074f1eb2fd20",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "partial",
+            "retrievalStatus": "empty",
+            "answerMode": "no_evidence",
+            "buildingProfiles": [],
+            "conversationAct": "general",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": true,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "no_candidates",
+              "relatedDocuments": [],
+              "missing": [
+                "relevant_readable_evidence"
+              ],
+              "activities": [],
+              "needsSupplement": true,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 0,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 0,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [],
+            "upstreamTimings": [],
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "cachedPromptTokens": 0,
+            "totalTokens": 0,
+            "usageComplete": true,
+            "chargedTokens": 0,
+            "quotaAccountedTokens": 0,
+            "durationMs": 12,
+            "estimatedUsdRange": [
+              0,
+              0
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 0,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 4,
+              "serverElapsedMs": 16,
+              "firstTextMs": 16,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 10,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 20,
+                "writeQueries": 12,
+                "calls": 24,
+                "failures": 0,
+                "durationMs": 5.98,
+                "maxCallMs": 2.39,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 4,
+                  "durationMs": 10,
+                  "stagesMs": {
+                    "lexical": 2,
+                    "supplement": 1,
+                    "revalidationAndRanking": 7
+                  },
+                  "candidateChunks": 16,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 8
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 8
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T34",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "区分挂失、补卡与支付安全；依据现行官方来源回答，不把校园卡和学生证混为一谈。",
+      "turns": [
+        {
+          "message": "校园卡丢了怎么办？",
+          "status": 200,
+          "answer": "校园卡丢了先别慌，按这个顺序处理最稳妥：\n\n**通用做法（各校基本都适用）**\n1. **立刻挂失**：通过学校校园卡服务平台、官方App/公众号或自助终端冻结卡片，防止被刷。\n2. **找一圈**：回想最后用卡的地点，问问失物招领处、常去的食堂/图书馆服务台。\n3. **补办**：带身份证件到校园卡服务中心办理，通常要交工本费、现场拍照，新卡一般当场或几个工作日内拿到。\n4. **补卡后**：旧卡余额和绑定关系一般会转到新卡，门禁、水控等可能需要重新同步，具体问窗口。\n\n**广外这边暂不能确认的**\n本轮没检索到可核验的广外校园卡挂失渠道、补办地点、所需材料和工本费标准，这些具体规定本鱼没法替你拍板。建议直接看广外校园卡服务平台的官方说明，或问所在校区的校园卡服务窗口。\n\n先挂失，再补办，别拖～ 🐟",
+          "modelRequired": true,
+          "latencyMs": 2373,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 6,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "97d24589-59e9-5026-b93a-8b656cac360f",
+              "requestId": "330075a9-31ef-4058-9e09-945643e7449f",
+              "started": true
+            },
+            {
+              "conversationId": "97d24589-59e9-5026-b93a-8b656cac360f",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "partial",
+            "retrievalStatus": "empty",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "advisory",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "no_candidates",
+              "relatedDocuments": [],
+              "missing": [
+                "relevant_readable_evidence",
+                "procedure_evidence"
+              ],
+              "activities": [],
+              "needsSupplement": true,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 1,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 0,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [],
+            "upstreamTimings": [
+              {
+                "durationMs": 2359,
+                "firstTextMs": 678,
+                "finishReason": "stop",
+                "contentChars": 356
+              }
+            ],
+            "promptTokens": 1014,
+            "completionTokens": 233,
+            "cachedPromptTokens": 0,
+            "totalTokens": 1247,
+            "usageComplete": true,
+            "chargedTokens": 1247,
+            "quotaAccountedTokens": 1247,
+            "durationMs": 2368,
+            "estimatedUsdRange": [
+              0.0002919,
+              0.0005838
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 1247,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 4,
+              "serverElapsedMs": 2372,
+              "firstTextMs": 2372,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 6,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 22,
+                "writeQueries": 12,
+                "calls": 26,
+                "failures": 0,
+                "durationMs": 5.02,
+                "maxCallMs": 2.19,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 4,
+                  "durationMs": 5,
+                  "stagesMs": {
+                    "lexical": 1,
+                    "supplement": 0,
+                    "revalidationAndRanking": 3
+                  },
+                  "candidateChunks": 3,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 2
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 1
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    }
+  ]
+}

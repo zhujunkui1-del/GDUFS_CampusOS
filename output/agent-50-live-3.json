@@ -1,0 +1,1335 @@
+{
+  "clock": "2026-11-18T20:06:00.000Z",
+  "environment": "isolated SQLite; real provider with capped test transport",
+  "budget": {
+    "limit": 1800000,
+    "reserved": 183375,
+    "calls": 14,
+    "rejected": 0
+  },
+  "rows": [
+    {
+      "id": "T36",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "区分奖学金项目、申请资格、截止日期和当前是否开放；没有证据时不编造金额或名额。",
+      "turns": [
+        {
+          "message": "2026年有哪些奖学金可以申请？",
+          "status": 200,
+          "answer": "目前能确认的2026年广外奖学金信息只有两项，且都不是“正在开放申请”的状态：\n\n- **本科学生国家励志奖学金**：学校已印发2026年管理办法（广外校〔2026〕27号），但现有内容只有通知标题和文件名称，具体申请条件、金额、时间和步骤暂不能确认 [1]。\n- **新疆籍少数民族本科学生奖学金**：2025-2026学年的拟获奖名单已于2026年11月9日公示，公示期为11月9日至13日，共28人 [2]。这是评选结果公示，不是申请入口；该学年申请阶段已经过去。\n\n所以，2026年还有哪些奖学金可以申请、当前是否开放报名，仅凭这两份材料无法给出完整清单。国家励志奖学金的管理办法文件正文未取得，不能据此判断申请是否开放；新疆籍少数民族奖学金本轮公示也已结束。",
+          "modelRequired": true,
+          "latencyMs": 3075,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 31,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "428438a5-c209-50bd-83b7-8a35ed5cb78c",
+              "requestId": "32e963f1-0996-4aba-bfe7-1c40d5bf5bb7",
+              "started": true
+            },
+            {
+              "conversationId": "428438a5-c209-50bd-83b7-8a35ed5cb78c",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "content-d7007f12-2767-461b-95ab-28f94d665924",
+                  "title": "广外校〔2026〕27号 关于印发《广东外语外贸大学本科学生国家励志奖学金管理办法》的通知",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://nstu.gdufs.edu.cn/info/1711/68351.htm",
+                  "publishedAt": "2026-09-14T04:22:41.000Z",
+                  "snippet": "广外校〔2026〕27号 关于印发《广东外语外贸大学本科学生国家励志奖学金管理办法》的通知.pdf",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                },
+                {
+                  "kind": "source",
+                  "documentId": "content-b6b9164c-5bb3-41f0-8bfd-74d64188c9eb",
+                  "title": "广东外语外贸大学2025-2026学年新疆籍少数民族本科学生奖学金拟获奖名单公示",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://nstu.gdufs.edu.cn/info/1056/69061.htm",
+                  "publishedAt": "2026-11-09",
+                  "snippet": "根据《广东外语外贸大学新疆籍少数民族本科学生奖学金评选办法》《广东外语外贸大学2025-2026学年新疆籍少数民族本科学生奖学金评选方案》，经新疆籍本科民族学生本人申请，培养单位初评，学生工作部评选审核，2026年新疆少数民族本科学生奖学金拟获奖者28人。现将名单予以公示（详见附件）。\n在公示期间，任何个人和单位均可通过来信、来电、来访等形式，向学生工作部反映公示对象的情况和问题。以个人名义反映的提倡签署或自报本人真实姓名；以单位名义反映的应加盖本单位印章。反映公示对象的情况和问题，要坚持实事求是的原则，不得借机诽谤和诬告。\n公示期：11月9日-11月13日\n联系人：热米莱老师\n联系电话：39328388\n电子邮箱：gwxscxsk@163.com\n地址：大学城校区行政楼116室\n学生工作部\n2026年11月9日\n附件：\n经济贸易学院\n麦合丽娅·吐鲁洪、阿布都萨拉木·玉苏普、帕太姆罕·如孜麦麦提、乌仁格格、布麦热木·图尔荪、阿依孜巴·艾尼、热伊莱·吐尔松、赛米热·如则\n商学院\n穆斯塔帕·买买提江、谢伊代·吐地、伊力塔尔·亚森江、麦吾兰·居热、热伊赛·热合买提江、凯丽比努尔·艾比布拉、谢姆西努尔·艾尔希丁、迪达尔·加尔根、马丽娅\n法学院\n艾力西尔·艾尔肯、热阳古丽·阿布都力木、麦尔哈巴·阿布都拉、阿克玛纳依·白克铁木尔、古丽努尔·麦麦提吐尔孙\n区域国别学院（区域国别研究院）\n依力米努尔·阿不力米提、希林娜依·肉扎吉、祖丽米热·阿布拉哈提\n新闻与传播学院\n阿依谢姆·阿卜杜克尤木、娜孜拉·艾海提、阿亚拉·赛力别克",
+                  "evidenceType": "full_text",
+                  "classificationState": "radar",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "completed",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "supported",
+              "relatedDocuments": [
+                "content-d7007f12-2767-461b-95ab-28f94d665924",
+                "content-b6b9164c-5bb3-41f0-8bfd-74d64188c9eb"
+              ],
+              "missing": [],
+              "activities": [],
+              "needsSupplement": false,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "professional",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 2,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [
+              {
+                "supported": true,
+                "relevant": true,
+                "coverage": "covered",
+                "severity": "unverified",
+                "issues": []
+              }
+            ],
+            "upstreamTimings": [
+              {
+                "durationMs": 1955,
+                "firstTextMs": 638,
+                "finishReason": "stop",
+                "contentChars": 334
+              },
+              {
+                "durationMs": 1024,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 3901,
+            "completionTokens": 291,
+            "cachedPromptTokens": 768,
+            "totalTokens": 4192,
+            "usageComplete": true,
+            "chargedTokens": 4192,
+            "quotaAccountedTokens": 4192,
+            "durationMs": 3034,
+            "estimatedUsdRange": [
+              0.0006468539999999999,
+              0.0012937079999999998
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 4192,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 34,
+              "serverElapsedMs": 3069,
+              "firstTextMs": 3067,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 31,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 27,
+                "writeQueries": 12,
+                "calls": 31,
+                "failures": 0,
+                "durationMs": 10.16,
+                "maxCallMs": 2.32,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 7,
+                  "durationMs": 22,
+                  "stagesMs": {
+                    "lexical": 5,
+                    "supplement": 2,
+                    "revalidationAndRanking": 14
+                  },
+                  "candidateChunks": 23,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "scholarship_policy",
+                      "limit": 16,
+                      "candidates": 1
+                    },
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 2
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 8
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 12
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T37",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "检索国际交流/学院官方渠道；说明不同项目要求可能不同，提供可核验入口，不编造统一截止日期。",
+      "turns": [
+        {
+          "message": "广外出国交换项目怎么申请？",
+          "status": 200,
+          "answer": "目前检索到的广外资料里，没有能说明“出国交换项目怎么申请”的流程信息。唯一命中的是会计学院转专业方案，和交换项目无关 [1]，所以本鱼暂时没法给你可靠的申请步骤。\n\n建议你直接看这两个渠道获取准确流程：\n- **广外国际交流合作处（港澳台事务办公室）官网**的“学生出国（境）”栏目，通常会有项目通知、申请条件和材料清单。\n- **所在学院教务办/辅导员**：交换项目常由学院转发或初审，问本院老师最快。\n\n如果你告诉我具体想去的国家或项目类型（校际交换、国家公派、联合培养等），我可以再帮你查站内有没有对应通知。",
+          "modelRequired": true,
+          "latencyMs": 2660,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 19,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "6e156712-2b99-5c8f-8492-ebc06eb420da",
+              "requestId": "bb73a162-82b7-4bc9-aff1-34c35d9d8f3d",
+              "started": true
+            },
+            {
+              "conversationId": "6e156712-2b99-5c8f-8492-ebc06eb420da",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564",
+                  "title": "会计学院2025-2026-2学期本科生转专业工作方案",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://kjxy.gdufs.edu.cn/info/1107/7797.htm",
+                  "publishedAt": "2026-04-20",
+                  "snippet": "东外语外贸大学本科生转专业实施办法》（广外校〔2025〕37号）文件规定条件的其他学院的2024、2025级在校全日制本科生；\n（2）已入选创新班等教学改革班的，不能再申请转专业；\n（3）尚在休学、保留入学资格或者保留学籍期间的，不得申请转专业。\n（4）上级有关文件明确规定不可转专业的；\n（5）在校期间无违纪处分记录。\n财务管理\n审计学\n考核方案\n转出流程：\n申请者在教务系统填写转专业申请，提出申请理由，由学院转专业工作小组审核通过，方可转出。\n工作小组\n组长：余鹏翼\n成员：黄浩、李海琳、洪 昀、龙文滨、李宏达、邹宇\n联系人：李旭英\n咨询电话：39328956，办公室：会计学院教务办（院系楼103室）\n邮箱：201710074@oamail.gdufs.edu.cn\n备注\n本方案由会计学院转专业工作小组负责解释。\n会计学院\n2026年4月20日",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "completed",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "supported",
+              "relatedDocuments": [
+                "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564"
+              ],
+              "missing": [],
+              "activities": [],
+              "needsSupplement": false,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "professional",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 2,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [
+              {
+                "supported": true,
+                "relevant": true,
+                "coverage": "covered",
+                "severity": "unverified",
+                "issues": []
+              }
+            ],
+            "upstreamTimings": [
+              {
+                "durationMs": 1505,
+                "firstTextMs": 440,
+                "finishReason": "stop",
+                "contentChars": 257
+              },
+              {
+                "durationMs": 1125,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 2968,
+            "completionTokens": 253,
+            "cachedPromptTokens": 768,
+            "totalTokens": 3221,
+            "usageComplete": true,
+            "chargedTokens": 3221,
+            "quotaAccountedTokens": 3221,
+            "durationMs": 2653,
+            "estimatedUsdRange": [
+              0.0004841039999999999,
+              0.0009682079999999998
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 3221,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 4,
+              "serverElapsedMs": 2657,
+              "firstTextMs": 2656,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 19,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 25,
+                "writeQueries": 12,
+                "calls": 29,
+                "failures": 0,
+                "durationMs": 10.57,
+                "maxCallMs": 3.44,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 5,
+                  "durationMs": 19,
+                  "stagesMs": {
+                    "lexical": 4,
+                    "supplement": 3,
+                    "revalidationAndRanking": 12
+                  },
+                  "candidateChunks": 28,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 14
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 14
+                    },
+                    {
+                      "name": "document_passages",
+                      "limit": 144,
+                      "candidates": 2
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T38",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "核验 2026 年对应通知；不能拿 2024 年证书领取地点直接当作 2026 年现行规定。",
+      "turns": [
+        {
+          "message": "2026年下半年全国计算机等级考试广外考点的证书怎么领取？",
+          "status": 200,
+          "answer": "目前能查到的广外考点通知只覆盖**报考、考试和准考证打印**，没有写明2026年下半年（第78次）考试合格证书的领取时间、地点或流程，所以暂时无法确认具体怎么领 [1][2]。\n\n可确认的相关信息：\n- 该次考试广外设白云山校区（代码440101）和大学城校区（代码440128）两个考点 [1][2]。\n- 考试时间为2026年9月19日，准考证打印时间为9月14日9:00至18日 [1][2]。\n- 广外考点由现代教育技术中心组织实施，咨询电话：**020-36206335** [1]。\n\n建议直接拨打上述考点电话，询问证书是现场领取还是邮寄、需要带什么证件。",
+          "modelRequired": true,
+          "latencyMs": 3363,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 46,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "98598ff8-65d0-562a-a718-27e6190f2da3",
+              "requestId": "dc9c88ad-95b5-4331-a509-502e05804465",
+              "started": true
+            },
+            {
+              "conversationId": "98598ff8-65d0-562a-a718-27e6190f2da3",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "wx-1c06bd085b46ba6efb7156b53fff46d9155c8b31",
+                  "title": "转载||2026年下半年(第78次)全国计算机等级考试（NCRE）广外考点报考通知",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://mp.weixin.qq.com/s/kPSUshdq1-uqzjVac1WmZQ",
+                  "publishedAt": "2026-06-30T09:36:15.000Z",
+                  "snippet": "2026年下半年(第78次)\n全国计算机等级考试（NCRE）广外考点报考通知\n2026年下半年(第78次)全国计算机等级考试（NCRE）报名于2026年6月25日10:00时开始，广外考点由我校现代教育技术中心组织实施，欢迎广大考生报考。考点咨询电话：020-36206335。\n全国计算机等级考试（NCRE）由教育部教育考试院（原教育部考试中心）主办，面向社会开考，是用于考查应试人员计算机应用知识与能力的全国性计算机水平考试体系。全国计算机等级考试（NCRE）合格证书式样按国际通行证书式样设计，用中、英两种文字书写，证书上印有持有人身份证号码和照片，证书编号全国统一，是持有人计算机应用能力的证明。广东外语外贸大学白云山校区（代码440101）和广东外语外贸大学大学城校区（代码440128）均面向社会开考。\n01\n报考条件\n报名者不限年龄、职业、学历，均可报考相应的级别和科目。同一个科目同次不可重复报名，同一名考生同次考试只能在同一省级承办机构报名，不允许跨省报考。\n02\n考试时间和准考证打印时间\n考试时间：2026年9月19日随机分批进行。\n准考证打印时间：2026年9月14日上午9:00 至18日（考生登录报名系统打印准考证）\n03\n报考方式及时间\nNCRE实行网上报名。\n考生网上报名时间：2026年6月25日10:00时至2026年7月3日16:00时；\n04\n考生报名流程\n网上报名分为注册账号、填报信息、网上缴费三个步骤。\n推荐浏览器：谷歌、火狐、IE9+、360浏览器（极速模式）。\n注册账号\n考生登录网址(公网 https://passport.etest.net.cn或教育网https://passport.etest.edu.cn)注册ETEST通行证。\nETEST通行证账号在教育部考试中心所有使用ETEST通行证的考务系",
+                  "evidenceType": "full_text",
+                  "classificationState": "radar",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": [
+                    {
+                      "title": "转载||2026年下半年(第78次)全国计算机等级考试（NCRE）广外考点报考通知",
+                      "href": "/calendar?date=2026-09-14&event=event-6ac6380a06a5e34602d4b2f4e819780bc2860aa3&article=wx-1c06bd085b46ba6efb7156b53fff46d9155c8b31"
+                    }
+                  ]
+                },
+                {
+                  "kind": "source",
+                  "documentId": "content-2e615595-8ffc-445c-bb94-14e65e579414",
+                  "title": "2026年下半年(第78次)全国计算机等级考试（NCRE）广外考点报考通知",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://etr.gdufs.edu.cn/info/1033/6907.htm",
+                  "publishedAt": "2026-06-25",
+                  "snippet": "电话：36206335；QQ群：129621175、245296927、28901811\n附件1：全国计算机等级考试大纲目录\n附件2：全国计算机等级考试教材目录\n附件3：全国计算机等级考试级别科目设置及证书体系\n附件4：全国计算机等级考试报名常见问题及解答\n全国计算机等级考试广东外语外贸大学考点\n2026年6月25日\n附件1\n全国计算机等级考试考试大纲\n（2025年版）\n级别\n大纲名称\n一级\n一级计算机基础及WPS Office应用考试大纲（2025年版）\n一级计算机基础及MS Office应用考试大纲（2025年版）\n一级计算机基础及Photoshop应用考试大纲（2025年版）\n一级网络安全素质教育考试大纲（2025年版）\n一级人工智能与大模型基础考试大纲（2025年版）\n二级\n二级公共基础知识考试大纲（2025年版）\n二级C语言程序设计考试大纲（2025年版）\n二级Java语言程序设计考试大纲（2025年版）\n二级Access数据库程序设计考试大纲（2025年版）\n二级C++语言程序设计考试大纲（2025年版）\n二级MySQL数据库程序设计考试大纲（2025年版）\n二级Web程序设计考试大纲（2025年版）\n二级MS Office高级应用与设计考试大纲（2025年版）\n二级Python语言程序设计考试大纲（2025年版）\n二级WPS Office高级应用与设计考试大纲（2025年版）",
+                  "evidenceType": "full_text",
+                  "classificationState": "radar",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": [
+                    {
+                      "title": "2026年下半年(第78次)全国计算机等级考试（NCRE）广外考点报考通知",
+                      "href": "/calendar?date=2026-09-14&event=event-04becb9da7a4b32f559177d8afa5163cda7ac672&article=content-2e615595-8ffc-445c-bb94-14e65e579414"
+                    }
+                  ]
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "plan": {
+                "subject": "全国计算机等级考试广外考点证书领取",
+                "entities": [
+                  "广外"
+                ],
+                "constraints": [
+                  "2026年下半年"
+                ],
+                "goal": "procedure",
+                "query": "“全国计算机等级考试广外考点” “证书” “领取” “广外” “2026年下半年” 2026年下半年 2026"
+              },
+              "durationMs": 1336,
+              "usage": {
+                "promptTokens": 599,
+                "completionTokens": 98,
+                "totalTokens": 697,
+                "cachedPromptTokens": 384
+              }
+            },
+            "executionStatus": "completed",
+            "taskStatus": "completed",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "supported",
+              "relatedDocuments": [
+                "wx-1c06bd085b46ba6efb7156b53fff46d9155c8b31",
+                "content-2e615595-8ffc-445c-bb94-14e65e579414",
+                "content-d7007f12-2767-461b-95ab-28f94d665924",
+                "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564"
+              ],
+              "missing": [],
+              "activities": [
+                {
+                  "documentId": "wx-1c06bd085b46ba6efb7156b53fff46d9155c8b31",
+                  "existence": "documented",
+                  "eventState": "ended",
+                  "registrationState": "closed",
+                  "participation": "closed",
+                  "openParticipation": false
+                },
+                {
+                  "documentId": "content-2e615595-8ffc-445c-bb94-14e65e579414",
+                  "existence": "documented",
+                  "eventState": "ended",
+                  "registrationState": "closed",
+                  "participation": "closed",
+                  "openParticipation": false
+                }
+              ],
+              "needsSupplement": false,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "professional",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 3,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [
+              {
+                "supported": true,
+                "relevant": true,
+                "coverage": "covered",
+                "issues": []
+              }
+            ],
+            "upstreamTimings": [
+              {
+                "durationMs": 1258,
+                "firstTextMs": 241,
+                "finishReason": "stop",
+                "contentChars": 284
+              },
+              {
+                "durationMs": 710,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 10213,
+            "completionTokens": 349,
+            "cachedPromptTokens": 768,
+            "totalTokens": 10562,
+            "usageComplete": true,
+            "chargedTokens": 10562,
+            "quotaAccountedTokens": 10562,
+            "durationMs": 2020,
+            "estimatedUsdRange": [
+              0.001479804,
+              0.002959608
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 10562,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 1339,
+              "serverElapsedMs": 3360,
+              "firstTextMs": 3358,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 46,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 32,
+                "writeQueries": 12,
+                "calls": 36,
+                "failures": 0,
+                "durationMs": 13.55,
+                "maxCallMs": 2.33,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 6,
+                  "durationMs": 17,
+                  "stagesMs": {
+                    "lexical": 2,
+                    "supplement": 2,
+                    "revalidationAndRanking": 13
+                  },
+                  "candidateChunks": 17,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 17
+                    },
+                    {
+                      "name": "document_passages",
+                      "limit": 112,
+                      "candidates": 6
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T40",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "优先提供可核验的广外官方入口及来源，不能给出未经验证的钓鱼或过时网址。",
+      "turns": [
+        {
+          "message": "学校教务系统的官方入口是什么？",
+          "status": 200,
+          "answer": "本轮站内资料没有给出广外教务系统的官方入口网址，暂不能确认。现有几份材料只提到“通过教务管理系统/教务系统进行申请” [1][2]，但没有附上入口地址。\n\n建议从学校官网或教务部官网的“教务系统”链接进入，别点搜索引擎里的推广链接。🐟",
+          "modelRequired": true,
+          "latencyMs": 3249,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 40,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "68a2e9b6-8036-599a-b089-32d4887f8220",
+              "requestId": "548c6058-97b0-432c-8c4d-da6d2b2f6d81",
+              "started": true
+            },
+            {
+              "conversationId": "68a2e9b6-8036-599a-b089-32d4887f8220",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+                  "title": "广东外语外贸大学本科生转专业实施办法",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://dbxb.gdufs.edu.cn/info/1094/2604.htm",
+                  "publishedAt": "2025-12-11",
+                  "snippet": "工作方案应包括计划转入人数、转入条件、考核方式、考核程序等，考核方式中必须设置笔试环节。工作方案报教务部备案后向全校学生公布。\n（二）学生申请。拟转专业的学生在规定时间内通过教务管理系统进行申请。\n（三）转出学院审查。转出学院对申请转专业的学生进行资格审查，对符合条件的学生名单进行公示，公示无异议后，将学生名单及材料报教务部。\n（四）转入学院考核。转入学院对申请转专业的学生进行考核，将考核结果和拟转入学生名单进行公示，公示无异议，经学院党政联席会议审议通过后，将学生名单及材料报教务部。\n（五）学校批准及公布。教务部对各学院拟转入学生的材料进行汇总和复核，并在全校范围内公示5日；公示无异议后，将各学院拟转入学生汇总名单报校长办公会议审定后，由学校发文公布转专业学生名单。",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                },
+                {
+                  "kind": "source",
+                  "documentId": "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564",
+                  "title": "会计学院2025-2026-2学期本科生转专业工作方案",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://kjxy.gdufs.edu.cn/info/1107/7797.htm",
+                  "publishedAt": "2026-04-20",
+                  "snippet": "东外语外贸大学本科生转专业实施办法》（广外校〔2025〕37号）文件规定条件的其他学院的2024、2025级在校全日制本科生；\n（2）已入选创新班等教学改革班的，不能再申请转专业；\n（3）尚在休学、保留入学资格或者保留学籍期间的，不得申请转专业。\n（4）上级有关文件明确规定不可转专业的；\n（5）在校期间无违纪处分记录。\n财务管理\n审计学\n考核方案\n转出流程：\n申请者在教务系统填写转专业申请，提出申请理由，由学院转专业工作小组审核通过，方可转出。\n工作小组\n组长：余鹏翼\n成员：黄浩、李海琳、洪 昀、龙文滨、李宏达、邹宇\n联系人：李旭英\n咨询电话：39328956，办公室：会计学院教务办（院系楼103室）\n邮箱：201710074@oamail.gdufs.edu.cn\n备注\n本方案由会计学院转专业工作小组负责解释。\n会计学院\n2026年4月20日",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "plan": {
+                "subject": "教务系统",
+                "entities": [
+                  "学校"
+                ],
+                "constraints": [
+                  "官方入口"
+                ],
+                "goal": "facts",
+                "query": "“教务系统” “学校” “官方入口” 官方入口"
+              },
+              "durationMs": 1227,
+              "usage": {
+                "promptTokens": 591,
+                "completionTokens": 89,
+                "totalTokens": 680,
+                "cachedPromptTokens": 384
+              }
+            },
+            "executionStatus": "completed",
+            "taskStatus": "completed",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "supported",
+              "relatedDocuments": [
+                "content-2e615595-8ffc-445c-bb94-14e65e579414",
+                "wx-1c06bd085b46ba6efb7156b53fff46d9155c8b31",
+                "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+                "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564"
+              ],
+              "missing": [],
+              "activities": [
+                {
+                  "documentId": "content-2e615595-8ffc-445c-bb94-14e65e579414",
+                  "existence": "documented",
+                  "eventState": "ended",
+                  "registrationState": "closed",
+                  "participation": "closed",
+                  "openParticipation": false
+                },
+                {
+                  "documentId": "wx-1c06bd085b46ba6efb7156b53fff46d9155c8b31",
+                  "existence": "documented",
+                  "eventState": "ended",
+                  "registrationState": "closed",
+                  "participation": "closed",
+                  "openParticipation": false
+                }
+              ],
+              "needsSupplement": false,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 3,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [
+              {
+                "supported": true,
+                "relevant": true,
+                "coverage": "covered",
+                "issues": []
+              }
+            ],
+            "upstreamTimings": [
+              {
+                "durationMs": 1103,
+                "firstTextMs": 533,
+                "finishReason": "stop",
+                "contentChars": 118
+              },
+              {
+                "durationMs": 868,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 6466,
+            "completionTokens": 244,
+            "cachedPromptTokens": 768,
+            "totalTokens": 6710,
+            "usageComplete": true,
+            "chargedTokens": 6710,
+            "quotaAccountedTokens": 6710,
+            "durationMs": 2016,
+            "estimatedUsdRange": [
+              0.0008613539999999999,
+              0.0017227079999999999
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 6710,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 1230,
+              "serverElapsedMs": 3246,
+              "firstTextMs": 3245,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 40,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 32,
+                "writeQueries": 12,
+                "calls": 36,
+                "failures": 0,
+                "durationMs": 11.44,
+                "maxCallMs": 1.81,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 6,
+                  "durationMs": 14,
+                  "stagesMs": {
+                    "lexical": 1,
+                    "supplement": 1,
+                    "revalidationAndRanking": 11
+                  },
+                  "candidateChunks": 18,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 18
+                    },
+                    {
+                      "name": "document_passages",
+                      "limit": 96,
+                      "candidates": 7
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T44",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "查最新有日期的官方通知，给发布日期、适用时间、校区和链接；不能把 2023 年临时闭馆当作最新。",
+      "turns": [
+        {
+          "message": "最近一条图书馆开放时间调整通知是什么？",
+          "status": 200,
+          "answer": "本鱼暂时查不到图书馆开放时间调整的通知，手头只有图书馆的地点信息（大学城校区图书馆，placeId: osm-way-307250998），没有通知内容或发布时间。\n\n建议你直接看图书馆官网或公众号的公告栏，或者问馆内服务台，这样最稳妥。🐟",
+          "modelRequired": true,
+          "latencyMs": 3988,
+          "tools": [
+            {
+              "name": "search_places",
+              "origin": "model"
+            },
+            {
+              "name": "search_places",
+              "ok": true,
+              "durationMs": 1.94,
+              "origin": "model"
+            },
+            {
+              "name": "find_nearby_places",
+              "origin": "model"
+            },
+            {
+              "name": "find_nearby_places",
+              "ok": true,
+              "durationMs": 2.41,
+              "origin": "model"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "29d826ad-28dd-50c4-8da2-930cbffb57c6",
+              "requestId": "5b558b7b-dbf6-4b4d-957c-55571bd28536",
+              "started": true
+            },
+            {
+              "conversationId": "29d826ad-28dd-50c4-8da2-930cbffb57c6",
+              "cards": [
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-307250998",
+                    "name": "图书馆",
+                    "category": "library",
+                    "zone": "teaching",
+                    "location": [
+                      113.39131405,
+                      23.0680465
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [
+                      "大学城校区图书馆"
+                    ],
+                    "labelPlaceId": "osm-way-307250998",
+                    "verificationStatus": "source_mapped"
+                  }
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 4,
+            "correctionRetries": 1,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 0,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [],
+            "upstreamTimings": [
+              {
+                "durationMs": 879,
+                "firstTextMs": null,
+                "finishReason": "tool_calls",
+                "contentChars": 0
+              },
+              {
+                "durationMs": 1134,
+                "firstTextMs": null,
+                "finishReason": "tool_calls",
+                "contentChars": 0
+              },
+              {
+                "durationMs": 662,
+                "firstTextMs": null,
+                "finishReason": "tool_calls",
+                "contentChars": 0
+              },
+              {
+                "durationMs": 1298,
+                "firstTextMs": 521,
+                "finishReason": "stop",
+                "contentChars": 121
+              }
+            ],
+            "promptTokens": 4430,
+            "completionTokens": 332,
+            "cachedPromptTokens": 1664,
+            "totalTokens": 4762,
+            "usageComplete": true,
+            "chargedTokens": 4762,
+            "quotaAccountedTokens": 4762,
+            "durationMs": 3983,
+            "estimatedUsdRange": [
+              0.000619092,
+              0.001238184
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 4762,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 4,
+              "serverElapsedMs": 3986,
+              "firstTextMs": 3986,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_places",
+                  "durationMs": 1.94,
+                  "ok": true
+                },
+                {
+                  "name": "find_nearby_places",
+                  "durationMs": 2.41,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 23,
+                "writeQueries": 12,
+                "calls": 27,
+                "failures": 0,
+                "durationMs": 1.82,
+                "maxCallMs": 0.19,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T45",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "不能从“没检索到”推断“已取消”；核查官方政策或明确无法证实。",
+      "turns": [
+        {
+          "message": "广外是不是已经取消了所有奖学金？",
+          "status": 200,
+          "answer": "翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息。这不代表学校没有相关规定，只是本站还没收录到——建议通过广外官网、院系公示或校园地图APP核实。",
+          "modelRequired": true,
+          "latencyMs": 40,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 16,
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 12,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "45c5a1e0-e10c-582b-9ca9-5a2f3fa2d118",
+              "requestId": "79cc8bdb-ce80-49db-bcdd-30b3da25ad22",
+              "started": true
+            },
+            {
+              "conversationId": "45c5a1e0-e10c-582b-9ca9-5a2f3fa2d118",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "partial",
+            "retrievalStatus": "matched",
+            "answerMode": "no_evidence",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": true,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "off_topic",
+              "relatedDocuments": [],
+              "missing": [
+                "relevant_readable_evidence",
+                "official_authority_unconfirmed"
+              ],
+              "activities": [],
+              "needsSupplement": true,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "professional",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 0,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 0,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [],
+            "upstreamTimings": [],
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "cachedPromptTokens": 0,
+            "totalTokens": 0,
+            "usageComplete": true,
+            "chargedTokens": 0,
+            "quotaAccountedTokens": 0,
+            "durationMs": 32,
+            "estimatedUsdRange": [
+              0,
+              0
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 0,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 7,
+              "serverElapsedMs": 38,
+              "firstTextMs": 38,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 16,
+                  "ok": true
+                },
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 12,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 28,
+                "writeQueries": 12,
+                "calls": 32,
+                "failures": 0,
+                "durationMs": 12.61,
+                "maxCallMs": 2.19,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 7,
+                  "durationMs": 16,
+                  "stagesMs": {
+                    "lexical": 2,
+                    "supplement": 1,
+                    "revalidationAndRanking": 12
+                  },
+                  "candidateChunks": 15,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "scholarship_policy",
+                      "limit": 16,
+                      "candidates": 1
+                    },
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 14
+                    },
+                    {
+                      "name": "document_passages",
+                      "limit": 112,
+                      "candidates": 3
+                    }
+                  ]
+                },
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 5,
+                  "durationMs": 12,
+                  "stagesMs": {
+                    "lexical": 3,
+                    "supplement": 1,
+                    "revalidationAndRanking": 8
+                  },
+                  "candidateChunks": 19,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "scholarship_policy",
+                      "limit": 16,
+                      "candidates": 1
+                    },
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 2
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 8
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 8
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    }
+  ]
+}

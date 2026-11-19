@@ -1,0 +1,36 @@
+[
+  {
+    "results": [
+      {
+        "id": "content-fbc3ca16-4c2b-444e-957b-56f8be3821f4",
+        "url": "https://etr.gdufs.edu.cn/info/1303/5927.htm",
+        "publication_status": "published",
+        "lifecycle_status": "active"
+      },
+      {
+        "id": "content-2756749b-db84-4c38-9f04-8538f3e435df",
+        "url": "https://jwb.gdufs.edu.cn/info/1044/3725.htm",
+        "publication_status": "published",
+        "lifecycle_status": "active"
+      }
+    ],
+    "success": true,
+    "meta": {
+      "served_by": "v3-prod",
+      "served_by_region": "APAC",
+      "served_by_colo": "KIX",
+      "served_by_primary": true,
+      "timings": {
+        "sql_duration_ms": 1.3208
+      },
+      "duration": 1.3208,
+      "changes": 0,
+      "last_row_id": 0,
+      "changed_db": false,
+      "size_after": 599937024,
+      "rows_read": 10,
+      "rows_written": 0,
+      "total_attempts": 1
+    }
+  }
+]

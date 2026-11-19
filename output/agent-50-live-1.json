@@ -1,0 +1,663 @@
+{
+  "clock": "2026-11-18T20:06:00.000Z",
+  "environment": "isolated SQLite; real provider with capped test transport",
+  "budget": {
+    "limit": 1800000,
+    "reserved": 71663,
+    "calls": 6,
+    "rejected": 0
+  },
+  "rows": [
+    {
+      "id": "T35",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "说明政策适用年份/对象及来源；若没有现行制度，避免套用旧年规定。",
+      "turns": [
+        {
+          "message": "转专业需要满足什么条件？",
+          "status": 200,
+          "answer": "广外本科生转专业，基本条件和主要流程如下：\n\n**基本申请条件**（依据《广东外语外贸大学本科生转专业实施办法》，广外校〔2025〕37号）[1]：\n- 一年级学生可在第一、第二学期申请，二年级学生可在第四学期申请，均需在学期结束前完成；\n- 在校期间无违纪处分记录；\n- 对其他专业有兴趣和专长；\n- 每名学生每次只能申请转入1个专业，在校期间原则上只能成功转专业1次。\n\n**转专业分三类**：教学改革班选拔、申请转专业、特殊情况转专业 [1]。\n\n**申请程序** [1]：\n1. 各学院公布转专业工作方案（含计划转入人数、转入条件、考核方式等，考核必须设笔试）；\n2. 学生在规定时间内通过教务管理系统申请；\n3. 转出学院资格审查并公示；\n4. 转入学院组织考核，公示考核结果和拟转入名单。\n\n**各学院另有具体要求**。以会计学院2025-2026-2学期方案为例 [2]：\n- 接收对象为其他学院2024、2025级全日制本科生；\n- 已转过专业的（大类招生分流不计入）、已入选创新班等教学改革班的、尚在休学或保留学籍期间的，不得申请；\n- 需通过学院组织的数学笔试，成绩不低于60分；\n- 总成绩 = 学分加权平均分×50% + 面试分×30% + 笔试分×20%，按专业接收指标排序录取；\n- 有相关竞赛奖项或专业技能者优先。\n\n所以，转专业能否成功，关键看目标学院当学期的方案：转入名额、笔试科目和考核权重都由学院定，转出人数则不设限制 [1][2]。建议先确认自己想转入的学院最新工作方案，再对照准备。",
+          "modelRequired": true,
+          "latencyMs": 4509,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 21,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "74a820ff-4564-518a-958b-ddb0bb5a4f8d",
+              "requestId": "ee2328fc-5332-4aaa-b07d-924d6d613666",
+              "started": true
+            },
+            {
+              "conversationId": "74a820ff-4564-518a-958b-ddb0bb5a4f8d",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+                  "title": "广东外语外贸大学本科生转专业实施办法",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://dbxb.gdufs.edu.cn/info/1094/2604.htm",
+                  "publishedAt": "2025-12-11",
+                  "snippet": "（广外校〔2025〕37号 2025年12月11日印发）\n第一章 总则\n第一条 为规范我校本科生转专业管理，调动学生学习的主动性与积极性，促进学生自主学习和个性化发展，根据《普通高等学校学生管理规定》，结合学校实际，制定本办法。\n第二条 本办法适用于我校普通本科学历教育的全日制学生。\n第三条 转专业工作坚持公开、公平、公正的原则。\n第四条 学校允许符合条件的本科生转专业。各专业转出学生人数不设限制，转入学生人数由各学院根据实际情况确定。\n第二章 转专业的分类、条件和程序\n第五条 学校转专业分为三种情况：\n（一）教学改革班选拔；\n（二）申请转专业；\n（三）特殊情况转专业。\n每个学生在校期间原则上只能成功转1次专业。\n第六条 新生入学阶段，学校按照当年情况选拔进入各类教学改革班的学生，经公示无异议后，由转入学院报教务部办理转专业手续。\n第七条 一年级学生可在第一学期、第二学期申请转专业，二年级学生可在第四学期申请转专业，均应在学期结束前完成。每名学生每次只能申请转入1个专业。申请转专业的学生应符合以下条件：\n（一）一年级或二年级在校学生；\n（二）在校期间无违纪处分记录；\n（三）对其他专业有兴趣和专长。\n第八条 申请转专业的程序如下：\n（一）公布方案。各学院根据各专业的实际情况，制定学院转专业工作方案。工作方案应包括计划转入人数、转入条件、考核方式、考核程序等，考核方式中必须设置笔试环节。工作方案报教务部备案后向全校学生公布。\n（二）学生申请。拟转专业的学生在规定时间内通过教务管理系统进行申请。\n（三）转出学院审查。转出学院对申请转专业的学生进行资格审查，对符合条件的学生名单进行公示，公示无异议后，将学生名单及材料报教务部。\n（四）转入学院考核。转入学院对申请转专业的学生进行考核，将考核结果和拟转入学生名单进行公示，公示无异议，经学院党政联",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                },
+                {
+                  "kind": "source",
+                  "documentId": "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564",
+                  "title": "会计学院2025-2026-2学期本科生转专业工作方案",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://kjxy.gdufs.edu.cn/info/1107/7797.htm",
+                  "publishedAt": "2026-04-20",
+                  "snippet": "接收人数\n接收对象\n转入条件或要求\n备注\n会计学\n2025级/2026级\n共3人，其中2024级1人，2025级2人。\n符合《广东外语外贸大学本科生转专业实施办法》（广外校〔2025〕37号）文件规定条件的其他学院2024、2025级在校全日制本科生。\n学生申请转入会计学院各专业，应当符合下列条件或要求：\n（1）符合《广东外语外贸大学本科生转专业实施办法》（广外校〔2025〕37号）文件规定条件的其他学院的2024、2025级在校全日制本科生；\n（2）在校期间已转过专业的（因大类招生进行专业分流的，不计入转专业）不得申请转专业；\n（3）已入选创新班等教学改革班的，不能再申请转专业；\n（4）尚在休学、保留入学资格或者保留学籍期间的，不得申请转专业；\n（5）上级有关文件明确规定不可转专业的；\n（6）在校期间无违纪处分记录；\n（7）由学院组织的数学笔试成绩，不得低于60分，否则取消转入资格，不予接收；\n（8）不按学院通知要求准时参加面试、笔试者视为放弃转入资格。\n具备与转入专业有关的竞赛奖项或专业技能者优先。\n财务管理\n共4人，其中2024级1人，2025级3人。\n审计学\n共6人，其中2024级1人，2025级5人。\n考核方案\n所有申请者按入学后全部课程学分加权平均分为基准，综合考虑面试、笔试分按总分数排序后，根据各专业接收指标转入。\n申请者总分数计算公式：学分加权平均分*50%+面试分*30%+笔试分*20%\n转入流程：\n符合大学本科生转专业规定条件的其他学院的学生；在校期间无违纪处分记录，可申请转入会计学院相关专业；\n（1）申请者系统提出申请（系统申请时间待教务部通知）并按要求提交纸质版申请材料（含申请表（系统可导出）、成绩单、无违纪处分记录等），在系统申请时间内将材料交至会计学院教务办（院系楼103）李老师处；\n（2）学院对学生进行考",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "plan": {
+                "subject": "转专业",
+                "entities": [],
+                "constraints": [],
+                "goal": "requirements",
+                "query": "“转专业”"
+              },
+              "durationMs": 885,
+              "usage": {
+                "promptTokens": 591,
+                "completionTokens": 84,
+                "totalTokens": 675,
+                "cachedPromptTokens": 0
+              }
+            },
+            "executionStatus": "completed",
+            "taskStatus": "completed",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "general",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "supported",
+              "relatedDocuments": [
+                "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+                "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564"
+              ],
+              "missing": [],
+              "activities": [],
+              "needsSupplement": false,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "professional",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 3,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [
+              {
+                "supported": true,
+                "relevant": true,
+                "coverage": "covered",
+                "severity": "unverified",
+                "issues": []
+              }
+            ],
+            "upstreamTimings": [
+              {
+                "durationMs": 2618,
+                "firstTextMs": 500,
+                "finishReason": "stop",
+                "contentChars": 662
+              },
+              {
+                "durationMs": 914,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 5620,
+            "completionTokens": 575,
+            "cachedPromptTokens": 0,
+            "totalTokens": 6195,
+            "usageComplete": true,
+            "chargedTokens": 6195,
+            "quotaAccountedTokens": 6195,
+            "durationMs": 3576,
+            "estimatedUsdRange": [
+              0.00104895,
+              0.0020979
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 6195,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 923,
+              "serverElapsedMs": 4499,
+              "firstTextMs": 4497,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 21,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 24,
+                "writeQueries": 12,
+                "calls": 28,
+                "failures": 0,
+                "durationMs": 7.26,
+                "maxCallMs": 1.87,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 4,
+                  "durationMs": 13,
+                  "stagesMs": {
+                    "lexical": 3,
+                    "supplement": 1,
+                    "revalidationAndRanking": 9
+                  },
+                  "candidateChunks": 18,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 6
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 6
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 6
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T39",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "优先官方校园网排障步骤；一般性排查可清楚标注为通用建议，不能编造报修电话。",
+      "turns": [
+        {
+          "message": "校园网连不上怎么办？",
+          "status": 200,
+          "answer": "校园网连不上，先别急着怀疑人生，按这个顺序排查通常能解决大半：\n\n**通用排查步骤**\n1. **先分清是“完全没网”还是“认证不过”**：看设备有没有连上 Wi-Fi 信号、能不能打开认证页面。信号满格但打不开网页，多半是认证或账号问题；连信号都搜不到，先查无线开关和飞行模式。\n2. **换设备、换位置试一下**：同一账号在手机和电脑上分别试，或者走到别的楼层/教室试。只有一台设备不行，问题在设备；到处都不行，问题在账号或网络侧。\n3. **检查账号状态**：确认账号没欠费、没被锁定、密码没改过；多人共用账号容易被挤下线。\n4. **重启和重连**：关掉 Wi-Fi 再开、忘记网络后重新连接、重启设备；电脑有线的话换根网线或换个端口。\n5. **关掉代理/VPN/私人DNS**：这些设置经常让认证页面跳不出来，先临时关闭再试。\n6. **还不行就报修**：记下时间、地点（楼栋楼层）、设备类型和报错页面，找学校网络信息中心或宿舍网管报障，比只说“连不上”快得多。\n\n**广外具体情况**\n本轮没有检索到广外校园网认证方式、账号办理、报修入口或服务点位置的可读资料，所以这些**广外具体规定暂不能确认**，包括：GDUFS-Auto/GDUFS_Auto 的认证流程、账号开通与缴费方式、报修渠道和办公地点。建议直接看学校网络信息中心官网或问宿舍网管，别照着网上旧攻略操作。🐟",
+          "modelRequired": true,
+          "latencyMs": 3489,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 14,
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 16,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "2d84ee1a-bc2b-5174-9d59-8a61a8917b08",
+              "requestId": "04db04db-d2c9-41fd-a96e-31a1ab2911a9",
+              "started": true
+            },
+            {
+              "conversationId": "2d84ee1a-bc2b-5174-9d59-8a61a8917b08",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "partial",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "advisory",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "off_topic",
+              "relatedDocuments": [],
+              "missing": [
+                "relevant_readable_evidence",
+                "procedure_evidence"
+              ],
+              "activities": [],
+              "needsSupplement": true,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 1,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 0,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [],
+            "upstreamTimings": [
+              {
+                "durationMs": 3443,
+                "firstTextMs": 583,
+                "finishReason": "stop",
+                "contentChars": 594
+              }
+            ],
+            "promptTokens": 1026,
+            "completionTokens": 375,
+            "cachedPromptTokens": 0,
+            "totalTokens": 1401,
+            "usageComplete": true,
+            "chargedTokens": 1401,
+            "quotaAccountedTokens": 1401,
+            "durationMs": 3479,
+            "estimatedUsdRange": [
+              0.0003789,
+              0.0007578
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 1401,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 7,
+              "serverElapsedMs": 3487,
+              "firstTextMs": 3486,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 14,
+                  "ok": true
+                },
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 16,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 29,
+                "writeQueries": 12,
+                "calls": 33,
+                "failures": 0,
+                "durationMs": 12.67,
+                "maxCallMs": 2.96,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 5,
+                  "durationMs": 13,
+                  "stagesMs": {
+                    "lexical": 2,
+                    "supplement": 1,
+                    "revalidationAndRanking": 10
+                  },
+                  "candidateChunks": 7,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 0
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 7
+                    },
+                    {
+                      "name": "document_passages",
+                      "limit": 48,
+                      "candidates": 4
+                    }
+                  ]
+                },
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 6,
+                  "durationMs": 16,
+                  "stagesMs": {
+                    "lexical": 3,
+                    "supplement": 1,
+                    "revalidationAndRanking": 12
+                  },
+                  "candidateChunks": 20,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 2
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 6
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 12
+                    },
+                    {
+                      "name": "document_passages",
+                      "limit": 80,
+                      "candidates": 6
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T43",
+      "repeat": 1,
+      "priority": "P0",
+      "expected": "从已提供官方搜索摘要可区分举办 2026-10-25、新闻发布 2026-10-29；答案分别标注日期与来源。",
+      "turns": [
+        {
+          "message": "《新利益法学》讲座的举办日期和新闻发布日期分别是什么？",
+          "status": 200,
+          "answer": "《新利益法学》讲座举办于2026年10月25日下午，新闻发布于2026年10月29日 [1]。\n\n关键依据：这场是著名教授论坛（复合型教师培养专项）第763讲，在白云山校区开讲，由清华大学梁上上教授主讲 [1]。",
+          "modelRequired": true,
+          "latencyMs": 1805,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 16,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "e4927feb-9657-5f6c-b7b6-e0b07660c222",
+              "requestId": "16c007de-8af2-4cfd-94d4-756886aab624",
+              "started": true
+            },
+            {
+              "conversationId": "e4927feb-9657-5f6c-b7b6-e0b07660c222",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "content-96336d86-f5df-450b-ae92-f820332fed54",
+                  "title": "著名教授论坛（复合型教师培养专项）第763讲：新利益法学",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://ctd.gdufs.edu.cn/info/1015/11399.htm",
+                  "publishedAt": "2026-10-29",
+                  "snippet": "10月25日下午，我校著名教授论坛第763讲在白云山校区开讲，本次讲座主题为《新利益法学》，由人力资源部（教师发展中心）主办，法学院、涉外法治研究院共同承办。清华大学博士生导师梁上上教授应邀主讲，涉外法治研究院副院长、法学院王荣珍教授主持。\n讲座中，梁上上教授循着法学理论发展脉络展开分享，梳理概念法学的主要特征与固有局限，介绍传统利益法学的形成背景及其在司法裁判领域的理论贡献，剖析传统利益法学在实践运用中存在的短板。在此基础上，重点阐释新利益法学的利益层次结构理论，厘清当事人利益、群体利益、制度利益、社会公共利益的层级逻辑关系，并结合实务案例对理论体系加以阐释说明。\n互动环节中，现场师生围绕新利益法学、人工智能司法应用等议题与梁上上教授展开交流探讨，现场研讨氛围浓厚。\n",
+                  "evidenceType": "full_text",
+                  "classificationState": "radar",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": [
+                    {
+                      "title": "著名教授论坛（复合型教师培养专项）第763讲：新利益法学",
+                      "href": "/calendar?date=2026-10-25&event=event-eaf419b3a536555482cb5a75418fed1b837eadac&article=content-96336d86-f5df-450b-ae92-f820332fed54"
+                    }
+                  ]
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": false
+            },
+            "executionStatus": "completed",
+            "taskStatus": "completed",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "campus",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "supported",
+              "relatedDocuments": [
+                "content-96336d86-f5df-450b-ae92-f820332fed54"
+              ],
+              "missing": [],
+              "activities": [
+                {
+                  "documentId": "content-96336d86-f5df-450b-ae92-f820332fed54",
+                  "existence": "documented",
+                  "eventState": "started_end_unknown",
+                  "registrationState": "unknown",
+                  "participation": "unknown",
+                  "openParticipation": false
+                }
+              ],
+              "needsSupplement": false,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 2,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [
+              {
+                "supported": true,
+                "relevant": true,
+                "coverage": "covered",
+                "issues": []
+              }
+            ],
+            "upstreamTimings": [
+              {
+                "durationMs": 1033,
+                "firstTextMs": 616,
+                "finishReason": "stop",
+                "contentChars": 106
+              },
+              {
+                "durationMs": 738,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 3063,
+            "completionTokens": 149,
+            "cachedPromptTokens": 768,
+            "totalTokens": 3212,
+            "usageComplete": true,
+            "chargedTokens": 3212,
+            "quotaAccountedTokens": 3212,
+            "durationMs": 1792,
+            "estimatedUsdRange": [
+              0.00043595399999999995,
+              0.0008719079999999999
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 3212,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 8,
+              "serverElapsedMs": 1800,
+              "firstTextMs": 1800,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 16,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 27,
+                "writeQueries": 12,
+                "calls": 31,
+                "failures": 0,
+                "durationMs": 7.64,
+                "maxCallMs": 1.95,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 4,
+                  "durationMs": 7,
+                  "stagesMs": {
+                    "lexical": 2,
+                    "supplement": 0,
+                    "revalidationAndRanking": 4
+                  },
+                  "candidateChunks": 2,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_exact",
+                      "limit": 16,
+                      "candidates": 1
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 1
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    }
+  ]
+}

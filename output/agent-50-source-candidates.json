@@ -1,0 +1,323 @@
+[
+  {
+    "id": "T28",
+    "q": "云山卓越讲坛",
+    "lane": "radar",
+    "status": 200,
+    "items": [
+      {
+        "id": "content-0c9c10b1-9ce7-4911-93ce-32be9c04dcab",
+        "title": "云山卓越讲坛第19讲：浅谈动机性推理在语言研究中的正负作用",
+        "url": "https://www.gdufs.edu.cn/info/1005/255426.htm",
+        "publishedAt": "2026-06-05",
+        "readable": true,
+        "source": "广东外语外贸大学"
+      },
+      {
+        "id": "content-fdb1e62b-6c37-49b2-a475-ecbe50dfb67e",
+        "title": "陆正飞教授主讲云山卓越讲坛第17讲",
+        "url": "https://kjxy.gdufs.edu.cn/info/1443/7907.htm",
+        "publishedAt": "2026-04-28",
+        "readable": true,
+        "source": "会计学院"
+      },
+      {
+        "id": "content-3e8b4470-0a25-4bb7-b071-34c92dce8289",
+        "title": "云山卓越讲坛第17讲：什么是“好公司”——不确定环境下的观察与思考",
+        "url": "https://www.gdufs.edu.cn/info/1005/250076.htm",
+        "publishedAt": "2026-04-15",
+        "readable": true,
+        "source": "广东外语外贸大学"
+      },
+      {
+        "id": "content-6bfd67cd-3fd7-4fba-86af-3f3b8179b49f",
+        "title": "云山卓越讲坛第15讲：品德基因结构分析与智能计算",
+        "url": "https://www.gdufs.edu.cn/info/1005/65772.htm",
+        "publishedAt": "2025-11-10",
+        "readable": true,
+        "source": "广东外语外贸大学"
+      },
+      {
+        "id": "content-ca4fe25f-7e6b-45d4-958a-8a4a6d29d4c2",
+        "title": "“云山卓越讲坛”第十四讲报名通知",
+        "url": "https://www.gdufs.edu.cn/info/1005/65670.htm",
+        "publishedAt": "2025-10-30",
+        "readable": true,
+        "source": "广东外语外贸大学"
+      },
+      {
+        "id": "content-1b257157-a948-4dea-9d95-d8a3a46d2e01",
+        "title": "云山卓越讲坛第13讲：AI时代人文学科的危与机",
+        "url": "https://www.gdufs.edu.cn/info/1005/65628.htm",
+        "publishedAt": "2025-10-24",
+        "readable": true,
+        "source": "广东外语外贸大学"
+      }
+    ]
+  },
+  {
+    "id": "T31",
+    "q": "水电费",
+    "lane": "knowledge",
+    "status": 200,
+    "items": []
+  },
+  {
+    "id": "T32",
+    "q": "电费",
+    "lane": "knowledge",
+    "status": 200,
+    "items": []
+  },
+  {
+    "id": "T33",
+    "q": "学生证补办",
+    "lane": "knowledge",
+    "status": 200,
+    "items": []
+  },
+  {
+    "id": "T34",
+    "q": "校园卡挂失",
+    "lane": "knowledge",
+    "status": 200,
+    "items": []
+  },
+  {
+    "id": "T35",
+    "q": "转专业",
+    "lane": "knowledge",
+    "status": 200,
+    "items": [
+      {
+        "id": "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564",
+        "title": "会计学院2025-2026-2学期本科生转专业工作方案",
+        "url": "https://kjxy.gdufs.edu.cn/info/1107/7797.htm",
+        "publishedAt": "2026-04-20",
+        "readable": true,
+        "source": "会计学院"
+      },
+      {
+        "id": "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+        "title": "广东外语外贸大学本科生转专业实施办法",
+        "url": "https://dbxb.gdufs.edu.cn/info/1094/2604.htm",
+        "publishedAt": "2025-12-11",
+        "readable": true,
+        "source": "党委办公室（校长办公室）"
+      }
+    ]
+  },
+  {
+    "id": "T36",
+    "q": "奖学金",
+    "lane": "knowledge",
+    "status": 200,
+    "items": [
+      {
+        "id": "content-b6b9164c-5bb3-41f0-8bfd-74d64188c9eb",
+        "title": "广东外语外贸大学2025-2026学年新疆籍少数民族本科学生奖学金拟获奖名单公示",
+        "url": "https://nstu.gdufs.edu.cn/info/1056/69061.htm",
+        "publishedAt": "2026-11-09",
+        "readable": true,
+        "source": "学生工作部"
+      },
+      {
+        "id": "content-d7007f12-2767-461b-95ab-28f94d665924",
+        "title": "广外校〔2026〕27号 关于印发《广东外语外贸大学本科学生国家励志奖学金管理办法》的通知",
+        "url": "https://nstu.gdufs.edu.cn/info/1711/68351.htm",
+        "publishedAt": "2026-09-14T04:22:41.000Z",
+        "readable": true,
+        "source": "学生工作部"
+      },
+      {
+        "id": "content-74b3c8cc-1c0e-4fa6-a85d-809deabce8be",
+        "title": "广外校〔2026〕26号 关于印发《广东外语外贸大学本科学生国家奖学金管理办法》的通知",
+        "url": "https://nstu.gdufs.edu.cn/info/1711/68341.htm",
+        "publishedAt": "2026-09-14T04:00:26.000Z",
+        "readable": true,
+        "source": "学生工作部"
+      },
+      {
+        "id": "content-4516603a-cda7-4e0d-bcfb-83569e7cc260",
+        "title": "广外校〔2026〕11号 关于印发《广东外语外贸大学研究生学业奖学金评选办法》的通知",
+        "url": "https://nstu.gdufs.edu.cn/info/1721/66341.htm",
+        "publishedAt": "2026-03-25T02:50:45.000Z",
+        "readable": true,
+        "source": "学生工作部"
+      },
+      {
+        "id": "content-179eeb79-873d-4861-8a1b-770a2d471cd0",
+        "title": "广外校〔2026〕10号 关于印发《广东外语外贸大学研究生国家奖学金评选办法》的通知",
+        "url": "https://nstu.gdufs.edu.cn/info/1721/66351.htm",
+        "publishedAt": "2026-03-25T02:48:27.000Z",
+        "readable": true,
+        "source": "学生工作部"
+      },
+      {
+        "id": "content-dd2e04a4-9816-4be8-ab18-7b78a0e34e76",
+        "title": "广外校〔2022〕35号关于印发《广东外语外贸大学本科学生奖学金管理规定》的通知",
+        "url": "https://nstu.gdufs.edu.cn/info/1711/66271.htm",
+        "publishedAt": "2022-05-25T07:00:05.000Z",
+        "readable": true,
+        "source": "学生工作部"
+      }
+    ]
+  },
+  {
+    "id": "T37",
+    "q": "交换项目",
+    "lane": "knowledge",
+    "status": 200,
+    "items": []
+  },
+  {
+    "id": "T38",
+    "q": "计算机等级考试",
+    "lane": "radar",
+    "status": 200,
+    "items": [
+      {
+        "id": "wx-1c06bd085b46ba6efb7156b53fff46d9155c8b31",
+        "title": "转载||2026年下半年(第78次)全国计算机等级考试（NCRE）广外考点报考通知",
+        "url": "https://mp.weixin.qq.com/s/kPSUshdq1-uqzjVac1WmZQ",
+        "publishedAt": "2026-06-30T09:36:15.000Z",
+        "readable": true,
+        "source": "广外考试中心"
+      },
+      {
+        "id": "content-2e615595-8ffc-445c-bb94-14e65e579414",
+        "title": "2026年下半年(第78次)全国计算机等级考试（NCRE）广外考点报考通知",
+        "url": "https://etr.gdufs.edu.cn/info/1033/6907.htm",
+        "publishedAt": "2026-06-25",
+        "readable": true,
+        "source": "现代教育技术中心、信息化建设与管理办公室"
+      },
+      {
+        "id": "content-f16ffaa2-0610-45da-b080-16b7e91f8112",
+        "title": "2026年上半年(第76次)全国计算机等级考试（NCRE）广外考点报考通知",
+        "url": "https://etr.gdufs.edu.cn/info/1033/5797.htm",
+        "publishedAt": "2025-12-24",
+        "readable": true,
+        "source": "现代教育技术中心、信息化建设与管理办公室"
+      },
+      {
+        "id": "content-f6053304-3c24-431a-ae20-134795109ad6",
+        "title": "2024年下半年全国计算机等级考试（NCRE）(第74次)广外番禺大学城校区和白云山校区考点报考通知",
+        "url": "https://etr.gdufs.edu.cn/info/1033/5357.htm",
+        "publishedAt": "2024-06-25",
+        "readable": true,
+        "source": "现代教育技术中心、信息化建设与管理办公室"
+      },
+      {
+        "id": "content-05c3c821-be40-441a-8500-fbb01f11a64d",
+        "title": "2024年上半年全国计算机等级考试（NCRE）(第72次)广外番禺大学城校区和白云山校区考点报考通知​",
+        "url": "https://etr.gdufs.edu.cn/info/1033/5237.htm",
+        "publishedAt": "2024-01-05",
+        "readable": true,
+        "source": "现代教育技术中心、信息化建设与管理办公室"
+      }
+    ]
+  },
+  {
+    "id": "T39",
+    "q": "校园网",
+    "lane": "knowledge",
+    "status": 200,
+    "items": [
+      {
+        "id": "wx-8cdb4cbcd0e98c121b8f4ed149c736f8bb533123",
+        "title": "使用指南 | 校园网上网",
+        "url": "https://mp.weixin.qq.com/s/BmuzTaqZhx4dPEyqDPXflQ",
+        "publishedAt": "2026-08-31T08:20:56.000Z",
+        "readable": true,
+        "source": "数智广外"
+      }
+    ]
+  },
+  {
+    "id": "T40",
+    "q": "教务系统",
+    "lane": "knowledge",
+    "status": 200,
+    "items": []
+  },
+  {
+    "id": "T43",
+    "q": "新利益法学",
+    "lane": "radar",
+    "status": 200,
+    "items": [
+      {
+        "id": "content-96336d86-f5df-450b-ae92-f820332fed54",
+        "title": "著名教授论坛（复合型教师培养专项）第763讲：新利益法学",
+        "url": "https://ctd.gdufs.edu.cn/info/1015/11399.htm",
+        "publishedAt": "2026-10-29",
+        "readable": true,
+        "source": "教师发展中心"
+      }
+    ]
+  },
+  {
+    "id": "T44",
+    "q": "图书馆开放时间",
+    "lane": "radar",
+    "status": 200,
+    "items": []
+  },
+  {
+    "id": "T45",
+    "q": "奖学金",
+    "lane": "knowledge",
+    "status": 200,
+    "items": [
+      {
+        "id": "content-b6b9164c-5bb3-41f0-8bfd-74d64188c9eb",
+        "title": "广东外语外贸大学2025-2026学年新疆籍少数民族本科学生奖学金拟获奖名单公示",
+        "url": "https://nstu.gdufs.edu.cn/info/1056/69061.htm",
+        "publishedAt": "2026-11-09",
+        "readable": true,
+        "source": "学生工作部"
+      },
+      {
+        "id": "content-d7007f12-2767-461b-95ab-28f94d665924",
+        "title": "广外校〔2026〕27号 关于印发《广东外语外贸大学本科学生国家励志奖学金管理办法》的通知",
+        "url": "https://nstu.gdufs.edu.cn/info/1711/68351.htm",
+        "publishedAt": "2026-09-14T04:22:41.000Z",
+        "readable": true,
+        "source": "学生工作部"
+      },
+      {
+        "id": "content-74b3c8cc-1c0e-4fa6-a85d-809deabce8be",
+        "title": "广外校〔2026〕26号 关于印发《广东外语外贸大学本科学生国家奖学金管理办法》的通知",
+        "url": "https://nstu.gdufs.edu.cn/info/1711/68341.htm",
+        "publishedAt": "2026-09-14T04:00:26.000Z",
+        "readable": true,
+        "source": "学生工作部"
+      },
+      {
+        "id": "content-4516603a-cda7-4e0d-bcfb-83569e7cc260",
+        "title": "广外校〔2026〕11号 关于印发《广东外语外贸大学研究生学业奖学金评选办法》的通知",
+        "url": "https://nstu.gdufs.edu.cn/info/1721/66341.htm",
+        "publishedAt": "2026-03-25T02:50:45.000Z",
+        "readable": true,
+        "source": "学生工作部"
+      },
+      {
+        "id": "content-179eeb79-873d-4861-8a1b-770a2d471cd0",
+        "title": "广外校〔2026〕10号 关于印发《广东外语外贸大学研究生国家奖学金评选办法》的通知",
+        "url": "https://nstu.gdufs.edu.cn/info/1721/66351.htm",
+        "publishedAt": "2026-03-25T02:48:27.000Z",
+        "readable": true,
+        "source": "学生工作部"
+      },
+      {
+        "id": "content-dd2e04a4-9816-4be8-ab18-7b78a0e34e76",
+        "title": "广外校〔2022〕35号关于印发《广东外语外贸大学本科学生奖学金管理规定》的通知",
+        "url": "https://nstu.gdufs.edu.cn/info/1711/66271.htm",
+        "publishedAt": "2022-05-25T07:00:05.000Z",
+        "readable": true,
+        "source": "学生工作部"
+      }
+    ]
+  }
+]

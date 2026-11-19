@@ -1,0 +1,436 @@
+{
+  "clock": "2026-11-18T20:06:00.000Z",
+  "environment": "isolated SQLite; real provider with capped test transport",
+  "budget": {
+    "limit": 1800000,
+    "reserved": 67267,
+    "calls": 6,
+    "rejected": 0
+  },
+  "rows": [
+    {
+      "id": "T35",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "说明政策适用年份/对象及来源；若没有现行制度，避免套用旧年规定。",
+      "turns": [
+        {
+          "message": "转专业需要满足什么条件？",
+          "status": 200,
+          "answer": "广外本科生转专业，基本条件如下：\n\n**基本申请条件**（依据《广东外语外贸大学本科生转专业实施办法》，广外校〔2025〕37号）[1]\n- 一年级学生可在第一、第二学期申请，二年级学生可在第四学期申请，均须在学期结束前完成；\n- 在校期间无违纪处分记录；\n- 对其他专业有兴趣和专长；\n- 每名学生每次只能申请转入1个专业，在校期间原则上只能成功转专业1次。\n\n**程序要点**[1]\n1. 各学院公布转专业工作方案（含计划转入人数、转入条件、考核方式等，考核方式中必须设笔试）；\n2. 学生在规定时间内通过教务管理系统申请；\n3. 转出学院资格审查并公示；\n4. 转入学院考核、公示，报教务部办理。\n\n**学院层面可能另有要求**，以会计学院2025-2026-2学期方案为例[2]：\n- 已转过专业的（大类招生专业分流不计入）、已入选创新班等教学改革班的、尚在休学或保留学籍期间的，不得申请；\n- 需参加学院组织的数学笔试，成绩不低于60分，否则取消转入资格；\n- 未按时参加笔试、面试视为放弃；\n- 总成绩按“学分加权平均分×50%＋面试分×30%＋笔试分×20%”排序录取。\n\n所以，除了学校统一条件，还要看目标学院当年公布的工作方案——转入名额、笔试科目和门槛都由学院定 [1][2]。",
+          "modelRequired": true,
+          "latencyMs": 4386,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 17,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "2417f4f7-595e-517d-bb2c-ce0c003e796d",
+              "requestId": "5fd64774-8afd-4df0-add7-cb48ea39c5dc",
+              "started": true
+            },
+            {
+              "conversationId": "2417f4f7-595e-517d-bb2c-ce0c003e796d",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+                  "title": "广东外语外贸大学本科生转专业实施办法",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://dbxb.gdufs.edu.cn/info/1094/2604.htm",
+                  "publishedAt": "2025-12-11",
+                  "snippet": "（广外校〔2025〕37号 2025年12月11日印发）\n第一章 总则\n第一条 为规范我校本科生转专业管理，调动学生学习的主动性与积极性，促进学生自主学习和个性化发展，根据《普通高等学校学生管理规定》，结合学校实际，制定本办法。\n第二条 本办法适用于我校普通本科学历教育的全日制学生。\n第三条 转专业工作坚持公开、公平、公正的原则。\n第四条 学校允许符合条件的本科生转专业。各专业转出学生人数不设限制，转入学生人数由各学院根据实际情况确定。\n第二章 转专业的分类、条件和程序\n第五条 学校转专业分为三种情况：\n（一）教学改革班选拔；\n（二）申请转专业；\n（三）特殊情况转专业。\n每个学生在校期间原则上只能成功转1次专业。\n第六条 新生入学阶段，学校按照当年情况选拔进入各类教学改革班的学生，经公示无异议后，由转入学院报教务部办理转专业手续。\n第七条 一年级学生可在第一学期、第二学期申请转专业，二年级学生可在第四学期申请转专业，均应在学期结束前完成。每名学生每次只能申请转入1个专业。申请转专业的学生应符合以下条件：\n（一）一年级或二年级在校学生；\n（二）在校期间无违纪处分记录；\n（三）对其他专业有兴趣和专长。\n第八条 申请转专业的程序如下：\n（一）公布方案。各学院根据各专业的实际情况，制定学院转专业工作方案。工作方案应包括计划转入人数、转入条件、考核方式、考核程序等，考核方式中必须设置笔试环节。工作方案报教务部备案后向全校学生公布。\n（二）学生申请。拟转专业的学生在规定时间内通过教务管理系统进行申请。\n（三）转出学院审查。转出学院对申请转专业的学生进行资格审查，对符合条件的学生名单进行公示，公示无异议后，将学生名单及材料报教务部。\n（四）转入学院考核。转入学院对申请转专业的学生进行考核，将考核结果和拟转入学生名单进行公示，公示无异议，经学院党政联",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                },
+                {
+                  "kind": "source",
+                  "documentId": "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564",
+                  "title": "会计学院2025-2026-2学期本科生转专业工作方案",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://kjxy.gdufs.edu.cn/info/1107/7797.htm",
+                  "publishedAt": "2026-04-20",
+                  "snippet": "接收人数\n接收对象\n转入条件或要求\n备注\n会计学\n2025级/2026级\n共3人，其中2024级1人，2025级2人。\n符合《广东外语外贸大学本科生转专业实施办法》（广外校〔2025〕37号）文件规定条件的其他学院2024、2025级在校全日制本科生。\n学生申请转入会计学院各专业，应当符合下列条件或要求：\n（1）符合《广东外语外贸大学本科生转专业实施办法》（广外校〔2025〕37号）文件规定条件的其他学院的2024、2025级在校全日制本科生；\n（2）在校期间已转过专业的（因大类招生进行专业分流的，不计入转专业）不得申请转专业；\n（3）已入选创新班等教学改革班的，不能再申请转专业；\n（4）尚在休学、保留入学资格或者保留学籍期间的，不得申请转专业；\n（5）上级有关文件明确规定不可转专业的；\n（6）在校期间无违纪处分记录；\n（7）由学院组织的数学笔试成绩，不得低于60分，否则取消转入资格，不予接收；\n（8）不按学院通知要求准时参加面试、笔试者视为放弃转入资格。\n具备与转入专业有关的竞赛奖项或专业技能者优先。\n财务管理\n共4人，其中2024级1人，2025级3人。\n审计学\n共6人，其中2024级1人，2025级5人。\n考核方案\n所有申请者按入学后全部课程学分加权平均分为基准，综合考虑面试、笔试分按总分数排序后，根据各专业接收指标转入。\n申请者总分数计算公式：学分加权平均分*50%+面试分*30%+笔试分*20%\n转入流程：\n符合大学本科生转专业规定条件的其他学院的学生；在校期间无违纪处分记录，可申请转入会计学院相关专业；\n（1）申请者系统提出申请（系统申请时间待教务部通知）并按要求提交纸质版申请材料（含申请表（系统可导出）、成绩单、无违纪处分记录等），在系统申请时间内将材料交至会计学院教务办（院系楼103）李老师处；\n（2）学院对学生进行考",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "plan": {
+                "subject": "转专业",
+                "entities": [],
+                "constraints": [],
+                "goal": "requirements",
+                "query": "“转专业”"
+              },
+              "durationMs": 949,
+              "usage": {
+                "promptTokens": 591,
+                "completionTokens": 84,
+                "totalTokens": 675,
+                "cachedPromptTokens": 384
+              }
+            },
+            "executionStatus": "completed",
+            "taskStatus": "completed",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "general",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "supported",
+              "relatedDocuments": [
+                "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+                "content-5b244ef0-e535-49e6-ab91-9dbcfc92f564"
+              ],
+              "missing": [],
+              "activities": [],
+              "needsSupplement": false,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "professional",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 3,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [
+              {
+                "supported": true,
+                "relevant": true,
+                "coverage": "covered",
+                "severity": "unverified",
+                "issues": []
+              }
+            ],
+            "upstreamTimings": [
+              {
+                "durationMs": 2632,
+                "firstTextMs": 811,
+                "finishReason": "stop",
+                "contentChars": 549
+              },
+              {
+                "durationMs": 730,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 5552,
+            "completionTokens": 513,
+            "cachedPromptTokens": 4096,
+            "totalTokens": 6065,
+            "usageComplete": true,
+            "chargedTokens": 6065,
+            "quotaAccountedTokens": 6065,
+            "durationMs": 3395,
+            "estimatedUsdRange": [
+              0.000399438,
+              0.000798876
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 6065,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 983,
+              "serverElapsedMs": 4378,
+              "firstTextMs": 4377,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 17,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 24,
+                "writeQueries": 12,
+                "calls": 28,
+                "failures": 0,
+                "durationMs": 5.19,
+                "maxCallMs": 1.58,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 4,
+                  "durationMs": 9,
+                  "stagesMs": {
+                    "lexical": 2,
+                    "supplement": 0,
+                    "revalidationAndRanking": 7
+                  },
+                  "candidateChunks": 18,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 6
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 6
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 6
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        },
+        {
+          "message": "那需要笔试吗？",
+          "status": 200,
+          "answer": "**转专业条件**：学校允许符合条件的本科生转专业，各专业转出人数不设限制，转入人数由各学院根据实际情况确定；转专业分为教学改革班选拔、申请转专业、特殊情况转专业三类，每名学生在校期间原则上只能成功转1次专业 [1]。\n\n**是否需要笔试**：目前能确认的只有教学改革班选拔这一类的流程：新生入学阶段按当年情况选拔，经公示无异议后由转入学院报教务部办理手续 [1]。至于“申请转专业”和“特殊情况转专业”是否设笔试、考什么，现有内容没有写明，暂不能确认。建议直接向拟转入学院或教务部确认当年考核方式。",
+          "modelRequired": true,
+          "latencyMs": 3654,
+          "tools": [
+            {
+              "name": "search_campus_knowledge",
+              "origin": "server_plan"
+            },
+            {
+              "name": "search_campus_knowledge",
+              "ok": true,
+              "durationMs": 10,
+              "origin": "server_plan"
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "2417f4f7-595e-517d-bb2c-ce0c003e796d",
+              "requestId": "a9f0ae9a-ab9d-4f76-beb5-fc5c0415a20c",
+              "started": true
+            },
+            {
+              "conversationId": "2417f4f7-595e-517d-bb2c-ce0c003e796d",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "content-3da188fb-d19a-4b8a-9124-30ffe840525a",
+                  "title": "广东外语外贸大学本科生转专业实施办法",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://dbxb.gdufs.edu.cn/info/1094/2604.htm",
+                  "publishedAt": "2025-12-11",
+                  "snippet": "（广外校〔2025〕37号 2025年12月11日印发）\n第一章 总则\n第一条 为规范我校本科生转专业管理，调动学生学习的主动性与积极性，促进学生自主学习和个性化发展，根据《普通高等学校学生管理规定》，结合学校实际，制定本办法。\n第二条 本办法适用于我校普通本科学历教育的全日制学生。\n第三条 转专业工作坚持公开、公平、公正的原则。\n第四条 学校允许符合条件的本科生转专业。各专业转出学生人数不设限制，转入学生人数由各学院根据实际情况确定。\n第二章 转专业的分类、条件和程序\n第五条 学校转专业分为三种情况：\n（一）教学改革班选拔；\n（二）申请转专业；\n（三）特殊情况转专业。\n每个学生在校期间原则上只能成功转1次专业。\n第六条 新生入学阶段，学校按照当年情况选拔进入各类教学改革班的学生，经公示",
+                  "evidenceType": "full_text",
+                  "classificationState": "knowledge",
+                  "validity": "unknown",
+                  "readable": true,
+                  "calendarLinks": []
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "smartSearch": false,
+            "queryUnderstanding": {
+              "failed": true,
+              "code": "INVALID_PLAN",
+              "effectiveQuery": "转专业需要满足什么条件 追问 那需要笔试吗",
+              "fallbackReason": "INVALID_PLAN",
+              "durationMs": 1137,
+              "usage": {
+                "promptTokens": 599,
+                "completionTokens": 164,
+                "totalTokens": 763,
+                "cachedPromptTokens": 384
+              }
+            },
+            "executionStatus": "completed",
+            "taskStatus": "completed",
+            "retrievalStatus": "matched",
+            "answerMode": "model",
+            "buildingProfiles": [],
+            "conversationAct": "general",
+            "answerRequirement": "strict",
+            "modelFailureCode": null,
+            "evidenceGateUsed": false,
+            "publicationFallbackUsed": false,
+            "evidenceAssessment": {
+              "state": "supported",
+              "relatedDocuments": [
+                "content-3da188fb-d19a-4b8a-9124-30ffe840525a"
+              ],
+              "missing": [],
+              "activities": [],
+              "needsSupplement": false,
+              "negativeExistenceProven": false
+            },
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "professional",
+              "aside": false,
+              "concise": false
+            },
+            "requests": 3,
+            "correctionRetries": 0,
+            "emptyAnswerRetries": 0,
+            "answerRepairRetries": 0,
+            "softAcceptances": 0,
+            "groundingChecks": 1,
+            "groundingFailures": 0,
+            "groundingCheckFailures": 0,
+            "groundingResults": [
+              {
+                "supported": true,
+                "relevant": true,
+                "coverage": "covered",
+                "severity": "unverified",
+                "issues": []
+              }
+            ],
+            "upstreamTimings": [
+              {
+                "durationMs": 1548,
+                "firstTextMs": 617,
+                "finishReason": "stop",
+                "contentChars": 250
+              },
+              {
+                "durationMs": 947,
+                "firstTextMs": null,
+                "stage": "evidence_check"
+              }
+            ],
+            "promptTokens": 3548,
+            "completionTokens": 414,
+            "cachedPromptTokens": 768,
+            "totalTokens": 3962,
+            "usageComplete": true,
+            "chargedTokens": 3962,
+            "quotaAccountedTokens": 3962,
+            "durationMs": 2510,
+            "estimatedUsdRange": [
+              0.0004794539999999999,
+              0.0009589079999999999
+            ],
+            "priceSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+            "priceCheckedAt": "2026-10-15",
+            "model": "deepseek-flash",
+            "providerReportedTokens": 3962,
+            "quotaAccountingBasis": "provider_reported",
+            "timings": {
+              "version": "camera-settled-v2",
+              "preparationMs": 1142,
+              "serverElapsedMs": 3652,
+              "firstTextMs": 3651,
+              "mapActionMs": null,
+              "skills": [
+                {
+                  "name": "search_campus_knowledge",
+                  "durationMs": 10,
+                  "ok": true
+                }
+              ],
+              "database": {
+                "readQueries": 25,
+                "writeQueries": 11,
+                "calls": 28,
+                "failures": 0,
+                "durationMs": 4.96,
+                "maxCallMs": 1.35,
+                "rowsRead": 0,
+                "rowsWritten": 0,
+                "rowUsageStatements": 0,
+                "rowUsageComplete": false
+              },
+              "retrieval": [
+                {
+                  "skill": "search_campus_knowledge",
+                  "rowsRead": 0,
+                  "rowsWritten": 0,
+                  "queries": 5,
+                  "durationMs": 10,
+                  "stagesMs": {
+                    "lexical": 1,
+                    "supplement": 1,
+                    "revalidationAndRanking": 7
+                  },
+                  "candidateChunks": 25,
+                  "usageAvailable": false,
+                  "queryPlanVersion": "query-v2",
+                  "recallLanes": [
+                    {
+                      "name": "title_subject",
+                      "limit": 32,
+                      "candidates": 6
+                    },
+                    {
+                      "name": "expanded_subject",
+                      "limit": 64,
+                      "candidates": 6
+                    },
+                    {
+                      "name": "body_passages",
+                      "limit": 32,
+                      "candidates": 13
+                    },
+                    {
+                      "name": "document_passages",
+                      "limit": 64,
+                      "candidates": 5
+                    }
+                  ]
+                }
+              ],
+              "externalSearch": []
+            }
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    }
+  ]
+}
