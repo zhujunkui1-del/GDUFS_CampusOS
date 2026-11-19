@@ -203,6 +203,10 @@ it("keeps the answer and records a separate evidence timeout", async () => {
       groundingChecks: 1,
       groundingCheckFailures: 1,
     });
+    const usage = bounded.metrics();
+    expect(usage.chargedTokens).toBe(usage.totalTokens);
+    expect(usage.quotaAccountedTokens).toBeGreaterThan(usage.chargedTokens);
+    expect(usage.quotaAccountedTokens).toBeLessThan(250000);
     expect(trace.records).toMatchObject([
       { node: "model", state: "running" },
       { node: "model", state: "success" },
