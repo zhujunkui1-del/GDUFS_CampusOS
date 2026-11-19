@@ -21,21 +21,13 @@ export async function dateGateFixture(
     date: string,
     title = id,
     body = fixtureBody,
+    url = "https://example.invalid/" + id,
   ) {
     f.sqlite
       .prepare(
         "INSERT INTO knowledge_documents(id,source_id,title,url,body,body_format,body_status,content_hash,fetched_at,campus_scope,data_domain,published_at,content_revision,input_hash,rights_scope,content_type,knowledge_category) VALUES(?,?,?,?,?,'reading_html','complete',?,'2026-10-25','all','campus_announcements',?,1,?,'licensed_full_text','notice','campus_life')",
       )
-      .run(
-        id,
-        source.id,
-        title,
-        "https://example.invalid/" + id,
-        body,
-        id,
-        date,
-        "a".repeat(64),
-      );
+      .run(id, source.id, title, url, body, id, date, "a".repeat(64));
     f.sqlite
       .prepare(
         "INSERT INTO console_revision_payloads(document_id,content_revision,input_hash,input_json,created_at) VALUES(?,1,?,'{\"body\":\"原文全文\"}','2026-10-25')",

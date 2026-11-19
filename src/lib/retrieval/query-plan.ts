@@ -32,7 +32,7 @@ const CLAUSE_VERB =
 // A symptom is not a subject either: “宿舍东西坏了” asks about repairs, and
 // no article writes “东西坏” as a word.
 const CLAUSE_TAIL =
-  /(?:开放|关闭|提交|交付|报修|保修|记录|影响|办理|使用|收费|发放|收取|坏|坏了|坏掉|破了|漏了|堵了|断了|没了)$/u;
+  /(?:开放|关闭|提交|交付|报修|保修|记录|影响|办理|使用|收费|发放|收取|坏|坏了|坏掉|破了|漏了|堵了|断了|没了|丢失|遗失|连不上|上不了网)$/u;
 // A fee or penalty question is a whole clause, not a subject: “书逾期了要交”
 // and “违约要赔” are how the user asks, while the article writes “逾期” and
 // “违约金”. Keeping the clause as a hard filter rejected the very documents
@@ -109,10 +109,12 @@ export function buildQueryPlan(
       /(?:不要|排除|不含|除了)\s*([\p{Script=Han}a-zA-Z]{2,12})(?=[，。；\s]|$)/gu,
     ),
   ].map((m) => m[1]);
-  const positive = normalized.replace(
-    /(?:不要|排除|不含|除了)\s*[\p{Script=Han}a-zA-Z]{2,12}(?=[，。；\s]|$)/gu,
-    " ",
-  );
+  const positive = normalized
+    .replace(/(?:校园卡|一卡通)(?:丢了|丢失|遗失)/g, "校园卡 挂失")
+    .replace(
+      /(?:不要|排除|不含|除了)\s*[\p{Script=Han}a-zA-Z]{2,12}(?=[，。；\s]|$)/gu,
+      " ",
+    );
   let topics: QueryPlan["topics"] = TOPIC_GROUPS.filter((c) =>
     c.aliases.some((t) => positive.includes(t)),
   ).map((c) => ({
@@ -511,7 +513,7 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
     return { relevant: false, score: 0, reason: "card_type_mismatch" };
   if (
     plan.topics.some((t) => t.id === "card") &&
-    /挂失|补办|补卡/.test(plan.original) &&
+    /挂失|补办|补卡|丢了|丢失|遗失/.test(plan.original) &&
     !/挂失|补办|补卡/.test(text)
   )
     return { relevant: false, score: 0, reason: "requested_operation_missing" };
@@ -570,7 +572,7 @@ export function queryRelevance(plan: QueryPlan, hit: QueryEvidence) {
   const goalEvidence: Partial<Record<QueryGoal, RegExp>> = {
     policy: /办法|规定|规则|制度|政策/,
     procedure:
-      /流程|办理|步骤|指南|手续|借阅规则|续借|凭.{0,12}(?:卡|证)|登录|提交|充值|缴费/,
+      /流程|办理|步骤|指南|手续|借阅规则|续借|凭.{0,12}(?:卡|证)|登录|提交|充值|缴费|挂失|补办|补卡|递交/,
     requirements: /条件|资格|材料|要求|须|需满足|面向/,
     experience:
       /推荐|好吃|口味|味道|体验|测评|踩雷|隔音|居住|价格|喜欢|不错|难吃/,

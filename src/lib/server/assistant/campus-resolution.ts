@@ -24,7 +24,9 @@ export function resolveCampus(
       selectedPlaceId: undefined,
     };
   const prior = named(previous || "");
-  const inherit = /那里|那边|刚才|那个校区|其中|这个校区/.test(question);
+  const inherit = /那里|那边|刚才|那个校区|其中|这个校区|附近|按举办时间/.test(
+    question,
+  );
   const campus: Campus | undefined = explicit.baiyun
     ? "baiyun"
     : explicit.university
