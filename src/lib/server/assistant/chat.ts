@@ -51,7 +51,7 @@ import {
   routeSummaryText,
 } from "../maps/route-directions";
 import { createMapSkillRegistry } from "../maps/skills";
-import { defaultModelRuntime } from "../models/runtime";
+import { platformModelRuntime } from "../models/runtime";
 import { personalModelRuntime } from "../models/personal-runtime";
 import { withApi } from "../http";
 import { ApiError } from "../errors";
@@ -1022,7 +1022,8 @@ export async function chatResponse(request: Request) {
         ? await upcomingEvents(ctx.db, lectureQuery, directScope)
         : undefined;
     if (verifiedLectures)
-      workflow.start("events", {        name: "search_campus_events",
+      workflow.start("events", {
+        name: "search_campus_events",
         campus: directScope ?? "all",
       })({
         matches: verifiedLectures.cards.length,
@@ -1356,9 +1357,13 @@ export async function chatResponse(request: Request) {
         ctx.identity.owner,
         ctx.credentialSecret,
       )) ||
-      (await defaultModelRuntime({
-        providerManagedOutput: true,
-      }).resolve());
+      (await (
+        await platformModelRuntime({
+          providerManagedOutput: true,
+          db: ctx.db,
+          onEvent: (event) => ctx.store.modelEvent(conversation.id, event),
+        })
+      ).resolve());
     const resolved = {
       ...baseModel,
       client: observeWorkflowModel(
@@ -1375,6 +1380,16 @@ export async function chatResponse(request: Request) {
       workflow.enabled ? "workflow" : "assistant",
     );
     scopedRoutes.requireRun(runId);
+    if (baseModel.snapshot.source === "platform")
+      await ctx.store.modelEvent(
+        conversation.id,
+        {
+          event: "resolved",
+          provider: baseModel.snapshot.provider,
+          model: baseModel.snapshot.model,
+        },
+        { runId, owner: ctx.identity.owner },
+      );
     let queryUnderstanding:
       | Extract<Awaited<ReturnType<typeof understandQuery>>, { plan: unknown }>
       | undefined;

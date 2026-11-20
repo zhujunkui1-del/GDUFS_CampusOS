@@ -3115,3 +3115,36 @@ Worker 版本 edb11a3f-aecb-4521-bdf2-702274ae9347。生产构建及净化扫描
 新增 `migrations/0080_concurrent_conversations.sql`：重建 `assistant_run_limits` 触发器，把“同账户只能有一条 running”改为“同一会话只能有一条 running”，保留全站并发上限（普通 4 / 验证 16）与 `agent_runs(conversation_id,execution_lane,status)` 索引。新增 `tests/unit/assistant-concurrent-conversations.test.ts`（2 项：同账户两会话可并行、同会话第二条仍拒绝）。
 
 验证：`npx vitest run` 该文件 2/2 通过；preview 库已应用 0080 并在 `sqlite_master` 确认条件为 `conversation_id`；线上同一账户并发两次 `POST /api/agent/chat`（不同会话）均 200，runId `1cdc1fca-d134-4815-bdd4-b4d90be0d38f` / `806589cc-750d-4ddd-9114-6988373f503f`。无 Worker 代码改动，桌面端与移动端安装包无需重新打包，生产库上线前需 `wrangler d1 migrations apply` 应用 0080。
+
+## 2026-11-20｜控制台平台模型管理（总闸 + 开关 + 顺序 + 健康看板）
+
+控制台新增「平台模型」页：总闸、三层（DeepSeek / StepFun / 校园网关）的启停与顺序、以及近 24/72/168 小时的真实路由记录。策略存在 `console_engine_settings`（迁移 `0081_platform_model_controls.sql` 新增 `platform_model_enabled`、`platform_models_json` 与事件表 `agent_model_events`），凭据仍在 Worker Secret。权限为 console admin 与负责人指定的 `admin01` / `3287390083` / `3287390083@qq.com`（名单来自 Secret `PLATFORM_MODEL_OPERATORS`，不写入前端与仓库），写入前由 `mayManagePlatformModels` 校验，数据库触发器 `console_platform_models_insert`（`0082_platform_model_operators.sql`）再校验一次并用 settings 版本做乐观锁。
+
+运行时改为 `platformModelState(db)` + `buildPlatformRuntime(state)`：读不到策略时回落 `MODEL_PRIORITY` 变量；总闸关闭抛 `MODEL_DISABLED`，全部层级关闭抛 `MODEL_SELECTION_REQUIRED`；`PriorityModelRouter` 增加观察者回调，把 `resolved` / `fallback` / `failed` 事件写入 `agent_model_events`，回调异常不影响回答。`/api/agent/status`、`/api/capabilities`、`/api/agent/session` 与地图 Agent 均改用同一份策略。
+
+验证：`tests/unit/platform-models.test.ts` 5 项（权限、顺序与全关校验、审计命令与乐观锁、健康聚合）、`tests/unit/platform-model-runtime.test.ts` 4 项（策略读取、总闸、空层级、无数据库回落）、`tests/unit/priority-model.test.ts` 增加 2 项事件断言；全量 `npx vitest run` 186 文件 / 1272 项通过，`tsc`、`eslint . --max-warnings=0`、`prettier` 干净。
+
+## 2026-11-20｜平台模型权限改为「绑定负责人邮箱的账号」，admin 前缀用户名设为保留
+
+负责人把权限口径从「三个固定账号」改为「凡是绑定 `3287390083@qq.com` 的账号都可操作平台模型」，并要求禁止他人注册以 `admin` 开头的用户名，除非注册时绑定该邮箱。
+
+控制台侧：`ConsoleGovernanceStore.canManagePlatformModels()` 先看 Secret 名单 `PLATFORM_MODEL_OPERATORS`，再查 `user_password_identities JOIN users`（`status='active'` 且 `verified_email` 落在 Secret `OWNER_MAILBOXES`），`platformModels()` 与 `savePlatformModels()` 都走这一判定；数据库侧 `migrations/0083_owner_mailbox_binding.sql` 重建 `console_platform_models_insert` 用同一条 `EXISTS` 复核，并放开 `console_operator_scope_guard` 对 `platform.models` 的来源范围校验（该动作不属于任何来源）。
+
+注册侧：`src/domain/account/contracts.ts` 新增 `parseOwnerMailboxes` / `usernameNeedsOwnerMailbox` / `ownerMailboxAllows`，`register()`、`rename()`（用账号当前已验证邮箱）与发码入口 `registrationCode()` 共用；违规返回 `USERNAME_RESERVED`（409「以 admin 开头的用户名仅限负责人邮箱绑定的账号使用。」）。
+
+验证：`tests/unit/platform-models.test.ts` 增加「绑定负责人邮箱的 operator 可管理」用例（未绑定时 `canManage=false`，插入 `users` + `user_password_identities` 绑定后为 true 且保存成功），6/6 通过；preview 已执行 `wrangler secret put OWNER_MAILBOXES`（`3287390083@qq.com`）与应用 `0083`（Executed 5 commands in 0.79ms）。
+
+## 2026-11-20｜助手并发上限抬到 64，控制台总闸改为一点即生效
+
+- 迁移 `0084_concurrent_headroom.sql`：`assistant_run_limits` 全站并发由 16/4 抬到 64/24（preview 已应用，3 commands / 0.52ms，`sqlite_master` 确认 `THEN 64`）。
+- 部署 `b576bd06-4241-4a6a-bf39-ac9490e32f47`（含控制台面板改动）。
+- 压测（`https://gdufs.zhiyuapp.site`，同一访客会话）：30 并发 → 30/30 返回 200，p50 4.6 秒、p90 7.8 秒，无 `AGENT_SITE_BUSY`；70 并发 → 50 成功，其余 20 条为单账号 50 个访客对话上限与访客对话容量，说明并发闸门已不再是瓶颈。压测后 15 分钟内 133 条运行全部 `completed`，无遗留 running。
+- 控制台「平台模型」总闸此前只改本地草稿、必须再点下方「保存设置」才落库，刷新即回跳；现在点击直接 POST 保存，按钮文案随状态切换并提示「平台模型已停用。/已启用。」，顺序与层级仍由「保存顺序与层级」提交，未保存时给出提示。e2e `tests/e2e/console-platform-models-nav.spec.ts` 断言首次点击即发出 `enabled:false` 并显示结果。
+- 未放开：单账号次数、单 IP 次数、全站每日次数与 token 额度（`assistant_run_usage_limits`，验证环境不生效；生产环境按现值启用会先于并发上限打满）。
+
+## 2026-11-20｜平台模型总闸不再影响个人模型
+
+- 修复会话握手：`src/lib/server/assistant/api.ts` 的 `sessionGet` 改为「账号自己的模型优先，平台链兜底」；新增 `personalModelStatus()` 于 `src/lib/server/models/personal-runtime.ts`。
+- 前端文案：`src/features/assistant/use-assistant.ts` 对 `MODEL_DISABLED` 单独提示，引导用户到「API 设置」使用自己的密钥。
+- 验证：`npx tsc --noEmit` 干净；`npx eslint . --max-warnings=0` 无告警（需先删 `.tmp-build`，否则构建残留会带 5 条 warning）；全量 `npx vitest run` 187 文件 / 1278 项通过（新增 `personal model status` 用例 4 个断言）。线上游客侧仍返回 `MODEL_DISABLED`（游客没有个人密钥，符合预期）；账号侧的就绪判定由单测覆盖。
+- 部署：preview Worker Version `96b61ce2-97e8-4acb-9b30-735bc37cda28`。

@@ -45,10 +45,21 @@ async function router(provider: "stepfun" | "deepseek", client: ModelClient) {
   });
   return new ModelRouter(config, { create: () => client });
 }
-async function chain(primary: ModelClient, fallback: ModelClient) {
+async function chain(
+  primary: ModelClient,
+  fallback: ModelClient,
+  onEvent?: (event: {
+    event: "fallback" | "failed";
+    provider: string;
+    model?: string;
+    from?: string;
+    code?: string;
+  }) => void,
+) {
   return new PriorityModelRouter(
     await router("deepseek", primary),
     await router("stepfun", fallback),
+    onEvent,
   ).resolve();
 }
 it("leads with DeepSeek and puts StepFun second unless the operator flips it", () => {
@@ -167,4 +178,68 @@ it("distinguishes Step Plan quota exhaustion from HTTP 429 rate limiting", async
       "https://api.stepfun.com/step_plan/v1/chat/completions",
     );
   }
+});
+
+it("records a tier swap so the console can show which model answered", async () => {
+  const events: {
+    event: string;
+    provider: string;
+    from?: string;
+    code?: string;
+  }[] = [];
+  const primary = {
+    generateWithTools: vi
+      .fn()
+      .mockRejectedValue(new ApiError("MODEL_QUOTA_EXHAUSTED", "fixture")),
+    generateStructured: vi.fn(),
+  };
+  const fallback = {
+    generateWithTools: vi.fn().mockResolvedValue(reply),
+    generateStructured: vi.fn(),
+  };
+  const v = await chain(primary, fallback, (event) => events.push(event));
+  await v.client.generateWithTools(request);
+  expect(events).toEqual([
+    {
+      event: "fallback",
+      provider: "stepfun",
+      model: "step-3.5-flash-2603",
+      from: "deepseek",
+      code: "MODEL_QUOTA_EXHAUSTED",
+    },
+  ]);
+});
+it("records the final availability failure after the last tier also fails", async () => {
+  const events: {
+    event: string;
+    provider: string;
+    from?: string;
+    code?: string;
+  }[] = [];
+  const broken = () => ({
+    generateWithTools: vi
+      .fn()
+      .mockRejectedValue(new ApiError("MODEL_TIMEOUT", "fixture")),
+    generateStructured: vi.fn(),
+  });
+  const v = await chain(broken(), broken(), (event) => events.push(event));
+  await expect(v.client.generateWithTools(request)).rejects.toMatchObject({
+    code: "MODEL_TIMEOUT",
+  });
+  // One swap, then the failure that ends the run on the tier that could not answer.
+  expect(events).toEqual([
+    {
+      event: "fallback",
+      provider: "stepfun",
+      model: "step-3.5-flash-2603",
+      from: "deepseek",
+      code: "MODEL_TIMEOUT",
+    },
+    {
+      event: "failed",
+      provider: "stepfun",
+      model: "step-3.5-flash-2603",
+      code: "MODEL_TIMEOUT",
+    },
+  ]);
 });

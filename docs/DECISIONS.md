@@ -1636,3 +1636,36 @@ get_place_details在助理内支持实时profile增量，旧地图几何合约�
 验证：`tests/unit/assistant-concurrent-conversations.test.ts` 断言同账户两个会话可同时 reserve（running 计数 2）、同会话第二条仍报“上一条回复仍在进行，请等待完成或停止后重试。”；preview 库已应用 0080，`sqlite_master` 确认触发器条件为 `conversation_id`；线上同一 guest 账户并发两次 `POST /api/agent/chat`（不同会话）均返回 200，runId 分别为 `1cdc1fca-d134-4815-bdd4-b4d90be0d38f` 与 `806589cc-750d-4ddd-9114-6988373f503f`。
 
 部署面：仅数据库迁移，无 Worker 代码改动，客户端与已发布的安装包无需重新打包。
+
+## D-212｜平台模型的启停与顺序交给控制台，凭据仍留在 Secret（2026-11-20）
+
+背景：负责人要求能在后台看到「现在用的是哪个模型、什么时候切走、为什么失败」，并能在不重新部署的情况下停用整条链、单独停用某一层、调整降级顺序。此前顺序只能靠 `MODEL_PRIORITY` 变量，改一次要重新部署；没有任何地方记录一次回答到底由谁产生。
+
+决定一：只把「策略」搬进数据库，凭据不动。`console_engine_settings` 增加 `platform_model_enabled`（总闸）与 `platform_models_json`（`order` + 三层 `tiers` 开关），迁移 `0081_platform_model_controls.sql`。API Key、Base URL、模型名仍在 Worker Secret / 变量里，控制台只填开关与顺序，符合 v2 基线「凭据不进入 Git、前端与日志」。
+
+决定二：每次请求读一次策略，读不到就回落变量。`platformModelState(db)` 解析失败、行缺失或数据库不可用时返回 `fallback: true` 并用 `MODEL_PRIORITY` 组装链路，`buildPlatformRuntime` 再按 `order` 过滤启用且有凭据的层。总闸关闭时抛 `MODEL_DISABLED`，一层都没启用时抛 `MODEL_SELECTION_REQUIRED`，都不静默降级到别的模型。
+
+决定三：谁可以改。写入前由 `mayManagePlatformModels` 判定：console admin 恒可，另外认负责人指定的 `admin01`、`3287390083`、`3287390083@qq.com`（按邮箱或邮箱本地部分比对，因为 `console_admins` 没有用户名字段）。这份名单是配置（Secret `PLATFORM_MODEL_OPERATORS`，逗号分隔），不写进前端与仓库——发布扫描会拒绝任何与私密变量同值的字面量。数据库触发器 `console_platform_models_insert`（`0082_platform_model_operators.sql`）再校验一次同样的名单，并复用 `console_engine_settings.version` 做乐观锁，控制台与数据库都不接受越权写入。
+
+决定四：健康看板只记录发生过的事。新增 `agent_model_events`，写入三类事实：`resolved`（本次回答由哪层提供）、`fallback`（从哪层切到哪层、原因码）、`failed`（链条最终失败的原因码）。事件由 `PriorityModelRouter` 的观察者回调写入，回调自身异常被吞掉，绝不影响回答。控制台按 24/72/168 小时聚合「成功回答、接管、让出、失败」，30 天前的记录随既有 `cleanup()` 一起清理。
+
+取舍：不做在线连通性探测（会消耗额度并在页面上制造假故障），只展示能力回执是否有效与真实路由记录；模型名与 Base URL 仍不可在控制台修改，改它们必须重签能力回执，这一点与 `ModelRouter.resolve()` 的既有约束一致。
+
+决定五（同日补充）：判定口径从「三个固定账号」改为「绑定负责人邮箱的账号」。负责人指出 `admin01` 是绑定在 `3287390083@qq.com` 名下的普通账号，并要求凡是绑定该邮箱的账号都能操作。因此 `platformModels()` / `savePlatformModels()` 在名单之外再查 `user_password_identities JOIN users`：只要该账号 `status='active'` 且 `verified_email` 落在 `OWNER_MAILBOXES`（Secret，逗号分隔），即可管理；数据库触发器 `console_platform_models_insert`（`0083_owner_mailbox_binding.sql`）用同一条 `EXISTS` 复核。同时 `console_operator_scope_guard` 放开 `platform.models`——该动作不属于任何来源，operator 的来源范围校验在这里没有可校验的对象，越权防线仍由前一条触发器承担。
+
+决定六（同日补充）：`admin` 开头的用户名改为负责人邮箱专属。负责人预留「admin」前缀给管理员，要求除绑定 `3287390083@qq.com` 的注册外一律禁止使用。`register()` 与 `rename()` 共用 `ownerMailboxAllows()` 判定（改名前用账号当前已验证邮箱，避免注册后改名绕过），失败返回 `USERNAME_RESERVED`（409，「以 admin 开头的用户名仅限负责人邮箱绑定的账号使用。」）；发注册验证码前先拦一次，避免白花一封邮件。邮箱名单同样只来自 `OWNER_MAILBOXES`，不写进仓库与前端。
+
+## D-213｜全站助手并发上限抬到 64，活动期不再按「十几个并发」限流（2026-11-20）
+
+- 现状：`migrations/0080_concurrent_conversations.sql` 的 `assistant_run_limits` 把全站同时进行的运行限制在验证环境 16、普通环境 4。线上 `gdufs.zhiyuapp.site` 跑的是 preview Worker（`AGENT_VALIDATION_UNLIMITED=true`），实际生效值是 16；近 7 天 698 条运行全部是 `validation_unlimited=1`。
+- 决定：`migrations/0084_concurrent_headroom.sql` 重建触发器，验证环境 64、普通环境 24。同一会话仍只允许一条运行，这条正确性约束不变。
+- 不压缩租约：`agent_runs.lease_until_ms` 同时是 `src/lib/server/assistant/store.ts` 中 `finish()` 的写入守卫，缩短租约会让超过租约时长的真实回复无法收尾、被打成 `INTERRUPTED`。因此保持 120 秒，改用更多槽位来吸收异常请求占位。
+- 仍未放开：`assistant_run_usage_limits` 里的单账号次数、单 IP 次数、全站次数与 token 额度。验证环境本就不生效；生产环境若按现值启用，全站 200 次/天与单 IP 120 次/小时会远早于并发上限把活动打满。
+- 实测：30 并发 30/30 成功（p50 4.6 秒）；70 并发 50 成功，其余 20 条是单账号 50 个访客对话上限与访客对话容量，不是并发限制。
+
+## D-214｜平台模型总闸只管平台链，个人密钥始终独立可用（2026-11-20）
+
+- 问题：负责人在 `/account/settings/api` 配好自己的模型后，把控制台总闸点成停用，页面仍提示「AI 暂不可用」。实际对话链路是对的——`src/lib/server/assistant/chat.ts` 先用 `personalModelRuntime()`，取不到才走平台链；错的是会话握手 `src/lib/server/assistant/api.ts` 的 `sessionGet`，它把 `platformModelStatus()` 的结果当成唯一就绪来源，总闸一关就把所有账号判成不可用。
+- 决定：`sessionGet` 的 `model` 改为「账号自己的模型优先」——新增 `personalModelStatus()`（`src/lib/server/models/personal-runtime.ts`），未登录、偏好为 platform 或没有配置时返回 `null` 交给平台链；有配置但未连接返回 `MODEL_NOT_CONNECTED`。总闸的语义收窄为「平台链是否可用」，不再代表「本账号是否可用」。
+- 前端：`src/features/assistant/use-assistant.ts` 按 code 区分文案，`MODEL_DISABLED` 提示「平台模型已停用，可在「API 设置」中改用自己的模型密钥。」，其余仍是通用不可用提示。
+- 取舍：不加在线连通性探测（会消耗额度、并把临时故障显示成永久错误）；就绪只看能力回执与本地配置状态，真实失败仍由对话返回的错误码说明。

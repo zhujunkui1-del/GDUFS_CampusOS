@@ -10,7 +10,7 @@ vi.mock("@opennextjs/cloudflare", () => ({
   getCloudflareContext: () => ({ env: fixtureRuntime.env }),
 }));
 vi.mock("@/lib/server/models/runtime", () => ({
-  defaultModelRuntime: () => ({ resolve: fixtureRuntime.resolve }),
+  platformModelRuntime: async () => ({ resolve: fixtureRuntime.resolve }),
 }));
 import { chatResponse } from "@/lib/server/assistant/chat";
 

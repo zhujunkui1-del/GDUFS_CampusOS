@@ -94,7 +94,7 @@ type Session = {
   scopeKey: string;
   kind: string;
   history: unknown;
-  model: { ready: boolean };
+  model: { ready: boolean; code?: string };
   deepThinkingAvailable?: boolean;
 };
 
@@ -363,7 +363,11 @@ export function useAssistant(
       if (readyGeneration !== generation.current) return;
       setReady(session.model.ready);
       setError(
-        session.model.ready ? restoreError : "AI 暂不可用，请稍后重试。",
+        session.model.ready
+          ? restoreError
+          : session.model.code === "MODEL_DISABLED"
+            ? "平台模型已停用，可在「API 设置」中改用自己的模型密钥。"
+            : "AI 暂不可用，请稍后重试。",
       );
       initialized.current = true;
       setConnected(true);

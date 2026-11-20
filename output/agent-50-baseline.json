@@ -13,16 +13,16 @@
           "status": 200,
           "answer": "你要去哪个校区，从哪里出发？",
           "modelRequired": false,
-          "latencyMs": 98,
+          "latencyMs": 71,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "9432ce40-c999-5280-be37-5fc48f3bca6c",
-              "requestId": "e4033256-58eb-49a7-8edd-68bc018d6403",
+              "conversationId": "8057d72f-9667-5511-b7a0-8739126dd5c7",
+              "requestId": "4b03a1d6-8468-4c06-ad8c-28079cd0cee6",
               "started": true
             },
             {
-              "conversationId": "9432ce40-c999-5280-be37-5fc48f3bca6c",
+              "conversationId": "8057d72f-9667-5511-b7a0-8739126dd5c7",
               "cards": [],
               "routes": []
             }
@@ -39,7 +39,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 83
+            "serverElapsedMs": 56
           }
         }
       ],
@@ -56,16 +56,16 @@
           "status": 200,
           "answer": "你要去哪个校区，从哪里出发？",
           "modelRequired": false,
-          "latencyMs": 35,
+          "latencyMs": 40,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "2ac9326c-776c-5145-b807-e2f305660183",
-              "requestId": "3ec1908d-6e0c-4b8d-ae05-088e8ef01ffa",
+              "conversationId": "e874be9f-4131-5057-b3ae-b377ad224e05",
+              "requestId": "359a1033-92ea-4818-85e6-d7fec3958e6d",
               "started": true
             },
             {
-              "conversationId": "2ac9326c-776c-5145-b807-e2f305660183",
+              "conversationId": "e874be9f-4131-5057-b3ae-b377ad224e05",
               "cards": [],
               "routes": []
             }
@@ -82,7 +82,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 32
+            "serverElapsedMs": 27
           }
         },
         {
@@ -90,13 +90,13 @@
           "actionClaim": [
             {
               "type": "SHOW_ROUTE",
-              "routeId": "17032d39-7df5-42e6-b126-c67c03936482"
+              "routeId": "23a29f16-92f6-469e-9a9b-a08368987748"
             }
           ],
           "status": 200,
           "answer": "从南苑7栋到图书馆的路线已按校园步行路网计算：约848米，步行约12分钟。具体路径见路线卡片。",
           "modelRequired": false,
-          "latencyMs": 112,
+          "latencyMs": 101,
           "tools": [
             {
               "name": "plan_route",
@@ -106,16 +106,16 @@
           ],
           "artifacts": [
             {
-              "conversationId": "2ac9326c-776c-5145-b807-e2f305660183",
-              "requestId": "3c13f86d-f0c7-4b4e-b7cb-104c6c1bb2eb",
+              "conversationId": "e874be9f-4131-5057-b3ae-b377ad224e05",
+              "requestId": "41442345-cc3d-4da3-95c5-5948bce49879",
               "started": true
             },
             {
-              "conversationId": "2ac9326c-776c-5145-b807-e2f305660183",
+              "conversationId": "e874be9f-4131-5057-b3ae-b377ad224e05",
               "cards": [
                 {
                   "kind": "route",
-                  "routeId": "17032d39-7df5-42e6-b126-c67c03936482",
+                  "routeId": "23a29f16-92f6-469e-9a9b-a08368987748",
                   "startName": "南苑7栋",
                   "endName": "图书馆",
                   "distanceMeters": 848.0326392899915,
@@ -127,7 +127,7 @@
               "routes": [
                 {
                   "route": {
-                    "routeId": "17032d39-7df5-42e6-b126-c67c03936482",
+                    "routeId": "23a29f16-92f6-469e-9a9b-a08368987748",
                     "start": {
                       "source": "place",
                       "placeId": "osm-way-312536955",
@@ -299,15 +299,15 @@
                     "usesTunnel": true,
                     "expiresAt": "2026-11-18T20:16:00.000Z"
                   },
-                  "ticket": "eyJvd25lciI6Imc6NWViMGZmYTM3ZDdlOGYxMjI1NTVlNmM4YTg4ZGExYTk1Nzk0NWUzMzI0MDAzZDQ4ODA4MjI2NzE2YTNhOGQ2OCIsInJvdXRlIjp7InJvdXRlSWQiOiIxNzAzMmQzOS03ZGY1LTQyZTYtYjEyNi1jNjdjMDM5MzY0ODIiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMxMjUzNjk1NSIsIm5hbWUiOiLljZfoi5E35qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTAxNDYsMjMuMDYxNTc2NV0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTA0MzcwMDA3ODM4NSwyMy4wNjE3NTg2MDEyNDYwMjddLFsxMTMuMzkwNjIxODg0NTI3ODIsMjMuMDYxOTY0MTgxMjY4MDZdLFsxMTMuMzkwODU5NjAwNzAwMjQsMjMuMDYxNzgzMjAxMTI0OTM2XSxbMTEzLjM5MTA1NzUwMDY2MjQ3LDIzLjA2MjExMzAwMTA2OTQyXSxbMTEzLjM5MTE1NDUwMDY0NDI2LDIzLjA2MjM0NjYwMTA0MjQ5Ml0sWzExMy4zOTEyMzE4MDA2Mjk5NCwyMy4wNjI4MTcxMDEwMjEyMDZdLFsxMTMuMzkxMjMyMzAwNjI5ODcsMjMuMDYzMTY2NzAxMDIxMTJdLFsxMTMuMzkxMjQyNjAwNjI3OTksMjMuMDYzNTA4MzAxMDE4MzM0XSxbMTEzLjM5MTU3MTUwMDU2ODQ1LDIzLjA2Mzc1ODMwMDkyODg2XSxbMTEzLjM5MjAxMjAwMDQ5MjQ2LDIzLjA2NDA4NzcwMDgxMjI4NF0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyNjA4MzAwMzk2NiwyMy4wNjQ1NDU1MDA2NjA1MTVdLFsxMTMuMzkyNjcyMDAwMzg2ODgsMjMuMDY1MDE0NzAwNjQ0ODFdLFsxMTMuMzkyNjc2ODAwMzg2MTQsMjMuMDY1MTQxNTAwNjQzNjQ4XSxbMTEzLjM5MjMzOTYwMDQzODg2LDIzLjA2NTEyOTUwMDcyODE5N10sWzExMy4zOTIyNjYwMDA0NTA3LDIzLjA2NTIyNDcwMDc0Njk3NF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMzAzODAwNDQ0NjIsMjMuMDY1NDUwOTAwNzM3MzY4XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MTI1ODIwMDYyNTQyLDIzLjA2NzE3MzYwMTAxNDYwNl0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjUzNTAwMzkyMDMsMjMuMDY3NTQ3MDY2MzQzNjJdXX0sImFwcHJvYWNoUGF0aCI6bnVsbCwidW5kZXJncm91bmRQYXRocyI6W3sidHlwZSI6IkxpbmVTdHJpbmciLCJjb29yZGluYXRlcyI6W1sxMTMuMzkyMDg2NjAwNDgwMDMsMjMuMDY0MTQzNTAwNzkyOTEzXSxbMTEzLjM5MjYwODMwMDM5NjYsMjMuMDY0NTQ1NTAwNjYwNTE1XV19XSwiZGlzdGFuY2VNZXRlcnMiOjg0OC4wMzI2MzkyODk5OTE1LCJlc3RpbWF0ZWRTZWNvbmRzIjo2NzguNDI2MTExNDMxOTkzMSwiZXN0aW1hdGVkTWludXRlcyI6MTIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoyNjF9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6MTEyfSx7Imluc3RydWN0aW9uIjoi6L-b5YWl5bm256m_6L-H5LiL5rKJ6Zqn6YGTIiwiZGlzdGFuY2VNZXRlcnMiOjcwfSx7Imluc3RydWN0aW9uIjoi56a75byA6Zqn6YGT77yM5rK_5Y-w6Zi25q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjUzfSx7Imluc3RydWN0aW9uIjoi5rK_5qCh5YaF5q2l6YGT5q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjkyfSx7Imluc3RydWN0aW9uIjoi56m_6L-H5pWZ5a2m5a6e6aqM5qW85Y-v6YCa6KGM5Yy65Z-fIiwiZGlzdGFuY2VNZXRlcnMiOjIyOH0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.9m0CMQHLhk-vlEpDvGuxZ7FHTX94xvkQt9CO_1g5KM8"
+                  "ticket": "eyJvd25lciI6Imc6Y2YxNDk4OTUzMTM5NmUzYWYzYmMzNTI2ZmYwOWNmZmJhZjNiYTgyMzJkYWVjY2M3ZTA4ODkzNTNiODljNTU5MCIsInJvdXRlIjp7InJvdXRlSWQiOiIyM2EyOWYxNi05MmY2LTQ2OWUtOWE5Yi1hMDgzNjg5ODc3NDgiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMxMjUzNjk1NSIsIm5hbWUiOiLljZfoi5E35qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTAxNDYsMjMuMDYxNTc2NV0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTA0MzcwMDA3ODM4NSwyMy4wNjE3NTg2MDEyNDYwMjddLFsxMTMuMzkwNjIxODg0NTI3ODIsMjMuMDYxOTY0MTgxMjY4MDZdLFsxMTMuMzkwODU5NjAwNzAwMjQsMjMuMDYxNzgzMjAxMTI0OTM2XSxbMTEzLjM5MTA1NzUwMDY2MjQ3LDIzLjA2MjExMzAwMTA2OTQyXSxbMTEzLjM5MTE1NDUwMDY0NDI2LDIzLjA2MjM0NjYwMTA0MjQ5Ml0sWzExMy4zOTEyMzE4MDA2Mjk5NCwyMy4wNjI4MTcxMDEwMjEyMDZdLFsxMTMuMzkxMjMyMzAwNjI5ODcsMjMuMDYzMTY2NzAxMDIxMTJdLFsxMTMuMzkxMjQyNjAwNjI3OTksMjMuMDYzNTA4MzAxMDE4MzM0XSxbMTEzLjM5MTU3MTUwMDU2ODQ1LDIzLjA2Mzc1ODMwMDkyODg2XSxbMTEzLjM5MjAxMjAwMDQ5MjQ2LDIzLjA2NDA4NzcwMDgxMjI4NF0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyNjA4MzAwMzk2NiwyMy4wNjQ1NDU1MDA2NjA1MTVdLFsxMTMuMzkyNjcyMDAwMzg2ODgsMjMuMDY1MDE0NzAwNjQ0ODFdLFsxMTMuMzkyNjc2ODAwMzg2MTQsMjMuMDY1MTQxNTAwNjQzNjQ4XSxbMTEzLjM5MjMzOTYwMDQzODg2LDIzLjA2NTEyOTUwMDcyODE5N10sWzExMy4zOTIyNjYwMDA0NTA3LDIzLjA2NTIyNDcwMDc0Njk3NF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMzAzODAwNDQ0NjIsMjMuMDY1NDUwOTAwNzM3MzY4XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MTI1ODIwMDYyNTQyLDIzLjA2NzE3MzYwMTAxNDYwNl0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjUzNTAwMzkyMDMsMjMuMDY3NTQ3MDY2MzQzNjJdXX0sImFwcHJvYWNoUGF0aCI6bnVsbCwidW5kZXJncm91bmRQYXRocyI6W3sidHlwZSI6IkxpbmVTdHJpbmciLCJjb29yZGluYXRlcyI6W1sxMTMuMzkyMDg2NjAwNDgwMDMsMjMuMDY0MTQzNTAwNzkyOTEzXSxbMTEzLjM5MjYwODMwMDM5NjYsMjMuMDY0NTQ1NTAwNjYwNTE1XV19XSwiZGlzdGFuY2VNZXRlcnMiOjg0OC4wMzI2MzkyODk5OTE1LCJlc3RpbWF0ZWRTZWNvbmRzIjo2NzguNDI2MTExNDMxOTkzMSwiZXN0aW1hdGVkTWludXRlcyI6MTIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoyNjF9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6MTEyfSx7Imluc3RydWN0aW9uIjoi6L-b5YWl5bm256m_6L-H5LiL5rKJ6Zqn6YGTIiwiZGlzdGFuY2VNZXRlcnMiOjcwfSx7Imluc3RydWN0aW9uIjoi56a75byA6Zqn6YGT77yM5rK_5Y-w6Zi25q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjUzfSx7Imluc3RydWN0aW9uIjoi5rK_5qCh5YaF5q2l6YGT5q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjkyfSx7Imluc3RydWN0aW9uIjoi56m_6L-H5pWZ5a2m5a6e6aqM5qW85Y-v6YCa6KGM5Yy65Z-fIiwiZGlzdGFuY2VNZXRlcnMiOjIyOH0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.JM9LlVu9zYfFZkitWn0dQvYwFEyXqVWvwjuNDjFPsMI"
                 }
               ],
               "packet": {
-                "id": "745e60d4-4fcd-47b2-9a4b-a92bd6ccf9d7",
+                "id": "c713215f-64e8-447b-ac62-c1a4b718ec54",
                 "actions": [
                   {
                     "type": "SHOW_ROUTE",
-                    "routeId": "17032d39-7df5-42e6-b126-c67c03936482"
+                    "routeId": "23a29f16-92f6-469e-9a9b-a08368987748"
                   }
                 ]
               }
@@ -325,7 +325,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 107
+            "serverElapsedMs": 98
           }
         }
       ],
@@ -342,13 +342,13 @@
           "actionClaim": [
             {
               "type": "SHOW_ROUTE",
-              "routeId": "f92aa594-0b86-4a51-ab69-b41ff1b42807"
+              "routeId": "882f63c0-4224-4a81-84cb-504f5f268574"
             }
           ],
           "status": 200,
           "answer": "从南苑7栋到图书馆的路线已按校园步行路网计算：约848米，步行约12分钟。具体路径见路线卡片。",
           "modelRequired": false,
-          "latencyMs": 53,
+          "latencyMs": 32,
           "tools": [
             {
               "name": "plan_route",
@@ -358,16 +358,16 @@
           ],
           "artifacts": [
             {
-              "conversationId": "92aa0699-8495-5ba5-9661-fc3318bbebb7",
-              "requestId": "af6d5dfa-8605-4711-afb2-296bb40e5b1c",
+              "conversationId": "cb8979c9-6c22-5ad1-8f0f-2e88e87f83d6",
+              "requestId": "3e566156-a0c7-413d-8d49-a7cf03f4deee",
               "started": true
             },
             {
-              "conversationId": "92aa0699-8495-5ba5-9661-fc3318bbebb7",
+              "conversationId": "cb8979c9-6c22-5ad1-8f0f-2e88e87f83d6",
               "cards": [
                 {
                   "kind": "route",
-                  "routeId": "f92aa594-0b86-4a51-ab69-b41ff1b42807",
+                  "routeId": "882f63c0-4224-4a81-84cb-504f5f268574",
                   "startName": "南苑7栋",
                   "endName": "图书馆",
                   "distanceMeters": 848.0326392899915,
@@ -379,7 +379,7 @@
               "routes": [
                 {
                   "route": {
-                    "routeId": "f92aa594-0b86-4a51-ab69-b41ff1b42807",
+                    "routeId": "882f63c0-4224-4a81-84cb-504f5f268574",
                     "start": {
                       "source": "place",
                       "placeId": "osm-way-312536955",
@@ -551,15 +551,15 @@
                     "usesTunnel": true,
                     "expiresAt": "2026-11-18T20:16:00.000Z"
                   },
-                  "ticket": "eyJvd25lciI6Imc6ZDMzYzcxNmMyMGUwMzNiYmM3NDk3M2Y2YzMwNTM5ZmU5MGE4NTk2MTE2YTkwZTNiMmJmZWYwYjRjZmM2YTQ5YiIsInJvdXRlIjp7InJvdXRlSWQiOiJmOTJhYTU5NC0wYjg2LTRhNTEtYWI2OS1iNDFmZjFiNDI4MDciLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMxMjUzNjk1NSIsIm5hbWUiOiLljZfoi5E35qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTAxNDYsMjMuMDYxNTc2NV0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTA0MzcwMDA3ODM4NSwyMy4wNjE3NTg2MDEyNDYwMjddLFsxMTMuMzkwNjIxODg0NTI3ODIsMjMuMDYxOTY0MTgxMjY4MDZdLFsxMTMuMzkwODU5NjAwNzAwMjQsMjMuMDYxNzgzMjAxMTI0OTM2XSxbMTEzLjM5MTA1NzUwMDY2MjQ3LDIzLjA2MjExMzAwMTA2OTQyXSxbMTEzLjM5MTE1NDUwMDY0NDI2LDIzLjA2MjM0NjYwMTA0MjQ5Ml0sWzExMy4zOTEyMzE4MDA2Mjk5NCwyMy4wNjI4MTcxMDEwMjEyMDZdLFsxMTMuMzkxMjMyMzAwNjI5ODcsMjMuMDYzMTY2NzAxMDIxMTJdLFsxMTMuMzkxMjQyNjAwNjI3OTksMjMuMDYzNTA4MzAxMDE4MzM0XSxbMTEzLjM5MTU3MTUwMDU2ODQ1LDIzLjA2Mzc1ODMwMDkyODg2XSxbMTEzLjM5MjAxMjAwMDQ5MjQ2LDIzLjA2NDA4NzcwMDgxMjI4NF0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyNjA4MzAwMzk2NiwyMy4wNjQ1NDU1MDA2NjA1MTVdLFsxMTMuMzkyNjcyMDAwMzg2ODgsMjMuMDY1MDE0NzAwNjQ0ODFdLFsxMTMuMzkyNjc2ODAwMzg2MTQsMjMuMDY1MTQxNTAwNjQzNjQ4XSxbMTEzLjM5MjMzOTYwMDQzODg2LDIzLjA2NTEyOTUwMDcyODE5N10sWzExMy4zOTIyNjYwMDA0NTA3LDIzLjA2NTIyNDcwMDc0Njk3NF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMzAzODAwNDQ0NjIsMjMuMDY1NDUwOTAwNzM3MzY4XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MTI1ODIwMDYyNTQyLDIzLjA2NzE3MzYwMTAxNDYwNl0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjUzNTAwMzkyMDMsMjMuMDY3NTQ3MDY2MzQzNjJdXX0sImFwcHJvYWNoUGF0aCI6bnVsbCwidW5kZXJncm91bmRQYXRocyI6W3sidHlwZSI6IkxpbmVTdHJpbmciLCJjb29yZGluYXRlcyI6W1sxMTMuMzkyMDg2NjAwNDgwMDMsMjMuMDY0MTQzNTAwNzkyOTEzXSxbMTEzLjM5MjYwODMwMDM5NjYsMjMuMDY0NTQ1NTAwNjYwNTE1XV19XSwiZGlzdGFuY2VNZXRlcnMiOjg0OC4wMzI2MzkyODk5OTE1LCJlc3RpbWF0ZWRTZWNvbmRzIjo2NzguNDI2MTExNDMxOTkzMSwiZXN0aW1hdGVkTWludXRlcyI6MTIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoyNjF9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6MTEyfSx7Imluc3RydWN0aW9uIjoi6L-b5YWl5bm256m_6L-H5LiL5rKJ6Zqn6YGTIiwiZGlzdGFuY2VNZXRlcnMiOjcwfSx7Imluc3RydWN0aW9uIjoi56a75byA6Zqn6YGT77yM5rK_5Y-w6Zi25q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjUzfSx7Imluc3RydWN0aW9uIjoi5rK_5qCh5YaF5q2l6YGT5q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjkyfSx7Imluc3RydWN0aW9uIjoi56m_6L-H5pWZ5a2m5a6e6aqM5qW85Y-v6YCa6KGM5Yy65Z-fIiwiZGlzdGFuY2VNZXRlcnMiOjIyOH0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.BmgyZ_NHF2EjAABhXHkWHBm9n9qAS-w2LkXNu7tk8bc"
+                  "ticket": "eyJvd25lciI6Imc6ZGM5YmU0MTVmYmRhNDVmMTA3YjZmN2Q3ZTQwNWM2YTY0OTc0ZTFlNmM0MDA3NGNiZGM3NzdjMGNkM2FkOTUwNSIsInJvdXRlIjp7InJvdXRlSWQiOiI4ODJmNjNjMC00MjI0LTRhODEtODRjYi01MDRmNWYyNjg1NzQiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMxMjUzNjk1NSIsIm5hbWUiOiLljZfoi5E35qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTAxNDYsMjMuMDYxNTc2NV0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTA0MzcwMDA3ODM4NSwyMy4wNjE3NTg2MDEyNDYwMjddLFsxMTMuMzkwNjIxODg0NTI3ODIsMjMuMDYxOTY0MTgxMjY4MDZdLFsxMTMuMzkwODU5NjAwNzAwMjQsMjMuMDYxNzgzMjAxMTI0OTM2XSxbMTEzLjM5MTA1NzUwMDY2MjQ3LDIzLjA2MjExMzAwMTA2OTQyXSxbMTEzLjM5MTE1NDUwMDY0NDI2LDIzLjA2MjM0NjYwMTA0MjQ5Ml0sWzExMy4zOTEyMzE4MDA2Mjk5NCwyMy4wNjI4MTcxMDEwMjEyMDZdLFsxMTMuMzkxMjMyMzAwNjI5ODcsMjMuMDYzMTY2NzAxMDIxMTJdLFsxMTMuMzkxMjQyNjAwNjI3OTksMjMuMDYzNTA4MzAxMDE4MzM0XSxbMTEzLjM5MTU3MTUwMDU2ODQ1LDIzLjA2Mzc1ODMwMDkyODg2XSxbMTEzLjM5MjAxMjAwMDQ5MjQ2LDIzLjA2NDA4NzcwMDgxMjI4NF0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyNjA4MzAwMzk2NiwyMy4wNjQ1NDU1MDA2NjA1MTVdLFsxMTMuMzkyNjcyMDAwMzg2ODgsMjMuMDY1MDE0NzAwNjQ0ODFdLFsxMTMuMzkyNjc2ODAwMzg2MTQsMjMuMDY1MTQxNTAwNjQzNjQ4XSxbMTEzLjM5MjMzOTYwMDQzODg2LDIzLjA2NTEyOTUwMDcyODE5N10sWzExMy4zOTIyNjYwMDA0NTA3LDIzLjA2NTIyNDcwMDc0Njk3NF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMzAzODAwNDQ0NjIsMjMuMDY1NDUwOTAwNzM3MzY4XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MTI1ODIwMDYyNTQyLDIzLjA2NzE3MzYwMTAxNDYwNl0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjUzNTAwMzkyMDMsMjMuMDY3NTQ3MDY2MzQzNjJdXX0sImFwcHJvYWNoUGF0aCI6bnVsbCwidW5kZXJncm91bmRQYXRocyI6W3sidHlwZSI6IkxpbmVTdHJpbmciLCJjb29yZGluYXRlcyI6W1sxMTMuMzkyMDg2NjAwNDgwMDMsMjMuMDY0MTQzNTAwNzkyOTEzXSxbMTEzLjM5MjYwODMwMDM5NjYsMjMuMDY0NTQ1NTAwNjYwNTE1XV19XSwiZGlzdGFuY2VNZXRlcnMiOjg0OC4wMzI2MzkyODk5OTE1LCJlc3RpbWF0ZWRTZWNvbmRzIjo2NzguNDI2MTExNDMxOTkzMSwiZXN0aW1hdGVkTWludXRlcyI6MTIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoyNjF9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6MTEyfSx7Imluc3RydWN0aW9uIjoi6L-b5YWl5bm256m_6L-H5LiL5rKJ6Zqn6YGTIiwiZGlzdGFuY2VNZXRlcnMiOjcwfSx7Imluc3RydWN0aW9uIjoi56a75byA6Zqn6YGT77yM5rK_5Y-w6Zi25q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjUzfSx7Imluc3RydWN0aW9uIjoi5rK_5qCh5YaF5q2l6YGT5q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjkyfSx7Imluc3RydWN0aW9uIjoi56m_6L-H5pWZ5a2m5a6e6aqM5qW85Y-v6YCa6KGM5Yy65Z-fIiwiZGlzdGFuY2VNZXRlcnMiOjIyOH0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.v-8INV58PTVLx4I-t8-h4p_RUdrcB5YS_oLSK7VN0y4"
                 }
               ],
               "packet": {
-                "id": "e8b93d40-66f1-42a9-a81e-d9e8c7fd16fb",
+                "id": "7313db7a-49cc-4114-9689-71e4fd958f20",
                 "actions": [
                   {
                     "type": "SHOW_ROUTE",
-                    "routeId": "f92aa594-0b86-4a51-ab69-b41ff1b42807"
+                    "routeId": "882f63c0-4224-4a81-84cb-504f5f268574"
                   }
                 ]
               }
@@ -577,7 +577,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 50
+            "serverElapsedMs": 30
           }
         }
       ],
@@ -594,13 +594,13 @@
           "actionClaim": [
             {
               "type": "SHOW_ROUTE",
-              "routeId": "9e763424-66b9-46ff-a8a8-3f1a2449a53e"
+              "routeId": "9401d58b-de97-4cde-b1f5-f487149edfa7"
             }
           ],
           "status": 200,
           "answer": "从图书馆到文采园（一饭）的路线已按校园步行路网计算：约534米，步行约8分钟。具体路径见路线卡片。",
           "modelRequired": false,
-          "latencyMs": 53,
+          "latencyMs": 56,
           "tools": [
             {
               "name": "plan_route",
@@ -610,16 +610,16 @@
           ],
           "artifacts": [
             {
-              "conversationId": "4930852f-7801-5a35-aeff-13fe1e5937c3",
-              "requestId": "f1d9bab4-f715-490c-a523-00a7353cca6f",
+              "conversationId": "9511f75d-5b9c-5dcb-8e76-ff3228897040",
+              "requestId": "d46cb47a-cfe1-4a49-8294-8bf13bd60615",
               "started": true
             },
             {
-              "conversationId": "4930852f-7801-5a35-aeff-13fe1e5937c3",
+              "conversationId": "9511f75d-5b9c-5dcb-8e76-ff3228897040",
               "cards": [
                 {
                   "kind": "route",
-                  "routeId": "9e763424-66b9-46ff-a8a8-3f1a2449a53e",
+                  "routeId": "9401d58b-de97-4cde-b1f5-f487149edfa7",
                   "startName": "图书馆",
                   "endName": "文采园（一饭）",
                   "distanceMeters": 533.9924194549192,
@@ -631,7 +631,7 @@
               "routes": [
                 {
                   "route": {
-                    "routeId": "9e763424-66b9-46ff-a8a8-3f1a2449a53e",
+                    "routeId": "9401d58b-de97-4cde-b1f5-f487149edfa7",
                     "start": {
                       "source": "place",
                       "placeId": "osm-way-307250998",
@@ -779,15 +779,15 @@
                     "usesTunnel": true,
                     "expiresAt": "2026-11-18T20:16:00.000Z"
                   },
-                  "ticket": "eyJvd25lciI6Imc6YjE1MGRhMWE4ODFkMDlmYzVhYWQ3MmQ4ZDM2MDBjMTg2ZDI1YzU4ZTI3ZmZlNGRkNWJkNTlmMzQzODIxNDkzNiIsInJvdXRlIjp7InJvdXRlSWQiOiI5ZTc2MzQyNC02NmI5LTQ2ZmYtYThhOC0zZjFhMjQ0OWE1M2UiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJlbmQiOnsic291cmNlIjoicGxhY2UiLCJwbGFjZUlkIjoib3NtLXdheS0zMTMwMzkwNDgiLCJuYW1lIjoi5paH6YeH5Zut77yI5LiA6aWt77yJIiwiY29vcmRpbmF0ZSI6WzExMy4zOTEzMTc0NSwyMy4wNjQ0OTA1NTAwMDAwMDJdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTEyNTM1MDAzOTIwMywyMy4wNjc1NDcwNjYzNDM2Ml0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjU4MjAwNjI1NDIsMjMuMDY3MTczNjAxMDE0NjA2XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MjMwMzgwMDQ0NDYyLDIzLjA2NTQ1MDkwMDczNzM2OF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMjY2MDAwNDUwNywyMy4wNjUyMjQ3MDA3NDY5NzRdLFsxMTMuMzkyMzM5NjAwNDM4ODYsMjMuMDY1MTI5NTAwNzI4MTk3XSxbMTEzLjM5MjY3NjgwMDM4NjE0LDIzLjA2NTE0MTUwMDY0MzY0OF0sWzExMy4zOTI2NzIwMDAzODY4OCwyMy4wNjUwMTQ3MDA2NDQ4MV0sWzExMy4zOTI2MDgzMDAzOTY2LDIzLjA2NDU0NTUwMDY2MDUxNV0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyMDEyMDAwNDkyNDYsMjMuMDY0MDg3NzAwODEyMjg0XSxbMTEzLjM5MTk2NTM3NDg1OTQ4LDIzLjA2NDA1MjgzNDc5NDc0XSxbMTEzLjM5MTcwNDkwMDU0NTAxLDIzLjA2NDM0NzcwMDg5MzI0XV19LCJhcHByb2FjaFBhdGgiOm51bGwsInVuZGVyZ3JvdW5kUGF0aHMiOlt7InR5cGUiOiJMaW5lU3RyaW5nIiwiY29vcmRpbmF0ZXMiOltbMTEzLjM5MjA4NjYwMDQ4MDAzLDIzLjA2NDE0MzUwMDc5MjkxM10sWzExMy4zOTI2MDgzMDAzOTY2LDIzLjA2NDU0NTUwMDY2MDUxNV1dfV0sImRpc3RhbmNlTWV0ZXJzIjo1MzMuOTkyNDE5NDU0OTE5MiwiZXN0aW1hdGVkU2Vjb25kcyI6NDI3LjE5MzkzNTU2MzkzNTMsImVzdGltYXRlZE1pbnV0ZXMiOjgsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH0seyJpbnN0cnVjdGlvbiI6Iuepv-i_h-aVmeWtpuWunumqjOalvOWPr-mAmuihjOWMuuWfnyIsImRpc3RhbmNlTWV0ZXJzIjoyMjh9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_moKHlhoXmraXpgZPmraXooYwiLCJkaXN0YW5jZU1ldGVycyI6OTJ9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6NTN9LHsiaW5zdHJ1Y3Rpb24iOiLov5vlhaXlubbnqb_ov4fkuIvmsonpmqfpgZMiLCJkaXN0YW5jZU1ldGVycyI6NzB9LHsiaW5zdHJ1Y3Rpb24iOiLnprvlvIDpmqfpgZPvvIzmsr_lj7DpmLbmraXooYwiLCJkaXN0YW5jZU1ldGVycyI6MTB9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6Nn0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjo0Mn1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.RHICWs5HH1upxiELStwlssb5t34Qhan_n9auJbY2Tm0"
+                  "ticket": "eyJvd25lciI6Imc6ZDdhMjZiMTk5MjExNDc4YjMxM2ZhOWQwNjQ4NTRhYzk1ZTE0NzY5N2RlZjk1MDQ5MGMzMzMxZGMxYTNkZGUyYiIsInJvdXRlIjp7InJvdXRlSWQiOiI5NDAxZDU4Yi1kZTk3LTRjZGUtYjFmNS1mNDg3MTQ5ZWRmYTciLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJlbmQiOnsic291cmNlIjoicGxhY2UiLCJwbGFjZUlkIjoib3NtLXdheS0zMTMwMzkwNDgiLCJuYW1lIjoi5paH6YeH5Zut77yI5LiA6aWt77yJIiwiY29vcmRpbmF0ZSI6WzExMy4zOTEzMTc0NSwyMy4wNjQ0OTA1NTAwMDAwMDJdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTEyNTM1MDAzOTIwMywyMy4wNjc1NDcwNjYzNDM2Ml0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjU4MjAwNjI1NDIsMjMuMDY3MTczNjAxMDE0NjA2XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MjMwMzgwMDQ0NDYyLDIzLjA2NTQ1MDkwMDczNzM2OF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMjY2MDAwNDUwNywyMy4wNjUyMjQ3MDA3NDY5NzRdLFsxMTMuMzkyMzM5NjAwNDM4ODYsMjMuMDY1MTI5NTAwNzI4MTk3XSxbMTEzLjM5MjY3NjgwMDM4NjE0LDIzLjA2NTE0MTUwMDY0MzY0OF0sWzExMy4zOTI2NzIwMDAzODY4OCwyMy4wNjUwMTQ3MDA2NDQ4MV0sWzExMy4zOTI2MDgzMDAzOTY2LDIzLjA2NDU0NTUwMDY2MDUxNV0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyMDEyMDAwNDkyNDYsMjMuMDY0MDg3NzAwODEyMjg0XSxbMTEzLjM5MTk2NTM3NDg1OTQ4LDIzLjA2NDA1MjgzNDc5NDc0XSxbMTEzLjM5MTcwNDkwMDU0NTAxLDIzLjA2NDM0NzcwMDg5MzI0XV19LCJhcHByb2FjaFBhdGgiOm51bGwsInVuZGVyZ3JvdW5kUGF0aHMiOlt7InR5cGUiOiJMaW5lU3RyaW5nIiwiY29vcmRpbmF0ZXMiOltbMTEzLjM5MjA4NjYwMDQ4MDAzLDIzLjA2NDE0MzUwMDc5MjkxM10sWzExMy4zOTI2MDgzMDAzOTY2LDIzLjA2NDU0NTUwMDY2MDUxNV1dfV0sImRpc3RhbmNlTWV0ZXJzIjo1MzMuOTkyNDE5NDU0OTE5MiwiZXN0aW1hdGVkU2Vjb25kcyI6NDI3LjE5MzkzNTU2MzkzNTMsImVzdGltYXRlZE1pbnV0ZXMiOjgsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH0seyJpbnN0cnVjdGlvbiI6Iuepv-i_h-aVmeWtpuWunumqjOalvOWPr-mAmuihjOWMuuWfnyIsImRpc3RhbmNlTWV0ZXJzIjoyMjh9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_moKHlhoXmraXpgZPmraXooYwiLCJkaXN0YW5jZU1ldGVycyI6OTJ9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6NTN9LHsiaW5zdHJ1Y3Rpb24iOiLov5vlhaXlubbnqb_ov4fkuIvmsonpmqfpgZMiLCJkaXN0YW5jZU1ldGVycyI6NzB9LHsiaW5zdHJ1Y3Rpb24iOiLnprvlvIDpmqfpgZPvvIzmsr_lj7DpmLbmraXooYwiLCJkaXN0YW5jZU1ldGVycyI6MTB9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6Nn0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjo0Mn1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.V3BCxkMtiWPBmuzmApX6Kmw3fZGLwpNl-w-0npmpj0M"
                 }
               ],
               "packet": {
-                "id": "78e95226-a905-462e-acc2-dd2929f8ff6f",
+                "id": "d863c7b6-02b2-4534-b195-f0cb7f18f912",
                 "actions": [
                   {
                     "type": "SHOW_ROUTE",
-                    "routeId": "9e763424-66b9-46ff-a8a8-3f1a2449a53e"
+                    "routeId": "9401d58b-de97-4cde-b1f5-f487149edfa7"
                   }
                 ]
               }
@@ -805,7 +805,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 50
+            "serverElapsedMs": 45
           }
         }
       ],
@@ -823,13 +823,13 @@
             {
               "campus": "baiyun",
               "type": "SHOW_ROUTE",
-              "routeId": "dd0e7daf-4ba6-4a9e-ae9e-c1266a0c1df2"
+              "routeId": "5d318bb4-381f-4fd2-b3dd-c7af96885e79"
             }
           ],
           "status": 200,
           "answer": "从北校区图书馆到第一教学楼的路线已按校园步行路网计算：约237米，步行约4分钟。具体路径见路线卡片。",
           "modelRequired": false,
-          "latencyMs": 55,
+          "latencyMs": 63,
           "tools": [
             {
               "name": "plan_route",
@@ -839,16 +839,16 @@
           ],
           "artifacts": [
             {
-              "conversationId": "887cf142-7034-5184-adcc-fd4b07c14f7a",
-              "requestId": "51d72cc5-69a6-4bfb-8d82-dc79d0b66bec",
+              "conversationId": "077174f8-826f-53cb-9bff-5787f127b6bf",
+              "requestId": "410cdc71-6031-4392-84f7-ed9a2d2467f5",
               "started": true
             },
             {
-              "conversationId": "887cf142-7034-5184-adcc-fd4b07c14f7a",
+              "conversationId": "077174f8-826f-53cb-9bff-5787f127b6bf",
               "cards": [
                 {
                   "kind": "route",
-                  "routeId": "dd0e7daf-4ba6-4a9e-ae9e-c1266a0c1df2",
+                  "routeId": "5d318bb4-381f-4fd2-b3dd-c7af96885e79",
                   "startName": "北校区图书馆",
                   "endName": "第一教学楼",
                   "distanceMeters": 237.02141274741757,
@@ -926,7 +926,7 @@
                         ]
                       ]
                     },
-                    "routeId": "dd0e7daf-4ba6-4a9e-ae9e-c1266a0c1df2",
+                    "routeId": "5d318bb4-381f-4fd2-b3dd-c7af96885e79",
                     "start": {
                       "source": "place",
                       "placeId": "osm-way-962936641",
@@ -1020,16 +1020,16 @@
                     "usesTunnel": false,
                     "expiresAt": "2026-11-18T20:16:00.000Z"
                   },
-                  "ticket": "eyJvd25lciI6Imc6ZmIxMmEyOTBiODJjYTQ2ODdkODAwMjc2Yjc4YzYxMjA1OTdhMzkyOWQ1NGE2MWMzOTI1NzcxYTM3Mjg4MGE5MCIsInJvdXRlIjp7ImNhbXB1cyI6ImJhaXl1biIsImd1aWRhbmNlUGF0aHMiOlt7InR5cGUiOiJMaW5lU3RyaW5nIiwiY29vcmRpbmF0ZXMiOltbMTEzLjI4NTQ0MDA5OTk5OTk5LDIzLjIwMTMxOTA1MDAwMDAwMl0sWzExMy4yODU0NTg5OTIxMjAzMSwyMy4yMDE3NTk1Nzg0NzAxMjhdXX0seyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4yODQwNDA0MjQwMjExMywyMy4yMDE4MDAyMTY0MTE0MTRdLFsxMTMuMjg0MDQwNzUsMjMuMjAyMTg1NzQ5OTk5OTk4XV19XSwic29saWRQYXRoIjp7InR5cGUiOiJMaW5lU3RyaW5nIiwiY29vcmRpbmF0ZXMiOltbMTEzLjI4NTQ1ODk5MjEyMDMxLDIzLjIwMTc1OTU3ODQ3MDEyOF0sWzExMy4yODUyMjkzLDIzLjIwMTc2NzldLFsxMTMuMjg0OTM4MywyMy4yMDE3ODA5XSxbMTEzLjI4NDY5NjUsMjMuMjAxODAwM10sWzExMy4yODQ0MjY1LDIzLjIwMTc5NzhdLFsxMTMuMjg0MTEyMSwyMy4yMDE4MDAxXSxbMTEzLjI4NDA2MzQsMjMuMjAxODAwMl0sWzExMy4yODQwNDA0MjQwMjExMywyMy4yMDE4MDAyMTY0MTE0MTRdXX0sInJvdXRlSWQiOiJkZDBlN2RhZi00YmE2LTRhOWUtYWU5ZS1jMTI2NmEwYzFkZjIiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTk2MjkzNjY0MSIsIm5hbWUiOiLljJfmoKHljLrlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjI4NTQ0MDA5OTk5OTk5LDIzLjIwMTMxOTA1MDAwMDAwMl0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMzODAyODU5MSIsIm5hbWUiOiLnrKzkuIDmlZnlrabmpbwiLCJjb29yZGluYXRlIjpbMTEzLjI4NDA0MDc1LDIzLjIwMjE4NTc0OTk5OTk5OF0sImNycyI6IldHUzg0In0sIm1vZGUiOiJ3YWxraW5nIiwiY3JzIjoiV0dTODQiLCJzb3VyY2UiOiJDYW1wdXNPUy5PU00iLCJwYXRoIjp7InR5cGUiOiJMaW5lU3RyaW5nIiwiY29vcmRpbmF0ZXMiOltbMTEzLjI4NTQ0MDA5OTk5OTk5LDIzLjIwMTMxOTA1MDAwMDAwMl0sWzExMy4yODU0NTg5OTIxMjAzMSwyMy4yMDE3NTk1Nzg0NzAxMjhdLFsxMTMuMjg1MjI5MywyMy4yMDE3Njc5XSxbMTEzLjI4NDkzODMsMjMuMjAxNzgwOV0sWzExMy4yODQ2OTY1LDIzLjIwMTgwMDNdLFsxMTMuMjg0NDI2NSwyMy4yMDE3OTc4XSxbMTEzLjI4NDExMjEsMjMuMjAxODAwMV0sWzExMy4yODQwNjM0LDIzLjIwMTgwMDJdLFsxMTMuMjg0MDQwNDI0MDIxMTMsMjMuMjAxODAwMjE2NDExNDE0XSxbMTEzLjI4NDA0MDc1LDIzLjIwMjE4NTc0OTk5OTk5OF1dfSwiYXBwcm9hY2hQYXRoIjpudWxsLCJ1bmRlcmdyb3VuZFBhdGhzIjpbXSwiZGlzdGFuY2VNZXRlcnMiOjIzNy4wMjE0MTI3NDc0MTc1NywiZXN0aW1hdGVkU2Vjb25kcyI6MTk3LjUxNzg0Mzk1NjE4MTMsImVzdGltYXRlZE1pbnV0ZXMiOjQsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-iZmue6v-W8leWvvOWJjeW-gOatpemBkyIsImRpc3RhbmNlTWV0ZXJzIjo0OX0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoxNDV9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_omZrnur_lvJXlr7zliY3lvoDnu4jngrkiLCJkaXN0YW5jZU1ldGVycyI6NDN9XSwibmV0d29ya1ZlcnNpb24iOiJiYWl5dW4td2Fsa2luZy0yMDI2LTExLTE4LjEiLCJtYXBWZXJzaW9uIjoiYmFpeXVuLTIwMjYtMTEtMTguMiIsImNyb3NzZXNab25lcyI6ZmFsc2UsInVzZXNUdW5uZWwiOmZhbHNlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.nPZ2Qfb1NAPSC1jFdRx306HrmX1iPWHcNAhyN06mtp0"
+                  "ticket": "eyJvd25lciI6Imc6MThmNjVhNDY5OWJmYzM0OWQ3ODQ4NGFlN2QyN2MxMTk1ZWNjMDZhYmFiNzVlZjBiY2FmNDk3NTFlZTkxMTMzMyIsInJvdXRlIjp7ImNhbXB1cyI6ImJhaXl1biIsImd1aWRhbmNlUGF0aHMiOlt7InR5cGUiOiJMaW5lU3RyaW5nIiwiY29vcmRpbmF0ZXMiOltbMTEzLjI4NTQ0MDA5OTk5OTk5LDIzLjIwMTMxOTA1MDAwMDAwMl0sWzExMy4yODU0NTg5OTIxMjAzMSwyMy4yMDE3NTk1Nzg0NzAxMjhdXX0seyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4yODQwNDA0MjQwMjExMywyMy4yMDE4MDAyMTY0MTE0MTRdLFsxMTMuMjg0MDQwNzUsMjMuMjAyMTg1NzQ5OTk5OTk4XV19XSwic29saWRQYXRoIjp7InR5cGUiOiJMaW5lU3RyaW5nIiwiY29vcmRpbmF0ZXMiOltbMTEzLjI4NTQ1ODk5MjEyMDMxLDIzLjIwMTc1OTU3ODQ3MDEyOF0sWzExMy4yODUyMjkzLDIzLjIwMTc2NzldLFsxMTMuMjg0OTM4MywyMy4yMDE3ODA5XSxbMTEzLjI4NDY5NjUsMjMuMjAxODAwM10sWzExMy4yODQ0MjY1LDIzLjIwMTc5NzhdLFsxMTMuMjg0MTEyMSwyMy4yMDE4MDAxXSxbMTEzLjI4NDA2MzQsMjMuMjAxODAwMl0sWzExMy4yODQwNDA0MjQwMjExMywyMy4yMDE4MDAyMTY0MTE0MTRdXX0sInJvdXRlSWQiOiI1ZDMxOGJiNC0zODFmLTRmZDItYjNkZC1jN2FmOTY4ODVlNzkiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTk2MjkzNjY0MSIsIm5hbWUiOiLljJfmoKHljLrlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjI4NTQ0MDA5OTk5OTk5LDIzLjIwMTMxOTA1MDAwMDAwMl0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMzODAyODU5MSIsIm5hbWUiOiLnrKzkuIDmlZnlrabmpbwiLCJjb29yZGluYXRlIjpbMTEzLjI4NDA0MDc1LDIzLjIwMjE4NTc0OTk5OTk5OF0sImNycyI6IldHUzg0In0sIm1vZGUiOiJ3YWxraW5nIiwiY3JzIjoiV0dTODQiLCJzb3VyY2UiOiJDYW1wdXNPUy5PU00iLCJwYXRoIjp7InR5cGUiOiJMaW5lU3RyaW5nIiwiY29vcmRpbmF0ZXMiOltbMTEzLjI4NTQ0MDA5OTk5OTk5LDIzLjIwMTMxOTA1MDAwMDAwMl0sWzExMy4yODU0NTg5OTIxMjAzMSwyMy4yMDE3NTk1Nzg0NzAxMjhdLFsxMTMuMjg1MjI5MywyMy4yMDE3Njc5XSxbMTEzLjI4NDkzODMsMjMuMjAxNzgwOV0sWzExMy4yODQ2OTY1LDIzLjIwMTgwMDNdLFsxMTMuMjg0NDI2NSwyMy4yMDE3OTc4XSxbMTEzLjI4NDExMjEsMjMuMjAxODAwMV0sWzExMy4yODQwNjM0LDIzLjIwMTgwMDJdLFsxMTMuMjg0MDQwNDI0MDIxMTMsMjMuMjAxODAwMjE2NDExNDE0XSxbMTEzLjI4NDA0MDc1LDIzLjIwMjE4NTc0OTk5OTk5OF1dfSwiYXBwcm9hY2hQYXRoIjpudWxsLCJ1bmRlcmdyb3VuZFBhdGhzIjpbXSwiZGlzdGFuY2VNZXRlcnMiOjIzNy4wMjE0MTI3NDc0MTc1NywiZXN0aW1hdGVkU2Vjb25kcyI6MTk3LjUxNzg0Mzk1NjE4MTMsImVzdGltYXRlZE1pbnV0ZXMiOjQsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-iZmue6v-W8leWvvOWJjeW-gOatpemBkyIsImRpc3RhbmNlTWV0ZXJzIjo0OX0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoxNDV9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_omZrnur_lvJXlr7zliY3lvoDnu4jngrkiLCJkaXN0YW5jZU1ldGVycyI6NDN9XSwibmV0d29ya1ZlcnNpb24iOiJiYWl5dW4td2Fsa2luZy0yMDI2LTExLTE4LjEiLCJtYXBWZXJzaW9uIjoiYmFpeXVuLTIwMjYtMTEtMTguMiIsImNyb3NzZXNab25lcyI6ZmFsc2UsInVzZXNUdW5uZWwiOmZhbHNlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.zAMm4T9ELSM1uwG7g65XC7D7E3d1QlMA3XiWn7K3tcs"
                 }
               ],
               "packet": {
-                "id": "df74c398-1de3-4e10-969f-7add9574c537",
+                "id": "79262ebc-c223-4e90-b8d2-3928cf075e5c",
                 "actions": [
                   {
                     "campus": "baiyun",
                     "type": "SHOW_ROUTE",
-                    "routeId": "dd0e7daf-4ba6-4a9e-ae9e-c1266a0c1df2"
+                    "routeId": "5d318bb4-381f-4fd2-b3dd-c7af96885e79"
                   }
                 ]
               }
@@ -1047,7 +1047,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 53
+            "serverElapsedMs": 58
           }
         }
       ],
@@ -1064,16 +1064,16 @@
           "status": 200,
           "answer": "请告诉我从哪里出发。",
           "modelRequired": false,
-          "latencyMs": 40,
+          "latencyMs": 17,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "8bd59512-3c5c-59c6-a8bf-487c757f5eee",
-              "requestId": "bb2ca51c-5f43-42eb-ad2b-a247dc1d0865",
+              "conversationId": "12c3d353-21c8-50ee-b418-f1613c2b6b62",
+              "requestId": "1327a587-39ef-4097-abd0-28dd11cb64e3",
               "started": true
             },
             {
-              "conversationId": "8bd59512-3c5c-59c6-a8bf-487c757f5eee",
+              "conversationId": "12c3d353-21c8-50ee-b418-f1613c2b6b62",
               "cards": [],
               "routes": []
             }
@@ -1090,7 +1090,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 36
+            "serverElapsedMs": 14
           }
         }
       ],
@@ -1107,16 +1107,16 @@
           "status": 200,
           "answer": "两处地点分属不同校区，目前没有跨校区校内步行路线。",
           "modelRequired": false,
-          "latencyMs": 29,
+          "latencyMs": 23,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "649a6907-cf40-5053-b7ce-6cd4206eb0c0",
-              "requestId": "fedb644a-2368-4dca-846c-02af2affbea7",
+              "conversationId": "318e3f9c-b459-5f52-af65-15d343d5fbc8",
+              "requestId": "e0d4ed89-92b0-4bb4-bb3c-088db086da7a",
               "started": true
             },
             {
-              "conversationId": "649a6907-cf40-5053-b7ce-6cd4206eb0c0",
+              "conversationId": "318e3f9c-b459-5f52-af65-15d343d5fbc8",
               "cards": [],
               "routes": []
             }
@@ -1133,7 +1133,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 27
+            "serverElapsedMs": 20
           }
         }
       ],
@@ -1150,13 +1150,13 @@
           "actionClaim": [
             {
               "type": "SHOW_ROUTE",
-              "routeId": "29dceaee-00dc-439e-9d5e-4acf5061a8d6"
+              "routeId": "61df9d41-282d-4927-9f5a-ddadd3745e6a"
             }
           ],
           "status": 200,
           "answer": "从南苑7栋到图书馆的路线已按校园步行路网计算：约848米，步行约12分钟。具体路径见路线卡片。",
           "modelRequired": false,
-          "latencyMs": 84,
+          "latencyMs": 52,
           "tools": [
             {
               "name": "plan_route",
@@ -1166,16 +1166,16 @@
           ],
           "artifacts": [
             {
-              "conversationId": "4cc51fa1-eba7-5a35-a3a9-8d5a6a7a4df2",
-              "requestId": "2fc3b053-7538-4866-9680-4e4604faef98",
+              "conversationId": "94f55d33-7843-58af-b026-f1d218c5d010",
+              "requestId": "a799d9e9-46a2-4802-9da5-34c1b291b6b4",
               "started": true
             },
             {
-              "conversationId": "4cc51fa1-eba7-5a35-a3a9-8d5a6a7a4df2",
+              "conversationId": "94f55d33-7843-58af-b026-f1d218c5d010",
               "cards": [
                 {
                   "kind": "route",
-                  "routeId": "29dceaee-00dc-439e-9d5e-4acf5061a8d6",
+                  "routeId": "61df9d41-282d-4927-9f5a-ddadd3745e6a",
                   "startName": "南苑7栋",
                   "endName": "图书馆",
                   "distanceMeters": 848.0326392899915,
@@ -1187,7 +1187,7 @@
               "routes": [
                 {
                   "route": {
-                    "routeId": "29dceaee-00dc-439e-9d5e-4acf5061a8d6",
+                    "routeId": "61df9d41-282d-4927-9f5a-ddadd3745e6a",
                     "start": {
                       "source": "place",
                       "placeId": "osm-way-312536955",
@@ -1359,138 +1359,18 @@
                     "usesTunnel": true,
                     "expiresAt": "2026-11-18T20:16:00.000Z"
                   },
-                  "ticket": "eyJvd25lciI6Imc6MDA1MjZhMzQyMTNkNmNkNDgzMWQ4OTkyNzM3YWEwNzFiNzUyYTk5YTcxMDNiYjBlNzc4YzA3OWMzY2UzOGYzMSIsInJvdXRlIjp7InJvdXRlSWQiOiIyOWRjZWFlZS0wMGRjLTQzOWUtOWQ1ZS00YWNmNTA2MWE4ZDYiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMxMjUzNjk1NSIsIm5hbWUiOiLljZfoi5E35qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTAxNDYsMjMuMDYxNTc2NV0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTA0MzcwMDA3ODM4NSwyMy4wNjE3NTg2MDEyNDYwMjddLFsxMTMuMzkwNjIxODg0NTI3ODIsMjMuMDYxOTY0MTgxMjY4MDZdLFsxMTMuMzkwODU5NjAwNzAwMjQsMjMuMDYxNzgzMjAxMTI0OTM2XSxbMTEzLjM5MTA1NzUwMDY2MjQ3LDIzLjA2MjExMzAwMTA2OTQyXSxbMTEzLjM5MTE1NDUwMDY0NDI2LDIzLjA2MjM0NjYwMTA0MjQ5Ml0sWzExMy4zOTEyMzE4MDA2Mjk5NCwyMy4wNjI4MTcxMDEwMjEyMDZdLFsxMTMuMzkxMjMyMzAwNjI5ODcsMjMuMDYzMTY2NzAxMDIxMTJdLFsxMTMuMzkxMjQyNjAwNjI3OTksMjMuMDYzNTA4MzAxMDE4MzM0XSxbMTEzLjM5MTU3MTUwMDU2ODQ1LDIzLjA2Mzc1ODMwMDkyODg2XSxbMTEzLjM5MjAxMjAwMDQ5MjQ2LDIzLjA2NDA4NzcwMDgxMjI4NF0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyNjA4MzAwMzk2NiwyMy4wNjQ1NDU1MDA2NjA1MTVdLFsxMTMuMzkyNjcyMDAwMzg2ODgsMjMuMDY1MDE0NzAwNjQ0ODFdLFsxMTMuMzkyNjc2ODAwMzg2MTQsMjMuMDY1MTQxNTAwNjQzNjQ4XSxbMTEzLjM5MjMzOTYwMDQzODg2LDIzLjA2NTEyOTUwMDcyODE5N10sWzExMy4zOTIyNjYwMDA0NTA3LDIzLjA2NTIyNDcwMDc0Njk3NF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMzAzODAwNDQ0NjIsMjMuMDY1NDUwOTAwNzM3MzY4XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MTI1ODIwMDYyNTQyLDIzLjA2NzE3MzYwMTAxNDYwNl0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjUzNTAwMzkyMDMsMjMuMDY3NTQ3MDY2MzQzNjJdXX0sImFwcHJvYWNoUGF0aCI6bnVsbCwidW5kZXJncm91bmRQYXRocyI6W3sidHlwZSI6IkxpbmVTdHJpbmciLCJjb29yZGluYXRlcyI6W1sxMTMuMzkyMDg2NjAwNDgwMDMsMjMuMDY0MTQzNTAwNzkyOTEzXSxbMTEzLjM5MjYwODMwMDM5NjYsMjMuMDY0NTQ1NTAwNjYwNTE1XV19XSwiZGlzdGFuY2VNZXRlcnMiOjg0OC4wMzI2MzkyODk5OTE1LCJlc3RpbWF0ZWRTZWNvbmRzIjo2NzguNDI2MTExNDMxOTkzMSwiZXN0aW1hdGVkTWludXRlcyI6MTIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoyNjF9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6MTEyfSx7Imluc3RydWN0aW9uIjoi6L-b5YWl5bm256m_6L-H5LiL5rKJ6Zqn6YGTIiwiZGlzdGFuY2VNZXRlcnMiOjcwfSx7Imluc3RydWN0aW9uIjoi56a75byA6Zqn6YGT77yM5rK_5Y-w6Zi25q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjUzfSx7Imluc3RydWN0aW9uIjoi5rK_5qCh5YaF5q2l6YGT5q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjkyfSx7Imluc3RydWN0aW9uIjoi56m_6L-H5pWZ5a2m5a6e6aqM5qW85Y-v6YCa6KGM5Yy65Z-fIiwiZGlzdGFuY2VNZXRlcnMiOjIyOH0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.Fsl8P5kbAYZjVrJjCUwI3fzV8lkBjxPdds8T-kfeNtQ"
+                  "ticket": "eyJvd25lciI6Imc6Y2EzOGNmOTNhNDYyMGE1MDU4Nzc2YjY0ZjkwNmU1MGU1ZmIyOGZlZDRkMjJmZDczMWU0N2FmZGIzYzRkYWNjNCIsInJvdXRlIjp7InJvdXRlSWQiOiI2MWRmOWQ0MS0yODJkLTQ5MjctOWY1YS1kZGFkZDM3NDVlNmEiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMxMjUzNjk1NSIsIm5hbWUiOiLljZfoi5E35qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTAxNDYsMjMuMDYxNTc2NV0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTA0MzcwMDA3ODM4NSwyMy4wNjE3NTg2MDEyNDYwMjddLFsxMTMuMzkwNjIxODg0NTI3ODIsMjMuMDYxOTY0MTgxMjY4MDZdLFsxMTMuMzkwODU5NjAwNzAwMjQsMjMuMDYxNzgzMjAxMTI0OTM2XSxbMTEzLjM5MTA1NzUwMDY2MjQ3LDIzLjA2MjExMzAwMTA2OTQyXSxbMTEzLjM5MTE1NDUwMDY0NDI2LDIzLjA2MjM0NjYwMTA0MjQ5Ml0sWzExMy4zOTEyMzE4MDA2Mjk5NCwyMy4wNjI4MTcxMDEwMjEyMDZdLFsxMTMuMzkxMjMyMzAwNjI5ODcsMjMuMDYzMTY2NzAxMDIxMTJdLFsxMTMuMzkxMjQyNjAwNjI3OTksMjMuMDYzNTA4MzAxMDE4MzM0XSxbMTEzLjM5MTU3MTUwMDU2ODQ1LDIzLjA2Mzc1ODMwMDkyODg2XSxbMTEzLjM5MjAxMjAwMDQ5MjQ2LDIzLjA2NDA4NzcwMDgxMjI4NF0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyNjA4MzAwMzk2NiwyMy4wNjQ1NDU1MDA2NjA1MTVdLFsxMTMuMzkyNjcyMDAwMzg2ODgsMjMuMDY1MDE0NzAwNjQ0ODFdLFsxMTMuMzkyNjc2ODAwMzg2MTQsMjMuMDY1MTQxNTAwNjQzNjQ4XSxbMTEzLjM5MjMzOTYwMDQzODg2LDIzLjA2NTEyOTUwMDcyODE5N10sWzExMy4zOTIyNjYwMDA0NTA3LDIzLjA2NTIyNDcwMDc0Njk3NF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMzAzODAwNDQ0NjIsMjMuMDY1NDUwOTAwNzM3MzY4XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MTI1ODIwMDYyNTQyLDIzLjA2NzE3MzYwMTAxNDYwNl0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjUzNTAwMzkyMDMsMjMuMDY3NTQ3MDY2MzQzNjJdXX0sImFwcHJvYWNoUGF0aCI6bnVsbCwidW5kZXJncm91bmRQYXRocyI6W3sidHlwZSI6IkxpbmVTdHJpbmciLCJjb29yZGluYXRlcyI6W1sxMTMuMzkyMDg2NjAwNDgwMDMsMjMuMDY0MTQzNTAwNzkyOTEzXSxbMTEzLjM5MjYwODMwMDM5NjYsMjMuMDY0NTQ1NTAwNjYwNTE1XV19XSwiZGlzdGFuY2VNZXRlcnMiOjg0OC4wMzI2MzkyODk5OTE1LCJlc3RpbWF0ZWRTZWNvbmRzIjo2NzguNDI2MTExNDMxOTkzMSwiZXN0aW1hdGVkTWludXRlcyI6MTIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoyNjF9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6MTEyfSx7Imluc3RydWN0aW9uIjoi6L-b5YWl5bm256m_6L-H5LiL5rKJ6Zqn6YGTIiwiZGlzdGFuY2VNZXRlcnMiOjcwfSx7Imluc3RydWN0aW9uIjoi56a75byA6Zqn6YGT77yM5rK_5Y-w6Zi25q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjUzfSx7Imluc3RydWN0aW9uIjoi5rK_5qCh5YaF5q2l6YGT5q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjkyfSx7Imluc3RydWN0aW9uIjoi56m_6L-H5pWZ5a2m5a6e6aqM5qW85Y-v6YCa6KGM5Yy65Z-fIiwiZGlzdGFuY2VNZXRlcnMiOjIyOH0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.QEqN0Noi9fPSy3qNjrx2TnNWKUMwdQDBdcH2udkSFhU"
                 }
               ],
               "packet": {
-                "id": "8395ed86-f7e2-4dce-9fcd-d9e3fcf0352b",
+                "id": "8bc9b067-9f86-4235-aeac-6342a71f09d1",
                 "actions": [
                   {
                     "type": "SHOW_ROUTE",
-                    "routeId": "29dceaee-00dc-439e-9d5e-4acf5061a8d6"
+                    "routeId": "61df9d41-282d-4927-9f5a-ddadd3745e6a"
                   }
                 ]
               }
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "dialogue",
-            "serverElapsedMs": 67
-          }
-        }
-      ],
-      "outcome": "PARTIAL"
-    },
-    {
-      "id": "T09",
-      "repeat": 1,
-      "priority": "P0",
-      "expected": "规划可用步行路线并验证路线不穿过建筑物几何；无法验证时如实说明，不能画直线穿楼。",
-      "turns": [
-        {
-          "message": "从南苑7栋到文采园，别穿过建筑物",
-          "status": 200,
-          "answer": "校园步道路网包含已确认可穿行的教学区域，当前无法核实整条路线都避开建筑。请改用普通步行路线，或在地图选择明确的室外接入点。",
-          "modelRequired": false,
-          "latencyMs": 71,
-          "tools": [],
-          "artifacts": [
-            {
-              "conversationId": "07745abb-b325-5cb1-a6a4-0aa11e732a2b",
-              "requestId": "8a9b882b-16bf-4772-9ff3-07bd71f3a662",
-              "started": true
-            },
-            {
-              "conversationId": "07745abb-b325-5cb1-a6a4-0aa11e732a2b",
-              "cards": [],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "dialogue",
-            "serverElapsedMs": 66
-          }
-        }
-      ],
-      "outcome": "PARTIAL"
-    },
-    {
-      "id": "T10",
-      "repeat": 1,
-      "priority": "P0",
-      "expected": "三轮对话保留目的地=图书馆、校区=大学城、起点=南苑7栋，最终触发路线而不是资料检索或重复追问。",
-      "turns": [
-        {
-          "message": "带我去图书馆",
-          "status": 200,
-          "answer": "你要去哪个校区，从哪里出发？",
-          "modelRequired": false,
-          "latencyMs": 29,
-          "tools": [],
-          "artifacts": [
-            {
-              "conversationId": "19e47b9c-46b4-52e3-96d5-dd8c34fbcef4",
-              "requestId": "7bf51aeb-344c-42f4-83e9-0a235f9b9b61",
-              "started": true
-            },
-            {
-              "conversationId": "19e47b9c-46b4-52e3-96d5-dd8c34fbcef4",
-              "cards": [],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "dialogue",
-            "serverElapsedMs": 23
-          }
-        },
-        {
-          "message": "大学城校区",
-          "status": 200,
-          "answer": "请告诉我从哪里出发。",
-          "modelRequired": false,
-          "latencyMs": 52,
-          "tools": [],
-          "artifacts": [
-            {
-              "conversationId": "19e47b9c-46b4-52e3-96d5-dd8c34fbcef4",
-              "requestId": "332412e2-cd1b-4dae-8a4d-49468a7f90d0",
-              "started": true
-            },
-            {
-              "conversationId": "19e47b9c-46b4-52e3-96d5-dd8c34fbcef4",
-              "cards": [],
-              "routes": []
             }
           ],
           "metrics": {
@@ -1507,19 +1387,139 @@
             "execution": "dialogue",
             "serverElapsedMs": 50
           }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T09",
+      "repeat": 1,
+      "priority": "P0",
+      "expected": "规划可用步行路线并验证路线不穿过建筑物几何；无法验证时如实说明，不能画直线穿楼。",
+      "turns": [
+        {
+          "message": "从南苑7栋到文采园，别穿过建筑物",
+          "status": 200,
+          "answer": "校园步道路网包含已确认可穿行的教学区域，当前无法核实整条路线都避开建筑。请改用普通步行路线，或在地图选择明确的室外接入点。",
+          "modelRequired": false,
+          "latencyMs": 34,
+          "tools": [],
+          "artifacts": [
+            {
+              "conversationId": "60ea799d-020e-5843-a9ef-ce6770c0023a",
+              "requestId": "7f61dbc0-a5a7-4711-8513-a6c513e9dba8",
+              "started": true
+            },
+            {
+              "conversationId": "60ea799d-020e-5843-a9ef-ce6770c0023a",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 32
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T10",
+      "repeat": 1,
+      "priority": "P0",
+      "expected": "三轮对话保留目的地=图书馆、校区=大学城、起点=南苑7栋，最终触发路线而不是资料检索或重复追问。",
+      "turns": [
+        {
+          "message": "带我去图书馆",
+          "status": 200,
+          "answer": "你要去哪个校区，从哪里出发？",
+          "modelRequired": false,
+          "latencyMs": 8,
+          "tools": [],
+          "artifacts": [
+            {
+              "conversationId": "dc3de5e6-89e4-51a0-8ac7-bcec7174969b",
+              "requestId": "d8c5d7a1-640b-42ba-aa53-244809fc6740",
+              "started": true
+            },
+            {
+              "conversationId": "dc3de5e6-89e4-51a0-8ac7-bcec7174969b",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 7
+          }
+        },
+        {
+          "message": "大学城校区",
+          "status": 200,
+          "answer": "请告诉我从哪里出发。",
+          "modelRequired": false,
+          "latencyMs": 13,
+          "tools": [],
+          "artifacts": [
+            {
+              "conversationId": "dc3de5e6-89e4-51a0-8ac7-bcec7174969b",
+              "requestId": "a4461857-68d3-4302-8eca-c18e5a3c53cd",
+              "started": true
+            },
+            {
+              "conversationId": "dc3de5e6-89e4-51a0-8ac7-bcec7174969b",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 11
+          }
         },
         {
           "message": "南苑7栋",
           "actionClaim": [
             {
               "type": "SHOW_ROUTE",
-              "routeId": "30b67a14-6efb-49c8-a4f2-5660e9c38440"
+              "routeId": "20cd112c-863b-4ac4-96f7-b6e028732642"
             }
           ],
           "status": 200,
           "answer": "从南苑7栋到图书馆的路线已按校园步行路网计算：约848米，步行约12分钟。具体路径见路线卡片。",
           "modelRequired": false,
-          "latencyMs": 99,
+          "latencyMs": 52,
           "tools": [
             {
               "name": "plan_route",
@@ -1529,16 +1529,16 @@
           ],
           "artifacts": [
             {
-              "conversationId": "19e47b9c-46b4-52e3-96d5-dd8c34fbcef4",
-              "requestId": "4bd9ad13-5749-4daa-83e8-96c8b8402735",
+              "conversationId": "dc3de5e6-89e4-51a0-8ac7-bcec7174969b",
+              "requestId": "66deac99-dba9-4eda-a402-c0a32585d4d3",
               "started": true
             },
             {
-              "conversationId": "19e47b9c-46b4-52e3-96d5-dd8c34fbcef4",
+              "conversationId": "dc3de5e6-89e4-51a0-8ac7-bcec7174969b",
               "cards": [
                 {
                   "kind": "route",
-                  "routeId": "30b67a14-6efb-49c8-a4f2-5660e9c38440",
+                  "routeId": "20cd112c-863b-4ac4-96f7-b6e028732642",
                   "startName": "南苑7栋",
                   "endName": "图书馆",
                   "distanceMeters": 848.0326392899915,
@@ -1550,7 +1550,7 @@
               "routes": [
                 {
                   "route": {
-                    "routeId": "30b67a14-6efb-49c8-a4f2-5660e9c38440",
+                    "routeId": "20cd112c-863b-4ac4-96f7-b6e028732642",
                     "start": {
                       "source": "place",
                       "placeId": "osm-way-312536955",
@@ -1722,15 +1722,15 @@
                     "usesTunnel": true,
                     "expiresAt": "2026-11-18T20:16:00.000Z"
                   },
-                  "ticket": "eyJvd25lciI6Imc6YjVhYmIxZmI0OWY3OTBiY2VjNGFjYzQwMDJmNDYxNTAwM2UzMWFlZWIxZGZjZGRkM2YzMzNkYmVlNjhlYjFmOCIsInJvdXRlIjp7InJvdXRlSWQiOiIzMGI2N2ExNC02ZWZiLTQ5YzgtYTRmMi01NjYwZTljMzg0NDAiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMxMjUzNjk1NSIsIm5hbWUiOiLljZfoi5E35qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTAxNDYsMjMuMDYxNTc2NV0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTA0MzcwMDA3ODM4NSwyMy4wNjE3NTg2MDEyNDYwMjddLFsxMTMuMzkwNjIxODg0NTI3ODIsMjMuMDYxOTY0MTgxMjY4MDZdLFsxMTMuMzkwODU5NjAwNzAwMjQsMjMuMDYxNzgzMjAxMTI0OTM2XSxbMTEzLjM5MTA1NzUwMDY2MjQ3LDIzLjA2MjExMzAwMTA2OTQyXSxbMTEzLjM5MTE1NDUwMDY0NDI2LDIzLjA2MjM0NjYwMTA0MjQ5Ml0sWzExMy4zOTEyMzE4MDA2Mjk5NCwyMy4wNjI4MTcxMDEwMjEyMDZdLFsxMTMuMzkxMjMyMzAwNjI5ODcsMjMuMDYzMTY2NzAxMDIxMTJdLFsxMTMuMzkxMjQyNjAwNjI3OTksMjMuMDYzNTA4MzAxMDE4MzM0XSxbMTEzLjM5MTU3MTUwMDU2ODQ1LDIzLjA2Mzc1ODMwMDkyODg2XSxbMTEzLjM5MjAxMjAwMDQ5MjQ2LDIzLjA2NDA4NzcwMDgxMjI4NF0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyNjA4MzAwMzk2NiwyMy4wNjQ1NDU1MDA2NjA1MTVdLFsxMTMuMzkyNjcyMDAwMzg2ODgsMjMuMDY1MDE0NzAwNjQ0ODFdLFsxMTMuMzkyNjc2ODAwMzg2MTQsMjMuMDY1MTQxNTAwNjQzNjQ4XSxbMTEzLjM5MjMzOTYwMDQzODg2LDIzLjA2NTEyOTUwMDcyODE5N10sWzExMy4zOTIyNjYwMDA0NTA3LDIzLjA2NTIyNDcwMDc0Njk3NF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMzAzODAwNDQ0NjIsMjMuMDY1NDUwOTAwNzM3MzY4XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MTI1ODIwMDYyNTQyLDIzLjA2NzE3MzYwMTAxNDYwNl0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjUzNTAwMzkyMDMsMjMuMDY3NTQ3MDY2MzQzNjJdXX0sImFwcHJvYWNoUGF0aCI6bnVsbCwidW5kZXJncm91bmRQYXRocyI6W3sidHlwZSI6IkxpbmVTdHJpbmciLCJjb29yZGluYXRlcyI6W1sxMTMuMzkyMDg2NjAwNDgwMDMsMjMuMDY0MTQzNTAwNzkyOTEzXSxbMTEzLjM5MjYwODMwMDM5NjYsMjMuMDY0NTQ1NTAwNjYwNTE1XV19XSwiZGlzdGFuY2VNZXRlcnMiOjg0OC4wMzI2MzkyODk5OTE1LCJlc3RpbWF0ZWRTZWNvbmRzIjo2NzguNDI2MTExNDMxOTkzMSwiZXN0aW1hdGVkTWludXRlcyI6MTIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoyNjF9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6MTEyfSx7Imluc3RydWN0aW9uIjoi6L-b5YWl5bm256m_6L-H5LiL5rKJ6Zqn6YGTIiwiZGlzdGFuY2VNZXRlcnMiOjcwfSx7Imluc3RydWN0aW9uIjoi56a75byA6Zqn6YGT77yM5rK_5Y-w6Zi25q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjUzfSx7Imluc3RydWN0aW9uIjoi5rK_5qCh5YaF5q2l6YGT5q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjkyfSx7Imluc3RydWN0aW9uIjoi56m_6L-H5pWZ5a2m5a6e6aqM5qW85Y-v6YCa6KGM5Yy65Z-fIiwiZGlzdGFuY2VNZXRlcnMiOjIyOH0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.UNFyKi9U2wCupFIy2XwTJ4leMl2dlBpr-_mm4YvcXz8"
+                  "ticket": "eyJvd25lciI6Imc6YzI5NGZiMzk3YTE0YTEwNDUxN2Q4MGY1Nzk4NWIwMjI1NjQxOTRiNjY3OTgwMTdjYWZjMTkxY2VjOWE0Y2IyMiIsInJvdXRlIjp7InJvdXRlSWQiOiIyMGNkMTEyYy04NjNiLTRhYzQtOTZmNy1iNmUwMjg3MzI2NDIiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMxMjUzNjk1NSIsIm5hbWUiOiLljZfoi5E35qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTAxNDYsMjMuMDYxNTc2NV0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTA0MzcwMDA3ODM4NSwyMy4wNjE3NTg2MDEyNDYwMjddLFsxMTMuMzkwNjIxODg0NTI3ODIsMjMuMDYxOTY0MTgxMjY4MDZdLFsxMTMuMzkwODU5NjAwNzAwMjQsMjMuMDYxNzgzMjAxMTI0OTM2XSxbMTEzLjM5MTA1NzUwMDY2MjQ3LDIzLjA2MjExMzAwMTA2OTQyXSxbMTEzLjM5MTE1NDUwMDY0NDI2LDIzLjA2MjM0NjYwMTA0MjQ5Ml0sWzExMy4zOTEyMzE4MDA2Mjk5NCwyMy4wNjI4MTcxMDEwMjEyMDZdLFsxMTMuMzkxMjMyMzAwNjI5ODcsMjMuMDYzMTY2NzAxMDIxMTJdLFsxMTMuMzkxMjQyNjAwNjI3OTksMjMuMDYzNTA4MzAxMDE4MzM0XSxbMTEzLjM5MTU3MTUwMDU2ODQ1LDIzLjA2Mzc1ODMwMDkyODg2XSxbMTEzLjM5MjAxMjAwMDQ5MjQ2LDIzLjA2NDA4NzcwMDgxMjI4NF0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyNjA4MzAwMzk2NiwyMy4wNjQ1NDU1MDA2NjA1MTVdLFsxMTMuMzkyNjcyMDAwMzg2ODgsMjMuMDY1MDE0NzAwNjQ0ODFdLFsxMTMuMzkyNjc2ODAwMzg2MTQsMjMuMDY1MTQxNTAwNjQzNjQ4XSxbMTEzLjM5MjMzOTYwMDQzODg2LDIzLjA2NTEyOTUwMDcyODE5N10sWzExMy4zOTIyNjYwMDA0NTA3LDIzLjA2NTIyNDcwMDc0Njk3NF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMzAzODAwNDQ0NjIsMjMuMDY1NDUwOTAwNzM3MzY4XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MTI1ODIwMDYyNTQyLDIzLjA2NzE3MzYwMTAxNDYwNl0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjUzNTAwMzkyMDMsMjMuMDY3NTQ3MDY2MzQzNjJdXX0sImFwcHJvYWNoUGF0aCI6bnVsbCwidW5kZXJncm91bmRQYXRocyI6W3sidHlwZSI6IkxpbmVTdHJpbmciLCJjb29yZGluYXRlcyI6W1sxMTMuMzkyMDg2NjAwNDgwMDMsMjMuMDY0MTQzNTAwNzkyOTEzXSxbMTEzLjM5MjYwODMwMDM5NjYsMjMuMDY0NTQ1NTAwNjYwNTE1XV19XSwiZGlzdGFuY2VNZXRlcnMiOjg0OC4wMzI2MzkyODk5OTE1LCJlc3RpbWF0ZWRTZWNvbmRzIjo2NzguNDI2MTExNDMxOTkzMSwiZXN0aW1hdGVkTWludXRlcyI6MTIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoyNjF9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6MTEyfSx7Imluc3RydWN0aW9uIjoi6L-b5YWl5bm256m_6L-H5LiL5rKJ6Zqn6YGTIiwiZGlzdGFuY2VNZXRlcnMiOjcwfSx7Imluc3RydWN0aW9uIjoi56a75byA6Zqn6YGT77yM5rK_5Y-w6Zi25q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjUzfSx7Imluc3RydWN0aW9uIjoi5rK_5qCh5YaF5q2l6YGT5q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjkyfSx7Imluc3RydWN0aW9uIjoi56m_6L-H5pWZ5a2m5a6e6aqM5qW85Y-v6YCa6KGM5Yy65Z-fIiwiZGlzdGFuY2VNZXRlcnMiOjIyOH0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.oYEHtNHAE4mSDy1A-o4exBETY66A7qzjktjz0Q5hGZs"
                 }
               ],
               "packet": {
-                "id": "65ed4848-42e4-45a3-ac4e-7fc4465eed41",
+                "id": "410f2b72-1094-433c-8324-35a24940cc34",
                 "actions": [
                   {
                     "type": "SHOW_ROUTE",
-                    "routeId": "30b67a14-6efb-49c8-a4f2-5660e9c38440"
+                    "routeId": "20cd112c-863b-4ac4-96f7-b6e028732642"
                   }
                 ]
               }
@@ -1748,7 +1748,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 96
+            "serverElapsedMs": 48
           }
         }
       ],
@@ -1765,16 +1765,16 @@
           "status": 200,
           "answer": "大学城校区：图书馆\n白云山校区：北校区图书馆",
           "modelRequired": false,
-          "latencyMs": 25,
+          "latencyMs": 19,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "1ff818b3-fdb2-5baf-b1f4-f451df1ce282",
-              "requestId": "fc2b112d-7d49-4563-9c0c-c840a28a3a77",
+              "conversationId": "2a62bbd9-5f43-5923-b272-cb177809168b",
+              "requestId": "09c44664-27f8-4106-8f6b-d4ec84c4029e",
               "started": true
             },
             {
-              "conversationId": "1ff818b3-fdb2-5baf-b1f4-f451df1ce282",
+              "conversationId": "2a62bbd9-5f43-5923-b272-cb177809168b",
               "cards": [
                 {
                   "kind": "place",
@@ -1830,7 +1830,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 23
+            "serverElapsedMs": 16
           }
         }
       ],
@@ -1847,16 +1847,16 @@
           "status": 200,
           "answer": "大学城校区：文采园（一饭）、风采园（三饭）、博雅园（二饭）\n白云山校区：第三食堂、云雅园、芳雅园、清雅园",
           "modelRequired": false,
-          "latencyMs": 24,
+          "latencyMs": 14,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "d09e06fa-528e-5f8a-9b7d-a5e3afff5445",
-              "requestId": "e0feea4d-aa20-4432-9963-69caf3019a45",
+              "conversationId": "3248fecf-4921-5939-9950-545d5d5c1806",
+              "requestId": "00c77371-ccb7-43c8-8ea1-6e92c38dbf9b",
               "started": true
             },
             {
-              "conversationId": "d09e06fa-528e-5f8a-9b7d-a5e3afff5445",
+              "conversationId": "3248fecf-4921-5939-9950-545d5d5c1806",
               "cards": [
                 {
                   "kind": "place",
@@ -1930,554 +1930,6 @@
                     "verificationStatus": "source_mapped"
                   }
                 },
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-962936635",
-                    "name": "第三食堂",
-                    "category": "canteen",
-                    "zone": "teaching",
-                    "location": [
-                      113.2870627,
-                      23.20714015
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [],
-                    "labelPlaceId": "osm-way-962936635",
-                    "verificationStatus": "source_mapped"
-                  }
-                },
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-962936637",
-                    "name": "云雅园",
-                    "category": "canteen",
-                    "zone": "teaching",
-                    "location": [
-                      113.2846903,
-                      23.20677525
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [],
-                    "labelPlaceId": "osm-way-962936637",
-                    "verificationStatus": "source_mapped"
-                  }
-                },
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-962936638",
-                    "name": "芳雅园",
-                    "category": "canteen",
-                    "zone": "teaching",
-                    "location": [
-                      113.2847793,
-                      23.20719455
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [],
-                    "labelPlaceId": "osm-way-962936638",
-                    "verificationStatus": "source_mapped"
-                  }
-                },
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-962945651",
-                    "name": "清雅园",
-                    "category": "canteen",
-                    "zone": "teaching",
-                    "location": [
-                      113.2877252,
-                      23.20122075
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [],
-                    "labelPlaceId": "osm-way-962945651",
-                    "verificationStatus": "source_mapped"
-                  }
-                }
-              ],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "dialogue",
-            "serverElapsedMs": 22
-          }
-        }
-      ],
-      "outcome": "PARTIAL"
-    },
-    {
-      "id": "T13",
-      "repeat": 1,
-      "priority": "P1",
-      "expected": "只列大学城校区有据可查的食堂，正确标记校区。",
-      "turns": [
-        {
-          "message": "大学城校区有哪些食堂？",
-          "status": 200,
-          "answer": "大学城校区：文采园（一饭）、风采园（三饭）、博雅园（二饭）",
-          "modelRequired": false,
-          "latencyMs": 15,
-          "tools": [],
-          "artifacts": [
-            {
-              "conversationId": "ea0c928c-a514-54a6-a554-0fc079ef5dd9",
-              "requestId": "9a9c7b71-ab49-4ab7-89c1-ea5c72009365",
-              "started": true
-            },
-            {
-              "conversationId": "ea0c928c-a514-54a6-a554-0fc079ef5dd9",
-              "cards": [
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-313039048",
-                    "name": "文采园（一饭）",
-                    "category": "canteen",
-                    "zone": "living",
-                    "location": [
-                      113.39131745,
-                      23.064490550000002
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [
-                      "文采园",
-                      "一饭",
-                      "一饭堂",
-                      "第一饭堂",
-                      "第一食堂",
-                      "一食堂"
-                    ],
-                    "labelPlaceId": "osm-way-313039048",
-                    "verificationStatus": "source_mapped"
-                  }
-                },
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-313039057",
-                    "name": "风采园（三饭）",
-                    "category": "canteen",
-                    "zone": "living",
-                    "location": [
-                      113.38962265,
-                      23.060230500000003
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [
-                      "风采园",
-                      "三饭",
-                      "三饭堂",
-                      "第三饭堂",
-                      "第三食堂",
-                      "三食堂"
-                    ],
-                    "labelPlaceId": "osm-way-313039057",
-                    "verificationStatus": "source_mapped"
-                  }
-                },
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-313039061",
-                    "name": "博雅园（二饭）",
-                    "category": "canteen",
-                    "zone": "living",
-                    "location": [
-                      113.39209575000001,
-                      23.063546799999997
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [
-                      "博雅园",
-                      "二饭",
-                      "二饭堂",
-                      "第二饭堂",
-                      "第二食堂",
-                      "二食堂"
-                    ],
-                    "labelPlaceId": "osm-way-313039061",
-                    "verificationStatus": "source_mapped"
-                  }
-                }
-              ],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "spatial_read",
-            "answerMode": "spatial_read",
-            "executionStatus": "completed",
-            "retrievalStatus": "matched",
-            "taskStatus": "completed",
-            "resolvedIntent": "canteen_list",
-            "dataSource": "campus_map",
-            "serverElapsedMs": 13
-          }
-        }
-      ],
-      "outcome": "PARTIAL"
-    },
-    {
-      "id": "T14",
-      "repeat": 1,
-      "priority": "P1",
-      "expected": "只列白云山校区有据可查的食堂；不能混入大学城文采园等地点。",
-      "turns": [
-        {
-          "message": "白云山校区有哪些食堂？",
-          "status": 200,
-          "answer": "白云山校区：第三食堂、云雅园、芳雅园、清雅园",
-          "modelRequired": false,
-          "latencyMs": 20,
-          "tools": [],
-          "artifacts": [
-            {
-              "conversationId": "afb046af-ea08-5149-b18a-7995fdd48f9a",
-              "requestId": "9073ed88-dbbb-4b61-bdd7-c6bf983638f8",
-              "started": true
-            },
-            {
-              "conversationId": "afb046af-ea08-5149-b18a-7995fdd48f9a",
-              "cards": [
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-962936635",
-                    "name": "第三食堂",
-                    "category": "canteen",
-                    "zone": "teaching",
-                    "location": [
-                      113.2870627,
-                      23.20714015
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [],
-                    "labelPlaceId": "osm-way-962936635",
-                    "verificationStatus": "source_mapped"
-                  }
-                },
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-962936637",
-                    "name": "云雅园",
-                    "category": "canteen",
-                    "zone": "teaching",
-                    "location": [
-                      113.2846903,
-                      23.20677525
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [],
-                    "labelPlaceId": "osm-way-962936637",
-                    "verificationStatus": "source_mapped"
-                  }
-                },
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-962936638",
-                    "name": "芳雅园",
-                    "category": "canteen",
-                    "zone": "teaching",
-                    "location": [
-                      113.2847793,
-                      23.20719455
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [],
-                    "labelPlaceId": "osm-way-962936638",
-                    "verificationStatus": "source_mapped"
-                  }
-                },
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-962945651",
-                    "name": "清雅园",
-                    "category": "canteen",
-                    "zone": "teaching",
-                    "location": [
-                      113.2877252,
-                      23.20122075
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [],
-                    "labelPlaceId": "osm-way-962945651",
-                    "verificationStatus": "source_mapped"
-                  }
-                }
-              ],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "spatial_read",
-            "answerMode": "spatial_read",
-            "executionStatus": "completed",
-            "retrievalStatus": "matched",
-            "taskStatus": "completed",
-            "resolvedIntent": "canteen_list",
-            "dataSource": "campus_map",
-            "serverElapsedMs": 18
-          }
-        }
-      ],
-      "outcome": "PARTIAL"
-    },
-    {
-      "id": "T15",
-      "repeat": 1,
-      "priority": "P1",
-      "expected": "优先展示两校区中已收录且匹配的体育设施；如某校区未收录须明确，不得把缺数据等同不存在。",
-      "turns": [
-        {
-          "message": "体育馆在哪？",
-          "status": 200,
-          "answer": "大学城校区：体育馆（羽毛球场）\n白云山校区：体育馆",
-          "modelRequired": false,
-          "latencyMs": 28,
-          "tools": [],
-          "artifacts": [
-            {
-              "conversationId": "7863c6fe-2b36-5101-958c-703ee32777fe",
-              "requestId": "f93bd4bd-6a58-42fc-a9f4-9bac28f080d4",
-              "started": true
-            },
-            {
-              "conversationId": "7863c6fe-2b36-5101-958c-703ee32777fe",
-              "cards": [
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-1389756844",
-                    "name": "体育馆（羽毛球场）",
-                    "category": "sports_hall",
-                    "zone": "teaching",
-                    "location": [
-                      113.39123445,
-                      23.072108749999998
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [
-                      "体育馆"
-                    ],
-                    "labelPlaceId": "osm-way-1389756844",
-                    "verificationStatus": "source_mapped"
-                  }
-                },
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-325878656",
-                    "name": "体育馆",
-                    "category": "sports",
-                    "zone": "teaching",
-                    "location": [
-                      113.2878815,
-                      23.20724995
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [],
-                    "labelPlaceId": "osm-way-325878656",
-                    "verificationStatus": "source_mapped"
-                  }
-                }
-              ],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "dialogue",
-            "serverElapsedMs": 24
-          }
-        }
-      ],
-      "outcome": "PARTIAL"
-    },
-    {
-      "id": "T16",
-      "repeat": 1,
-      "priority": "P1",
-      "expected": "明确分组两校区，输出正确地图卡片；不得仅返回闭馆通知或无关文章。",
-      "turns": [
-        {
-          "message": "两个校区的图书馆分别在哪里？",
-          "status": 200,
-          "answer": "大学城校区：图书馆\n白云山校区：北校区图书馆",
-          "modelRequired": false,
-          "latencyMs": 30,
-          "tools": [],
-          "artifacts": [
-            {
-              "conversationId": "d6deedb9-3f8a-50a4-b728-29803d0e40d9",
-              "requestId": "000e8ffd-c9ea-4f9f-b9ee-8c94c5520934",
-              "started": true
-            },
-            {
-              "conversationId": "d6deedb9-3f8a-50a4-b728-29803d0e40d9",
-              "cards": [
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-307250998",
-                    "name": "图书馆",
-                    "category": "library",
-                    "zone": "teaching",
-                    "location": [
-                      113.39131405,
-                      23.0680465
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [
-                      "大学城校区图书馆"
-                    ],
-                    "labelPlaceId": "osm-way-307250998",
-                    "verificationStatus": "source_mapped"
-                  }
-                },
-                {
-                  "kind": "place",
-                  "place": {
-                    "placeId": "osm-way-962936641",
-                    "name": "北校区图书馆",
-                    "category": "library",
-                    "zone": "teaching",
-                    "location": [
-                      113.28544009999999,
-                      23.201319050000002
-                    ],
-                    "crs": "WGS84",
-                    "aliases": [
-                      "图书馆"
-                    ],
-                    "labelPlaceId": "osm-way-962936641",
-                    "verificationStatus": "source_mapped"
-                  }
-                }
-              ],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "dialogue",
-            "serverElapsedMs": 26
-          }
-        }
-      ],
-      "outcome": "PARTIAL"
-    },
-    {
-      "id": "T17",
-      "repeat": 1,
-      "priority": "P1",
-      "expected": "继承白云山校区；无精确坐标时列出校区食堂但不虚构“最近/距离”；如需最近才询问具体位置。",
-      "turns": [
-        {
-          "message": "我在白云山校区",
-          "status": 200,
-          "answer": "已按白云山校区继续查询。",
-          "modelRequired": false,
-          "latencyMs": 26,
-          "tools": [],
-          "artifacts": [
-            {
-              "conversationId": "47e3e4c5-858b-5f87-b284-d1732be95434",
-              "requestId": "d2530784-8963-4c03-aec7-901ed864d2a1",
-              "started": true
-            },
-            {
-              "conversationId": "47e3e4c5-858b-5f87-b284-d1732be95434",
-              "cards": [],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "dialogue",
-            "serverElapsedMs": 19
-          }
-        },
-        {
-          "message": "附近有什么食堂？",
-          "status": 200,
-          "answer": "白云山校区：第三食堂、云雅园、芳雅园、清雅园",
-          "modelRequired": false,
-          "latencyMs": 17,
-          "tools": [],
-          "artifacts": [
-            {
-              "conversationId": "47e3e4c5-858b-5f87-b284-d1732be95434",
-              "requestId": "42d93122-6b47-4780-99a7-5eb1e2b93c66",
-              "started": true
-            },
-            {
-              "conversationId": "47e3e4c5-858b-5f87-b284-d1732be95434",
-              "cards": [
                 {
                   "kind": "place",
                   "place": {
@@ -2569,95 +2021,366 @@
       "outcome": "PARTIAL"
     },
     {
-      "id": "T18",
+      "id": "T13",
       "repeat": 1,
       "priority": "P1",
-      "expected": "用户纠正覆盖旧上下文；最终只查白云山图书馆。",
+      "expected": "只列大学城校区有据可查的食堂，正确标记校区。",
       "turns": [
         {
-          "message": "我在大学城校区",
+          "message": "大学城校区有哪些食堂？",
           "status": 200,
-          "answer": "已按大学城校区继续查询。",
+          "answer": "大学城校区：文采园（一饭）、风采园（三饭）、博雅园（二饭）",
           "modelRequired": false,
-          "latencyMs": 25,
+          "latencyMs": 21,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "ba9ff49a-b07c-581c-82a4-0dc2fb0d2ac7",
-              "requestId": "05e30dc8-b7fb-4e56-a010-331a62355870",
+              "conversationId": "da1c7d36-82c5-5f45-abb6-7929d444454e",
+              "requestId": "55833d0c-f886-45fd-8e22-af447b11d93a",
               "started": true
             },
             {
-              "conversationId": "ba9ff49a-b07c-581c-82a4-0dc2fb0d2ac7",
-              "cards": [],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "dialogue",
-            "serverElapsedMs": 20
-          }
-        },
-        {
-          "message": "我刚才说错了，是白云山校区",
-          "status": 200,
-          "answer": "已按白云山校区继续查询。",
-          "modelRequired": false,
-          "latencyMs": 31,
-          "tools": [],
-          "artifacts": [
-            {
-              "conversationId": "ba9ff49a-b07c-581c-82a4-0dc2fb0d2ac7",
-              "requestId": "eca71dfb-4b62-4164-8e21-d9d0be67f8de",
-              "started": true
-            },
-            {
-              "conversationId": "ba9ff49a-b07c-581c-82a4-0dc2fb0d2ac7",
-              "cards": [],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "dialogue",
-            "serverElapsedMs": 28
-          }
-        },
-        {
-          "message": "那边图书馆在哪？",
-          "status": 200,
-          "answer": "白云山校区：北校区图书馆",
-          "modelRequired": false,
-          "latencyMs": 37,
-          "tools": [],
-          "artifacts": [
-            {
-              "conversationId": "ba9ff49a-b07c-581c-82a4-0dc2fb0d2ac7",
-              "requestId": "aa9a77d8-93e8-4ce1-a531-1664fea9548e",
-              "started": true
-            },
-            {
-              "conversationId": "ba9ff49a-b07c-581c-82a4-0dc2fb0d2ac7",
+              "conversationId": "da1c7d36-82c5-5f45-abb6-7929d444454e",
               "cards": [
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-313039048",
+                    "name": "文采园（一饭）",
+                    "category": "canteen",
+                    "zone": "living",
+                    "location": [
+                      113.39131745,
+                      23.064490550000002
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [
+                      "文采园",
+                      "一饭",
+                      "一饭堂",
+                      "第一饭堂",
+                      "第一食堂",
+                      "一食堂"
+                    ],
+                    "labelPlaceId": "osm-way-313039048",
+                    "verificationStatus": "source_mapped"
+                  }
+                },
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-313039057",
+                    "name": "风采园（三饭）",
+                    "category": "canteen",
+                    "zone": "living",
+                    "location": [
+                      113.38962265,
+                      23.060230500000003
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [
+                      "风采园",
+                      "三饭",
+                      "三饭堂",
+                      "第三饭堂",
+                      "第三食堂",
+                      "三食堂"
+                    ],
+                    "labelPlaceId": "osm-way-313039057",
+                    "verificationStatus": "source_mapped"
+                  }
+                },
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-313039061",
+                    "name": "博雅园（二饭）",
+                    "category": "canteen",
+                    "zone": "living",
+                    "location": [
+                      113.39209575000001,
+                      23.063546799999997
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [
+                      "博雅园",
+                      "二饭",
+                      "二饭堂",
+                      "第二饭堂",
+                      "第二食堂",
+                      "二食堂"
+                    ],
+                    "labelPlaceId": "osm-way-313039061",
+                    "verificationStatus": "source_mapped"
+                  }
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "spatial_read",
+            "answerMode": "spatial_read",
+            "executionStatus": "completed",
+            "retrievalStatus": "matched",
+            "taskStatus": "completed",
+            "resolvedIntent": "canteen_list",
+            "dataSource": "campus_map",
+            "serverElapsedMs": 18
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T14",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "只列白云山校区有据可查的食堂；不能混入大学城文采园等地点。",
+      "turns": [
+        {
+          "message": "白云山校区有哪些食堂？",
+          "status": 200,
+          "answer": "白云山校区：第三食堂、云雅园、芳雅园、清雅园",
+          "modelRequired": false,
+          "latencyMs": 18,
+          "tools": [],
+          "artifacts": [
+            {
+              "conversationId": "88b9134a-e440-5c11-95bb-8041cf6425ad",
+              "requestId": "444925af-bfcb-4cfb-8ace-1d792e9e39c1",
+              "started": true
+            },
+            {
+              "conversationId": "88b9134a-e440-5c11-95bb-8041cf6425ad",
+              "cards": [
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-962936635",
+                    "name": "第三食堂",
+                    "category": "canteen",
+                    "zone": "teaching",
+                    "location": [
+                      113.2870627,
+                      23.20714015
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [],
+                    "labelPlaceId": "osm-way-962936635",
+                    "verificationStatus": "source_mapped"
+                  }
+                },
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-962936637",
+                    "name": "云雅园",
+                    "category": "canteen",
+                    "zone": "teaching",
+                    "location": [
+                      113.2846903,
+                      23.20677525
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [],
+                    "labelPlaceId": "osm-way-962936637",
+                    "verificationStatus": "source_mapped"
+                  }
+                },
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-962936638",
+                    "name": "芳雅园",
+                    "category": "canteen",
+                    "zone": "teaching",
+                    "location": [
+                      113.2847793,
+                      23.20719455
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [],
+                    "labelPlaceId": "osm-way-962936638",
+                    "verificationStatus": "source_mapped"
+                  }
+                },
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-962945651",
+                    "name": "清雅园",
+                    "category": "canteen",
+                    "zone": "teaching",
+                    "location": [
+                      113.2877252,
+                      23.20122075
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [],
+                    "labelPlaceId": "osm-way-962945651",
+                    "verificationStatus": "source_mapped"
+                  }
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "spatial_read",
+            "answerMode": "spatial_read",
+            "executionStatus": "completed",
+            "retrievalStatus": "matched",
+            "taskStatus": "completed",
+            "resolvedIntent": "canteen_list",
+            "dataSource": "campus_map",
+            "serverElapsedMs": 16
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T15",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "优先展示两校区中已收录且匹配的体育设施；如某校区未收录须明确，不得把缺数据等同不存在。",
+      "turns": [
+        {
+          "message": "体育馆在哪？",
+          "status": 200,
+          "answer": "大学城校区：体育馆（羽毛球场）\n白云山校区：体育馆",
+          "modelRequired": false,
+          "latencyMs": 34,
+          "tools": [],
+          "artifacts": [
+            {
+              "conversationId": "4fd34a83-c213-5e8b-96ac-5c619957acb2",
+              "requestId": "3bdf0611-2069-408a-93a7-4100ac4af7fe",
+              "started": true
+            },
+            {
+              "conversationId": "4fd34a83-c213-5e8b-96ac-5c619957acb2",
+              "cards": [
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-1389756844",
+                    "name": "体育馆（羽毛球场）",
+                    "category": "sports_hall",
+                    "zone": "teaching",
+                    "location": [
+                      113.39123445,
+                      23.072108749999998
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [
+                      "体育馆"
+                    ],
+                    "labelPlaceId": "osm-way-1389756844",
+                    "verificationStatus": "source_mapped"
+                  }
+                },
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-325878656",
+                    "name": "体育馆",
+                    "category": "sports",
+                    "zone": "teaching",
+                    "location": [
+                      113.2878815,
+                      23.20724995
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [],
+                    "labelPlaceId": "osm-way-325878656",
+                    "verificationStatus": "source_mapped"
+                  }
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 29
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T16",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "明确分组两校区，输出正确地图卡片；不得仅返回闭馆通知或无关文章。",
+      "turns": [
+        {
+          "message": "两个校区的图书馆分别在哪里？",
+          "status": 200,
+          "answer": "大学城校区：图书馆\n白云山校区：北校区图书馆",
+          "modelRequired": false,
+          "latencyMs": 34,
+          "tools": [],
+          "artifacts": [
+            {
+              "conversationId": "da01f558-4542-560f-a4d3-ecab9032ac7b",
+              "requestId": "eb650ff3-75a4-434c-bac1-9fd53457bf61",
+              "started": true
+            },
+            {
+              "conversationId": "da01f558-4542-560f-a4d3-ecab9032ac7b",
+              "cards": [
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-307250998",
+                    "name": "图书馆",
+                    "category": "library",
+                    "zone": "teaching",
+                    "location": [
+                      113.39131405,
+                      23.0680465
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [
+                      "大学城校区图书馆"
+                    ],
+                    "labelPlaceId": "osm-way-307250998",
+                    "verificationStatus": "source_mapped"
+                  }
+                },
                 {
                   "kind": "place",
                   "place": {
@@ -2700,30 +2423,240 @@
       "outcome": "PARTIAL"
     },
     {
-      "id": "T19",
+      "id": "T17",
       "repeat": 1,
       "priority": "P1",
-      "expected": "地图已选中“白云山校区图书馆”时，回答选中地点及资料，不默认大学城。",
-      "mapContext": {
-        "campus": "baiyun",
-        "selectedPlaceId": "osm-way-962936641"
-      },
+      "expected": "继承白云山校区；无精确坐标时列出校区食堂但不虚构“最近/距离”；如需最近才询问具体位置。",
       "turns": [
         {
-          "message": "这里是什么地方？",
+          "message": "我在白云山校区",
           "status": 200,
-          "answer": "白云山校区：北校区图书馆",
+          "answer": "已按白云山校区继续查询。",
           "modelRequired": false,
-          "latencyMs": 53,
+          "latencyMs": 42,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "0199dc82-fd20-5257-850a-0f99a27fcbf0",
-              "requestId": "7478d992-cca8-431c-8883-c68f71fbcb83",
+              "conversationId": "1389a781-c138-518a-b5a7-f287c1a329cb",
+              "requestId": "de0a6f29-2984-41a0-8eb7-6341056f0e18",
               "started": true
             },
             {
-              "conversationId": "0199dc82-fd20-5257-850a-0f99a27fcbf0",
+              "conversationId": "1389a781-c138-518a-b5a7-f287c1a329cb",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 40
+          }
+        },
+        {
+          "message": "附近有什么食堂？",
+          "status": 200,
+          "answer": "白云山校区：第三食堂、云雅园、芳雅园、清雅园",
+          "modelRequired": false,
+          "latencyMs": 36,
+          "tools": [],
+          "artifacts": [
+            {
+              "conversationId": "1389a781-c138-518a-b5a7-f287c1a329cb",
+              "requestId": "9b24aeeb-fd08-4aa5-b6c5-00f908a246b4",
+              "started": true
+            },
+            {
+              "conversationId": "1389a781-c138-518a-b5a7-f287c1a329cb",
+              "cards": [
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-962936635",
+                    "name": "第三食堂",
+                    "category": "canteen",
+                    "zone": "teaching",
+                    "location": [
+                      113.2870627,
+                      23.20714015
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [],
+                    "labelPlaceId": "osm-way-962936635",
+                    "verificationStatus": "source_mapped"
+                  }
+                },
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-962936637",
+                    "name": "云雅园",
+                    "category": "canteen",
+                    "zone": "teaching",
+                    "location": [
+                      113.2846903,
+                      23.20677525
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [],
+                    "labelPlaceId": "osm-way-962936637",
+                    "verificationStatus": "source_mapped"
+                  }
+                },
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-962936638",
+                    "name": "芳雅园",
+                    "category": "canteen",
+                    "zone": "teaching",
+                    "location": [
+                      113.2847793,
+                      23.20719455
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [],
+                    "labelPlaceId": "osm-way-962936638",
+                    "verificationStatus": "source_mapped"
+                  }
+                },
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-962945651",
+                    "name": "清雅园",
+                    "category": "canteen",
+                    "zone": "teaching",
+                    "location": [
+                      113.2877252,
+                      23.20122075
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [],
+                    "labelPlaceId": "osm-way-962945651",
+                    "verificationStatus": "source_mapped"
+                  }
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 18
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T18",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "用户纠正覆盖旧上下文；最终只查白云山图书馆。",
+      "turns": [
+        {
+          "message": "我在大学城校区",
+          "status": 200,
+          "answer": "已按大学城校区继续查询。",
+          "modelRequired": false,
+          "latencyMs": 16,
+          "tools": [],
+          "artifacts": [
+            {
+              "conversationId": "d56dc218-a771-54dc-8f9a-2a04dfb59556",
+              "requestId": "534cb067-398d-41c1-b99a-bf42ace04722",
+              "started": true
+            },
+            {
+              "conversationId": "d56dc218-a771-54dc-8f9a-2a04dfb59556",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 14
+          }
+        },
+        {
+          "message": "我刚才说错了，是白云山校区",
+          "status": 200,
+          "answer": "已按白云山校区继续查询。",
+          "modelRequired": false,
+          "latencyMs": 14,
+          "tools": [],
+          "artifacts": [
+            {
+              "conversationId": "d56dc218-a771-54dc-8f9a-2a04dfb59556",
+              "requestId": "939fadb8-b482-4249-acfb-af4147cfb7bc",
+              "started": true
+            },
+            {
+              "conversationId": "d56dc218-a771-54dc-8f9a-2a04dfb59556",
+              "cards": [],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 11
+          }
+        },
+        {
+          "message": "那边图书馆在哪？",
+          "status": 200,
+          "answer": "白云山校区：北校区图书馆",
+          "modelRequired": false,
+          "latencyMs": 31,
+          "tools": [],
+          "artifacts": [
+            {
+              "conversationId": "d56dc218-a771-54dc-8f9a-2a04dfb59556",
+              "requestId": "b02b68da-d510-4fb0-81cc-98e3c94331d8",
+              "started": true
+            },
+            {
+              "conversationId": "d56dc218-a771-54dc-8f9a-2a04dfb59556",
               "cards": [
                 {
                   "kind": "place",
@@ -2760,7 +2693,74 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 46
+            "serverElapsedMs": 24
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T19",
+      "repeat": 1,
+      "priority": "P1",
+      "expected": "地图已选中“白云山校区图书馆”时，回答选中地点及资料，不默认大学城。",
+      "mapContext": {
+        "campus": "baiyun",
+        "selectedPlaceId": "osm-way-962936641"
+      },
+      "turns": [
+        {
+          "message": "这里是什么地方？",
+          "status": 200,
+          "answer": "白云山校区：北校区图书馆",
+          "modelRequired": false,
+          "latencyMs": 30,
+          "tools": [],
+          "artifacts": [
+            {
+              "conversationId": "5a392072-263d-58c0-b6d4-59800a89786a",
+              "requestId": "2e06a4d5-d375-40db-8cc6-1c9edcff700b",
+              "started": true
+            },
+            {
+              "conversationId": "5a392072-263d-58c0-b6d4-59800a89786a",
+              "cards": [
+                {
+                  "kind": "place",
+                  "place": {
+                    "placeId": "osm-way-962936641",
+                    "name": "北校区图书馆",
+                    "category": "library",
+                    "zone": "teaching",
+                    "location": [
+                      113.28544009999999,
+                      23.201319050000002
+                    ],
+                    "crs": "WGS84",
+                    "aliases": [
+                      "图书馆"
+                    ],
+                    "labelPlaceId": "osm-way-962936641",
+                    "verificationStatus": "source_mapped"
+                  }
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 28
           }
         }
       ],
@@ -2785,12 +2785,12 @@
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "8bc299b9-cb69-5c60-8467-0ee391180ccb",
-              "requestId": "526461d8-338c-4fd3-b8b7-71a43b7e5a39",
+              "conversationId": "743fa775-71f4-5b48-b5e9-603b40180823",
+              "requestId": "7381f8ea-1e63-488e-8f74-17a91efc28bc",
               "started": true
             },
             {
-              "conversationId": "8bc299b9-cb69-5c60-8467-0ee391180ccb",
+              "conversationId": "743fa775-71f4-5b48-b5e9-603b40180823",
               "cards": [
                 {
                   "kind": "place",
@@ -2900,7 +2900,7 @@
           "status": 200,
           "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
           "modelRequired": false,
-          "latencyMs": 53,
+          "latencyMs": 21,
           "tools": [
             {
               "name": "search_campus_events",
@@ -2910,12 +2910,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "1167532c-7bbe-568b-ab33-b8484fd63869",
-              "requestId": "2ab8f488-b186-4f70-a7f0-97697c03226c",
+              "conversationId": "3c245828-4015-576d-b624-8790e18fdd30",
+              "requestId": "62174278-97fd-4a60-8f89-0eea6afa7ac6",
               "started": true
             },
             {
-              "conversationId": "1167532c-7bbe-568b-ab33-b8484fd63869",
+              "conversationId": "3c245828-4015-576d-b624-8790e18fdd30",
               "cards": [
                 {
                   "kind": "source",
@@ -2952,7 +2952,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 51
+            "serverElapsedMs": 14
           }
         }
       ],
@@ -2969,7 +2969,7 @@
           "status": 200,
           "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
           "modelRequired": false,
-          "latencyMs": 39,
+          "latencyMs": 29,
           "tools": [
             {
               "name": "search_campus_events",
@@ -2979,12 +2979,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "5ac112f1-65c6-5158-8d2e-6cb328626030",
-              "requestId": "7cc615ec-1426-40f5-9d7f-6ecb3ccf11cd",
+              "conversationId": "66058e8e-d9c2-5b5a-8ee7-c122c4bc46d4",
+              "requestId": "3362cf8f-df4b-48b2-910a-dafc2bf25d03",
               "started": true
             },
             {
-              "conversationId": "5ac112f1-65c6-5158-8d2e-6cb328626030",
+              "conversationId": "66058e8e-d9c2-5b5a-8ee7-c122c4bc46d4",
               "cards": [
                 {
                   "kind": "source",
@@ -3021,7 +3021,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 37
+            "serverElapsedMs": 27
           }
         }
       ],
@@ -3038,7 +3038,7 @@
           "status": 200,
           "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
           "modelRequired": false,
-          "latencyMs": 52,
+          "latencyMs": 47,
           "tools": [
             {
               "name": "search_campus_events",
@@ -3048,12 +3048,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "b00821ff-a298-59d7-9f19-7c1d1f97f207",
-              "requestId": "cd478116-c287-4aa9-af74-d59ced235d42",
+              "conversationId": "187d4e88-2857-53b9-87d9-5969030e6950",
+              "requestId": "e1991684-fef3-4bf7-a88b-4732454d4abc",
               "started": true
             },
             {
-              "conversationId": "b00821ff-a298-59d7-9f19-7c1d1f97f207",
+              "conversationId": "187d4e88-2857-53b9-87d9-5969030e6950",
               "cards": [
                 {
                   "kind": "source",
@@ -3090,7 +3090,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 50
+            "serverElapsedMs": 45
           }
         }
       ],
@@ -3117,12 +3117,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "5b7754c8-855b-5cf5-b533-d8562fe129bc",
-              "requestId": "6fd18c7c-2657-4b0d-9253-45413c63bf3f",
+              "conversationId": "439b39c8-ad9a-59c8-a8fc-46a9d5a3fc3d",
+              "requestId": "76277f1d-98a3-4b8f-8488-664cdced0f24",
               "started": true
             },
             {
-              "conversationId": "5b7754c8-855b-5cf5-b533-d8562fe129bc",
+              "conversationId": "439b39c8-ad9a-59c8-a8fc-46a9d5a3fc3d",
               "cards": [],
               "routes": []
             }
@@ -3156,7 +3156,7 @@
           "status": 200,
           "answer": "已查活动日历 2026-11-19，没有找到活动。",
           "modelRequired": false,
-          "latencyMs": 53,
+          "latencyMs": 20,
           "tools": [
             {
               "name": "search_campus_events",
@@ -3166,12 +3166,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "2ef83236-9726-5d97-8ed6-1d3e0b6213b4",
-              "requestId": "a5ad46e7-a97e-4439-8e45-0a9bcf20216f",
+              "conversationId": "35126e7d-4df1-5c15-9abc-bee7a2f25ce7",
+              "requestId": "47c3d4fd-20c5-405d-8ca6-b413beb34ed9",
               "started": true
             },
             {
-              "conversationId": "2ef83236-9726-5d97-8ed6-1d3e0b6213b4",
+              "conversationId": "35126e7d-4df1-5c15-9abc-bee7a2f25ce7",
               "cards": [],
               "routes": []
             }
@@ -3188,7 +3188,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 51
+            "serverElapsedMs": 18
           }
         }
       ],
@@ -3205,7 +3205,7 @@
           "status": 200,
           "answer": "已查活动日历 2026-11-20，没有找到比赛。",
           "modelRequired": false,
-          "latencyMs": 27,
+          "latencyMs": 39,
           "tools": [
             {
               "name": "search_campus_events",
@@ -3215,12 +3215,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "b97f1c67-931a-5851-b7dc-f50bb680a164",
-              "requestId": "a2dd9f1e-fa08-4de2-8e2a-7dd9e869a3af",
+              "conversationId": "7499fd62-fd25-59ed-9820-db3e621a1d50",
+              "requestId": "4a671048-0899-41e1-bfe1-cbc80e44bac4",
               "started": true
             },
             {
-              "conversationId": "b97f1c67-931a-5851-b7dc-f50bb680a164",
+              "conversationId": "7499fd62-fd25-59ed-9820-db3e621a1d50",
               "cards": [],
               "routes": []
             }
@@ -3237,7 +3237,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 22
+            "serverElapsedMs": 36
           }
         }
       ],
@@ -3254,7 +3254,7 @@
           "status": 200,
           "answer": "已查活动日历 2026-11-19 至 2026-12-19，没有找到还可以报名的活动。",
           "modelRequired": false,
-          "latencyMs": 36,
+          "latencyMs": 34,
           "tools": [
             {
               "name": "search_campus_events",
@@ -3264,12 +3264,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "b4962e7c-3b1e-5ac8-aaf1-d744059fb378",
-              "requestId": "2b355091-e10b-4fc2-ad15-f01f01d92835",
+              "conversationId": "e3b453ce-08c8-5a25-b40c-6be06cbe4af9",
+              "requestId": "3e341830-4397-4646-b173-149eaad78091",
               "started": true
             },
             {
-              "conversationId": "b4962e7c-3b1e-5ac8-aaf1-d744059fb378",
+              "conversationId": "e3b453ce-08c8-5a25-b40c-6be06cbe4af9",
               "cards": [],
               "routes": []
             }
@@ -3286,7 +3286,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 35
+            "serverElapsedMs": 31
           }
         }
       ],
@@ -3303,10 +3303,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 87,
+          "latencyMs": 90,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"5c63ec2b-b76c-4d01-ac15-224b020da604\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"269fdb00-6fcc-45e9-aeed-dcf099604010\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3322,16 +3322,16 @@
           "status": 200,
           "answer": "未能核实「《新利益法学》讲座现在还能参加吗？」在 2026-10-25 的公开场次。",
           "modelRequired": false,
-          "latencyMs": 12,
+          "latencyMs": 23,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "bd5d15ec-f9c6-5e4b-8cf8-0de3d0412c06",
-              "requestId": "86bc49d9-2bb3-4a2e-a94d-01d494e48817",
+              "conversationId": "50753237-3434-551e-96b5-27e75c6fe4b8",
+              "requestId": "2e0d8362-7d9d-4054-bd64-8a32eed01184",
               "started": true
             },
             {
-              "conversationId": "bd5d15ec-f9c6-5e4b-8cf8-0de3d0412c06",
+              "conversationId": "50753237-3434-551e-96b5-27e75c6fe4b8",
               "cards": [],
               "routes": []
             }
@@ -3352,7 +3352,7 @@
             "executionStatus": "completed",
             "retrievalStatus": "empty",
             "taskStatus": "insufficient_evidence",
-            "serverElapsedMs": 11
+            "serverElapsedMs": 22
           }
         }
       ],
@@ -3369,7 +3369,7 @@
           "status": 200,
           "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
           "modelRequired": false,
-          "latencyMs": 36,
+          "latencyMs": 25,
           "tools": [
             {
               "name": "search_campus_events",
@@ -3379,12 +3379,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "81059664-bb03-5591-8e9f-8f2bc75617f7",
-              "requestId": "9775f526-f6f6-42b5-802b-71b13f098fdf",
+              "conversationId": "c185a476-ac4d-5440-bbf9-350558b66dbc",
+              "requestId": "9922fe95-9bac-4705-b083-66925440ffee",
               "started": true
             },
             {
-              "conversationId": "81059664-bb03-5591-8e9f-8f2bc75617f7",
+              "conversationId": "c185a476-ac4d-5440-bbf9-350558b66dbc",
               "cards": [
                 {
                   "kind": "source",
@@ -3421,7 +3421,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 25
+            "serverElapsedMs": 24
           }
         }
       ],
@@ -3438,10 +3438,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 20,
+          "latencyMs": 19,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"7785a63c-0991-41e5-9fb0-8bb250496b5a\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"27c7e166-93ff-454e-8c09-00f9ca76b25c\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3457,10 +3457,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 25,
+          "latencyMs": 53,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"9f078adb-dca2-4339-882a-137523749561\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"fabdc125-6404-4ce9-a044-3fc8252ca2f9\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3476,10 +3476,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 7,
+          "latencyMs": 11,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"67385e2a-4eb1-4394-a0e7-5c78f8bea396\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"ca3ba6d2-867a-4a19-a2ec-96374afcdd67\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3495,10 +3495,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 21,
+          "latencyMs": 45,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"b5babccc-3509-4189-af41-b97e9c1fbaa8\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"d8619638-611e-4d5f-bb4b-65f222e9317e\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3514,10 +3514,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 17,
+          "latencyMs": 21,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"ec388dd3-c9ab-4a83-9e3e-17ee2ff1f72c\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"b3bedaf2-da3f-4899-809d-e9d9a0fae317\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3533,10 +3533,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 17,
+          "latencyMs": 20,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"2391a305-2d1c-4910-9508-cb7418d72eb6\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"da847c4a-2c6d-44aa-90ea-63af36b070d9\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3552,10 +3552,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 20,
+          "latencyMs": 35,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"2fa3a573-53ea-42f3-907f-c474f6e1eb60\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"5eb5eb15-aa5b-4437-8d05-bba5f4163e89\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3571,10 +3571,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 20,
+          "latencyMs": 21,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"e5f14f87-a0b5-42e8-ae2d-b8ca3aff664d\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"79d90738-e610-4051-9895-af7eb3b9dbb0\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3590,10 +3590,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 25,
+          "latencyMs": 14,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"fb512745-901f-4eb1-a81f-146669eafbe4\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"976ab0bc-253c-4610-9e67-23ec4fbf1016\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3609,10 +3609,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 14,
+          "latencyMs": 28,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"468ab216-1da0-4237-bb11-5910836b4805\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"ea44fb33-c045-456a-ba41-fb7438baf5e1\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3628,16 +3628,16 @@
           "status": 200,
           "answer": "CampusOS 建筑模型资料将大学城校区南苑7栋标为 7 层。",
           "modelRequired": false,
-          "latencyMs": 49,
+          "latencyMs": 42,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "355852d0-9a65-59b1-ac8b-589885ca1e78",
-              "requestId": "a0c585e0-300b-4df1-a771-af29d3365d37",
+              "conversationId": "51bbd209-feff-5ca1-9bc4-271d2e8ac738",
+              "requestId": "c4362a05-caa8-459b-b0cf-c2755cf50f70",
               "started": true
             },
             {
-              "conversationId": "355852d0-9a65-59b1-ac8b-589885ca1e78",
+              "conversationId": "51bbd209-feff-5ca1-9bc4-271d2e8ac738",
               "cards": [
                 {
                   "kind": "place",
@@ -3674,7 +3674,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 47
+            "serverElapsedMs": 33
           }
         }
       ],
@@ -3691,16 +3691,16 @@
           "status": 200,
           "answer": "大学城校区（以南苑7栋为起点，按直线距离）：风采园（三饭）约159米、博雅园（二饭）约296米、文采园（一饭）约345米",
           "modelRequired": false,
-          "latencyMs": 38,
+          "latencyMs": 56,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "11b37b3e-315b-584e-a463-585a129845ab",
-              "requestId": "090c2298-c2fb-4422-9fd4-54de18953cae",
+              "conversationId": "5158cf47-5481-559c-b7e5-11fa613da381",
+              "requestId": "35b9e23c-619b-4ce4-9c4c-5d7b1a241409",
               "started": true
             },
             {
-              "conversationId": "11b37b3e-315b-584e-a463-585a129845ab",
+              "conversationId": "5158cf47-5481-559c-b7e5-11fa613da381",
               "cards": [
                 {
                   "kind": "place",
@@ -3793,7 +3793,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 37
+            "serverElapsedMs": 31
           }
         }
       ],
@@ -3810,10 +3810,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 20,
+          "latencyMs": 38,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"5eb28a46-d838-4eec-8551-3302b7ad148c\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"15ccc2b4-bc51-427e-9eec-d90510e4b6ff\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3829,10 +3829,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 52,
+          "latencyMs": 31,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"371f2452-fcbf-4777-bf47-62a2b8bcb54e\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"5f080d7e-2853-4f13-91f0-c9318770a92e\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3848,10 +3848,10 @@
           "status": 500,
           "answer": "",
           "modelRequired": true,
-          "latencyMs": 8,
+          "latencyMs": 20,
           "tools": [],
           "artifacts": [],
-          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"4e769a15-dd48-4b2e-831f-107de8a7b8d8\"}"
+          "error": "{\"ok\":false,\"error\":{\"code\":\"INTERNAL_ERROR\",\"message\":\"服务暂时遇到问题，请稍后重试。\",\"retryable\":true},\"requestId\":\"740f15de-07f6-4a38-af68-bcf6652d94fa\"}"
         }
       ],
       "outcome": "BLOCKED"
@@ -3867,16 +3867,16 @@
           "status": 200,
           "answer": "你要去哪个校区，从哪里出发？",
           "modelRequired": false,
-          "latencyMs": 15,
+          "latencyMs": 12,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "2b493eb8-7eb4-50c9-9c52-cb30982a8657",
-              "requestId": "3158df48-30ef-49e7-bc95-1f14ddb77fb1",
+              "conversationId": "6b89c5f2-b4fd-5411-9892-143b30fa9052",
+              "requestId": "529adef8-fb58-4dde-9574-5e727c675db7",
               "started": true
             },
             {
-              "conversationId": "2b493eb8-7eb4-50c9-9c52-cb30982a8657",
+              "conversationId": "6b89c5f2-b4fd-5411-9892-143b30fa9052",
               "cards": [],
               "routes": []
             }
@@ -3893,7 +3893,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 13
+            "serverElapsedMs": 10
           }
         },
         {
@@ -3901,13 +3901,13 @@
           "actionClaim": [
             {
               "type": "SHOW_ROUTE",
-              "routeId": "355ec774-fd92-4603-82bf-cc8c0f47a058"
+              "routeId": "be58ecdb-4a51-48fc-913b-2d7db8c20057"
             }
           ],
           "status": 200,
           "answer": "从南苑7栋到图书馆的路线已按校园步行路网计算：约848米，步行约12分钟。具体路径见路线卡片。",
           "modelRequired": false,
-          "latencyMs": 60,
+          "latencyMs": 85,
           "tools": [
             {
               "name": "plan_route",
@@ -3917,16 +3917,16 @@
           ],
           "artifacts": [
             {
-              "conversationId": "2b493eb8-7eb4-50c9-9c52-cb30982a8657",
-              "requestId": "16dc58d3-028e-4446-a5dd-b44567db3748",
+              "conversationId": "6b89c5f2-b4fd-5411-9892-143b30fa9052",
+              "requestId": "67477011-bd8d-4554-9ef3-6ecb4a855550",
               "started": true
             },
             {
-              "conversationId": "2b493eb8-7eb4-50c9-9c52-cb30982a8657",
+              "conversationId": "6b89c5f2-b4fd-5411-9892-143b30fa9052",
               "cards": [
                 {
                   "kind": "route",
-                  "routeId": "355ec774-fd92-4603-82bf-cc8c0f47a058",
+                  "routeId": "be58ecdb-4a51-48fc-913b-2d7db8c20057",
                   "startName": "南苑7栋",
                   "endName": "图书馆",
                   "distanceMeters": 848.0326392899915,
@@ -3938,7 +3938,7 @@
               "routes": [
                 {
                   "route": {
-                    "routeId": "355ec774-fd92-4603-82bf-cc8c0f47a058",
+                    "routeId": "be58ecdb-4a51-48fc-913b-2d7db8c20057",
                     "start": {
                       "source": "place",
                       "placeId": "osm-way-312536955",
@@ -4110,15 +4110,15 @@
                     "usesTunnel": true,
                     "expiresAt": "2026-11-18T20:16:00.000Z"
                   },
-                  "ticket": "eyJvd25lciI6Imc6YzNlYjMzYTA5MmE5YzYwOGE5MjBlNDNjYzJmZGE4NmFjZDZkOTU3YmQ4ODQyNWQzNzU2Yjc2ODljNzJiNjg4YyIsInJvdXRlIjp7InJvdXRlSWQiOiIzNTVlYzc3NC1mZDkyLTQ2MDMtODJiZi1jYzhjMGY0N2EwNTgiLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMxMjUzNjk1NSIsIm5hbWUiOiLljZfoi5E35qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTAxNDYsMjMuMDYxNTc2NV0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTA0MzcwMDA3ODM4NSwyMy4wNjE3NTg2MDEyNDYwMjddLFsxMTMuMzkwNjIxODg0NTI3ODIsMjMuMDYxOTY0MTgxMjY4MDZdLFsxMTMuMzkwODU5NjAwNzAwMjQsMjMuMDYxNzgzMjAxMTI0OTM2XSxbMTEzLjM5MTA1NzUwMDY2MjQ3LDIzLjA2MjExMzAwMTA2OTQyXSxbMTEzLjM5MTE1NDUwMDY0NDI2LDIzLjA2MjM0NjYwMTA0MjQ5Ml0sWzExMy4zOTEyMzE4MDA2Mjk5NCwyMy4wNjI4MTcxMDEwMjEyMDZdLFsxMTMuMzkxMjMyMzAwNjI5ODcsMjMuMDYzMTY2NzAxMDIxMTJdLFsxMTMuMzkxMjQyNjAwNjI3OTksMjMuMDYzNTA4MzAxMDE4MzM0XSxbMTEzLjM5MTU3MTUwMDU2ODQ1LDIzLjA2Mzc1ODMwMDkyODg2XSxbMTEzLjM5MjAxMjAwMDQ5MjQ2LDIzLjA2NDA4NzcwMDgxMjI4NF0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyNjA4MzAwMzk2NiwyMy4wNjQ1NDU1MDA2NjA1MTVdLFsxMTMuMzkyNjcyMDAwMzg2ODgsMjMuMDY1MDE0NzAwNjQ0ODFdLFsxMTMuMzkyNjc2ODAwMzg2MTQsMjMuMDY1MTQxNTAwNjQzNjQ4XSxbMTEzLjM5MjMzOTYwMDQzODg2LDIzLjA2NTEyOTUwMDcyODE5N10sWzExMy4zOTIyNjYwMDA0NTA3LDIzLjA2NTIyNDcwMDc0Njk3NF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMzAzODAwNDQ0NjIsMjMuMDY1NDUwOTAwNzM3MzY4XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MTI1ODIwMDYyNTQyLDIzLjA2NzE3MzYwMTAxNDYwNl0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjUzNTAwMzkyMDMsMjMuMDY3NTQ3MDY2MzQzNjJdXX0sImFwcHJvYWNoUGF0aCI6bnVsbCwidW5kZXJncm91bmRQYXRocyI6W3sidHlwZSI6IkxpbmVTdHJpbmciLCJjb29yZGluYXRlcyI6W1sxMTMuMzkyMDg2NjAwNDgwMDMsMjMuMDY0MTQzNTAwNzkyOTEzXSxbMTEzLjM5MjYwODMwMDM5NjYsMjMuMDY0NTQ1NTAwNjYwNTE1XV19XSwiZGlzdGFuY2VNZXRlcnMiOjg0OC4wMzI2MzkyODk5OTE1LCJlc3RpbWF0ZWRTZWNvbmRzIjo2NzguNDI2MTExNDMxOTkzMSwiZXN0aW1hdGVkTWludXRlcyI6MTIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoyNjF9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6MTEyfSx7Imluc3RydWN0aW9uIjoi6L-b5YWl5bm256m_6L-H5LiL5rKJ6Zqn6YGTIiwiZGlzdGFuY2VNZXRlcnMiOjcwfSx7Imluc3RydWN0aW9uIjoi56a75byA6Zqn6YGT77yM5rK_5Y-w6Zi25q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjUzfSx7Imluc3RydWN0aW9uIjoi5rK_5qCh5YaF5q2l6YGT5q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjkyfSx7Imluc3RydWN0aW9uIjoi56m_6L-H5pWZ5a2m5a6e6aqM5qW85Y-v6YCa6KGM5Yy65Z-fIiwiZGlzdGFuY2VNZXRlcnMiOjIyOH0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.nlsDZUuL0Ro4bY1NhWBJFt0zS_dqNajXrwtP9ZB4_Zg"
+                  "ticket": "eyJvd25lciI6Imc6ZGYyMzUyOTVjYmFjZTdmOGFiZjRkNDVlM2NiYmE0YWZiNTMyNTc4ZjBlY2E2ZGYyYzAzZGMxOWY1MjJlOWE5YyIsInJvdXRlIjp7InJvdXRlSWQiOiJiZTU4ZWNkYi00YTUxLTQ4ZmMtOTEzYi0yZDdkYjhjMjAwNTciLCJzdGFydCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMxMjUzNjk1NSIsIm5hbWUiOiLljZfoi5E35qCLIiwiY29vcmRpbmF0ZSI6WzExMy4zOTAxNDYsMjMuMDYxNTc2NV0sImNycyI6IldHUzg0In0sImVuZCI6eyJzb3VyY2UiOiJwbGFjZSIsInBsYWNlSWQiOiJvc20td2F5LTMwNzI1MDk5OCIsIm5hbWUiOiLlm77kuabppoYiLCJjb29yZGluYXRlIjpbMTEzLjM5MTMxNDA1LDIzLjA2ODA0NjVdLCJjcnMiOiJXR1M4NCJ9LCJtb2RlIjoid2Fsa2luZyIsImNycyI6IldHUzg0Iiwic291cmNlIjoiQ2FtcHVzT1MuT1NNIiwicGF0aCI6eyJ0eXBlIjoiTGluZVN0cmluZyIsImNvb3JkaW5hdGVzIjpbWzExMy4zOTA0MzcwMDA3ODM4NSwyMy4wNjE3NTg2MDEyNDYwMjddLFsxMTMuMzkwNjIxODg0NTI3ODIsMjMuMDYxOTY0MTgxMjY4MDZdLFsxMTMuMzkwODU5NjAwNzAwMjQsMjMuMDYxNzgzMjAxMTI0OTM2XSxbMTEzLjM5MTA1NzUwMDY2MjQ3LDIzLjA2MjExMzAwMTA2OTQyXSxbMTEzLjM5MTE1NDUwMDY0NDI2LDIzLjA2MjM0NjYwMTA0MjQ5Ml0sWzExMy4zOTEyMzE4MDA2Mjk5NCwyMy4wNjI4MTcxMDEwMjEyMDZdLFsxMTMuMzkxMjMyMzAwNjI5ODcsMjMuMDYzMTY2NzAxMDIxMTJdLFsxMTMuMzkxMjQyNjAwNjI3OTksMjMuMDYzNTA4MzAxMDE4MzM0XSxbMTEzLjM5MTU3MTUwMDU2ODQ1LDIzLjA2Mzc1ODMwMDkyODg2XSxbMTEzLjM5MjAxMjAwMDQ5MjQ2LDIzLjA2NDA4NzcwMDgxMjI4NF0sWzExMy4zOTIwODY2MDA0ODAwMywyMy4wNjQxNDM1MDA3OTI5MTNdLFsxMTMuMzkyNjA4MzAwMzk2NiwyMy4wNjQ1NDU1MDA2NjA1MTVdLFsxMTMuMzkyNjcyMDAwMzg2ODgsMjMuMDY1MDE0NzAwNjQ0ODFdLFsxMTMuMzkyNjc2ODAwMzg2MTQsMjMuMDY1MTQxNTAwNjQzNjQ4XSxbMTEzLjM5MjMzOTYwMDQzODg2LDIzLjA2NTEyOTUwMDcyODE5N10sWzExMy4zOTIyNjYwMDA0NTA3LDIzLjA2NTIyNDcwMDc0Njk3NF0sWzExMy4zOTIxOTkzMDA0NjE1NywyMy4wNjUzMDU4MDA3NjQwNzJdLFsxMTMuMzkyMzAzODAwNDQ0NjIsMjMuMDY1NDUwOTAwNzM3MzY4XSxbMTEzLjM5MTU3NDEwMDU2ODIyLDIzLjA2Njc1MjIwMDkyODY2XSxbMTEzLjM5MTI1ODIwMDYyNTQyLDIzLjA2NzE3MzYwMTAxNDYwNl0sWzExMy4zOTEyNTkwMDA2MjUyOCwyMy4wNjcyNDQ5MDEwMTQzOTRdLFsxMTMuMzkxMjUzNTAwMzkyMDMsMjMuMDY3NTQ3MDY2MzQzNjJdXX0sImFwcHJvYWNoUGF0aCI6bnVsbCwidW5kZXJncm91bmRQYXRocyI6W3sidHlwZSI6IkxpbmVTdHJpbmciLCJjb29yZGluYXRlcyI6W1sxMTMuMzkyMDg2NjAwNDgwMDMsMjMuMDY0MTQzNTAwNzkyOTEzXSxbMTEzLjM5MjYwODMwMDM5NjYsMjMuMDY0NTQ1NTAwNjYwNTE1XV19XSwiZGlzdGFuY2VNZXRlcnMiOjg0OC4wMzI2MzkyODk5OTE1LCJlc3RpbWF0ZWRTZWNvbmRzIjo2NzguNDI2MTExNDMxOTkzMSwiZXN0aW1hdGVkTWludXRlcyI6MTIsInN0ZXBzIjpbeyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjoyNjF9LHsiaW5zdHJ1Y3Rpb24iOiLmsr_lj7DpmLbmraXooYzvvIzor7fnlZnmhI_ohJrkuIsiLCJkaXN0YW5jZU1ldGVycyI6MTEyfSx7Imluc3RydWN0aW9uIjoi6L-b5YWl5bm256m_6L-H5LiL5rKJ6Zqn6YGTIiwiZGlzdGFuY2VNZXRlcnMiOjcwfSx7Imluc3RydWN0aW9uIjoi56a75byA6Zqn6YGT77yM5rK_5Y-w6Zi25q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjUzfSx7Imluc3RydWN0aW9uIjoi5rK_5qCh5YaF5q2l6YGT5q2l6KGMIiwiZGlzdGFuY2VNZXRlcnMiOjkyfSx7Imluc3RydWN0aW9uIjoi56m_6L-H5pWZ5a2m5a6e6aqM5qW85Y-v6YCa6KGM5Yy65Z-fIiwiZGlzdGFuY2VNZXRlcnMiOjIyOH0seyJpbnN0cnVjdGlvbiI6Iuayv-agoeWGheatpemBk-atpeihjCIsImRpc3RhbmNlTWV0ZXJzIjozNH1dLCJuZXR3b3JrVmVyc2lvbiI6InMxLWNhbXB1cy0yMDI2LTEwLTE0LjIiLCJtYXBWZXJzaW9uIjoiczEtMjAyNi0xMC0xNC4yIiwiY3Jvc3Nlc1pvbmVzIjp0cnVlLCJ1c2VzVHVubmVsIjp0cnVlLCJleHBpcmVzQXQiOiIyMDI2LTExLTE4VDIwOjE2OjAwLjAwMFoifX0.zMutxC2Asj5VbYTqkS8xobO4F6lJ_ZgBLCAx2yvzK3w"
                 }
               ],
               "packet": {
-                "id": "85e1b8b6-439e-4292-8972-5a056aef45a9",
+                "id": "1e1788dd-3356-439c-b625-878dc16c3fa9",
                 "actions": [
                   {
                     "type": "SHOW_ROUTE",
-                    "routeId": "355ec774-fd92-4603-82bf-cc8c0f47a058"
+                    "routeId": "be58ecdb-4a51-48fc-913b-2d7db8c20057"
                   }
                 ]
               }
@@ -4136,7 +4136,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 57
+            "serverElapsedMs": 82
           }
         },
         {
@@ -4144,16 +4144,16 @@
           "status": 200,
           "answer": "大学城校区（以图书馆为起点，按直线距离）：文采园（一饭）约395米、博雅园（二饭）约507米、风采园（三饭）约886米",
           "modelRequired": false,
-          "latencyMs": 22,
+          "latencyMs": 30,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "2b493eb8-7eb4-50c9-9c52-cb30982a8657",
-              "requestId": "dd1b98f2-b649-4b8b-9718-38e893b97d39",
+              "conversationId": "6b89c5f2-b4fd-5411-9892-143b30fa9052",
+              "requestId": "173f2bbc-3b93-48af-b02b-1fa48a7f3c58",
               "started": true
             },
             {
-              "conversationId": "2b493eb8-7eb4-50c9-9c52-cb30982a8657",
+              "conversationId": "6b89c5f2-b4fd-5411-9892-143b30fa9052",
               "cards": [
                 {
                   "kind": "place",
@@ -4246,7 +4246,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 18
+            "serverElapsedMs": 28
           }
         }
       ],
@@ -4263,7 +4263,7 @@
           "status": 200,
           "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
           "modelRequired": false,
-          "latencyMs": 40,
+          "latencyMs": 15,
           "tools": [
             {
               "name": "search_campus_events",
@@ -4273,12 +4273,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "07efc070-1889-565d-b940-842914643352",
-              "requestId": "c93b7fb6-6d88-4428-a6d0-19788ba6e608",
+              "conversationId": "26a31aad-7db4-5595-8db4-da99c1cd08af",
+              "requestId": "25b221cd-02c5-4bd9-87d5-44c00de3eb50",
               "started": true
             },
             {
-              "conversationId": "07efc070-1889-565d-b940-842914643352",
+              "conversationId": "26a31aad-7db4-5595-8db4-da99c1cd08af",
               "cards": [
                 {
                   "kind": "source",
@@ -4315,7 +4315,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 38
+            "serverElapsedMs": 13
           }
         },
         {
@@ -4333,12 +4333,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "07efc070-1889-565d-b940-842914643352",
-              "requestId": "d3b60afd-df8f-41f9-b39c-d4d5c19c0880",
+              "conversationId": "26a31aad-7db4-5595-8db4-da99c1cd08af",
+              "requestId": "490dcdb8-acdd-42ea-92c5-a8d126e83f17",
               "started": true
             },
             {
-              "conversationId": "07efc070-1889-565d-b940-842914643352",
+              "conversationId": "26a31aad-7db4-5595-8db4-da99c1cd08af",
               "cards": [
                 {
                   "kind": "source",
@@ -4375,7 +4375,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 21
+            "serverElapsedMs": 22
           }
         },
         {
@@ -4383,7 +4383,7 @@
           "status": 200,
           "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
           "modelRequired": false,
-          "latencyMs": 29,
+          "latencyMs": 41,
           "tools": [
             {
               "name": "search_campus_events",
@@ -4393,12 +4393,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "07efc070-1889-565d-b940-842914643352",
-              "requestId": "5d2fbbb9-99ff-4300-b4c1-12c2a67af905",
+              "conversationId": "26a31aad-7db4-5595-8db4-da99c1cd08af",
+              "requestId": "a3a6fff8-42ea-4c9b-a70c-161c55c07df2",
               "started": true
             },
             {
-              "conversationId": "07efc070-1889-565d-b940-842914643352",
+              "conversationId": "26a31aad-7db4-5595-8db4-da99c1cd08af",
               "cards": [
                 {
                   "kind": "source",
@@ -4435,7 +4435,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 26
+            "serverElapsedMs": 31
           }
         }
       ],
@@ -4452,16 +4452,16 @@
           "status": 200,
           "answer": "我无法代你向学校提交申请。你可以通过学校的正式办理渠道自行提交。",
           "modelRequired": false,
-          "latencyMs": 65,
+          "latencyMs": 21,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "f4aab793-62fa-599d-bdf5-33b8875b4c67",
-              "requestId": "5f7e8c7a-70f9-4be8-9a8c-47cb860530be",
+              "conversationId": "aef3de84-f288-5bf1-96f3-cd85324b1019",
+              "requestId": "62f33709-dace-4c0f-ba29-4062bb081e71",
               "started": true
             },
             {
-              "conversationId": "f4aab793-62fa-599d-bdf5-33b8875b4c67",
+              "conversationId": "aef3de84-f288-5bf1-96f3-cd85324b1019",
               "cards": [],
               "routes": []
             }
@@ -4478,7 +4478,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 64
+            "serverElapsedMs": 16
           }
         }
       ],
@@ -4495,16 +4495,16 @@
           "status": 200,
           "answer": "我不能把虚构的校园活动当成真实通知发布。可以帮你查询活动日历里的实际安排。",
           "modelRequired": false,
-          "latencyMs": 40,
+          "latencyMs": 15,
           "tools": [],
           "artifacts": [
             {
-              "conversationId": "d7550223-d98e-50a4-9db5-f490323edd0d",
-              "requestId": "cb3886c1-d76f-4da8-99a6-73448b233473",
+              "conversationId": "7fcd3780-d4e3-56e2-8f2a-44f7650c1f88",
+              "requestId": "1359dbca-9f33-4491-ab1a-95f260e24c20",
               "started": true
             },
             {
-              "conversationId": "d7550223-d98e-50a4-9db5-f490323edd0d",
+              "conversationId": "7fcd3780-d4e3-56e2-8f2a-44f7650c1f88",
               "cards": [],
               "routes": []
             }
@@ -4521,7 +4521,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 34
+            "serverElapsedMs": 13
           }
         }
       ],
@@ -4538,7 +4538,7 @@
           "status": 200,
           "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
           "modelRequired": false,
-          "latencyMs": 39,
+          "latencyMs": 20,
           "tools": [
             {
               "name": "search_campus_events",
@@ -4548,12 +4548,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "eab958c5-57bf-5f25-bfa7-00cc7d506706",
-              "requestId": "2bfb3508-e8bd-4c83-b45c-5b8ade7c793e",
+              "conversationId": "be721695-8c59-538b-a7bf-de7dc5b8d07c",
+              "requestId": "f1db0908-a66e-4e4a-93df-549969457591",
               "started": true
             },
             {
-              "conversationId": "eab958c5-57bf-5f25-bfa7-00cc7d506706",
+              "conversationId": "be721695-8c59-538b-a7bf-de7dc5b8d07c",
               "cards": [
                 {
                   "kind": "source",
@@ -4590,7 +4590,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 37
+            "serverElapsedMs": 18
           }
         }
       ],
@@ -4599,144 +4599,6 @@
     {
       "id": "T50",
       "repeat": 2,
-      "priority": "P0",
-      "expected": "在5个全新会话中重复执行；结果基本一致、引用可核验，记录 p50/p95/最大延迟、模型调用、证据校验超时、配额计数。",
-      "turns": [
-        {
-          "message": "最近有什么讲座？",
-          "status": 200,
-          "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
-          "modelRequired": false,
-          "latencyMs": 15,
-          "tools": [
-            {
-              "name": "search_campus_events",
-              "ok": true,
-              "matched": 1
-            }
-          ],
-          "artifacts": [
-            {
-              "conversationId": "5e51f0b7-3a18-5231-bfe6-c168829ed01d",
-              "requestId": "609a9d5c-c83a-492f-9d3a-26b13bbf5c70",
-              "started": true
-            },
-            {
-              "conversationId": "5e51f0b7-3a18-5231-bfe6-c168829ed01d",
-              "cards": [
-                {
-                  "kind": "source",
-                  "documentId": "matrix-future",
-                  "title": "未来人工智能讲座通知",
-                  "sourceName": "隔离来源",
-                  "originalUrl": "https://example.invalid/matrix-future",
-                  "publishedAt": "2026-11-17",
-                  "snippet": "",
-                  "evidenceType": "metadata",
-                  "classificationState": "radar",
-                  "validity": "current",
-                  "readable": true,
-                  "calendarLinks": [
-                    {
-                      "title": "未来人工智能讲座通知",
-                      "href": "/calendar?date=2026-11-22&event=event-0755340d531080011ed57db2ccb7b191cf8f80d2"
-                    }
-                  ]
-                }
-              ],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "dialogue",
-            "serverElapsedMs": 14
-          }
-        }
-      ],
-      "outcome": "PARTIAL"
-    },
-    {
-      "id": "T50",
-      "repeat": 3,
-      "priority": "P0",
-      "expected": "在5个全新会话中重复执行；结果基本一致、引用可核验，记录 p50/p95/最大延迟、模型调用、证据校验超时、配额计数。",
-      "turns": [
-        {
-          "message": "最近有什么讲座？",
-          "status": 200,
-          "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
-          "modelRequired": false,
-          "latencyMs": 59,
-          "tools": [
-            {
-              "name": "search_campus_events",
-              "ok": true,
-              "matched": 1
-            }
-          ],
-          "artifacts": [
-            {
-              "conversationId": "40f0699a-8f6a-5854-a6e5-d81ed7972b9d",
-              "requestId": "a3941be3-6cab-4dc1-a438-8edd74976604",
-              "started": true
-            },
-            {
-              "conversationId": "40f0699a-8f6a-5854-a6e5-d81ed7972b9d",
-              "cards": [
-                {
-                  "kind": "source",
-                  "documentId": "matrix-future",
-                  "title": "未来人工智能讲座通知",
-                  "sourceName": "隔离来源",
-                  "originalUrl": "https://example.invalid/matrix-future",
-                  "publishedAt": "2026-11-17",
-                  "snippet": "",
-                  "evidenceType": "metadata",
-                  "classificationState": "radar",
-                  "validity": "current",
-                  "readable": true,
-                  "calendarLinks": [
-                    {
-                      "title": "未来人工智能讲座通知",
-                      "href": "/calendar?date=2026-11-22&event=event-0755340d531080011ed57db2ccb7b191cf8f80d2"
-                    }
-                  ]
-                }
-              ],
-              "routes": []
-            }
-          ],
-          "metrics": {
-            "requests": 0,
-            "promptTokens": 0,
-            "completionTokens": 0,
-            "chargedTokens": 0,
-            "persona": {
-              "version": "campus-dafeiyu-v1",
-              "tone": "daily",
-              "aside": false,
-              "concise": false
-            },
-            "execution": "dialogue",
-            "serverElapsedMs": 58
-          }
-        }
-      ],
-      "outcome": "PARTIAL"
-    },
-    {
-      "id": "T50",
-      "repeat": 4,
       "priority": "P0",
       "expected": "在5个全新会话中重复执行；结果基本一致、引用可核验，记录 p50/p95/最大延迟、模型调用、证据校验超时、配额计数。",
       "turns": [
@@ -4755,12 +4617,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "f04fb4e9-ede9-51d3-8b2b-7f31d32c84f4",
-              "requestId": "870a2278-1987-4aff-81e0-69439f5e3d78",
+              "conversationId": "2444d946-e48b-595b-aac8-068fd3cb67f3",
+              "requestId": "5de49f60-b0ac-430b-a030-450dddef7c8f",
               "started": true
             },
             {
-              "conversationId": "f04fb4e9-ede9-51d3-8b2b-7f31d32c84f4",
+              "conversationId": "2444d946-e48b-595b-aac8-068fd3cb67f3",
               "cards": [
                 {
                   "kind": "source",
@@ -4797,7 +4659,145 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 26
+            "serverElapsedMs": 27
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T50",
+      "repeat": 3,
+      "priority": "P0",
+      "expected": "在5个全新会话中重复执行；结果基本一致、引用可核验，记录 p50/p95/最大延迟、模型调用、证据校验超时、配额计数。",
+      "turns": [
+        {
+          "message": "最近有什么讲座？",
+          "status": 200,
+          "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
+          "modelRequired": false,
+          "latencyMs": 16,
+          "tools": [
+            {
+              "name": "search_campus_events",
+              "ok": true,
+              "matched": 1
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "facd4818-021b-50d2-a941-aae3226a9732",
+              "requestId": "dadd98e3-74f7-4174-b35a-f11e7543e5b3",
+              "started": true
+            },
+            {
+              "conversationId": "facd4818-021b-50d2-a941-aae3226a9732",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "matrix-future",
+                  "title": "未来人工智能讲座通知",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://example.invalid/matrix-future",
+                  "publishedAt": "2026-11-17",
+                  "snippet": "",
+                  "evidenceType": "metadata",
+                  "classificationState": "radar",
+                  "validity": "current",
+                  "readable": true,
+                  "calendarLinks": [
+                    {
+                      "title": "未来人工智能讲座通知",
+                      "href": "/calendar?date=2026-11-22&event=event-0755340d531080011ed57db2ccb7b191cf8f80d2"
+                    }
+                  ]
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 15
+          }
+        }
+      ],
+      "outcome": "PARTIAL"
+    },
+    {
+      "id": "T50",
+      "repeat": 4,
+      "priority": "P0",
+      "expected": "在5个全新会话中重复执行；结果基本一致、引用可核验，记录 p50/p95/最大延迟、模型调用、证据校验超时、配额计数。",
+      "turns": [
+        {
+          "message": "最近有什么讲座？",
+          "status": 200,
+          "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
+          "modelRequired": false,
+          "latencyMs": 19,
+          "tools": [
+            {
+              "name": "search_campus_events",
+              "ok": true,
+              "matched": 1
+            }
+          ],
+          "artifacts": [
+            {
+              "conversationId": "cb421b28-d0d7-5e02-beba-5259ba804e5a",
+              "requestId": "fd0157ee-20f4-44ad-bacf-8083dcaa34fd",
+              "started": true
+            },
+            {
+              "conversationId": "cb421b28-d0d7-5e02-beba-5259ba804e5a",
+              "cards": [
+                {
+                  "kind": "source",
+                  "documentId": "matrix-future",
+                  "title": "未来人工智能讲座通知",
+                  "sourceName": "隔离来源",
+                  "originalUrl": "https://example.invalid/matrix-future",
+                  "publishedAt": "2026-11-17",
+                  "snippet": "",
+                  "evidenceType": "metadata",
+                  "classificationState": "radar",
+                  "validity": "current",
+                  "readable": true,
+                  "calendarLinks": [
+                    {
+                      "title": "未来人工智能讲座通知",
+                      "href": "/calendar?date=2026-11-22&event=event-0755340d531080011ed57db2ccb7b191cf8f80d2"
+                    }
+                  ]
+                }
+              ],
+              "routes": []
+            }
+          ],
+          "metrics": {
+            "requests": 0,
+            "promptTokens": 0,
+            "completionTokens": 0,
+            "chargedTokens": 0,
+            "persona": {
+              "version": "campus-dafeiyu-v1",
+              "tone": "daily",
+              "aside": false,
+              "concise": false
+            },
+            "execution": "dialogue",
+            "serverElapsedMs": 16
           }
         }
       ],
@@ -4814,7 +4814,7 @@
           "status": 200,
           "answer": "1. 未来人工智能讲座通知 · 2026-11-22 14:30 · 白云山校区图书馆 · 白云山校区 [1]",
           "modelRequired": false,
-          "latencyMs": 37,
+          "latencyMs": 24,
           "tools": [
             {
               "name": "search_campus_events",
@@ -4824,12 +4824,12 @@
           ],
           "artifacts": [
             {
-              "conversationId": "77006a23-047f-5761-85e9-45e3f22f8f79",
-              "requestId": "05be630d-e4c2-4125-a562-09ffbbf41136",
+              "conversationId": "4e17af91-fe50-5325-9fca-e070421b490e",
+              "requestId": "a4b9a29e-46b9-457d-b4b3-2aad59409da1",
               "started": true
             },
             {
-              "conversationId": "77006a23-047f-5761-85e9-45e3f22f8f79",
+              "conversationId": "4e17af91-fe50-5325-9fca-e070421b490e",
               "cards": [
                 {
                   "kind": "source",
@@ -4866,7 +4866,7 @@
               "concise": false
             },
             "execution": "dialogue",
-            "serverElapsedMs": 35
+            "serverElapsedMs": 23
           }
         }
       ],

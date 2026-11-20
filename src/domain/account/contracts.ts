@@ -18,6 +18,27 @@ export const UsernameSchema = z
   .max(24)
   .regex(/^[A-Za-z0-9_]+$/)
   .refine((s) => !reserved.has(s.toLowerCase()), "用户名不可用");
+// Names that start with "admin" read as staff accounts, so they are reserved for
+// accounts bound to an owner mailbox. The mailbox list is configuration: putting
+// an address here would leak it into the client bundle.
+export function parseOwnerMailboxes(value: string | undefined | null) {
+  return String(value || "")
+    .split(",")
+    .map((entry) => entry.trim().toLowerCase())
+    .filter((entry) => entry.includes("@"));
+}
+export function usernameNeedsOwnerMailbox(username: string) {
+  return username.trim().toLowerCase().startsWith("admin");
+}
+export function ownerMailboxAllows(
+  username: string,
+  email: string | null | undefined,
+  mailboxes: readonly string[] = [],
+) {
+  if (!usernameNeedsOwnerMailbox(username)) return true;
+  const bound = (email || "").trim().toLowerCase();
+  return !!bound && mailboxes.includes(bound);
+}
 export const EmailSchema = z.string().trim().toLowerCase().max(254).email();
 export const PasswordSchema = z
   .string()

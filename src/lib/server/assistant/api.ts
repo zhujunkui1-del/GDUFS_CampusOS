@@ -2,7 +2,8 @@ import { z } from "zod";
 import { withApi } from "../http";
 import { assistantContext, readJson } from "./http-context";
 import { tokenHash } from "./crypto";
-import { defaultModelRuntime } from "../models/runtime";
+import { platformModelStatus } from "../models/runtime";
+import { personalModelStatus } from "../models/personal-runtime";
 import {
   CampusMapService,
   MAP_VERSIONS,
@@ -96,7 +97,14 @@ export const sessionGet = api(async (request, context) => {
           request.headers.get("X-CampusOS-Conversation-Protocol") === "3",
         )
       : null,
-    model: await defaultModelRuntime().status(),
+    // The account's own model outranks the operator switch: stopping the
+    // platform chain must not take a connected personal key offline.
+    model:
+      (await personalModelStatus(
+        context.store.db,
+        context.identity.owner,
+        context.credentialSecret,
+      )) ?? (await platformModelStatus(context.store.db)),
     deepThinkingAvailable: context.difyChatEnabled && !!context.difyAppApiKey,
   };
 });

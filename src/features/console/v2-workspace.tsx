@@ -5,6 +5,7 @@ import {
   type CampusHotspotItem,
 } from "@/domain/console/hotspots";
 import { WhitelistWorkspace, RetentionWorkspace } from "./retention-workspace";
+import { PlatformModelsPanel } from "./platform-models-panel";
 import { CollectorPanel } from "./collector-panel";
 import { OfficialWebCollectionPanel } from "./official-web-collection-panel";
 import { TrafficPanel } from "./dashboard-panels";
@@ -1235,6 +1236,8 @@ export function ConsoleV2Workspace(props: WorkspaceProps) {
         />
       </>
     );
+  if (props.section === "platform-models")
+    return <PlatformModelsPanel request={props.request} actor={props.actor} />;
   if (props.section === "whitelist")
     return (
       <WhitelistWorkspace

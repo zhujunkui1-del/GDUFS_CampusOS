@@ -24,7 +24,7 @@ vi.mock("@opennextjs/cloudflare", () => ({
   getCloudflareContext: () => ({ env: runtime.env }),
 }));
 vi.mock("@/lib/server/models/runtime", () => ({
-  defaultModelRuntime: () => ({
+  platformModelRuntime: async () => ({
     resolve: async () => {
       runtime.modelRequired = true;
       if (runtime.model) return runtime.model;

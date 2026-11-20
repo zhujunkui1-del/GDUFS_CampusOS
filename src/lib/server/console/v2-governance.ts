@@ -26,6 +26,16 @@ import {
   type SourceV2,
 } from "@/domain/console/v2";
 import { WebProfileSaveSchema } from "@/domain/console/web-profile";
+import { parseOwnerMailboxes } from "@/domain/account/contracts";
+import {
+  defaultPlatformModelPolicy,
+  mayManagePlatformModels,
+  parsePlatformModelOperators,
+  modelTierIds,
+  PlatformModelPolicySchema,
+  PlatformModelsSaveSchema,
+} from "@/domain/console/platform-models";
+import { modelTierRouters } from "../models/runtime";
 import { profileFromSource, webProfiles } from "@/lib/ingestion/profiles";
 import { tokenHash } from "../assistant/crypto";
 type Row = Record<string, string | number | null>;
@@ -391,6 +401,191 @@ export class ConsoleGovernanceStore extends ManualImportStore {
       ],
       "admin",
     );
+  }
+  // The platform model chain: master switch, per-tier enable flags and order.
+  // Credentials stay in Worker secrets; this only records policy.
+  async platformModels(query: unknown = {}) {
+    consolePermission(this.actor, "read");
+    const row = await this.db
+      .prepare(
+        "SELECT platform_model_enabled,platform_models_json,version,updated_at FROM console_engine_settings WHERE id='console-v2-settings'",
+      )
+      .first<Row>();
+    const parsed = PlatformModelPolicySchema.safeParse(
+      JSON.parse(String(row?.platform_models_json || "{}")),
+    );
+    const policy = parsed.success ? parsed.data : defaultPlatformModelPolicy;
+    const routers = modelTierRouters();
+    const tiers: {
+      id: string;
+      configured: boolean;
+      enabled: boolean;
+      ready: boolean;
+      code?: string;
+      model?: string;
+      testedAt?: string;
+      policyVersion?: string;
+    }[] = [];
+    for (const id of modelTierIds) {
+      const router = routers[id];
+      const status = router ? await router.status() : null;
+      tiers.push({
+        id,
+        configured: Boolean(router),
+        enabled: policy.tiers[id],
+        ready: status?.ready === true,
+        ...(status && status.ready === false ? { code: status.code } : {}),
+        ...(status && status.ready
+          ? {
+              model: status.model.model,
+              testedAt: status.model.testedAt,
+              policyVersion: status.model.policyVersion,
+            }
+          : {}),
+      });
+    }
+    return {
+      version: Number(row?.version ?? 0),
+      enabled: Number(row?.platform_model_enabled ?? 1) === 1,
+      order: policy.order,
+      tiers,
+      // A saved policy that cannot be parsed means the Worker variables decide.
+      fallback: !parsed.success,
+      updatedAt: row?.updated_at ?? null,
+      canManage: await this.canManagePlatformModels(),
+      health: await this.platformModelHealth(query),
+    };
+  }
+  // Any account bound to an owner mailbox may manage the chain, which is how the
+  // owner described admin01: a normal account whose verified email is that
+  // mailbox. The list is configuration (OWNER_MAILBOXES) so no address is
+  // shipped in the bundle.
+  private async canManagePlatformModels() {
+    if (
+      mayManagePlatformModels(
+        this.actor,
+        parsePlatformModelOperators(process.env.PLATFORM_MODEL_OPERATORS),
+      )
+    )
+      return true;
+    const mailboxes = parseOwnerMailboxes(process.env.OWNER_MAILBOXES);
+    if (!mailboxes.length) return false;
+    const email = this.actor.email.trim().toLowerCase(),
+      local = email.includes("@") ? email.slice(0, email.indexOf("@")) : email;
+    const bound = await this.db
+      .prepare(
+        `SELECT 1 AS bound FROM user_password_identities i JOIN users u ON u.id=i.user_id WHERE u.status='active' AND lower(i.verified_email) IN (${mailboxes.map(() => "?").join(",")}) AND lower(i.username_norm) IN (?,?) LIMIT 1`,
+      )
+      .bind(...mailboxes, local, email)
+      .first();
+    return !!bound;
+  }
+  async savePlatformModels(raw: unknown) {
+    const v = PlatformModelsSaveSchema.parse(raw);
+    // The allowlist is configuration, so this check lives here instead of inside
+    // the synchronous role predicate; the D1 trigger console_platform_models_insert
+    // re-checks the same rule and the settings version.
+    if (!(await this.canManagePlatformModels()))
+      throw new ApiError("FORBIDDEN", "没有执行此操作的管理权限。");
+    const policy = { order: v.order, tiers: v.tiers };
+    return this.mutate(
+      v,
+      "platform.models",
+      "job",
+      "console-v2-settings",
+      v,
+      [
+        this.db
+          .prepare(
+            "UPDATE console_engine_settings SET platform_model_enabled=?,platform_models_json=?,version=version+1,updated_at=? WHERE id='console-v2-settings'",
+          )
+          .bind(Number(v.enabled), JSON.stringify(policy), this.now()),
+      ],
+      "read",
+    );
+  }
+  // Health is evidence, not configuration: only the routing decisions recorded
+  // while answering show which provider served and when a chain swapped.
+  private async platformModelHealth(query: unknown) {
+    consolePermission(this.actor, "read");
+    const raw = Number((query as { hours?: unknown })?.hours);
+    const hours = Number.isFinite(raw) ? Math.min(168, Math.max(1, raw)) : 24;
+    const now = this.now();
+    const since =
+      (typeof now === "number" ? now : Date.parse(String(now))) -
+      hours * 3600000;
+    const rows = await this.db
+      .prepare(
+        "SELECT provider,event,from_provider,reason_code,count(*) AS n,max(created_at_ms) AS last FROM agent_model_events WHERE created_at_ms>=? GROUP BY provider,event,from_provider,reason_code",
+      )
+      .bind(since)
+      .all<Row>();
+    const providers = new Map<
+      string,
+      {
+        provider: string;
+        resolved: number;
+        fallbacksIn: number;
+        fallbacksOut: number;
+        failures: number;
+        lastAt: string | null;
+      }
+    >();
+    const entry = (provider: string) => {
+      const key = provider || "unknown";
+      const found = providers.get(key);
+      if (found) return found;
+      const created = {
+        provider: key,
+        resolved: 0,
+        fallbacksIn: 0,
+        fallbacksOut: 0,
+        failures: 0,
+        lastAt: null as string | null,
+      };
+      providers.set(key, created);
+      return created;
+    };
+    const failures = new Map<
+      string,
+      { provider: string; code: string; count: number; lastAt: string | null }
+    >();
+    for (const row of rows.results || []) {
+      const count = Number(row.n || 0);
+      const at = Number(row.last || 0);
+      const stamp = at ? new Date(at).toISOString() : null;
+      const provider = String(row.provider || "unknown");
+      if (row.event === "resolved") {
+        const target = entry(provider);
+        target.resolved += count;
+        target.lastAt = stamp;
+      } else if (row.event === "fallback") {
+        const target = entry(provider);
+        target.fallbacksIn += count;
+        target.lastAt = stamp;
+        if (row.from_provider)
+          entry(String(row.from_provider)).fallbacksOut += count;
+      } else {
+        const target = entry(provider);
+        target.failures += count;
+        target.lastAt = stamp;
+        const code = String(row.reason_code || "");
+        const key = provider + ":" + code;
+        const known = failures.get(key);
+        if (known) {
+          known.count += count;
+          known.lastAt = stamp;
+        } else failures.set(key, { provider, code, count, lastAt: stamp });
+      }
+    }
+    return {
+      hours,
+      since: new Date(since).toISOString(),
+      providers: [...providers.values()].sort(
+        (a, b) => b.resolved - a.resolved,
+      ),
+      failures: [...failures.values()].sort((a, b) => b.count - a.count),
+    };
   }
   async saveSourceSync(id: string, raw: unknown) {
     void raw;

@@ -22,6 +22,7 @@ export function generateStaticParams() {
     ["audit"],
     ["retention"],
     ["whitelist"],
+    ["platform-models"],
     ["feedback"],
     ["buildings"],
   ].map((section) => ({ section }));

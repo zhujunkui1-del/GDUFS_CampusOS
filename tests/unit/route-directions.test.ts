@@ -16,7 +16,7 @@ vi.mock("@opennextjs/cloudflare", () => ({
   getCloudflareContext: () => ({ env: runtime.env }),
 }));
 vi.mock("@/lib/server/models/runtime", () => ({
-  defaultModelRuntime: () => ({ resolve: runtime.resolve }),
+  platformModelRuntime: async () => ({ resolve: runtime.resolve }),
 }));
 // Exercise the existing model fallback when structured planning cannot take the fast path.
 vi.mock("@/lib/server/assistant/structured-campus-map", () => ({

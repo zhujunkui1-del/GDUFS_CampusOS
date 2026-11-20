@@ -32,10 +32,21 @@ const FALLBACK_CODES = new Set<ErrorCode>([
 
 // Each tier may be tried at most once, in order; a tier already reached is never
 // re-entered, so a three-tier chain cannot oscillate.
+export type PriorityEvent = {
+  event: "fallback" | "failed";
+  provider: string;
+  model?: string;
+  from?: string;
+  code?: string;
+};
+
 export class PriorityModelRouter {
   constructor(
     private readonly primary: ModelRouter,
     private readonly fallback: ModelRouter | ModelRouter[],
+    // The console reports which provider actually served traffic, so a swap is
+    // recorded at the moment it happens rather than inferred afterwards.
+    private readonly onEvent?: (event: PriorityEvent) => void | Promise<void>,
   ) {
     this.#tiers = [
       primary,
@@ -71,6 +82,13 @@ export class PriorityModelRouter {
       }
     }
   }
+  async #notify(event: PriorityEvent) {
+    try {
+      await this.onEvent?.(event);
+    } catch {
+      // Reporting must never take the assistant down with it.
+    }
+  }
   #chain(tier: number, selected: ModelClient, snapshot: ModelSnapshot) {
     const call = async <T>(
       run: (client: ModelClient) => Promise<T>,
@@ -80,16 +98,32 @@ export class PriorityModelRouter {
         try {
           return await run(selected);
         } catch (error) {
-          if (
-            tier + 1 >= this.#tiers.length ||
-            partial() ||
-            !(error instanceof ApiError) ||
-            !FALLBACK_CODES.has(error.code)
-          )
+          const code = error instanceof ApiError ? error.code : undefined;
+          const unavailable =
+            error instanceof ApiError && FALLBACK_CODES.has(error.code);
+          if (!unavailable || partial() || tier + 1 >= this.#tiers.length) {
+            // Availability failures with nowhere left to go are what the health
+            // board has to show; deterministic errors stay out of that count.
+            if (unavailable)
+              await this.#notify({
+                event: "failed",
+                provider: snapshot.provider,
+                model: snapshot.model,
+                code,
+              });
             throw error;
+          }
+          const from = snapshot.provider;
           const next = await this.#tiers[++tier].resolve();
           selected = next.client;
           Object.assign(snapshot, next.snapshot);
+          await this.#notify({
+            event: "fallback",
+            provider: next.snapshot.provider,
+            model: next.snapshot.model,
+            from,
+            code,
+          });
         }
       }
     };

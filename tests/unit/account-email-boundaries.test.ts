@@ -95,7 +95,7 @@ it("lets a shared mailbox use one password then establishes a one-time session f
 it("exposes the Console shortcut for the marked account even after a rename", async () => {
   const f = accountFixture();
   try {
-    const marked = await f.register("Admin01");
+    const marked = await f.register("Console01");
     const ordinary = await f.register("OrdinaryUser");
     f.sqlite
       .prepare(
@@ -121,14 +121,17 @@ it("exposes the Console shortcut for the marked account even after a rename", as
     expect(await session(ordinary.token)).toMatchObject({
       showConsoleEntry: false,
     });
-    await f.store.rename({ username: "RenamedAdmin" }, f.request(marked.token));
-    await f.store.rename({ username: "Admin01" }, f.request(ordinary.token));
+    await f.store.rename(
+      { username: "RenamedConsole" },
+      f.request(marked.token),
+    );
+    await f.store.rename({ username: "Console01" }, f.request(ordinary.token));
     expect(await session(marked.token)).toMatchObject({
-      username: "RenamedAdmin",
+      username: "RenamedConsole",
       showConsoleEntry: true,
     });
     expect(await session(ordinary.token)).toMatchObject({
-      username: "Admin01",
+      username: "Console01",
       showConsoleEntry: false,
     });
   } finally {

@@ -46,6 +46,8 @@ export async function consoleV2Api(
     if (section === "web-collection" && !id)
       return store.officialWebCollection(query);
     if (section === "settings") return store.engineSettings();
+    if (section === "platform-models" && !id)
+      return store.platformModels(query);
     if (section === "sources" && !action)
       return id ? store.sourceV2(id) : store.sourcesV2(query);
     if (section === "articles") return store.articlesV2(query);
@@ -111,6 +113,8 @@ export async function consoleV2Api(
     if (section === "attest" && id) return store.attest(id, await read());
     if (section === "settings" && !id)
       return store.saveEngineSettings(await read());
+    if (section === "platform-models" && !id)
+      return store.savePlatformModels(await read());
     if (section === "sources" && !id)
       return store.createGovernedSource(await read());
     if (section === "sources" && id === "batch") {

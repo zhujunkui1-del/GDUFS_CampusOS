@@ -6,6 +6,8 @@ import {
   ResetRequestSchema,
   ResetConfirmSchema,
   VerifyEmailSchema,
+  ownerMailboxAllows,
+  parseOwnerMailboxes,
 } from "@/domain/account/contracts";
 import { ApiError } from "../errors";
 import { randomToken, tokenHash } from "../assistant/crypto";
@@ -63,6 +65,19 @@ export class AccountService extends AccountStore {
   }
   async registrationCode(raw: unknown, ip: string) {
     const input = RegistrationCodeSchema.parse(raw);
+    // Refuse the reserved namespace before sending a code, so the answer arrives
+    // without spending an email.
+    if (
+      !ownerMailboxAllows(
+        input.username,
+        input.email,
+        parseOwnerMailboxes(process.env.OWNER_MAILBOXES),
+      )
+    )
+      throw new ApiError(
+        "USERNAME_RESERVED",
+        "以 admin 开头的用户名仅限负责人邮箱绑定的账号使用。",
+      );
     await this.limit("registration_code", ip, input.email);
     if (!this.mailer.available)
       throw new ApiError("SERVICE_UNAVAILABLE", "邮件暂时无法发送。", true);

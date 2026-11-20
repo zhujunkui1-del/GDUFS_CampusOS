@@ -176,7 +176,41 @@ export class AssistantStore {
           "DELETE FROM conversations WHERE owner_key IS NOT NULL AND deleted_at_ms IS NOT NULL AND expires_at_ms<=?",
         )
         .bind(now),
+      this.db
+        .prepare("DELETE FROM agent_model_events WHERE created_at_ms<?")
+        .bind(now - 2592000000),
     ]);
+  }
+  // Routing decisions are kept for the console health board: which provider
+  // served, when a chain swapped tiers, and which availability code ended a run.
+  async modelEvent(
+    conversationId: string,
+    event: {
+      event: "resolved" | "fallback" | "failed";
+      provider: string;
+      model?: string;
+      from?: string;
+      code?: string;
+    },
+    details: { runId?: string; owner?: string } = {},
+  ) {
+    await this.db
+      .prepare(
+        "INSERT INTO agent_model_events(id,run_id,conversation_id,owner_key,event,provider,model,from_provider,reason_code,created_at_ms) VALUES(?,?,?,?,?,?,?,?,?,?)",
+      )
+      .bind(
+        crypto.randomUUID(),
+        details.runId || null,
+        conversationId,
+        details.owner || null,
+        event.event,
+        event.provider,
+        event.model || null,
+        event.from || null,
+        event.code || null,
+        this.now(),
+      )
+      .run();
   }
   async conversation(
     identity: AssistantIdentity,

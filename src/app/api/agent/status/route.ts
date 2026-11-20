@@ -1,19 +1,26 @@
 import { withApi } from "@/lib/server/http";
-import { defaultModelRuntime } from "@/lib/server/models/runtime";
+import { platformModelStatus } from "@/lib/server/models/runtime";
 import { AGENT_DOMAINS } from "@/lib/server/agent/domains";
 import { mapSkillRegistry } from "@/lib/server/maps/runtime";
 import { assistantBindings } from "@/lib/server/assistant/database";
 
 export const dynamic = "force-dynamic";
 export const GET = withApi(async () => {
-  const model = await defaultModelRuntime().status();
-  let storageReady = false;
+  let db: Parameters<typeof platformModelStatus>[0] = undefined;
   try {
-    await assistantBindings()
-      .db.prepare("SELECT token_hash FROM assistant_sessions LIMIT 1")
-      .first();
-    storageReady = true;
+    db = assistantBindings().db;
   } catch {}
+  let storageReady = false;
+  if (db)
+    try {
+      await db
+        .prepare("SELECT token_hash FROM assistant_sessions LIMIT 1")
+        .first();
+      storageReady = true;
+    } catch {}
+  // The console-managed chain decides which provider answers. Without a database
+  // handle the Worker variables decide, so the status stays truthful either way.
+  const model = await platformModelStatus(db);
   return {
     stage: "S2-C",
     chatAvailable: model.ready && storageReady,

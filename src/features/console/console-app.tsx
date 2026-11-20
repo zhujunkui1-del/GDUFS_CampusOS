@@ -31,6 +31,7 @@ import {
   MessageCirclePlus,
   Building2,
   Workflow,
+  Cpu,
 } from "lucide-react";
 import {
   sourceTypeNames,
@@ -79,6 +80,7 @@ const navigation = [
   { id: "collector", label: "公众号采集", icon: RefreshCw },
   { id: "retention", label: "过时信息清理", icon: Archive },
   { id: "whitelist", label: "白名单", icon: ShieldCheck },
+  { id: "platform-models", label: "平台模型", icon: Cpu },
   { id: "buildings", label: "建筑管理", icon: Building2 },
   { id: "feedback", label: "反馈", icon: MessageCirclePlus },
 ];

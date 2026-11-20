@@ -13,7 +13,10 @@ import {
   PersonalProviderRegistry,
   testPersonalConnection,
 } from "@/lib/server/models/personal-client";
-import { personalModelRuntime } from "@/lib/server/models/personal-runtime";
+import {
+  personalModelRuntime,
+  personalModelStatus,
+} from "@/lib/server/models/personal-runtime";
 import { ModelConfigStore } from "@/lib/server/models/model-config-store";
 import { MODEL_PROVIDERS, providerById } from "@/domain/models/providers";
 
@@ -31,7 +34,8 @@ describe("provider metadata", () => {
       expect(providerById(provider.id)).toBe(provider);
       expect(["openai", "anthropic", "gemini"]).toContain(provider.protocol);
       expect(provider.label.length).toBeGreaterThan(0);
-      if (provider.id !== "custom") expect(provider.baseUrl).toMatch(/^https:\/\//);
+      if (provider.id !== "custom")
+        expect(provider.baseUrl).toMatch(/^https:\/\//);
     }
   });
 });
@@ -46,7 +50,9 @@ describe("personal provider registry", () => {
         model: "m",
         apiKey: "sk-x",
       }),
-    ).toThrowError(expect.objectContaining({ code: "MODEL_SELECTION_REQUIRED" }));
+    ).toThrowError(
+      expect.objectContaining({ code: "MODEL_SELECTION_REQUIRED" }),
+    );
     expect(
       registry.create({
         provider: "openrouter",
@@ -282,12 +288,50 @@ describe("personal runtime resolution", () => {
       });
       expect(reply.content).toBe("pong");
       expect(calls[0]).toBe("https://api.deepseek.com/v1/chat/completions");
-      expect(
-        await personalModelRuntime(f.db, "g:guest", secret),
-      ).toBeNull();
+      expect(await personalModelRuntime(f.db, "g:guest", secret)).toBeNull();
       await expect(
         personalModelRuntime(f.db, "u:" + a.profile.id, "short"),
       ).rejects.toMatchObject({ code: "MODEL_NOT_CONNECTED" });
+    } finally {
+      f.close();
+    }
+  });
+});
+
+describe("personal model status", () => {
+  it("keeps a connected personal model usable on its own", async () => {
+    const f = accountFixture();
+    try {
+      const a = await f.register("StatusUser");
+      const configs = new ModelConfigStore(f.db, secret);
+      expect(await personalModelStatus(f.db, "g:guest", secret)).toBeNull();
+      const created = await configs.create(a.profile.id, {
+        displayName: "status",
+        provider: "deepseek",
+        baseUrl: "https://api.deepseek.com/v1",
+        model: "deepseek-chat",
+        apiKey: "sk-status",
+      });
+      // Platform preference: the platform chain still decides readiness.
+      expect(
+        await personalModelStatus(f.db, "u:" + a.profile.id, secret),
+      ).toBeNull();
+      await configs.setStatus(a.profile.id, created.id, "connected", null);
+      await configs.setPreference(a.profile.id, "personal", created.id);
+      expect(
+        await personalModelStatus(f.db, "u:" + a.profile.id, secret),
+      ).toMatchObject({
+        ready: true,
+        model: {
+          source: "personal",
+          provider: "openai",
+          model: "deepseek-chat",
+        },
+      });
+      // The same account loses readiness only for its own broken key.
+      await expect(
+        personalModelStatus(f.db, "u:" + a.profile.id, "short"),
+      ).resolves.toMatchObject({ ready: false, code: "MODEL_NOT_CONNECTED" });
     } finally {
       f.close();
     }
@@ -347,10 +391,9 @@ describe("personal settings account API", () => {
       const listed = await call("GET");
       expect(listed.settings).toHaveLength(1);
       expect(JSON.stringify(listed)).not.toContain("sk-super-secret-key");
-      const stored = await new ModelSettingsStore(
-        f.db,
-        secret,
-      ).get(a.profile.id);
+      const stored = await new ModelSettingsStore(f.db, secret).get(
+        a.profile.id,
+      );
       expect(stored?.apiKey).toBe("sk-super-secret-key");
       expect(await call("DELETE", {})).toEqual({ settings: [] });
       expect(await call("GET")).toEqual({ settings: [] });
@@ -438,13 +481,15 @@ describe("multiple personal model configs", () => {
       await store.setStatus(a.profile.id, config.id, "connected", null);
       await store.setPreference(a.profile.id, "personal", config.id);
       expect((await store.list(b.profile.id)).length).toBe(0);
-      await expect(store.update(b.profile.id, config.id, {
-        displayName: "hijack",
-        provider: "deepseek",
-        baseUrl: "https://api.deepseek.com/v1",
-        model: "deepseek-chat",
-        apiKey: "sk-hijack",
-      })).rejects.toMatchObject({ code: "NOT_FOUND" });
+      await expect(
+        store.update(b.profile.id, config.id, {
+          displayName: "hijack",
+          provider: "deepseek",
+          baseUrl: "https://api.deepseek.com/v1",
+          model: "deepseek-chat",
+          apiKey: "sk-hijack",
+        }),
+      ).rejects.toMatchObject({ code: "NOT_FOUND" });
       await expect(store.active(b.profile.id)).resolves.toMatchObject({
         mode: "platform",
       });
@@ -514,7 +559,9 @@ describe("multiple personal model configs", () => {
         "fetch",
         vi.fn(async (url: string) => {
           if (url.includes("cloudflare-dns.com"))
-            return jsonResponse({ Answer: [{ type: 1, data: "93.184.216.34" }] });
+            return jsonResponse({
+              Answer: [{ type: 1, data: "93.184.216.34" }],
+            });
           return jsonResponse({ choices: [{ message: { content: "OK" } }] });
         }),
       );

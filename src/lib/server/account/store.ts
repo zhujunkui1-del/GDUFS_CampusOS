@@ -7,6 +7,8 @@ import {
   EmailLoginSelectSchema,
   RenameSchema,
   PasswordChangeSchema,
+  ownerMailboxAllows,
+  parseOwnerMailboxes,
   type AccountProfile,
   type EmailLoginChoice,
 } from "@/domain/account/contracts";
@@ -237,6 +239,17 @@ export class AccountStore {
   ) {
     const input = RegisterSchema.parse(raw),
       norm = input.username.toLowerCase();
+    if (
+      !ownerMailboxAllows(
+        input.username,
+        input.email,
+        parseOwnerMailboxes(process.env.OWNER_MAILBOXES),
+      )
+    )
+      throw new ApiError(
+        "USERNAME_RESERVED",
+        "以 admin 开头的用户名仅限负责人邮箱绑定的账号使用。",
+      );
     await this.limit("register", ip, norm);
     if (
       await this.db
@@ -490,6 +503,19 @@ export class AccountStore {
   async rename(raw: unknown, request: Request) {
     const input = RenameSchema.parse(raw),
       s = await this.require(request);
+    // Renaming into the reserved "admin" namespace needs the same binding the
+    // registration rule asks for, otherwise the rule is a one-line bypass.
+    if (
+      !ownerMailboxAllows(
+        input.username,
+        s.row.verified_email,
+        parseOwnerMailboxes(process.env.OWNER_MAILBOXES),
+      )
+    )
+      throw new ApiError(
+        "USERNAME_RESERVED",
+        "以 admin 开头的用户名仅限负责人邮箱绑定的账号使用。",
+      );
     const now = this.now();
     const nonce = crypto.randomUUID();
     let results: unknown[];
