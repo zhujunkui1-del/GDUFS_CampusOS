@@ -52,6 +52,49 @@ it("keeps the knowledge page at its own cap", () => {
     expect((read.input as { limit: number }).limit).toBeLessThanOrEqual(4);
 });
 
+it("keeps the user's recent wording for the events calendar route", () => {
+  const c = contentIntent("最近有什么讲座？");
+  const reads = contentReadPlan(
+    c.tools,
+    c.query,
+    externalPolicy(c.query),
+    () => false,
+    c.retrievalQuery,
+  );
+  const events = reads.find((r) => r.name === "search_campus_events");
+  expect((events?.input as { query?: string } | undefined)?.query).toContain(
+    "最近",
+  );
+});
+
+it("passes an explicit week to the event calendar", () => {
+  const reads = contentReadPlan(
+    ["search_campus_events"],
+    "这周有哪些比赛？",
+    externalPolicy("这周有哪些比赛？"),
+    () => false,
+    "比赛",
+    () => false,
+    undefined,
+    false,
+    false,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    false,
+    { after: "2026-11-16", before: "2026-11-22" },
+  );
+  const events = reads.find((r) => r.name === "search_campus_events");
+  expect(events?.input).toMatchObject({
+    after: "2026-11-16",
+    before: "2026-11-22",
+    timeRole: "event",
+  });
+  expect(EventSearchInputSchema.safeParse(events?.input).success).toBe(true);
+});
+
 it("pages past the entries already shown on a follow-up", () => {
   const c = contentIntent("最近两周可以去参加的活动");
   const shown = ["doc-a", "doc-b", "doc-c"];

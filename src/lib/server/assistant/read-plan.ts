@@ -104,6 +104,7 @@ export function contentReadPlan(
   publishedCursor?: { at: string; id: string },
   excludeDocumentIds?: string[],
   nearestIfEmpty?: boolean,
+  timeWindow?: { after: string; before: string } | null,
 ): PlannedRead[] {
   void discoveryFollowup;
   const external = publicQuery(query);
@@ -129,12 +130,20 @@ export function contentReadPlan(
             .replace(/\s+/g, " ")
             .trim()
         : text,
-    ...(name === "search_campus_events" && buildQueryPlan(query).campus
+    ...(name === "search_campus_events" &&
+    buildQueryPlan(query).campus
       ? {
           campus:
             buildQueryPlan(query).campus === "south"
               ? ("university_town" as const)
               : ("baiyun" as const),
+        }
+      : {}),
+    ...(name === "search_campus_events" && timeWindow
+      ? {
+          after: timeWindow.after,
+          before: timeWindow.before,
+          timeRole: "event" as const,
         }
       : {}),
     ...(name === "search_campus_events" &&
@@ -187,10 +196,14 @@ export function contentReadPlan(
   const scopedUtilities = campusUtilityQueries(query)?.map((scope) =>
     scope.replace(/\s+/g, " "),
   );
+  const eventsText = /最近|近期|最新/.test(query) ? query : retrievalQuery;
   const primary: PlannedRead[] = tools.flatMap((name) =>
     (name === "search_campus_knowledge" && !articleTitle && scopedUtilities
       ? scopedUtilities
-      : [retrievalQuery]
+      : // The events tool needs the user's own time wording ("最近", "这周"):
+        // the normalized retrieval query drops it, and the calendar route then
+        // looks like an untimed keyword search.
+        [name === "search_campus_events" ? eventsText : retrievalQuery]
     ).map((text) => ({ name, input: inputFor(name, text) })),
   );
   if (

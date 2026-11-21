@@ -3,6 +3,7 @@ import type { ExternalSearchResult } from "@/domain/retrieval/external";
 import type { ExternalPolicy } from "../external-search/policy";
 import { chinaDay } from "./time-window";
 import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
+import { relevanceQueries } from "../external-search/scope";
 /** Do not let a model turn a known publication day into an unverified event day. */
 export function publicationDateFallback(
   answer: string,
@@ -74,13 +75,19 @@ export function evidenceFallback(
       (h) =>
         h.bodyAvailable && (trustAllBodies || queryRelevance(plan, h).relevant),
     );
-  const outside = (external?.items || []).filter(
-    (i) =>
-      i.evidenceKind !== "title_only" &&
-      queryRelevance(plan, i).relevant &&
+  const outside = (external?.items || []).filter((item) => {
+    // A fanned-out question is judged one subject at a time: judging the merged
+    // sentence would demand every name in one page and drop all three answers.
+    const plans = relevanceQueries(
+      external?.query || policy.relevanceQuery || "",
+    ).map((query) => buildQueryPlan(query));
+    return (
+      item.evidenceKind !== "title_only" &&
+      plans.some((judge) => queryRelevance(judge, item).relevant) &&
       (!policy.officialOnly ||
-        (i.authority === "official" && i.canConfirmAdministrativeFacts)),
-  );
+        (item.authority === "official" && item.canConfirmAdministrativeFacts))
+    );
+  });
   const bodies = [
     ...usable.map((h) => h.title + " " + h.contentSnippet),
     ...outside.map((i) => i.title + " " + i.snippet),
@@ -101,16 +108,13 @@ export function evidenceFallback(
           !k.replace(/\s+/g, "").includes(questionKey),
       )
       .join("、");
-    const excludedNote = external?.warnings.find((warning) =>
-      warning.startsWith("已排除"),
-    );
     // Fixed no-evidence structure: no guess, no "大概/应该", no title-only answer.
     // "This site has not collected it" is not "the school has no such rule", so
     // the answer says which of the two it knows, and never both.
     const looked = tried && tried !== "无" ? `（查过：${tried}）` : "";
     return `${playful ? "本鱼" : ""}翻遍了已收录的广外资料，没有检索到能回答这个问题的正文信息${looked}。这不代表学校没有相关规定，只是本站还没收录到——建议通过${channel}核实。${
-      excludedNote ? `（${excludedNote}）` : ""
-    }${unavailable ? "（部分外部查询未完成，不代表信息不存在。）" : ""}`;
+      unavailable ? "（部分外部查询未完成，不代表信息不存在。）" : ""
+    }`;
   }
 }
 /** Detect expression conflicts without altering URLs, citations, dates or structured tool data. */

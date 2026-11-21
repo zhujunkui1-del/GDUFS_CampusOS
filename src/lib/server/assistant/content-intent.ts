@@ -26,6 +26,7 @@ import { navigationIntent } from "@/domain/agent/navigation-intent";
 import { searchCampusPlaces } from "@/features/campus-map/data/campus";
 import { VENUE_GROUPS } from "@/lib/retrieval/aliases";
 import { inputGate } from "./input-gate";
+import { externalScope } from "../external-search/scope";
 import {
   searchControlBusiness,
   stripSearchControls,
@@ -45,6 +46,37 @@ const ENTITY_GROUPS = VENUE_GROUPS.map((group) => group.names);
 // wording and found nothing.
 const OUTPUT_CLAUSE =
   /(?:每条|每篇|每则).{0,8}(?:包含|列出|附上|注明|给出)|(?:如果|若).{0,10}(?:样本不足|不足|没有找到)|请说明|原文链接|但不是所有/;
+/**
+ * A question with no campus subject at all. The campus gate defaults to campus,
+ * so “1+8*9-7等于多少” was being required to retrieve campus knowledge before it
+ * could answer. General knowledge (arithmetic, a named technology, a book list,
+ * a URL the user pasted) is answered directly; campus questions keep every
+ * evidence constraint below.
+ */
+const GENERAL_TECH =
+  /\b(?:Cloudflare|D1|SQLite|OpenAI|Anthropic|DeepSeek|Python|TypeScript|JavaScript|React|Next\.js|Vue|Docker|Kubernetes|Linux|Git|GitHub|Rust|Postgres|PostgreSQL|MySQL|Redis|Kafka|AWS|Azure|API|JSON|HTTP|HTTPS|CSS|HTML|Vercel|Netlify|Supabase)\b/i;
+const BOOK_REQUEST = /推荐.{0,8}(?:书|书籍|书单)|书单|书籍(?:列表|推荐)/;
+function arithmeticQuestion(text: string) {
+  const stripped = text
+    .replace(/^(?:请|帮我|麻烦)?\s*(?:计算|算一下|算算)\s*/, "")
+    .replace(/(?:等于|是)?\s*(?:多少|几)\s*[？?。！!\s]*$/, "")
+    .replace(/[？?。！!\s]+$/, "")
+    .trim();
+  return (
+    /\d/.test(stripped) &&
+    /[+\-*/×÷^]/.test(stripped) &&
+    /^[\d\s+\-*/×÷^().%=]+$/.test(stripped)
+  );
+}
+function generalSubjectQuestion(message: string) {
+  if (externalScope(message) !== "general") return false;
+  return (
+    arithmeticQuestion(message) ||
+    /https?:\/\/|www\./i.test(message) ||
+    GENERAL_TECH.test(message) ||
+    BOOK_REQUEST.test(message)
+  );
+}
 function stripOutputClauses(text: string) {
   return text
     .split(/[，,。；;]/)
@@ -76,6 +108,7 @@ export function contentIntent(
 ) {
   message = searchControlBusiness(message);
   const reply = dialogueReply(message);
+  const generalSubject = generalSubjectQuestion(message);
   // A safety question is answered from general knowledge first: waiting for
   // campus evidence left “被人跟踪骚扰可以找谁帮忙” with no reply at all,
   // because the corpus has no article on it and the gate refused to speak.
@@ -92,8 +125,24 @@ export function contentIntent(
   // A long list of unrelated topics is not one radar category. Treating any
   // single keyword ("竞赛") as the whole request produced a competition-only
   // answer to a 687-character campus-wide notice question.
+  //
+  // Only a campus question can be a campus-wide browse: a pasted competition
+  // brief or a request for three papers is long and full of “、”, but it asks
+  // about the world, not about which notices were posted most recently.
+  const teachesMaterial = message.length > 800;
+  // Pasted material with a short instruction at the end (“帮我列出决赛需要
+  // 交付的文件”) is answered from the material itself. Searching the corpus
+  // turned it into “最新校园资讯” and buried the answer.
+  const materialQuestion =
+    message.length > 400 &&
+    /(?:列出|总结|概括|提取|整理|归纳|梳理|摘录|翻译)[^。！？]{0,24}$/.test(
+      message.trim(),
+    );
   const multiTopic =
-    message.length > 400 || (message.match(/、/g)?.length ?? 0) >= 8;
+    !teachesMaterial &&
+    !materialQuestion &&
+    externalScope(message) !== "general" &&
+    (message.length > 400 || (message.match(/、/g)?.length ?? 0) >= 8);
   const isSearchFollowup = (text: string) =>
     /^(?:请|再|帮我)?\s*(?:调用|用|去|通过|到)?\s*(?:小红书|外部搜索|互联网|网上)(?:来|帮我)?(?:搜|搜索|查|查找|找)(?:一下|一遍|看看)?[。！？!？\s]*$/.test(
       text.trim(),
@@ -273,11 +322,25 @@ export function contentIntent(
   // 「最近」 means "newest" in a notice question and "closest" in a distance
   // question. Only the second sense is a map question: 「最近一条图书馆开放
   // 时间调整通知」 was sent to the map and answered with a place card.
-  const proximity = /最近/.test(message) && !/最近[一二三四五六七八九十\d]*(?:条|篇|个|份|次|期|则)/.test(message);
+  const proximity =
+    /最近/.test(message) &&
+    !/最近[一二三四五六七八九十\d]*(?:条|篇|个|份|次|期|则)/.test(message);
+  // A named place plus “活动/讲座/比赛” asks what is happening there, not how
+  // to get there. “最近的食堂” is still a distance question and stays on the map.
+  const eventQuestion =
+    events &&
+    /讲座|讲坛|论坛|沙龙|活动|竞赛|比赛|大赛|挑战杯|晚会|演出|音乐会|招新|校运会|运动会|通知|公告|报名|截止|申请/.test(
+      message,
+    );
   const map =
+    !generalSubject &&
+    !materialQuestion &&
     !articleLookup &&
     (facilityListing ||
+      // “学术交流中心最近两周有什么活动” names a place but asks for events.
+      // Sending it to the map answered with a place card and no events at all.
       (!multiTopic &&
+        !eventQuestion &&
         (nav.namedPlaces.length > 0 ||
           /食堂|饭堂|体育场地|运动场地|体育设施/.test(message) ||
           (history.at(-1)?.cards.some((card) => card.kind === "place") &&
@@ -322,23 +385,31 @@ export function contentIntent(
   // 「人工智能或科研竞赛相关的通知」 spans two subjects joined by 或. Locking
   // one category dropped the AI lectures, and requiring both subjects found
   // nothing, so an explicit alternation keeps the whole search open.
-  const alternatives = query.split(/或者|以及|或/).filter((part) => part.trim());
+  const alternatives = query
+    .split(/或者|以及|或/)
+    .filter((part) => part.trim());
   const alternation =
     alternatives.length > 1 &&
     new Set(alternatives.map((part) => categoryOf(part) ?? "")).size > 1;
   const radarCategory =
-    multiTopic || alternation || (/讲座|论坛/.test(query) && /竞赛|比赛|大赛/.test(query))
+    multiTopic ||
+    alternation ||
+    (/讲座|论坛/.test(query) && /竞赛|比赛|大赛/.test(query))
       ? undefined
       : categoryOf(query);
   // "最近/近期" on a radar category is a recency request: newest publications
   // in that tag, not the best lexical match. The retriever orders these by
   // published_at DESC; older items only appear when more are requested.
+  const eventBrowsing =
+    /讲座|讲坛|论坛|沙龙/.test(query) &&
+    /有什么|有哪些|什么时候|何时|哪天|哪些|吗|？|\?/.test(query);
   const recentDiscovery =
     multiTopic ||
     // A time-boxed browse ("最近两周有什么讲座") is an event-date query, not
     // "newest articles in this category". Letting the recency lane win hid the
     // whole window and produced a publication list instead of upcoming events.
-    (!participationQuery(query) &&
+    (!eventBrowsing &&
+      !participationQuery(query) &&
       timeWindow?.role !== "event" &&
       /最近|近期|最新/.test(query) &&
       (!!radarCategory || /资讯|新闻|动态|消息|资料|文章/.test(query)));
@@ -350,6 +421,8 @@ export function contentIntent(
     : conversationAct(query);
   const policy = externalPolicy(query);
   const search =
+    !generalSubject &&
+    !materialQuestion &&
     inputGate(message, history) === "campus" &&
     !map &&
     !reply &&
@@ -570,6 +643,7 @@ export function contentIntent(
     articleKeywords,
     contentStatement,
     multiTopic,
+    materialQuestion,
     discoveryFollowup: !!previousDiscovery,
     // A relative browse ("最近两周") may fall back to the nearest upcoming
     // events; a written date range ("11月1日到11月5日") is a hard filter.

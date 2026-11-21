@@ -102,7 +102,11 @@ export async function upcomingEvents(
     !/报名方式|报名要求|是否需要报名|报名条件|要不要报名/.test(subject);
   const today = chinaDate(now),
     range = requestTimeWindow(subject, now);
-  const date = range?.after ?? today,
+  // 「最近有什么讲座」 means the recent past as well as the coming days; an
+  // upcoming-only window would hide last week's lecture.
+  const recentLecture =
+    !range && kind === "lecture" && /最近|近期/.test(subject);
+  const date = range?.after ?? (recentLecture ? addDays(today, -14) : today),
     before = range?.before ?? addDays(today, registration ? 30 : 14);
   const result = await readCalendar(
     db,
@@ -129,12 +133,22 @@ export async function upcomingEvents(
       const start = item.activity.startsAt;
       if (!start) return false;
       // An event that is still running today is still an option; only one
-      // that has already ended is dropped.
+      // that has already ended is dropped. "最近有什么讲座" explicitly asks
+      // about the recent past too, so a lecture held inside that window stays
+      // in the list and is labelled as already held.
+      const recentFloor = recentLecture ? date : today;
       const endAt = item.activity.endsAt?.at;
-      if (endAt) return Date.parse(endAt) > now;
-      if (start.at) return Date.parse(start.at) > now;
+      if (endAt) {
+        const endDay = chinaDate(Date.parse(endAt));
+        return Date.parse(endAt) > now || (recentLecture && endDay >= recentFloor);
+      }
+      if (start.at)
+        return (
+          Date.parse(start.at) > now ||
+          (recentLecture && !!start.date && start.date >= recentFloor)
+        );
       const lastDay = item.activity.endsAt?.date ?? start.date;
-      return !!lastDay && lastDay >= today;
+      return !!lastDay && lastDay >= recentFloor;
     })
     .sort((a, b) =>
       (a.activity.startsAt?.at ?? a.activity.startsAt?.date ?? "").localeCompare(
@@ -144,11 +158,29 @@ export async function upcomingEvents(
   // Source categories mislabel real events (a contest filed as a notice), so
   // the title decides and a mismatch falls back to every match instead of
   // hiding the answer.
+  // A call for papers shares the "论坛/讲座" vocabulary but is a submission
+  // notice, not something to attend. A forum preview is likewise not a
+  // lecture when the question asks specifically for 讲座.
+  const lectureOnly =
+    kind === "lecture" && /讲座/.test(question) && !/论坛|会议/.test(question);
+  const relevant = lectureOnly
+    ? rows.filter(
+        (row) =>
+          !/征文|征稿|启事/.test(row.activity.title) &&
+          !/论坛|研讨会|会议预告|宣讲/.test(row.activity.title),
+      )
+    : kind === "lecture"
+      ? rows.filter((row) => !/征文|征稿|启事/.test(row.activity.title))
+      : rows;
   const typed =
     kind && kind !== "activity"
-      ? rows.filter((row) => KIND_OF[kind].test(row.activity.title))
-      : rows;
-  const chosen = typed.length ? typed : rows;
+      ? relevant.filter((row) => KIND_OF[kind].test(row.activity.title))
+      : relevant;
+  const chosen = typed.length
+    ? typed
+    : lectureOnly
+      ? []
+      : relevant;
   const inScope = scope
     ? chosen.filter((row) => campusOf(row) === scope)
     : chosen;
@@ -186,6 +218,14 @@ export async function upcomingEvents(
     const activity = item.activity,
       start = activity.startsAt!;
     const where = CAMPUS_NAME[campusOf(item)] ?? "";
+    const endDate = activity.endsAt?.date;
+    const startDay = start.date ?? (start.at ? start.at.slice(0, 10) : today);
+    const span = endDate && endDate !== startDay ? `${startDay} 至 ${endDate}` : startDay;
+    const phase = item.historical
+      ? " · 已举办"
+      : startDay < today && (!endDate || endDate >= today)
+        ? " · 进行中"
+        : "";
     const state =
       item.registrationState === "open"
         ? " · 报名中"
@@ -194,7 +234,7 @@ export async function upcomingEvents(
           : item.registrationState === "closed"
             ? " · 报名已截止"
             : "";
-    return `${index + 1}. ${activity.title} · ${start.date}${start.at ? ` ${start.at.slice(11, 16)}` : ""}${activity.placeRaw ? ` · ${activity.placeRaw}` : ""}${where ? ` · ${where}` : ""}${state} [${index + 1}]`;
+    return `${index + 1}. ${activity.title} · ${span}${start.at ? ` ${start.at.slice(11, 16)}` : ""}${activity.placeRaw ? ` · ${activity.placeRaw}` : ""}${where ? ` · ${where}` : ""}${phase}${state} [${index + 1}]`;
   };
   const window = date === before ? date : `${date} 至 ${before}`;
   const scopeNote =

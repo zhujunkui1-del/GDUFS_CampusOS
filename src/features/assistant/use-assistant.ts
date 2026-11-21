@@ -84,11 +84,14 @@ async function waitFor(
   }
 }
 const toolLabels: Record<string, string> = {
-  search_places: "查找地点",
-  get_place_details: "读取地点",
-  find_nearby_places: "查找附近设施",
-  plan_route: "规划步行路线",
-  control_map: "准备地图",
+  search_places: "正在查找地点",
+  get_place_details: "正在读取地点",
+  find_nearby_places: "正在查找附近设施",
+  plan_route: "正在规划步行路线",
+  control_map: "正在准备地图",
+  search_campus_knowledge: "正在检索校园知识库",
+  search_campus_events: "正在查询校园活动",
+  search_external_campus_info: "正在查询最新信息",
 };
 type Session = {
   scopeKey: string;
@@ -753,7 +756,7 @@ export function useAssistant(
     pending.current = { controller, requestId };
     setBusy(true);
     setError("");
-    setStatus(deepThinkingSnapshot ? "深度思考中" : "正在查询");
+    setStatus(deepThinkingSnapshot ? "深度思考中" : "正在理解问题");
     let cid = conversationRef.current;
     const messageScope =
       cid || (await requestConversationId(scope.current, requestId));

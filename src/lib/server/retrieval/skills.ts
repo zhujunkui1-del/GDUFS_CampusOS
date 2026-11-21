@@ -26,6 +26,8 @@ import { completeSnippetTimes } from "@/lib/retrieval/snippet-time";
 import { calendarContentSearch } from "../calendar/search";
 import { collegeRoundupIds } from "./college-roundup";
 import { readCalendar } from "../calendar/query";
+import { buildQueryPlan } from "@/lib/retrieval/query-plan";
+import { addDays } from "@/lib/retrieval/calendar-dates";
 
 const time = (t: ArticleTimePoint | null) =>
   t
@@ -76,6 +78,51 @@ export async function searchContent(
             before: inferredWindow.before,
             timeRole: inferredWindow.role,
           }),
+    });
+    q = event;
+  }
+  // A named competition ("挑战杯什么时候举办") is an event identity, not a
+  // keyword. Lexical retrieval can return an older college sign-up notice and
+  // never reach the published calendar row for the main event. Read the
+  // calendar index over a wide window so the event itself is ranked.
+  const timingQuestion =
+    /什么时候|啥时候|何时|几号|几月|哪天|时间|日期|举办|举行|开始|结束|截止/.test(
+      event?.query ?? "",
+    );
+  const namedEvent =
+    event &&
+    purpose === "events" &&
+    timingQuestion &&
+    !event.after &&
+    !event.before &&
+    !event.publishedAfter &&
+    !event.publishedBefore &&
+    !event.eventState &&
+    (() => {
+      const plan = buildQueryPlan(event.query);
+      return (
+        plan.entities.length > 0 || plan.modifiers.some((m) => m.hard)
+      );
+    })();
+  const recentEvent =
+    event &&
+    purpose === "events" &&
+    /最近|近期/.test(event.query) &&
+    !event.after &&
+    !event.before &&
+    !event.eventState;
+  if (event && (namedEvent || recentEvent)) {
+    const today = new Date(Date.parse(now) + 28800000)
+      .toISOString()
+      .slice(0, 10);
+    event = EventSearchInputSchema.parse({
+      ...event,
+      ...(recentEvent
+        ? { publishedAfter: undefined, publishedBefore: undefined }
+        : {}),
+      after: namedEvent ? addDays(today, -15) : addDays(today, -14),
+      before: addDays(today, namedEvent ? 15 : 16),
+      timeRole: "event",
     });
     q = event;
   }
@@ -360,6 +407,20 @@ export async function searchContent(
     );
   // A page must never repeat a row the previous turn already listed, so the
   // exclusion is applied before the limit rather than after it.
+  // A lecture listing must not be filled by calls for papers. This applies to
+  // both the calendar and the lexical route: the lexical route can return the
+  // notice before the calendar filter ever runs.
+  const callForPapers = /征文|征稿|启事/;
+  if (
+    event &&
+    /讲座|讲坛|学术沙龙/.test(event.query) &&
+    !callForPapers.test(event.query)
+  ) {
+    result.hits = result.hits.filter((h) => !callForPapers.test(h.title));
+    result.activities = result.activities.filter(
+      (a) => !callForPapers.test(a.name),
+    );
+  }
   const excluded = new Set(event?.excludeDocumentIds ?? []);
   if (excluded.size)
     result.hits = result.hits.filter((h) => !excluded.has(h.documentId));

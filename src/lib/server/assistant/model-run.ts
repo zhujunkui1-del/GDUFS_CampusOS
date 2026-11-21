@@ -21,6 +21,7 @@ import {
   verdictSeverity,
   EVIDENCE_VERDICT_TOOL,
 } from "./evidence-check";
+import { pruneUnsupported } from "./grounding-prune";
 type RequiredTool =
   | "control_map"
   | "search_places"
@@ -73,6 +74,13 @@ export function meteredClient(
     groundingEvidence?: (answer: string) => unknown | undefined;
     workflowTrace?: WorkflowTrace;
     isolateFinalEvidence?: boolean;
+    /**
+     * Forward final-round text to the SSE callback while it is generated.
+     * Only for direct answers that need no evidence gate or citation repair:
+     * once a token reaches the client it cannot be retracted, so this must
+     * stay off for campus facts and web-search answers.
+     */
+    streamFinal?: boolean;
   } = {},
 ) {
   let requests = 0,
@@ -290,6 +298,7 @@ export function meteredClient(
         const upstreamStarted = performance.now();
         let firstTextMs: number | null = null;
         let streamedText = "";
+        let forwardedText = false;
         let reply: ModelReply;
         const baseMessages: readonly ModelMessage[] =
           final && options.finalSystem
@@ -460,6 +469,10 @@ export function meteredClient(
                   firstTextMs ??= Math.round(
                     performance.now() - upstreamStarted,
                   );
+                  if (options.streamFinal) {
+                    forwardedText = true;
+                    request.onText?.(text);
+                  }
                 }
               : undefined,
           });
@@ -516,8 +529,10 @@ export function meteredClient(
             outputIssue = false;
           }
         }
+        // A streamed answer is already on screen; replaying validation would
+        // append a second answer instead of repairing the first one.
         const rawAnswerIssue =
-          final && !outputIssue
+          final && !outputIssue && !options.streamFinal
             ? options.validateFinal?.(reply.content)
             : undefined;
         // A validator may classify its own rule as hard (fabricated URL,
@@ -528,7 +543,13 @@ export function meteredClient(
             ? { message: rawAnswerIssue, hard: false }
             : rawAnswerIssue;
         let evidenceIssue: { message: string; hard: boolean } | undefined;
-        if (final && !outputIssue && !answerIssue && reply.content.trim())
+        if (
+          final &&
+          !outputIssue &&
+          !answerIssue &&
+          !options.streamFinal &&
+          reply.content.trim()
+        )
           evidenceIssue = await checkEvidence(reply.content, request.signal);
         if (outputIssue || answerIssue || evidenceIssue) {
           const groundIssue = evidenceIssue;
@@ -562,6 +583,23 @@ export function meteredClient(
           // checker wanted a different shape: shipping it beats telling the
           // user the service is broken. Hard defects stay fatal.
           if (!hard && reply.content.trim()) {
+            // The judge named details the sources do not support. Shipping the
+            // answer unchanged would present them as campus facts, so drop the
+            // unsupported sentences before the soft acceptance.
+            const remaining = groundingResults.at(-1)?.issues ?? [];
+            if (remaining.length) {
+              const pruned = pruneUnsupported(reply.content, remaining);
+              if (pruned !== reply.content)
+                console.warn(
+                  "FINAL_GROUNDING_PRUNED",
+                  JSON.stringify({
+                    before: reply.content.length,
+                    after: pruned.length,
+                    issues: remaining.length,
+                  }),
+                );
+              reply = { ...reply, content: pruned };
+            }
             softAcceptances++;
             console.warn(
               "FINAL_SOFT_ACCEPTED",
@@ -627,7 +665,11 @@ export function meteredClient(
             "模型未执行必要的查询，请重试。",
           );
         }
-        if (!reply.toolCalls.length && reply.content)
+        if (
+          !reply.toolCalls.length &&
+          reply.content &&
+          (!options.streamFinal || !forwardedText)
+        )
           request.onText?.(reply.content);
         await store.running(owner, runId);
         return reply;

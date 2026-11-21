@@ -280,7 +280,7 @@ it("gateway is server-configured and login failure cannot masquerade as successf
     ).status,
   ).toBe("unavailable");
 });
-it("Skill enforces internal-first and bounded one-shot execution, with no database writes", async () => {
+it("Skill enforces internal-first and bounded four-search execution, with no database writes", async () => {
   const p = externalPolicy("奖学金截止日期");
   const denied = registerExternalSearch(
     new SkillRegistry(),
@@ -306,7 +306,95 @@ it("Skill enforces internal-first and bounded one-shot execution, with no databa
     status: "unavailable",
     items: [],
   });
+  // A turn may look at several gaps — “compare three papers” needs three
+  // queries — but the fourth is the last one.
+  for (let i = 0; i < 3; i++)
+    await skill.run({ query: "广外奖学金", gap: "missing_detail" }, context);
   await expect(
     skill.run({ query: "广外", gap: "missing_detail" }, context),
   ).rejects.toMatchObject({ code: "RUN_LIMIT_EXCEEDED" });
+});
+it("a general question keeps its own words and keeps general results", async () => {
+  const queries: string[] = [];
+  const relay = async (input: { query: string }) => {
+    queries.push(input.query);
+    return {
+      provider: "relay",
+      status: "ok" as const,
+      durationMs: 1,
+      items: [
+        {
+          title: "Cloudflare D1 is a serverless SQLite database",
+          originalUrl: "https://developers.cloudflare.com/d1/",
+          sourceName: "Cloudflare",
+          platform: "web" as const,
+          authority: "unverified" as const,
+          evidenceKind: "page_excerpt" as const,
+          snippet: "Cloudflare D1 is a serverless SQL database.",
+          publishedAt: null,
+          retrievedAt: "2026-11-20T00:00:00.000Z",
+          searchMode: "public_web" as const,
+          canConfirmAdministrativeFacts: false,
+        },
+      ],
+    };
+  };
+  const skill = registerExternalSearch(
+    new SkillRegistry(),
+    externalPolicy("Cloudflare D1 是什么？"),
+    { relay },
+    () => true,
+  ).get("search_external_campus_info")!;
+  const result = await skill.run(
+    { query: "Cloudflare D1 是什么？", gap: "freshness_check" },
+    context,
+  );
+  expect(queries[0]).toBe("Cloudflare D1 是什么？");
+  expect(
+    result.ok ? (result.data as { items: unknown[] }).items : null,
+  ).toHaveLength(1);
+});
+it("a campus question still scopes the query to the school", async () => {
+  const queries: string[] = [];
+  const skill = registerExternalSearch(
+    new SkillRegistry(),
+    externalPolicy("图书馆借阅规则是什么？"),
+    {
+      relay: async (input) => {
+        queries.push(input.query);
+        return { provider: "relay", status: "empty", durationMs: 1, items: [] };
+      },
+    },
+    () => true,
+  ).get("search_external_campus_info")!;
+  await skill.run(
+    { query: "图书馆借阅规则是什么？", gap: "no_internal_answer" },
+    context,
+  );
+  expect(queries[0]).toContain("广东外语外贸大学");
+});
+it("an enumeration is searched once per subject", async () => {
+  const queries: string[] = [];
+  const skill = registerExternalSearch(
+    new SkillRegistry(),
+    externalPolicy("Cloudflare、D1、SQLite 分别是什么？"),
+    {
+      relay: async (input) => {
+        queries.push(input.query);
+        return { provider: "relay", status: "empty", durationMs: 1, items: [] };
+      },
+    },
+    () => true,
+  ).get("search_external_campus_info")!;
+  await skill.run(
+    { query: "Cloudflare、D1、SQLite 分别是什么？", gap: "no_internal_answer" },
+    context,
+  );
+  // One search per subject, and the ambiguous short name is qualified with its
+  // family: “D1” alone returns a camera and a dopamine receptor.
+  expect(queries).toEqual([
+    "Cloudflare 是什么？",
+    "Cloudflare D1 是什么？",
+    "SQLite 是什么？",
+  ]);
 });

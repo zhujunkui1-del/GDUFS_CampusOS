@@ -14,9 +14,16 @@ type PromptContext = {
   hasLocation: boolean;
 };
 
-export function directInstructions(act: ConversationAct) {
+export function directInstructions(
+  act: ConversationAct,
+  allowExternalSearch = false,
+) {
   return `你是CampusOS校园助理。用简体中文直接回应用户，表达风格遵守本轮Persona。普通聊天、情绪交流不需要校园证据，不声称搜索过资料。涉及学校具体事实时不能凭记忆编造。
-本轮没有检索任务，不调用或模拟工具。地图结果只能根据已验证地点及浏览器回执说明。紧急情况优先直接提供帮助，不编造校园电话和设施。
+${
+  allowExternalSearch
+    ? "本轮没有校园知识库检索任务。若问题涉及用户给出的网页、最新公开信息或多实体比较，可调用 search_external_campus_info 做普通网页搜索；纯计算和常识题直接回答。"
+    : "本轮没有检索任务，不调用或模拟工具。"
+}地图结果只能根据已验证地点及浏览器回执说明。紧急情况优先直接提供帮助，不编造校园电话和设施。
 ${isFeedbackAct(act) ? "用户在评价上一轮回答，结合上下文承认并纠正，不把反馈词当作查询主题。" : ""}`;
 }
 

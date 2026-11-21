@@ -12,6 +12,7 @@ import { registrationWindowState } from "@/lib/retrieval/registration-state";
 import { buildQueryPlan, queryRelevance } from "@/lib/retrieval/query-plan";
 import { stripTimeRange } from "../assistant/time-window";
 import { addDays, chinaDate } from "@/lib/retrieval/calendar-dates";
+import { buildingActivityPlaceIds, articleMapPlace } from "@/lib/retrieval/activity-place";
 import type { ArticleTimePoint } from "@/domain/console/article-analysis";
 import type { EvidenceHit } from "@/domain/retrieval/contracts";
 
@@ -60,6 +61,12 @@ export async function calendarContentSearch(
   event: z.output<typeof EventSearchInputSchema>,
   now: string,
 ): Promise<ContentSearchResult> {
+  // Time words are constraints, not subjects: “最近两周” must not become a
+  // relevance modifier that rejects every lecture in the window.
+  const plan = buildQueryPlan(stripTimeRange(event.query));
+  // A named competition can sit behind other activities in the window. The
+  // calendar read is capped at 50 rows, so keep the window tight around the
+  // current term and rank by event identity below.
   const query = await readCalendar(
     db,
     {
@@ -75,9 +82,14 @@ export async function calendarContentSearch(
     },
     now,
   );
-  // Time words are constraints, not subjects: “最近两周” must not become a
-  // relevance modifier that rejects every lecture in the window.
-  const plan = buildQueryPlan(stripTimeRange(event.query));
+  // A place named in the question ("学术交流中心最近两周有什么活动") is a hard
+  // constraint. The article's title/body often never repeats the venue, so a
+  // lexical check alone keeps every event on campus and drops the one the user
+  // asked for.
+  const namedPlace = articleMapPlace(stripTimeRange(event.query), "unknown");
+  const placeIds = namedPlace
+    ? buildingActivityPlaceIds(namedPlace.placeId)
+    : null;
   const specific =
     plan.topics.some((t) => !["competition"].includes(t.id)) ||
     plan.entities.length ||
@@ -85,7 +97,21 @@ export async function calendarContentSearch(
   // A follow-up page must skip what the previous answer already showed, or the
   // same five entries come back forever.
   const excluded = new Set(event.excludeDocumentIds ?? []);
-  let items = query.items
+  // A named place is part of the activity's identity even when the article
+  // body never repeats it: "学术交流中心最近两周有什么活动" must keep the
+  // events whose placeRaw names that building, and drop the rest.
+  const evidenceText = (g: (typeof query.items)[number]) =>
+    `${g.activity.title} ${g.activity.evidence.map((e) => e.text).join(" ")} ${g.activity.placeRaw ?? ""}`;
+  const relevanceOf = (g: (typeof query.items)[number]) =>
+    specific
+      ? queryRelevance(plan, {
+          title: g.activity.title,
+          contentSnippet: evidenceText(g),
+        })
+      : { relevant: true, score: 0 };
+  const ranked =
+    plan.entities.length > 0 || plan.modifiers.some((m) => m.hard);
+  const filtered = query.items
     .filter(
       (item) =>
         event.eventState !== "upcoming" ||
@@ -96,15 +122,43 @@ export async function calendarContentSearch(
             : item.activity.startsAt.date > chinaDate(Date.parse(now)))),
     )
     .filter((g) => !excluded.has(g.sources[0]?.documentId))
+    .filter((g) => {
+      // "最近有什么讲座" is asking for something to attend. A call for papers or
+      // a forum announcement mentions the same vocabulary but is not a lecture,
+      // so it must not lead the list unless the question asks for submissions
+      // or for a forum.
+      const title = g.activity.title;
+      const asksForSubmissions = /征文|征稿|启事/.test(event.query);
+      if (/征文|征稿|启事/.test(title) && !asksForSubmissions) return false;
+      const asksForLecture =
+        /讲座/.test(event.query) && !/论坛|会议/.test(event.query);
+      if (
+        asksForLecture &&
+        !/讲座/.test(title) &&
+        /论坛|研讨会|会议预告|征文|征稿|启事/.test(title)
+      )
+        return false;
+      return true;
+    })
     .filter(
       (g) =>
-        !specific ||
-        queryRelevance(plan, {
-          title: g.activity.title,
-          contentSnippet: g.activity.evidence.map((e) => e.text).join(" "),
-        }).relevant,
+        !placeIds ||
+        (!!g.mapPlace && placeIds.has(g.mapPlace.placeId)),
     )
-    .slice(0, event.limit);
+    .map((g) => ({ g, relevance: relevanceOf(g) }))
+    .filter(({ relevance }) => !specific || relevance.relevant);
+  // A named competition ("挑战杯什么时候举办") has many college-level notices
+  // sharing the name. Date order alone puts an old selection round first, so a
+  // hard subject ranks titles that actually contain the competition name.
+  if (ranked)
+    filtered.sort(
+      (a, b) =>
+        b.relevance.score - a.relevance.score ||
+        (a.g.activity.startsAt?.date ?? "").localeCompare(
+          b.g.activity.startsAt?.date ?? "",
+        ),
+    );
+  let items = filtered.slice(0, event.limit).map(({ g }) => g);
   // An empty page inside a time box is not the same as "no such event": the
   // useful answer is the nearest one outside the box. Say so instead of
   // claiming the corpus has nothing.
@@ -135,6 +189,8 @@ export async function calendarContentSearch(
         .filter(
           (g) =>
             !excluded.has(g.sources[0]?.documentId) &&
+            (!placeIds ||
+              (!!g.mapPlace && placeIds.has(g.mapPlace.placeId))) &&
             // The category filter already names the subject; demanding the
             // word “讲座” in the title would drop the nearest forum whose
             // title says “研讨会”. Without a category, relevance still guards
@@ -143,9 +199,7 @@ export async function calendarContentSearch(
               !!event.category ||
               queryRelevance(plan, {
                 title: g.activity.title,
-                contentSnippet: g.activity.evidence
-                  .map((e) => e.text)
-                  .join(" "),
+                contentSnippet: evidenceText(g),
               }).relevant) &&
             (g.activity.startsAt?.date ?? "") >= today,
         )

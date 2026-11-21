@@ -10,6 +10,7 @@ import {
   revalidateCalendarEvidence,
 } from "@/lib/server/calendar/search";
 import { EventSearchInputSchema } from "@/domain/retrieval/skills";
+import { upcomingEvents } from "@/lib/server/assistant/upcoming-events";
 it.each([
   ["2026-11-05", "2026-11-07", ["2026-11-05", "2026-11-06", "2026-11-07"]],
   ["2026-11-30", "2026-12-02", ["2026-11-30", "2026-12-01", "2026-12-02"]],
@@ -386,6 +387,378 @@ it("uses the published calendar index identity in assistant links instead of rec
     expect(
       (await readCalendar(f.db, { event: activity.eventId })).items,
     ).toHaveLength(1);
+  } finally {
+    f.close();
+  }
+});
+
+it("keeps a named venue even when the article never repeats it in the title", async () => {
+  const f = await dateGateFixture();
+  try {
+    const venue = await f.store.document("spring");
+    await f.db.batch(
+      await analysisStatements(
+        f.db,
+        venue.id,
+        venue.contentRevision,
+        venue.inputHash!,
+        {
+          title: "职引未来，逐梦启航——公管学院举办求职技能系列讲座",
+          body: "讲座时间：2026年11月11日19:00。地点：大学城校区学术交流中心 MPA 第一会议室。",
+        },
+      ),
+    );
+    const elsewhere = await f.store.document("autumn");
+    await f.db.batch(
+      await analysisStatements(
+        f.db,
+        elsewhere.id,
+        elsewhere.contentRevision,
+        elsewhere.inputHash!,
+        {
+          title: "2026年青年师生思政微课大赛",
+          body: "比赛时间：2026年11月12日14:00。地点：大学城校区图书馆报告厅。",
+        },
+      ),
+    );
+    const result = await calendarContentSearch(
+      f.db,
+      EventSearchInputSchema.parse({
+        query: "学术交流中心最近两周有什么活动",
+        after: "2026-11-09",
+        before: "2026-11-23",
+        timeRole: "event",
+        limit: 5,
+      }),
+      "2026-11-21T00:00:00Z",
+    );
+    expect(result.activities).toHaveLength(1);
+    expect(result.activities[0].placeRaw).toContain("学术交流中心");
+  } finally {
+    f.close();
+  }
+});
+
+it("ranks the named competition above an earlier college sign-up notice", async () => {
+  const f = await dateGateFixture();
+  try {
+    for (const [id, title, day] of [
+      ["spring", "挑战杯 | 会计学院“大挑”选拔赛正式报名通知", "2026-11-07"],
+      [
+        "autumn",
+        "2026-2027学年“挑战杯”广外大学生课外学术科技创新大赛",
+        "2026-11-19",
+      ],
+    ] as const) {
+      const d = await f.store.document(id);
+      await f.db.batch(
+        await analysisStatements(
+          f.db,
+          d.id,
+          d.contentRevision,
+          d.inputHash!,
+          {
+            title,
+            body: `比赛时间：${day}。地点：大学城校区。`,
+          },
+        ),
+      );
+    }
+    const result = await calendarContentSearch(
+      f.db,
+      EventSearchInputSchema.parse({
+        query: "挑战杯比赛什么时候举办",
+        after: "2026-11-01",
+        before: "2026-11-30",
+        timeRole: "event",
+        limit: 5,
+      }),
+      "2026-11-21T00:00:00Z",
+    );
+    expect(result.activities[0].name).toContain("大学生课外学术科技创新大赛");
+    expect(result.activities[0].startsAt?.date).toBe("2026-11-19");
+  } finally {
+    f.close();
+  }
+});
+
+it("drops a call for papers from a lecture listing", async () => {
+  const f = await dateGateFixture();
+  try {
+    for (const [id, title, day] of [
+      [
+        "spring",
+        "征文启事 | 第七届全国高校国际贸易学科协作组国际商务论坛征文通知",
+        "2026-11-22",
+      ],
+      [
+        "autumn",
+        "讲座预告 | 馆藏资源检索方法",
+        "2026-11-20",
+      ],
+    ] as const) {
+      const d = await f.store.document(id);
+      await f.db.batch(
+        await analysisStatements(
+          f.db,
+          d.id,
+          d.contentRevision,
+          d.inputHash!,
+          { title, body: `讲座时间：${day}。地点：白云山校区明德报告厅。` },
+        ),
+      );
+    }
+    const result = await calendarContentSearch(
+      f.db,
+      EventSearchInputSchema.parse({
+        query: "最近有什么讲座",
+        after: "2026-11-19",
+        before: "2026-12-05",
+        timeRole: "event",
+        limit: 5,
+      }),
+      "2026-11-21T00:00:00Z",
+    );
+    expect(result.activities.length).toBeGreaterThan(0);
+    expect(
+      result.activities.every((a) => !/征文|征稿|启事/.test(a.name)),
+    ).toBe(true);
+    expect(result.activities.some((a) => /馆藏资源检索方法/.test(a.name))).toBe(
+      true,
+    );
+  } finally {
+    f.close();
+  }
+});
+
+it("keeps calls for papers out of a lexical lecture listing", async () => {
+  const { searchContent } = await import("@/lib/server/retrieval/skills");
+  const f = await dateGateFixture();
+  try {
+    for (const [id, title] of [
+      [
+        "spring",
+        "征文启事 | 第七届全国高校国际贸易学科协作组国际商务论坛征文通知",
+      ],
+      [
+        "autumn",
+        "会议预告 | 第七届全国高校国际贸易学科协作组国际商务论坛",
+      ],
+    ] as const) {
+      const d = await f.store.document(id);
+      await f.db.batch(
+        await analysisStatements(
+          f.db,
+          d.id,
+          d.contentRevision,
+          d.inputHash!,
+          { title, body: "讲座时间：2026-11-22。地点：白云山校区明德报告厅。" },
+        ),
+      );
+    }
+    const result = await searchContent(
+      f.db,
+      "events",
+      { query: "讲座", limit: 5 },
+      "2026-11-21T00:00:00+08:00",
+    );
+    expect(
+      result.hits.every((h) => !/征文|征稿|启事/.test(h.title)),
+    ).toBe(true);
+  } finally {
+    f.close();
+  }
+});
+
+it("keeps calls for papers out of the direct lecture listing", async () => {
+  const f = await dateGateFixture();
+  try {
+    for (const [id, title] of [
+      [
+        "spring",
+        "征文启事 | 第七届全国高校国际贸易学科协作组国际商务论坛征文通知",
+      ],
+      ["autumn", "讲座预告 | 馆藏资源检索方法"],
+    ] as const) {
+      const d = await f.store.document(id);
+      await f.db.batch(
+        await analysisStatements(
+          f.db,
+          d.id,
+          d.contentRevision,
+          d.inputHash!,
+          {
+            title,
+            body: "讲座时间：2026-11-22。地点：白云山校区明德报告厅。",
+          },
+        ),
+      );
+    }
+    const result = await upcomingEvents(
+      f.db,
+      "最近有什么讲座",
+      undefined,
+      Date.parse("2026-11-21T00:00:00+08:00"),
+    );
+    expect(result?.text).toContain("馆藏资源检索方法");
+    expect(result?.text).not.toContain("征文");
+  } finally {
+    f.close();
+  }
+});
+
+it("lists a recently held lecture instead of claiming the calendar is empty", async () => {
+  const f = await dateGateFixture();
+  try {
+    const d = await f.store.document("autumn");
+    await f.db.batch(
+      await analysisStatements(f.db, d.id, d.contentRevision, d.inputHash!, {
+        title: "职引未来，逐梦启航——公管学院举办求职技能系列讲座",
+        body: "讲座时间：2026-11-11。地点：学术交流中心 MPA 第一会议室。",
+      }),
+    );
+    const result = await upcomingEvents(
+      f.db,
+      "最近有什么讲座",
+      undefined,
+      Date.parse("2026-11-21T00:00:00+08:00"),
+    );
+    expect(result?.text).toContain("求职技能系列讲座");
+    expect(result?.text).toContain("2026-11-11");
+    expect(result?.text).toContain("已举办");
+    expect(result?.text).not.toContain("没有找到");
+  } finally {
+    f.close();
+  }
+});
+
+it("shows the full span of an ongoing competition in this week's list", async () => {
+  const f = await dateGateFixture();
+  try {
+    const d = await f.store.document("autumn");
+    await f.db.batch(
+      await analysisStatements(f.db, d.id, d.contentRevision, d.inputHash!, {
+        title: "红色演艺大赛",
+        body: "比赛时间：2026-10-15 至 2026-11-29。地点：大学城校区。",
+      }),
+    );
+    const result = await upcomingEvents(
+      f.db,
+      "这周有哪些比赛",
+      undefined,
+      Date.parse("2026-11-21T00:00:00+08:00"),
+    );
+    expect(result?.text).toContain("红色演艺大赛");
+    expect(result?.text).toContain("2026-10-15 至 2026-11-29");
+    expect(result?.text).toContain("进行中");
+  } finally {
+    f.close();
+  }
+});
+
+it("keeps a recruitment briefing out of a lecture listing", async () => {
+  const f = await dateGateFixture();
+  try {
+    const d = await f.store.document("autumn");
+    await f.db.batch(
+      await analysisStatements(f.db, d.id, d.contentRevision, d.inputHash!, {
+        title: "【11月12日宣讲】中铁二十五局集团有限公司",
+        body: "宣讲时间：2026-11-12 14:30。地点：大学城校区E301。",
+      }),
+    );
+    const result = await upcomingEvents(
+      f.db,
+      "最近有什么讲座",
+      undefined,
+      Date.parse("2026-11-21T00:00:00+08:00"),
+    );
+    expect(result?.text).not.toContain("宣讲");
+    expect(result?.text).not.toContain("中铁二十五局");
+  } finally {
+    f.close();
+  }
+});
+
+it("routes a recent lecture listing through the calendar index", async () => {
+  const { searchContent } = await import("@/lib/server/retrieval/skills");
+  const f = await dateGateFixture();
+  try {
+    for (const [id, title, day] of [
+      [
+        "spring",
+        "征文启事 | 第七届全国高校国际贸易学科协作组国际商务论坛征文通知",
+        "2026-11-22",
+      ],
+      [
+        "autumn",
+        "讲座预告 | 馆藏资源检索方法",
+        "2026-11-20",
+      ],
+    ] as const) {
+      const d = await f.store.document(id);
+      await f.db.batch(
+        await analysisStatements(
+          f.db,
+          d.id,
+          d.contentRevision,
+          d.inputHash!,
+          { title, body: `讲座时间：${day}。地点：白云山校区明德报告厅。` },
+        ),
+      );
+    }
+    const result = await searchContent(
+      f.db,
+      "events",
+      {
+        query: "最近有什么讲座",
+        limit: 5,
+        publishedAfter: "2026-11-14",
+        publishedBefore: "2026-11-21",
+      },
+      "2026-11-21T00:00:00+08:00",
+    );
+    expect(result.activities.length).toBeGreaterThan(0);
+    expect(
+      result.activities.every((a) => !/征文|征稿|启事/.test(a.name)),
+    ).toBe(true);
+  } finally {
+    f.close();
+  }
+});
+
+it("routes a named competition timing question through the calendar index", async () => {
+  const { searchContent } = await import("@/lib/server/retrieval/skills");
+  const f = await dateGateFixture();
+  try {
+    for (const [id, title, day] of [
+      ["spring", "挑战杯 | 会计学院“大挑”选拔赛正式报名通知", "2026-11-07"],
+      [
+        "autumn",
+        "2026-2027学年“挑战杯”广外大学生课外学术科技创新大赛",
+        "2026-11-19",
+      ],
+    ] as const) {
+      const d = await f.store.document(id);
+      await f.db.batch(
+        await analysisStatements(
+          f.db,
+          d.id,
+          d.contentRevision,
+          d.inputHash!,
+          { title, body: `比赛时间：${day}。地点：大学城校区。` },
+        ),
+      );
+    }
+    const result = await searchContent(
+      f.db,
+      "events",
+      { query: "挑战杯比赛什么时候举办", limit: 5 },
+      "2026-11-21T00:00:00+08:00",
+    );
+    expect(result.activities[0].name).toContain(
+      "大学生课外学术科技创新大赛",
+    );
+    expect(result.activities[0].startsAt?.date).toBe("2026-11-19");
   } finally {
     f.close();
   }

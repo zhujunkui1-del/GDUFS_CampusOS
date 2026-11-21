@@ -78,8 +78,317 @@ function parseArgs(value: unknown) {
     return "{}";
   }
 }
+async function readSse(
+  response: Response,
+  onEvent: (event: string | undefined, data: string) => void,
+  limit = 1048576,
+) {
+  if (!response.body)
+    throw new ApiError("MODEL_SERVICE_UNAVAILABLE", "模型回复为空。", true);
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let pending = "";
+  let bytes = 0;
+  let event: string | undefined;
+  let data: string[] = [];
+  const dispatch = () => {
+    if (data.length) onEvent(event, data.join("\n"));
+    event = undefined;
+    data = [];
+  };
+  try {
+    while (true) {
+      const chunk = await reader.read();
+      if (chunk.done) break;
+      bytes += chunk.value.byteLength;
+      if (bytes > limit)
+        throw new ApiError("MODEL_SERVICE_UNAVAILABLE", "模型回复超过限制。");
+      pending += decoder.decode(chunk.value, { stream: true });
+      let newline: number;
+      while ((newline = pending.indexOf("\n")) >= 0) {
+        const line = pending.slice(0, newline).replace(/\r$/, "");
+        pending = pending.slice(newline + 1);
+        if (!line) dispatch();
+        else if (line.startsWith(":")) continue;
+        else if (line.startsWith("event:")) event = line.slice(6).trim();
+        else if (line.startsWith("data:")) data.push(line.slice(5).trimStart());
+      }
+      if (pending.length > 65536)
+        throw new ApiError("MODEL_SERVICE_UNAVAILABLE", "模型流格式无效。");
+    }
+    pending += decoder.decode();
+    if (pending.trim()) {
+      const line = pending.replace(/\r$/, "");
+      if (line.startsWith("data:")) data.push(line.slice(5).trimStart());
+      dispatch();
+    }
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
+}
+function incomplete() {
+  return new ApiError(
+    "MODEL_SERVICE_UNAVAILABLE",
+    "模型回复未完整完成，请重试。",
+    true,
+  );
+}
 
-/** User-scoped provider factory. Only registered provider ids can be constructed. */
+async function openaiStream(
+  response: Response,
+  onText: (text: string) => void,
+): Promise<ModelReply> {
+  let content = "";
+  let finish: string | undefined;
+  let done = false;
+  let tokens: ReturnType<typeof usage>;
+  const calls = new Map<
+    number,
+    { id: string; type: "function"; function: { name: string; arguments: string } }
+  >();
+  await readSse(response, (_event, data) => {
+    if (data === "[DONE]") {
+      done = true;
+      return;
+    }
+    if (!data || done) return;
+    const parsed = JSON.parse(data) as {
+      choices?: Array<{
+        index?: number;
+        delta?: {
+          content?: string | null;
+          tool_calls?: Array<{
+            index: number;
+            id?: string;
+            function?: { name?: string; arguments?: string };
+          }>;
+        };
+        finish_reason?: string | null;
+      }>;
+      usage?: unknown;
+    };
+    tokens = usage(parsed.usage) || tokens;
+    if (parsed.choices && parsed.choices.length > 1) throw incomplete();
+    const choice = parsed.choices?.[0];
+    if (!choice) return;
+    if (choice.finish_reason) finish = choice.finish_reason;
+    if (choice.delta?.content) {
+      content += choice.delta.content;
+      if (content.length > 200000)
+        throw new ApiError("MODEL_SERVICE_UNAVAILABLE", "模型回复超过限制。");
+      onText(choice.delta.content);
+    }
+    for (const part of choice.delta?.tool_calls || []) {
+      const call = calls.get(part.index) || {
+        id: "",
+        type: "function" as const,
+        function: { name: "", arguments: "" },
+      };
+      if (part.id) call.id += part.id;
+      if (part.function?.name) call.function.name += part.function.name;
+      if (part.function?.arguments)
+        call.function.arguments += part.function.arguments;
+      if (
+        call.id.length > 128 ||
+        call.function.name.length > 64 ||
+        call.function.arguments.length > 16384
+      )
+        throw new ApiError(
+          "MODEL_SERVICE_UNAVAILABLE",
+          "模型工具参数超过限制。",
+        );
+      calls.set(part.index, call);
+    }
+  });
+  if (!done && !finish) throw incomplete();
+  if (finish === "length") throw incomplete();
+  const toolCalls: ModelToolCall[] = [...calls.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([, call]) => ({
+      id: call.id,
+      type: "function",
+      function: {
+        name: call.function.name,
+        arguments: call.function.arguments || "{}",
+      },
+    }));
+  return {
+    content,
+    toolCalls,
+    finishReason: toolCalls.length ? "tool_calls" : "stop",
+    usage: tokens,
+  };
+}
+
+async function anthropicStream(
+  response: Response,
+  onText: (text: string) => void,
+): Promise<ModelReply> {
+  let content = "";
+  let stop: string | undefined;
+  let done = false;
+  let promptTokens = 0;
+  let completionTokens = 0;
+  const blocks = new Map<
+    number,
+    { id: string; name: string; input: unknown; json: string }
+  >();
+  await readSse(response, (event, data) => {
+    if (!data || done) return;
+    const parsed = JSON.parse(data) as Record<string, unknown>;
+    if (event === "error" || parsed.type === "error")
+      throw new ApiError(
+        "MODEL_SERVICE_UNAVAILABLE",
+        String(
+          (parsed.error as { message?: string } | undefined)?.message ||
+            "模型服务暂时不可用。",
+        ),
+        true,
+      );
+    if (parsed.type === "message_start") {
+      const message = parsed.message as
+        | { usage?: { input_tokens?: number } }
+        | undefined;
+      promptTokens = message?.usage?.input_tokens || promptTokens;
+      return;
+    }
+    if (parsed.type === "content_block_start") {
+      const index = Number(parsed.index);
+      const block = parsed.content_block as
+        | { type?: string; id?: string; name?: string; input?: unknown; text?: string }
+        | undefined;
+      if (block?.type === "text" && block.text) {
+        content += block.text;
+        onText(block.text);
+      }
+      if (block?.type === "tool_use")
+        blocks.set(index, {
+          id: block.id || "",
+          name: block.name || "",
+          input: block.input,
+          json: "",
+        });
+      return;
+    }
+    if (parsed.type === "content_block_delta") {
+      const index = Number(parsed.index);
+      const delta = parsed.delta as
+        | { type?: string; text?: string; partial_json?: string }
+        | undefined;
+      if (delta?.type === "text_delta" && delta.text) {
+        content += delta.text;
+        if (content.length > 200000)
+          throw new ApiError("MODEL_SERVICE_UNAVAILABLE", "模型回复超过限制。");
+        onText(delta.text);
+      }
+      if (delta?.type === "input_json_delta" && delta.partial_json) {
+        const block = blocks.get(index);
+        if (!block) throw incomplete();
+        block.json += delta.partial_json;
+        if (block.json.length > 16384)
+          throw new ApiError(
+            "MODEL_SERVICE_UNAVAILABLE",
+            "模型工具参数超过限制。",
+          );
+      }
+      return;
+    }
+    if (parsed.type === "message_delta") {
+      const delta = parsed.delta as { stop_reason?: string } | undefined;
+      const deltaUsage = parsed.usage as
+        | { output_tokens?: number }
+        | undefined;
+      if (delta?.stop_reason) stop = delta.stop_reason;
+      completionTokens = deltaUsage?.output_tokens || completionTokens;
+      return;
+    }
+    if (parsed.type === "message_stop") done = true;
+  });
+  if (!done && !stop) throw incomplete();
+  if (stop === "max_tokens") throw incomplete();
+  const toolCalls: ModelToolCall[] = [...blocks.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([, block]) => ({
+      id: block.id,
+      type: "function",
+      function: {
+        name: block.name,
+        arguments: block.json || JSON.stringify(block.input ?? {}),
+      },
+    }));
+  return {
+    content,
+    toolCalls,
+    finishReason: toolCalls.length ? "tool_calls" : "stop",
+    usage: {
+      promptTokens,
+      completionTokens,
+      totalTokens: promptTokens + completionTokens,
+    },
+  };
+}
+
+async function geminiStream(
+  response: Response,
+  onText: (text: string) => void,
+): Promise<ModelReply> {
+  let content = "";
+  let finish: string | undefined;
+  let tokens: ReturnType<typeof usage>;
+  const toolCalls: ModelToolCall[] = [];
+  await readSse(response, (_event, data) => {
+    if (!data) return;
+    const parsed = JSON.parse(data) as {
+      candidates?: Array<{
+        content?: {
+          parts?: Array<
+            { text?: string } | { functionCall?: { name?: string; args?: unknown } }
+          >;
+        };
+        finishReason?: string;
+      }>;
+      usageMetadata?: unknown;
+      error?: { message?: string };
+    };
+    if (parsed.error)
+      throw new ApiError(
+        "MODEL_SERVICE_UNAVAILABLE",
+        parsed.error.message || "模型服务暂时不可用。",
+        true,
+      );
+    tokens = usage(parsed.usageMetadata) || tokens;
+    const candidate = parsed.candidates?.[0];
+    if (!candidate) return;
+    if (candidate.finishReason) finish = candidate.finishReason;
+    for (const [index, part] of (candidate.content?.parts || []).entries()) {
+      if ("text" in part && part.text) {
+        content += part.text;
+        if (content.length > 200000)
+          throw new ApiError("MODEL_SERVICE_UNAVAILABLE", "模型回复超过限制。");
+        onText(part.text);
+      }
+      if ("functionCall" in part && part.functionCall)
+        toolCalls.push({
+          id: `gemini-${Date.now()}-${index}-${toolCalls.length}`,
+          type: "function",
+          function: {
+            name: part.functionCall.name || "",
+            arguments: parseArgs(part.functionCall.args),
+          },
+        });
+    }
+  });
+  if (!finish) throw incomplete();
+  if (finish === "MAX_TOKENS") throw incomplete();
+  return {
+    content,
+    toolCalls,
+    finishReason: toolCalls.length ? "tool_calls" : "stop",
+    usage: tokens,
+  };
+}
+
 export class PersonalProviderRegistry {
   constructor(
     private readonly fetchImpl: Fetch = fetch,
@@ -92,7 +401,46 @@ export class PersonalProviderRegistry {
   }
 }
 
-/** Non-streaming adapter. Streaming is intentionally not trusted for arbitrary providers. */
+function openaiJson(data: unknown): ModelReply {
+  const value = data as {
+    choices?: Array<{
+      message?: {
+        content?: string | null;
+        tool_calls?: Array<{
+          id: string;
+          type?: string;
+          function: { name: string; arguments: string };
+        }>;
+      };
+      finish_reason?: string;
+    }>;
+    usage?: unknown;
+    error?: { message?: string };
+  };
+  const choice = value.choices?.[0];
+  if (!choice?.message)
+    throw new ApiError(
+      "MODEL_SERVICE_UNAVAILABLE",
+      value.error?.message || "模型没有返回内容。",
+      true,
+    );
+  const calls: ModelToolCall[] = (choice.message.tool_calls || []).map((c) => ({
+    id: c.id,
+    type: "function",
+    function: {
+      name: c.function.name,
+      arguments: parseArgs(c.function.arguments),
+    },
+  }));
+  return {
+    content: choice.message.content || "",
+    toolCalls: calls,
+    finishReason: calls.length ? "tool_calls" : "stop",
+    usage: usage(value.usage),
+  };
+}
+
+/** User-scoped adapter; streams when the caller supplies onText. */
 export class PersonalModelClient implements ModelClient {
   readonly snapshot: ModelSnapshot;
   constructor(
@@ -114,43 +462,65 @@ export class PersonalModelClient implements ModelClient {
       },
     };
   }
-  async #post(url: string, headers: Record<string, string>, body: unknown) {
+  async #send(
+    url: string,
+    headers: Record<string, string>,
+    body: unknown,
+    signal?: AbortSignal,
+  ) {
     const controller = new AbortController();
     const timer = setTimeout(
       () => controller.abort(new Error("model timeout")),
       this.timeoutMs,
     );
+    const combined = signal
+      ? AbortSignal.any([controller.signal, signal])
+      : controller.signal;
     try {
       const response = await this.fetchImpl(url, {
         method: "POST",
         headers: { "Content-Type": "application/json", ...headers },
         body: JSON.stringify(body),
-        signal: controller.signal,
+        signal: combined,
       });
       if (!response.ok) throw upstream(response.status);
-      return await readJson(response);
+      return {
+        response,
+        cleanup: () => clearTimeout(timer),
+      };
     } catch (error) {
+      clearTimeout(timer);
       if (error instanceof ApiError) throw error;
+      if (signal?.aborted)
+        throw new ApiError("CANCELLED", "已停止回复。");
       if (
         error instanceof Error &&
         (error.name === "AbortError" || /timeout/i.test(error.message))
       )
         throw new ApiError("MODEL_TIMEOUT", "模型请求超时。", true);
       throw new ApiError("MODEL_NETWORK_ERROR", "无法连接模型服务。", true);
+    }
+  }
+  async #post(
+    url: string,
+    headers: Record<string, string>,
+    body: unknown,
+    signal?: AbortSignal,
+  ) {
+    const { response, cleanup } = await this.#send(url, headers, body, signal);
+    try {
+      return await readJson(response);
     } finally {
-      clearTimeout(timer);
+      cleanup();
     }
   }
   async generateWithTools(request: ModelRequest): Promise<ModelReply> {
     const p = protocol(this.config.provider);
-    const reply =
-      p === "anthropic"
-        ? await this.#anthropic(request)
-        : p === "gemini"
-          ? await this.#gemini(request)
-          : await this.#openai(request);
-    request.onText?.(reply.content);
-    return reply;
+    return p === "anthropic"
+      ? await this.#anthropic(request)
+      : p === "gemini"
+        ? await this.#gemini(request)
+        : await this.#openai(request);
   }
   async generateStructured<T>(
     request: Omit<ModelRequest, "tools" | "onText" | "toolChoice">,
@@ -171,77 +541,65 @@ export class PersonalModelClient implements ModelClient {
     }
   }
   async #openai(request: ModelRequest): Promise<ModelReply> {
-    const data = await this.#post(
-      endpoint(this.config.baseUrl, "/chat/completions"),
-      { Authorization: `Bearer ${this.config.apiKey}` },
-      {
-        model: this.config.model,
-        messages: request.messages.map((message) => {
-          if (message.role === "system" || message.role === "user")
-            return { role: message.role, content: message.content };
-          if (message.role === "assistant")
-            return {
-              role: "assistant",
-              content: message.content,
-              ...(message.tool_calls?.length
-                ? {
-                    tool_calls: message.tool_calls.map((call) => ({
-                      id: call.id,
-                      type: "function",
-                      function: call.function,
-                    })),
-                  }
-                : {}),
-            };
-          if (message.role !== "tool") throw new Error("invalid role");
+    const url = endpoint(this.config.baseUrl, "/chat/completions");
+    const headers = { Authorization: `Bearer ${this.config.apiKey}` };
+    const body = {
+      model: this.config.model,
+      messages: request.messages.map((message) => {
+        if (message.role === "system" || message.role === "user")
+          return { role: message.role, content: message.content };
+        if (message.role === "assistant")
           return {
-            role: "tool",
+            role: "assistant",
             content: message.content,
-            tool_call_id: message.tool_call_id,
+            ...(message.tool_calls?.length
+              ? {
+                  tool_calls: message.tool_calls.map((call) => ({
+                    id: call.id,
+                    type: "function",
+                    function: call.function,
+                  })),
+                }
+              : {}),
           };
-        }),
-        tools: request.tools,
-        tool_choice: request.toolChoice || "auto",
-        max_tokens: request.maxTokens,
-        stream: false,
-      },
-    );
-    const value = data as {
-      choices?: Array<{
-        message?: {
-          content?: string | null;
-          tool_calls?: Array<{
-            id: string;
-            type?: string;
-            function: { name: string; arguments: string };
-          }>;
+        if (message.role !== "tool") throw new Error("invalid role");
+        return {
+          role: "tool",
+          content: message.content,
+          tool_call_id: message.tool_call_id,
         };
-        finish_reason?: string;
-      }>;
-      usage?: unknown;
-      error?: { message?: string };
+      }),
+      tools: request.tools,
+      tool_choice: request.toolChoice || "auto",
+      max_tokens: request.maxTokens,
+      stream: !!request.onText,
+      ...(request.onText
+        ? { stream_options: { include_usage: true } }
+        : {}),
     };
-    const choice = value.choices?.[0];
-    if (!choice?.message)
-      throw new ApiError(
-        "MODEL_SERVICE_UNAVAILABLE",
-        value.error?.message || "模型没有返回内容。",
-        true,
+    if (request.onText) {
+      const { response, cleanup } = await this.#send(
+        url,
+        headers,
+        body,
+        request.signal,
       );
-    const calls: ModelToolCall[] = (choice.message.tool_calls || []).map((c) => ({
-      id: c.id,
-      type: "function",
-      function: {
-        name: c.function.name,
-        arguments: parseArgs(c.function.arguments),
-      },
-    }));
-    return {
-      content: choice.message.content || "",
-      toolCalls: calls,
-      finishReason: calls.length ? "tool_calls" : "stop",
-      usage: usage(value.usage),
-    };
+      try {
+        if (
+          !(response.headers.get("content-type") || "").includes(
+            "text/event-stream",
+          )
+        ) {
+          const reply = openaiJson(await readJson(response));
+          if (reply.content) request.onText(reply.content);
+          return reply;
+        }
+        return await openaiStream(response, request.onText);
+      } finally {
+        cleanup();
+      }
+    }
+    return openaiJson(await this.#post(url, headers, body, request.signal));
   }
   async #anthropic(request: ModelRequest): Promise<ModelReply> {
     const system = request.messages
@@ -280,27 +638,38 @@ export class PersonalModelClient implements ModelClient {
         ],
       });
     }
-    const data = await this.#post(
-      endpoint(this.config.baseUrl, "/messages"),
-      {
-        "x-api-key": this.config.apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      {
-        model: this.config.model,
-        max_tokens: request.maxTokens,
-        ...(system ? { system } : {}),
-        messages,
-        tools: request.tools.map((tool) => ({
-          name: tool.function.name,
-          description: tool.function.description,
-          input_schema: tool.function.parameters,
-        })),
-        ...(request.toolChoice
-          ? { tool_choice: { type: "auto" } }
-          : {}),
-      },
-    );
+    const url = endpoint(this.config.baseUrl, "/messages");
+    const headers = {
+      "x-api-key": this.config.apiKey,
+      "anthropic-version": "2023-06-01",
+    };
+    const body = {
+      model: this.config.model,
+      max_tokens: request.maxTokens,
+      stream: !!request.onText,
+      ...(system ? { system } : {}),
+      messages,
+      tools: request.tools.map((tool) => ({
+        name: tool.function.name,
+        description: tool.function.description,
+        input_schema: tool.function.parameters,
+      })),
+      ...(request.toolChoice ? { tool_choice: { type: "auto" } } : {}),
+    };
+    if (request.onText) {
+      const { response, cleanup } = await this.#send(
+        url,
+        headers,
+        body,
+        request.signal,
+      );
+      try {
+        return await anthropicStream(response, request.onText);
+      } finally {
+        cleanup();
+      }
+    }
+    const data = await this.#post(url, headers, body, request.signal);
     const value = data as {
       content?: Array<
         | { type: "text"; text: string }
@@ -380,8 +749,11 @@ export class PersonalModelClient implements ModelClient {
       });
     }
     const model = encodeURIComponent(this.config.model);
-    const url = `${this.config.baseUrl.replace(/\/+$/, "")}/models/${model}:generateContent?key=${encodeURIComponent(this.config.apiKey)}`;
-    const data = await this.#post(url, {}, {
+    const streaming = !!request.onText;
+    const url = `${this.config.baseUrl.replace(/\/+$/, "")}/models/${model}:${
+      streaming ? "streamGenerateContent?alt=sse&" : "generateContent?"
+    }key=${encodeURIComponent(this.config.apiKey)}`;
+    const body = {
       ...(system ? { systemInstruction: { parts: [{ text: system }] } } : {}),
       contents,
       tools: request.tools.length
@@ -396,7 +768,21 @@ export class PersonalModelClient implements ModelClient {
           ]
         : undefined,
       generationConfig: { maxOutputTokens: request.maxTokens },
-    });
+    };
+    if (request.onText) {
+      const { response, cleanup } = await this.#send(
+        url,
+        {},
+        body,
+        request.signal,
+      );
+      try {
+        return await geminiStream(response, request.onText);
+      } finally {
+        cleanup();
+      }
+    }
+    const data = await this.#post(url, {}, body, request.signal);
     const value = data as {
       candidates?: Array<{
         content?: {

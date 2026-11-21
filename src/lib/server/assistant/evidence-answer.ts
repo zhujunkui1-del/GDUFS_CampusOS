@@ -317,9 +317,16 @@ export function eventEvidenceAnswer(
   return sources
     .slice(0, 5)
     .map(({ card, citation }, index) => {
-      const activity = results
+      // A document can publish several sessions for the same competition.
+      // Prefer the one that is still running and carries an end date, so
+      // "什么时候举办" reports the main window instead of an opening notice.
+      const candidates = results
         .flatMap((r) => r.activities)
-        .find((a) => a.documentId === card.documentId);
+        .filter((a) => a.documentId === card.documentId);
+      const activity =
+        candidates.find((a) => a.eventStatus === "ongoing" && a.endsAt?.date) ??
+        candidates.find((a) => a.endsAt?.date) ??
+        candidates[0];
       const details: string[] = [];
       if (activity?.startsAt?.date) {
         const start = activity.startsAt;

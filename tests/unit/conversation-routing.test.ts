@@ -31,6 +31,49 @@ it.each([
   },
 );
 
+it("does not require a campus search for arithmetic or general knowledge", () => {
+  // The campus gate defaults to campus, so a pure calculation was routed to
+  // search_campus_knowledge and then failed when the corpus had no article.
+  for (const question of [
+    "1+8*9-7等于多少",
+    "计算 1+8*9-7",
+    "23*17等于多少",
+    "Cloudflare、D1、SQLite 分别是什么？",
+    "推荐几本书籍",
+    "https://example.com 这个网页说了什么",
+  ]) {
+    const intent = contentIntent(question);
+    expect(intent.active, question).toBe(false);
+    expect(intent.tools, question).toEqual([]);
+    expect(intent.map, question).toBe(false);
+  }
+  expect(contentIntent("1+8*9-7等于多少").answerRequirement).not.toBe(
+    "strict",
+  );
+});
+
+it("answers a pasted passage from the passage itself", () => {
+  // A long notice pasted into the composer is the evidence the user supplied.
+  // Routing it to campus search turned "extract the time and place" into a
+  // latest-news lookup and buried the requested fields.
+  const passage =
+    "各位同学：校学生会将于近期举办学术讲座，邀请图书馆老师介绍馆藏资源检索方法。".repeat(
+      10,
+    ) +
+    "讲座地点为学术交流中心第一会议室，报名截止时间为本周五17:00，报名方式为扫描通知附件二维码。" +
+    "请提取讲座时间、地点和报名方式";
+  const intent = contentIntent(passage);
+  expect(intent.active).toBe(false);
+  expect(intent.tools).toEqual([]);
+  expect(intent.map).toBe(false);
+});
+
+it("asks for events at a named place instead of navigating there", () => {
+  const intent = contentIntent("学术交流中心最近两周有什么活动？");
+  expect(intent.map).toBe(false);
+  expect(intent.tools).toEqual(["search_campus_events"]);
+});
+
 it("keeps a verifiable campus fact strict and a housing question advisory", () => {
   const rules = contentIntent("广外图书馆借阅规则是什么");
   expect(rules.active).toBe(true);
@@ -65,6 +108,16 @@ it("tells a feedback turn to explain the previous answer instead of searching", 
   expect(directInstructions("correction")).toContain("承认并纠正");
   expect(directInstructions("chitchat")).toContain(
     "普通聊天、情绪交流不需要校园证据",
+  );
+});
+
+it("allows external search for a general question but not for chat", () => {
+  expect(directInstructions("general")).toContain("本轮没有检索任务");
+  expect(directInstructions("general", true)).toContain(
+    "search_external_campus_info",
+  );
+  expect(directInstructions("general", true)).not.toContain(
+    "本轮没有检索任务，不调用或模拟工具",
   );
 });
 

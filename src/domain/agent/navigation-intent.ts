@@ -78,7 +78,11 @@ export function matchAt(text: string, pool: readonly CampusPlace[]) {
         const at = text.indexOf(name);
         if (
           at < 0 ||
-          (/\d$/.test(name) && /^\d/.test(text.slice(at + name.length)))
+          (/\d$/.test(name) && /^\d/.test(text.slice(at + name.length))) ||
+          // A bare dormitory number is a place only when it stands alone:
+          // “24” inside “2024” and “1840” is a year, and reading it as 24栋
+          // turned a book list into a 312-metre walk.
+          (/^\d+$/.test(name) && /\d/.test(text.slice(Math.max(0, at - 1), at)))
         )
           return [];
         if (/^\d+栋$/.test(name) && /[\d苑]$/.test(text.slice(0, at)))
