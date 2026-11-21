@@ -158,6 +158,12 @@ function titleKey(title: string) {
     .slice(0, 60);
 }
 
+import {
+  hasMatchingExternalArticle,
+  matchesTargetTitle,
+  missesHardSubject,
+} from "./article-match";
+
 function modelResult(name: string, result: SkillResult<unknown>) {
   if (!result.ok) return result;
   if (name === "plan_route") {
@@ -1053,13 +1059,20 @@ export async function chatResponse(request: Request) {
       !explicitWebRequest(businessMessage)
         ? eventFollowUpReply(history.messages, businessMessage)
         : undefined;
+    // An empty calendar result is not a finished answer: a recruitment notice
+    // may exist without a calendar row. Let the content workflow try other
+    // campus retrieval before concluding that nothing exists.
+    const eventListing =
+      verifiedLectures && verifiedLectures.cards.length
+        ? verifiedLectures
+        : undefined;
     const directReply =
       unsupportedExecution ??
       eventFollowUp ??
       (verifiedMap?.route || verifiedMap?.routes?.length
         ? ""
         : verifiedMap?.text) ??
-      verifiedLectures?.text ??
+      eventListing?.text ??
       campusReply ??
       personal?.text ??
       comparison ??
@@ -1181,7 +1194,7 @@ export async function chatResponse(request: Request) {
       const directCards = routeCards.length
         ? routeCards
         : (verifiedMap?.cards ??
-          verifiedLectures?.cards ??
+          eventListing?.cards ??
           personal?.cards ??
           libraryComparison ??
           spatialRead?.cards ??
@@ -1855,6 +1868,28 @@ export async function chatResponse(request: Request) {
             return "本轮已检索到符合主题的公开文章，不能否定相关文章存在。列出实际项目和证据来源；活动日期、报名开放、参加资格分别说明，无法确认当前资格不等于没有相关资料。";
           if (content.active && asksForSearchPermission(text))
             return "用户已要求这次查询，应直接使用返回的证据回答，不再次问是否搜索。";
+          // A denial that the schedule is missing is contradicted by the target
+          // page itself. This local check still works when the evidence judge
+          // times out, and it does not lower the judge's standards.
+          const deniesSchedule =
+            /(?:没有|未(?:能)?(?:找到|查到)|没找到|无法确认)[^。\n]{0,40}(?:具体)?(?:时间|地点|日期|安排)/.test(
+              text,
+            );
+          const scheduleHit = contentResults
+            .flatMap((result) => result.hits)
+            .find(
+              (hit) =>
+                matchesTargetTitle(content.query, hit.title) &&
+                /(?:展览时间|活动时间|举办时间|展期|时间\s*[:：]|地点\s*[:：])/.test(
+                  hit.contentSnippet,
+                ),
+            );
+          if (content.active && deniesSchedule && scheduleHit)
+            return {
+              message:
+                "本轮目标文章正文已经给出时间或地点，不能回答“没有”。请直接摘录该文章的时间、地点和展期；其余未写明的细节才说明缺失。",
+              hard: true,
+            };
           const issues = expressionConflicts(
             text,
             personaContext(personaMessage, persona.preference, history.messages)
@@ -1915,6 +1950,10 @@ export async function chatResponse(request: Request) {
           ReturnType<WorkflowTrace["start"]>
         >();
         const cards = new Map<string, AssistantCard>();
+        const scheduleFacts = new Map<
+          string,
+          { startsAt: string; endsAt?: string; place?: string }
+        >();
         // The answer's [n] numbers were written against the isolated final
         // evidence, where web sources come first for general questions. Apply
         // that same order before grounding so the judge reads [1] as the page
@@ -2338,19 +2377,43 @@ export async function chatResponse(request: Request) {
                   ? data.query
                   : content.retrievalQuery || content.query,
               );
+              const articleTarget =
+                content.articleLookup && (content.articleQuery || content.retrievalQuery);
+              // An exact-title lookup must not be diluted by same-topic pages
+              // (a forum preview that mentions the exhibition, a book-launch
+              // story). Keep the target title(s) and drop the rest; if the
+              // retriever returned no title match at all, keep its candidates
+              // so the normal not-found path can still report honestly.
+              const hasTargetTitle =
+                !!articleTarget &&
+                data.hits.some((h) =>
+                  matchesTargetTitle(articleTarget, h.title),
+                );
               for (const h of data.hits) {
-                // Retrieved candidates are ranked, not guaranteed on-topic. Passing
-                // an unrelated article as evidence makes the model list it when the
-                // real answer is "not found".
-                // A category-scoped "最近" query already applied the retriever's
-                // subject filter (with synonyms such as 计算机→AI). Re-applying the
-                // literal query terms here dropped exactly the newest AI articles
-                // and left only old ones that happened to contain 计算机.
+                if (
+                  hasTargetTitle &&
+                  !matchesTargetTitle(articleTarget!, h.title)
+                )
+                  continue;
+                // The retriever can return same-account articles for a
+                // distinctive subject (three bookkeeping posts from the cat
+                // rescue account for an adoption notice). If a hard subject
+                // is absent from both title and body, it is not this article.
+                if (
+                  data.method !== "calendar_index" &&
+                  !content.articleLookup &&
+                  missesHardSubject(buildQueryPlan(data.query), h)
+                )
+                  continue;
                 if (
                   data.method !== "calendar_index" &&
                   !content.articleLookup &&
                   !content.recentDiscovery &&
                   !queryRelevance(relevancePlan, h).relevant &&
+                  !matchesTargetTitle(
+                    content.query || content.retrievalQuery,
+                    h.title,
+                  ) &&
                   !isDirectPaymentEvidence(
                     compareCampusUtilities ? data.query : content.query,
                     h,
@@ -2367,20 +2430,50 @@ export async function chatResponse(request: Request) {
                   const key = "source:" + h.documentId;
                   const previous = cards.get(key);
                   if (
-                    compareCampusUtilities &&
+                    (compareCampusUtilities || content.articleLookup) &&
                     previous?.kind === "source" &&
                     previous.snippet !== h.contentSnippet
                   )
                     cards.set(key, {
                       ...previous,
                       snippet: [
-                        previous.snippet.slice(0, 399),
-                        h.contentSnippet.slice(0, 399),
+                        previous.snippet.slice(0, 599),
+                        h.contentSnippet.slice(0, 599),
                       ].join("\n\n"),
                     });
                   continue;
                 }
                 evidence.set(h.documentId, h);
+                // Structured activity fields are extracted from the article
+                // body but the retrieval snippet often starts mid-paragraph
+                // and omits the schedule. Put the verified fields in front of
+                // the snippet so both the model and the evidence fallback can
+                // see the dates/venue the corpus already knows.
+                const structuredActivity = data.activities.find(
+                  (a) => a.documentId === h.documentId && a.startsAt?.date,
+                );
+                const structuredLead = structuredActivity
+                  ? [
+                      `活动时间：${structuredActivity.startsAt!.date}${
+                        structuredActivity.endsAt?.date &&
+                        structuredActivity.endsAt.date !==
+                          structuredActivity.startsAt!.date
+                          ? ` 至 ${structuredActivity.endsAt.date}`
+                          : ""
+                      }`,
+                      structuredActivity.placeRaw
+                        ? `地点：${structuredActivity.placeRaw}`
+                        : "",
+                    ]
+                      .filter(Boolean)
+                      .join("；")
+                  : "";
+                if (structuredActivity?.startsAt?.date)
+                  scheduleFacts.set(h.documentId, {
+                    startsAt: structuredActivity.startsAt.date,
+                    endsAt: structuredActivity.endsAt?.date ?? undefined,
+                    place: structuredActivity.placeRaw ?? undefined,
+                  });
                 cards.set("source:" + h.documentId, {
                   kind: "source",
                   documentId: h.documentId,
@@ -2388,7 +2481,14 @@ export async function chatResponse(request: Request) {
                   sourceName: h.sourceName,
                   originalUrl: h.originalUrl,
                   publishedAt: h.publishedAt,
-                  snippet: h.contentSnippet,
+                  snippet: (
+                    structuredLead &&
+                    !/活动时间|展览时间|举办时间|时间\s*[:：]/.test(
+                      h.contentSnippet,
+                    )
+                      ? `${structuredLead}\n${h.contentSnippet}`
+                      : h.contentSnippet
+                  ).slice(0, 800),
                   evidenceType: h.evidenceType,
                   classificationState: h.classificationState,
                   validity: h.validity,
@@ -2429,7 +2529,31 @@ export async function chatResponse(request: Request) {
                   0,
                 ),
               });
+              const externalTarget = content.articleLookup
+                ? content.articleQuery || content.retrievalQuery
+                : undefined;
+              const externalHasTarget =
+                !!externalTarget &&
+                data.items.some((item) =>
+                  matchesTargetTitle(externalTarget, item.title),
+                );
+              // If the internal corpus already found the named article, web
+              // results that do not match that title (a 2017 exhibition from a
+              // different city) are not evidence for it. Keep them only when
+              // the target itself is absent internally and externally.
+              const internalHasTarget =
+                !!content.articleQuery &&
+                [...cards.values()].some(
+                  (card) =>
+                    card.kind === "source" &&
+                    matchesTargetTitle(content.articleQuery!, card.title),
+                );
               for (const item of data.items) {
+                if (
+                  (externalHasTarget || internalHasTarget) &&
+                  !matchesTargetTitle(externalTarget!, item.title)
+                )
+                  continue;
                 const duplicate = [...cards.values()].some(
                   (card) =>
                     (card.kind === "source" ||
@@ -2659,6 +2783,8 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
               {
                 unrestricted: true,
                 stopOnToolError: true,
+                tolerateToolError: (name) =>
+                  name === "search_external_campus_info",
                 tolerateNotFound: true,
                 instructions,
                 ...(content.active && !content.map
@@ -2785,10 +2911,320 @@ ${routeQuestion && !needsOriginQuestion ? `本轮路线已解析起点：${JSON.
                           taskStatus = "partial";
                           return "你目前是本科生还是研究生？你想在读期间参加交换或联合培养，还是毕业后申请海外学位？这几类的条件和材料不同，确认后可以按对应项目查。";
                         }
+                        // The calendar fields are already verified in D1 and
+                        // were prepended to the source snippet. For a direct
+                        // "when/where" question about a named article, answer
+                        // from those fields instead of asking the model to
+                        // rediscover them inside a mid-paragraph excerpt.
+                        const articleQuestion = businessMessage
+                          .replace(content.articleQuery ?? "", " ")
+                          .trim();
+                        const scheduleQuestion = articleQuestion.replace(
+                          /(?:发布时间|发布日期|发表时间|更新时间)\s*[:：]?\s*\d{4}[/-]\d{1,2}[/-]\d{1,2}(?:\s+\d{1,2}:\d{2})?/g,
+                          " ",
+                        );
+                        const metadataStripped = scheduleQuestion
+                          .replace(/\s+/g, " ")
+                          .trim();
+                        const asksContent =
+                          /整理|总结|概括|摘要|全文|这篇文章的内容/.test(
+                            articleQuestion,
+                          );
+                        const asksSchedule =
+                          /时间|地点|展期|什么时候|哪天|在哪/.test(
+                            scheduleQuestion,
+                          );
+                        const titleOnly =
+                          metadataStripped
+                            .replace(
+                              /广外[^\s]{0,12}|研究生招生信息网|来源[：:].*$/g,
+                              " ",
+                            )
+                            .replace(/\s+/g, "").length === 0;
+                        const asksDeadline =
+                          /截止|截稿|什么时候截止/.test(articleQuestion);
+                        const asksSuspension = /停课/.test(articleQuestion);
+                        const asksTimePoints =
+                          /时间点|重要.*时间|关键.*时间/.test(articleQuestion);
+                        const asksConditions =
+                          /申请条件|报名条件|选拔条件|申请资格|报考条件/.test(
+                            articleQuestion,
+                          );
+                        const asksProcess =
+                          /流程|应聘|怎么参加|如何参加|报名方式|投递/.test(
+                            articleQuestion,
+                          );
+                        // A call-for-papers page gives both a conference date
+                        // and a submission deadline. The calendar fields point
+                        // at the former, so answer a deadline question from the
+                        // deadline sentence in the body instead.
+                        if (content.articleLookup && asksDeadline) {
+                          let title = "";
+                          for (const card of cards.values()) {
+                            if (card.kind !== "source") continue;
+                            title ||= card.title;
+                            const snippet = card.snippet ?? "";
+                            const deadline = snippet.match(
+                              /截止(?:时间|日期)?[^。\n]{0,12}?(?:为|是|：|:)\s*(\d{4}年\d{1,2}月\d{1,2}日|\d{1,2}月\d{1,2}日)/,
+                            )?.[1];
+                            if (!deadline) continue;
+                            answerMode = "article_deadline";
+                            taskStatus = "completed";
+                            return `**${card.title}**\n\n- **截止时间**：${deadline}\n\n信息来自[1]。`;
+                          }
+                          if (title) {
+                            answerMode = "article_deadline";
+                            taskStatus = "partial";
+                            return `**${title}**\n\n站内收录的正文没有写明明确的截止时间，暂不能确认。\n\n信息来自[1]。`;
+                          }
+                        }
+                        // A suspension notice states the dates in prose
+                        // ("11月20日（周五）所有课程停课") and rarely has a
+                        // structured calendar row. Quote the notice itself.
+                        if (content.articleLookup && asksSuspension) {
+                          for (const card of cards.values()) {
+                            if (card.kind !== "source") continue;
+                            const snippet = card.snippet ?? "";
+                            const time = snippet.match(
+                              /(\d{1,2}月\d{1,2}日(?:（[^）]{1,8}）)?)[^。\n]{0,24}?停课/,
+                            )?.[1];
+                            if (!time) continue;
+                            const audience =
+                              /各本科教学单位|所有课程停课/.test(snippet)
+                                ? "本科教学单位学生（原文表述为“各本科教学单位”“所有课程停课”，未单独列出年级）"
+                                : "原文未明确列出停课人群";
+                            answerMode = "article_suspension";
+                            taskStatus = "completed";
+                            return `**${card.title}**\n\n- **停课时间**：${time}\n- **停课人群**：${audience}\n\n信息来自[1]。`;
+                          }
+                        }
+                        // "Important dates" questions need the labelled dates
+                        // in the body (registration, preliminaries, finals),
+                        // not just the start of the event window.
+                        if (content.articleLookup && asksTimePoints) {
+                          for (const card of cards.values()) {
+                            if (card.kind !== "source") continue;
+                            const lines = (card.snippet ?? "")
+                              .split("\n")
+                              .map((line) => line.trim())
+                              .filter(Boolean);
+                            const points: string[] = [];
+                            for (let index = 0; index < lines.length; index++) {
+                              const line = lines[index];
+                              const dated =
+                                /(\d{1,2}月\d{1,2}日(?:[^，。；\n]{0,12})?|\d{1,2}\.\d{1,2}(?:\s*周[一二三四五六日])?)/.test(
+                                  line,
+                                );
+                              if (!dated) continue;
+                              const previous = lines[index - 1] ?? "";
+                              const labelled =
+                                /初赛|决赛|报名|活动时间|材料|截止|时间/.test(
+                                  line,
+                                )
+                                  ? line
+                                  : previous &&
+                                      previous.length <= 12 &&
+                                      !/[|｜]/.test(previous)
+                                    ? `${previous}：${line}`
+                                    : line;
+                              if (!points.includes(labelled))
+                                points.push(labelled);
+                            }
+                            if (!points.length) continue;
+                            answerMode = "article_timepoints";
+                            taskStatus = "completed";
+                            return `**${card.title}**\n\n${points
+                              .slice(0, 6)
+                              .map((point) => `- ${point}`)
+                              .join("\n")}\n\n信息来自[1]。`;
+                          }
+                        }
+                        if (
+                          content.articleLookup &&
+                          !asksDeadline &&
+                          !asksSuspension &&
+                          !asksTimePoints &&
+                          (titleOnly || asksSchedule)
+                        ) {
+                          let scheduleCard:
+                            | {
+                                title: string;
+                                snippet: string;
+                                documentId: string;
+                              }
+                            | undefined;
+                          for (const card of cards.values()) {
+                            if (
+                              card.kind === "source" &&
+                              /活动时间：|展览时间：|举办时间：/.test(
+                                card.snippet ?? "",
+                              )
+                            ) {
+                              scheduleCard = {
+                                title: card.title,
+                                snippet: card.snippet ?? "",
+                                documentId: card.documentId,
+                              };
+                              break;
+                            }
+                          }
+                          const snippet = scheduleCard?.snippet ?? "";
+                          const scheduleLine = snippet
+                            .split("\n")[0]
+                            ?.trim();
+                          if (scheduleCard && scheduleLine) {
+                            const facts = scheduleFacts.get(
+                              scheduleCard.documentId,
+                            );
+                            const iso = (facts?.startsAt ?? scheduleLine).match(
+                              /(\d{4})-(\d{2})-(\d{2})/,
+                            );
+                            const time = iso
+                              ? `${iso[1]}年${Number(iso[2])}月${Number(iso[3])}日`
+                              : snippet.match(
+                                  /(\d{1,2}月\d{1,2}日)/,
+                                )?.[1];
+                            const place =
+                              facts?.place ??
+                              snippet.match(
+                                /地点[：:]\s*([^，。；\n]{2,60})/,
+                              )?.[1] ??
+                              snippet.match(
+                                /(?:在|地点[：:])\s*([^，。；\n]{2,40}?(?:会堂|报告厅|会议室|图书馆|教室|礼堂|中心|楼|馆))/,
+                              )?.[1];
+                            answerMode = "article_schedule";
+                            taskStatus = "completed";
+                            return `${scheduleCard.title}${
+                              time ? `\n活动时间：${time}` : ""
+                            }${place ? `\n地点：${place}` : ""}\n信息来自[1]。`;
+                          }
+                          // Some previews have no structured calendar row.
+                          // The body still states the date and venue; quote
+                          // exactly those two facts instead of dropping the
+                          // time or letting the model guess a year.
+                          if (asksSchedule)
+                            for (const card of cards.values()) {
+                              if (card.kind !== "source") continue;
+                              const snippet = card.snippet ?? "";
+                              const time =
+                                snippet.match(
+                                  /(?:活动时间[：:]\s*)?(\d{1,2}月\d{1,2}日)/,
+                                )?.[1] ??
+                                snippet.match(
+                                  /(\d{1,2}月\d{1,2}日)/,
+                                )?.[1];
+                              const place = snippet.match(
+                                /(?:在|地点[：:])\s*([^，。；\n]{2,40}?(?:会堂|报告厅|会议室|图书馆|教室|礼堂|中心|楼|馆))/,
+                              )?.[1];
+                              if (!time && !place) continue;
+                              answerMode = "article_schedule";
+                              taskStatus = "completed";
+                              return `${card.title}${
+                                time
+                                  ? `\n时间：${time}（原文未标年份）`
+                                  : ""
+                              }${place ? `\n地点：${place}` : ""}\n信息来自[1]。`;
+                            }
+                        }
+                        // A short adoption/notice page often has only its
+                        // opening paragraph indexed. Summarise exactly that
+                        // paragraph rather than letting the model invent
+                        // conditions the corpus does not contain.
+                        if (
+                          content.articleLookup &&
+                          (asksContent ||
+                            /要求|条件|怎么|如何|流程|报名|申请|学费|费用|收费|标准/.test(
+                              articleQuestion,
+                            ))
+                        ) {
+                          for (const card of cards.values()) {
+                            if (card.kind !== "source") continue;
+                            const snippet = card.snippet ?? "";
+                            const shortBody = snippet.length < 600;
+                            const asksTuition = /学费|费用|收费|标准/.test(
+                              articleQuestion,
+                            );
+                            const anchor = asksTuition
+                              ? snippet.search(
+                                  /(?:^|\n)\s*(?:[一二三四五六七八九十]+、)?\s*(?:学费标准|收费标准|学费)/,
+                                )
+                              : asksConditions
+                                ? snippet.search(
+                                    /(?:^|\n)\s*(?:[一二三四五六七八九十]+、)?\s*(?:申请条件|报名条件|选拔条件|申请资格|报考条件)/,
+                                  )
+                                : asksProcess
+                                  ? snippet.search(
+                                      /(?:^|\n)\s*(?:[一二三四五六七八九十]+、)?\s*(?:应聘流程|招聘流程|应聘方式|报名方式|投递方式|招聘程序|招聘流程)/,
+                                    )
+                                  : -1;
+                            const facet = asksTuition
+                              ? snippet.search(
+                                  /学费标准|收费标准|学费|费用/,
+                                )
+                              : -1;
+                            const start =
+                              anchor >= 0
+                                ? anchor
+                                : facet >= 0
+                                  ? Math.max(0, facet - 20)
+                                  : 0;
+                            const limit = asksTuition ? 600 : 700;
+                            let body = snippet.slice(start, start + limit);
+                            if (asksConditions) {
+                              const section = body
+                                .slice(12)
+                                .search(/\n\s*[一二三四五六七八九十]+、/);
+                              if (section >= 0)
+                                body = body.slice(0, 12 + section);
+                            }
+                            if (!/[。！？]\s*$/.test(body.trimEnd())) {
+                              const cut = Math.max(
+                                body.lastIndexOf("。"),
+                                body.lastIndexOf("！"),
+                                body.lastIndexOf("？"),
+                              );
+                              if (cut > 120) body = body.slice(0, cut + 1);
+                            }
+                            const footerOnly =
+                              /^(?:来源|编辑|初审|复审|终审|排版|审核|摄影|文字)[|｜]/.test(
+                                body.trim(),
+                              ) && body.trim().length < 200;
+                            answerMode = "article_summary";
+                            taskStatus = footerOnly ? "partial" : "completed";
+                            if (footerOnly) {
+                              return `**${card.title}**\n\n站内只提取到来源/编辑署名，正文可能是图片或未提取到文字，无法确认${
+                                asksProcess ? "应聘流程" : "正文内容"
+                              }。\n\n信息来自[1]。`;
+                            }
+                            const heading = asksTuition
+                              ? "学费标准"
+                              : asksConditions
+                                ? "申请条件"
+                                : asksProcess
+                                  ? "应聘流程"
+                                  : "正文要点";
+                            return `**${card.title}**\n\n**发布方**：${card.sourceName}${
+                              card.publishedAt
+                                ? `（${card.publishedAt.slice(0, 10)}）`
+                                : ""
+                            }\n\n**${heading}**：\n${body}\n\n${
+                              shortBody
+                                ? "站内只收录了这些正文，未写到的内容不能确认；"
+                                : "以上为站内检索到的相关原文；"
+                            }信息来自[1]。`;
+                          }
+                        }
                         if (
                           content.articleLookup &&
                           contentResults.length &&
-                          contentResults.every((r) => !r.hits.length)
+                          contentResults.every((r) => !r.hits.length) &&
+                          // The internal corpus can miss an official article
+                          // that the web search just found. Its evidence is
+                          // still usable: do not answer "not found" over it.
+                          !hasMatchingExternalArticle(
+                            [...cards.values()],
+                            content.articleQuery,
+                          )
                         ) {
                           answerMode = "article_not_found";
                           return "当前公开资料中未找到这篇文章。可以检查标题，或提供原文链接。";

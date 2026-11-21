@@ -199,7 +199,7 @@ it("lists scheduled activities without treating notices as events to attend", ()
     "这周末南校区有什么活动可以参加？",
   );
   expect(result.text).toContain("传播学讲座");
-  expect(result.text).toContain("报名状态尚未核实");
+  expect(result.text).toContain("报名要求未注明");
   expect(result.text).not.toContain("停课通知");
   expect(result.taskStatus).toBe("partial");
 });

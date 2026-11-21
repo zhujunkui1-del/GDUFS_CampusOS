@@ -115,6 +115,14 @@ export async function resolveCalendarIntent(
   previous?: CalendarComparisonState,
   now = Date.now(),
 ): Promise<CalendarIntent | undefined> {
+  // "发布时间：2026-11-09" is when the page was published, not the date the
+  // user asks about. Treating it as the requested event date sent an article
+  // lookup into runCalendarDate("…", "2026-11-09") and answered "未能核实场次"
+  // without ever reading the article's stated schedule.
+  question = question.replace(
+    /(?:发布时间|发布日期|发表时间|更新时间|来源|作者|编辑)\s*[:：][^\n]*/g,
+    " ",
+  );
   const dates = requestedDates(question, now);
   const key = calendarTitleKey(question);
   const comparing = asksScheduleConflict(question);

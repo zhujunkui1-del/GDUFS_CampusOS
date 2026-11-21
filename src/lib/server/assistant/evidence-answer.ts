@@ -95,7 +95,7 @@ export function participationEvidenceAnswer(
   text: string;
 } {
   const activities = results.flatMap((r) => r.activities);
-  const requiresOpenRegistration = /报名|招募/.test(query);
+  const mode = participationMode(query);
   const rows = cards.flatMap((card, index) => {
     if (card.kind !== "source") return [];
     const activity = activities.find(
@@ -104,14 +104,27 @@ export function participationEvidenceAnswer(
     if (
       !activity ||
       activity.category === "campus_notice" ||
+      /停课|征文|征稿|启事|评审阶段|公示|名单/.test(activity.name) ||
       ["cancelled", "postponed", "ended"].includes(activity.eventStatus)
     )
       return [];
+    const registration = activity.registrationState;
+    if (mode === "open" && registration !== "open") return [];
+    if (mode === "not_required" && registration !== "not_required")
+      return [];
     if (
-      !requiresOpenRegistration &&
-      activity.registrationState === "closed"
+      mode === "either" &&
+      registration !== "open" &&
+      registration !== "not_required"
     )
       return [];
+    if (
+      mode === "unknown" &&
+      registration !== "unknown" &&
+      registration !== "capacity_unknown"
+    )
+      return [];
+    if (mode === "joinable" && registration === "closed") return [];
     const confirmed = openParticipation(activity, card.title, now);
     const deadline = activity.registrationWindows.find(
       (window) => window.state === "open",
@@ -120,18 +133,25 @@ export function participationEvidenceAnswer(
       /(?:参赛|报名|招募|参加)(?:对象|资格|条件)\s*[:：]\s*[^。\n]{2,100}/,
     )?.[0];
     const state =
-      activity.registrationState === "not_required"
+      registration === "not_required"
         ? "无需报名。"
-        : confirmed
-          ? "当前有开放报名窗口，截止：" +
+        : registration === "open"
+          ? "报名中，截止：" +
             (deadline?.at?.slice(0, 16).replace("T", " ") ??
               deadline?.date ??
               "原文未给出确切时刻") +
             "。"
-          : "报名状态尚未核实。";
+          : registration === "closed"
+            ? "报名已截止。"
+            : registration === "not_started"
+              ? "报名尚未开始。"
+              : registration === "capacity_unknown"
+                ? "名额情况未注明。"
+                : "报名要求未注明。";
     return [
       {
         confirmed,
+        registration,
         text:
           "- " +
           activity.name +
@@ -145,50 +165,130 @@ export function participationEvidenceAnswer(
     ];
   });
   const confirmed = rows.filter((row) => row.confirmed);
-  const unverified = rows.filter((row) => !row.confirmed);
-  if (!requiresOpenRegistration && rows.length) {
-    const result = rows
+  const scope =
+    "本轮查询了近期活动日历与站内校园资料；部分招募公告可能尚未进入活动日历，这不代表学校没有此类活动。";
+  const text = (rowsToShow: typeof rows) =>
+    rowsToShow
       .slice(0, 5)
       .map((row) => row.text)
       .join("\n");
+  if (mode === "open") {
     return {
-      confirmed: rows.filter((row) => row.confirmed).length,
-      taskStatus: rows.some((row) => /报名状态尚未核实/.test(row.text))
-        ? "partial"
-        : "completed",
-      text: "这段时间内找到以下已排期活动，报名要求未确认的请查看原文\n\n" + result,
+      confirmed: confirmed.length,
+      taskStatus: confirmed.length ? "completed" : "insufficient_evidence",
+      text: confirmed.length
+        ? "已核实以下活动正在开放报名\n\n" + text(confirmed) + "\n\n" + scope
+        : "近期活动日历与站内公告中，没有找到可确认正在开放报名的活动。" +
+          scope,
     };
   }
-  const taskStatus: "completed" | "partial" | "insufficient_evidence" =
-    confirmed.length
-      ? "completed"
-      : unverified.length
+  if (mode === "not_required") {
+    return {
+      confirmed: confirmed.length,
+      taskStatus: confirmed.length ? "completed" : "insufficient_evidence",
+      text: confirmed.length
+        ? "已核实以下活动无需报名即可参加\n\n" +
+          text(confirmed) +
+          "\n\n" +
+          scope
+        : "近期活动日历与站内公告中，没有找到可确认无需报名即可参加的活动。" +
+          scope,
+    };
+  }
+  if (mode === "either") {
+    const openRows = confirmed.filter((row) => row.registration === "open");
+    const walkInRows = confirmed.filter(
+      (row) => row.registration === "not_required",
+    );
+    const sections = [
+      openRows.length
+        ? "正在开放报名：\n" + text(openRows)
+        : "本轮没有找到确认正在开放报名的活动。",
+      walkInRows.length
+        ? "无需报名即可参加：\n" + text(walkInRows)
+        : "本轮没有找到确认无需报名的活动。",
+    ];
+    return {
+      confirmed: confirmed.length,
+      taskStatus: confirmed.length ? "completed" : "insufficient_evidence",
+      text:
+        (confirmed.length
+          ? "以下包括正在报名和无需报名的活动\n\n"
+          : "没有找到同时满足报名或无需报名条件的活动。\n\n") +
+        sections.join("\n\n") +
+        "\n\n" +
+        scope,
+    };
+  }
+  if (mode === "unknown") {
+    return {
+      confirmed: 0,
+      taskStatus: rows.length ? "partial" : "insufficient_evidence",
+      text: rows.length
+        ? "以下活动的报名要求尚未核实\n\n" + text(rows) + "\n\n" + scope
+        : "近期活动日历与站内公告中，没有找到报名要求待确认的活动。" +
+          scope,
+    };
+  }
+  if (mode === "joinable") {
+    return {
+      confirmed: confirmed.length,
+      taskStatus: rows.length ? "partial" : "insufficient_evidence",
+      text: rows.length
+        ? "以下活动尚未结束，可以关注参加；报名要求未注明的请核对原文\n\n" +
+          text(rows) +
+          "\n\n" +
+          scope
+        : "近期活动日历与站内公告中，没有找到尚未结束且可以参加的活动。" +
+          scope,
+    };
+  }
+  if (rows.length) {
+    return {
+      confirmed: confirmed.length,
+      taskStatus: rows.some((row) => row.registration === "unknown")
         ? "partial"
-        : "insufficient_evidence";
+        : "completed",
+      text:
+        "这段时间内找到以下已排期活动，报名要求未注明的请查看原文\n\n" +
+        text(rows) +
+        "\n\n" +
+        scope,
+    };
+  }
   return {
-    confirmed: confirmed.length,
-    taskStatus,
-    text: confirmed.length
-      ? "已核实以下活动当前有参与依据\n\n" +
-        confirmed
-          .slice(0, 5)
-          .map((row) => row.text)
-          .join("\n") +
-        (unverified.length
-          ? "\n\n另有活动报名状态未核实\n" +
-            unverified
-              .slice(0, 3)
-              .map((row) => row.text)
-              .join("\n")
-          : "")
-      : unverified.length
-        ? "找到以下相关活动，但目前不能确认可报名\n\n" +
-          unverified
-            .slice(0, 5)
-            .map((row) => row.text)
-            .join("\n")
-        : "暂未找到有可靠证据表明当前开放报名的相关活动。",
+    confirmed: 0,
+    taskStatus: "insufficient_evidence",
+    text: "近期活动日历与站内公告中，没有找到符合条件且有可靠证据的活动。" + scope,
   };
+}
+
+type ParticipationMode =
+  | "open"
+  | "not_required"
+  | "either"
+  | "unknown"
+  | "all"
+  | "joinable"
+  | "any";
+
+function participationMode(query: string): ParticipationMode {
+  const text = query.replace(/\s+/g, "");
+  const walkIn = /不用报名|无需报名|不需要报名|免报名/.test(text);
+  const open = /(?:可以|还能|开放|正在|可)报名|报名中/.test(text);
+  if (walkIn && open) return "either";
+  if (
+    /报名(?:要求|方式|条件)?(?:不确定|未知|不一定)|不确定(?:是否|用不用)?报名/.test(
+      text,
+    )
+  )
+    return /也列|也算|都列/.test(text) ? "all" : "unknown";
+  if (/不限报名|报名方式不限|都可以/.test(text)) return "any";
+  if (walkIn) return "not_required";
+  if (open) return "open";
+  if (/可以参加|能参加|想参加/.test(text)) return "joinable";
+  if (/有什么活动|有哪些活动|其他活动|还有什么活动/.test(text)) return "all";
+  return /报名/.test(text) ? "open" : "all";
 }
 
 export function registrationRequirementEvidenceAnswer(
@@ -604,15 +704,29 @@ export function retrievedEvidenceAnswer(
         canAttribute(c)
           ? "（公开指南，官方身份及现行效力待确认）"
           : "";
+      const eventFact =
+        plan.goal === "discovery" ||
+        plan.goal === "participation" ||
+        plan.topics.some((topic) =>
+          ["lecture", "competition", "culture_sports", "activity"].includes(
+            topic.id,
+          ),
+        );
       const anchor = currentOpportunity
         ? normalized.search(/定于|将于|(?:比赛|活动|讲座)(?:举办)?时间[：:]?/)
-        : -1;
-      const start = anchor >= 0 ? Math.max(0, anchor - 5) : 0;
+        : eventFact
+          ? normalized.search(
+              /展览信息|展览时间|展期|活动时间|举办时间|时间[：:]|地点[：:]/,
+            )
+          : -1;
+      const start = anchor >= 0 ? Math.max(0, anchor - 10) : 0;
       // The same cut applies here: a 160-character quote must not stop inside
-      // "2026年11月7日", which would read as a different date.
+      // "2026年11月7日", which would read as a different date. Event pages put
+      // the schedule after an introduction, so start at the schedule anchor
+      // instead of the article's first paragraph.
       const quote = normalized.slice(
         start,
-        alignWindowEnd(normalized, start + 160),
+        alignWindowEnd(normalized, start + (eventFact ? 240 : 160)),
       );
       const dates = [
         ...normalized.matchAll(
@@ -643,7 +757,7 @@ export function retrievedEvidenceAnswer(
         ? [
             {
               future,
-              text: `- ${c.title}${dated}${attribution}： “${quote}${quote.length === 160 ? "…" : ""}”[${index + 1}]${conflict ? `\n  ${conflict}` : ""}`,
+              text: `- ${c.title}${dated}${attribution}： “${quote}${quote.length === (eventFact ? 240 : 160) ? "…" : ""}”[${index + 1}]${conflict ? `\n  ${conflict}` : ""}`,
             },
           ]
         : [];

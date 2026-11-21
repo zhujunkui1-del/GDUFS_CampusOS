@@ -138,6 +138,31 @@ it("lets a lookup that found nothing still answer", async () => {
   expect(events.some((e) => e.type === "run.failed")).toBe(false);
 });
 
+it("continues when an explicitly optional tool fails", async () => {
+  const execute = vi.fn(async () => {
+    throw new ApiError("UPSTREAM_ERROR", "外部搜索暂不可用，请重试。", true);
+  });
+  const provider = new MockModelProvider([
+    toolReply([call("test_echo", '{"value":"x"}', "boom")]),
+    final,
+  ]);
+  const result = await new AgentOrchestrator(
+    { resolve: async () => ({ client: provider, snapshot }) },
+    registry({ execute }),
+    undefined,
+    {
+      stopOnToolError: true,
+      tolerateNotFound: true,
+      tolerateToolError: (name) => name === "test_echo",
+    },
+  ).run({ message: "fixture", context, onEvent: () => {} });
+  expect(result.status).toBe("completed");
+  expect(provider.requests).toHaveLength(2);
+  expect(JSON.stringify(provider.requests[1].messages)).toContain(
+    "外部搜索暂不可用",
+  );
+});
+
 it("still fails the turn on a tool that is not a lookup", async () => {
   const execute = vi.fn(async () => {
     throw new ApiError("UPSTREAM_ERROR", "工具执行失败，请重试。", true);

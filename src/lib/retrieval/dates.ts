@@ -28,6 +28,8 @@ export type StatedDate = {
   /** Month and day as written; a year is only set when the source states one. */
   monthDay: string;
   year: string | null;
+  /** True when a fact label ("时间：", "报名截止：") binds this date. */
+  labeled: boolean;
 };
 
 function keyFor(label: string): DateKey {
@@ -41,6 +43,12 @@ export function statedDates(text: string): StatedDate[] {
   for (const match of text.matchAll(DATE_LITERAL)) {
     const at = match.index ?? 0;
     const label = text.slice(Math.max(0, at - 24), at).match(LABEL)?.[0] ?? "";
+    // A date only participates in a contradiction when the source binds it to
+    // a fact ("展览时间：…", "报名截止：…"). Publication timestamps, table
+    // cells and a range's end date ("11月24日—12月25日") are schedule data,
+    // not competing answers to the same question. Treating every date in a
+    // snippet as a claim produced false "原文给出了不同日期" warnings for a
+    // single exhibition whose start and end were both stated.
     const year = match[1] ? Number(match[1]) : null;
     const month = match[2] ? Number(match[2]) : Number(match[4]);
     const day = match[3] ? Number(match[3]) : Number(match[5]);
@@ -50,6 +58,7 @@ export function statedDates(text: string): StatedDate[] {
       raw: match[0].replace(/\s+/g, ""),
       monthDay: `${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`,
       year: year && year >= 1990 && year <= 2100 ? String(year) : null,
+      labeled: label.length > 0,
     });
   }
   return out;
@@ -63,6 +72,7 @@ export function dateConflicts(text: string) {
     Map<string, { days: Set<string>; years: Set<string>; raws: Set<string> }>
   >();
   for (const date of statedDates(text)) {
+    if (!date.labeled) continue;
     const bucket = byKey.get(date.key) ?? new Map();
     const entry = bucket.get(date.monthDay) ?? {
       days: new Set<string>(),

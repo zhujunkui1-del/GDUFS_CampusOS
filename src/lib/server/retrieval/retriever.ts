@@ -1034,7 +1034,12 @@ ${sourceFilterSql}
         (activity ? freshness : 0);
       const selectedWindow = windows.get(c.id)!,
         start = selectedWindow.start,
-        snippet = covering.length
+        snippet =
+          q.purpose === "knowledge" &&
+          q.title &&
+          /截止|截稿/.test(q.query)
+            ? c.text.slice(0, 800)
+            : covering.length
           ? covering
               .map((chunk) => {
                 const at = chunk.text.indexOf(chunk.half);

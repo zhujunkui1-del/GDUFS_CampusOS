@@ -196,6 +196,23 @@ export async function searchContent(
       usageAvailable: typeof r.meta?.rows_read === "number",
     };
   }
+  // Exact-title lookups must survive the lexical ranker. A short adoption
+  // notice can lose to several bookkeeping posts from the same account, and
+  // the article never reaches the answer path even though its title and chunk
+  // are indexed. When the caller supplies an exact title, resolve that
+  // document id first; the normal scope and body checks still apply.
+  if (purpose === "knowledge" && q.title && !documentIds) {
+    const exact = await db
+      .prepare(
+        `SELECT d.id FROM knowledge_documents d
+         WHERE d.title=? AND d.owner_user_id IS NULL
+           AND d.body_status<>'not_provided' AND d.data_domain<>'user_private'
+         LIMIT 1`,
+      )
+      .bind(q.title)
+      .all<{ id: string }>();
+    if (exact.results.length) documentIds = [exact.results[0].id];
+  }
   // An enumeration question ("还有别的学院的院运会吗") is answered by the
   // derived facets, not by a top-k guess: read one upcoming notice per
   // college. A date or registration filter still wins, because it is a

@@ -107,6 +107,10 @@ export class AgentOrchestrator {
     private readonly limiter = new RunLimiter(),
     private readonly options: {
       stopOnToolError?: boolean;
+      /** Optional tools (for example a best-effort web search) may fail
+       * without voiding the evidence already retrieved from the campus
+       * corpus. */
+      tolerateToolError?: (name: string) => boolean;
       /** A lookup that found nothing is a result, not a failure. */
       tolerateNotFound?: boolean;
       unrestricted?: boolean;
@@ -223,7 +227,11 @@ export class AgentOrchestrator {
           result,
           durationMs: Math.round(performance.now() - started),
         });
-        if (!result.ok && this.options.stopOnToolError)
+        if (
+          !result.ok &&
+          this.options.stopOnToolError &&
+          !this.options.tolerateToolError?.(read.name)
+        )
           throw new ApiError(
             result.error.code,
             result.error.message,
@@ -425,7 +433,11 @@ export class AgentOrchestrator {
               toolCalls: toolsExecuted,
             };
           }
-          if (!result.ok && this.options.stopOnToolError) {
+          if (
+            !result.ok &&
+            this.options.stopOnToolError &&
+            !this.options.tolerateToolError?.(call.function.name)
+          ) {
             if (
               inputCorrections < 2 &&
               skill?.sideEffect === "none" &&

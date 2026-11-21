@@ -68,10 +68,55 @@ const QUESTION_SHAPE =
 function isLongRequest(text: string) {
   return text.length > 80 || (text.match(/[。；！？]/g)?.length ?? 0) >= 2;
 }
+// Article pages often arrive as "标题 | 栏目" or with a metadata line appended
+// ("发布时间：… 来源：…"). The title is the part before those markers; keeping
+// the metadata in the query made an exact-title lookup miss the article.
+const TITLE_METADATA =
+  /\s*(?:发布时间|发布日期|发表时间|更新时间|来源|作者|编辑|阅读|浏览|点击)\s*[:：]/;
+function titleCandidate(message: string) {
+  const first =
+    message
+      // NFC keeps the title's full-width punctuation intact; NFKC would turn
+      // "：" into ":" and change the string users see and the corpus stores.
+      .normalize("NFC")
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .find(Boolean) ?? "";
+  return first
+    .split(TITLE_METADATA)[0]
+    .replace(/^(?:标题|题目)\s*[:：]\s*/, "")
+    .trim();
+}
+function columnTitle(text: string) {
+  return /^[^|｜]{2,16}[|｜][^|｜]{4,120}$/.test(text);
+}
 export function titleLike(message: string) {
   const text = message.normalize("NFKC").trim();
-  if (isLongRequest(text)) return false;
-  if (QUESTION_SHAPE.test(text)) return false;
+  const candidate = titleCandidate(text);
+  if (columnTitle(candidate)) return true;
+  if (isLongRequest(candidate)) return false;
+  if (QUESTION_SHAPE.test(candidate)) return false;
+  if (
+    TITLE_METADATA.test(text) &&
+    candidate.length >= 4 &&
+    candidate.length <= 120 &&
+    !QUESTION_SHAPE.test(candidate)
+  )
+    return true;
+  // Event notices often arrive as two lines: a long headline followed by the
+  // user's instruction ("…大赛\n帮我找出…)"). The headline is still a title,
+  // even though its ending (大赛/喜报/招聘) is not an official-document suffix.
+  const lines = text
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  if (
+    lines.length >= 2 &&
+    candidate.length >= 6 &&
+    /大赛|比赛|喜报|招聘|征稿|讲座|论坛|活动/.test(candidate) &&
+    !QUESTION_SHAPE.test(candidate)
+  )
+    return true;
   return (
     /[《「『“"][^》」』”"]{4,300}[》」』”"]/.test(text) ||
     (text.length >= 12 &&
@@ -103,7 +148,9 @@ export function isContentStatement(message: string) {
 /** A request for a specific article, not a place. */
 export function wantsArticle(message: string) {
   const text = message.normalize("NFKC");
-  if (isLongRequest(text)) return false;
+  const candidate = titleCandidate(text);
+  const long = isLongRequest(text) && !TITLE_METADATA.test(text);
+  if (long && !columnTitle(candidate)) return false;
   if (
     /区分|哪些|有哪些/.test(text) &&
     /新闻报道|新闻|报道/.test(text) &&
@@ -113,13 +160,15 @@ export function wantsArticle(message: string) {
   return (
     /(?:文章|这篇|原文|报道|新闻稿|全文|标题)/.test(text) ||
     /[《「『“"][^》」』”"]{4,200}[》」』”"]/.test(text) ||
+    columnTitle(candidate) ||
+    TITLE_METADATA.test(text) ||
     titleLike(text)
   );
 }
 /** Best-effort title extraction; the retriever still has to verify it exists. */
 export function articleTitle(message: string) {
-  const text = message.trim();
-  if (!wantsArticle(text)) return undefined;
+  if (!wantsArticle(message)) return undefined;
+  const text = titleCandidate(message);
   const book = text.match(/《([^》]{4,300})》/);
   const outer =
     text.match(/[「『“"]([^》」』”"]{4,300})[》」』”"]/) ||

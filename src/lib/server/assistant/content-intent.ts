@@ -278,7 +278,23 @@ export function contentIntent(
   // "找到这篇文章" is a content lookup, never a map lookup, even though
   // “找到” also appears in place phrasings. The article title is sent to the
   // retriever as a title filter so the exact document can be recovered.
-  const articleQuery = articleTitle(message);
+  const articleQuery = (() => {
+    const direct = articleTitle(message);
+    if (direct) return direct;
+    // "那地点呢？" continues the article the previous turn was about. Without
+    // this, the follow-up falls back to a generic campus search and the named
+    // article loses its exact-title constraint.
+    if (
+      message.length <= 24 &&
+      /地点|时间|在哪|什么时候|哪天|展期/.test(message)
+    )
+      for (const turn of [...history].reverse()) {
+        if (turn.role !== "user") continue;
+        const prior = articleTitle(turn.text);
+        if (prior) return prior;
+      }
+    return undefined;
+  })();
   const articleLookup = !!articleQuery || wantsArticle(message);
   // Declarative campus statements should get a natural answer *and* a search,
   // not a hard platform refusal. The search uses the sentence as written first
@@ -287,6 +303,37 @@ export function contentIntent(
   // Exact titles often differ by typographic quotes or a suffix added by the
   // site. Keep a short leading fragment as the fallback query so a title with
   // inner quotes can still be recalled by FTS.
+  // What the user wants from the named article, with the title and publication
+  // metadata removed. "总结下研究生的学费标准" must retrieve the tuition
+  // section, not just the article's opening chunk.
+  const articleFacet = articleQuery
+    ? (() => {
+        // The facet is the request line, not the whole pasted page. A message
+        // often arrives as "标题\n发布时间：…\n来源：…\n问题"; keeping the
+        // metadata and the source name made the retriever search for
+        // "研究生招生信息网" and return the wrong chunk. Take the last
+        // non-metadata line and strip generic request wording.
+        const withoutTitle = query
+          .replace(articleQuery, " ")
+          .replace(
+            /(?:发布时间|发布日期|发表时间|更新时间)\s*[:：]?\s*[0-9/年.\-: ]+/g,
+            " ",
+          );
+        const lines = withoutTitle
+          .split(/\r?\n/)
+          .map((line) => line.trim())
+          .filter(Boolean);
+        const facet = lines.length ? lines[lines.length - 1] : withoutTitle;
+        return facet
+          .replace(
+            /帮我|请|麻烦|告诉我|说说|讲一下|介绍一下|解释一下|说明一下|总结一下|总结下|总结|整理一下|整理|概括|归纳|梳理|生成|写|做|来|一份|一个|文章摘要|摘要|全文|这篇文章的?内容|通知中(?:的)?|文章中(?:的)?|文中|其中|提及的|提到的|里的|中的|找出|告诉我|一下|是什么|有什么|有哪些|怎么|如何|吗|呢|？|\?/g,
+            " ",
+          )
+          .replace(/[，,。；;：:、]/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      })()
+    : "";
   const articleKeywords = multiTopic
     ? undefined
     : articleLookup && articleQuery
@@ -452,9 +499,24 @@ export function contentIntent(
   if (search) {
     if (entityLookup) {
       tools.push("search_campus_knowledge", "search_campus_events");
-    } else if (articleLookup) tools.push("search_campus_knowledge");
-    else if (events && !knowledge) tools.push("search_campus_events");
-    else if (contentStatement) {
+    } else if (articleLookup) {
+      tools.push("search_campus_knowledge");
+      // An exhibition/lecture/competition article lives in the activity index
+      // even when its page is also a knowledge document. Search both so an
+      // exact title is not reported as missing just because it is an event.
+      if (
+        /展览|展演|展出|作品展|艺术展|摄影展|影像展|书画展|设计展|讲座|讲坛|论坛|会议|比赛|竞赛|大赛|活动|演出|音乐会|招新/.test(
+          message,
+        )
+      )
+        tools.push("search_campus_events");
+    } else if (events && !knowledge) {
+      tools.push("search_campus_events");
+      // A recruitment notice can exist without a calendar row. Search the
+      // campus corpus as well so an empty calendar is not the final answer.
+      if (/报名|招募|其他/.test(message))
+        tools.push("search_campus_knowledge");
+    } else if (contentStatement) {
       tools.push("search_campus_knowledge");
       // A time-bounded "what happened this week" request is events content
       // even when it does not name a radar tag.
@@ -561,7 +623,7 @@ export function contentIntent(
         : broadListQuery
           ? broadListQuery
           : articleLookup
-            ? articleQuery!.slice(-300)
+            ? (articleFacet || articleQuery!).slice(-300)
             : contentStatement
               ? coreQuery.slice(-300)
               : declarativeRequest
